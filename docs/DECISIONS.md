@@ -1,0 +1,68 @@
+# Founder decisions (source of truth)
+
+When any spec, module or eval disagrees with this page, this page wins. Changes need the founder.
+
+- **Product:**
+  - Name: "Content Machine" (kept, despite Matt Gray using the phrase). The name sits in one config field.
+  - It is paid; there is no upsell inside.
+  - Two editions (EN zip, VN zip) from one source.
+  - VN is **fully Vietnamese**, including the method files.
+- **Users and experience:**
+  - Coaches run it DIY; with a 1–2 h/week budget or a VA.
+  - **Experience is the #1 priority.**
+  - The machine does the work in conversation; no templates are handed over.
+  - ≤1 decision per session; one next step per reply.
+- **Formats:**
+  - short-form video;
+  - text posts and carousels;
+  - long-form video/podcast;
+  - paid ads + email.
+  - Output is scripts only: spoken lines, on-screen hook text, caption/CTA. No editor briefs or shot lists.
+- **Content model:**
+  - Domino = an Attract → Trust → Convert ladder, run as episodic series, with a belief-shift chain.
+  - First win = the Message Map + a film-today script; then a 30-day plan + Week 1.
+- **Weekly model:**
+  - "Pillar + short native": one main source cut into distribution (Hormozi: "1 kênh chủ đạo, 3 kênh distribution cắt ra từ đó"), plus 1–2 native pieces a week.
+  - **Default pillar = the Weekly Talk;** the filmed pillar is opt-in.
+- **Edge thesis:**
+  - "Khi mà ai cũng đẻ được 1 đống content rồi thì từ khoá cụ thể + value + authority + authenticity sẽ tạo ra edge."
+  - Keyword = "từ khoá gắn liền với người đó và cũng là 1 từ mà tệp của người đó nói": a signature keyword, not SEO.
+- **Character thesis:**
+  - Be polarized, definitive, concise and clear about your character.
+  - Content amplifies who you are.
+  - Attract through traits, principles, values, vision and polarity, not through money flexes or freebies.
+  - A flex or a freebie is allowed only as proof, a CTA or a flipped format, never as the whole hook.
+  - Polarize on ideas, methods and the "old way"; never on people or protected groups.
+- **Research:**
+  - "Marketing always starts with research."
+  - Primary research plus social listening plus secondary research.
+  - Port the agency protocol (why-loop to root cause; demand → product → bridge).
+  - Include ChatGPT browsing as well as Claude in Chrome.
+- **Launch:**
+  - Converting content includes planned launches run like a direct-response campaign: mồi + lead magnet → belief shift → value → educate/case series → open cart → retargeting → urgency/scarcity → close.
+  - The founder's VN examples:
+    - "50 slot trải nghiệm ai muốn?"
+    - "Chấm q.t mình hướng dẫn 👇"
+    - "Đủ 100 comment 'UP' …"
+    - "Mở bán … trong vòng 21 ngày"
+- **Comment-keyword CTAs are ON by default** ("comment từ khoá giúp post tăng lên, cứ thêm").
+  - Thresholds and "chấm" are allowed when the coach chooses them.
+  - The machine adds one dated platform note and never blocks or rewrites.
+  - Only fake scarcity and unsubstantiated income/health claims are hard-blocked.
+- **Hub and automations:**
+  - Notion is the default template, with Google Sheets "Lite" (same columns), introduced at L2.
+  - 3 automations: weekly script batch, daily idea + hook drop, weekly performance review.
+- **QA:** all four layers (machine QA on every output, coach checklists, build QA, standards/house rules), porting the agency QA doctrine.
+- **VN:**
+  - The VN default app is ChatGPT.
+  - A buyers' Zalo group plus a weekly install session.
+  - Examples use fictional, labelled personas.
+- **Gemini:** off the main path (1.1).
+- **Reference creators:**
+  - Iman Gadzhi, Robert Oliver (robthebank), Sabri Suby, Soo Wei Goh, Nik Setting, Charlie Morgan, Brian Luebben, Alex Garcia (House of AG), Mark Satterfield (gentlerainman), Hormozi, Matt Gray;
+  - plus POV creators of my choosing (`wf9`).
+- **Privacy and safety:**
+  - no names or handles in captured research;
+  - read-only listening (never post, react or join);
+  - never full computer use (Zalo / PDPL red line);
+  - never invent proof, testimonials or scarcity.
