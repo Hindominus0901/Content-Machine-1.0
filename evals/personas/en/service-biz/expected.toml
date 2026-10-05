@@ -234,8 +234,8 @@ note = "Line 14 is Corinne's own sentence from answers.md (dump chunk 2): it mus
 
 [paste_dump]
 total_items = 35
-duplicates = 3                       # Kristen Albury, Rachel Thibodeaux, Jolene Kettleman
-spam_account = "Tyler Brinkworth"    # 2 items (comment + DM, including a fake 'only 3 spots left')
+duplicates = 3                       # the "eat at the kitchen island" comment, the piano-room DM, the paint-samples newsletter reply
+spam_account = "the Facebook-ads seller"    # 2 items (comment + DM, including a fake 'only 3 spots left'); named only in paste-dump.md / seeded_names
 keyword_mentions_distinct = 12       # distinct items containing 'nothing room' (8 different people)
 off_map_asks = [
   "take out a wall (risky: structural engineer)",

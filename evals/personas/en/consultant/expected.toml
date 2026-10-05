@@ -229,8 +229,8 @@ note = "Line 14 is Erin's own sentence from answers.md: it must not count as an 
 
 [paste_dump]
 total_items = 33
-duplicates = 3                          # Trevor Haldane, Hannah Petrakis, Martin Delacroix-Hume
-spam_account = "Brooke Tannenbaum"
+duplicates = 3                          # the line-of-credit comment, the S-corp question, the "which client I'd fire" email reply
+spam_account = "the pipeline-audit seller (a comment plus a DM with a fake 'Only 2 onboarding spots left')"   # named only in paste-dump.md / seeded_names
 keyword_items = 10                      # items containing 'record year', incl. 1 duplicate; 8 distinct people; 2 typed RECORD YEAR
 off_map_asks = [
   "S-corp vs LLC (tax: risky, refer to their tax person)",

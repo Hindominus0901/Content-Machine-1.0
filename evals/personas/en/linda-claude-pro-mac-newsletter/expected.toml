@@ -268,8 +268,8 @@ note = "Line 14 is Linda's own sentence from answers.md: it must not count as an
 
 [paste_dump]
 total_items = 34
-duplicates = 3                          # Bonnie Rasmussen, Marjorie Klett, Marcia Delgado-Finch
-spam_account = "Chad Wexley"            # comment + a fake-scarcity follow-up ('Only 2 audit spots left')
+duplicates = 3                          # the glove-box badge comment, the "who am I without the badge" comment, the "so proud of you" Facebook comment
+spam_account = "the LinkedIn-automation seller"   # comment + a fake-scarcity follow-up ('Only 2 audit spots left'); named only in paste-dump.md / seeded_names
 keyword_items = 9                       # items containing 'badge', incl. 2 duplicates; 6 distinct people; 5 items / 4 people say 'without the badge'
 buyer_signals = [
   "a reader asks for the free call (any day but Thursday)",
