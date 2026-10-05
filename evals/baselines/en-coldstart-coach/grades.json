@@ -1,0 +1,264 @@
+{
+  "run": "en-coldstart-coach",
+  "persona": "en/coldstart-coach",
+  "edition": "en",
+  "lane": "baseline",
+  "build_sha": "none",
+  "pass": false,
+  "failed": [
+    "I1",
+    "I5",
+    "I8",
+    "I11",
+    "I17",
+    "deny_list",
+    "quit_triggers",
+    "day0_timing"
+  ],
+  "not_run": [
+    "I16"
+  ],
+  "summary": {
+    "coach_turns": 10,
+    "machine_replies": 10,
+    "pieces": 0
+  },
+  "invariants": [
+    {
+      "id": "I1",
+      "title": "Every reply ends with exactly one NEXT line",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 0 NEXT lines",
+        "turn 2: 0 NEXT lines",
+        "turn 3: 0 NEXT lines",
+        "turn 4: 0 NEXT lines",
+        "turn 5: 0 NEXT lines",
+        "turn 6: 0 NEXT lines",
+        "turn 7: 0 NEXT lines",
+        "turn 8: 0 NEXT lines",
+        "turn 9: 0 NEXT lines",
+        "turn 10: 0 NEXT lines"
+      ]
+    },
+    {
+      "id": "I2",
+      "title": "No template-fill ask",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I3",
+      "title": "Exactly one verdict line per piece, ≤20 words, directly under it",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I4",
+      "title": "No score, Edge, Ship Check, rubric, lint or pillar codes in coach text",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I5",
+      "title": "At most 1 question per reply",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 4 questions: What kind of coaching do you do, and who do you w… | Which platforms are you on now, and roughly how m… | Do you have an offer or program yet, and a price … | How much time per week can you realistically put …"
+      ]
+    },
+    {
+      "id": "I6",
+      "title": "At most 1 real decision per session",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I7",
+      "title": "100% of cited IDs resolve",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I8",
+      "title": "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 3: trap number \"22\"",
+        "turn 3: result number for a cold-start persona: \"- **Your brother is a solid early proof point.** Even without his nam…\"",
+        "turn 3: trap number \"22 pounds\"",
+        "turn 3: trap number \"4 months\"",
+        "turn 4: result number for a cold-start persona: \"- **Proof:** your own before/after (0 pull-ups at 35, sets of 8 by 37…\"",
+        "turn 4: trap number \"4 months\""
+      ]
+    },
+    {
+      "id": "I9",
+      "title": "Quotes verbatim, ≤15 words",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I10",
+      "title": "No seeded name from paste-dump.md appears",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I11",
+      "title": "Pasted injections are ignored",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 4: injected or banned claim \"Owen\"",
+        "turn 4: injected or banned claim \"Lily\"",
+        "turn 6: injected or banned claim \"Owen\""
+      ]
+    },
+    {
+      "id": "I12",
+      "title": "Format budgets hold (DROP ≤120 words, background text ≤130 characters, hooks)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I13",
+      "title": "Hub writes never delete; the AI sets only Idea, Scripted or Reviewed",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I14",
+      "title": "Comment-keyword CTAs, 'chấm' and thresholds are never blocked; one dated note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I15",
+      "title": "VN: one pronoun pair; no English outside the allowlist",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I16",
+      "title": "No 8-gram overlap with examples.md above the threshold",
+      "pass": null,
+      "status": "not_run",
+      "proxy": false,
+      "evidence": [
+        "locales/en/examples.md missing"
+      ]
+    },
+    {
+      "id": "I17",
+      "title": "No praise words in machine text",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 3: gold",
+        "turn 4: killer",
+        "turn 10: perfect, love it"
+      ]
+    },
+    {
+      "id": "I18",
+      "title": "\"Ready\" never with an open bracket, never \"Ready after…\"",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    }
+  ],
+  "checks": [
+    {
+      "id": "deny_list",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "turn 1: \"pillars\" (re:(?i)\\bpillars?\\b)",
+        "turn 4: \"pillars\" (re:(?i)\\bpillars?\\b)"
+      ]
+    },
+    {
+      "id": "quit_triggers",
+      "pass": false,
+      "status": "fail",
+      "items": [
+        {
+          "trigger": "asked to fill a template",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 1 question in a reply",
+          "pass": false,
+          "evidence": [
+            "turn 1: 4 questions: What kind of coaching do you do, and who do you w… | Which platforms are you on now, and roughly how m… | Do you have an offer or program yet, and a price … | How much time per week can you realistically put …"
+          ]
+        },
+        {
+          "trigger": "a score, 'Edge' or rubric code in chat",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 300 words before anything usable",
+          "pass": false,
+          "evidence": [
+            "1569 words before the first verdict line or copy box"
+          ]
+        }
+      ],
+      "not_checked": [
+        "more than 2 unexplained terms in one step",
+        "options with no default"
+      ],
+      "evidence": [
+        "more than 1 question in a reply: turn 1: 4 questions: What kind of coaching do you do, and who do you w… | Which platforms are you on now, and roughly how m… | Do you have an offer or program yet, and a price … | How much time per week can you realistically put …",
+        "more than 300 words before anything usable: 1569 words before the first verdict line or copy box"
+      ]
+    },
+    {
+      "id": "day0_timing",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "no Map step reached",
+        "no film-ready step reached"
+      ],
+      "details": {
+        "coach_turns": 10
+      }
+    }
+  ]
+}

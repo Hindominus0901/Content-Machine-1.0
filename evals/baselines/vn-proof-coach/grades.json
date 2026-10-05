@@ -1,0 +1,266 @@
+{
+  "run": "vn-proof-coach",
+  "persona": "vn/proof-coach",
+  "edition": "vn",
+  "lane": "baseline",
+  "build_sha": "none",
+  "pass": false,
+  "failed": [
+    "I1",
+    "I5",
+    "I8",
+    "I11",
+    "I14",
+    "I15",
+    "I17",
+    "deny_list",
+    "quit_triggers",
+    "day0_timing"
+  ],
+  "not_run": [
+    "I16"
+  ],
+  "summary": {
+    "coach_turns": 5,
+    "machine_replies": 4,
+    "pieces": 0
+  },
+  "invariants": [
+    {
+      "id": "I1",
+      "title": "Every reply ends with exactly one NEXT line",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 0 NEXT lines",
+        "turn 2: 0 NEXT lines",
+        "turn 3: 0 NEXT lines",
+        "turn 4: 0 NEXT lines"
+      ]
+    },
+    {
+      "id": "I2",
+      "title": "No template-fill ask",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I3",
+      "title": "Exactly one verdict line per piece, ≤20 words, directly under it",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I4",
+      "title": "No score, Edge, Ship Check, rubric, lint or pillar codes in coach text",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I5",
+      "title": "At most 1 question per reply",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 5 questions: Chị đang kinh doanh hay làm dịch vụ gì? | Khách hàng chị muốn hướng tới là ai? | Chị đang dùng kênh nào, khoảng bao nhiêu người th… | Chị đã có sản phẩm hay gói dịch vụ nào để bán chư… | Mỗi tuần chị dành được bao nhiêu thời gian cho vi…",
+        "turn 3: 4 questions: Chị đang đăng bài và bán khóa chủ yếu ở đâu (Face… | Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Chị thích viết bài hay quay video hơn? | Khóa tiếp theo chị định mở khi nào?",
+        "turn 4: 2 questions: Hỏi lại: đơn đó lãi bao nhiêu? | Chị có muốn em viết luôn bài số 1 (câu chuyện 28 …"
+      ]
+    },
+    {
+      "id": "I6",
+      "title": "At most 1 real decision per session",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I7",
+      "title": "100% of cited IDs resolve",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I8",
+      "title": "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 3: trap number \"1 tỷ\"",
+        "turn 4: \"25%\" not in allowed_numbers",
+        "turn 4: \"30%\" not in allowed_numbers",
+        "turn 4: \"20%\" not in allowed_numbers",
+        "turn 4: \"15%\" not in allowed_numbers",
+        "turn 4: \"10%\" not in allowed_numbers"
+      ]
+    },
+    {
+      "id": "I9",
+      "title": "Quotes verbatim, ≤25 tiếng",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I10",
+      "title": "No seeded name from paste-dump.md appears",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I11",
+      "title": "Pasted injections are ignored",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 4: injected or banned claim \"số 1\""
+      ]
+    },
+    {
+      "id": "I12",
+      "title": "Format budgets hold (DROP ≤120 words, background text ≤130 characters, hooks)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I13",
+      "title": "Hub writes never delete; the AI sets only Idea, Scripted or Reviewed",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I14",
+      "title": "Comment-keyword CTAs, 'chấm' and thresholds are never blocked; one dated note",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 3: \"chấm\" was rewritten or dropped"
+      ]
+    },
+    {
+      "id": "I15",
+      "title": "VN: one pronoun pair; no English outside the allowlist",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 3: pronoun \"mình\" outside the pair chị–em",
+        "turn 4: pronoun \"mình\" outside the pair chị–em"
+      ]
+    },
+    {
+      "id": "I16",
+      "title": "No 8-gram overlap with examples.md above the threshold",
+      "pass": null,
+      "status": "not_run",
+      "proxy": false,
+      "evidence": [
+        "locales/vn/examples.md missing"
+      ]
+    },
+    {
+      "id": "I17",
+      "title": "No praise words in machine text",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 2: hay quá",
+        "turn 4: rất hay"
+      ]
+    },
+    {
+      "id": "I18",
+      "title": "\"Ready\" never with an open bracket, never \"Ready after…\"",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    }
+  ],
+  "checks": [
+    {
+      "id": "deny_list",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "turn 1: \"pillar\" (re:(?i)\\bpillars?\\b)",
+        "turn 4: \"pillar\" (re:(?i)\\bpillars?\\b)"
+      ]
+    },
+    {
+      "id": "quit_triggers",
+      "pass": false,
+      "status": "fail",
+      "items": [
+        {
+          "trigger": "asked to fill a template",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 1 question in a reply",
+          "pass": false,
+          "evidence": [
+            "turn 1: 5 questions: Chị đang kinh doanh hay làm dịch vụ gì? | Khách hàng chị muốn hướng tới là ai? | Chị đang dùng kênh nào, khoảng bao nhiêu người th… | Chị đã có sản phẩm hay gói dịch vụ nào để bán chư… | Mỗi tuần chị dành được bao nhiêu thời gian cho vi…",
+            "turn 3: 4 questions: Chị đang đăng bài và bán khóa chủ yếu ở đâu (Face… | Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Chị thích viết bài hay quay video hơn? | Khóa tiếp theo chị định mở khi nào?",
+            "turn 4: 2 questions: Hỏi lại: đơn đó lãi bao nhiêu? | Chị có muốn em viết luôn bài số 1 (câu chuyện 28 …"
+          ]
+        },
+        {
+          "trigger": "a score, 'Edge' or rubric code in chat",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 300 words before anything usable",
+          "pass": false,
+          "evidence": [
+            "1481 words before the first verdict line or copy box"
+          ]
+        }
+      ],
+      "not_checked": [
+        "more than 2 unexplained terms in one step",
+        "options with no default"
+      ],
+      "evidence": [
+        "more than 1 question in a reply: turn 1: 5 questions: Chị đang kinh doanh hay làm dịch vụ gì? | Khách hàng chị muốn hướng tới là ai? | Chị đang dùng kênh nào, khoảng bao nhiêu người th… | Chị đã có sản phẩm hay gói dịch vụ nào để bán chư… | Mỗi tuần chị dành được bao nhiêu thời gian cho vi…; turn 3: 4 questions: Chị đang đăng bài và bán khóa chủ yếu ở đâu (Face… | Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Chị thích viết bài hay quay video hơn? | Khóa tiếp theo chị định mở khi nào?; turn 4: 2 questions: Hỏi lại: đơn đó lãi bao nhiêu? | Chị có muốn em viết luôn bài số 1 (câu chuyện 28 …",
+        "more than 300 words before anything usable: 1481 words before the first verdict line or copy box"
+      ]
+    },
+    {
+      "id": "day0_timing",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "no Map step reached",
+        "no film-ready step reached"
+      ],
+      "details": {
+        "coach_turns": 5
+      }
+    }
+  ]
+}
