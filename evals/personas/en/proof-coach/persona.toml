@@ -66,11 +66,20 @@ allowed_numbers = [
   "1,150", "$95", "$175", "$800", "$2,400", "$9,600", "4B", "2022", "2026", "2027",
   "11:59", "23:59",                # launch close time (20 Jan 2027, Eastern)
 ]
-excluded_numbers = ["90", "90%", "$15,000", "$3,000"]
+excluded_numbers = ["90", "90%", "$15,000", "$3,000",
+  # wf13 (liked-paste.md / follow-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Counts are matched by value: "18.4K" = 18,400, "2.1M" = 2,100,000 (tools/cmcore/checks.py reads K and M forms).
+  "$127K", "$127,000", "47", "412", "six-figure", "88.4K", "3,912", "$100K", "614-555-0182", "6145550182",
+  "110K", "18.4K", "15.2K", "21.7K", "16.9K", "19.8K", "13.6K", "24.3K", "17.1K", "$1,497", "$349", "64.2K",
+  "2.1M",
+]
 # Not claims (ignored by graders): "80s" in answers.md is a dictation slip for "ATS keywords";
 # "late 40s / late 50s" are decades; list numbering in voice-samples.md.
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md / follow-paste.md.
+# None may appear in any output (I10).
 seeded_names = [
   "Marcy Tillotson",
   "Joanne Prewitt",
@@ -86,6 +95,23 @@ seeded_names = [
   "Connie Draper-Hale",
   "Gloria Haverkamp",
   "Kayla Ruiz-Lund",
+  # wf13: commenters in liked-paste.md / follow-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Charlene Moffit", "Roxanne Pettibone", "Janice Albertine", "Wendell Kraus", "Margo Treadwell",
+  "Sylvie Brannigan", "Paulette Ingersoll", "Gwendolyn Saari", "Tobias Renfrow", "Lucinda Varga",
+  "Ingrid Haugland", "Felicity Ambroise", "Marisol Teague", "Corliss Duvall", "Bernadette Lowry",
+  "Kristof Albescu", "Annemarie Witt", "Odessa Kimura",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md / follow-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Tamsin Wexford", "@unstuck.at.fifty", "Résumé Blackout Method", "Résumé Blackout", "BLACKOUT",
+  "Priyanka Desmond", "thelatebloomerdesk", "June Halvorsen", "@thursday.career.club", "Lena Kristoffersen",
+  "@lena.midcareer", "Mariela Quintero", "@mariela.carreras50", "Second Wind Careers", "@secondwind.careers",
+  "Second Wind Circle", "The Midlife Résumé Studio", "Midlife Résumé Studio", "Fearless at Fifty",
+  "Coach Dolores",
 ]
 
 # Names the coach herself uses (answers.md / pillar-transcript.md). Allowed only where consent covers it.

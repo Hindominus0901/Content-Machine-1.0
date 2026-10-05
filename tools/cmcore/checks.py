@@ -10,7 +10,8 @@ EN words and VN tiếng are both whitespace tokens that hold a letter or digit.
 
 Keep names here distinct from tools/shiplint.py's own (main, lint_*, load_*,
 format_line, PayloadError, PIECE_FIELDS, _sl_*): after inlining they share one
-namespace.
+namespace. The copy-run helpers (wf13-inspiration-spec §4 DISTANCE) use the
+copy_* / *_copy_note / point_order_mirror / stock_phrase_list names.
 """
 from __future__ import annotations
 
@@ -31,6 +32,9 @@ BG_POST_MAX_CHARS = 130
 ON_SCREEN_MAX_WORDS = 6
 WORD_RATE_TOLERANCE = 0.15
 SHORT_DEFAULT_MAX_SECONDS = 60
+# Copy runs against someone else's post (evals/acceptance.toml [copy] en_words / vn_tieng;
+# wf13-inspiration-spec §4 DISTANCE, §6): a shared run this long is a copy.
+COPY_RUN_MIN = {"en": 6, "vn": 8}
 
 _ALNUM = re.compile(r"[^\W_]")
 UPPER = "A-ZĐÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ"
@@ -134,8 +138,12 @@ _MULT_AFTER = [
     (re.compile(r"\s?(?:nghìn|ngàn)(?!\w)", re.I), 1e3),
     (re.compile(r"\s?(?:million|mil)(?!\w)", re.I), 1e6),
     (re.compile(r"\s?(?:billion|bn)(?!\w)", re.I), 1e9),
-    (re.compile(r"tr(?![^\W\d_])"), 1e6),
+    (re.compile(r"(?:tr|Tr|TR)(?![^\W\d_])"), 1e6),
     (re.compile(r"[kK](?![^\W\d_])"), 1e3),
+    # counts as apps print them: "2.1M views", "52,7 N lượt xem" (nghìn), "1,2 Tr" (triệu)
+    (re.compile(r"\s?M(?![^\W\d_])"), 1e6),
+    (re.compile(r"\s?N(?![^\W\d_])"), 1e3),
+    (re.compile(r"\s(?:Tr|TR)(?![^\W\d_])"), 1e6),
 ]
 _MONEY_AFTER = re.compile(r"\s?(?:đồng|dong|vnđ|vnd|usd|dollars?|bucks|đ|₫)(?![^\W\d_])", re.I)
 _PERCENT_AFTER = re.compile(r"\s?(?:%|percent(?!\w)|per cent(?!\w)|phần trăm(?!\w))", re.I)
@@ -165,6 +173,24 @@ def _num_value(digits: str) -> float:
 def _prev_word(text: str, pos: int) -> str:
     m = re.search(r"([^\W\d_]+)\s*[#.:]?\s*$", text[max(0, pos - 24):pos])
     return m.group(1).casefold() if m else ""
+
+
+_SECONDS_AFTER = re.compile(r"(?:\s*[–—-]\s*\d+(?:[.,]\d+)?)?\s*(?:giây|secs?|seconds?|s)(?![^\W\d_])", re.I)
+_SECONDS_BEFORE = re.compile(r"(?<![^\W\d_])(?:giây|seconds?|secs?)\s*(?:thứ\s*)?[#:]?\s*$", re.I)
+
+
+def _is_timing(text: str, start: int, end: int, kind: str, percent: bool) -> bool:
+    """A video timestamp or a seconds mark in a script ("0:15", "3–15 giây", "15–35 s", "giây 35"):
+    a beat label, not a claim."""
+    raw = text[start:end]
+    line_before = text[text.rfind("\n", 0, start) + 1:start]
+    if kind == "time":
+        return bool(re.fullmatch(r"0{1,2}:\d{2}", raw) or re.search(r"(?<!\d)0{1,2}:\d{2}\s*[–—-]\s*$", line_before))
+    if kind != "number" or percent:
+        return False
+    if _SECONDS_AFTER.match(text, end) or _SECONDS_BEFORE.search(line_before):
+        return True
+    return raw.endswith("s") and bool(re.search(r"\d\s*[–—-]\s*$", line_before))   # "0–3s"
 
 
 def numbers_in(text: str) -> list[Number]:
@@ -241,6 +267,8 @@ def numbers_in(text: str) -> list[Number]:
                 structural = True                         # format instructions (≤12 words, under 30 s)
             elif kind == "number" and _prev_word(text, raw_start) in STRUCTURE_WORDS:
                 structural = True                         # Beat 2, Week 1, tuần 1
+            elif _is_timing(text, raw_start, end, kind, percent):
+                structural = True                         # 0:15, 3–15 giây, giây 35 (video timestamps)
         tagged = any(a <= raw_start < b for a, b in tagged_spans) or bool(_GUESS_AFTER.match(text[end:]))
         out.append(Number(text[raw_start:end], value, kind, percent, raw_start, end, structural, tagged))
         pos = end
@@ -308,10 +336,16 @@ _ATTR_BEFORE = {
 _ATTR_AFTER = re.compile(r"^[\s,]*(?:[—–-]\s*[" + UPPER + r"]|(?:she|he|they|[A-Z][a-z]+|a client|my client|"
                          r"one client)\s+(?:said|says|wrote|writes|asked|told me|texted|messaged)\b|(?:chị|anh|em|bạn|"
                          r"khách|học viên|[" + UPPER + r"][^\W\d_]+)\s+(?:ấy\s+)?(?:nói|bảo|nhắn|kể|viết|hỏi)\b)")
+# A short quoted term followed by its meaning ('"insight" là điều khách nghĩ', '"CTA" means …') is a gloss.
+_GLOSS_AFTER = re.compile(r"^\s*[,:]?\s*(?:là|nghĩa là|có nghĩa là|tức là|means?|meaning|stands for|is short for|"
+                          r"=|→|->)(?!\w)", re.I)
 
 
 def quotes_in(text: str, lang: str = "en") -> list[Quote]:
-    """Double-quoted spans (straight or curly), each marked attributed or not."""
+    """Double-quoted spans (straight or curly), each marked attributed or not.
+
+    A quoted term of up to 3 words followed by its meaning is a gloss, never an attributed quote.
+    """
     text = straight_quotes(nfc(text))
     out = []
     for m in _QUOTE_SPAN.finditer(text):
@@ -319,6 +353,8 @@ def quotes_in(text: str, lang: str = "en") -> list[Quote]:
         before = text[line_start:m.start()]
         after = text[m.end():text.find("\n", m.end()) if "\n" in text[m.end():] else len(text)]
         attributed = any(p.search(before) for p in _ATTR_BEFORE.values()) or bool(_ATTR_AFTER.match(after))
+        if attributed and count_words(m.group(1)) <= 3 and _GLOSS_AFTER.match(after):
+            attributed = False
         out.append(Quote(m.group(1), m.start(1), m.end(1), attributed))
     return out
 
@@ -701,3 +737,130 @@ def budget_problems(fmt: str | None, hook: str, body: str, lang: str = "en", sec
     if "min_words" in rule and words < rule["min_words"]:
         out.append(f"{words} {unit} (min {rule['min_words']})")
     return out
+
+
+# ---------------------------------------------------------------- copy runs (someone else's post)
+
+# liked.copy_note (strings) carries the real wording; these are its first-sentence cores, used when
+# no note text is given (wf13-inspiration-spec §2 liked.copy_note).
+COPY_NOTE_MARKERS = ("follows their post closely", "bám sát bài của họ")
+
+
+def copy_tokens(text: str | None) -> list[str]:
+    """NFC, casefolded, punctuation-stripped tokens (EN words / VN tiếng) for the copy-run check.
+
+    Quotes are straightened, apostrophes inside a word dropped ("don't" → "dont") and digit
+    group separators joined ("2,400" → "2400"); every other punctuation mark splits.
+    """
+    s = straight_quotes(nfc(text)).casefold()
+    s = re.sub(r"(?<=\d)[.,](?=\d)", "", s)
+    s = re.sub(r"(?<=\w)'(?=\w)", "", s)
+    return re.sub(r"[^\w\s]", " ", s).split()
+
+
+def stock_phrase_list(text: str | None) -> list[str]:
+    """The phrases in a locales/<lang>/stock-phrases.txt body: one per line, '#' starts a comment."""
+    out = []
+    for line in nfc(text).splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and line not in out:
+            out.append(line)
+    return out
+
+
+def _copy_strip_stock(tokens: list[str], stock: list[list[str]]) -> list[str]:
+    """Tokens minus every whole stock phrase (any of them, wherever it occurs)."""
+    keep = [True] * len(tokens)
+    by_first: dict[str, list[list[str]]] = {}
+    for phrase in stock:
+        if phrase:
+            by_first.setdefault(phrase[0], []).append(phrase)
+    for i, tok in enumerate(tokens):
+        for phrase in by_first.get(tok, ()):
+            if tokens[i:i + len(phrase)] == phrase:
+                for j in range(i, i + len(phrase)):
+                    keep[j] = False
+    return [t for t, k in zip(tokens, keep) if k]
+
+
+def copy_runs(text: str, source: str, lang: str = "en", n: int | None = None, stock=()) -> list[str]:
+    """Runs of ≥n tokens that `text` shares with `source` (someone else's post), in text order.
+
+    n defaults to COPY_RUN_MIN (6 EN words / 8 VN tiếng). Tokens come from copy_tokens(); every
+    stock phrase (calls to action, greetings: locales/<lang>/stock-phrases.txt) is removed from
+    both sides first, so "link in bio" or "comment bên dưới" never makes or lengthens a run.
+    Overlapping shared n-grams merge into one run.
+    """
+    n = int(n or COPY_RUN_MIN.get(lang, COPY_RUN_MIN["en"]))
+    stock_tokens = [copy_tokens(p) for p in (stock or ())]
+    a = _copy_strip_stock(copy_tokens(text), stock_tokens)
+    b = _copy_strip_stock(copy_tokens(source), stock_tokens)
+    if n < 1 or len(a) < n or len(b) < n:
+        return []
+    grams = {tuple(b[i:i + n]) for i in range(len(b) - n + 1)}
+    spans: list[list[int]] = []
+    for i in range(len(a) - n + 1):
+        if tuple(a[i:i + n]) in grams:
+            if spans and i <= spans[-1][1]:
+                spans[-1][1] = i + n
+            else:
+                spans.append([i, i + n])
+    out: list[str] = []
+    for start, end in spans:
+        run = " ".join(a[start:end])
+        if run not in out:
+            out.append(run)
+    return out
+
+
+def _mirror_units(point: str) -> set:
+    """Content units of one point: non-stopword words of 3+ letters plus adjacent-word pairs
+    (VN tiếng are short, so the pairs carry most of the meaning)."""
+    toks = copy_tokens(point)
+    units: set = {t for t in toks if t not in STOPWORDS and len(t) >= 3}
+    units |= {(x, y) for x, y in zip(toks, toks[1:]) if not (x in STOPWORDS and y in STOPWORDS)}
+    return units
+
+
+def point_order_mirror(text: str, source: str, min_points: int = 3, share: float = 0.5) -> bool:
+    """Best-effort proxy for a mirrored point order (DISTANCE): True when at least `min_points`
+    of the source's points (sentences) come back in the text in the same order, each sharing at
+    least half of its content units (and 2 or more) with one point of the text, and those points
+    make up at least `share` of the shorter side. Topic-free shapes (hook → story → steps) with
+    new content do not match: only the source's own points do.
+    """
+    src = [u for u in (_mirror_units(p) for p in sentences(source)) if len(u) >= 2]
+    txt = [u for u in (_mirror_units(p) for p in sentences(text)) if len(u) >= 2]
+    if len(src) < min_points or len(txt) < min_points:
+        return False
+    best = [0] * len(txt)                      # longest in-order chain ending at text point j
+    for s in src:
+        hits = [j for j, t in enumerate(txt) if len(s & t) >= 2 and len(s & t) >= 0.5 * len(s)]
+        new = list(best)
+        for j in hits:
+            new[j] = max(new[j], 1 + max(best[:j], default=0))
+        best = new
+    chain = max(best, default=0)
+    return chain >= min_points and chain >= share * min(len(src), len(txt))
+
+
+def copy_note_marker(note: str) -> str:
+    """The part of a copy note that marks it: its first sentence without a leading label
+    ("Note:", "Lưu ý:", "Note (5 Oct 2026):") and without {slots}."""
+    s = nfc(note).strip()
+    s = re.sub(r"^[^\s:{}]{1,12}(?:\s+[^\s:{}]{1,12})?\s*(?:\([^)\n]*\))?\s*:\s*", "", s)
+    first = next(iter(sentences(s)), "")
+    chunks = [c for c in re.split(r"\{[^}]*\}", first) if copy_tokens(c)]
+    return max(chunks, key=lambda c: len(copy_tokens(c))).strip(" .!?…") if chunks else ""
+
+
+def has_copy_note(text: str, note: str | None = None) -> bool:
+    """True when `text` carries the copy note: the marker of `note` (the rendered liked.copy_note),
+    or, with no note given, one of COPY_NOTE_MARKERS. Case, punctuation and spacing are ignored."""
+    markers = [copy_note_marker(note)] if note and note.strip() else list(COPY_NOTE_MARKERS)
+    haystack = " " + " ".join(copy_tokens(text)) + " "
+    for marker in markers:
+        toks = copy_tokens(marker)
+        if toks and " " + " ".join(toks) + " " in haystack:
+            return True
+    return False

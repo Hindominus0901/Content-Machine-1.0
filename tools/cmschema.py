@@ -561,6 +561,7 @@ def _check_banks(banks: dict, hub: dict | None, out: _Findings) -> None:
                 out.add(w, f"field '{f.get('name')}' needs required = true/false")
             if hub_targets is not None and f.get("hub") not in hub_targets:
                 out.add(w, f"field '{f.get('name')}' maps to unknown Bank property '{f.get('hub')}'")
+            _check_bank_field_limits(f, w, out)
         if not any(f.get("hub") == "Text" and f.get("required") for f in fields):
             out.add(w, "a required field must map to Text (the row title)")
         kinds = t.get("kinds", [])
@@ -582,6 +583,25 @@ def _check_banks(banks: dict, hub: dict | None, out: _Findings) -> None:
             out.add(f"{where} [card_caps]", f"{prefix} needs a positive cap")
 
 
+def _positive_int(value) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool) and value > 0
+
+
+def _check_bank_field_limits(f: dict, w: str, out: _Findings) -> None:
+    """Optional field attributes: options (closed list), max_chars (int), max_words ({en, vn})."""
+    name = f.get("name")
+    if "options" in f:
+        opts = f["options"]
+        if not _is_str_list(opts) or not opts or len(set(opts)) != len(opts):
+            out.add(w, f"field '{name}' options must be a non-empty list of unique strings")
+    if "max_chars" in f and not _positive_int(f["max_chars"]):
+        out.add(w, f"field '{name}' max_chars must be a positive integer")
+    if "max_words" in f:
+        mw = f["max_words"]
+        if not isinstance(mw, dict) or not all(_positive_int(mw.get(e)) for e in cmlib.EDITIONS):
+            out.add(w, f"field '{name}' max_words needs positive en and vn integers")
+
+
 def _card_fields(card: dict) -> list[tuple[str, dict]]:
     out = []
     for part in ("visible", "machine"):
@@ -597,6 +617,10 @@ def _check_card(card: dict, banks: dict | None, root: Path, out: _Findings) -> N
     for k in ("whole_chars", "visible_chars"):
         if not all(isinstance(budgets.get(k, {}).get(e), int) for e in cmlib.EDITIONS):
             out.add(f"{where} [budgets]", f"{k} needs en and vn integers")
+    for e in cmlib.EDITIONS:
+        whole, visible = budgets.get("whole_chars", {}).get(e), budgets.get("visible_chars", {}).get(e)
+        if isinstance(whole, int) and isinstance(visible, int) and whole < visible:
+            out.add(f"{where} [budgets]", f"whole_chars.{e} is smaller than visible_chars.{e}")
     targets_path = root / "platform" / "targets.toml"
     if targets_path.exists():
         targets = cmlib.load_toml(targets_path).get("budgets", {})

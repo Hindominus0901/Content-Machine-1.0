@@ -7,6 +7,7 @@
   "pass": false,
   "failed": [
     "I1",
+    "I2",
     "I5",
     "I8",
     "I17",
@@ -41,10 +42,13 @@
     {
       "id": "I2",
       "title": "No template-fill ask",
-      "pass": true,
-      "status": "pass",
+      "pass": false,
+      "status": "fail",
       "proxy": false,
-      "evidence": []
+      "evidence": [
+        "turn 1: \"[who]\"",
+        "turn 1: \"[who] go from [where they're stuck]\""
+      ]
     },
     {
       "id": "I3",
@@ -110,7 +114,7 @@
     },
     {
       "id": "I10",
-      "title": "No seeded name from paste-dump.md appears",
+      "title": "No seeded name appears; no creator term in a piece the machine started on its own",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -185,6 +189,38 @@
       "status": "pass",
       "proxy": false,
       "evidence": []
+    },
+    {
+      "id": "I19",
+      "title": "No copy run against someone else's post; a requested copy or translation carries the copy note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I20",
+      "title": "An unopened link gets the can't-open line and 0 words about what it holds",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I21",
+      "title": "The \"Your angle\" card traces to the evidence rule (EVERYONE SAYS ≥2 accounts; else a hunch)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I22",
+      "title": "No promise to watch, monitor or track anyone's account",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
     }
   ],
   "checks": [
@@ -206,8 +242,11 @@
       "items": [
         {
           "trigger": "asked to fill a template",
-          "pass": true,
-          "evidence": []
+          "pass": false,
+          "evidence": [
+            "turn 1: \"[who]\"",
+            "turn 1: \"[who] go from [where they're stuck]\""
+          ]
         },
         {
           "trigger": "more than 1 question in a reply",
@@ -234,6 +273,7 @@
         "options with no default"
       ],
       "evidence": [
+        "asked to fill a template: turn 1: \"[who]\"; turn 1: \"[who] go from [where they're stuck]\"",
         "more than 1 question in a reply: turn 2: 3 questions: What do you offer, and at what price? | Which platform do you want to focus on? | How much time can you realistically give content …",
         "more than 300 words before anything usable: 2022 words before the first verdict line or copy box"
       ]

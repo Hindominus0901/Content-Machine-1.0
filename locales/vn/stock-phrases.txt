@@ -1,0 +1,50 @@
+# Cụm câu quen thuộc, không tính là chép (I19; wf13-inspiration-spec §4 DISTANCE, §6).
+# Stock phrases exempt from the copy-run check: tiếng that belong to one of these phrases
+# are left out of a run shared with someone else's post.
+# Read by tools/shiplint.py --source and evals/graders.py. Maintainer file; never shipped.
+#
+# One phrase per line; lines starting with "#" are comments. Plain text, no regex;
+# matched as a whole phrase, any letter case, any run of spaces. Matching is literal, so
+# common xưng hô forms (mình / em / chị / anh) are listed one by one.
+# Only calls to action, greetings, sign-offs and transitions belong here. Never a hook
+# stem, a claim or a coined term: those are exactly what the check must catch.
+
+# Bình luận
+comment bên dưới
+bình luận bên dưới
+để lại bình luận
+để lại comment
+bạn nghĩ sao
+mọi người nghĩ sao
+
+# Link ở bio và nhắn tin
+link ở bio
+link trong bio
+link ở phần bình luận
+nhắn tin cho mình
+nhắn tin cho em
+nhắn tin cho chị
+nhắn tin cho anh
+inbox cho mình
+inbox cho em
+inbox mình gửi
+inbox em gửi
+
+# Theo dõi, lưu, chia sẻ
+theo dõi để xem phần 2
+theo dõi để không bỏ lỡ
+phần 2 sắp ra
+lưu lại để xem sau
+lưu lại kẻo trôi
+chia sẻ cho người cần
+gửi cho người bạn cần xem
+tag người bạn cần xem
+thả tim nếu bạn đồng ý
+
+# Mở đầu, chuyển ý, kết
+xem đến cuối
+xem hết video
+cảm ơn bạn đã xem
+cảm ơn mọi người đã xem
+hẹn gặp lại ở video sau
+hẹn gặp ở video sau

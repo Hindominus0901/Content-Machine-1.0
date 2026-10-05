@@ -49,6 +49,40 @@ class EditionParamsMatchChecks(unittest.TestCase):
                     self.assertEqual(params[key], want, f"editions/{ed_id}.toml {key} != tools/cmcore/checks.py")
 
 
+class CopyChecksMatchAcceptance(unittest.TestCase):
+    """checks.py COPY_RUN_MIN and COPY_NOTE_MARKERS are copies too (wf13-inspiration-spec §2, §6)."""
+
+    def test_copy_run_min_equals_acceptance_copy(self):
+        copy = cmlib.load_toml(REPO / "evals" / "acceptance.toml")["copy"]
+        self.assertEqual(ck.COPY_RUN_MIN, {"en": copy["en_words"], "vn": copy["vn_tieng"]})
+
+    def test_a_stock_phrase_alone_is_never_a_copy_run(self):
+        for lang in ck.LANGS:
+            path = REPO / "locales" / lang / "stock-phrases.txt"
+            if not path.exists():
+                continue
+            phrases = ck.stock_phrase_list(path.read_text(encoding="utf-8"))
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    self.assertEqual(ck.copy_runs(phrase, phrase, lang, n=1, stock=phrases), [])
+
+    def test_liked_strings_are_recognised(self):
+        """Once strings carry liked.copy_note / liked.cant_open (P2), the graders and the fallback find them."""
+        for ed_id in cmlib.EDITIONS:
+            strings, _ = graders.load_strings(REPO, ed_id)
+            note = strings.get("liked.copy_note", "")
+            if note.strip():
+                with self.subTest(edition=ed_id, key="liked.copy_note"):
+                    self.assertTrue(ck.has_copy_note(note, note))
+                    self.assertTrue(ck.has_copy_note(note), "COPY_NOTE_MARKERS no longer match liked.copy_note")
+            line = strings.get("liked.cant_open", "")
+            if line.strip():
+                with self.subTest(edition=ed_id, key="liked.cant_open"):
+                    run = type("RunStub", (), {"strings": strings, "lang": ed_id})()
+                    pattern = graders._cant_open_pattern(run)
+                    self.assertTrue(pattern.search(ck.straight_quotes(fill(line))))
+
+
 class StringsMatchRuntimeChecks(unittest.TestCase):
     def rendered(self, ed: cmlib.Edition, key: str) -> str:
         return cmlib.render(ed.strings[key], ed, "kit").strip()

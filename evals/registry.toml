@@ -116,6 +116,12 @@ kind = "module"
 status = "planned"
 baseline = ""
 
+[modules.liked]
+kind = "module"
+status = "planned"
+baseline = ""
+note = "§CM-LIKED, posts and channels the coach likes or follows (wf13-inspiration-spec §7 P2); minimum: acceptance.toml [cases] liked_min"
+
 [modules.review]
 kind = "module"
 status = "planned"

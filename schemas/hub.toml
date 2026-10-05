@@ -569,7 +569,7 @@ name = "Type"
 type = "select"
 group = "Item"
 options = ["Client words", "Objection", "Story", "Belief", "Proof", "Moment", "Keyword", "Insight",
-           "Capture", "Gift", "Swipe", "Parked"]
+           "Capture", "Gift", "Liked post", "Parked"]
 sheet_column = true
 description_key = "hub.bank.type"
 
@@ -583,6 +583,7 @@ options = ["Pain", "Desire", "Fear", "Failed fix", "Identity", "Trigger",
            "Vehicle", "Internal", "External", "Stance",
            "Unaware", "Problem aware", "Solution aware", "Product aware", "Most aware",
            "Noticed", "Happened", "Believe", "Client said", "Refused",
+           "Post", "Channel",
            "DIFF-BUYER", "DIFF-PROBLEM", "NO-OFFER", "TOOL", "GENERIC", "RISKY", "TOO-EARLY"]
 sheet_column = true
 description_key = "hub.bank.kind"
@@ -610,7 +611,7 @@ type = "rich_text"
 group = "Item"
 sheet_column = true
 description_key = "hub.bank.source"
-note = "label · link · date · place · role only, never names"
+note = "label · link · date · place · role only, never names; a Liked post row may name a public brand or channel (banks.toml privacy.public_source_names)"
 
 [[databases.bank.property]]
 name = "Link"
@@ -988,6 +989,19 @@ audience = "more"
 filter = [ { property = "Type", op = "is", value = "Parked" } ]
 sort = [ { property = "Added", direction = "descending" } ]
 properties = ["Text", "Detail", "State", "Added"]
+
+# The coach's "Posts you like" at L2 (wf13-inspiration-spec §1, §3): the full set of W rows.
+# Detail is left out: it carries field names (seen, relation, hook_type) the coach never sees.
+[[views]]
+name = "Posts I like"
+label_key = "hub.view.liked"               # EN "Posts I like", VN "Bài mình thích"
+database = "bank"
+layout = "table"
+audience = "more"
+filter = [ { property = "Type", op = "is", value = "Liked post" },
+           { property = "State", op = "is", value = "Active" } ]
+sort = [ { property = "Added", direction = "descending" } ]
+properties = ["Text", "Kind", "Source", "Link", "Used In", "Added"]
 
 [[views]]
 name = "Runs"

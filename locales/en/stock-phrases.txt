@@ -1,0 +1,52 @@
+# Stock phrases exempt from the copy-run check (I19; wf13-inspiration-spec §4 DISTANCE, §6).
+# Words that belong to one of these phrases are left out of a run shared with someone
+# else's post: everyone says them, so they prove nothing about copying.
+# Read by tools/shiplint.py --source and evals/graders.py. Maintainer file; never shipped.
+#
+# One phrase per line; lines starting with "#" are comments. Plain text, no regex;
+# matched as a whole phrase, any letter case, any run of spaces.
+# Only calls to action, greetings, sign-offs and transitions belong here. Never a hook
+# stem, a claim or a coined term: those are exactly what the check must catch.
+
+# Comments
+let me know in the comments
+tell me in the comments
+drop a comment below
+leave a comment below
+comment below
+what do you think
+let me know what you think
+
+# Link in bio and DMs
+link in bio
+the link is in my bio
+check the link in my bio
+click the link below
+send me a DM
+DM me
+and I'll send it to you
+I'll send it to you
+
+# Follow, save, share
+follow for more
+follow for part 2
+follow for more tips like this
+part 2 coming soon
+save this for later
+save this post
+share this with a friend
+send this to a friend who needs it
+tag a friend who needs this
+double tap if you agree
+like and subscribe
+turn on notifications
+
+# Openers, transitions and sign-offs
+let's get into it
+let's dive in
+here's the thing
+watch till the end
+stay tuned
+thanks for watching
+see you in the next one
+see you in the next video

@@ -69,12 +69,40 @@ allowed_numbers = [
 # Numbers that appear in the persona's files but are NOT substantiated. Any of these in machine output is a fabrication or an echoed trap.
 trap_numbers = ["22", "22 pounds", "4 months", "200", "200+", "30 pounds", "30 days", "10K", "10,000+", "50%", "50+", "60%", "20%", "$99", "$499"]
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in output (I10).
+# wf13 (liked-paste.md / follow-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+# the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+# number (as written and digits-only). Never presented as the coach's (I8).
+# Counts are matched by value: "18.4K" = 18,400, "2.1M" = 2,100,000 (tools/cmcore/checks.py reads K and M forms).
+# trap_numbers above is unchanged; graders.py reads both lists.
+excluded_numbers = [
+  "41", "41 lbs", "23", "1,700", "1,700+", "$47K", "412.6K", "38.1K", "6,203", "27 pounds", "380-555-0127",
+  "3805550127", "381K", "58.3K", "66.1K", "49.7K", "72.9K", "63.5K", "54.8K", "77.2K", "61.0K", "$297", "233K",
+  "8,914",
+]
+
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md / follow-paste.md.
+# None may appear in output (I10).
 seeded_names = [
   "Brandon Kowalczyk", "Terrence Liddell", "Mateo Arriaga", "Jordan Pruitt", "Chris Vandermolen",
   "Sam Okafor", "Kyle Brenneman", "Andre Pettaway", "Nate Osterhaus", "Derek Lindqvist",
   "Luis Carranza", "Rachel Dunmore", "Greg Tennant", "Wes Fairbanks", "Darnell Ashby",
   "Peakline Growth Studio",
+  # wf13: commenters in liked-paste.md / follow-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Cody Pettengill", "Garrison Volk", "Shane Hollister", "Trevin Ashcroft", "Lyle Bertrand", "Quentin Marsh",
+  "Kellan Mayfield", "Colby Ferrante", "Bryce Lindahl", "Royce Danforth", "Damon Rasku",
+  "Dominic Ferreira-Holt", "Brennan Oyelowo", "Ellison Brookfield", "Fitzgerald Ames", "Ezra Quintanilla",
+  "Thaddeus Okoro", "Porter Vance", "Wyatt Sorensen",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md / follow-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Rhett Calloway", "@irondad.rhett", "Iron Dad Protocol", "@macro.mike.meals", "Ty Brannock",
+  "@fourthquarter.ty", "Nolan Petrakis", "@backyard.barbell.dad", "Rafael Teixeira", "@pai.em.forma",
+  "Iron Dad Collective", "@irondadcollective", "The Dadbod Rebuild Podcast", "Dadbod Rebuild",
+  "Lean Dad Kitchen", "@leandadkitchen",
 ]
 
 # Extras used by graders and the simulator

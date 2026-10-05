@@ -209,7 +209,7 @@ class SchemaFilesTest(TempRepo):
         for ed in cmlib.EDITIONS:
             with self.subTest(edition=ed):
                 self.assertLessEqual(cmschema.visible_max(self.card, ed), self.card["budgets"]["visible_chars"][ed])
-        self.assertEqual(self.card["budgets"]["whole_chars"], {"en": 5000, "vn": 5800})
+        self.assertEqual(self.card["budgets"]["whole_chars"], {"en": 5700, "vn": 6600})   # wf13 §4
         self.assertEqual(self.card["budgets"]["visible_chars"], {"en": 900, "vn": 900})
 
     def test_brand_card_machine_block_holds_the_ux_fields(self):
@@ -232,6 +232,53 @@ class SchemaFilesTest(TempRepo):
                 with self.subTest(field=f["name"]):
                     self.assertTrue(cmlib.KEY_RE.match(f["label_key"]))
                     self.assertTrue(f["label_key"].startswith("card."))
+
+    def test_liked_post_bank_type(self):
+        """wf13-inspiration-spec §4: the W row is a post or channel the coach likes or follows."""
+        w = self.banks["types"]["W"]
+        self.assertEqual(w["hub_option"], "Liked post")
+        self.assertEqual(w["states"], ["Active", "Retired"])
+        self.assertEqual(w["kinds"], ["Post", "Channel"])
+        fields = {f["name"]: f for f in w["fields"]}
+        self.assertEqual({n for n, f in fields.items() if f["required"]}, {"shape", "kind", "seen", "source"})
+        self.assertEqual({n for n, f in fields.items() if not f["required"]},
+                         {"about", "why", "hook_type", "relation", "fits", "ratio", "link", "used_in"})
+        self.assertEqual((fields["shape"]["hub"], fields["shape"]["max_chars"]), ("Text", 140))
+        self.assertEqual(fields["kind"]["hub"], "Kind")
+        self.assertEqual(fields["seen"]["options"], ["screenshot", "caption", "transcript", "told", "grid", "page"])
+        self.assertEqual(fields["about"]["max_words"], {"en": 12, "vn": 18})
+        self.assertNotIn("L1", fields["link"]["levels"])
+        never = " ".join(w["rules"]["never_store"])
+        for word in ("commenter", "phone", "results"):
+            self.assertIn(word, never)
+        self.assertIn("W rows only", self.banks["privacy"]["public_source_names"])
+        hub_types = cmschema.prop(self.hub, "bank", "Type")["options"]
+        self.assertIn("Liked post", hub_types)
+        self.assertNotIn("Swipe", hub_types)
+        self.assertLessEqual({"Post", "Channel"}, set(cmschema.prop(self.hub, "bank", "Kind")["options"]))
+
+    def test_posts_i_like_view(self):
+        view = next(v for v in self.hub["views"] if v["name"] == "Posts I like")
+        self.assertEqual((view["database"], view["label_key"]), ("bank", "hub.view.liked"))
+        self.assertIn({"property": "Type", "op": "is", "value": "Liked post"}, view["filter"])
+        self.assertIn({"property": "State", "op": "is", "value": "Active"}, view["filter"])
+        self.assertEqual(view["sort"][0]["property"], "Added")
+        for name in view["properties"]:
+            self.assertFalse(cmschema.prop(self.hub, "bank", name).get("internal"), name)
+        self.assertNotIn("Score", view["properties"])        # no ratio in front of the coach
+
+    def test_brand_card_liked_line(self):
+        """wf13-inspiration-spec §4: ≤8 entries, ≤80 EN / 90 VN chars, first in trim_order, never visible."""
+        machine = {f["name"]: f for f in self.card["machine"]["field"]}
+        liked = machine["liked"]
+        self.assertEqual((liked["type"], liked["max_items"]), ("list", 8))
+        self.assertEqual(liked["max_chars"], {"en": 80, "vn": 90})
+        self.assertFalse(liked["required"])
+        self.assertEqual(self.card["budgets"]["trim_order"][0], "liked")
+        self.assertNotIn("liked", {f["name"] for f in self.card["visible"]["field"]})
+        for ed in cmlib.EDITIONS:
+            added = self.card["budgets"]["whole_chars"][ed] - {"en": 5000, "vn": 5800}[ed]
+            self.assertGreaterEqual(added, liked["max_items"] * liked["max_chars"][ed], ed)
 
     def test_brand_card_budgets_match_targets(self):
         targets_path = REPO / "platform" / "targets.toml"
@@ -377,6 +424,25 @@ class ValidatorFaultsTest(TempRepo):
         def fn(d):
             d["brand-card"]["machine"]["field"][0]["name"] = "pillar_one"
         self.assertFlags(fn, "framework words")
+
+    def test_bank_field_with_bad_options(self):
+        def fn(d):
+            next(f for f in d["banks"]["types"]["W"]["fields"] if f["name"] == "seen")["options"] = []
+        self.assertFlags(fn, "options must be a non-empty list")
+
+    def test_bank_field_with_bad_word_cap(self):
+        def fn(d):
+            next(f for f in d["banks"]["types"]["W"]["fields"] if f["name"] == "about")["max_words"] = {"en": 12}
+        self.assertFlags(fn, "max_words needs positive en and vn")
+
+    def test_liked_post_option_missing_from_hub(self):
+        def fn(d):
+            opts = cmschema.prop(d["hub"], "bank", "Type")["options"]
+            opts[opts.index("Liked post")] = "Swipe"
+        self.assertFlags(fn, "Bank Type options")
+
+    def test_whole_card_smaller_than_visible(self):
+        self.assertFlags(lambda d: d["brand-card"]["budgets"]["whole_chars"].update(vn=800), "smaller than visible")
 
     def test_run_state_drift(self):
         self.assertFlags(lambda d: cmschema.prop(d["hub"], "runs", "Run State")["options"].append("Skipped"),

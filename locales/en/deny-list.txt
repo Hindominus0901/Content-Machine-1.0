@@ -50,8 +50,25 @@ re:(?i)\b(lock(ed)?\s+(the\s+|your\s+)?map|map\s+lock)\b
 Pancake
 ManyChat
 
+# Research and analytics words around posts the coach likes (wf13-inspiration-spec §1, §6).
+# The coach says "Posts you like"; "swipe file" stays a docs-only word, never coach-visible.
+swipe
+swipe file
+outlier
+re:(?i)\b(outlier|views?)\s+ratios?\b
+re:(?i)\bmedian\s+views?\b
+re:(?i)\bproven\s+shapes?\b
+re:(?i)\bsame[\s-]feed\s+test\b
+white space
+social listening
+VoC
+# the machine block's section name, as a printed tag or heading
+re:\bLIKED\b
+
 # Bank IDs, slot and run keys, method anchors, the router
-re:\b[VSPX]-\d+\b
+# Every Bank prefix (banks.toml [ids]). Real-world look-alikes ("W-2 job", "K-12",
+# "I-9") need a lint-ok:E140 waiver or a tools/lint_allow.toml [E140] entry.
+re:\b[VOSBPRKICAWX]-\d+\b
 re:(?i)\bslot\s+keys?\b
 re:(?i)\brun\s+keys?\b
 re:§\s?CM

@@ -77,7 +77,21 @@ allowed_numbers = [
 # "7 ngày" is left out on purpose: the founding launch itself runs 7 days.
 trap_numbers = ["3 tuần", "4 viên", "2 giờ sáng", "1.990.000đ", "100%", "100 comment", "24 giờ"]
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# wf13 (liked-paste.md / follow-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+# the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+# number (as written and digits-only). Never presented as the coach's (I8).
+# Grid counts are listed by value ("14.600" = 14,6 N) because graders match by value;
+# app-style counts ("52,7 N", "2,1 Tr") are read by value too (tools/cmcore/checks.py), so either form is caught.
+# trap_numbers above is unchanged; graders.py reads both lists.
+excluded_numbers = [
+  "12.000", "97%", "0987 654 321", "0987654321", "86.400", "14.200", "12.800", "15.900", "13.500", "16.700",
+  "11.900", "14.600", "18.300", "1.290.000đ", "4.990.000đ", "212.600", "98.100",
+  # the L1 post's own like / comment / share / view counts (EN lists them the same way)
+  "143,2 N", "3.906", "17,4 N", "1,8 Tr",
+]
+
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md / follow-paste.md.
+# None may appear in any output (I10).
 seeded_names = [
   "Nguyễn Thị Thu Hà",
   "Trần Quốc Bảo",
@@ -97,6 +111,22 @@ seeded_names = [
   "Hồ Thị Thanh Tâm",
   "Tô Văn Hậu",
   "Lâm Ngọc Quỳnh",
+  # wf13: commenters in liked-paste.md / follow-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Huỳnh Thị Mộng Tuyền", "Lục Văn Tài", "Thái Thị Mỹ Linh", "Diệp Quốc Toàn", "Kha Thị Bảo Ngọc",
+  "Lâm Thị Ngọc Trinh", "Nguyễn Ngọc Hà Vy", "Trương Thúy Kiều", "Lê Mạnh Cường", "Võ Thị Thanh Trúc",
+  "Phan Bích Thủy", "Đỗ Diễm Châu", "Mai Hữu Phước", "Châu Hồng Đào", "Hứa Thị Ngọc Hoa", "Tạ Thị Kim Xuyến",
+  "Ngô Văn Lộc", "Dương Thị Bảo Khuyên", "Lý Như Ý",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md / follow-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Diệu Linh Yoga Trị Liệu", "@dieulinh.cotsong", "Phương Pháp Cột Sống Vàng", "Cột Sống Vàng",
+  "@anlanhvanphong", "Bốn Phút Giữa Giờ", "@bonphut.giuagio", "Lưng Khỏe Cùng Ân", "@lungkhoe.cungan",
+  "Jordan Ellery", "@deskmotion.pt", "Yoga Tĩnh Tâm Cô Uyển", "@yogatinhtam.uyen", "Ghế Thẳng Lưng Store",
+  "@ghethanglung.store", "Cao Dán Thảo Mộc Mộc An",
 ]
 
 [[proof_items]]

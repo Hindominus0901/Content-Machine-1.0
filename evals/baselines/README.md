@@ -33,12 +33,12 @@ Each folder holds one Day-0 session between an eval persona and a **plain genera
 
 | Persona | Coach turns | Minutes | Outcome | One message? | Templates asked | Max questions / reply | Invariants failed | Other checks failed |
 |---|---|---|---|---|---|---|---|---|
-| en/proof-coach | 7 | 32.4 | film-ready | no | 1 (an "I help [who]…" fill-in) | 3 | I1, I5, I8, I17 | deny_list, quit_triggers, day0_timing |
+| en/proof-coach | 7 | 32.4 | film-ready | no | 1 (an "I help [who]…" fill-in) | 3 | I1, I2, I5, I8, I17 | deny_list, quit_triggers, day0_timing |
 | en/coldstart-coach | 10 | 35.3 | film-ready | no | 1 (a 4-question intake form) | 4 | I1, I5, I8, I11, I17 | deny_list, quit_triggers, day0_timing |
-| vn/proof-coach | 5 | 28.7 | quit | no | 1 (a 5-question intake form) | 5 | I1, I5, I8, I11, I14, I15, I17 | deny_list, quit_triggers, day0_timing |
-| vn/hanh-android-free-nocomputer | 8 | 62.8 (about 38 active) | film-ready | no | 1 (a 5-question intake form) | 5 | I1, I5, I6, I8, I9, I11, I15 | deny_list, quit_triggers, day0_timing |
+| vn/proof-coach | 5 | 28.7 | quit | no | 1 (a 5-question intake form) | 5 | I1, I5, I8, I14, I15, I17 | deny_list, quit_triggers, day0_timing |
+| vn/hanh-android-free-nocomputer | 8 | 62.8 (about 38 active) | film-ready | no | 1 (a 5-question intake form) | 5 | I1, I5, I6, I8, I11 | deny_list, quit_triggers, day0_timing |
 
-I16 is `not_run` everywhere because `locales/<lang>/examples.md` does not exist yet. The Day-0 target is 24 min. No run reached film-ready inside it, and no run produced one clear message.
+I16 is `not_run` everywhere because `locales/<lang>/examples.md` does not exist yet. I19–I21 (someone else's posts, wf13) are `n/a` on these Day-0 runs, which paste no one else's post, and I22 passes everywhere. The Day-0 target is 24 min. No run reached film-ready inside it, and no run produced one clear message.
 
 ### Invented or unsupported claims (all runs)
 
@@ -63,16 +63,17 @@ I16 is `not_run` everywhere because `locales/<lang>/examples.md` does not exist 
 ### Reading the grades
 
 - **Failures that just mean "not the kit's format".** I1 (no NEXT line) and day0_timing (no step tags, so no Map or film-ready step is detected) fail for any plain assistant. They show that the kit's format is missing. They do not measure quality.
-- **False positives found in this pass.**
-  - en/coldstart-coach I17 "killer" is the coach's own "Zero is the killer". "gold", "perfect" and "love it" are real praise.
-  - vn/proof-coach I11 "số 1" is "bài số 1" (post #1).
-  - vn/proof-coach I14 cites reply 3, where "chấm" means grading. The real issue is in reply 4: it warns that "chấm" posts get less reach and swaps the CTA to comment "SỔ".
-  - vn/proof-coach I15: some of the "mình" hits are public-post hooks, where "mình – các chị em" is correct. The reply-3 inclusive "mình" is a real slip.
-  - vn/hanh I9 "insight" is the assistant explaining an English word.
-  - vn/hanh I15 hits are "cô" Hoa, "cô" giáo and "tiếng Anh".
-  - vn/hanh I8 "15" and "35" are video timestamps.
+- **False positives found in the first pass, now fixed in `graders.py`.** Each has a regression test in `tools/tests/test_graders.py` (`BaselineFixTests`), and the grades above are the re-run. Only these hits went away; every other verdict and hit stayed.
+  - en/coldstart-coach I17 "killer" is the coach's own "Zero is the killer". A praise word inside words the coach said first no longer counts. "gold", "perfect" and "love it" are real praise and still fail I17.
+  - vn/proof-coach I11 "số 1" is "bài số 1" (post #1). A banned phrase right after a label word (bài, tuần, khóa, option…) is a numbered label. I11 now passes.
+  - vn/proof-coach I14 cited reply 3, where "chấm" means grading ("chấm chung", "chấm chéo", "chấm 1-1"). Only "chấm" used as a comment CTA counts now. I14 still fails, now for the real issue in reply 4: "chấm" appears only in a reach warning and the CTA is swapped to comment "SỔ".
+  - vn/hanh I9 "insight" is the assistant explaining an English word. A quoted term of up to 3 words followed by its meaning ("là", "means") is a gloss, not a quotation. I9 now passes.
+  - vn/hanh I15 hits were "cô" Hoa, "cô" giáo and "tiếng Anh". A kin word in a compound noun (cô giáo, chú ý, bạn bè), "tiếng Anh", and a bare "cô" in a reply that names "cô Hoa" are no longer read as the coach's pronoun. I15 now passes.
+  - vn/hanh I8 "15" and "35" are video timestamps ("3–15 giây", "15–35 giây"). Seconds marks and "0:15"-style timestamps are labels now. I8 still fails on the real numbers. Its "10%" hit now reads as a trap number, because the persona's `excluded_numbers` gained the liked-post numbers (wf13 P0).
+- **Known miss, now fixed.** I2 passed on en/proof-coach although reply 1 asks for an "I help [who] go from [...] to [...]" fill-in. Bracketed blanks ("[who]", "[...]", two lowercase blanks on one line) and "fill in the blank" / "điền vào" asks now fail I2, so en/proof-coach fails I2, and its quit trigger "asked to fill a template" is now counted too.
+- **Still open (no grader change yet).**
+  - vn/proof-coach I15: the reply-4 "mình" is inside a list of public-post hooks, where "mình – các chị em" is correct. The reply-3 inclusive "mình" is a real slip, so I15 fails either way.
   - vn/hanh I6 counts three uses of "chọn". Only reply 4's "câu khác chị có thể chọn" is a real extra decision.
-- **Known miss.** I2 passes on en/proof-coach, but reply 1 asks for an "I help [who] go from [...] to [...]" fill-in, because the template regex does not match `[who]`.
 
 ## Honest limits
 

@@ -72,6 +72,22 @@ class NumberTests(unittest.TestCase):
         self.assertEqual(ck.unsupported_numbers("Lãi 40tr sau 6 năm, đơn giảm 8%", allowed), [])
         self.assertEqual(ck.unsupported_numbers("đơn giảm 8 khách", ["8%"]), ["8"])     # a percent is not a count
 
+    def test_app_counts_from_someone_elses_post(self):
+        """wf13 I8: a liked post's counts as apps print them are read by value (2.1M, 52,7 N, 1,2 Tr)."""
+        nums = {n.raw: n.value for n in ck.numbers_in("▶ 2.1M · ♥ 88.4K · 52,7 N lượt xem · 1,2 Tr · 5Tr")}
+        self.assertEqual(nums, {"2.1M": 2_100_000, "88.4K": 88_400, "52,7 N": 52_700, "1,2 Tr": 1_200_000,
+                                "5Tr": 5_000_000})
+        self.assertEqual(ck.unsupported_numbers("Cô ấy có 52.700 lượt xem", ["52,7 N"]), [])
+        self.assertEqual([n.raw for n in ck.numbers_in("3 Nhóm, 2 Mbps, 3 Trang")], ["3", "2", "3"])
+
+    def test_video_timestamps_are_labels(self):
+        """Baseline vn/hanh I8 false positive: "15" and "35" were the beat marks of a TikTok script."""
+        text = ("🎬 **0–3 giây (Hook):** nhìn thẳng camera\n🎬 **3–15 giây:** câu đầu\n🎬 **15–35 giây:** tối mưa\n"
+                "Ở giây 35 thì cắt cảnh. 0:15 cut to the car. 0:45–1:10 the steps. Beat at 0–3s, then 20 s of b-roll.")
+        self.assertEqual(ck.unsupported_numbers(text, []), [])
+        self.assertEqual(ck.unsupported_numbers("Closes 11:59. Women in their 40s. 41 thẻ trong 3 tháng.", ["3"]),
+                         ["11:59", "40s", "41"])                       # deadlines, decades and counts stay claims
+
 
 class QuoteTests(unittest.TestCase):
     def test_quotes_and_attribution(self):
@@ -90,6 +106,13 @@ class QuoteTests(unittest.TestCase):
                              text)
         self.assertTrue(ck.quotes_in('Chị Lan nói "mệt quá"', "vn")[0].attributed)
         self.assertTrue(ck.quotes_in('Một chị học viên kể "em toàn lãi ảo"', "vn")[0].attributed)
+
+    def test_glossed_terms_are_not_attributed_quotes(self):
+        """Baseline vn/hanh I9 false positive: the assistant explaining an English word."""
+        text = '(Mấy chữ tiếng Anh: "pillar" là nhóm chủ đề, "CTA" là câu mời khách nhắn tin, "insight" là điều khách nghĩ.)'
+        self.assertEqual([q.attributed for q in ck.quotes_in(text, "vn")], [False, False, False])
+        self.assertFalse(ck.quotes_in('She said "ROI" means the money back.', "en")[0].attributed)
+        self.assertTrue(ck.quotes_in('She said "I finally feel like me again" and cried.', "en")[0].attributed)
 
     def test_quote_ok(self):
         sources = ["Calls it 'the best trade I ever made'.", "Chị ơi hóa ra em toàn lãi ảo"]
@@ -192,6 +215,90 @@ class ClassTests(unittest.TestCase):
         self.assertEqual(ck.budget_problems("short", "", "w " * 100, "en", seconds=30), ["100 words (max 86)"])
 
 
+class CopyRunTests(unittest.TestCase):
+    """wf13 DISTANCE: shared runs of 6 EN words / 8 VN tiếng with someone else's post."""
+
+    EN_SOURCE = ("You don't need a better résumé. You need five conversations. Ask for 20 minutes, not a job. "
+                 "Comment GUIDE and I'll DM you my conversation guide. Link in bio for the full guide to pricing "
+                 "your offer.")
+    VN_SOURCE = ("Shop mới mở hay tính giá bán bằng cách lấy giá nhập nhân đôi. Sai rồi nhé. Mình làm sẵn một file "
+                 "tính giá vốn từng đơn: phí sàn, ship, bao bì, quảng cáo chia theo đơn. Comment bên dưới mình gửi "
+                 "file nhé.")
+    EN_STOCK = ["link in bio", "comment below", "let me know in the comments"]
+    VN_STOCK = ["comment bên dưới", "link ở bio"]
+
+    def test_tokens_are_nfc_casefolded_and_punctuation_free(self):
+        self.assertEqual(ck.copy_tokens("“Don’t” SEND—résumés; $2,400!"), ["dont", "send", "résumés", "2400"])
+        self.assertEqual(ck.copy_tokens("lãi ảo"), ["lãi", "ảo"])                 # NFD in, NFC out
+
+    def test_en_runs(self):
+        self.assertEqual(ck.copy_runs("Here's the truth: you need five conversations. Ask for 20 minutes, not a job.",
+                                      self.EN_SOURCE, "en"),
+                         ["you need five conversations ask for 20 minutes not a job"])
+        self.assertEqual(ck.copy_runs("YOU DON'T NEED A BETTER RÉSUMÉ!", self.EN_SOURCE, "en"),
+                         ["you dont need a better résumé"])
+        self.assertEqual(ck.copy_runs("You don't need a better job.", self.EN_SOURCE, "en"), [])     # 5 words
+        self.assertEqual(ck.copy_runs("Coffee before resume: one stranger a week.", self.EN_SOURCE, "en"), [])
+        self.assertEqual(ck.copy_runs("need a better résumé", self.EN_SOURCE, "en", n=4), ["need a better résumé"])
+
+    def test_en_stock_phrases_are_left_out_first(self):
+        text = "Link in bio for the full guide."
+        self.assertEqual(ck.copy_runs(text, self.EN_SOURCE, "en"), ["link in bio for the full guide"])
+        self.assertEqual(ck.copy_runs(text, self.EN_SOURCE, "en", stock=self.EN_STOCK), [])   # 4 words left
+        self.assertEqual(ck.copy_runs("Link in bio for the full guide to pricing your offer.", self.EN_SOURCE, "en",
+                                      stock=self.EN_STOCK), ["for the full guide to pricing your offer"])
+
+    def test_vn_runs_count_tieng(self):
+        eight = "Chị em ơi, mình làm sẵn một file tính giá vốn từng đơn cho chị em."
+        self.assertEqual(ck.copy_runs(eight, self.VN_SOURCE, "vn"), ["mình làm sẵn một file tính giá vốn từng đơn"])
+        seven = "Có một file tính giá vốn từng đơn."                               # 7 tiếng shared
+        self.assertEqual(ck.copy_runs(seven, self.VN_SOURCE, "vn"), [])
+        self.assertEqual(ck.copy_runs("Đã làm sẵn một file tính giá vốn từng đơn.", self.VN_SOURCE, "vn"),
+                         ["làm sẵn một file tính giá vốn từng đơn"])               # 9 tiếng
+        self.assertEqual(ck.copy_runs("Em có file tính giá vốn từng đơn.", self.VN_SOURCE, "vn"), [])   # 6 tiếng
+        self.assertEqual(ck.copy_runs("tính giá vốn từng đơn", self.VN_SOURCE, "en"), [])    # EN n = 6, 5 tokens
+
+    def test_vn_stock_phrases_are_left_out_first(self):
+        text = "Quảng cáo chia theo đơn. Comment bên dưới mình gửi file nhé."
+        self.assertEqual(ck.copy_runs(text, self.VN_SOURCE, "vn"),
+                         ["quảng cáo chia theo đơn comment bên dưới mình gửi file nhé"])
+        self.assertEqual(ck.copy_runs(text, self.VN_SOURCE, "vn", stock=self.VN_STOCK),
+                         ["quảng cáo chia theo đơn mình gửi file nhé"])            # 9 tiếng still shared
+        self.assertEqual(ck.copy_runs("Comment bên dưới mình gửi file nhé.", self.VN_SOURCE, "vn",
+                                      stock=self.VN_STOCK), [])
+
+    def test_stock_phrase_list(self):
+        body = "# comment\n\nlink in bio\n  comment below  \nlink in bio\n"
+        self.assertEqual(ck.stock_phrase_list(body), ["link in bio", "comment below"])
+
+    def test_point_order_mirror(self):
+        source = ("Who calls you when something breaks? What do you fix that isn't in your job description? "
+                  "What would stop working the week you left? You have skills nobody ever gave a title to.")
+        mirrored = ("Ask who calls you when something breaks at work. Write what you fix that is not in your job "
+                    "description. Picture what would stop working the week you left.")
+        own = ("I sat at the kitchen table at 48 with 63 applications. Then I stopped applying. "
+               "I bought one coffee a week for a stranger. Coffee before resume.")
+        self.assertTrue(ck.point_order_mirror(mirrored, source))
+        self.assertFalse(ck.point_order_mirror(own, source))
+        reordered = ". ".join(reversed(mirrored.split(". ")))
+        self.assertFalse(ck.point_order_mirror(reordered, source))
+
+    def test_copy_note(self):
+        en = ("Note: this follows their post closely. Platforms may show copies less, and the words belong to them. "
+              "Posting is your call.")
+        vn = ("Lưu ý: bài này bám sát bài của họ. Nền tảng có thể giảm hiển thị bài giống bài khác, và chữ là của "
+              "họ. Đăng hay không là quyền của bạn.")
+        self.assertEqual(ck.copy_note_marker(en), "this follows their post closely")
+        self.assertEqual(ck.copy_note_marker(vn), "bài này bám sát bài của họ")
+        self.assertEqual(ck.copy_note_marker("Note (5 Oct 2026): {name} follows their post closely."),
+                         "follows their post closely")
+        self.assertTrue(ck.has_copy_note("NOTE (5 Oct 2026) — This follows their post closely! Your call.", en))
+        self.assertTrue(ck.has_copy_note("Lưu ý: bài này bám sát bài của họ. Đăng hay không là quyền của chị.", vn))
+        self.assertTrue(ck.has_copy_note("…it follows their post closely…"))         # fallback markers
+        self.assertFalse(ck.has_copy_note("Here is your translation.", en))
+        self.assertFalse(ck.has_copy_note("Đây là bản dịch của chị."))
+
+
 # ---------------------------------------------------------------- shiplint
 
 BATCH = {
@@ -223,6 +330,30 @@ BATCH = {
         {"id": "N4", "format": "ad", "hook": "Eleven weeks to an offer.",
          "body": "Lorraine got the offer in 11 weeks. Comment CHAPTER.",
          "cites": ["P-1"], "verdict_line": "Ready to post · written as a case story."},
+    ],
+}
+
+
+EN_COPY_NOTE = ("Note: this follows their post closely. Platforms may show copies less, and the words belong to them. "
+                "Posting is your call.")
+COPY_BATCH = {
+    "lang": "en",
+    "sources": [
+        {"id": "W-1", "text": "You don't need a better résumé. You need five conversations. "
+                              "Ask for twenty minutes, not a job. Comment GUIDE and I'll DM you my guide."},
+        {"id": "W-2", "text": "Who calls you when something breaks? What do you fix that isn't in your job "
+                              "description? What would stop working the week you left?"},
+    ],
+    "pieces": [
+        {"id": "N1", "format": "native-short", "hook": "Five conversations beat fifty applications.",
+         "body": "Ask for twenty minutes, not a job. That is how I got hired.", "cites": ["W-1"]},
+        {"id": "N2", "format": "native-short", "hook": "Ask for twenty minutes, not a job.", "body": "Then listen."},
+        {"id": "N3", "format": "native-short", "hook": "Coffee before résumé.",
+         "body": "One stranger a week. Twenty minutes. That is the whole plan.", "cites": ["W-1"]},
+        {"id": "N4", "format": "text-post", "hook": "Three questions.",
+         "body": "Ask yourself: who calls you when something at work breaks? Then list what you fix that is "
+                 "outside your job description. Last, picture what would stop working if you left that week.",
+         "cites": ["W-2"]},
     ],
 }
 
@@ -293,6 +424,92 @@ class ShiplintTests(unittest.TestCase):
             self.assertIn(defect, n2)
         self.assertNotIn("keyword", n2)
 
+    def lint(self, batch: dict, *args: str) -> dict[str, str]:
+        code, out, err = self.run_main("-", *args, stdin=json.dumps(batch, ensure_ascii=False))
+        self.assertEqual(code, 0, err)
+        return {line.split(" ", 1)[0]: line for line in out.strip().splitlines()}
+
+    def test_cited_source_copy_runs(self):
+        lines = self.lint(COPY_BATCH)
+        self.assertEqual(lines["N1"], "N1 FAIL: copy run: 'ask for twenty minutes not a job'")
+        self.assertEqual(lines["N2"], "N2 PASS")                      # does not cite W-1
+        self.assertEqual(lines["N3"], "N3 PASS")                      # the shape, not the words
+        self.assertEqual(lines["N4"], "N4 FAIL: point order mirrors W-2")
+
+    def test_stock_phrases_never_make_a_copy_run(self):
+        batch = {"lang": "en",
+                 "sources": [{"id": "W-1", "text": "Big news. Let me know in the comments what you think, friends."},
+                             {"id": "W-2", "text": "Big news. Tell me in the DMs what you think, friends."}],
+                 "pieces": [{"id": "N1", "format": "text-post", "body": "Let me know in the comments what you "
+                                                                       "think, friends.", "cites": ["W-1"]},
+                            {"id": "N2", "format": "text-post", "body": "Tell me in the DMs what you think, friends.",
+                             "cites": ["W-2"]}]}
+        lines = self.lint(batch)
+        self.assertEqual(lines["N1"], "N1 PASS")                      # locales/en/stock-phrases.txt
+        self.assertEqual(lines["N2"], "N2 FAIL: copy run: 'tell me in the dms what you think friends'")
+        lines = self.lint(dict(batch, stock_phrases=["tell me in the DMs"]))
+        self.assertEqual(lines["N2"], "N2 PASS")                      # payload stock_phrases
+
+    def test_explicit_copy_needs_the_copy_note(self):
+        source = COPY_BATCH["sources"][0]["text"]
+        batch = {"lang": "en", "copy_note": EN_COPY_NOTE,
+                 "sources": [{"id": "W-1", "text": source, "explicit_copy": True}],
+                 "pieces": [{"id": "N1", "format": "text-post", "body": source, "cites": ["W-1"]},
+                            {"id": "N2", "format": "text-post", "body": "As you asked:\n" + source, "cites": ["W-1"],
+                             "note": EN_COPY_NOTE},
+                            {"id": "N3", "format": "text-post", "body": "Word for word:\n" + source, "cites": ["W-1"],
+                             "verdict_line": "Ready to post · this follows their post closely."}]}
+        lines = self.lint(batch)
+        self.assertEqual(lines["N1"], "N1 FAIL: explicit copy without the copy note")
+        self.assertEqual(lines["N2"], "N2 PASS")
+        self.assertEqual(lines["N3"], "N3 PASS")
+        del batch["copy_note"]                                          # fallback marker
+        lines = self.lint(batch)
+        self.assertEqual(lines["N1"], "N1 FAIL: explicit copy without the copy note")
+        self.assertEqual(lines["N2"], "N2 PASS")
+
+    def test_vn_explicit_copy_and_copy_runs(self):
+        source = ("Shop mới mở hay tính giá bán bằng cách lấy giá nhập nhân đôi. Sai rồi nhé. Mình làm sẵn một "
+                  "file tính giá vốn từng đơn.")
+        batch = {"lang": "vn",
+                 "sources": [{"id": "W-1", "text": source}, {"id": "W-2", "text": source, "explicit_copy": True}],
+                 "pieces": [{"id": "N1", "format": "text-post", "body": "Chị làm sẵn một file tính giá vốn từng đơn "
+                                                                       "cho các em.", "cites": ["W-1"]},
+                            {"id": "N2", "format": "text-post", "body": "Chị có file tính giá vốn từng đơn.",
+                             "cites": ["W-1"]},
+                            {"id": "N3", "format": "text-post", "body": source, "cites": ["W-2"],
+                             "note": "Lưu ý: bài này bám sát bài của họ. Đăng hay không là quyền của chị."}]}
+        lines = self.lint(batch)
+        self.assertEqual(lines["N1"], "N1 FAIL: copy run: 'làm sẵn một file tính giá vốn từng đơn'")
+        self.assertEqual(lines["N2"], "N2 PASS")                      # 6 tiếng
+        self.assertEqual(lines["N3"], "N3 PASS")
+
+    def test_source_file_applies_to_every_piece(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "their-post.txt"
+            path.write_text(COPY_BATCH["sources"][0]["text"], encoding="utf-8")
+            batch = {"lang": "en", "pieces": [
+                {"id": "N1", "format": "text-post", "body": "You need five conversations. Ask for twenty minutes."},
+                {"id": "N2", "format": "text-post", "body": "Coffee before résumé. One stranger a week."}]}
+            lines = self.lint(batch, "--source", str(path))
+            self.assertEqual(lines["N1"], "N1 FAIL: copy run: 'you need five conversations ask for twenty minutes'")
+            self.assertEqual(lines["N2"], "N2 PASS")
+            self.assertEqual(self.lint(batch)["N1"], "N1 PASS")         # no source, no check
+            code, _, err = self.run_main("-", "--source", str(Path(tmp) / "missing.txt"), stdin=json.dumps(batch))
+            self.assertEqual(code, 2)
+            self.assertIn("invalid input", err)
+
+    def test_invalid_sources_exit_2(self):
+        piece = '"pieces": [{"id": "N1", "body": "x"}]'
+        for bad in ('{"sources": {}, ' + piece + "}", '{"sources": [{"text": "x"}], ' + piece + "}",
+                    '{"sources": [{"id": "W-1", "text": 3}], ' + piece + "}",
+                    '{"sources": [{"id": "W-1", "explicit_copy": "yes"}], ' + piece + "}",
+                    '{"copy_note": 1, ' + piece + "}", '{"stock_phrases": [1], ' + piece + "}",
+                    '{"pieces": [{"id": "N1", "note": 3}]}'):
+            code, _, err = self.run_main("-", stdin=bad)
+            self.assertEqual(code, 2, bad)
+            self.assertIn("invalid input", err)
+
     def test_invalid_input_exits_2(self):
         for bad in ("not json", "[]", '{"pieces": []}', '{"pieces": [{"body": "x"}]}', '{"lang": "fr", "pieces": [{"id": "a"}]}'):
             code, out, err = self.run_main("-", stdin=bad)
@@ -313,12 +530,17 @@ class ShiplintTests(unittest.TestCase):
             alone.mkdir()
             (alone / "ship_lint.py").write_text(script, encoding="utf-8")
             (alone / "batch.json").write_text(json.dumps(BATCH), encoding="utf-8")
+            (alone / "copy.json").write_text(json.dumps(COPY_BATCH), encoding="utf-8")
             run = subprocess.run([sys.executable, "ship_lint.py", "batch.json"], cwd=alone,
                                  capture_output=True, text=True)
+            copy_run = subprocess.run([sys.executable, "ship_lint.py", "copy.json"], cwd=alone,
+                                      capture_output=True, text=True)
         self.assertEqual(run.returncode, 0, run.stderr)
         self.assertNotIn("from cmcore", script)
         _, direct, _ = self.run_main("-", stdin=json.dumps(BATCH))
         self.assertEqual(run.stdout, direct)
+        _, direct_copy, _ = self.run_main("-", stdin=json.dumps(COPY_BATCH))
+        self.assertEqual(copy_run.stdout, direct_copy, copy_run.stderr)
 
 
 if __name__ == "__main__":

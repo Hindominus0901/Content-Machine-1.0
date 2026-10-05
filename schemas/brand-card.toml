@@ -2,8 +2,9 @@
 # MY-BRAND-BRAIN.md and the Brand Brain field list of arch-final-spec §5.1 everywhere).
 #
 # Generated in session, never pre-built: printed at the Day-0 stop point, then again
-# after each monthly re-plan. The coach saves it as a project source; the highest
-# version wins. At L2/L3 the Notion "Brand Brain" page holds the same card.
+# after each monthly re-plan and at the Friday review of a week that added posts the
+# coach likes (wf13-inspiration-spec §4). The coach saves it as a project source; the
+# highest version wins. At L2/L3 the Notion "Brand Brain" page holds the same card.
 #
 # Two parts, in this order:
 #   [visible]  one phone screen for the coach, plain words, ≤900 characters.
@@ -30,17 +31,23 @@ title_key = "card.title"
 saved_as = "a project source (Save to project); the highest version wins"
 notion_page = "Brand Brain"              # hub.toml [pages.brand_brain] holds the same card at L2/L3
 replaces = ["MY-BRAND-BRAIN.md", "the bank file"]
+printed_at = ["the Day-0 stop point", "each monthly re-plan",
+              "the Friday review of a week that added posts the coach likes"]
 
 [budgets]
 unit = "chars_nfc"
 whole = "brand_card"                     # platform/targets.toml [budgets.brand_card]
 visible = "brand_card_visible"           # platform/targets.toml [budgets.brand_card_visible]
-whole_chars = { en = 5000, vn = 5800 }
+# wf13-inspiration-spec §4: +700 EN / +800 VN for the machine block's `liked` line
+# (8 × 80/90 characters plus separators); the visible part gains 0.
+whole_chars = { en = 5700, vn = 6600 }
 visible_chars = { en = 900, vn = 900 }
 label_allowance = 14                     # characters per visible line for its label and separators
 # Over budget: drop the lowest-ranked items of these fields, in this order, until
 # the card fits. Never below a field's min_items; required single values never go.
-trim_order = ["recent_hooks", "passages", "client_words", "stories", "do_say", "never_say", "proof", "side_door"]
+# `liked` goes first, oldest entry first (wf13-inspiration-spec §4).
+trim_order = ["liked", "recent_hooks", "passages", "client_words", "stories", "do_say", "never_say", "proof",
+              "side_door"]
 
 [sources]
 dump = "the Day-0 brain-dump, verbatim"
@@ -50,6 +57,7 @@ coach = "asked or confirmed in chat"
 bank = "top rows of the Bank (banks.toml [card_caps])"
 plan = "the weekly plan"
 machine = "written by the machine"
+sent = "posts or channels the coach sent (screenshot, caption, transcript, told), distilled to their shape"
 
 # ================================================================ visible part
 [visible]
@@ -613,3 +621,20 @@ source = "machine"
 required = false
 label_key = "card.label.recent_hooks"
 note = "opening words of the latest hooks, so new ones don't repeat (no board on ChatGPT)"
+
+# ---------------------------------------------------------------- posts the coach likes
+# The coach's "Posts you like" / "Bài bạn thích" at L0-L1 (wf13-inspiration-spec §4); from L2
+# the Bank's W rows (banks.toml [types.W]) hold the full set. Machine block only, never visible.
+[[machine.field]]
+name = "liked"
+group = "liked"
+type = "list"
+max_items = 8
+min_items = 0
+max_chars = { en = 80, vn = 90 }
+source = "sent"
+required = false
+label_key = "card.label.liked"
+order = "newest first; a 9th entry drops the oldest"
+item = "shape · about · source"
+note = "the shape only, never their words or numbers; source may be a public channel or brand name, never a commenter or private person"

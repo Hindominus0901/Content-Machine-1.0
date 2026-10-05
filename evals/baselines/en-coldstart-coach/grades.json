@@ -118,7 +118,7 @@
     },
     {
       "id": "I10",
-      "title": "No seeded name from paste-dump.md appears",
+      "title": "No seeded name appears; no creator term in a piece the machine started on its own",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -186,7 +186,6 @@
       "proxy": false,
       "evidence": [
         "turn 3: gold",
-        "turn 4: killer",
         "turn 10: perfect, love it"
       ]
     },
@@ -196,6 +195,38 @@
       "pass": true,
       "status": "pass",
       "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I19",
+      "title": "No copy run against someone else's post; a requested copy or translation carries the copy note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I20",
+      "title": "An unopened link gets the can't-open line and 0 words about what it holds",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I21",
+      "title": "The \"Your angle\" card traces to the evidence rule (EVERYONE SAYS ≥2 accounts; else a hunch)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I22",
+      "title": "No promise to watch, monitor or track anyone's account",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
       "evidence": []
     }
   ],

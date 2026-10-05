@@ -6,6 +6,7 @@ tools/cmcore/checks.py so the shipped copy is one self-contained file.
 
     python3 ship_lint.py batch.json          (or "-" to read stdin)
     python3 ship_lint.py batch.json --json   (adds the output class and defects as JSON)
+    python3 ship_lint.py batch.json --source their-post.txt   (repeatable)
 
 Input: one JSON object.
 
@@ -23,8 +24,13 @@ Input: one JSON object.
       "recent_hook_stems": ["not too old"],       the last 10 shipped stems
       "word_rate": 2.5,                           optional; default 2.5 EN / 3.5 VN
       "budgets": {"<format>": {"max_words": 80}}, optional per-format overrides
+      "sources": [{"id": "W-3", "text": "...",    someone else's post (a liked post, a W row):
+                   "explicit_copy": false}],      its words, as sent; optional
+      "copy_note": "Note: this follows …",        the rendered liked.copy_note; optional
+      "stock_phrases": ["link in bio"],           optional extra stock phrases (below)
       "pieces": [{"id": "N2", "format": "native-short", "hook": "...", "body": "...",
                   "caption": "...", "cites": ["P-1"], "verdict_line": "...",
+                  "note": "...",                  optional coach-facing note sent with the piece
                   "seconds": 30}]                 "seconds" optional (shorts: word_rate ±15%)
     }
 
@@ -40,7 +46,27 @@ an enforced Ledger row; keyword exactly once; hook stem new against
 recent_hook_stems and the batch; no hedge in the hook; no open [NEEDS] in a
 Ready piece and no "Ready after"; the word budget for the format; every cited
 ID resolves. Idea and Structured pieces get only the trace checks (numbers,
-names, quotes, IDs, brackets).
+names, quotes, IDs, brackets, copy runs).
+
+Someone else's post (DISTANCE, wf13-inspiration-spec §4, §6). A piece that cites
+a source in "sources", and every piece when --source FILE is given (the file's
+text is the source, id = the file name), is checked against it:
+- default path (explicit_copy false or missing): FAIL with "copy run: '<run>'"
+  for each run of 6 EN words / 8 VN tiếng it shares with the source (tokens
+  casefolded, punctuation stripped; stock phrases left out first), and with
+  "point order mirrors <id>" when 3 or more of the source's points come back in
+  the same order;
+- the coach explicitly asked to copy or translate it (explicit_copy true): no
+  copy-run check, but the piece (hook, body, caption, note or verdict line)
+  must carry the copy note: the first sentence of "copy_note" (without its
+  "Note:" label), or, when "copy_note" is missing, "follows their post
+  closely" / "bám sát bài của họ". Otherwise FAIL with "explicit copy without
+  the copy note".
+A source is never a trace: its numbers, names and quotes are not cited rows
+(spec §4, closing the source), so a piece reusing them fails those checks too.
+Stock phrases are "stock_phrases" plus locales/<lang>/stock-phrases.txt when
+this file runs from the repo (tools/shiplint.py); the shipped copy has no
+locales folder and uses "stock_phrases" only.
 
 The output is final and is never re-argued. Exit 0 always (it informs), or 2
 when the input is not valid.
@@ -74,12 +100,24 @@ def load_payload(raw: str) -> dict:
     pieces = data.get("pieces")
     if not isinstance(pieces, list) or not pieces:
         raise PayloadError("'pieces' must be a non-empty list")
-    for key in ("keyword_variants", "allowed_numbers", "allowed_names", "bank", "ledger", "recent_hook_stems"):
+    for key in ("keyword_variants", "allowed_numbers", "allowed_names", "bank", "ledger", "recent_hook_stems",
+                "sources", "stock_phrases"):
         if not isinstance(data.get(key, []), list):
             raise PayloadError(f"'{key}' must be a list")
     for row in data.get("bank", []) + data.get("ledger", []):
         if not isinstance(row, dict) or not str(row.get("id", "")).strip():
             raise PayloadError("every bank and ledger row needs an 'id'")
+    for row in data.get("sources", []):
+        if not isinstance(row, dict) or not str(row.get("id", "")).strip():
+            raise PayloadError("every source needs an 'id'")
+        if not isinstance(row.get("text", ""), str):
+            raise PayloadError(f"source {row['id']}: 'text' must be a string")
+        if not isinstance(row.get("explicit_copy", False), bool):
+            raise PayloadError(f"source {row['id']}: 'explicit_copy' must be true or false")
+    if not isinstance(data.get("copy_note", ""), str):
+        raise PayloadError("'copy_note' must be a string")
+    if not all(isinstance(p, str) for p in data.get("stock_phrases", [])):
+        raise PayloadError("'stock_phrases' must be a list of strings")
     seen = set()
     for i, piece in enumerate(pieces):
         if not isinstance(piece, dict) or not str(piece.get("id", "")).strip():
@@ -87,7 +125,7 @@ def load_payload(raw: str) -> dict:
         if piece["id"] in seen:
             raise PayloadError(f"duplicate piece id '{piece['id']}'")
         seen.add(piece["id"])
-        for key in PIECE_FIELDS + ("format", "verdict_line"):
+        for key in PIECE_FIELDS + ("format", "verdict_line", "note"):
             if not isinstance(piece.get(key, ""), str):
                 raise PayloadError(f"piece {piece['id']}: '{key}' must be a string")
         if not isinstance(piece.get("cites", []), list):
@@ -130,7 +168,7 @@ def lint_piece(piece: dict, data: dict, bank: dict, batch_stems: list) -> tuple[
     defects: list[str] = []
 
     cites = [_sl_norm_id(c) for c in piece.get("cites", [])]
-    missing = [c for c in cites if c not in bank and c not in data["_ledger"]]
+    missing = [c for c in cites if c not in bank and c not in data["_ledger"] and c not in data["_sources"]]
     if missing:
         defects.append("cited ID does not resolve: " + ", ".join(missing))
     rows = [bank[c] for c in cites if c in bank]
@@ -162,6 +200,8 @@ def lint_piece(piece: dict, data: dict, bank: dict, batch_stems: list) -> tuple[
         defects.append('conditional "Ready after" wording')
     if verdict and ck.count_words(verdict, lang) > ck.VERDICT_MAX_WORDS:
         defects.append(f"verdict line over {ck.VERDICT_MAX_WORDS} words")
+
+    defects += lint_copy(piece, text, cites, data)
 
     if cls in ("Idea", "Structured"):
         return cls, defects
@@ -205,10 +245,56 @@ def lint_piece(piece: dict, data: dict, bank: dict, batch_stems: list) -> tuple[
     return cls, defects
 
 
-def lint_payload(data: dict) -> list[dict]:
-    """One result per piece: {"id", "class", "result" (PASS | FAIL), "defects"}."""
+def lint_copy(piece: dict, text: str, cites: list[str], data: dict) -> list[str]:
+    """DISTANCE against someone else's post: copy runs and point order on the default path;
+    on an explicit copy or translation request, the copy note instead."""
+    lang = data.get("lang", "en")
+    sources = [data["_sources"][c] for c in cites if c in data["_sources"]]
+    sources += [s for s in data["_file_sources"] if s not in sources]
+    defects: list[str] = []
+    for src in sources:
+        source_text = str(src.get("text", ""))
+        if src.get("explicit_copy"):
+            noted = "\n".join([text, piece.get("note", ""), piece.get("verdict_line", "")])
+            missing = "explicit copy without the copy note"
+            if not ck.has_copy_note(noted, data.get("copy_note") or None) and missing not in defects:
+                defects.append(missing)
+            continue
+        for run in ck.copy_runs(text, source_text, lang, stock=data["_stock"])[:3]:
+            defect = f"copy run: '{_sl_short(run, 60)}'"
+            if defect not in defects:
+                defects.append(defect)
+        if ck.point_order_mirror(text, source_text):
+            defects.append(f"point order mirrors {src['id']}")
+    return defects
+
+
+def load_stock_phrases(lang: str) -> list[str]:
+    """locales/<lang>/stock-phrases.txt beside tools/ (repo runs only; the shipped skill has no locales/)."""
+    path = Path(__file__).resolve().parent.parent / "locales" / lang / "stock-phrases.txt"
+    try:
+        return ck.stock_phrase_list(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError):
+        return []
+
+
+def load_source_file(path: str) -> dict:
+    """A --source FILE: someone else's post as plain text, checked against every piece."""
+    return {"id": Path(path).name, "text": Path(path).read_text(encoding="utf-8"), "explicit_copy": False}
+
+
+def lint_payload(data: dict, file_sources: list[dict] | None = None) -> list[dict]:
+    """One result per piece: {"id", "class", "result" (PASS | FAIL), "defects"}.
+
+    `file_sources` (from --source) are checked against every piece; payload "sources" only
+    against the pieces that cite them.
+    """
     bank = {_sl_norm_id(r["id"]): r for r in data.get("bank", [])}
-    data = dict(data, _ledger={_sl_norm_id(r["id"]): r for r in data.get("ledger", [])})
+    lang = data.get("lang", "en")
+    stock = [str(p) for p in data.get("stock_phrases", [])] + load_stock_phrases(lang)
+    data = dict(data, _ledger={_sl_norm_id(r["id"]): r for r in data.get("ledger", [])},
+                _sources={_sl_norm_id(r["id"]): r for r in data.get("sources", [])},
+                _file_sources=list(file_sources or []), _stock=stock)
     stems: list[str] = []
     results = []
     for piece in data["pieces"]:
@@ -228,14 +314,17 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Ship Check LINT for one batch of pieces.")
     parser.add_argument("path", help="batch JSON file, or - for stdin")
     parser.add_argument("--json", action="store_true", help="print results as JSON (adds the output class)")
+    parser.add_argument("--source", action="append", default=[], metavar="FILE",
+                        help="someone else's post as plain text; every piece is checked for copy runs against it")
     args = parser.parse_args(argv)
     try:
         raw = sys.stdin.read() if args.path == "-" else Path(args.path).read_text(encoding="utf-8")
         data = load_payload(raw)
+        file_sources = [load_source_file(p) for p in args.source]
     except (OSError, UnicodeDecodeError, PayloadError) as exc:
         print(f"ship_lint: invalid input: {exc}", file=sys.stderr)
         return 2
-    results = lint_payload(data)
+    results = lint_payload(data, file_sources)
     if args.json:
         print(json.dumps(results, ensure_ascii=False, indent=2))
     else:

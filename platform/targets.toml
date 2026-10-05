@@ -9,7 +9,8 @@
 #   - any limit referenced by a budget, or marked release_blocking, must not be VERIFY
 #   - verified_on must be <= meta.max_age_days old on release day
 # Only locales/*/platform-notes.md may repeat these facts in shipped text, and only with a date.
-# Every fact below was checked on or before 2026-10-05 (docs/research/wf11-ux-facts.md, wf3-*, wf10-*, wf1-packaging.md).
+# Every fact below was checked on or before 2026-10-05 (docs/research/wf11-ux-facts.md, wf3-*, wf10-*, wf1-packaging.md,
+# wf13-platform-facts.md).
 
 [meta]
 schema = 1
@@ -365,6 +366,89 @@ evidence = "PRAC"
 verified_on = "2026-10-05"
 source = "wf5: DM automation works on Pages and IG professional accounts, not personal FB profiles."
 
+# ---------------------------------------------------------------- Posts the coach likes (wf13)
+# wf13-inspiration-spec §7 (P1 patch) and Phase-0 section D; facts in docs/research/wf13-platform-facts.md.
+[limits.claude_social_links_blocked]
+value = "Instagram, Facebook, Threads, X, TikTok, LinkedIn"
+unit = "domains whose robots.txt blocks Claude-User"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf13-platform-facts §1, §2.2: Claude respects robots.txt (support.claude.com article 8896518, updated 7 Apr 2026); robots.txt files downloaded 5 Oct 2026 disallow Claude-User or every non-whitelisted agent on these domains."
+note = "Unopened means unread: on Claude a pasted social link gets liked.cant_open, never a guess (I20)."
+
+[limits.chatgpt_social_link_read]
+value = ""
+unit = "per platform: refused / caption only / full text / counts"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D1; wf13-platform-facts §10 check 1: what ChatGPT returns for pasted Instagram, TikTok, Facebook, LinkedIn, Threads, X, YouTube and Substack links (Free and Plus, phone and web)."
+
+[limits.youtube_link_transcript_in_chat]
+value = ""
+unit = "bool per app"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D1; wf13-platform-facts §10 checks 1 and 11: does a pasted YouTube link bring back the transcript in a ChatGPT or Claude chat? robots.txt disallows the transcript endpoints."
+
+[limits.chatgpt_free_image_counts_as_upload]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D2; wf13-platform-facts §10 check 2: do screenshots count toward ChatGPT Free's daily file uploads (chatgpt_free_uploads_per_day)? Decides whether 'send a screenshot' is the default."
+release_blocking = true
+
+[limits.vn_screenshot_ocr_ok]
+value = ""
+unit = "exact-transcription rate per app"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D3; wf13-platform-facts §10 check 4: five VN caption or carousel screenshots (diacritics, stylised fonts, text over images) on ChatGPT Free/Plus and Claude Free/Pro."
+release_blocking = true
+
+[limits.grid_counts_legible_phone]
+value = ""
+unit = "bool per platform"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D3: are view counts legible in a phone screenshot of a profile grid (TikTok, YouTube, IG Reels)? 'About N× their usual' needs 6 or more legible counts."
+
+[limits.vn_count_format_parse]
+value = ""
+unit = "bool per app"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D3: are VN-locale counts on screenshots (1,2 N; 3,4 Tr; dot thousands) read as the right number?"
+
+[limits.share_sheet_new_chat]
+value = ""
+unit = "per app: link / preview / nothing; project chat or new chat"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D4; wf13-platform-facts §10 check 6: sharing a post from the IG, TikTok, FB or YouTube phone app into ChatGPT or Claude. Does it land in a new chat outside the project?"
+
+[limits.comment_name_echo_chatgpt]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D7: does ChatGPT repeat commenter names it reads from a screenshot (I10)?"
+
+[limits.copy_run_baseline]
+value = ""
+unit = "longest shared run, words EN / tiếng VN"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D6: overlap baseline, 20 sources × 3 runs on the default path. Calibrates evals/acceptance.toml [copy] en_words and vn_tieng (I19)."
+release_blocking = true
+
+[limits.browse_profile_listing]
+value = ""
+unit = "accuracy per platform"
+evidence = "VERIFY"
+verified_on = ""
+source = "wf13-platform-facts §10 check 14: Claude in Chrome (Pro) and the ChatGPT extension (Plus) list a creator's last 12-20 posts with date and count, read-only. Gates opt-in Browse in GROW (L4)."
+
 # ================================================================ Budgets
 # limit = the targets entry the budget protects ("" when the budget is our own design rule).
 # Character counts are taken after NFC normalisation.
@@ -410,9 +494,10 @@ limit = ""
 [budgets.brand_card]
 artifact = "Brand Card (whole)"
 unit = "chars_nfc"
-en = 5000
-vn = 5800
+en = 5700
+vn = 6600
 limit = ""
+note = "wf13-inspiration-spec §4: +700 EN / +800 VN for the machine block's liked line; the visible part gains 0."
 
 [budgets.brand_card_visible]
 artifact = "Brand Card visible part (one phone screen)"

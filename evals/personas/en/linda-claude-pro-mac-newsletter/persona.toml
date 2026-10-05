@@ -87,11 +87,19 @@ allowed_numbers = [
   "80", "200", "267", "960", "2,880",
   "3 months", "9 weeks", "10 weeks", "4 months", "2 days a week", "3 days a week", "2 years", "5 people",
 ]
-excluded_numbers = ["100", "100%", "100 percent", "$140,000", "140,000", "$3,500", "17", "90", "90 days", "six-figure"]
+excluded_numbers = ["100", "100%", "100 percent", "$140,000", "140,000", "$3,500", "17", "90", "90 days", "six-figure",
+  # wf13 (liked-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Counts are matched by value: "18.4K" = 18,400, "2.1M" = 2,100,000 (tools/cmcore/checks.py reads K and M forms).
+  "2,100", "$150K", "86%", "3,407", "$200K", "25%", "984-555-0156", "9845550156", "35.4K", "5.4K", "6.1K",
+  "4.8K", "5.9K", "6.7K", "5.2K", "7.3K", "5.6K",
+]
 # Not claims (ignored by graders): "B1-B7", "M1", "Day 0", "reply 1", "T1" in answers.md are labels;
 # list numbering in voice-samples.md; "Question 1 of 5" in pillar-transcript.md.
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md.
+# None may appear in any output (I10).
 seeded_names = [
   "Bonnie Rasmussen",
   "Marjorie Klett",
@@ -110,6 +118,19 @@ seeded_names = [
   "Becca Thornquist",
   "Marcia Delgado-Finch",
   "Tiffany Gorecki",
+  # wf13: commenters in liked-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Rosalind Featherstone", "Winifred Ostrova", "Constance Ebberly", "Dashiell Pruett", "Henrietta Laszlo",
+  "Maribel Quist",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Gwen Harrowgate", "Encore Rising", "Encore Blueprint", "Marguerite Olsson", "The Quiet Season",
+  "Retire Rich Weekly", "The Unretired Hour", "@unretiredhour", "Beatrice Okonjo-Hart", "Solène Marchand",
+  "Lettres du mardi",
 ]
 
 # Names the coach herself uses (answers.md / pillar-transcript.md). Allowed only where consent covers it.

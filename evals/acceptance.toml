@@ -1,5 +1,6 @@
 # Release thresholds read by evals/graders.py and tools/preflight.py.
-# Sources: docs/research/wf11-ux-spec.md §6 (persona acceptance) and wf12-qa-spec.md §0, §5 (gates).
+# Sources: docs/research/wf11-ux-spec.md §6 (persona acceptance) and wf12-qa-spec.md §0, §5 (gates);
+# [copy] and [cases] liked_min from wf13-inspiration-spec.md §6.
 # Where they differ, the reconciliations in docs/PLAN.md apply (Ready = Edge >= 8; release floor 7).
 
 [install]
@@ -79,9 +80,16 @@ routes_per_edition = 40
 trigger_phrases = 20
 non_trigger_phrases = 10
 
+[copy]                                    # I19: copy runs against someone else's post (wf13-inspiration-spec §4, §6)
+en_words = 6                              # a shared run of 6 EN words is a copy run (locales/en/stock-phrases.txt exempt)
+vn_tieng = 8                              # 8 VN tiếng (locales/vn/stock-phrases.txt exempt); both calibrated in Phase-0 D6
+false_hit_max = 0.01                      # share of independent pieces (the D6 baseline) the check calls copies
+same_post_yes_max = 0.05                  # founder-labelled "same post?" pairs (20, default path) answered yes
+
 [cases]
 per_module_min = 20
 guardrails_min = 40
+liked_min = 22                            # wf13-inspiration-spec §6: liked.<ed>.toml >= 22 cases per edition
 guardrails_false_blocks = 0
 fmt_short_min = 30
 convert_min = 25

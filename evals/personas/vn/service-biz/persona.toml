@@ -122,9 +122,19 @@ allowed_numbers = [
 excluded_numbers = [
   "70 triệu", "130 triệu", "70", "130", "gần gấp đôi", "chỉ nhận 2 công trình", "0 phát sinh", "100%",
   "30 triệu", "65 triệu", "39 triệu",
+  # wf13 (liked-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Grid counts are listed by value ("397.000" = 397 N) because graders match by value;
+  # app-style counts ("52,7 N", "2,1 Tr") are read by value too (tools/cmcore/checks.py), so either form is caught.
+  "1.200", "15 năm", "49 triệu", "0935 123 789", "0935123789", "2,4 triệu", "380.000", "412.000", "356.000",
+  "397.000", "425.000", "368.000", "441.000", "389.000",
+  # the L1 post's own like / comment / share / view counts (EN lists them the same way)
+  "211,8 N", "5.402", "33,7 N", "3,1 Tr",
 ]
 
-# Fictional full names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional full names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md.
+# None may appear in any output (I10).
 seeded_names = [
   "Trần Thị Mỹ Duyên",
   "Hồ Văn Phước",
@@ -137,6 +147,19 @@ seeded_names = [
   "Văn Thị Diệu Hiền",
   "Lưu Quang Toàn",
   "Cao Thị Hồng Nhung",
+  # wf13: commenters in liked-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Nguyễn Thị Hạnh Dung", "Đặng Văn Nhứt", "Phạm Thị Thùy Linh", "Lê Công Danh", "Võ Thị Mỹ Xuân",
+  "Hồ Văn Tèo",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Nhà Bếp Vàng", "@nhabepvang.official", "Hệ Bếp Vàng 4.0", "Hệ Bếp Vàng", "@phongthuy.nhavui",
+  "Thợ Mộc Hội An", "@thomoc.hoian", "chú Lành", "Bếp Việt Trực Tiếp", "@bepviet.tructiep", "Walt Henning",
+  "@truegrain.kitchens",
 ]
 
 [[proof_items]]

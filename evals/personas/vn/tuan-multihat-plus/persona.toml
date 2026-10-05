@@ -105,9 +105,19 @@ allowed_numbers = [
 excluded_numbers = [
   "1 tỷ 9", "1,9 tỷ", "3 tỷ 8", "3,8 tỷ", "lời gấp đôi", "70%", "80%", "12%/năm", "5,9%", "5,5%",
   "100 comment", "1.490.000đ", "24 giờ", "100%", "50 tới có 5",
+  # wf13 (liked-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Grid counts are listed by value ("184.000" = 184 N) because graders match by value;
+  # app-style counts ("52,7 N", "2,1 Tr") are read by value too (tools/cmcore/checks.py), so either form is caught.
+  "1,8 tỷ", "3,6 tỷ", "740", "lời 100%", "25%", "0909 123 456", "0909123456", "1,1 triệu", "176.000",
+  "189.000", "168.000", "193.000", "181.000", "205.000", "172.000", "184.000",
+  # the L1 post's own like / comment / share / view counts (EN lists them the same way)
+  "98,7 N", "3.388", "15,2 N", "2,2 Tr",
 ]
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md.
+# None may appear in any output (I10).
 # Nguyễn Thị Thanh Xuân (cô giáo mầm non, P2), Trần Văn Hậu (anh khách gãy chân, P3) and Phạm Quốc Bảo are past clients
 # replying on Zalo; their names still never appear.
 seeded_names = [
@@ -135,6 +145,18 @@ seeded_names = [
   "Nguyễn Thị Thanh Xuân",
   "Trần Văn Hậu",
   "Phạm Quốc Bảo",
+  # wf13: commenters in liked-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Trần Thị Mỹ Lài", "Võ Thanh Liêm", "Phạm Thị Thu Cúc", "Đinh Hữu Nghĩa", "Huỳnh Thị Ngọc Bích",
+  "Lương Văn Hên",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Bin Đòn Bẩy", "@bin.donbay.bds", "Bí Kíp Đòn Bẩy Kép", "Đòn Bẩy Kép", "@sale.chot.nhanh", "Chị Tư Vấn Vay",
+  "@chituvay.minhthu", "@nhadautien.tinhtruoc", "Khoa Lê", "Carla Benning", "@firsthome.honest",
 ]
 
 [[proof_items]]

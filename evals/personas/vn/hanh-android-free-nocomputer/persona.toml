@@ -113,9 +113,19 @@ allowed_numbers = [
 excluded_numbers = [
   "70%", "5 tháng", "58", "gấp đôi", "150%", "12.000.000đ", "5 triệu", "100%",
   "7 buổi", "100 comment", "gấp 3", "24 giờ",
+  # wf13 (liked-paste.md / follow-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Grid counts are listed by value ("52.700" = 52,7 N) because graders match by value;
+  # app-style counts ("52,7 N", "2,1 Tr") are read by value too (tools/cmcore/checks.py), so either form is caught.
+  "80 triệu", "780 triệu", "1.500", "92%", "0934 567 890", "0934567890", "312.000", "51.400", "47.900",
+  "55.200", "49.600", "58.800", "44.100", "52.700", "60.300", "4.900.000đ", "8 suất", "10%",
+  # the L1 post's own like / comment / share / view counts (EN lists them the same way)
+  "167,3 N", "4.861", "26,2 N", "2,1 Tr",
 ]
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md / follow-paste.md.
+# None may appear in any output (I10).
 seeded_names = [
   "Đỗ Thị Bích Ngọc",
   "Vũ Hải Yến",
@@ -132,6 +142,23 @@ seeded_names = [
   "Hà Thị Kim Oanh",
   "Chu Thị Phương",
   "Đàm Quang Huy",
+  # wf13: commenters in liked-paste.md / follow-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Nguyễn Thị Thu Trà", "Phùng Thị Mến", "Khổng Thị Lụa", "Quản Văn Thắng", "Lã Thị Bích Huệ",
+  "Đào Thị Minh Thư", "Hoàng Ngọc Bích Thủy", "Nguyễn Thị Hiền", "Lê Văn Khánh", "Trương Thị Hồng Nhung",
+  "Bế Thị Thắm", "Lương Thị Tuyết Mai", "Vi Thanh Huyền", "Phạm Thu Hường", "Tạ Đức Mạnh", "Mông Thị Sen",
+  "Trần Ngọc Ánh", "Chử Thị Kiều Trang", "Đinh Thị Mơ",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md / follow-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Vương Kim Chi", "@kimchi.chotthe", "Học Viện Chốt Thẻ Thần Tốc", "Kịch Bản Chốt Thẻ 7 Bước",
+  "@mayspa.review", "Spa Nhỏ Hải Phòng", "@spanho.haiphong", "Chủ Spa Học Mỗi Ngày", "Renata Albescu",
+  "@honestskin.studio", "Spa Triệu Đô Academy", "@spatrieudo.academy", "Lớp Chốt Thẻ Tại Giường",
+  "Hội Chủ Spa Khởi Nghiệp", "Chuyện Làm Đẹp Cùng Diễm Quyên", "@diemquyen.lamdep", "Diễm Quyên",
+  "Máy Spa Hàn Quốc Chính Hãng",
 ]
 
 [[proof_items]]

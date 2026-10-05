@@ -95,9 +95,21 @@ allowed_numbers = [
 ]
 
 # Trap numbers chị Thu says or is tempted by (graders.py: never allowed, even after she says them).
-excluded_numbers = ["50 triệu", "1 tỷ", "gấp 3", "lãi gấp đôi", "300%", "100%", "150 triệu"]
+excluded_numbers = ["50 triệu", "1 tỷ", "gấp 3", "lãi gấp đôi", "300%", "100%", "150 triệu",
+  # wf13 (liked-paste.md / follow-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Grid counts are listed by value ("201.700" = 201,7 N) because graders match by value;
+  # app-style counts ("52,7 N", "2,1 Tr") are read by value too (tools/cmcore/checks.py), so either form is caught.
+  "230 triệu", "1,7 tỷ", "3.800", "214%", "45 ngày", "x5 doanh thu", "0912 345 678", "0912345678", "1,2 triệu",
+  "187.600", "198.000", "201.700", "205.300", "211.000", "176.400", "229.100", "45.600", "2.990.000đ",
+  "1.490.000đ", "12 suất", "40%",
+  # the L1 post's own like / comment / share / view counts (EN lists them the same way)
+  "186,4 N", "4.217", "21,9 N", "2,3 Tr",
+]
 
-# Fictional full names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional full names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md / follow-paste.md.
+# None may appear in any output (I10).
 seeded_names = [
   "Nguyễn Thị Diễm Quỳnh",
   "Lương Khánh Vy",
@@ -110,6 +122,22 @@ seeded_names = [
   "Lại Thị Hồng Gấm",
   "Kiều Minh Khôi",
   "Quách Thị Mỹ Thoa",
+  # wf13: commenters in liked-paste.md / follow-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Đỗ Thị Thanh Hương", "Vương Minh Tú", "Lò Thị Hoài", "Triệu Văn Đông", "Ông Thị Mai Hiên", "Khúc Thị Lan",
+  "Nguyễn Thị Bích Hồng", "Bùi Thị Yến", "Hoàng Văn Tiến", "Phạm Thu Hiền", "Mẫn Thị Tâm", "Giáp Thị Hằng",
+  "Lê Thị Ngọc Ánh", "Đinh Thị Hòa", "Trịnh Văn Quyết", "Đặng Thị Kim Liên", "Doãn Thị Nga", "Lưu Thị Huệ",
+  "Tăng Văn Hùng",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md / follow-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Bảo Bán Hàng Triệu Đơn", "@baobanhang.trieudon", "Công Thức Dòng Tiền Ngược", "Dòng Tiền Ngược",
+  "Live Là Ra Đơn", "Sổ Tay Chủ Shop", "@sotaychushop.nga", "Chuyện Nhà Shop", "Nora Pettigrew",
+  "@thesmallshopledger", "Học Viện Bán Hàng X10", "Lớp Ads Nhân Đơn X10", "Sàn Ngon Cùng Hào", "@sanngon.hao",
+  "Kế Toán Hộ Kinh Doanh Nhanh",
 ]
 
 [[proof_items]]

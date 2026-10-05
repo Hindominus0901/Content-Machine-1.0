@@ -59,8 +59,30 @@ re:(?i)\block(ed|s)?\b[^.\n]{0,20}\b90\b
 Pancake
 ManyChat
 
+# Research and analytics words around posts the coach likes (wf13-inspiration-spec §1, §6).
+# The coach says "Bài bạn thích"; "swipe file" stays a docs-only word, never coach-visible.
+swipe
+swipe file
+file swipe
+outlier
+re:(?i)\b(outlier|views?)\s+ratios?\b
+re:(?i)\bmedian\s+views?\b
+re:(?i)\bproven\s+shapes?\b
+re:(?i)\bsame[\s-]feed\s+test\b
+white space
+social listening
+# "trung vị" (median), not "miền Trung vị cay" or "tập trung vị trí"
+re:(?i)(?<!miền )(?<!tập )(?<!\w)trung vị(?!\w)(?!\s+trí(?!\w))
+# "tỉ lệ vượt" (the outlier ratio), not "tỉ lệ vượt qua" (pass rate) or "tỷ lệ vượt trội" (outstanding)
+re:(?i)(?<!\w)t[ỉỷ] lệ vượt(?!\w)(?!\s+(?:qua|trội|chỉ tiêu|mức|kế hoạch)(?!\w))
+# case-sensitive so unaccented "voc" in a coach's own words is not a hit
+re:\b(VoC|VOC)\b
+# the machine block's section name, as a printed tag or heading
+re:\bLIKED\b
+
 # Bank IDs, slot and run keys, method anchors, the router
-re:\b[VSPX]-\d+\b
+# Every Bank prefix (banks.toml [ids]), shared with EN.
+re:\b[VOSBPRKICAWX]-\d+\b
 re:(?i)\bslot\s+keys?\b
 re:(?i)\brun\s+keys?\b
 re:§\s?CM

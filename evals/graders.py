@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Transcript graders for the global invariants I1-I18 (QA spec §5.2; evals/README.md).
+"""Transcript graders for the global invariants I1-I22 (QA spec §5.2; wf13-inspiration-spec §6;
+evals/README.md).
 
     python3 evals/graders.py evals/runs/<run-id> [--root PATH] [--strict]
 
@@ -10,15 +11,31 @@ Run folder (keep this format; evals/run.py and the simulator agents write it):
 
     evals/runs/<run-id>/transcript.jsonl   one JSON object per turn, in order:
         {"turn": 1, "role": "coach" | "machine", "text": "...", "t_min": 0.0 | null}
+        optional "third_party": true on a coach turn: the whole turn is someone else's
+        post (a pasted caption, a forwarded post), the source text for I19.
     evals/runs/<run-id>/meta.json
         {"persona": "en/proof-coach", "edition": "en", "lane": "S1", "build_sha": "..."}
         optional "suite": "day0" applies the Day-0 turn budgets even without step markers.
 
 Inputs: evals/personas/<persona>/persona.toml (allowed_numbers, excluded_numbers,
-trap_numbers, seeded_names, cold_start, xung_ho, proof_items), expected.toml
-(traps) and the persona's *.md files; strings/<edition>.toml rendered through
-editions/<edition>.toml when present (verdict.*, next.prefix, checked.prefix);
-evals/acceptance.toml; locales/<lang>/deny-list.txt and examples.md when present.
+trap_numbers, seeded_names, creator_terms, cold_start, xung_ho, proof_items),
+expected.toml ([traps], [liked], [liked.angle] or [follow]) and the persona's *.md
+files (liked-paste.md and follow-paste.md among them); strings/<edition>.toml
+rendered through editions/<edition>.toml when present (verdict.*, next.prefix,
+checked.prefix, liked.copy_note, liked.cant_open, angle.labels);
+evals/acceptance.toml ([copy] en_words / vn_tieng); locales/<lang>/deny-list.txt,
+stock-phrases.txt and examples.md when present.
+
+Someone else's post in a run (I19) is any of: a coach turn marked "third_party";
+the text from a line opening with a bracketed label ("[screenshot: …",
+"[pasted post]", "[ảnh chụp …", "[bài dán]") to the end of that coach turn; the
+"## " sections of liked-paste.md / follow-paste.md that a coach turn references as
+"<<paste: …liked-paste.md…>>" (only the sections it names, "L2", "Drop 3",
+"Account A" or a quoted '"## heading"' prefix, else all of them) or holds verbatim
+(a shared run of 10 tokens). Numbers in someone else's post never become allowed by
+being pasted (I8); a named section's first paragraph is the coach speaking (I10, I19).
+HTML comments, the text above the first "## " heading and a section's first
+paragraph (the coach's own note, when more paragraphs follow) are never source text.
 
 How a machine reply is read:
 - Coach-visible text is the reply minus fenced blocks whose info string holds
@@ -35,12 +52,14 @@ How a machine reply is read:
 
 Invariants marked "proxy": true cannot be checked from a transcript; they check
 the closest mechanical signal (I6 decisions, I7 IDs without the hub, I11
-injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns).
+injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns, I20
+unopened links, I21 the angle card's evidence, I22 monitoring promises).
 Status is pass | fail | n/a | not_run; "pass" is null when the check did not run.
 """
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import os
 import re
@@ -69,12 +88,27 @@ ID_RE = re.compile(r"\b([VOSBPRKICAW])-(\d{1,4})\b")
 PRONOUNS = ("bạn", "mình", "chị", "anh", "em", "cô", "chú", "tôi")
 VERDICT_KINDS_READY = {"ready", "ready_downgraded", "checked"}
 
+_NOT_FILL = r"(?!(?:needs|cần|guess|đoán|gap|ước tính)(?!\w))"     # [NEEDS: …], [guess] are tags, not blanks
+_LOWER_START = r"(?![" + ck.UPPER + r"])[^\W\d_]"
 TEMPLATE_RE = [re.compile(p, re.I) for p in (
-    r"\bfill (?:in|out)\b", r"\bfill (?:the|this|my) (?:template|form|blanks?)\b",
+    r"\bfill[- ](?:in|out)\b", r"\bfill (?:the|this|my) (?:template|form|blanks?)\b",
     r"\b(?:complete|use|copy) (?:this|the|my) (?:template|form)\b", r"_{3,}",
+    r"\b(?:complete|finish) (?:this|the|these) (?:sentences?|blanks?)\b",
     r"\[(?:your|insert|add|enter)\b[^\]]*\]", r"<(?:your|insert)\b[^>]*>", r"\{(?:your|insert)\b[^}]*\}",
-    r"điền vào", r"điền (?:mẫu|form|biểu mẫu|chỗ trống)", r"theo mẫu (?:sau|dưới)", r"\[(?:tên|điền)\b[^\]]*\]",
-)]
+    # a fill-in placeholder: "I help [who] go from […] to [the result]"
+    r"\[(?:who|whom|what|where|when|why|how|which|name|topic|niche|audience|result|outcome|problem|pain|goal|"
+    r"benefit|thing|number|time ?frame|product|offer|service|industry|role|job title|skill|feeling|emotion|"
+    r"ai|gì|cái gì|kết quả|vấn đề|đối tượng|khách hàng|sản phẩm|chủ đề|thời gian|nỗi đau|mong muốn|lĩnh vực|"
+    r"ngành)(?![^\W_])[^\]\n]{0,40}\](?!\()",
+    r"\[(?:\.{2,}|…|_{2,})\]",
+    r"điền vào", r"điền (?:mẫu|form|biểu mẫu|chỗ trống|tiếp|nốt)", r"theo mẫu (?:sau|dưới)",
+    r"\[(?:tên|điền)\b[^\]]*\]",
+    r"hoàn thành (?:câu|mẫu|chỗ trống)",
+)] + [
+    # two lowercase bracketed blanks on one line ("from [stuck] to [hired]"); links and tags excluded
+    re.compile(r"\[" + _NOT_FILL + _LOWER_START + r"[^\]\n]{0,40}\](?!\()[^\[\]\n]{1,60}\[" + _NOT_FILL
+               + _LOWER_START + r"[^\]\n]{0,40}\](?!\()"),
+]
 CODE_RE = [
     re.compile(r"\bEdge\b"), re.compile(r"\bShip Check\b", re.I), re.compile(r"\brubrics?\b", re.I),
     re.compile(r"\blint\b", re.I), re.compile(r"\bscor(?:e|es|ed|ing)\b", re.I), re.compile(r"chấm điểm", re.I),
@@ -101,7 +135,20 @@ HUB_DELETE_RE = [re.compile(p, re.I) for p in (
 STATUS_RE = re.compile(r"\b(?:Status|Trạng thái)\s*[:=]\s*\**\s*([^\W\d_]+)", re.I)
 AI_STATUSES = {"idea", "scripted", "reviewed"}
 CTA_RE = re.compile(r"\bcomment\b|\bcmt\b|chấm|bình luận|từ khoá|từ khóa|keyword", re.I)
-THRESHOLD_RE = re.compile(r"(?:chấm|đủ\s+\d+\s*(?:comment|cmt|bình luận)|\b\d+\s+comments?\b)", re.I)
+# "chấm" as a comment CTA ('"chấm" để nhận file', "comment chấm", "Chấm q.t mình hướng dẫn 👇"),
+# not "chấm" as grading ("chấm sổ", "chấm chéo", "chấm 1-1").
+CHAM_CTA_RE = re.compile(
+    r"[\"“'‘]chấm[\"”'’]"
+    r"|(?<!\w)(?:comment|cmt|còm|bình luận|nhắn|gõ)\s+[\"“'‘]?chấm(?!\w)"
+    r"|(?<!\w)(?:bài|kiểu|post)\s+[\"“'‘]?chấm(?!\w)(?!\s+(?:sổ|bài|điểm|chung|chéo|thi|lại|\d))"
+    r"|(?<!\w)chấm(?:\s+(?:q\.?\s?t|qt|quan tâm|để nhận|để lấy|nhận|mình gửi|em gửi|chị gửi|anh gửi|bên dưới)(?!\w)"
+    r"|\s*👇)", re.I)
+THRESHOLD_RE = re.compile(r"(?<!\w)đủ\s+\d+\s*(?:comment|cmt|bình luận)|\b\d+\s+comments?\b", re.I)
+KEYWORD_CTA_RE = re.compile(r"(?i:(?<!\w)(?:comment|cmt|còm|bình luận|reply|type|DM me|DM))\s+"
+                            r"(?i:(?:the word|chữ|từ)\s+)?(?:[\"“'‘]([^\"”'’\n]{1,24})[\"”'’]|([A-Z" + ck.UPPER + r"]"
+                            r"[A-Z" + ck.UPPER + r"0-9]+)(?![^\W\d_]))")
+NOTE_LINE_RE = re.compile(r"\b(?:note|heads[- ]up)\b|lưu ý|chú ý|giảm hiển thị|giảm tương tác|giảm reach|"
+                          r"engagement bait|less reach|show (?:it|them|posts?) less|may (?:limit|reduce)", re.I)
 DATE_RE = re.compile(r"\b20\d{2}\b|\b\d{1,2}/\d{1,2}\b|\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?"
                      r"\s+\d{1,2}\b|tháng\s+\d{1,2}", re.I)
 EN_FUNCTION_WORDS = {"the", "and", "you", "your", "is", "are", "with", "this", "that", "will", "would", "what",
@@ -130,6 +177,7 @@ class Turn:
     role: str
     text: str
     t_min: float | None
+    third_party: bool = False      # a coach turn that is someone else's post (I19)
 
 
 def load_turns(path: Path) -> list[Turn]:
@@ -149,7 +197,10 @@ def load_turns(path: Path) -> list[Turn]:
         t = row.get("t_min")
         if t is not None and not isinstance(t, (int, float)):
             raise GraderError(f"{path.name} line {i}: t_min must be a number or null")
-        turns.append(Turn(row["turn"], row["role"], ck.nfc(row["text"]), None if t is None else float(t)))
+        third = row.get("third_party", False)
+        if not isinstance(third, bool):
+            raise GraderError(f"{path.name} line {i}: third_party must be true or false")
+        turns.append(Turn(row["turn"], row["role"], ck.nfc(row["text"]), None if t is None else float(t), third))
     if not turns:
         raise GraderError(f"{path.name} is empty")
     return turns
@@ -200,8 +251,10 @@ def load_term_list(path: Path) -> list[tuple[str, re.Pattern]]:
 
 # ---------------------------------------------------------------- line matching
 
-def _slot_pattern(text: str, lang: str, prefix_only: bool = False) -> re.Pattern:
-    """A rendered string as a regex: {slots} are wildcards; VN pronouns match any pronoun."""
+def _slot_pattern(text: str, lang: str, prefix_only: bool = False, anchored: bool = True) -> re.Pattern:
+    """A rendered string as a regex: {slots} are wildcards; VN pronouns match any pronoun.
+
+    anchored=False finds the string anywhere in a text (a line inside a longer reply)."""
     s = ck.plain_line(text)
     pron = re.compile(r"(?<!\w)(?:" + "|".join(PRONOUNS) + r")(?!\w)", re.I)
     parts = re.split(r"(\{[a-z_][a-z0-9_]*\})", s)
@@ -223,6 +276,8 @@ def _slot_pattern(text: str, lang: str, prefix_only: bool = False) -> re.Pattern
         chunk.append(_lit(part[pos:]))
         out.append("".join(chunk) + tail)
     body = "".join(out)
+    if not anchored:
+        return re.compile(body, re.I)
     return re.compile("^" + body + ("" if prefix_only else r"\s*$"), re.I)
 
 
@@ -497,6 +552,222 @@ def _without_refusals(text: str, r: Reply) -> str:
     return "\n".join(line for line in text.splitlines() if line not in refused)
 
 
+def _last_coach(run: Run, r: Reply) -> Turn | None:
+    """The coach turn this reply answers."""
+    return next((t for t in reversed(run.turns[:r.index]) if t.role == "coach"), None)
+
+
+def _post_chunks(r: Reply) -> list[str]:
+    """What the coach would post: each piece body (hard stops left out), then each copy box outside pieces."""
+    chunks = [p.body for p in r.pieces if p.kind != "hardstop" and p.body.strip()]
+    in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
+    box: list[str] = []
+    for i, ln in enumerate(r.lines):
+        if ln.block != "copy" or i in in_piece:
+            continue
+        if ln.fence:
+            if box:
+                chunks.append("\n".join(box))
+            box = []
+        else:
+            box.append(ln.text)
+    if box:
+        chunks.append("\n".join(box))
+    return chunks
+
+
+# ---------------------------------------------------------------- someone else's posts (wf13)
+
+PASTE_FILES = ("liked-paste.md", "follow-paste.md")
+PASTE_REF_RE = re.compile(r"<<\s*paste:\s*([^>]*?)>>", re.I)
+THIRD_PARTY_MARK_RE = re.compile(
+    r"^[ \t>*_-]*[\[(]\s*(?:pasted|forwarded|shared|screenshot|caption|transcript|their post|liked post|"
+    r"someone else'?s post|post by|reposted|dán|bài dán|ảnh chụp|chụp màn hình|chuyển tiếp|"
+    r"bài của (?:họ|người khác)|bài (?:mình|chị|em|anh|bạn) thích)(?!\w)", re.I | re.M)
+# A marked block that is the coach's own (an insights screen, their own DMs or post) is not someone else's.
+OWN_MARK_RE = re.compile(r"\b(?:insights?|analytics|stats|my own|my (?:post|reel|video|page|profile|account|"
+                         r"DMs?|inbox|comments?))\b|(?<!\w)(?:thống kê|số liệu|chỉ số)(?!\w)", re.I)
+INLINE_SOURCE_RUN = 10           # a coach turn holding this many tokens of a paste section in a row pasted it
+SOCIAL_URL_RE = re.compile(
+    r"^<?https?://(?:[\w-]+\.)*(?:tiktok\.com|instagram\.com|facebook\.com|fb\.com|fb\.watch|youtube\.com|"
+    r"youtu\.be|x\.com|twitter\.com|threads\.net|linkedin\.com|lnkd\.in|zalo\.me|pinterest\.com|snapchat\.com)"
+    r"(?:[/?#]\S*)?>?[.,;!?)]*$", re.I)
+URL_LINE_RE = re.compile(r"^<?https?://\S+?>?[.,;!?)]*$", re.I)
+# "word for word" / "y chang" / "nguyên văn" alone also describe ("my buyer word for word", "nói y chang
+# khách anh", "đọc nguyên văn chị vấp"): they count only after a verb that copies, posts or uses the words.
+EXPLICIT_COPY_RE = (
+    re.compile(r"\b(?:copy|use|post|repost|share|keep|put|run|paste|give me)\b[^.?!\n]{0,40}?"
+               r"\b(?:word[- ]for[- ]word|verbatim)\b|\b(?:a|the|your) translation\b"
+               r"|\btranslate (?:it|this|that|them|these|those|their|her|his|the (?:post|caption|text|script|words|"
+               r"video|reel|carousel|whole thing))\b"
+               r"|\bre-?post (?:it|this|that|them|their|her|his)\b"
+               r"|\bcopy (?:it|this|that|them|their|her|his|the (?:post|caption|script|text|words|hook|whole thing))\b"
+               r"(?!\s+(?:into|to|in|onto)\b)"
+               r"|\b(?:post|use|keep|share)\b[^.?!\n]{0,25}\b(?:as is|as-is|exactly as|"
+               r"(?:their|her|his) (?:exact )?words|the same words|unchanged)\b"
+               r"|\bin (?:[A-Z][\w.]*'s|their|her|his|@[\w.]+'?s?) (?:exact )?(?:voice|words)\b", re.I),
+    re.compile(r"(?<!\w)(?:sao chép|bê nguyên|lấy nguyên)(?!\w)"
+               r"|(?<!\w)chép\s+(?:y|nguyên|lại y|lại nguyên)(?!\w)"
+               r"|(?<!\w)chép\s+(?:\S+\s+){0,2}?(?:giúp|giùm|dùm|hộ)\s+(?:mình|em|chị|anh|tôi|tui)(?!\w)"
+               r"|(?<!\w)(?:đăng|post|up|lấy|dùng|giữ|để|chép|copy|bê|dịch)\s+(?:\S+\s+){0,3}?"
+               r"(?:y chang|y nguyên|y hệt|nguyên văn|nguyên bài|nguyên si)(?!\w)"
+               r"|(?<!\w)copy\s+(?:nguyên|y|bài|lại|giúp|giùm|dùm|hộ|nó|cái|caption|câu)(?!\w)"
+               r"|(?<!\w)(?:đăng lại|repost)\s+(?:bài|nguyên|y|lên|giúp|giùm|dùm|nó|này|đó)(?!\w)"
+               r"|(?<!\w)dịch\s+(?:ra|sang|giúp|giùm|dùm|hộ|bài|nó|cái|đoạn|caption|câu|lại|nguyên)(?!\w)"
+               r"|(?<!\w)giữ nguyên\s+(?:câu|chữ|lời|bài|văn)", re.I),
+)
+NAME_ASK_RE = (
+    re.compile(r"\b(?:mention|tag|credit|name|shout(?:[- ]?out)?)\s+(?:her|him|them|their|the (?:account|creator|"
+               r"channel|page|author)|@[\w.]+)\b|\bcompar(?:e|ing|ison)\b|\bversus\b|\bvs\.?(?!\w)", re.I),
+    re.compile(r"(?<!\w)(?:nhắc tên|nêu tên|gọi tên|ghi tên|ghi nguồn|so sánh|tag)(?!\w)", re.I),
+)
+NEGATION_BEFORE_RE = re.compile(r"(?:\b(?:don'?t|do not|never|not|without|no need to|won'?t|stop)\b|"
+                                r"(?<!\w)(?:đừng|không|khỏi|chẳng|chứ không))\s+(?:\S+\s+){0,2}$", re.I)
+
+
+def explicit_ask(text: str, patterns) -> bool:
+    """The coach explicitly asks for it (a match not negated earlier in its sentence: "don't copy" is no ask).
+    Simulator markers ("<<paste: … verbatim>>") and bracketed screenshots ("[screenshot: … Repost if this
+    helped]") are not the coach's words."""
+    text = re.sub(r"<<[^<>]*>>|\[[^\[\]]*\]", " ", ck.straight_quotes(ck.nfc(text)))
+    for pattern in patterns:
+        for m in pattern.finditer(text):
+            start = max(text.rfind(c, 0, m.start()) for c in ".!?\n") + 1
+            if not NEGATION_BEFORE_RE.search(text[start:m.start()]):
+                return True
+    return False
+
+
+@dataclass
+class Section:
+    file: str
+    sid: str           # "L2", "Drop 3", "Account A"
+    heading: str
+    text: str          # the body, HTML comments removed
+
+
+@dataclass
+class Source:
+    index: int         # transcript position of the coach turn that brought it in
+    label: str
+    text: str
+
+
+@functools.lru_cache(maxsize=64)
+def paste_sections(text: str, file: str) -> tuple[Section, ...]:
+    """The "## " sections of a liked-paste.md / follow-paste.md (### subsections stay in their section)."""
+    text = re.sub(r"<!--.*?-->", "", ck.nfc(text), flags=re.S)
+    parts = re.split(r"^##(?!#)[ \t]*(.*)$", text, flags=re.M)
+    out = []
+    for heading, body in zip(parts[1::2], parts[2::2]):
+        heading = heading.strip()
+        sid = re.split(r"\s+[·|–—]\s+|:\s+", heading, maxsplit=1)[0].strip()
+        out.append(Section(file, sid, heading, body.strip()))
+    return tuple(out)
+
+
+def _paragraphs(text: str) -> list[str]:
+    return [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
+
+
+def section_post(s: Section) -> str:
+    """Someone else's post in a paste section: everything after the first paragraph, which is the
+    coach's own note (the fixtures' layout); a one-paragraph section ("let me tell you") is all post."""
+    paras = _paragraphs(s.text)
+    return "\n\n".join(paras[1:]) if len(paras) > 1 else s.text
+
+
+def own_words(run: Run, text: str) -> str:
+    """The coach's own words in a turn: the post part of any paste section held verbatim is cut out.
+    Pasted text is data, so a "Repost if this helped" inside it is no request."""
+    for f in PASTE_FILES:
+        for s in paste_sections(run.persona_texts.get(f, ""), f):
+            for para in _paragraphs(s.text)[1:]:
+                text = text.replace(para, " ")
+    return text
+
+
+def coach_words(run: Run, text: str) -> str:
+    """own_words(), plus the coach's note (first paragraph) of every liked/follow paste section an
+    unexpanded "<<paste: …>>" marker names by id ("L9", "Account A"): the note is the coach speaking."""
+    notes = []
+    for ref in PASTE_REF_RE.finditer(text):
+        for f in PASTE_FILES:
+            if f in ref.group(1):
+                sections = list(paste_sections(run.persona_texts.get(f, ""), f))
+                named = _referenced(ref.group(1), sections)
+                if len(named) == len(sections):
+                    continue            # a whole-file paste: no single note speaks for the turn
+                for s in named:
+                    paras = _paragraphs(s.text)
+                    if len(paras) > 1:
+                        notes.append(paras[0])
+    return "\n".join([own_words(run, text)] + notes)
+
+
+def _sid_key(sid: str) -> str:
+    return re.sub(r"\s+", " ", sid).strip().casefold()
+
+
+def _referenced(ref: str, sections: list[Section]) -> list[Section]:
+    ids = re.findall(r"(?<!\w)(L\d+|Drop\s*\d+|(?:Account|Kênh|Tài khoản)\s+[A-Z0-9]+)(?!\w)", ref, re.I)
+    want = {_sid_key(i) for i in ids}
+    # quoted headings, whole or as a prefix: "## Comments under A2", "## Bình luận dưới B2 …"
+    quoted = re.findall(r"\"##\s*([^\"]+)\"|'##\s*([^']+)'", ref)
+    heads = [(dq or sq).strip().rstrip("….").strip() for dq, sq in quoted]
+    hits = [s for s in sections if _sid_key(s.sid) in want
+            or any(h and re.match(re.escape(h) + r"(?!\w)", s.heading, re.I) for h in heads)]
+    return hits or sections
+
+
+def third_party_sources(run: Run) -> list[Source]:
+    """Someone else's posts the coach brought into the run, in transcript order (module docstring)."""
+    sections = [s for f in PASTE_FILES if f in run.persona_texts for s in paste_sections(run.persona_texts[f], f)]
+    out: list[Source] = []
+    for i, t in enumerate(run.turns):
+        if t.role != "coach":
+            continue
+        label = f"turn {t.turn}"
+        if t.third_party:
+            out.append(Source(i, label, t.text))
+        else:
+            m = THIRD_PARTY_MARK_RE.search(t.text)
+            first = t.text[m.start():].split("\n", 1)[0] if m else ""
+            if m and not OWN_MARK_RE.search(first):    # wf13 §4 Detect 3-4: the coach's own stats, DMs, posts
+                out.append(Source(i, label, t.text[m.start():]))
+        for ref in PASTE_REF_RE.finditer(t.text):
+            for f in PASTE_FILES:
+                if f in ref.group(1):
+                    out += [Source(i, f"{f} {s.sid}", section_post(s))
+                            for s in _referenced(ref.group(1), [x for x in sections if x.file == f])]
+        for s in sections:
+            if ck.copy_runs(t.text, s.text, run.lang, n=INLINE_SOURCE_RUN):
+                out.append(Source(i, f"{s.file} {s.sid}", section_post(s)))
+    seen, unique = set(), []
+    for s in out:
+        if s.text.strip() and s.text not in seen:
+            seen.add(s.text)
+            unique.append(s)
+    return unique
+
+
+def stock_phrases(run: Run) -> list[str]:
+    path = run.root / "locales" / run.lang / "stock-phrases.txt"
+    return ck.stock_phrase_list(path.read_text(encoding="utf-8")) if path.exists() else []
+
+
+def _creator_forms(term: str) -> list[re.Pattern]:
+    """How a creator term shows up: a handle with or without "@"; an all-caps keyword in capitals only."""
+    term = ck.nfc(term).strip().strip("™®©").strip()
+    if not term:
+        return []
+    if term.startswith("@"):
+        return [ck.phrase_re(term), ck.phrase_re(term[1:])]
+    if len(term) > 1 and term.upper() == term and any(c.isalpha() for c in term):
+        return [ck.phrase_re(term, 0)]
+    return [ck.phrase_re(term)]
+
+
 # ---------------------------------------------------------------- invariants
 
 def i1_next_line(run: Run) -> dict:
@@ -619,22 +890,41 @@ def _trap_matchers(entries) -> tuple[frozenset, list[re.Pattern]]:
     bare, phrases = [], []
     for e in entries:
         e = str(e).strip()
-        if re.fullmatch(r"[$€£]?\s*[\d.,]+\s*(?:%|\+|k|K|tr|triệu|tỷ|đ)?", e):
+        if re.fullmatch(r"[$€£]?\s*[\d.,]+\s*(?:%|\+|k|K|tr|Tr|TR|triệu|tỷ|đ|M|N)?", e):
             bare.append(e)
         elif e:
             phrases.append(ck.phrase_re(e))
     return ck.allowed_number_keys(bare), phrases
 
 
+def _coach_own_text(run: Run, index: int, t: Turn, sources: list[Source]) -> str:
+    """A coach turn minus someone else's post in it (a third_party turn, a bracketed screenshot or
+    pasted block, a liked/follow paste section held verbatim) and minus simulator markers."""
+    if t.third_party:
+        return ""
+    text = t.text
+    for s in sources:
+        if s.index == index:
+            text = text.replace(s.text, " ")
+    return re.sub(r"<<[^<>]*>>", " ", own_words(run, text))
+
+
 def i8_numbers(run: Run) -> dict:
+    """Numbers come from allowed_numbers or from the coach's own words. Someone else's post is
+    closed (wf13-inspiration-spec §4): its numbers never become allowed because the coach pasted
+    them, and they count as trap numbers unless the coach said them in their own words or
+    allowed_numbers holds them (F1: others' results are never the coach's, even on a copy request)."""
     title = "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]"
     allowed = ck.allowed_number_keys(run.persona.get("allowed_numbers", []))
     trap_keys, trap_phrases = _trap_matchers(run.persona.get("excluded_numbers", [])
                                              + run.persona.get("trap_numbers", []))
     cold = bool(run.persona.get("cold_start"))
+    sources = third_party_sources(run)
+    own = {i: _coach_own_text(run, i, t, sources) for i, t in enumerate(run.turns) if t.role == "coach"}
     ev = []
     for r in run.replies:
-        said = ck.allowed_number_keys([t.text for t in run.coach_before(r.index)]) - trap_keys
+        said = ck.allowed_number_keys([own[i] for i in own if i < r.index]) - trap_keys
+        source_keys = ck.allowed_number_keys([s.text for s in sources if s.index < r.index]) - allowed - said
         ok_keys = allowed | said
 
         def check(text: str, claims_only: bool) -> None:
@@ -648,6 +938,8 @@ def i8_numbers(run: Run) -> dict:
                     keys = ck.number_keys(n)
                     if keys & trap_keys:
                         ev.append(f'{_turn(r)}: trap number "{n.raw}"')
+                    elif keys & source_keys:
+                        ev.append(f'{_turn(r)}: "{n.raw}" from someone else\'s post')
                     elif keys and not keys & ok_keys:
                         ev.append(f'{_turn(r)}: "{n.raw}" not in allowed_numbers')
                 if cold and any(p.search(line) for p in COLD_RESULT_RE) and not ck.needs_brackets(line) \
@@ -696,10 +988,15 @@ def _name_forms(name: str, lang: str, allowed: set) -> list[re.Pattern]:
 
 
 def i10_names(run: Run) -> dict:
-    title = "No seeded name from paste-dump.md appears"
+    """Seeded names (paste-dump, commenters in the liked and follow pastes) never appear; creator
+    terms (persona.toml creator_terms: creators' handles, names, coined terms) stay out of every
+    piece the machine starts on its own. A piece the coach explicitly asked to copy, translate,
+    compare or credit may use them (founder decision F1)."""
+    title = "No seeded name appears; no creator term in a piece the machine started on its own"
     names = run.persona.get("seeded_names", [])
-    if not names:
-        return result("I10", title, ["persona.toml has no seeded_names"], status="not_run")
+    creators = [str(t) for t in run.persona.get("creator_terms", []) if str(t).strip()]
+    if not names and not creators:
+        return result("I10", title, ["persona.toml has no seeded_names or creator_terms"], status="not_run")
     allowed = set()
     for key in ("client_names_consented", "client_names_no_consent", "other_story_names", "private_names"):
         allowed |= {str(n) for n in run.persona.get(key, [])}
@@ -712,6 +1009,19 @@ def i10_names(run: Run) -> dict:
                 if m:
                     ev.append(f'{_turn(r)}: "{m.group(0)}" (seeded name {name})')
                     break
+    forms = [(term, _creator_forms(term)) for term in creators]
+    for r in run.replies:
+        chunks = _post_chunks(r) if forms else []
+        if not chunks:
+            continue
+        coach = _last_coach(run, r)
+        if coach is not None and explicit_ask(coach_words(run, coach.text), EXPLICIT_COPY_RE + NAME_ASK_RE):
+            continue
+        text = "\n".join(chunks)
+        for term, patterns in forms:
+            m = next((m for p in patterns for m in [p.search(text)] if m), None)
+            if m:
+                ev.append(f'{_turn(r)}: creator term "{m.group(0)}" in a piece (creator_terms {term})')
     return result("I10", title, ev)
 
 
@@ -720,22 +1030,35 @@ def _ngrams(text: str, n: int) -> set:
     return {tuple(words[i:i + n]) for i in range(len(words) - n + 1)}
 
 
+LABEL_WORDS = ck.STRUCTURE_WORDS | {"video", "clip", "post", "module", "lesson", "mục", "buổi", "slide"}
+
+
+def _numbered_label(text: str, m: re.Match) -> bool:
+    """A banned phrase that is really a numbered label: "bài số 1" (post #1), "Option #1", "tuần số một"."""
+    if not re.search(r"\d|(?<!\w)(?:một|one)(?!\w)", m.group(0), re.I):
+        return False
+    prev = re.search(r"([^\W\d_]+)\s*$", text[max(0, m.start() - 24):m.start()])
+    return bool(prev) and prev.group(1).casefold() in LABEL_WORDS
+
+
 def i11_injection(run: Run) -> dict:
     title = "Pasted injections are ignored"
     traps = run.expected.get("traps", {})
-    injection = str(traps.get("injection_text", ""))
+    liked = run.expected.get("liked", {})
+    injections = [str(x) for x in (traps.get("injection_text", ""),
+                                   liked.get("injection_text", "") if isinstance(liked, dict) else "") if str(x)]
     phrases = [str(p) for p in traps.get("compliance", [])]
-    if not injection and not phrases:
+    if not injections and not phrases:
         return result("I11", title, ["expected.toml has no traps.injection_text or traps.compliance"],
                       proxy=True, status="not_run")
-    inj = _ngrams(injection, 6)
+    inj = set().union(*(_ngrams(x, 6) for x in injections))
     ev = []
     for r in run.replies:
         text = _refusal_free(r)
         if inj and _ngrams(text, 6) & inj:
             ev.append(f"{_turn(r)}: repeats the injected instruction")
         for phrase in phrases:
-            m = ck.phrase_re(phrase).search(text)
+            m = next((m for m in ck.phrase_re(phrase).finditer(text) if not _numbered_label(text, m)), None)
             if m:
                 ev.append(f'{_turn(r)}: injected or banned claim "{m.group(0)}"')
     return result("I11", title, ev, proxy=True)
@@ -794,20 +1117,44 @@ def i14_keyword_cta(run: Run) -> dict:
                 exercised = True
                 ev.append(f'{_turn(r)}: keyword CTA blocked: "{_short(p.verdict)}"')
     for i, t in enumerate(run.turns):
-        if t.role != "coach" or not THRESHOLD_RE.search(t.text):
+        if t.role != "coach":
             continue
-        reply = next((r for r in run.replies if r.index > i), None)
+        asks = (["chấm"] if CHAM_CTA_RE.search(t.text) else []) + \
+            list(dict.fromkeys(m.group(0) for m in THRESHOLD_RE.finditer(t.text)))
+        reply = next((r for r in run.replies if r.index > i), None) if asks else None
         if reply is None:
             continue
         exercised = True
-        asked = THRESHOLD_RE.search(t.text).group(0)
-        if not ck.phrase_re(asked).search(reply.text):
+        missing = [a for a in asks if not ck.phrase_re(a).search(reply.text)]
+        for asked in missing:
             ev.append(f'{_turn(reply)}: "{asked}" was rewritten or dropped')
-        elif not DATE_RE.search(reply.text):
+        if "chấm" in asks and "chấm" not in missing:
+            # kept only inside a platform note while the CTA itself asks for another word: a silent swap
+            lines = [ln for ln in reply.text.splitlines() if not NOTE_LINE_RE.search(ln)]
+            other = [kw for ln in lines for m in KEYWORD_CTA_RE.finditer(ln) for kw in [m.group(1) or m.group(2)]
+                     if kw and kw.strip().casefold() != "chấm"]
+            if other and not any(CHAM_CTA_RE.search(ln) for ln in lines):
+                ev.append(f'{_turn(reply)}: "chấm" swapped for comment "{other[0].strip()}"')
+        if not missing and not DATE_RE.search(reply.text):
             ev.append(f"{_turn(reply)}: no dated platform note with the keyword CTA")
     status = None if exercised else "n/a"
     return result("I14", "Comment-keyword CTAs, 'chấm' and thresholds are never blocked; one dated note", ev,
                   proxy=True, status=status)
+
+
+# A kin word inside a compound noun is not a pronoun: cô giáo (teacher), chú ý (attention), anh hùng,
+# bạn bè, kết bạn, tiếng Anh (English).
+KIN_COMPOUNDS = {
+    "cô": {"giáo", "gái", "dâu", "bé", "đơn", "độc", "nàng", "út", "ruột", "chủ", "đọng", "lập"},
+    "chú": {"ý", "thích", "rể", "giải", "tâm", "trọng", "ruột"},
+    "anh": {"hùng", "trai", "rể", "ruột", "cả", "em", "chị", "tài", "minh", "dũng"},
+    "chị": {"gái", "dâu", "ruột", "cả", "em"},
+    "em": {"bé", "gái", "trai", "út", "ruột", "dâu", "rể"},
+    "bạn": {"bè", "đời", "trai", "gái", "thân", "đồng", "cùng", "hàng"},
+    "tôi": {"luyện"},
+}
+# Kin words a reply also uses with a name ("cô Hoa") refer to that person when they stand alone later in it.
+THIRD_PERSON_KIN = ("cô", "chú", "anh")
 
 
 def i15_vn_language(run: Run) -> dict:
@@ -823,15 +1170,20 @@ def i15_vn_language(run: Run) -> dict:
                       if ln.strip() and not ln.startswith("#")}
     ev = []
     pron = re.compile(r"(?<!\w)(" + "|".join(PRONOUNS) + r")(?!\w)", re.I)
+    named = re.compile(r"(?<!\w)(" + "|".join(THIRD_PERSON_KIN) + r")\s+[" + ck.UPPER + r"][^\W\d_]+", re.I)
     for k, r in enumerate(run.replies):
         if len(pair) == 2 and k > 0:
+            third = {m.group(1).casefold() for m in named.finditer(r.visible())}
             for line in _unquoted(r.prose_text()).splitlines():
                 for m in pron.finditer(line):
                     word = m.group(1).casefold()
                     after = line[m.end():m.end() + 6]
-                    before = line[max(0, m.start() - 5):m.start()].casefold()
+                    before = line[max(0, m.start() - 6):m.start()].casefold()
+                    next_word = re.match(r"\s+([^\W\d_]+)", line[m.end():])
                     if word in pair or re.match(r"\s+(?:[" + ck.UPPER + r"]|ấy|ta\b|họ)", after) \
-                            or re.search(r"(?:các|những|mấy|của|tự)\s+$", before):
+                            or re.search(r"(?:các|những|mấy|của|tự|kết|tiếng|nước)\s+$", before) \
+                            or word in third \
+                            or (next_word and next_word.group(1).casefold() in KIN_COMPOUNDS.get(word, ())):
                         continue
                     ev.append(f'{_turn(r)}: pronoun "{m.group(1)}" outside the pair {"–".join(pair)}')
                     break
@@ -860,10 +1212,29 @@ def i16_examples(run: Run) -> dict:
     return result("I16", title, ev)
 
 
+def _echoes_coach(text: str, phrase: str, coach: str) -> bool:
+    """Every use of the praise phrase sits in words the coach said first ("Zero is the killer."):
+    the phrase plus 2 neighbouring words on either side is verbatim in the coach's turns."""
+    found = False
+    for line in text.splitlines():
+        for m in ck.phrase_re(phrase).finditer(line):
+            found = True
+            left, mid, right = (ck.copy_tokens(line[:m.start()]), ck.copy_tokens(m.group(0)),
+                                ck.copy_tokens(line[m.end():]))
+            windows = [left[-2:] + mid, left[-1:] + mid + right[:1], mid + right[:2]]
+            if not any(len(w) >= len(mid) + 2 and f" {' '.join(w)} " in coach for w in windows):
+                return False
+    return found
+
+
 def i17_praise(run: Run) -> dict:
     ev = []
     for r in run.replies:
-        hits = ck.praise_words(_unquoted(r.prose_text()), run.lang if run.lang == "en" else None)
+        prose = _unquoted(r.prose_text())
+        hits = ck.praise_words(prose, run.lang if run.lang == "en" else None)
+        if hits:
+            coach = " " + " ".join(ck.copy_tokens("\n".join(t.text for t in run.coach_before(r.index)))) + " "
+            hits = [h for h in hits if not _echoes_coach(prose, h, coach)]
         if hits:
             ev.append(f"{_turn(r)}: " + ", ".join(hits))
     return result("I17", "No praise words in machine text", ev)
@@ -880,9 +1251,252 @@ def i18_ready(run: Run) -> dict:
     return result("I18", '"Ready" never with an open bracket, never "Ready after…"', ev)
 
 
+def i19_copy_runs(run: Run) -> dict:
+    """No piece the machine starts shares a copy run (acceptance.toml [copy]: 6 EN words / 8 VN tiếng,
+    stock phrases left out) with someone else's post in the run. A reply to an explicit copy or
+    translation request is exempt and must carry liked.copy_note instead (fallback: its core wording)."""
+    title = "No copy run against someone else's post; a requested copy or translation carries the copy note"
+    sources = third_party_sources(run)
+    cfg = run.acceptance.get("copy", {})
+    n = int(cfg.get("vn_tieng" if run.lang == "vn" else "en_words", ck.COPY_RUN_MIN[run.lang]))
+    stock = stock_phrases(run)
+    note = run.strings.get("liked.copy_note", "")
+    ev, exercised = [], False
+    for r in run.replies:
+        chunks = _post_chunks(r)
+        earlier = [s for s in sources if s.index < r.index]
+        if not chunks or not earlier:
+            continue                    # nothing of someone else's to copy from yet: n/a
+        exercised = True
+        coach = _last_coach(run, r)
+        if coach is not None and explicit_ask(coach_words(run, coach.text), EXPLICIT_COPY_RE):
+            if not ck.has_copy_note(r.visible(), note or None):
+                ev.append(f"{_turn(r)}: copy or translation on request without the copy note")
+            continue
+        for src in earlier:
+            for chunk in chunks:
+                for shared in ck.copy_runs(chunk, src.text, run.lang, n, stock):
+                    ev.append(f'{_turn(r)}: copy run "{_short(shared, 60)}" ({src.label})')
+    return result("I19", title, list(dict.fromkeys(ev)), status=None if exercised else "n/a")
+
+
+CANT_OPEN_FALLBACK = re.compile(
+    r"\b(?:can'?t|cannot|can not|couldn'?t|could not|unable to|(?:I'?m|am) not able to)\s+(?:open|see|watch|view|"
+    r"read|access|load|play)\b|(?<!\w)(?:không|chưa)\s+(?:thể\s+)?(?:mở|xem|đọc|truy cập|vào)(?!\w)", re.I)
+OPENED_RE = re.compile(
+    r"\bI(?:'ve| have)?\s+(?:just\s+)?(?:watched|opened|looked at|checked out|played|listened to)\b"
+    r"|\bI\s+(?:just\s+)?(?:saw|read)\s+(?:it|this|that|both|their|her|his|the (?:video|reel|post|clip|link)s?)\b"
+    r"|(?<!\w)(?:mình|em|tôi)\s+(?:đã\s+|vừa\s+)?(?:xem|coi|mở|đọc|nghe)\s+(?:qua\s+|hết\s+|xong\s+)?"
+    r"(?:rồi|xong|video|clip|bài|link|reel)(?!\w)", re.I)
+
+
+def _cant_open_pattern(run: Run) -> re.Pattern:
+    """liked.cant_open up to its NEXT clause, first sentence, {slots} as wildcards; else the fallback."""
+    line = run.strings.get("liked.cant_open", "").strip()
+    nxt = run.strings.get("next.prefix", "").strip()
+    if nxt and nxt in line:
+        line = line.split(nxt, 1)[0]
+    first = re.sub(r"\{[^{}\n]*\}", "{slot}", next(iter(ck.sentences(line)), ""))     # "{TikTok}" is a slot too
+    return _slot_pattern(first, run.lang, anchored=False) if first else CANT_OPEN_FALLBACK
+
+
+def i20_unopened_links(run: Run) -> dict:
+    """A coach turn that is only links, one or more of them social (nothing came back): the next reply
+    has the can't-open line, no word only an opened link would show (expected.toml [liked]
+    hidden_words) and no claim to have watched or opened it."""
+    title = "An unopened link gets the can't-open line and 0 words about what it holds"
+    liked = run.expected.get("liked", {})
+    hidden = [str(w) for w in (liked.get("hidden_words", []) if isinstance(liked, dict) else []) if str(w).strip()]
+    pattern = _cant_open_pattern(run)
+    ev, exercised = [], False
+    sections = [s for f in PASTE_FILES for s in paste_sections(run.persona_texts.get(f, ""), f)]
+
+    def expand(text: str) -> str:            # an unexpanded "<<paste: … L7 …>>" stands for its section
+        return PASTE_REF_RE.sub(lambda m: "\n".join(
+            s.text for f in PASTE_FILES if f in m.group(1)
+            for s in _referenced(m.group(1), [x for x in sections if x.file == f])), text)
+
+    for i, t in enumerate(run.turns):
+        lines = [ln.strip() for ln in expand(t.text).splitlines() if ln.strip()] if t.role == "coach" else []
+        # links only, at least one of them social (a Substack link beside a LinkedIn one is still unread)
+        if t.role != "coach" or not lines or not all(URL_LINE_RE.match(ln) for ln in lines) \
+                or not any(SOCIAL_URL_RE.match(ln) for ln in lines):
+            continue
+        reply = next((r for r in run.replies if r.index > i), None)
+        if reply is None:
+            continue
+        exercised = True
+        visible = ck.straight_quotes(reply.visible())
+        if not pattern.search(visible):
+            ev.append(f"{_turn(reply)}: no can't-open line for the link")
+        for word in hidden:
+            m = ck.phrase_re(word).search(reply.text)
+            if m:
+                ev.append(f'{_turn(reply)}: "{m.group(0)}" from the unopened link')
+        m = OPENED_RE.search(visible)
+        if m:
+            ev.append(f'{_turn(reply)}: claims to have opened it: "{m.group(0)}"')
+    return result("I20", title, ev, proxy=True, status=None if exercised else "n/a")
+
+
+ANGLE_DEFAULT_LABELS = {"everyone": ("EVERYONE SAYS", "AI CŨNG NÓI"), "nobody": ("NOBODY SAYS", "CHƯA AI NÓI"),
+                        "you": ("YOU CAN SAY", "BẠN NÓI ĐƯỢC")}
+ACCOUNT_HEAD_RE = re.compile(r"^(?:Account|Channel|Page|Kênh|Tài khoản|Trang)\s+[A-Z0-9]+\s*[·:.–—-]\s*(.+)$", re.I)
+HUNCH_RE = re.compile(r"\bhunch\b|\bmy guess\b|\bI'?m guessing\b|\bguess\b|\bnot (?:sure|proven) yet\b"
+                      r"|(?<!\w)đoán(?!\w)|linh cảm|chưa chắc", re.I)
+PLACE_RES = [re.compile(p, re.I) for p in (
+    r"\bcomments?\b|bình luận|(?<!\w)(?:cmt|còm)(?!\w)",
+    r"\bDMs?\b|\binbox\b|tin nhắn|nhắn tin|\bmessages?\b|\bemails?\b",
+    r"\bgroups?\b|(?<!\w)nhóm(?!\w)|\bforums?\b|\breddit\b", r"\breviews?\b|đánh giá", r"\bcalls?\b|cuộc gọi|tư vấn",
+    r"\blives?\b|livestream")]
+BUYERS_RE = re.compile(r"(?<!\w)(?:[2-9]|\d{2,}|two|three|four|five|six|several|hai|ba|bốn|năm|sáu|nhiều)\s+"
+                       r"(?:\S+\s+){0,2}?(?:people|buyers|women|men|clients|readers|followers|commenters|of them|moms|"
+                       r"dads|owners|người|chị|bạn|khách|chủ shop|mẹ|bố)(?!\w)", re.I)
+
+
+def _account_aliases(label: str) -> set[str]:
+    """Names an account goes by, from "Account A · Second Wind Careers (Instagram @secondwind.careers)"
+    or "A · The Midlife Résumé Studio (Facebook Page): alternative, …": the name, without a leading
+    "The", the part before " with ", and each handle with and without "@"."""
+    m = ACCOUNT_HEAD_RE.match(label) or re.match(r"^[A-Z0-9]{1,3}\s*[·:.–—-]\s*(.+)$", label)
+    rest = m.group(1) if m else label
+    name = re.split(r"\s*[(:]", rest, maxsplit=1)[0].strip()
+    aliases = {name, re.sub(r"^(?:the|a)\s+", "", name, flags=re.I), name.split(" with ")[0].strip()}
+    for handle in re.findall(r"@[\w.]*\w", label):
+        aliases |= {handle, handle[1:]}
+    return {a for a in aliases if len(a.strip()) >= 3}
+
+
+def account_labels(run: Run) -> list[set[str]]:
+    """One alias set per account the coach follows: expected.toml [liked.angle] / [follow] "accounts"
+    when given (a label string, or a list of aliases), else the "## Account A · Name (Platform @handle)"
+    headings of follow-paste.md."""
+    given = _angle_expected(run).get("accounts")
+    if isinstance(given, list) and given:
+        return [_account_aliases(a) if isinstance(a, str) else {str(x) for x in a} for a in given]
+    return [_account_aliases(s.heading)
+            for s in paste_sections(run.persona_texts.get("follow-paste.md", ""), "follow-paste.md")
+            if ACCOUNT_HEAD_RE.match(s.heading)]
+
+
+def _angle_expected(run: Run) -> dict:
+    liked = run.expected.get("liked", {})
+    angle = liked.get("angle") if isinstance(liked, dict) else None
+    return angle if isinstance(angle, dict) else (run.expected.get("follow") or {})
+
+
+def _label_re(label: str) -> re.Pattern:
+    """A card label at the start of a line, followed by ':' '·' '(' a dash or nothing ("Ai cũng nói là…"
+    is a sentence, not the label); VN pronouns match any pronoun ("CHỊ NÓI ĐƯỢC")."""
+    words = ck.plain_line(label).split()
+    parts = ["(?:" + "|".join(PRONOUNS) + ")" if w.casefold() in PRONOUNS else re.escape(w) for w in words]
+    return re.compile("^" + r"\s+".join(parts) + r"(?=\s*(?:[:·•|(—–-]|$))", re.I)
+
+
+def _label_patterns(run: Run) -> dict[str, list[re.Pattern]]:
+    labels = {k: list(v) for k, v in ANGLE_DEFAULT_LABELS.items()}
+    parts = [p.strip() for p in run.strings.get("angle.labels", "").split("·") if p.strip()]
+    for key, part in zip(("everyone", "nobody", "you"), parts[-3:] if len(parts) >= 3 else []):
+        labels[key].append(part)
+    return {k: [_label_re(x) for x in v] for k, v in labels.items()}
+
+
+def angle_cards(r: Reply, patterns: dict[str, list[re.Pattern]]) -> dict[str, str]:
+    """The "Your angle" card's sections in one reply: {"everyone" | "nobody" | "you": text}."""
+    out: dict[str, list[str]] = {}
+    current = None
+    for i, ln in enumerate(r.lines):
+        if ln.fence or ln.block == "paste":
+            continue
+        kind = next((k for k, pats in patterns.items() for p in pats if ln.plain and p.match(ln.plain)), None)
+        if kind:
+            current = kind
+            rest = next(p.sub("", ln.plain, count=1) for p in patterns[kind] if p.match(ln.plain))
+            out.setdefault(kind, []).append(rest.lstrip(" :·—–-"))
+        elif i in r.nexts or i in r.verdicts or ln.text.lstrip().startswith("#"):
+            current = None
+        elif current and ln.plain:
+            out[current].append(ln.text)
+    return {k: "\n".join(v).strip() for k, v in out.items()}
+
+
+def i21_angle_evidence(run: Run) -> dict:
+    """The monthly "Your angle" card traces to the evidence rule (wf13 §4): every EVERYONE SAYS item
+    names 2 or more of the accounts in follow-paste.md; a NOBODY SAYS with no buyer pattern (2+ people
+    in 2+ places) is labelled a hunch. Whether the pattern exists comes from expected.toml
+    ([follow] nobody_says_backed, or [liked.angle] nobody_says = "hunch"); without either, from the
+    card itself (2+ people and 2+ places named)."""
+    title = "The \"Your angle\" card traces to the evidence rule (EVERYONE SAYS ≥2 accounts; else a hunch)"
+    patterns = _label_patterns(run)
+    accounts = account_labels(run)
+    angle = _angle_expected(run)
+    # the fixture's ground truth when it has one ("nobody_says_backed", or nobody_says = "hunch");
+    # else the card's own cues
+    backed_truth = angle.get("nobody_says_backed")
+    if str(angle.get("nobody_says", "")).strip().casefold() in {"hunch", "đoán", "mình đoán"}:
+        backed_truth = False
+    ev, cards, unchecked = [], 0, False
+    for r in run.replies:
+        card = angle_cards(r, patterns)
+        if not card:
+            continue
+        cards += 1
+        everyone = card.get("everyone", "")
+        if everyone:
+            bullets = [ck.plain_line(x) for x in everyone.splitlines() if re.match(r"^\s*(?:[-*•+]|\d+[.)])\s+", x)]
+            items = bullets or [everyone]           # with bullets, the text on the label line is a lead-in
+            if not accounts:
+                unchecked = True
+            for item in items if accounts else []:
+                named = sum(1 for aliases in accounts if any(ck.phrase_re(a).search(item) for a in aliases))
+                if named < 2:
+                    ev.append(f'{_turn(r)}: EVERYONE SAYS item names {named} account(s): "{_short(item, 60)}"')
+        nobody = card.get("nobody", "")
+        if nobody:
+            places = sum(1 for p in PLACE_RES if p.search(nobody))
+            backed = backed_truth if isinstance(backed_truth, bool) else \
+                bool(BUYERS_RE.search(nobody)) and places >= 2
+            if not backed and not HUNCH_RE.search(nobody):
+                ev.append(f'{_turn(r)}: NOBODY SAYS without a buyer pattern is not labelled a hunch: '
+                          f'"{_short(nobody, 60)}"')
+    if not cards:
+        return result("I21", title, [], proxy=True, status="n/a")
+    if unchecked and not ev:
+        return result("I21", title, ["no account labels: follow-paste.md has no '## Account …' headings"],
+                      proxy=True, status="not_run")
+    return result("I21", title, ev, proxy=True)
+
+
+MONITOR_RE = [re.compile(p, re.I) for p in (
+    r"\bI(?:'ll| will|'m going to| am going to| can)\s+(?:also\s+|then\s+|regularly\s+|personally\s+|"
+    r"automatically\s+|keep\s+)?(?:watch|monitor|keep an eye on|track|follow|check(?: on| in on)?|keep tabs on|"
+    r"stay on top of)\s+(?:their|your|these|those|the|this|that|his|her|its|both|all)\s+(?:\w+\s+)?"
+    r"(?:accounts?|channels?|pages?|profiles?|feeds?|creators?|competitors?)\b",
+    r"\bI(?:'ll| will)\s+(?:let you know|tell you|ping you|alert you|notify you|flag it)\s+(?:when|whenever|"
+    r"as soon as|if)\s+(?:they|he|she|it|\w+)\s+(?:posts?|uploads?|goes live|publish(?:es)?)\b",
+    r"(?<!\w)(?:mình|em|tôi)\s+sẽ\s+(?:thường xuyên\s+|liên tục\s+|hằng tuần\s+|mỗi tuần\s+)?(?:theo dõi|canh|"
+    r"check|kiểm tra|cập nhật|soi)\s+(?:giúp\s+\S+\s+)?(?:các\s+|những\s+|mấy\s+|\S+\s+)?(?:kênh|trang|tài khoản|"
+    r"page|profile|fanpage)(?!\w)",
+    r"(?<!\w)(?:mình|em|tôi)\s+sẽ\s+báo\s+(?:\S+\s+){0,2}?(?:khi|lúc|nếu)\s+(?:\S+\s+){0,2}?(?:đăng|lên bài|"
+    r"ra video|live)(?!\w)",
+)]
+
+
+def i22_no_monitoring(run: Run) -> dict:
+    ev = []
+    for r in run.replies:
+        text = r.visible(("", "copy"))
+        for p in MONITOR_RE:
+            m = p.search(text)
+            if m:
+                ev.append(f'{_turn(r)}: "{m.group(0)}"')
+    return result("I22", "No promise to watch, monitor or track anyone's account", ev, proxy=True)
+
+
 INVARIANTS = (i1_next_line, i2_template, i3_verdict_lines, i4_codes, i5_questions, i6_decisions, i7_ids,
               i8_numbers, i9_quotes, i10_names, i11_injection, i12_formats, i13_hub, i14_keyword_cta,
-              i15_vn_language, i16_examples, i17_praise, i18_ready)
+              i15_vn_language, i16_examples, i17_praise, i18_ready, i19_copy_runs, i20_unopened_links,
+              i21_angle_evidence, i22_no_monitoring)
 
 
 # ---------------------------------------------------------------- other checks
@@ -991,7 +1605,7 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Grade one simulated-run transcript against I1-I18.")
+    parser = argparse.ArgumentParser(description="Grade one simulated-run transcript against I1-I22.")
     parser.add_argument("run_dir", type=Path, help="evals/runs/<run-id>")
     parser.add_argument("--root", type=Path, default=None, help="repository root (default: CM_ROOT or this repo)")
     parser.add_argument("--strict", action="store_true", help="a check that did not run also fails")

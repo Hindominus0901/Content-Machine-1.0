@@ -88,9 +88,17 @@ allowed_numbers = [
 excluded_numbers = [
   "70%", "80%", "90%", "100%", "200 triệu", "60.000.000đ",
   "6 tháng lương", "50 doanh nghiệp", "100 comment",
+  # wf13 (liked-paste.md; spec docs/research/wf13-inspiration-spec.md §4, §7 P0):
+  # the liked posts' own results, claims, prices and profile-grid view counts, and the commenter's phone
+  # number (as written and digits-only). Never presented as the coach's (I8).
+  # Grid counts are listed by value ("4.600" = 4,6 N) because graders match by value;
+  # app-style counts ("52,7 N", "2,1 Tr") are read by value too (tools/cmcore/checks.py), so either form is caught.
+  "64%", "6%", "520", "87%", "2,4 tỷ", "2.316", "0905 123 456", "0905123456", "27.300", "4.100", "4.800",
+  "3.900", "5.200", "4.500", "3.600", "5.700", "4.600",
 ]
 
-# Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
+# Fictional names that appear ONLY in paste-dump.md and, since wf13, in liked-paste.md.
+# None may appear in any output (I10).
 # Lê Hữu Khang and Đoàn Thị Minh Châu are past clients replying on Zalo; their names still never appear.
 seeded_names = [
   "Trần Thị Thanh Thủy",
@@ -114,6 +122,18 @@ seeded_names = [
   "Châu Gia Bảo",
   "Lê Hữu Khang",
   "Đoàn Thị Minh Châu",
+  # wf13: commenters in liked-paste.md. Same rule: never stored or printed (I10; PDP).
+  "Phan Thị Hoài Thương", "Trần Đức Lợi", "Hồ Thị Thu Sương", "Nguyễn Văn Sỹ", "Lê Thị Bích Liễu",
+  "Đoàn Minh Nhân",
+]
+
+# wf13 (spec §4 'closing the source', §5, founder decision F4): creator names, handles, page and channel
+# names and coined terms from liked-paste.md. Allowed in the swipe file and the internal research grid;
+# never on the DEFAULT path (scripts, captions, posts, the visible Brand Card) unless the coach explicitly
+# asks (F1: done with one dated note).
+creator_terms = [
+  "Văn Đình Thắng", "HR Bứt Phá Group", "Mô Hình Giữ Chân 5 Sao", "Giữ Chân 5 Sao", "Luật Lao Động Dễ Hiểu",
+  "Tuyển Người Cho Quán", "anh Bửu", "Mạc Thị Quỳnh Hoa", "Margaret Ashdown",
 ]
 
 [[proof_items]]
