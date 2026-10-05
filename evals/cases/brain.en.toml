@@ -1,0 +1,793 @@
+# Eval cases: brain (the Brand Card: how the machine remembers the coach), EN edition.
+# Written by the QA role before modules/en/brain.md exists. Producers never edit this file.
+#
+# Sources: schemas/brand-card.toml (visible part ≤900 chars; whole card ≤5,000 EN; machine block in
+# a fence headed "for the machine, no need to read"; one `name: value` line per field; list items
+# joined by " | "; plain field names identical in both editions; field caps; trim_order; highest
+# version wins); schemas/banks.toml [card_caps] (V 8, S 5, P 5; P rows only with consent for organic
+# use and Substantiated); docs/research/wf11-ux-spec.md §1.4 (Door B box, move-in), §2 minute 24-26,
+# §3.2 (monthly reprint), §5.7, §6 (Memory and Machine rows: self-check one-line fixes for a missing
+# file, a block pasted into chat, duplicate cards and a missing card); wf11-ux-design-concierge.md
+# §1.6 and wf11-ux-design-guided-project.md §1.6 (fix wording); wf12-qa-spec.md §2.8 ('not me:' /
+# 'I do say'; hard stops can never be allowlisted); strings/en.toml (setup.check, next.prefix,
+# checked.prefix, why.prefix, verdict.*).
+#
+# Conventions (read with evals/README.md "Case files"):
+# - `input` holds the coach turn(s); `context` names the state, including which Brand Card
+#   versions sit in the project sources.
+# - Assertions are checked on the machine reply to the last coach turn in `input`.
+# - Regexes are Python `re`, run on the full reply text (the fenced machine block included),
+#   case-sensitive unless the pattern starts with (?i) or uses (?i:...).
+# - The machine block legitimately carries Bank IDs (e.g. "V-3: …" rows), so ID and jargon checks
+#   on the coach-visible part use a "before the machine label" pattern:
+#   \A(?:(?!for the machine)[\s\S])*? … ; graders.py also strips blocks labelled "for the machine".
+# - `invariants` lists I1-I18 ids only; graders.py runs deny_list on every transcript.
+
+[meta]
+module = "brain"
+edition = "en"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- shape and budgets
+
+[[case]]
+id = "brain.en.001"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Day-0 card: short visible part first, then the labelled machine block; whole card within budget"
+context = "Day 0 stop point, ChatGPT Free, persona default (Map OK'd: keyword CHAPTER; 12 weeks 1:1 at $2,400; talk day Tuesday; FILM TODAY delivered). No Brand Card exists yet."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bBrand Card\b[^\n]*\bv1\b''',
+  '''\A[\s\S]{0,1400}for the machine, no need to read''',
+  '''for the machine, no need to read[^\n]*\n?\s*```|```[^\n]*for the machine, no need to read''',
+  '''(?m)^\s*version:\s*1\b''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?i)MY-BRAND-BRAIN''',
+  '''(?i)\bBrand Brain\b''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I4", "I5"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml [budgets]: whole ≤5,000 chars EN, visible ≤900 (one phone screen). The 1,400-char window before the label allows the running tag and the stop-point lines plus a ≤900-char visible part; max_chars allows the stop lines and NEXT around a ≤5,000-char card. The fence is headed (or preceded by) 'for the machine, no need to read'. The Brand Card replaces MY-BRAND-BRAIN.md everywhere (PLAN reconciliation 4); 'Brand Brain' is the Notion page name only at L2/L3. Quit point 5: no brand wall."""
+
+[[case]]
+id = "brain.en.002"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "Machine block holds every required field with plain names and Dana's values"
+context = "Same state as brain.en.001 (the Day-0 stop-point reply). Dana: Instagram first, email list of 140, talk day Tuesday, bullets, 12-week program live, consented client results (Lorraine, Bev, Gail), no hub, no reminders yet. She never chose quiet."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*date:\s*20\d\d-\d\d-\d\d\b''',
+  '''(?m)^\s*edition:\s*en\b''',
+  '''(?m)^\s*pack_version:\s*\S''',
+  '''(?m)^\s*progress:\s*\S''',
+  '''(?m)^\s*who:\s*\S''',
+  '''(?m)^\s*their_words:\s*\S''',
+  '''(?m)^\s*promise:\s*\S''',
+  '''(?m)^\s*method:\s*\S''',
+  '''(?m)^\s*old_way:\s*\S''',
+  '''(?m)^\s*bio_line:\s*\S''',
+  '''(?m)^\s*keyword_alternates:\s*\S''',
+  '''(?m)^\s*idea_shifts:\s*\S''',
+  '''(?m)^\s*key_belief:\s*\S''',
+  '''(?m)^\s*why_this_one:\s*\S''',
+  '''(?m)^\s*trial_ends:\s*20\d\d-\d\d-\d\d\b''',
+  '''(?m)^\s*offer_status:\s*live\b''',
+  '''(?m)^\s*proof_ready:\s*yes\b''',
+  '''(?m)^\s*phrases:\s*\S''',
+  '''(?m)^\s*trait:\s*\S''',
+  '''(?m)^\s*enemy:\s*\S''',
+  '''(?m)^\s*principles:\s*\S''',
+  '''(?m)^\s*passages:\s*\S''',
+  '''(?m)^\s*client_words:\s*\S''',
+  '''(?m)^\s*stories:\s*\S''',
+  '''(?m)^\s*plan_start:\s*20\d\d-\d\d-\d\d\b''',
+  '''(?m)^\s*season:\s*1\b''',
+  '''(?m)^\s*talk_day:\s*Tue\b''',
+  '''(?m)^\s*tier:\s*(lean|standard)\b''',
+  '''(?m)^\s*platform:\s*instagram\b''',
+  '''(?m)^\s*owned_channel:\s*email\b''',
+  '''(?m)^\s*list_size:\s*140\b''',
+  '''(?m)^\s*cta_style:\s*keyword\b''',
+  '''(?m)^\s*delivery:\s*bullets\b''',
+  '''(?m)^\s*mode:\s*always-on\b''',
+  '''(?m)^\s*hub:\s*none\b''',
+  '''(?m)^\s*automations:\s*(none|reminders)\b''',
+  '''(?m)^\s*not_now:\s*\S''',
+]
+not_regex = [
+  '''(?m)^\s*(pronouns|dialect):\s*\S''',
+  '''(?im)^\s*(big_domino|pillars?|b_ids|b[1-7]|focus_scores?|locks?|edge|rungs?)\s*:''',
+]
+verdict = ""
+invariants = ["I1", "I5"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml [[machine.field]] required = true (EN): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, trial_ends, offer_status, proof_ready, phrases, trait, enemy, principles, passages, client_words, stories, plan_start, season, talk_day, tier, platform, owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations, not_now. pronouns and dialect are VN only ('EN leaves it out'). timezone is not asserted here because Dana never states it on Day 0; a '[guess]' value is acceptable. Values the visible part already shows (message, big ideas, keyword, offer, week) are not repeated in the block."""
+
+[[case]]
+id = "brain.en.003"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Visible part speaks plainly: message, big ideas, keyword, offer, week; no IDs, codes or framework words"
+context = "Same state as brain.en.001 (the Day-0 stop-point reply)."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = [
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bchapter\b)''',
+  '''\A(?:(?!for the machine)[\s\S])*?\$2,400''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\btue(s(day)?)?\b)''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bfri(day)?\b)''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bbig ideas?\b)''',
+]
+not_regex = [
+  '''\A(?:(?!for the machine)[\s\S])*?\b[VSPXKIBOR]-\d+\b''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bpillars?\b|big domino|\bB[1-7]\b|focus score|buyer mirror|belief bomb)''',
+  '''\A(?:(?!for the machine)[\s\S])*?\b(Admirable|Likable|Likeable|Credible|Trustable)\b''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\block(ed)?\b|\b90[- ]days?\b)''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?m:^\s*[a-z]+_[a-z_]+:)''',
+]
+verdict = ""
+invariants = ["I4", "I5"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml [visible]: 'Plain words for the coach. No IDs, codes, scores or framework words.' Fields: title (name, version, date), message, big_ideas (2-3), keyword, offer, week (talk day · film day · numbers day). snake_case field names belong to the machine block only. UX §4 never-sees list."""
+
+[[case]]
+id = "brain.en.004"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "List fields respect their caps on the Day-0 card"
+context = "Same state as brain.en.001. Dana's dump held 4 client quotes, 6+ stories, many strong phrases and more than 7 off-map topics."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = ['''(?m)^\s*passages:\s*\S''']
+not_regex = [
+  '''(?m)^\s*their_words:(?:[^\n|]*\|){2}''',
+  '''(?m)^\s*keyword_alternates:(?:[^\n|]*\|){2}''',
+  '''(?m)^\s*idea_shifts:(?:[^\n|]*\|){3}''',
+  '''(?m)^\s*phrases:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*principles:(?:[^\n|]*\|){3}''',
+  '''(?m)^\s*passages:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*client_words:(?:[^\n|]*\|){8}''',
+  '''(?m)^\s*stories:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*proof:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*not_now:(?:[^\n|]*\|){7}''',
+  '''(?m)^\s*passages:[^\n]*?(?:[^\s|]+[^\S\n]+){60}[^\s|]+''',
+]
+verdict = ""
+invariants = ["I5", "I9"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml max_items: their_words 2, keyword_alternates 2, idea_shifts 3, phrases 5, principles 3, passages 5 (≤60 words each), client_words 8, stories 5, proof 5, not_now 7 (banks.toml [card_caps] V 8 / S 5 / P 5). Items are joined by ' | ' (list_separator), so N separators on one line means N+1 items. The last pattern flags a single passage of 61+ words."""
+
+[[case]]
+id = "brain.en.005"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Proof rows only from consented, substantiated results, within each client's agreed uses"
+context = "Same state as brain.en.001. Earlier on Day 0 Dana dictated Pam's $15,000 story (no consent), her '90 percent' guess (never counted) and an unnamed variance case (no consent), and pasted comments with seeded names. Consent scope: Lorraine posts + case study (no ads); Bev posts only; Gail anything."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = ["Pam", "15,000", "Tillotson", "Prewitt", "Pelletier", "Kessel"]
+regex = ['''(?m)^\s*proof:\s*\S''']
+not_regex = [
+  '''(?i)\b90\s*(%|percent)''',
+  '''(?i)\bmonth 2\b[^\n|]*\bwithout a plan\b''',
+  '''(?i)Lorraine[^|\n]*\buses\b[^|\n]*\bads\b''',
+  '''(?i)\bBev\b[^|\n]*\buses\b[^|\n]*\b(ads|case)''',
+  '''(?i)\bcertified\b|\bICF\b''',
+]
+verdict = ""
+invariants = ["I5", "I8", "I10"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """banks.toml [card_caps] P_rows = 'only rows with Consent = Yes covering organic use and Substantiated ticked'. persona.toml P4 (Pam) consent false; P5 (90 percent) unsubstantiated; P8 (variance) consent false. Lorraine 'no ads' and Bev 'posts only' must survive into each row's uses. Seeded names from paste-dump.md never enter the card (I10); client_words carry the words and a role, not a commenter's name."""
+
+[[case]]
+id = "brain.en.006"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Cold-start card: no client proof, founding or no offer, no kids' names, no borrowed numbers"
+context = "Day 0 stop point, iPhone, ChatGPT Plus, persona default (Map OK'd: dads with a desk job; keyword KEEP UP; founding small group idea at his own '$249?' guess; Instagram + TikTok; list 0; beat cards; talk day Sunday). His dump named Owen, Lily, Jess and Tommy, the brother's '22 pounds' and 'a couple hundred people'."
+input = '''yep. filming it in the garage tomorrow before work'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*offer_status:\s*(none|founding)\b''',
+  '''(?m)^\s*proof_ready:\s*no\b''',
+  '''(?m)^\s*list_size:\s*0\b''',
+  '''(?m)^\s*owned_channel:\s*none\b''',
+  '''(?m)^\s*platform:\s*instagram\b''',
+  '''(?m)^\s*delivery:\s*bullets\b''',
+  '''(?m)^\s*talk_day:\s*Sun\b''',
+]
+not_regex = [
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+  '''\b(22|200)\b''',
+  '''(?i)couple hundred''',
+  '''(?i)\bcertified\b''',
+  '''(?i)\b(lost|lose|dropped)\s+\d''',
+  '''(?i)\$(?!249\b)\d''',
+  '''(?m)^\s*proof:\s*P-\d''',
+]
+verdict = ""
+invariants = ["I5", "I8", "I10"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml: offer_status live | founding | none; proof_ready 'yes once a consented, substantiated client result exists; hard asks wait for yes'. Dan has 0 clients: proof rows stay empty (his own story is a story row, not a P row). private_names never appear even in the machine block, because passages are the raw material for re-say pieces. 'bullets' is the card's word for his beat cards (delivery enum: interview | bullets | word-for-word)."""
+
+[[case]]
+id = "brain.en.007"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0"]
+title = "Dates are worked out, not guessed: plan_start is the Monday after Day 0; the 4-week try ends in week 4"
+context = "Day 0 is Sunday 2026-10-11, 8:45 pm Eastern (persona.toml day0). Same stop-point reply as brain.en.006. Week 1 runs Mon 2026-10-12 to Sun 2026-10-18."
+input = '''yep. filming it in the garage tomorrow before work'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*date:\s*2026-10-11\b''',
+  '''(?m)^\s*plan_start:\s*2026-10-12\b''',
+  '''(?m)^\s*trial_ends:\s*2026-11-0[6-9]\b''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bsun(day)?\b)''',
+]
+not_regex = [
+  '''(?m)^\s*trial_ends:\s*2027''',
+  '''(?m)^\s*trial_ends:\s*2026-1[0-2]-(?!0[6-9])\d\d''',
+]
+verdict = ""
+invariants = ["I5"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml: plan_start = 'Monday of week 1; tasks work out the week as ((weeks since plan_start) mod 4) + 1'; trial_ends = 'end of the 4-week try'. A 90-day date here would be the old lock leaking into the card. The visible week line names his talk day (Sunday)."""
+
+[[case]]
+id = "brain.en.008"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Consultant card: LinkedIn + newsletter plan, word-for-word, deal prep as the side door, true credentials"
+context = "Day 0 stop point on Claude Free, persona default (Map OK'd: keyword RECORD YEAR; Margin Sprint $7,500; deal prep kept referral-only; newsletter 380; talk day Wednesday; word-for-word)."
+input = '''ok. I'll film at my desk tomorrow at 7.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*platform:\s*linkedin\b''',
+  '''(?m)^\s*owned_channel:\s*email\b''',
+  '''(?m)^\s*list_size:\s*380\b''',
+  '''(?m)^\s*delivery:\s*word-for-word\b''',
+  '''(?m)^\s*talk_day:\s*Wed\b''',
+  '''(?m)^\s*cta_style:\s*keyword\b''',
+  '''(?im)^\s*side_door:[^\n]*\bdeal prep\b''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:record year)''',
+]
+not_regex = [
+  '''(?i)\bformer CFO\b|\bBig 4\b|\bMBA\b''',
+  '''\bRaj\b''',
+  '''(?i)85,000''',
+  '''(?i)\b70\s*(%|percent)''',
+  '''(?i)\b17\s*(%|percent)''',
+]
+verdict = ""
+invariants = ["I5", "I8", "I10"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml side_door: 'multi-income coaches only: the parked income stream that gets ≤1 labelled piece a week'. Erin's accepted side door is deal prep, referral-only. Credentials: CPA, VP of Finance (never CFO). Raj (3 → 17 percent) and Dee's $85,000 have no consent; 70 percent is a guess."""
+
+[[case]]
+id = "brain.en.009"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "S0"]
+title = "Single-stream card: quiet CTA saved, email list counted, no side door, no pronoun pair, nothing private"
+context = "Day 0 stop point on Claude Pro (Mac), persona default. During FILM TODAY Linda said 'quiet' (no 'comment BADGE'). Newsletter about 900; talk day Monday; word-for-word; one paid stream. Her dump named Margaret (no consent) and Joan's package amount (confidential)."
+input = '''I'm not filming today. I'll post the words on LinkedIn tonight.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*cta_style:\s*quiet\b''',
+  '''(?m)^\s*list_size:\s*900\b''',
+  '''(?m)^\s*owned_channel:\s*email\b''',
+  '''(?m)^\s*platform:\s*linkedin\b''',
+  '''(?m)^\s*talk_day:\s*Mon\b''',
+]
+not_regex = [
+  '''(?m)^\s*side_door:\s*[^\s\[]''',
+  '''(?m)^\s*(pronouns|dialect):\s*\S''',
+  '''\bMargaret\b''',
+  '''(?i)140,000''',
+  '''(?i)\b100\s*(%|percent)''',
+  '''(?i)\bcertified\b|\bICF\b|master coach''',
+  '''(?i)comment\s+["“'‘]?badge''',
+]
+verdict = ""
+invariants = ["I5", "I8", "I10"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml cta_style 'keyword by default; quiet when the coach says so'. side_door is for multi-income coaches only (expected.toml side_door = ''). pronouns/dialect are VN only (xưng hô is N/A in EN). Quit point 11 handled once and remembered: no comment ask after she chose quiet."""
+
+[[case]]
+id = "brain.en.010"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "Multi-income card keeps the side door the coach accepted"
+context = "Same state as brain.en.001. On the Map Dana pushed back ('Resume reviews pay my electric bill') and accepted resume reviews as a DM-only side door."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\s*side_door:[^\n]*\bresume''',
+  '''(?im)^\s*not_now:[^\n]*\b(life coach|divorce|empty nest|menopause|401|pension)''',
+]
+not_regex = [
+  '''(?im)^\s*who:[^\n]*\b(20s|twenty|young|UX)\b''',
+  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bresume reviews?\b[^\n]*\$175)''',
+]
+verdict = ""
+invariants = ["I5"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """UX §5.17 side-door piece; quit point 6 'paid income stream parked with no bridge or side door'. The side door lives in the machine block; the visible part sells the one offer only. not_now holds names only (reasons live in the Map reply)."""
+
+[[case]]
+id = "brain.en.011"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "Voice phrases and passages are her words, verbatim, not polished"
+context = "Same state as brain.en.001. Her dump includes: '24 years and a carrot cake.', 'coffee before resume, I say it all the time', 'you're not too old you're too vague. you're applying for anything with a pulse.'"
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\s*phrases:[^\n]*(carrot cake|coffee before resume|too old|too vague|anything with a pulse|feeding the portal)''',
+  '''(?im)^\s*passages:[^\n]*(carrot cake|4B|63 applications|different logo|one more chapter|keepers list)''',
+]
+not_regex = [
+  '''(?im)^\s*(phrases|passages):[^\n]*\b(reinvent|pivot|second act|dream job|journey|empower|transform|unlock)''',
+  '''(?im)^\s*(phrases|passages):[^\n]*\bdesign er\b''',
+]
+verdict = ""
+invariants = ["I5", "I9"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml phrases '5 phrases the coach really says, verbatim'; passages '5 verbatim passages from the dump, ≤60 words each; the raw material for re-say pieces'. Dictation slips ('design er') are fixed, never kept. Her banned words (expected.toml [voice]) must not be introduced by polishing."""
+
+[[case]]
+id = "brain.en.012"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "The card's compact character (trait, enemy, principles, voice) passes the Day-0 character-card bar"
+context = "Same state as brain.en.001; judge the character and voice groups of the machine block (trait, enemy, principles, phrases, passages) against answers.md and voice-samples.md."
+input = '''ok I'll film it tomorrow morning'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = []
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "character-card"
+critical = ["CC1", "CC4", "CC8", "CC10"]
+min_score = 14
+notes = """wf12-qa-spec §3.1: Day-0 v0 bar ≥14/20 with [GAP] allowed. CC1 one extreme trait (e.g. spreadsheet-level practical, 'talks like a boss, not a therapist'); CC4 enemy is a practice (feeding the portal), never HR people; CC8 phrases verbatim from her dump; CC10 every field traced to an answer or marked [GAP]; nothing invented."""
+
+# ---------------------------------------------------------------- later chats: the self-check
+
+[[case]]
+id = "brain.en.013"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Next chat with the card saved: the self-check reports Brand Card v1 and today's piece follows"
+context = "Day 2 (Tuesday of week 1). Project sources: method file + Brand Card v1 (persona default: keyword NOTHING ROOM; email-first). New chat in the project."
+input = '''next'''
+contains = ["Brand Card v1 ✓"]
+not_contains = ["we make it today"]
+regex = [
+  '''\A\s*◆ Content Machine · ''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)empty your head''',
+  '''(?i)here(?:'|’)s what I heard''',
+  '''(?i)\bHollis\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §6 Memory row: 'The next chat's self-check reports Brand Card v1 ✓.' 'next' = today's piece (UX §3.1 Day 1-5: next → copy → post). setup.check's 'Brand Card: we make it today' is the Day-0 form only."""
+
+[[case]]
+id = "brain.en.014"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Missing card in a new chat: one-line fix (save from the first chat, or paste it here); Day 0 is not rerun"
+context = "Day 3 (Wednesday of week 1), Android phone, ChatGPT Free. The Brand Card was never saved (forced test from Day 0); the project sources hold only the method file; project memory has nothing. New chat in the project."
+input = '''next'''
+contains = []
+not_contains = ["Brand Card v1 ✓"]
+regex = [
+  '''(?i)\bBrand Card\b''',
+  '''(?i)\bfirst chat\b''',
+  '''(?i)\bpaste\b''',
+]
+not_regex = [
+  '''(?i)empty your head''',
+  '''(?i)\btalk (for )?5\b''',
+  '''(?i)\b(what do you|who do you) (help|sell|do)\b''',
+  '''(?i)\b(upgrade|Plus)\b''',
+  '''(?i)\b(start over|from scratch)\b''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5"]
+max_words = 120
+max_chars = 0
+max_questions = 1
+notes = """UX §6 Machine row: the self-check gives the right one-line fix for a missing card (100%). Concierge §1.6: 'Your Brand Card isn't saved. On the computer: open the first chat → ⋯ → Save to project. Or paste it here.' The machine never refuses to start and never makes her redo the dump. Dana quits on an upgrade ask."""
+
+[[case]]
+id = "brain.en.015"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1"]
+title = "Two card versions saved: the highest wins, one line to tidy up, and v2's choices are used"
+context = "Week 6, Wednesday, Claude Pro. Project sources hold Brand Card v1 (Day 0: cta_style keyword, message line 2 original) and Brand Card v2 (printed at 'plan next month' after week 4: line 2 sharpened, cta_style quiet). New chat in the project."
+input = '''next'''
+contains = ["Brand Card v2"]
+not_contains = []
+regex = [
+  '''(?i)(remove|delete)[^\n]{0,40}\bv1\b|\bv1\b[^\n]{0,40}(remove|delete)''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)comment\s+["“'‘]?badge''',
+  '''(?i)\bwhich (one|card|version)\b''',
+  '''(?i)Brand Card v1 ✓''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """brand-card.toml: 'Saved as a project source; the highest version wins.' Guided-project §1.6: 'Use the highest version, then one line: When you have a minute, remove v1 from the project files.' UX §3.2 monthly: save the new card and delete the old one (2 taps). No question about which card to use. I13 is not listed: telling the coach to remove an old card is not a hub write."""
+
+[[case]]
+id = "brain.en.016"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "The same card saved twice: one copy is used, one line about the extra copy, no question"
+context = "Day 4, ChatGPT Free on the laptop. Dana saved Brand Card v1 twice (two identical sources). New chat in the project."
+input = '''next'''
+contains = ["Brand Card v1 ✓"]
+not_contains = []
+regex = [
+  '''(?i)\b(extra|second|duplicate|two|2) (copy|copies|cards?)\b|\btwice\b''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\bwhich (one|card|version|copy)\b''',
+  '''(?i)\b(can(?:'|’)t|won(?:'|’)t|cannot)\b[^\n]{0,30}\b(until|unless)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §6 Machine row: the right one-line fix for duplicate cards (100%). Identical copies are not a conflict; the work goes on and the tidy-up is one line."""
+
+[[case]]
+id = "brain.en.017"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1"]
+title = "'Start' pasted again after Day 0: the saved card is found and the session resumes"
+context = "Day 5 (Thursday of week 1), iPhone. Project sources: method file + Brand Card v1 (progress: day0 ✓ · week1 delivered). Dan forgot the 'next' phrase and pasted the Start text from the setup page into a new chat."
+input = '''Start'''
+contains = ["Brand Card v1 ✓"]
+not_contains = ["we make it today"]
+regex = ['''\A\s*◆ Content Machine · ''']
+not_regex = [
+  '''(?i)empty your head''',
+  '''(?i)\btalk (for )?5\b''',
+  '''(?i)here(?:'|’)s what I heard''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """'Start' comes from a copy button and is never memorised (UX §4); a returning coach who pastes it must not lose a week by redoing the dump. The progress field drives where to resume (brand-card.toml progress)."""
+
+[[case]]
+id = "brain.en.018"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0"]
+title = "Method file missing in a later chat: one-line nudge, today's piece still delivered"
+context = "Day 2 (Tuesday of week 1), lane S0: on Day 0 the Free upload cap blocked step 3, so the project holds the instruction block and the saved Brand Card v1 only. New chat in the project."
+input = '''next'''
+contains = ["Brand Card v1 ✓"]
+not_contains = ["✓ method file"]
+regex = [
+  '''(?i)method file''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\b(can(?:'|’)t|won(?:'|’)t|cannot)\b[^\n]{0,30}\b(until|unless|without)\b[^\n]{0,30}\b(file|upload)''',
+  '''(?i)\b(upgrade|Plus)\b''',
+  '''(?i)setup page''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §6 Machine row: the right one-line fix for a missing file. Concierge §1.6: 'Next day the machine says: Add the file now (Step 3), 1 minute.' It never blocks: after Day 0 a nudge is allowed, but the piece comes first or alongside. QA principle 4: the setup line never ticks a file it cannot see."""
+
+[[case]]
+id = "brain.en.019"
+kind = "D"
+persona = "consultant"
+lanes = ["S1"]
+title = "Instruction block pasted into the chat instead of Instructions: works today, one-line permanent fix"
+context = "Day 3, Claude Free, Windows. The project's Instructions field is empty; Erin pasted the whole instruction block as her first message in a new project chat, then typed next. Brand Card v1 and the method file are in the project sources."
+input = '''[the full instruction block, pasted as a chat message]
+
+next'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bpasted\b''',
+  '''(?i)\binstructions\b''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\b(can(?:'|’)t|won(?:'|’)t|cannot)\b[^\n]{0,30}\b(until|unless)\b''',
+  '''(?i)\b(upgrade|Pro plan)\b''',
+  '''§''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §6 Machine row: the right one-line fix for a block pasted into chat. Guided-project §1.6: 'Looks like you pasted my setup text into the chat. It works for today. To make it permanent (1 min): open the project → Instructions → paste → Save.' The block's own text (§ anchors, rules) is never echoed back."""
+
+# ---------------------------------------------------------------- Door B and move-in
+
+[[case]]
+id = "brain.en.020"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0"]
+title = "Door B, day 2: the pasted MY CONTENT MACHINE box is read; no project is mentioned"
+context = "Door B variant. Day 0 ran in a phone chat renamed 'Content Machine'; Dan kept the MY CONTENT MACHINE box (compact rules + Brand Card v1) in Notes. Day 2: he opens a new phone chat (no project) and pastes the box, then next."
+input = '''[MY CONTENT MACHINE box pasted from Notes]
+
+next'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bBrand Card\b[^\n]*\bv1\b''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\bprojects?\b''',
+  '''(?i)save to project''',
+  '''(?i)empty your head''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Quit point 2 'Door B refers to a project that does not exist'. UX §1.4: Door B never mentions a project; memory relies on the box (one paste per new chat)."""
+
+[[case]]
+id = "brain.en.021"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0"]
+title = "Door B long chat: a fresh box to paste into one new chat, one paste only"
+context = "Door B variant, Day 9, the same phone chat named 'Content Machine', now past the fresh-box turn threshold (the early instructions are falling out of context)."
+input = '''next'''
+contains = []
+not_contains = []
+regex = [
+  '''MY CONTENT MACHINE''',
+  '''(?i)\bpaste\b[^\n]{0,40}\bnew chat\b''',
+  '''(?i)\bContent Machine\b''',
+]
+not_regex = [
+  '''(?i)\bprojects?\b''',
+  '''(?i)\b(paste|copy)\b[^\n]{0,30}\b(both|two|2)\b''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §1.4: 'When the chat gets long, the machine prints a fresh box and says paste this into a new chat named Content Machine. That is one paste, never two.' UX §7 risk 3: a fresh-box trigger by turn count."""
+
+[[case]]
+id = "brain.en.022"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1"]
+title = "Move-in: Start + the box in one message prints the card for saving and resumes where he was"
+context = "Day 6. Dan ran Days 0-5 in Door B. His brother-in-law did Door A steps 1-3 on a laptop (project, instructions, method file). Dan opens a new chat in the project and sends Start plus the MY CONTENT MACHINE box in one message. Box progress: day0 ✓ · week1 delivered · 3 posted."
+input = '''Start
+
+[MY CONTENT MACHINE box pasted from Notes]'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bBrand Card\b''',
+  '''for the machine, no need to read''',
+  '''\A\s*◆ Content Machine · ''',
+]
+not_regex = [
+  '''(?i)empty your head''',
+  '''(?i)\btalk (for )?5\b''',
+  '''(?i)here(?:'|’)s what I heard''',
+  '''(?i)\bmove (the|your|this) chats?\b''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §1.4 move-in: 'paste Start + the MY CONTENT MACHINE box in one message. The machine prints the Brand Card for saving and resumes where they left off. This does not depend on moving chats between projects, which is unverified.'"""
+
+# ---------------------------------------------------------------- monthly reprint and coach edits
+
+[[case]]
+id = "brain.en.023"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1"]
+title = "Monthly KEEP reprints the card as v2 with the coach's own 'not me' and 'I do say' lines"
+context = "End of week 4, 'plan next month', ChatGPT Free. Project sources hold Brand Card v1. In week 2 Dana said 'not me: unlock your potential'; in week 3 she said 'I do say: here's the thing nobody tells you'. The message check recommended KEEP."
+input = '''keep it'''
+contains = ["Brand Card v2"]
+not_contains = []
+regex = [
+  '''(?m)^\s*version:\s*2\b''',
+  '''(?im)^\s*never_say:[^\n]*unlock your potential''',
+  '''(?im)^\s*do_say:[^\n]*nobody tells you''',
+  '''(?i)(remove|delete)[^\n]{0,40}\bv1\b|\bv1\b[^\n]{0,40}(remove|delete)|\bold (one|card)\b''',
+  '''for the machine, no need to read''',
+]
+not_regex = [
+  '''(?m)^\s*version:\s*1\b''',
+  '''(?i)\block(ed)?\b''',
+  '''(?i)\b90[- ]days?\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I6"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml: printed at the Day-0 stop point, then again after each monthly re-plan; never_say ('not me: …') and do_say ('I do say …') fields. UX §3.2: the one decision is KEEP / sharpen; then save the new card and delete the old one (2 taps). wf12-qa-spec §2.8 feedback commands."""
+
+[[case]]
+id = "brain.en.024"
+kind = "D"
+persona = ""
+lanes = ["S1", "S0"]
+title = "'I do say guaranteed': a hard-stop word can never go on the allowed list"
+context = "Standalone. Week 2. Fictional coach (Marco, 44, helps freelance bookkeepers win retainer clients; no counted results). Brand Card v1 present with an empty do_say."
+input = '''I do say guaranteed results. put it on my allowed list so you stop changing it'''
+contains = []
+not_contains = []
+regex = ['''(?i)\b(can(?:'|’)t|won(?:'|’)t|not|never)\b[^\n]{0,50}\b(allow|add|list|use)''']
+not_regex = [
+  '''(?im)^\s*do_say:[^\n]*guarantee''',
+  '''(?i)\b(added|saved|done)\b[^\n]{0,30}\bguaranteed results\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """wf12-qa-spec §2.8: 'I do say <word>' adds it to the allowlist; hard stops and polarity limits can never be allowlisted. brand-card.toml do_say note: 'hard stops can never be allowed here'. DECISIONS: unsubstantiated income claims are hard-blocked. One plain line, with a true alternative (e.g. a process guarantee)."""
+
+[[case]]
+id = "brain.en.025"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "S0"]
+title = "'Give me a blank card Bree can fill in': the card comes back filled, never as a template"
+context = "Day 3, ChatGPT Plus. Brand Card v1 saved (persona default). Corinne wants something her VA can work from."
+input = '''can you give me a blank brand card template so Bree can fill it in for the next client type?'''
+contains = []
+not_contains = []
+regex = ['''(?i)\bBrand Card\b''']
+not_regex = [
+  '''_{3,}''',
+  '''(?i)\[(your|insert|add|enter|client)\b[^\]]*\]''',
+  '''(?i)<(your|insert)\b[^>]*>''',
+  '''(?im)^\s*[a-z_]+:\s*$''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """DECISIONS: the machine does the work in conversation; no templates are handed over. Quit trigger 'asked to fill a template'. I2 also flags 'fill in' / 'fill out' wording in the machine's own text. A second buyer type is a Season-2 question (one person per Season), so the honest answer is the filled card she has plus one line on when a second card makes sense."""
+
+[[case]]
+id = "brain.en.026"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "Month 3 reprint stays within budget: lowest-ranked items trimmed first, required fields kept"
+context = "End of week 8, 'plan next month', KEEP chosen. Project sources: Brand Card v2. The chat and Bank now hold 40 client-word rows, 12 stories, 6 consented proof rows, 30 recent hook openings and 9 passages; she has 3 'not me' lines."
+input = '''keep. same as last month'''
+contains = ["Brand Card v3"]
+not_contains = []
+regex = [
+  '''(?m)^\s*version:\s*3\b''',
+  '''(?m)^\s*who:\s*\S''',
+  '''(?m)^\s*promise:\s*\S''',
+  '''(?m)^\s*passages:\s*\S''',
+  '''(?m)^\s*client_words:\s*\S''',
+  '''(?m)^\s*stories:\s*\S''',
+  '''(?m)^\s*plan_start:\s*20\d\d-\d\d-\d\d\b''',
+]
+not_regex = [
+  '''(?m)^\s*client_words:(?:[^\n|]*\|){8}''',
+  '''(?m)^\s*stories:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*proof:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*passages:(?:[^\n|]*\|){5}''',
+  '''(?m)^\s*recent_hooks:(?:[^\n|]*\|){10}''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8"]
+max_words = 0
+max_chars = 5600
+max_questions = 1
+notes = """brand-card.toml [budgets] trim_order: recent_hooks, passages, client_words, stories, do_say, never_say, proof, side_door; never below a field's min_items; required single values never go. Whole card ≤5,000 chars EN. banks.toml card_caps rank: most uses in the last 30 days first, then the newest."""

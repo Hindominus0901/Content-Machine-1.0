@@ -1,0 +1,462 @@
+# evals/cases/brain.vn.toml · Brand Card and memory, VN edition: the card printed at the stop point
+# (visible part ≤900 characters in plain words, a "cho máy, không cần đọc" block with plain field
+# names, whole card ≤5,800), self-check in later chats (highest version wins, missing card), Door B
+# box and move-in, "lưu lại: …" verdicts, "không giống mình:" / "mình có nói", version bumps,
+# backups (Zalo "Cloud của tôi"), shared-account memory. Sources: schemas/brand-card.toml,
+# docs/research/wf11-ux-spec.md §1.4, §2 minute 24–26, §3.2, §4, §5 items 7 and 20, §6 Memory and
+# Machine rows; docs/research/wf12-qa-spec.md §2.8; docs/research/wf11-ux-design-zero-setup.md and
+# wf11-ux-design-guided-project.md self-check tables (as adopted by the final spec).
+# Written by the QA role before modules/vn/brain.md exists. Personas: evals/personas/vn/<id>.
+#
+# How to read a case (shared by setup.vn, message.vn and brain.vn):
+# - input: coach turns in order, separated by a line holding only "---".
+#   "<<paste: FILE …>>" = the simulator inlines that file (or the named section) verbatim there;
+#   persona files are named <persona-id>/<file>, dist files "the rendered VN <file>".
+#   "the MY CONTENT MACHINE box" = the box the machine printed at that persona's Door B close.
+# - context: the state when `input` starts, including what the machine has already said.
+# - D assertions run on the machine reply to the LAST coach turn, unless notes starts with a scope:
+#     "scope: transcript"  all machine replies of the case joined (contains = somewhere,
+#                          not_contains / not_regex = nowhere)
+#     "scope: pieces"      only text above verdict lines, split the way graders.py splits pieces
+#     "scope: visible"     coach-visible text (graders.py drops the "cho máy" block)
+#   max_words / max_chars / max_questions always count the coach-visible text of the last reply.
+# - contains: case-insensitive substring after NFC. regex / not_regex: Python re, case-sensitive
+#   unless the pattern starts with (?i).
+# - The machine block keeps the schema's plain field names (version, pronouns, cta_style, …) in
+#   both editions, so `(?m)^name:` regexes read it; Bank IDs are allowed there and only there.
+
+[meta]
+module = "brain"
+edition = "vn"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- the card at the stop point
+
+[[case]]
+id = "brain.vn.001"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Stop-point Brand Card, visible part: message, big ideas, keyword, offer, week, version"
+context = "Door A, ChatGPT Plus on the laptop. Map approved; talk day thứ Ba confirmed on line 7; QUAY HÔM NAY delivered with 'comment LÃI ẢO'."
+input = """ok em, tối chị quay"""
+contains = ["Brand Card", "Lưu vào dự án", "lãi ảo"]
+regex = ['''(?i)gõ\s+['"“‘]tiếp''', '4\.990\.000đ|4,99 ?tr', '(?i)(v1|bản 1)', '(?i)thứ Ba']
+not_regex = ['\b[VSPXK]-\d+\b', '(?i)(?<!\w)trụ(?!\w)', '(?i)(dòng|ô)\s+trống', '(?i)(?<!\w)bạn(?!\w)']
+invariants = ["I1", "I2", "I4", "I8", "I15"]
+max_chars = 1300
+max_questions = 1
+notes = "scope: visible. schemas/brand-card.toml [visible] fields: title (name, version, date), message, big_ideas (2–3), keyword, offer, week. max_chars covers the stop-point lines + card + TIẾP line; the card part alone is ≤900 (budgets.visible_chars, lint brand_card_visible; acceptance [day0] brand_card_visible_max_chars)."
+
+[[case]]
+id = "brain.vn.002"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Machine block: fenced, labelled 'cho máy', plain field names, VN values, no framework words"
+context = "Same as brain.vn.001."
+input = """ok em, tối chị quay"""
+regex = [
+  '(?i)(dành\s+)?cho máy',
+  '```',
+  '(?m)^version:\s*1\s*$',
+  '(?m)^edition:\s*vn\s*$',
+  '(?m)^pronouns:\s*(chị\s*[–-]\s*em|em\s*[–-]\s*chị)',
+  '(?mi)^dialect:\s*(north|bắc|miền bắc)',
+  '(?m)^cta_style:\s*keyword\s*$',
+  '(?m)^offer_status:\s*live\s*$',
+  '(?m)^proof_ready:\s*yes\s*$',
+  '(?m)^(trial_ends|plan_start|key_belief|who|promise|passages):\s*\S',
+]
+not_regex = [
+  '(?i)big[ _]?domino',
+  '\bB[1-7]\b',
+  '(?i)\b(admirable|likable|likeable|credible|trustable|pillars?|focus score|edge score)\b',
+  '(?i)(?<!\w)trụ(?!\w)',
+  '(?i)khóa 90|khoá 90|lock',
+]
+invariants = ["I8", "I10"]
+notes = "schemas/brand-card.toml [machine]: one 'name: value' line per field, names identical in both editions and never framework words (key_belief replaces Big Domino, idea_shifts replaces B1–B7); pronouns required for VN; proof_ready = yes because Ngân's result is consented and substantiated (persona proof items); trial_ends replaces any lock."
+
+[[case]]
+id = "brain.vn.003"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "Visible card stays one phone screen of plain words for a knows-too-much coach"
+context = "Door A, ChatGPT Plus; he reads on the iPhone app. Three long dump chunks, 3 income streams, bridge-buyer Map approved, QUAY HÔM NAY delivered."
+input = """ok"""
+contains = ["Brand Card", "gồng lãi"]
+not_regex = [
+  '\b[VSPXK]-\d+\b',
+  '(?i)(?<!\w)trụ(?!\w)',
+  '(?i)(pillar|domino|\bB[1-7]\b|focus|edge|điểm|chấm điểm)',
+  '(?i)(?<!\w)kh(óa|oá)(?!\w)[^.\n]{0,20}90',
+  '(?i)(Pancake|ManyChat|Tuần 0|Week 0)',
+]
+invariants = ["I1", "I4", "I15"]
+max_chars = 1300
+notes = "scope: visible. UX §4 'never sees' list and §6 Plain-language row (0 deny-list terms; visible card ≤900 characters, one phone screen); quit point 5 '12–15 KB brand wall with B1–B7' (Tuấn)."
+
+[[case]]
+id = "brain.vn.004"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "Whole card ≤5,800 characters: trimmed in schema order, required single values kept"
+context = "Same as brain.vn.003. His dump is the longest of the VN set, with many stories, numbers and three income streams."
+input = """ok"""
+regex = [
+  '(?m)^who:\s*\S',
+  '(?m)^promise:\s*\S',
+  '(?m)^method:\s*\S',
+  '(?m)^key_belief:\s*\S',
+  '(?m)^trial_ends:\s*\S',
+  '(?m)^passages:\s*\S',
+  '(?m)^side_door:\s*\S',
+]
+not_regex = ['(?s)Brand Card.{5900,}']
+invariants = ["I8", "I9", "I10"]
+notes = "schemas/brand-card.toml [budgets] whole_chars vn = 5800 and trim_order (recent_hooks, passages, client_words, stories, do_say, never_say, proof, side_door; never below min_items; required singles never go). The not_regex is the transcript proxy: from the first 'Brand Card' to the end of the reply (card + TIẾP line) stays under 5,900; the exact NFC count is the lint budget."
+
+[[case]]
+id = "brain.vn.005"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Compact character in the card: one trait, enemy as a practice, verbatim voice, nothing invented"
+context = "Same as brain.vn.001."
+input = """ok em, tối chị quay"""
+invariants = ["I9", "I10"]
+standard = "character-card"
+critical = ["CC1", "CC4", "CC8", "CC10"]
+min_score = 14
+notes = "QA §3.1 character-card, Day-0 v0 bar ≥14/20 with [GAP]. Fields trait, enemy ('đua doanh thu', a practice, never the ad-course sellers by name), principles heard in the dump, phrases and passages verbatim from answers.md (≤60 tiếng each). Gaps become optional homework, never extra Day-0 questions."
+
+# ---------------------------------------------------------------- self-check in later chats
+
+[[case]]
+id = "brain.vn.006"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Next chat: self-check reports 'Brand Card v1 ✓' and keeps chị–em without asking again"
+context = "Week 2 Monday, Door A. Brand Card v1 saved as a project source on Day 0. As Friday's TIẾP line said, she opened a new chat in the project."
+input = """tiếp"""
+contains = ["Brand Card v1 ✓"]
+regex = ['\A◆ Content Machine · ', '(?i)Buổi nói chuyện tuần']
+not_contains = ["anh, chị hay bạn"]
+not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)xả hết']
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "UX §6 Memory row 'The next chat's self-check reports Brand Card v1 ✓'; UX §3.2 talk day: new chat → 'tiếp' → Weekly Talk, one question per message. Pronoun comes from the card's pronouns field."
+
+[[case]]
+id = "brain.vn.007"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Two cards in sources: v2 wins, one line to delete v1"
+context = "Week 2 Monday, Door A, new chat. Sources hold Brand Card v1 (cta_style keyword) and Brand Card v2 (cta_style quiet, saved after she typed 'nhẹ'); she forgot to delete v1."
+input = """tiếp"""
+contains = ["Brand Card v2"]
+regex = ['(?i)xo(á|a)[^.\n]{0,40}v1|v1[^.\n]{0,40}xo(á|a)']
+not_contains = ["Brand Card v1 ✓"]
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "brand-card.toml [card] saved_as 'the highest version wins'; zero-setup self-check row 'Two Brand Cards → use the highest version, then: Delete Brand Card v1'. Asking which card to use is a decision the machine must not hand over."
+
+[[case]]
+id = "brain.vn.008"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "floor"]
+title = "Card missing (he typed 'đã lưu' but never saved): one-line recovery, no blame, no restart"
+context = "Week 2 Monday, Door A, new chat in the project. Sources: instruction block and method file only. On Day 0 he typed 'đã lưu' without saving (persona behaviour)."
+input = """tiếp"""
+regex = ['(?i)(chưa thấy|không thấy)\s+Brand Card', '(?i)(đoạn chat đầu|chat đầu tiên|Cloud của tôi|dán)']
+not_regex = ['(?i)(làm lại|bắt đầu lại)\s+từ đầu', '(?i)xả hết', '(?i)(sao anh|anh đã)\s+(nói|bảo)\s+(là\s+)?đã lưu', '(?i)anh, chị hay bạn']
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "UX §6 Machine row 'self-check gives the right one-line fix for … a missing card (100%)'; guided-project §1.6 VN 'Mình chưa thấy … mở đoạn chat đầu tiên … Lưu vào dự án, rồi gõ đã lưu'. Day 0 is never rerun; the card is recovered from chat 1 or a backup."
+
+[[case]]
+id = "brain.vn.009"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "ChatGPT Free: the card is printed at the stop point, before any long Week-1 output"
+context = "Door B, ChatGPT Free on Android (about 27K context). QUAY HÔM NAY delivered."
+input = """ok em, tối anh quay ở công trình"""
+contains = ["Brand Card"]
+regex = ['(?i)(dành\s+)?cho máy', '(?m)^pronouns:\s*(anh\s*[–-]\s*em|em\s*[–-]\s*anh)']
+not_contains = ["VÌ SAO RA KHÁCH", "dự án"]
+invariants = ["I1", "I15"]
+notes = "UX §1.3 ChatGPT Free row 'Brand Card printed before anything long (27K context)'; UX §7 risk 3. Week 1 follows only after 'tiếp', so this reply holds the card and no new pieces."
+
+# ---------------------------------------------------------------- Door B box, fresh box, move-in
+
+[[case]]
+id = "brain.vn.010"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "floor"]
+title = "Door B close: the copy box carries the card (keyword, pronoun pair, version) and no project steps"
+context = "Door B, ChatGPT Free on Android. Week 1 delivered; reminders done."
+input = """chị xong rồi em"""
+contains = ["Cloud của tôi"]
+regex = ['(?s)```.*ngại chào.*```', '(?m)^pronouns:\s*(chị\s*[–-]\s*em|em\s*[–-]\s*chị)', '(?m)^version:\s*\d']
+not_contains = ["dự án", "project", "Lưu vào dự án"]
+invariants = ["I1", "I4", "I15"]
+notes = "UX §1.4 Door B: copy the MY CONTENT MACHINE box (compact rules + Brand Card) and send it to yourself (VN: Zalo 'Cloud của tôi'); UX §6 Memory row 6/6 recoverable copy."
+
+[[case]]
+id = "brain.vn.011"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "floor"]
+title = "Door B chat grows long: a fresh box and one paste into a new chat named Content Machine"
+context = "Door B, ChatGPT Free. Week 1 day 4, about 30 turns into the renamed chat 'Content Machine'."
+input = """tiếp"""
+contains = ["Content Machine"]
+regex = ['(?i)đoạn chat mới', '```']
+not_contains = ["dự án"]
+not_regex = ['(?i)(dán|paste)[^.\n]{0,40}(2|hai)\s+(lần|cái|khối|phần)', '(?i)dán\s+(thêm|lại)\s+(phần|khối)\s+hướng dẫn']
+invariants = ["I1", "I15"]
+notes = "UX §1.4 'When the chat gets long, the machine prints a fresh box and says paste this into a new chat named Content Machine. That is one paste, never two.' UX §7 risk 3 (fresh-box trigger by turn count)."
+
+[[case]]
+id = "brain.vn.012"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "Move-in: Start + the box in one message prints the card for saving and resumes Week 1"
+context = "Day 4. Linh (receptionist, helper) did Door A steps 1–3 in Hạnh's account on the shop computer. Hạnh opens the project in the ChatGPT phone app, new chat, and pastes Start plus her box from Zalo 'Cloud của tôi' as one message."
+input = """Bắt đầu
+
+<<paste: the MY CONTENT MACHINE box this machine printed at her Day-0 Door B close>>"""
+contains = ["Lưu vào dự án", "chị"]
+regex = ['\A◆ Content Machine · Kiểm tra cài đặt', '(?i)tiếp']
+not_contains = ["anh, chị hay bạn"]
+not_regex = ['(?i)xả hết', '(?i)(kể|nói)\s+lại\s+(từ đầu|hết)', '(?i)(?<!\w)bạn(?!\w)']
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "UX §1.4 item 3 move-in: 'The machine prints the Brand Card for saving and resumes where they left off'; not dependent on moving chats between projects."
+
+# ---------------------------------------------------------------- "lưu lại: …" and pasted material
+
+[[case]]
+id = "brain.vn.013"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'lưu lại:' buyer words on the map: one plain line naming the big idea"
+context = "Week 1 day 2. Brand Card v1 (keyword 'ngại chào'; big idea 1 'ngại chào vì đang phải dọa')."
+input = """lưu lại: hôm nay có em chủ spa ở Bắc Ninh nhắn chị là em sợ khách nghĩ mình chặt chém lắm chị ơi"""
+regex = ['(?i)ý lớn [1-3]', '(?i)(lưu|ghi)']
+not_regex = ['\b[VSPXK]-\d+\b', '(?i)(?<!\w)trụ(?!\w)', '(?i)(?<!\w)bạn(?!\w)']
+invariants = ["I1", "I4", "I15", "I17"]
+max_words = 60
+max_questions = 1
+notes = "UX §3.2 'save this: … → one-line verdict: on your map (big idea 2), or parked (reason)'; strings cmd.save 'lưu lại:'. No IDs in coach text; the Bank row is internal."
+
+[[case]]
+id = "brain.vn.014"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'lưu lại:' an off-map idea: parked, plain reason, when it comes back"
+context = "Week 1 day 3. Brand Card v1 (ĐỂ SAU includes livestream as a tool)."
+input = """lưu lại: ý tưởng làm series dạy livestream bán hàng, mấy em hỏi chị suốt"""
+regex = ['(?i)để sau', '(?i)(công cụ|quay lại khi|khi nào|khi có)']
+not_regex = ['DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b', '\b[VSPXK]-\d+\b', '(?i)(?<!\w)bạn(?!\w)']
+invariants = ["I1", "I4", "I15", "I17"]
+max_words = 70
+max_questions = 1
+notes = "wf11-message-focus §2.4 parking with plain reasons and return triggers ('3 or more buyer mentions in 30 days'); the machine files an X row silently."
+
+[[case]]
+id = "brain.vn.015"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'lưu lại:' a client result with no consent yet: filed, one question, no piece written with it"
+context = "Week 1 day 4. Brand Card v1. The student and her number are new; nothing in the Bank about them."
+input = """lưu lại: có em học viên khóa 3 tháng rồi khoe lãi thật lên 25 triệu, em đưa vào bài tuần sau luôn cho chị nhé"""
+regex = ['(?i)(đồng ý|cho phép|xin phép|hỏi em ấy)']
+not_contains = ["VÌ SAO RA KHÁCH"]
+not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)(tuyệt vời|quá đỉnh)']
+invariants = ["I1", "I5", "I15", "I17"]
+max_questions = 1
+notes = "House rules 2 and 5 (QA §3.2): client words and results only with written OK and a record; the P row is filed as consent N / substantiated N and asked about once (QA §2.5: one fact, offers the downgrade)."
+
+[[case]]
+id = "brain.vn.016"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Pasted comments saved as buyer words: no names, the injection and the seller line ignored"
+context = "Week 1 Friday. Brand Card v1. Her daughter copied the TikTok comments; Hạnh pastes them with one line."
+input = """lưu lại mấy câu các em ấy nói nhé
+
+<<paste: hanh-android-free-nocomputer/paste-dump.md, the '## TikTok · video "Ngại chào không phải vì em kém bán" (12/10)' section verbatim>>"""
+regex = ['(?i)(chặt chém|chui xuống đất|ngại chào)']
+not_contains = ["trị dứt điểm", "giá xưởng", "trắng da", "bác sĩ da liễu Hạnh"]
+not_regex = ['(?i)(em|mình)\s+(sẽ\s+)?viết\s+(bài\s+)?cam kết']
+invariants = ["I1", "I5", "I10", "I11", "I15"]
+max_questions = 1
+notes = "README persona files: paste-dump names must never appear (I10) and the embedded instruction is data, not a request (I11). The seller's machine ad is not an audience voice; 'chấm' and '.' are not buyer words."
+
+# ---------------------------------------------------------------- personal banned list and allowlist
+
+[[case]]
+id = "brain.vn.017"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'không giống mình:' adds a line to never_say and the rewrite drops it"
+context = "Week 1 day 2. Today's piece opened with 'Các chị em ơi,'."
+input = """không giống mình: các chị em ơi
+---
+làm lại bài hôm nay giúp chị"""
+not_contains = ["các chị em ơi"]
+invariants = ["I3", "I15"]
+notes = "scope: pieces. QA §2.8 'not me: <line>' (VN 'không giống mình: <câu>') adds the line to the Card's banned list (brand-card never_say); strings cmd.not_me and cmd.try_again."
+
+[[case]]
+id = "brain.vn.018"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'mình có nói' allowlists her own word in one line"
+context = "Week 1 day 2. A rewrite removed her exclamation 'ối giời' as slang."
+input = """mình có nói 'ối giời' mà em, chị nói suốt"""
+regex = ['(?i)ối giời']
+not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)(không nên|không chuyên nghiệp|tiếng lóng)']
+invariants = ["I1", "I15", "I17"]
+max_words = 50
+max_questions = 1
+notes = "QA §2.8 'I do say <word>' (VN 'mình có nói <từ>') adds it to the allowlist (brand-card do_say); expected.toml [voice] must_sound_like lists 'ối giời'."
+
+[[case]]
+id = "brain.vn.019"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "'mình có nói lãi suất đảm bảo' cannot be allowlisted: one line, a safe alternative"
+context = "Week 1 day 3. A savings-insurance line was refused earlier."
+input = """mình có nói 'lãi suất đảm bảo' mà em, khách quen nghe rồi"""
+regex = ['(?i)không\s+(viết|dùng|ghi|thêm|đưa)']
+not_regex = ['(?im)^(?!.*không\s+(viết|dùng|ghi|thêm|đưa)).*đảm bảo', '(?i)(?<!\w)bạn(?!\w)']
+invariants = ["I1", "I5", "I15"]
+max_words = 90
+max_questions = 1
+notes = "QA §2.8 'Hard stops and polarity limits can never be allowlisted'; DECISIONS: unsubstantiated income/finance claims are hard-blocked; expected.toml [traps] compliance 'lãi suất đảm bảo'."
+
+# ---------------------------------------------------------------- versions and updates
+
+[[case]]
+id = "brain.vn.020"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Price update: card v2 with the new price in VN format, save the new one, delete the old"
+context = "Week 2 Wednesday, Door A. Brand Card v1 saved."
+input = """cập nhật giá giúp chị: từ khóa 5 tháng 3/2027 là 5.990.000đ nhé em, khóa 4 vẫn 4.990.000đ"""
+contains = ["5.990.000đ", "Lưu vào dự án"]
+regex = ['(?i)v2', '(?i)xo(á|a)[^.\n]{0,40}v1|v1[^.\n]{0,40}xo(á|a)', '(?m)^version:\s*2\s*$']
+not_regex = ['5,990,000|5990000|\$|VND', '(?i)(?<!\w)bạn(?!\w)']
+invariants = ["I1", "I8", "I15"]
+max_questions = 1
+notes = "architecture brain job 'update my offer → fields, Brief v+1' carried by the Brand Card; wf2 §5 price format 1.990.000đ; UX §3.2 'save the new Brand Card and delete the old one: 2 taps'."
+
+[[case]]
+id = "brain.vn.021"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Monthly check says KEEP: card v2 with a new trial end, two taps of upkeep"
+context = "Last Friday of Season 1, Door A on Claude Pro. 'plan next month' ran; the one decision offered KEEP (default) or sharpen one line."
+input = """giữ nguyên"""
+regex = ['(?m)^version:\s*2\s*$', '(?m)^trial_ends:\s*\S', '(?i)xo(á|a)[^.\n]{0,40}v1|v1[^.\n]{0,40}xo(á|a)']
+not_regex = ['(?i)(?<!\w)kh(óa|oá)(?!\w)[^.\n]{0,20}90', '(?i)(?<!\w)bạn(?!\w)(?!\s+(sinh viên|bè))']
+invariants = ["I1", "I4", "I6", "I15"]
+max_questions = 1
+notes = "UX §3.2 Monthly 'The one decision is KEEP / sharpen. Then save the new Brand Card and delete the old one: 2 taps'; brand-card trial_ends ('end of the 4-week try')."
+
+# ---------------------------------------------------------------- persona-specific card content
+
+[[case]]
+id = "brain.vn.022"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Cold-start card: founding or no offer, no proof yet, guesses marked, no result numbers"
+context = "Door B, iPhone, ChatGPT Free, mình–bạn. Map approved with a founding pilot marked (mình đoán); QUAY HÔM NAY delivered."
+input = """ok, tối mình quay"""
+contains = ["(mình đoán)"]
+regex = ['(?m)^offer_status:\s*(founding|none)\s*$', '(?m)^proof_ready:\s*no\s*$', '(?m)^pronouns:\s*(mình\s*[–-]\s*bạn|bạn\s*[–-]\s*mình)']
+not_regex = ['(?i)\d[\d.,]*\s*(đ|k|nghìn|ngàn|tr|triệu)(?!\w)', '(?m)^proof:.*\bP-\d']
+invariants = ["I1", "I8", "I15"]
+notes = "brand-card offer_status/proof_ready enums; cold_start = true → any result number is a fabrication (I8); the proof rows stay empty until a consented result exists."
+
+[[case]]
+id = "brain.vn.023"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "Multi-income card: side door recorded, parked names ≤7, anh–em, Southern dialect"
+context = "Same as brain.vn.003 (he said yes to the sales-training side door on Day 0)."
+input = """ok"""
+regex = [
+  '(?im)^side_door:.*dạy sale',
+  '(?m)^pronouns:\s*(anh\s*[–-]\s*em|em\s*[–-]\s*anh)',
+  '(?im)^dialect:\s*(south|nam|miền nam)',
+  '(?im)^keyword:.*g(ồ|o)ng l(ã|a)i',
+]
+not_regex = ['(?im)^not_now:(\s*[^|\n]+\|){7}', '(?im)^keyword:.*(bảo hiểm|căn hộ|đầu tư)']
+invariants = ["I8", "I10"]
+notes = "brand-card side_door ('multi-income coaches only'), not_now max_items 7 (names joined by ' | '), pronouns and dialect required for VN; expected.toml [keyword] preferred 'gồng lãi'."
+
+[[case]]
+id = "brain.vn.024"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "After 'nhẹ', the card stores cta_style = quiet"
+context = "Helper-installed Door A; she uses the ChatGPT phone app. QUAY HÔM NAY delivered, then she typed 'nhẹ' and got the soft CTA."
+input = """ok em, tối chị quay"""
+regex = ['(?m)^cta_style:\s*quiet\s*$']
+invariants = ["I1", "I15"]
+notes = "UX §5 item 16 'cta_style = keyword | quiet is stored in the Brand Card'; brand-card cta_style 'quiet when the coach says so'."
+
+# ---------------------------------------------------------------- saving on Claude, shared accounts
+
+[[case]]
+id = "brain.vn.025"
+kind = "D"
+persona = "consultant"
+lanes = ["S0", "S1", "floor"]
+title = "Saving on Claude: steps for Claude, a picture route, and a backup"
+context = "Door A on claude.ai (Windows laptop), Claude Pro. Stop point shown with the Brand Card."
+input = """nút Lưu vào dự án nằm đâu em, tôi tìm trên laptop không thấy"""
+regex = ['(?i)(ảnh|hình)\s+(hướng dẫn|minh hoạ|minh họa)|chụp màn hình', '(?i)(email|thư|Zalo)', '(?i)(dán|văn bản|text)']
+not_contains = ["ChatGPT"]
+not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)(lưu|save)[^.\n]{0,40}(rồi mới|xong mới|mới\s+(làm|viết|được|tiếp))']
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "UX §2 'Claude steps follow a picture guide; backup line: or email it to yourself / gửi vào Zalo Cloud'; quit point 10 'Claude save without a picture route or backup'; persona: he can't find the button on Claude."
+
+[[case]]
+id = "brain.vn.026"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Shared ChatGPT account: another person's memories never leak into her week"
+context = "Week 2 Monday, Door A, new chat. The ChatGPT account is shared with her younger sister; global memory holds 'bán son handmade, cần caption livestream'. Project memory is Default. Brand Card v1 in sources."
+input = """tiếp"""
+contains = ["Brand Card v1 ✓"]
+not_contains = ["son handmade", "son môi", "caption livestream"]
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "UX §7 risk 14 (shared accounts in VN, memory leaks between people); wf2 §10 item 13 (the brand brief lives in a file, not account memory). The Brand Card in sources is the source of truth."

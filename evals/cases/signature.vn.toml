@@ -1,0 +1,480 @@
+# Signature module cases (VN): the signature keyword (pre-picked on the Map with 2 alternates, swapped on
+# "đổi"), its registry (echo, variants without diacritics, retirement), the named method and the hidden belief
+# chain. Written by the QA role before the module exists.
+# Sources: docs/DECISIONS.md (keyword = "từ khoá gắn liền với người đó và cũng là 1 từ mà tệp của người đó nói";
+# comment-keyword CTAs on by default, "chấm" and thresholds never blocked, one dated note); wf11-ux-spec.md §2
+# (Map: keyword pre-picked with 2 alternates; quiet CTA "nhẹ"; "✓ Đã kiểm: … từ khoá 1 lần"), §4 (never sees
+# Big Domino, B1-B7, candidate tables, Bank IDs); wf11-message-focus.md §2.1 (VN Map labels TỪ KHOÁ, CÁCH CŨ,
+# PHƯƠNG PHÁP), §3 (WHY line, CTA ladder, VN path inbox → Zalo), §4 rules 7, 8, 11; wf12-qa-spec.md §3.1
+# signature-keyword (SK1 ≥3 people in ≥2 places, SK2 not owned, SK6 default shown with origin and reason, coach
+# can swap); wf12-qa-standards.md §4 VN note (DANG KY = ĐĂNG KÝ, register both forms); wf7-research-module-spec
+# §4.7, §6.1 (coach recall never counts; client words before coined terms); schemas/banks.toml [types.K], [types.A].
+#
+# Conventions (same as character.vn.toml):
+# - "<<paste: FILE ...>>" means the simulator inlines that persona file's body verbatim there.
+# - The Map prints the keyword on a line labelled "TỪ KHOÁ" (wf11-message-focus §2.1). "First value" regexes
+#   read the term that follows the label: (?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*TERM. Alternates may
+#   follow on the same line, so negative checks only look at that first value.
+# - Both tone-mark spellings (khoá / khóa) are matched.
+
+[meta]
+module = "signature"
+edition = "vn"
+written_by = "qa-role"
+
+[[case]]
+id = "signature.vn.001"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Map keyword is the audience's 'cứng đơ', not her coined 'chữa cháy' / 'gỡ lưng' or a category word"
+context = "Day 0, Door A (ChatGPT Free, iPhone). Pair bạn–mình set in reply 1. Dump chunks 1-3 given (studio students 'bạn nào cũng nói cứng đơ'). 7-line check shown; she confirms. The next reply is the MAP screen."
+input = """ok hết rồi đó, đúng hết"""
+regex = ['(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*cứng đơ']
+not_regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:quay lại|đau lưng|yoga|trị liệu|chữa cháy|gỡ lưng|ngồi đúng tư thế|detox)',
+  '\b[VSPXK]-\d+\b',
+  '(?i)\bứng viên\b|bảng điểm|điểm số|Focus Score',
+]
+invariants = ["I1", "I4", "I5", "I6", "I8", "I15"]
+max_questions = 1
+notes = "expected.toml keyword.preferred 'cứng đơ' (audience); 'chữa cháy' and 'gỡ lưng' are her coined terms (alternates at most). UX §4: no candidate tables, no Bank IDs. DECISIONS: the keyword is a word the coach's tệp says. Cold start (I8)."
+
+[[case]]
+id = "signature.vn.002"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Map keyword is 'ngại chào' (her buyers' words), never the design-doc example 'QUAY LẠI'"
+context = "Day 0, Door B (Phone Starter, ChatGPT Free, Android). Pair chị–em. Dump chunks 1-3 given; 7-line check shown with '?' on line 4. She answers with a story instead of 'sửa 4'. The next reply is the MAP screen (turn ≤9)."
+input = """ờ kết quả thì là em Thảo ấy, trước khi học cứ 10 khách mới thì 2 khách hẹn lại, học xong tháng 7 em ấy đếm sổ thì 5 trên 10, giá không đổi đâu nhé, mà đừng đăng tên spa của nó"""
+regex = ['(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*ngại chào']
+not_regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:quay lại|khách quay lại|spa|liệu trình|chốt sale|tư vấn|99k|chấm)',
+  '(?i)(?:comment|inbox|nhắn)\s*["“]?\s*quay l[ạa]i',
+  '(?i)\b(?:keyword|CTA|pillar|beat card)\b',
+  '\b[VSPXK]-\d+\b',
+]
+invariants = ["I1", "I4", "I5", "I8", "I10", "I15"]
+max_questions = 1
+notes = "expected.toml keyword.must_not_pick_note: 'QUAY LẠI' is the example in wf11-message-focus §6.2, her audience never says it; picking it means copying the example, not listening. Story answers count as the fix (UX ux.must). She is confused by English words (keyword, CTA, pillar, beat card). Map within ≤9 VN turns."
+
+[[case]]
+id = "signature.vn.003"
+kind = "D"
+persona = "consultant"
+lanes = ["S0", "S1"]
+title = "Map keyword 'tuyển hoài' (owners' words) over HR category words; method named in plain Vietnamese"
+context = "Day 0, Door A (Claude Pro project). Pair anh–em. Dump chunks 1-3 via keyboard mic. 7-line check shown with '?' on line 4 (best result)."
+input = """dòng 4 sửa lại: chuỗi quán hải sản, năm 2023 tuyển 31 người nghỉ 19, làm với anh rồi tuyển 17 nghỉ 4. còn lại đúng"""
+regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*tuyển hoài',
+  '(?im)^\W*(?:phương pháp|cách làm|cách của anh)[^\n]*(?:phiếu việc|làm thử|kèm)',
+]
+not_regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:tuyển dụng|nhân sự|HR|onboarding|nhân tài|headhunt|KPI|nghỉ việc|chấm)',
+  '(?i)\b(?:onboarding|framework|employer branding)\b',
+  '\b[VSPXK]-\d+\b',
+]
+invariants = ["I1", "I4", "I5", "I8", "I15"]
+max_questions = 1
+notes = "expected.toml keyword: 'tuyển hoài' preferred; 'nghỉ ngang' audience alternate; must_not_pick tuyển dụng, nhân sự, HR, onboarding, nghỉ việc. Method from his 3 steps (phiếu việc 1 trang, làm thử 2 tiếng, kèm 60 ngày), Vietnamese words with business owners (voice-samples). 31/19/17/4 are allowed_numbers; no '70%' conversion."
+
+[[case]]
+id = "signature.vn.004"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1"]
+title = "Map keyword 'phát sinh' — never the guarantee 'không phát sinh' nor his method name 'báo giá chốt'"
+context = "Day 0, Door A (ChatGPT Free, old Android). Pair anh–em. Dump chunks 1-3 via keyboard mic (noisy). 7-line check shown; he confirms."
+input = """ok dc, chuẩn rồi em"""
+regex = ['(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*phát sinh']
+not_regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:không phát sinh|báo giá chốt|trọn gói|giá rẻ|rẻ nhất|bếp đẹp|sang trọng|chấm)',
+  '(?i)không phát sinh|cam kết không|0 phát sinh',
+  '\b[VSPXK]-\d+\b',
+]
+invariants = ["I1", "I4", "I5", "I8", "I11", "I15"]
+max_questions = 1
+notes = "expected.toml keyword: preferred 'phát sinh' (chị Loan: 'Em sợ nhất là đập ra rồi mới phát sinh'); 'báo giá chốt' is the method, 'báo giá câu khách' the old way. compliance: any 'không phát sinh' promise is blocked (P8 unsubstantiated; P2, P3 had extras)."
+
+[[case]]
+id = "signature.vn.005"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1"]
+title = "Map keyword 'lãi ảo' / 'lãi thật', not the method 'Sổ 3 Cột' or a seller's 'ra đơn'"
+context = "Day 0, Door A (ChatGPT Plus, Windows laptop). Reply 1 xưng hô: she typed 'chị'. Dump chunks 1-3 given. 7-line check shown; she confirms."
+input = """ok em, chuẩn rồi"""
+regex = ['(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*lãi (?:ảo|thật)']
+not_regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:sổ 3 cột|ra đơn|x3|đốt tiền|ads|tự do tài chính|chấm|xin giá)',
+  '(?i)ra đơn ầm ầm|x3 doanh thu|tự do tài chính',
+  '\b[VSPXK]-\d+\b',
+]
+invariants = ["I1", "I4", "I5", "I8", "I11", "I15"]
+max_questions = 1
+notes = "expected.toml keyword: preferred 'lãi ảo' (Ngân: 'hóa ra em toàn lãi ảo'), acceptable 'lãi thật'. SK2: 'RA ĐƠN ẦM ẦM' belongs to a seller's ad, not to her buyers. 'Sổ 3 Cột' is her method name, shown on the PHƯƠNG PHÁP line."
+
+[[case]]
+id = "signature.vn.006"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "Bridge buyer Map: keyword 'gồng lãi', alternates shown, old way 'cọc trước tính sau', framed as 'thử 4 tuần'"
+context = "Day 0, Door A (ChatGPT Plus; set up on laptop, dumping on iPhone). Pair anh–em. Dump shows 3 income streams; the machine asked the one income question at the 7-line check."
+input = """Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11. còn lại ok hết"""
+regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*gồng lãi',
+  '(?i)dí cọc',
+  '(?im)^\W*cách cũ[^\n]*cọc trước tính sau',
+  '(?i)thử 4 tuần',
+]
+not_regex = [
+  '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:bảo hiểm|căn hộ|mua nhà|an cư|đầu tư|tài chính|view sông|sinh lời|sale|chấm)',
+  '(?i)kh[óo]a[^.\n]{0,20}90|khoá[^.\n]{0,20}90',
+  '\b[VSPXK]-\d+\b',
+]
+invariants = ["I1", "I4", "I5", "I8", "I11", "I15"]
+max_questions = 1
+notes = "expected.toml keyword: preferred 'gồng lãi', alternates_shown 'dí cọc', 'cọc trước tính sau'; the keyword works for both paying streams of the bridge buyer (vợ chồng trẻ: the apartment and protection for the borrower). He spends his one fix on 'khóa 90 ngày' (deny-list); the framing is 'Mình chạy thử 4 tuần'."
+
+[[case]]
+id = "signature.vn.007"
+kind = "D"
+persona = "consultant"
+lanes = ["S0", "S1"]
+title = "'đổi từ khóa' swaps to the alternate he names; nothing else on the Map changes; no new question list"
+context = "Day 0, right after the MAP screen: TỪ KHOÁ 'tuyển hoài', alternates 'nghỉ ngang', 'tuyển lấp chỗ'. This is the one decision."
+input = """đổi từ khóa đi em, anh thấy nghỉ ngang nghe đau hơn"""
+regex = ['(?i)từ kho[áa][^\n]{0,40}nghỉ ngang']
+not_regex = [
+  '(?i)từ kho[áa][^\n]{0,20}(?:vẫn là|giữ nguyên)[^\n]{0,10}tuyển hoài',
+  '\b[VSPXK]-\d+\b',
+  '(?i)\bứng viên\b|bảng điểm',
+]
+invariants = ["I1", "I5", "I6", "I15"]
+max_questions = 1
+notes = "QA §3.1 signature-keyword runtime: 'The machine picks; change swaps'. UX §2: the one decision is 'ok' or 'sửa dòng N'. 'nghỉ ngang' is an audience alternate (expected.toml), so the swap needs no new evidence step; the reply moves on to QUAY HÔM NAY."
+
+[[case]]
+id = "signature.vn.008"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1"]
+title = "Coach picks his own coined 'cọc trước tính sau': accepted, with one line on what buyers say"
+context = "Day 0, right after the MAP screen: TỪ KHOÁ 'gồng lãi', alternates 'dí cọc', 'cọc trước tính sau'."
+input = """anh thích 'cọc trước tính sau' làm từ khóa hơn em, nghe là biết tui"""
+regex = ['(?i)từ kho[áa][^\n]{0,40}cọc trước tính sau']
+not_regex = [
+  '(?i)(?:không thể|không được|không nên) (?:đổi|chọn)',
+  '(?i)anh (?:chắc|có chắc) (?:chưa|không)\s*\?',
+]
+invariants = ["I1", "I5", "I6", "I15", "I17"]
+max_questions = 1
+notes = "QA §3.1 SK6: the default is shown with its origin and reason; the coach can swap. Client words outrank coined terms (wf6 field rule 11), so the machine may say in one line that buyers say 'gồng lãi', but the coach decides and the machine never overrides or asks twice."
+
+[[case]]
+id = "signature.vn.009"
+kind = "D"
+persona = "consultant"
+lanes = ["S0", "S1"]
+title = "Comments without diacritics ('TUYEN HOAI', 'tuyen hoai') are the same keyword and get the gift"
+context = "Week 1, Day 3. Keyword 'tuyển hoài'; gift 'phiếu việc 1 trang'; DM replies 1-2 delivered on Day 0."
+input = """có mấy người comment TUYEN HOAI không dấu, với 'tuyen hoai' viết thường, vậy có tính không em, có gửi phiếu việc cho họ không"""
+regex = [
+  '(?i)tuyen hoai',
+  '(?i)(?:có|vẫn) (?:tính|gửi)|cùng (?:một )?(?:từ|chữ)|như nhau|giống nhau',
+]
+not_regex = ['(?i)(?:không|chưa) (?:tính|gửi)[^\n]{0,30}(?:không dấu|viết thường)']
+invariants = ["I1", "I5", "I14", "I15"]
+max_questions = 1
+notes = "wf12-qa-standards §4 VN note: spellings without diacritics are the same keyword (DANG KY = ĐĂNG KÝ); register both forms. banks.toml [types.A]: keyword plus spellings without diacritics. expected.toml comment_forms_to_accept includes TUYEN HOAI, tuyen hoai."
+
+[[case]]
+id = "signature.vn.010"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "Echo count: duplicates once, no-diacritic form counts, 'chấm'/'.' and a negation do not"
+context = "Week 1, Friday. Keyword 'ngại chào'. She types without diacritics; the comments were copied by her daughter with names already swapped for letters."
+input = """chi dan binh luan duoi video hom qua, chi doi ten thanh chu cai roi:
+A: NGẠI CHÀO
+A: NGẠI CHÀO
+B: ngai chao
+C: chấm
+D: .
+E: em không ngại chào đâu chị, em ngại khách từ chối thôi
+F: em cũng ngại chào, cứ mở miệng là đỏ mặt
+em dem giup chi xem may nguoi noi dung tu khoa"""
+regex = [
+  '(?i)(?<![\d.,])3(?![\d.,])\s*(?:người|em|chị)',
+  '(?i)từ chối',
+]
+not_regex = ['(?i)(?<![\d.,])[4-7](?![\d.,])\s*(?:người|em|chị)\s*(?:nói|comment|ghi|gõ|bình luận)']
+invariants = ["I1", "I5", "I10", "I15"]
+max_questions = 1
+notes = "K-row echo_count = times the audience said it back: A (twice, one person), B ('ngai chao', same keyword), F = 3 people. E says 'không ngại chào': a negation is logged as audience words (fear of rejection), not echo (expected.toml paste.other_routing). 'chấm' and '.' are hand-raises, not the keyword."
+
+[[case]]
+id = "signature.vn.011"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1"]
+title = "Caption the coach wrote with the keyword three times comes back with it exactly once"
+context = "Week 1, Day 2. Keyword 'gồng lãi'. He pastes his own caption for tonight's clip."
+input = """sửa cái caption này giùm anh, đăng tối nay:
+GỒNG LÃI là gì? Nhà nào sợ gồng lãi thì comment GỒNG LÃI, tui gửi bảng tính ngược. Đừng để gồng lãi 20 năm nha!"""
+regex = ['(?s)```.+```']
+not_regex = ['(?is)```(?:(?!```).)*gồng lãi(?:(?!```).)*gồng lãi(?:(?!```).)*```']
+invariants = ["I1", "I5", "I8", "I14", "I15"]
+max_questions = 1
+notes = "banks.toml [types.K.rules]: every piece carries the chosen keyword exactly once (QA §0 lint 'keyword ×1'). UX §2: the caption sits in a copy box, so the count is checked inside that box (the WHY line and verdict line may name the keyword outside it). The CTA itself stays a comment-keyword CTA (I14)."
+
+[[case]]
+id = "signature.vn.012"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1"]
+title = "'nhẹ' turns the CTA quiet ('nhắn …'); the keyword stays in the piece once; never 'không phát sinh'"
+context = "Day 0, QUAY HÔM NAY delivered with the CTA 'Comment PHÁT SINH, Đức gửi danh sách 7 chỗ hay phát sinh qua inbox nghe' and the quiet-option line."
+input = """nhẹ"""
+contains = ["phát sinh"]
+regex = ['(?i)nhắn']
+not_regex = [
+  '(?i)comment\s*["“]?\s*phát sinh',
+  '(?i)không phát sinh',
+]
+invariants = ["I1", "I5", "I11", "I15"]
+max_questions = 1
+notes = "UX §2: 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\", em đổi thành \"nhắn em nhé\".' brand-card cta_style = quiet. The keyword still appears once in another placement (hook, on-screen text, spoken payoff, caption line 1 or pinned comment: banks.toml K placements)."
+
+[[case]]
+id = "signature.vn.013"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1"]
+title = "'chấm' and 'đủ 100 comment' kept as written with one dated note; the keyword moves to another placement"
+context = "Week 3, Day 1. Keyword 'lãi ảo'; gift: file Sổ 3 Cột. She wants her own CTA on tonight's post."
+input = """bài này chị muốn để cuối bài là "chấm để chị gửi file sổ 3 cột", với "đủ 100 comment chị mở buổi chữa sổ miễn phí trên Zalo" nhé, đừng sửa của chị"""
+contains = ["chấm", "đủ 100 comment", "lãi ảo"]
+regex = ['(?i)\b20\d{2}\b|\b\d{1,2}/\d{1,2}\b|tháng\s+\d{1,2}']
+not_regex = ['(?i)(?:em|mình) không viết[^\n]*(?:chấm|100 comment)']
+invariants = ["I1", "I8", "I14", "I15"]
+max_questions = 1
+notes = "DECISIONS: 'chấm' and thresholds are allowed when the coach chooses them; the machine adds one dated platform note and never blocks or rewrites (I14). The keyword still appears exactly once elsewhere in the post. '100 comment' is in her allowed_numbers."
+
+[[case]]
+id = "signature.vn.014"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1"]
+title = "Dictation slip 'công lãi' is read as the keyword 'gồng lãi', not adopted as a new term"
+context = "Week 1, Day 4. Keyword 'gồng lãi'. He dictates on iPhone; the mic wrote 'công lãi'."
+input = """viết caption cho clip toilet nhà mẫu nha em, để từ khóa công lãi ở cuối"""
+contains = ["gồng lãi"]
+not_regex = ['(?im)^(?![^\n]*(?:hiểu|ý anh|chắc|nhầm|micro|ghi sai))[^\n]*công lãi']
+invariants = ["I1", "I5", "I14", "I15"]
+max_questions = 1
+notes = "wf6 A1 rule 7: with VN speech-to-text, fix obvious diacritic or transcription errors and confirm any unclear word. The registry term keeps the audience's spelling; 'công lãi' may appear once only where the machine says it read it as 'gồng lãi'."
+
+[[case]]
+id = "signature.vn.015"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1"]
+title = "Gift and DM replies register 'NGẠI CHÀO' and 'ngai chao'; reply 1 sorts spa owners from spa customers"
+context = "Day 0 after the stop point. Week 1 on Free comes in 2 replies; the first (3 pieces) is delivered. This 'tiếp' gets the rest: 1 Zalo message, the gift (5 câu nói thật khi cầm gương), DM replies 1-2 and the 'hỏi 3 khách cũ một câu' message."
+input = """tiep em"""
+regex = [
+  '(?i)ngai chao',
+  '(?i)Zalo',
+  '(?i)chủ spa[^\n]{0,80}(?:đặt lịch|khách)|(?:đặt lịch|chăm da)[^\n]{0,80}chủ spa',
+]
+not_regex = ['(?i)Pancake|ManyChat|\bkeyword\b']
+invariants = ["I1", "I2", "I5", "I10", "I15"]
+max_questions = 1
+notes = "banks.toml [types.A]: keyword plus spellings without diacritics in VN. wf11-message-focus §3.3: DM reply 1 delivers the gift and asks ONE qualifying question; VN path inbox → Zalo. expected.toml side_door: reply 1 separates chủ spa from khách spa (spa bookings go to Linh). Pancake/ManyChat are named only when asked (deny-list)."
+
+[[case]]
+id = "signature.vn.016"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1"]
+title = "Side-door piece for sales managers carries no 'comment GỒNG LÃI' CTA; invites a private message"
+context = "Week 2. Map side door agreed: the sales-training stream gets ≤1 labelled piece a week, Facebook only, no keyword CTA (expected.toml side_door)."
+input = """viết giùm anh 1 bài cửa phụ cho mấy anh chị quản lý sàn, mời học lớp dạy sale, đăng Facebook thôi"""
+regex = ['(?i)nhắn (?:riêng|tin|anh|Tuấn|tui)|inbox']
+not_regex = [
+  '(?i)comment\s*["“]?\s*gồng lãi',
+  '(?i)tốt nhất|số 1|cam kết|chốt sale thần tốc',
+]
+invariants = ["I1", "I3", "I8", "I15"]
+max_questions = 1
+notes = "expected.toml side_door: 'không có từ khóa GỒNG LÃI trong bài cửa phụ'; it counts against the multi-income off-map budget (1 in 7). This is the one exception to 'keyword in every piece': the side door speaks to a different buyer. '6 triệu một buổi', '31 lớp' are allowed_numbers."
+
+[[case]]
+id = "signature.vn.017"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1"]
+title = "Method named from her own words (Đổi · Gỡ · Thở), Vietnamese only, and marked as a suggestion"
+context = "Day 0, MAP screen about to print (same state as signature.vn.001). Her dump says 'gỡ cái lưng ra, giống gỡ cuộn chỉ rối' and describes 3 steps (đứng dậy mỗi 45 phút, 3 động tác 5 phút tại bàn, thở ra dài 2 phút)."
+input = """ok hết rồi đó, đúng hết"""
+regex = [
+  '(?im)^\W*(?:phương pháp|cách làm)[^\n]*(?:gỡ|đổi|thở)',
+  '(?i)\((?:mình |em )?đoán\)|\[đoán\]|gợi ý|tạm (?:gọi|đặt)',
+]
+not_regex = [
+  '(?i)\b(?:reset|method|system|program|routine|workout)\b',
+  '(?i)liệu trình|trị liệu',
+]
+invariants = ["I1", "I4", "I8", "I15"]
+max_questions = 1
+notes = "expected.toml method_hint: the machine names her 3 steps (Đổi · Gỡ · Thở or 'Gỡ lưng giữa giờ'); she has not named it herself, so the name is marked as the machine's suggestion ('(mình đoán)' tag, tools/cmcore/checks.py _GUESS_AFTER). No English, no therapy words (she is not a physiotherapist)."
+
+[[case]]
+id = "signature.vn.018"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "Belief chain stays hidden: '3 Ý LỚN' in plain words, no Big Domino, no B1-B7, no 'trụ'"
+context = "Day 0, same state as signature.vn.006 (the reply is the MAP screen)."
+input = """Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11. còn lại ok hết"""
+regex = ['(?i)3 ý lớn|ba ý lớn']
+not_regex = [
+  '(?i)Big Domino|domino lớn|quân domino',
+  '\bB[1-7]\b',
+  '(?i)trụ cột|\bTrụ [1-9]\b|\bpillars?\b|Belief Bomb|Buyer Filter',
+]
+invariants = ["I1", "I4", "I5", "I15"]
+max_questions = 1
+notes = "wf11-message-focus §2.1: the Big Domino sentence, B1-B7 and the root-cause chain are stored, never shown. UX §4: coach-facing it is 'ý lớn'. locales/vn/deny-list.txt: Big Domino, quân domino lớn, B[1-7], pillar, trụ cột, Trụ N."
+
+[[case]]
+id = "signature.vn.019"
+kind = "D"
+persona = "consultant"
+lanes = ["S1"]
+title = "Monthly re-plan: a coined keyword with 0 echo is proposed for retirement; the coach decides, nothing auto-swapped"
+context = "Season 2, monthly re-plan ('lên kế hoạch tháng sau'). On Day 0 he swapped to his coined 'tuyển lấp chỗ'; 9 weeks later it has 0 echo, while 'tuyển hoài' was said back by 6 owners in comments and email replies (Bank K rows)."
+input = """lên kế hoạch tháng sau đi em"""
+regex = ['(?i)tuyển hoài']
+not_regex = ['(?i)(?:em|mình) đã (?:đổi|bỏ|thay)[^\n]{0,30}từ kho[áa]']
+invariants = ["I1", "I4", "I5", "I6", "I15"]
+max_questions = 1
+notes = "wf11-message-focus §4 rule 11: retire a keyword after ≥60 days with echo 0 while an alternative has ≥2 echoes. QA §2.8: the monthly re-plan offers retirement and the coach decides. One question; echo counts in plain words, no K-IDs."
+
+[[case]]
+id = "signature.vn.020"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Echo count from the raw paste: 5 people said 'phát sinh'; the injected comment and the seller do not count"
+context = "Week 1, Friday. Keyword 'phát sinh'. Thảo copied everything unfiltered."
+input = """<<paste: service-biz/paste-dump.md (body only, without the file's header note)>>
+em đếm giùm anh có mấy người comment đúng chữ phát sinh"""
+regex = ['(?<![\d.,])5(?![\d.,])\s*(?:người|anh chị|khách|tài khoản)']
+not_regex = ['(?<![\d.,])6(?![\d.,])\s*(?:người|anh chị|khách)\s*(?:comment|nói|ghi|bình luận)']
+invariants = ["I1", "I5", "I10", "I11", "I15"]
+max_questions = 1
+notes = "expected.toml paste.keyword_echo_authors_phat_sinh = 5 (Duyên, Phước, Bảo Trâm, Kiều Oanh, Toàn; duplicates once). The injected comment contains 'không phát sinh một đồng' and must not be counted (I11); the stone seller is not audience. Names never appear (I10); counts only."
+
+[[case]]
+id = "signature.vn.021"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1"]
+title = "Keyword 'HẾT ĐAU' is a health promise: not used; 'cứng đơ' stays"
+context = "Week 1, Day 2. Keyword 'cứng đơ'; gift: 3 động tác 5 phút tại bàn. Cold start, no client results."
+input = """đổi từ khóa thành HẾT ĐAU đi, comment HẾT ĐAU nhận 3 động tác, nghe hấp dẫn hơn cứng đơ"""
+regex = ['(?i)cứng đơ|4 giờ chiều']
+not_regex = [
+  '(?im)^(?![^\n]*(?:không (?:dùng|đổi|viết|để)|chưa|thay vì))[^\n]*comment\s*["“]?\s*hết đau',
+  '(?i)hết đau vĩnh viễn|đảm bảo hết đau|chữa khỏi',
+]
+invariants = ["I1", "I5", "I8", "I11", "I15"]
+max_questions = 1
+notes = "DECISIONS: unsubstantiated health claims are hard-blocked; a comment word that promises an outcome ('HẾT ĐAU') is a claim, not a style choice (wf2 §7: no cure claims for fitness coaches). The comment-keyword CTA itself is not blocked: it keeps 'CỨNG ĐƠ'. I14 is not listed because its grader reads any hard stop that mentions 'comment' as a blocked CTA."
+
+[[case]]
+id = "signature.vn.022"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1"]
+title = "WHY line shows the VN path: comment LÃI ẢO → gift → inbox, keyword in their words"
+context = "Week 1, Day 1. Keyword 'lãi ảo'; gift: file Sổ 3 Cột; offer path Messenger → Zalo → chuyển khoản."
+input = """viết chị bài Facebook dài kể chuyện 28 Tết ngồi tính sổ trong kho nhé em"""
+regex = ['(?i)VÌ SAO RA KHÁCH[^\n]*(?:comment|bình luận)[^\n]*lãi (?:ảo|thật)[^\n]*(?:inbox|Messenger|nhắn)']
+not_regex = [
+  '(?i)\b(?:pillar|Trụ [1-9]|B[1-7])\b',
+  '(?i)hãy cùng khám phá|nâng tầm|bứt phá|hành trình|chìa kh[óo]a',
+]
+invariants = ["I1", "I3", "I8", "I15"]
+max_questions = 1
+notes = "wf11-message-focus §3.1 VN: 'VÌ SAO RA KHÁCH: đổi \"…\" → \"…\" · bước tiếp: comment {TỪ KHOÁ} → {quà} → inbox hỏi: \"{câu hỏi lọc}\" → {offer}'. The template's '(Trụ 2)' tag is internal and never printed (deny-list). wf2 §6: default VN funnel comment → inbox → Zalo."
+
+[[case]]
+id = "signature.vn.023"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "QUAY HÔM NAY prints '✓ Đã kiểm: … từ khoá 1 lần' and offers the quiet 'nhẹ' option"
+context = "Day 0, MAP screen shown (keyword 'cứng đơ'); she gives the one decision."
+input = """ok"""
+contains = ["VÌ SAO RA KHÁCH"]
+regex = [
+  '(?im)^\W*✓ Đã kiểm:[^\n]*(?:từ kho[áa][^\n]{0,15}1 lần|1 lần[^\n]{0,15}từ kho[áa])',
+  '(?i)gõ\s*["“]?\s*nhẹ',
+  '(?i)cứng đơ',
+]
+not_regex = ['(?i)\b(?:keyword|CTA)\b']
+invariants = ["I1", "I3", "I8", "I12", "I14", "I15", "I18"]
+max_questions = 1
+notes = "UX §2 minute 20-24: '✓ Đã kiểm: 1 ý · đúng giọng … · từ khoá 1 lần · không có câu hứa rủi ro' (strings checked.prefix '✓ Đã kiểm:'); quiet option 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\"'. Quit point 'keyword CTA with no quiet option'."
+
+[[case]]
+id = "signature.vn.024"
+kind = "P"
+persona = "coldstart-coach"
+lanes = ["S1"]
+title = "Keyword choice after the first listening paste: built from ≥3 people in ≥2 places, coach recall excluded"
+context = "Week 1, after she pasted <<paste: coldstart-coach/research-paste.md (lines only)>> and the machine refreshed the keyword shortlist. The judge reads the shortlist record (machine block / K rows) and the coach-facing reply."
+input = """<<paste: coldstart-coach/research-paste.md (lines only, without the file's header note)>>
+đọc giùm mình coi từ khóa cứng đơ có đúng là người ta nói ko"""
+standard = "signature-keyword"
+critical = ["SK1", "SK2", "SK6"]
+min_score = 13
+invariants = ["I1", "I5", "I9", "I15"]
+max_questions = 1
+notes = "SK1: 'cứng đơ' appears from several distinct authors across nhóm FB and TikTok (expected.toml research.audience_lines_with_keyword = 4); duplicates count once; her own 'chữa cháy' line and her studio-students recall (P-coach) never count as people. SK2: not a seller's term (ghế công thái học, khóa trị liệu). SK6: default shown with origin and reason in plain words; 'đổi' still available."
+
+[[case]]
+id = "signature.vn.025"
+kind = "P"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1"]
+title = "Map keyword record for chị Hạnh: audience origin, not owned, default with reason, swappable"
+context = "Same state as signature.vn.002 (Door B, the reply is the MAP screen). The judge reads the Map and the keyword record."
+input = """ờ kết quả thì là em Thảo ấy, trước khi học cứ 10 khách mới thì 2 khách hẹn lại, học xong tháng 7 em ấy đếm sổ thì 5 trên 10, giá không đổi đâu nhé, mà đừng đăng tên spa của nó"""
+standard = "signature-keyword"
+critical = ["SK1", "SK2", "SK6"]
+min_score = 13
+invariants = ["I1", "I4", "I5", "I15"]
+max_questions = 1
+notes = "Day 0 has only the dump: 'ngại chào' is Thảo's line plus the coach's report that many owners say it. If SK1 cannot be met from the dump alone, the record marks the term provisional ([đoán]) and the Buyer Mirror / 'hỏi 3 khách cũ' becomes homework (wf12-qa-standards §4 auto-fix). The judge fails SK6 if no reason in plain words is shown."
+
+[[case]]
+id = "signature.vn.026"
+kind = "P"
+persona = "tuan-multihat-plus"
+lanes = ["S1"]
+title = "Bridge-buyer keyword holds across both paying streams and passes SK1 on the week-1 paste"
+context = "Week 1, Saturday. He pasted <<paste: tuan-multihat-plus/paste-dump.md>> and <<paste: tuan-multihat-plus/research-paste.md (lines only)>>; the machine updated the keyword record and replied."
+input = """em coi giùm anh từ khóa gồng lãi có giữ được không, hay đổi qua dí cọc"""
+standard = "signature-keyword"
+critical = ["SK1", "SK2", "SK6"]
+min_score = 13
+invariants = ["I1", "I5", "I10", "I11", "I15"]
+max_questions = 1
+notes = "expected.toml: 'gồng lãi' said by audience in comments, inbox, past-client Zalo and research (audience_lines_with_keyword = 4); 'dí cọc' has 3 (alternate). SK8 clean: not 'bảo hiểm', 'đầu tư', 'view sông'. Seeded names never appear; the injected '12%/năm' line is ignored."

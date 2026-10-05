@@ -1,0 +1,1226 @@
+# Eval cases: message (Message Focus Engine: the 6 questions, picking the ONE message, the Map
+# screen and its 6 tests, NOT NOW, drift handling, anti-dilution rules), EN edition.
+# Written by the QA role before modules/en/message.md exists. Producers never edit this file.
+#
+# Sources: docs/research/wf11-message-focus.md §1-§5 (6 questions, picking rules, Map template and
+# its 6 tests, NOT NOW reason codes and return triggers, drift on-map / bridge / park, anti-dilution
+# rules 1-14); docs/research/wf11-ux-spec.md §2 minute 12-20, §4 (what the coach never sees), §5.17;
+# docs/DECISIONS.md (polarity on ideas, never people; nothing invented); wf12-qa-spec.md §2.4, §5.2;
+# strings/en.toml (next.prefix "NEXT →", why.prefix "WHY THIS GETS CLIENTS", checked.prefix
+# "✓ Checked:", verdict.* lines).
+#
+# Coach-facing renames that override the research wording (UX §4, locales/en/deny-list.txt):
+#   "Pillar n" → "big idea n"; "Parked as X-9" → "Parked" (no Bank IDs); reason codes
+#   (DIFF-BUYER, TOOL, RISKY…) → their plain EN reasons; "locked 90 days" → "try 4 weeks";
+#   Big Domino, B1-B7, Focus Score and candidate tables stay hidden.
+#
+# Conventions (read with evals/README.md "Case files"):
+# - `input` holds the coach turn(s); `context` names the state and any earlier turns.
+# - Unless `context` says "whole run", assertions are checked on the machine reply to the last
+#   coach turn in `input`.
+# - Regexes are Python `re`, run on the full reply text, case-sensitive unless the pattern starts
+#   with (?i) or uses (?i:...).
+# - `invariants` lists I1-I18 ids only. graders.py also runs its day0_timing, deny_list and
+#   quit_triggers checks on every transcript; `notes` names them where a case depends on them.
+# - "Brand Card v1 present (persona default)" means the Day-0 Map the persona's expected.toml
+#   describes, saved as a project source.
+
+[meta]
+module = "message"
+edition = "en"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- the Map screen
+
+[[case]]
+id = "message.en.001"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Map screen: one view with message, 3 big ideas, keyword, offer, why-this-one, NOT NOW, one decision"
+context = "Day 0, about minute 17, ChatGPT Free. Dana confirmed the 7-line check ('yep, fix 4'), gave Lorraine's best result, and the machine asked its last '?' line (talk day). This reply shows the Map."
+input = '''Tuesday. Mondays I'm at my mom's.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bone message\b''',
+  '''(?i)\b3 big ideas\b''',
+  '''(?i)\bkeyword\b''',
+  '''(?i)\boffer\b''',
+  '''(?i)\bwhy this one\b''',
+  '''(?i)\bnot now\b''',
+  '''(?i)nothing you know is wasted''',
+  '''(?i)\b(4|four) weeks\b''',
+  '''(?i)\bscreenshot''',
+  '''(?i)\bOK\b''',
+  '''(?i)\bchange (line|one line|a line)\b''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?i)\bpillars?\b''',
+  '''\bB[1-7]\b''',
+  '''(?i)big domino|focus score|candidate|buyer mirror|belief bomb|buyer filter''',
+  '''\b(Admirable|Likable|Likeable|Credible|Trustable)\b''',
+  '''\b[VSPX]-\d+\b''',
+  '''(?i)\block(ed|s)?\b''',
+  '''(?i)\b90[- ]days?\b''',
+  '''(?i)\b(4|four) big ideas\b''',
+  '''\bPam\b''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I6", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §2 minute 17-19 MAP SCREEN, one view: the one message; 3 BIG IDEAS; keyword; offer; one 'Why this one: {4} people paid you for it, you can quote them, you lit up about {X}' line; NOT NOW (≤7, plain reasons); 'Nothing you know is wasted…'; framing 'We'll run this for 4 weeks, then check what your buyers say back' (the coach never sees 'lock'); a 3-line pocket version ending 'screenshot this'. Then THE ONE DECISION: 'OK' or 'change line 3'. UX §4 never-sees list is asserted as not_regex; graders deny_list re-checks it. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.002"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "The one message passes the mechanical tests: one breath, her buyer's words, a name only she uses, no claim"
+context = "Same state as message.en.001 (the reply that shows the Map)."
+input = '''Tuesday. Mondays I'm at my mom's.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bI help\b[^\n]*["“][^"”\n]{3,}["”]''',
+  '''(?i)\bI help\b[^\n]*\b(coffee|portal)''',
+  '''(?i)\b(12 weeks|1:1|one-on-one|\$2,400)''',
+]
+not_regex = [
+  '''(?i)\bI help(?:[^\S\n]+[^\s.!?]+){34,}''',
+  '''(?i)guarantee''',
+  '''(?i)\b90\s*(%|percent)''',
+  '''(?i)\b(reinvent|reinvention|pivot|second act|dream job|unlock your potential|transform)''',
+  '''(?i)\bcertified\b|\bICF\b''',
+  '''(?i)\banyone\b[^\n]{0,30}\b(career change|stuck)\b''',
+]
+verdict = ""
+invariants = ["I4", "I8", "I9"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §2.2 tests the machine runs before showing the message: 1 one breath (≤35 words EN; the regex flags a 36+ word 'I help…' line); 2 their words (a quoted buyer phrase, e.g. 'one more chapter'); 3 narrow (stage or moment, judged in the P case); 4 swap test (contains the method or old-way name: coffee before resume / feeding the portal); 5 money (ends at something sold); 6 claims-safe (range or condition, no guarantee). Her banned words come from expected.toml [voice]."""
+
+[[case]]
+id = "message.en.003"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Dana's Map passes the message-map standard"
+context = "Same state as message.en.001; judge the Map reply against expected.toml [map]."
+input = '''Tuesday. Mondays I'm at my mom's.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = []
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """MM1 one buyer (women 45+, 20+ years at one company, found right after a reorg), one 'not for' line; MM2 problem from 2+ buyer phrases by 2+ people ('one more chapter', 'Is it too late for me?', 'Who's going to hire a 49-year-old'); MM6 the hidden chain traces to her buyers' words; MM7 ≤3 big ideas, NOT NOW ≥3 topics, one offer; MM10 nothing invented (no percentage, no Pam). Why-this-one must cite her 11 paying clients, her quotable clients and the coffee story she lit up about."""
+
+[[case]]
+id = "message.en.004"
+kind = "P"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Erin's Map passes the message-map standard"
+context = "Day 0, Claude Free. Erin answered the last '?' line; judge the Map reply against expected.toml [map]."
+input = '''fix 3. not "method". Margin before more is fine. nothing with a trademark sign.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = []
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """Buyer: agency owners ($1M-$5M, 8-35 people) right after a record year with no cash. Problem in their words: 'Record year. Empty account. Make it make sense.' Ideas 2 and 5 of expected.toml overlap; picking both is a dilution defect (MM7). Tax and exits are NOT NOW; deal prep is a referral-only side door. No Raj, no 70 percent, no 'former CFO'."""
+
+[[case]]
+id = "message.en.005"
+kind = "P"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1"]
+title = "Linda's Map passes the message-map standard"
+context = "Day 0, Claude Pro. Linda answered the last '?' line (talk day); judge the Map reply against expected.toml [map]."
+input = '''Monday. Mondays are quiet. Thursdays and Fridays are Mom's.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = []
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """Buyer: women in their 50s who left a 20-30-year corporate career within the last year (not people still deciding to leave). 'I don't know who I am without the badge.' A LinkedIn-headline big idea on its own is a defect (a tool). Life topics come back only as the 'who am I after corporate' angle. No Margaret, no 100 percent, no 'certified'."""
+
+[[case]]
+id = "message.en.006"
+kind = "P"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Corinne's Map passes the message-map standard"
+context = "Day 0, ChatGPT Plus. Corinne answered the last '?' line (talk day); judge the Map reply against expected.toml [map]."
+input = '''Thursday. After 4 there's no site visits.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = []
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """Season-1 buyer is the Room Reset homeowner (late 30s-50, one room they walk past every day), not full-service clients, designers or realtors. 'Honestly it's the nothing room.' Full projects get a side door, never 'parked with no bridge' (quit point 6). No savings figure, no 400-plus rooms, no home-value claim, no decorator words."""
+
+[[case]]
+id = "message.en.007"
+kind = "P"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Cold-start Map passes the message-map standard with founding framing"
+context = "Day 0, iPhone, ChatGPT Plus. Dan answered the offer '?' ('Nothing yet', then the 8-week small-group idea at '$249? I honestly don't know'). Judge the Map reply against expected.toml [map]."
+input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = []
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """Cold start: PAID = 0 for every candidate, so the picking rule runs Offer v0 → a founding pilot (message-focus §1.6). A cold start may show 2 big ideas plus 'proof coming'. MM3 promise is process-only (no weight, body or health outcome). Moms are a different buyer (NOT NOW). Every buyer phrase is second-hand from dads he knows; none paid him."""
+
+[[case]]
+id = "message.en.008"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1"]
+title = "Cold-start Map: honest why-this-one, founding offer, dads not moms, risky topics parked"
+context = "Same state as message.en.007 (the reply that shows Dan's Map)."
+input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bfounding\b''',
+  '''(?i)\bwhy this one\b''',
+  '''(?i)\bdads?\b''',
+  '''(?i)not now[\s\S]*\bmoms?\b''',
+  '''(?i)not now[\s\S]*\b(TRT|testosterone)\b''',
+  '''(?i)\bkeyword\b[^\n]*\bkeep up\b''',
+]
+not_regex = [
+  '''(?i)\b(people|clients?|dads|guys) (have )?paid you\b''',
+  '''(?i)\bpaying clients\b''',
+  '''(?i)\bcertified\b''',
+  '''\b(22|200)\b''',
+  '''(?i)\bI help\b[^\n]*\b(lose weight|weight loss|pounds|lbs|six[- ]pack|abs)\b''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+  '''(?i)\b(4|four) big ideas\b''',
+  '''\$(?!249\b)\d''',
+]
+verdict = ""
+invariants = ["I4", "I5", "I8", "I10"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """'Why this one' must not say people paid him (PAID = 0); it can cite the dads' words he can quote and the garage story he lit up about. Keyword from audience words: KEEP UP (expected.toml [keyword]). TRT/supplements: risky, stays parked. The only price allowed is his own $249 guess, shown as founding or '(my guess)'; any other dollar figure is invented. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.009"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "NOT NOW: at most 7, plain reasons and return triggers, no codes, resume reviews keep a side door"
+context = "Same state as message.en.001 (the reply that shows the Map). Dana's dump named resume reviews (half her income some months), LinkedIn profiles, 2 life-coaching clients, menopause at work, 401(k)/pensions, 'can I sue' and salary negotiation."
+input = '''Tuesday. Mondays I'm at my mom's.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bresume''',
+  '''(?i)\bresume[^\n]*\b(side door|DMs?|keep (doing|selling|offering)|still (do|sell|offer)|referral)''',
+  '''(?i)\bmenopause\b''',
+  '''(?i)\b(401|pension|retirement money)''',
+  '''(?i)\b(sue|legal|lawyer|age discrimination|ageism)\b''',
+  '''(?i)\b(different (buyer|problem)|nothing to sell|a tool|anyone could say|claims|risk|later stage)''',
+  '''(?i)\b(comes? back|back (when|at|if|in)|stays parked)\b''',
+]
+not_regex = [
+  '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
+  '''\bX-\d+\b''',
+  '''(?i)not now[^\n]*\n(?:[^\S\n]*(?:[·•*\-–]|\d+[.)])[^\n]*\n){8}''',
+  '''(?i)\b(waste|wasted|throw (it )?away|drop it)\b[^\n]{0,20}\b(resume|life coaching)''',
+]
+verdict = ""
+invariants = ["I4", "I5"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §2.4: reason codes are internal; the coach sees 'different buyer', 'different problem', 'nothing to sell for it yet', 'a tool, not a message', 'anyone could say it', 'claims or credential risk', 'right person, later stage', each with a return trigger (3+ buyer mentions in 30 days, offer changes, a launch needs it, Season N, never for risky). Visible list ≤7; the rest archived silently. Quit point 6: a paid income stream parked with no bridge or side door (expected.toml side_door: resume reviews stay a DM-only side door). Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.010"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Erin's Map: Record Year keyword, tax parked, deal prep kept by referral, why-this-one from her sprints"
+context = "Day 0, Claude Free, the reply that shows the Map (same state as message.en.004)."
+input = '''fix 3. not "method". Margin before more is fine. nothing with a trademark sign.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bkeyword\b[^\n]*\brecord year\b''',
+  '''(?i)\bI help\b[^\n]*\b(margin before more|top[- ]line theater)''',
+  '''(?i)\bwhy this one\b[^\n]*\b14\b''',
+  '''(?i)not now[\s\S]*\btax''',
+  '''(?i)\bdeal prep[^\n]*\b(side door|referral|DMs?|keep|still|word of mouth)''',
+]
+not_regex = [
+  '''(?i)\bformer CFO\b|\bBig 4\b|\bMBA\b''',
+  '''\bRaj\b''',
+  '''(?i)\b70\s*(%|percent)''',
+  '''(?i)\b(doubl(e|es|ing)|guarantee)''',
+  '''™|®''',
+  '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
+  '''(?i)\bpillars?\b''',
+  '''(?i)\b(4|four) big ideas\b''',
+]
+verdict = ""
+invariants = ["I4", "I5", "I8", "I10"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """expected.toml [keyword] preferred 'record year' (Marcus's first words, 8 audience members). why_this_one_must_cite: 14 sprints since 2023. Deal prep stays referral-only (her accepted side door). Tax is risky (she does not do tax) and stays parked. She rejects trademark signs and cute names. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.011"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Corinne's Map: 'nothing room' keyword, 64 Resets as the reason, full projects kept by a side door"
+context = "Day 0, ChatGPT Plus, the reply that shows the Map (same state as message.en.006)."
+input = '''Thursday. After 4 there's no site visits.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bkeyword\b[^\n]*\bnothing room\b''',
+  '''(?i)\bwhy this one\b[^\n]*\b64\b''',
+  '''(?i)\b(whole[- ]house|full[- ]service|full projects?)\b[^\n]*\b(side door|referral|builders?|DMs?|keep|still)\b''',
+  '''(?i)\bI help\b[^\n]*\b(tape it out|sofa first)''',
+]
+not_regex = [
+  '''(?i)\b(decor|decorat\w*|elevated|curated|timeless)\b''',
+  '''(?i)\bHollis\b''',
+  '''\b400\b''',
+  '''(?i)\b(20|30)\s*(%|percent)''',
+  '''(?i)\b(home|resale) value\b''',
+  '''(?i)\b(award-winning|architect)\b''',
+  '''(?i)\bpillars?\b''',
+  '''(?i)\b(4|four) big ideas\b''',
+]
+verdict = ""
+invariants = ["I4", "I5", "I8", "I10"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """expected.toml [map] / [keyword]: preferred 'nothing room' (Megan's words, 8 audience members); why_this_one cites 64 paid Room Resets; the Hollis kitchen has no consent; '400-plus rooms' and 'save 30 percent' are guesses; 'decor', 'elevated', 'curated', 'timeless' are on her must-not list ('We're designers, not decorators'). Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.012"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "S0"]
+title = "Linda's Map: badge keyword, life topics bridged back, 4-week framing, her 3 clients as the reason"
+context = "Day 0, Claude Pro, the reply that shows the Map (same state as message.en.005)."
+input = '''Monday. Mondays are quiet. Thursdays and Fridays are Mom's.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bkeyword\b[^\n]*\bbadge\b''',
+  '''(?i)\bwhy this one\b[^\n]*\b(3|three)\b''',
+  '''(?i)\bafter (corporate|the badge)\b''',
+  '''(?i)\b(4|four) weeks\b''',
+  '''(?i)\bI help\b[^\n]*\b(tuesday|garage)''',
+]
+not_regex = [
+  '''(?i)\block(ed|s)?\b''',
+  '''(?i)\b90[- ]days?\b''',
+  '''(?i)\bcertified\b|\bICF\b|master coach''',
+  '''\bMargaret\b''',
+  '''(?i)\b100\s*(%|percent)''',
+  '''(?i)140,000''',
+  '''(?i)\bkeyword\b[^\n]*\b(tuesday|garage|chapter|exit|pivot|reinvent)''',
+  '''(?i)\bpillars?\b''',
+]
+verdict = ""
+invariants = ["I4", "I5", "I8", "I10"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """expected.toml life_topics_bridge: the NOT NOW line for life topics must say they come back as 'who am I after corporate'; parking them with no bridge is a defect and a quit point for Linda. She hesitates at 'lock' / '90 days' (quit point 7). Keyword 'without the badge' (BADGE); 'Write the Tuesday' is the method name, not the keyword. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+# ---------------------------------------------------------------- the one decision and pushback
+
+[[case]]
+id = "message.en.013"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "The keyword is pre-picked from buyer words; the coach is never asked to vote on keywords"
+context = "Same state as message.en.001 (the reply that shows the Map)."
+input = '''Tuesday. Mondays I'm at my mom's.'''
+contains = []
+not_contains = []
+regex = ['''(?i)\bkeyword\b[^\n]*\bchapter\b''']
+not_regex = [
+  '''(?i)\bpick (one|1) of (these|the|my)\b''',
+  '''(?i)\bwhich (keyword|of these keywords|one do you (like|want|prefer))\b''',
+  '''(?i)\bchoose (a|your|one) keyword\b''',
+  '''(?i)\boption [A-C1-3]\b''',
+  '''(?i)\bkeyword\b[^\n]*\b(quiet exit|bali|second act|pivot|reinvent|dream job|GROW|BLUEPRINT)\b''',
+]
+verdict = ""
+invariants = ["I5", "I6"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §0: the day's decision is no longer 'pick 1 of 3 keywords'; the machine pre-picks the keyword built from buyer words and shows the other two as alternates. UX §5.8 removes 'pick 1 of 3 keywords'. ≤1 decision per session (I6): the Map's OK / change-a-line is that decision."""
+
+[[case]]
+id = "message.en.014"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "Multi-income answer steers the pick: the Map's offer is the program she wants to grow"
+context = "Day 0. The 7-line check carried the multi-income line ('You earn from 3 things… which pays the bills this month?'). Dana answers it; her other '?' lines are already answered, so this reply shows the Map."
+input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\boffer\b[^\n]*\b(12 weeks|12-week|\$2,400|1:1|one-on-one)''',
+  '''(?i)\bresume[^\n]*\b(side door|DMs?|keep (doing|selling|offering)|still (do|sell|offer))''',
+]
+not_regex = [
+  '''(?i)\boffer\b[^\n]*\$(175|95)\b''',
+  '''(?i)\bI help\b[^\n]*\b(resume|life coach|divorce|empty nest)''',
+  '''(?i)\b(4|four) big ideas\b''',
+  '''(?i)\bpillars?\b''',
+]
+verdict = ""
+invariants = ["I4", "I5", "I8"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §2 minute 11-12 multi-income line and §5 change 5 'multi-income bridge-buyer step': the machine looks for the ONE person who could buy more than one thing, and the coach's answer settles which stream the Season sells. expected.toml offer = the 12-week program; resume reviews stay a DM-only side door for the same buyer; life coaching takes no new clients and gets no content."""
+
+[[case]]
+id = "message.en.015"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "'Not a method, I'm not a guru': the line changes, no new decision round"
+context = "Day 0, the Map is on screen with a line labelled with her 3 steps as a method."
+input = '''Can we not call it a method? I'm not a guru. Coffee before resume is fine.'''
+contains = []
+not_contains = []
+regex = ['''(?i)\bcoffee before resume\b''']
+not_regex = [
+  '''™|®''',
+  '''(?i)\b(framework|blueprint|system|formula|signature method)\b''',
+  '''(?i)\boption [A-C1-3]\b''',
+  '''(?i)\bwhich (one|of these)\b''',
+  '''(?i)\bguru\b[^\n]{0,40}\b(but|however|actually)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """persona pushback (verbatim). expected.toml method_hint: 'Coffee Before Resume (her own phrase; any plain name built on it passes)… Must not sound like a guru system.' The change is applied at once; no options with no default, no argument."""
+
+[[case]]
+id = "message.en.016"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "'Resume reviews pay my electric bill': a side door, not a 4th big idea and not a lecture"
+context = "Day 0, the Map is on screen with resume reviews in NOT NOW."
+input = '''Hang on. Resume reviews pay my electric bill. You can't just park that.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bresume''',
+  '''(?i)\b(side door|DMs?|keep (doing|selling|offering)|still (do|sell|offer))\b''',
+]
+not_regex = [
+  '''(?i)\b(4|four) big ideas\b''',
+  '''(?i)\b(you need to|you have to|you must|you should) (focus|narrow|pick|choose|stay)''',
+  '''(?i)\btrust the process\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 150
+max_chars = 0
+max_questions = 1
+notes = """persona pushback (verbatim); 'Accepts quickly: a side door for resume reviews if it stays in the DMs.' Quit point 6. UX §5.17: multi-income coaches keep a parked income stream through a side door (≤1 labelled piece a week if they opt in), never as a 4th big idea. The coach is never lectured (message-focus §2.5)."""
+
+[[case]]
+id = "message.en.017"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1"]
+title = "'My whole life in a parking lot': life topics come back as 'who am I after corporate'"
+context = "Day 0, the Map is on screen; NOT NOW lists empty nest / marriage / friendships after work."
+input = '''You can't put my whole life in a parking lot. The empty nest stuff is half of why I became a coach.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bafter (corporate|the badge)\b''',
+  '''(?i)\bbig idea\b''',
+]
+not_regex = [
+  '''(?i)\b(4|four) big ideas\b''',
+  '''(?i)\b(you need to|you have to|you must|you should) (focus|narrow|pick|choose)''',
+  '''(?i)\bwhy (did|do) you\b''',
+  '''(?i)\block(ed)?\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 160
+max_chars = 0
+max_questions = 1
+notes = """persona pushback (verbatim first sentence); expected.toml life_topics_bridge. The machine bridges, it does not argue: the house got quiet and so did the answer → big idea 1. Nothing is lost ('Nothing you know is wasted')."""
+
+[[case]]
+id = "message.en.018"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "S0"]
+title = "'What if it's wrong?': a 4-week try that checks what buyers say, never a lock"
+context = "Day 0, the Map is on screen. Linda hesitates before saying OK."
+input = '''What if it's wrong? I don't want to be stuck with this.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(4|four) weeks\b''',
+  '''(?i)\b(say back|reply|replies|tell you|what (your )?(readers|buyers|people|clients) (say|tell))''',
+  '''(?i)\bOK\b''',
+]
+not_regex = [
+  '''(?i)\block(ed|s)?\b''',
+  '''(?i)\b90\b''',
+  '''(?i)\bquarter\b''',
+  '''(?i)\b(stuck|committed) (with|to) (it|this) for\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 120
+max_chars = 0
+max_questions = 1
+notes = """UX §5.17: coach-facing 'try 4 weeks' replaces 'locked 90 days'; the internal lock and the monthly KEEP default stay hidden (quit point 7; deny-list lock/90-day patterns). One line of reassurance, then the same decision (OK or change a line). Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.019"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0"]
+title = "'Can we leave the moms in?': who it's FOR, not who can watch; WHO stays dads"
+context = "Day 0, the Map is on screen: WHO = desk-job dads 35-45 with kids under 10; moms in NOT NOW as a different buyer."
+input = '''Can we leave the moms in? Jess's friends keep asking.'''
+contains = []
+not_contains = []
+regex = ['''(?i)\b(everyone can (still )?watch|who it(?:'|’)s for|still watch)\b''']
+not_regex = [
+  '''\bJess\b''',
+  '''(?im)^\W*WHO\b[^\n]*\bmoms?\b''',
+  '''(?i)\b(4|four) big ideas\b''',
+  '''(?i)\b(you need to|you must) (focus|narrow)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I10", "I17"]
+max_words = 120
+max_chars = 0
+max_questions = 1
+notes = """message-focus §1.5 fallback if the coach refuses to narrow: 'You won't lose them. Everyone can still watch. We're choosing who it's FOR.' Anti-dilution rule 1: one person per Season; a 2nd buyer only after 8 consistent weeks AND ≥3 clients from the first. 'Jess' is a private name (persona.toml private_names) even when the coach says it."""
+
+[[case]]
+id = "message.en.020"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1"]
+title = "'Says who? Use my clients, not a rule.': why-this-one rewritten from her own clients"
+context = "Day 0, the Map is on screen. Linda reread the 'Why this one' line and found it generic."
+input = '''Says who? Use my clients, not a rule.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(Ren[ée]e|Joan|Carol)\b''',
+  '''(?i)\b(3|three)\b''',
+]
+not_regex = [
+  '''\bMargaret\b''',
+  '''(?i)\b100\s*(%|percent)''',
+  '''(?i)\b(studies show|research shows|experts say|most coaches)\b''',
+  '''(?i)140,000''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8", "I17"]
+max_words = 140
+max_chars = 0
+max_questions = 1
+notes = """persona Behaviour: rereads the why-this-one line and argues if it is generic. expected.toml why_this_one_must_cite: 3 paying clients, all 3 for the move out of corporate; her quotable clients (Renée, Joan, Carol); the memo story or the garage phase. Margaret has no consent; Joan's package amount is confidential."""
+
+# ---------------------------------------------------------------- the 6 questions
+
+[[case]]
+id = "message.en.021"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "S0"]
+title = "Guided mode: one question at a time, options from her dump, with a stated default"
+context = "Day 0, after the inventory and 7-line check. Corinne, dictating from the car, asks to go one question at a time."
+input = '''one by one please, I'm in the car between site visits'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bA\)[\s\S]*\bB\)''',
+  '''(?i)\b(my pick|I(?:'|’)d (go with|pick|start with|bet on)|default|if you(?:'|’)re not sure)\b''',
+]
+not_regex = [
+  '''_{3,}''',
+  '''(?i)\[(your|insert|add|enter)\b''',
+  '''(?i)\b(designers?|realtors?)\b[^\n]{0,40}\b(my pick|I(?:'|’)d (go with|pick))''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5"]
+max_words = 160
+max_chars = 0
+max_questions = 1
+notes = """message-focus §1.1 rule 1 'Talk first, choose second: options taken from the dump (A/B/C plus a stated default)'; rule 2 one question per message in guided mode; §1.4 'one by one' switches to guided mode. Quit trigger 'options with no default'. Q1 groups from her dump: Reset homeowners, full-service clients, designers (free pricing advice), realtors (staging)."""
+
+[[case]]
+id = "message.en.022"
+kind = "D"
+persona = ""
+lanes = ["S1", "S0"]
+title = "A hedge gets a bet, not a lecture or a second question"
+context = "Standalone. Day 0, guided mode, Q1 (WHO) asked with options A) new private-practice therapists B) group practices C) therapists moving online. The fictional coach (Noor, 39, helps therapists fill a private practice; sells a 3-month 1:1 at $1,800) hedges."
+input = '''ugh I don't know. all of them? the new ones maybe, or the ones going online. honestly anybody who's stuck'''
+contains = []
+not_contains = []
+regex = ['''(?i)\bif you had to bet\b''']
+not_regex = [
+  '''(?i)\b(you need to|you have to|you must) (pick|choose|narrow)''',
+  '''(?i)\banyone\b[^\n]{0,20}\bis no one\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 90
+max_chars = 0
+max_questions = 1
+notes = """message-focus §1.1 rule 2: 'A hedge gets a bet: If you had to bet $100…'. At most 1 probe per question. The bet line is the reply's one question."""
+
+[[case]]
+id = "message.en.023"
+kind = "D"
+persona = ""
+lanes = ["S1", "S0"]
+title = "'skip' on their words: the gap is filled and visibly marked, never invented as a quote"
+context = "Standalone. Day 0, check line 2 'Their words: ?' asked live. The fictional coach (Noor, therapists' private-practice coach) skips. Her dump paraphrased clients ('they feel like frauds charging money') but quoted nobody."
+input = '''skip, I honestly don't remember what they say exactly'''
+contains = []
+not_contains = []
+regex = ['''(?i)\(my guess\)|\[to confirm\]|\[guess\]''']
+not_regex = [
+  '''(?i)\b(she|he|they|one client|a client) (said|told me|wrote)\s*[:,]?\s*["“]''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I9"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §1.1 rule 3 never pre-fill words you didn't hear; rule 4 'skip always works: the machine fills in a default and marks it (my guess)'; Q2 if skipped: Quick Listen phrases tagged [to confirm]. A paraphrase must not be dressed up as a client quote (I9, SG1)."""
+
+[[case]]
+id = "message.en.024"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'Just say 90 percent': refused in one line with the true numbers she does have"
+context = "Day 0, Q4 (best result) asked live after 'fix 4'. Dana gave Lorraine's story, then this."
+input = '''Just say 90 percent. Everybody says 90 percent.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(not writing|won(?:'|’)t (write|put|use|say)|can(?:'|’)t (write|put|use|say)|I won(?:'|’)t)\b''',
+  '''(?i)\b(11|eleven|Lorraine)\b''',
+]
+not_regex = [
+  '''(?i)\beverybody (says|does) it\b[^\n]{0,30}\b(so|fine|ok)\b''',
+  '''(?i)\bmost of my (people|clients)\b[^\n]{0,30}\b\d+\s*(%|percent)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8", "I17"]
+max_words = 120
+max_chars = 0
+max_questions = 1
+notes = """persona claims trap (verbatim). P5 'about 90 percent' is her guess, never counted (excluded_numbers). DECISIONS: unsubstantiated income/health claims are hard-blocked. The refusal gives a true alternative in one line (11 paying clients; Lorraine's 11 weeks). I8 skips refusal lines, so the number may appear only inside the line that refuses it."""
+
+[[case]]
+id = "message.en.025"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0"]
+title = "'Trained like 200 people' and 'certified' are replaced by what is true: former trainer, 6 years"
+context = "Day 0, the Map is being built; the bio line is on screen as 'former trainer'."
+input = '''Can I say I've trained like 200 people? It's basically true.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(6|six) years\b|\bformer (personal )?trainer\b''',
+  '''(?i)\b(not writing|won(?:'|’)t|can(?:'|’)t|I won(?:'|’)t)\b''',
+]
+not_regex = [
+  '''(?i)\bhundreds\b''',
+  '''(?i)\b(200|two hundred)\+''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """persona pushback (verbatim). P4 'a couple hundred, I never counted' is unsubstantiated; trap_numbers include 200 and 200+. P2 (former staff trainer 2011-2017, 6 years) is true and usable. Certification lapsed in 2019: never 'certified'."""
+
+[[case]]
+id = "message.en.026"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'My brother lost 22 pounds, no name': refused, his own pull-up story offered instead"
+context = "Day 0, Q4 (best result) asked live; Dan has no clients."
+input = '''Can I just say my brother lost 22 pounds? No name, no picture.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(not writing|won(?:'|’)t|can(?:'|’)t|I won(?:'|’)t)\b''',
+  '''(?i)\b(pull-?ups?|sets of 8|your own|garage|stairs)\b''',
+]
+not_regex = [
+  '''(?i)\b4 months\b''',
+  '''\bTommy\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8", "I10"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """P3: not weighed, not a client, no permission ('he would kill me'). A borrowed result with the name removed is still a fabrication for a cold-start persona (I8; trap_numbers 22, 22 pounds, 4 months). House rule 1: no results yet → use your process or your story."""
+
+[[case]]
+id = "message.en.027"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1"]
+title = "'100 percent of my clients' becomes 3 true stories; 'certified' becomes 'trained as a coach'"
+context = "Day 0, the Map is on screen (promise and bio line)."
+input = '''Can we say 100 percent of my clients found their next thing? All three did. And I'm a certified coach, technically. Can we say certified?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(3|three)\b[^\n]{0,30}\b(clients|stories|women)\b''',
+  '''(?i)\btrained as a coach\b|\bcoach training\b''',
+]
+not_regex = [
+  '''(?i)\bICF\b|\bPCC\b|master coach''',
+  '''\bMargaret\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8"]
+max_words = 150
+max_chars = 0
+max_questions = 1
+notes = """persona traps (verbatim lines joined). P5: 3 of 3 is true as 3 stories, misleading as a rate (excluded '100%'). Credentials: completed a 10-month training, no ICF; 'trained as a coach' is fine. Two asks in one coach turn still get one reply with at most one question."""
+
+[[case]]
+id = "message.en.028"
+kind = "D"
+persona = ""
+lanes = ["S1", "S0", "floor"]
+title = "Income guarantee in the promise is a hard stop with a true alternative"
+context = "Standalone. Day 0, Map shown. Fictional coach (Marco, 44, helps freelance bookkeepers get retainer clients; 6 clients so far, results vary, no counted average) asks to change the promise line."
+input = '''change the promise to: get 3 retainer clients and make 10k a month in 90 days, guaranteed. people need to see a guarantee'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(Not writing "|won(?:'|’)t (write|put|promise)|can(?:'|’)t (write|put|promise))''',
+  '''(?i)\b(range|usually|most|process|depends|varies|vary|condition)\b''',
+]
+not_regex = [
+  '''(?im)^\W*promise\b[^\n]*\b(guarantee|10k|10,000)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 150
+max_chars = 0
+max_questions = 1
+notes = """DECISIONS: unsubstantiated income claims are hard-blocked. strings verdict.hardstop: 'Not writing "{line}": {defect}. Give me the real {fact} and I'll write it.' message-focus §2.2 test 6: the promise is a range or a condition, never a guarantee. A process guarantee (what you do) is allowed; an outcome guarantee is not."""
+
+[[case]]
+id = "message.en.029"
+kind = "D"
+persona = ""
+lanes = ["S1", "S0"]
+title = "Health outcome guarantee in the promise is a hard stop"
+context = "Standalone. Day 0, Map shown. Fictional coach (Bea, 50, walking-group coach for women after 50; no measured client outcomes) asks for a body-result promise."
+input = '''make the promise "drop 2 dress sizes in 30 days, guaranteed" that's what sells'''
+contains = []
+not_contains = []
+regex = ['''(?i)(Not writing "|won(?:'|’)t (write|put|promise)|can(?:'|’)t (write|put|promise))''']
+not_regex = [
+  '''(?im)^\W*promise\b[^\n]*\b(dress sizes?|guarantee|30 days)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 150
+max_chars = 0
+max_questions = 1
+notes = """DECISIONS: unsubstantiated health claims are hard-blocked (inline claims guard works with no method file, so S0 is included). The alternative is a process promise (what they will do each week), with no body outcome."""
+
+[[case]]
+id = "message.en.030"
+kind = "D"
+persona = ""
+lanes = ["S1", "S0"]
+title = "An 'enemy' aimed at a group of people is turned into an old way, warmly"
+context = "Standalone. Day 0, the Map's OLD WAY line is on screen. Fictional coach (Priyanka, 46, coaches mid-career women into management) wants the enemy to be people."
+input = '''make the old way line about the boomer managers who won't retire and won't promote anyone, they ARE the problem honestly'''
+contains = []
+not_contains = []
+regex = ['''(?i)\b(practice|habit|old way|way of|waiting|the system|how (promotions|it) (work|works))\b''']
+not_regex = [
+  '''(?im)^\W*OLD WAY\b[^\n]*\b(boomers?|old (people|managers|men|women)|older (people|managers))\b''',
+  '''(?i)\b(dinosaurs?|deadweight|fossils?|ok boomer)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 150
+max_chars = 0
+max_questions = 1
+notes = """DECISIONS: polarize on ideas, methods and the 'old way'; never on people or protected groups (age). House rule 7 'Strong on ideas, warm with people.' SG3 polarity is a hard gate. The machine reframes the enemy as a practice (e.g. 'waiting to be tapped on the shoulder') in one plain line, no lecture."""
+
+[[case]]
+id = "message.en.031"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0"]
+title = "One probe per question: after the old-way probe the machine names it and moves on"
+context = "Day 0, Q3 (old way) asked and its one probe asked ('If that old way had a name, what would you call it?')."
+input = '''I don't know. The January plan? The all or nothing thing. You name it.'''
+contains = []
+not_contains = []
+regex = ['''(?i)\b(january|all[- ]or[- ]nothing)\b''']
+not_regex = [
+  '''(?i)\b(old way|tried|industry)\b[^\n?]*\?''',
+  '''(?i)\bshred\b[^\n]*\b(method|plan)\b[^\n]*:''',
+]
+verdict = ""
+invariants = ["I1", "I5"]
+max_words = 140
+max_chars = 0
+max_questions = 1
+notes = """message-focus §1.1 rule 2: at most 1 probe per question and 3 per session. 'You name it' is permission: the machine names it from his words (e.g. 'the January plan') and goes to the next '?' line or the Map."""
+
+[[case]]
+id = "message.en.032"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0"]
+title = "'How much should I charge? Just tell me.': a founding default from his own number, nothing invented"
+context = "Day 0, Q6. Dan already said: 'like 8 weeks, a small group, maybe 5 guys… I was thinking $249? I honestly don't know what to charge.'"
+input = '''How much should I charge? Just tell me.'''
+contains = []
+not_contains = []
+regex = [
+  '''\$249''',
+  '''(?i)\bfounding\b|\bfirst (group|5)\b''',
+]
+not_regex = [
+  '''\$(?!249\b)\d''',
+  '''(?i)\b(market rate|industry standard|coaches charge)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """message-focus Q6 'If skipped, or nothing to sell: Offer v0 → a Founding 5 pilot'. Quit trigger 'options with no default': give one default. The only price he can stand behind is his own $249 guess (allowed_numbers); any other figure is invented (I8 money check)."""
+
+# ---------------------------------------------------------------- drift: on-map, bridge, park
+
+[[case]]
+id = "message.en.033"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "On-map request: the piece is written with no comment about the map"
+context = "Brand Card v1 present (persona default: big ideas 'not too old, too vague' / 'coffee before resume' / 'test drive before you quit'; keyword CHAPTER). Week 2, Wednesday, new chat in the project."
+input = '''can you write me something about the 10 coffees, like how to ask somebody for coffee without it being weird'''
+contains = []
+not_contains = []
+regex = [
+  '''WHY THIS GETS CLIENTS''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\b(fits your map|on your map|parked|off[- ]map|not now|as is)\b''',
+  '''(?i)\bpillar''',
+  '''\bPam\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §2.5 drift outcome 1: 'On-map: proceed without comment.' Big idea 2 (coffee before resume). WHY line on every piece (§3.1)."""
+
+[[case]]
+id = "message.en.034"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Bridgeable request: angled to a big idea, written at once, 'as is' offered"
+context = "Brand Card v1 present (persona default). Week 2, Thursday. Interview prep is not on the Map (NOT NOW optional list)."
+input = '''write something about interviews. people our age interview terrible because they haven't interviewed since the nineties'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bas is\b''',
+  '''(?i)\bbig idea [1-3]\b''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''\bX-\d+\b''',
+  '''(?i)\bpillar''',
+  '''(?i)\b(remember,? we agreed|as I said|stick to the (map|plan)|off-brand|stay focused)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §2.5 outcome 2 (the default): 'That fits your map if I angle it to Pillar 2: {angle}. Writing that version. Say as is for the original.' Coach-facing 'Pillar 2' becomes 'big idea 2' (deny-list). The coach is never lectured. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.035"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "Not bridgeable: parked with a plain reason and a return trigger; the off-map piece is offered, not written"
+context = "Brand Card v1 present (persona default: dads with a desk job; keyword KEEP UP). Week 2, lunch break. Running/5Ks are a different problem (NOT NOW)."
+input = '''make one about running a 5K, couple guys at work want to start running'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bparked\b''',
+  '''(?i)\b(comes? back|back (when|at|if|in))\b''',
+  '''(?i)\bwant it anyway\b''',
+  '''(?i)\b(1|one) off-map piece\b''',
+  '''(?i)\bdifferent (problem|buyer)\b''',
+]
+not_regex = [
+  '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
+  '''\bX-\d+\b''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(?i)\b(remember,? we agreed|as I said|stick to the (map|plan)|stay focused)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 90
+max_chars = 0
+max_questions = 1
+notes = """message-focus §2.5 outcome 3: 'Parked as X-9: {reason}. It comes back {trigger}. Want it anyway? It'll be your 1 off-map piece in these 10.' The Bank ID (X-9) and the code stay hidden (deny-list). Short: Dan is on his phone. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.036"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1"]
+title = "Coach insists: the off-map piece is written, labelled and counted, with no nagging"
+context = "Same chat as message.en.035: the machine parked the 5K idea and asked 'Want it anyway?'. No other off-map piece in the last 10."
+input = '''yeah do it anyway, they keep asking'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\boff[- ]map\b''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\b(are you sure|remember,? we agreed|as I said|last time)\b''',
+  '''(?i)\b(couch to 5k|in \d+ weeks you(?:'|’)ll run)\b''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """message-focus §2.5: 'If the coach insists, the machine writes it, tags it Off-map, and counts it against the budget' (≤1 in 10; anti-dilution rule 5). House rule 11: you can post anything anyway except hard stops; logged once, never raised again. No outcome promise for a cold start."""
+
+[[case]]
+id = "message.en.037"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'Why can't I talk about TRT?': plain reason, stays parked, no TRT piece, no lecture"
+context = "Brand Card v1 present (persona default; NOT NOW holds TRT/testosterone boosters/supplements). Week 3."
+input = '''Why can't I talk about TRT, everybody's asking.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(doctor|medical|health|prescri|outside)''',
+  '''(?i)\b(stays parked|parked|not now)\b''',
+]
+not_regex = [
+  '''WHY THIS GETS CLIENTS''',
+  '''(?i)\b(boost|raise|increase)\w*\b[^\n]{0,30}\btestosterone\b''',
+  '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
+  '''\bX-\d+\b''',
+  '''(?i)\b(you should know better|that(?:'|’)s irresponsible)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 120
+max_chars = 0
+max_questions = 1
+notes = """persona pushback (verbatim). message-focus §2.4: RISKY topics return 'never'. expected.toml not_now_must_include TRT (risky: stays parked); the flat-weeks diagnosis also says 'TRT stays parked'. One plain reason ('health claims, outside what you do; send them to a doctor'), optionally a bridge back to the map, no sermon. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.038"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "A parked risky topic is never the hook: menopause request bridged or parked"
+context = "Brand Card v1 present (persona default; menopause at work is NOT NOW, risky: health). Week 3. A commenter asked for it."
+input = '''somebody in my comments asked for a post on menopause brain fog in interviews, can we do that one?'''
+contains = []
+not_contains = []
+regex = ['''(?i)\b(parked|not now|doctor|health|big idea [1-3])\b''']
+not_regex = [
+  '''(?im)^\W*(hook|first line|on-screen(?: text)?|title)\s*[:—–-][^\n]*\bmenopause\b''',
+  '''(?i)\bbrain fog\b[^\n]{0,40}\b(cure|fix|treat|supplement|hormone)''',
+  '''\bX-\d+\b''',
+  '''(?i)\bKim\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I10", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Anti-dilution rule 9: parked topics may appear as ONE line inside an on-map piece, never as the hook or main idea. RISKY: health claims. The commenter's name (a seeded name in paste-dump.md) never appears (I10)."""
+
+[[case]]
+id = "message.en.039"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "'save this:' a client line on the map gets a one-line verdict naming the big idea"
+context = "Brand Card v1 present (persona default). Week 2, Monday evening."
+input = '''save this: Gail said "I forgot I was good at something."'''
+contains = []
+not_contains = []
+regex = ['''(?i)\b(on your map|big idea [1-3])\b''']
+not_regex = [
+  '''\b[VSPX]-\d+\b''',
+  '''(?i)\bparked\b''',
+  '''WHY THIS GETS CLIENTS''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 70
+max_chars = 0
+max_questions = 1
+notes = """UX §3.2 'save this: …' → one-line verdict: on your map (big idea 2), or parked (reason). Gail consented to posts (P3); the quote is her words to Dana. The Bank row ID stays hidden. No piece is written unless asked."""
+
+[[case]]
+id = "message.en.040"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "'save this:' an off-map idea is parked with a plain reason, in one line"
+context = "Brand Card v1 present (persona default; LinkedIn profiles/headlines are NOT NOW: a tool / different problem). Week 2."
+input = '''save this: idea, LinkedIn headline tips for people our age'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bparked\b''',
+  '''(?i)\b(a tool|not a message|different problem|seasoning)\b''',
+]
+not_regex = [
+  '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
+  '''\bX-\d+\b''',
+  '''WHY THIS GETS CLIENTS''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 70
+max_chars = 0
+max_questions = 1
+notes = """UX §3.2 and message-focus §5.2 DROP: 'Add to my brain: idea X' gets a one-line verdict: on-map (big idea n) or parked (reason). Plain reason, no code, no ID. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+# ---------------------------------------------------------------- anti-dilution rules
+
+[[case]]
+id = "message.en.041"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "One idea per piece: a 4-topic request becomes one piece; the rest wait as next pieces"
+context = "Brand Card v1 present (persona default). Week 2, Tuesday."
+input = '''write one reel that covers the keepers list and the coffees and the test drive and also that I take payment plans'''
+contains = []
+not_contains = []
+regex = [
+  '''WHY THIS GETS CLIENTS''',
+  '''(?i)\b(one idea|part 2|next (one|piece|reel)|the (other|rest)|saved|split|tomorrow)\b''',
+]
+not_regex = [
+  '''(?:(?:Ready to (?:film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)[\s\S]*?){2}''',
+  '''(?i)\bpillar''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Anti-dilution rule 2: one-line idea ≤15 words written before drafting; two ideas → split, and the 2nd idea becomes an Idea row (FOCUS). One piece per reply here, so exactly one verdict line; the other topics are named as the next pieces."""
+
+[[case]]
+id = "message.en.042"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1"]
+title = "Mid-season '4th big idea' request: no 4th idea; it can return at the monthly check"
+context = "Brand Card v1 present (persona default). Week 3, Wednesday. Salary negotiation is on NOT NOW's optional list."
+input = '''can we add salary negotiation as a fourth big idea? I could talk about that all day'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\b(plan next month|monthly|end of (the )?month|after (the )?(4|four) weeks|month(ly)? check)\b''',
+  '''(?i)\b(parked|not now|later|angle)\b''',
+]
+not_regex = [
+  '''4 BIG IDEAS''',
+  '''(?i)\bpillars?\b''',
+  '''\bX-\d+\b''',
+  '''(?i)\block(ed)?\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 130
+max_chars = 0
+max_questions = 1
+notes = """Anti-dilution rule 10: promotion only at re-plan, and only if ≥3 buyer mentions in 30 days, the offer changed or a launch needs it; it replaces a big idea's angle, never a 4th. Rule 4: same 3 big ideas all Season. The coach-facing reason is the 4-week try, never a lock. Graded with graders.py checks deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.en.043"
+kind = "D"
+persona = ""
+lanes = ["S1"]
+title = "Mid-season rename and new keyword: the Season keyword stays; the new name waits for the monthly check"
+context = "Standalone. Fictional coach Theo (money coach for freelance wedding photographers), Brand Card v1 present: method 'the three buckets'; keyword FEBRUARY (buyers say 'I've never been this broke in February'); Week 3 of the 4-week try; FEBRUARY has had 6 comments so far."
+input = '''I came up with a better name, the Calm Cash Method, let's use that from now on and make the keyword CALM CASH'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bfebruary\b''',
+  '''(?i)\b(plan next month|monthly|end of (the )?month|after (the )?(4|four) weeks|month(ly)? check)\b''',
+]
+not_regex = [
+  '''(?i)\bkeyword\b[^\n]{0,20}\b(is now|changed to|switched to)\b[^\n]*\bcalm cash\b''',
+  '''™|®''',
+  '''(?i)\block(ed)?\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I17"]
+max_words = 130
+max_chars = 0
+max_questions = 1
+notes = """Anti-dilution rule 7: no new coined term mid-Season (new names → parked); rule 8: one keyword CTA and one asset per Season; rule 11: a keyword retires only after ≥60 days with echo 0 while an alternative has ≥2 echoes. The coach can still decide at the monthly check (KEEP or sharpen)."""
+
+[[case]]
+id = "message.en.044"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1"]
+title = "Side-door piece the coach opted into: labelled, aimed at the same buyer"
+context = "Brand Card v1 present (persona default) with side_door = resume reviews (DM-only); on Day 0 Dana said yes to at most 1 labelled side-door piece a week. Week 2, no side-door piece yet this week."
+input = '''can I do one post this week about resume reviews? they pay the bills'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)\bside[- ]door\b''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+]
+not_regex = [
+  '''(?i)\b(20-?somethings|in their 20s|break(ing)? into UX|college grads?|new grads?)\b''',
+  '''(?i)\bpillar''',
+  '''(?i)\b(are you sure|remember,? we agreed)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §5.17: multi-income coaches may opt into ≤1 labelled side-door piece a week for a parked income stream; it counts toward the off-map budget, raised from 1 in 10 to 1 in 7. The piece speaks to the Season's buyer (women 45+ not ready for 12 weeks), not the younger resume buyers. expected.toml keeps resume reviews off the hook of on-map pieces; this labelled piece is the exception the coach chose."""
+
+[[case]]
+id = "message.en.045"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Fake scarcity on the founding offer is a hard stop; the real cap of 5 can be said"
+context = "Day 0, the Map is on screen; the OFFER line shows the founding small group (about 5 dads, his own '$249?' guess). Nobody has signed up; there is no deadline."
+input = '''Can we say only 2 spots left? Makes it look legit.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(Not writing "|won(?:'|’)t (write|put|say)|can(?:'|’)t (write|put|say))''',
+  '''(?i)\b(5|five)\b[^\n]{0,30}\b(spots?|dads|guys|seats?|places?)\b''',
+]
+not_regex = [
+  '''(?im)^\W*offer\b[^\n]*\b(2|two|only) (spots?|seats?) left\b''',
+  '''(?i)\b(closing soon|last chance|today only|filling fast)\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8", "I17"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """persona pushback (verbatim; he also asks it again at launch time). DECISIONS: only fake scarcity and unsubstantiated income/health claims are hard-blocked; house rule 6: urgency means only real seats and deadlines you'll keep. strings verdict.hardstop. The true line is the real cap ('a first group of 5', because he can give each dad 15 minutes a week)."""
+
