@@ -38,10 +38,19 @@ not_now_optional = [
 side_door = "Resume reviews ($175) stay as a DM-only side door for the same buyer (women 45+ not ready for 12 weeks); never the hook or main idea of a piece. Life coaching keeps its 2 existing monthly clients and takes no new ones; no content."
 one_message_example = "I help women 45+ with 20 years in one corporate job, who've got 'one more chapter' in them, find the next role with 10 coffees before a single application, instead of feeding the portal. (illustrative; <=35 words, must contain the method or old-way name)"
 why_this_one_must_cite = ["11 paying clients", "her quotable clients (Lorraine, Bev, Gail)", "the coffee-before-resume story she lit up about"]
+must_not = [
+  "resume reviews, LinkedIn or younger job-seekers as the buyer or a big idea (side door only)",
+  "'anyone who wants a career change' or 'women' in general as the buyer",
+  "a 4th big idea",
+  "menopause, 401(k)/pensions or age-discrimination law as a big idea, hook or promise",
+  "'certified', 'ICF' or any coaching credential about Dana",
+  "any percentage of clients who land somewhere better",
+  "Pam in any form",
+]
 
 [keyword]
 candidates = [
-  { term = "one more chapter", origin = "Lorraine's verbatim words in dump chunk 1; echoed by 5 different audience members (6 distinct comments/DMs) in paste-dump.md and 1 research line (posted twice)", said_by_audience = true },
+  { term = "one more chapter", origin = "Lorraine's verbatim words in dump chunk 1; echoed by 4 different audience members (5 distinct comments/DMs, plus 1 duplicate) in paste-dump.md, a 5th writes 'my next chapter', and 1 research line (posted twice)", said_by_audience = true },
   { term = "too late", origin = "'Is it too late for me?', the first-call question from almost every client; audience comments", said_by_audience = true },
   { term = "bored out", origin = "a Facebook commenter quoted second-hand in dump chunk 2; one paste-dump comment ('I'm not burned out I'm bored out'); a close research line ('I'm not burned out. I'm bored.')", said_by_audience = true },
   { term = "coffee before resume", origin = "Dana's own phrase; it is the method name, not the keyword", said_by_audience = false },
@@ -73,6 +82,13 @@ must_include = [
   "keyword CHAPTER exactly once per piece",
   "at least one Week-1 piece names a WHY line tied to a big idea",
   "no piece built on a NOT NOW topic (resume tips, LinkedIn, menopause, 401(k), ageism law)",
+]
+must_not = [
+  "an email newsletter as the lead piece (the list is 140, under 300)",
+  "dancing, trend audio or pointing at floating words",
+  "a word-for-word script to read on camera (she asked for bullets)",
+  "Pam in any form; Lorraine or Bev in ads",
+  "a DM-to-buy program CTA in more than 1 piece",
 ]
 
 [launch]

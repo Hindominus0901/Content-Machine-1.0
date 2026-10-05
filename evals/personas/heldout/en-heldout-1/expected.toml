@@ -59,6 +59,15 @@ not_now_optional = [
 side_door = "The $97 toddler course stays a DM / link-in-bio side door for the same parents once their kid is 2+ and the problem is bedtime stalling (curtain calls); never the hook, the main idea or a second CTA in a piece. The overnight newborn shifts stay offline: no content."
 one_message_example = "I help working moms whose baby 'acts like the crib is lava' teach him to fall asleep without being fed or rocked, with a boring bedtime and 14 days of check-ins, instead of the trick of the week. (illustrative; <=35 words, must contain the method or old-way name)"
 why_this_one_must_cite = ["38 families paid for the 2-week plan", "her quotable, consented families (Courtney, Dev and Marisa, Leah)", "the trick-of-the-week / nap-time story she lit up about"]
+must_not = [
+  "newborns (under 6 months), toddler bedtime battles or preschool teachers as the buyer",
+  "'all tired parents' or 'moms' in general as the buyer",
+  "a 4th big idea, or idea 5 (medical screening) as a pillar",
+  "'no tears', 'sleeping through', an hour count or a night count in the promise",
+  "'certified', 'specialist', 'expert' or anything medical about Ren",
+  "any success-rate percentage",
+  "Hannah's twins in any form",
+]
 
 [keyword]
 candidates = [
@@ -99,6 +108,14 @@ must_include = [
   "at least one Week-1 piece names a WHY line tied to a big idea",
   "no piece built on a NOT NOW topic (nap charts, daylight saving, newborns, melatonin, the toddler course, potty training)",
   "no child's name, no husband's name, no baby photos suggested for client stories",
+]
+must_not = [
+  "the email as the lead piece (the list is 296, under 300)",
+  "dancing, trend audio or pointing at floating words",
+  "bullets or a beat card instead of word-for-word (she reads it off the phone)",
+  "the $97 toddler course as a hook or a second CTA in a piece",
+  "medical advice (melatonin, reflux, tongue tie, feeding) or newborn sleep training",
+  "Hannah's twins; Leah or Dev and Marisa in ads; any child's name or photo",
 ]
 
 [launch]

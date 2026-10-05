@@ -76,6 +76,7 @@ cô bán khoá thì đăng bài trên Facebook cá nhân, cô bật chế độ 
 - **Lên live được mấy lần trong đợt mở bán:** live Facebook thì không; Zoom thì được 1 buổi; dạy 3 tối liền trong nhóm Zalo thì được, quay sẵn cũng được.
 - **Giới hạn chỗ thật:** 25 mẹ một khoá (nghe clip, trả lời tin nhắn thoại từng mẹ). Nhóm Zalo lớp thử thì cô khoá link khi đủ 200 người, vì cô đọc hết bài nộp.
 - **Mục tiêu khoá 2:** chừng 30 triệu, tức là khoảng 20 mẹ.
+- **Người tương tác gần đây (khi được hỏi lúc mở bán):** "Ba tháng nay chắc chừng 400 người comment với nhắn tin cho cô, cô đếm sơ sơ trong sổ thôi nha em."
 - **Lịch mở bán muốn:** bắt đầu thứ Hai 16/11/2026; lớp thử 3 tối trên Zalo lúc 21h thứ Năm 26/11, thứ Sáu 27/11, thứ Bảy 28/11 (mỗi tối cô quay sẵn một video 7 phút với một bài tập); Zoom chia sẻ 20h30 tối Chủ nhật 29/11; mở đăng ký thứ Hai 30/11; đóng 23h59 thứ Bảy 05/12/2026; khai giảng 21 giờ thứ Năm 10/12/2026. "20/11 là ngày Nhà giáo, cô đâu có muốn bán hàng ngày đó, em."
 - **Quà khi đăng ký sớm:** gọi video Zalo 15 phút với cô để coi góc học của bé, cho 10 mẹ đầu tiên hoặc tới 23h59 thứ Năm 03/12/2026.
 - **Hoàn tiền:** mẹ nào học buổi Zoom thứ 2 rồi thấy không hợp thì nhắn cô trước 21 giờ thứ Năm 17/12/2026, cô chuyển khoản trả đủ học phí.

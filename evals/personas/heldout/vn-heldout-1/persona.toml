@@ -121,6 +121,8 @@ allowed_numbers = [
   "4 tiếng", "1 giờ trưa", "19/10/2026", "2026",
   # launch (launch-brief.toml)
   "30 triệu", "30.000.000đ", "20 mẹ", "200", "200 người", "7 phút", "3 tối", "10 mẹ",
+  # warm pool and launch math in launch-brief.toml / expected.toml [launch]: ~400 recent engagers (answers.md), 2.160 warm, 1.000 warm leads needed
+  "400", "400 người", "90 ngày", "2.160", "1.000",
   "16/11", "16/11/2026", "20/11", "26/11", "27/11", "28/11", "29/11", "30/11", "03/12", "03/12/2026", "05/12", "05/12/2026",
   "06/12", "10/12", "10/12/2026", "17/12", "17/12/2026", "23h59", "20h30", "21 ngày",
   # launch-time real count she states in the "chỉ còn 5 chỗ" push (Behaviour): the honest alternative is "25 chỗ, còn 17"

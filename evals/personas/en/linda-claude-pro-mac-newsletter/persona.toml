@@ -82,6 +82,7 @@ allowed_numbers = [
   "7:40", "11:52", "11:59", "8:15", "9:15", "6:30", "5:15", "3 a.m.", "10 a.m.", "noon",
   "30-minute", "30 minute", "45-minute", "60-minute", "60 minutes", "75 minutes", "48 hours", "20 minutes",
   "12:00", "13:00", "23:59", "1 p.m.", "11:59 p.m.",
+  "21 February",                         # replay comes down Sun 21 Feb 2027 13:00 ET (launch-brief.toml real_caps)
   # launch math the machine may state plainly (launch-brief.toml): derived from her own facts
   "80", "200", "267", "960", "2,880",
   "3 months", "9 weeks", "10 weeks", "4 months", "2 days a week", "3 days a week", "2 years", "5 people",

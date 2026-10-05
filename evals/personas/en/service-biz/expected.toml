@@ -73,7 +73,7 @@ must_not = [
 
 [keyword]
 candidates = [
-  { term = "nothing room", origin = "Megan Whitfield's verbatim words in dump chunk 1 ('Honestly it's the nothing room'); echoed unprompted-style by 8 different people in paste-dump.md (12 distinct comments/DMs/replies, plus 3 duplicates) and research-paste.md line 7 (cross-posted as line 17)", said_by_audience = true },
+  { term = "nothing room", origin = "Megan Whitfield's verbatim words in dump chunk 1 ('Honestly it's the nothing room'); echoed unprompted-style by 8 different people in paste-dump.md (11 distinct comments/DMs/replies, plus 3 duplicates) and research-paste.md line 7 (cross-posted as line 17)", said_by_audience = true },
   { term = "expensive mistake", origin = "'I'm terrified of making an expensive mistake', the first-call line from almost every client (dump chunk 2); one paste-dump comment; close research lines 26 ('spending real money and being wrong')", said_by_audience = true },
   { term = "doesn't feel like us", origin = "first-call line (dump chunk 2); one paste-dump comment ('still doesn't feel like us'); research line 15 ('doesn't feel like ours')", said_by_audience = true },
   { term = "tape it out", origin = "Corinne's own phrase; it is the method name, not the keyword", said_by_audience = false },
@@ -236,7 +236,7 @@ note = "Line 14 is Corinne's own sentence from answers.md (dump chunk 2): it mus
 total_items = 35
 duplicates = 3                       # the "eat at the kitchen island" comment, the piano-room DM, the paint-samples newsletter reply
 spam_account = "the Facebook-ads seller"    # 2 items (comment + DM, including a fake 'only 3 spots left'); named only in paste-dump.md / seeded_names
-keyword_mentions_distinct = 12       # distinct items containing 'nothing room' (8 different people)
+keyword_mentions_distinct = 11       # distinct items containing 'nothing room' (8 different people; 14 items with the 3 duplicates)
 off_map_asks = [
   "take out a wall (risky: structural engineer)",
   "stage a listing (different buyer: realtor)",

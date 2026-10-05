@@ -5,7 +5,7 @@ What Linda pastes when the machine offers research: lines she copied from Facebo
 ---
 
 1. (group post) Took the package after 27 years. Everyone says enjoy it. Week 6 and I've cleaned every closet in the house. [FB group, 2026-09]
-2. (forum thread) What do you say when people ask what you do now? I've started lying. [careers forum, 2026-08]
+2. (forum thread) What do you even say when someone asks "so what do you do now?" I've started lying. [careers forum, 2026-08]
 3. (review) Lovely retreat, beautiful food. Came home Sunday, cried in the car Monday. Nothing had changed. [retreat review, 2026-06]
 4. (comment) turned in my badge after 30 years and walked to the parking lot like a ghost [LinkedIn comment, 2026-09]
 5. (group post) My vision board has been on the fridge since 2023. The magnets are doing more work than I am. [FB group, 2026-07]
@@ -13,7 +13,7 @@ What Linda pastes when the machine offers research: lines she copied from Facebo
 7. (group post) I don't need a job exactly. I need a reason to get dressed. [FB group, 2026-08]
 8. (group post) Feeling lost after corporate? My 8-week REWIRE Blueprint has helped 300+ women unretire into purpose-driven careers! Comment REWIRE for the free masterclass [FB group, 2026-09]
 9. (comment) LinkedIn profile makeovers for executives in transition. 48-hour turnaround, 30% off this week only, DM me [LinkedIn comment, 2026-08]
-10. (forum thread) What do you say when people ask what you do now? I've started lying. [careers forum, cross-posted, 2026-08]
+10. (forum thread) What do you even say when someone asks "so what do you do now?" I've started lying. [careers forum, cross-posted, 2026-08]
 11. (review) The outplacement firm gave me a binder and a login. I wanted a person who had actually been through it. [service review, 2026-05]
 12. (group post) I keep my old work badge in my jewelry box. Is that weird? [FB group, 2026-09]
 13. (forum thread) I applied for my old job at a competitor just so I'd have something to say at Thanksgiving. Got it. Hate it. [careers forum, 2026-07]
