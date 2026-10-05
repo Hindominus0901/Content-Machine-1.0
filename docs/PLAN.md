@@ -19,6 +19,26 @@
 - **Status:** all research and design is done (12 workflows; specs in the scratchpad `research/` folder). In P0 they are committed to `docs/research/`.
 - **Precedence when specs conflict:** founder decisions (Appendix A) > UX spec (`wf11-ux-spec.md`) > QA spec (`wf12-qa-spec.md`) > architecture spec (`arch-final-spec.md`) > other research. Known conflicts are settled under "Reconciliations" below.
 
+## Added after approval: posts and channels you like or follow (5 Oct 2026)
+Founder request: "user có thể đưa lên các bài hoặc các kênh mà họ thích hoặc theo dõi". Final spec: [research/wf13-inspiration-spec.md](research/wf13-inspiration-spec.md); decisions in [DECISIONS.md](DECISIONS.md).
+
+- **Save first.** A screenshot, caption, "let me tell you" or link goes to the swipe file ("Posts you like"). The AI uses it later when planning, packaging, when the coach is stuck and in the monthly New slot.
+- **"Your version" on request.** The post's shape, the coach's topic, stories and words.
+- **Copying, translating or naming comparisons** on explicit request: done with one dated note, never blocked. Others' results are never presented as the coach's own.
+- **Monthly "Your angle" card:** EVERYONE SAYS · NOBODY SAYS · YOU CAN SAY, from accounts the coach follows.
+- **No new phrase. Day 0 untouched.**
+- **Built across phases:**
+
+  | Phase | Work |
+  |---|---|
+  | P0 | fixtures |
+  | P1 patch | schemas, graders I19–I22, shiplint `--source` |
+  | P2 | kit line + `§CM-LIKED` |
+  | P3 | monthly angle |
+  | P4 | skill references |
+  | P5 | GROW channels + opt-in Browse |
+  | P6 | house rule 3 |
+
 ## What we're building
 
 ### Coach journey (UX spec)

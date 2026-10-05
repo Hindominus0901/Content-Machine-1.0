@@ -66,3 +66,11 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
   - read-only listening (never post, react or join);
   - never full computer use (Zalo / PDPL red line);
   - never invent proof, testimonials or scarcity.
+- **Posts and channels the coach likes or follows (5 Oct 2026).** Spec: `research/wf13-inspiration-spec.md`.
+  - **Copying, translating a foreign post to repost, a comparison that names someone: "Ko sao hết".**
+    - Never blocked. The default output is still the coach's own version in the post's shape.
+    - On an explicit coach request the machine does it with ONE dated note and logs an Override.
+    - Still hard-blocked: others' results, testimonials, numbers or story presented as the coach's own; attacks on private individuals or protected groups.
+  - **Default when a post arrives:** save it to the swipe file ("Posts you like" / "Bài bạn thích"), so the AI references it later when planning, packaging, when the coach is stuck and in the monthly New slot. "Make my version" / "làm bản của mình" on request.
+  - **v1 scope:** "Your version" + the monthly "Your angle" card (EVERYONE SAYS · NOBODY SAYS · YOU CAN SAY). Browse stays opt-in in GROW.
+  - **Names:** public brand, channel and creator names may be kept in the swipe file and the internal competitor grid. In posts, only when the coach asks. Commenters and private individuals are never stored or printed. (The founder's answer "Cozm" is read as "Có"; awaiting confirmation.)
