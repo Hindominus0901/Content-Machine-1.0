@@ -344,6 +344,18 @@ class ReleaseTests(TempDir):
         self.assertFalse(ok)
         self.assertIn("vn.word_rate", detail)
 
+    def test_pending_key_signed_for_another_default_or_without_a_date(self):
+        self.write("editions/vn.acceptance.toml",
+                   "[accepted.word_rate]\ndefault = 3.0\nsigned_by = 'founder'\ndate = '2026-10-01'\n")
+        ok, detail = self.results()["G0.pending"]
+        self.assertFalse(ok)
+        self.assertIn("vn.word_rate (signed for a different default)", detail)
+        self.write("editions/vn.acceptance.toml",
+                   "[accepted.word_rate]\ndefault = 3.5\nsigned_by = 'founder'\ndate = 'soon'\n")
+        ok, detail = self.results()["G0.pending"]
+        self.assertFalse(ok)
+        self.assertIn("vn.word_rate", detail)
+
     def test_active_module_needs_cases_and_baseline(self):
         self.write("evals/cases/setup.vn.toml", "[[case]]\nid = 'a'\n")
         (self.root / "evals" / "baselines" / "setup.toml").unlink()

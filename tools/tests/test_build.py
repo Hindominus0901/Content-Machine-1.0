@@ -103,6 +103,17 @@ if __name__ == "__main__":
 '''
 
 
+def release_verdict(build_sha: str) -> str:
+    """A valid PASS verdict file (tools/verdict_check.py rules)."""
+    return (
+        "Result: PASS\nScore: 20/20\nCritical items failed: none\nNot run: none\n\n"
+        "| Field | Value |\n|---|---|\n| Subject at commit | release v1.2.3 @ e70891d |\n"
+        f"| Build sha | {build_sha} |\n| Edition and lane | en, vn · all |\n"
+        "| Producer | lead |\n| Reviewer | release reviewer |\n\n"
+        '<!-- scorecard {"result": "PASS", "score": "20/20"} -->\n'
+    )
+
+
 def write(root: Path, rel: str, text: str) -> Path:
     path = root / rel
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -549,8 +560,15 @@ class PackageTests(TempRepo):
         self.assertEqual(code, 1)
         self.assertIn("RELEASE-VERDICT.md", err)
         rel = "qa/releases/v1.2.3"
-        write(self.root, f"{rel}/RELEASE-VERDICT.md", "Result: PASS\nScore: 20/20\n")
+        # a "Result: PASS" first line is not enough: the verdict must be valid (QA spec §5.5)
+        write(self.root, f"{rel}/RELEASE-VERDICT.md", "Result: PASS\nScore: 20/20\nCritical items failed: 2\n")
         write(self.root, f"{rel}/RELEASE-VERDICT.second-read.md", "Result: PASS\n")
+        write(self.root, f"{rel}/SIGNOFF.md", f"Decision: SHIP\nBuild: {manifest['build_sha256']}\n")
+        code, _, err = self.quiet(package.main, "--root", str(self.root), "--release")
+        self.assertEqual(code, 1)
+        self.assertIn("RELEASE-VERDICT.md: not a valid verdict", err)
+        write(self.root, f"{rel}/RELEASE-VERDICT.md", release_verdict(manifest["build_sha256"]))
+        write(self.root, f"{rel}/RELEASE-VERDICT.second-read.md", release_verdict(manifest["build_sha256"]))
         write(self.root, f"{rel}/SIGNOFF.md", f"Decision: SHIP\nBuild: {'0' * 64}\n")
         code, _, err = self.quiet(package.main, "--root", str(self.root), "--release")
         self.assertEqual(code, 1)
@@ -562,6 +580,21 @@ class PackageTests(TempRepo):
         code, _, err = self.quiet(package.main, "--root", str(self.root), "--release")
         self.assertEqual(code, 1)
         self.assertIn("changed since the build", err)
+
+    def test_release_gate_needs_every_packaged_edition_in_the_signed_build(self):
+        make_repo(self.root)
+        with contextlib.redirect_stdout(io.StringIO()):
+            build.build(self.root, ["en", "vn"])
+            manifest = build.build(self.root, ["en"])   # a later EN-only build; dist/vn/ is now unsigned
+        rel = "qa/releases/v1.2.3"
+        write(self.root, f"{rel}/RELEASE-VERDICT.md", release_verdict(manifest["build_sha256"]))
+        write(self.root, f"{rel}/RELEASE-VERDICT.second-read.md", release_verdict(manifest["build_sha256"]))
+        write(self.root, f"{rel}/SIGNOFF.md", f"Decision: SHIP\nBuild: {manifest['build_sha256']}\n")
+        code, _, err = self.quiet(package.main, "--root", str(self.root), "--release")
+        self.assertEqual(code, 1)
+        self.assertIn("does not cover edition(s) vn", err)
+        code, _, err = self.quiet(package.main, "--root", str(self.root), "--release", "--edition", "en")
+        self.assertEqual(code, 0, err)
 
 
 # ---------------------------------------------------------------- ics

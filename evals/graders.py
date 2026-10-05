@@ -189,10 +189,10 @@ def load_term_list(path: Path) -> list[tuple[str, re.Pattern]]:
         if not line or line.startswith("#"):
             continue
         if line.startswith("re:"):
-            try:
-                terms.append((line, re.compile(line[3:])))
-            except re.error:
-                continue
+            try:  # parsed as tools/lint.py parses it (lint reports a bad entry as E161)
+                terms.append((line, re.compile(ck.nfc(line[3:].strip()))))
+            except re.error as exc:  # never drop a term silently: a missing term could hide a FAIL
+                raise GraderError(f"{path.name}: bad regex {line!r}: {exc}")
         else:
             terms.append((line, ck.phrase_re(line)))
     return terms

@@ -9,8 +9,10 @@ dotfiles, __MACOSX and .DS_Store never go in. Non-ASCII names are an error
 (E150). build.py uses make_zip() for the inner skill zip as well.
 
 --release refuses to package unless qa/releases/v<VERSION>/ holds a PASS
-RELEASE-VERDICT.md, a PASS RELEASE-VERDICT.second-read.md and a SIGNOFF.md
-that says SHIP against the build_sha256 in dist/maintainer/manifest.json.
+RELEASE-VERDICT.md, a PASS RELEASE-VERDICT.second-read.md (both valid verdict
+files per tools/verdict_check.py) and a SIGNOFF.md that says SHIP against the
+build_sha256 in dist/maintainer/manifest.json, and that build covers every
+edition being packaged.
 """
 from __future__ import annotations
 
@@ -128,15 +130,24 @@ def _first_line(path: Path) -> str:
     return text.splitlines()[0].strip() if text.strip() else ""
 
 
-def check_release(root: Path, version: str) -> str:
-    """Return the signed build sha256, or raise ReleaseRefused naming every problem."""
+def check_release(root: Path, version: str, editions: list[str] | None = None) -> str:
+    """Return the signed build sha256, or raise ReleaseRefused naming every problem.
+
+    `editions` are the editions about to be packaged; each must be part of the signed build.
+    """
+    import verdict_check  # the QA spec §5.5 validator; imported here so build/lint never need it
+
     rel_dir = f"qa/releases/v{version}"
     folder = root / rel_dir
     problems: list[str] = []
-    if _first_line(folder / "RELEASE-VERDICT.md") != "Result: PASS":
-        problems.append(f"{rel_dir}/RELEASE-VERDICT.md: first line is not 'Result: PASS'")
-    if _first_line(folder / "RELEASE-VERDICT.second-read.md") != "Result: PASS":
-        problems.append(f"{rel_dir}/RELEASE-VERDICT.second-read.md: first line is not 'Result: PASS'")
+    for name in ("RELEASE-VERDICT.md", "RELEASE-VERDICT.second-read.md"):
+        path = folder / name
+        if _first_line(path) != "Result: PASS":
+            problems.append(f"{rel_dir}/{name}: first line is not 'Result: PASS'")
+        elif path.exists():
+            v = verdict_check.check_file(path)
+            if v.errors:
+                problems.append(f"{rel_dir}/{name}: not a valid verdict: " + "; ".join(v.errors))
 
     manifest_path = root / "dist" / "maintainer" / "manifest.json"
     build_sha = ""
@@ -150,6 +161,10 @@ def check_release(root: Path, version: str) -> str:
         actual = compute_build_sha256(root / "dist", manifest.get("editions", []))
         if actual != build_sha:
             problems.append("dist/ changed since the build (build_sha256 no longer matches); rebuild")
+        uncovered = sorted(set(editions or []) - set(manifest.get("editions", [])))
+        if uncovered:
+            problems.append(f"the signed build does not cover edition(s) {', '.join(uncovered)}; "
+                            "build them together (tools/build.py --edition all)")
 
     try:
         signoff = (folder / "SIGNOFF.md").read_text(encoding="utf-8")
@@ -193,7 +208,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         version = read_version(root)
         if args.release:
-            sha = check_release(root, version)
+            sha = check_release(root, version, editions)
             print(f"release checks passed for v{version} (build {sha[:12]})")
         for ed in editions:
             out = package_edition(root, ed, version)

@@ -34,6 +34,13 @@ Where docs/BUILD.md leaves a choice, this file decides:
     pointers that hand over to the project or the skill, where the card lives.
   * A missing dist/ or dist/<edition>/, and every target the build skipped, is
     E170 on --release and a note otherwise.
+  * E161 also covers schemas/*.toml as a set: tools/cmschema.py checks their
+    required keys and cross-references (a missing schema file is E161 too).
+  * E110 also covers router and format-check text: a route or format used by a
+    skill reference needs trigger_<id> / rules_<id> / checks_<id> for every
+    non-EN edition, or render.py would fall back to the EN text there.
+  * E152 fails closed: if tools/package.py cannot be imported, every zip is
+    reported, because its determinism cannot be shown.
 """
 from __future__ import annotations
 
@@ -55,12 +62,15 @@ from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cmlib  # noqa: E402
+import cmschema  # noqa: E402
 from cmlib import CMError, nfc, nfc_len, sha10  # noqa: E402
 
 try:  # the build's deterministic zip writer, used to re-zip for E152
     import package as zip_writer  # noqa: E402
-except ImportError:  # pragma: no cover - lint still runs without it
+    ZIP_WRITER_ERROR = ""
+except ImportError as exc:  # pragma: no cover - lint still runs, but E152 then fails closed
     zip_writer = None
+    ZIP_WRITER_ERROR = repr(exc)
 
 SOURCE_EDITION = "en"
 SHIPPED_DIRS = ("core", "modules", "locales", "strings", "guides", "automation")
@@ -504,7 +514,7 @@ class Linter:
         steps = [
             self.load_allowlist, self.load_toml_files, self.load_editions, self.load_strings,
             self.load_terms, self.check_strings, self.check_sections, self.check_pending,
-            self.check_targets, self.check_router, self.check_templates, self.check_hub_refs,
+            self.check_targets, self.check_schemas, self.check_router, self.check_templates, self.check_hub_refs,
             self.check_source_text, self.check_cards, self.check_dist, self.check_unused,
         ]
         for step in steps:
@@ -941,8 +951,45 @@ class Linter:
                 if fid not in fmt_table:
                     self.add("E130", "core/method.toml", f"{label} names format '{fid}', "
                                                          "not in core/format-checks.toml")
+        self.check_reference_parity(refs, routes, fmt_table)
         if method:
             self.check_start_block_anchors(method)
+
+    def check_reference_parity(self, refs: list[dict], routes: list[dict], fmt_table: dict) -> None:
+        """E110: a non-EN skill reference must not fall back to the EN router or format-check text.
+
+        render.render_reference uses trigger_<id> / rules_<id> / checks_<id> when present and
+        the EN field otherwise, so a missing localized field would ship English text in the
+        WHEN TO USE / RULES header or the CHECK BEFORE ANSWERING footer of that edition.
+        """
+        for ed_id, ed in sorted(self.editions.items()):
+            if ed_id == SOURCE_EDITION:
+                continue
+            suffixes = (f"_{ed_id}", f"_{ed.lang}")
+            reported: set[tuple[str, str]] = set()
+            for ref in refs:
+                if "route" in ref:
+                    row = next((r for r in routes if r.get("id") == ref["route"]), None)
+                else:
+                    row = next((r for r in routes if r.get("module") == ref.get("module")), None)
+                for field in ("trigger", "rules"):
+                    if row is None or not row.get(field) or any(field + s in row for s in suffixes):
+                        continue
+                    rid = str(row.get("id", "?"))
+                    if (rid, field) not in reported:
+                        reported.add((rid, field))
+                        self.add("E110", "core/router.toml",
+                                 f"route '{rid}' has {field} but no {field}_{ed_id}; the {ed_id.upper()} "
+                                 f"reference '{ref['file']}' would show the {SOURCE_EDITION.upper()} text")
+                for fid in ref.get("formats") if isinstance(ref.get("formats"), list) else []:
+                    row = fmt_table.get(fid)
+                    if not isinstance(row, dict) or not row.get("checks") or any("checks" + s in row for s in suffixes):
+                        continue
+                    if (fid, "checks") not in reported:
+                        reported.add((fid, "checks"))
+                        self.add("E110", "core/format-checks.toml",
+                                 f"[format.{fid}] has checks but no checks_{ed_id}; the {ed_id.upper()} "
+                                 f"reference '{ref['file']}' would show the {SOURCE_EDITION.upper()} lines")
 
     def check_method_table(self, method: dict, table: str, kind: str) -> list[dict]:
         """Validate [[<table>.<kind>]] entries and their selectors; return the valid entries."""
@@ -975,6 +1022,14 @@ class Linter:
                     except CMError:
                         self.add("E130", "core/method.toml",
                                  f"[[{table}.{kind}]] '{ident}': selector '{sel}' matches no {lang.upper()} section")
+            if kind == "anchor" and selectors:
+                # build.py titles the heading from this key and falls back to the bare id without it
+                key = f"anchor.{ident.lower()}"
+                for ed_id, ed in sorted(self.editions.items()):
+                    if key not in ed.strings:
+                        self.add("E170", "core/method.toml",
+                                 f"[[{table}.anchor]] '{ident}' has no title string '{key}' in strings/{ed_id}.toml "
+                                 f"(the built heading would read '§CM-{ident} · {ident}')")
             good.append(entry)
         title_key = cfg.get("title_key")
         if title_key is not None:
@@ -1032,6 +1087,22 @@ class Linter:
             for key, value in sorted(ed.strings.items()):
                 for message, _ in template_problems(value, ed):
                     self.add("E170", f"strings/{ed_id}.toml", f"key '{key}': {message}")
+
+    # -- schemas/*.toml checked against each other (E161)
+
+    def check_schemas(self) -> None:
+        """tools/cmschema.py validates the four schema files together (required keys, options,
+        views, key grammars, Bank types, Brand Card fields and budgets)."""
+        present = {n: self.toml[f"schemas/{n}.toml"] for n in cmschema.SCHEMAS if f"schemas/{n}.toml" in self.toml}
+        if not present:
+            self.note("schemas/ not present; E161 schema checks skipped")
+            return
+        for name in cmschema.SCHEMAS:
+            if name not in present:
+                self.add("E161", f"schemas/{name}.toml", "file not found (the schemas are checked as a set)")
+        data = {n: d for n, d in present.items() if d is not None}  # bad TOML is already E161
+        for code, where, message in cmschema.check(self.root, data):
+            self.add(code, where, message)
 
     # -- hub properties (E160)
 
@@ -1420,8 +1491,8 @@ class Linter:
 
     def check_zip_rebuild(self, data: bytes, where: str) -> None:
         """Re-zip the entries with package.make_zip in a temp folder; the sha256 must match."""
-        if zip_writer is None:
-            self.note("tools/package.py not importable; E152 rebuild comparison skipped")
+        if zip_writer is None:  # fail closed: determinism cannot be shown without the build's writer
+            self.add("E152", where, f"cannot be re-zipped: tools/package.py not importable ({ZIP_WRITER_ERROR})")
             return
         with tempfile.TemporaryDirectory() as tmp:
             src, out = Path(tmp) / "src", Path(tmp) / "rebuilt.zip"
@@ -1497,8 +1568,8 @@ class Linter:
             used: set[str] = set()
             for path in self.source_files() + self.files_under("schemas", "editions"):
                 used.update(STRING_TAG_RE.findall(self.text(path)))
-            for path in sorted((self.root / "tools").glob("*.py")):
-                used.update(KEY_LITERAL_RE.findall(self.text(path)))
+            for path in sorted((self.root / "tools").glob("*.py")) + sorted((self.root / "evals").glob("*.py")):
+                used.update(KEY_LITERAL_RE.findall(self.text(path)))  # evals/graders.py reads next.prefix etc.
             for table in ("method", "grow"):
                 cfg = method.get(table) if isinstance(method.get(table), dict) else {}
                 used.add(cfg.get("title_key") or f"{table}.title")

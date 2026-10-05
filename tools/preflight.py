@@ -9,8 +9,8 @@
               and CHANGELOG.md has a "## [<VERSION>]" section. No earlier release: pass.
   freshness   every platform/targets.toml limit with a verified_on date is at most
               meta.max_age_days old; a release_blocking or budget-referenced limit must have a date.
-  pending     every editions/<id>.toml [pending] key has an [accepted.<key>] row with signed_by
-              and date in editions/<id>.acceptance.toml.
+  pending     every editions/<id>.toml [pending] key has an [accepted.<key>] row with signed_by,
+              a YYYY-MM-DD date and the current default in editions/<id>.acceptance.toml (as lint E120).
   modules     every evals/registry.toml module with status "active" has, per edition, at least its
               minimum [[case]] count in evals/cases/<name>.<edition>.toml (evals/acceptance.toml
               [cases]: "<name>_min" with "-" read as "_", else per_module_min) and an existing
@@ -140,6 +140,18 @@ def check_freshness(root: Path, rep: Report, today: dt.date) -> None:
         rep.add(True, "G0.freshness", f"every verified_on within {max_age} days")
 
 
+def _date(value) -> dt.date | None:
+    """A TOML date or a 'YYYY-MM-DD' string, else None."""
+    if isinstance(value, dt.datetime):
+        return value.date()
+    if isinstance(value, dt.date):
+        return value
+    try:
+        return dt.date.fromisoformat(str(value).strip())
+    except ValueError:
+        return None
+
+
 def check_pending(root: Path, rep: Report) -> None:
     problems = []
     for ed_file in sorted((root / "editions").glob("*.toml")):
@@ -152,8 +164,13 @@ def check_pending(root: Path, rep: Report) -> None:
         accepted = _toml(acc_file).get("accepted", {}) if acc_file.exists() else {}
         for key in sorted(pending):
             row = accepted.get(key, {})
-            if not (str(row.get("signed_by", "")).strip() and str(row.get("date", "")).strip()):
+            row = row if isinstance(row, dict) else {}
+            spec = pending[key] if isinstance(pending[key], dict) else {}
+            if not str(row.get("signed_by", "")).strip() or _date(row.get("date")) is None:
                 problems.append(f"{ed_file.stem}.{key}")
+            elif "default" in spec and row.get("default") != spec["default"]:
+                # same rule as lint E120: a sign-off covers the default it names, not a later one
+                problems.append(f"{ed_file.stem}.{key} (signed for a different default)")
     if problems:
         rep.add(False, "G0.pending", "not accepted: " + ", ".join(problems))
     else:

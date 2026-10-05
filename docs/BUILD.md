@@ -158,6 +158,7 @@ Every rendered text is NFC-normalised and ends with exactly one newline.
   - every route loads ≤4 files that exist;
   - every method anchor is named by the kit's start-block router.
 - **`core/format-checks.toml`:** `[format.<id>]` with `checks = ["…", …]`, at most 5 yes/no lines per format and per language (`checks_vn`).
+- **`schemas/*.toml`:** the hub (Notion + Sheets), Slot and Run keys, Bank types and the Brand Card. `tools/cmschema.py` loads and validates them together; `tools/hub_build_prompt.py` renders the Notion build prompt and Sheets CSVs from them (`python3 tools/hub_build_prompt.py --edition all`).
 - **`platform/targets.toml`:** limits and budgets (see its header). `build.py` writes the size of each built artifact and its % of budget into `dist/maintainer/manifest.json`.
 
 ## 6. Build outputs
@@ -190,7 +191,7 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 | E101 | Budget exceeded (artifact vs `targets.toml` budget, NFC chars, bytes or lines) |
 | E102 | Skill name or description invalid (length, charset, folder match, forbidden words) |
 | E103 | Reference over 150 lines or 9 KB; references over 200 KB total; a route loads more than 4 files |
-| E110 | VN string missing (parity) |
+| E110 | VN string missing (parity), including a `trigger_vn` / `rules_vn` (router) or `checks_vn` (format checks) that a skill reference needs |
 | E111 | VN string stale (`src` hash mismatch) |
 | E112 | Placeholder set differs between EN and VN |
 | E113 | VN section missing, orphaned or stale |
@@ -213,8 +214,8 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 | E152 | Non-deterministic zip (rebuilding gives a different sha256) |
 | E153 | `qa/` or `evals/` content inside a shipped zip |
 | E160 | Unknown hub property name used in prose (not in `schemas/hub.toml`) |
-| E161 | Bad TOML, or a schema file missing a required key |
-| E170 | Render error (unknown param or string key, unbalanced block) |
+| E161 | Bad TOML, or a schema file missing a required key (`tools/cmschema.py` checks `schemas/*.toml` as a set) |
+| E170 | Render error (unknown param or string key, unbalanced block), including an anchor with sections but no `anchor.<id>` title string |
 | W2xx | Warnings: budget above 90%, a string unused by any template, a section unused by any target |
 
 ## 8. Runtime lint and graders

@@ -20,19 +20,19 @@ jobs:
       - name: Unit tests and must-fail fixtures
         run: python3 -m unittest discover -s tools/tests
 
-      - name: Lint (G1)
-        run: |
-          if [ -f tools/lint.py ]; then
-            python3 tools/lint.py
-          else
-            echo "tools/lint.py not present yet; skipping"
-          fi
-
       - name: Build both editions
         run: python3 tools/build.py --edition all
 
+      - name: Notion build prompt and Sheets CSVs
+        run: python3 tools/hub_build_prompt.py --edition all
+
       - name: Package
         run: python3 tools/package.py
+
+      # After build and package, so the dist/ checks (budgets on built files, E131,
+      # E132, E150-E153) run too; without dist/ lint only notes that it skipped them.
+      - name: Lint (G1)
+        run: python3 tools/lint.py
 
       - name: Upload zips and maintainer files
         uses: actions/upload-artifact@v4

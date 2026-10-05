@@ -445,6 +445,11 @@ class LoaderTests(TempRepo):
         with self.assertRaises(graders.GraderError):
             graders.grade(d, self.root)
 
+    def test_bad_deny_list_regex_is_a_grader_error_not_a_dropped_term(self):
+        self.write("locales/en/deny-list.txt", "Big Domino\nre:\\bB[1-7\n")
+        with self.assertRaises(graders.GraderError):
+            graders.grade(self.run_dir(GOOD), self.root)
+
     def test_verdict_patterns_tolerate_markdown_and_quotes(self):
         matcher = graders.Matcher(EN_STRINGS, "en")
         self.assertEqual(matcher.verdict_kind(graders.ck.plain_line("**Ready to film** · I'd post it: X")), "ready")

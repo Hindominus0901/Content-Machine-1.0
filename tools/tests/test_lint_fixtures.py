@@ -27,11 +27,13 @@ import zipfile
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent.parent
+REPO = TOOLS.parent
 sys.path.insert(0, str(TOOLS))
 
 import lint  # noqa: E402
 import package  # noqa: E402
 from cmlib import sha10  # noqa: E402
+from cmschema import SCHEMAS  # noqa: E402
 
 TODAY = dt.date(2026, 10, 5)
 DOS_EPOCH = (1980, 1, 1, 0, 0, 0)
@@ -41,11 +43,13 @@ EN_STRINGS = {
     "contract.output": "Always reply in English. One screen per reply, then one NEXT line.",
     "verdict.ready": "Ready to {verb} · I'd post it: {evidence}",
     "skill.description": "Writes a coach's week of content from their own words and checks it before handing it over.",
+    "anchor.talk": "Weekly Talk",
 }
 VN_STRINGS = {
     "contract.output": "Luôn trả lời bằng tiếng Việt. Mỗi lần một màn hình, rồi một dòng TIẾP.",
     "verdict.ready": "Sẵn sàng {verb} · Mình sẽ đăng: {evidence}",
     "skill.description": "Viết nội dung cả tuần cho coach từ chính lời của họ và kiểm tra trước khi giao.",
+    "anchor.talk": "Buổi nói chuyện tuần",
 }
 
 # prose[lang][file] = [[section id, attributes, body], ...]
@@ -155,7 +159,9 @@ formats = ["short"]
 id = "weekly-talk"
 module = "talk"
 trigger = "The coach says next on talk day."
+trigger_vn = "Coach nhắn tiếp vào ngày nói chuyện."
 rules = ["Ask one question at a time."]
+rules_vn = ["Hỏi từng câu một."]
 loads = ["talk.md"]
 writes = ["Content"]
 phrases.en = ["next"]
@@ -165,14 +171,6 @@ phrases.vn = ["tiếp"]
 [format.short]
 checks = ["Does the first line make the claim?"]
 checks_vn = ["Câu đầu đã nói thẳng ý chính chưa?"]
-""",
-    "schemas/hub.toml": """\
-[[databases]]
-name = "Content"
-
-[[databases.property]]
-name = "Status"
-type = "select"
 """,
     "locales/en/deny-list.txt": "# fixture list\nShip Check\nre:\\bB[1-7]\\b\n",
     "locales/en/banned-tells.txt": "delve\nlet's dive in\n",
@@ -225,6 +223,8 @@ class Repo:
         self.section_src_override: dict[str, str] = {}
         for rel, text in BASE_FILES.items():
             self.write(rel, text)
+        for name in SCHEMAS:  # the real schema set (cmschema checks the four together; E160 reads hub.toml)
+            self.write(f"schemas/{name}.toml", (REPO / "schemas" / f"{name}.toml").read_text(encoding="utf-8"))
         self.write_strings()
         self.write_prose()
 
@@ -545,6 +545,35 @@ limit = ""
         self.repo.set_string("en", "verdict.ready", "Ready to {verb} · passed the Ship Check: {evidence}")
         self.repo.set_string("vn", "verdict.ready", "Sẵn sàng {verb} · Mình sẽ đăng: {evidence}")
         self.assertCatches("E140", where="strings/en.toml")
+
+    def test_E110_vn_reference_would_fall_back_to_en_router_text(self):
+        router = self.repo.read("core/router.toml").replace('trigger_vn = "Coach nhắn tiếp vào ngày nói chuyện."\n', "")
+        self.repo.write("core/router.toml", router)
+        report = self.assertCatches("E110", where="core/router.toml")
+        self.assertTrue(any("trigger_vn" in f.message for f in report.errors), self.dump(report))
+
+    def test_E110_vn_reference_would_fall_back_to_en_format_checks(self):
+        checks = self.repo.read("core/format-checks.toml").split("checks_vn")[0]
+        self.repo.write("core/format-checks.toml", checks)
+        report = self.assertCatches("E110", where="core/format-checks.toml")
+        self.assertTrue(any("checks_vn" in f.message for f in report.errors), self.dump(report))
+
+    def test_E170_anchor_without_a_title_string(self):
+        del self.repo.strings["vn"]["anchor.talk"]
+        del self.repo.strings["en"]["anchor.talk"]
+        self.repo.write_strings()
+        report = self.assertCatches("E170", where="core/method.toml")
+        self.assertTrue(any("anchor.talk" in f.message for f in report.errors), self.dump(report))
+
+    def test_E161_schema_missing_a_required_key(self):
+        hub = self.repo.read("schemas/hub.toml").replace("max_hub_calls_per_run", "max_calls_per_run", 1)
+        self.repo.write("schemas/hub.toml", hub)
+        report = self.assertCatches("E161", where="schemas/hub.toml")
+        self.assertTrue(any("max_hub_calls_per_run" in f.message for f in report.errors), self.dump(report))
+
+    def test_E161_schema_file_missing(self):
+        (self.repo.root / "schemas" / "keys.toml").unlink()
+        self.assertCatches("E161", where="schemas/keys.toml")
 
     def test_E161_bad_toml(self):
         self.repo.write("core/format-checks.toml", "[format.short\nchecks = [\n")
