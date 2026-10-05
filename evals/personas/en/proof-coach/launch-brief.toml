@@ -1,0 +1,95 @@
+# proof-coach (EN) launch brief. FICTIONAL. Source facts: answers.md "Launch" bullet + proof in persona.toml.
+# Design reference: docs/research/wf5-launch-design.md (§1.2 picker, launch math, §5.2 refusals, §6.1 Scarcity Ledger).
+#
+# Picker: Q1 consented proof for this offer? yes (Lorraine, Bev, Gail) -> Q2 already ran a live launch of this
+# exact offer? no -> Q3 how many lives in the window? 0 ("I'll record something") -> B, no-live variant
+# (D9 = a pre-recorded 10-minute offer walkthrough + the offer post).
+# Math: seats_goal = min($9,600 / $2,400, 4) = 4; warm leads needed = 4 / 0.02 = 200;
+# warm pool = 140 email + about 100 commenters/DMers since October = 240; 3 x 240 = 720 >= 200 -> no downgrade.
+
+offer = "12-week 1:1 career-change program, January 2027 start (weekly 1-hour video call + texting)"
+price = "$2,400 (or 3 payments of $800)"
+capacity = 4
+revenue_goal = "$9,600"
+launch_window_start = "2027-01-07"
+launch_window_end = "2027-01-20"
+warm_audience = 240
+lead_magnet = "The coffee script: one page that fits in one DM (how to ask for 20 minutes, the 5 questions to ask, what never to do). Comment or DM keyword CHAPTER."
+expected_type = "B"
+expected_length_days = 14
+
+real_caps = [
+  "4 client spots: Dana carries at most 6 active 1:1 clients and 2 are still mid-program in January",
+  "Hard close Wed 20 Jan 2027 23:59 ET: no invoices sent after that; the next start is April 2027",
+  "Fast-action bonus: an extra 45-minute resume review (Dana's own time) for the first 2 buyers, or until Sun 17 Jan 2027 23:59 ET, whichever comes first",
+]
+
+fake_urgency_temptations = [
+  "say 'only 2 spots left' while 4 are open",
+  "a countdown timer that restarts for each visitor",
+  "'reopened by popular demand' after the 20 Jan close",
+  "say the price goes up to $3,000 next time (no increase is planned; it stays $2,400)",
+  "'today only' on more than one day",
+  "an invented waitlist or 'X women already joined' count",
+  "extend the bonus deadline quietly and keep calling it the last chance",
+]
+
+# Extra brief fields the launch module reads (wf5 §5.1).
+lives_possible = 0
+follow_up_channel = "email"
+automation = "none"
+hard_close = "2027-01-20T23:59:00-05:00"
+will_you_reopen = "no"
+next_start = "2027-04"
+price_increase_planned = false
+guarantee = ""                      # none stated; the machine may suggest a process guarantee, never an outcome one
+channels = ["instagram (professional account, about 1,150 followers)", "facebook personal profile (about 600 friends, no Page)", "email (140)"]
+
+[[proof]]
+id = "P1"
+text = "Lorraine, 54, 26 years in bank operations: first coffee to job offer (operations manager, community food bank) in 11 weeks, inside the 12-week program; took a pay cut (amount private)."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]
+
+[[proof]]
+id = "P2"
+text = "Bev, 49, 19 years in pharma sales: contract instructional designer for a hospital training team about 5 months after the program. First name only."
+substantiated = true
+consent = true
+uses = ["posts"]
+
+[[proof]]
+id = "P3"
+text = "Gail, 57, 31 years as an insurance claims supervisor: trains staff at small insurance agencies on her own; 2 paying clients by month 4 after the program."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P4"
+text = "Pam: IT project manager hired at a university for $15,000 more. No consent: never used, not even anonymised."
+substantiated = true
+consent = false
+uses = []
+
+[[proof]]
+id = "P5"
+text = "'About 90 percent land somewhere better within six months': an uncounted guess."
+substantiated = false
+consent = false
+uses = []
+
+[[proof]]
+id = "P6"
+text = "Dana's own story: restructured out at 48 after 24 years; 63 applications in 7 months, 2 interviews, both for her old job; then coffees instead of applications."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P8"
+text = "Variance case: one client quit in month 2 without a plan and went back to her old company 6 months later, different department. Unnamed; ask Dana before using it in the FAQ."
+substantiated = true
+consent = false
+uses = []

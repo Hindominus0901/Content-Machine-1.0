@@ -1,0 +1,49 @@
+# AI tells, buzzwords and English calques (lint E141) for Vietnamese coach text.
+# Sources: docs/research/wf2-vietnam-market.md §1 and §8 (banned calques and
+# buzzwords), wf6-definitive-concise.md §2b F "Mùi AI" and D, wf2-synthesis.md
+# (VN distrust of hype language).
+# Scanned over strings/vn.toml values, guides/* and locales/vn/examples.md.
+# Hedges, fillers and xưng hô drift are runtime writing targets, not lint.
+#
+# One entry per line; lines starting with "#" are comments.
+# A plain entry matches as a whole word or phrase, any letter case.
+# "re:" starts a Python regular expression; it is case-sensitive unless it
+# begins with (?i). Both tone-mark spellings (khóa / khoá) are listed where
+# they differ, since NFC keeps them apart.
+
+# Buzzwords
+nâng tầm
+bứt phá
+khai phá tiềm năng
+hành trình
+chìa khóa
+chìa khoá
+thay đổi cuộc chơi
+lan tỏa giá trị
+lan toả giá trị
+mang lại giá trị
+góp phần
+re:(?i)\bđóng\s+vai\s+trò\s+(vô\s+cùng\s+|rất\s+)?(quan\s+trọng|then\s+chốt)\b
+
+# Calques and stock openers
+hãy cùng khám phá
+cùng khám phá ngay
+đây là lý do tại sao
+ở cuối ngày
+điều đó nói rằng
+bạn có biết rằng
+trong thế giới hiện đại ngày nay
+trong thời đại ngày nay
+re:(?i)\btrong\s+(thời\s+đại|bối\s+cảnh)\s+(số|công\s+nghệ|ngày\s+nay|hiện\s+nay|4\.0)\b
+có thể nói
+điều quan trọng cần lưu ý
+re:(?i)\bkhông\s+chỉ\b[^.!?\n]{1,80}\bmà\s+còn\b
+
+# Closers and self-undercutting
+tóm lại
+hy vọng bài viết hữu ích
+hi vọng bài viết hữu ích
+hy vọng có ích
+em xin phép chia sẻ
+vài tips nho nhỏ
+nói sai mọi người bỏ qua

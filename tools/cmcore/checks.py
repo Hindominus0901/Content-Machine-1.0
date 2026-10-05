@@ -1,0 +1,703 @@
+"""Shared runtime-check core (docs/BUILD.md §8; QA spec §2.1-§2.4, §5.2).
+
+Pure functions, standard library only, and no imports from the repo:
+tools/build.py inlines this file into the skill's single-file
+scripts/ship_lint.py, and evals/graders.py imports it, so the runtime lint and
+the transcript graders count the same way.
+
+Languages are "en" and "vn". Every function NFC-normalises its input. Counts:
+EN words and VN tiếng are both whitespace tokens that hold a letter or digit.
+
+Keep names here distinct from tools/shiplint.py's own (main, lint_*, load_*,
+format_line, PayloadError, PIECE_FIELDS, _sl_*): after inlining they share one
+namespace.
+"""
+from __future__ import annotations
+
+import re
+import unicodedata
+from typing import NamedTuple
+
+LANGS = ("en", "vn")
+
+# Per-edition numbers (editions/<id>.toml [params]; QA spec §0).
+WORD_RATE = {"en": 2.5, "vn": 3.5}          # spoken words (tiếng) per second
+MICRO_THRESHOLD = {"en": 40, "vn": 60}      # under this many words: the Micro check
+QUOTE_CAP = {"en": 15, "vn": 25}            # longest public quote
+HOOK_MAX = {"en": 12, "vn": 18}             # verbal hook length
+VERDICT_MAX_WORDS = 20
+DROP_MAX_WORDS = 120
+BG_POST_MAX_CHARS = 130
+ON_SCREEN_MAX_WORDS = 6
+WORD_RATE_TOLERANCE = 0.15
+SHORT_DEFAULT_MAX_SECONDS = 60
+
+_ALNUM = re.compile(r"[^\W_]")
+UPPER = "A-ZĐÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ"
+_QUOTE_MAP = str.maketrans({"“": '"', "”": '"', "„": '"', "«": '"', "»": '"',
+                            "‘": "'", "’": "'", "‛": "'"})
+
+
+# ---------------------------------------------------------------- text basics
+
+def nfc(text: str | None) -> str:
+    return unicodedata.normalize("NFC", text or "")
+
+
+def straight_quotes(text: str) -> str:
+    """Curly quotes and guillemets to ASCII quotes (length-preserving)."""
+    return text.translate(_QUOTE_MAP)
+
+
+def strip_diacritics(text: str) -> str:
+    """Vietnamese spelling without diacritics, one character per character (đ → d)."""
+    out = []
+    for ch in nfc(text):
+        if ch == "đ":
+            out.append("d")
+        elif ch == "Đ":
+            out.append("D")
+        else:
+            out.append(unicodedata.normalize("NFD", ch)[0])
+    return "".join(out)
+
+
+def fold(text: str) -> str:
+    """Lowercase without diacritics, one character per character (positions line up with `text`)."""
+    return "".join(c if len(c.lower()) != 1 else c.lower() for c in strip_diacritics(text))
+
+
+def count_words(text: str, lang: str = "en") -> int:
+    """EN words or VN tiếng: whitespace tokens holding at least one letter or digit."""
+    return sum(1 for tok in nfc(text).split() if _ALNUM.search(tok))
+
+
+def count_tieng(text: str) -> int:
+    """VN syllables (tiếng). Vietnamese writes one syllable per whitespace token."""
+    return count_words(text, "vn")
+
+
+def phrase_re(phrase: str, flags: int = re.I) -> re.Pattern:
+    """A whole-word, whitespace-tolerant pattern for a literal phrase."""
+    body = r"\s+".join(re.escape(part) for part in nfc(phrase).split())
+    return re.compile(r"(?<!\w)" + body + r"(?!\w)", flags)
+
+
+def _phrase_hits(text: str, phrases) -> list[str]:
+    text = nfc(text)
+    found = []
+    for phrase in phrases:
+        if phrase not in found and phrase_re(phrase).search(text):
+            found.append(phrase)
+    return found
+
+
+def sentences(text: str) -> list[str]:
+    """Lines split further at sentence ends (. ! ? … followed by a space)."""
+    out = []
+    for line in nfc(text).splitlines():
+        out.extend(part.strip() for part in re.split(r"(?<=[.!?…])\s+", line) if part.strip())
+    return out
+
+
+def plain_line(line: str) -> str:
+    """A line without markdown decoration (quote marks, bullets, emphasis), quotes straightened."""
+    s = straight_quotes(nfc(line)).strip()
+    s = re.sub(r"^(?:>\s*)+", "", s)
+    s = re.sub(r"^(?:[-*+•]\s+)", "", s)
+    for _ in range(3):
+        stripped = re.sub(r"^(\*\*|__|\*|_)(.*)\1$", r"\2", s).strip()
+        stripped = re.sub(r"^(\*\*|__)(.*?)\1", r"\2", stripped).strip()
+        if stripped == s:
+            break
+        s = stripped
+    return re.sub(r"\s+", " ", s).strip()
+
+
+# ---------------------------------------------------------------- numbers
+
+class Number(NamedTuple):
+    raw: str              # the token as written, prefix and suffix included
+    value: float | None   # numeric value with k / tr / triệu / tỷ applied; None for times and dates
+    kind: str             # number | money | time | date | id
+    percent: bool
+    start: int
+    end: int
+    structural: bool      # a label or list marker (Beat 2, N2, "1)", ≤12), not a claim
+    tagged: bool          # inside [NEEDS: …] / [CẦN …] / [guess], or marked "(my guess)"
+
+
+_DIGITS = re.compile(r"\d+(?:[.,]\d+)*")
+_MULT_AFTER = [
+    (re.compile(r"\s?(?:triệu|trieu)(?!\w)", re.I), 1e6),
+    (re.compile(r"\s?(?:tỷ|tỉ|ty)(?!\w)", re.I), 1e9),
+    (re.compile(r"\s?(?:nghìn|ngàn)(?!\w)", re.I), 1e3),
+    (re.compile(r"\s?(?:million|mil)(?!\w)", re.I), 1e6),
+    (re.compile(r"\s?(?:billion|bn)(?!\w)", re.I), 1e9),
+    (re.compile(r"tr(?![^\W\d_])"), 1e6),
+    (re.compile(r"[kK](?![^\W\d_])"), 1e3),
+]
+_MONEY_AFTER = re.compile(r"\s?(?:đồng|dong|vnđ|vnd|usd|dollars?|bucks|đ|₫)(?![^\W\d_])", re.I)
+_PERCENT_AFTER = re.compile(r"\s?(?:%|percent(?!\w)|per cent(?!\w)|phần trăm(?!\w))", re.I)
+_TAG_SPAN = re.compile(r"\[\s*(?:NEEDS|CẦN|guess|GAP|đoán|ước tính)\b[^\]\n]*(?:\]|$)", re.I | re.M)
+_GUESS_AFTER = re.compile(r"\s*(?:\[\s*(?:guess|đoán)\s*\]|\((?:my |mình |em |anh |chị )?(?:guess|đoán)\))", re.I)
+STRUCTURE_WORDS = {
+    "beat", "beats", "slide", "slides", "line", "step", "part", "take", "hook", "option", "week", "day",
+    "chunk", "round", "version", "question", "no", "n", "q", "tip", "point", "idea", "piece", "rung",
+    "tuần", "ngày", "bước", "câu", "dòng", "phần", "ý", "cảnh", "lần", "lượt", "tháng", "khóa", "khoá",
+    "bài", "tập", "slide", "số",
+}
+
+
+def _num_value(digits: str) -> float:
+    """1.990.000 / 1,150 → thousands; 4,99 / 1.5 → decimal (a separator before exactly 3 digits groups)."""
+    parts = re.split(r"[.,]", digits)
+    whole, frac = parts[0], ""
+    for grp in parts[1:]:
+        if len(grp) == 3 and not frac:
+            whole += grp
+        else:
+            frac = grp
+            break
+    return float(whole + ("." + frac if frac else ""))
+
+
+def _prev_word(text: str, pos: int) -> str:
+    m = re.search(r"([^\W\d_]+)\s*[#.:]?\s*$", text[max(0, pos - 24):pos])
+    return m.group(1).casefold() if m else ""
+
+
+def numbers_in(text: str) -> list[Number]:
+    """Every number token: 1.990.000đ, 1,99tr, 99k, $2,400, 30%, 45+, 11:59, 23h59, 13/10, 2026-10-05.
+
+    Ranges ("2–3") give two numbers. Digits glued to letters (N2, B2B, P-3) are ids.
+    """
+    text = nfc(text)
+    tagged_spans = [(m.start(), m.end()) for m in _TAG_SPAN.finditer(text)]
+    out: list[Number] = []
+    pos = 0
+    while True:
+        m = _DIGITS.search(text, pos)
+        if not m:
+            break
+        start, end = m.start(), m.end()
+        pos = end
+        digits = m.group(0)
+        prev = text[start - 1] if start else ""
+        prev2 = text[start - 2] if start > 1 else ""
+        kind, value, percent, structural = "number", None, False, False
+        # dates and times first: they swallow their separators
+        iso = re.match(r"-\d{1,2}-\d{1,2}(?!\d)", text[end:]) if len(digits) == 4 else None
+        dm = re.match(r"(?:/\d{1,4}){1,2}(?![\d/])", text[end:]) if re.fullmatch(r"\d{1,2}", digits) else None
+        tm = re.match(r"(?::\d{2}|h\d{2}(?!\d)|h(?![^\W\d_]))", text[end:]) if re.fullmatch(r"\d{1,2}", digits) else None
+        if iso:
+            kind, end = "date", end + iso.end()
+        elif dm and prev != "/":
+            kind, end = "date", end + dm.end()
+        elif tm and prev != ":":
+            kind, end = "time", end + tm.end()
+        else:
+            value = _num_value(digits)
+        raw_start = start
+        if prev and (prev.isalpha() or prev == "_"):
+            if prev in "xX×" and not (prev2 and prev2.isalnum()):
+                raw_start = start - 1                     # x3, ×2
+            else:
+                kind, structural = "id", True             # N2, B2B, mp4
+        elif prev and prev in "-–" and prev2 and prev2.isupper():
+            kind, structural = "id", True                 # P-3, V-12
+        elif prev and prev in "$€£":
+            kind, raw_start = "money", start - 1
+        if kind in ("number", "money"):
+            rest = text[end:]
+            for pattern, mult in _MULT_AFTER:
+                mm = pattern.match(rest)
+                if mm:
+                    value, end, rest = value * mult, end + mm.end(), text[end + mm.end():]
+                    break
+            mm = _MONEY_AFTER.match(rest)
+            if mm:
+                kind, end, rest = "money", end + mm.end(), text[end + mm.end():]
+            mm = _PERCENT_AFTER.match(rest)
+            if mm:
+                percent, end = True, end + mm.end()
+            else:
+                mm = re.match(r"(?:\+|s\b|st\b|nd\b|rd\b|th\b|[x×](?![^\W\d_]))", rest)
+                if mm:
+                    end += mm.end()
+            if kind == "money" and raw_start == start - 1 and re.match(r"[MB](?![^\W\d_])", text[end:]):
+                value, end = value * (1e6 if text[end] == "M" else 1e9), end + 1
+        line_start = text.rfind("\n", 0, raw_start) + 1
+        before = text[line_start:raw_start]
+        after = text[end:end + 2]
+        if not structural:
+            if re.fullmatch(r"\s*(?:[-*+•]\s+)?\(?", before) and re.match(r"[.)]\s", after + " ") \
+                    and kind == "number":
+                structural = True                         # list markers "1." "2)"
+            elif re.match(r"\)", after) and (not before or before[-1].isspace()) and kind == "number":
+                structural = True                         # inline "1) … 2) …"
+            elif re.search(r"[≤≥<>]\s*$", before) or (kind == "number" and re.search(r"\b(?:under|max|min)\s*$",
+                                                                                         before, re.I)):
+                structural = True                         # format instructions (≤12 words, under 30 s)
+            elif kind == "number" and _prev_word(text, raw_start) in STRUCTURE_WORDS:
+                structural = True                         # Beat 2, Week 1, tuần 1
+        tagged = any(a <= raw_start < b for a, b in tagged_spans) or bool(_GUESS_AFTER.match(text[end:]))
+        out.append(Number(text[raw_start:end], value, kind, percent, raw_start, end, structural, tagged))
+        pos = end
+    return out
+
+
+def number_keys(n: Number) -> set:
+    if n.kind in ("time", "date"):
+        raw = re.sub(r"\s+", "", n.raw).replace("h", ":")
+        raw = re.sub(r"(?<!\d)0(\d)", r"\1", raw)
+        return {("raw", raw)}
+    if n.value is None:
+        return set()
+    return {("val", round(n.value, 4), n.percent)}
+
+
+def allowed_number_keys(allowed) -> frozenset:
+    """Match keys for every number inside the allowed strings ("6 năm", "$2,400", "8%")."""
+    keys: set = set()
+    for item in allowed or ():
+        for n in numbers_in(str(item)):
+            keys |= number_keys(n)
+    return frozenset(keys)
+
+
+def unsupported_numbers(text: str, allowed) -> list[str]:
+    """Claim numbers in `text` (not labels, not tagged [NEEDS]/[guess]) whose value is not in `allowed`.
+
+    `allowed` is an iterable of strings (allowed_numbers entries or source rows) or a key set
+    from allowed_number_keys(). Units other than k / tr / triệu / tỷ do not matter: "6 năm" allows 6.
+    """
+    keys = allowed if isinstance(allowed, frozenset) else allowed_number_keys(allowed)
+    out: list[str] = []
+    for n in numbers_in(text):
+        if n.structural or n.tagged:
+            continue
+        nk = number_keys(n)
+        if nk and not (nk & keys) and n.raw not in out:
+            out.append(n.raw)
+    return out
+
+
+# ---------------------------------------------------------------- quotes
+
+class Quote(NamedTuple):
+    text: str
+    start: int
+    end: int
+    attributed: bool      # someone is said to have said or written it
+
+
+_QUOTE_SPAN = re.compile(r'"([^"\n]{1,600})"')
+_ATTR_BEFORE = {
+    "en": re.compile(r"(?i)\b(?:said|says|told (?:me|us|her|him)|wrote|writes|asked|asks|texted|texts|messaged|"
+                     r"commented|comments|replied|replies|emailed|posted|put it|called it|calls it|"
+                     r"in (?:her|his|their|my) (?:own )?words|DM'?d|DMed)\b[^.!?\"]{0,20}$"),
+    # VN: a real subject (kin + name, a client noun, or a name) before the verb; "Hoặc nhắn" and
+    # "Bạn gõ" are instructions to the coach, not quotations.
+    "vn": re.compile(r"(?:(?<!\w)(?:[Cc]hị|[Aa]nh|[Ee]m|[Bb]ạn|[Cc]ô|[Cc]hú|[Bb]ác|[Bb]é)\s+[" + UPPER + r"][^\W\d_]+|"
+                     r"(?<!\w)(?:khách|học viên|người ta|ai đó|họ|một (?:bạn|chị|anh|người|khách|học viên))(?!\w)|"
+                     r"(?<!\w)(?!(?:Hoặc|Cứ|Rồi|Thì|Và|Nếu|Khi|Bạn|Chị|Anh|Em|Mình|Hãy|Cô|Chú|Gõ|Nhắn|Bấm|Gửi)(?!\w))"
+                     r"[" + UPPER + r"][^\W\d_]+)\s+(?:\w+\s+){0,3}?(?:đã |từng |có )?(?:nói|bảo|nhắn|kể|hỏi|viết|"
+                     r"chia sẻ|bình luận|comment|than|tâm sự|gửi)(?!\w)[^.!?\"]{0,20}$"),
+}
+_ATTR_AFTER = re.compile(r"^[\s,]*(?:[—–-]\s*[" + UPPER + r"]|(?:she|he|they|[A-Z][a-z]+|a client|my client|"
+                         r"one client)\s+(?:said|says|wrote|writes|asked|told me|texted|messaged)\b|(?:chị|anh|em|bạn|"
+                         r"khách|học viên|[" + UPPER + r"][^\W\d_]+)\s+(?:ấy\s+)?(?:nói|bảo|nhắn|kể|viết|hỏi)\b)")
+
+
+def quotes_in(text: str, lang: str = "en") -> list[Quote]:
+    """Double-quoted spans (straight or curly), each marked attributed or not."""
+    text = straight_quotes(nfc(text))
+    out = []
+    for m in _QUOTE_SPAN.finditer(text):
+        line_start = text.rfind("\n", 0, m.start()) + 1
+        before = text[line_start:m.start()]
+        after = text[m.end():text.find("\n", m.end()) if "\n" in text[m.end():] else len(text)]
+        attributed = any(p.search(before) for p in _ATTR_BEFORE.values()) or bool(_ATTR_AFTER.match(after))
+        out.append(Quote(m.group(1), m.start(1), m.end(1), attributed))
+    return out
+
+
+def _quote_norm(text: str) -> str:
+    s = straight_quotes(nfc(text)).casefold()
+    s = re.sub(r"[^\w\s]", " ", s)
+    return " ".join(s.split())
+
+
+def quote_problem(quote: str, sources, cap: int, lang: str = "en") -> str | None:
+    """Why a public quote fails (over the cap, or not verbatim in any source), or None."""
+    words = count_words(quote, lang)
+    if words > cap:
+        return f"quote is {words} {'tiếng' if lang == 'vn' else 'words'} (cap {cap})"
+    q = _quote_norm(quote)
+    if not q:
+        return None
+    for src in sources or ():
+        if f" {q} " in f" {_quote_norm(src)} ":
+            return None
+    return "quote not verbatim in the sources"
+
+
+def quote_ok(quote: str, sources, cap: int, lang: str = "en") -> bool:
+    return quote_problem(quote, sources, cap, lang) is None
+
+
+# ---------------------------------------------------------------- hooks, keyword, praise
+
+HEDGES = {
+    "en": ["maybe", "might", "I think", "kind of", "sort of", "perhaps", "could be"],
+    "vn": ["có lẽ", "chắc là", "hình như", "mình nghĩ là", "có thể"],
+}
+
+
+def hedges_in_hook(hook: str, lang: str = "en") -> list[str]:
+    return _phrase_hits(hook, HEDGES.get(lang, HEDGES["en"]))
+
+
+def keyword_count(text: str, keyword: str, variants=()) -> int:
+    """Occurrences of the keyword, any letter case.
+
+    A span spelled entirely without diacritics also counts (VN "lai ao" = "lãi ảo"); a span with
+    different diacritics does not ("lại áo" is another word). `variants` are extra accepted spellings.
+    """
+    text = nfc(text)
+    folded = fold(text)
+    spans: set[tuple[int, int]] = set()
+    for form in [keyword, *(variants or ())]:
+        form = nfc(form).strip()
+        if not form:
+            continue
+        target = form.casefold()
+        pattern = phrase_re(fold(form), 0)
+        for m in pattern.finditer(folded):
+            original = text[m.start():m.end()]
+            ok = (" ".join(original.casefold().split()) == " ".join(target.split())
+                  or strip_diacritics(original) == original)
+            if ok and not any(a < m.end() and m.start() < b for a, b in spans):
+                spans.add((m.start(), m.end()))
+    return len(spans)
+
+
+STOPWORDS = {
+    # EN function words and contractions (apostrophes removed)
+    "a", "an", "the", "and", "or", "but", "so", "if", "then", "i", "im", "ive", "id", "ill", "you", "youre",
+    "youve", "your", "yours", "we", "were", "our", "us", "it", "its", "is", "are", "was", "be", "been", "am",
+    "to", "of", "in", "on", "at", "for", "with", "from", "by", "as", "about", "this", "that", "these",
+    "those", "there", "theres", "here", "heres", "my", "me", "he", "she", "they", "them", "theyre", "his",
+    "her", "their", "do", "does", "did", "dont", "doesnt", "didnt", "not", "no", "just", "very", "really",
+    "what", "whats", "how", "why", "when", "who", "which", "can", "cant", "will", "wont", "would", "should",
+    "could", "have", "has", "had", "all", "any", "some", "more", "most", "than", "too", "also", "now",
+    "ok", "okay", "oh", "so", "well", "like", "get", "got", "let", "lets",
+    # VN function words
+    "thì", "là", "mà", "và", "của", "cái", "những", "các", "một", "này", "đó", "ấy", "kia", "ạ", "nhé",
+    "nha", "à", "ơi", "với", "cho", "để", "khi", "nếu", "vì", "nên", "có", "được", "đã", "đang", "sẽ",
+    "rồi", "cũng", "thế", "vậy", "đi", "nào", "gì", "ai", "đâu", "sao", "lại", "ra", "vào", "lên", "xuống",
+    "mình", "bạn", "em", "anh", "chị", "tôi", "các", "mấy", "hả", "hở", "đấy", "nhỉ", "luôn",
+}
+
+
+def hook_stem(text: str) -> str:
+    """The first 3 content words of the hook (its first line), lowercased, punctuation stripped."""
+    first = next((ln for ln in nfc(text).splitlines() if ln.strip()), "")
+    first = straight_quotes(first).casefold().replace("'", "")
+    tokens = re.sub(r"[^\w\s]", " ", first).split()
+    content = [t for t in tokens if t not in STOPWORDS]
+    return " ".join(content[:3])
+
+
+PRAISE = {
+    "en": ["great", "excellent", "amazing", "awesome", "fantastic", "wonderful", "brilliant", "perfect",
+           "impressive", "outstanding", "incredible", "superb", "stellar", "phenomenal", "love this",
+           "love it", "love that", "well done", "nice work", "good job", "great job", "nailed it",
+           "spot on", "beautifully", "beautiful", "powerful", "gold", "killer", "strong work"],
+    "vn": ["tuyệt vời", "tuyệt quá", "tuyệt lắm", "xuất sắc", "hay quá", "hay lắm", "rất hay", "quá hay",
+           "giỏi quá", "giỏi lắm", "làm tốt lắm", "ấn tượng", "hoàn hảo", "quá đỉnh", "đỉnh quá", "đỉnh thật",
+           "đỉnh của chóp", "siêu hay", "chuẩn không cần chỉnh", "quá chuẩn", "thích quá"],
+}
+
+
+def praise_words(text: str, lang: str | None = "en") -> list[str]:
+    """Praise words and phrases in `text` (lang None: both lists)."""
+    if lang in PRAISE:
+        phrases = PRAISE[lang]
+    else:
+        phrases = PRAISE["en"] + PRAISE["vn"]
+    return _phrase_hits(text, phrases)
+
+
+# ---------------------------------------------------------------- urgency, brackets, verdict lines
+
+_SEAT = r"(?:spots?|seats?|places?|slots?|spaces?|copies|tickets?)"
+URGENCY = {
+    "en": [
+        rf"\b\d+\s+(?:\w+\s+)?{_SEAT}\s+(?:left|remaining)\b",
+        rf"\b{_SEAT}\s+(?:left|remaining)\b",
+        rf"\b(?:only|just)\s+(?:\d+|one|two|three|four|five|a few|a handful of)\s+(?:\w+\s+)?"
+        rf"(?:{_SEAT}|days?|hours?|left)\b",
+        r"\b\d+\s+left\b",
+        r"\btoday only\b|\bonly today\b|\bonly until\b|\bonly through\b",
+        r"\blast (?:chance|call)\b|\blast (?:spots?|seats?|places?)\b|\blast day to\b|"
+        r"\blast few (?:spots?|seats?|hours?|days?)\b",
+        r"\b(?:cart|doors?|enrol(?:l)?ment|registration|sale|offer|sign-?ups?|applications?)\s+(?:closes?|closing)\b",
+        r"\bcloses\s+(?:on|at|tonight|tomorrow|today|in|this|friday|sunday|monday|midnight)\b",
+        r"\bclosing\s+(?:soon|tonight|tomorrow|today|on|at)\b",
+        r"\bdeadline\b(?=.*(?:\d|tonight|tomorrow|today|midnight|monday|tuesday|wednesday|thursday|friday|"
+        r"saturday|sunday))",
+        r"\bends (?:tonight|today|tomorrow|at midnight|friday|sunday)\b",
+        r"\b(?:price goes up|price rises|before the price)\b",
+    ],
+    "vn": [
+        r"chỉ còn",
+        r"(?<!\w)còn\s+(?:\d+|một|hai|ba|vài)\s+(?:\w+\s+)?(?:suất|chỗ|slot|vé|ngày|giờ|tiếng|bạn)(?!\w)",
+        r"(?<!\w)suất cuối(?!\w)|(?<!\w)\d+\s+suất(?!\w)|(?<!\w)còn suất(?!\w)|(?<!\w)hết suất(?!\w)",
+        r"hạn chót(?=.*(?:\d|hôm nay|tối nay|ngày mai|thứ|chủ nhật|nửa đêm))",
+        r"(?<!\w)đóng\s+(?:cổng|link|đăng ký|đăng kí|form|lớp|giỏ|vào|lúc|sau|tối|ngày)(?!\w)",
+        r"(?<!\w)(?:hôm nay thôi|duy nhất hôm nay|cơ hội cuối|(?:sắp|trước khi|sẽ) tăng giá)(?!\w)",
+    ],
+}
+_URGENCY_RE = {lang: [re.compile(p, re.I) for p in pats] for lang, pats in URGENCY.items()}
+
+
+def urgency_lines(text: str, lang: str = "en") -> list[str]:
+    """Lines that use an urgency word as urgency (left, only, last, closes, deadline, today only,
+    còn, chỉ còn, suất, hạn chót, đóng): "3 seats left" counts, "the only way" does not."""
+    patterns = _URGENCY_RE.get(lang, _URGENCY_RE["en"])
+    if lang != "en":
+        patterns = patterns + _URGENCY_RE["en"]
+    out = []
+    for line in nfc(text).splitlines():
+        if line.strip() and any(p.search(line) for p in patterns):
+            out.append(line.strip())
+    return out
+
+
+_NEEDS_RE = re.compile(r"\[\s*(?:NEEDS|CẦN)\b[^\]\n]*(?:\]|$)", re.I | re.M)
+
+
+def needs_brackets(text: str) -> list[str]:
+    """Open [NEEDS: …] / [CẦN BẠN: …] brackets (any pronoun after CẦN; unclosed ones too)."""
+    return [m.group(0) for m in _NEEDS_RE.finditer(nfc(text))]
+
+
+READY_PREFIXES = ("Ready", "Sẵn sàng", "✓ Checked", "✓ Đã kiểm")
+_CONDITIONAL_READY = re.compile(r"\bReady\s+(?:after|once|if|when|with)\b|\bSẵn sàng\s+(?:sau khi|nếu|khi)\b",
+                                re.I)
+
+
+def is_ready_line(verdict_line: str, prefixes=READY_PREFIXES) -> bool:
+    line = plain_line(verdict_line).casefold()
+    return any(line.startswith(nfc(p).casefold()) for p in prefixes)
+
+
+def conditional_ready(text: str) -> list[str]:
+    """'Ready after…' style wording (never allowed: a piece is Ready or it is not)."""
+    return [m.group(0) for m in _CONDITIONAL_READY.finditer(nfc(text))]
+
+
+def ready_with_open_bracket(verdict_line: str, piece_text: str, prefixes=READY_PREFIXES) -> bool:
+    """True when a Ready verdict sits on a piece (or a verdict) that still holds an open [NEEDS]."""
+    if not is_ready_line(verdict_line, prefixes):
+        return False
+    return bool(needs_brackets(piece_text) or needs_brackets(verdict_line))
+
+
+# ---------------------------------------------------------------- claims, names, classes
+
+_PEOPLE_WORDS = {
+    "en": r"(?:clients?|students?|customers?|people|women|men|dads|moms|members|buyers)",
+    "vn": r"(?:khách|học viên|người|bạn|chị em|mẹ|học trò)",
+}
+_TIME_WORDS = {
+    "en": r"(?:days?|weeks?|months?|lbs?|pounds?|kg|kilos?)",
+    "vn": r"(?:ngày|tuần|tháng|kg|ký|cân|lần)",
+}
+_OUTCOME = {
+    "en": [r"\blos[et]\s+(?:\d|weight|fat|pounds|kg|inches|the belly)", r"\bweight\b", r"\bfat\b", r"\bbelly\b", r"\bcured?\b", r"\bheal(?:ed|s)?\b",
+           r"\bpain[- ]free\b", r"\bdiabetes\b", r"\bblood pressure\b", r"\btestosterone\b", r"\bTRT\b",
+           r"\bhormones?\b", r"\bincome\b", r"\brevenue\b", r"\bsalary\b", r"\b(?:a|her|his|their|my|pay) raise\b", r"\bearn(?:ed|s|ing)?\b",
+           r"\bprofit\b", r"\bsix[- ]figures?\b", r"\b[67][- ]figures?\b", r"\bmoney back\b", r"\bguarantee[ds]?\b",
+           r"\bdoubled\b", r"\btripled\b", r"\blanded\b", r"\bhired\b", r"\bwent from\b", r"\bjob offer\b",
+           r"\bgot (?:the|a|an|her|his|their|my) (?:job |new )?(?:offer|job|role|promotion|raise|clients?)\b"],
+    "vn": [r"giảm cân", r"giảm mỡ", r"giảm \d+", r"cân nặng", r"(?<!\w)chữa(?!\w)", r"khỏi bệnh", r"hết đau",
+           r"thu nhập", r"doanh thu", r"(?<!\w)lãi(?!\w)", r"lợi nhuận", r"tăng lương", r"kiếm được",
+           r"gấp đôi", r"gấp ba", r"hoàn tiền", r"tăng \d+"],
+}
+_SUPERLATIVE = re.compile(r"(?<!\w)(?:duy nhất|số 1|số một)(?!\w)|(?<!thống )(?<!hợp )(?<!đồng )(?<!đệ )(?<!\w)nhất"
+                          r"(?!\s+(?:định|là|quán|thời|trí))(?!\w)|#1\b|\bnumber one\b|\bNo\.\s?1\b", re.I)
+_TESTIMONIAL = {
+    "en": re.compile(r"\b(?:testimonials?|my client|a client|one client|client of mine|case study|reviews?)\b", re.I),
+    "vn": re.compile(r"(?<!\w)(?:học viên|khách hàng của|khách của|khách mình|feedback|cảm nhận|case)(?!\w)", re.I),
+}
+_PRICE_WORD = re.compile(r"(?<!\w)(?:price|priced|costs?|investment|giá|học phí|chỉ với)(?!\w)", re.I)
+
+IDEA_FORMATS = {"idea", "drop-idea", "hook-options", "hooks", "title-options", "titles", "plan-row",
+                "capture-question"}
+MICRO_FORMATS = {"background-text", "story-frame", "dm-line", "subject-line", "on-screen-text", "drop-hook",
+                 "drop-hooks", "thumbnail"}
+CLAIMS_FORMATS = {"offer-post", "client-decision-breakdown", "ad", "sales-email", "dm-flow-price",
+                  "launch-p1-seats", "launch-p4", "launch-p5", "launch-p6", "launch-p7", "launch-p8"}
+STRUCTURED_FORMATS = {"brand-brain", "brand-card", "character-card", "message-map", "keyword-pick",
+                      "season-plan", "research-brief", "weekly-review", "launch-plan"}
+FORMAT_ALIASES = {
+    "reel": "native-short", "short": "native-short", "shorts": "native-short", "tiktok": "native-short",
+    "film-today": "native-short", "clip": "native-short", "bg-post": "background-text",
+    "background-text-post": "background-text", "bg": "background-text", "drop": "drop",
+    "todays-one-thing": "drop", "dm": "dm-line", "subject": "subject-line", "on-screen": "on-screen-text",
+    "ads": "ad", "offer": "offer-post", "brand-brain-v0": "brand-brain",
+}
+
+
+def norm_format(fmt: str | None) -> str:
+    f = re.sub(r"[\s_]+", "-", nfc(fmt or "").strip().casefold())
+    f = re.sub(r"[^\w-]", "", f)
+    return FORMAT_ALIASES.get(f, f)
+
+
+def money_numbers(text: str) -> list[Number]:
+    return [n for n in numbers_in(text) if n.kind == "money" or (n.value is not None and n.value >= 1000
+            and re.search(r"(?:k|tr|triệu|tỷ|tỉ|nghìn|ngàn)", n.raw, re.I))]
+
+
+def result_claims(text: str, lang: str = "en") -> list[str]:
+    """Lines that claim a result: a percent (not a discount), a count of clients or people, or an
+    outcome word (weight, income, revenue, lãi, doanh thu…) on a line with a number. Prices and
+    durations alone are not results."""
+    people = re.compile(rf"\d[\d.,]*\+?\s+(?:\w+\s+)?{_PEOPLE_WORDS.get(lang, _PEOPLE_WORDS['en'])}(?!\w)", re.I)
+    discount = re.compile(r"%\s*(?:off|discount)|giảm giá|chiết khấu", re.I)
+    outcome = [re.compile(p, re.I) for p in _OUTCOME.get(lang, _OUTCOME["en"])]
+    out = []
+    for line in nfc(text).splitlines():
+        nums = [n for n in numbers_in(line) if not n.structural and not n.tagged]
+        if not nums:
+            continue
+        pct = any(n.percent for n in nums) and not discount.search(line)
+        if pct or people.search(line) or any(p.search(line) for p in outcome):
+            out.append(line.strip())
+    return out
+
+
+def claim_triggers(text: str, lang: str = "en") -> list[str]:
+    """Which §2.1 Script-claims triggers the text carries (empty list: none)."""
+    text = nfc(text)
+    found = []
+    nums = [n for n in numbers_in(text) if not n.structural]
+    unit = re.compile(rf"\d[\d.,]*\s*(?:%|k\b|tr\b|triệu|tỷ|đ|đồng|[x×]\b)|[$€£]\s?\d|[x×]\s?\d|\d[\d.,]*\+?\s+"
+                      rf"(?:\w+\s+)?(?:{_PEOPLE_WORDS['en']}|{_PEOPLE_WORDS['vn']}|{_TIME_WORDS['en']}|"
+                      rf"{_TIME_WORDS['vn']})(?!\w)", re.I)
+    if nums and unit.search(text):
+        found.append("number+result word")
+    if _TESTIMONIAL.get(lang, _TESTIMONIAL["en"]).search(text) or any(q.attributed for q in quotes_in(text, lang)):
+        found.append("client story or quote")
+    if money_numbers(text) or (nums and _PRICE_WORD.search(text)):
+        found.append("price")
+    if urgency_lines(text, lang):
+        found.append("urgency")
+    if any(re.search(p, text, re.I) for p in _OUTCOME["en"] + _OUTCOME["vn"]):
+        found.append("health/body/income outcome")
+    if _SUPERLATIVE.search(text):
+        found.append("superlative")
+    return found
+
+
+def output_class(piece_text: str, fmt: str | None, lang: str = "en") -> str:
+    """Idea | Micro | Script | Script-claims | Structured, per the QA spec §2.1 trigger list.
+
+    Order: Structured and Idea by format; a listed claims format; Micro by format or length
+    (under 40 words EN / 60 tiếng VN; the Micro check covers its claims and urgency); then any
+    claims trigger; otherwise Script.
+    """
+    f = norm_format(fmt)
+    if f in STRUCTURED_FORMATS:
+        return "Structured"
+    if f in IDEA_FORMATS:
+        return "Idea"
+    if f in CLAIMS_FORMATS or (f == "dm-flow" and money_numbers(piece_text)):
+        return "Script-claims"
+    if f in MICRO_FORMATS or count_words(piece_text, lang) < MICRO_THRESHOLD.get(lang, 40):
+        return "Micro"
+    if claim_triggers(piece_text, lang):
+        return "Script-claims"
+    return "Script"
+
+
+_NAME = r"[" + UPPER + r"][^\W\d_]+"
+_NAME_PATTERNS = {
+    "en": [re.compile(rf"\b(?:my client|client|a client named|named|called|coworker|boss|friend)\s+({_NAME})"),
+           re.compile(rf"\b({_NAME}),\s+\d{{2}},"),
+           re.compile(rf"\b({_NAME})\s+(?:said|says|told|wrote|asked|texted|messaged|landed|got|gets|earned|lost|"
+                      rf"went|made|quit|was hired|is now)\b")],
+    "vn": [re.compile(rf"(?<!\w)(?:chị|anh|em|bạn|cô|chú|bác|bé|học viên|khách)\s+({_NAME}(?:\s+{_NAME})?)")],
+}
+_NOT_NAMES = {"I", "She", "He", "They", "We", "You", "It", "This", "That", "My", "Our", "Your", "Monday",
+              "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "January", "February",
+              "March", "April", "May", "June", "July", "August", "September", "October", "November",
+              "December", "Instagram", "Facebook", "TikTok", "LinkedIn", "YouTube", "Zalo", "Google",
+              "ChatGPT", "Claude", "Notion", "Reel", "Reels", "Someone", "Everyone", "Nobody", "One"}
+
+
+def names_in(text: str, lang: str = "en") -> list[str]:
+    """Person names the text uses as people (after 'client', before 'said', 'chị Lan' …).
+
+    A heuristic for the "names in cited rows" check; it never guesses at capitalised words
+    without a person cue.
+    """
+    text = nfc(text)
+    out = []
+    for pattern in _NAME_PATTERNS.get(lang, []) + (_NAME_PATTERNS["en"] if lang != "en" else []):
+        for m in pattern.finditer(text):
+            name = m.group(1)
+            if name.split()[0] not in _NOT_NAMES and name not in out:
+                out.append(name)
+    return out
+
+
+# ---------------------------------------------------------------- format budgets
+
+def budget_problems(fmt: str | None, hook: str, body: str, lang: str = "en", seconds: float | None = None,
+                    word_rate: float | None = None, limits: dict | None = None) -> list[str]:
+    """Length defects for a piece: hook ≤12 words EN / 18 tiếng VN; background-text ≤130 characters;
+    DROP ≤120 words; on-screen text ≤6 words; thumbnail 2–4 words; a short within word_rate ×
+    seconds ±15% (no seconds given: at most word_rate × 60). `limits` overrides by format:
+    {"<format>": {"max_words": n, "min_words": n, "max_chars": n}}.
+    """
+    f = norm_format(fmt)
+    unit = "tiếng" if lang == "vn" else "words"
+    spoken = "\n".join(p for p in (hook, body) if p and p.strip())
+    words = count_words(spoken, lang)
+    out = []
+    if hook and hook.strip():
+        hook_words = count_words(hook, lang)
+        if hook_words > HOOK_MAX.get(lang, 12):
+            out.append(f"hook {hook_words} {unit} (max {HOOK_MAX.get(lang, 12)})")
+    rule = dict((limits or {}).get(f, {}))
+    if not rule:
+        if f == "background-text":
+            rule = {"max_chars": BG_POST_MAX_CHARS}
+        elif f == "drop":
+            rule = {"max_words": DROP_MAX_WORDS}
+        elif f == "on-screen-text":
+            rule = {"max_words": ON_SCREEN_MAX_WORDS}
+        elif f == "thumbnail":
+            rule = {"min_words": 2, "max_words": 4}
+        elif f == "native-short":
+            rate = word_rate or WORD_RATE.get(lang, 2.5)
+            if seconds:
+                target = rate * float(seconds)
+                rule = {"min_words": int(target * (1 - WORD_RATE_TOLERANCE)),
+                        "max_words": int(round(target * (1 + WORD_RATE_TOLERANCE)))}
+            else:
+                rule = {"max_words": int(rate * SHORT_DEFAULT_MAX_SECONDS)}
+    if "max_chars" in rule:
+        chars = len(nfc(spoken).strip())
+        if chars > rule["max_chars"]:
+            out.append(f"{chars} characters (max {rule['max_chars']})")
+    if "max_words" in rule and words > rule["max_words"]:
+        out.append(f"{words} {unit} (max {rule['max_words']})")
+    if "min_words" in rule and words < rule["min_words"]:
+        out.append(f"{words} {unit} (min {rule['min_words']})")
+    return out

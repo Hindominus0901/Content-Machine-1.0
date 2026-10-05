@@ -1,0 +1,85 @@
+# Vietnamese strings: same keys as strings/en.toml (docs/BUILD.md §2).
+# Each value is { text = "...", src = "<first 10 hex of sha256 of the NFC EN text>" }.
+# Lint fails on a missing key (E110), a stale src (E111) or a different {slot} set (E112).
+# Default register is mình–bạn; the machine follows the pronoun pair the coach picks.
+
+[strings]
+
+# Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
+"contract.output" = { text = "Luôn trả lời bằng tiếng Việt tự nhiên, đúng cách xưng hô đã chọn. Mỗi lần một màn hình, kết thúc bằng một dòng TIẾP.", src = "01276cce59" }
+"running.tag"     = { text = "◆ {{name}} · {step}", src = "82bae98171" }
+"setup.check"     = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card: làm ngay hôm nay", src = "a5b0d1d40d" }
+"next.prefix"     = { text = "TIẾP →", src = "4c813654ab" }
+"why.prefix"      = { text = "VÌ SAO RA KHÁCH", src = "f91b568b43" }
+"checked.prefix"  = { text = "✓ Đã kiểm:", src = "781a6a9609" }
+"needs.tag"       = { text = "[CẦN BẠN: {question}]", src = "c37b3488a8" }
+
+# The one-line verdict per piece, at most 20 words (QA spec §2.4). Slots: {verb} is a verb.* word;
+# {evidence} names a Bank item (or, downgraded, what the piece was written as); {question} is one fact
+# to ask; {defect} is the named problem; {n} is the piece label (N2); {line} is the refused line and
+# {fact} the real fact that would allow it.
+"verdict.ready"            = { text = "Sẵn sàng {verb} · Mình sẽ đăng: {evidence}", src = "7f09f33e2c" }
+"verdict.ready_downgraded" = { text = "Sẵn sàng {verb} · viết dạng {evidence}", src = "4ac9de0398" }
+"verdict.needs"            = { text = "Cần bạn · {question} Mình không tự bịa phần này. (Hoặc nhắn \"bỏ qua\".)", src = "bd355b9913" }
+"verdict.draft_queued"     = { text = "Bản nháp · còn thiếu 1 thông tin, mình sẽ hỏi sau.", src = "7b36c6780d" }
+"verdict.draft_fixable"    = { text = "Bản nháp · {defect}. Nhắn \"sửa {n}\", mình làm sắc lại.", src = "4efe35f44e" }
+"verdict.hardstop"         = { text = "Câu \"{line}\" mình không viết: {defect}. Bạn cho {fact} thật, mình viết ngay.", src = "16d7fa6c09" }
+"verdict.override"         = { text = "Đăng theo quyết định của bạn · mình lưu ý: {defect} · đã ghi lại.", src = "8534b80dee" }
+"verdict.second_read"      = { text = "Lưu ý {n}: {defect}. Nhắn \"sửa {n}\" trước khi đăng.", src = "1d1d0f998b" }
+
+# Verdict verbs (QA spec §2.4)
+"verb.film" = { text = "quay", src = "d0607f7ad2" }
+"verb.post" = { text = "đăng", src = "72231043bc" }
+"verb.send" = { text = "gửi", src = "27ce1d1bf4" }
+
+# Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
+"cmd.start"         = { text = "Bắt đầu", src = "e4bb9f1ece" }
+"cmd.next"          = { text = "tiếp", src = "c6c1c9a9c8" }
+"cmd.save"          = { text = "lưu lại:", src = "08f78b8402" }
+"cmd.numbers"       = { text = "số liệu tuần này", src = "1e683564a5" }
+"cmd.voice"         = { text = "viết lại giọng mình", src = "4c01540441" }
+"cmd.stuck"         = { text = "mình bị kẹt", src = "f01608ccc8" }
+"cmd.skip"          = { text = "bỏ qua", src = "42e93b9bb7" }
+"cmd.later"         = { text = "lát nữa", src = "1d9283d848" }
+"cmd.quiet"         = { text = "nhẹ", src = "008f0747f4" }
+"cmd.ok"            = { text = "ok", src = "2689367b20" }
+"cmd.why"           = { text = "tại sao?", src = "f5b2b98bf4" }
+"cmd.fix"           = { text = "sửa", src = "1c6e6c4c02" }
+"cmd.post_anyway"   = { text = "cứ đăng", src = "7378f0b426" }
+"cmd.try_again"     = { text = "làm lại", src = "5b5dedee32" }
+"cmd.not_me"        = { text = "không giống mình:", src = "84543e8cf3" }
+"cmd.i_do_say"      = { text = "mình có nói", src = "45d5445a92" }
+"cmd.send_feedback" = { text = "gửi góp ý", src = "e118af67dd" }
+
+# Mic tips by device (UX spec §2 minute 0, §5.18)
+"mic.phone"     = { text = "Điện thoại: bấm micro nhỏ trong ô chat, KHÔNG bấm nút sóng âm.", src = "06257ff861" }
+"mic.mac"       = { text = "Máy Mac: bấm phím fn (hình quả địa cầu) hai lần.", src = "e34d8f64c2" }
+"mic.windows"   = { text = "Windows: bấm Win+H.", src = "d7e0fdfd3f" }
+"mic.claude_vn" = { text = "Bạn dùng micro trên bàn phím điện thoại nhé, micro của Claude chưa nghe được tiếng Việt.", src = "0272e26c0b" }
+
+# Method and GROW file titles; one title per §CM anchor (core/method.toml)
+"method.title"          = { text = "{{name}} · Phương pháp", src = "f30ce5ef69" }
+"grow.title"            = { text = "{{name}} · Phát triển", src = "5d8bb44be5" }
+"anchor.talk"           = { text = "Buổi nói chuyện tuần", src = "9d5e232fb4" }
+"anchor.week"           = { text = "Viết nội dung cả tuần", src = "7a7c4293bc" }
+"anchor.today"          = { text = "Bài của hôm nay", src = "dfc1723246" }
+"anchor.numbers"        = { text = "Số liệu và tổng kết thứ Sáu", src = "6f4888f368" }
+"anchor.month"          = { text = "Lên kế hoạch tháng sau", src = "cd55e0a873" }
+"anchor.formats"        = { text = "Các dạng bài", src = "9f01769a42" }
+"anchor.cta-kit"        = { text = "Lời kêu gọi và tin nhắn trả lời", src = "e459eeecc3" }
+"anchor.character-lite" = { text = "Tính cách, bản ngắn", src = "f8206fc127" }
+"anchor.research-lite"  = { text = "Lắng nghe nhanh", src = "7d8ce92785" }
+"anchor.edge"           = { text = "Kiểm tra độ khác biệt", src = "4a0e74c272" }
+"anchor.humanize"       = { text = "Viết đúng giọng thật", src = "2f1de845f2" }
+"anchor.guardrails"     = { text = "Giới hạn an toàn và lời hứa kết quả", src = "e4c4889869" }
+"anchor.locale"         = { text = "Ngôn ngữ và thị trường", src = "b54ab26ed4" }
+
+# START-HERE.html (built until guides/ takes over in P6)
+"starthere.title" = { text = "Bắt đầu từ đây: {{name}}", src = "78db6907b6" }
+"starthere.body"  = { text = "Cài {{name}} trong 4 bước, khoảng 3 phút. Mở đường link bên dưới và làm theo từng bước.", src = "483aac3481" }
+
+# Calendar reminders (tools/ics.py)
+"ics.talk.summary"       = { text = "Buổi nói chuyện tuần · {{name}}", src = "a44e0a481c" }
+"ics.talk.description"   = { text = "Mở {{name}}, vào đoạn chat mới nhất, gõ \"tiếp\". 15 phút, chỉ cần nói.", src = "f65decd32f" }
+"ics.friday.summary"     = { text = "Số liệu thứ Sáu · {{name}}", src = "c796a97b41" }
+"ics.friday.description" = { text = "Mở {{name}}, vào đoạn chat mới nhất, gõ \"số liệu tuần này\". 5 phút.", src = "9c876b3e13" }

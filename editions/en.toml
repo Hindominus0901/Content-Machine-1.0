@@ -1,0 +1,73 @@
+# English edition (docs/BUILD.md §2). EN is the source edition.
+# [params] values fill {{param}} tags in prose and templates; every key here
+# exists in vn.toml too, so one source renders for both editions.
+
+[edition]
+id = "en"
+lang = "en"                      # prose folder: core/en, modules/en
+method_prose = "en"              # prose folder for the method, GROW and skill sections
+name = "Content Machine"         # the brand name lives in this one field
+skill_name = "content-machine"
+file_suffix = "EN"               # CONTENT-MACHINE-EN.md, GROW-EN.md
+zip_name = "Content-Machine-EN"
+# setup_url = ""                 # P6: the hosted setup page; START-HERE.html links to it once set
+
+[params]
+currency = "$"
+money_example = "$1,500"
+number_format = "1,500"          # comma thousands, dot decimals
+timezone_default = "ask"         # asked on Day 0; task texts use the coach's own zone
+week_start = "Mon"
+register_default = "I–you"       # plain first person to second person; no pronoun choice in EN
+owned_channel = "email"
+cta_channel = "comment → DM"
+keyword_variants = "accept any letter case"
+launch_default_type = "B"        # Mồi launch: lead magnet + DM keyword (wf5-launch-design §1.1)
+launch_default_days = 14
+word_rate = 2.5                  # spoken words per second (wf1-entertainment)
+word_rate_unit = "words per second"
+quote_cap = 15                   # longest public quote (QA spec §0)
+quote_unit = "words"
+micro_threshold = 40             # under this many words a piece gets the Micro check, not Edge
+hook_max = 12                    # verbal hook length
+hook_unit = "words"
+drop_max_words = 120             # one daily "Today's one thing" drop
+bg_post_max_chars = 130          # background-text post
+verdict_max_words = 20           # the one coach-visible verdict line
+default_app = "the one you already pay for; none yet: ChatGPT Free"
+helper_channel = "WhatsApp or email"
+
+# Week-1 pieces per week by the coach's main platform (wf11-ux-spec §2 min 26–34, §3.2, §5.11).
+# owned_messages = messages on {{owned_channel}}. lead = the piece that goes out first.
+# talk_week_shorts: from Week 2 the Weekly Talk feeds 3 re-say shorts + 1 character short.
+
+[platform_mix.short-video]       # Facebook, TikTok or Instagram first
+lead = "short"
+shorts = 3
+long_posts = 1
+posts = 0
+carousels = 0
+owned_messages = 1
+optional_shorts = 0
+talk_week_shorts = 4
+
+[platform_mix.text-first]        # LinkedIn or newsletter first
+lead = "post"
+shorts = 0
+long_posts = 0
+posts = 2
+carousels = 1
+owned_messages = 1
+optional_shorts = 1
+talk_week_shorts = 1
+
+[platform_mix.email-first]       # an email list of 300 or more: the lead piece is an email asking for a reply
+lead = "email"
+shorts = 0
+long_posts = 0
+posts = 2
+carousels = 1
+owned_messages = 1
+optional_shorts = 1
+talk_week_shorts = 1
+min_list_size = 300

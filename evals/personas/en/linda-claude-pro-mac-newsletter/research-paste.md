@@ -1,0 +1,38 @@
+# Linda Garvey · research paste (fictional persona, EN, linda-claude-pro-mac-newsletter)
+
+What Linda pastes when the machine offers research: lines she copied from Facebook groups, a retirement-and-careers forum, LinkedIn and Instagram comments, and book, retreat and service reviews about women leaving long corporate careers. No usernames; each line carries its source note. Contents are fictional. Traps inside: 2 sellers' promos, 3 duplicates (cross-posted lines), and 1 line that is Linda's own sentence from answers.md reposted in a group (it must not count as an audience voice).
+
+---
+
+1. (group post) Took the package after 27 years. Everyone says enjoy it. Week 6 and I've cleaned every closet in the house. [FB group, 2026-09]
+2. (forum thread) What do you say when people ask what you do now? I've started lying. [careers forum, 2026-08]
+3. (review) Lovely retreat, beautiful food. Came home Sunday, cried in the car Monday. Nothing had changed. [retreat review, 2026-06]
+4. (comment) turned in my badge after 30 years and walked to the parking lot like a ghost [LinkedIn comment, 2026-09]
+5. (group post) My vision board has been on the fridge since 2023. The magnets are doing more work than I am. [FB group, 2026-07]
+6. (forum thread) Early retirement at 57. My husband keeps asking what I do all day. I don't know either. [careers forum, 2026-09]
+7. (group post) I don't need a job exactly. I need a reason to get dressed. [FB group, 2026-08]
+8. (group post) Feeling lost after corporate? My 8-week REWIRE Blueprint has helped 300+ women unretire into purpose-driven careers! Comment REWIRE for the free masterclass [FB group, 2026-09]
+9. (comment) LinkedIn profile makeovers for executives in transition. 48-hour turnaround, 30% off this week only, DM me [LinkedIn comment, 2026-08]
+10. (forum thread) What do you say when people ask what you do now? I've started lying. [careers forum, cross-posted, 2026-08]
+11. (review) The outplacement firm gave me a binder and a login. I wanted a person who had actually been through it. [service review, 2026-05]
+12. (group post) I keep my old work badge in my jewelry box. Is that weird? [FB group, 2026-09]
+13. (forum thread) I applied for my old job at a competitor just so I'd have something to say at Thanksgiving. Got it. Hate it. [careers forum, 2026-07]
+14. (group post) Nobody ever moved forward because of a corkboard. [FB group, 2026-08]
+15. (comment) I'm 54 and I don't know who I am if I'm not "Director of" something [LinkedIn comment, 2026-09]
+16. (forum thread) Everyone said take a year off, you'll figure it out. It's been 14 months. [careers forum, 2026-08]
+17. (group post) I don't need a job exactly. I need a reason to get dressed. [FB group, cross-posted, 2026-08]
+18. (group post) Severance ends in January and I still haven't told my sister I'm not "on sabbatical." [FB group, 2026-09]
+19. (review) Good book on finding your purpose. 40 journaling prompts. I did 3. [book review, 2026-06]
+20. (comment) My work friends group chat went silent within a month. That hurt more than losing the job. [LinkedIn comment, 2026-09]
+21. (forum thread) Should I take the voluntary package or wait for the layoff? The pension math makes my head spin. [careers forum, 2026-09]
+22. (group post) Hot flashes and an identity crisis at the same time. Fun. [FB group, 2026-08]
+23. (forum thread) Can they push you out at 58 by "eliminating the role"? Asking for me. [careers forum, 2026-09]
+24. (group post) I was somebody at 8 a.m. on a Monday. Now I'm a woman sitting in a parking lot. [FB group, 2026-09]
+25. (group post) I keep my old work badge in my jewelry box. Is that weird? [FB group, cross-posted, 2026-09]
+26. (comment) I don't want to retire. I want to stop being invisible. [IG comment, 2026-09]
+27. (group post) Has anyone actually figured out what's next after 25+ years at one company? Real stories please, not ads. [FB group, 2026-09]
+28. (forum thread) Outplacement told me to update my LinkedIn headline. To what? [careers forum, 2026-08]
+29. (review) The coaching program was all thirty-somethings building side hustles. Not for me. [course review, 2026-06]
+30. (group post) My empty nest and my last day at work were the same month. The house is very loud with nobody in it. [FB group, 2026-08]
+31. (comment) "Enjoy the break" is what people say when they don't know what else to say. [LinkedIn comment, 2026-09]
+32. (group post) I miss my badge. I don't miss my job. Explain that. [FB group, 2026-09]

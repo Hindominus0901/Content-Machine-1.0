@@ -1,0 +1,162 @@
+# Module registry (QA spec §5.3; gate G0 in tools/preflight.py).
+#
+# One row per module named in docs/research/arch-final-spec.md §4, plus message, talk and levelup
+# from docs/PLAN.md. "router" stands for SKILL.md and the start-block router; "locale" rows are the
+# locales/<lang>/ files the router pairs with modules.
+#
+# status: planned | active | demoted | retired
+#   A module is "active" only when, for every edition, evals/cases/<name>.<edition>.toml holds at
+#   least its minimum number of [[case]] entries (evals/acceptance.toml [cases]: "<name>_min" with
+#   "-" read as "_", else per_module_min; a row may set min_cases) and `baseline` names a recorded
+#   baseline file under evals/baselines/. QA-role agents flip the status; producers never do.
+#   `preflight.py --release` also fails when a module ships (modules/<lang>/<name>.md exists) but
+#   is not active.
+
+[modules.router]
+kind = "module"
+status = "planned"
+baseline = ""
+note = "SKILL.md and the start-block router (arch-final-spec §4 'SKILL.md (router)')"
+
+[modules.setup]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.message]
+kind = "module"
+status = "planned"
+baseline = ""
+note = "Message Map (PLAN repo layout)"
+
+[modules.talk]
+kind = "module"
+status = "planned"
+baseline = ""
+note = "Weekly Talk, mini-talk, re-say shorts (PLAN P3)"
+
+[modules.levelup]
+kind = "module"
+status = "planned"
+baseline = ""
+note = "level-up offers L0.5-L5 (PLAN P3)"
+
+[modules.brain]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.character]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.research]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.signature]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.ideas]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.plan]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.fmt-short]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.fmt-long]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.packaging]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.convert]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.launch-plan]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.launch-scripts]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.edge-rubric]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.humanize]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.guardrails]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.review]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.hub]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.automation]
+kind = "module"
+status = "planned"
+baseline = ""
+
+[modules.language]
+kind = "locale"
+status = "planned"
+baseline = ""
+note = "locales/<lang>/language.md"
+
+[modules.market]
+kind = "locale"
+status = "planned"
+baseline = ""
+note = "locales/<lang>/market.md"
+
+[modules.compliance]
+kind = "locale"
+status = "planned"
+baseline = ""
+note = "locales/<lang>/compliance.md"
+
+[modules.platform-notes]
+kind = "locale"
+status = "planned"
+baseline = ""
+note = "locales/<lang>/platform-notes.md"
+
+[modules.examples]
+kind = "locale"
+status = "planned"
+baseline = ""
+note = "locales/<lang>/examples.md"

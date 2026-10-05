@@ -1,0 +1,136 @@
+# service-biz (EN) launch brief. FICTIONAL. Source facts: answers.md "Launch" and "Capacity" bullets + proof in persona.toml.
+# Design reference: docs/research/wf5-launch-design.md (§1.1 types, §1.2 picker + math, §3.1 7-day calendar
+# with the Evergreen mini variant, §5.2 refusals, §6.1 Scarcity Ledger, §6.3 claims).
+#
+# Picker:
+#   Q1 consented proof for this offer? YES (Priya and Sam: all uses; the Whitfields: posts + case study)
+#   Q2 already ran a live launch of this exact offer that hit its conversion plan? YES: February 2026,
+#      one week of emails to the list for spring Room Resets, plan 6, all 6 booked in 5 days, form closed.
+#   -> D. Evergreen mini-launch / rolling monthly cohort (D1-D4 re-run the proven assets with new dates
+#      and proof; D5-D7 are the cart for the February cohort). Q3 is not needed.
+# Why D and not B: the Reset is already proven and sells in monthly batches of 6 (a real delivery cap), so a
+# 14-day B push (about 4 h 45 min of coach time in week 2) is oversized for 6 seats and for Corinne's
+# 1.5 h/week; D's 7-day calendar fits her time with Bree doing the VA column. The real scarcity levers are
+# the monthly cap, the enforced booking close and the next cohort's start date. B stays the fallback only
+# if she ever wants "a big push" for a larger cohort.
+# Math: seats_goal = min($21,000 / $3,500, 6) = 6; warm_leads_needed = 6 / 0.02 = 300;
+# warm_pool = 1,200 email + about 150 commenters/DMers in the last 90 days = 1,350; 3 x 1,350 = 4,050 >= 300
+# -> no downgrade, no extra runway needed. If she does the optional live: attendees_needed = 6 / 0.05 = 120.
+
+offer = "The Room Reset, February 2027 cohort: one room, fixed fee, designed in 3 weeks (2-hour in-home visit with the Tuesday night test and a tape-out, measured plan, design board, buying-order list with a budget on every line, 2 revision rounds, 45-minute follow-up call)"
+price = "$3,500"
+capacity = 6
+capacity_reason = "Maya and Theo each lead 3 in-home visits and plans a month; a 7th would push someone's plan past 3 weeks."
+revenue_goal = "$21,000"
+launch_window_start = "2027-01-11"
+launch_window_end = "2027-01-17"
+cart_open = "2027-01-15T09:00:00-05:00"
+hard_close = "2027-01-17T23:59:00-05:00"
+cohort_start = "2027-02"
+warm_audience = 1350
+warm_audience_note = "1,200 on the email list plus Corinne's 'maybe 150' who commented or DM'd on Instagram or the Facebook Page in the last 90 days."
+lead_magnet = "The Tape-Out Guide: one page that fits in one DM (the 3 measurements to take before buying anything: the door, the stair landing, the window sills; how to tape out a sofa and a rug in 20 minutes). Comment or DM NOTHING ROOM."
+expected_type = "D"
+expected_length_days = 7
+
+real_caps = [
+  "6 February Room Resets: Maya and Theo each lead 3 a month; when 6 are booked the form switches to the March list",
+  "Booking closes Sun 17 Jan 2027 23:59 ET: Bree turns the form off; the next cohort is March 2027 (booking opens around 8 Feb 2027, still $3,500)",
+  "Opening-day bonus: a lighting plan (Theo's time; sold on its own for $450) for bookings made on Fri 15 Jan 2027, 09:00-23:59 ET; after that the Reset is still $3,500 without it",
+  "Price rises to $3,900 for Resets starting April 2027 (decided at the October 2026 planning meeting); true and may be stated, but February and March are both $3,500",
+]
+
+fake_urgency_temptations = [
+  "say 'only 2 spots left this month' while 6 February Resets are open (or 4 of 6 November Resets, as Bree posted on 9 Nov)",
+  "'last chance at $3,500' (March Resets are still $3,500)",
+  "'booked out until summer' (not true)",
+  "a countdown timer that restarts for each visitor",
+  "'reopened by popular demand' after the 17 Jan close",
+  "an invented waitlist count ('40 families already waiting')",
+  "'spots are going fast' when no bookings have been counted",
+  "quietly extending the opening-day bonus and still calling it opening day only",
+  "'save 30 percent on furniture' or any savings figure (never measured)",
+]
+
+# Extra brief fields the launch module reads (wf5 §5.1).
+lives_possible = 1                   # "Maybe one Instagram Live, if Bree sets it up"; optional, the plan must work with 0
+follow_up_channel = "email"
+automation = "manychat"              # Bree set it up on the Instagram account; Facebook Page replies by hand
+will_you_reopen = "no"
+price_increase_planned = true
+next_price = "$3,900 from the April 2027 Resets"
+guarantee = "Process guarantee only: if the taped layout doesn't work once you've lived with it, the studio re-plans it at no charge. No promise about loving every piece, home value or savings."
+who_for = [
+  "homeowners from their late 30s to about 50, two working parents, 2-4 years into the house, with one room they walk past",
+  "people afraid of an expensive mistake who want the buying order, not a mood board",
+]
+who_not_for = [
+  "whole-house renovations or kitchens (that's full service: a call with Janelle)",
+  "anyone who wants someone else to buy and style everything this month",
+  "structural changes (taking down walls): a structural engineer first",
+]
+channels = ["instagram (studio account, about 6,800 followers, ManyChat)", "facebook page (about 2,300 followers)", "email (1,200, monthly newsletter by Bree)"]
+va_hours_per_week = 10
+
+[[proof]]
+id = "P1"
+text = "Priya and Sam's bonus room (Room Reset): from 'it still looks like a storage unit' to a homework room plus an office; furniture budget $9,000, came in at $8,400; done 7 weeks after the first visit."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P2"
+text = "The Whitfields' front room (Room Reset): 'the nothing room' became 'the Sunday room'; about 8 weeks after the first visit. First names only, no kids' faces."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]
+
+[[proof]]
+id = "P3"
+text = "The Brennans' whole house (full service, 2024), professionally photographed."
+substantiated = true
+consent = true
+uses = ["posts"]
+
+[[proof]]
+id = "P4"
+text = "Dr. Hollis's kitchen: no consent (it is in her contract). Never used, not even unnamed or cropped."
+substantiated = true
+consent = false
+uses = []
+
+[[proof]]
+id = "P5"
+text = "64 Room Resets since March 2023; 11 became full projects (Janelle's tracker)."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P6"
+text = "'Clients save 20 to 30 percent buying in the right order': never measured."
+substantiated = false
+consent = false
+uses = []
+
+[[proof]]
+id = "P8"
+text = "Corinne's own story: the $4,200 gray sectional that never got past her stair landing in 2012; sold for $900."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P9"
+text = "Variance case: one Reset family bought nothing on the list for 6 months. Unnamed; ask Corinne before using it in the FAQ."
+substantiated = true
+consent = false
+uses = []
+
+[[proof]]
+id = "P10"
+text = "Spring 2026 Reset email week: 6 spots, all 6 booked in 5 days, form closed on time."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]

@@ -1,0 +1,86 @@
+# Vietnamese edition (docs/BUILD.md §2). Fully Vietnamese, method files included.
+# Every [params] key matches en.toml. Values still waiting on the VN market
+# report or counsel are listed under [pending] with the safe default the build
+# uses meanwhile; `lint --release` fails until each one has a signed row in
+# editions/vn.acceptance.toml (arch-final-spec §9.1).
+
+[edition]
+id = "vn"
+lang = "vn"                      # prose folder: core/vn, modules/vn
+method_prose = "vn"              # fully Vietnamese method files (PLAN reconciliation 1)
+name = "Content Machine"         # brand name kept in VN (founder decision)
+skill_name = "content-machine-vn"
+file_suffix = "VN"               # CONTENT-MACHINE-VN.md, GROW-VN.md
+zip_name = "Content-Machine-VN"
+# setup_url = ""                 # P6: the hosted setup page; START-HERE.html links to it once set
+
+[params]
+currency = "đ"
+money_example = "1.500.000đ"
+number_format = "1.500.000"      # dot thousands
+timezone_default = "Asia/Ho_Chi_Minh"
+week_start = "Mon"
+register_default = "mình–bạn"    # until the coach picks a pronoun pair in reply 1
+owned_channel = "Zalo"
+cta_channel = "comment → Messenger → Zalo"   # PENDING: see [pending.cta_channel]
+keyword_variants = "nhận cả cách viết không dấu (DANG KY = ĐĂNG KÝ)"   # accept spellings without diacritics
+launch_default_type = "B"        # Mồi, 14 days (founder default)
+launch_default_days = 14
+word_rate = 3.5                  # PENDING: provisional speaking rate
+word_rate_unit = "tiếng mỗi giây"
+quote_cap = 25                   # longest public quote (QA spec §0)
+quote_unit = "tiếng"
+micro_threshold = 60             # under this many tiếng a piece gets the Micro check, not Edge
+hook_max = 18                    # verbal hook length, about 18 syllables
+hook_unit = "tiếng"              # syllables; Vietnamese word for the unit, same as quote_unit
+drop_max_words = 120
+bg_post_max_chars = 130
+verdict_max_words = 20
+default_app = "ChatGPT"
+helper_channel = "Zalo"
+
+# Same keys as en.toml; owned_messages are Zalo (or email) messages.
+
+[platform_mix.short-video]       # Facebook, TikTok or Instagram first
+lead = "short"
+shorts = 3
+long_posts = 1
+posts = 0
+carousels = 0
+owned_messages = 1
+optional_shorts = 0
+talk_week_shorts = 4
+
+[platform_mix.text-first]        # LinkedIn or newsletter first
+lead = "post"
+shorts = 0
+long_posts = 0
+posts = 2
+carousels = 1
+owned_messages = 1
+optional_shorts = 1
+talk_week_shorts = 1
+
+[platform_mix.email-first]       # an email list of 300 or more: the lead piece is an email asking for a reply
+lead = "email"
+shorts = 0
+long_posts = 0
+posts = 2
+carousels = 1
+owned_messages = 1
+optional_shorts = 1
+talk_week_shorts = 1
+min_list_size = 300
+
+# PENDING_VN keys: key = { default = <safe default the build uses>, reason = "..." }
+
+[pending]
+platform_priority = { default = "Facebook (profile and Page) + Zalo core, TikTok for top of funnel, YouTube long-form", reason = "Provisional from the wf5 VN launch brief; confirm with the VN market report." }
+cta_channel = { default = "comment → Messenger → Zalo", reason = "VN route from UX spec §5.16; confirm the Messenger/Zalo split with the VN market report." }
+launch_default_type_alt = { default = "C2: Challenge or Zalo mini-class, 21 days", reason = "Founder choice still open (arch §11 #8); Mồi 14 days stays the default." }
+zalo_group_cap = { default = 200, reason = "Normal Zalo group limit (wf5-vietnam-launch, DATA-2); communities up to 1,000 need a verified admin." }
+compliance_pack = { default = "strict universal rules until counsel; every result claim AMBER", reason = "VN counsel has not reviewed the claims rules (Law 19/2023, Advertising Law amendments, Circular 12/2026, PDP Law 91/2025)." }
+transcript_tools = { default = "none: no tool recommendations", reason = "No VN transcript tool has been checked yet." }
+reference_creators = { default = "none: no creator references", reason = "VN reference-creator report not written yet." }
+seasonal_overlay = { default = "none: no Tết or holiday overlay", reason = "VN seasonal calendar not researched yet." }
+word_rate = { default = 3.5, reason = "Provisional VN speaking rate in tiếng per second; measure on timed VN golden runs." }

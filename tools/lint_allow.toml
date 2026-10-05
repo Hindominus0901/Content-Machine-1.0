@@ -1,0 +1,43 @@
+# Accepted exceptions for tools/lint.py, one table per lint code.
+#
+#   allow = literal matched texts to accept (compared after NFC, any letter case)
+#   paths = repo-relative glob patterns where the code is not reported
+#           (e.g. "locales/vn/examples.md", "dist/*/Help/*.html")
+#   keys  = strings keys (strings/*.toml) where the code is not reported
+#
+# Prefer an inline waiver when one source line must quote a banned phrase: end
+# the line with <!-- lint-ok:E143 --> (several codes: lint-ok:E142,E143). The
+# waiver also covers that line's rendered copy in dist/.
+# Use this file for values that recur, such as the founder's public support
+# address. Give every entry a comment saying why it is safe.
+# Emails at example.com / example.org / example.net and *.example are always allowed.
+
+[E140]   # coach-visible jargon
+allow = []
+paths = []
+keys = []
+
+[E141]   # AI tells and calques
+allow = []
+paths = []
+keys = []
+
+[E142]   # Matt Gray framework names: no exceptions expected
+allow = []
+paths = []
+keys = []
+
+[E143]   # template-fill wording
+allow = []
+paths = []
+keys = []
+
+[E144]   # possible PII: emails, phone numbers, @handles
+allow = []
+paths = []
+keys = []
+
+[E145]   # dates and "currently" outside locales/<lang>/platform-notes.md
+allow = []
+paths = []
+keys = []

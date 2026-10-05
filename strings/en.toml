@@ -1,0 +1,86 @@
+# Every line the coach can read that is not method prose (docs/BUILD.md §2).
+# Keys are flat and dotted. {{param}} and {{t:key}} are template tags filled at
+# build; {name} in single braces is a runtime slot the model fills.
+# strings/vn.toml carries the same keys; change an EN text and its VN row goes
+# stale (lint E111) until it is rewritten and its src updated.
+
+[strings]
+
+# Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
+"contract.output" = "Always reply in English. Plain words, one screen per reply, end with one NEXT line."
+"running.tag"     = "◆ {{name}} · {step}"
+"setup.check"     = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card: we make it today"
+"next.prefix"     = "NEXT →"
+"why.prefix"      = "WHY THIS GETS CLIENTS"
+"checked.prefix"  = "✓ Checked:"
+"needs.tag"       = "[NEEDS: {question}]"
+
+# The one-line verdict per piece, at most 20 words (QA spec §2.4). Slots: {verb} is a verb.* word;
+# {evidence} names a Bank item (or, downgraded, what the piece was written as); {question} is one fact
+# to ask; {defect} is the named problem; {n} is the piece label (N2); {line} is the refused line and
+# {fact} the real fact that would allow it.
+"verdict.ready"            = "Ready to {verb} · I'd post it: {evidence}"
+"verdict.ready_downgraded" = "Ready to {verb} · written as {evidence}"
+"verdict.needs"            = "Needs you · {question} I won't make it up. (Or say \"skip\".)"
+"verdict.draft_queued"     = "Draft · waiting on one fact from you; I'll ask next."
+"verdict.draft_fixable"    = "Draft · {defect}. Say \"fix {n}\" and I'll sharpen it."
+"verdict.hardstop"         = "Not writing \"{line}\": {defect}. Give me the real {fact} and I'll write it."
+"verdict.override"         = "Posted on your call · my concern: {defect} · logged."
+"verdict.second_read"      = "Heads-up on {n}: {defect}. Say \"fix {n}\" before posting."
+
+# Verdict verbs (QA spec §2.4)
+"verb.film" = "film"
+"verb.post" = "post"
+"verb.send" = "send"
+
+# Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
+"cmd.start"         = "Start"
+"cmd.next"          = "next"
+"cmd.save"          = "save this:"
+"cmd.numbers"       = "my numbers"
+"cmd.voice"         = "make it sound like me"
+"cmd.stuck"         = "I'm stuck"
+"cmd.skip"          = "skip"
+"cmd.later"         = "later"
+"cmd.quiet"         = "quiet"
+"cmd.ok"            = "ok"
+"cmd.why"           = "why?"
+"cmd.fix"           = "fix"
+"cmd.post_anyway"   = "post anyway"
+"cmd.try_again"     = "try again"
+"cmd.not_me"        = "not me:"
+"cmd.i_do_say"      = "I do say"
+"cmd.send_feedback" = "send feedback"
+
+# Mic tips by device (UX spec §2 minute 0, §5.18)
+"mic.phone"     = "Phone: tap the small mic in the message box, NOT the sound-wave button."
+"mic.mac"       = "Mac: press fn (globe) twice."
+"mic.windows"   = "Windows: Win+H."
+"mic.claude_vn" = "Claude's own mic doesn't hear Vietnamese yet: use the mic on your phone keyboard (Gboard or iPhone)."
+
+# Method and GROW file titles; one title per §CM anchor (core/method.toml)
+"method.title"          = "{{name}} · Method"
+"grow.title"            = "{{name}} · Grow"
+"anchor.talk"           = "Weekly Talk"
+"anchor.week"           = "Writing the week"
+"anchor.today"          = "Today's piece"
+"anchor.numbers"        = "Friday numbers and review"
+"anchor.month"          = "Plan next month"
+"anchor.formats"        = "Formats"
+"anchor.cta-kit"        = "Calls to action and DM replies"
+"anchor.character-lite" = "Character, short version"
+"anchor.research-lite"  = "Quick Listen"
+"anchor.edge"           = "Stand-out check"
+"anchor.humanize"       = "Sound like the coach"
+"anchor.guardrails"     = "Guardrails and claims"
+"anchor.locale"         = "Language and market"
+
+# START-HERE.html (built until guides/ takes over in P6)
+"starthere.title" = "Start here: {{name}}"
+"starthere.body"  = "Set up {{name}} in 4 steps, about 3 minutes. Open the link below and follow it step by step."
+
+# Calendar reminders (tools/ics.py)
+"ics.talk.summary"       = "Weekly Talk · {{name}}"
+"ics.talk.description"   = "Open {{name}}, newest chat, and say \"next\". 15 minutes, voice only."
+"ics.friday.summary"     = "Friday numbers · {{name}}"
+"ics.friday.description" = "Open {{name}}, newest chat, and say \"my numbers\". 5 minutes."

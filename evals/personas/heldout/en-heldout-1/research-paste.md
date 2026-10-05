@@ -1,0 +1,38 @@
+# Ren Haugland · research paste (fictional persona, EN, held-out en-heldout-1)
+
+What Ren pastes when the machine offers research: lines she copied on her phone from parenting Facebook groups, a parenting forum, Instagram comments, app-store reviews and course reviews about babies and toddlers who won't sleep. No usernames; each line carries its source note. Contents are fictional. Traps inside: 2 sellers' promos, 3 duplicates (cross-posted lines), and 1 line that is Ren's own words reposted in a group (it must not count as an audience voice).
+
+---
+
+1. (group post) He's 11 months and I still rock him for 40 minutes and the second he touches the mattress he's screaming. Like the crib is lava. [FB group, 2026-09]
+2. (forum thread) We've tried everything. Sleep sack, white noise, blackout curtains, the app. He still wakes up 5 times. [parenting forum, 2026-08]
+3. (review) This wake window app made me so anxious. I was staring at a countdown instead of my baby. Deleted. [app review, 2026-07]
+4. (comment) I'm not a person anymore, just a human pacifier with a phone [IG comment, 2026-09]
+5. (group post) I went back to work at 12 weeks and I cried in the supply closet on my second day because I'd slept 3 hours [FB group, 2026-08]
+6. (forum thread) My husband says let him cry it out. I physically can't. Is there anything in between? [parenting forum, 2026-09]
+7. (group post) Is something wrong with her? Every baby in my mom group sleeps but mine. [FB group, 2026-09]
+8. (group post) Exhausted mamas! My No-Tears Sleep Method has helped 3,000+ families sleep 12 hours in 3 nights, guaranteed! Comment SLEEP for my free guide [FB group, 2026-09]
+9. (comment) Smart bassinet 30% off this week only! The only bassinet that rocks your baby back to sleep automatically. Link in bio [IG comment, 2026-08]
+10. (forum thread) We've tried everything. Sleep sack, white noise, blackout curtains, the app. He still wakes up 5 times. [parenting forum, cross-posted, 2026-08]
+11. (review) The course was 4 hours of videos and a schedule. Nobody to ask when it fell apart on night 3. [course review, 2026-06]
+12. (group post) Night 3 was the worst night of my life and we gave in. Back to rocking. [FB group, 2026-09]
+13. (forum thread) Every time I lay her down she acts like the crib is lava. What am I doing wrong [parenting forum, 2026-08]
+14. (comment) I nurse him to sleep because it's the only thing that works, and then it's the only thing that works at 2am too [IG comment, 2026-09]
+15. (group post) Your kid doesn't need a new trick, he needs the same answer every night. [FB group, 2026-09]
+16. (forum thread) I fell asleep at a stoplight with the baby in the back. That was the day I called someone. [parenting forum, 2026-07]
+17. (group post) Is something wrong with her? Every baby in my mom group sleeps but mine. [FB group, cross-posted, 2026-09]
+18. (review) Bought a $40 sleep sack because a stranger in a group swore by it. He woke up 6 times in it instead of 6 times without it. [product review, 2026-08]
+19. (group post) Does anybody else feel guilty for wanting just 4 hours in a row? [FB group, 2026-09]
+20. (forum thread) Bedtime is 2 hours of "one more book" and "I need water" with my 3 year old. Send help. [parenting forum, 2026-09]
+21. (comment) we're not even married anymore, we're roommates who take shifts [IG comment, 2026-08]
+22. (group post) Is it safe to give melatonin gummies to a toddler? My pediatrician is booked for 3 weeks. [FB group, 2026-09]
+23. (forum thread) Everyone says "it's just a phase." Which phase? He's 15 months. [parenting forum, 2026-08]
+24. (group post) He's 11 months and I still rock him for 40 minutes and the second he touches the mattress he's screaming. Like the crib is lava. [FB group, cross-posted, 2026-09]
+25. (review) Sleep consultant told me to shut the door and not go back in until 6. I lasted 9 minutes. [service review, 2026-05]
+26. (comment) My 4 week old only naps on me, when can I start sleep training? [IG comment, 2026-09]
+27. (group post) Daylight saving is coming and I'm already scared [FB group, 2026-10]
+28. (forum thread) I need someone to just tell me I'm not ruining him [parenting forum, 2026-09]
+29. (review) The book said "drowsy but awake." Mine goes from wide awake to asleep in one second. There is no drowsy. [book review, 2026-07]
+30. (group post) We change something every night. Different bedtime, different sound machine, different everything. Nothing sticks. [FB group, 2026-08]
+31. (comment) the crib is lava and the floor is lava and I'm lava, apparently, if I try to leave [IG comment, 2026-09]
+32. (group post) I don't need perfect. I need him to stop waking up every hour so I can drive to work safely. [FB group, 2026-09]

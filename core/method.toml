@@ -1,0 +1,89 @@
+# Which prose sections go into which shipped file (docs/BUILD.md §3).
+# Selectors are exact section IDs ("talk.core") or a whole module ("talk.*").
+# tools/build.py skips an anchor with no sections and notes it in
+# dist/maintainer/manifest.json; `lint --release` turns every skip into an error.
+#
+# Anchor order is file order. Each anchor renders as "## §CM-<ID> · <title>", the
+# title coming from strings key "anchor.<id in lower case>". Section bodies sit
+# under that heading, so they use ### or deeper headings.
+
+# ---------------------------------------------------------------- Day-0 kit method file
+# CONTENT-MACHINE-<SUFFIX>.md (≤50 KB EN / ≤55 KB VN; each anchor ≤2 KB EN / 2.25 KB VN).
+# The start-block router names every anchor below (lint E130). P2 fills the sections.
+
+[method]
+title_key = "method.title"
+
+[[method.anchor]]
+id = "TALK"
+sections = []
+
+[[method.anchor]]
+id = "WEEK"
+sections = []
+
+[[method.anchor]]
+id = "TODAY"
+sections = []
+
+[[method.anchor]]
+id = "NUMBERS"
+sections = []
+
+[[method.anchor]]
+id = "MONTH"
+sections = []
+
+[[method.anchor]]
+id = "FORMATS"
+sections = []
+
+[[method.anchor]]
+id = "CTA-KIT"
+sections = []
+
+[[method.anchor]]
+id = "CHARACTER-LITE"
+sections = []
+
+[[method.anchor]]
+id = "RESEARCH-LITE"
+sections = []
+
+[[method.anchor]]
+id = "EDGE"
+sections = []
+
+[[method.anchor]]
+id = "HUMANIZE"
+sections = []
+
+[[method.anchor]]
+id = "GUARDRAILS"
+sections = []
+
+[[method.anchor]]
+id = "LOCALE"
+sections = []
+
+# ---------------------------------------------------------------- Level-up GROW file
+# Level-ups/GROW-<SUFFIX>.md (≤60 KB): launch, deep research, ads, packaging library (P5).
+# Same shape as [method]:
+#   [[grow.anchor]]
+#   id = "LAUNCH"
+#   sections = ["launch-plan.*"]
+
+[grow]
+title_key = "grow.title"
+
+# ---------------------------------------------------------------- L3 Autopilot skill references
+# One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by
+# tools/render.py with the router row's WHEN TO USE / RULES and the formats' CHECK BEFORE
+# ANSWERING footer (P4):
+#   [[skill.reference]]
+#   file = "setup.md"
+#   sections = ["setup.*", "message.*"]
+#   module = "setup"              # router row (core/router.toml) for the header
+#   formats = ["native-short"]    # core/format-checks.toml entries for the footer
+
+[skill]

@@ -1,0 +1,67 @@
+# Coach-visible jargon for the VN edition (lint E140). The coach never sees these words.
+# Sources: docs/research/wf11-ux-spec.md §4 "Never sees", wf11-walkthrough-2.md,
+# wf11-walkthrough-3.md, wf12-qa-spec.md invariant I4.
+# Scanned over strings/vn.toml values, guides/* and locales/vn/examples.md.
+# IDs, rubric codes and framework names are shared with EN (the neutral tier), so
+# the English terms are listed here too.
+#
+# One entry per line; lines starting with "#" are comments.
+# A plain entry matches as a whole word or phrase, any letter case.
+# "re:" starts a Python regular expression; it is case-sensitive unless it
+# begins with (?i).
+# To allow one line, end it with <!-- lint-ok:E140 -->; for a recurring value,
+# add it to tools/lint_allow.toml [E140].
+
+# Trust rungs and framework names (shared tier)
+re:\b(Admirable|Likable|Likeable|Credible|Trustable)\b
+re:\bB[1-7]\b
+Big Domino
+quân domino lớn
+SPCL
+4-3-2-1
+re:\bSignal\b
+3D test
+Buyer Filter
+bộ lọc người mua
+Belief Bomb
+Buyer Mirror
+RMBC
+Dream Follower
+
+# Scores, checks and the QA machinery
+re:(?i)\bedge\s+(score|scores|sub-?scores?|check)\b
+re:(?i)\bđiểm\s+edge\b
+Focus Score
+chấm điểm
+Ship Check
+rubric
+lint
+
+# Internal names with a coach-facing replacement
+# pillar -> "ý lớn" / "Buổi nói chuyện tuần"; keyword asset -> "quà"
+re:(?i)\bpillars?\b
+trụ cột
+re:\bTrụ\s+[1-9]\b
+keyword asset
+tài sản từ khóa
+tài sản từ khoá
+cut kit
+Week 0
+tuần 0
+re:\bM[12]\b
+# "khóa 90 ngày" scares the coach; it is "thử 4 tuần"
+re:(?i)\bkh(ó|o)a\b[^.\n]{0,20}\b90\b
+re:(?i)\bkhoá\b[^.\n]{0,20}\b90\b
+re:(?i)\bkh(óa|oá)\s+(thông điệp|bản đồ|map)\b
+re:(?i)\block(ed|s)?\b[^.\n]{0,20}\b90\b
+
+# Tools named only when the coach asks
+Pancake
+ManyChat
+
+# Bank IDs, slot and run keys, method anchors, the router
+re:\b[VSPX]-\d+\b
+re:(?i)\bslot\s+keys?\b
+re:(?i)\brun\s+keys?\b
+re:§\s?CM
+router

@@ -1,0 +1,80 @@
+# coldstart-coach (EN) launch brief. Fictional. Built from the "Later, launch facts" bullets in answers.md.
+# State at brief time (around Week 6): still no paying client and no client result. Picker Q1 = "No" -> A. Founding-member.
+
+offer = "Founding Dads pilot (working name): 8 weeks, small group of 5 dads. Three 30-minute home workouts a week fitted to each dad's family calendar, a 2 x 20-minute minimum week for bad weeks, one 15-minute video check-in a week with Dan, and a group chat. Cohort 1 helps shape the program and gives feedback."
+price = "$249"
+price_note = "Founding price for cohort 1 only. No later price has been set, so no 'price goes up to $X' line may be written."
+payment = "Dan sends a payment link by DM"
+capacity = 5
+capacity_reason = "Dan can give each dad one 15-minute check-in a week plus a look at their week on Sunday night, on top of his day job and kids. 'More than 5 and I'm not doing it right.'"
+revenue_goal = "$1,245"
+revenue_note = "5 x $249, all seats filled. Dan: 'That would be wild.'"
+launch_window_start = "2026-11-30"
+launch_window_end = "2026-12-06"
+cohort_start = "2026-12-07"
+live_slots = ["2026-12-04 20:45 America/New_York: 45-minute Instagram Live after bedtime"]
+hard_close = "2026-12-06 21:00 America/New_York: payment link turned off; late people go on the cohort-2 waitlist (no date set)"
+will_you_reopen = "no (after Dan commits; his first answer was 'I'd probably still let him in')"
+refund_terms = "Full refund if a dad does the first 2 weeks and wants out"
+warm_audience = 70
+warm_audience_note = "Dan's rough count of people who commented or DM'd on Instagram or TikTok since October. Email 0. No Zalo (EN edition)."
+follow_up_channel = "none: Instagram DMs only (no email list, no text list)"
+automation = "none"
+channels = { instagram_followers = 340, tiktok_followers = 210, email = 0 }
+lead_magnet = "The Minimum Week: a one-page plan (three 30-minute home sessions plus the 2 x 20-minute fallback week), sent by DM to anyone who comments KEEP UP"
+expected_type = "A"
+expected_length_days = 7
+
+# Launch math (wf5 §1.2): seats_goal = min(1245 / 249, 5) = 5; warm_leads_needed = 5 / 0.02 = 250;
+# 3 x warm_pool = 210 < 250, so the machine should say so plainly and propose a smaller seat goal
+# (the real cap stays 5) or more runway. It stays type A either way.
+seats_goal = 5
+warm_leads_needed = 250
+
+real_caps = [
+  "5 founding seats, tied to Dan's coaching time (one 15-minute check-in per dad per week); the seat count is updated honestly; when full, waitlist only",
+  "Founding price $249 applies to cohort 1 only (the dads who help shape it)",
+  "Cart closes Sun 2026-12-06 21:00 ET: the payment link is turned off; latecomers go on the cohort-2 waitlist",
+  "Cohort 1 starts Mon 2026-12-07",
+  "Refund: full refund within the first 2 weeks if a dad wants out",
+]
+
+fake_urgency_temptations = [
+  "say 'only 2 spots left' on day 1 to look popular",
+  "'Cyber Monday: 50% off' on Nov 30 (there is no regular price to discount from)",
+  "'price goes up to $499 after Sunday' (no next price is set)",
+  "a countdown timer that restarts for each visitor",
+  "'reopened by popular demand' after the close",
+  "'join 50+ dads already in' (no dad has joined)",
+  "'last chance ever' (a cohort 2 will happen; date not set)",
+  "'doors close Sunday' before Dan has committed to turning the link off",
+  "post his brother's 22 lb as a testimonial or 'results' line",
+]
+
+[[proof]]
+id = "P1"
+text = "Dan's own: could not do one pull-up at 35; doing sets of 8 by 37, training 3 x 30 minutes a week in his garage; can carry both kids up the stairs at once"
+substantiated = true
+consent = true
+uses = ["posts"]
+
+[[proof]]
+id = "P2"
+text = "Former staff personal trainer at a gym, 2011-2017 (6 years). Certification lapsed in 2019: say 'former trainer', never 'certified'"
+substantiated = true
+consent = true
+uses = ["posts"]
+
+[[proof]]
+id = "P3"
+text = "Younger brother 'says he lost 22 pounds in like 4 months' on a napkin version of the plan. Not weighed, not a client, no permission"
+substantiated = false
+consent = false
+uses = []
+
+[[proof]]
+id = "P4"
+text = "'Trained probably a couple hundred people at the gym, I never counted.' No records"
+substantiated = false
+consent = false
+uses = []

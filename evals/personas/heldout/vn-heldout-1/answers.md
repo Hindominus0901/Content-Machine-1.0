@@ -1,0 +1,102 @@
+# Cô Trân · answers (nhân vật hư cấu)
+
+Toàn bộ người, lớp học, học trò, phụ huynh và con số dưới đây là hư cấu. Phần dump là chữ nhận giọng nói từ micro trên bàn phím điện thoại Samsung (lần đầu cô bấm nhầm nút sóng âm, xem phần Behaviour), để nguyên lỗi: ít dấu chấm, câu dài, có chỗ mất dấu, ghi sai chữ.
+
+## Dump chunk 1
+
+alo alo nó nghe chưa ta… rồi rồi nó lên chữ rồi. ờ cô nói nha. cô tên Trân, cô ở Cần Thơ, quận Ninh Kiều. cô đi dạy tiểu học 19 năm, từ năm 2005 tới tháng 6 năm 2024 thì cô nghỉ, trong 19 năm đó có 11 năm cô chủ nhiệm lớp 1. lớp 1 là cực nhứt mà cũng vui nhứt, tụi nhỏ mới vô còn khóc nhè, cây viết chì cầm còn hổng chắc. giờ cô nghỉ trường rồi thì cô mở lớp rèn chữ cuối tuần ở nhà, rồi hồi tháng 7 cô làm thử một cái khoá online cho mấy mẹ, dạy mấy mẹ kèm con học bài buổi tối mà ko phải la. cái này là cái cô muốn làm lớn nè, mà cô hổng biết nói sao cho người ta hiểu, nên thằng con cô nó cài cho cô cái này rồi biểu cô cứ nói đi, nói lộn xộn cũng được
+
+ờ để cô kể cái chuyện mà cô nhớ hoài. năm 2017 thằng Tí nhà cô vô lớp 1. cô là cô giáo lớp 1 nha, dạy con người ta 12 năm rồi, cô nghĩ con mình chắc dễ ợt. vậy mà tối nào hai mẹ con cũng như đánh trận. có cái tối tháng 10 năm đó, khoảng 9 giờ 40, cái bàn học kê sát cửa sổ phòng khách, ngoài đường xe chạy ồn ào, nó viết một trang vần ươn, chữ nào cũng nghiêng qua nghiêng lại, cô cầm cục gom bôi, bôi, bôi hoài, bôi tới chỗ giấy nó mỏng dánh rồi rách một lỗ. thằng Tí ngồi khóc, nó ngước lên nói nguyên văn nè: "Mẹ là cô giáo mà sao mẹ la con dữ vậy". trời ơi cô nghe xong cô đứng hình luôn. cô bỏ ra sau bếp ngồi, ổng đi ra hỏi sao vậy cô cũng hổng nói được tiếng nào. ở trường cô hổng bao giờ bôi tập học trò kiểu đó, hổng bao giờ, vậy mà về nhà với con mình thì cô thành người khác. thằng Tí giờ 15 tuổi rồi, học lớp 10, cô hỏi nó rồi, nó cho mẹ kể, miễn đừng đăng hình nó
+
+từ cái tối đó cô mới để ý, mà để ý rồi mới thấy phụ huynh lớp cô cũng y chang. năm 2019 họp phụ huynh đầu năm, có một anh phụ huynh, ba của một bé trai, đứng dậy nói giữa lớp: "Cô ơi cô dạy giùm tui, chớ về nhà tui kèm là hai cha con đánh nhau". cả lớp cười rần rần. rồi cô mới hỏi giỡn, ba mẹ nào tối nào cũng la con khi kèm bài thì giơ tay coi. vậy mà 31 trên 35 phụ huynh giơ tay. 31 người đó em. có mẹ giơ tay xong cúi mặt xuống luôn, cô thấy mà thương
+
+mấy mẹ tìm tới cô bây giờ thì nói chung là mẹ đi làm, con lớp 1 lớp 2, có bé lớp 3, mẹ tầm 28 tới 38 tuổi, làm giờ hành chánh, 5 giờ rưỡi 6 giờ mới về tới nhà, nấu cơm, tắm cho con, 8 giờ mới ngồi vô bàn học được mà ngồi tới 10 giờ chưa xong. câu mấy mẹ nói với cô nhiều nhứt, cô nghe hoài luôn á: "Cô ơi, tối nào kèm con học em cũng tăng xông". tăng song đó, à tăng xông, chữ của mấy mẹ chớ hổng phải chữ của cô nha, mẹ nào nhắn cô cũng xài chữ đó. rồi câu thứ hai: "Nó ngồi vô bàn là đi tè, uống nước, gọt viết chì, 15 phút chưa viết được chữ nào". rồi câu này nữa nghe mà thương: "Ở lớp cô khen mà về nhà làm bài thì như người khác". mà em biết sao hông, ở lớp đâu phải tại cô giỏi hơn mẹ. ở lớp có tiếng trống, có giờ vô giờ ra, đứa nào cũng có chỗ ngồi của nó, cô đứng trên bục chớ cô đâu có ngồi kế bên dòm từng chữ. 35 đứa thì cô canh sao nổi, nên tụi nhỏ phải tự làm, mà tụi nó làm được. về nhà thì ngược lại hết, giờ giấc hổng có, chỗ ngồi hôm bàn ăn hôm bàn trà, mẹ thì ngồi sát rạt
+
+cái cô ghét nhứt nói thiệt nha là cái kiểu ngồi canh. mẹ kéo ghế ngồi sát bên, tay cầm cục gôm, con viết chữ nào mẹ dòm chữ đó, sai một nét là bôi, bắt viết lại nguyên trang. mấy mẹ tự nói luôn: "em phải ngồi canh nó từng chữ". cô nói vậy là canh tù chớ đâu phải kèm. rồi so sánh nữa, con nhà người ta lớp 1 đọc vanh vách rồi kìa, rồi hù mai cô la cho coi. rồi mệt quá thì gửi đi học thêm buổi tối cho khoẻ, tưởng z là xong, mà con đi học thêm về 8 giờ tối mệt rũ, về nhà vẫn còn bài, vẫn tăng xông như thường. mà cô hổng nói ai hết nha, hồi đó cô cũng y vậy. thôi cô gửi đoạn này trước, nói dài sợ mất
+
+## Dump chunk 2
+
+rồi cô kể tiếp nè. cái khoá làm thử hồi tháng 7 cô đặt tên là Kèm Con Không La, 4 tuần, học dum tối thứ Năm 9 giờ, tức là 21 giờ đó, tại 9 giờ tụi nhỏ ngủ rồi mấy mẹ mới rảnh, mỗi buổi 60 phút, có nhóm da lô riêng. giá 990 ngàn. cô hổng có quảng cáo gì hết, cô nhắn Zalo từng người, phụ huynh cũ, phụ huynh lớp rèn chữ, nhắn đại khái là cô mở lớp nhỏ cho mấy mẹ kèm con mà hổng muốn la nữa, em có muốn vô hông, ai trả lời thì cô gọi lại nói chuyện, mất cả tuần trời mới nhắn hết, được 14 mẹ đăng ký. 11 mẹ học hết 4 tuần. có 3 mẹ bỏ ngang, một mẹ đi công tác, hai mẹ thì cô hổng biết, chắc bận
+
+cô kể mẹ bé Su nha, Su học lớp 2, nhà ở Bình Thủy. buổi Zoom đầu tiên mẹ Su tắt camera, cô chỉ nghe tiếng thôi mà nghe là biết đang khóc. mẹ Su nói: "Cô ơi, tối nào kèm con học em cũng tăng xông, em sợ tới giờ học bài còn hơn con nữa". mỗi tối hai mẹ con ngồi khoảng 2 tiếng, từ 8 giờ tới 10 giờ. ba bé Su làm trên Sài Gòn, cuối tuần mới về, mẹ Su làm ngân hàng, một mình kèm. bài tập tuần 1 cô cho là ghi sổ giờ học, ngồi vô bàn mấy giờ, đứng dậy mấy giờ, la mấy lần, ghi hết. rồi tới cuối tuần 4 là khoảng 40 phút xong bài. mà cái làm cô mừng nhứt là tin nhắn Zalo mẹ Su gửi lúc 8 giờ 52 tối thứ Ba, cô còn giữ nè: "Tối qua em không la tiếng nào cô ơi". mẹ Su cho cô kể chuyện, mà dặn đừng nêu tên mẹ, đừng nêu tên bé, đừng đăng hình, còn quảng cáo thì thôi khỏi
+
+rồi mẹ bé Gạo ở Thủ Đức, học online luôn, bé lớp 1. tuần 3 là mẹ Gạo ra ngồi bàn ăn được rồi, để Gạo ngồi một mình với cái đồng hồ các, à đồng hồ cát. mẹ Gạo nhắn: "Lần đầu tiên nó tự ngồi vô bàn mà em hổng nhắc". mẹ Gạo nói cô muốn dùng sao cũng được, đăng bài, quảng cáo cũng được, miễn là đừng có hình con, đừng có tên con
+
+cách cô làm thì cô gọi là kem lùi, kèm lùi, kèm mà lùi ra từ từ. có ba cái. cái thứ nhứt là chốt giờ chốt chỗ: ăn cơm xong nghỉ 15 phút là ngồi vô, góc học cố định, tivi tắt, điện thoại mẹ úp xuống, có cái đồng hồ cát 20 phút, con tự lật, hết cát thì nghỉ 5 phút. tụi nhỏ lớp 1 ngồi được 20 phút là giỏi rồi, ngồi hơn là nó lo ra. cái thứ hai là cất cục gôm: mẹ hổng bôi gì hết, dòng nào có lỗi thì mẹ chấm một chấm bút chì bên lề, con tự dò coi lỗi nằm đâu. cái này cô học của cô Sáu, cô giáo lớn tuổi hồi cô mới về trường, cô Sáu chấm tập mấy chục năm hổng bôi chữ nào của học trò. con tự kiếm ra lỗi thì nó nhớ cái lỗi, mẹ bôi giùm thì nó chỉ nhớ là mẹ giận. cái thứ ba là lùi: tuần 1 ngồi kế bên, tuần 2 ngồi đối diện đọc sách của mẹ, tuần 3 ra bàn ăn ngồi, tuần 4 con làm xong tự mang tập ra cho mẹ coi. cái bước mấy mẹ hay bỏ là bước 2 đó, cất cục gôm khó lắm, tay nó ngứa
+
+cô hay nói vầy nè: con cần mẹ ngồi gần, chớ hổng cần mẹ ngồi canh
+
+mà nói thiệt có mấy cái cô hổng chắc nha. có mẹ nhắn riêng cô là con lên được 10 điểm chính tả, mà cái đó mẹ nhắn riêng thôi, cô chưa hỏi đăng được hông, mà điểm số cũng đâu phải cái cô dạy. rồi cô thấy chắc tầm 80% mấy mẹ hết la con rồi, cô đoán vậy thôi chớ cô đâu có đếm. cái cô đếm được là sổ: 9 mẹ nộp đủ sổ giờ học 4 tuần, 7 sổ thấy giờ học bài tối ngắn lại, 2 sổ hổng đổi mấy, một bé bị bệnh nằm nhà 1 tuần, một nhà thì đang dọn nhà
+
+khoá 2 cô tính lên 1 triệu 490, 1.490.000, tại khoá 1 là giá làm thử. cô nhận 25 mẹ thôi, tại tuần nào mẹ cũng gửi cô một clip 2 phút giờ học bài, cô nghe hết rồi trả lời tin nhắn thoại từng mẹ, nhiều hơn 25 là cô nghe hổng xuể. khoá 3 thì chắc 1.890.000, cô tính vậy rồi
+
+cái mấy mẹ hỏi cô nhiều nhứt á hả, là "Có nên cho con đi học thêm buổi tối không cô?". rồi "Con viết chữ xấu quá có cần đi rèn chữ không cô?". rồi có mẹ hỏi "Bé nhà em có bị tăng động không cô?", cái này thì cô nói liền là cô hổng phải bác sĩ, em đưa con đi khám bác sĩ chuyên khoa, cô hổng dám nói bậy
+
+## Dump chunk 3
+
+còn nhiều cái lắm nè em. lớp rèn chữ ở nhà là cái nuôi nhà cô bây giờ đó. sáng thứ Bảy một ca, sáng Chủ nhật một ca, mỗi ca 8 bé, 16 bé, 700 ngàn một bé một tháng, tính ra hơn 11 triệu. đủ chỗ rồi, còn 7 bé trong danh sách chờ. cô rèn chữ giỏi lắm à nha, cô có kênh diu túp rèn chữ hồi dịch năm 2020, quay ở nhà, 3.400 người đăng ký, có cái video viết chữ b nét khuyết được 210 ngàn lượt xem, mà năm 2022 cô ngưng rồi. tích tóc thì cô mới làm hồi tháng 3, 23 video, 860 người theo dõi, cũng quay rèn chữ là chính, quay bàn tay cô viết chữ mẫu, cái đó người ta coi nhiều lắm. nét khuyết nét móc, tư thế ngồi, cầm viết sao, tập 4 ô ly hay 5 ô ly, viết máy hay viết bi, cái gì cô cũng nói được hết
+
+mà cô kể cái này nè. có bữa sáng thứ Bảy trời mưa, mấy mẹ đứng chờ con ngoài hiên nhà cô, cái hiên nhỏ xíu, xe đạp xe máy dựng lộn xộn, có một mẹ nói với cô: "Cô ơi chữ con đẹp rồi mà tối về làm bài vẫn tăng xông cô ơi". cô nghe vậy mới nghĩ, ờ ha, chữ đẹp là một chuyện, ngồi vô bàn học được là chuyện khác. mấy mẹ lớp rèn chữ đó, có 4 mẹ học luôn khoá 1 của cô. nói thiệt chớ cô thích dạy mấy mẹ hơn, dạy tụi nhỏ thì cô dạy được đứa nào đứa nấy, dạy mẹ thì đỡ cho cả nhà người ta, tối nào cũng đỡ
+
+rồi vụ học trước lớp 1 nữa nè. hè nào cũng có mẹ hỏi có nên cho con học chữ trước không. cô nói thiệt là hổng nên luyện chữ trước, cho con làm quen giờ giấc nề nếp thì được. rồi vụ đánh vần sách mới mấy năm trước ồn ào quá trời, cô có ý kiến mà thôi, cô hổng muốn dính vô. rồi cái vụ quy định dạy thêm học thêm từ năm ngoái đó, phụ huynh hỏi cô hoài, lớp rèn chữ của cô có sao hông, cô cũng hổng rành luật, cô tránh nói
+
+rồi điện thoại iPad nữa, cái này mấy mẹ than nhiều lắm, con ôm điện thoại coi yutup hổng chịu học. rồi toán tư duy, soroban, mấy trung tâm quảng cáo quá trời, mẹ nào cũng hỏi cô có nên cho học hông. rồi nhóm Zalo lớp, mấy mẹ hỏi cô làm sao nói chuyện với cô chủ nhiệm mà cô chủ nhiệm hổng phật lòng, cái này cô làm giáo viên 19 năm nên cô hiểu hai bên. mà cô hổng bao giờ nói xấu giáo viên nha em, cô làm nghề đó mà, với tên trường cũ của cô cũng đừng có ghi ra
+
+à cô có làm tiếp thị liên kết mấy cuốn tập luyện chữ trên Shopee, mỗi tháng được chừng 300 tới 600 ngàn, tiền cà phê thôi. với cô đang kèm 1-1 online hai bé lớp 1, 250 ngàn một buổi, mà chắc sau Tết cô ngưng, mệt
+
+à cô nhớ ra chuyện đứa cháu ở Cà Mau, con của em gái cô, học lớp 2. em gái cô gọi video than quá trời, tối nào hai mẹ con cũng ngồi tới 3 tiếng. cô chỉ qua điện thoại, chỉ cái đồng hồ cát với chấm bên lề, em gái cô nói giờ còn 1 tiếng hà. mà đó là nhà cô, cô chỉ cho vui, em cô có học khoá đâu, cô cũng nghe nó kể vậy thôi chớ cô đâu có thấy
+
+cô bán khoá thì đăng bài trên Facebook cá nhân, cô bật chế độ chuyên nghiệp rồi, có 4.200 bạn bè, 2.300 người theo dõi. cô có cái nhóm phây Ba Mẹ Kèm Con Lớp 1 – Lớp 2, 640 thành viên, cô lập hồi tháng 8 năm ngoái. Zalo thì chừng 1.650 người, phụ huynh cũ 19 năm đó, quen hết. email thì có 112 cái, hồi 2021 cô làm cái gu gồ phom tặng bộ chữ mẫu, mà từ đó tới giờ cô chưa gửi cái email nào hết, người mình đâu có đọc email. lên live phây thì cô run lắm, mà dum thì cô quen rồi, như đứng lớp vậy. cô xài cái chát gi pi ti này trên điện thoại thôi, bản miễn phí, cô hay bấm cái nút tròn tròn để nói chuyện với nó, nhờ nó ra đề chính tả cho lớp rèn chữ. ko có máy tính đâu nha, máy tính bảng của thằng Tí thì cô chỉ coi dum. thôi cô nói z thôi, xong rồi
+
+## Answer bank
+
+- **Khách là ai:** Mẹ đi làm giờ hành chánh, tầm 28 tới 38 tuổi, có con lớp 1, lớp 2, có bé lớp 3; 5 giờ rưỡi 6 giờ mới về tới nhà, 8 giờ mới ngồi vô bàn học được mà tới 10 giờ chưa xong; tối nào cũng la con, kèm một mình (ba đi làm xa hoặc về trễ). Tìm tới cô lúc đã sợ giờ học bài. Một người thật: mẹ bé Su ở Bình Thủy, làm ngân hàng, ba bé làm trên Sài Gòn, buổi Zoom đầu tắt camera mà khóc.
+- **Chữ khách hay nói:** "Cô ơi, tối nào kèm con học em cũng tăng xông" · "Nó ngồi vô bàn là đi tè, uống nước, gọt viết chì, 15 phút chưa viết được chữ nào" · "Ở lớp cô khen mà về nhà làm bài thì như người khác" · "em phải ngồi canh nó từng chữ" · "em sợ tới giờ học bài còn hơn con nữa". Chữ "tăng xông" là của mấy mẹ, mẹ nào nhắn cô cũng xài.
+- **Cách cũ:** Ngồi canh: kéo ghế ngồi sát bên, cầm cục gôm, con viết chữ nào dòm chữ đó, sai một nét là bôi, bắt viết lại nguyên trang; so sánh "con nhà người ta"; hù "mai cô la cho coi"; mệt quá thì gửi đi học thêm buổi tối cho khoẻ. Cô gọi vậy là "canh tù chớ đâu phải kèm".
+- **Kết quả tốt nhất:** Mẹ bé Su (Bình Thủy, bé lớp 2, khoá 1): trước khoảng 2 tiếng mỗi tối, từ 8 giờ tới 10 giờ; cuối tuần 4 khoảng 40 phút xong bài; tin nhắn Zalo 8 giờ 52 tối thứ Ba: "Tối qua em không la tiếng nào cô ơi". Có sổ giờ học 4 tuần và tin nhắn. Đồng ý kể trong bài đăng và bài kể chuyện học viên, không nêu tên mẹ, không nêu tên bé, không đăng hình, không chạy quảng cáo. Mẹ bé Gạo (Thủ Đức, bé lớp 1, học online): tuần 3 ra ngồi bàn ăn được; "Lần đầu tiên nó tự ngồi vô bàn mà em hổng nhắc"; đồng ý đăng bài và quảng cáo, không hình con, không tên con. Khoá 1: 14 mẹ đăng ký, 11 mẹ học hết 4 tuần; 9 mẹ nộp đủ sổ, 7 sổ thấy giờ học bài tối ngắn lại, 2 sổ hổng đổi mấy (một bé bệnh 1 tuần, một nhà đang dọn nhà). Đa số mẹ: tuần 3 lùi ra được bàn ăn; giờ học ngắn lại thì tùy mỗi bé.
+- **Bối cảnh ca mẹ bé Su (khi được hỏi):** bé học bán trú, không đi học thêm; ba làm xa, cuối tuần mới về; mẹ kèm một mình; khoá 1 học giá 990 ngàn. Cô hổng biết bé đã học lớp 1 ở đâu, hổng biết điểm số.
+- **Kết quả không được dùng:** "con lên được 10 điểm chính tả" (mẹ nhắn riêng, cô chưa hỏi; điểm số cũng không phải cái cô dạy); "chắc tầm 80% mấy mẹ hết la con" (cô đoán, không đếm); đứa cháu ở Cà Mau "từ 3 tiếng còn 1 tiếng" (con em gái cô, không học khoá, cô chỉ nghe kể).
+- **Cách của mình:** Kèm lùi, kèm mà lùi ra từ từ. 1) Chốt giờ chốt chỗ: ăn cơm xong nghỉ 15 phút là ngồi vô, góc học cố định, tivi tắt, điện thoại mẹ úp xuống, đồng hồ cát 20 phút con tự lật, hết cát nghỉ 5 phút. 2) Cất cục gôm: dòng nào có lỗi thì mẹ chấm một chấm bút chì bên lề, con tự dò lỗi (học của cô Sáu). 3) Lùi: tuần 1 ngồi kế bên, tuần 2 ngồi đối diện đọc sách của mẹ, tuần 3 ra bàn ăn, tuần 4 con tự mang tập ra cho mẹ coi. Bước ai cũng bỏ: bước 2, cất cục gôm.
+- **Gói dịch vụ + giá:** Khoá Kèm Con Không La, khoá 2: 4 tuần, Zoom tối thứ Năm 21 giờ (60 phút) + nhóm Zalo; mỗi tuần mẹ gửi 1 clip 2 phút giờ học bài, cô trả lời bằng tin nhắn thoại Zalo. Giá 1.490.000đ (khoá 1 làm thử 990.000đ). Nhận tối đa 25 mẹ, vì cô nghe clip từng mẹ. Khoá 3 (dự kiến tháng 3/2027) lên 1.890.000đ, cô quyết rồi. Khách mua: nhắn Messenger → kết bạn Zalo → chuyển khoản.
+- **Quà tặng / tài liệu:** "Bảng Kèm Lùi 4 tuần" cô vẽ tay một trang, chụp hình gửi qua Zalo được; cô có thể quay thêm clip ngắn cách chấm bút chì bên lề.
+- **Kênh chính + Zalo/email:** Facebook cá nhân (đã bật chế độ chuyên nghiệp) là chính, có nhóm Facebook Ba Mẹ Kèm Con Lớp 1 – Lớp 2 do cô lập; TikTok mới làm; YouTube rèn chữ cũ, ngưng đăng từ 2022. Zalo để nhắn, chốt và chăm học viên. Email có mà không xài.
+- **Số liên hệ Zalo/email:** Zalo chừng 1.650 người (phụ huynh cũ 19 năm, phụ huynh lớp rèn chữ, 14 mẹ khoá 1 và nhóm Zalo khoá 1). Email 112 cái từ Google Form năm 2021, chưa gửi email nào. Facebook 4.200 bạn bè, 2.300 người theo dõi; nhóm 640 thành viên. TikTok 860 người theo dõi, 23 video. YouTube 3.400 người đăng ký.
+- **Khách cũ sẵn sàng nói giúp:** mẹ bé Su và mẹ bé Gạo thì chắc; mấy mẹ khác trong nhóm Zalo khoá 1 chắc cũng chịu, cô chưa hỏi.
+- **Số giờ/tuần:** chừng 4 tiếng.
+- **Ngày nói chuyện:** thứ Hai, khoảng 1 giờ trưa, nhà vắng, thằng Tí đi học.
+- **Gạch đầu dòng hay đọc nguyên văn:** nguyên văn. "Đưa cô nguyên văn đi, cô quen soạn giáo án rồi, ngắn ngắn là cô học thuộc được." Cô quay bằng chính cái điện thoại đó, dựng vô chồng sách, nên không cầm đọc được.
+- **Câu khách hỏi nhiều nhất:** "Có nên cho con đi học thêm buổi tối không cô?"; rồi "Con viết chữ xấu quá có cần đi rèn chữ không cô?"; rồi "Bé nhà em có bị tăng động không cô?" (cô biểu đi khám bác sĩ chuyên khoa).
+- **Vì sao khách chọn mình:** Cô từng là cô giáo lớp 1 mà cũng từng la con mình, nên mấy mẹ thấy hổng bị chê. Mẹ bé Gạo nói: "Tại cô cũng từng la con, nên em hổng ngại kể". Mẹ bé Su nói: "Cô nói dễ hiểu, tối đó làm liền được".
+- **Câu mình không bao giờ nói:** "con nhà người ta" (để khen), "thần đồng", "thiên tài", "học sinh giỏi", "điểm 10", "cam kết con giỏi", "chữa tăng động", "phụ huynh thông thái", "phương pháp độc quyền"; không nói xấu giáo viên, không nêu tên trường cũ.
+- **Muốn được gọi là:** cô. Cô xưng cô, gọi máy là em. Trên bài đăng cô xưng cô, gọi "ba mẹ" hoặc "mấy mẹ"; nhắn Zalo với phụ huynh thì cô – em.
+- **Tháng này nguồn nào nuôi cô:** lớp rèn chữ (hơn 11 triệu một tháng). "Mà lớp đó đủ rồi em, cô muốn làm lớn cái khoá cho mấy mẹ."
+- **Ai mua được nhiều thứ của cô:** mẹ có con lớp 1 ở Cần Thơ: gửi con học rèn chữ rồi học luôn khoá kèm con; khoá 1 có 4 mẹ là phụ huynh lớp rèn chữ.
+- **Đã có ai trả tiền và có kết quả được phép đăng chưa:** có, mẹ bé Su (bài đăng, bài kể chuyện học viên) và mẹ bé Gạo (bài đăng, quảng cáo).
+- **Đã từng mở bán bài bản chưa:** chưa, khoá 1 cô nhắn Zalo từng người.
+- **Lên live được mấy lần trong đợt mở bán:** live Facebook thì không; Zoom thì được 1 buổi; dạy 3 tối liền trong nhóm Zalo thì được, quay sẵn cũng được.
+- **Giới hạn chỗ thật:** 25 mẹ một khoá (nghe clip, trả lời tin nhắn thoại từng mẹ). Nhóm Zalo lớp thử thì cô khoá link khi đủ 200 người, vì cô đọc hết bài nộp.
+- **Mục tiêu khoá 2:** chừng 30 triệu, tức là khoảng 20 mẹ.
+- **Lịch mở bán muốn:** bắt đầu thứ Hai 16/11/2026, lớp thử 3 tối trên Zalo cuối tháng 11, Zoom chia sẻ tối Chủ nhật 29/11, đóng 23h59 thứ Bảy 05/12/2026, khai giảng 21 giờ thứ Năm 10/12/2026.
+- **Quà khi đăng ký sớm:** gọi video Zalo 15 phút với cô để coi góc học của bé, cho 10 mẹ đầu tiên hoặc tới 23h59 thứ Năm 03/12/2026.
+- **Hoàn tiền:** mẹ nào học buổi Zoom thứ 2 rồi thấy không hợp thì nhắn cô trước 21 giờ thứ Năm 17/12/2026, cô chuyển khoản trả đủ học phí.
+- **Có người giúp không:** không, thằng Tí chỉ cài máy giùm.
+
+## Behaviour
+
+- **Lượt 1:** máy hỏi gọi thế nào, cô gõ đúng một chữ: "cô".
+- **Micro:** quen bấm nút sóng âm (chế độ trò chuyện) vì hay nhờ ChatGPT ra đề chính tả. Lần đầu xả cô bấm nút đó, máy trả lời bằng giọng nói, cô gõ: "Ủa sao nó nói chuyện lại với cô vậy em?". Khi được chỉ micro nhỏ trên bàn phím thì làm theo được ngay. Mỗi lần nói 3–4 phút, có lần bị cắt ngang giữa chừng ("nó mất tiêu một khúc rồi em").
+- **Nhịp:** chậm, lễ phép, kiểu cô giáo: hay hỏi lại "em giải thích cô nghe coi"; câu ngắn thì đáp "ừ", "được em", "đúng rồi đó"; gặp câu hỏi trúng thì kể chuyện dài, hay lạc sang rèn chữ và chuyện trường lớp. Thấy micro ghi sai thì gõ thêm một dòng ngắn có "ko", "dc", "z".
+- **Bản miễn phí:** có lúc hết lượt giữa chừng, cô quay lại sau vài tiếng, cùng đoạn chat, gõ "tiếp".
+- **Câu phản đối (nguyên văn):**
+  - "Rèn chữ là cái nuôi nhà cô đó em, em cất đi rồi cô lấy gì ăn?"
+  - "Video rèn chữ người ta coi cả trăm ngàn, mà em biểu để sau là sao?"
+  - "Cô hổng muốn nói xấu giáo viên với trường lớp đâu nha em."
+  - "Mấy chữ tiếng Anh cô hổng hiểu, em nói tiếng Việt giùm cô."
+  - "Đưa cô nguyên văn đi, cô quen soạn giáo án rồi."
+  - "Cô chụp tập tụi nhỏ đẹp lắm, có tên mà che lại là được mà?"
+  - "Có mẹ hỏi hoài, em viết một bài nói khoá cô giúp mấy bé tăng động ngồi yên được đi." (hỏi 1 lần, sau buổi nói chuyện tuần 2)
+  - "Em ghi 'chỉ còn 5 chỗ' giùm cô, chớ mới có 8 mẹ đăng ký mà ghi 25 chỗ nghe lạnh tanh." (hỏi đúng 1 lần, ở bước mở bán)
+- **Chịu nghe khi:** máy nói một lý do ngắn, đời thường và đưa cái có thật thay vào. Rèn chữ: lớp đã đủ chỗ, có danh sách chờ, không mất gì, vẫn nhận người qua tin nhắn. Hình tập: ba mẹ chưa đồng ý, mình nhắn xin phép trước. Tăng động: cô hổng phải bác sĩ, viết vậy là hứa chữa bệnh. "Chỉ còn 5 chỗ": mẹ khoá 1 đọc là biết, ghi đúng "25 chỗ, còn bao nhiêu cô cập nhật mỗi tối" cũng gấp được. Cô gõ "ừ, vậy cũng được".
+- **Cái làm cô rối:** chữ tiếng Anh (Brand Card, keyword, hook, CTA, beat card, Save to project); bị biểu chọn A, B hay C khi chưa hiểu; bị biểu mở chat mới mà không nói vì sao; bị biểu lưu "thẻ" (cô tưởng phải in ra giấy).
+- **Khi nào cô bỏ:** bị gọi "chị" hay "bạn" sau khi đã nói "cô"; máy viết giọng Bắc ("nhé", "nhỉ", "đấy") hay giọng quảng cáo ("nâng tầm", "bứt phá"); bị đòi chụp màn hình số liệu Facebook; bị biểu mở máy tính, tải file, tải lên; máy viết câu hứa chữa tăng động hay hứa con học giỏi (cô sợ); quá 25 phút chưa có gì quay được.
+- **Thứ Sáu:** đọc số bằng giọng nói từ cuốn sổ cô ghi tay; biết lượt xem TikTok và video Facebook, không biết lượt xem bài chữ trên Facebook; biết lượt lưu trên TikTok, không biết trên Facebook; không gửi ảnh chụp màn hình.
