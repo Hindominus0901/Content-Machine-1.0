@@ -20,7 +20,7 @@ Chủ doanh nghiệp nhỏ không có lỗi gì hết nghe, họ không học nh
 
 ## Dump chunk 2
 
-ok tiếp nè. Ờ cách tôi làm thì nói gọn là 3 bước, mà tôi chưa đặt tên cho đàng hoàng.
+ok tiếp nghe. Ờ cách tôi làm thì nói gọn là 3 bước, mà tôi chưa đặt tên cho đàng hoàng.
 
 Bước 1 là viết rõ việc. Không phải JD chép mạng, mà một trang thôi, tôi gọi là phiếu việc: sau 60 ngày người này phải làm được cái gì, đo bằng cái gì, ai là người kèm, ca làm ra sao, lương thưởng nói thẳng ra luôn. Chủ doanh nghiệp ngồi viết phiếu việc là tự họ thấy ra mình đang tuyển cái gì, nhiều khi viết xong ảnh nói ủa vậy là tôi cần người bán hàng chứ đâu phải người thu ngân. (gõ thêm cho rõ: phieu viec ko phai JD, la 1 trang thoi, chu doanh nghiep tu viet)
 

@@ -80,6 +80,14 @@ allowed_numbers = [
   "60 phút", "48 giờ", "14 ngày",
   "26/11/2026", "04/12/2026", "14h30", "06/12/2026", "07/12/2026", "09/12/2026", "23:59",
   "04/01/2027", "06/02/2027", "tháng 4/2027", "12h", "20h", "18/10/2026",
+  "26/11", "04/12", "06/12", "07/12", "09/12", "04/01", "06/02",
+]
+
+# Trap numbers Khoa says or is tempted by (graders.py: never allowed, even after he says them).
+# "30 ngày" is left out on purpose: it is also a neutral planning span the kit may use.
+excluded_numbers = [
+  "70%", "80%", "90%", "100%", "200 triệu", "60.000.000đ",
+  "6 tháng lương", "50 doanh nghiệp", "100 comment",
 ]
 
 # Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).

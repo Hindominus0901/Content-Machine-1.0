@@ -24,7 +24,7 @@ Every persona is **fictional**. Names, businesses, clients and numbers are inven
 
 | File | Contents |
 |---|---|
-| `persona.toml` | Identity, app/plan/device, platforms, list size, offer, proof, hours, delivery mode, xưng hô (VN), behaviour traits, `allowed_numbers`, `seeded_names`, `cold_start` |
+| `persona.toml` | Identity, app/plan/device, platforms, list size, offer, proof, hours, delivery mode, xưng hô (VN), behaviour traits, `allowed_numbers`, `excluded_numbers` / `trap_numbers` (numbers the persona says or is tempted by that must never be printed as claims, even after the coach says them), `seeded_names`, `cold_start` |
 | `answers.md` | `## Dump chunk 1..3` messy dictated brain-dump (fillers, run-ons, dictation errors, topic jumps); `## Answer bank` facts the coach can give when asked; `## Behaviour` how they react (impatience, "ok", story answers, pushback lines) |
 | `voice-samples.md` | 5–8 verbatim phrases the coach really says + 2 short paragraphs in their voice + words they would never say |
 | `pillar-transcript.md` | A Weekly Talk transcript (5 questions, spoken answers, ~1,800–2,500 words EN / equivalent VN) for week 2 |

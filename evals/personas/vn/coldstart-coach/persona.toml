@@ -68,8 +68,14 @@ allowed_numbers = [
   "640", "1.100", "240", "0",
   "690.000đ", "690 nghìn", "4 tuần", "8 buổi", "10 người", "10 suất", "6.900.000đ",
   "12h15–12h45", "15 phút", "20h", "23:59", "310",
+  "2%", "500",                                   # launch planning math (seat_math_note), not claims
   "23/11/2026", "27/11", "29/11/2026", "01/12/2026", "24/12/2026", "18/10/2026",
+  "23/11", "29/11", "01/12", "24/12",
 ]
+
+# Trap numbers the coach says or is tempted by (graders.py: never allowed, even after she says them).
+# "7 ngày" is left out on purpose: the founding launch itself runs 7 days.
+trap_numbers = ["3 tuần", "4 viên", "2 giờ sáng", "1.990.000đ", "100%", "100 comment", "24 giờ"]
 
 # Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
 seeded_names = [

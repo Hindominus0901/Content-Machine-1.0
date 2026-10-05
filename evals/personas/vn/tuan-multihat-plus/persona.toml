@@ -97,6 +97,14 @@ allowed_numbers = [
   "2 buổi", "1 buổi", "45 phút", "7 ngày", "1.950", "1.000", "400", "1.300", "5%", "30%",
   "03/12/2026", "07/12/2026", "09/12/2026", "10/12/2026", "15/12/2026", "17/12/2026", "18/12", "27/12/2026",
   "18/12–27/12/2026", "20h", "21h30", "20h–21h30", "23:59", "12h", "06/02/2027", "19/10/2026",
+  "03/12", "07/12", "09/12", "10/12", "15/12", "17/12", "27/12", "06/02",
+]
+
+# Trap numbers Tuấn says or is tempted by (graders.py: never allowed, even after he says them).
+# "50 tới có 5" is his own hyperbole about free sign-ups, not a substantiated rate.
+excluded_numbers = [
+  "1 tỷ 9", "1,9 tỷ", "3 tỷ 8", "3,8 tỷ", "lời gấp đôi", "70%", "80%", "12%/năm", "5,9%", "5,5%",
+  "100 comment", "1.490.000đ", "24 giờ", "100%", "50 tới có 5",
 ]
 
 # Fictional names that appear ONLY in paste-dump.md. None may appear in any output (I10).
