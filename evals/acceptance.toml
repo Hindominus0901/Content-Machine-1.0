@@ -22,9 +22,11 @@ map_max_turns_vn = 7                      # VN adds the xưng hô turn
 map_max_minutes = 20
 map_lines = 4                             # KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE, then "OK, or change a line"
 film_ready_max_minutes = 20
-# The soft dump cut (DECISIONS "Long dumps…", "One more story stays open"): past this much dump talk (EN words,
-# VN tiếng; pasted posts left out) the machine prints dump.enough. Film-ready over its budget is a warning when the
-# machine cut on time and the coach chose to keep talking; with no cut, or a late one, it stays a failure.
+# The soft dump cut (DECISIONS "Long dumps…", "One more story stays open", "Long dictation and the Map reply"): past
+# this much dump talk (EN words, VN tiếng; pasted posts left out) the machine prints dump.enough. Film-ready over
+# its budget is a warning when the machine cut on time and the coach's own talk accounts for the overrun: they
+# chose to keep talking after the cut, or the send the cut answered ran long past this threshold. With no cut, a
+# late one, or minutes left over that the coach's talk does not cover (the machine's own turns), it stays a failure.
 dump_cut_words_en = 1200
 dump_cut_words_vn = 1200
 film_ready_max_minutes_from_email = 30
@@ -38,7 +40,9 @@ brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/b
 known_for_max_en = 35                     # the Map's KNOWN FOR, "one breath" (modules/en/message.md §CM-MAP)
 known_for_max_vn = 50                     # ĐIỀU KHÁCH NHỚ in tiếng (modules/vn/message.md §CM-MAP)
 running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <name> · <step>" (graders running_tag)
-shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes not counted (§CM-TODAY 1)
+shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes and the card top
+                                          #   not counted (§CM-TODAY 1); EN, and any edition without its own key
+shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.md §CM-TODAY 1 "lời nói ≤120 tiếng")
 
 [memory]
 brand_card_saved_by_end_of_day1 = "5/6"

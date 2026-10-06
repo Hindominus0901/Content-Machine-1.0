@@ -80,12 +80,14 @@ audience address, I20 unopened links, I21 the angle card's evidence, I22 monitor
 promises, I23 voice).
 Other checks: deny_list, quit_triggers (the generic triggers, against the persona's own quit list),
 running_tag (every reply opens with the running tag), day0_timing (Map and film-ready turn and active-minute
-budgets, the session's minutes, the early win; film-ready over budget is a warning when the coach chose to keep
-talking after an on-time soft cut), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and
+budgets, the session's minutes, the early win; film-ready over budget is a warning when the soft cut came on time
+and the coach's own talk accounts for the overrun: they chose to keep talking after it, or the send it answered ran
+long past the threshold), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and
 quiet option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list
-(VN: a Zalo message for a Zalo list), the keyword once in the body of each Week-1 piece, outside its ask, the card
-top ≤500 characters and outside the copy box, the whole card in budget, the save route and backup, no unfilled
-placeholders, "Shorter" honoured; a re-asked fact needs a reader) and, in VN runs, vn_natural (translationese
+(VN: a Zalo message for a Zalo list), the keyword once in the body of FILM TODAY and of each Week-1 piece, outside
+its ask, the card top ≤500 characters and outside the copy box, the whole card in budget, the save route and backup,
+no unfilled placeholders, "Shorter" honoured with the card top not counted; a re-asked fact needs a reader) and, in
+VN runs, vn_natural (translationese
 density, Markdown bold, emoji lines, em dashes and the end-particle share of the written pieces against the coach's
 written-posts.md; docs/research/vn-language-guide.md §9.3) and vn_messages (no "anh/chị" form letter, no DỪNG in a
 1:1 reply, no "Dạ" down to an em, no Northern particle in the dump prompt to a Southern or Central coach). Every
@@ -1482,14 +1484,26 @@ def number_pairs(text: str) -> list[tuple[str, float, float]]:
     return list(dict.fromkeys(out))
 
 
+# A carousel or slide page label at the start of a line ("Trang 11:", "Slide 11:", "Page 11:", "**Trang 3.**") numbers
+# the page; it is not a claim (review retest-vg3-g4 G28).
+PAGE_LABEL_RE = re.compile(r"^[\W_]*(?:page|slide|trang)\s+(?:số\s+)?(\d{1,3})(?=\s*(?:[:.)·–—-]|\*|$))", re.I)
+
+
+def _page_label(line: str, n) -> bool:
+    """The number is a page label at the start of its line (PAGE_LABEL_RE)."""
+    m = PAGE_LABEL_RE.match(line)
+    return bool(m) and m.start(1) == n.start
+
+
 def i8_numbers(run: Run) -> dict:
     """Numbers come from allowed_numbers or from the coach's own words. Someone else's post is
     closed (wf13-inspiration-spec §4): its numbers never become allowed because the coach pasted
     them, and they count as trap numbers unless the coach said them in their own words or
     allowed_numbers holds them (F1: others' results are never the coach's, even on a copy request).
-    Dates and times ("Thu, Oct 8", "2026-10-12", "11:59") place a piece in the week; they are not claims. The
-    cold-start rule (no client result numbers) reads what gets posted, and the machine's talk too (the Map's KNOWN
-    FOR, a line suggested to say on camera), except the kit's own wording ("2–3 clients before → after" in the
+    Dates and times ("Thu, Oct 8", "2026-10-12", "11:59") place a piece in the week, and a page label at the start of
+    a line ("Trang 11:", "Slide 11:", "Page 11:") numbers a carousel page; they are not claims (review retest-vg3-g4
+    G28). The cold-start rule (no client result numbers) reads what gets posted, and the machine's talk too (the Map's
+    KNOWN FOR, a line suggested to say on camera), except the kit's own wording ("2–3 clients before → after" in the
     setup prompt) and the coach's own words played back to them. A before → after claim ("went from minus 6 to 51")
     pairs two numbers the coach said together (number_pairs; review G17). A number printed inside a rendered kit
     string's own words is the kit's ("thứ Hai hằng tuần kể 15 phút cho tuần sau": setup.plan_guess; review VG2 G20)."""
@@ -1524,7 +1538,7 @@ def i8_numbers(run: Run) -> dict:
             for line in text.splitlines():
                 claim_line = bool(ck.result_claims(line, run.lang))
                 for n in ck.numbers_in(line):
-                    if n.structural or n.tagged or n.kind in ("date", "time"):
+                    if n.structural or n.tagged or n.kind in ("date", "time") or _page_label(line, n):
                         continue
                     if claims_only and not (n.percent or n.kind == "money" or claim_line):
                         continue
@@ -1689,8 +1703,10 @@ def _numbered_label(text: str, m: re.Match) -> bool:
 # không phải cam kết.", "isn't a guarantee" (review VG-10). Only a negation right before the phrase counts.
 NEGATED_BEFORE_RE = re.compile(r"(?:(?<!\w)(?:không|chẳng|đâu|chứ không|chả)(?:\s+(?:phải|hề|có))?"
                                r"|\b(?:not|never|no|isn'?t|aren'?t|wasn'?t)(?:\s+(?:a|an|the))?)\s+$", re.I)
-# Card fields that hold the coach's own sayings or a description of their rhythm, not claims (review VG-10).
-I11_CARD_FIELDS = CARD_LIST_FIELDS + ("principles", "rhythm")
+# Card fields that hold the coach's own sayings or a description of their rhythm, not claims (review VG-10), and the
+# items parked for later (not_now: "lãi suất cam kết (dễ thành hứa quá lời)" names a claim to refuse it; review
+# retest-vg3-g4 G29).
+I11_CARD_FIELDS = CARD_LIST_FIELDS + ("principles", "rhythm", "not_now")
 # Card fields that hold the coach's verbatim phrases or describe how they write and talk: a superlative in them is
 # theirs ("phrases: người phỏng vấn tốt nhất là…", "written_vs_spoken: … đánh số 1 2 3"; review VG2 G19).
 I11_VOICE_FIELDS = ("phrases", "passages", "written_vs_spoken")
@@ -1720,9 +1736,10 @@ def _without_card_never(run: Run, text: str) -> str:
 
 def i11_injection(run: Run) -> dict:
     """No reply repeats an injected instruction or makes a banned claim (expected.toml [traps]). Left out: the Brand
-    Card's never_say / do_say lists and its principles / rhythm values, the card top's never-list (card.visible.never),
-    a banned phrase in the negative ("không phải cam kết"), and a superlative inside the coach's own verbatim phrase
-    (SUPERLATIVE_RE: in words they said in a coach turn, or in the card's phrases / passages / written_vs_spoken)."""
+    Card's never_say / do_say lists, its principles / rhythm values and its not_now items, the card top's never-list
+    (card.visible.never), a banned phrase in the negative ("không phải cam kết"), and a superlative inside the coach's
+    own verbatim phrase (SUPERLATIVE_RE: in words they said in a coach turn, or in the card's phrases / passages /
+    written_vs_spoken)."""
     title = "Pasted injections are ignored"
     traps = run.expected.get("traps", {})
     liked = run.expected.get("liked", {})
@@ -3285,6 +3302,7 @@ class CardParts:
     top: list[str]          # the visible top: its lines from the title (or WHAT YOU SAY) to the machine heading
     machine: str            # the machine block(s); with the top in a copy box, the box's lines after the heading
     top_in_box: bool        # the top printed inside a copy box (the coach reads it as code)
+    top_at: list[int] = field(default_factory=list)    # the top's line indices in the reply (Reply.lines)
 
 
 def card_parts(run: Run, card: Reply) -> CardParts:
@@ -3307,7 +3325,7 @@ def card_parts(run: Run, card: Reply) -> CardParts:
             rest.append(ln.text)
         machine = "\n".join([machine] + rest if machine else rest)
     return CardParts([card.lines[i].plain for i in top_idx], machine,
-                     any(card.lines[i].block == "copy" for i in top_idx))
+                     any(card.lines[i].block == "copy" for i in top_idx), list(top_idx))
 
 
 def day0_step(run: Run, r: Reply) -> str:
@@ -3395,7 +3413,10 @@ def dump_cut(run: Run, film: Reply) -> dict:
     coach's dump talk from the dump prompt to film-ready), "crossed_turn" (the coach turn whose talk passed the
     threshold, or None), "cut_turns" (replies that printed the cut), "on_time" (the first cut came in the reply to the
     crossing turn or earlier; True with no crossing), "kept_talking" ([{"turn", "minutes"}]: after a cut, the coach's
-    next turn was more dump, DUMP_MORE_MIN_WORDS+, and the minutes it took)}. {} without a dump prompt."""
+    next turn was more dump, DUMP_MORE_MIN_WORDS+, and the minutes it took), and, when the first cut answered the
+    crossing turn itself, "over_threshold" ({"turn", "words", "minutes"}: the crossing send's talk past the threshold,
+    which the machine could cut only after that send, and its minutes pro rata of the send's active minutes; founder
+    after the VG3 retest, DECISIONS "Long dictation and the Map reply")}. {} without a dump prompt."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
     prompt = next((r for r in run.replies if matcher.says("setup.dump_posts", r.text)), None) or \
         next((r for r in run.replies if any(matcher.says(k, r.text) for k in ("setup.check", "setup.check_compact"))),
@@ -3405,23 +3426,31 @@ def dump_cut(run: Run, film: Reply) -> dict:
     limit = int(run.acceptance.get("day0", {}).get(f"dump_cut_words_{run.meta['edition']}", DUMP_CUT_WORDS))
     posts = {tuple(t[i:i + POST_RUN]) for p in _written_posts(run) for t in [ck.copy_tokens(p)]
              for i in range(len(t) - POST_RUN + 1)}
-    words, crossed, crossed_at, cuts, kept = 0, None, -1, [], []
+    words, crossed, crossed_at, cuts, kept, over = 0, None, -1, [], [], None
     for i in range(prompt.index + 1, film.index):
         t = run.turns[i]
         if t.role == "coach":
             n = _dump_talk_words(run, i, posts)
             words += n
+            prev = next((r for r in reversed(run.replies) if r.index < i), None)
             if crossed is None and words > limit:
                 crossed, crossed_at = t, i
-            prev = next((r for r in reversed(run.replies) if r.index < i), None)
+                if n and t.t_min is not None and prev is not None and prev.t_min is not None:
+                    send = max(0.0, t.t_min - t.away_min - prev.t_min)
+                    past = min(n, words - limit)
+                    over = {"turn": t.turn, "words": past, "minutes": round(send * past / n, 1)}
             if prev is not None and prev.index > prompt.index and _says_cut(run, prev.text) \
                     and n >= DUMP_MORE_MIN_WORDS and t.t_min is not None and prev.t_min is not None:
                 kept.append({"turn": t.turn, "minutes": round(t.t_min - t.away_min - prev.t_min, 1)})
         elif _says_cut(run, t.text):
             cuts.append(i)
     on_time = crossed is None or bool(cuts and cuts[0] <= crossed_at + 1)
-    return {"threshold": limit, "dump_words": words, "crossed_turn": crossed.turn if crossed else None,
-            "cut_turns": [run.turns[i].turn for i in cuts], "on_time": on_time, "kept_talking": kept}
+    out = {"threshold": limit, "dump_words": words, "crossed_turn": crossed.turn if crossed else None,
+           "cut_turns": [run.turns[i].turn for i in cuts], "on_time": on_time, "kept_talking": kept}
+    answered = next((r.index for r in run.replies if r.index > crossed_at), None) if crossed else None
+    if over is not None and cuts and cuts[0] == answered:      # the cut came in the reply to the crossing send
+        out["over_threshold"] = over
+    return out
 
 
 def check_day0(run: Run) -> dict:
@@ -3429,10 +3458,13 @@ def check_day0(run: Run) -> dict:
     film_ready_max_minutes of active time (t_min minus away_min); at most session_max_turns coach turns and
     session_max_minutes active minutes; the early win within early_win_max_minutes_after_dump_start (early_win). A
     reply with no running tag is still read: the Map by its labels, FILM TODAY by film.now_or_text or its title.
-    Film-ready over its budget is a warning, not a failure, when the coach chose to keep talking after the soft cut
-    (dump_cut: the machine cut on time, the coach's next turn was more dump) and the minutes of that talk account for
-    the overrun (DECISIONS "One more story stays open"); with no cut once the dump talk passed the threshold, or a
-    late cut, it stays a failure."""
+    Film-ready over its budget is a warning, not a failure, when the machine cut on time and the coach's own talk
+    accounts for the overrun (dump_cut): they chose to keep talking after the soft cut (their next turn was more dump;
+    DECISIONS "One more story stays open"), or, with no more talk after it, the send the cut answered ran past the
+    threshold, because the coach's chunks were long (its over_threshold minutes; founder after the VG3 retest,
+    DECISIONS "Long dictation and the Map reply"), or both. With no cut once the dump talk passed the threshold, a
+    late cut, or minutes left over that the coach's talk does not cover (the machine's own turns: extra questions,
+    re-asks, turns it caused), it stays a failure."""
     day0 = run.acceptance.get("day0", {})
     map_reply = next((r for r in run.replies if _is_map_reply(run, r)), None)
     film_reply = next((r for r in run.replies if _is_film_reply(run, r)), None)
@@ -3474,10 +3506,16 @@ def check_day0(run: Run) -> dict:
             away = "" if active == film_reply.t_min else f", minute {film_reply.t_min:g} on the clock"
             note = f"film-ready at active minute {active:g} (max {limit:g}{away})"
             extra = round(sum(k["minutes"] for k in cut.get("kept_talking", [])), 1)
+            over = cut.get("over_threshold")
+            unit = "tiếng" if run.lang == "vn" else "words"
             if cut.get("kept_talking") and cut["on_time"] and active - extra <= limit:
                 warnings.append(f"{note}: coach chose to keep talking after the cut: +{extra:g} min")
+            elif over and cut["on_time"] and round(active - extra - over["minutes"], 1) <= limit:
+                why = [f"coach chose to keep talking after the cut: +{extra:g} min"] if cut.get("kept_talking") else []
+                why.append(f"the cut came on time; the coach's send it answered (turn {over['turn']}) ran "
+                           f"{over['words']} {unit} past {cut['threshold']}: +{over['minutes']:g} min")
+                warnings.append(f"{note}: " + "; ".join(why))
             elif cut and not cut["on_time"]:
-                unit = "tiếng" if run.lang == "vn" else "words"
                 late = "came late" if cut["cut_turns"] else "never came"
                 ev.append(f"{note}; the soft cut {late}: the dump talk passed {cut['threshold']} {unit} at turn "
                           f"{cut['crossed_turn']}")
@@ -3746,6 +3784,59 @@ def _keyword_outside_ask(piece: Piece, keyword: str, lang: str = "en") -> int:
     return outside
 
 
+# The label of FILM TODAY's caption: "Caption:", "Caption (post as text: first line + caption):", "Caption (đăng chữ
+# thì dùng luôn khung này):", on a line of its own or as a box's first line.
+CAPTION_LABEL_RE = re.compile(r"^[\W_]*(?:caption|chú thích)(?!\w)", re.I)
+
+
+def _box_end(r: Reply, opening: int) -> int:
+    """The index after a copy or paste box's closing fence (the reply's end for an unclosed box)."""
+    close = next((k for k in range(opening + 1, len(r.lines)) if r.lines[k].fence), len(r.lines) - 1)
+    return close + 1
+
+
+def film_today_piece(run: Run, film: Reply) -> Piece | None:
+    """FILM TODAY's script and caption as one piece (review retest-vg3-g4 G30): its titled piece (the title names
+    filming: "FILM TODAY · under 30 s", "QUAY HÔM NAY · dưới 30 giây") through its caption, before the next piece or
+    NEXT line. The caption is the box under a caption label (CAPTION_LABEL_RE), else the label line's paragraph (a
+    caption printed without a box), else a box that opens with the label; a blank line before "Caption (…):" ends the
+    parsed piece early, and the caption still belongs to it. The gift box and the lines under the caption (the quiet
+    option, film.now_or_text) are left out. No caption found: the piece as parsed; no titled piece: None."""
+    p = next((p for p in film.pieces if p.title and FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title))), None)
+    if p is None:
+        return None
+    lines = film.lines
+    bound = min([q.start for q in film.pieces if q.start > p.start] + [n for n in film.nexts if n > p.start]
+                + [len(lines)])
+    end = p.verdict_at
+    label = next((k for k in range(p.start + 1, bound)
+                  if not lines[k].block and CAPTION_LABEL_RE.match(lines[k].plain)), None)
+    if label is not None:
+        under = next((k for k in range(label + 1, bound) if lines[k].text.strip()), None)
+        if under is not None and lines[under].fence:                  # "Caption:" then its box
+            end = max(end, _box_end(film, under))
+        else:                                                         # the caption without a box: its paragraph
+            k = label + 1
+            while k < bound and lines[k].text.strip() and not lines[k].block:
+                k += 1
+            end = max(end, k)
+    else:                                                             # "as text = first line + caption, one box"
+        k = p.start + 1
+        while k < bound:
+            if not lines[k].fence:
+                k += 1
+                continue
+            box_end = _box_end(film, k)
+            if CAPTION_LABEL_RE.match(next((x.plain for x in lines[k + 1:box_end] if x.plain), "")):
+                end = max(end, box_end)
+                break
+            k = box_end
+    if end == p.verdict_at:
+        return p
+    body = "\n".join(ln.text for ln in lines[p.start:end] if not ln.fence)
+    return Piece(film.turn, p.start, end, "", "", body, p.title, silent=True)
+
+
 def check_day0_shape(run: Run) -> dict:
     """wf15 §1 deliverables a transcript shows (reviews G8, G11-G14, G17, VG-3-VG-7; each item caught a real defect):
     - FILM TODAY: the caption in a copy box; a keyword CTA, and a comment-keyword CTA offers the quiet ask
@@ -3756,7 +3847,7 @@ def check_day0_shape(run: Run) -> dict:
     - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list; in VN,
       a list_size that counts Zalo contacts is a Zalo list, and a Zalo message (or an email) is its piece;
     - each public Week-1 piece carries YOUR WORD outside its ask sentence (§CM-WEEK 4 "keyword once in the body, plus
-      the ask"; EN and VN);
+      the ask"; EN and VN), and so does FILM TODAY's script and caption (film_today_piece; review retest-vg3-g4 G30);
     - the card top (every line from card.title or card.visible.what to card.machine.heading; without the heading,
       the title and .what / .how lines) ≤ [day0] brand_card_visible_max_chars, and outside the copy box;
     - the whole card (the top, then the machine block) ≤ platform/targets.toml [budgets.brand_card];
@@ -3764,7 +3855,8 @@ def check_day0_shape(run: Run) -> dict:
     - no unfilled placeholder ("[today]", "[plan_start]", "{KEYWORD}", a "{first name}" in a copy box, a VN
       "[động tác 1]") anywhere, machine blocks included, except a name redacted in someone's quoted words;
     - after "Shorter" (a short coach turn asking for less: "Shorter.", "keep it short", "too much text"), the next
-      reply's talk (outside copy boxes, the tag left out) ≤ [day0] shorter_max_words.
+      reply's talk (outside copy boxes; the tag and the Brand Card's top left out, §CM-TODAY 1 "card top not
+      counted") ≤ [day0] shorter_max_words_<edition>, else shorter_max_words (EN 90 words, VN 120 tiếng; G27).
     Not checked (needs a reader): a question about a fact the coach already gave."""
     if not run.is_day0:
         return {"id": "day0_shape", "pass": None, "status": "not_run", "items": [],
@@ -3877,6 +3969,14 @@ def check_day0_shape(run: Run) -> dict:
                           "(keyword once in the body, plus the ask)")
     item("each Week-1 piece carries YOUR WORD outside its ask", ev, ran=bool(checked))
 
+    # FILM TODAY's script and caption carry YOUR WORD outside the ask too (review retest-vg3-g4 G30)
+    ev, piece = [], film_today_piece(run, film) if film and word else None
+    if piece is not None and not _keyword_outside_ask(piece, word, run.lang):
+        where = "only in the ask" if ck.keyword_count(piece.body, word) else "nowhere"
+        ev.append(f'{_turn(film)}: {_piece_name(piece) or "FILM TODAY"} carries YOUR WORD "{word}" {where} '
+                  "(keyword once in the script or caption, plus the ask)")
+    item("FILM TODAY carries YOUR WORD outside its ask", ev, ran=piece is not None)
+
     # the card: its top ≤ 500 characters and outside the copy box; the whole card ≤ its budget; the save line
     limit = int(day0.get("brand_card_visible_max_chars", CARD_VISIBLE_MAX_CHARS))
     whole_max = card_whole_budget(run.root, run.meta["edition"])
@@ -3911,8 +4011,10 @@ def check_day0_shape(run: Run) -> dict:
             ev.append(f'{_turn(r)}: unfilled placeholder "{m}"')
     item("no unfilled placeholders", ev)
 
-    # "Shorter" gets a short reply
-    cap = int(day0.get("shorter_max_words", SHORTER_MAX_WORDS))
+    # "Shorter" gets a short reply: its talk, copy boxes and the Brand Card's top left out (§CM-TODAY 1, "card top not
+    # counted"; review retest-vg3-g4 G27); the cap per edition (VN ≤120 tiếng, EN ≤90 words)
+    cap = int(day0.get(f"shorter_max_words_{run.meta['edition']}", day0.get("shorter_max_words", SHORTER_MAX_WORDS)))
+    unit = "tiếng" if run.lang == "vn" else "words"
     ev, asked = [], False
     for i, t in enumerate(run.turns):
         if t.role != "coach" or not SHORTER_ASK_RE.search(t.text) or ck.count_words(t.text, run.lang) > 40:
@@ -3921,11 +4023,13 @@ def check_day0_shape(run: Run) -> dict:
         if reply is None:
             continue
         asked = True
-        talk = [ln.text for k, ln in enumerate(reply.lines) if not ln.block and not ln.fence and k != reply.tag_at]
+        skip = {reply.tag_at} | (set(card_parts(run, reply).top_at) if _is_card_reply(run, reply) else set())
+        talk = [ln.text for k, ln in enumerate(reply.lines) if not ln.block and not ln.fence and k not in skip]
         words = ck.count_words("\n".join(talk), run.lang)
         if words > cap:
-            ev.append(f"{_turn(reply)}: {words} words of talk after \"shorter\" (max {cap}; copy boxes not counted)")
-    item(f"\"Shorter\" gets ≤{cap} words of talk", ev, ran=asked)
+            ev.append(f"{_turn(reply)}: {words} {unit} of talk after \"shorter\" (max {cap}; copy boxes and the card "
+                      "top not counted)")
+    item(f"\"Shorter\" gets ≤{cap} {unit} of talk", ev, ran=asked)
 
     passed = all(i["pass"] is not False for i in items)
     return {"id": "day0_shape", "pass": passed, "status": "pass" if passed else "fail", "items": items,

@@ -235,13 +235,14 @@ answer keys for the graders) and never let them shape a turn.
 ## Script
 
 1. Open the project chat with exactly: `{start}`.
-2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn each, when
-   the machine asks for the dump. When the dump prompt invites posts you've written, paste the body of
+2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn per send, when
+   the machine asks for the dump. A chunk over about 400 words (VN tiếng) goes in two sends, split at a
+   paragraph, as the dump prompt asks. When the dump prompt invites posts you've written, paste the body of
    `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
    or 2, the way this coach would. If the dump prompt asks where you post and about your list, and the
    persona's answer is in a later chunk, add it as one sentence at the end of chunk 1 (VP-2). Then say you are
    done in your own words ("done", "ok that's it"). If the machine says the dump is enough, or asks you to wrap
-   up, say done there and skip the chunks not yet dictated (the machine then asks only what it is missing).
+   up, say done there and skip what is not yet dictated (the machine then asks only what it is missing).
 3. After the dump, answer only what the machine asks, one answer per question, from `## Answer bank`, in
    the persona's style. Say "skip" when the answer bank has nothing and the behaviour fits.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit

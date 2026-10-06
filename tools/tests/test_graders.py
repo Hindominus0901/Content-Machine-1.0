@@ -194,6 +194,7 @@ FILM_REPLY = f'''
     Last line: Comment CHAPTER for the coffee script.
     Caption:
     ```
+    Your next chapter starts with a coffee.
     Comment CHAPTER and I'll send you the coffee script.
     ```
     (quieter: say 'quiet')
@@ -1727,9 +1728,10 @@ class G1RoundGraderTests(TempRepo):
         report = self.day0(("coach", "next"), ("machine", WEEK_REPLY), ("coach", "ok"), ("machine", CARD_REPLY))
         shape = self.inv(report, "day0_shape")
         self.assertPasses(report, "day0_shape")
-        # FILM TODAY, YOUR WORD, KNOWN FOR, email (no list named), keyword outside the ask, card top, whole card,
-        # save line, placeholders, "Shorter" (not asked)
-        self.assertEqual([i["pass"] for i in shape["items"]], [True, True, True, None, True, True, True, True, True, None])
+        # FILM TODAY, YOUR WORD, KNOWN FOR, email (no list named), keyword outside the ask (Week 1, FILM TODAY), card
+        # top, whole card, save line, placeholders, "Shorter" (not asked)
+        self.assertEqual([i["pass"] for i in shape["items"]],
+                         [True, True, True, None, True, True, True, True, True, True, None])
 
     def test_g8_film_today_box_quiet_and_your_word(self):
         floor = FILM_REPLY.replace("```\n", "").replace("    ```", "").replace("(quieter: say 'quiet')", "")
@@ -2591,6 +2593,210 @@ class VG2RoundGraderTests(TempRepo):
                                                "luôn, không thì anh trả lời em câu này:"))
         self.assertTrue(graders._says_cut(run, "Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì gõ 'xong'."))
         self.assertFalse(graders._says_cut(run, "Hôm nay vậy là được một nửa rồi."))
+
+
+class VG3RoundGraderTests(TempRepo):
+    """Grader fixes from the VG3 / G4 retest (qa/runs/retest-vg3-g4/review.md §4 and §8, G27-G30) and the founder's
+    long-dictation rule (docs/DECISIONS.md "Long dictation and the Map reply"): every false positive the review found
+    must pass, every real defect the same check caught must still fail."""
+
+    CHUNK = VG2RoundGraderTests.CHUNK
+    SHORTER = "Viết ngắn thôi, đọc trên điện thoại mỏi mắt."
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", VG2_STRINGS))
+        self.write("strings/en.toml", toml_table("strings", dict(EN_STRINGS, **{"dump.enough": EN_CUT})))
+        self.write("evals/acceptance.toml", """
+            [day0]
+            map_max_turns_en = 6
+            map_max_turns_vn = 7
+            film_ready_max_minutes = 20
+            session_max_turns = 10
+            map_lines = 4
+            shorter_max_words = 90
+            shorter_max_words_vn = 120
+            [voice]
+            i23_phrase_share_min = 0.5
+            never_words = 0
+            """)
+        self.write("evals/personas/vn/khoa/persona.toml", VG_PERSONA)
+        self.write("evals/personas/vn/khoa/expected.toml", VG_EXPECTED)
+        self.write("evals/personas/vn/khoa/answers.md", f"## Dump chunk 1\n{self.CHUNK}\n")
+
+    def vn(self, *extra, map_reply=VG_MAP, **kw):
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", map_reply)] \
+            + list(extra)
+        return self.grade(turns, persona="vn/khoa", edition="vn", suite="day0", **kw)
+
+    def week(self, body: str) -> str:
+        return f"{TAG}Tuần 1\n{body}\nTIẾP → Nhắn 'tiếp'."
+
+    def item(self, report: dict, check: str, name: str) -> dict:
+        return next(i for i in self.inv(report, check)["items"] if i["item"].startswith(name))
+
+    # -- G27: "Shorter" leaves the card top out of the talk; VN caps at 120 tiếng (§CM-TODAY 1)
+    def card_after_shorter(self, talk: int, top: int = 95) -> str:
+        """A Brand Card reply right after "Shorter": `talk` tiếng outside the top and the boxes, a top of `top`."""
+        lead = "Rồi, từ giờ em viết ngắn, bài chỉ in khung thôi."                       # 11 tiếng
+        save = "Lưu lại để em nhớ anh (30 giây): bấm ⋯ dưới card → Lưu vào dự án. Dự phòng: gửi card vào Zalo."
+        rest = talk - 11 - graders.ck.count_words(save, "vn") - 9 - 5        # heading 9, TIẾP line 5
+        return (f"{TAG}Lưu lại\n{lead}\n{' '.join(['nữa'] * rest)}\n\nBrand Card v1 · 06/10/2026\n"
+                f"NÓI GÌ: {' '.join(['tuyển'] * (top - 9))}\nNÓI THẾ NÀO: thẳng\n"
+                "Phần còn lại là cho máy, không cần đọc:\n```\nversion: 1\n```\n"
+                f"{save}\nTIẾP → Mai nhắn 'tiếp' nha.")
+
+    def test_g27_shorter_leaves_the_card_top_out(self):
+        week = self.week("N1 · Bài\n```\nTuyển hoài mà không giữ được ai. Comment TUYỂN HOÀI nha.\n```")
+        ok = self.vn(("coach", "ok"), ("machine", week), ("coach", self.SHORTER),
+                     ("machine", self.card_after_shorter(75)))
+        shorter = self.item(ok, "day0_shape", '"Shorter"')
+        self.assertEqual(shorter["item"], '"Shorter" gets ≤120 tiếng of talk')
+        self.assertIs(shorter["pass"], True, shorter)                  # 75 + the 95-tiếng top: under the VN cap
+        over_en_cap = self.vn(("coach", "ok"), ("machine", week), ("coach", self.SHORTER),
+                              ("machine", self.card_after_shorter(110)))
+        self.assertIs(self.item(over_en_cap, "day0_shape", '"Shorter"')["pass"], True)     # VN: 120, not EN's 90
+        long = self.vn(("coach", "ok"), ("machine", week), ("coach", self.SHORTER),
+                       ("machine", self.card_after_shorter(130)))
+        self.assertFails(long, "day0_shape", 'turn 8: 130 tiếng of talk after "shorter" (max 120; copy boxes and the '
+                                             "card top not counted)")
+        # EN keeps 90 words; a card's top lines are left out there too
+        top = "WHAT YOU SAY: " + " ".join(["coffee"] * 80)
+        card = (f"{TAG}Brand Card\nShort from now on.\nBrand Card v1 · Oct 6, 2026\n{top}\nHOW YOU SAY IT: dry\n"
+                "The rest is for the machine, no need to read:\n```\nversion: 1\n```\nNEXT → Save it.")
+        base = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", FILM_REPLY), ("coach", "Shorter.")]
+        en = self.grade(base + [("machine", card)], suite="day0")
+        self.assertIs(self.item(en, "day0_shape", '"Shorter"')["pass"], True)
+        talky = card.replace("Short from now on.", " ".join(["word"] * 80))
+        self.assertFails(self.grade(base + [("machine", talky)], suite="day0"), "day0_shape",
+                         'words of talk after "shorter" (max 90')
+        # the repo's acceptance keys (G27)
+        day0 = graders._toml(REPO / "evals" / "acceptance.toml")["day0"]
+        self.assertEqual((day0["shorter_max_words"], day0["shorter_max_words_vn"]), (90, 120))
+
+    # -- G28: a carousel page label at a line's start is not a claim; the numbers after it still are
+    def test_g28_page_labels_are_not_claims(self):
+        carousel = self.week("Thứ Hai, 12/10 · carousel LinkedIn\n```\nTrang 1: 40 người bỏ việc sau Tết.\n"
+                             "Trang 11: Một quán 40 nhân viên, tuyển 8 nghỉ 2.\n"
+                             "**Trang 12:** Nhắn tôi chữ TUYỂN HOÀI.\nSlide 11: same.\nPage 11 · same.\n```")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", carousel)), "I8")
+        for line in ("Trang 11: Một quán 45 nhân viên.", "Có 11 quán tuyển hoài.", "Xem trang 11 trước."):
+            with self.subTest(line=line):
+                bad = self.week(f"Thứ Hai, 12/10 · carousel LinkedIn\n```\n{line}\n```")
+                n = "45" if "45" in line else "11"
+                self.assertFails(self.vn(("coach", "ok"), ("machine", bad)), "I8", f'"{n}" not in allowed_numbers')
+
+    # -- G29: the card's not_now items name a claim to park it; the same claim elsewhere is still a claim
+    def test_g29_not_now_items_are_not_claims(self):
+        parked = VG_CARD.replace("version: 1", "version: 1\nnot_now: dạy sale (khác tệp khách) | sản phẩm mới công ty "
+                                               "đang thi đua, lãi suất cam kết (dễ thành hứa quá lời)\ntone: thẳng")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", parked)), "I11")
+        offer = parked.replace("tone: thẳng", "offer: gói giữ người, cam kết có người trong 60 ngày")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", offer)), "I11", '"cam kết"')
+        post = self.week("N1 · Bài\n```\nLãi suất cam kết 7%, anh chị yên tâm.\n```")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", post)), "I11", '"cam kết"')
+
+    # -- G30: FILM TODAY's script and caption carry YOUR WORD outside the ask, like each Week-1 piece
+    def test_g30_film_today_keyword_outside_the_ask(self):
+        name = "FILM TODAY carries YOUR WORD"
+        # Hạnh's shape: a blank line and "Caption (…):" end the parsed piece before its box; the caption is still read
+        labelled = VG_MAP.replace("    Caption:\n", "\n    Caption (đăng chữ thì dùng luôn khung này):\n")
+        report = self.vn(map_reply=labelled)
+        self.assertFails(report, "day0_shape", 'turn 4: QUAY HÔM NAY · dưới 30 giây carries YOUR WORD "tuyển hoài" '
+                                               "only in the ask (keyword once in the script or caption, plus the ask)")
+        caption = labelled.replace("Mùng 8 Tết tôi đứng", "Tuyển hoài mà không giữ được ai. Mùng 8 Tết tôi đứng")
+        self.assertIs(self.item(self.vn(map_reply=caption), "day0_shape", name)["pass"], True)
+        script = labelled.replace("Chữ trên màn hình: Còn dư 40 bao lì xì",
+                                  "Chữ trên màn hình: Tuyển hoài? Còn dư 40 bao")
+        self.assertIs(self.item(self.vn(map_reply=script), "day0_shape", name)["pass"], True)
+        gift = labelled.replace("    Muốn kết nhẹ hơn",
+                                "    Quà gửi anh chị (vừa một tin inbox):\n    ```\n"
+                                "    Mẫu phiếu việc cho ai đang tuyển hoài.\n    ```\n    Muốn kết nhẹ hơn")
+        self.assertIs(self.item(self.vn(map_reply=gift), "day0_shape", name)["pass"], False)   # the gift is not read
+        # "as text = first line + caption, one box": a box that opens with the caption label belongs to FILM TODAY
+        one_box = VG_MAP.replace("    Caption:\n    ```\n",
+                                 "\n    Đăng chữ thì dùng khung này:\n    ```\n"
+                                 "    Caption: Tuyển hoài mà không giữ được ai.\n")
+        self.assertIs(self.item(self.vn(map_reply=one_box), "day0_shape", name)["pass"], True)
+        # EN: a caption printed without a box is read to its paragraph's end
+        unboxed = FILM_REPLY.replace("    ```\n    Your next chapter starts with a coffee.\n", "    Coffee first.\n") \
+            .replace("    Comment CHAPTER and I'll send you the coffee script.\n    ```\n",
+                     "    Comment CHAPTER and I'll send you the coffee script.\n\n")
+        report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", unboxed)], suite="day0")
+        self.assertFails(report, "day0_shape", 'FILM TODAY (under 30 s) carries YOUR WORD "chapter" only in the ask')
+        said = unboxed.replace("Coffee first.", "Your next chapter starts with a coffee.")
+        report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", said)], suite="day0")
+        self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
+        self.assertIs(self.item(report, "day0_shape", "FILM TODAY: caption")["pass"], False)   # no box: still caught
+
+    # -- founder after the VG3 retest: an on-time cut and long chunks make film-ready over budget a warning
+    CHUNK_EN = " ".join(["We sat in the stairwell and I called the bank about payroll."] * 60)       # 720 words
+
+    def long_run(self, first: float = 7.0, second: float = 7.0, film_at: float = 21.5, asks: int = 0,
+                 cut: str = "chunk 2", third: str = "Right, one buyer.", third_min: float = 0.7) -> dict:
+        """Two 720-word sends (`first`, `second` minutes), the cut where `cut` says ("chunk 2", "late", "never"), the
+        coach's `third` turn, `asks` extra machine questions, and FILM TODAY at `film_at`."""
+        said = "Got it. That's plenty for today. If you have one more story, tell it now. If not: My guess: one " \
+               "buyer. Right?"
+        prompt = (f"{TAG}Setup check\nGot posts or messages you've written? Paste 2–3 too, or send a link to your "
+                  "page.\nNEXT → Talk.")
+        win = (f"{TAG}Your talk\nGot it. A line worth money:\n```\nThe bank app is not a forecast.\n```\n"
+               "NEXT → Keep going.")
+        t = 1.0 + first
+        turns = [("coach", "Start", {"t_min": 0.0}), ("machine", prompt, {"t_min": 1.0}),
+                 ("coach", self.CHUNK_EN, {"t_min": t}), ("machine", win, {"t_min": t + 0.3})]
+        t += 0.3 + second
+        turns += [("coach", self.CHUNK_EN, {"t_min": t}),
+                  ("machine", f"{TAG}Your talk\n{said if cut == 'chunk 2' else 'Got it. Next: your clients.'}",
+                   {"t_min": t + 0.3})]
+        t += 0.3 + third_min
+        turns += [("coach", third, {"t_min": t})]
+        if cut == "late":
+            turns += [("machine", f"{TAG}Your talk\n{said}", {"t_min": t + 0.3})]
+            t += 1.0
+            turns += [("coach", "Right, one buyer.", {"t_min": t})]
+        for k in range(asks):                                  # the machine's own extra questions
+            turns += [("machine", f"{TAG}Your talk\nMy guess: you post on LinkedIn {k}. Right?", {"t_min": t + 0.3}),
+                      ("coach", "yes", {"t_min": t + 1.0})]
+            t += 1.0
+        turns += [("machine", MAP_REPLY, {"t_min": t + 0.3}), ("coach", "ok", {"t_min": film_at - 0.3}),
+                  ("machine", FILM_REPLY, {"t_min": film_at})]
+        return self.inv(self.grade(turns, suite="day0"), "day0_timing")
+
+    def test_long_chunks_with_an_on_time_cut_are_a_warning(self):
+        long = self.long_run()                                  # consultant VN 20.3: 7-minute sends, cut on time
+        self.assertIs(long["pass"], True, long)
+        self.assertEqual(long["status"], "warn")
+        self.assertEqual(long["details"]["dump_cut"]["over_threshold"], {"turn": 5, "words": 240, "minutes": 2.3})
+        self.assertIn("film-ready at active minute 21.5 (max 20): the cut came on time; the coach's send it answered "
+                      "(turn 5) ran 240 words past 1200: +2.3 min", long["warnings"])
+        # the machine's own turns: the coach's talk past the cut covers 2.3 min, not the questions after it
+        asked = self.long_run(film_at=24.0, asks=2)
+        self.assertIs(asked["pass"], False, asked)
+        self.assertIn("film-ready at active minute 24 (max 20)", asked["evidence"])
+        slow = self.long_run(film_at=23.0)                      # minutes the long send does not cover
+        self.assertIs(slow["pass"], False)
+        self.assertIn("film-ready at active minute 23 (max 20)", slow["evidence"])
+        # no cut, or a late one, stays a failure however long the sends were
+        never = self.long_run(cut="never")
+        self.assertIs(never["pass"], False)
+        self.assertIn("the soft cut never came: the dump talk passed 1200 words at turn 5", never["evidence"][0])
+        self.assertNotIn("over_threshold", never["details"]["dump_cut"])
+        late = self.long_run(cut="late", film_at=21.0)
+        self.assertIs(late["pass"], False)
+        self.assertIn("the soft cut came late", late["evidence"][0])
+        # one more story after an on-time cut, and a long send before it: both are the coach's minutes
+        both = self.long_run(first=5.0, second=5.7, third=self.CHUNK_EN, third_min=5.7, film_at=27.0)
+        self.assertEqual(both["status"], "warn", both)
+        self.assertIn("film-ready at active minute 27 (max 20): coach chose to keep talking after the cut: +5.7 min; "
+                      "the cut came on time; the coach's send it answered (turn 5) ran 240 words past 1200: +1.9 min",
+                      both["warnings"])
+        self.assertIs(self.long_run(first=5.0, second=5.7, third=self.CHUNK_EN, third_min=5.7, film_at=28.0)["pass"],
+                      False)
+        # within budget: nothing to explain (the 7-minute first send still warns about the early win)
+        quick = self.long_run(film_at=19.0)
+        self.assertIs(quick["pass"], True)
+        self.assertFalse([w for w in quick.get("warnings", []) if w.startswith("film-ready")])
 
 
 class LoaderTests(TempRepo):

@@ -142,6 +142,16 @@ class RunPackets(TempRepo):
         self.assertIn("If the dump prompt asks where you post and about your list", coach)       # VP-2
         self.assertIn("add it as one sentence at the end of chunk 1", coach)
 
+    def test_protocol_long_chunks_go_in_two_sends(self):
+        """Retest VG3/G4 §8 P10: a dump chunk over about 400 words is two sends, split at a paragraph, as the dump
+        prompt asks (first sends of 595-871 words made the early win late and the consultant's film-ready 20.3)."""
+        made = self.packets()
+        step2 = " ".join((made[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        self.assertIn("A chunk over about 400 words (VN tiếng) goes in two sends, split at a paragraph, as the dump "
+                      "prompt asks.", step2)
+        self.assertIn("one coach turn per send", step2)
+        self.assertNotIn("one coach turn each", step2)
+
     def test_s0_has_no_method_file(self):
         made = self.packets(lane="S0")
         self.assertEqual([p.name for p in (made[0] / "packet" / "kit").iterdir()], ["1-INSTRUCTIONS.txt"])
