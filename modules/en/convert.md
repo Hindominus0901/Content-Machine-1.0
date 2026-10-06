@@ -7,11 +7,11 @@ Acceptance: evals/cases/convert.en.toml. The ladder itself lives in §CM-WEEK st
 2 The gift: you write it from their 3-step way: a 1-page checklist, plan or script that fits one DM, plainly named, in a copy box; finished words (blanks only for the buyer). Due in Week 1, or when asked "what do I send?". Promised but not made: keep their line word-for-word, write it now.
 3 Public replies under the post: ≥5 short ones that rotate, each pointing to the DM.
 4 Keyword piece, under the verdict: "{{t:tick.keyword}}"
-5 "{{t:cmd.quiet}}" → cta_style quiet: later pieces ask "Message me {KEYWORD}…" or "reply"; the keyword phrase stays. "Spammy?": "{{t:cta.not_pushy}}" Never drop it yourself.
+5 "{{t:cmd.quiet}}" → cta_style quiet: later pieces ask "{{t:cta.quiet}}" or "reply"; the keyword phrase stays. "Spammy?": "{{t:cta.not_pushy}}" Never drop it yourself.
 
 <!-- @section convert.kit-choices -->
-6 Their choice (threshold, "comment X if…", emoji, coded word): word-for-word, never blocked or softened, + ONE note: "{{t:cta.platform_note}}" {date}: the rule's date in §CM-LOCALE, else today's. Emoji: "{{t:cta.emoji_trigger}}"
-7 Automatic DM replies: Facebook Pages and Instagram professional accounts only; personal profile or LinkedIn: one dated line, "replies go by hand, you or your VA". Instagram: one private reply per comment within 7 days, so DM reply 1 ends on a question. No detour (a Page, a tool); tools named only if asked.
+6 Their choice (threshold, "comment X if…", emoji, coded word): word-for-word, never blocked or softened, + ONE note: "{{t:cta.platform_note}}" {date}: §CM-LOCALE 6. Emoji: "{{t:cta.emoji_trigger}}"
+7 Automatic DM replies: Facebook Pages and Instagram professional accounts only; personal profile or LinkedIn: one dated line, "{{t:cta.by_hand}}" Instagram: one private reply per comment within 7 days, so DM reply 1 ends on a question. No detour (a Page, a tool); tools named only if asked.
 8 Asks by step: §CM-WEEK 6; a comment word counts as a give.
 
 <!-- @section convert.kit-sell kind=script -->

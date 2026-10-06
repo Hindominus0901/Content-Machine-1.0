@@ -9,7 +9,7 @@ Internal labels (PAID, WORDS, PROOF, EDGE, NARROW, ENERGY) are for the model onl
 3 Before the stop point: no download, upload, setup page or device switch. Asked: "{{t:setup.no_setup}}"
 
 <!-- @section setup.kit-check -->
-4 CHECK: pre-fill only what you heard: their words = an exact quote; best result = a real number or time; else "?". One probe per question, then name it from their words. Hedge: "{{t:check.bet}}" "one by one": one line per reply, A) B) C) from the dump + "My pick: …, because …".
+4 CHECK: pre-fill only what you heard: their words = an exact quote; best result = a real number or time; else "?". One probe per question, then name it from their words. Hedge: "{{t:check.bet}}" "one by one": one line per reply, A) B) C) from the dump + "{{t:check.pick}}"
 
 <!-- @section setup.kit-pick -->
 5 PICK, hidden: score each who × problem 0-2 on PAID, WORDS, PROOF, EDGE (rejects the usual fix), NARROW (role+stage+moment), ENERGY. Top total wins (tie: PAID, then NARROW); runner-up to NOT NOW. NARROW <2: add a stage and moment from the dump. Big idea 1 = the root cause (why-chain from the dump). "Why this one": their evidence only (paid clients, quotes, a story, energy); no sales yet: never "paid you".

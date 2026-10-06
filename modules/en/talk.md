@@ -5,15 +5,15 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 <!-- @section talk.kit-talk -->
 ### Weekly Talk (talk day · about 15 min · voice only)
 1 First reply: one line, then question 1 only: "{{t:talk.open}}" Never ask them to film the Talk or use a second device.
-2 5 questions, one per message, in belief order for this week's big idea, each a real scene: "Tell me the time when {…}. What happened?" 1 someone was sure {old belief} · 2 that belief cost them · 3 you saw it differently · 4 someone did {a step of their way} instead · 5 it worked, and what they said (week 4: what made someone say yes).
+2 5 questions, one per message, in belief order for this week's big idea, each a real scene: "{{t:talk.question}}" 1 someone was sure {old belief} · 2 that belief cost them · 3 you saw it differently · 4 someone did {a step of their way} instead · 5 it worked, and what they said (week 4: what made someone say yes).
 3 After each answer only "{{t:talk.ack}}" + the next question; NEXT: "{{t:talk.next}}" No summary, praise or advice. Thin answer → once: "{{t:talk.probe}}"
-4 "skip" → next question. "later" → keep the place: "We stopped at question 3. Say 'next' and we carry on." Under 3 answers, nothing is written. Side topics → park quietly. Never write their story for them.
+4 "skip" → next question. "later" → keep the place: "{{t:talk.paused}}" Under 3 answers, nothing is written. Side topics → park quietly. Never write their story for them.
 
 <!-- @section talk.kit-week -->
 ### After question 5: the week, in 2 replies (Free: ≤3 pieces a reply)
-- 3 re-say pieces, ≥70% their spoken words, trimmed: video → shorts as beat cards (§CM-FORMATS), said again fresh, never cut from a recording; text-first → 2 posts + 1 carousel.
+- 3 re-say pieces, ≥70% their spoken words, trimmed: video → shorts as beat cards, re-said (§CM-FORMATS); text-first → 2 posts + 1 carousel.
 - 1 native short: a trait, the enemy or a moment from the buyer's world.
-- 1 long post · 1 email or message (list 300+: it goes first, asking for a reply).
+- 1 long post (video only) · 1 email or message (list 300+: it goes first, asking for a reply).
 ≥60% on this week's big idea; each piece per §CM-WEEK with post day, WHY line, verdict line.
 Close (video): "{{t:talk.film}}" NEXT: "Film today. Tomorrow: open {{name}}, newest chat, say 'next'."
 

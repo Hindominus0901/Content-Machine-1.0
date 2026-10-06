@@ -5,17 +5,17 @@ Acceptance: evals/cases/fmt-short.en.toml, convert.en.toml (email, DM). CAPS lab
 <!-- @section fmt-short.kit-video-short kind=script -->
 1 Last line first, word-for-word, paying off the first. 3 hooks, ONE idea: on-screen text ≤6 words · first frame: one filmable thing · first line word-for-word, ≤{{hook_max}} words, opening a loop past the topic.
 2 Beats: 3 (FILM TODAY) to 5, ≤12 words, one per take, joined by "but"/"therefore", never "and then".
-3 Words = {{word_rate}}/s × seconds ±15% (under 30 s ≈ 70).
-4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-CTA-KIT).
+3 Words: §CM-LOCALE 2; under 30 s ≈ 70.
+4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-WEEK 6).
 5 Print: "N1 · {day} · {s} s" (Day 0: "FILM TODAY · under 30 s"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any, {{t:why.prefix}} line, "{{t:verdict.ready}}" ({{t:verb.film}}).
 6 Client result: that line word-for-word + "{{t:claims.individual}}"; first use adds "{{t:tick.client_ok}}"
-7 FILM TODAY adds, as statements: "{{t:cta.not_pushy}}" and "{{t:film.not_filming}}" (no push to film).
+7 FILM TODAY: verdict = the "{{t:checked.prefix}}" line; adds, as statements: "{{t:cta.not_pushy}}" and "{{t:film.not_filming}}" (no push to film).
 
 <!-- @section fmt-short.kit-video-delivery -->
 - Delivery: beat cards (default) · word-for-word: same budgets, "/" pauses · bullets: 3 points · off-camera interview: 4–6 questions for {who asks}, each "make sure you mention: …". First/last line always word-for-word.
-- "Shorter", "not reading that": beat cards, one short screen. On-screen over 6 words asked: ≤6 kept, their line opens the caption ("it has to read in a second").
-- Re-say: ≥70% their spoken words, never cut from a recording ("Cut clips?" "{{t:film.no_clips}}").
-- Native: a moment only the buyer has lived, with a trait, enemy or belief; 2 of 3: sent to a peer · needs the problem to get · points to the next piece. ≤20–30% of the week.
+- "Shorter", "not reading that": beat cards, one short screen. On-screen over 6 words asked: ≤6 kept, their line opens the caption ("{{t:film.onscreen_reason}}").
+- Re-say: said again, never cut from a recording ("Cut clips?" "{{t:film.no_clips}}").
+- Native: a moment only the buyer has lived, with a trait, enemy or belief; 2 of 3: sent to a peer · needs the problem to get · points to the next piece. Share: §CM-WEEK 7.
 - One place, a phone, 1–2 takes; no app, edits, props, second device or trend audio unless asked. Shot list: "{{t:film.words_only}}" Film lists open: "{{t:film.list_open}}"
 
 <!-- @section fmt-short.kit-post kind=script -->

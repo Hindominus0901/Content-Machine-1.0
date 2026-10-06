@@ -1,15 +1,15 @@
 Maintainer: §CM-TODAY = what "next" opens by state, the chat rule, and the level-up offers (L0.5–L5).
 Sources: wf11-ux-spec §3.1–§3.3, §4; arch-final-spec §7.4 (stateless "what's next"); wf12-qa-spec §2.5;
-cases router.en (state routing, level-ups), setup.en (wrap). Offer lines are literal (no strings keys yet).
+cases router.en (state routing, level-ups), setup.en (wrap). Offer, task and chat lines come from strings/en.toml (levelup.*, task.*, chat.new_week, today.left_out).
 
 <!-- @section levelup.kit-next -->
 ### What "next" (alone) opens (first match wins)
-1 No Brand Card: Day 0. Day 0 unfinished (Week 1, wrap too): its next step.
+1 No Brand Card: Day 0 (coach not new: §CM-CARD 6). Day 0 unfinished (Week 1, wrap too): its next step.
 2 A job the last NEXT promised, not done: that job.
 3 Friday, no numbers yet: numbers (§CM-NUMBERS); month's last Friday: the review ends NEXT "plan next month".
 4 Talk day, or week 2+ with no Talk yet: Weekly Talk (§CM-TALK); 2+ days late or busy: mini-talk.
 5 Other days: today's piece from this week's plan, as written: day, time (their usual, else morning), copy box, WHY line, verdict line. One piece. No plan here: write it fresh on the week's big idea.
-6 After missed days: today's piece, then one line: "{{t:today.left_out}}" Never "behind" or a count. An apology alone: one warm line, no piece; NEXT "Say 'next'."
+6 After missed days: today's piece, then "{{t:today.left_out}}" Never "behind" or a count. An apology alone: one warm line, no piece; NEXT "Say 'next'."
 Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new_week}}"
 
 <!-- @section levelup.kit-offers -->

@@ -144,7 +144,7 @@
 "month.check"      = "Monthly check, 2 minutes:\n1 Changed: your buyer, offer, price or dates.\n2 New: a client result, or a client's OK to share one.\n3 No longer true: something you said in public, or stopped believing.\n'Nothing changed' is a full answer."
 "month.check_next" = "Say 'nothing changed', or tell me what did."
 "month.decide"     = "Say 'keep' or 'sharpen'."
-"month.save_card"  = "Save this one, then delete v{n} from the project: 2 taps."
+"month.save_card"  = "Save this one, then delete v{n-1} from the project: 2 taps."
 "angle.offer"      = "Send 2–3 screenshots of accounts you follow; I'll find your angle in 5 min."
 "angle.tag"        = "Your angle"
 "angle.labels"     = "EVERYONE SAYS · NOBODY SAYS · YOU CAN SAY"

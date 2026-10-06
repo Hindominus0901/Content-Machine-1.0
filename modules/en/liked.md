@@ -1,6 +1,6 @@
 Maintainer: §CM-LIKED (liked.kit-*): someone else's post or account: detect, read only what came back, save first, "make my version", F1 requests.
 Sources: wf13-inspiration-spec §0-§5 (founder decisions F1-F4 win); DECISIONS (5 Oct entry); schemas/brand-card.toml (liked); qa/standards/shared.md SG-copy.
-Acceptance: evals/cases/liked.en.toml, router.en (009, 013, 019, 045-051, 056, 070, 071). Lines are literal until strings/en.toml gains liked.*; "swipe" and the distance tests stay internal.
+Acceptance: evals/cases/liked.en.toml, router.en (009, 013, 019, 045-051, 056, 070, 071). Lines come from strings/en.toml liked.* except cant_open, kept literal for its slot hint; "swipe" and the distance tests stay internal.
 
 <!-- @section liked.kit-read -->
 1 WHOSE: "mine" → "{{t:liked.mine}}" · a DM to the coach → client words ("save this:") · else someone else's. Unsure: theirs + "{{t:liked.mine_clause}}", never ask.

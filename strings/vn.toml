@@ -116,7 +116,7 @@
 "phone.fresh_box"        = { text = "Dán khung này vào một đoạn chat mới tên {{name}}.", src = "958e3358e3" }
 
 # What 'next' opens, chats, level-up offers and nudge tasks (§ TODAY)
-"today.left_out"          = { text = "Bỏ qua: {bài thứ Ba}. Bài hôm nay quan trọng hơn.", src = "c0a899b5a4" }
+"today.left_out"          = { text = "Tạm bỏ: {bài thứ Ba}. Bài hôm nay quan trọng hơn.", src = "c0a899b5a4" }
 "chat.new_week"           = { text = "{thứ Hai}: mở {{name}}, tạo đoạn chat mới, nhắn 'tiếp'.", src = "32d9ce4df7" }
 "task.week.name"          = { text = "Tuần của bạn", src = "b21fa43e75" }
 "task.today.name"         = { text = "Việc duy nhất hôm nay", src = "f5d7626aca" }
@@ -142,8 +142,8 @@
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)
 "month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Thay đổi: khách hàng, sản phẩm, giá hoặc lịch của bạn.\n2 Mới: một kết quả của khách, hoặc một khách đồng ý cho chia sẻ.\n3 Không còn đúng: điều bạn từng nói công khai, hoặc bạn không còn tin nữa.\n'Không có gì thay đổi' là câu trả lời đủ rồi.", src = "fe38499570" }
 "month.check_next" = { text = "Nhắn 'không có gì thay đổi', hoặc kể mình nghe điều đã thay đổi.", src = "1ba0ba69ac" }
-"month.decide"     = { text = "Nhắn 'giữ' hoặc 'làm sắc'.", src = "6ed6468a53" }
-"month.save_card"  = { text = "Lưu bản này, rồi xoá v{n} khỏi project: 2 lần chạm.", src = "e1bbb31b6c" }
+"month.decide"     = { text = "Nhắn 'giữ' hoặc 'chỉnh lại'.", src = "6ed6468a53" }
+"month.save_card"  = { text = "Lưu bản này, rồi xoá v{n-1} khỏi project: 2 lần chạm.", src = "3ac6c30207" }
 "angle.offer"      = { text = "Gửi mình 2–3 ảnh chụp các kênh bạn đang theo dõi; mình tìm góc nhìn riêng cho bạn trong 5 phút.", src = "0b7edcb14b" }
 "angle.tag"        = { text = "Góc nhìn riêng", src = "22ee1fc8b2" }
 "angle.labels"     = { text = "AI CŨNG NÓI · CHƯA AI NÓI · BẠN NÓI ĐƯỢC", src = "a4d31bb2d4" }
@@ -157,9 +157,9 @@
 "cta.by_hand"           = { text = "Phần trả lời làm bằng tay, bạn hoặc trợ lý của bạn.", src = "ec13910d6f" }
 "cta.emoji_trigger"     = { text = "Thêm nó vào danh sách từ kích hoạt của tin nhắn trả lời tự động.", src = "0e03f7ee66" }
 "tick.client_ok"        = { text = "Chuyện này là thật, và {client} đã đồng ý được nhắc đến theo cách này.", src = "2dcea9c668" }
-"tick.keyword"          = { text = "Từ khoá của bạn gửi quà được ngay hôm nay: tin nhắn trả lời đã sẵn.", src = "d2b4df38cc" }
+"tick.keyword"          = { text = "Hôm nay từ khoá đã gửi được quà: tin nhắn trả lời đã soạn sẵn.", src = "d2b4df38cc" }
 "tick.cap"              = { text = "Số suất hoặc hạn chót là thật, và bạn sẽ giữ đúng.", src = "163c41a399" }
-"claims.individual"     = { text = "kết quả của riêng một người, không phải lời hứa", src = "f5d5ca08a4" }
+"claims.individual"     = { text = "kết quả cá nhân, không phải lời cam kết", src = "f5d5ca08a4" }
 "film.not_filming"      = { text = "Hôm nay không quay: đăng phần caption thành bài chữ.", src = "4ef2cdccd3" }
 "film.list_open"        = { text = "Đọc to câu đầu và câu cuối của từng video; câu nào bạn sẽ không nói với khách, mình cắt.", src = "b8cbd7e9be" }
 "film.onscreen_reason"  = { text = "Chữ trên màn hình phải đọc được trong 1 giây.", src = "d6669d87aa" }
@@ -189,7 +189,7 @@
 "message.label.off_map"       = { text = "Ngoài bản đồ", src = "f6f4582230" }
 "message.label.side_door"     = { text = "Cửa phụ", src = "bdbb8ae020" }
 "message.pushback.who"        = { text = "Ai cũng xem được; mình chỉ đang chọn nội dung này dành cho ai.", src = "0c50b521e1" }
-"message.reason.diff_buyer"   = { text = "khác khách hàng", src = "4144b0b30f" }
+"message.reason.diff_buyer"   = { text = "khác tệp khách", src = "4144b0b30f" }
 "message.reason.diff_problem" = { text = "khác vấn đề", src = "4021e138ca" }
 "message.reason.no_offer"     = { text = "chưa có gì để bán cho chủ đề này", src = "a941fdf7e0" }
 "message.reason.tool"         = { text = "đây là công cụ, không phải thông điệp", src = "c699cad83c" }
