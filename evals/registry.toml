@@ -111,6 +111,12 @@ kind = "module"
 status = "planned"
 baseline = ""
 
+[modules.voice]
+kind = "module"
+status = "planned"
+baseline = ""
+note = "§CM-VOICE, the Voice Card, the Map's voice line, 'not me:' / 'I do say' (wf14-voice-language-spec §2, §5); minimum: per_module_min (wf14 §5: ≥20 per edition)"
+
 [modules.guardrails]
 kind = "module"
 status = "planned"

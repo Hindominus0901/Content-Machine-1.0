@@ -165,6 +165,14 @@ min_score = 0
 notes = "why this case exists"
 ```
 
+Conventions (6 Oct 2026, wf15 / wf14; the rewrite rules R1–R18 are in `docs/research/wf15-case-impact.md`):
+
+- **Turns and scope.** Lines starting `[turn n]` split `input` into coach turns. Assertions run on the reply to the last turn, or on the scope that opens `notes` (`scope: transcript | pieces | visible | each reply`, read by `run.py`). `context` is self-contained: the simulator sees only the case's own context, so "same state as <case>" does not work.
+- **A Ready piece prints no status line.** Cases find a piece by a fenced copy box, an `N<digit> ·` label, field lines or a format title, and forbid a Ready, ✓ Checked, WHY or Draft line under it (`not_regex` + I3). The only line that may sit under a piece: one Needs you line (at most one a reply), a hard stop, an override after "post anyway", or a dated note (`liked.copy_note`, `liked.compare_note`, `cta.platform_note`, `cta.by_hand`). A check the coach asks for on their own draft ("ok to post?", "edge check") still gets one Ready or Draft line.
+- **Hidden checks are asserted through "why?" follow-ups.** `input` is `[turn 1] <the turn that prints the piece>` and `[turn 2] why?`; assertions run on the "why?" reply (WHY line, what the piece was written from, ✓ Checked, ticks, the record); I3 grades turn 1. Each module needs at least one such case per edition. `verdict` is hidden state: `Ready` on a piece reply means no status line, on a "why?" reply a Ready or ✓ Checked line; `Override` on an F1 copy means the logged Override, with only the dated note visible.
+- **`invariants`** lists ids I1–I23 only (below). `day0_timing`, `deny_list` and `quit_triggers` run on every transcript; `notes` names them where a case depends on them.
+- **Day 0** follows wf15 §1: no check screen, inventory, stop point or wrap-up; Week 1 arrives unasked after FILM TODAY, then the Brand Card (3-line top ≤500 chars) and `card.save_line`. Budgets: the Map within 6 EN / 7 VN coach turns, film-ready by minute 20, at most 10 coach turns.
+
 ## Lanes and simulated runs
 
 Golden runs need no API keys. A simulator agent receives the rendered kit (instruction block, plus the method file in S1), the persona folder and strict rules:

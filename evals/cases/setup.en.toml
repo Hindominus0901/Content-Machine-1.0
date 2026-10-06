@@ -1044,9 +1044,10 @@ id = "setup.en.030"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
-title = "Week 1 second reply: free gift, DM replies, the ask-3-past-clients message, plain words"
-context = "Day 0, ChatGPT Free. FILM TODAY was delivered; her next message got Week 1 reply 1 (3 Instagram Reels as beat cards), unasked. This 'next' gets the rest of Week 1; the Brand Card + save line may follow in the same reply. Keyword CHAPTER; list 140 (under 300, so the email is not the lead); consented clients Lorraine, Bev, Gail."
-input = '''next'''
+title = "Week 1 extras: free gift, DM replies, the ask-3-past-clients message, plain words"
+context = "Day 0, ChatGPT Free. FILM TODAY was delivered and is on screen. Turn 1 answers it and gets Week 1, unasked (all of it, or on Free a first reply of 3 Instagram Reels as beat cards); turn 2 'next' gets the rest of Week 1 if any is left, and the Brand Card + save line may follow. Keyword CHAPTER; list 140 (under 300, so the email is not the lead); consented clients Lorraine, Bev, Gail."
+input = '''[turn 1] ok I'll film it tomorrow morning
+[turn 2] next'''
 contains = []
 not_contains = []
 regex = [
@@ -1070,7 +1071,7 @@ invariants = ["I1", "I3", "I5", "I8", "I9", "I10", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """start-block DAY 0 step 6 and plan.kit-week 9: the gift (fits in one DM), DM replies 1-2 and the 'ask 3 past clients one question' message. Renames from UX §4 / §5.18: free gift (never 'keyword asset' or 'lead magnet'), DM reply 1/2 (never M1/M2). Dana is confused by 'lead magnet' and 'CTA'. Nothing under the pieces (wf15 §2). Graded with graders.py checks deny_list as well as the invariants listed."""
+notes = """scope: transcript. start-block DAY 0 step 6 and plan.kit-week 9: the gift (fits in one DM), DM replies 1-2 and the 'ask 3 past clients one question' message. The extras are asserted on both replies joined, so the case holds whether Week 1 arrives in one reply (§CM-TODAY 1: 'any message gets all of Week 1') or in 2 replies on Free (wf11-ux-spec §2, R13); the Day-0 kit does not say which. Renames from UX §4 / §5.18: free gift (never 'keyword asset' or 'lead magnet'), DM reply 1/2 (never M1/M2). Dana is confused by 'lead magnet' and 'CTA'. Nothing under the pieces (wf15 §2). Graded with graders.py checks deny_list as well as the invariants listed."""
 
 [[case]]
 id = "setup.en.031"
@@ -1543,7 +1544,6 @@ not_regex = [
   '''(?i)\b(?:want|ready for|shall I (?:write|send|do))\b[^\n]{0,12}\bweek ?(?:1|one)\b''',
   '''(?i)say ["“'‘]?next["”'’]?,? (?:for|to get) (?:your )?week''',
   '''(?i)that(?:'|’)s today done|\bstop here\b''',
-  '''(?s)(?:(?m:^\W*N\d+ ·).*?){4}''',
   '''(?i)\b(?:which|what) (?:day|platforms?)\b[^\n?]{0,30}\byou\b[^\n]*\?''',
   '''FILM TODAY''',
   '''WHY THIS GETS CLIENTS''',
@@ -1554,7 +1554,7 @@ invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1: after FILM TODAY any coach message gets all of Week 1 (on ChatGPT Free in 2 replies of ≤3 pieces), never 'want Week 1?'; a question in the message is answered in one line first. Above Week 1, once: setup.plan_guess 'For {platform} · talk day {day} (my guess; one word changes it).', the talk day guessed from her dump (never Monday, when she is at her mom's), never asked (setup.kit-facts 5, R12). Pieces print with nothing under them (wf15 §2). FILM TODAY is not reprinted."""
+notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1: after FILM TODAY any coach message gets all of Week 1, never 'want Week 1?'; a question in the message is answered in one line first. No upper bound on pieces in this reply: wf11-ux-spec §2 and R13 split Week 1 into 2 replies of ≤3 pieces on Free, but the Day-0 kit says 'all of Week 1' in the next reply, so either form passes. Above Week 1, once: setup.plan_guess 'For {platform} · talk day {day} (my guess; one word changes it).', the talk day guessed from her dump (never Monday, when she is at her mom's), never asked (setup.kit-facts 5, R12). Pieces print with nothing under them (wf15 §2). FILM TODAY is not reprinted."""
 
 [[case]]
 id = "setup.en.047"

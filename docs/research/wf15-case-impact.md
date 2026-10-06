@@ -547,3 +547,46 @@
 - **Strings now unused** (lint W202), whose cases go with them: `card.stop_lines`, `film.not_filming`, `verdict.draft_queued`, `voice.not_me_done` (replaced by `voice.not_me_ok`, wf14 §2).
 - **New cases wf14/wf15 ask for, not yet written:** `voice.{en,vn}.toml` (≥20 each, wf14 §5), "why?" cases per module, the 4-line Map with the voice line, the audience address kept apart from the machine–coach pair (VN), the coach's page link read silently and an unopened link said in one clause (`setup.link_unread`), Week 1 arriving unasked after FILM TODAY, and the 500-character card top.
 - **Unrelated stale number found on the way:** brain.vn.004 says "Whole card ≤5,800 characters"; the schema whole budget is 6,600 VN since wf13.
+
+## Status
+
+**EN: done, 6 Oct 2026** (two writer groups, each checked by a verifier, then integrated; nothing committed by the pass). All 174 listed EN cases are handled by their rule. The R17 cases (edge-rubric.en.021, fmt-short.en.038, guardrails.en.052/053, router.en.063) keep `verdict.override` as R17 says. Cases the list missed were fixed as well: stale promise, check-screen and Map contexts, "same state as" contexts, and broken regexes. The final contradiction search over all `*.en.toml` positive assertions finds hits only on "why?" turns, on checks of the coach's own draft (edge-rubric.en.004, .012; router.en.034), on R17 "post anyway" turns, or on false matches (the keyword "record year", Erin's "shop your way", the "old way" in KNOWN FOR, "out loud" in the deep-talk invite). The kit's later-chat lines still say "big idea {n}" and "Parked".
+
+| Module | Cases | Rewritten | Added | "why?" cases |
+|---|---|---|---|---|
+| setup.en | 51 | 32 | 9 | 048 (Map), 049, 050 |
+| research.en | 27 | 6 | 1 | 027 |
+| signature.en | 27 | 12 | 2 | 026, 027 |
+| message.en | 55 | 38 | 10 | 009, 046-049 (Map), 055 |
+| brain.en | 33 | 21 | 7 | 033 |
+| fmt-short.en | 48 | 26 | 5 | 044-048 |
+| humanize.en | 30 | 24 | 1 | 030 |
+| character.en | 28 | 7 | 1 | 028 |
+| edge-rubric.en | 35 | 27 | 3 | 033-035 (+003 record) |
+| convert.en | 47 | 16 | 3 | 045-047 |
+| guardrails.en | 68 | 15 | 3 | 066-068 |
+| liked.en | 37 | 20 | 2 | 036, 037 |
+| router.en | 96 | 29 | 7 | 090-093 (+062 record); 094-096 Day-0 order |
+| voice.en (new) | 29 | n/a | 29 | 024, 025 |
+
+`evals/registry.toml` now has a `[modules.voice]` row (planned). Every file parses; ids are gap-free; every regex compiles; invariants are within I1-I23; personas and `<<paste>>` targets exist; text is NFC. The case conventions are in `evals/README.md` "Case files".
+
+**VN: still to do.** The 167 listed VN cases, `voice.vn.toml` (≥20), and the "why?" cases per module come after the VN port and the VN naturalness pass. They mirror the EN patterns: piece detectors by copy box, not status line; copy-box-only humanize strips; and the "why?" pairs.
+
+**Open flags** (deduplicated from writers and verifiers; owners in brackets):
+- [graders.py] I8 reads the card's ISO dates as claim numbers, which fails every Day-0 card case; brain.en.010's `401(k)` fails the same way. I17 flags "Messy is perfect." (start-block 1), which fails setup.en.001-004 and 040. I6 counts each reprint of `map.ok` as a new decision: message.en.052 and brain.en.030 cannot pass, and setup.en.048, signature.en.008 and message.en.009/015/021 fail whenever the line repeats. The `quit_triggers` 300-word counter does not count the early win or the Map as usable output. I3's 20-word cap is tight for "why?" evidence lines, for `verdict.needs` (9 fixed words) and for `verdict.hardstop`. FORMAT_TITLE_RE misses platform-prefixed titles and untitled copy boxes, so I3 and I12 under-detect and `scope: pieces` comes back empty. CHECK_ASK_RE misses "tell me if this is ready" (edge-rubric.en.012 has a workaround). WHY_RE takes any short "why …" question as "why?" (router.en.083, message.en.037). `day0_timing` counts forwarded-post turns (liked.en.010). I23 reads only `not me:` lines, and NOT_ME_RE bans the whole rest of the line. `_unquoted` skips double quotes only. I20 conflicts with `setup.link_unread` when a turn holds only the coach's own page link. Nothing checks that card phrases are verbatim, or that the card top is 3 lines and ≤500 characters.
+- [run.py] "WHOLE RUN: …" inputs (setup.en.017-019, 047; liked.en.035) and fmt-short.en.007's `<<coach turns…>>` are sent as one verbatim coach turn. setup.en.043 needs a lane where links open. Standalone cases cannot be graded (setup.en.009/010, signature.en.021, message.en.022/023/028/029/030/043, brain.en.024, fmt-short.en.010). Pasted posts take a separate Day-0 turn, which puts Dana's Map exactly at turn 6.
+- [kit / module owners] Is Week 1 on Free Day 0 split into replies of ≤3 pieces, and does the card print in the last Week-1 reply or in its own? (wf11 §2 and R13 say split; the kit says "all of Week 1". The 2-turn brain card cases fail if the card lands in a third reply.) Other open questions:
+  - "later" right after FILM TODAY: setup.kit-order 9 or levelup.kit-next 1?
+  - An edit request on FILM TODAY itself.
+  - What "why?" prints right after FILM TODAY.
+  - Does "why?" on a Ready piece print the record? (edge-rubric.en.033/034 assert it.)
+  - An own-draft check plus `cta.platform_note` makes 2 lines under one piece (signature.en.020). A hard stop plus a copy note does the same (guardrails.en.026).
+  - Is a coach with no offer (Dan) asked what he sells? (message.en.007/008/031/032/045/046 and brain.en.006/007 assume he is.)
+  - Is the coach's own rewrite the intended route to a visible Draft (edge-rubric.en.002/003/020/021, guardrails.en.052)?
+  - Does a buyer pattern count as "why?" evidence (research.en.027)?
+  - The TikTok hook budget (voice.en.014 reads ≤9 words); email that is one-to-one vs the coaches' group greetings; typos in the written voice.
+  - A mid-week `not me:`, an "I do say" or a Talk's phrases are lost before the next card reprint.
+  - message.kit-map points to a KEYWORD section that does not exist.
+- [strings] No string covers how "why?" shows the logged F1 Override (fmt-short.en.047, guardrails.en.068, liked.en.037) or names the voice used (voice.en.024/025). `voice.map_line` (wf14 §6) is missing. No string covers the NEXT line after "later" before the card. R17 is still on watch ("· logged." vs wf15's "· noted."). W202 lists `voice.not_me_done`, `verdict.draft_queued`, `card.stop_lines` and `film.not_filming` as unused.
+- [fixtures / config / standards] Persona `answers.md` Behaviour ("fix 4") and `expected.toml` [day0]/[week1] still script the old flow. `acceptance.toml [day0]` still has `stop_point_max_minutes` 27 and `brand_card_visible_max_chars` 900 (the schema says 500). `qa/standards/message-map.md` and `core/format-checks.toml [format.message-map]` still describe the one-screen Map, and `character-card.md` may lack the voice fields. The router.en header says Day 0 is 12 Oct, but coldstart-coach's is 11 Oct. router.en.012 keeps max_chars 5600. Some S0 lanes assert wording that only the method file has (edge-rubric.en.021; liked.en.009/010; router.en.009). voice.en has no case on `connectors` or `address_1to1` yet.

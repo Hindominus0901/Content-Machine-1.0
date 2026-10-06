@@ -43,8 +43,9 @@
 #   the "why?" reply: the WHY line (old belief → new belief, next step), the checks, what it was written
 #   from, and here the voice it used (their phrase, tone, address; plain words, no field names). I3
 #   grades turn 1. `verdict = "Ready"` on a "why?" reply wants a Ready or ✓ Checked line (evals/run.py).
-# - `invariants` lists I1-I23 ids (I15 audience address, I23 voice: never-words, banned tells, the
-#   phrase-share proxy). graders.py also runs day0_timing, deny_list and quit_triggers.
+# - `invariants` lists I1-I23 ids (I23 voice: never-words incl. the coach's "not me:" lines, banned
+#   tells, the phrase-share proxy; I15's audience-address check is VN-only, so EN cases assert the
+#   address with regexes). graders.py also runs day0_timing, deny_list and quit_triggers.
 # - P cases score against qa/standards/shared.md: SG4 "sounds like the coach" (tone, rhythm, phrases,
 #   audience address, code_mix) and SG8 read-aloud are critical here.
 # - FICTIONAL: every person, business and draft comes from the persona files or is invented for the case.
@@ -139,7 +140,7 @@ regex = [
   '''(?m)^\W*A\)[^\n]*["“][^"”\n]{3,}["”]''',
   '''(?m)^\W*B\)[^\n]*["“][^"”\n]{3,}["”]''',
   '''(?im)^\W*[AB]\)[^\n]*["“][^"”\n]*\b(write the tuesday|plan the dream|make you ready|other people(?:'|’)s words|corkboard|ramble|parking lot|label|lost your answer|wish someone had told me|hit reply)''',
-  '''(?is)^\W*A\)[^\n]*\byou\b[\s\S]*?^\W*B\)[^\n]*\byou\b''',
+  '''(?im)^\W*A\)[^\n]*\bto them\b[^\n]{0,30}\byou\b[\s\S]*?^\W*B\)[^\n]*\bto them\b[^\n]{0,30}\byou\b''',
   '''My pick: [^\n]{1,160}, because [^\n]{3,}\.''',
 ]
 not_regex = [
@@ -157,7 +158,7 @@ invariants = ["I1", "I5", "I6", "I17"]
 max_words = 150
 max_chars = 0
 max_questions = 1
-notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; 'Voice line too'; voice.kit-build 2: '"change 4": §CM-MAP, same one decision'. Both options are built from her words (answers.md: 'Don't plan the dream. Write the Tuesday.', 'Okay, I'm going to ramble'; her pasted posts W1-W2: 'You didn't lose a job. You lost your answer.', 'Here's what I wish someone had told me in that parking lot', 'Hit reply and tell me…'), both keep 'you' to one reader. No full Map reprint, no third option, no voice questions, no FILM TODAY until she picks. The pattern with '(?is)^' anchors A) and B) at line starts."""
+notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; 'Voice line too'; voice.kit-build 2: '"change 4": §CM-MAP, same one decision'. Both options are built from her words (answers.md: 'Don't plan the dream. Write the Tuesday.', 'Okay, I'm going to ramble'; her pasted posts W1-W2: 'You didn't lose a job. You lost your answer.', 'Here's what I wish someone had told me in that parking lot', 'Hit reply and tell me…'), both keep 'you' to one reader. No full Map reprint, no third option, no voice questions, no FILM TODAY until she picks."""
 
 [[case]]
 id = "voice.en.004"
@@ -640,7 +641,7 @@ notes = """scope: transcript. §CM-VOICE 5: '"make it sound like me": rewrite wi
 id = "voice.en.019"
 kind = "D"
 persona = "service-biz"
-lanes = ["S1", "S0", "floor"]
+lanes = ["S1", "floor"]
 title = "HOW YOU SAY IT on the Day-0 card: her tone, rhythm, two of her lines verbatim, 'to them: you'; the top ≤500 characters; no field names"
 context = "Day 0, ChatGPT Plus. Corinne dictated 3 dump chunks from the car and pasted her posts W1-W2 after chunk 1; the one missing fact (the multi-income line) is answered; the Map OK'd (YOUR WORD: nothing room); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. She never said 'not me:'."
 input = '''[turn 1] ok I'll film it tonight after pickup
@@ -669,7 +670,7 @@ invariants = ["I1", "I4", "I5", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. wf14 §2 'HOW YOU SAY IT: {tone} · {rhythm} · "{phrase}", "{phrase}" / to them: "{address}" · never: "{word}"'; brain.kit-print 2 (top ≤500 chars, 3 lines; 'never:' only after a 'not me:'); schemas/brand-card.toml voice_line (≤124 chars, plain words, no field names). expected.toml [voice]: tone 'quick · warm · bossy', rhythm 'punchy lines; the scene first, then the rule; imperatives', audience_address 'you; "neighbors" in the newsletter'. Her lines are in her dump ('tape it out', 'rug before sofa', 'measure the door', 'judge your IKEA') or W1-W2 ('Okay, so here's what I tell people.', 'It just doesn't have a job.'). Her never-words (I23) and praise (I17) stay off the line. The top window runs from the card title to the machine heading."""
+notes = """scope: transcript. wf14 §2 'HOW YOU SAY IT: {tone} · {rhythm} · "{phrase}", "{phrase}" / to them: "{address}" · never: "{word}"'; brain.kit-print 2 (top ≤500 chars, 3 lines; 'never:' only after a 'not me:'); schemas/brand-card.toml voice_line (≤124 chars, plain words, no field names). expected.toml [voice]: tone 'quick · warm · bossy', rhythm 'punchy lines; the scene first, then the rule; imperatives', audience_address 'you; "neighbors" in the newsletter'. Her lines are in her dump ('tape it out', 'rug before sofa', 'measure the door', 'judge your IKEA') or W1-W2 ('Okay, so here's what I tell people.', 'It just doesn't have a job.'). Her never-words (I23) and praise (I17) stay off the line. The top window runs from the card title to the machine heading. Not on S0: card.title, the two-phrase line and 'to them:' (card.visible.to_them) live only in brain.kit-print 2; the compact kit's top is 'HOW YOU SAY IT: {voice line}'."""
 
 [[case]]
 id = "voice.en.020"
@@ -693,7 +694,7 @@ not_regex = [
   '''(?i)\b400\b|\b30\s*(?:%|percent)''',
 ]
 verdict = ""
-invariants = ["I1", "I3", "I15", "I23"]
+invariants = ["I1", "I3", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
@@ -801,7 +802,7 @@ notes = """scope: transcript. talk.kit-week ('3 re-say pieces, ≥70% their spok
 id = "voice.en.024"
 kind = "D"
 persona = "proof-coach"
-lanes = ["S1", "S0", "floor"]
+lanes = ["S1", "floor"]
 title = "'why?' after today's piece: the WHY line, the checks, and the voice it used (her line, her 'you') in plain words; the piece itself carried none"
 context = "Week 1, Tuesday, ChatGPT Free, new chat in the project. Brand Card v1 present (persona default: tone 'plain · dry · warm'; phrases include 'Coffee before resume. Every time.' and 'You're not too old. You're too vague.'; audience 'you'). Turn 1 gets today's piece with nothing under it; turn 2 asks why."
 input = '''[turn 1] next
@@ -825,7 +826,7 @@ invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from'); §CM-EDGE "why?" ('Evidence: their phrase, scene or client'); ship.kit 4 VOICE ('their tone, rhythm, phrases and audience address, no never-words'). Turn 1 prints the piece with nothing under it (I3 grades it). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the piece used, shown in plain words: one of her lines or 'your words', her 'you', no never-words. No string fixes how 'why?' names the voice, so it is asserted loosely (see flags). Field names stay internal; the piece is not reprinted. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from'); §CM-EDGE "why?" ('Evidence: their phrase, scene or client'); ship.kit 4 VOICE ('their tone, rhythm, phrases and audience address, no never-words'). Turn 1 prints the piece with nothing under it (I3 grades it). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the piece used, shown in plain words: one of her lines or 'your words', her 'you', no never-words. No string fixes how 'why?' names the voice, so it is asserted loosely (see flags). Field names stay internal; the piece is not reprinted. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Not on S0: the WHY prefix, '✓ Checked:' and the Ready wording for 'why?' live only in the method file (§CM-EDGE), as for edge-rubric.en.033."""
 
 [[case]]
 id = "voice.en.025"

@@ -379,10 +379,11 @@ not_regex = [
   '''\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+''',
   '''\bEdge\b|\bSG\d\b|\bG[1-3]\b|\bH[1-9]\b''',
   '''(?i)\bcertified\b|\bICF\b|master coach''',
+  '''(?s)Draft ·.*Draft ·''',
 ]
-invariants = ["I1", "I3", "I4", "I5", "I17"]
+invariants = ["I1", "I4", "I5", "I17"]
 max_questions = 1
-notes = """wf6 §6: years and client counts in lines 1-3, no 'why' signal (because, I chose, I refuse, it cost…) and a failed removal test make the post résumé-only: Character & Polarity = 0 and the verdict is FAIL whatever the total (QA §2.2 step 4: borrowed-attractor-only means re-ideate). She asked for a check only, so the reply states the Draft and names the defect in plain words ('it lists what you've done, not why anyone should care'); a flipped version (her memo story first, the 26 years as line-3 proof) may be offered, not forced. Detector class names stay internal (I4). Every number is allowed; 'certified' is her credential trap. A check of her own draft keeps its one line (edge-rubric.kit-verdict THEIR OWN DRAFT; wf15-case-impact 'Not contradictions'). Grader gap (6 Oct 2026): graders.py CHECK_ASK_RE does not yet read 'tell me if this is ready' as a check, so I3 would flag this correct Draft line until it does."""
+notes = """wf6 §6: years and client counts in lines 1-3, no 'why' signal (because, I chose, I refuse, it cost…) and a failed removal test make the post résumé-only: Character & Polarity = 0 and the verdict is FAIL whatever the total (QA §2.2 step 4: borrowed-attractor-only means re-ideate). She asked for a check only, so the reply states the Draft and names the defect in plain words ('it lists what you've done, not why anyone should care'); a flipped version (her memo story first, the 26 years as line-3 proof) may be offered, not forced. Detector class names stay internal (I4). Every number is allowed; 'certified' is her credential trap. A check of her own draft keeps its one line (edge-rubric.kit-verdict THEIR OWN DRAFT; wf15-case-impact 'Not contradictions'). Grader gap (6 Oct 2026): graders.py CHECK_ASK_RE does not yet read 'tell me if this is ready' as a check, so I3 fails this correct Draft line (verified on a synthetic run); I3 is left out of `invariants` until CHECK_ASK_RE reads it, and the last not_regex holds I3's 'one line' part here (no second Draft line; the Ready line is forbidden above). Re-add I3 when the grader is fixed."""
 
 [[case]]
 id = "edge-rubric.en.013"

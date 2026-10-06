@@ -81,8 +81,9 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Week 1 carries 'ask 3 past clients one question': one question, consent built in, no form"
-context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was delivered; her next message got Week 1 reply 1 (3 Reels; Free shows at most 3 pieces a reply), unasked; the Brand Card is not printed yet. This 'next' brings the rest of Week 1 (free gift, DM replies 1-2, the ask-3-past-clients message in a copy box)."
-input = """next"""
+context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was delivered and is on screen; no Brand Card yet. Turn 1 answers it and gets Week 1, unasked (all of it, or on Free a first reply of 3 Reels); turn 2 'next' brings the rest of Week 1 if any is left (free gift, DM replies 1-2, the ask-3-past-clients message in a copy box)."
+input = """[turn 1] ok I'll film it tomorrow morning
+[turn 2] next"""
 regex = [
   '(?i)\b(3|three)\b[^\n]{0,30}\bpast clients?\b',
   '(?i)\b(quote|use|share)\b[^.\n]{0,40}\b(name|ok|okay|permission)\b|\b(name|ok|okay|permission)\b[^.\n]{0,40}\b(quote|use|share)\b',
@@ -96,7 +97,7 @@ not_regex = [
 ]
 invariants = ["I1", "I2", "I3", "I4", "I5", "I10"]
 max_questions = 1
-notes = "wf15 §1.6 and research.kit-quick ASK 3: 'ask 3 past clients one question' rides in Week 1 (unlocks real proof for Week 3), as a copy box with research.ask3 ('… What was going on right before you called me? Can I share your answer, first name only?'), printed with nothing under it. wf7 §5: ask permission before using anyone's words. Lorraine, Bev and Gail consented; Pam never. The client question sits in a copy box, so it is not a question to the coach."
+notes = "scope: transcript. Both replies are read joined, so the case holds whether Week 1 arrives in one reply (§CM-TODAY 1: 'any message gets all of Week 1') or in 2 replies on Free (wf11-ux-spec §2, R13). wf15 §1.6 and research.kit-quick ASK 3: 'ask 3 past clients one question' rides in Week 1 (unlocks real proof for Week 3), as a copy box with research.ask3 ('… What was going on right before you called me? Can I share your answer, first name only?'), printed with nothing under it. wf7 §5: ask permission before using anyone's words. Lorraine, Bev and Gail consented; Pam never. The client question sits in a copy box, so it is not a question to the coach."
 
 [[case]]
 id = "research.en.004"
@@ -186,7 +187,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "The coach's own line in the paste never counts as a buyer voice"
-context = "Same state and input as research.en.007 (research-paste.md inlined)."
+context = "Brand Card v1 present (persona default), Week 2; 'research my audience' gave the paste steps; the input inlines research-paste.md verbatim (same state and input as research.en.007)."
 input = """ok I copied a bunch from the groups and the career forum like you said. no names.
 
 <<paste: research-paste.md, lines 1-32 verbatim>>
@@ -303,7 +304,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
 title = "Long buyer lines are cut to 15 words or fewer when quoted"
-context = "Same state and input as research.en.012 (research-paste.md inlined)."
+context = "Brand Card v1 present (persona default: keyword KEEP UP), Week 2, in the pickup line; the input inlines research-paste.md verbatim (same state as research.en.012)."
 input = """found a bunch of stuff dads are saying online, copied it into my notes, here
 
 <<paste: research-paste.md, lines 1-32 verbatim>>
@@ -327,7 +328,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
 title = "Dan's own '30 minutes' line is not counted as a dad's voice"
-context = "Same state and input as research.en.012 (research-paste.md inlined)."
+context = "Brand Card v1 present (persona default: keyword KEEP UP), Week 2, in the pickup line; the input inlines research-paste.md verbatim (same state as research.en.012)."
 input = """found a bunch of stuff dads are saying online, copied it into my notes, here
 
 <<paste: research-paste.md, lines 1-32 verbatim>>

@@ -1708,7 +1708,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "'skip' on a Needs-you question writes the downgraded piece with nothing under it; 'written as' waits for 'why?'"
-context = "Week 2, Thursday 22 Oct 2026, Claude Free. Brand Card v1 present (persona default). The last reply held two LinkedIn posts; N2 (Marcus's client margin sheet story; Marcus consented to any use) ended with 'Needs you · What did Marcus say when he saw the sheet, word for word? I won't make it up. (Or say \"skip\".)'"
+context = "Week 2, Thursday 22 Oct 2026, Claude Free. Brand Card v1 present (persona default). The last reply held two LinkedIn posts; N2 (Marcus's client margin sheet story; Marcus consented to any use) ended with 'Needs you · Marcus's exact words when he saw the sheet? I won't make it up. (Or say \"skip\".)'"
 input = '''skip'''
 contains = []
 not_contains = []
@@ -2557,7 +2557,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "'why?' after 'skip' shows the downgrade: the WHY line, 'Ready to post · written as …' and the checks; still no quote from Marcus"
-context = "Same state as router.en.059: Week 2, Thursday 22 Oct 2026, Claude Free. Brand Card v1 present (persona default). The last reply held two LinkedIn posts; under N2 (Marcus's client margin sheet story; Marcus consented to any use) sat 'Needs you · What did Marcus say when he saw the sheet, word for word? I won't make it up. (Or say \"skip\".)'. Turn 1 'skip' gets N2 written as a process story with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
+context = "Same state as router.en.059: Week 2, Thursday 22 Oct 2026, Claude Free. Brand Card v1 present (persona default). The last reply held two LinkedIn posts; under N2 (Marcus's client margin sheet story; Marcus consented to any use) sat 'Needs you · Marcus's exact words when he saw the sheet? I won't make it up. (Or say \"skip\".)'. Turn 1 'skip' gets N2 written as a process story with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] skip
 [turn 2] why?'''
 contains = []
@@ -2615,7 +2615,7 @@ notes = """route: liked (route set). A state-dependent 'why?': after a version i
 id = "router.en.094"
 kind = "D"
 persona = "service-biz"
-lanes = ["S1", "S0", "floor"]
+lanes = ["S1", "floor"]
 title = "Day 0: any message after FILM TODAY gets all of Week 1, unasked, with the plan guess above it; never 'want Week 1?' or a stop point"
 context = "Day 0, about minute 19, ChatGPT Plus on the iPhone, in her car. FILM TODAY is on screen (on-screen text, first line, 3 beats, last line, caption in a copy box, 'Comment NOTHING ROOM and I'll send you the Tape-Out Guide. (quieter: say 'quiet')', then 'Film it now, or post the caption as text.'). Nothing of Week 1 has been printed; no Brand Card yet."
 input = '''ok. Bree can film it at the studio after pickup'''
@@ -2642,13 +2642,13 @@ invariants = ["I1", "I3", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → Map → "ok" → FILM TODAY → Week 1, unasked'; §CM-TODAY 1 'After FILM TODAY any message gets all of Week 1 … never "want Week 1?"'. setup.kit-facts 5: platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step."""
+notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → Map → "ok" → FILM TODAY → Week 1, unasked'; §CM-TODAY 1 'After FILM TODAY any message gets all of Week 1 … never "want Week 1?"'. setup.kit-facts 5: platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
 
 [[case]]
 id = "router.en.095"
 kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
-lanes = ["S1", "S0", "floor"]
+lanes = ["S1", "floor"]
 title = "Day 0: 'later' right after FILM TODAY prints the Brand Card and the save line at once; Week 1 waits for 'next'"
 context = "Day 0, about minute 20, Claude Pro on the MacBook Air. FILM TODAY is on screen and ends 'Film it now, or post the caption as text.' Nothing of Week 1 has been printed; no Brand Card yet."
 input = '''later. I need to start dinner'''
@@ -2676,7 +2676,7 @@ invariants = ["I1", "I4", "I5", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: brain (route set). 'later' is a universal word; in this state it opens the Brand Card (§CM-CARD), not a pause of a job: setup.kit-order 9 'Stopping ("later") before the card: card + save line now, Week 1 on "next"' (R13; wf15 §0 S4 'The coach can stop at any time'). The card prints with its visible top (WHAT YOU SAY: / HOW YOU SAY IT:, card.visible.what / .how) and the machine block under card.machine.heading, then card.save_line and the app's save route (Claude: copy it, + by the project files → Add text content); saving never blocks. No Week-1 piece, plan guess, DM reply or past-clients message yet, and none of the old stop lines (card.stop_lines is retired). The NEXT line sends her back with 'next' (start-block 8: 'Tomorrow: open Content Machine, newest chat, say 'next'.'). I4: the machine block's field names are not coach-visible text."""
+notes = """route: brain (route set). 'later' is a universal word; in this state it opens the Brand Card (§CM-CARD), not a pause of a job: setup.kit-order 9 'Stopping ("later") before the card: card + save line now, Week 1 on "next"' (R13; wf15 §0 S4 'The coach can stop at any time'). The card prints with its visible top (WHAT YOU SAY: / HOW YOU SAY IT:, card.visible.what / .how) and the machine block under card.machine.heading, then card.save_line and the app's save route (Claude: copy it, + by the project files → Add text content); saving never blocks. No Week-1 piece, plan guess, DM reply or past-clients message yet, and none of the old stop lines (card.stop_lines is retired). The NEXT line sends her back with 'next' (start-block 8: 'Tomorrow: open Content Machine, newest chat, say 'next'.'). I4: the machine block's field names are not coach-visible text. Not on S0: the 'later' branch (setup.kit-order 9) and card.title live only in the method file; the compact kit's step 6 sends Week 1 'in the next reply, no waiting'."""
 
 [[case]]
 id = "router.en.096"
