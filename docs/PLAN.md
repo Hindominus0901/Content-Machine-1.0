@@ -49,6 +49,15 @@ Founder: "Voice and Languages (how to say), Content Strategy (what to say)". Spe
 - **QA:** Ship Check VOICE step, graders I15 extension + I23, `voice` cases.
 - **Built in P2:** schema, start-block, Ship Check, VOICE anchor, strings, fixtures, cases. This runs as a patch right after the EN method modules land.
 
+## Added: simple on the outside, rigorous on the inside (6 Oct 2026)
+Founder: delivery must be very simple, and coaches won't read the artifacts. Those are for the AI. Spec: [research/wf15-simple-surface-spec.md](research/wf15-simple-surface-spec.md). It supersedes UX spec §2 and QA spec §2.4 where they differ.
+
+- **Day 0:** talk → only the missing facts → a 4-line Map + OK → today's video → Week 1 automatically → the save line.
+- **Per piece:** nothing is shown when it's ready; one line only when the coach is needed; WHY and checks on "why?".
+- **Brand Card:** a short visible top, then the machine block.
+- **Research:** silent during the dump; the coach's own posts and page link are read.
+- **Built together with the Voice & Language patch** right after the EN method modules land. Changes: start-block, ship.kit PRINT rule, modules, graders I3, acceptance, and a case rewrite pass for EN + VN.
+
 ## What we're building
 
 ### Coach journey (UX spec)

@@ -80,3 +80,10 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
   - "Languages" means wording and style, not multilingual output.
   - Written voice: the Day-0 dump prompt invites 2–3 posts the coach wrote. This is optional and adds no extra turn.
   - VN: how the coach addresses the audience is inferred, shown on the Map, and kept separate from how the machine addresses the coach.
+- **Simple on the outside, rigorous on the inside (6 Oct 2026).** Spec: `research/wf15-simple-surface-spec.md`.
+  - The coach drops the file in, talks, says OK once, and gets content. The Brand Card, scores and checks are for the AI to navigate and validate with, and all keep running silently.
+  - **Per piece:** nothing is shown when it's ready. One line appears only when the coach is needed (missing fact, hard stop, override, required note). WHY and checks show only on "why?".
+  - **Day 0:** no 7-line check screen. The machine asks only the 1–3 facts it couldn't hear, then shows a 4-line Map (known for · 3 topics · your word · your voice) and asks OK.
+  - **Brand Card:** a short visible top (3–4 lines), then the machine block.
+  - **After OK:** today's video, then the whole Week 1 automatically.
+  - **Research:** runs silently during the dump. The coach's own pasted posts and page link are read to fill gaps instead of asking.
