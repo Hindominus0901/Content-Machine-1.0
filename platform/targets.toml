@@ -474,7 +474,7 @@ unit = "bytes"
 en = 51200
 vn = 56320
 limit = "chatgpt_free_context_tokens"
-note = "50 KB / 55 KB. A <=25 KB 'Claude Free light' variant ships if claude_free_turns_with_kit < 12."
+note = "50 KB / 55 KB. A <=25 KB 'Claude Free light' variant ships if claude_free_turns_with_kit < 12. Measured 2026-10-06 (o200k tokens): EN 46,066 B = 12.3k tokens, VN 56,261 B = 15.3k tokens; VN costs about the same bytes per token as EN (3.7), so a bigger VN byte cap only takes room from the conversation. Keep VN at 55 KB: a VN addition is paid for by a VN cut."
 
 [budgets.method_section]
 artifact = "each §CM section of the method file"

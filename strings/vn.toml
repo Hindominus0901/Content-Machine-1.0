@@ -85,7 +85,7 @@
 "ics.friday.description" = { text = "Mở {{name}}, vào đoạn chat mới nhất, gõ \"số liệu tuần này\". 5 phút.", src = "9c876b3e13" }
 
 # Setup-check variants, Phone Starter, new method anchors (P2)
-"anchor.setup" = { text = "Chi tiết buổi đầu", src = "744b6f620c" }
+"anchor.setup" = { text = "Chi tiết ngày 0", src = "744b6f620c" }
 "anchor.card" = { text = "Brand Card", src = "bef5186d8e" }
 "anchor.posts" = { text = "Bài viết và carousel", src = "f29c52a354" }
 "anchor.messages" = { text = "Email, tin nhắn Zalo và inbox", src = "72cd5a8ae5" }
@@ -109,9 +109,9 @@
 "card.title"             = { text = "Brand Card v{n} · {date}", src = "27c96e5c42" }
 "card.label.week"        = { text = "nói chuyện {day} · quay {day} · số liệu thứ Sáu", src = "e8aaa06e3c" }
 "card.machine.heading"   = { text = "Phần còn lại là cho máy, không cần đọc:", src = "05b28e1925" }
-"card.remove_old"        = { text = "Xoá {v1 | bản thừa} khỏi file của project.", src = "0cc183dade" }
+"card.remove_old"        = { text = "Xoá {v1 | bản thừa} khỏi file của dự án.", src = "0cc183dade" }
 "card.fix_missing"       = { text = "Ở đây chưa có Brand Card: trong đoạn chat đầu tiên, bấm ⋯ dưới card → Lưu vào dự án. Hoặc dán card vào đây.", src = "bdf99dd62b" }
-"card.fix_pasted_block"  = { text = "Bạn vừa dán phần hướng dẫn cài đặt vào chat; muốn giữ lại thì: Hướng dẫn → dán vào → Lưu.", src = "3f5d031c34" }
+"card.fix_pasted_block"  = { text = "Bạn vừa dán phần hướng dẫn vào chat; muốn giữ thì: Hướng dẫn → dán vào → Lưu.", src = "3f5d031c34" }
 "save.claude_plain"      = { text = "Chép card, bấm dấu + cạnh mục file của project, chọn Add text content, dán vào, bấm Save. Đoạn chat này không mất đâu.", src = "231b997849" }
 "phone.fresh_box"        = { text = "Dán khung này vào một đoạn chat mới tên {{name}}.", src = "958e3358e3" }
 
@@ -124,13 +124,13 @@
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
 "levelup.offer_reminders" = { text = "Bạn muốn mình nhắc vào ngày nói chuyện và thứ Sáu không? Nhắn 'có'.", src = "045eb498dd" }
 "levelup.offer_nudges"    = { text = "Bạn đã đi trọn một tuần. Muốn mình nhắn bạn vào thứ Hai, mỗi sáng và thứ Sáu không? Nhắn 'có'.", src = "4894256bfd" }
-"levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Notion, hoặc Google Sheets. Nhắn 'có'.", src = "03fc7d8ead" }
+"levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Google Sheets, hoặc Notion. Nhắn 'có'.", src = "03fc7d8ead" }
 "levelup.offer_autopilot" = { text = "Muốn mỗi tuần tự được viết sẵn vào Notion không? Nhắn 'có'.", src = "11eb7f42ec" }
-"levelup.offer_grow"      = { text = "Phần đó nằm trong file Phát triển (thư mục Level-ups). Thêm file vào đây (tải lên một lần), rồi hỏi lại mình.", src = "f90186ef14" }
+"levelup.offer_grow"      = { text = "Phần đó nằm trong file Phát triển (thư mục Level-ups). Tải file đó lên đây một lần, rồi hỏi lại mình.", src = "f90186ef14" }
 "levelup.offer_character" = { text = "Muốn bài giống bạn hơn: 3 buổi nói chuyện, mỗi buổi 20 phút? Nhắn 'có'.", src = "212af05855" }
 
 # Weekly Talk and mini-talk (§ TALK)
-"talk.open"      = { text = "Buổi nói chuyện tuần: 5 câu hỏi, khoảng 15 phút. Bấm micro nhỏ và trả lời thành tiếng, như kể cho bạn bè nghe. Không cần camera, một thiết bị là đủ.", src = "fcc4f4a188" }
+"talk.open"      = { text = "Buổi nói chuyện tuần: 5 câu hỏi, khoảng 15 phút. Bấm micro nhỏ rồi trả lời thành tiếng, như kể chuyện với người quen. Không cần camera hay máy thứ hai.", src = "fcc4f4a188" }
 "talk.question"  = { text = "Kể mình nghe lần {scene}. Lúc đó chuyện gì đã xảy ra?", src = "ceedb975a2" }
 "talk.ack"       = { text = "Mình ghi lại rồi. Câu tiếp:", src = "da1df4029f" }
 "talk.next"      = { text = "Bạn trả lời thành tiếng, rồi bấm gửi.", src = "cf3ce1d335" }
@@ -140,26 +140,26 @@
 "talk.mini_open" = { text = "Tuần bận: 3 câu hỏi nhanh, 5 phút, nói bằng giọng là được.", src = "b7a36f9fc4" }
 
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)
-"month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Thay đổi: khách hàng, sản phẩm, giá hoặc lịch của bạn.\n2 Mới: một kết quả của khách, hoặc một khách đồng ý cho chia sẻ.\n3 Không còn đúng: điều bạn từng nói công khai, hoặc bạn không còn tin nữa.\n'Không có gì thay đổi' là câu trả lời đủ rồi.", src = "fe38499570" }
+"month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Thay đổi: khách, sản phẩm, giá hay lịch của bạn.\n2 Mới: một kết quả của khách, hay một khách đồng ý cho chia sẻ.\n3 Không còn đúng: điều bạn từng nói công khai, hay bạn không còn tin nữa.\nTrả lời 'Không có gì thay đổi' là đủ.", src = "fe38499570" }
 "month.check_next" = { text = "Nhắn 'không có gì thay đổi', hoặc kể mình nghe điều đã thay đổi.", src = "1ba0ba69ac" }
 "month.decide"     = { text = "Nhắn 'giữ' hoặc 'chỉnh lại'.", src = "6ed6468a53" }
-"month.save_card"  = { text = "Lưu bản này, rồi xoá v{n-1} khỏi project: 2 lần chạm.", src = "3ac6c30207" }
+"month.save_card"  = { text = "Lưu bản này, rồi xoá v{n-1} khỏi dự án: 2 lần chạm.", src = "3ac6c30207" }
 "angle.offer"      = { text = "Gửi mình 2–3 ảnh chụp các kênh bạn đang theo dõi; mình tìm góc nhìn riêng cho bạn trong 5 phút.", src = "0b7edcb14b" }
 "angle.tag"        = { text = "Góc nhìn riêng", src = "22ee1fc8b2" }
 "angle.labels"     = { text = "AI CŨNG NÓI · CHƯA AI NÓI · BẠN NÓI ĐƯỢC", src = "a4d31bb2d4" }
 "angle.hunch"      = { text = "mình đoán vậy", src = "d7a04cc448" }
 
 # Short videos, posts, messages, calls to action (§ FORMATS, POSTS, MESSAGES, CTA-KIT)
-"cta.default"           = { text = "Comment {KEYWORD}, mình gửi bạn {gift}.", src = "c06c6746cc" }
+"cta.default"           = { text = "Comment {KEYWORD}, mình gửi bạn {gift} qua inbox.", src = "c06c6746cc" }
 "cta.quiet"             = { text = "Nhắn mình {KEYWORD}, mình gửi bạn {gift}.", src = "5cdfb8b507" }
-"cta.not_pushy"         = { text = "Comment từ khoá giúp người xem nhận được thứ có ích thật, nên không hề ép ai. Muốn kết nhẹ nhàng hơn, nhắn '{{t:cmd.quiet}}'.", src = "5d113a312e" }
+"cta.not_pushy"         = { text = "Comment từ khoá giúp người xem nhận thứ có ích thật, nên không ép ai. Muốn kết nhẹ hơn, gõ '{{t:cmd.quiet}}'.", src = "5d113a312e" }
 "cta.platform_note"     = { text = "Lưu ý nền tảng (tính đến {date}): Facebook và Instagram có thể giảm hiển thị bài kiểu 'comment nếu…'. Bạn quyết nhé.", src = "c057b7f3d5" }
 "cta.by_hand"           = { text = "Phần trả lời làm bằng tay, bạn hoặc trợ lý của bạn.", src = "ec13910d6f" }
 "cta.emoji_trigger"     = { text = "Thêm nó vào danh sách từ kích hoạt của tin nhắn trả lời tự động.", src = "0e03f7ee66" }
-"tick.client_ok"        = { text = "Chuyện này là thật, và {client} đã đồng ý được nhắc đến theo cách này.", src = "2dcea9c668" }
+"tick.client_ok"        = { text = "Chuyện có thật, và {client} đã đồng ý cho kể theo cách này.", src = "2dcea9c668" }
 "tick.keyword"          = { text = "Hôm nay từ khoá đã gửi được quà: tin nhắn trả lời đã soạn sẵn.", src = "d2b4df38cc" }
 "tick.cap"              = { text = "Số suất hoặc hạn chót là thật, và bạn sẽ giữ đúng.", src = "163c41a399" }
-"claims.individual"     = { text = "kết quả cá nhân, không phải lời cam kết", src = "f5d5ca08a4" }
+"claims.individual"     = { text = "kết quả cá nhân, không phải cam kết", src = "f5d5ca08a4" }
 "film.not_filming"      = { text = "Hôm nay không quay: đăng phần caption thành bài chữ.", src = "4ef2cdccd3" }
 "film.list_open"        = { text = "Đọc to câu đầu và câu cuối của từng video; câu nào bạn sẽ không nói với khách, mình cắt.", src = "b8cbd7e9be" }
 "film.onscreen_reason"  = { text = "Chữ trên màn hình phải đọc được trong 1 giây.", src = "d6669d87aa" }
@@ -176,14 +176,14 @@
 "voice.not_me_done"  = { text = "Bỏ rồi. Mình sẽ không dùng lại.", src = "11c47e2953" }
 "voice.cant_allow"   = { text = "Câu đó mình không thêm được: {why}.", src = "5ba35310d8" }
 "voice.match"        = { text = "Bạn gửi voice nói câu đó theo cách của bạn; mình viết đúng như vậy.", src = "99f3ca0d19" }
-"proof.intake"       = { text = "Kết quả này có ghi nhận lại không, và khách đã đồng ý bằng văn bản cho dùng trong bài đăng, quảng cáo hay case study?", src = "1d1583b6c6" }
+"proof.intake"       = { text = "Kết quả này có ghi lại không, và khách đã đồng ý bằng văn bản cho dùng trong bài đăng, quảng cáo hay case study?", src = "1d1583b6c6" }
 "note.ad_comment"    = { text = "Lưu ý ({date}): quảng cáo kêu gọi comment hay bị từ chối duyệt. Đăng hay không là quyền của bạn.", src = "27c460f2d7" }
 "liked.copy_note"    = { text = "Lưu ý ({date}): bài này bám sát bài của họ. Nền tảng có thể giảm hiển thị bài giống bài khác, và chữ là của họ. Đăng hay không là quyền của bạn.", src = "172e2f16d1" }
-"liked.compare_note" = { text = "Lưu ý ({date}): so sánh có nêu tên doanh nghiệp khác có thể vi phạm luật quảng cáo ở một số thị trường. Đăng hay không là quyền của bạn.", src = "417d400696" }
+"liked.compare_note" = { text = "Lưu ý ({date}): so sánh có nêu tên doanh nghiệp khác có thể vi phạm luật quảng cáo. Đăng hay không là quyền của bạn.", src = "417d400696" }
 
 # Staying on the Map, the keyword, character, Quick Listen (§ MAP, CHARACTER-LITE, RESEARCH-LITE)
-"message.drift.bridge"        = { text = "Chủ đề này hợp bản đồ của bạn nếu mình xoay theo ý lớn {n}: '{angle}'. Mình viết bản đó. Muốn giữ bản gốc thì nhắn 'giữ nguyên'.", src = "d0b73cbe8d" }
-"message.drift.park"          = { text = "Để dành: {lý do}. Chủ đề này quay lại {trigger}. Vẫn muốn viết không? Đó sẽ là 1 bài ngoài bản đồ trong 10 bài này.", src = "4972b93122" }
+"message.drift.bridge"        = { text = "Chủ đề này hợp bản đồ nếu mình xoay theo ý lớn {n}: '{angle}'. Mình viết bản đó; muốn giữ bản gốc thì nhắn 'giữ nguyên'.", src = "d0b73cbe8d" }
+"message.drift.park"          = { text = "Để dành: {lý do}. Chủ đề này sẽ quay lại {trigger}. Vẫn muốn viết? Đó sẽ là 1 bài ngoài bản đồ trong 10 bài.", src = "4972b93122" }
 "message.save.on_map"         = { text = "Đúng bản đồ: ý lớn {n}.", src = "17d0779fd5" }
 "message.save.parked"         = { text = "Để dành: {lý do}.", src = "0bcdd7c347" }
 "message.label.off_map"       = { text = "Ngoài bản đồ", src = "f6f4582230" }
@@ -202,10 +202,10 @@
 "character.voice_first"       = { text = "bấm micro, cứ nói tự nhiên 2-3 phút", src = "1414c9af7f" }
 "character.bet"               = { text = "Nếu phải đặt cược 1 triệu, câu trả lời là gì?", src = "d86811d666" }
 "research.later"              = { text = "Để sau: một bước 10 phút trong Tuần 1.", src = "0e68627662" }
-"research.ask3"               = { text = "Nhờ bạn chút xíu: mình đang viết lại cách giới thiệu công việc và muốn dùng chính lời của bạn, không phải lời mình. {{t:ask3.question}} {{t:ask3.consent}}", src = "03b81104e2" }
+"research.ask3"               = { text = "Nhờ bạn chút xíu: mình đang viết lại cách giới thiệu công việc và muốn dùng chính lời của bạn, không phải lời mình. {{t:ask3.question}}", src = "03b81104e2" }
 "research.ask3_cold"          = { text = "Lúc này, phần khó nhất của {problem} với bạn là gì?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, thay tên bằng chữ cái, hoặc nhắn 'không có'.", src = "34c9df6797" }
-"research.paste_steps"        = { text = "Chép 10-20 bài hoặc comment từ 3 nơi khách của bạn trò chuyện khi không ai bán hàng. Mỗi đợt mở đầu bằng [nơi · tháng]. Thay mỗi tên bằng một chữ cái, cùng người thì cùng chữ. Bỏ qua người bán hàng.", src = "79be035ed1" }
+"research.paste_steps"        = { text = "Chép 10-20 bài hoặc comment ở 3 nơi khách của bạn trò chuyện khi không ai bán hàng. Mỗi đợt ghi [nơi · tháng] ở đầu. Thay tên bằng chữ cái, cùng người cùng chữ. Bỏ qua người bán hàng.", src = "79be035ed1" }
 "research.no_client"          = { text = "Chưa có câu trả lời nào từ khách", src = "418a8548c2" }
 
 # Posts the coach likes (§ LIKED; wf13-inspiration-spec §2). liked.cant_open and liked.copy_note are read by evals/graders.py
@@ -223,7 +223,7 @@
 "liked.slot"        = { text = "Bài này thay {video thứ Năm}. Quay hôm nay, 2 lần là đủ. Muốn giữ bài cũ thì nhắn 'bỏ qua'.", src = "fb3739da6d" }
 
 # Friday numbers and review (§ NUMBERS); language and market (§ LOCALE)
-"review.ask"          = { text = "Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn bán · khách trả lời gì khi được hỏi \"bạn biết mình từ đâu?\" · bài tốt nhất và vì sao. Thêm nếu có: lượt xem hoặc ảnh chụp (bài đăng từ 2 ngày trước) · ai nói lại đúng chữ của bạn · một câu mình viết mà không giống bạn.", src = "b3b0d59628" }
+"review.ask"          = { text = "Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · khách nói biết bạn từ đâu · bài tốt nhất, vì sao. Nếu có: lượt xem hoặc ảnh chụp (bài đăng từ 2 ngày trước) · ai nói lại đúng chữ của bạn · câu nào mình viết mà không giống bạn.", src = "b3b0d59628" }
 "review.ask_next"     = { text = "Có gì thì nói hoặc gõ nấy; để trống cũng được.", src = "c14fd19b2a" }
 "review.labels"       = { text = "Đã đăng · Người giơ tay · Thông điệp của bạn · Bài tốt nhất · Tuần sau", src = "03e3993ade" }
 "review.not_supplied" = { text = "chưa có số", src = "83da3d029b" }
@@ -232,7 +232,7 @@
 "review.bets_default" = { text = "Mình sẽ chạy 3 thử nghiệm này, trừ khi bạn muốn đổi cái nào.", src = "ed33307878" }
 "review.card_next"    = { text = "Nhắn 'ok', mình in Brand Card tuần này để bạn lưu.", src = "34c98b673a" }
 "review.whats_off"    = { text = "Chỗ chưa ổn: {một dòng}", src = "9c6a3ab8e2" }
-"locale.not_legal"    = { text = "Đây không phải tư vấn pháp lý; với trường hợp của bạn, hãy hỏi luật sư.", src = "2565e90f29" }
+"locale.not_legal"    = { text = "Đây không phải tư vấn pháp lý; trường hợp của bạn nên hỏi luật sư.", src = "2565e90f29" }
 
 # Simple surface + voice (wf15, wf14)
 "setup.dump_posts" = { text = "Có bài hay tin nhắn bạn từng viết thì dán 2–3 cái luôn, hoặc gửi link trang của bạn.", src = "fbfc38d52e" }
@@ -248,7 +248,7 @@
 # Integrator pass, wf15 + wf14: Day-0 missing facts, the Map's OK line, card top labels, VOICE anchor, Voice Card labels
 "setup.link_unread"            = { text = "Trang của bạn không mở được ở đây; bạn kể là đủ rồi.", src = "18d9ef7035" }
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
-"setup.guess_no_result"        = { text = "Mình đoán: chưa có kết quả của khách để đưa ra, nên mình dùng câu chuyện của chính bạn. Đúng không?", src = "bb5673e233" }
+"setup.guess_no_result"        = { text = "Mình đoán: chưa có kết quả của khách để kể, nên mình dùng chuyện của chính bạn. Đúng không?", src = "bb5673e233" }
 "setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán: MỘT kiểu khách có thể mua nhiều hơn một thứ là {buyer}. Đúng không? Hoặc nói luôn: tháng này nguồn nào nuôi bạn?", src = "262f5be82e" }
 "setup.plan_guess"             = { text = "Cho {platform} · ngày nói chuyện {day} (mình đoán; nhắn một chữ là đổi).", src = "c7e7a165c3" }
 "map.ok"                       = { text = "Mình chạy thử 4 tuần nhé. OK, hoặc sửa một dòng.", src = "1e6d1e3eeb" }
