@@ -74,3 +74,9 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
   - **Default when a post arrives:** save it to the swipe file ("Posts you like" / "Bài bạn thích"), so the AI references it later when planning, packaging, when the coach is stuck and in the monthly New slot. "Make my version" / "làm bản của mình" on request.
   - **v1 scope:** "Your version" + the monthly "Your angle" card (EVERYONE SAYS · NOBODY SAYS · YOU CAN SAY). Browse stays opt-in in GROW.
   - **Names:** public brand, channel and creator names may be kept in the swipe file and the internal competitor grid. In posts, only when the coach asks. Commenters and private individuals are never stored or printed. (The founder's answer "Cozm" is read as "Có"; awaiting confirmation.)
+- **Voice & Language is a first-class pillar next to Content Strategy (6 Oct 2026).** Spec: `research/wf14-voice-language-spec.md`.
+  - "What to say" is the Map; "how to say it" is the Voice Card.
+  - One voice line on the Map, correctable inside the one decision. Two voice lines on the Brand Card, under "WHAT YOU SAY / HOW YOU SAY IT" ("NÓI GÌ / NÓI THẾ NÀO").
+  - "Languages" means wording and style, not multilingual output.
+  - Written voice: the Day-0 dump prompt invites 2–3 posts the coach wrote. This is optional and adds no extra turn.
+  - VN: how the coach addresses the audience is inferred, shown on the Map, and kept separate from how the machine addresses the coach.

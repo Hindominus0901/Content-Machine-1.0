@@ -39,6 +39,16 @@ Founder request: "user có thể đưa lên các bài hoặc các kênh mà họ
   | P5 | GROW channels + opt-in Browse |
   | P6 | house rule 3 |
 
+## Added: Voice & Language as a first-class pillar (6 Oct 2026)
+Founder: "Voice and Languages (how to say), Content Strategy (what to say)". Spec: [research/wf14-voice-language-spec.md](research/wf14-voice-language-spec.md).
+
+- **What to say:** the Map.
+- **How to say it:** the Voice Card. It is built from the dump, 2–3 pasted posts (invited in the Day-0 dump prompt, no extra turn) and the Weekly Talks, and refined by "not me:" / "I do say".
+- **Shown:** one voice line on the Map; two lines on the Brand Card under WHAT YOU SAY / HOW YOU SAY IT.
+- **VN audience address:** inferred and shown on the Map.
+- **QA:** Ship Check VOICE step, graders I15 extension + I23, `voice` cases.
+- **Built in P2:** schema, start-block, Ship Check, VOICE anchor, strings, fixtures, cases. This runs as a patch right after the EN method modules land.
+
 ## What we're building
 
 ### Coach journey (UX spec)
