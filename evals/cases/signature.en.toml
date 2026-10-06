@@ -9,8 +9,10 @@
 #
 # Day 0 since 6 Oct 2026 (wf15-simple-surface-spec.md §0-§2; wf15-case-impact.md R2, R9-R13): after "done" only
 # the missing facts (≤3, one a message, "My guess: … Right?"); then a 4-line Map whose YOUR WORD: line is the
-# keyword (the 2 alternates stay stored; "change" brings the next one); FILM TODAY carries the keyword and the
-# comment ask with "(quieter: say 'quiet')", nothing under it; Week 1 follows unasked.
+# keyword (the 2 alternates stay stored; "change" brings the next one); in the same reply (K2, DECISIONS
+# 6 Oct 2026) FILM TODAY under it carries the keyword and the comment ask with "(quieter: say 'quiet')",
+# nothing under it, then "We'll run this for 4 weeks. OK, or change a line."; Week 1 follows unasked on any
+# answer but a Map change. FILM TODAY cases anchor the keyword-in-words pattern after the FILM TODAY title.
 #
 # Conventions (read with evals/README.md "Case files"):
 # - Assertions run on the machine reply to the last coach turn; "[turn n]" lines separate several coach turns.
@@ -103,7 +105,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S0", "S1", "floor"]
 title = "LinkedIn coach takes 'quiet': no comment-word CTA, the signature phrase still appears"
-context = "Day 0, Claude Pro, Mac. Variant of the persona: her dump never mentioned comment asks (persona default: it refuses them, so FILM TODAY starts quiet, convert.kit-keyword 5). Map OK'd; FILM TODAY delivered with 'Comment BADGE and I'll send you …' and '(quieter: say 'quiet')'. This is her answer; any message after FILM TODAY also brings all of Week 1 (§CM-TODAY 1), quiet from here on."
+context = "Day 0, Claude Pro, Mac. Variant of the persona: her dump never mentioned comment asks (persona default: it refuses them, so FILM TODAY starts quiet, convert.kit-keyword 5). The Map is on screen with FILM TODAY under it, carrying 'Comment BADGE and I'll send you …' and '(quieter: say 'quiet')'. This is her answer; any message but a Map change also brings all of Week 1 (§CM-TODAY 1), quiet from here on."
 input = """Okay, I'll be honest, I can't do 'comment BADGE'. My old CEO reads my posts. It looks like I'm selling knives. Can we do the quiet one?"""
 regex = [
   '(?i)badge',
@@ -124,13 +126,15 @@ id = "signature.en.006"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "FILM TODAY carries the keyword in its words and the comment ask with the quiet option; no Checked line under it"
-context = "Day 0, persona default. The Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) is on screen; the coach gives the one decision."
-input = """ok"""
+title = "FILM TODAY under the Map carries the keyword in its words and the comment ask with the quiet option; no Checked line under it"
+context = "Day 0, persona default. After 'done' the one missing fact was the multi-income guess; her answer brings the 4-line Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.'"
+input = """yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all"""
 regex = [
-  '''(?im)^(?![^\n]*\bcomment\b)[^\n]*\bone more chapter\b''',
+  '''(?m)FILM TODAY[\s\S]*^(?![^\n]*(?i:\bcomment\b))[^\n]*(?i:\bone more chapter\b)''',
   '''(?i)\bcomment\W{0,3}["“'‘]?chapter\b''',
   '''(?i)say ["“'‘]?quiet''',
+  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
   '''(?m)^\W*✓ Checked:''',
@@ -143,7 +147,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I14", "I17", "I18"]
 max_questions = 1
-notes = "wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {gift}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
+notes = "K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the keyword-in-words pattern is anchored after the FILM TODAY title because the Map lines hold the keyword too. wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {gift}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
 
 [[case]]
 id = "signature.en.007"
@@ -492,8 +496,8 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "'why?' after FILM TODAY shows the keyword check that no longer prints under the piece"
-context = "Day 0, persona default (ChatGPT Free). Same state as signature.en.006: the Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) is on screen."
-input = """[turn 1] ok
+context = "Day 0, persona default (ChatGPT Free). Same state as signature.en.006: after 'done' the one missing fact was the multi-income guess. Turn 1 answers it and gets the 4-line Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) with FILM TODAY under it; turn 2 asks why."
+input = """[turn 1] yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all
 [turn 2] why?"""
 regex = [
   '''(?im)^\W*✓ Checked:[^\n]*\bkeyword\b''',
@@ -507,7 +511,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I14", "I18"]
 max_questions = 1
-notes = "wf15 §2 and §CM-EDGE WHAT PRINTS: the old '✓ Checked: … keyword once …' line moved to 'why?' (R2, R9). Turn 1 prints FILM TODAY with nothing under it (I3 grades it; signature.en.006 asserts the piece). Turn 2 (assertions here): the ✓ Checked line names the keyword check (once, in the words, not only in the CTA), next to the WHY line and what the piece was written from; tick.keyword may print here too. Internal words stay out ('registry', 'echo'). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."
+notes = "wf15 §2 and §CM-EDGE WHAT PRINTS: the old '✓ Checked: … keyword once …' line moved to 'why?' (R2, R9). Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece (I3 grades it; signature.en.006 asserts the piece); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the ✓ Checked line names the keyword check (once, in the words, not only in the CTA), next to the WHY line and what the piece was written from; tick.keyword may print here too. Internal words stay out ('registry', 'echo'). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."
 
 [[case]]
 id = "signature.en.027"

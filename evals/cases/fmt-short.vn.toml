@@ -85,8 +85,8 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "QUAY HÔM NAY has every part: chữ trên màn hình ≤6, câu đầu ≤18, 3 ý ≤18, câu cuối, caption box, LÃI ẢO + 'nhẹ', WHY, ✓ line, ticks, text fallback"
-context = "Day 0, about minute 20, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. The Map is on screen and she has just OK'd it: one message on 'lãi ảo' (bán thì đắt mà cuối tháng không thấy tiền đâu), keyword LÃI ẢO, quà = Sổ 3 Cột bản 1 trang, offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ. Her delivery choice on the 7-line check: gạch đầu dòng, not word for word. This reply is QUAY HÔM NAY."
-input = """ok em, đúng rồi đấy. Tối nay chị quay luôn, em đưa chị cái video đi"""
+context = "Day 0, about minute 20, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in; her dump holds her buyers' words, Ngân's result and the offer, so nothing is missing and her 'xong' brings the Map with QUAY HÔM NAY under it, then '… chạy thử 4 tuần nhé. OK hay sửa một dòng?': one message on 'lãi ảo' (bán thì đắt mà cuối tháng không thấy tiền đâu), keyword LÃI ẢO, quà = Sổ 3 Cột bản 1 trang, offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ. Delivery: gạch đầu dòng, not word for word (her dump: 'em cho chị mấy gạch đầu dòng')."
+input = """xong rồi em. Tối nay chị quay luôn, em đưa chị cái video đi"""
 regex = [
   'QUAY HÔM NAY',
   '(?i)dưới 30\s?(?:giây|s)',
@@ -97,11 +97,13 @@ regex = [
   '```',
   'VÌ SAO RA KHÁCH: đổi [^\n]+→',
   '✓ Đã kiểm:[^\n]*(?:2019|28 Tết|Tết|kho)',
-  '(?i)lãi ảo',
+  '''QUAY HÔM NAY[\s\S]*(?i:lãi ảo)''',
   '''(?i)gõ\s+['"“‘]nhẹ''',
   '(?i)đọc to',
   '(?i)chưa quay[^\n]{0,60}(?:đăng|caption)',
   'TIẾP →[^\n]*\s*\Z',
+  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY''',
+  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+',
@@ -120,16 +122,16 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I12", "I14", "I15", "I17", "I18"]
 max_questions = 1
-notes = """UX §2 minute 20–24 VN, the whole QUAY HÔM NAY shape in one reply: chữ trên màn hình ≤6 tiếng, câu đầu nguyên văn ≤18 tiếng (hook_max), 3 ý ≤18 tiếng each, câu cuối nguyên văn; caption in a copy box; keyword CTA with the 'nhẹ' switch (quit point 11); VÌ SAO RA KHÁCH in the message-focus §3.1 VN form; '✓ Đã kiểm:' naming her own storeroom story (UX §6 Trust row; PLAN reconciliation 2: the Day-0 plain form of Ready); before-filming ticks ('đọc to câu đầu 2 lần · từ khoá đã có · nói chậm câu cuối'); the text fallback. The option lines are statements (header rule). Template labels stay internal (UX §4). Traps from persona.toml: Trang's 50 triệu (no consent), Khải's 'gấp 3', the 1 tỷ rumour. Her Northern voice never takes nha / nè / hông / tui (expected.toml banned_particles_whole_word). S0 included: Day-0-critical."""
+notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-7): QUAY HÔM NAY prints under the Map in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?', pair and regional particle adapted); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Only the trigger, context and order changed here; the rest predates wf15 and waits for the VN rewrite. UX §2 minute 20–24 VN, the whole QUAY HÔM NAY shape in one reply: chữ trên màn hình ≤6 tiếng, câu đầu nguyên văn ≤18 tiếng (hook_max), 3 ý ≤18 tiếng each, câu cuối nguyên văn; caption in a copy box; keyword CTA with the 'nhẹ' switch (quit point 11); VÌ SAO RA KHÁCH in the message-focus §3.1 VN form; '✓ Đã kiểm:' naming her own storeroom story (UX §6 Trust row; PLAN reconciliation 2: the Day-0 plain form of Ready); before-filming ticks ('đọc to câu đầu 2 lần · từ khoá đã có · nói chậm câu cuối'); the text fallback. The option lines are statements (header rule). Template labels stay internal (UX §4). Traps from persona.toml: Trang's 50 triệu (no consent), Khải's 'gấp 3', the 1 tỷ rumour. Her Northern voice never takes nha / nè / hông / tui (expected.toml banned_particles_whole_word). S0 included: Day-0-critical."""
 
 [[case]]
 id = "fmt-short.vn.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
-title = "Compact mode: QUAY HÔM NAY is complete with no method file, never asks for one, carries no client result"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 21, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. The Map is OK'd: dân văn phòng 25–35 ngồi máy tính cả ngày, keyword CỨNG ĐƠ, quà = 3 động tác 5 phút tại bàn, no offer yet (cold start, 0 online clients). Delivery: thẻ ý. This reply is QUAY HÔM NAY."
-input = """dc"""
+title = "Compact mode: QUAY HÔM NAY under the Map is complete with no method file, never asks for one, carries no client result"
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 21, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Her last missing fact was what she sells ('Mình đoán: …. Đúng không?'); her answer brings the Map (dân văn phòng 25–35 ngồi máy tính cả ngày, keyword CỨNG ĐƠ, quà = 3 động tác 5 phút tại bàn, no offer yet: cold start, 0 online clients) with QUAY HÔM NAY under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Delivery: thẻ ý."
+input = """chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi"""
 regex = [
   'QUAY HÔM NAY',
   '(?i)chữ trên màn hình',
@@ -138,10 +140,12 @@ regex = [
   '```',
   'VÌ SAO RA KHÁCH',
   '✓ Đã kiểm:',
-  '(?i)cứng đơ',
+  '''QUAY HÔM NAY[\s\S]*(?i:cứng đơ)''',
   '''(?i)gõ\s+['"“‘]nhẹ''',
   '(?i)chưa quay[^\n]{0,60}(?:đăng|caption)',
   'TIẾP →[^\n]*\s*\Z',
+  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY''',
+  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?i)file phương pháp',
@@ -160,7 +164,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I15", "I17", "I18"]
 max_questions = 1
-notes = """UX §6 'Day 0 completes with 0 files and with 1 file'; quit point 1 'method file requested mid-session'; UX §1.2 compact mode runs all of Day 0. Cold start: any client-result number is a fabrication (I8); '3 tuần' and '4 viên' are trap_numbers (the friend's anecdote, P5). Pair bạn–mình: 'chị' or 'em' addressed to her is a slip (setup.vn.007), and her script speaks to 'mấy bạn'. graders.py deny_list also runs."""
+notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-7): QUAY HÔM NAY prints under the Map in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?', pair and regional particle adapted); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Only the trigger, context and order changed here; the rest predates wf15 and waits for the VN rewrite. UX §6 'Day 0 completes with 0 files and with 1 file'; quit point 1 'method file requested mid-session'; UX §1.2 compact mode runs all of Day 0. Cold start: any client-result number is a fabrication (I8); '3 tuần' and '4 viên' are trap_numbers (the friend's anecdote, P5). Pair bạn–mình: 'chị' or 'em' addressed to her is a slip (setup.vn.007), and her script speaks to 'mấy bạn'. graders.py deny_list also runs."""
 
 [[case]]
 id = "fmt-short.vn.003"
@@ -168,18 +172,20 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "Undecided audience pair: the machine picks one and offers the switch as a statement; no option line ends in '?'"
-context = "Day 0, about minute 22, ChatGPT Plus; he dumped from the iPhone app and reads on the laptop. Pair anh–em; Southern. His audience pair is undecided (persona: 'mình – bạn' hay 'anh – em'; he picks at random if the machine proposes nothing). The Map is OK'd: bridge buyer = vợ chồng trẻ mua căn hộ đầu tiên, keyword GỒNG LÃI, quà = bảng tính ngược 1 trang, offer = buổi tính trước khi cọc (0đ; he lives on commission and says so). Delivery: thẻ ý. This reply is QUAY HÔM NAY."
-input = """ok lẹ đi em"""
+context = "Day 0, about minute 22, ChatGPT Plus; he dumped from the iPhone app and reads on the laptop. Pair anh–em; Southern. His audience pair is undecided (persona: 'mình – bạn' hay 'anh – em'; he picks at random if the machine proposes nothing). After 'xong' his last missing fact was the multi-income guess (bảo hiểm, môi giới căn hộ, dạy sale); his answer brings the Map (bridge buyer = vợ chồng trẻ mua căn hộ đầu tiên, keyword GỒNG LÃI, quà = bảng tính ngược 1 trang, offer = buổi tính trước khi cọc: 0đ, he lives on commission and says so) with QUAY HÔM NAY under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Delivery: thẻ ý."
+input = """Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11. Lẹ đi em"""
 regex = [
   'QUAY HÔM NAY',
-  '(?i)gồng lãi',
-  '(?i)(?:toilet|nhà mẫu)',
+  '''QUAY HÔM NAY[\s\S]*(?i:gồng lãi)''',
+  '''QUAY HÔM NAY[\s\S]*(?i:toilet|nhà mẫu)''',
   '''(?i)(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em|xưng\s+["“‘']?(?:mình|anh)(?!\w))''',
   'VÌ SAO RA KHÁCH',
   '✓ Đã kiểm:[^\n]*(?:toilet|nhà mẫu|khăn giấy|dí cọc)',
   '''(?i)gõ\s+['"“‘]nhẹ''',
   '(?i)chưa quay[^\n]{0,60}(?:đăng|caption)',
   'TIẾP →[^\n]*\s*\Z',
+  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY''',
+  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?i)nhẹ nhàng hơn\s*\?',
@@ -194,7 +200,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I10", "I12", "I15", "I17", "I18"]
 max_questions = 1
-notes = """'Options with no default' is a G6 quit trigger: the machine picks the audience pair (his test video used mình – bạn) and offers the other as a statement ('Muốn xưng anh – em thì gõ …'). The reply now carries three option lines (pair, 'nhẹ', not filming today); none ends in '?' (header option-line rule, I5). His caller's line 'Bên sale dí cọc quá, em có nên cọc không anh?' may sit verbatim in the piece (I9); in-piece questions do not count. Traps: P8 'chưa khách nào bị từ chối bồi thường', 'view sông' (the unit faces the pool), 'lãi suất đảm bảo'. Southern voice: no nhé / nhỉ / đấy (expected.toml avoid_regional_in_his_voice). Quit points 7 ('khóa 90 ngày') and 8 ('ngoài dự án')."""
+notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-7): QUAY HÔM NAY prints under the Map in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?', pair and regional particle adapted); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Only the trigger, context and order changed here; the rest predates wf15 and waits for the VN rewrite. 'Options with no default' is a G6 quit trigger: the machine picks the audience pair (his test video used mình – bạn) and offers the other as a statement ('Muốn xưng anh – em thì gõ …'). The reply now carries three option lines (pair, 'nhẹ', not filming today); none ends in '?' (header option-line rule, I5); map.ok is the reply's one question, with the Southern particle ('nha'), never 'nhé'. The pick may show on the Map's GIỌNG line ('với khách: …'). His caller's line 'Bên sale dí cọc quá, em có nên cọc không anh?' may sit verbatim in the piece (I9); in-piece questions do not count. Traps: P8 'chưa khách nào bị từ chối bồi thường', 'view sông' (the unit faces the pool), 'lãi suất đảm bảo'. Southern voice: no nhé / nhỉ / đấy (expected.toml avoid_regional_in_his_voice). Quit points 7 ('khóa 90 ngày') and 8 ('ngoài dự án')."""
 
 [[case]]
 id = "fmt-short.vn.004"
@@ -202,18 +208,20 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
 title = "On site: a walk-around beat card in one screen, never 'sit and talk to the camera', no 'không phát sinh'"
-context = "Day 0, about minute 21, ChatGPT Free on his old Samsung, standing in a client's kitchen in Thanh Khê at lunch. Pair anh–em; Central (Quảng) voice; public posts xưng Đức / tụi em, gọi anh chị. The Map is OK'd: chủ nhà phố và căn hộ ở Đà Nẵng sợ phát sinh khi sửa bếp; keyword 'phát sinh'; quà = danh sách 7 chỗ hay phát sinh khi sửa bếp; offer Cải tạo bếp trọn gói từ 85.000.000đ. Delivery: thẻ ý. This reply is QUAY HÔM NAY."
-input = """ok. nói ngắn thôi em, anh đang ở công trình"""
+context = "Day 0, about minute 21, ChatGPT Free on his old Samsung, standing in a client's kitchen in Thanh Khê at lunch. Pair anh–em; Central (Quảng) voice; public posts xưng Đức / tụi em, gọi anh chị. After 'xong' his last missing fact was the multi-income guess (bếp trọn gói, nội thất homestay, đóng tủ cho công ty thiết kế); his answer brings the Map (chủ nhà phố và căn hộ ở Đà Nẵng sợ phát sinh khi sửa bếp; keyword 'phát sinh'; quà = danh sách 7 chỗ hay phát sinh khi sửa bếp; offer Cải tạo bếp trọn gói từ 85.000.000đ) with QUAY HÔM NAY under it, then '… chạy thử 4 tuần nghe. OK hay sửa một dòng?'. Delivery: thẻ ý."
+input = """bếp đó em, tháng ni bếp nuôi xưởng. homestay với đóng tủ cho công ty là phụ thôi. nói ngắn thôi em, anh đang ở công trình"""
 regex = [
   'QUAY HÔM NAY',
-  '(?i)phát sinh',
-  '(?i)(?:cầm máy|đi một vòng|vừa đi vừa nói|ở công trình|trong bếp)',
+  '''QUAY HÔM NAY[\s\S]*(?i:phát sinh)''',
+  '''QUAY HÔM NAY[\s\S]*(?i:cầm máy|đi một vòng|vừa đi vừa nói|ở công trình|trong bếp)''',
   '(?i)câu (?:đầu|mở đầu)',
   '(?i)câu (?:cuối|chốt)',
   '```',
   'VÌ SAO RA KHÁCH',
   '✓ Đã kiểm:[^\n]*(?:2019|Liên Chiểu|đục thử|ông chú)',
   'TIẾP →[^\n]*\s*\Z',
+  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY''',
+  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?im)^(?![^\n]*(?:không|khỏi|đừng|chẳng)\s)[^\n]*ngồi\s+(?:nói|nhìn)[^.\n]{0,20}(?:camera|máy quay|ống kính)',
@@ -229,7 +237,7 @@ verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I15", "I17", "I18"]
 max_words = 340
 max_questions = 1
-notes = """Persona behaviour 'Nói ngắn thôi em, anh đang ở công trình' and 'Đừng bắt anh ngồi nói trước camera': the short is filmed walking the site with the phone (expected.toml week1 lead_piece). Quit trigger: text longer than one screen; 340 tiếng holds the whole QUAY HÔM NAY shape at the edition's ratio. Any absolute 'không phát sinh' is his hard-blocked trap (P8; setup.vn.021). His Central voice never takes đấy / nhỉ / nhé (voice-samples.md). Hidden: anh Quân's kitchens (no consent), dì Năm's 70 → 130 triệu (hearsay about another team)."""
+notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-7): QUAY HÔM NAY prints under the Map in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?', pair and regional particle adapted); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Only the trigger, context and order changed here; the rest predates wf15 and waits for the VN rewrite. Persona behaviour 'Nói ngắn thôi em, anh đang ở công trình' and 'Đừng bắt anh ngồi nói trước camera': the short is filmed walking the site with the phone (expected.toml week1 lead_piece). Quit trigger: text longer than one screen; 340 tiếng holds the whole QUAY HÔM NAY shape at the edition's ratio. Any absolute 'không phát sinh' is his hard-blocked trap (P8; setup.vn.021). His Central voice never takes đấy / nhỉ / nhé (voice-samples.md). Hidden: anh Quân's kitchens (no consent), dì Năm's 70 → 130 triệu (hearsay about another team)."""
 
 [[case]]
 id = "fmt-short.vn.005"
@@ -237,8 +245,8 @@ kind = "P"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Cold-start QUAY HÔM NAY passes the native-short standard"
-context = "Same state as fmt-short.vn.002 (S0) and its S1 twin; judge the QUAY HÔM NAY piece only (chữ trên màn hình, câu đầu, 3 ý, câu cuối, caption)."
-input = """dc"""
+context = "Same state as fmt-short.vn.002 (S0) and its S1 twin: her answer to the last guess brings the Map with QUAY HÔM NAY under it; judge the QUAY HÔM NAY piece only (chữ trên màn hình, câu đầu, 3 ý, câu cuối, caption)."
+input = """chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi"""
 standard = "native-short"
 critical = ["NS1"]
 min_score = 10

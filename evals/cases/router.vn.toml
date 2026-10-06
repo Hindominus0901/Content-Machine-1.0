@@ -127,14 +127,13 @@ id = "router.vn.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'tiếp' after a ChatGPT Free limit resumes Day 0 at QUAY HÔM NAY, not at Bắt đầu"
-context = "Day 0, Monday 12 Oct 2026, ChatGPT Free on her iPhone (a friend did Door A on a laptop; the project opens in the phone app). The Map was shown and Minh Anh typed “ok”; ChatGPT Free hit its limit before QUAY HÔM NAY arrived. About 5 hours later, after her evening class, she opens the same chat."
+title = "'tiếp' after a ChatGPT Free limit resumes Day 0 at Tuần 1, not at Bắt đầu"
+context = "Day 0, Monday 12 Oct 2026, ChatGPT Free on her iPhone (a friend did Door A on a laptop; the project opens in the phone app). The Map was shown with QUAY HÔM NAY under it; ChatGPT Free hit its limit right after, before Minh Anh answered. About 5 hours later, after her evening class, she opens the same chat."
 input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
-  '''QUAY HÔM NAY''',
-  '''VÌ SAO RA KHÁCH''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -142,6 +141,8 @@ not_regex = [
   '''(?i)xả hết''',
   '''(?i)anh, chị hay bạn''',
   '''(?i)(làm lại|bắt đầu lại|kể lại) từ đầu''',
+  '''(?m)^\W*QUAY HÔM NAY\b''',
+  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG):''',
   '''(?i)nhẹ nhàng hơn\s*\?''',
   '''(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?''',
 ]
@@ -150,7 +151,7 @@ invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; persona behaviour ('bản free hay hết lượt, quay lại buổi tối cùng đoạn chat và gõ tiếp'); UX §2 budget (save points on free tiers). The Map is not shown again and nothing restarts; the next step is QUAY HÔM NAY (UX §2 minute 20-24)."""
+notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; persona behaviour ('bản free hay hết lượt, quay lại buổi tối cùng đoạn chat và gõ tiếp'); UX §2 budget (save points on free tiers). K2 (DECISIONS 6 Oct 2026): QUAY HÔM NAY came in the Map reply, so she left with today's video; the next step is Tuần 1 (VN start-block step 7: it comes on any answer but a change; ChatGPT Free may split it, so at least 2 copy boxes here). Neither the Map nor QUAY HÔM NAY is shown again and nothing restarts. Only the trigger, context and order changed here; the rest waits for the VN rewrite."""
 
 [[case]]
 id = "router.vn.003"
@@ -2370,20 +2371,20 @@ id = "router.vn.083"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "'ok em' on the Map is the one decision: QUAY HÔM NAY follows at once"
-context = "Day 0, Monday 12 Oct 2026, about minute 19, Door B (ChatGPT Free, Android). The Map is on screen (MỘT THÔNG ĐIỆP, 3 Ý LỚN, keyword “ngại chào”, offer, vì sao chọn, ĐỂ SAU, “Mình chạy thử 4 tuần…” in chị–em)."
+title = "'ok em' on the Map + QUAY HÔM NAY is the one decision: all of Tuần 1 follows at once"
+context = "Day 0, Monday 12 Oct 2026, about minute 19, Door B (ChatGPT Free, Android). The Map is on screen with QUAY HÔM NAY under it (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ “ngại chào”, GIỌNG; then the beat card, its caption box, “Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.” and “Em chạy thử 4 tuần nhé. OK hay sửa một dòng?” in chị–em). Nothing of Tuần 1 has been printed; no Brand Card yet."
 input = '''ok em'''
 contains = []
 not_contains = []
 regex = [
-  '''QUAY HÔM NAY''',
-  '''(?im)^\W*chữ trên màn hình''',
-  '''VÌ SAO RA KHÁCH''',
-  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)chị (có )?chắc (chưa|không)|xác nhận''',
+  '''(?m)^\W*QUAY HÔM NAY\b''',
+  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG):''',
+  '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
   '''(?i)(?<!\w)bạn(?!\w)''',
   '''(?i)nhẹ nhàng hơn\s*\?''',
   '''(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?''',
@@ -2393,7 +2394,7 @@ invariants = ["I1", "I3", "I5", "I6", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (trigger set). UX §2 minute 19-20: 'ok' is THE one decision; minute 20-24 QUAY HÔM NAY follows at once (chữ trên màn hình, câu đầu, 3 ý, câu cuối, caption, VÌ SAO RA KHÁCH, '✓ Đã kiểm:' with 'dùng chuyện spa 2018'). 'ok' is a universal word (UX §4); no confirmation round."""
+notes = """route: setup (trigger set). K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-7): QUAY HÔM NAY already came under the Map, so 'ok em' on that reply is THE one decision and brings Tuần 1 at once (step 7 'TUẦN 1 ra ngay khi coach đáp (trừ khi sửa)'; ChatGPT Free may split it, so at least 2 copy boxes here): no QUAY HÔM NAY or Map reprint, no confirmation round, never 'muốn làm tuần 1 không?'. 'ok' is a universal word (UX §4). Only the trigger, context and order changed here; the rest waits for the VN rewrite."""
 
 [[case]]
 id = "router.vn.084"

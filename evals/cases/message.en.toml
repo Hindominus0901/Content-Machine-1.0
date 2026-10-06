@@ -21,9 +21,12 @@
 #   in every one) or "scope: transcript" (all machine replies joined in order); evals/run.py reads it.
 # - Regexes are Python `re`, run on the full reply text, case-sensitive unless they start with (?i).
 # - Day 0: dump → at most 3 missing facts, one a message ("My guess: … Right?") → the Map: 4 lines
-#   (KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE) + "We'll run this for 4 weeks. OK, or change a
-#   line." No check screen; why this one, the root cause and NOT NOW print only on "why?". Budgets
-#   (acceptance.toml [day0]): the Map within 6 coach turns, film-ready ≤20 min, ≤10 coach turns.
+#   (KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE), FILM TODAY under it in the same reply (K2, DECISIONS
+#   6 Oct 2026), then "We'll run this for 4 weeks. OK, or change a line." Any answer but a change brings
+#   Week 1; "change N: …" reprints that line, and FILM TODAY only if it changes. Word caps on a Map reply
+#   count FILM TODAY too (about 140 words with its caption box). No check screen; why this one, the root
+#   cause and NOT NOW print only on "why?". Budgets (acceptance.toml [day0]): the Map within 6 coach turns,
+#   film-ready ≤20 min, ≤10 coach turns.
 # - Status lines: a Ready piece prints only its content. At most one line under a piece, only for
 #   "Needs you · …" (one a reply), a hard stop, "post anyway" or a required dated note. Piece cases
 #   detect the piece by its copy box (or an N<digit> label) and forbid Ready / ✓ Checked / Draft / WHY
@@ -82,10 +85,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I6", "I17"]
-max_words = 160
+max_words = 300
 max_chars = 0
 max_questions = 1
-notes = """wf15 §0 S2, §1.4; start-block DAY 0 step 4; §CM-MAP message.kit-map: the Map is 4 labelled lines (strings map.known, map.topics, map.word, map.voice), then map.ok, the day's one decision. Never on it: NOT NOW, why this one, the runner-up, the root cause, scores; the offer and the price live in the card's machine block (brain.en.003). The old screen (ONE MESSAGE, 3 BIG IDEAS, OFFER, Why this one, NOT NOW, 'Nothing you know is wasted', the pocket version 'screenshot this') is gone; why this one, the root cause and NOT NOW print on 'why?' (message.en.009). The coach never sees 'lock' or '90 days' (quit point 7). The Map arrives at coach turn 5 (Start, 3 chunks, the one missing fact), within map_max_turns_en 6 (message.en.054). max_words 160 keeps it one short screen. Graded with graders.py checks day0_timing (map_lines = 4) and deny_list as well as the invariants listed."""
+notes = """wf15 §0 S2, §1.4; start-block DAY 0 step 4; §CM-MAP message.kit-map: the Map is 4 labelled lines (strings map.known, map.topics, map.word, map.voice), then map.ok, the day's one decision. Never on it: NOT NOW, why this one, the runner-up, the root cause, scores; the offer and the price live in the card's machine block (brain.en.003). The old screen (ONE MESSAGE, 3 BIG IDEAS, OFFER, Why this one, NOT NOW, 'Nothing you know is wasted', the pocket version 'screenshot this') is gone; why this one, the root cause and NOT NOW print on 'why?' (message.en.009). The coach never sees 'lock' or '90 days' (quit point 7). The Map arrives at coach turn 5 (Start, 3 chunks, the one missing fact), within map_max_turns_en 6 (message.en.054). max_words 160 kept the Map alone to one short screen; 300 now that FILM TODAY sits under it in the same reply (K2, DECISIONS 6 Oct 2026). Graded with graders.py checks day0_timing (map_lines = 4) and deny_list as well as the invariants listed."""
 
 [[case]]
 id = "message.en.002"
@@ -257,10 +260,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I4", "I5", "I6", "I8", "I10"]
-max_words = 160
+max_words = 300
 max_chars = 0
 max_questions = 1
-notes = """wf15 S2: the Map shows 4 lines; why this one, the moms and TRT (NOT NOW) print on 'why?' (message.en.046), and the founding offer lives in the card (brain.en.006 offer_status founding|none), so neither is asserted here. KNOWN FOR names the dads; his word comes from audience words: KEEP UP (expected.toml [keyword]). A cold start may show 2 topics (expected 'proof coming'). Any dollar figure other than his own $249 guess is invented. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed."""
+notes = """wf15 S2: the Map shows 4 lines; why this one, the moms and TRT (NOT NOW) print on 'why?' (message.en.046), and the founding offer lives in the card (brain.en.006 offer_status founding|none), so neither is asserted here. KNOWN FOR names the dads; his word comes from audience words: KEEP UP (expected.toml [keyword]). A cold start may show 2 topics (expected 'proof coming'). Any dollar figure other than his own $249 guess is invented. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
 
 [[case]]
 id = "message.en.009"
@@ -369,10 +372,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I4", "I5", "I6", "I8", "I10"]
-max_words = 160
+max_words = 300
 max_chars = 0
 max_questions = 1
-notes = """expected.toml [map] / [keyword]: preferred 'nothing room' (Megan's words, 8 audience members); her method lines ('Tape it out before you buy it', 'Rug before sofa', 'Every room needs a job') may carry KNOWN FOR's method. wf15 S2: why this one (64 paid Room Resets) and full projects kept by a side door (referral, builders, DMs) print on 'why?' (message.en.048); full projects are never a topic. The Hollis kitchen has no consent; '400-plus rooms' and 'save 30 percent' are guesses; 'decor', 'elevated', 'curated', 'timeless' are on her must-not list ('We're designers, not decorators'). Graded with graders.py checks day0_timing and deny_list as well as the invariants listed."""
+notes = """expected.toml [map] / [keyword]: preferred 'nothing room' (Megan's words, 8 audience members); her method lines ('Tape it out before you buy it', 'Rug before sofa', 'Every room needs a job') may carry KNOWN FOR's method. wf15 S2: why this one (64 paid Room Resets) and full projects kept by a side door (referral, builders, DMs) print on 'why?' (message.en.048); full projects are never a topic. The Hollis kitchen has no consent; '400-plus rooms' and 'save 30 percent' are guesses; 'decor', 'elevated', 'curated', 'timeless' are on her must-not list ('We're designers, not decorators'). Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
 
 [[case]]
 id = "message.en.012"
@@ -405,10 +408,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I4", "I5", "I6", "I8", "I10"]
-max_words = 160
+max_words = 300
 max_chars = 0
 max_questions = 1
-notes = """wf15 S2: her 3 clients as the reason, and the life topics coming back as 'who am I after corporate' (expected.toml life_topics_bridge), print on 'why?' (message.en.049); her pushback when she misses them is message.en.017. The Map's 4-week line is map.ok; she hesitates at 'lock' / '90 days' (quit point 7). Keyword 'without the badge' (BADGE); 'Write the Tuesday' is the method name, not the keyword. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed."""
+notes = """wf15 S2: her 3 clients as the reason, and the life topics coming back as 'who am I after corporate' (expected.toml life_topics_bridge), print on 'why?' (message.en.049); her pushback when she misses them is message.en.017. The Map's 4-week line is map.ok; she hesitates at 'lock' / '90 days' (quit point 7). Keyword 'without the badge' (BADGE); 'Write the Tuesday' is the method name, not the keyword. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
 
 # ---------------------------------------------------------------- the one decision and pushback
 
@@ -636,7 +639,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "S0"]
 title = "'change 1' alone: two options from her dump and my pick with a reason, still the one decision"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). She answered it and the 4-line Map is on screen. She is on her iPhone in the car between site visits and wants line 1 different but doesn't say how."
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). She answered it and the 4-line Map is on screen with FILM TODAY under it. She is on her iPhone in the car between site visits and wants line 1 different but doesn't say how."
 input = '''change 1'''
 contains = []
 not_contains = []
@@ -656,7 +659,7 @@ invariants = ["I1", "I2", "I5", "I6"]
 max_words = 160
 max_chars = 0
 max_questions = 1
-notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; it stays inside the day's one decision (I6), and FILM TODAY waits for her OK. Options come from her dump (message-focus §1.1 rule 1: talk first, choose second); the pick stays the Room Reset homeowner, never designers (free pricing advice), realtors (staging) or full-service clients. Quit trigger 'options with no default'. Replaces the guided-mode 'one by one' case: the check screen it presumed is gone (wf15 S2) and missing facts already come one a message."""
+notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; it stays inside the day's one decision (I6), and FILM TODAY, already under the Map, is not reprinted (start-block 4: only a changed line that changes it reprints it). Options come from her dump (message-focus §1.1 rule 1: talk first, choose second); the pick stays the Room Reset homeowner, never designers (free pricing advice), realtors (staging) or full-service clients. Quit trigger 'options with no default'. Replaces the guided-mode 'one by one' case: the check screen it presumed is gone (wf15 S2) and missing facts already come one a message."""
 
 [[case]]
 id = "message.en.022"
@@ -890,10 +893,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I5", "I8"]
-max_words = 170
+max_words = 310
 max_chars = 0
 max_questions = 1
-notes = """setup.kit-facts 4: a hedge gets check.bet once; after that 'not sure' leaves the guess standing as (my guess), with no re-ask and no list. 'You name it' is permission: the offer is named from his words (a founding small group, 8 weeks; setup.kit-facts 7 'No offer: founding offer ("first 5") at their own price'). He gave no price here, so none is printed (I8): the offer piece will ask it as one Needs-you line. With all missing facts in, the reply is the Map (map.ok). Re-aimed from the old 'one probe on the old way' case: the old way is never asked on Day 0 (wf15 §1.3)."""
+notes = """setup.kit-facts 4: a hedge gets check.bet once; after that 'not sure' leaves the guess standing as (my guess), with no re-ask and no list. 'You name it' is permission: the offer is named from his words (a founding small group, 8 weeks; setup.kit-facts 7 'No offer: founding offer ("first 5") at their own price'). He gave no price here, so none is printed (I8): the offer piece will ask it as one Needs-you line. With all missing facts in, the reply is the Map (map.ok). Re-aimed from the old 'one probe on the old way' case: the old way is never asked on Day 0 (wf15 §1.3). max_words: the Map's 170 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
 
 [[case]]
 id = "message.en.032"
@@ -1476,7 +1479,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'change 4' edits the voice line inside the one decision: line 4 reprinted with her words, the same OK, no voice quiz"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). Turn 1 answers it and gets the 4-line Map. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). Turn 1 answers it and gets the 4-line Map with FILM TODAY under it. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
 input = '''[turn 1] The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
 [turn 2] change 4: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.'''
 contains = []
@@ -1498,25 +1501,25 @@ invariants = ["I1", "I5", "I6", "I17"]
 max_words = 140
 max_chars = 0
 max_questions = 1
-notes = """wf14 V1 'It can be changed inside the same one decision ("change line N")'; §CM-MAP CHANGE '"change N: …" → that line reprinted + map.ok … Voice line too'; voice.kit-build 2 '"change 4": §CM-MAP, same one decision'. Her own words go in as given: tone 'blunt', her phrase verbatim (voice-samples.md 7). No second decision round, no questions about her voice, no A) B) (that is for 'change N' alone), and FILM TODAY waits for her OK. The card carries the change (brain.en.030)."""
+notes = """wf14 V1 'It can be changed inside the same one decision ("change line N")'; §CM-MAP CHANGE '"change N: …" → that line reprinted + map.ok … Voice line too'; voice.kit-build 2 '"change 4": §CM-MAP, same one decision'. Her own words go in as given: tone 'blunt', her phrase verbatim (voice-samples.md 7). No second decision round, no questions about her voice, no A) B) (that is for 'change N' alone), and FILM TODAY, printed under the Map in turn 1, is not reprinted: start-block 4 reprints the script only if the change alters it, and a voice-line change in her own words leaves the script, already cut from her words, as it is. The card carries the change (brain.en.030)."""
 
 [[case]]
 id = "message.en.053"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'ok' with a voice change: the change is applied and the day goes on to FILM TODAY, no second OK"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). Turn 1 answers it and gets the 4-line Map, whose voice line says she talks to them as 'you'. In turn 2 Corinne says OK and adds how she addresses newsletter readers. Assertions run on the reply to turn 2."
+title = "'ok' with a voice change: the change is applied and the day goes on to Week 1, no second OK"
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). Turn 1 answers it and gets the 4-line Map, whose voice line says she talks to them as 'you', with FILM TODAY under it. In turn 2 Corinne says OK and adds how she addresses newsletter readers. Assertions run on the reply to turn 2."
 input = '''[turn 1] Full projects, about 70 percent. They pay 5 salaries. The Reset is what I want to grow, because it's the one we can actually sell from content. Color consults are $250 for 90 minutes and I'd stop tomorrow. Staging is a favor for 2 realtor friends.
 [turn 2] ok. but in the newsletter I call them neighbors'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)\bFILM TODAY\b''',
-  '''(?m)^\s*(?:```|~~~)''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
 ]
 not_regex = [
   '''We(?:'|’)ll run this for 4 weeks''',
+  '''(?m)^\W*FILM TODAY\b''',
   '''(?im)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD):''',
   '''(?i)\bneighbou?rs\b[^\n]*\?''',
   '''(?i)\b(are you sure|just to confirm|confirm (that|this))\b''',
@@ -1526,7 +1529,7 @@ invariants = ["I1", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """§CM-MAP CHANGE: '"ok" with a change → apply it and go on. Voice line too.' The OK is the one decision; the change (expected.toml [voice] audience_address 'you; "neighbors" in the newsletter') is stored for the newsletter and the card, and the reply moves on to FILM TODAY (start-block step 5) with its caption copy box. No reprinted Map, no second OK, no question about it. The Instagram FILM TODAY still talks to 'you' (voice.kit-shift 8: the address belongs to the platform where she uses it)."""
+notes = """§CM-MAP CHANGE: '"ok" with a change → apply it and go on. Voice line too.' The OK is the one decision; the change (expected.toml [voice] audience_address 'you; "neighbors" in the newsletter') is stored for the newsletter and the card, and, FILM TODAY already sitting under the Map (K2, DECISIONS 6 Oct 2026), the reply moves on to all of Week 1 (start-block step 6; ChatGPT Plus: one reply, at least 3 copy boxes). No reprinted Map or FILM TODAY, no second OK, no question about it. The Instagram pieces still talk to 'you'; 'neighbors' belongs to the newsletter (voice.kit-shift 8: the address belongs to the platform where she uses it)."""
 
 # ---------------------------------------------------------------- Day-0 budget for the Map (acceptance [day0])
 

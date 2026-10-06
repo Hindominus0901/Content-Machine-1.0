@@ -18,7 +18,7 @@ This spec overrides `wf11-ux-spec.md` §2 and `wf12-qa-spec.md` §2.4 / §2.7 wh
 
 ## 1. Day 0, new shape (≤10 coach turns, film-ready ≤20 min)
 
-> **Amended 6 Oct 2026 (founder, golden round G1 item K2):** step 5 FILM TODAY prints in the same reply as the step 4 Map, under "OK, or change a line." A changed line reprints both; the next coach message brings Week 1 (step 6). See `docs/DECISIONS.md`.
+> **Amended 6 Oct 2026 (founder, golden round G1 item K2):** step 5 FILM TODAY prints in the same reply as the step 4 Map, right under it, and "OK, or change a line." comes last. A changed line reprints that line (and the script if it changes); the next coach message brings Week 1 (step 6). See `docs/DECISIONS.md`.
 
 1. **Start.**
    - Setup check line + the 3-line promise + the mic tip.

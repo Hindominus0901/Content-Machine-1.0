@@ -15,12 +15,13 @@
 #   including which Brand Card versions sit in the project sources. Assertions run on the machine
 #   reply to the last coach turn, unless `notes` starts with "scope: transcript" (all machine replies
 #   joined in order) or "scope: each reply" (regex in at least one reply; not_* and max_* in every one).
-# - Day 0 now: … the Map → "ok" → FILM TODAY → Week 1 in the next reply, unasked → the Brand Card +
+# - Day 0 now: … one reply: the Map with FILM TODAY under it and "OK, or change a line." (K2, DECISIONS
+#   6 Oct 2026) → any answer but a Map change brings Week 1 in the next reply, unasked → the Brand Card +
 #   "Save this so I remember you (30 s)." → NEXT. No stop point and no wrap-up; "later" before the card
 #   prints the card at once and Week 1 waits for "next". Budgets (acceptance.toml [day0]): Map ≤6 coach
 #   turns, film-ready ≤20 min, ≤10 coach turns.
-# - Day-0 card cases: `input` runs from the coach's answer to FILM TODAY ("[turn 1] …") to the reply that
-#   holds the card ("[turn 2] ok" answers a first Week-1 reply on a Free plan). They are graded
+# - Day-0 card cases: `input` runs from the coach's answer to the Map + FILM TODAY reply ("[turn 1] …") to
+#   the reply that holds the card ("[turn 2] ok" answers a first Week-1 reply on a Free plan). They are graded
 #   "scope: transcript", with patterns anchored on the card itself: its title line "Brand Card v1 · …"
 #   (the top runs from it to "for the machine"), the machine heading, or `name: value` field lines.
 # - Card shape: the top is 3 lines (title · "WHAT YOU SAY:" message · 3 topics · "keyword" · "HOW YOU
@@ -53,7 +54,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Day-0 card, after Week 1: a 3-line top (≤500 chars), then the labelled machine block, the save line and NEXT; no stop point"
-context = "Day 0, ChatGPT Free, persona default (Map OK'd: keyword CHAPTER; 12 weeks 1:1 at $2,400; talk day guessed from her dump, never Monday; FILM TODAY delivered). No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers a first Week-1 reply; Day 0's last reply prints the card."
+context = "Day 0, ChatGPT Free, persona default (the Map on screen with FILM TODAY under it: keyword CHAPTER; 12 weeks 1:1 at $2,400; talk day guessed from her dump, never Monday). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers a first Week-1 reply; Day 0's last reply prints the card."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -89,7 +90,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "Machine block holds every required field with plain names and Dana's values, offer and week included"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Dana: Instagram first (about 1,150 followers), email list of 140, consented client results (Lorraine, Bev, Gail), no hub, no reminders yet. She never chose quiet. Talk day and delivery were never asked: guessed from her dump and named once above Week 1 (setup.plan_guess)."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Dana: Instagram first (about 1,150 followers), email list of 140, consented client results (Lorraine, Bev, Gail), no hub, no reminders yet. She never chose quiet. Talk day and delivery were never asked: guessed from her dump and named once above Week 1 (setup.plan_guess)."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -158,7 +159,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "The card top speaks plainly: WHAT YOU SAY (message · 3 topics · CHAPTER) and HOW YOU SAY IT; offer, talk day and NOT NOW sit in the block"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -195,7 +196,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "List fields respect their caps on the Day-0 card"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Dana's dump held 4 client quotes, 6+ stories, many strong phrases and more than 7 off-map topics."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Dana's dump held 4 client quotes, 6+ stories, many strong phrases and more than 7 off-map topics."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -228,7 +229,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Proof rows only from consented, substantiated results, within each client's agreed uses"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Earlier on Day 0 Dana dictated Pam's $15,000 story (no consent), her '90 percent' guess (never counted) and an unnamed variance case (no consent), and pasted comments with seeded names. Consent scope: Lorraine posts + case study (no ads); Bev posts only; Gail anything."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Earlier on Day 0 Dana dictated Pam's $15,000 story (no consent), her '90 percent' guess (never counted) and an unnamed variance case (no consent), and pasted comments with seeded names. Consent scope: Lorraine posts + case study (no ads); Bev posts only; Gail anything."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -254,7 +255,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start card: no client proof, founding or no offer, no kids' names, no borrowed numbers"
-context = "Day 0, iPhone, ChatGPT Plus, persona default (Map OK'd: dads with a desk job; keyword KEEP UP; founding small group idea at his own '$249?' guess; Instagram + TikTok; no email list; beat cards). His dump named Owen, Lily, Jess and Tommy, the brother's '22 pounds' and 'a couple hundred people'. Talk day was never asked (a guess, named once above Week 1). Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
+context = "Day 0, iPhone, ChatGPT Plus, persona default (the Map on screen with FILM TODAY under it: dads with a desk job; keyword KEEP UP; founding small group idea at his own '$249?' guess; Instagram + TikTok; no email list; beat cards). His dump named Owen, Lily, Jess and Tommy, the brother's '22 pounds' and 'a couple hundred people'. Talk day was never asked (a guess, named once above Week 1). Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] yep. filming it in the garage tomorrow before work
 [turn 2] ok'''
 contains = []
@@ -290,7 +291,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0"]
 title = "Dates are worked out, not guessed: plan_start is the day after Day 0 (a Monday here); the 4-week try ends in week 4; the week line matches the talk day"
-context = "Day 0 is Sunday 2026-10-11, 8:45 pm Eastern (persona.toml day0), iPhone, ChatGPT Plus, persona default (Map OK'd: dads with a desk job; keyword KEEP UP; founding small group at his own '$249?' guess). Talk day was never asked (a guess, named once above Week 1). Week 1 runs Mon 2026-10-12 to Sun 2026-10-18. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
+context = "Day 0 is Sunday 2026-10-11, 8:45 pm Eastern (persona.toml day0), iPhone, ChatGPT Plus, persona default (the Map on screen with FILM TODAY under it: dads with a desk job; keyword KEEP UP; founding small group at his own '$249?' guess). Talk day was never asked (a guess, named once above Week 1). Week 1 runs Mon 2026-10-12 to Sun 2026-10-18. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] yep. filming it in the garage tomorrow before work
 [turn 2] ok'''
 contains = []
@@ -319,7 +320,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Consultant card: LinkedIn + newsletter plan, Wednesday from her dump, deal prep as the side door, true credentials"
-context = "Day 0 on Claude Free, persona default (Map OK'd: keyword RECORD YEAR; Margin Sprint $7,500; deal prep kept referral-only from her multi-income answer; newsletter 380; her dump says 'Wednesday 7 to 8 in the morning is the only hour I truly own'). Turn 1 answers FILM TODAY and gets Week 1; turn 2 answers a first Week-1 reply; Day 0's last reply prints the card."
+context = "Day 0 on Claude Free, persona default (the Map on screen with FILM TODAY under it: keyword RECORD YEAR; Margin Sprint $7,500; deal prep kept referral-only from her multi-income answer; newsletter 380; her dump says 'Wednesday 7 to 8 in the morning is the only hour I truly own'). Turn 1 answers it and gets Week 1; turn 2 answers a first Week-1 reply; Day 0's last reply prints the card."
 input = '''[turn 1] ok. I'll film at my desk tomorrow at 7.
 [turn 2] ok'''
 contains = []
@@ -389,7 +390,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "Multi-income card keeps the side door her answer set"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. On the Map she also pushed back ('Resume reviews pay my electric bill') and accepted the DM-only side door."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. On the Map she also pushed back ('Resume reviews pay my electric bill') and accepted the DM-only side door."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -415,7 +416,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "Voice phrases and passages are her words, verbatim, not polished"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Her dump includes: '24 years and a carrot cake.', 'coffee before resume, I say it all the time', 'you're not too old you're too vague. you're applying for anything with a pulse.'"
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Her dump includes: '24 years and a carrot cake.', 'coffee before resume, I say it all the time', 'you're not too old you're too vague. you're applying for anything with a pulse.'"
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -441,7 +442,7 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "The card's compact character and voice (trait, enemy, principles, Voice Card) pass the Day-0 character-card bar"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Judge the character and voice groups of the machine block (trait, enemy, principles, tone, rhythm, phrases, openers_closers, audience_address, passages) against answers.md, voice-samples.md and written-posts.md."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. Judge the character and voice groups of the machine block (trait, enemy, principles, tone, rhythm, phrases, openers_closers, audience_address, passages) against answers.md, voice-samples.md and written-posts.md."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -910,7 +911,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Voice fields in the machine block: tone, rhythm, 5 verbatim phrases, openers from her posts, 'you' as the address, jargon, humour, written vs spoken"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map OK'd (keyword CHAPTER); FILM TODAY delivered. No Brand Card exists yet. Turn 1 answers FILM TODAY and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. With chunk 1 she pasted her posts W1-W2 (written-posts.md: 'Here's the thing nobody tells you.' … 'Coffee before resume ☕ Every time.'). She never said 'not me:' on Day 0."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer: the 12-week program at $2,400 is the offer, resume reviews a DM-only side door); the Map shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. With chunk 1 she pasted her posts W1-W2 (written-posts.md: 'Here's the thing nobody tells you.' … 'Coffee before resume ☕ Every time.'). She never said 'not me:' on Day 0."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] ok'''
 contains = []
@@ -946,7 +947,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "A Day-0 'not me:' lands in the card: the one-line confirmation, never_say in the block, 'never:' on the top's HOW line, and no piece uses it"
-context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer); the Map OK'd (keyword CHAPTER); FILM TODAY delivered; no Brand Card yet. Turn 1 answers FILM TODAY and gets Week 1's first reply. In turn 2 Dana rejects a word; that reply confirms it in one line, finishes Week 1 and prints the card."
+context = "Day 0, ChatGPT Free, persona default: dump with her written posts; one missing fact (her multi-income answer); the Map shown with FILM TODAY under it (keyword CHAPTER); no Brand Card yet. Turn 1 answers it and gets Week 1's first reply. In turn 2 Dana rejects a word; that reply confirms it in one line, finishes Week 1 and prints the card."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] not me: game-changer. otherwise ok'''
 contains = []
@@ -973,7 +974,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'change 4' on the Map carries into the card: her tone word and her phrase on the HOW line and in the voice fields"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answered it and the 4-line Map is on screen. Turn 1 changes line 4; turn 2 OKs the Map and gets FILM TODAY; turn 3 answers it and gets Week 1; turn 4 answers the next reply; Day 0's last reply prints the card."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answered it and the 4-line Map is on screen with FILM TODAY under it. Turn 1 changes line 4 (line 4 reprinted, FILM TODAY only if it changes); turn 2 OKs it and gets Week 1, unasked (ChatGPT Free: ≤3 pieces a reply); turn 3 answers that and gets the rest; turn 4 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] change 4: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.
 [turn 2] ok
 [turn 3] ok I'll film it tomorrow morning
@@ -1004,7 +1005,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'later' right after FILM TODAY: the card and the save line print at once; Week 1 waits for 'next'"
-context = "Day 0, ChatGPT Free, persona default. FILM TODAY was just delivered (Map OK'd: keyword CHAPTER). No Brand Card exists yet. Dana has to leave."
+context = "Day 0, ChatGPT Free, persona default. The Map was just shown with FILM TODAY under it (keyword CHAPTER). No Brand Card exists yet. Dana has to leave."
 input = '''later. gotta go get my mom'''
 contains = []
 not_contains = []
@@ -1032,9 +1033,9 @@ id = "brain.en.032"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "Day-0 order: FILM TODAY, then Week 1 unasked, then the card once; never a card before Week 1, never 'want Week 1?'"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). She answered it and the 4-line Map is on screen. Turn 1 OKs the Map; turn 2 answers FILM TODAY; turn 3 answers the next reply. Regexes run on the machine replies joined in order."
-input = '''[turn 1] ok
+title = "Day-0 order: the Map with FILM TODAY under it, then Week 1 unasked, then the card once; never a card before Week 1, never 'want Week 1?'"
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging); the guess is on screen. Turn 1 answers it and gets the 4-line Map with FILM TODAY under it; turn 2 answers that reply (no Map change) and gets Week 1; turn 3 answers the next reply. Regexes run on the machine replies joined in order."
+input = '''[turn 1] Reset is the one I want to grow. full projects pay the 5 salaries but those come from referrals.
 [turn 2] ok I'll film it tonight after pickup
 [turn 3] ok'''
 contains = []
@@ -1042,9 +1043,10 @@ not_contains = []
 regex = [
   '''(?i:film today)(?:[\s\S]*?```[\s\S]*?```){4}[\s\S]*?Brand Card v1\W{0,4}·''',
   '''Save this so I remember you \(30 s\)\.''',
+  '''(?s)KNOWN FOR:(?:(?!NEXT →).)*FILM TODAY''',
 ]
 not_regex = [
-  '''Brand Card v1\W{0,4}·[\s\S]*FILM TODAY''',
+  '''(?m)Brand Card v1\W{0,4}·[\s\S]*^\W*FILM TODAY\b''',
   '''(?s)Brand Card v1\W{0,4}·.*Brand Card v1\W{0,4}·''',
   '''(?i)\b(want|ready for|shall I (do|write)) (your |the )?week 1\b[^\n]*\?''',
   '''(?i)that(?:'|’)s today done|\bstop here\b|for your Week 1 scripts''',
@@ -1054,7 +1056,7 @@ invariants = ["I1", "I3", "I5", "I6"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. wf15 §0 S4, §1.5-§1.8; setup.kit-order 9: 'missing facts → Map → "ok" → FILM TODAY → one reply, unasked (§CM-TODAY 1): Week 1 → Brand Card + save line → NEXT (app would cut it: card next reply)'; levelup.kit-next 1: 'After FILM TODAY any message gets all of Week 1 … never "want Week 1?"'. The first pattern needs FILM TODAY, then at least 4 copy boxes (its caption plus Week-1 pieces), then the card title; the card prints once. The NEXT line after the card says 'Film today's video', so the not-before check uses the upper-case FILM TODAY title only. Week-1 pieces carry nothing under them (I3)."""
+notes = """scope: transcript. wf15 §0 S4, §1.5-§1.8; setup.kit-order 9 (K2, DECISIONS 6 Oct 2026): 'missing facts → one reply: Map + FILM TODAY → any answer but a change (§CM-TODAY 1) → one reply: Week 1 → Brand Card + save line → NEXT (app cuts it: card next)'; levelup.kit-next 1: 'After the Map + FILM TODAY any message but a Map change gets all of Week 1 … never "want Week 1?"'. The last pattern puts FILM TODAY in the Map's reply: no NEXT line (one closes every reply, I1) between KNOWN FOR and FILM TODAY. The first pattern needs FILM TODAY, then at least 4 copy boxes (its caption plus Week-1 pieces), then the card title; the card prints once. The NEXT line after the card says 'Film today's video', so the not-before check uses the upper-case FILM TODAY title only, at a line start (a machine-block line such as 'progress: … FILM TODAY given' is not the title). Week-1 pieces carry nothing under them (I3)."""
 
 [[case]]
 id = "brain.en.033"

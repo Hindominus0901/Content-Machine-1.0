@@ -419,19 +419,21 @@ id = "signature.vn.023"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "QUAY HÔM NAY prints '✓ Đã kiểm: … từ khoá 1 lần' and offers the quiet 'nhẹ' option"
-context = "Day 0, MAP screen shown (keyword 'cứng đơ'); she gives the one decision."
-input = """ok"""
+title = "QUAY HÔM NAY under the Map prints '✓ Đã kiểm: … từ khoá 1 lần' and offers the quiet 'nhẹ' option"
+context = "Day 0. Her last missing fact was what she sells; her answer brings the Map (keyword 'cứng đơ') with QUAY HÔM NAY under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'."
+input = """chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi"""
 contains = ["VÌ SAO RA KHÁCH"]
 regex = [
   '(?im)^\W*✓ Đã kiểm:[^\n]*(?:từ kho[áa][^\n]{0,15}1 lần|1 lần[^\n]{0,15}từ kho[áa])',
   '(?i)gõ\s*["“]?\s*nhẹ',
-  '(?i)cứng đơ',
+  '''QUAY HÔM NAY[\s\S]*(?i:cứng đơ)''',
+  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY''',
+  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = ['(?i)\b(?:keyword|CTA)\b', '(?i)nhẹ nhàng hơn\s*\?', '(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?']
 invariants = ["I1", "I3", "I8", "I12", "I14", "I15", "I18"]
 max_questions = 1
-notes = "UX §2 minute 20-24: '✓ Đã kiểm: 1 ý · đúng giọng … · từ khoá 1 lần · không có câu hứa rủi ro' (strings checked.prefix '✓ Đã kiểm:'); quiet option 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\"', written as a statement because a '?' on an option line is a second question (I5; fmt-short.vn header option-line rule). Quit point 'keyword CTA with no quiet option'."
+notes = "K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-7): QUAY HÔM NAY prints under the Map in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?', pair and regional particle adapted); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Only the trigger, context and order changed here; the rest predates wf15 and waits for the VN rewrite. UX §2 minute 20-24: '✓ Đã kiểm: 1 ý · đúng giọng … · từ khoá 1 lần · không có câu hứa rủi ro' (strings checked.prefix '✓ Đã kiểm:'); quiet option 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\"', written as a statement because a '?' on an option line is a second question (I5; fmt-short.vn header option-line rule). Quit point 'keyword CTA with no quiet option'."
 
 [[case]]
 id = "signature.vn.024"

@@ -3,9 +3,10 @@
 # this file. Rewritten 6 Oct 2026 for the simple surface (wf15) and Voice & Language (wf14).
 #
 # Sources: docs/research/wf15-simple-surface-spec.md §1-§3 and wf14-voice-language-spec.md §2 (win where
-# they differ: Day 0 = missing facts → 4-line Map → FILM TODAY → Week 1 unasked → Brand Card + save line,
-# no stop point; nothing under a Ready piece); wf15-case-impact.md (rules R1-R18); modules/en/levelup.md
-# (§CM-TODAY: what "next" opens by state), setup.md 9, message.md, liked.md, edge-rubric.md WHAT PRINTS;
+# they differ: Day 0 = missing facts → 4-line Map with FILM TODAY under it (one reply, K2) → Week 1 unasked
+# → Brand Card + save line, no stop point; nothing under a Ready piece); wf15-case-impact.md (rules R1-R18);
+# modules/en/levelup.md (§CM-TODAY: what "next" opens by state), setup.md 9, message.md, liked.md,
+# edge-rubric.md WHAT PRINTS;
 # docs/research/wf11-ux-spec.md §2 (reply rules; Day-0 order), §3 (weekly loop, monthly plan,
 # level-up triggers L0.5-L5), §4 (the 5 phrases + ok / skip / later / quiet; "next" does everything:
 # resume setup, today's piece, the Talk, catch-up, plan next month, the next level-up; what the coach never
@@ -66,10 +67,10 @@
 #   plain reasons. I3 grades the turn-1 reply.
 # - Day 0 (wf15 §1; acceptance.toml [day0], graders.py day0_timing): promise → dump → early win → only
 #   the missing facts (max 3, one a message, "My guess: … Right?") → the 4-line Map (KNOWN FOR · 3 TOPICS ·
-#   YOUR WORD · YOUR VOICE + "We'll run this for 4 weeks. OK, or change a line.") → FILM TODAY → any coach
-#   message gets all of Week 1 → Brand Card + "Save this so I remember you (30 s)." → NEXT. A "later"
-#   before the card prints the card and save line at once; Week 1 waits for "next". Budgets: Map ≤6
-#   coach turns, film-ready by minute 20, ≤10 coach turns.
+#   YOUR WORD · YOUR VOICE), FILM TODAY under it and "We'll run this for 4 weeks. OK, or change a line." in one
+#   reply (K2, DECISIONS 6 Oct 2026) → any coach message but a Map change gets all of Week 1 → Brand Card +
+#   "Save this so I remember you (30 s)." → NEXT. A "later" before the card prints the card and save line at
+#   once; Week 1 waits for "next". Budgets: Map ≤6 coach turns, film-ready by minute 20, ≤10 coach turns.
 # - `invariants` lists I1-I23 ids. graders.py also runs its deny_list (which holds "router", "§CM",
 #   "pillar", Bank IDs and slot/run keys), quit_triggers and, on Day-0 runs, day0_timing checks on every
 #   transcript.
@@ -132,15 +133,14 @@ id = "router.en.002"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'next' after a Claude Free limit resumes Day 0 at FILM TODAY, not at Start"
-context = "Day 0, Claude Free, Windows laptop. The 4-line Map was shown with its save point (save.limit_claude_free) and Erin typed 'ok'; Claude Free hit its message limit before the FILM TODAY script arrived. About 5 hours later she returns to the same chat."
+title = "'next' after a Claude Free limit resumes Day 0 at Week 1, not at Start"
+context = "Day 0, Claude Free, Windows laptop. The 4-line Map was shown with FILM TODAY under it and its save point (save.limit_claude_free); Claude Free hit its message limit right after it, before Erin answered. About 5 hours later she returns to the same chat."
 input = '''next'''
 contains = []
 not_contains = []
 regex = [
-  '''FILM TODAY''',
-  '''(?im)^\W*on[- ]screen''',
-  '''Film it now, or post the caption as text\.''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
+  '''(?i)\(my guess; one word changes it\)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -150,6 +150,8 @@ not_regex = [
   '''(?im)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD|YOUR VOICE):''',
   '''(?im)^\W*(?:Ready to (?:film|post|send)\b|Draft ·|✓ Checked:)''',
   '''WHY THIS GETS CLIENTS''',
+  '''(?m)^\W*FILM TODAY\b''',
+  '''(?i)\b(?:want|ready for|shall I (?:send|write)) (?:your |the )?week 1\b''',
   '''(?i)\b(start (over|again)|from the beginning)\b''',
   '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
@@ -158,7 +160,7 @@ invariants = ["I1", "I3", "I5", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; persona behaviour (Claude Free limit right after the Map; back about 5 hours later, same chat, 'next'); UX §2 budget 'Claude Free: save points after the dump and after the Map'. The Map is not shown again and nothing restarts (§CM-TODAY 1: 'the first unfinished step … never re-ask or reprint'); the next step is FILM TODAY (wf15 §1.5), ending with film.now_or_text and nothing under it (R1: no WHY or ✓ Checked line; the WHY prints on 'why?')."""
+notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; persona behaviour (Claude Free limit right after the Map; back about 5 hours later, same chat, 'next'); UX §2 budget 'Claude Free: save points after the dump and after the Map'. K2 (DECISIONS 6 Oct 2026): FILM TODAY came in the Map reply, so she left with today's video; the next step is Week 1 (§CM-TODAY 1: after the Map + FILM TODAY any message but a Map change gets all of Week 1; on Free ≤3 pieces a reply, so at least 2 copy boxes here) with the plan guess above it (setup.plan_guess). Neither the Map nor FILM TODAY is shown again and nothing restarts (§CM-TODAY 1: 'the first unfinished step … never re-ask or reprint'); never 'want Week 1?'. The pieces print with nothing under them (R1: no WHY or ✓ Checked line; the WHY prints on 'why?')."""
 
 [[case]]
 id = "router.en.003"
@@ -2054,22 +2056,23 @@ id = "router.en.072"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'ok' on the Map is the one decision: FILM TODAY follows at once"
-context = "Day 0, about minute 14, ChatGPT Free. The 4-line Map is on screen (KNOWN FOR · 3 TOPICS · YOUR WORD: CHAPTER · YOUR VOICE) with 'We'll run this for 4 weeks. OK, or change a line.'"
+title = "'ok' on the Map + FILM TODAY is the one decision: all of Week 1 follows at once"
+context = "Day 0, about minute 14, ChatGPT Free. The 4-line Map (KNOWN FOR · 3 TOPICS · YOUR WORD: CHAPTER · YOUR VOICE) is on screen with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' Nothing of Week 1 has been printed; no Brand Card yet."
 input = '''ok'''
 contains = []
 not_contains = []
 regex = [
-  '''FILM TODAY''',
-  '''(?im)^\W*on[- ]screen''',
-  '''Film it now, or post the caption as text\.''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)\b(are you sure|confirm)\b''',
+  '''(?m)^\W*FILM TODAY\b''',
+  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD|YOUR VOICE):''',
+  '''(?i)\b(?:want|ready for|shall I (?:send|write)) (?:your |the )?week 1\b''',
+  '''(?i)stop here|that(?:'|’)s today done''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(Ready to (film|post|send)\b|Draft ·|✓ Checked:)''',
-  '''(?i)isn(?:'|’)t pushy|out loud|keyword is in|no risky claims''',
   '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = ""
@@ -2077,7 +2080,7 @@ invariants = ["I1", "I3", "I5", "I6"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (trigger set). wf15 §1.4-§1.5: 'OK' on the 4-line Map is THE one decision; FILM TODAY follows at once (on-screen text, first line, 3 beats, last line, caption in a copy box, CTA with '(quieter: say 'quiet')'), then only 'Film it now, or post the caption as text.' (film.now_or_text), film-ready by minute 20 (acceptance.toml [day0]). R1, R2, R9: no WHY line, no '✓ Checked:' line, no ticks or extras under it; they print on 'why?'. 'ok' is a universal word (UX §4); no confirmation round."""
+notes = """route: setup (trigger set). K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-6, §CM-TODAY 1): FILM TODAY already came under the 4-line Map, so 'OK' on that reply is THE one decision and brings all of Week 1 at once (wf15 §1.6; ChatGPT Free: ≤3 pieces a reply, R13, so at least 2 copy boxes here): no FILM TODAY or Map reprint, no confirmation round, never 'want Week 1?' or a stop point. 'ok' is a universal word (UX §4). R1, R2: the pieces print with nothing under them (no WHY line, no '✓ Checked:' line); they print on 'why?'. The R9 FILM TODAY-extras pattern ('isn't pushy', 'out loud', …) left with FILM TODAY: this reply is Week 1, as in router.en.094."""
 
 [[case]]
 id = "router.en.073"
@@ -2616,8 +2619,8 @@ id = "router.en.094"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "Day 0: any message after FILM TODAY gets all of Week 1, unasked, with the plan guess above it; never 'want Week 1?' or a stop point"
-context = "Day 0, about minute 19, ChatGPT Plus on the iPhone, in her car. FILM TODAY is on screen (on-screen text, first line, 3 beats, last line, caption in a copy box, 'Comment NOTHING ROOM and I'll send you the Tape-Out Guide. (quieter: say 'quiet')', then 'Film it now, or post the caption as text.'). Nothing of Week 1 has been printed; no Brand Card yet."
+title = "Day 0: any message after the Map + FILM TODAY gets all of Week 1, unasked, with the plan guess above it; never 'want Week 1?' or a stop point"
+context = "Day 0, about minute 19, ChatGPT Plus on the iPhone, in her car. The 4-line Map is on screen with FILM TODAY under it (on-screen text, first line, 3 beats, last line, caption in a copy box, 'Comment NOTHING ROOM and I'll send you the Tape-Out Guide. (quieter: say 'quiet')', then 'Film it now, or post the caption as text.') and 'We'll run this for 4 weeks. OK, or change a line.' Nothing of Week 1 has been printed; no Brand Card yet."
 input = '''ok. Bree can film it at the studio after pickup'''
 contains = []
 not_contains = []
@@ -2642,7 +2645,7 @@ invariants = ["I1", "I3", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → Map → "ok" → FILM TODAY → one reply, unasked (§CM-TODAY 1): Week 1 → Brand Card + save line → NEXT'; §CM-TODAY 1 'After FILM TODAY any message gets all of Week 1 … never "want Week 1?"'. setup.kit-facts 5: platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
+notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → one reply: Map + FILM TODAY → any answer but a change (§CM-TODAY 1) → one reply: Week 1 → Brand Card + save line → NEXT'; §CM-TODAY 1 'After the Map + FILM TODAY any message but a Map change gets all of Week 1 … never "want Week 1?"' (K2, DECISIONS 6 Oct 2026). Her message is not a change, so it also settles the Map. setup.kit-facts 5: platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
 
 [[case]]
 id = "router.en.095"

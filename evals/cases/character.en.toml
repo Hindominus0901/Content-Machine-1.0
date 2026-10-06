@@ -15,10 +15,12 @@
 #   because verdict.hardstop quotes the refused line back to the coach.
 # - "<<paste: FILE ...>>" in an input means the simulator inlines that persona file's body verbatim there.
 # - Day 0 (wf15 §1): no character questions. After "done" only the facts the dump left open (≤3, one a message, "My
-#   guess: … Right?"); a 4-line Map + "OK, or change a line."; FILM TODAY; any message after it gets all of Week 1,
-#   unasked; then the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the
-#   machine block) + "Save this so I remember you (30 s)." + NEXT. No check screen, no stop point. Budgets
-#   (acceptance.toml [day0]): Map ≤6 coach turns, film-ready ≤20 min, ≤10 coach turns.
+#   guess: … Right?"); one reply with the 4-line Map, FILM TODAY under it and "OK, or change a line." (K2,
+#   DECISIONS 6 Oct 2026); any answer but a Map change gets all of Week 1, unasked; then the Brand Card (top:
+#   title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the machine block) + "Save this so I
+#   remember you (30 s)." + NEXT. No check screen, no stop point. Budgets (acceptance.toml [day0]): Map ≤6 coach
+#   turns, film-ready ≤20 min, ≤10 coach turns. FILM TODAY cases assert the 4 Map labels and map.ok in the same
+#   reply and anchor story patterns after the FILM TODAY title.
 # - Status lines (wf15 §2): a Ready piece prints only its content: no WHY, "✓ Checked:", "Ready to …" or "Draft ·"
 #   line (I3). One line only for "Needs you · …", a hard stop, "post anyway" (verdict.override) or a required dated
 #   note (the F1 compare note). On an F1 request `verdict = "Override"` is hidden state: logged, shown on "why?".
@@ -63,12 +65,14 @@ id = "character.en.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "FILM TODAY stands on Dan's own story, never a client he doesn't have, kids unnamed, nothing under it"
-context = "Day 0, persona default (cold start, 0 clients, proof locked). The 4-line Map is on screen and the coach gives the one decision; this reply is FILM TODAY. No Brand Card yet: it prints after Week 1."
-input = """ok"""
+title = "FILM TODAY under the Map stands on Dan's own story, never a client he doesn't have, kids unnamed, nothing under it"
+context = "Day 0, persona default (cold start, 0 clients, proof locked). The one missing fact was the best result ('My guess: no client result to show yet, so I'll use your own story. Right?'); his answer brings the 4-line Map with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' No Brand Card yet: it prints after Week 1."
+input = """yep"""
 regex = [
   '''FILM TODAY''',
-  '''(?i)\b(?:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8)\b''',
+  '''FILM TODAY[\s\S]*(?i:\b(?:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8)\b)''',
+  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
   '(?i)\bmy clients?\b',
@@ -81,7 +85,7 @@ not_contains = ["Owen", "Lily", "Jess", "Tommy", "Coach Dan"]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = "expected.toml [day0] lead piece: built on his own story (the birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), now asserted in the piece itself: the ✓ Checked line that used to name it prints only on 'why?' (character.en.028; R2, wf15 §2). verdict Ready is hidden state (evals/run.py: no status line). private_names and 'never his kids' names or faces'. P3 (brother's 22 lb) and P4 ('a couple hundred people') are unsubstantiated; credential lapsed in 2019. Character = what he has lived, never borrowed proof."
+notes = "K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the story pattern is anchored after the FILM TODAY title because the Map's lines sit in the same reply. expected.toml [day0] lead piece: built on his own story (the birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), now asserted in the piece itself: the ✓ Checked line that used to name it prints only on 'why?' (character.en.028; R2, wf15 §2). verdict Ready is hidden state (evals/run.py: no status line). private_names and 'never his kids' names or faces'. P3 (brother's 22 lb) and P4 ('a couple hundred people') are unsubstantiated; credential lapsed in 2019. Character = what he has lived, never borrowed proof."
 
 [[case]]
 id = "character.en.003"
@@ -89,7 +93,7 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Day-0 Brand Card: one trait, an enemy that is a practice, principles and voice lines heard in the dump"
-context = "Day 0, persona default (ChatGPT Free). Map OK'd, FILM TODAY delivered. Turn 1 answers FILM TODAY and gets Week 1, unasked (Free: 2 replies of at most 3 pieces); turn 2 answers the first Week-1 reply. Day 0's last reply prints the Brand Card: the top (title, WHAT YOU SAY:, HOW YOU SAY IT:) and the 'for the machine' block holding trait, enemy, principles, voice fields and 5 verbatim passages; then the save line and NEXT. Judge the card in the reply that holds it."
+context = "Day 0, persona default (ChatGPT Free). The Map is on screen with FILM TODAY under it. Turn 1 answers it and gets Week 1, unasked (Free: 2 replies of at most 3 pieces); turn 2 answers the first Week-1 reply. Day 0's last reply prints the Brand Card: the top (title, WHAT YOU SAY:, HOW YOU SAY IT:) and the 'for the machine' block holding trait, enemy, principles, voice fields and 5 verbatim passages; then the save line and NEXT. Judge the card in the reply that holds it."
 input = """[turn 1] ok I filmed it. twice. the second one's better. what now
 [turn 2] ok"""
 standard = "character-card"
@@ -105,7 +109,7 @@ kind = "P"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start Brand Card: nothing invented to fill the character fields"
-context = "Day 0, persona default (cold start, ChatGPT Plus). Map OK'd, FILM TODAY delivered; his 'brb kid's up' got 'No rush. Say 'ok back' when you're back.' Turn 1 (his return) gets all of Week 1, unasked; turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the machine block), the save line and NEXT. Judge the card in the reply that holds it."
+context = "Day 0, persona default (cold start, ChatGPT Plus). The Map was shown with FILM TODAY under it; his 'brb kid's up' got 'No rush. Say 'ok back' when you're back.' Turn 1 (his return) gets all of Week 1, unasked; turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the machine block), the save line and NEXT. Judge the card in the reply that holds it."
 input = """[turn 1] ok back. filmed it in the garage, one take. what now
 [turn 2] ok"""
 standard = "character-card"
@@ -479,7 +483,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
 title = "Day 0's last reply: the Brand Card carries character in plain words, no framework names"
-context = "Day 0, persona default (ChatGPT Plus). Map OK'd, FILM TODAY delivered. Turn 1 answers FILM TODAY and gets all of Week 1, unasked (her question answered in one line first); turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the 'for the machine' block with trait, enemy, principles), the save line and NEXT."
+context = "Day 0, persona default (ChatGPT Plus). The Map is on screen with FILM TODAY under it. Turn 1 answers it and gets all of Week 1, unasked (her question answered in one line first); turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the 'for the machine' block with trait, enemy, principles), the save line and NEXT."
 input = """[turn 1] ok filmed it in the Whitfield room, Bree has it. are we done for today?
 [turn 2] ok"""
 contains = ["brand card", "Save this so I remember you (30 s)"]
@@ -517,8 +521,8 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "'why?' after FILM TODAY: the checks and the evidence name his own story, never a client he doesn't have"
-context = "Same state as character.en.002: Day 0, persona default (cold start, 0 clients, proof locked); the 4-line Map is on screen. Turn 1 OKs it and gets FILM TODAY with nothing under it; turn 2 asks why."
-input = """[turn 1] ok
+context = "Same state as character.en.002: Day 0, persona default (cold start, 0 clients, proof locked); the best-result guess is on screen. Turn 1 answers it and gets the 4-line Map with FILM TODAY under it and nothing under the piece; turn 2 asks why."
+input = """[turn 1] yep
 [turn 2] why?"""
 regex = [
   '''(?m)^\W*(?:✓ Checked:|Ready to film · (?:I(?:'|’)d post it|written as))[^\n]*(?i:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8|your (?:own )?story)''',
@@ -533,4 +537,4 @@ not_contains = ["Owen", "Lily", "Jess", "Tommy", "Coach Dan"]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = "expected.toml [day0]: the old FILM TODAY 'Checked' line named his own story (birthday relay or kitchen floor); it now prints only on 'why?' (wf15 §2, R2; §CM-EDGE WHAT PRINTS), with the WHY line and what the piece was written from ('Ready to film · I'd post it: {his story}', or with no client result '… · written as {his story}'). Turn 1 prints FILM TODAY with nothing under it (I3 grades it; character.en.002 asserts the piece). Turn 2 (assertions here): his own story named on the Checked or evidence line, the ✓ Checked line, the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Never a client, a credential or the brother's number."
+notes = "expected.toml [day0]: the old FILM TODAY 'Checked' line named his own story (birthday relay or kitchen floor); it now prints only on 'why?' (wf15 §2, R2; §CM-EDGE WHAT PRINTS), with the WHY line and what the piece was written from ('Ready to film · I'd post it: {his story}', or with no client result '… · written as {his story}'). Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece (I3 grades it; character.en.002 asserts the piece); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): his own story named on the Checked or evidence line, the ✓ Checked line, the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Never a client, a credential or the brother's number."

@@ -15,9 +15,9 @@
 # and expected.toml [voice]. Every phrase quoted here appears in those fixture files.
 #
 # Day 0 now: promise → dump (+ optional pasted posts / page link) → early win after chunk 1 → only the
-# missing facts (≤3, one a message, "My guess: … Right?") → 4-line Map (KNOWN FOR · 3 TOPICS · YOUR WORD
-# · YOUR VOICE) + "We'll run this for 4 weeks. OK, or change a line." → FILM TODAY → Week 1 in the next
-# reply, unasked → Brand Card (top ≤500: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the machine block)
+# missing facts (≤3, one a message, "My guess: … Right?") → one reply: 4-line Map (KNOWN FOR · 3 TOPICS ·
+# YOUR WORD · YOUR VOICE), FILM TODAY under it, "We'll run this for 4 weeks. OK, or change a line." (K2,
+# DECISIONS 6 Oct 2026) → any answer but a Map change brings Week 1 in the next reply, unasked → Brand Card (top ≤500: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the machine block)
 # + "Save this so I remember you (30 s)." → NEXT. Never a voice question. Budgets (acceptance [day0]):
 # Map ≤6 coach turns, film-ready by minute 20, ≤10 coach turns.
 #
@@ -85,10 +85,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I6", "I17"]
-max_words = 160
+max_words = 300
 max_chars = 0
 max_questions = 1
-notes = """wf14 V1, §2; start-block step 4 'YOUR VOICE: {3-word tone} · {rhythm} · "{their phrase}" · talks to them as "{how they address the audience}"'; voice.kit-build 2-3: tone in words he'd use about himself, no praise; rhythm in ≤4 plain words; his most repeated phrase, verbatim; the address exactly as he says it. expected.toml [voice]: tone 'plain · dry · self-deprecating', rhythm 'short bursts, one run-on per story; fragments OK', audience_address 'you (one dad to another)'. Every phrase in the pattern is in answers.md ('You're not lazy, you're booked.', 'Zero is the killer.', 'I'm not gonna lie'). The address is how he talks to buyers, never 'bro', 'king' or 'guys' (voice-samples.md never list) and never how the machine talks to him. Kids stay unnamed. He quits on long replies ('Bro I'm on my phone. Shorter.'): ≤160 words. ≤30 words on the line. Complements message.en.050 (Dana) and message.en.051 (Linda)."""
+notes = """wf14 V1, §2; start-block step 4 'YOUR VOICE: {3-word tone} · {rhythm} · "{their phrase}" · talks to them as "{how they address the audience}"'; voice.kit-build 2-3: tone in words he'd use about himself, no praise; rhythm in ≤4 plain words; his most repeated phrase, verbatim; the address exactly as he says it. expected.toml [voice]: tone 'plain · dry · self-deprecating', rhythm 'short bursts, one run-on per story; fragments OK', audience_address 'you (one dad to another)'. Every phrase in the pattern is in answers.md ('You're not lazy, you're booked.', 'Zero is the killer.', 'I'm not gonna lie'). The address is how he talks to buyers, never 'bro', 'king' or 'guys' (voice-samples.md never list) and never how the machine talks to him. Kids stay unnamed. He quits on long replies ('Bro I'm on my phone. Shorter.'): ≤300 words, the Map's 160 before K2 plus FILM TODAY under it (DECISIONS 6 Oct 2026), the one usable thing he came for. ≤30 words on the line. Complements message.en.050 (Dana) and message.en.051 (Linda)."""
 
 [[case]]
 id = "voice.en.002"
@@ -132,7 +132,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "floor"]
 title = "'change 4' alone: two versions of the voice line from her own words, A) and B), with a pick; no Map reprint, no voice quiz"
-context = "Day 0, Claude Pro on the MacBook. Linda dictated chunks 1-3 and pasted her posts W1-W2 after chunk 1; nothing was missing, so the 4-line Map followed chunk 3. Its YOUR VOICE line is on screen with 'We'll run this for 4 weeks. OK, or change a line.' She wants line 4 different but does not say how."
+context = "Day 0, Claude Pro on the MacBook. Linda dictated chunks 1-3 and pasted her posts W1-W2 after chunk 1; nothing was missing, so the 4-line Map followed chunk 3 with FILM TODAY under it. Its YOUR VOICE line is on screen, and 'We'll run this for 4 weeks. OK, or change a line.' She wants line 4 different but does not say how."
 input = '''change 4'''
 contains = []
 not_contains = []
@@ -158,15 +158,15 @@ invariants = ["I1", "I5", "I6", "I17"]
 max_words = 150
 max_chars = 0
 max_questions = 1
-notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; 'Voice line too'; voice.kit-build 2: '"change 4": §CM-MAP, same one decision'. Both options are built from her words (answers.md: 'Don't plan the dream. Write the Tuesday.', 'Okay, I'm going to ramble'; her pasted posts W1-W2: 'You didn't lose a job. You lost your answer.', 'Here's what I wish someone had told me in that parking lot', 'Hit reply and tell me…'), both keep 'you' to one reader. No full Map reprint, no third option, no voice questions, no FILM TODAY until she picks."""
+notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; 'Voice line too'; voice.kit-build 2: '"change 4": §CM-MAP, same one decision'. Both options are built from her words (answers.md: 'Don't plan the dream. Write the Tuesday.', 'Okay, I'm going to ramble'; her pasted posts W1-W2: 'You didn't lose a job. You lost your answer.', 'Here's what I wish someone had told me in that parking lot', 'Hit reply and tell me…'), both keep 'you' to one reader. No full Map reprint, no third option, no voice questions, no FILM TODAY reprint (it already sits under the Map; start-block 4 reprints it only if a changed line changes it)."""
 
 [[case]]
 id = "voice.en.004"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'change 4: …' in his words: line 4 reprinted with his tone and his phrase, the same OK, then 'ok' goes straight to FILM TODAY"
-context = "Day 0, iPhone, ChatGPT Plus. The 4-line Map is on screen after his offer answer (as in voice.en.001); its YOUR VOICE line calls him dry. Turn 1 changes line 4 in his own words; turn 2 OKs the Map and gets FILM TODAY."
+title = "'change 4: …' in his words: line 4 reprinted with his tone and his phrase, the same OK, then 'ok' brings Week 1"
+context = "Day 0, iPhone, ChatGPT Plus. The 4-line Map is on screen after his offer answer (as in voice.en.001), with FILM TODAY under it; its YOUR VOICE line calls him dry. Turn 1 changes line 4 in his own words (line 4 reprinted, FILM TODAY only if it changes); turn 2 OKs it and gets Week 1, unasked."
 input = '''[turn 1] change 4: not dry, I'm goofy. about me, never about other guys. and use zero is the killer, I say it all the time
 [turn 2] ok'''
 contains = []
@@ -174,8 +174,7 @@ not_contains = []
 regex = [
   '''(?im)^\W*YOUR VOICE:[^\n]*\bgoofy\b''',
   '''(?im)^\W*YOUR VOICE:[^\n]*zero is the killer''',
-  '''(?i)\bFILM TODAY\b''',
-  '''Film it now, or post the caption as text\.''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
 ]
 not_regex = [
   '''(?im)^\W*YOUR VOICE:(?=[^\n]*\bgoofy\b)[^\n]*\bdry\b''',
@@ -192,7 +191,7 @@ invariants = ["I1", "I3", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. wf14 V1 ('changed inside the same one decision'); §CM-MAP CHANGE '"change N: …" → that line reprinted + map.ok'; voice.kit-build 2. His words go in as given: 'goofy' replaces 'dry', and 'Zero is the killer.' (answers.md chunk 3) is the quoted phrase. The OK line prints once in this transcript (with line 4); 'ok' then gives FILM TODAY with film.now_or_text and nothing under it (I3). His humour stays on himself (voice-samples.md: 'Self-deprecating about himself, never about other guys' bodies'). Complements message.en.052 (Dana, the change only)."""
+notes = """scope: transcript. wf14 V1 ('changed inside the same one decision'); §CM-MAP CHANGE '"change N: …" → that line reprinted + map.ok'; voice.kit-build 2. His words go in as given: 'goofy' replaces 'dry', and 'Zero is the killer.' (answers.md chunk 3) is the quoted phrase. The OK line prints once in this transcript (with line 4); FILM TODAY already sits under the Map (K2, DECISIONS 6 Oct 2026), so 'ok' then gives all of Week 1 (ChatGPT Plus: one reply, at least 3 copy boxes) with nothing under the pieces (I3). His humour stays on himself (voice-samples.md: 'Self-deprecating about himself, never about other guys' bodies'). Complements message.en.052 (Dana, the change only)."""
 
 # ---------------------------------------------------------------- written posts vs the spoken dump (wf14 V3, §3 written_vs_spoken, §4.5)
 
@@ -202,7 +201,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Her pasted posts set the written voice: the card's rhythm and written_vs_spoken come from them, and her email signs off like her posts"
-context = "Day 0, Claude Free on the Windows laptop. Erin dictated chunks 1-3 and pasted her own posts after chunk 1 (written-posts.md W1-W3: a LinkedIn post, the opening of a Monday Number issue signed 'Erin', an email to Dee signed 'E.'). The one missing fact (the multi-income line) is answered; the Map OK'd (YOUR WORD: record year; LinkedIn + the Monday Number, 380 subscribers); FILM TODAY (a LinkedIn native video, word-for-word) delivered. Turn 1 answers it and gets Week 1, unasked, the email first (list 300+); turn 2 answers the next reply; Day 0's last reply prints the card."
+context = "Day 0, Claude Free on the Windows laptop. Erin dictated chunks 1-3 and pasted her own posts after chunk 1 (written-posts.md W1-W3: a LinkedIn post, the opening of a Monday Number issue signed 'Erin', an email to Dee signed 'E.'). The one missing fact (the multi-income line) is answered; the Map (YOUR WORD: record year; LinkedIn + the Monday Number, 380 subscribers) is on screen with FILM TODAY (a LinkedIn native video, word-for-word) under it. Turn 1 answers it and gets Week 1, unasked, the email first (list 300+); turn 2 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] I'll post it as text today. no camera at my desk this week.
 [turn 2] ok'''
 contains = []
@@ -236,7 +235,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "No posts pasted, page link unread: posts use his spoken voice tidied (fillers out, contractions and his lines kept), no invented written style"
-context = "Day 0, iPhone, ChatGPT Plus. Dan skipped the posts clause: he pasted no posts or messages; at the end of chunk 1 he sent his Instagram link, which did not open here, so the next 'Got it.' said 'Your page didn't open here; what you say is enough.' once. Missing facts answered (no result: his own story; offer: the 8-week small group); the Map OK'd (YOUR WORD: keep up); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. His only voice source is his dictated dump ('um', 'like', 'dude', 'oh my god', 'lol', run-ons)."
+context = "Day 0, iPhone, ChatGPT Plus. Dan skipped the posts clause: he pasted no posts or messages; at the end of chunk 1 he sent his Instagram link, which did not open here, so the next 'Got it.' said 'Your page didn't open here; what you say is enough.' once. Missing facts answered (no result: his own story; offer: the 8-week small group); the Map (YOUR WORD: keep up) is on screen with FILM TODAY under it. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. His only voice source is his dictated dump ('um', 'like', 'dude', 'oh my god', 'lol', run-ons)."
 input = '''[turn 1] ok filming it tonight in the garage after bedtime
 [turn 2] ok'''
 contains = []
@@ -269,7 +268,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "floor"]
 title = "Her lead email is written, not spoken: no rambling markers, her sign-off and 'hit reply' closer, one reader, none of her never-words"
-context = "Day 0, Claude Pro on the MacBook. Linda dictated chunks 1-3 and pasted her own posts after chunk 1 (written-posts.md W1-W2: one Kitchen Table Notes issue signed '— Linda', one LinkedIn post); nothing was missing, so the Map came after chunk 3 and she OK'd it (YOUR WORD: without the badge; LinkedIn + Kitchen Table Notes, about 900 subscribers; quiet CTA after her pushback). FILM TODAY was delivered as a LinkedIn native video script. Her answer gets Week 1, unasked; with a list of 900 the email goes first, asking for a reply."
+context = "Day 0, Claude Pro on the MacBook. Linda dictated chunks 1-3 and pasted her own posts after chunk 1 (written-posts.md W1-W2: one Kitchen Table Notes issue signed '— Linda', one LinkedIn post); nothing was missing, so the Map came after chunk 3 (YOUR WORD: without the badge; LinkedIn + Kitchen Table Notes, about 900 subscribers; quiet CTA after her pushback) with FILM TODAY under it, a LinkedIn native video script. Her answer gets Week 1, unasked; with a list of 900 the email goes first, asking for a reply."
 input = '''I'll write it. I'm not ready to be a talking head.'''
 contains = []
 not_contains = []
@@ -422,7 +421,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "Week 1 cut from her dump: no banned tells even where she said them ('buckle up', 'if that makes sense'), and her phrases are not stamped on every piece"
-context = "Day 0, ChatGPT Free, persona default: dump chunks 1-3 as in answers.md (chunk 1 holds 'the long version is long so, buckle up' and 'if that makes sense'), her posts W1-W2 pasted after chunk 1; one missing fact (the multi-income line) answered; the Map OK'd (YOUR WORD: one more chapter, keyword CHAPTER); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked (ChatGPT Free: ≤3 pieces a reply); turn 2 gets the rest; Day 0's last reply prints the card."
+context = "Day 0, ChatGPT Free, persona default: dump chunks 1-3 as in answers.md (chunk 1 holds 'the long version is long so, buckle up' and 'if that makes sense'), her posts W1-W2 pasted after chunk 1; one missing fact (the multi-income line) answered; the Map (YOUR WORD: one more chapter, keyword CHAPTER) is on screen with FILM TODAY under it. Turn 1 answers it and gets Week 1, unasked (ChatGPT Free: ≤3 pieces a reply); turn 2 gets the rest; Day 0's last reply prints the card."
 input = '''[turn 1] ok I'll film it tomorrow morning
 [turn 2] next'''
 contains = []
@@ -643,7 +642,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "HOW YOU SAY IT on the Day-0 card: her tone, rhythm, two of her lines verbatim, 'to them: you'; the top ≤500 characters; no field names"
-context = "Day 0, ChatGPT Plus. Corinne dictated 3 dump chunks from the car and pasted her posts W1-W2 after chunk 1; the one missing fact (the multi-income line) is answered; the Map OK'd (YOUR WORD: nothing room); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. She never said 'not me:'."
+context = "Day 0, ChatGPT Plus. Corinne dictated 3 dump chunks from the car and pasted her posts W1-W2 after chunk 1; the one missing fact (the multi-income line) is answered; the Map (YOUR WORD: nothing room) is on screen with FILM TODAY under it. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. She never said 'not me:'."
 input = '''[turn 1] ok I'll film it tonight after pickup
 [turn 2] ok'''
 contains = []
@@ -678,7 +677,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "One audience address all week: 'you' in her Week-1 pieces, 'neighbors' only as her newsletter greeting, never 'friends', 'ladies' or 'y'all'"
-context = "Same Day-0 state as voice.en.019: Corinne pasted W1-W2 with chunk 1 (W2, her newsletter intro, opens 'Hi neighbors,'); Map OK'd (YOUR WORD: nothing room; email-first, list 1,200, The Floor Plan sent by Bree); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply."
+context = "Same Day-0 state as voice.en.019: Corinne pasted W1-W2 with chunk 1 (W2, her newsletter intro, opens 'Hi neighbors,'); the Map (YOUR WORD: nothing room; email-first, list 1,200, The Floor Plan sent by Bree) is on screen with FILM TODAY under it. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply."
 input = '''[turn 1] ok I'll film it tonight after pickup
 [turn 2] ok'''
 contains = []

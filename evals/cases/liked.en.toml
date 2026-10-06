@@ -370,12 +370,13 @@ persona = "coldstart-coach"
 lanes = ["S1", "S0"]
 title = "Day-0 whole run with two forwarded posts: each gets the keep clause, the Map still lands on KEEP UP, GUIDE never becomes his word"
 context = "Whole run: Day 0 (persona.toml day0), iPhone, ChatGPT Plus, no Brand Card yet. The persona player follows answers.md and Behaviour; the two forwards are the only additions."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2] dump chunk 1 · [turn 3] <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L2" block: everything below its HTML comment, verbatim>> · [turn 4-5] dump chunks 2-3, chunk 3 ends 'done' · [turn 6-7] his answers to the missing-fact guesses, one per message, from the answer bank (the best result, then what he sells); the Map follows · [turn 8] at the Map, instead of 'ok': <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L8" block: everything below its HTML comment, verbatim>> · [turn 9] 'ok' on the Map. Stop after the FILM TODAY reply.'''
+input = '''WHOLE RUN: [turn 1] Start · [turn 2] dump chunk 1 · [turn 3] <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L2" block: everything below its HTML comment, verbatim>> · [turn 4-5] dump chunks 2-3, chunk 3 ends 'done' · [turn 6] his answer to the first missing-fact guess (the best result), from the answer bank · [turn 7] at the next guess (what he sells), instead of answering: <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L8" block: everything below its HTML comment, verbatim>> · [turn 8] his answer to that guess, from the answer bank; the Map with FILM TODAY under it follows. Stop after that reply.'''
 regex = [
   '''(?i)\(kept that post for [^)\n]+; first, today(?:'|’)s video\.?\)''',
   '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
   '''(?im)^\W*YOUR WORD:[^\n]*\bkeep up\b''',
   '''FILM TODAY''',
+  '''(?ms)\A(?=.*We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.)(?=.*^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY)''',
   '''(?i)\b(?:garage|grandpa|both kids|pull-?ups?|so slow|birthday)\b''',
 ]
 not_regex = [
@@ -389,7 +390,7 @@ not_regex = [
 verdict = ""
 invariants = ["I1", "I2", "I3", "I5", "I9", "I10", "I17", "I19"]
 max_questions = 1
-notes = """scope: each reply. wf13 §3 Day 0: each forward gets liked.day0 and costs 0 turns: the reply that carries the clause also carries the setup step (the chunk-2 jogger at turn 3; the 4-line Map still waiting for its ok at turn 8), so the Map and FILM TODAY arrive within acceptance.toml [day0] (Map ≤6 coach turns, film-ready by minute 20, ≤10 coach turns) not counting the two forwarding turns. graders.py day0_timing counts every coach turn today, so this run reads Map after 7 (flagged for the grader owner: forwarded posts should not count). wf15 §1: after 'done' only the missing facts, one per message ('My guess: … Right?'); the Map is KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE; FILM TODAY prints with nothing under it (I3). 'It never feeds voice fields, buyer words, the keyword or the early win': YOUR WORD stays KEEP UP (expected.toml [keyword] expected_pick), never the creator's GUIDE; the early win and the film-today piece quote only Dan (I19: no 6-word run from L2 or L8). No save line or make offer on Day 0 (§3 'Day 0 untouched')."""
+notes = """scope: each reply. wf13 §3 Day 0: each forward gets liked.day0 and costs 0 turns: the reply that carries the clause also carries the setup step (the chunk-2 jogger at turn 3; the offer guess still waiting for its answer at turn 7), so the Map and FILM TODAY, one reply since K2 (DECISIONS 6 Oct 2026; the L8 forward comes before it, so its GUIDE CTA could leak into the Map or FILM TODAY), arrive within acceptance.toml [day0] (Map ≤6 coach turns, film-ready by minute 20, ≤10 coach turns) not counting the two forwarding turns. graders.py day0_timing counts every coach turn today, so this run reads Map after 8 (flagged for the grader owner: forwarded posts should not count). wf15 §1: after 'done' only the missing facts, one per message ('My guess: … Right?'); the Map is KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE; FILM TODAY prints with nothing under it (I3). 'It never feeds voice fields, buyer words, the keyword or the early win': YOUR WORD stays KEEP UP (expected.toml [keyword] expected_pick), never the creator's GUIDE; the early win and the film-today piece quote only Dan (I19: no 6-word run from L2 or L8). No save line or make offer on Day 0 (§3 'Day 0 untouched')."""
 
 # ================================================================ COLD START: someone else's '$10k in 30 days'
 

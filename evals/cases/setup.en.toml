@@ -8,11 +8,11 @@
 # (setup.*, map.*, film.now_or_text, card.save_line, card.visible.*, mic.*, verdict.*, why.prefix).
 #
 # Day 0 now: promise → dump (optional pasted posts / page link) → early win after chunk 1 → only the
-# missing facts (≤3, one a message, "My guess: … Right?") → 4-line Map + "We'll run this for 4 weeks.
-# OK, or change a line." → FILM TODAY → Week 1 in the next reply, unasked, with the plan guess above it
-# → Brand Card + "Save this so I remember you (30 s)." → NEXT. No check screen, inventory, stop point
-# or wrap-up. Budgets (acceptance [day0], graders.py day0_timing): Map ≤6 coach turns, film-ready by
-# minute 20, ≤10 coach turns.
+# missing facts (≤3, one a message, "My guess: … Right?") → one reply: 4-line Map, FILM TODAY under it,
+# "We'll run this for 4 weeks. OK, or change a line." (K2, DECISIONS 6 Oct 2026) → any answer but a Map
+# change brings Week 1, unasked, with the plan guess above it → Brand Card + "Save this so I remember
+# you (30 s)." → NEXT. No check screen, inventory, stop point or wrap-up. Budgets (acceptance [day0],
+# graders.py day0_timing): Map ≤6 coach turns, film-ready by minute 20, ≤10 coach turns.
 #
 # Conventions used in this file (read with evals/README.md "Case files"):
 # - `input` holds the coach turn(s). When a case needs earlier turns, `context` names them and
@@ -40,6 +40,9 @@
 #   asserted loosely: "Setup check: ✓ instructions" plus no "✓ method file".
 # - FILM TODAY ends with the ask "(quieter: say 'quiet')" and the statement "Film it now, or post the
 #   caption as text." Neither is a question: FILM TODAY cases carry a not_regex for a '?' on those lines.
+# - FILM TODAY cases (K2): the trigger is the coach turn that brings the Map (the last missing-fact
+#   answer, or "done"); they assert the 4 Map labels and map.ok in the same reply, and anchor keyword and
+#   story patterns after the FILM TODAY title, since the Map's lines in that reply hold the keyword too.
 # - `invariants` lists I1-I23 ids. graders.py also runs day0_timing, deny_list and quit_triggers on every
 #   transcript; `notes` names them where a case depends on them.
 
@@ -507,10 +510,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I2", "I5", "I17"]
-max_words = 160
+max_words = 300
 max_chars = 0
 max_questions = 1
-notes = """wf15 §1.3 and setup.kit-facts 5 (R10, R12): platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 (setup.plan_guess). Linda's dump holds her clients' words, a result and the offer, so 'done' gets the Map at once, or at most one 'My guess: … Right?'. The ~900 Kitchen Table Notes list shows up later without a question: Week 1 leads with the email and list_size sits in the card's machine block (setup.en.019). She has one paid stream (expected side_door = ''); life coaching and ghostwriting were unpaid, so the multi-income line would invent a choice. No 'I ramble' reassurance padding, no praise (I17)."""
+notes = """wf15 §1.3 and setup.kit-facts 5 (R10, R12): platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 (setup.plan_guess). Linda's dump holds her clients' words, a result and the offer, so 'done' gets the Map at once, or at most one 'My guess: … Right?'. The ~900 Kitchen Table Notes list shows up later without a question: Week 1 leads with the email and list_size sits in the card's machine block (setup.en.019). She has one paid stream (expected side_door = ''); life coaching and ghostwriting were unpaid, so the multi-income line would invent a choice. No 'I ramble' reassurance padding, no praise (I17). max_words 300: the Map (160 before K2) now carries FILM TODAY under it (DECISIONS 6 Oct 2026), about 140 more with its caption box."""
 
 [[case]]
 id = "setup.en.015"
@@ -578,7 +581,7 @@ persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "Whole run: Map within 6 coach turns, film-ready by minute 20, Week 1 unasked, card last, at most 10 turns"
 context = "Whole run, Day 0, ChatGPT Free, persona default (answers.md order, Behaviour section; t_min recorded on every turn). Graded on every machine reply."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2-4] dump chunks 1-3, chunk 3 ends 'done' · [turn 5] her answer to the one missing fact (the multi-income guess), from the answer bank: the 12 weeks is what she wants to grow, resume reviews pay the electric bill · [turn 6] 'ok' on the Map · [turn 7] 'ok I'll film it tomorrow' after FILM TODAY · [turn 8] 'next' (the rest of Week 1; ChatGPT Free, ≤3 pieces a reply) · [turn 9] 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
+input = '''WHOLE RUN: [turn 1] Start · [turn 2-4] dump chunks 1-3, chunk 3 ends 'done' · [turn 5] her answer to the one missing fact (the multi-income guess), from the answer bank: the 12 weeks is what she wants to grow, resume reviews pay the electric bill; the Map with FILM TODAY under it follows · [turn 6] 'ok I'll film it tomorrow' to the Map + FILM TODAY reply · [turn 7] 'next' (the rest of Week 1; ChatGPT Free, ≤3 pieces a reply) · [turn 8] 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
 contains = []
 not_contains = []
 regex = [
@@ -589,6 +592,7 @@ regex = [
   '''(?m)^\W*YOUR VOICE:[^\n]*["“][^"”\n]{3,}["”]''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''FILM TODAY''',
+  '''(?ms)\A(?=.*We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.)(?=.*^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY)''',
   '''Film it now, or post the caption as text\.''',
   '''(?i)talk day \w+ \(my guess; one word changes it\)''',
   '''(?i)ask (your )?(3|three) past clients''',
@@ -621,7 +625,7 @@ invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I17", "I18
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. acceptance.toml [day0] (wf15 §1, §3): map_max_turns_en = 6, map_lines = 4, film_ready_max_minutes = 20, session_max_turns = 10. graders.py day0_timing reads the step from the running tag (the Map step names 'map', the film step 'film') and counts the Map's 4 labelled lines (map.known, map.topics, map.word, map.voice). This script reaches the Map after 5 coach turns, film-ready after 6 and the end of Day 0 after 8-9. No check screen, inventory, stop point, 'want Week 1?' or wrap-up (R10, R13); she never asks 'why?', so no WHY, ✓ Checked or Ready line anywhere (I3); 'why this one' and NOT NOW stay internal (R11). The plan guess sits above Week 1 (setup.plan_guess); the YOUR VOICE line quotes one of her phrases (wf14 §2). Dana quits on an upgrade ask or an insights-screenshot request (quit point 14). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+notes = """scope: each reply. acceptance.toml [day0] (wf15 §1, §3): map_max_turns_en = 6, map_lines = 4, film_ready_max_minutes = 20, session_max_turns = 10. graders.py day0_timing reads the step from the running tag (the Map step names 'map', the film step 'film') and counts the Map's 4 labelled lines (map.known, map.topics, map.word, map.voice). This script reaches the Map after 5 coach turns, with FILM TODAY under it in the same reply (K2, DECISIONS 6 Oct 2026; the second regex checks both, with map.ok, in one reply), and the end of Day 0 after 7-8. No check screen, inventory, stop point, 'want Week 1?' or wrap-up (R10, R13); she never asks 'why?', so no WHY, ✓ Checked or Ready line anywhere (I3); 'why this one' and NOT NOW stay internal (R11). The plan guess sits above Week 1 (setup.plan_guess); the YOUR VOICE line quotes one of her phrases (wf14 §2). Dana quits on an upgrade ask or an insights-screenshot request (quit point 14). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
 
 [[case]]
 id = "setup.en.018"
@@ -629,8 +633,8 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0"]
 title = "Whole run on compact mode: every Day-0 milestone holds with no method file, a 'brb' included"
-context = "Whole run, Day 0, lane S0 (instruction block only, no method file), iPhone, ChatGPT Plus, persona default including 'brb kid's up' right after FILM TODAY and 'ok back' 6 minutes later. Graded on every machine reply."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2-4] dump chunks 1-3, chunk 3 ends 'Done.' · [turn 5] 'yep' to the best-result guess (his own pull-up story) · [turn 6] 'ok' on the Map · [turn 7] 'brb kid's up' after FILM TODAY · [turn 8] 'ok back' (all of Week 1 arrives; ChatGPT Plus, one reply) · [turn 9] 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
+context = "Whole run, Day 0, lane S0 (instruction block only, no method file), iPhone, ChatGPT Plus, persona default including 'brb kid's up' right after the Map + FILM TODAY reply and 'ok back' 6 minutes later. Graded on every machine reply."
+input = '''WHOLE RUN: [turn 1] Start · [turn 2-4] dump chunks 1-3, chunk 3 ends 'Done.' · [turn 5] 'yep' to the best-result guess (his own pull-up story); the Map with FILM TODAY under it follows · [turn 6] 'brb kid's up' after it · [turn 7] 'ok back' (all of Week 1 arrives; ChatGPT Plus, one reply) · [turn 8] 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
 contains = []
 not_contains = []
 regex = [
@@ -640,6 +644,7 @@ regex = [
   '''(?m)^\W*YOUR WORD:[^\n]*(?i:keep up)''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''FILM TODAY''',
+  '''(?ms)\A(?=.*We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.)(?=.*^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY)''',
   '''Film it now, or post the caption as text\.''',
   '''No rush\. Say ["“'‘]?ok back["”'’]? when you(?:'|’)re back\.''',
   '''for the machine, no need to read''',
@@ -666,7 +671,7 @@ invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I17", "I18
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. UX §6 Machine row: 'Day 0 completes with 0 files and with 1 file.' Quit point 1 'method file requested mid-session': in compact mode the file is never asked for during Day 0. The interruption costs no step: 'brb' gets only resume.brb ('No rush. Say 'ok back' when you're back.'), 'ok back' gets the first unfinished step, all of Week 1 (§CM-TODAY 1), never a reprint of FILM TODAY. Budgets as setup.en.017 (Map after 5 coach turns, ≤10 in all). His only missing fact is the best result (setup.guess_no_result). Week 1 for Dan uses 'ask 3 dads you know one question', never 'past clients' (expected.toml [week1]). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+notes = """scope: each reply. UX §6 Machine row: 'Day 0 completes with 0 files and with 1 file.' Quit point 1 'method file requested mid-session': in compact mode the file is never asked for during Day 0. The interruption costs no step: 'brb' gets only resume.brb ('No rush. Say 'ok back' when you're back.'), 'ok back' gets the first unfinished step, all of Week 1 (§CM-TODAY 1), never a reprint of FILM TODAY. Budgets as setup.en.017 (Map after 5 coach turns, FILM TODAY under it in the same reply (K2), ≤10 in all). His only missing fact is the best result (setup.guess_no_result). Week 1 for Dan uses 'ask 3 dads you know one question', never 'past clients' (expected.toml [week1]). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
 
 [[case]]
 id = "setup.en.019"
@@ -675,7 +680,7 @@ persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "S0"]
 title = "Whole run: zero detours and zero gates between Start and Day 0's last reply"
 context = "Whole run, Day 0, Claude Pro on the Mac desktop app, persona default (long paragraphs; any answer arrives as a paragraph). Graded on every machine reply from Start to Day 0's last reply inclusive."
-input = '''WHOLE RUN: Start · 3 dictated chunks (fn twice), the last ends 'done' · a paragraph answer to any missing-fact guess · 'OK' on the Map · 'I'm not filming today' after FILM TODAY (all of Week 1 arrives) · 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
+input = '''WHOLE RUN: Start · 3 dictated chunks (fn twice), the last ends 'done' · a paragraph answer to any missing-fact guess · 'I'm not filming today' to the Map + FILM TODAY reply (all of Week 1 arrives) · 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
 contains = []
 not_contains = []
 regex = [
@@ -710,7 +715,7 @@ invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. acceptance.toml detours_between_start_and_day0_end = 0 and save_gates = 0 (the 'stop' is now Day 0's last reply: there is no stop point, R13). Quit points 3 (save-for-reward gate), 7 ('locked 90 days'), 8 ('new chat outside the project'). Linda quits on a mid-session download/upload or setup-page detour. She skips filming on Day 0: 'Film it now, or post the caption as text.' (film.now_or_text) is her path, and her 'I'm not filming today' gets all of Week 1 at once. Her ~900 list is never asked (R12): it is guessed from the dump, so Week 1 leads with the email ('reply to me', list 300+, plan.kit-week 2) and list_size sits in the card's machine block; the talk day is named once above Week 1 (setup.plan_guess). Claude save route with the 'email it to yourself' backup (start-block BRAND CARD). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+notes = """scope: each reply. acceptance.toml detours_between_start_and_day0_end = 0 and save_gates = 0 (the 'stop' is now Day 0's last reply: there is no stop point, R13). Quit points 3 (save-for-reward gate), 7 ('locked 90 days'), 8 ('new chat outside the project'). Linda quits on a mid-session download/upload or setup-page detour. She skips filming on Day 0: 'Film it now, or post the caption as text.' (film.now_or_text) is her path, and her 'I'm not filming today', the answer to the Map with FILM TODAY under it (K2), gets all of Week 1 at once. Her ~900 list is never asked (R12): it is guessed from the dump, so Week 1 leads with the email ('reply to me', list 300+, plan.kit-week 2) and list_size sits in the card's machine block; the talk day is named once above Week 1 (setup.plan_guess). Claude save route with the 'email it to yourself' backup (start-block BRAND CARD). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
 
 # ---------------------------------------------------------------- film today
 
@@ -719,9 +724,9 @@ id = "setup.en.020"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "FILM TODAY after 'ok': memorisable shape, her own story, quiet option, nothing printed under the piece"
-context = "Day 0, about minute 17. The Map is on screen (KNOWN FOR built on 'one more chapter' and coffee before resume; YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word; offer 12 weeks 1:1 at $2,400 from her dump). Dana asked for bullets, not word-for-word. ChatGPT Free."
-input = '''ok'''
+title = "FILM TODAY under the Map: memorisable shape, her own story, quiet option, nothing printed under the piece"
+context = "Day 0, about minute 17. After 'done' the one missing fact was the multi-income guess; she answers it in this turn, so this reply shows the 4-line Map (KNOWN FOR built on 'one more chapter' and coffee before resume; YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word; offer 12 weeks 1:1 at $2,400 from her dump) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' Dana asked for bullets, not word-for-word. ChatGPT Free."
+input = '''yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all'''
 contains = []
 not_contains = []
 regex = [
@@ -730,11 +735,13 @@ regex = [
   '''(?i)on-screen''',
   '''(?i)first line''',
   '''(?i)last line''',
-  '''(?i)\b(?:carrot cake|conference room|4B|63|applications|Teresa|coffee|24 years)\b''',
+  '''FILM TODAY[\s\S]*(?i:\b(?:carrot cake|conference room|4B|63|applications|Teresa|coffee|24 years)\b)''',
   '''(?i)\bcomment\b[^\n]{0,40}\bchapter\b''',
   '''(?i)say ["“'‘]?quiet''',
   '''```''',
   '''Film it now, or post the caption as text\.''',
+  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
   '''(?im)on-screen(?: text)?[^\S\n]*[:—–-][^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
@@ -756,7 +763,7 @@ invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I14", "I17", "I18", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §1.5, start-block DAY 0 step 5, fmt-short.kit-video-short 5 and 7: on-screen text ≤6 words, first line word-for-word, 3 beats, last line word-for-word; caption in a copy box; 'Comment CHAPTER and I'll send you {gift}' (quieter: say 'quiet'); then only 'Film it now, or post the caption as text.', a statement. Nothing under the piece (wf15 §2; verdict Ready is hidden state, which evals/run.py checks as 'no status line'): no WHY line, no ✓ Checked line, no ticks, no 'isn't pushy' or 'out loud' line (R1, R2, R9). The story the old Checked line named is asserted in the piece itself; the WHY line, the checks and what it was written from come on 'why?' (setup.en.049). DECISIONS: comment-keyword CTAs are ON by default and never removed by the machine (only the coach's 'quiet' swaps them). Her banned words come from expected.toml [voice]."""
+notes = """K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. wf15 §1.5, start-block DAY 0 step 5, fmt-short.kit-video-short 5 and 7: on-screen text ≤6 words, first line word-for-word, 3 beats, last line word-for-word; caption in a copy box; 'Comment CHAPTER and I'll send you {gift}' (quieter: say 'quiet'); then only 'Film it now, or post the caption as text.', a statement. Nothing under the piece (wf15 §2; verdict Ready is hidden state, which evals/run.py checks as 'no status line'): no WHY line, no ✓ Checked line, no ticks, no 'isn't pushy' or 'out loud' line (R1, R2, R9). The story the old Checked line named is asserted in the piece itself; the WHY line, the checks and what it was written from come on 'why?' (setup.en.049). DECISIONS: comment-keyword CTAs are ON by default and never removed by the machine (only the coach's 'quiet' swaps them). Her banned words come from expected.toml [voice]."""
 
 [[case]]
 id = "setup.en.021"
@@ -764,8 +771,8 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "FILM TODAY short passes the native-short standard"
-context = "Same state as setup.en.020; judge the FILM TODAY piece only (script, on-screen text, caption)."
-input = '''ok'''
+context = "Same state as setup.en.020 (her multi-income answer brings the 4-line Map with FILM TODAY under it); judge the FILM TODAY piece only (script, on-screen text, caption)."
+input = '''yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all'''
 contains = []
 not_contains = []
 regex = []
@@ -786,8 +793,8 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "FILM TODAY short clears the shared script gates with Edge 8+"
-context = "Same state as setup.en.020; judge the FILM TODAY piece against the shared gate and Edge v2."
-input = '''ok'''
+context = "Same state as setup.en.020 (her multi-income answer brings the 4-line Map with FILM TODAY under it); judge the FILM TODAY piece against the shared gate and Edge v2."
+input = '''yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all'''
 contains = []
 not_contains = []
 regex = []
@@ -808,16 +815,18 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start FILM TODAY uses his own story, makes no result claim and prints nothing under the piece"
-context = "Day 0, about minute 17, iPhone. Map OK'd: dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; offer = founding small group (no price set). Dan wants beat cards, not word-for-word ('hostage video')."
+context = "Day 0, about minute 17, iPhone. The one missing fact was the best result ('My guess: no client result to show yet, so I'll use your own story. Right?'); his 'yep' answers it, so this reply shows the 4-line Map (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; offer = founding small group, no price set) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' Dan wants beat cards, not word-for-word ('hostage video')."
 input = '''yep'''
 contains = []
 not_contains = []
 regex = [
   '''FILM TODAY''',
-  '''(?i)\b(?:relay|birthday|so slow|garage|pull-?ups?|kettle ?bell|stairs|kitchen floor|grandpa)\b''',
-  '''(?i)\bkeep up\b''',
+  '''FILM TODAY[\s\S]*(?i:\b(?:relay|birthday|so slow|garage|pull-?ups?|kettle ?bell|stairs|kitchen floor|grandpa)\b)''',
+  '''FILM TODAY[\s\S]*(?i:\bkeep up\b)''',
   '''(?i)say ["“'‘]?quiet''',
   '''Film it now, or post the caption as text\.''',
+  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
   '''\b(Owen|Lily|Jess|Tommy)\b''',
@@ -837,7 +846,7 @@ invariants = ["I1", "I3", "I5", "I8", "I9", "I17", "I18", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """expected.toml [week1] lead piece: a beat card built from his own story (birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), now asserted in the script itself: the ✓ Checked line that used to name it shows only on 'why?' (R1, R2; wf15 §2). Quiet option offered; 'Film it now, or post the caption as text.' closes it. Cold start: any result number is a fabrication (I8). Words he would never say come from answers.md. 'my son' / 'my daughter' are fine; names are not."""
+notes = """K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. expected.toml [week1] lead piece: a beat card built from his own story (birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), now asserted in the script itself: the ✓ Checked line that used to name it shows only on 'why?' (R1, R2; wf15 §2). Quiet option offered; 'Film it now, or post the caption as text.' closes it. Cold start: any result number is a fabrication (I8). Words he would never say come from answers.md. 'my son' / 'my daughter' are fine; names are not."""
 
 [[case]]
 id = "setup.en.024"
@@ -979,7 +988,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Email-first Week 1: the lead piece is the 'reply to me' email to her 380, with nothing under the pieces"
-context = "Day 0, Claude Free. Map OK'd (YOUR WORD: record year; LinkedIn + the Monday Number newsletter, 380 subscribers, both from her dump). FILM TODAY was delivered; her next message gets Week 1, unasked ('next' still works). Erin wants word-for-word."
+context = "Day 0, Claude Free. The Map (YOUR WORD: record year; LinkedIn + the Monday Number newsletter, 380 subscribers, both from her dump) is on screen with FILM TODAY under it; her next message gets Week 1, unasked ('next' still works). Erin wants word-for-word."
 input = '''next'''
 contains = []
 not_contains = []
@@ -1003,7 +1012,7 @@ invariants = ["I1", "I3", "I5", "I8", "I9", "I10", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """plan.kit-week 2 and editions/en.toml platform_mix: LinkedIn/newsletter → 2 posts, 1 email, 1 carousel, 1 optional short; list 300+ → the email goes first, asking 'hit reply and tell me…'. The first piece title in the reply (an N label, a heading or bold title) is the email; the plan guess above Week 1 does not count. Pieces print with nothing under them (R1, R4): the WHY of a piece shows on 'why?' (setup.en.050). Week 1 arrives with any message after FILM TODAY; 'next' still works (R13). expected.toml [week1] must_not: engagement-bait endings, Raj, Dee's $85,000. Tax is NOT NOW (risky) for Erin."""
+notes = """plan.kit-week 2 and editions/en.toml platform_mix: LinkedIn/newsletter → 2 posts, 1 email, 1 carousel, 1 optional short; list 300+ → the email goes first, asking 'hit reply and tell me…'. The first piece title in the reply (an N label, a heading or bold title) is the email; the plan guess above Week 1 does not count. Pieces print with nothing under them (R1, R4): the WHY of a piece shows on 'why?' (setup.en.050). Week 1 arrives with any message but a Map change after the Map + FILM TODAY reply; 'next' still works (R13). expected.toml [week1] must_not: engagement-bait endings, Raj, Dee's $85,000. Tax is NOT NOW (risky) for Erin."""
 
 [[case]]
 id = "setup.en.029"
@@ -1011,7 +1020,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0"]
 title = "Week 1 for a cold start with no list arrives unasked: no email piece, no 'past clients', no sales ask"
-context = "Day 0, iPhone, ChatGPT Plus. Map OK'd: YOUR WORD keep up; Instagram first, same video on TikTok; no email list; no offer yet (founding group idea only), all from his dump. FILM TODAY was delivered; this is his next message, so all of Week 1 arrives with it, unasked."
+context = "Day 0, iPhone, ChatGPT Plus. The Map (YOUR WORD keep up; Instagram first, same video on TikTok; no email list; no offer yet, founding group idea only, all from his dump) is on screen with FILM TODAY under it; this is his next message, so all of Week 1 arrives with it, unasked."
 input = '''cool. gonna film it in the driveway after work'''
 contains = []
 not_contains = []
@@ -1037,7 +1046,7 @@ invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1: after FILM TODAY any message gets all of Week 1, unasked, with the plan guess once above it (setup.plan_guess; R12, R13). expected.toml [week1] coldstart: 3 shorts as beat cards, 1 long Instagram post; no email piece (list 0), the slot becomes a personal message to dads he knows; 'ask 3 dads you know one question', not 'past clients'; no DM-to-buy CTA in Week 1. Nothing under the pieces (R1): a piece's WHY shows on 'why?'."""
+notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1: after the Map + FILM TODAY any message but a Map change gets all of Week 1, unasked, with the plan guess once above it (setup.plan_guess; R12, R13). expected.toml [week1] coldstart: 3 shorts as beat cards, 1 long Instagram post; no email piece (list 0), the slot becomes a personal message to dads he knows; 'ask 3 dads you know one question', not 'past clients'; no DM-to-buy CTA in Week 1. Nothing under the pieces (R1): a piece's WHY shows on 'why?'."""
 
 [[case]]
 id = "setup.en.030"
@@ -1101,7 +1110,7 @@ kind = "P"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1"]
 title = "Week-1 LinkedIn text post passes the text-post standard"
-context = "Day 0, Week 1 (it arrives unasked after FILM TODAY), Claude Pro. Map OK'd: keyword phrase 'without the badge'; Linda chose quiet; word-for-word. Judge the first LinkedIn text post in Week 1."
+context = "Day 0, Week 1 (it arrives unasked with her answer to the Map + FILM TODAY reply), Claude Pro. Map: keyword phrase 'without the badge'; Linda chose quiet; word-for-word. Judge the first LinkedIn text post in Week 1."
 input = '''next'''
 contains = []
 not_contains = []
@@ -1123,7 +1132,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "VA-run studio: Week 1 leads with the email and hands Bree a posting note"
-context = "Day 0, ChatGPT Plus (Mac browser). Map OK'd: homeowners with a 'nothing room'; YOUR WORD nothing room; Instagram + Facebook Page. FILM TODAY was delivered; this message gets all of Week 1, unasked. Her dump said the newsletter goes out once a month but never its size; she gives it here (nobody asked)."
+context = "Day 0, ChatGPT Plus (Mac browser). The Map (homeowners with a 'nothing room'; YOUR WORD nothing room; Instagram + Facebook Page) is on screen with FILM TODAY under it; this message gets all of Week 1, unasked. Her dump said the newsletter goes out once a month but never its size; she gives it here (nobody asked)."
 input = '''the newsletter's about 1,200 people, Bree sends it. can you make it so I can just give it to Bree'''
 contains = []
 not_contains = []
@@ -1248,15 +1257,15 @@ id = "setup.en.037"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "Back after the Claude Free limit: 'next' resumes at FILM TODAY with nothing lost"
-context = "Day 0, Claude Free. Erin typed 'ok' on the Map (YOUR WORD record year, method Margin Before More), then hit the message limit before the FILM TODAY reply. She returns about 5 hours later in the same chat."
+title = "Back after the Claude Free limit: 'next' resumes at Week 1 with nothing lost"
+context = "Day 0, Claude Free. The 4-line Map (YOUR WORD record year, method Margin Before More) came with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.'; Erin hit the message limit right after it, before answering. She returns about 5 hours later in the same chat."
 input = '''next'''
 contains = []
 not_contains = []
 regex = [
-  '''FILM TODAY''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
+  '''(?i)\(my guess; one word changes it\)''',
   '''(?i)record year''',
-  '''Film it now, or post the caption as text\.''',
 ]
 not_regex = [
   '''(?i)empty your head''',
@@ -1264,6 +1273,9 @@ not_regex = [
   '''(?i)here(?:'|’)s what I heard''',
   '''(?i)\b(remind me|tell me again)\b''',
   '''WHY THIS GETS CLIENTS''',
+  '''(?m)^\W*FILM TODAY\b''',
+  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD|YOUR VOICE):''',
+  '''(?i)\b(?:want|ready for|shall I (?:send|write)) (?:your |the )?week 1\b''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?im)^[^\n]*(?:post the caption as text|quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
@@ -1272,7 +1284,7 @@ invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """UX §6 Machine row: 'Claude Free finishes in one 5-h window or resumes via next with no lost answers.' §CM-TODAY 1: 'next' opens the first unfinished step (FILM TODAY); the Map answers are in the same chat and nothing is re-asked. The piece prints with nothing under it (R1); its WHY waits for 'why?'."""
+notes = """UX §6 Machine row: 'Claude Free finishes in one 5-h window or resumes via next with no lost answers.' Persona behaviour: the limit comes right after the Map. K2 (DECISIONS 6 Oct 2026): FILM TODAY came in that reply, so she left with today's video; §CM-TODAY 1: after the Map + FILM TODAY any message but a Map change gets all of Week 1 (Claude Free: ≤3 pieces a reply, so at least 2 copy boxes here), with the plan guess above it (setup.plan_guess). Nothing is re-asked; neither the Map nor FILM TODAY is reprinted; never 'want Week 1?'. The pieces print with nothing under them (R1); their WHY waits for 'why?'."""
 
 [[case]]
 id = "setup.en.038"
@@ -1395,14 +1407,16 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "S0"]
 title = "A résumé as the whole hook is flipped: credentials become proof, the opener is the buyer's problem"
-context = "Day 0, about minute 17, Claude Free. Map OK'd (YOUR WORD record year; Margin Before More). Before FILM TODAY arrives, Erin asks for a credentials opener."
-input = '''ok. and open the video with my background. CPA, 9 years at the agency, VP of Finance, 14 sprints. people need to know I'm legit'''
+context = "Day 0, about minute 17, Claude Free. After 'done' the one missing fact was the income-streams guess; Erin answers it in this turn and asks for a credentials opener before any video exists, so this reply shows the 4-line Map (YOUR WORD record year; Margin Before More) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.'"
+input = '''The retainers pay the bills. The sprint is what I want to sell more of. and open the video with my background. CPA, 9 years at the agency, VP of Finance, 14 sprints. people need to know I'm legit'''
 contains = []
 not_contains = []
 regex = [
   '''FILM TODAY''',
-  '''(?i)\b(CPA|VP of Finance|14 sprints|14 Margin Sprints)\b''',
+  '''FILM TODAY[\s\S]*(?i:\b(CPA|VP of Finance|14 sprints|14 Margin Sprints)\b)''',
   '''(?i)first line\W{0,8}(?:[^\n]*\n)?[^\n]*\b(?:record year|empty account|stairwell|bank app|payroll|cash|margin|underwater)\b''',
+  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
   '''(?im)^\W*(first line|on-screen(?: text)?|hook)\b[^\n]*[:—–-][^\n]*\b(CPA|VP of Finance|9 years|14 sprints)\b''',
@@ -1417,7 +1431,7 @@ invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """DECISIONS character thesis and §CM-EDGE BORROWED: a flex or a freebie (and a résumé) is allowed only as proof, a CTA or a flipped format, never as the whole hook; the flip is done silently. The credentials stay in the piece as proof (a beat or the last line); the first line is her buyer's problem ('Record year. Empty account.' or the stairwell), asserted in the script itself since the WHY line now shows only on 'why?' (R1). VP of Finance, never CFO."""
+notes = """K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. DECISIONS character thesis and §CM-EDGE BORROWED: a flex or a freebie (and a résumé) is allowed only as proof, a CTA or a flipped format, never as the whole hook; the flip is done silently. The credentials stay in the piece as proof (a beat or the last line); the first line is her buyer's problem ('Record year. Empty account.' or the stairwell), asserted in the script itself since the WHY line now shows only on 'why?' (R1). VP of Finance, never CFO."""
 
 # ---------------------------------------------------------------- the coach's own page and posts, read silently (wf15 S5, wf14 V3)
 
@@ -1529,7 +1543,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "After FILM TODAY a question gets one line, then Week 1 arrives unasked with the plan guess above it"
-context = "Day 0, about minute 19, ChatGPT Free on the laptop. Map OK'd (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word). FILM TODAY is on screen, ending 'Film it now, or post the caption as text.' Her dump named Instagram (about 1,150 followers), a personal Facebook profile and a 140-person email list, said Mondays she is at her mom's and never named a talk day."
+context = "Day 0, about minute 19, ChatGPT Free on the laptop. The 4-line Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) is on screen with FILM TODAY under it, ending 'Film it now, or post the caption as text.' and 'We'll run this for 4 weeks. OK, or change a line.' Her dump named Instagram (about 1,150 followers), a personal Facebook profile and a 140-person email list, said Mondays she is at her mom's and never named a talk day."
 input = '''can I film it sitting at my kitchen table? standing up I sway'''
 contains = []
 not_contains = []
@@ -1554,7 +1568,7 @@ invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1: after FILM TODAY any coach message gets all of Week 1, never 'want Week 1?'; a question in the message is answered in one line first. No upper bound on pieces in this reply: wf11-ux-spec §2 and R13 split Week 1 into 2 replies of ≤3 pieces on Free, but the Day-0 kit says 'all of Week 1' in the next reply, so either form passes. Above Week 1, once: setup.plan_guess 'For {platform} · talk day {day} (my guess; one word changes it).', the talk day guessed from her dump (never Monday, when she is at her mom's), never asked (setup.kit-facts 5, R12). Pieces print with nothing under them (wf15 §2). FILM TODAY is not reprinted."""
+notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1 (K2, DECISIONS 6 Oct 2026): after the Map + FILM TODAY any coach message but a Map change gets all of Week 1, never 'want Week 1?'; her question is not a change, so it also settles the Map; a question in the message is answered in one line first. No upper bound on pieces in this reply: wf11-ux-spec §2 and R13 split Week 1 into 2 replies of ≤3 pieces on Free, but the Day-0 kit says 'all of Week 1' in the next reply, so either form passes. Above Week 1, once: setup.plan_guess 'For {platform} · talk day {day} (my guess; one word changes it).', the talk day guessed from her dump (never Monday, when she is at her mom's), never asked (setup.kit-facts 5, R12). Pieces print with nothing under them (wf15 §2). FILM TODAY is not reprinted."""
 
 [[case]]
 id = "setup.en.047"
@@ -1563,7 +1577,7 @@ persona = "service-biz"
 lanes = ["S1", "S0"]
 title = "Whole run, interrupted owner on ChatGPT Plus: Map ≤6 coach turns, film-ready by minute 20, ≤10 turns, Week 1 in one reply"
 context = "Whole run, Day 0, ChatGPT Plus (Mac browser at the studio, phone in the car), persona default (answers.md order, Behaviour section; t_min recorded on every turn). Graded on every machine reply."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2-4] dump chunks 1-3 (chunk 1 ends 'I'm at the site', chunk 3 ends 'done I think. done.') · [turn 5] her answer to the multi-income guess, from the answer bank (the Reset is the one to grow; full projects pay 5 salaries and come from referrals and builders) · [turn 6] 'ok' on the Map · [turn 7] 'give that to Bree' after FILM TODAY (all of Week 1 arrives) · [turn 8] 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
+input = '''WHOLE RUN: [turn 1] Start · [turn 2-4] dump chunks 1-3 (chunk 1 ends 'I'm at the site', chunk 3 ends 'done I think. done.') · [turn 5] her answer to the multi-income guess, from the answer bank (the Reset is the one to grow; full projects pay 5 salaries and come from referrals and builders); the Map with FILM TODAY under it follows · [turn 6] 'give that to Bree' to the Map + FILM TODAY reply (all of Week 1 arrives) · [turn 7] 'ok', only if the Brand Card has not printed yet. Stop after Day 0's last reply (Brand Card + save line + NEXT).'''
 contains = []
 not_contains = []
 regex = [
@@ -1575,6 +1589,7 @@ regex = [
   '''(?m)^\W*YOUR VOICE:''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''FILM TODAY''',
+  '''(?ms)\A(?=.*We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.)(?=.*^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY)''',
   '''Film it now, or post the caption as text\.''',
   '''(?i)talk day \w+ \(my guess; one word changes it\)''',
   '''(?i)\bBree\b''',
@@ -1609,7 +1624,7 @@ invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I17", "I18
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. acceptance.toml [day0] (wf15 §1, §3), graded by graders.py day0_timing: the Map within map_max_turns_en = 6 coach turns with map_lines = 4, film-ready by minute film_ready_max_minutes = 20, at most session_max_turns = 10 coach turns. This script reaches the Map after 5 coach turns, FILM TODAY after 6 and the end of Day 0 after 7-8 (on Plus, Week 1 comes in one reply). Her only missing fact is the buyer to build on (setup.multi_income; 4 paid streams); list size and talk day are guessed (setup.plan_guess), never asked (R12). 'give that to Bree' is any message after FILM TODAY, so it brings Week 1 (R13). She quits on a wall of text before anything usable or on tool setup for herself. Hollis never (no consent); trap numbers 400, 140 and 20-30 percent (persona.toml excluded_numbers, I8). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+notes = """scope: each reply. acceptance.toml [day0] (wf15 §1, §3), graded by graders.py day0_timing: the Map within map_max_turns_en = 6 coach turns with map_lines = 4, film-ready by minute film_ready_max_minutes = 20, at most session_max_turns = 10 coach turns. This script reaches the Map after 5 coach turns, with FILM TODAY under it in the same reply (K2, DECISIONS 6 Oct 2026), and the end of Day 0 after 6-7 (on Plus, Week 1 comes in one reply). Her only missing fact is the buyer to build on (setup.multi_income; 4 paid streams); list size and talk day are guessed (setup.plan_guess), never asked (R12). 'give that to Bree' is any message but a Map change after the Map + FILM TODAY reply, so it brings Week 1 (R13). She quits on a wall of text before anything usable or on tool setup for herself. Hollis never (no consent); trap numbers 400, 140 and 20-30 percent (persona.toml excluded_numbers, I8). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
 
 [[case]]
 id = "setup.en.048"
@@ -1652,8 +1667,8 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'why?' after FILM TODAY: the piece printed clean; the 'why?' reply gives the WHY line, what it was written from and the checks"
-context = "Day 0, about minute 17, ChatGPT Free. Same state as setup.en.020: the Map is on screen (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word); Dana asked for bullets."
-input = '''[turn 1] ok
+context = "Day 0, about minute 17, ChatGPT Free. Same state as setup.en.020: after 'done' the one missing fact was the multi-income guess. Turn 1 answers it and gets the 4-line Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) with FILM TODAY under it; Dana asked for bullets. Turn 2 asks why."
+input = '''[turn 1] yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all
 [turn 2] why?'''
 contains = []
 not_contains = []
@@ -1672,7 +1687,7 @@ invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE WHAT PRINTS. Turn 1 prints FILM TODAY with nothing under it: I3 grades that reply (a WHY, ✓ Checked or Ready line there fails without 'why?'). Turn 2 (assertions here): the stored WHY line (plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {step}'), 'Ready to film · I'd post it: {evidence}' naming her own story, and the ✓ Checked line with the checks passed (ticks too); the record may follow. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. I4 is not listed: scores may print after 'why?'."""
+notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE WHAT PRINTS. Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece: I3 grades that reply (a WHY, ✓ Checked or Ready line there fails without 'why?'); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored WHY line (plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {step}'), 'Ready to film · I'd post it: {evidence}' naming her own story, and the ✓ Checked line with the checks passed (ticks too); the record may follow. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. I4 is not listed: scores may print after 'why?'."""
 
 [[case]]
 id = "setup.en.050"
@@ -1680,7 +1695,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "'why?' after Week 1: the WHY line for the last piece, its checks and the fact it was written from; the pieces carry none"
-context = "Day 0, Claude Free. Same state as setup.en.028: Map OK'd (YOUR WORD: record year; LinkedIn + the Monday Number, 380 subscribers); FILM TODAY delivered; her next message brings Week 1."
+context = "Day 0, Claude Free. Same state as setup.en.028: the Map (YOUR WORD: record year; LinkedIn + the Monday Number, 380 subscribers) is on screen with FILM TODAY under it; her next message brings Week 1."
 input = '''[turn 1] next
 [turn 2] why?'''
 contains = []
