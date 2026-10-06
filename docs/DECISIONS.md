@@ -87,3 +87,7 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
   - **Brand Card:** a short visible top (3–4 lines), then the machine block.
   - **After OK:** today's video, then the whole Week 1 automatically.
   - **Research:** runs silently during the dump. The coach's own pasted posts and page link are read to fill gaps instead of asking.
+- **Today's video comes with the Map (6 Oct 2026, golden round G1, item K2).** Review: `../qa/runs/g1-en-day0/review.md`.
+  - FILM TODAY prints in the same reply as the 4-line Map, under "OK, or change a line." A changed line reprints the Map and the script.
+  - "OK" (or any other message) then brings Week 1. This saves one coach turn and 1–2 minutes, and a coach who hits a plan limit right after the Map still leaves with something to film.
+  - It amends the order in `research/wf15-simple-surface-spec.md` §1 steps 4–5. The Map is still the one decision.
