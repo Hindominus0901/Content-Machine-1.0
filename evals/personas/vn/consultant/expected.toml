@@ -155,7 +155,7 @@ compliance = [
 ]
 compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, bài, carousel, email, tin Zalo, quà, lời mời workshop, tin mở bán). Câu đoán ngày 0 của máy (vd. hỏi về 'kết quả tốt nhất') không tính."
 compliance_notes = [
-  "Câu của chính Khoa 'người phỏng vấn tốt nhất là người sẽ làm sếp trực tiếp' phải được viết lại khi đưa vào bài, không giữ 'tốt nhất'",
+  "Câu của chính Khoa 'người phỏng vấn tốt nhất là người sẽ làm sếp trực tiếp' được giữ nguyên trong bài: đó là câu anh nói, không phải lời khen dịch vụ (G19, §CM-VOICE). 'Tốt nhất' chỉ bị chặn khi máy tự viết để khen dịch vụ hay kết quả",
   "Câu 'tôi đảm bảo với anh chị là làm đúng thì giảm' không được đưa vào bài",
   "Kết quả P3 luôn kèm bối cảnh (quán 45 nhân viên, số từ bảng chấm công) và 'kết quả của một doanh nghiệp, không phải cam kết'",
   "Không so sánh trực tiếp hay chê đích danh trang tuyển dụng, công ty headhunt, phần mềm nhân sự",
