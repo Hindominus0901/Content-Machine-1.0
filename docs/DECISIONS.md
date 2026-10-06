@@ -99,3 +99,7 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
 - **Long dictation and the Map reply (founder, after the VG3 retest).**
   - Film-ready past 20 minutes is a warning, not a failure, when the machine cut the dump on time and the coach's own chunks were simply long. It stays a failure when the cut was missing or late, or when the machine's own turns caused the delay.
   - The Map reply keeps the Map, today's video and the gift (written in full under the caption), even at about two phone screens. "Shorter" trims from the next reply on.
+- **A client phrase the coach quotes counts as heard (founder, 7 Oct 2026, after the VG5 retest).** Review: `../qa/runs/retest-vg5-g6/review.md` (founder call a).
+  - On Day 0 nearly every client phrase arrives through the coach, so the old rule ("never the coach's recall") printed every Day-0 keyword as "(my guess)" on the one decision screen.
+  - A buyer phrase the coach quotes from 3 or more named clients now counts like words buyers said in 3+ places: the keyword prints with no guess tag. The coach's own lines still never count.
+  - Fewer than 3 named clients (one client plus "lots of people say it") stays "(my guess)", checked in Week 1. The research evidence rule for KEEP / WATCH patterns is unchanged.
