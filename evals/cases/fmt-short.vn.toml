@@ -75,7 +75,7 @@
 #   VN persona's chunks 1-2 pass 1.200, so the cut comes after chunk 2; one more story stays open) → the
 #   other missing facts (≤3 in all, one a message, "Mình đoán: {guess}. Đúng không?") → ONE reply: the
 #   4-line Bản đồ (ĐIỀU KHÁCH NHỚ: · 3 CHỦ ĐỀ: · TỪ KHOÁ: · GIỌNG:, possibly numbered), QUAY HÔM NAY right
-#   under it, then map.ok "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?" → any coach message but a Map
+#   under it, then map.ok "Chạy thử 4 tuần nhé. OK hay sửa một dòng?" → any coach message but a Map
 #   change brings Tuần 1, unasked (a question in it answered in one line first; setup.plan_guess above it
 #   for what was guessed; on Free at most 3 pieces a reply, as in the EN cases) → the Brand Card + "Lưu lại
 #   để mình nhớ bạn (30 giây)." → TIẾP. No check screen, inventory, stop point or wrap-up. Budgets
@@ -139,13 +139,13 @@ regex = [
   '''```''',
   '''QUAY HÔM NAY[\s\S]*(?i:28 Tết|2019|(?<!\w)kho(?!\w)|cộng sổ|vở ô li)''',
   '''(?m)QUAY HÔM NAY[\s\S]*^(?![^\n]*(?i:comment|bình luận|nhắn riêng|TIẾP))[^\n]*(?i:lãi ảo)''',
-  '''(?i)comment\s+["“]?LÃI ẢO["”]?\s+hay nhắn riêng,[^\n]*Sổ 3 Cột''',
+  '''(?i)comment\s+["“]?LÃI ẢO["”]?\s+hay nhắn riêng(?:\s+\w+)?,[^\n]*Sổ 3 Cột''',
   '''(?i)ngại xin comment[^\n]{0,20}gõ\s+['"“‘]nhẹ''',
   '''(?ms)QUAY HÔM NAY(?:.*?^[ \t]*```){4}''',
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
   '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
@@ -174,7 +174,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
 title = "Compact mode: QUAY HÔM NAY under the Bản đồ is complete with no method file, prints nothing under it, never asks for the file, carries no client result"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 18, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the best-result guess ('… không thì mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?'), which she confirmed; the last missing fact was a guess on what she sells ('Mình đoán: …. Đúng không?'). Her answer brings ONE reply: the 4-line Bản đồ (dân văn phòng 25–35 ngồi máy tính cả ngày; TỪ KHOÁ: CỨNG ĐƠ; quà = 3 động tác 5 phút tại bàn; no offer yet: cold start, 0 online clients) with QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Delivery: thẻ ý (the default)."
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 18, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the best-result guess ('… không thì mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the last missing fact was a guess on what she sells ('Mình đoán: …. Đúng không?'). Her answer brings ONE reply: the 4-line Bản đồ (dân văn phòng 25–35 ngồi máy tính cả ngày; TỪ KHOÁ: CỨNG ĐƠ; quà = 3 động tác 5 phút tại bàn; no offer yet: cold start, 0 online clients) with QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Delivery: thẻ ý (the default)."
 input = """chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi"""
 regex = [
   '''QUAY HÔM NAY''',
@@ -190,7 +190,7 @@ regex = [
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
   '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?i)file phương pháp''',
@@ -232,7 +232,7 @@ regex = [
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
   '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)(?:nhẹ nhàng hơn|ngại xin comment|gõ\s+['"“‘]nhẹ['"”’]?|quay luôn bây giờ|chưa (?:kịp )?quay)[^.!\n]*\?''',
@@ -273,7 +273,7 @@ regex = [
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
   '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^(?![^\n]*(?:không|khỏi|đừng|chẳng)\s)[^\n]*ngồi\s+(?:nói|nhìn)[^.\n]{0,20}(?:camera|máy quay|ống kính)''',
@@ -877,7 +877,7 @@ input = """ơ câu số 2 ấy, tối nay chị đăng lên facebook luôn đư�
 regex = [
   '''(?i)bán được thẻ chứ mình có giữ được người''',
   '''```''',
-  '''(?i)kể tiếp, hết thì gõ ['"“‘]xong''',
+  '''(?i)kể tiếp(?:[^\S\n]+\w+){0,2}, hết thì gõ ['"“‘]xong''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [

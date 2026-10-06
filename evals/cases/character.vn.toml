@@ -27,7 +27,7 @@
 #   cách'). Past ~1.200 tiếng the soft cut carries the first câu đoán (dump.enough + setup.guess /
 #   setup.guess_no_result / setup.multi_income), then the other missing facts, one a message (≤3 in all); then ONE
 #   reply with the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ: · 3 CHỦ ĐỀ: · TỪ KHOÁ: · GIỌNG:, the last ending 'với khách:
-#   "{audience address}"'), QUAY HÔM NAY under it and map.ok "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?" (K2);
+#   "{audience address}"'), QUAY HÔM NAY under it and map.ok "Chạy thử 4 tuần nhé. OK hay sửa một dòng?" (K2);
 #   any answer but a Map change brings Tuần 1, unasked; then the Brand Card: the top (card.title, 'NÓI GÌ: …',
 #   'NÓI THẾ NÀO: … · với khách: "…"', ≤500 characters) and, after 'Phần còn lại là cho máy, không cần đọc:', the
 #   machine block (trait, enemy, principles, phrases, pronouns, dialect …) + card.save_line "Lưu lại để mình nhớ bạn
@@ -86,7 +86,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S0", "S1", "floor"]
 title = "B2B card after Tuần 1: machine pair anh–em, enemy 'tuyển lấp chỗ' as a practice, the 3-line top with 'tôi – anh chị', no 'bạn', a Claude save line with a backup"
-context = "Day 0, Door A (Claude Pro project, method file added). Reply 1 asked xưng hô; anh Khoa typed 'anh'. Dump chunks 1-3 given by keyboard mic (Quảng accent slips such as 'chổ', 'nghỉ/nghĩ' left uncorrected); the Bản đồ came with QUAY HÔM NAY under it (gạch đầu dòng) and map.ok; his 'ok' brought all of Tuần 1, unasked, and it ran long, so the card waits for the next reply (setup.kit-order 9 'dài quá: card ở tin sau'). This turn asks for it: the reply is Day 0's last one (the Brand Card + the save line + TIẾP)."
+context = "Day 0, Door A (Claude Pro project, method file added). Reply 1 asked xưng hô; anh Khoa typed 'anh'. Dump chunks 1-3 given by keyboard mic (Quảng accent slips such as 'chổ', 'nghỉ/nghĩ' left uncorrected); the Bản đồ came with QUAY HÔM NAY under it (gạch đầu dòng) and map.ok; his 'ok' brought all of Tuần 1, unasked, and it ran long, so the card waits for the next reply (setup.kit-order 9 'app cắt: card ở tin sau'). This turn asks for it: the reply is Day 0's last one (the Brand Card + the save line + TIẾP)."
 input = """ok. in cái thẻ ra đi em, anh lưu luôn"""
 regex = [
   '(?im)^\W*pronouns:\s*(?:anh\s*[–-]\s*em|em\s*[–-]\s*anh)',
@@ -116,7 +116,7 @@ context = "Day 0, Door A (ChatGPT Free, iPhone). Reply 1 asked xưng hô; Minh A
 input = """<<paste: coldstart-coach/answers.md, the '## Dump chunk 2' section, verbatim>>"""
 regex = [
   '''(?i)Hôm nay vậy là đủ rồi''',
-  '''(?i)mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn\. Đúng không\?''',
+  '''(?i)mình đoán chưa có kết quả của khách, nên mình kể chuyện (?:của )?chính bạn(?: trải qua)?\. Đúng không\?''',
 ]
 not_regex = [
   '(?i)tính cách|nét (?:riêng|nổi bật|cực đoan)|giá trị (?:sống|cốt lõi)|nguyên tắc (?:sống|của bạn)',
@@ -130,7 +130,7 @@ not_regex = [
 not_contains = ["học viên đã", "hết đau", "chuyên gia trị liệu"]
 invariants = ["I2", "I5", "I8", "I15"]
 max_questions = 1
-notes = "character.kit-core 'NGÀY 0: không hỏi về tính cách … chỉ từ lời xả, thiếu thì [CHƯA CÓ]'; QA §3.1 character-card runtime: fields traced or [GAP]; gaps become optional homework with no extra setup probes. wf11: Character Core Q1-Q5 are covered by the dump; excavation is L5. DECISIONS 'Long dumps…' and start-block step 3-4: past ~1.200 tiếng the soft cut (dump.enough 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán}') carries the first câu đoán in the same message, here setup.guess_no_result ('Mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?', mình–bạn as is). R10: no inventory ('Bạn biết nhiều thật…'), no numbered check lines, no Map yet, one guess only. Cold start (I8): no client result anywhere. A character question here also costs a turn against the Map's 7-turn VN budget (acceptance.toml [day0])."
+notes = "character.kit-core 'NGÀY 0: không hỏi về tính cách … chỉ từ lời xả, thiếu thì [CHƯA CÓ]'; QA §3.1 character-card runtime: fields traced or [GAP]; gaps become optional homework with no extra setup probes. wf11: Character Core Q1-Q5 are covered by the dump; excavation is L5. DECISIONS 'Long dumps…' and start-block step 3-4: past ~1.200 tiếng the soft cut (dump.enough 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán}') carries the first câu đoán in the same message, here setup.guess_no_result ('Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?', mình–bạn as is). R10: no inventory ('Bạn biết nhiều thật…'), no numbered check lines, no Map yet, one guess only. Cold start (I8): no client result anywhere. A character question here also costs a turn against the Map's 7-turn VN budget (acceptance.toml [day0])."
 
 [[case]]
 id = "character.vn.004"
@@ -560,7 +560,7 @@ context = "Day 0. Reply 1 asked his xưng hô ('anh'). In chunk 2 he said 'mình
 input = """ok đúng á em, đều đều thì bảo hiểm. còn vụ xưng hô trên video em chọn giùm anh luôn đi"""
 regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?GIỌNG:[^\n]*với khách:[^\n]*mình\s*[–-]\s*bạn''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?i)anh muốn (?:xưng|chọn)[^\n?]*\?',
@@ -598,11 +598,11 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
 title = "'tại sao vậy?' after QUAY HÔM NAY: the checks and the evidence name her own story, never a client she doesn't have"
-context = "Day 0, about minute 18, ChatGPT Free on her iPhone (S1: method file in the project). Pair bạn–mình; audience mình – mấy bạn; Southern; cold start (0 online clients, proof locked). The soft cut after dump chunk 2 carried the best-result guess ('… mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?'), which she confirmed; the last guess was what she sells. Turn 1 answers it and gets the 4-line Bản đồ (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it, nothing under the piece, then map.ok; turn 2 asks why."
+context = "Day 0, about minute 18, ChatGPT Free on her iPhone (S1: method file in the project). Pair bạn–mình; audience mình – mấy bạn; Southern; cold start (0 online clients, proof locked). The soft cut after dump chunk 2 carried the best-result guess ('… mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the last guess was what she sells. Turn 1 answers it and gets the 4-line Bản đồ (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it, nothing under the piece, then map.ok; turn 2 asks why."
 input = """[turn 1] chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi
 [turn 2] tại sao vậy?"""
 regex = [
-  '''(?m)^\W*(?:✓ Đã kiểm:|Sẵn sàng quay · viết (?:từ|thành))[^\n]*(?i:9 giờ tối|tháng 3|2023|vịn|kế toán|quyết toán|chuyện của bạn|chuyện của chính bạn|cứng đơ)''',
+  '''(?m)^\W*(?:✓ Đã kiểm:|Sẵn sàng quay · viết (?:từ|thành))[^\n]*(?i:9 giờ tối|tháng 3|2023|vịn|kế toán|quyết toán|chuyện của bạn|chuyện (?:của )?chính bạn|cứng đơ)''',
   '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
 ]

@@ -616,7 +616,7 @@ regex = [
   'Tính bằng lãi năm thứ hai, đừng tính bằng lãi năm đầu\.',
   '(?i)Dĩ An|7,5\s?%|13 triệu|9 triệu|thả nổi|tờ khăn giấy|toilet nhà mẫu|tui gồng',
   '(?i)gồng lãi',
-  '''Đăng hay không t(?:uỳ|ùy) anh\.''',
+  '''Đăng hay không t(?:uỳ|ùy) anh(?:[^\S\n]+\w+)?[.!]''',
   '(?im)^(?=[^\n]*bám sát bài của họ)(?=[^\n]*(?:\b20\d{2}\b|\b\d{1,2}/\d{1,2}\b|tháng\s+\d{1,2}))[^\n]*$',
   'TIẾP →[^\n]*\s*\Z',
 ]
@@ -758,7 +758,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I8", "I15", "I17", "I23"]
 max_questions = 1
-notes = """scope: pieces. §CM-NATURAL 4 ('Một cặp xưng hô cả bài; tin riêng gọi số ít'); guide §4.4 rule 4 (public 'mình – các chị em', 1:1 'chị – em', never mixed) and §5.7; wf14 V4. She is older than the student, so no 'Dạ' opening; 'em ạ' at a dặn line is natural for her (written-posts.md), so 'ạ' is not forbidden, nor is 'chị em mình' meaning the two of them. A help-desk opener ('Cảm ơn em đã hỏi', 'Câu hỏi hay') is the call-centre voice of guide §2.4 X7, X9. I15 leaves 1:1 messages out of its audience check, so the plural forms are asserted here."""
+notes = """scope: pieces. §CM-NATURAL 4 ('Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách'); guide §4.4 rule 4 (public 'mình – các chị em', 1:1 'chị – em', never mixed) and §5.7; wf14 V4. She is older than the student, so no 'Dạ' opening; 'em ạ' at a dặn line is natural for her (written-posts.md), so 'ạ' is not forbidden, nor is 'chị em mình' meaning the two of them. A help-desk opener ('Cảm ơn em đã hỏi', 'Câu hỏi hay') is the call-centre voice of guide §2.4 X7, X9. I15 leaves 1:1 messages out of its audience check, so the plural forms are asserted here."""
 
 [[case]]
 id = "humanize.vn.034"

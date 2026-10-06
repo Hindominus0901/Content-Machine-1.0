@@ -17,8 +17,8 @@
 # đoán; only the missing facts follow (≤3, one a message, "Mình đoán: …. Đúng không?"); then ONE reply: the 4-line Bản
 # đồ (ĐIỀU KHÁCH NHỚ: · 3 CHỦ ĐỀ: · TỪ KHOÁ: · GIỌNG:), whose TỪ KHOÁ: line is the keyword with its unaccented form (the
 # 2 alternates stay stored; "đổi" brings the next one, no menu); QUAY HÔM NAY under it carries the keyword in its words
-# and the comment ask with "(ngại xin comment thì gõ 'nhẹ')", nothing under it; then map.ok "Mình chạy thử 4 tuần nhé.
-# OK hay sửa một dòng?" (K2). There is no PHƯƠNG PHÁP or CÁCH CŨ line any more: the method and the old way show inside
+# and the comment ask with "(ngại xin comment thì gõ 'nhẹ')", nothing under it; then map.ok "Chạy thử 4 tuần nhé. OK
+# hay sửa một dòng?" (K2). There is no PHƯƠNG PHÁP or CÁCH CŨ line any more: the method and the old way show inside
 # ĐIỀU KHÁCH NHỚ ("{coach}: {cách làm} chứ không {cách cũ}") and in the card's machine block; why this keyword prints
 # on "tại sao?". Any answer but a Map change brings Tuần 1.
 # Budgets (acceptance [day0]): the Map within 7 coach turns (VN adds the xưng hô turn), film-ready by active minute 20,
@@ -48,11 +48,11 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Map keyword is the audience's 'cứng đơ', not her coined 'chữa cháy' / 'gỡ lưng' or a category word"
-context = "Day 0, Door B (ChatGPT Free, iPhone). Pair bạn–mình. Dump chunks 1-2 given (studio students: 'bạn nào cũng nói cứng đơ'); past ~1,200 tiếng the soft cut came after chunk 2 with the best-result guess ('mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?'), which she confirmed; the second missing fact was a guess on what she sells ('Mình đoán: bạn chưa bán gì online, giờ thu nhập là dạy ở studio. Đúng không?'). This is her answer; the next reply is the 4-line Map with QUAY HÔM NAY under it."
+context = "Day 0, Door B (ChatGPT Free, iPhone). Pair bạn–mình. Dump chunks 1-2 given (studio students: 'bạn nào cũng nói cứng đơ'); past ~1,200 tiếng the soft cut came after chunk 2 with the best-result guess ('mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the second missing fact was a guess on what she sells ('Mình đoán: bạn chưa bán gì online, giờ thu nhập là dạy ở studio. Đúng không?'). This is her answer; the next reply is the 4-line Map with QUAY HÔM NAY under it."
 input = """đúng, chưa có gì hết"""
 regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?từ kh(?:oá|óa|oa)(?:\s+riêng)?[\s:*"“”\-–·]*cứng đơ''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?từ kh(?:oá|óa|oa)(?:\s+riêng)?[\s:*"“”\-–·]*(?:quay lại|đau lưng|yoga|trị liệu|chữa cháy|gỡ lưng|ngồi đúng tư thế|detox)''',
@@ -74,7 +74,7 @@ context = "Day 0, Door B (Phone Starter, ChatGPT Free, Android). Pair chị–em
 input = """Ờ đúng rồi em, chị nói thật nhé, spa nuôi cả nhà chị đấy, 7 đứa nhân viên chứ ít đâu. Nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm cái này là để các em chủ spa như em Thảo biết mà tìm chị, học xong em ấy đếm sổ hẹn được 5 trên 10 đấy em."""
 regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?từ kh(?:oá|óa|oa)(?:\s+riêng)?[\s:*"“”\-–·]*ngại chào''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?từ kh(?:oá|óa|oa)(?:\s+riêng)?[\s:*"“”\-–·]*(?:quay lại|khách quay lại|spa|liệu trình|chốt sale|tư vấn|99k|chấm)''',
@@ -139,7 +139,7 @@ context = "Day 0, Door A (ChatGPT Plus, Windows laptop). Reply 1 xưng hô: she 
 input = """xong em"""
 regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?từ kh(?:oá|óa|oa)(?:\s+riêng)?[\s:*"“”\-–·]*lãi (?:ảo|thật)''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^\W*(?:[1-4][.)]?\s+)?từ kh(?:oá|óa|oa)(?:\s+riêng)?[\s:*"“”\-–·]*(?:sổ 3 cột|ra đơn|x3|đốt tiền|ads|tự do tài chính|chấm|xin giá)''',
@@ -173,7 +173,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I4", "I5", "I8", "I11", "I15"]
 max_questions = 1
-notes = "expected.toml keyword: preferred 'gồng lãi'; 'dí cọc' and 'cọc trước tính sau' are stored alternates (no menu on the Map: signature.kit-keyword 'Chọn sẵn + 2 dự phòng, không hỏi'). The keyword works for both paying streams of the bridge buyer (vợ chồng trẻ: the apartment and protection for the borrower). The 4-line Map has no CÁCH CŨ line (R10, R11): the old way is named inside ĐIỀU KHÁCH NHỚ ('… chứ không {cách cũ}', start-block step 5); the full old way sits in the card's machine block (old_way). Never 'khóa 90 ngày' (deny-list, quit trigger); the framing is map.ok 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. VG2 tuan S1 turn 6 is a passing reply."
+notes = "expected.toml keyword: preferred 'gồng lãi'; 'dí cọc' and 'cọc trước tính sau' are stored alternates (no menu on the Map: signature.kit-keyword 'Chọn sẵn + 2 dự phòng, không hỏi'). The keyword works for both paying streams of the bridge buyer (vợ chồng trẻ: the apartment and protection for the borrower). The 4-line Map has no CÁCH CŨ line (R10, R11): the old way is named inside ĐIỀU KHÁCH NHỚ ('… chứ không {cách cũ}', start-block step 5); the full old way sits in the card's machine block (old_way). Never 'khóa 90 ngày' (deny-list, quit trigger); the framing is map.ok 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. VG2 tuan S1 turn 6 is a passing reply."
 
 [[case]]
 id = "signature.vn.007"
@@ -337,7 +337,7 @@ regex = [
   '(?i)chủ spa[^\n]{0,80}(?:đặt lịch|khách)|(?:đặt lịch|chăm da)[^\n]{0,80}chủ spa',
 ]
 not_regex = [
-  '(?i)Pancake|ManyChat|\bkeyword\b',
+  '''(?im)Pancake|ManyChat|^(?![ \t]*[a-z_]+[ \t]*[:=])[^\n]*?(?<![\w=-])(?<!: )keyword(?![\w-])(?!\s*[:=])''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
 invariants = ["I1", "I2", "I3", "I5", "I10", "I15"]
@@ -483,7 +483,7 @@ regex = [
   '''(?i)comment\s*["“]?\s*C(?:Ứ|U)NG Đ(?:Ơ|O)''',
   '''(?i)ngại xin comment thì[^\n]{0,8}gõ ['"“‘]nhẹ''',
   '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?i)\b(?:keyword|CTA)\b',

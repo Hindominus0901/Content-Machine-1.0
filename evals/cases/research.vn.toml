@@ -53,7 +53,7 @@ context = "Day 0, Door B (Phone Starter, ChatGPT Free, Android). Pair chị–em
 input = """Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi."""
 regex = [
   '''(?m)^\W*ĐIỀU KHÁCH NHỚ:''',
-  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '(?i)dán (?:bình luận|link|bài|đường dẫn)|mở (?:trình duyệt|Chrome|link)|tải (?:file|tệp)|đính kèm|chụp màn hình (?:bình luận|nhóm)',
@@ -625,11 +625,11 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Coach offers to research first on Day 0: kept for Week 1 in one line, the open câu đoán stays, the Day-0 path keeps moving"
-context = "Day 0, iPhone, ChatGPT Free, pair bạn–mình, dialect Nam, cold start. Past ~1,200 tiếng the soft cut followed dump chunk 2 and carried the first câu đoán ('… không thì: mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?'). Instead of answering, she asks about research."
+context = "Day 0, iPhone, ChatGPT Free, pair bạn–mình, dialect Nam, cold start. Past ~1,200 tiếng the soft cut followed dump chunk 2 and carried the first câu đoán ('… không thì: mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'). Instead of answering, she asks about research."
 input = """khoan, hay là mình đi coi trong mấy nhóm văn phòng người ta than gì trước rồi mới làm tiếp ha? mai mình coi cũng được á"""
 regex = [
   '''(?i)Để Tuần 1 làm, 10 phút thôi''',
-  '''(?i)(?:mình đoán|chuyện của (?:chính )?bạn|đúng không\?|bỏ qua)''',
+  '''(?i)(?:mình đoán|chuyện (?:của )?chính bạn|chuyện của bạn|đúng không\?|bỏ qua)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -685,7 +685,7 @@ not_regex = [
   '''(?s)```(?:(?!```).)*loay hoay nhất chuyện gì\?(?:(?!```).)*\?(?:(?!```).)*```''',
   '''(?s)```(?:(?!```).)*\?(?:(?!```).)*loay hoay nhất chuyện gì\?''',
   '''(?i)khảo sát|biểu mẫu|google form|điền (?:vào|mẫu|form)''',
-  '''(?<!\w)Vân(?!\w)''',
+  '''(?m)^(?![ \t]*[a-z_]+[ \t]*[:=])[^\n]*(?<!\w)Vân(?!\w)''',
   '''(?i)Buyer Mirror''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]

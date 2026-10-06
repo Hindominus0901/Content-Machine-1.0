@@ -18,7 +18,7 @@
 # message.*, verdict.*, why.prefix, checked.prefix, resume.brb).
 #
 # Coach-facing names (locales/vn/deny-list.txt): "chủ đề n" on the Map ("ý lớn n" still accepted in later chats),
-# never "Trụ n"; no Bank IDs (X-9) or reason codes (DIFF-BUYER…), only the plain message.reason.* words; "chạy thử 4
+# never "Trụ n"; no Bank IDs (X-9) or reason codes (DIFF-BUYER…), only the plain message.reason.* words; "Chạy thử 4
 # tuần", never "khoá 90 ngày". Scores (TIỀN, LỜI, BẰNG CHỨNG, KHÁC, HẸP, HỨNG), the runner-up and candidate tables
 # stay hidden, "tại sao?" included.
 #
@@ -34,8 +34,8 @@
 #   included), case-sensitive unless the pattern starts with (?i). A per-line guard such as
 #   (?im)^(?!.*không viết).*cam kết reads "any line holding the phrase must be a refusal line".
 # - Pronoun-dependent strings are asserted in the pair the coach chose (default mình–bạn; chị → em–chị, so
-#   "Mình nhận rồi." prints "Em nhận rồi.", map.ok "Em chạy thử 4 tuần nhé. Chị OK hay sửa một dòng?"), with the
-#   regional particle adapted (nhé · nha · nghe): map.ok is matched as "chạy thử 4 tuần … OK hay sửa một dòng?".
+#   "Mình nhận rồi." prints "Em nhận rồi.", map.ok "Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?"), with the
+#   regional particle adapted (nhé · nha · nghe): map.ok is matched as "[Cc]hạy thử 4 tuần … OK hay sửa một dòng?".
 #   Map labels are matched at a line start, optionally numbered ("1 ĐIỀU KHÁCH NHỚ:"), TỪ KHOÁ in either accent
 #   placement (graders.py map_lines).
 # - Day 0 (start-block NGÀY 0, K2): reply 1 asks the xưng hô → the dump prompt (it asks where they post and whether
@@ -108,10 +108,10 @@ lanes = ["S1", "S0", "floor"]
 title = "Early win after chunk 1: '3 câu đáng tiền anh vừa nói', the best line in a copy box, the other 2 in quotes"
 context = """Day 0, Door A, ChatGPT Plus; he dictates from the iPhone app. Reply 2 (the dump prompt in anh–em) delivered. His chunk 1 is about 770 tiếng, below the ~1,200-tiếng soft cut."""
 input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 1' section verbatim>>'''
-contains = ["3 câu đáng tiền anh vừa nói", "Câu này hôm nay đăng luôn cũng được."]
+contains = ["3 câu đáng tiền anh vừa nói", "đăng luôn cũng được"]
 not_contains = []
 regex = [
-  '''(?s)3 câu đáng tiền anh vừa nói:\s*```[^\n]*\n(?:(?!```).){10,400}```\s*Câu này hôm nay đăng luôn cũng được\.''',
+  '''(?s)3 câu đáng tiền anh vừa nói:\s*```[^\n]*\n(?:(?!```).){10,400}```\s*Câu này hôm nay (?:(?:chị|anh|bạn) )?đăng luôn cũng được(?:[^\S\n]+\w+){0,2}[.!]''',
   '''(?ms)^[ \t]*["“][^\n]{8,}["”][ \t]*$.*?^[ \t]*["“][^\n]{8,}["”][ \t]*$''',
   '''(?i)gõ\s+['"“‘]xong''',
 ]
@@ -136,7 +136,7 @@ lanes = ["S0", "S1", "floor"]
 title = "Early win from a noisy Quảng-accent dictation: clean lines quoted, speech-to-text slips never echoed"
 context = """Day 0, Door B (Phone Starter), ChatGPT Free on his old Samsung; keyboard mic in the workshop. Reply 2 (the dump prompt in anh–em) delivered. Chunk 1 is about 730 tiếng."""
 input = '''<<paste: service-biz/answers.md, the '## Dump chunk 1' section verbatim>>'''
-contains = ["3 câu đáng tiền anh vừa nói", "Câu này hôm nay đăng luôn cũng được."]
+contains = ["3 câu đáng tiền anh vừa nói", "đăng luôn cũng được"]
 not_contains = ["báo da", "chống thắm", "tới chờ"]
 regex = ['''(?s)3 câu đáng tiền anh vừa nói:\s*```[^\n]*\n(?:(?!```).){10,400}```''']
 not_regex = ['''(?i)(chữ|từ)\s+["“]?báo da''']
@@ -208,7 +208,7 @@ context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị.
 input = '''<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>'''
 contains = []
 not_contains = ["Chị biết nhiều thật", "6 tháng content", "không bỏ gì"]
-regex = ['''(Đúng không\?|ĐIỀU KHÁCH NHỚ:)''']
+regex = ['''(Đúng không(?: \w+)?\?|ĐIỀU KHÁCH NHỚ:)''']
 not_regex = [
   '''(?i)(quá nhiều|lan man|loãng)''',
   '''(?i)chị\s+(đang\s+)?bán\s+(gì|những gì)[^\n]*\?''',
@@ -236,7 +236,7 @@ context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị.
 input = '''<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>'''
 contains = []
 not_contains = ["doanh thu gấp đôi", "liệu chình"]
-regex = ['''(Đúng không\?|ĐIỀU KHÁCH NHỚ:)''']
+regex = ['''(Đúng không(?: \w+)?\?|ĐIỀU KHÁCH NHỚ:)''']
 not_regex = [
   '''(?m):\s*\?\s*$''',
   '''(?i)70\s?%''',
@@ -260,14 +260,14 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "A story instead of 'đúng' or 'sửa': taken as the answer to the câu đoán; the Map follows with her correction in ĐIỀU KHÁCH NHỚ"
-context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'). The one câu đoán was the multi-income line with the buyer guessed a little off: 'Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa mới mở, vì mấy thứ chị bán các em ấy đều cần. Đúng không?'. As her Behaviour says, she does not type 'đúng' or 'sửa'; she tells a story with the correction in it. Nothing else is missing."""
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'). The one câu đoán was the multi-income line with the buyer guessed a little off: 'Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa mới mở, vì lớp kèm là cái chị muốn làm lớn. Đúng không?'. As her Behaviour says, she does not type 'đúng' or 'sửa'; she tells a story with the correction in it. Nothing else is missing."""
 input = '''Ơ không phải các em mới mở đâu em. Có em mở ba bốn năm rồi vẫn ngại chào đấy. Như em Loan ở Hưng Yên ấy, mở spa lâu rồi, đi học chốt sale về dạy nhân viên nói theo, xong nhân viên nói câu nào khách cũng sợ, thế là Loan lại phải tự đứng quầy. Các em ấy là thợ lên làm chủ, tay nghề tốt, chỉ có mỗi cái là ngại chào thôi.'''
 contains = []
 not_contains = []
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(thợ lên làm chủ|ngại chào)''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*mới mở''',
@@ -301,7 +301,7 @@ regex = [
   '''(?i)còn chuyện nào thì[^\n]{0,20}kể luôn''',
   '''(?i)anh đang có 3 nguồn thu''',
   '''(?i)đoán nên viết cho[^\n]{0,90}(vợ chồng|gia đình|mua căn|mua nhà)''',
-  '''Đúng không\?''',
+  '''Đúng không(?: \w+)?\?''',
 ]
 not_regex = [
   '''(?i)nguồn nào nuôi''',
@@ -315,7 +315,7 @@ invariants = ["I1", "I5", "I15", "I17"]
 max_words = 110
 max_chars = 0
 max_questions = 1
-notes = """DECISIONS 'Long dumps': past about 1,200 tiếng the machine says it is enough for today and combines that with its first câu đoán in one message (dump.enough 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán}'), one '?' in all. setup.multi_income (VK-3, one question): 'Anh đang có 3 nguồn thu. Em đoán nên viết cho {buyer}, vì mấy thứ anh bán, họ đều cần. Đúng không?'; the old two-question line ('… Hoặc anh nói luôn: tháng này nguồn nào nuôi anh?') is gone. The bridge buyer is young couples buying a first apartment (expected.toml bridge_rule: 6 of his 9 apartment buyers also hold his insurance); sales training is never the guessed buyer, and no stream is dropped (quit point 6). vg2-day0-vn-tuan-multihat-plus turn 5 is a passing reply."""
+notes = """DECISIONS 'Long dumps': past about 1,200 tiếng the machine says it is enough for today and combines that with its first câu đoán in one message (dump.enough 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán}'), one '?' in all. setup.multi_income (VK-3, one question): 'Anh đang có 3 nguồn thu. Em đoán nên viết cho {buyer}, vì {why}. Đúng không?'; the old two-question line ('… Hoặc anh nói luôn: tháng này nguồn nào nuôi anh?') is gone. The bridge buyer is young couples buying a first apartment (expected.toml bridge_rule: 6 of his 9 apartment buyers also hold his insurance); sales training is never the guessed buyer, and no stream is dropped (quit point 6). vg2-day0-vn-tuan-multihat-plus turn 5 is a passing reply."""
 
 [[case]]
 id = "message.vn.010"
@@ -327,7 +327,7 @@ context = """Day 0, Door A, Claude Pro on the Windows laptop (keyboard mic, mic.
 input = '''<<paste: consultant/answers.md, the '## Dump chunk 3' section verbatim>>'''
 contains = []
 not_contains = ["nguồn nào nuôi anh", "Anh biết nhiều thật", "6 tháng content"]
-regex = ['''(Đúng không\?|ĐIỀU KHÁCH NHỚ:)''']
+regex = ['''(Đúng không(?: \w+)?\?|ĐIỀU KHÁCH NHỚ:)''']
 not_regex = [
   '''(?i)tháng (này|ni)\s+(tiền|nguồn)''',
   '''(?i)anh\s+(đang\s+)?bán\s+(gì|những gì|gói gì)[^\n]*\?''',
@@ -351,7 +351,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'sửa dòng 2' alone: A) B) from her dump and 'Em chọn …, vì …', still the one decision"
-context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong', nothing being missing) and chunk 3 ended 'xong rồi đấy em'. Her dump held her clients' words, Ngân's consented result and her offer, so that reply showed the 4-line Map (3 CHỦ ĐỀ: 'Lãi ảo, không phải bán ít · Nhìn lãi từng đơn, đừng nhìn doanh thu · Cắt mã lỗ trước, chạy quảng cáo sau') with QUAY HÔM NAY under it and 'Em chạy thử 4 tuần nhé. Chị OK hay sửa một dòng?'. She wants line 2 different but doesn't say how."""
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong', nothing being missing) and chunk 3 ended 'xong rồi đấy em'. Her dump held her clients' words, Ngân's consented result and her offer, so that reply showed the 4-line Map (3 CHỦ ĐỀ: 'Lãi ảo, không phải bán ít · Nhìn lãi từng đơn, đừng nhìn doanh thu · Cắt mã lỗ trước, chạy quảng cáo sau') with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?'. She wants line 2 different but doesn't say how."""
 input = '''sửa dòng 2 em ạ'''
 contains = []
 not_contains = []
@@ -380,7 +380,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "A hedge on who it is for, right after the Map: one line (no bet, no 'nhóm nào?'), then Tuần 1; dân văn phòng stays"
-context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result), she typed 'ừa'; the last câu đoán (what she sells) got 'chưa có gì hết á…'. That reply showed the 4-line Map (ĐIỀU KHÁCH NHỚ names dân văn phòng; TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it and 'Mình chạy thử 4 tuần nha. OK hay sửa một dòng?'. Pregnant women, older people with knee pain and others are on none of its lines. She hedges."""
+context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result), she typed 'ừa'; the last câu đoán (what she sells) got 'chưa có gì hết á…'. That reply showed the 4-line Map (ĐIỀU KHÁCH NHỚ names dân văn phòng; TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nha. OK hay sửa một dòng?'. Pregnant women, older people with knee pain and others are on none of its lines. She hedges."""
 input = '''chắc là dân văn phòng đó, mà mấy chị bầu cũng hỏi mình hoài, rồi mấy cô chú lớn tuổi đau gối nữa… mình cũng hông biết nữa, nhóm nào cũng được hết á'''
 contains = []
 not_contains = []
@@ -410,13 +410,13 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'bỏ qua' on the last câu đoán: the guess stands, marked '(mình đoán)', and the Map follows with nothing parked shown"
-context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?') and she typed 'ừa'. The last câu đoán was what she sells: 'Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'. She skips it."""
+context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?') and she typed 'ừa'. The last câu đoán was what she sells: 'Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'. She skips it."""
 input = '''bỏ qua'''
 contains = ["(mình đoán)"]
 not_contains = []
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''ĐỂ SAU''',
@@ -439,7 +439,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'Thôi em đừng bắt chị chọn mỗi một cái': one plain line, no lecture, no forced choice, then Tuần 1"
-context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong') and chunk 3 ended 'xong rồi đấy em'; nothing was missing, so that reply showed the 4-line Map (TỪ KHOÁ: LÃI ẢO) with QUAY HÔM NAY under it and 'Em chạy thử 4 tuần nhé. Chị OK hay sửa một dòng?'. Ads, livestream, Shopee, Quảng Châu, tax and TikTok Shop are on none of its lines. She objects."""
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong') and chunk 3 ended 'xong rồi đấy em'; nothing was missing, so that reply showed the 4-line Map (TỪ KHOÁ: LÃI ẢO) with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?'. Ads, livestream, Shopee, Quảng Châu, tax and TikTok Shop are on none of its lines. She objects."""
 input = '''Thôi em đừng bắt chị chọn mỗi một cái, chị biết nhiều thế mà chỉ nói một chuyện à?'''
 contains = []
 not_contains = []
@@ -471,11 +471,11 @@ lanes = ["S0", "S1", "floor"]
 title = "The Map: 4 lines (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ, GIỌNG), QUAY HÔM NAY under it, map.ok last; nothing else on it"
 context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (chunk 2 passed ~1,200 tiếng and she left for a client; the soft cut ended 'không thì gõ xong'; she came back with 'tiep em oi' and chunk 3 ended 'xong rồi đấy em'). The one câu đoán was the multi-income line ('Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa, vì … Đúng không?'). She answers it; this reply shows the Map with QUAY HÔM NAY under it."""
 input = '''Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.'''
-contains = ["QUAY HÔM NAY", "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết."]
+contains = ["QUAY HÔM NAY", "quay luôn bây giờ, hoặc đăng phần chữ làm bài viết"]
 not_contains = ["liệu chình", "90 ngày", "Big Domino", "chụp màn hình"]
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*["“][^"”\n]{3,}["”]''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*ngại chào''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?chị\s*[–-]\s*các em''',
@@ -533,13 +533,13 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "Bridge-buyer Map: young couples buying a first apartment, GỒNG LÃI, no listing hype, sales training off the Map"
-context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunk 1 got the early win; chunk 2 passed ~1,200 tiếng, so its reply was the soft cut carrying the multi-income câu đoán ('Anh đang có 3 nguồn thu. Em đoán nên viết cho vợ chồng trẻ mua căn đầu tiên, vì mấy thứ anh bán, họ đều cần. Đúng không?'). He tells chunk 3 as his one more story: the 22 sales recruits, the 2 tỷ 68 apartment he must close by 30/11 ('em đừng có bỏ bất động sản ra nha'), the 'view sông' idea, his cousin's 'lời gấp đôi', his channels, 6 of his 9 apartment buyers also insured with him; it ends 'Thôi, xong.'. That story answers the guess and nothing else is missing, so this reply shows the Map with QUAY HÔM NAY under it."""
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunk 1 got the early win; chunk 2 passed ~1,200 tiếng, so its reply was the soft cut carrying the multi-income câu đoán ('Anh đang có 3 nguồn thu. Em đoán nên viết cho vợ chồng trẻ mua căn đầu tiên, vì nhà mua căn đầu cũng cần bảo hiểm che người đứng tên vay. Đúng không?'). He tells chunk 3 as his one more story: the 22 sales recruits, the 2 tỷ 68 apartment he must close by 30/11 ('em đừng có bỏ bất động sản ra nha'), the 'view sông' idea, his cousin's 'lời gấp đôi', his channels, 6 of his 9 apartment buyers also insured with him; it ends 'Thôi, xong.'. That story answers the guess and nothing else is missing, so this reply shows the Map with QUAY HÔM NAY under it."""
 input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>'''
 contains = ["gồng lãi", "QUAY HÔM NAY"]
 not_contains = []
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(vợ chồng|gia đình|nhà)''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(?i:g[ồo]ng l[ãa]i)''',
 ]
@@ -591,13 +591,13 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Cold-start Map: CỨNG ĐƠ, no price, no paid-client claims, no health promise; QUAY HÔM NAY under it"
-context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?'), she typed 'ừa'; the last câu đoán was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answers it; this reply shows the Map with QUAY HÔM NAY under it. Her dump also named her friend's '3 tuần hết đau' (not a client, not measured, no consent)."""
+context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), she typed 'ừa'; the last câu đoán was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answers it; this reply shows the Map with QUAY HÔM NAY under it. Her dump also named her friend's '3 tuần hết đau' (not a client, not measured, no consent)."""
 input = '''chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi'''
 contains = ["cứng đơ", "QUAY HÔM NAY"]
 not_contains = []
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*cứng đơ''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?mình\s*[–-]\s*(mấy )?bạn''',
 ]
@@ -631,7 +631,7 @@ contains = ["phát sinh", "QUAY HÔM NAY"]
 not_contains = []
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*phát sinh''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:[^\n]*anh chị''',
 ]
@@ -659,13 +659,13 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "B2B Map: ĐIỀU KHÁCH NHỚ speaks tôi–anh chị, the machine speaks em–anh; no rounded rate, no marketing jargon"
-context = """Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the first câu đoán (what he sells); chunk 3, his one more story, answered it (the 45.000.000đ 3-month package, the half-day training, headhunting he does not like, LinkedIn 2,400, Zalo about 380, email 250) and ended 'xong'. The last câu đoán was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ doanh nghiệp 20–100 người tự tuyển, vì mấy thứ anh bán, họ đều cần. Đúng không?'). He answers it; this reply shows the Map with QUAY HÔM NAY under it."""
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the first câu đoán (what he sells); chunk 3, his one more story, answered it (the 45.000.000đ 3-month package, the half-day training, headhunting he does not like, LinkedIn 2,400, Zalo about 380, email 250) and ended 'xong'. The last câu đoán was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ doanh nghiệp 20–100 người tự tuyển, vì gói tư vấn 3 tháng là cái anh bán chính. Đúng không?'). He answers it; this reply shows the Map with QUAY HÔM NAY under it."""
 input = '''Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày thì khách quen hỏi mới làm, còn tìm người hộ thì đừng quảng bá, tôi làm vì nể thôi.'''
 contains = ["tuyển hoài", "QUAY HÔM NAY"]
 not_contains = ["giá ib", "ib giá", "inbox giá"]
 regex = [
   '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''QUAY HÔM NAY[\s\S]*chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(tìm|gặp)\s+(tôi|Khoa|anh Khoa)''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?tôi\s*[–-]\s*anh chị''',
 ]
@@ -797,14 +797,14 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "Swapping the keyword is the one decision: TỪ KHOÁ reprinted, QUAY HÔM NAY reprinted with the new CTA word, map.ok again"
-context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. The 4-line Map is on screen (TỪ KHOÁ: GỒNG LÃI) with QUAY HÔM NAY under it (its caption ends 'Comment GỒNG LÃI hay nhắn riêng, mình gửi bạn …') and 'Mình chạy thử 4 tuần nha anh. OK hay sửa một dòng?'."""
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. The 4-line Map is on screen (TỪ KHOÁ: GỒNG LÃI) with QUAY HÔM NAY under it (its caption ends 'Comment GỒNG LÃI hay nhắn riêng, mình gửi bạn …') and 'Chạy thử 4 tuần nha anh. OK hay sửa một dòng?'."""
 input = '''đổi từ khóa thành dí cọc đi em, khách nói câu đó nhiều hơn'''
 contains = []
 not_contains = []
 regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(?i:d[íi] c[ọo]c)''',
   '''QUAY HÔM NAY[\s\S]*(?i:d[íi] c[ọo]c)''',
-  '''chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(?i:g[ồo]ng l[ãa]i)''',
@@ -828,13 +828,13 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'sửa dòng 1' on the old way: ĐIỀU KHÁCH NHỚ reprinted with her name for it, map.ok again, Tuần 1 not started"
-context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. The 4-line Map is on screen with QUAY HÔM NAY under it and 'Em chạy thử 4 tuần nhé. Chị OK hay sửa một dòng?'. Its ĐIỀU KHÁCH NHỚ line ends '… thì tìm chị Thu: Sổ 3 Cột, tính lãi thật từng đơn chứ không chạy theo doanh thu.'"""
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. The 4-line Map is on screen with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?'. Its ĐIỀU KHÁCH NHỚ line ends '… thì tìm chị Thu: Sổ 3 Cột, tính lãi thật từng đơn chứ không chạy theo doanh thu.'"""
 input = '''sửa dòng 1 nhé em, chỗ chạy theo doanh thu ấy, chị hay gọi là đua doanh thu cơ'''
 contains = []
 not_contains = []
 regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*đua doanh thu''',
-  '''chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*chạy theo doanh thu''',
@@ -857,7 +857,7 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "'Xài tới cuối năm luôn hả?': one line, a 4-week try that checks what buyers say, never 'khóa'; Tuần 1 follows"
-context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. The 4-line Map is on screen with QUAY HÔM NAY under it and 'Mình chạy thử 4 tuần nha anh. OK hay sửa một dòng?'. He hesitates."""
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. The 4-line Map is on screen with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nha anh. OK hay sửa một dòng?'. He hesitates."""
 input = '''cái bản đồ này xài tới cuối năm luôn hả em? lỡ sai thì sao'''
 contains = []
 not_contains = ["90 ngày"]
@@ -1173,13 +1173,13 @@ contains = []
 not_contains = []
 regex = [
   '''(?i)3 câu đáng tiền chị vừa nói''',
-  '''Câu này hôm nay đăng luôn cũng được\.''',
+  '''Câu này hôm nay (?:(?:chị|anh|bạn) )?đăng luôn cũng được(?:[^\S\n]+\w+){0,2}[.!]''',
   '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:''',
   '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:''',
   '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):''',
   '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:''',
   '''(?m)^[^\w\n]*QUAY HÔM NAY''',
-  '''chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^[^\w\n]*[1-7][.)]?\s+(?:Ai|Lời của họ|Cách cũ|Kết quả tốt nhất|Cách của (?:chị|bạn|mình))\s*:''',
@@ -1213,7 +1213,7 @@ contains = ["3 nguồn thu"]
 not_contains = ["6 tháng content", "Anh biết nhiều thật"]
 regex = [
   '''(?i)đoán nên viết cho''',
-  '''Đúng không\?''',
+  '''Đúng không(?: \w+)?\?''',
 ]
 not_regex = [
   '''(?i)(kể|nói)\s+(thêm|tiếp)\s+(đi|nữa|nha)''',
@@ -1227,7 +1227,7 @@ invariants = ["I1", "I5", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """R10: no inventory. setup.kit-facts 4-6: after 'xong' only the missing facts, one a message with a guess; for 3 income streams the first is setup.multi_income ('Anh đang có 3 nguồn thu. Em đoán nên viết cho …, vì mấy thứ anh bán, họ đều cần. Đúng không?'). He said 'xong', so no soft cut and no push for more talk (persona: quits on 'giống mấy cái form'). Gaps are filled by guesses, not by more dumping."""
+notes = """R10: no inventory. setup.kit-facts 4-6: after 'xong' only the missing facts, one a message with a guess; for 3 income streams the first is setup.multi_income ('Anh đang có 3 nguồn thu. Em đoán nên viết cho …, vì {why}. Đúng không?'). He said 'xong', so no soft cut and no push for more talk (persona: quits on 'giống mấy cái form'). Gaps are filled by guesses, not by more dumping."""
 
 # ---------------------------------------------------------------- "tại sao?" on the Map (vì sao chọn, gốc rễ, ĐỂ SAU)
 
@@ -1482,7 +1482,7 @@ not_contains = []
 regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*thẳng''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*lãi mới là để tiêu''',
-  '''chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
 ]
 not_regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*ấm áp''',
@@ -1512,7 +1512,7 @@ contains = []
 not_contains = []
 regex = ['''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){3}''']
 not_regex = [
-  '''chạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng''',
   '''(?m)^[^\w\n]*QUAY HÔM NAY\b''',
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)):''',
   '''(?i)tụi em[^\n]*\?''',

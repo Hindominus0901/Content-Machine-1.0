@@ -59,7 +59,7 @@
 # - Strings are asserted as strings/vn.toml has them now, in the pair the coach chose (default mình–bạn): chị–em turns
 #   "Cần bạn" into "Cần chị", "Đăng theo ý bạn · mình vẫn lo:" into "Đăng theo ý chị · em vẫn lo:", "Bài bạn thích"
 #   into "Bài chị thích", "Lưu lại để mình nhớ bạn" into "Lưu lại để em nhớ chị", "(mình đoán, gõ một chữ là đổi)" into
-#   "(em đoán, …)"; anh–em the same with "anh". The inclusive "Mình chạy thử 4 tuần nhé." is natural in any pair; regional
+#   "(em đoán, …)"; anh–em the same with "anh". map.ok ("Chạy thử 4 tuần nhé.") has no subject, so it reads the same in any pair; regional
 #   particles follow the coach (nhé · nha · nghe), so exact-string regexes leave room for a particle or a pronoun.
 #   Pairs (persona.toml xung_ho): proof-coach chị–em (Bắc), hanh-android-free-nocomputer chị–em (Bắc), consultant anh–em
 #   (Trung, near neutral), service-biz anh–em (Trung, Quảng), tuan-multihat-plus anh–em (Nam), coldstart-coach bạn–mình
@@ -87,7 +87,7 @@
 #   early win (the best line in a copy box + "Câu này hôm nay đăng luôn cũng được.") → later chunks "Mình nhận rồi." +
 #   one gợi ý → past ~1.200 tiếng the soft cut dump.enough with the first câu đoán → only the missing facts (≤3, one a
 #   message, "Mình đoán: …. Đúng không?") → ONE reply: the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ · GIỌNG),
-#   QUAY HÔM NAY under it and map.ok "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?" (K2) → any coach message but a
+#   QUAY HÔM NAY under it and map.ok "Chạy thử 4 tuần nhé. OK hay sửa một dòng?" (K2) → any coach message but a
 #   Map change gets all of Tuần 1, with setup.plan_guess named once above it → Brand Card + card.save_line → TIẾP. A
 #   "lát nữa" before the card prints the card and save line at once; Tuần 1 waits for "tiếp". Budgets: the Map within 7
 #   coach turns, film-ready by active minute 20, at most 10 coach turns.
@@ -161,7 +161,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
 title = "'tiếp' after a ChatGPT Free limit resumes Day 0 at Tuần 1, not at Bắt đầu: the plan guess above it, nothing under the pieces"
-context = '''Day 0, Monday 12 Oct 2026, ChatGPT Free on her iPhone (a friend did Door A on a laptop; the project opens in the phone app); pair bạn–mình, Nam. The Day-0 decision reply came (K2): the 4-line Bản đồ, QUAY HÔM NAY under it and 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'; ChatGPT Free hit its limit right after, before Minh Anh answered. Nothing of Tuần 1 has been printed; no Brand Card yet. About 5 hours later, after her evening class, she opens the same chat.'''
+context = '''Day 0, Monday 12 Oct 2026, ChatGPT Free on her iPhone (a friend did Door A on a laptop; the project opens in the phone app); pair bạn–mình, Nam. The Day-0 decision reply came (K2): the 4-line Bản đồ, QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'; ChatGPT Free hit its limit right after, before Minh Anh answered. Nothing of Tuần 1 has been printed; no Brand Card yet. About 5 hours later, after her evening class, she opens the same chat.'''
 input = '''tiếp'''
 contains = []
 not_contains = []
@@ -689,7 +689,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'đổi từ khóa' on the Day-0 Map reply swaps to a pre-picked alternate with its origin: that line and the script reprinted, then the OK question; no Tuần 1 yet"
-context = '''Day 0, Monday 12 Oct 2026, about minute 18, ChatGPT Plus on the laptop; pair chị–em, Bắc. The last reply was the one Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: LÃI ẢO (lai ao) · GIỌNG), QUAY HÔM NAY under it with the CTA 'Comment LÃI ẢO hay nhắn riêng, chị gửi Sổ 3 Cột bản 1 trang' and the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. The keyword's 2 alternates (lãi thật, không thấy tiền đâu) sit in the machine's notes only. Chị Thu answers the one decision.'''
+context = '''Day 0, Monday 12 Oct 2026, about minute 18, ChatGPT Plus on the laptop; pair chị–em, Bắc. The last reply was the one Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: LÃI ẢO (lai ao) · GIỌNG), QUAY HÔM NAY under it with the CTA 'Comment LÃI ẢO hay nhắn riêng, chị gửi Sổ 3 Cột bản 1 trang' and the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. The keyword's 2 alternates (lãi thật, không thấy tiền đâu) sit in the machine's notes only. Chị Thu answers the one decision.'''
 input = '''đổi từ khóa em ơi'''
 contains = []
 not_contains = []
@@ -1092,7 +1092,7 @@ regex = [
 not_regex = [
   '''(?i)ManyChat|Pancake|lead magnet|keyword asset|tài sản từ kh''',
   '''(?<!\w)M[012](?!\w)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
 ]
 verdict = ""
@@ -1764,7 +1764,7 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "floor"]
 title = "Day 0: any message after the Map + QUAY HÔM NAY reply gets all of Tuần 1, unasked, with the plan guess above it; never 'muốn làm Tuần 1 không?' or a stop point"
-context = '''Day 0, Monday 12 Oct 2026, about minute 19, ChatGPT Plus app on the iPhone; pair anh–em, Nam. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: GỒNG LÃI (gong lai) · GIỌNG), QUAY HÔM NAY under it (Chữ trên màn hình, Câu đầu, 3 ý, Câu cuối, the caption box with 'Comment GỒNG LÃI hay nhắn riêng, …' and '(ngại xin comment thì gõ 'nhẹ')', the gift box), 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' and 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. His dump never named his talk day or a Zalo list. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
+context = '''Day 0, Monday 12 Oct 2026, about minute 19, ChatGPT Plus app on the iPhone; pair anh–em, Nam. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: GỒNG LÃI (gong lai) · GIỌNG), QUAY HÔM NAY under it (Chữ trên màn hình, Câu đầu, 3 ý, Câu cuối, the caption box with 'Comment GỒNG LÃI hay nhắn riêng, …' and '(ngại xin comment thì gõ 'nhẹ')', the gift box), 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' and 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. His dump never named his talk day or a Zalo list. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
 input = '''chiều nay anh quay ở nhà mẫu bên Dĩ An luôn, chỗ đó sáng'''
 contains = []
 not_contains = []
@@ -1790,7 +1790,7 @@ invariants = ["I1", "I3", "I5", "I6", "I15", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13) as amended by K2 (DECISIONS 6 Oct 2026): start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; §CM-SETUP 9 'coach đáp (trừ sửa): 7–9 chung một tin, không chờ hỏi (dài quá: card ở tin sau)'; §CM-TODAY 1 'Sau Bản đồ + QUAY HÔM NAY, nhắn gì (trừ sửa Bản đồ) cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?"'. His message is not a change, so it also settles the Map. §CM-SETUP 5: platform and the Zalo/email list are asked only in the dump prompt's hint list, talk day never; what the dump left unheard is guessed and named once above Tuần 1 with setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).', a line only this step has). §CM-WEEK 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece (R1, R4); start-block step 7: the inbox replies and the Zalo message asking 3 past clients one question (research.ask3 '… Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?'). ChatGPT Plus: all of Tuần 1 in one reply. The Brand Card and save line may close this reply or come in the next; no stop point, no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file."""
+notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13) as amended by K2 (DECISIONS 6 Oct 2026): start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; §CM-SETUP 9 'coach đáp (trừ sửa): 7–9 chung một tin, không chờ hỏi (app cắt: card ở tin sau)'; §CM-TODAY 1 'Sau Bản đồ + QUAY HÔM NAY, nhắn gì (trừ sửa Bản đồ) cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?"'. His message is not a change, so it also settles the Map. §CM-SETUP 5: platform and the Zalo/email list are asked only in the dump prompt's hint list, talk day never; what the dump left unheard is guessed and named once above Tuần 1 with setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).', a line only this step has). §CM-WEEK 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece (R1, R4); start-block step 7: the inbox replies and the Zalo message asking 3 past clients one question (research.ask3 '… Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?'). ChatGPT Plus: all of Tuần 1 in one reply. The Brand Card and save line may close this reply or come in the next; no stop point, no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file."""
 
 [[case]]
 id = "router.vn.104"
@@ -1798,7 +1798,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1"]
 title = "Day 0: 'lát nữa' right after the Map + QUAY HÔM NAY reply prints the Brand Card and the save line at once; Tuần 1 waits for 'tiếp'"
-context = '''Day 0, Monday 12 Oct 2026, about minute 20, Claude Pro on the laptop; pair anh–em, Trung. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (TỪ KHOÁ: TUYỂN HOÀI), QUAY HÔM NAY under it ending 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
+context = '''Day 0, Monday 12 Oct 2026, about minute 20, Claude Pro on the laptop; pair anh–em, Trung. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (TỪ KHOÁ: TUYỂN HOÀI), QUAY HÔM NAY under it ending 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
 input = '''lát nữa nghe em, anh có khách tới'''
 contains = []
 not_contains = []
@@ -1983,7 +1983,7 @@ invariants = ["I1", "I3", "I5", "I6", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). 'xong' (dump.keep_going's word) in this state ends the dump: start-block step 4 asks only what is still unheard, and here nothing is, so step 5 comes in ONE reply (K2, DECISIONS 6 Oct 2026): the 4-line Bản đồ (strings map.known 'ĐIỀU KHÁCH NHỚ:', map.topics '3 CHỦ ĐỀ:', map.word 'TỪ KHOÁ:', map.voice 'GIỌNG:' with 'với khách: "…"'), QUAY HÔM NAY right under it ending with film.now_or_text ('Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.'), then map.ok last ('Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'), the one decision (I6) and the one question. Gone (R10, R11, R18): the 7-line check screen, the old Map labels and ĐỂ SAU / vì sao chọn on the Map, QUAY HÔM NAY after 'ok', the old film line ('… đăng caption dạng bài chữ cũng được') and early win ('Câu {n} đăng được luôn'). Tuần 1 waits for her answer (step 7). Budgets (acceptance [day0], day0_timing): the Map at coach turn 5 here (≤7), film-ready by minute 20. Her register is Bắc (no 'nha', 'nè')."""
+notes = """route: setup (route set). 'xong' (dump.keep_going's word) in this state ends the dump: start-block step 4 asks only what is still unheard, and here nothing is, so step 5 comes in ONE reply (K2, DECISIONS 6 Oct 2026): the 4-line Bản đồ (strings map.known 'ĐIỀU KHÁCH NHỚ:', map.topics '3 CHỦ ĐỀ:', map.word 'TỪ KHOÁ:', map.voice 'GIỌNG:' with 'với khách: "…"'), QUAY HÔM NAY right under it ending with film.now_or_text ('Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.'), then map.ok last ('Chạy thử 4 tuần nhé. OK hay sửa một dòng?'), the one decision (I6) and the one question. Gone (R10, R11, R18): the 7-line check screen, the old Map labels and ĐỂ SAU / vì sao chọn on the Map, QUAY HÔM NAY after 'ok', the old film line ('… đăng caption dạng bài chữ cũng được') and early win ('Câu {n} đăng được luôn'). Tuần 1 waits for her answer (step 7). Budgets (acceptance [day0], day0_timing): the Map at coach turn 5 here (≤7), film-ready by minute 20. Her register is Bắc (no 'nha', 'nè')."""
 
 # ================================================================ TRIGGER set: taught phrases and universal words
 
@@ -2382,7 +2382,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'nhẹ' on the Day-0 Map reply swaps the comment-word CTA for the quiet ask, with no second pitch"
-context = '''Day 0, Monday 12 Oct 2026, about minute 20, iPhone, ChatGPT Free; pair bạn–mình, Nam; her audience pair mình – mấy bạn. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ, QUAY HÔM NAY under it with the CTA 'Comment CỨNG ĐƠ hay nhắn riêng, mình gửi 3 động tác 5 phút nha.' and the quiet option as a statement '(ngại xin comment thì gõ 'nhẹ')', the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed.'''
+context = '''Day 0, Monday 12 Oct 2026, about minute 20, iPhone, ChatGPT Free; pair bạn–mình, Nam; her audience pair mình – mấy bạn. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ, QUAY HÔM NAY under it with the CTA 'Comment CỨNG ĐƠ hay nhắn riêng, mình gửi 3 động tác 5 phút nha.' and the quiet option as a statement '(ngại xin comment thì gõ 'nhẹ')', the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed.'''
 input = '''nhẹ'''
 contains = []
 not_contains = []
@@ -2708,7 +2708,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "'ok em' on the Map + QUAY HÔM NAY is the one decision: all of Tuần 1 follows at once, nothing under the pieces"
-context = '''Day 0, Monday 12 Oct 2026, about minute 19, Door B (ChatGPT Free, Android); pair chị–em, Bắc. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ: NGẠI CHÀO (ngai chao), GIỌNG … với khách: "chị – các em"), QUAY HÔM NAY under it (the beat card, its caption box, the CTA with '(ngại xin comment thì gõ 'nhẹ')', the gift box), 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' and 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
+context = '''Day 0, Monday 12 Oct 2026, about minute 19, Door B (ChatGPT Free, Android); pair chị–em, Bắc. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ: NGẠI CHÀO (ngai chao), GIỌNG … với khách: "chị – các em"), QUAY HÔM NAY under it (the beat card, its caption box, the CTA with '(ngại xin comment thì gõ 'nhẹ')', the gift box), 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' and 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
 input = '''ok em'''
 contains = []
 not_contains = []
@@ -2721,7 +2721,7 @@ not_regex = [
   '''(?m)^\W*QUAY HÔM NAY\b''',
   '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)''',
   '''(?i)nhẹ nhàng hơn\s*\?''',
   '''(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?''',
   '''(?i)Hôm nay xong rồi|Hôm nay vậy là đủ rồi''',
