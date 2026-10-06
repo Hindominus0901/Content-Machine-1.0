@@ -227,5 +227,46 @@ class CaseAssertions(TempRepo):
         self.assertIn("| en/test-coach |", table)
 
 
+class Protocol(TempRepo):
+    def rows(self, *turns):
+        return [dict({"turn": i // 2 + 1, "role": role, "text": text, "t_min": None}, **extra)
+                for i, (role, text, *rest) in enumerate(turns) for extra in [rest[0] if rest else {}]]
+
+    def test_turns_alternate_and_quit_ends_the_run(self):
+        ok = run.check_turns(self.rows(("coach", "a"), ("machine", "b"), ("coach", "bye", {"quit": True})))
+        self.assertTrue(ok["pass"], ok)
+        bad = run.check_turns(self.rows(("coach", "a"), ("coach", "b")))
+        self.assertIn("two coach turns in a row", " ".join(bad["evidence"]))
+        self.assertIn("no reply", " ".join(bad["evidence"]))
+
+    def test_pace_needs_time_to_dictate_a_chunk(self):
+        chunk = " ".join(f"word{i}" for i in range(320))
+        self.write("evals/personas/en/test-coach/answers.md", f"## Dump chunk 1\n{chunk}\n\n## Answer bank\nx\n")
+        pdir = self.root / "evals" / "personas" / "en" / "test-coach"
+        fast = [{"turn": 1, "role": "machine", "text": "go", "t_min": 1.0},
+                {"turn": 2, "role": "coach", "text": chunk, "t_min": 1.5}]
+        self.assertFalse(run.check_pace(fast, pdir)["pass"])
+        slow = [dict(fast[0]), dict(fast[1], t_min=4.0)]
+        self.assertTrue(run.check_pace(slow, pdir)["pass"])
+        away = [dict(fast[0]), dict(fast[1], t_min=40.0, away_min=38.5)]
+        self.assertFalse(run.check_pace(away, pdir)["pass"])
+
+    def test_leaks_fail_in_voice_fields_and_warn_elsewhere(self):
+        self.write("evals/personas/en/test-coach/voice-samples.md",
+                   "## Phrases\n1. Tells the story first, then the step, every single time\n")
+        pdir = self.root / "evals" / "personas" / "en" / "test-coach"
+        rows = self.rows(("coach", "I coach people out of corporate jobs."),
+                         ("machine", "rhythm: tells the story first, then the step, every time"))
+        res = run.check_leaks(rows, pdir, None, "en")
+        self.assertFalse(res["pass"])
+        prose = self.rows(("coach", "hi"), ("machine", "You tell the story first, then the step, every single time."))
+        res2 = run.check_leaks(prose, pdir, None, "en")
+        self.assertTrue(res2["pass"])
+        self.assertEqual(res2["status"], "warn")
+        said = self.rows(("coach", "I always tell the story first, then the step, every single time."),
+                         ("machine", "rhythm: the story first, then the step, every single time"))
+        self.assertEqual(run.check_leaks(said, pdir, None, "en")["status"], "pass")
+
+
 if __name__ == "__main__":
     unittest.main()

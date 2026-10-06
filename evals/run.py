@@ -72,6 +72,7 @@ SCOPES = ("transcript", "pieces", "visible", "each reply", "each")
 SCOPE_RE = re.compile(r"^\s*scope:\s*(transcript|pieces|visible|each reply|each)\b", re.I)
 TURN_SPLIT_RE = re.compile(r"^\[turn \d+\]\s*", re.M)
 CASE_RUN_CHECKS = {"deny_list"}
+APP_NAMES = {"chatgpt": "ChatGPT", "claude": "Claude"}
 VERDICT_KINDS = {
     "hard stop": {"hardstop"},
     "needs you": {"needs"},
@@ -100,6 +101,15 @@ def rel(path: Path, root: Path) -> str:
 def load_toml(path: Path) -> dict:
     with open(path, "rb") as fh:
         return tomllib.load(fh)
+
+
+def persona_app(pdir: Path) -> tuple[str, str]:
+    """(app, plan) from persona.toml: the machine side is told its app, never the plan."""
+    path = pdir / "persona.toml"
+    if not path.exists():
+        return "", ""
+    data = load_toml(path)
+    return str(data.get("app", "")).lower(), str(data.get("plan", ""))
 
 
 def personas(root: Path, edition: str) -> list[str]:
@@ -164,15 +174,20 @@ One simulator agent plays both sides, turn by turn, from the files in this folde
   persona fact before the coach has said it in the transcript, and it never reads the persona folder,
   `expected.toml`, the eval cases or `qa/`.
 - **Coach side:** `COACH.md`. Only facts from the persona files it names, in the persona's style and order.
-- Keep the two apart: write each machine reply from the transcript so far and the kit only.
+- Keep the two apart: write each machine reply from the transcript so far and the kit only. `grade` scans
+  every machine turn for persona wording the coach never said (the leak check): a leak makes the run invalid,
+  so rewrite that turn from what the coach had said and grade again. Never write "no leaks" in notes.md
+  without a passing leak check.
 
 ## Write back into this run folder ({run_dir})
 
 1. `transcript.jsonl`: one JSON object per turn, in order:
    `{{"turn": 1, "role": "coach" | "machine", "text": "...", "t_min": 0.5}}`. A coach turn and the machine
    reply to it share the same `turn` number. `t_min` is the modelled minute the turn ends (dictation, typing
-   and reading speed plus time away). Mark a coach turn that is entirely someone else's post with
-   `"third_party": true`.
+   and reading speed plus time away). Optional keys on a coach row: `"away_min": 40` for time away
+   before it (a site visit, a plan limit; it does not count as active time), `"quit": true` on the coach's
+   quit line (the run then ends on that coach turn), `"third_party": true` when the whole turn is someone
+   else's post. Turns alternate coach, machine; every coach turn but a quit gets a reply.
 2. `notes.md`: outcome; the step reached and the minute; coach turns; where the machine broke the kit or a
    rule; any persona fact the machine used before the coach said it (a leak), and what you did about it;
    whether this coach comes back tomorrow, and why.
@@ -193,13 +208,14 @@ MACHINE = """# Machine side ({lane})
 - Searching the web is not possible in this run: where the kit says "search if you can", you can't.
 - A link the coach sends is never opened here (unopened = unread).
 - Today's date: {today}.
+- You know which app you run in; you do not know the coach's plan or device until they say it.
 """
 
 COACH_DAY0 = """# Coach side: {persona} ({edition}), Day 0
 
-Persona folder: `{pdir}`. Read `persona.toml` (identity, app and device, behaviour traits, quit triggers),
-`answers.md`, `voice-samples.md` and `written-posts.md`. Never read `expected.toml` and never let it shape a
-turn.
+Persona folder: `{pdir}`. Read `persona.toml` (identity, app, plan and device, behaviour traits, quit
+triggers), `answers.md` and `written-posts.md`. Never read `expected.toml` or `voice-samples.md` (they are
+answer keys for the graders) and never let them shape a turn.
 
 ## Script
 
@@ -207,17 +223,22 @@ turn.
 2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn each, when
    the machine asks for the dump. When the dump prompt invites posts you've written, paste the body of
    `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
-   or 2, the way this coach would. Then say you are done in your own words ("done", "ok that's it").
+   or 2, the way this coach would. Then say you are done in your own words ("done", "ok that's it"). If the
+   machine says the dump is enough, or asks you to wrap up, say done there and skip the chunks not yet
+   dictated (the machine then asks only what it is missing).
 3. After the dump, answer only what the machine asks, one answer per question, from `## Answer bank`, in
    the persona's style. Say "skip" when the answer bank has nothing and the behaviour fits.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
-   (write the quit line and stop) the moment a quit trigger in `persona.toml` or `## Behaviour` happens.
+   the moment a quit trigger in `persona.toml` or `## Behaviour` happens: write the quit line as the last
+   coach turn with `"quit": true`, and stop.
 5. Accept the Map with a short OK unless something on it is wrong for this coach, then fix only that line.
 6. Stop when the machine has delivered Week 1 and the Brand Card with the save line and NEXT, or when the
    coach quits, or after {max_turns} coach turns.
 
 Time: model `t_min` from dictation (about 130 words a minute), typing (about 30 words a minute on a phone,
-40 on a laptop), reading (about 200 words a minute) and the persona's time away.
+40 on a laptop), reading (about 200 words a minute) and the persona's time away (`away_min`). A pasted post
+takes about half a minute. Plan limits: if this persona's plan ({plan} on {app}) would hit a message limit
+during the run, model it (`away_min` on the coach's next turn) and say so in notes.md.
 """
 
 COACH_CASE = """# Coach side: case {case_id} ({edition})
@@ -255,7 +276,7 @@ def write_packet(root: Path, out_root: Path, rid: str, meta: dict, kit: dict[str
         shutil.copy2(kit["method"], run_dir / "packet" / "kit" / kit["method"].name)
         method_line = f"- **Method file:** `kit/{kit['method'].name}`, a project file."
     ed = cmlib.load_edition(meta["edition"], root)
-    app = "ChatGPT (a Project)" if meta["edition"] == "vn" else "ChatGPT or Claude (a Project)"
+    app = APP_NAMES.get(meta.get("app", ""), "ChatGPT or Claude") + " (a Project)"
     files = {
         "README.md": PROTOCOL.format(run_id=rid, run_dir=rel(run_dir, root)),
         "MACHINE.md": MACHINE.format(lane=lane, about=spec["about"], model=spec["model"], edition=ed.id, app=app,
@@ -292,13 +313,15 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
                 raise RunError(f"persona '{pid}' not found under evals/personas/{edition}/")
             pdir = root / "evals" / "personas" / edition / pid
             accept = load_toml(root / "evals" / "acceptance.toml").get("day0", {})
+            app, plan = persona_app(pdir)
             coach = COACH_DAY0.format(persona=pid, edition=edition, pdir=rel(pdir, root),
                                       start=strings.get("cmd.start", "Start"),
-                                      max_turns=int(accept.get("session_max_turns", 10)) + 4)
+                                      max_turns=int(accept.get("session_max_turns", 10)) + 4,
+                                      app=APP_NAMES.get(app, app or "the app"), plan=plan or "unknown plan")
             for n in range(1, repeat + 1):
                 rid = run_id(suite, edition, pid, lane, n, tag)
                 meta = {"persona": f"{edition}/{pid}", "edition": edition, "lane": lane, "build_sha": sha,
-                        "suite": suite, "repeat": n}
+                        "suite": suite, "repeat": n, **({"app": app} if app else {})}
                 made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
         return made
     if not module:
@@ -316,8 +339,9 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
         if pid and pid not in known:
             raise RunError(f"{case['id']}: persona '{pid}' not found under evals/personas/{edition}/")
         persona_line = (f"`{rel(root / 'evals' / 'personas' / edition / pid, root)}` (persona.toml, answers.md, "
-                        f"voice-samples.md, written-posts.md and the paste files; never expected.toml)"
+                        f"written-posts.md and the paste files; never expected.toml or voice-samples.md)"
                         if pid else "none (a standalone case)")
+        app = persona_app(root / "evals" / "personas" / edition / pid)[0] if pid else ""
         inputs = "\n\n".join(f"Turn {i}:\n\n```text\n{t}\n```" for i, t in enumerate(coach_turns(case), 1))
         coach = COACH_CASE.format(case_id=case["id"], edition=edition, persona_line=persona_line,
                                   title=case.get("title", ""), context=case.get("context", "") or "none",
@@ -325,7 +349,7 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
         for n in range(1, repeat + 1):
             rid = run_id(suite, edition, pid, lane, n, tag, case=case["id"])
             meta = {"persona": f"{edition}/{pid}" if pid else "", "edition": edition, "lane": lane,
-                    "build_sha": sha, "suite": suite, "repeat": n, "case": case["id"]}
+                    "build_sha": sha, "suite": suite, "repeat": n, "case": case["id"], **({"app": app} if app else {})}
             made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
     if not made:
         raise RunError(f"no D cases of {module}.{edition} run on lane {lane}")
@@ -463,6 +487,142 @@ def check_case(case: dict, run, report: dict | None = None) -> dict:
     return {"id": case.get("id"), "scope": scope, "pass": not failures, "failures": failures, "skipped": skipped}
 
 
+# ---------------------------------------------------------------- run protocol (is the run itself valid?)
+
+WORD_RE = re.compile(r"[^\W_]+(?:['’][^\W_]+)*")
+DICTATION_MAX_WPM = 160          # 130 wpm modelled, with slack
+LEAK_N = {"en": 6, "vn": 8}      # words / tiếng in a run shared with the persona files
+
+
+NUMBER_WORDS = set("""zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen
+sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand million
+k grand percent một hai ba bốn năm sáu bảy tám chín mười mươi trăm nghìn ngàn triệu tỷ tỉ""".split())
+
+
+def _words(text: str) -> list[str]:
+    return [w.casefold() for w in WORD_RE.findall(nfc(text))]
+
+
+def _content_words(text: str) -> list[str]:
+    """Words with numbers dropped: "63" and "sixty-three" are the same fact said two ways."""
+    return [w for w in _words(text) if not w.isdigit() and w not in NUMBER_WORDS]
+
+
+def _grams(words: list[str], n: int) -> set[str]:
+    return {" ".join(words[i:i + n]) for i in range(len(words) - n + 1)}
+
+
+def _rows(run_dir: Path) -> list[dict]:
+    path = run_dir / "transcript.jsonl"
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def _protocol(cid: str, ev: list[str], **extra) -> dict:
+    return {"id": cid, "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev, **extra}
+
+
+def check_turns(rows: list[dict]) -> dict:
+    """Coach and machine alternate from a coach turn; every coach turn but a quit gets a reply."""
+    ev = []
+    if rows and rows[0].get("role") != "coach":
+        ev.append("the transcript starts with a machine turn")
+    for a, b in zip(rows, rows[1:]):
+        if a.get("quit"):
+            ev.append(f"turn {b.get('turn')}: a turn after the coach quit")
+        elif a.get("role") == b.get("role"):
+            ev.append(f"turn {b.get('turn')}: two {a.get('role')} turns in a row")
+    if rows and rows[-1].get("role") == "coach" and not rows[-1].get("quit"):
+        ev.append("the last coach turn has no reply and no \"quit\": true")
+    return _protocol("turns", ev)
+
+
+def _dump_runs(pdir: Path, n: int = 12) -> set[str]:
+    path = pdir / "answers.md"
+    if not path.exists():
+        return set()
+    text = path.read_text(encoding="utf-8")
+    chunks = re.findall(r"^## Dump chunk[^\n]*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+    return set().union(*(_grams(_words(c), n) for c in chunks)) if chunks else set()
+
+
+def check_pace(rows: list[dict], pdir: Path) -> dict:
+    """A dictated dump chunk takes at least words / 160 minutes of active time (t_min minus away_min)."""
+    dump = _dump_runs(pdir)
+    ev, prev = [], None
+    for r in rows:
+        t = r.get("t_min")
+        if r.get("role") == "coach" and dump and t is not None and prev is not None:
+            words = _words(r.get("text", ""))
+            if _grams(words, 12) & dump:
+                active = float(t) - float(prev) - float(r.get("away_min") or 0)
+                need = len(words) / DICTATION_MAX_WPM
+                if active < need:
+                    ev.append(f"turn {r.get('turn')}: {len(words)} dictated words in {active:.1f} min "
+                              f"(needs ≥{need:.1f} at {DICTATION_MAX_WPM} wpm)")
+        if t is not None:
+            prev = t
+    return _protocol("pace", ev)
+
+
+VOICE_FIELD_RE = re.compile(r"^\W*(?:tone|rhythm|phrases?|openers?(?:_closers)?|closers|never_say|do_say|passages|"
+                            r"audience_address|address_1to1|connectors|written_vs_spoken|code_mix|humou?r|dialect)\b",
+                            re.I)
+
+
+def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str) -> dict:
+    """Persona wording in a machine turn that the coach never said before it and the kit does not hold:
+    the simulator's machine side read the persona files (README "Keep the two apart"). A hit in a Voice
+    Card field line fails the run (it inflates I23 and the voice judging); other hits are listed for a
+    human read ("warn"), since a model can rebuild a coach's phrase from what they said."""
+    n = LEAK_N.get(lang, 6)
+    corpus: set[str] = set()
+    for f in sorted(pdir.glob("*")):
+        if f.suffix in (".md", ".toml"):
+            corpus |= _grams(_content_words(f.read_text(encoding="utf-8")), n)
+    # a run whose first or last n-1 words the coach said, or the kit holds, is a restatement, not a leak
+    known: set[str] = set()
+    if kit_dir and kit_dir.is_dir():
+        for f in sorted(kit_dir.glob("*")):
+            known |= _grams(_content_words(f.read_text(encoding="utf-8")), n - 1)
+    fails, warns = [], []
+    for r in rows:
+        if r.get("role") == "coach":
+            known |= _grams(_content_words(r.get("text", "")), n - 1)
+            continue
+        for line in r.get("text", "").splitlines():
+            words = _content_words(line)
+
+            def leaked(i: int) -> bool:
+                g = words[i:i + n]
+                return (" ".join(g) in corpus and " ".join(g[:-1]) not in known
+                        and " ".join(g[1:]) not in known)
+
+            hit = [i for i in range(len(words) - n + 1) if leaked(i)]
+            spans, start, end = [], None, -1
+            for i in hit:                              # merge overlapping n-gram hits into spans
+                if start is None or i > end:
+                    if start is not None:
+                        spans.append((start, end))
+                    start = i
+                end = i + n
+            if start is not None:
+                spans.append((start, end))
+            for a, b in spans:
+                item = f'turn {r.get("turn")}: "{" ".join(words[a:b])}"'
+                (fails if VOICE_FIELD_RE.match(line) else warns).append(item)
+    out = _protocol("leaks", fails, n=n, warnings=warns)
+    if not fails and warns:
+        out["status"] = "warn"
+    return out
+
+
+def protocol_checks(run_dir: Path, root: Path, meta: dict) -> list[dict]:
+    rows = _rows(run_dir)
+    lang = "vn" if meta.get("edition") == "vn" else "en"
+    pdir = root / "evals" / "personas" / meta["persona"]
+    return [check_turns(rows), check_pace(rows, pdir), check_leaks(rows, pdir, run_dir / "packet" / "kit", lang)]
+
+
 # ---------------------------------------------------------------- grading
 
 def grade_run(run_dir: Path, root: Path) -> dict:
@@ -475,6 +635,9 @@ def grade_run(run_dir: Path, root: Path) -> dict:
         raise RunError(f"{run_dir.name}: standalone cases (no persona) cannot be graded by graders.py yet")
     report = graders.grade(run_dir, root)
     out = dict(report)
+    out["protocol"] = protocol_checks(run_dir, root, meta) if meta.get("persona") else []
+    out["valid"] = all(p["pass"] for p in out["protocol"])
+    out["pass"] = bool(report["pass"]) and out["valid"]
     if meta.get("case"):
         # a case run is a slice of a session: the session checks (day0_timing, quit_triggers) are reported,
         # not counted; every invariant and the deny list still count
@@ -484,14 +647,14 @@ def grade_run(run_dir: Path, root: Path) -> dict:
         out["failed"] = [x["id"] for x in counted if x["pass"] is False]
         out["info_failed"] = [c["id"] for c in report["checks"]
                               if c["id"] not in CASE_RUN_CHECKS and c["pass"] is False]
-        out["pass"] = not out["failed"] and out["case"]["pass"] is not False
+        out["pass"] = not out["failed"] and out["case"]["pass"] is not False and out["valid"]
     (run_dir / "grades.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return out
 
 
 def summary_rows(results: list[dict]) -> str:
-    head = "| Run | Persona | Lane | Pass | Failed | Coach turns | Map turns | Film-ready min | Case |"
-    rows = [head, "|" + "---|" * 9]
+    head = "| Run | Persona | Lane | Valid | Pass | Failed | Coach turns | Map turns | Film-ready min | Case |"
+    rows = [head, "|" + "---|" * 10]
     for g in results:
         day0 = next((c for c in g.get("checks", []) if c["id"] == "day0_timing"), {})
         d = day0.get("details", {})
@@ -500,8 +663,10 @@ def summary_rows(results: list[dict]) -> str:
         if case:
             case_cell = "pass" if case.get("pass") else ("P" if case.get("pass") is None else
                                                           "fail: " + "; ".join(case.get("failures", [])[:2]))
-        rows.append("| {run} | {persona} | {lane} | {ok} | {failed} | {turns} | {map} | {film} | {case} |".format(
+        bad = [p["id"] for p in g.get("protocol", []) if not p["pass"]]
+        rows.append("| {run} | {persona} | {lane} | {valid} | {ok} | {failed} | {turns} | {map} | {film} | {case} |".format(
             run=g.get("run", ""), persona=g.get("persona", ""), lane=g.get("lane", ""),
+            valid="no: " + ", ".join(bad) if bad else "yes",
             ok="yes" if g.get("pass") else "no", failed=", ".join(g.get("failed", [])) or "–",
             turns=g.get("summary", {}).get("coach_turns", ""), map=d.get("map_coach_turns", "–"),
             film=d.get("film_ready_minutes", "–") if d.get("film_ready_minutes") is not None else "–",
@@ -559,7 +724,9 @@ def main(argv: list[str] | None = None) -> int:
                 extra = ""
                 if case and case.get("pass") is False:
                     extra = " · case: " + "; ".join(case["failures"][:3])
-                status = "pass" if r["pass"] else "FAIL " + (", ".join(r["failed"]) or "case")
+                bad = [p["id"] for p in r.get("protocol", []) if not p["pass"]]
+                status = "pass" if r["pass"] else "FAIL " + (", ".join(r["failed"] + [f"invalid run: {b}" for b in bad])
+                                                             or "case")
                 print(f"{r['run']}: {status}{extra}")
         return 0 if all(r.get("pass") for r in results) else 1
     except (RunError, graders.GraderError, cmlib.CMError, OSError, tomllib.TOMLDecodeError,
