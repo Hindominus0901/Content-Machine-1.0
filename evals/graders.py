@@ -3736,11 +3736,17 @@ def check_day0(run: Run) -> dict:
                 ev.append(note)
     else:
         ev.append("no film-ready step reached")
+    # the session's coach turns: a turn of only their own pasted posts is not counted here either (G31, wf14 V3)
     total = len(run.coach_turns)
     details["coach_turns"] = total
+    posts_only = posts_only_turns(run, len(run.turns))
+    if posts_only:
+        details["session_posts_only_turns"] = [run.turns[i].turn for i in posts_only]
     limit = int(day0.get("session_max_turns", 10))
-    if total > limit:
-        ev.append(f"{total} coach turns in the session (max {limit})")
+    if total - len(posts_only) > limit:
+        left_out = (f"; posts-only turn {', '.join(str(run.turns[i].turn) for i in posts_only)} not counted"
+                    if posts_only else "")
+        ev.append(f"{total - len(posts_only)} coach turns in the session (max {limit}{left_out})")
     # the session's active minutes (review G15)
     last = run.replies[-1] if run.replies else None
     session = active_minutes(run, last) if last is not None else None

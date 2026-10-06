@@ -2904,6 +2904,15 @@ class VG4RoundGraderTests(TempRepo):
                               "Đúng.", "Gói 3 tháng."])
         self.assertIn("Map after 8 coach turns (max 7)", mixed["evidence"])
 
+    def test_g31_posts_only_turn_is_not_a_session_turn(self):
+        # 11 coach turns, one of them only the pasted posts: 10 counted (max 10)
+        pasted = "2 bài tôi viết:\n\n" + self.posts("W1", "W2")
+        ok = self.map_run([self.CHUNK, pasted, self.CHUNK, "Đúng.", "Gói 3 tháng.", "ok", "ok", "ok", "ok"])
+        self.assertEqual((ok["details"]["coach_turns"], ok["details"]["session_posts_only_turns"]), (11, [7]))
+        self.assertFalse([e for e in ok["evidence"] if "coach turns in the session" in e], ok)
+        late = self.map_run([self.CHUNK, pasted, self.CHUNK, "Đúng.", "Gói 3 tháng.", "ok", "ok", "ok", "ok", "ok"])
+        self.assertIn("11 coach turns in the session (max 10; posts-only turn 7 not counted)", late["evidence"])
+
     # -- G32: an early win in the reply to the coach's first send is a warning however close the send came to the limit
     def win_run(self, first: float, win_on_first: bool = True) -> dict:
         prompt = (f"{TAG}Setup check\nGot posts or messages you've written? Paste 2–3 too, or send a link to your "
