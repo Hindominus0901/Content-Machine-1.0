@@ -188,7 +188,7 @@
 "dm.part2"              = { text = "Phần 2 đây: {next}", src = "8f29b06a61" }
 "msg.own_list"          = { text = "Mình chỉ viết cho danh sách bạn tự gom, ai đồng ý nhận tin rồi mới gửi.", src = "97255d4752" }
 "ask3.question"         = { text = "Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?", src = "528fd991e2" }
-"ask3.consent"          = { text = "Mình đăng lại câu này được không, chỉ ghi tên thôi?", src = "1d9031ccf4" }
+"ask3.consent"          = { text = "Mình đăng lại câu này được không, chỉ ghi tên thôi?", src = "1929814a10" }
 
 # Stand-out check, sounding like the coach, guardrails (§ EDGE, HUMANIZE, GUARDRAILS). Dated notes: {date} per §CM-LOCALE
 "qa.why_hint"        = { text = "Nhắn '{{t:cmd.why}}'", src = "8cc0aebb3f" }
@@ -267,10 +267,10 @@
 # Integrator pass, wf15 + wf14: Day-0 missing facts, the Map's OK line, card top labels, VOICE anchor, Voice Card labels
 "setup.link_unread"            = { text = "Trang của bạn mình không mở được, nhưng bạn kể là đủ rồi.", src = "18d9ef7035" }
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
-"setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?", src = "dba7f66234" }
-"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì mấy thứ bạn bán, họ đều cần. Đúng không?", src = "0707a6ece8" }
+"setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?", src = "dba7f66234" }
+"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì {why}. Đúng không?", src = "c52dee2060" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).", src = "e94540bde7" }
-"map.ok"                       = { text = "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
+"map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }
 "card.visible.never"           = { text = "không bao giờ:", src = "3e2cc57c54" }
 "anchor.voice"                 = { text = "Giọng của bạn", src = "dc50b5a834" }

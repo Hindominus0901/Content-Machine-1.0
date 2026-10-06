@@ -96,3 +96,6 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
   - **Facts a cut can lose:** the dump prompt asks up front where they post and whether they have an email or Zalo list. What is still unheard is guessed and named once in one line above Week 1, changeable with one word.
   - **Early win to post:** after the first chunk, one of the "3 lines worth money" comes in a copy box with "post it as text today if you like", so the coach has something usable at minute 5–6, before the Map.
   - **"One more story" stays open (founder, after the VG2 retest):** the soft cut keeps inviting one more story. When the coach chooses to keep talking after the cut, film-ready past 20 minutes is a warning, not a failure; the machine still has to cut on time.
+- **Long dictation and the Map reply (founder, after the VG3 retest).**
+  - Film-ready past 20 minutes is a warning, not a failure, when the machine cut the dump on time and the coach's own chunks were simply long. It stays a failure when the cut was missing or late, or when the machine's own turns caused the delay.
+  - The Map reply keeps the Map, today's video and the gift (written in full under the caption), even at about two phone screens. "Shorter" trims from the next reply on.

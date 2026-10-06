@@ -174,7 +174,7 @@
 "dm.part2"              = "Part 2 is here: {next}"
 "msg.own_list"          = "I'll write it for your own list, the people who said yes."
 "ask3.question"         = "What was going on right before you called me?"
-"ask3.consent"          = "Can I share your answer, first name only?"
+"ask3.consent"          = "If I may quote you (first name only), just add 'OK to share'."
 
 # Stand-out check, sounding like the coach, guardrails (§ EDGE, HUMANIZE, GUARDRAILS). Dated notes: {date} per §CM-LOCALE
 "qa.why_hint"        = "Say '{{t:cmd.why}}'"
@@ -254,7 +254,7 @@
 "setup.link_unread"            = "Your page didn't open here; what you say is enough."
 "setup.guess"                  = "My guess: {guess}. Right?"
 "setup.guess_no_result"        = "My guess: no client result yet, so I'll use your own story. Right?"
-"setup.multi_income"           = "You earn from {n} things. My guess: write for {buyer}, the one buyer who could buy more than one. Right?"
+"setup.multi_income"           = "You earn from {n} things. My guess: write for {buyer}, because {why}. Right?"
 "setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess; one word changes it)."
 "map.ok"                       = "We'll run this for 4 weeks. OK, or change a line."
 "card.visible.to_them"         = "to them:"
