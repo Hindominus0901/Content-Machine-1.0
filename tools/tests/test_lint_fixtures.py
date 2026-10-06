@@ -489,6 +489,21 @@ class MustFailFixtures(LintCase):
         report = self.assertCatches("E113", where="modules/vn/talk.md")
         self.assertTrue(any("stale" in f.message for f in report.errors), self.dump(report))
 
+    def test_E113_unported_file_is_a_note_in_dev_and_an_error_on_release(self):
+        # An EN module with no VN file at all: the port has not started yet.
+        self.repo.prose["en"]["modules/en/review.md"] = [["review.kit-friday", "", "### Friday\nAsk for 4 numbers."]]
+        self.repo.write_prose()
+        dev = self.repo.lint()
+        self.assertNotIn("E113", dev.codes("E"), self.dump(dev))
+        self.assertTrue(any("modules/vn/review.md not written yet" in n for n in dev.notes), dev.notes)
+        self.assertCatches("E113", release=True, where="modules/vn/review.md")
+
+    def test_E113_ported_file_missing_a_section(self):
+        # The VN file exists, so a missing section is an error even in dev mode.
+        self.repo.prose["en"]["modules/en/talk.md"].append(["talk.extra", "", "### Extra\nOne more rule."])
+        self.repo.write_prose()
+        self.assertCatches("E113", where="modules/vn/talk.md")
+
     def test_E114_duplicate_section_id(self):
         self.repo.prose["en"]["modules/en/week.md"] = [["talk.core", "", "### Again\nA second talk.core."]]
         self.repo.write_prose()

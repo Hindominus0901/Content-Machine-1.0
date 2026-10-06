@@ -293,6 +293,13 @@ def iter_strings(node):
             yield from iter_strings(v)
 
 
+def _selector_matches(selector: str, sections: dict) -> bool:
+    """True when a method.toml selector (exact id or prefix*) matches a section."""
+    if selector.endswith("*"):
+        return any(sid.startswith(selector[:-1]) for sid in sections)
+    return selector in sections
+
+
 def natural_key(text: str):
     return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", text)]
 
@@ -752,6 +759,11 @@ class Linter:
                 twin = secs.get(sid)
                 if twin is None:
                     guess = sec.file.replace(f"/{src_lang}/", f"/{lang}/", 1)
+                    if not self.release and not (self.root / guess).exists():
+                        # The whole file is not ported yet: a note in dev, an error with --release.
+                        # A twin file that exists but lacks a section is always an error.
+                        self.note(f"{guess} not written yet ({lang.upper()} port of {sec.file})")
+                        continue
                     self.add("E113", guess, f"section '{sid}' has no {lang.upper()} twin (EN: {sec.file})")
                     continue
                 want, got = sha10(sec.body), twin.attrs.get("src")
@@ -1365,8 +1377,13 @@ class Linter:
             blocks = self.anchor_blocks(text, self.contract(ed, table))
             cfg = method.get(table) if isinstance(method.get(table), dict) else {}
             entries = cfg.get("anchor") if isinstance(cfg.get("anchor"), list) else []
+            secs = self.sections.get(ed.cfg.get("method_prose", ed.lang), {})
             for anchor in entries:
                 if isinstance(anchor, dict) and anchor.get("sections") and anchor.get("id") not in blocks:
+                    written = any(_selector_matches(sel, secs) for sel in anchor["sections"]
+                                  if isinstance(sel, str))
+                    if not written and not self.release:
+                        continue  # build skipped it: its modules are not written yet (noted above)
                     self.add("E130", where,
                              f"anchor §CM-{anchor.get('id')} has sections but no heading in the built file")
             if table == "method":
