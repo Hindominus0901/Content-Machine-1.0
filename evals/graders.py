@@ -61,11 +61,12 @@ How a machine reply is read:
     title line opening with a format, never a list of ideas or tips ("FILM TODAY",
     "**Reel 2**", "### Email", "**Facebook post**", "Free gift", "QUAY HÔM NAY"), or a
     day-first title naming a format or a length ("FRI, OCT 9 · LONG POST", "**Monday ·
-    15 s**"); a sentence that opens with a format ("**Your post is perfect.**") or a title
-    asking for a choice is talk, not a piece. A silent piece ends after its last
-    copy box, field line ("First line: …"), list item or "> " line, at the next
-    heading, or at a new paragraph asking the coach something; with no such lines,
-    at its first blank line.
+    15 s**"), or a bare reply label ("Tin trả lời inbox 1", "DM reply 1"); a sentence that
+    opens with a format ("**Your post is perfect.**") or a title asking for a choice is
+    talk, not a piece. A silent piece ends after its last copy box, field line ("First
+    line: …"), list item or "> " line, at the next heading, at the Brand Card, at a new
+    paragraph asking the coach something, or at a new paragraph after its copy box that is
+    not another box or its caption; with no such lines, at its first blank line.
   Text outside pieces is prose: the machine talking to the coach.
 - The running tag "◆ <name> · <step>" on the first line names the step.
 - A reply answers "why?" when the coach's turn is cmd.why or a close variant about the
@@ -78,22 +79,23 @@ the closest mechanical signal (I6 decisions, I7 IDs without the hub, I11
 injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns and the
 audience address, I20 unopened links, I21 the angle card's evidence, I22 monitoring
 promises, I23 voice).
-Other checks: deny_list, quit_triggers (the generic triggers, against the persona's own quit list),
-running_tag (every reply opens with the running tag), day0_timing (Map and film-ready turn and active-minute
-budgets, the session's minutes, the early win; film-ready over budget is a warning when the soft cut came on time
-and the coach's own talk accounts for the overrun: they chose to keep talking after it, or the send it answered ran
-long past the threshold), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and
-quiet option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list
-(VN: a Zalo message for a Zalo list), the keyword once in the body of FILM TODAY and of each Week-1 piece, outside
-its ask, the card top ≤500 characters and outside the copy box, the whole card in budget, the save route and backup,
-no unfilled placeholders, "Shorter" honoured with the card top not counted; a re-asked fact needs a reader) and, in
-VN runs, vn_natural (translationese
-density, Markdown bold, emoji lines, em dashes and the end-particle share of the written pieces against the coach's
-written-posts.md; docs/research/vn-language-guide.md §9.3) and vn_messages (no "anh/chị" form letter, no DỪNG in a
-1:1 reply, no "Dạ" down to an em, no Northern particle in the dump prompt to a Southern or Central coach). Every
-check reads its kit wording from strings/<edition>.toml keys (map.*, film.now_or_text, film.list_open, cmd.*, cta.*,
+Other checks: deny_list, quit_triggers (the generic triggers, against the persona's own quit list), running_tag (every
+reply opens with the running tag), day0_timing (Map and film-ready turn and active-minute budgets, a turn of pasted
+posts not counted toward the Map's; the session's minutes, the early win; film-ready over budget is a warning when the
+soft cut came on time and the coach's own talk accounts for the overrun: they chose to keep talking after it, or the
+send it answered ran long past the threshold), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and quiet
+option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list (VN: a
+Zalo message for a Zalo list), the keyword once in the body of FILM TODAY, of its text version and of each Week-1
+piece, outside its ask, the card top ≤500 characters and outside the copy box, the whole card in budget, the save
+route and backup, no unfilled placeholders, "Shorter" honoured with the card top not counted; a re-asked fact needs a
+reader) and, in VN runs, vn_natural (translationese density, Markdown bold, emoji lines, em dashes and the
+end-particle share of the written pieces against the posts the coach pasted from written-posts.md;
+docs/research/vn-language-guide.md §9.3) and vn_messages (no "anh/chị" form letter, no DỪNG in a 1:1 reply, no "Dạ"
+down to an em, no Northern particle in the dump prompt to a Southern or Central coach). Every check reads its kit
+wording from strings/<edition>.toml keys (map.*, film.now_or_text, film.not_filming, film.list_open, cmd.*, cta.*,
 card.*, setup.*, save.*, message.*, dump.enough), never from the kit's literal text, so a reworded string needs no
-grader change.
+grader change; a VN particle at a clause end in a string ("…mình gửi {gift} nhé.") reads as any particle or none, as
+the machine says it in the coach's region.
 Status is pass | fail | warn | n/a | not_run; "pass" is null when the check did not run; "warn" passes with
 "warnings" or "confusions" to read.
 """
@@ -175,6 +177,23 @@ _FORMAT_NOUN = (r"(?:reels?|shorts?|videos?|posts?|carousels?|slides|e-?mails?|n
                 r"stories|gifts?|bài(?!\s+học)|tin nhắn|thư(?!\s+giãn)|quà|zalo)")
 FORMAT_IN_BRACKETS_RE = re.compile(r"\([^()\n]*(?<!\w)" + _FORMAT_NOUN + r"(?!\w)[^()\n]*\)", re.I)
 FORMAT_AT_END_RE = re.compile(r"(?<!\w)" + _FORMAT_NOUN + r"\s*(?:\([^()\n]*\))?\s*$", re.I)
+# A bare label line over a message box starts a piece of its own (review retest-vg4-g5 G35): "Tin trả lời inbox 1",
+# "DM reply 1", "DM reply 2, after they answer:", "Inbox reply 2 · …": a reply or message label with its number, and at
+# most a short note after it. Without it, the piece above ran on through the inbox replies to the Brand Card.
+BARE_LABEL_RE = re.compile(r"^(?:(?:tin\s+)?trả lời(?:\s+(?:inbox|tin nhắn|messenger|zalo|dm))?|tin nhắn|tin inbox"
+                           r"|(?:dm|inbox|email|messenger|zalo)\s+repl(?:y|ies)|dm|reply)\s*\d{1,2}(?!\w)"
+                           r"(?:\s*[·•|,:(–—-][^.!?\n]{0,60})?\s*$", re.I)
+
+
+def _bare_label(plain: str) -> bool:
+    """A bare label line (BARE_LABEL_RE), also after a "·" part that says who gets the message ("Ai nhắn TUYỂN HOÀI ·
+    Tin trả lời inbox 1 (người nhắn là chị thì đổi "anh" thành "chị")"): a title, never talk to the coach."""
+    if BARE_LABEL_RE.match(plain):
+        return True
+    bare = re.sub(r"\s*\([^()\n]*\)", " ", plain).strip()
+    if not bare or bare.endswith("?") or ck.count_words(bare) > SEP_TITLE_MAX_WORDS:
+        return False
+    return any(BARE_LABEL_RE.match(part.strip()) for part in re.split(r"\s+[·•|]\s+", bare)[1:])
 
 
 def _names_format(rest: str) -> bool:
@@ -306,9 +325,16 @@ SAVE_ROUTE_RE = re.compile(r"\b(?:save to project|add text content|project files
 SAVE_BACKUP_RE = re.compile(r"\bback ?up\b|\b(?:email|e-mail|send|text|message)\s+(?:it|this|the card|a copy)\s+to "
                             r"yourself\b|(?<!\w)(?:sao lưu|dự phòng|gửi cho chính mình|tự gửi|cloud của tôi)(?!\w)"
                             r"|(?<!\w)(?:gửi|chép)(?!\w)[^.\n]{0,20}(?<!\w)zalo(?!\w)", re.I)   # VN: Zalo "Cloud của tôi" (VG-5)
-# A coach turn naming their email list or newsletter (Week 1 then carries an email).
+# A coach turn naming their email list or newsletter (Week 1 then carries an email). VN also names it by its size:
+# "email thì có 250 người", "email khoảng 300 người" (review retest-vg4-g5 G38); "email thì không có" names none.
 LIST_NAMED_RE = re.compile(r"\b(?:e-?mail list|mailing list|newsletter|subscribers?|my list|email (?:to|out to) "
-                           r"(?:my|the|our) (?:list|people))\b|(?<!\w)(?:danh sách email|bản tin)(?!\w)", re.I)
+                           r"(?:my|the|our) (?:list|people))\b|(?<!\w)(?:danh sách email|bản tin)(?!\w)"
+                           r"|(?<!\w)e-?mail\s+(?:thì\s+|cũng\s+)?(?:có\s+|được\s+)?"
+                           r"(?:khoảng\s+|chừng\s+|tầm\s+|gần\s+|hơn\s+)?"
+                           r"\d[\d.,]*\s*(?:người|địa chỉ|mail|liên hệ)(?!\w)", re.I)
+# A list named with its size in the card's list_size value: "email 250", "Zalo khoảng 380", "e-mail: 900".
+LIST_PAIR_RE = re.compile(r"(?<!\w)(e-?mail|newsletter|zalo)\s*[:=]?\s*"
+                          r"(?:khoảng\s+|chừng\s+|tầm\s+|gần\s+|about\s+|~\s*)?(\d[\d.,]*)", re.I)
 
 
 class GraderError(Exception):
@@ -404,14 +430,25 @@ def load_term_list(path: Path) -> list[tuple[str, re.Pattern]]:
 
 # A {slot} in a string: "{guess}", "{KEYWORD}", and a choice "{n | none}", "{your first guess | say 'done'.}".
 SLOT = r"\{[^{}\n]+\}"
+# A VN sentence particle at a clause end in a kit string ("…, mình gửi {gift} nhé.", "Chạy thử 4 tuần nhé."): the
+# machine says the whole line in the coach's region ("nha anh", "nghe", "nghen") or leaves the particle out
+# (§CM-NATURAL: "cả câu mẫu"), so it reads as any end particle, with or without an address word after it, or none
+# (review retest-vg4-g5: VK-33 ends cta.default and cta.quiet with "nhé").
+STRING_PARTICLES = ("nhé", "nha", "nghe", "nghen", "nhen", "hen", "nhá", "nè", "ạ")
+_ADDRESS_AFTER = ("anh chị", "các bạn", "mấy bạn", "các em", "chị em", "cả nhà", "mọi người") + PRONOUNS
+PARTICLE_ANY = (r"(?:,?\s+(?:" + "|".join(STRING_PARTICLES + ("nhe", "ha", "á")) + r")(?!\w)"
+                r"(?:\s+(?:" + "|".join(_ADDRESS_AFTER) + r")(?!\w))?)?")
+# In a VN string: a pronoun (any pronoun matches) or a clause-end particle with the space before it (PARTICLE_ANY).
+VN_STRING_WORD_RE = re.compile(r"(?P<particle>\s+(?:" + "|".join(STRING_PARTICLES) + r")(?=\s*(?:[.,!?…;:]|$)))"
+                               r"|(?<!\w)(?:" + "|".join(PRONOUNS) + r")(?!\w)", re.I)
 
 
 def _slot_pattern(text: str, lang: str, prefix_only: bool = False, anchored: bool = True) -> re.Pattern:
-    """A rendered string as a regex: {slots} are wildcards; VN pronouns match any pronoun.
+    """A rendered string as a regex: {slots} are wildcards; VN pronouns match any pronoun, and a VN particle at a
+    clause end matches any particle or none (PARTICLE_ANY).
 
     anchored=False finds the string anywhere in a text (a line inside a longer reply)."""
     s = ck.plain_line(text)
-    pron = re.compile(r"(?<!\w)(?:" + "|".join(PRONOUNS) + r")(?!\w)", re.I)
     parts = re.split("(" + SLOT + ")", s)
     out = []
     for i, part in enumerate(parts):
@@ -424,9 +461,9 @@ def _slot_pattern(text: str, lang: str, prefix_only: bool = False, anchored: boo
             tail = ""
         pos = 0
         chunk = []
-        for m in (pron.finditer(part) if lang == "vn" else []):
+        for m in (VN_STRING_WORD_RE.finditer(part) if lang == "vn" else []):
             chunk.append(_lit(part[pos:m.start()]))
-            chunk.append("(?:" + "|".join(PRONOUNS) + ")")
+            chunk.append(PARTICLE_ANY if m.group("particle") else "(?:" + "|".join(PRONOUNS) + ")")
             pos = m.end()
         chunk.append(_lit(part[pos:]))
         out.append("".join(chunk) + tail)
@@ -625,7 +662,7 @@ def _is_marker(line: Line, matcher: Matcher) -> bool:
         return False
     if matcher.why_prefix and line.plain.casefold().startswith(matcher.why_prefix):
         return False
-    if re.match(r"^#{1,6}\s", line.text.strip()) or LABEL_RE.match(line.plain):
+    if re.match(r"^#{1,6}\s", line.text.strip()) or LABEL_RE.match(line.plain) or _bare_label(line.plain):
         return True
     trimmed = matcher.title_plain(line.plain)
     if trimmed != line.plain:
@@ -664,7 +701,7 @@ def _is_piece_title(line: Line, matcher: Matcher) -> bool:
     "**Monday · 15 s**": a day with a length is a piece too); never a list of ideas or tips."""
     if not _is_marker(line, matcher):
         return False
-    if LABEL_RE.match(line.plain):
+    if LABEL_RE.match(line.plain) or _bare_label(line.plain):
         return True
     # "### 2. Reel: …" → "Reel: …"; "Thu, Oct 8 · Short 1. Say each first and last line…" → "Thu, Oct 8 · Short 1"
     head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", matcher.title_plain(line.plain)))
@@ -690,11 +727,27 @@ def _is_content(line: Line) -> bool:
 def _silent_end(lines: list[Line], title: int, bound: int) -> int:
     """Where a silent piece ends: after its last copy box, field line or list item before `bound`; with none
     of those, at its first blank line. A new paragraph that asks the coach something ("…?") or leads into
-    something else ("…, I just need a few details:") ends it too: that is the machine talking to the coach."""
+    something else ("…, I just need a few details:") ends it too: that is the machine talking to the coach.
+    A piece ends at its copy box (review retest-vg4-g5 G35): once a box has closed, a new paragraph (after a blank
+    line) that is neither another box nor the piece's caption ("Caption:") starts the next block, so a side-door line
+    ("Căn 2 tỷ 68: em để ở tin trả lời inbox 2.") or a platform note is not the piece's. A line right under the box
+    ("Caption for it:", "Họ trả lời rồi mới hỏi: …") still is."""
     for i in range(title + 2, bound):
         ln = lines[i]
         if ln.plain and not _is_content(ln) and not lines[i - 1].text.strip() \
                 and re.search(r"[?:][\W_]*$", ln.plain):
+            bound = i
+            break
+    in_box, closed = False, False
+    for i in range(title + 1, bound):
+        ln = lines[i]
+        if ln.fence and ln.block == "copy":
+            in_box = not in_box
+            closed = closed or not in_box
+            continue
+        if in_box or not closed or not ln.text.strip() or lines[i - 1].text.strip():
+            continue
+        if not CAPTION_LABEL_RE.match(ln.plain):          # a new paragraph after the box: the next block
             bound = i
             break
     content = [i for i in range(title + 1, bound) if _is_content(lines[i])]
@@ -728,9 +781,18 @@ def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
     stops = set(r.verdicts) | set(r.nexts)
     titles = [i for i, ln in enumerate(lines) if i > r.tag_at and i not in stops and _is_piece_title(ln, matcher)]
     heads = [i for i, ln in enumerate(lines) if not ln.block and HEADING_RE.match(ln.text)]
+    # the Brand Card (its title, WHAT YOU SAY or machine heading; inside a copy box, from the box's opening fence) is
+    # never part of the piece above it (review retest-vg4-g5 G35)
+    cards = []
+    for i, ln in enumerate(lines):
+        if _card_mark(None, matcher, ln):
+            k = i
+            while ln.block and k > 0 and not lines[k].fence:
+                k -= 1
+            cards.append(k)
 
     def silent(t: int, bound: int) -> None:
-        bound = min([bound] + [h for h in heads if h > t])      # a new section heading ends it
+        bound = min([bound] + [h for h in heads if h > t] + [c for c in cards if c > t])  # a heading, the card
         end = _silent_end(lines, t, bound)
         if end > t + 1:
             body = "\n".join(ln.text for ln in lines[t:end] if not ln.fence)
@@ -927,23 +989,31 @@ def _last_coach(run: Run, r: Reply) -> Turn | None:
     return next((t for t in reversed(run.turns[:r.index]) if t.role == "coach"), None)
 
 
-def _post_chunks(r: Reply) -> list[str]:
-    """What the coach would post: each piece body (hard stops left out), then each copy box outside pieces."""
-    chunks = [p.body for p in r.pieces if p.kind != "hardstop" and p.body.strip()]
+def _post_chunk_lines(r: Reply) -> list[tuple[Piece | None, list[int]]]:
+    """What the coach would post, as (piece, line indices): each piece body (hard stops left out; fences left out),
+    then each copy box outside pieces (piece None)."""
+    chunks: list[tuple[Piece | None, list[int]]] = [
+        (p, [i for i in range(p.start, p.verdict_at) if not r.lines[i].fence])
+        for p in r.pieces if p.kind != "hardstop" and p.body.strip()]
     in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
-    box: list[str] = []
+    box: list[int] = []
     for i, ln in enumerate(r.lines):
         if ln.block != "copy" or i in in_piece:
             continue
         if ln.fence:
             if box:
-                chunks.append("\n".join(box))
+                chunks.append((None, box))
             box = []
         else:
-            box.append(ln.text)
+            box.append(i)
     if box:
-        chunks.append("\n".join(box))
+        chunks.append((None, box))
     return chunks
+
+
+def _post_chunks(r: Reply) -> list[str]:
+    """What the coach would post: each piece body (hard stops left out), then each copy box outside pieces."""
+    return ["\n".join(r.lines[i].text for i in idx) for _, idx in _post_chunk_lines(r)]
 
 
 # ---------------------------------------------------------------- someone else's posts (wf13)
@@ -1360,15 +1430,41 @@ def _map_label_line(matcher: Matcher, plain: str) -> bool:
     return any(p.match(folded) for p in matcher.__dict__["_map_labels"])
 
 
-def reply_decisions(r: Reply, matcher: Matcher) -> dict[str, str]:
+def _topic_res(topics) -> list[re.Pattern]:
+    """The Map's topics as patterns that find them reprinted in a line (any case, any spacing)."""
+    out = []
+    for topic in topics:
+        words = ck.plain_line(str(topic)).split()
+        if len(words) >= 2:
+            out.append(re.compile(r"(?<!\w)" + r"\s+".join(re.escape(w) for w in words) + r"(?!\w)", re.I))
+    return out
+
+
+def map_topics(run: Run, upto: int | None = None) -> list[str]:
+    """The topics of every Map the run printed (before transcript position `upto`): the map.topics value split at
+    " · ", " / " or " | "."""
+    out: list[str] = []
+    for r in run.replies:
+        if upto is not None and r.index > upto:
+            break
+        value = map_lines(run, r).get("map.topics", "")
+        out += [t.strip(" .\"'") for t in re.split(r"\s+[·•|/]\s+", value) if t.strip(" .\"'")]
+    return list(dict.fromkeys(out))
+
+
+def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
     """The decisions one reply asks the coach for, {key: the words}: "map.ok" for the Map's OK (the same decision in
     every reply that prints it, its "OK or change a line" NEXT too), else one key per sentence that asks for a
     choice. A NEXT line that repeats the reply's choice, the labels of its options ("Option A: …") and a short "Pick
     one." beside it are that same decision. Not decisions: a guess the coach confirms (setup.guess*, setup.multi_income) with its own follow-up
     line and its NEXT, setup.plan_guess, the machine's own pick, a declarative "we pick one buyer", a save click, and
-    the Map's own lines ("3 CHỦ ĐỀ: Người mới quyết định nghỉ từ tuần đầu" is a topic, not a prompt; review VG2 G21)."""
+    the Map's own lines ("3 CHỦ ĐỀ: Người mới quyết định nghỉ từ tuần đầu" is a topic, not a prompt; review VG2 G21),
+    and a Map topic (`topics`) reprinted in another line, a Week-1 heading or the card top ("TUẦN 1 · 07/10 – 13/10 ·
+    Người mới quyết định nghỉ từ tuần đầu"; review retest-vg4-g5 G34): the topic's words are left out of the line, and
+    the rest of it is still read."""
     idx = sorted(set(r.prose) | set(r.nexts))
     confirm = [i for i in idx if any(matcher.says(k, r.lines[i].text) for k in GUESS_KEYS if k != "setup.plan_guess")]
+    topic_res = _topic_res(topics)
     out: dict[str, str] = {}
     nexts, options = [], []
     for pos, i in enumerate(idx):
@@ -1377,7 +1473,10 @@ def reply_decisions(r: Reply, matcher: Matcher) -> dict[str, str]:
             continue
         if confirm and (i in r.nexts or (pos and idx[pos - 1] in confirm and GUESS_TAIL_RE.match(ck.plain_line(line)))):
             continue                                       # the guess's "Or tell me which pays the bills" and its NEXT
-        for k, sent in enumerate(re.split(r"(?<=[.?!…])\s+", _unquoted(ck.plain_line(line)))):
+        plain = ck.plain_line(line)
+        for p in topic_res:
+            plain = p.sub(" ", plain)
+        for k, sent in enumerate(re.split(r"(?<=[.?!…])\s+", _unquoted(plain))):
             hits = _decision_hits(sent)
             if not hits:
                 continue
@@ -1403,11 +1502,11 @@ def reply_decisions(r: Reply, matcher: Matcher) -> dict[str, str]:
 def i6_decisions(run: Run) -> dict:
     """At most one real decision per session (the Map's OK). Counted once per decision: every reply that prints the
     Map's OK line (map.ok), the Map and its reprint after a pushback, asks the same one; two choices in one reply
-    are two (reply_decisions)."""
+    are two (reply_decisions). A Map topic reprinted in a heading or the card top is the Map's, not a prompt (G34)."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
     asks: dict[str, str] = {}
     for r in run.replies:
-        for key, words in reply_decisions(r, matcher).items():
+        for key, words in reply_decisions(r, matcher, map_topics(run, r.index)).items():
             asks.setdefault(key, f"{_turn(r)}: {words}")
     ev = [f"{len(asks)} decision prompts in one session: " + "; ".join(asks.values())] if len(asks) > 1 else []
     return result("I6", "At most 1 real decision per session", ev, proxy=True)
@@ -1700,8 +1799,9 @@ def _numbered_label(text: str, m: re.Match) -> bool:
 
 
 # A banned claim said in the negative is not the claim: "không phải cam kết" (not a guarantee), "Kết quả tuỳ người,
-# không phải cam kết.", "isn't a guarantee" (review VG-10). Only a negation right before the phrase counts.
-NEGATED_BEFORE_RE = re.compile(r"(?:(?<!\w)(?:không|chẳng|đâu|chứ không|chả)(?:\s+(?:phải|hề|có))?"
+# không phải cam kết.", "isn't a guarantee" (review VG-10), and the Southern "hổng phải cam kết", "hông phải" (review
+# retest-vg4-g5 G33). Only a negation right before the phrase counts.
+NEGATED_BEFORE_RE = re.compile(r"(?:(?<!\w)(?:không|chẳng|đâu|chứ không|chả|hổng|hông)(?:\s+(?:phải|hề|có))?"
                                r"|\b(?:not|never|no|isn'?t|aren'?t|wasn'?t)(?:\s+(?:a|an|the))?)\s+$", re.I)
 # Card fields that hold the coach's own sayings or a description of their rhythm, not claims (review VG-10), and the
 # items parked for later (not_now: "lãi suất cam kết (dễ thành hứa quá lời)" names a claim to refuse it; review
@@ -2799,7 +2899,7 @@ TRANSLATE_ASK_RE = re.compile(r"(?<!\w)dịch(?!\s+(?:vụ|bệnh|chuyển)(?!\w
 _EMOJI_NOT = re.compile(r"[\u2190-\u21ff\u2500-\u25ff\u00a9\u00ae\u2122]")   # arrows, box drawing, shapes, ©®™
 VN_NATURAL_DEFAULTS = {"min_tieng": 15, "patterns_per_100_max": 2.0, "patterns_min_hits": 2, "bold_max": 0,
                        "emoji_line_max": 2, "ai_emoji": ["🚀", "💡", "✨", "🎯", "🌟"], "em_dash_max": 0,
-                       "particle_share_ratio_min": 0.4, "particle_share_floor": 0.1, "particle_min_sentences": 10}
+                       "particle_share_ratio_min": 0.5, "particle_share_floor": 0.1, "particle_min_sentences": 10}
 
 
 def _is_emoji(ch: str) -> bool:
@@ -2888,18 +2988,70 @@ def particle_share(texts) -> tuple[int, int]:
     return sum(1 for s in sents if _particle_end(s)), len(sents)
 
 
+def written_post_sections(text: str) -> list[tuple[str, str]]:
+    """(id, body) of each "## W1 …" section of a written-posts.md text ("W1", the heading up to " · " or ":")."""
+    text = re.sub(r"<!--.*?-->", "", ck.nfc(text), flags=re.S)
+    parts = re.split(r"^##(?!#)[ \t]*(.*)$", text, flags=re.M)
+    return [(re.split(r"\s+[·|–—]\s+|:\s+", h.strip(), maxsplit=1)[0], b.strip())
+            for h, b in zip(parts[1::2], parts[2::2]) if b.strip()]
+
+
 def _written_posts(run: Run) -> list[str]:
     """The bodies of written-posts.md (## W1 … sections): the coach's own written voice (wf14 V3)."""
-    text = re.sub(r"<!--.*?-->", "", ck.nfc(run.persona_texts.get("written-posts.md", "")), flags=re.S)
-    parts = re.split(r"^##(?!#)[ \t]*.*$", text, flags=re.M)
-    return [p.strip() for p in parts[1:] if p.strip()]
+    return [b for _, b in written_post_sections(run.persona_texts.get("written-posts.md", ""))]
+
+
+def post_runs(posts) -> set:
+    """The POST_RUN-token runs of some texts (the coach's written posts): a paragraph mostly made of them is a
+    pasted post (is_pasted_post)."""
+    return {tuple(t[i:i + POST_RUN]) for p in posts for t in [ck.copy_tokens(p)] for i in range(len(t) - POST_RUN + 1)}
+
+
+def run_coverage(text: str, runs: set) -> tuple[int, int]:
+    """(tokens of `text` inside one of `runs`, tokens of `text`)."""
+    toks = ck.copy_tokens(text)
+    covered: set[int] = set()
+    for i in range(len(toks) - POST_RUN + 1):
+        if tuple(toks[i:i + POST_RUN]) in runs:
+            covered.update(range(i, i + POST_RUN))
+    return len(covered), len(toks)
+
+
+def is_pasted_post(para: str, runs: set) -> bool:
+    """A paragraph mostly made of POST_RUN-token runs of the coach's written posts (`runs`: post_runs) is a pasted
+    post, not talk: at least half its tokens."""
+    covered, total = run_coverage(para, runs)
+    return bool(total) and covered * 2 >= total
+
+
+def _dated_note(matcher: Matcher, plain: str) -> bool:
+    """A required dated note (cta.platform_note, cta.by_hand, the copy note) or another note line that carries a date
+    ("Lưu ý (06/10/2026): Facebook cá nhân không có trả lời tự động, …"): the kit's line, not the coach's voice."""
+    return bool(plain) and (matcher.is_note(plain) or bool(NOTE_LINE_RE.search(plain) and DATE_RE.search(plain)))
+
+
+def _card_lines(run: Run, card: Reply) -> set[int]:
+    """The Brand Card's lines in its reply: its top (card_parts) through the "no need to read" heading, and, when the
+    card sits in a copy box (review VG-6), the rest of that box."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    out = set(card_parts(run, card).top_at)
+    for i, ln in enumerate(card.lines):
+        if out and i > min(out) and _card_mark(run, matcher, ln) == "heading":
+            out |= set(range(min(out), _box_end(card, i) if ln.block else i + 1))
+            break
+    return out
 
 
 def _vn_pieces(run: Run) -> list[tuple[Reply, str]]:
-    """(reply, text) of each VN piece the machine wrote: piece bodies without their title line and copy boxes
-    outside pieces (_post_chunks), minus "why?" replies and pieces the coach asked to copy verbatim. A post the
-    coach asked to translate stays: it is translated for meaning, in their voice (guide §1 item 2)."""
-    out = []
+    """(reply, text) of each VN piece the machine wrote: piece bodies and copy boxes outside pieces
+    (_post_chunk_lines), minus "why?" replies and pieces the coach asked to copy verbatim. A post the coach asked to
+    translate stays: it is translated for meaning, in their voice (guide §1 item 2). Left out (review retest-vg4-g5
+    G37): a piece's title and any other title or bare label line outside a box ("Tin trả lời inbox 1"), dated notes
+    ("Lưu ý (06/10/2026): …"), and the Brand Card's top; a box printed again (the gift, then inbox reply 1 holding the
+    same steps; the caption, then its text version) counts once: a chunk with more than half its tokens in
+    POST_RUN-token runs of an earlier chunk is a reprint."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    out, seen = [], set()
     for r in run.replies:
         if r.after_why:
             continue
@@ -2907,13 +3059,36 @@ def _vn_pieces(run: Run) -> list[tuple[Reply, str]]:
         words = coach_words(run, coach.text) if coach else ""
         if coach and explicit_ask(words, EXPLICIT_COPY_RE) and not TRANSLATE_ASK_RE.search(words):
             continue
-        titles = {p.title for p in r.pieces if p.title}
-        for chunk in _post_chunks(r):
-            lines = chunk.split("\n")
-            if lines and ck.plain_line(lines[0]) in titles:
-                lines = lines[1:]
-            out.append((r, "\n".join(lines)))
+        top = _card_lines(run, r) if _is_card_reply(run, r) else set()
+        for p, idx in _post_chunk_lines(r):
+            keep = []
+            for i in idx:
+                ln = r.lines[i]
+                title = p is not None and bool(p.title) and i == p.start
+                if i in top or (not ln.block and ln.plain and (title or _is_marker(ln, matcher)
+                                                               or _dated_note(matcher, ln.plain))):
+                    continue
+                keep.append(ln.text)
+            text = "\n".join(keep)
+            if not text.strip():
+                continue
+            covered, total = run_coverage(text, seen)
+            seen |= post_runs([text])
+            if total and covered * 2 > total:           # printed before in this run: counted once
+                continue
+            out.append((r, text))
     return out
+
+
+def pasted_posts(run: Run) -> list[tuple[str, str]]:
+    """(id, body) of the written-posts.md sections the coach pasted in this run (at least half of a post's tokens in
+    POST_RUN-token runs of the coach's turns); all of them when the coach pasted none here (a later session reads
+    the posts pasted on Day 0)."""
+    sections = written_post_sections(run.persona_texts.get("written-posts.md", ""))
+    said = post_runs([t.text for t in run.coach_turns])
+    pasted = [(sid, body) for sid, body in sections
+              for covered, total in [run_coverage(body, said)] if total and covered * 2 >= total]
+    return pasted or sections
 
 
 def check_vn_natural(run: Run) -> dict:
@@ -2923,8 +3098,10 @@ def check_vn_natural(run: Run) -> dict:
     tiếng, in a piece and across the run; Markdown bold, lines opening with an emoji, the AI emoji set and the em
     dash, unless the coach's own written-posts.md uses them; and the share of written sentences that end in a
     particle (captions, posts, messages: script directions and spoken lines left out, split_script), compared with
-    the coach's own posts (no posts: a floor); the spoken lines' share is reported in details. A pattern the coach's
-    own posts or [voice] do_say hold is theirs and does not count. EN runs: n/a."""
+    the coach's own posts that they pasted in the run (pasted_posts; all of written-posts.md when none was pasted; no
+    posts: a floor); the spoken lines' share is reported in details. The pieces leave out titles, bare labels, dated
+    notes and the card top, and count a reprinted box once (_vn_pieces; review retest-vg4-g5 G37). A pattern the
+    coach's own posts or [voice] do_say hold is theirs and does not count. EN runs: n/a."""
     if run.lang != "vn":
         return {"id": "vn_natural", "pass": True, "status": "n/a", "evidence": []}
     cfg = dict(VN_NATURAL_DEFAULTS, **run.acceptance.get("vn_natural", {}))
@@ -2986,7 +3163,10 @@ def check_vn_natural(run: Run) -> dict:
     sp_ends, sp_sents = particle_share([sp for _, sp in parts])    # spoken lines: reported, never compared
     if sp_sents:
         details["spoken_particle_share"] = round(sp_ends / sp_sents, 2)
-    own_ends, own_sents = particle_share([_voice_scrub(p, "vn") for p in posts])
+    compared = pasted_posts(run)                                    # the posts the machine saw (G37)
+    own_ends, own_sents = particle_share([_voice_scrub(p, "vn") for _, p in compared])
+    if compared:
+        details["coach_posts"] = [sid for sid, _ in compared]
     if own_sents:
         details["coach_particle_share"] = round(own_ends / own_sents, 2)
     if sents >= int(cfg["particle_min_sentences"]):
@@ -3281,9 +3461,9 @@ def _is_card_reply(run: Run, r: Reply) -> bool:
     return bool(r.step and CARD_STEP_RE.search(r.step) and r.machine_blocks)
 
 
-def _card_mark(run: Run, matcher: Matcher, ln: Line) -> str:
+def _card_mark(run: Run | None, matcher: Matcher, ln: Line) -> str:
     """"title" | "label" | "heading" when the line opens a part of the Brand Card (card.title, card.visible.what /
-    .how at the line's start, card.machine.heading), else ""."""
+    .how at the line's start, card.machine.heading), else "". (The strings are the matcher's: `run` may be None.)"""
     if ln.fence or not ln.plain:
         return ""
     if matcher.says("card.machine.heading", ln.plain):
@@ -3291,7 +3471,7 @@ def _card_mark(run: Run, matcher: Matcher, ln: Line) -> str:
     if matcher.says("card.title", ln.plain) and ck.count_words(ln.plain) <= 12:
         return "title"
     for key in ("card.visible.what", "card.visible.how"):
-        label = ck.fold(ck.plain_line(run.strings.get(key, ""))).rstrip(":").strip()
+        label = ck.fold(ck.plain_line(matcher.strings.get(key, ""))).rstrip(":").strip()
         if label and ck.fold(ln.plain).startswith(label):
             return "label"
     return ""
@@ -3391,21 +3571,42 @@ def _says_cut(run: Run, text: str) -> bool:
     return bool(re.search(p.pattern + r"(?!\w)", "\n".join(ck.plain_line(x) for x in text.splitlines()), re.I))
 
 
+def _talk_and_pasted(run: Run, index: int, posts: set) -> tuple[int, int]:
+    """(words of the coach's own talk, words of their pasted written-posts.md paragraphs) in one coach turn (VN:
+    tiếng); someone else's post is left out of both (is_pasted_post)."""
+    text = _coach_own_text(run, index, run.turns[index], _run_sources(run))
+    talk = pasted = 0
+    for para in _paragraphs(text):
+        n = ck.count_words(para, run.lang)
+        if is_pasted_post(para, posts):                  # mostly a pasted post: not talk
+            pasted += n
+        else:
+            talk += n
+    return talk, pasted
+
+
 def _dump_talk_words(run: Run, index: int, posts: set) -> int:
     """Words (VN tiếng) of the coach's own talk in one turn: someone else's post and the coach's pasted
     written-posts.md paragraphs left out."""
-    text = _coach_own_text(run, index, run.turns[index], _run_sources(run))
-    total = 0
-    for para in _paragraphs(text):
-        toks = ck.copy_tokens(para)
-        covered = set()
-        for i in range(len(toks) - POST_RUN + 1):
-            if tuple(toks[i:i + POST_RUN]) in posts:
-                covered.update(range(i, i + POST_RUN))
-        if toks and len(covered) * 2 >= len(toks):      # mostly a pasted post: not talk
+    return _talk_and_pasted(run, index, posts)[0]
+
+
+def posts_only_turns(run: Run, upto: int) -> list[int]:
+    """Transcript positions of the coach turns before `upto` that are mostly the coach's own pasted posts (more of
+    their words in pasted written-posts.md paragraphs than in talk; the POST_RUN test dump_cut uses). DECISIONS (wf14
+    V3): the written posts the dump prompt invites add no extra turn, so the Map's turn budget leaves such a turn out
+    (review retest-vg4-g5 G31). A turn that pastes a post inside a dictated chunk is still a dump send."""
+    posts = post_runs(_written_posts(run))
+    if not posts:
+        return []
+    out = []
+    for i, t in enumerate(run.turns[:upto]):
+        if t.role != "coach" or t.third_party:
             continue
-        total += ck.count_words(para, run.lang)
-    return total
+        talk, pasted = _talk_and_pasted(run, i, posts)
+        if pasted > talk:
+            out.append(i)
+    return out
 
 
 def dump_cut(run: Run, film: Reply) -> dict:
@@ -3424,8 +3625,7 @@ def dump_cut(run: Run, film: Reply) -> dict:
     if prompt is None or prompt.index >= film.index:
         return {}
     limit = int(run.acceptance.get("day0", {}).get(f"dump_cut_words_{run.meta['edition']}", DUMP_CUT_WORDS))
-    posts = {tuple(t[i:i + POST_RUN]) for p in _written_posts(run) for t in [ck.copy_tokens(p)]
-             for i in range(len(t) - POST_RUN + 1)}
+    posts = post_runs(_written_posts(run))
     words, crossed, crossed_at, cuts, kept, over = 0, None, -1, [], [], None
     for i in range(prompt.index + 1, film.index):
         t = run.turns[i]
@@ -3454,10 +3654,12 @@ def dump_cut(run: Run, film: Reply) -> dict:
 
 
 def check_day0(run: Run) -> dict:
-    """wf15 §3 budgets: the Map within map_max_turns coach turns, as 4 labelled lines; film-ready within
-    film_ready_max_minutes of active time (t_min minus away_min); at most session_max_turns coach turns and
-    session_max_minutes active minutes; the early win within early_win_max_minutes_after_dump_start (early_win). A
-    reply with no running tag is still read: the Map by its labels, FILM TODAY by film.now_or_text or its title.
+    """wf15 §3 budgets: the Map within map_max_turns coach turns, as 4 labelled lines (a coach turn that is mostly
+    their own pasted posts is not counted: posts_only_turns, G31); film-ready within film_ready_max_minutes of active
+    time (t_min minus away_min); at most session_max_turns coach turns and session_max_minutes active minutes; the
+    early win within early_win_max_minutes_after_dump_start (early_win; in the reply to the coach's first send, a
+    miss is a warning: G32). A reply with no running tag is still read: the Map by its labels, FILM TODAY by
+    film.now_or_text or its title.
     Film-ready over its budget is a warning, not a failure, when the machine cut on time and the coach's own talk
     accounts for the overrun (dump_cut): they chose to keep talking after the soft cut (their next turn was more dump;
     DECISIONS "One more story stays open"), or, with no more talk after it, the send the cut answered ran past the
@@ -3474,13 +3676,18 @@ def check_day0(run: Run) -> dict:
                 "evidence": ["no Map step in the replies and meta.suite is not day0"]}
     ev, details = [], {}
     if map_reply:
-        turns = len(run.coach_before(map_reply.index))
+        posts_only = posts_only_turns(run, map_reply.index)           # not counted (G31, DECISIONS wf14 V3)
+        turns = len(run.coach_before(map_reply.index)) - len(posts_only)
         limit = int(day0.get(f"map_max_turns_{run.meta['edition']}", day0.get("map_max_turns_en", 6)))
         details["map_coach_turns"] = turns
+        if posts_only:
+            details["map_posts_only_turns"] = [run.turns[i].turn for i in posts_only]
         if map_reply.tag_at < 0:
             details["map_found_by"] = "labels (no running tag)"
         if turns > limit:
-            ev.append(f"Map after {turns} coach turns (max {limit})")
+            left_out = (f"; posts-only turn {', '.join(str(run.turns[i].turn) for i in posts_only)} not counted"
+                        if posts_only else "")
+            ev.append(f"Map after {turns} coach turns (max {limit}{left_out})")
         labels = _map_labels(run)
         if labels:                                   # wf15 §1.4: the Map is 4 labelled lines, then "OK?"
             want = int(day0.get("map_lines", len(labels)))
@@ -3536,9 +3743,10 @@ def check_day0(run: Run) -> dict:
         limit = float(day0.get("session_max_minutes", 40))
         if session > limit:
             ev.append(f"the session ran {session:g} active minutes (max {limit:g})")
-    # the early win (review G15, VP-4): within early_win_max_minutes_after_dump_start of the dump prompt. A coach who
-    # sends their first chunk later than that (a persona talking 5-8 minutes where the kit asks 2-3) gets it in the
-    # reply to that send at the earliest: then the budget is graded against their send, and the miss is a warning.
+    # the early win (review G15, VP-4): within early_win_max_minutes_after_dump_start of the dump prompt. The reply to
+    # the coach's first send is the earliest it can come, so an early win there is never the machine's delay: over
+    # the budget it is a warning, however close the send came to the limit (a first send at 4.0 of 4; review
+    # retest-vg4-g5 G32). An early win later than the reply to the first send stays a failure.
     win = early_win(run)
     limit = float(day0.get("early_win_max_minutes_after_dump_start", 4))
     if win:
@@ -3547,7 +3755,7 @@ def check_day0(run: Run) -> dict:
             ev.append("no copy-ready early win after the dump started")
         elif win["minutes"] > limit:
             note = (f"early win {win['minutes']:g} active minutes after the dump started (max {limit:g})")
-            if win.get("on_first_send") and win.get("first_send", 0) > limit:
+            if win.get("on_first_send"):
                 warnings.append(f"{note}: in the reply to the coach's first send, which came at minute "
                                 f"{win['first_send']:g} (the kit asks 2-3)")
             else:
@@ -3578,17 +3786,25 @@ def check_running_tag(run: Run) -> dict:
 
 
 # How a VN coach refers to themself in a CTA or a message ("mình gửi", "tôi gửi", "tụi em gửi", "Đức gửi"; review VG-4):
-# the kit's "mình" stands for any of them, and a name in capitals.
+# the kit's "mình" stands for any of them, and a name with a capital ("Đức", "Trang"; never an ALL-CAPS word, which is
+# the keyword: "Nhắn tôi chữ TUYỂN HOÀI, tôi gửi …" keeps "TUYỂN HOÀI" whole).
 VN_SELF = (r"(?:(?:tụi|bọn|chúng|bên)\s+)?(?:mình|tôi|tui|em|chị|anh|bạn|cô|chú|thầy|ta|(?-i:[" + ck.UPPER
-           + r"][^\W\d_]+))")
+           + r"](?![" + ck.UPPER + r"])[^\W\d_]+))")
 
 
 def _cta_lit(text: str, lang: str) -> str:
     """A literal part of a CTA string as a regex. VN: a pronoun stands for any self-form (VN_SELF), "hay" also reads
-    "hoặc", and a comma may follow an addressee ("nhắn riêng, mình gửi" = "nhắn riêng chị, chị gửi" = "nhắn riêng
-    Trang, tụi em gửi")."""
+    "hoặc", a comma may follow an addressee ("nhắn riêng, mình gửi" = "nhắn riêng chị, chị gửi" = "nhắn riêng
+    Trang, tụi em gửi"), and a particle at a clause end ("mình gửi {gift} nhé.") reads as any particle or none
+    (PARTICLE_ANY: "…gửi tờ tính 3 bước nha.", "…gửi tờ tính 3 bước.")."""
     if lang != "vn":
         return _lit(text)
+    return PARTICLE_ANY.join(_cta_lit_vn(part) for part in
+                             re.split(r"\s+(?:" + "|".join(STRING_PARTICLES) + r")(?=\s*(?:[.,!?…;:]|$))", text,
+                                      flags=re.I))
+
+
+def _cta_lit_vn(text: str) -> str:
     out, pos = [], 0
     for m in re.finditer(r"(?<!\w)(?:" + "|".join(PRONOUNS + ("tui",)) + r"|hay)(?!\w)|,", text, re.I):
         out.append(_lit(text[pos:m.start()]))
@@ -3795,46 +4011,103 @@ def _box_end(r: Reply, opening: int) -> int:
     return close + 1
 
 
-def film_today_piece(run: Run, film: Reply) -> Piece | None:
-    """FILM TODAY's script and caption as one piece (review retest-vg3-g4 G30): its titled piece (the title names
-    filming: "FILM TODAY · under 30 s", "QUAY HÔM NAY · dưới 30 giây") through its caption, before the next piece or
-    NEXT line. The caption is the box under a caption label (CAPTION_LABEL_RE), else the label line's paragraph (a
-    caption printed without a box), else a box that opens with the label; a blank line before "Caption (…):" ends the
-    parsed piece early, and the caption still belongs to it. The gift box and the lines under the caption (the quiet
-    option, film.now_or_text) are left out. No caption found: the piece as parsed; no titled piece: None."""
+def _film_piece(film: Reply) -> tuple[Piece, int] | None:
+    """FILM TODAY's titled piece (the title names filming: "FILM TODAY · under 30 s", "QUAY HÔM NAY · dưới 30 giây")
+    and the index of the next piece or NEXT line after it; None without one."""
     p = next((p for p in film.pieces if p.title and FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title))), None)
     if p is None:
         return None
-    lines = film.lines
     bound = min([q.start for q in film.pieces if q.start > p.start] + [n for n in film.nexts if n > p.start]
-                + [len(lines)])
-    end = p.verdict_at
+                + [len(film.lines)])
+    return p, bound
+
+
+def _film_caption(film: Reply, p: Piece, bound: int) -> tuple[int, int] | None:
+    """(start, end) of FILM TODAY's caption in the reply's lines: from its label line (CAPTION_LABEL_RE) to the end of
+    the box under it, or of the label's paragraph (a caption printed without a box), else a box that opens with the
+    label ("as text = first line + caption, one box"); None when there is none."""
+    lines = film.lines
     label = next((k for k in range(p.start + 1, bound)
                   if not lines[k].block and CAPTION_LABEL_RE.match(lines[k].plain)), None)
     if label is not None:
         under = next((k for k in range(label + 1, bound) if lines[k].text.strip()), None)
         if under is not None and lines[under].fence:                  # "Caption:" then its box
-            end = max(end, _box_end(film, under))
-        else:                                                         # the caption without a box: its paragraph
-            k = label + 1
-            while k < bound and lines[k].text.strip() and not lines[k].block:
-                k += 1
-            end = max(end, k)
-    else:                                                             # "as text = first line + caption, one box"
-        k = p.start + 1
-        while k < bound:
-            if not lines[k].fence:
-                k += 1
-                continue
-            box_end = _box_end(film, k)
-            if CAPTION_LABEL_RE.match(next((x.plain for x in lines[k + 1:box_end] if x.plain), "")):
-                end = max(end, box_end)
-                break
-            k = box_end
+            return label, _box_end(film, under)
+        k = label + 1                                                 # the caption without a box: its paragraph
+        while k < bound and lines[k].text.strip() and not lines[k].block:
+            k += 1
+        return label, k
+    k = p.start + 1                                                   # a box that opens with the caption label
+    while k < bound:
+        if not lines[k].fence:
+            k += 1
+            continue
+        box_end = _box_end(film, k)
+        if CAPTION_LABEL_RE.match(next((x.plain for x in lines[k + 1:box_end] if x.plain), "")):
+            return k, box_end
+        k = box_end
+    return None
+
+
+def film_today_piece(run: Run, film: Reply) -> Piece | None:
+    """FILM TODAY's script and caption as one piece (review retest-vg3-g4 G30): its titled piece through its caption
+    (_film_caption), before the next piece or NEXT line; a blank line before "Caption (…):" ends the parsed piece
+    early, and the caption still belongs to it. The gift box and the lines under the caption (the quiet option,
+    film.now_or_text) are left out. No caption found: the piece as parsed; no titled piece: None."""
+    found = _film_piece(film)
+    if found is None:
+        return None
+    p, bound = found
+    caption = _film_caption(film, p, bound)
+    end = max(p.verdict_at, caption[1]) if caption else p.verdict_at
     if end == p.verdict_at:
         return p
-    body = "\n".join(ln.text for ln in lines[p.start:end] if not ln.fence)
+    body = "\n".join(ln.text for ln in film.lines[p.start:end] if not ln.fence)
     return Piece(film.turn, p.start, end, "", "", body, p.title, silent=True)
+
+
+# A line that offers FILM TODAY as a text post, over the box that holds it ("Quay luôn bây giờ, hoặc đăng phần chữ
+# làm bài viết:", "Caption (đăng chữ thì dùng nguyên khung này):", "Caption (post as text: first line + caption):");
+# film.now_or_text and film.not_filming are read from strings too.
+TEXT_POST_LABEL_RE = re.compile(r"\bas (?:a )?text\b|\btext (?:version|post)\b|(?<!\w)(?:bài chữ|phần chữ|đăng chữ|"
+                                r"bài viết)(?!\w)", re.I)
+FIRST_LINE_RE = re.compile(r"^[\s>*_-]*(?:\*\*|__)?(?:câu đầu|câu mở đầu|first line|hook)\s*(?:\([^)\n]*\))?"
+                           r"(?:\*\*|__)?\s*:\s*(.+)$", re.I)
+
+
+def film_text_version(run: Run, film: Reply) -> str | None:
+    """FILM TODAY's text version, what the coach posts when they don't film (§CM-FORMATS 7: "as text = first line +
+    caption, one box"; review retest-vg4-g5 G36): the copy box under a line that offers the text post
+    (film.now_or_text, film.not_filming, TEXT_POST_LABEL_RE), else the script's first line ("First line:", "Câu
+    đầu:") with the caption. None without a FILM TODAY piece or a caption."""
+    found = _film_piece(film)
+    if found is None:
+        return None
+    p, bound = found
+    lines = film.lines
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    k = p.start + 1
+    while k < bound:                                  # a box the reply offers as the text post ("dán y khung này
+        if not lines[k].fence:                        # làm bài viết" reads as a paste box: either kind)
+            k += 1
+            continue
+        box_end = _box_end(film, k)
+        above = next((j for j in range(k - 1, p.start, -1) if lines[j].text.strip()), None)
+        label = lines[above].plain if above is not None and not lines[above].block else ""
+        if label and (TEXT_POST_LABEL_RE.search(label) or matcher.says("film.now_or_text", label)
+                      or matcher.says("film.not_filming", label)):
+            return "\n".join(ln.text for ln in lines[k + 1:box_end] if not ln.fence)
+        k = box_end
+    caption = _film_caption(film, p, bound)
+    if caption is None:
+        return None
+    start, stop = caption
+    text = [ln.text for ln in lines[start + 1:stop] if not ln.fence]
+    if not lines[start].fence:                        # "Caption: …" with the caption on its label line
+        text.insert(0, lines[start].plain.split(":", 1)[1] if ":" in lines[start].plain else "")
+    first = next((m.group(1).strip() for j in range(p.start + 1, start) for m in [FIRST_LINE_RE.match(lines[j].plain)]
+                  if m and not lines[j].block), "")
+    return "\n".join([first] + text)
 
 
 def check_day0_shape(run: Run) -> dict:
@@ -3844,10 +4117,12 @@ def check_day0_shape(run: Run) -> dict:
     - YOUR WORD (map.word) is the CTA's {KEYWORD} (cta.default / cta.quiet): the keyword at the head of its value
       (word_head: quotes, a leading "the" and a source or spelling note left out);
     - KNOWN FOR (map.known) within [day0] known_for_max_<edition> words / tiếng;
-    - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list; in VN,
-      a list_size that counts Zalo contacts is a Zalo list, and a Zalo message (or an email) is its piece;
+    - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list (VN also
+      by its size, "email thì có 250 người", or the card's "list_size: email 250 · …"; G38); in VN, a list_size that
+      counts Zalo contacts is a Zalo list, and a Zalo message (or an email) is its piece;
     - each public Week-1 piece carries YOUR WORD outside its ask sentence (§CM-WEEK 4 "keyword once in the body, plus
-      the ask"; EN and VN), and so does FILM TODAY's script and caption (film_today_piece; review retest-vg3-g4 G30);
+      the ask"; EN and VN), and so does FILM TODAY's script and caption (film_today_piece; review retest-vg3-g4 G30),
+      and, on its own, FILM TODAY's text version, first line + caption (film_text_version; review retest-vg4-g5 G36);
     - the card top (every line from card.title or card.visible.what to card.machine.heading; without the heading,
       the title and .what / .how lines) ≤ [day0] brand_card_visible_max_chars, and outside the copy box;
     - the whole card (the top, then the machine block) ≤ platform/targets.toml [budgets.brand_card];
@@ -3922,6 +4197,14 @@ def check_day0_shape(run: Run) -> dict:
                 zalo_list = True
             else:
                 named = True
+        elif not m:                         # "list_size: email 250 · Zalo khoảng 380": each list by name (G38)
+            value = re.search(r"\blist_size\b\W{0,3}([^|\n]*)", block)
+            for pair in LIST_PAIR_RE.finditer(value.group(1) if value else ""):
+                if int(re.sub(r"\D", "", pair.group(2)) or 0) > 0:
+                    if re.match(r"zalo", pair.group(1), re.I):
+                        zalo_list = zalo_list or run.lang == "vn"
+                    else:
+                        named = True
     zalo_list = zalo_list and not named
     week = [r for r in run.replies if film is not None and r.index > film.index
             and (card is None or r.index < card.index or (r is card and r.pieces))]
@@ -3976,6 +4259,15 @@ def check_day0_shape(run: Run) -> dict:
         ev.append(f'{_turn(film)}: {_piece_name(piece) or "FILM TODAY"} carries YOUR WORD "{word}" {where} '
                   "(keyword once in the script or caption, plus the ask)")
     item("FILM TODAY carries YOUR WORD outside its ask", ev, ran=piece is not None)
+
+    # FILM TODAY's text version (first line + caption) carries it on its own: the coach posts it without the script
+    # (§CM-FORMATS 7, K40 / VK-34; review retest-vg4-g5 G36)
+    ev, text = [], film_text_version(run, film) if film and word else None
+    if text is not None and not _keyword_outside_ask(Piece(film.turn, 0, 0, "", "", text), word, run.lang):
+        where = "only in the ask" if ck.keyword_count(text, word) else "nowhere"
+        ev.append(f'{_turn(film)}: FILM TODAY\'s text version carries YOUR WORD "{word}" {where} (first line + '
+                  "caption, posted without the script: keyword once outside the ask)")
+    item("FILM TODAY's text version carries YOUR WORD outside its ask", ev, ran=text is not None)
 
     # the card: its top ≤ 500 characters and outside the copy box; the whole card ≤ its budget; the save line
     limit = int(day0.get("brand_card_visible_max_chars", CARD_VISIBLE_MAX_CHARS))

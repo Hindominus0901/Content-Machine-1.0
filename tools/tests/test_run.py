@@ -152,6 +152,25 @@ class RunPackets(TempRepo):
         self.assertIn("one coach turn per send", step2)
         self.assertNotIn("one coach turn each", step2)
 
+    def test_protocol_states_the_soft_cut(self):
+        """Retest VG4/G5 §8 P15: the round brief told the VN simulators "about 1,500 tiếng"; the packet now states the
+        kit's cut from acceptance.toml [day0] (~1,200, pasted posts left out), so a simulator files no kit break over
+        a brief that disagrees with the kit."""
+        step2 = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        self.assertIn("The kit cuts the dump softly past about 1,200 words of your talk, your pasted posts not counted "
+                      "(acceptance.toml [day0]).", step2)
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\ndump_cut_words_vn = 1100\n")
+        self.write("evals/personas/vn/test-vn/persona.toml", 'id = "test-vn"\nedition = "vn"\n')
+        made = self.packets(edition="vn", tag="vn")
+        step2 = " ".join((made[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        self.assertIn("past about 1,100 tiếng of your talk, your pasted posts not counted", step2)
+        # the repo's own thresholds: about 1,200 for both editions, pasted posts left out
+        repo = run.load_toml(REPO / "evals" / "acceptance.toml")["day0"]
+        self.assertEqual((repo["dump_cut_words_en"], repo["dump_cut_words_vn"]), (1200, 1200))
+        text = (REPO / "evals" / "acceptance.toml").read_text(encoding="utf-8")
+        self.assertIn("pasted posts left out", text)
+        self.assertIn("~1,200 tiếng", text)
+
     def test_s0_has_no_method_file(self):
         made = self.packets(lane="S0")
         self.assertEqual([p.name for p in (made[0] / "packet" / "kit").iterdir()], ["1-INSTRUCTIONS.txt"])
@@ -296,6 +315,35 @@ class Protocol(TempRepo):
         self.assertTrue(run.check_pace(slow, pdir)["pass"])
         away = [dict(fast[0]), dict(fast[1], t_min=40.0, away_min=38.5)]
         self.assertFalse(run.check_pace(away, pdir)["pass"])
+
+    def test_pace_pasted_posts_are_not_dictated(self):
+        """Retest VG4/G5 §8 P14: Tuấn's W2 repeats a dump line, so one shared 12-gram made the W1+W2 paste read as 135
+        dictated words; pasted posts leave the dictation test and take ≥0.5 min each instead."""
+        line = "căn nào hợp là do con số chứ hổng phải do cái rèm nhà mẫu nha bạn"
+        chunk = " ".join(f"chữ{i}" for i in range(200)) + " " + line
+        self.write("evals/personas/vn/test-vn/answers.md", f"## Dump chunk 1\n{chunk}\n\n## Answer bank\nx\n")
+        w1 = "Tính trước rồi hẵng cọc nha. Sáng thứ Bảy có chị gọi mình từ trong toilet nhà mẫu, nói nhỏ xíu."
+        w2 = f"Nói thiệt nè, tui bán bảo hiểm, tui có nhận hoa hồng. {line.capitalize()}. Ai sắp cọc thì inbox tui."
+        self.write("evals/personas/vn/test-vn/written-posts.md", f"# Bài\n\n## W1 · TikTok\n\n{w1}\n\n## W2 · FB\n\n{w2}\n")
+        pdir = self.root / "evals" / "personas" / "vn" / "test-vn"
+
+        def pace(text: str, minutes: float) -> dict:
+            rows = [{"turn": 4, "role": "machine", "text": "Em nhận rồi.", "t_min": 9.5},
+                    {"turn": 5, "role": "coach", "text": text, "t_min": 9.5 + minutes}]
+            return run.check_pace(rows, pdir)
+
+        paste = f"{w1}\n\n{w2}"
+        tuan = pace(paste, 0.7)                                  # two posts in 0.7 min: still short, for the right reason
+        self.assertEqual(tuan["evidence"], ["turn 5: 2 pasted posts in 0.7 min (needs ≥1.0 at 0.5 min a post)"])
+        self.assertTrue(pace(paste, 1.0)["pass"])
+        self.assertTrue(pace("2 bài mình viết:\n\n" + paste, 1.1)["pass"])       # a short intro line is no dictation
+        # a dictated chunk with a post pasted after it: the chunk's words at 160 wpm plus 0.5 min for the post
+        both = pace(f"{chunk}\n\n{w1}", 1.5)
+        self.assertEqual(both["evidence"], ["turn 5: 217 dictated words and 1 pasted post in 1.5 min (needs ≥1.9 at "
+                                            "160 wpm, 0.5 min a post)"])
+        self.assertTrue(pace(f"{chunk}\n\n{w1}", 1.9)["pass"])
+        self.assertFalse(pace(chunk, 1.0)["pass"])               # dictation alone keeps its old reading
+        self.assertEqual(pace(chunk, 1.0)["evidence"], ["turn 5: 217 dictated words in 1.0 min (needs ≥1.4 at 160 wpm)"])
 
     def test_leaks_fail_in_voice_fields_and_warn_elsewhere(self):
         self.write("evals/personas/en/test-coach/voice-samples.md",

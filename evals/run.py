@@ -241,8 +241,10 @@ answer keys for the graders) and never let them shape a turn.
    `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
    or 2, the way this coach would. If the dump prompt asks where you post and about your list, and the
    persona's answer is in a later chunk, add it as one sentence at the end of chunk 1 (VP-2). Then say you are
-   done in your own words ("done", "ok that's it"). If the machine says the dump is enough, or asks you to wrap
-   up, say done there and skip what is not yet dictated (the machine then asks only what it is missing).
+   done in your own words ("done", "ok that's it"). The kit cuts the dump softly past about {cut} of your
+   talk, your pasted posts not counted (acceptance.toml [day0]). If the machine says the dump is enough, or asks
+   you to wrap up, say done there and skip what is not yet dictated (the machine then asks only what it is
+   missing).
 3. After the dump, answer only what the machine asks, one answer per question, from `## Answer bank`, in
    the persona's style. Say "skip" when the answer bank has nothing and the behaviour fits.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
@@ -332,8 +334,10 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
             pdir = root / "evals" / "personas" / edition / pid
             accept = load_toml(root / "evals" / "acceptance.toml").get("day0", {})
             app, plan = persona_app(pdir)
+            cut = int(accept.get(f"dump_cut_words_{edition}", graders.DUMP_CUT_WORDS))     # review retest-vg4-g5 P15
             coach = COACH_DAY0.format(persona=pid, edition=edition, pdir=rel(pdir, root),
                                       start=strings.get("cmd.start", "Start"),
+                                      cut=f"{cut:,} {'tiếng' if edition == 'vn' else 'words'}",
                                       max_turns=int(accept.get("session_max_turns", 10)) + 4,
                                       app=APP_NAMES.get(app, app or "the app"), plan=plan or "unknown plan")
             for n in range(1, repeat + 1):
@@ -509,6 +513,7 @@ def check_case(case: dict, run, report: dict | None = None) -> dict:
 
 WORD_RE = re.compile(r"[^\W_]+(?:['’][^\W_]+)*")
 DICTATION_MAX_WPM = 160          # 130 wpm modelled, with slack
+PASTE_MIN_PER_POST = 0.5         # minutes per pasted written post (COACH.md "a pasted post takes about half a minute")
 LEAK_N = {"en": 6, "vn": 8}      # words / tiếng in a run shared with the persona files
 
 
@@ -563,20 +568,51 @@ def _dump_runs(pdir: Path, n: int = 12) -> set[str]:
     return set().union(*(_grams(_words(c), n) for c in chunks)) if chunks else set()
 
 
+def _written_posts(pdir: Path) -> list[tuple[str, str]]:
+    """(id, body) of the persona's written-posts.md sections ("W1", …)."""
+    path = pdir / "written-posts.md"
+    return graders.written_post_sections(path.read_text(encoding="utf-8")) if path.exists() else []
+
+
+def _split_pasted(text: str, posts: list[tuple[str, set]]) -> tuple[list[str], set[str]]:
+    """(the turn's other paragraphs, the ids of the written posts it pastes): a paragraph mostly made of a written
+    post's runs is that post pasted (graders.is_pasted_post, the POST_RUN test dump_cut uses); a post that runs over
+    several paragraphs counts once."""
+    every = set().union(*(runs for _, runs in posts)) if posts else set()
+    talk, pasted = [], set()
+    for para in graders._paragraphs(nfc(text)):
+        if every and graders.is_pasted_post(para, every):
+            pasted.add(max(posts, key=lambda p: graders.run_coverage(para, p[1])[0])[0])
+        else:
+            talk.append(para)
+    return talk, pasted
+
+
 def check_pace(rows: list[dict], pdir: Path) -> dict:
-    """A dictated dump chunk takes at least words / 160 minutes of active time (t_min minus away_min)."""
+    """A dictated dump chunk takes at least words / 160 minutes of active time (t_min minus away_min). The coach's
+    pasted written posts (written-posts.md) are not dictated words: their paragraphs are left out of the words and of
+    the dictation test, and each pasted post takes at least PASTE_MIN_PER_POST minutes instead (COACH.md: "a pasted post
+    takes about half a minute"; review retest-vg4-g5 P14: one line of a pasted post shared with the dump made a whole
+    paste turn read as dictation)."""
     dump = _dump_runs(pdir)
+    posts = [(sid, graders.post_runs([body])) for sid, body in _written_posts(pdir)]
     ev, prev = [], None
     for r in rows:
         t = r.get("t_min")
-        if r.get("role") == "coach" and dump and t is not None and prev is not None:
-            words = _words(r.get("text", ""))
-            if _grams(words, 12) & dump:
+        if r.get("role") == "coach" and t is not None and prev is not None:
+            talk, pasted = _split_pasted(r.get("text", ""), posts)
+            words = _words("\n\n".join(talk))
+            dictated = bool(dump) and bool(_grams(words, 12) & dump)
+            if dictated or pasted:
                 active = float(t) - float(prev) - float(r.get("away_min") or 0)
-                need = len(words) / DICTATION_MAX_WPM
-                if active < need:
-                    ev.append(f"turn {r.get('turn')}: {len(words)} dictated words in {active:.1f} min "
-                              f"(needs ≥{need:.1f} at {DICTATION_MAX_WPM} wpm)")
+                need = (len(words) / DICTATION_MAX_WPM if dictated else 0.0) + PASTE_MIN_PER_POST * len(pasted)
+                if round(active, 2) < round(need, 2):
+                    what = " and ".join(([f"{len(words)} dictated words"] if dictated else [])
+                                        + ([f"{len(pasted)} pasted post{'s' if len(pasted) > 1 else ''}"]
+                                           if pasted else []))
+                    rate = ", ".join(([f"{DICTATION_MAX_WPM} wpm"] if dictated else [])
+                                     + ([f"{PASTE_MIN_PER_POST:g} min a post"] if pasted else []))
+                    ev.append(f"turn {r.get('turn')}: {what} in {active:.1f} min (needs ≥{need:.1f} at {rate})")
         if t is not None:
             prev = t
     return _protocol("pace", ev)

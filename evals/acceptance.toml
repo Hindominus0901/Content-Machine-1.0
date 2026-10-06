@@ -27,8 +27,8 @@ film_ready_max_minutes = 20
 # its budget is a warning when the machine cut on time and the coach's own talk accounts for the overrun: they
 # chose to keep talking after the cut, or the send the cut answered ran long past this threshold. With no cut, a
 # late one, or minutes left over that the coach's talk does not cover (the machine's own turns), it stays a failure.
-dump_cut_words_en = 1200
-dump_cut_words_vn = 1200
+dump_cut_words_en = 1200                  # ~1,200 words of talk; evals/run.py's COACH.md quotes both (P15)
+dump_cut_words_vn = 1200                  # ~1,200 tiếng, pasted posts left out (lowered from 1,500 after VG2)
 film_ready_max_minutes_from_email = 30
 # No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
 session_max_minutes = 40
@@ -83,7 +83,7 @@ bold_max = 0                              # **…** in a piece (guide §9.3: a f
 emoji_line_max = 2                        # lines opening with an emoji in a piece (guide §9.3: flag from 3)
 ai_emoji = ["🚀", "💡", "✨", "🎯", "🌟"]   # in a piece only if the coach's own written-posts.md uses it (guide §9.3, §4.9)
 em_dash_max = 0                           # "—" in a piece, unless their own posts use it (guide §2.5 P4, §10.2 item 5)
-particle_share_ratio_min = 0.4            # sentences ending in a particle, run vs their written-posts.md (guide §9.3:
+particle_share_ratio_min = 0.5            # sentences ending in a particle, run vs their written-posts.md (guide §9.3:
                                           #   below half of theirs; §4.6: their posts 36%, range 6-64% across the six
                                           #   personas, AI without the pack 11%)
 particle_share_floor = 0.1                # no written-posts.md: below this share (guide: 1/3 for captions and messages;

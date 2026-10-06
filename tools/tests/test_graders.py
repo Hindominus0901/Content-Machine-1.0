@@ -1502,8 +1502,8 @@ class VnNaturalTests(TempRepo):
         report, item = self.vn(flat)
         self.assertEqual(item["details"]["coach_particle_share"], 0.5)
         self.assertFails(report, "vn_natural", "pieces end 0 of 12 sentences with a particle (0%); their own posts 50%")
-        warm = flat + "\nTối nay thử nhé.\nXong nhắn mình nha.\nMột cột thôi á."
-        self.assertPasses(self.vn(warm)[0], "vn_natural")                         # 3 of 15 = 20% ≥ 40% of 50%
+        warm = flat + "\nTối nay thử nhé.\nXong nhắn mình nha.\nMột cột thôi á.\nLàm thử đi nha."
+        self.assertPasses(self.vn(warm)[0], "vn_natural")                         # 4 of 16 = 25% ≥ 50% of 50%
         short = "\n".join(f"Hôm thứ {k} mình ngồi cộng sổ cho một chị bán đồ bộ." for k in range(2, 8))
         self.assertPasses(self.vn(short)[0], "vn_natural")                        # 6 sentences: not compared
         self.assertTrue(graders._particle_end("Dạ chị, sơn gel bên em 150k nha chị."))
@@ -1728,10 +1728,10 @@ class G1RoundGraderTests(TempRepo):
         report = self.day0(("coach", "next"), ("machine", WEEK_REPLY), ("coach", "ok"), ("machine", CARD_REPLY))
         shape = self.inv(report, "day0_shape")
         self.assertPasses(report, "day0_shape")
-        # FILM TODAY, YOUR WORD, KNOWN FOR, email (no list named), keyword outside the ask (Week 1, FILM TODAY), card
-        # top, whole card, save line, placeholders, "Shorter" (not asked)
+        # FILM TODAY, YOUR WORD, KNOWN FOR, email (no list named), keyword outside the ask (Week 1, FILM TODAY, its
+        # text version), card top, whole card, save line, placeholders, "Shorter" (not asked)
         self.assertEqual([i["pass"] for i in shape["items"]],
-                         [True, True, True, None, True, True, True, True, True, True, None])
+                         [True, True, True, None, True, True, True, True, True, True, True, None])
 
     def test_g8_film_today_box_quiet_and_your_word(self):
         floor = FILM_REPLY.replace("```\n", "").replace("    ```", "").replace("(quieter: say 'quiet')", "")
@@ -2797,6 +2797,293 @@ class VG3RoundGraderTests(TempRepo):
         quick = self.long_run(film_at=19.0)
         self.assertIs(quick["pass"], True)
         self.assertFalse([w for w in quick.get("warnings", []) if w.startswith("film-ready")])
+
+
+VG4_STRINGS = dict(VG2_STRINGS, **{
+    # the kit after review retest-vg4-g5 (6e61e51): VK-33 ends both asks with "nhé"; the text post is offered in a line
+    "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift} nhé.",
+    "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift} nhé.",
+    "film.now_or_text": "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.",
+    "film.not_filming": "Hôm nay không quay thì đăng caption thành bài chữ.",
+    "cta.by_hand": "Tin trả lời phải gửi bằng tay.",
+})
+# The coach's written posts: W1 and W2 end their sentences on a particle, W3 (a Zalo reply) never does.
+VG4_POSTS = """# Bài Khoa từng viết
+
+## W1 · Bài Facebook
+
+Tối hôm trước tôi ngồi với một anh chủ quán hải sản, mười giờ đêm, quán vừa dọn xong nghe.
+Anh hỏi tôi đăng tin ở đâu cho ra người, tôi hỏi lại anh tuyển em đó mất bao lâu nha.
+
+## W2 · Bài LinkedIn
+
+Tuyển mười lăm phút thì người ta ở mười lăm ngày, cái chính không nằm ở chỗ đăng tin nghe.
+Viết phiếu việc một trang trước khi đăng tin tuyển, đừng chép mô tả công việc trên mạng về nha.
+
+## W3 · Tin Zalo
+
+Dạ anh, tôi gửi anh mẫu phiếu việc. Anh coi rồi nhắn tôi. Tôi ngồi với anh một buổi. Có gì anh cứ hỏi. Tuần sau tôi rảnh.
+"""
+
+
+class VG4RoundGraderTests(TempRepo):
+    """Grader fixes from the VG4 / G5 retest (qa/runs/retest-vg4-g5/review.md §4 and §8, G31-G38), the founder's
+    DECISIONS rule that the written posts add no extra turn (wf14 V3), and the kit changing at the same time (VK-33's
+    "nhé" in cta.*): every false positive the review found must pass, every real defect must still fail. Kit wording
+    comes from strings/<edition>.toml."""
+
+    CHUNK = VG2RoundGraderTests.CHUNK
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", VG4_STRINGS))
+        self.write("strings/en.toml", toml_table("strings", dict(EN_STRINGS, **{"dump.enough": EN_CUT})))
+        self.write("evals/personas/vn/khoa/persona.toml", VG_PERSONA)
+        self.write("evals/personas/vn/khoa/expected.toml", VG_EXPECTED)
+        self.write("evals/personas/vn/khoa/answers.md", f"## Dump chunk 1\n{self.CHUNK}\n")
+        self.write("evals/personas/vn/khoa/written-posts.md", VG4_POSTS)
+
+    def posts(self, *ids: str) -> str:
+        sections = dict(graders.written_post_sections(VG4_POSTS))
+        return "\n\n".join(sections[i] for i in ids)
+
+    def vn(self, *extra, map_reply=VG_MAP, **kw):
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", map_reply)] \
+            + list(extra)
+        return self.grade(turns, persona="vn/khoa", edition="vn", suite="day0", **kw)
+
+    def week(self, body: str) -> str:
+        return f"{TAG}Tuần 1\n{body}\nTIẾP → Nhắn 'tiếp'."
+
+    def item(self, report: dict, check: str, name: str) -> dict:
+        return next(i for i in self.inv(report, check)["items"] if i["item"].startswith(name))
+
+    # -- G31: a coach turn that is mostly pasted posts does not count toward the Map turn budget (DECISIONS wf14 V3)
+    def map_run(self, sends: list[str]) -> dict:
+        """Start, xưng hô, the dump prompt, then `sends` (each acknowledged) and the Map in reply to the last one."""
+        turns = [("coach", "Bắt đầu"), ("machine", f"{TAG}Bắt đầu\nGọi bạn là anh, chị hay bạn?\nTIẾP → Gõ một chữ."),
+                 ("coach", "anh"), ("machine", VG_PROMPT)]
+        for k, send in enumerate(sends):
+            turns.append(("coach", send))
+            turns.append(("machine", VG_MAP if k == len(sends) - 1 else f"{TAG}Xả ý\nEm nhận rồi.\nTIẾP → Kể tiếp."))
+        return self.inv(self.grade(turns, persona="vn/khoa", edition="vn", suite="day0"), "day0_timing")
+
+    def test_g31_posts_only_turn_is_not_a_map_turn(self):
+        pasted = "2 bài tôi viết:\n\n" + self.posts("W1", "W2")
+        # Hạnh and consultant VN: 3 dump sends, the posts, 2 answers: the Map at coach turn 8, 7 without the posts
+        # (the posts are transcript row 7: rows number coach and machine turns alike here)
+        ok = self.map_run([self.CHUNK, pasted, self.CHUNK, self.CHUNK, "Đúng.", "Gói 3 tháng."])
+        self.assertFalse([e for e in ok["evidence"] if e.startswith("Map after")], ok)
+        self.assertEqual((ok["details"]["map_coach_turns"], ok["details"]["map_posts_only_turns"]), (7, [7]))
+        # a dump send in its place still counts: 8 turns (max 7)
+        talk = self.map_run([self.CHUNK, self.CHUNK, self.CHUNK, self.CHUNK, "Đúng.", "Gói 3 tháng."])
+        self.assertIn("Map after 8 coach turns (max 7)", talk["evidence"])
+        self.assertNotIn("map_posts_only_turns", talk["details"])
+        # one turn more than the budget, the posts left out: still a failure, and it says what was left out
+        late = self.map_run([self.CHUNK, pasted, self.CHUNK, self.CHUNK, self.CHUNK, "Đúng.", "Gói 3 tháng."])
+        self.assertIn("Map after 8 coach turns (max 7; posts-only turn 7 not counted)", late["evidence"])
+        # a post pasted inside a dictated chunk is a dump send: the turn counts
+        mixed = self.map_run([self.CHUNK, f"{self.CHUNK} {self.CHUNK}\n\n{self.posts('W1')}", self.CHUNK, self.CHUNK,
+                              "Đúng.", "Gói 3 tháng."])
+        self.assertIn("Map after 8 coach turns (max 7)", mixed["evidence"])
+
+    # -- G32: an early win in the reply to the coach's first send is a warning however close the send came to the limit
+    def win_run(self, first: float, win_on_first: bool = True) -> dict:
+        prompt = (f"{TAG}Setup check\nGot posts or messages you've written? Paste 2–3 too, or send a link to your "
+                  "page.\nNEXT → Talk.")
+        win = f"{TAG}Your talk\nGot it. A line worth money:\n```\nThe bank app is not a forecast.\n```\nNEXT → Keep going."
+        turns = [("coach", "Start", {"t_min": 0.0}), ("machine", prompt, {"t_min": 1.0}),
+                 ("coach", ANSWERS, {"t_min": 1.0 + first})]
+        t = 1.3 + first
+        if not win_on_first:
+            turns += [("machine", f"{TAG}Your talk\nGot it.\nNEXT → Keep going.", {"t_min": t}),
+                      ("coach", ANSWERS, {"t_min": t + 1.0})]
+            t += 1.3
+        turns += [("machine", win, {"t_min": t}), ("coach", "done", {"t_min": t + 0.5}),
+                  ("machine", MAP_REPLY, {"t_min": t + 0.8}), ("coach", "ok", {"t_min": t + 1.5}),
+                  ("machine", FILM_REPLY, {"t_min": t + 1.8})]
+        return self.inv(self.grade(turns, suite="day0"), "day0_timing")
+
+    def test_g32_early_win_on_the_first_send_is_a_warning(self):
+        tuan = self.win_run(first=4.0)                      # Tuấn: first send at 4.0 of 4, the copy box at 4.3
+        self.assertIs(tuan["pass"], True, tuan)
+        self.assertIn("early win 4.3 active minutes after the dump started (max 4): in the reply to the coach's first "
+                      "send, which came at minute 4 (the kit asks 2-3)", tuan["warnings"])
+        late = self.win_run(first=2.5, win_on_first=False)   # the machine let the first send go by: still a failure
+        self.assertIs(late["pass"], False)
+        self.assertIn("turn 6: early win 4.1 active minutes after the dump started (max 4)", late["evidence"])
+
+    # -- G33: the Southern "hổng phải" / "hông phải" negates a banned claim like "không phải"
+    def test_g33_southern_negation(self):
+        for line in ("Chuyện của một nhà thôi, kết quả tuỳ người, hổng phải cam kết.", "Kết quả hông phải cam kết nha."):
+            with self.subTest(line=line):
+                said = self.week(f"N3 · Bài\n```\nTuyển hoài mà không giữ được ai. {line}\n```")
+                self.assertPasses(self.vn(("coach", "ok"), ("machine", said)), "I11")
+        claim = self.week("N3 · Bài\n```\nTui cam kết anh chị giữ được người, hổng tin thì thôi.\n```")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", claim)), "I11", '"cam kết"')
+
+    # -- G34: a Map topic reprinted in a Week-1 heading or the card top is the Map's, not a decision prompt
+    def test_g34_map_topic_in_a_heading(self):
+        topics = VG_MAP.replace("Người mới quyết nghỉ sớm", "Người mới quyết định nghỉ từ tuần đầu")
+        heading = self.week("TUẦN 1 · 07/10 – 13/10 · Người mới quyết định nghỉ từ tuần đầu\n\nN1 · Bài\n```\n"
+                            "Tuyển hoài mà không giữ được ai.\n```")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", heading), map_reply=topics), "I6")
+        ask = heading.replace("TUẦN 1 · 07/10 – 13/10 · Người mới quyết định nghỉ từ tuần đầu",
+                              "Người mới quyết định nghỉ từ tuần đầu: anh chọn quay hay viết bài chữ?")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", ask), map_reply=topics), "I6", "2 decision prompts")
+        other = heading.replace("Người mới quyết định nghỉ từ tuần đầu", "Anh quyết định giúp em lịch đăng")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", other), map_reply=topics), "I6", "2 decision prompts")
+
+    # -- G35: a piece ends at its copy box; a bare label line or the card starts the next block
+    WEEK_N3 = ("N3 · thứ Hai 12/10 · 20 giây\n```\nChữ trên màn hình: Anh hỏi tiền ngân hàng trước\n"
+               "Câu đầu: Anh khách nằm viện, chân bó bột.\nCaption:\nMua cái để che, đừng mua cái để lời.\n"
+               "Nhắn tôi chữ TUYỂN HOÀI, tôi gửi mẫu phiếu việc 1 trang.\n```\n\n"
+               "Tin trả lời inbox 1\n```\nTôi gửi anh mẫu phiếu việc đây. Anh tuyển hoài chỗ nào?\n```\n\n"
+               "Căn hộ của anh: em để ở tin trả lời inbox 1, nhà nào cần thì mời.\n\n"
+               "Brand Card v1 · 06/10/2026\nNÓI GÌ: Chủ doanh nghiệp tuyển hoài thì tìm tôi · \"TUYỂN HOÀI\"\n"
+               "NÓI THẾ NÀO: thẳng · thật\nPhần còn lại là cho máy, không cần đọc:\n```\nversion: 1\n```\n"
+               "Lưu lại để em nhớ anh (30 giây): bấm ⋯ dưới card → Lưu vào dự án. Dự phòng: gửi card vào Zalo.")
+
+    def test_g35_piece_boundaries(self):
+        week = self.week(self.WEEK_N3)
+        run = graders.load_run(self.run_dir([("coach", "ok"), ("machine", week)], persona="vn/khoa", edition="vn"),
+                               self.root)
+        pieces = run.replies[0].pieces
+        self.assertEqual([p.title for p in pieces], ["N3 · thứ Hai 12/10 · 20 giây", "Tin trả lời inbox 1"])
+        self.assertTrue(pieces[0].body.rstrip().endswith("tôi gửi mẫu phiếu việc 1 trang."), pieces[0].body)
+        self.assertNotIn("NÓI GÌ", pieces[1].body)
+        self.assertNotIn("Căn hộ", pieces[1].body)
+        # Tuấn's N3: the keyword only in the ask, the card top's "tuyển hoài" no longer hides it
+        report = self.vn(("coach", "ok"), ("machine", week))
+        self.assertFails(report, "day0_shape", 'turn 6: N3 carries YOUR WORD "tuyển hoài" only in the ask')
+        body = week.replace("Mua cái để che", "Tuyển hoài thì mua cái để che")
+        self.assertIs(self.item(self.vn(("coach", "ok"), ("machine", body)), "day0_shape", "each Week-1")["pass"], True)
+        # "Ai nhắn … · Tin trả lời inbox 1 (…)" is a label too, not talk to the coach (I15 reads talk)
+        label = week.replace("Tin trả lời inbox 1\n", 'Ai nhắn TUYỂN HOÀI · Tin trả lời inbox 1 (người nhắn là chị thì '
+                                                      'đổi "anh" thành "chị")\n')
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", label)), "I15")
+        # EN: "Caption for it:" right under the script box is the same piece; "DM reply 1" starts the next
+        en = (f"{TAG}Week 1\nMon, Oct 19 · short video\n```\nFirst line: The bank app is not a forecast.\n```\n"
+              "Caption for it:\n```\nYour next chapter or not, the bank app shows yesterday.\nComment CHAPTER and "
+              "I'll send you the check.\n```\n\nDM reply 1\n```\nThanks for commenting. Here's the check.\n```\n"
+              "NEXT → ok")
+        run = graders.load_run(self.run_dir([("coach", "go"), ("machine", en)]), self.root)
+        pieces = run.replies[0].pieces
+        self.assertEqual([p.title for p in pieces], ["Mon, Oct 19 · short video", "DM reply 1"])
+        self.assertIn("Your next chapter or not", pieces[0].body)
+        self.assertNotIn("Thanks for commenting", pieces[0].body)
+
+    # -- G36: FILM TODAY's text version (first line + caption) carries the keyword outside the ask on its own
+    def test_g36_film_today_text_version(self):
+        name = "FILM TODAY's text version"
+        # the review's consultant VN: the script carries "tuyển hoài" (G30 passes), the text post only in its ask
+        script = VG_MAP.replace("Chữ trên màn hình: Còn dư 40 bao lì xì", "Chữ trên màn hình: Tuyển hoài? Còn dư 40 bao")
+        report = self.vn(map_reply=script)
+        self.assertIs(self.item(report, "day0_shape", "FILM TODAY carries YOUR WORD")["pass"], True)
+        self.assertFails(report, "day0_shape", 'turn 4: FILM TODAY\'s text version carries YOUR WORD "tuyển hoài" only '
+                                               "in the ask (first line + caption")
+        # a box of its own under "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết:" is the text version
+        box = script.replace("    Muốn kết nhẹ hơn",
+                             "    Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết:\n    ```\n"
+                             "    Tôi tuyển hoài mà không giữ được ai, anh chủ quán nói vậy.\n"
+                             "    Anh chị nào cần thì comment TUYỂN HOÀI hay nhắn riêng, tôi gửi mẫu phiếu việc 1 trang.\n"
+                             "    ```\n    Muốn kết nhẹ hơn")
+        self.assertIs(self.item(self.vn(map_reply=box), "day0_shape", name)["pass"], True)
+        only_ask = box.replace("Tôi tuyển hoài mà không giữ được ai, anh chủ quán nói vậy.", "Anh chủ quán nói vậy.")
+        self.assertIs(self.item(self.vn(map_reply=only_ask), "day0_shape", name)["pass"], False)
+        # a caption labelled as the text post is the text version; its first line may carry the keyword
+        labelled = script.replace("    Caption:\n", "    Caption (đăng chữ thì dùng nguyên khung này):\n") \
+            .replace("Mùng 8 Tết tôi đứng ở cổng xưởng", "Tuyển hoài thì nhớ Mùng 8 Tết tôi đứng ở cổng xưởng")
+        self.assertIs(self.item(self.vn(map_reply=labelled), "day0_shape", name)["pass"], True)
+        # EN: no text box, so the first line + caption; the on-screen text is not posted as text
+        base = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok")]
+        self.assertIs(self.item(self.grade(base + [("machine", FILM_REPLY)], suite="day0"), "day0_shape",
+                                name)["pass"], True)
+        onscreen = FILM_REPLY.replace("On-screen: 63 applications. 2 interviews.", "On-screen: Your next chapter.") \
+            .replace("Your next chapter starts with a coffee.", "It starts with a coffee.")
+        report = self.grade(base + [("machine", onscreen)], suite="day0")
+        self.assertIs(self.item(report, "day0_shape", "FILM TODAY carries YOUR WORD")["pass"], True)
+        self.assertFails(report, "day0_shape", 'FILM TODAY\'s text version carries YOUR WORD "chapter" only in the ask')
+        first = onscreen.replace('First line: "63 applications. 2 interviews."', 'First line: "A new chapter at 48."')
+        self.assertIs(self.item(self.grade(base + [("machine", first)], suite="day0"), "day0_shape", name)["pass"],
+                      True)
+
+    # -- G37: vn_natural reads the pieces only (no card, dated notes or labels), a reprinted box once, and compares
+    # with the posts the coach pasted
+    PIECES = ("N1 · Bài\n```\nChủ quán đưa tôi coi tin nhắn xin nghỉ. Em đó mới vô được hai tuần. Tuyển mười lăm phút "
+              "thì người ta ở mười lăm ngày nghe. Anh chị nào cần thì nhắn tôi chữ TUYỂN HOÀI.\n```\n\n"
+              "N2 · Bài\n```\nViết phiếu việc trước khi đăng tin. Cho làm thử hai tiếng việc thật. Có người kèm sáu "
+              "mươi ngày nha. Thứ Sáu ngồi mười lăm phút với người mới. Rồi hỏi tuần này có gì khó. Làm vậy thì giữ "
+              "được người nghe.\n```")
+    GIFT = "Gửi anh mẫu phiếu việc một trang. Ghi ba việc người mới phải làm được sau sáu mươi ngày. Ghi ai đón ngày đầu."
+
+    def natural(self, *extra, paste: bool = True, week: str = "") -> dict:
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT)]
+        if paste:
+            turns += [("coach", self.posts("W1", "W2")), ("machine", f"{TAG}Xả ý\nEm nhận rồi.\nTIẾP → Kể tiếp.")]
+        turns += [("coach", self.CHUNK), ("machine", self.week(week or self.PIECES))] + list(extra)
+        return self.inv(self.grade(turns, persona="vn/khoa", edition="vn"), "vn_natural")
+
+    def test_g37_vn_natural_reads_the_pieces_against_the_pasted_posts(self):
+        pasted = self.natural()                              # 3 of 10 sentences end on a particle (30%)
+        self.assertEqual((pasted["details"]["coach_posts"], pasted["details"]["coach_particle_share"]),
+                         (["W1", "W2"], 1.0))
+        self.assertFails({"invariants": [], "checks": [pasted]}, "vn_natural",
+                         "pieces end 3 of 10 sentences with a particle (30%); their own posts 100% (min 50% of theirs)")
+        unpasted = self.natural(paste=False)                 # nothing pasted here: all of written-posts.md (44%)
+        self.assertEqual(unpasted["details"]["coach_posts"], ["W1", "W2", "W3"])
+        self.assertIs(unpasted["pass"], True, unpasted)
+        # the card (top in a copy box), a dated note under a box and a bare label add no sentence
+        noisy = self.PIECES + ("\nLưu ý (06/10/2026): Facebook cá nhân không tự trả lời được, tin trả lời phải gửi "
+                               "bằng tay.\n\n```\nBrand Card v1 · 06/10/2026\nNÓI GÌ: Chủ doanh nghiệp tuyển hoài "
+                               "thì tìm tôi\nNÓI THẾ NÀO: thẳng · thật\nPhần còn lại là cho máy, không cần đọc:\n"
+                               "version: 1\n```")
+        self.assertEqual(self.natural(week=noisy)["details"]["sentences"], 10)
+        # the gift printed again as inbox reply 1 counts once
+        gift = self.week(f"Quà gửi người nhắn:\n```\n{self.GIFT}\n```")
+        once = self.natural(("coach", "ok"), ("machine", gift))
+        twice = self.natural(("coach", "ok"), ("machine", gift),
+                             ("coach", "tiếp"), ("machine", self.week(f"Tin trả lời inbox 1\n```\n{self.GIFT}\n"
+                                                                      "Anh đang tuyển chỗ nào?\n```")))
+        self.assertEqual(twice["details"]["sentences"], once["details"]["sentences"])
+        self.assertEqual(once["details"]["sentences"], 13)
+
+    # -- G38: VN names the email list by its size, in talk ("email thì có 250 người") or in the card's list_size
+    def test_g38_vn_email_list(self):
+        name = "Week 1 has an email"
+        said = self.CHUNK + " Email thì có 250 người gom từ mấy buổi nói chuyện."
+        none = self.week("N1 · Bài\n```\nTuyển hoài mà không giữ được ai. Nhắn tôi chữ TUYỂN HOÀI.\n```")
+        email = self.week("Thứ Năm, 08/10 · Email gửi danh sách 250 người\n```\nTiêu đề: Tuyển hoài\nChào anh chị,\n"
+                          "Tuyển hoài mà không giữ được ai.\n```")
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", said), ("machine", VG_MAP), ("coach", "ok")]
+        missing = self.grade(turns + [("machine", none)], persona="vn/khoa", edition="vn", suite="day0")
+        self.assertFails(missing, "day0_shape", "the coach named an email list, and Week 1 has no email")
+        sent = self.grade(turns + [("machine", email)], persona="vn/khoa", edition="vn", suite="day0")
+        self.assertIs(self.item(sent, "day0_shape", name)["pass"], True)
+        # the card names both lists ("list_size: email 250 · Zalo khoảng 380"): the email list wins
+        card = VG_CARD.replace("version: 1", "version: 1\nowned_channel: both\nlist_size: email 250 · Zalo khoảng 380")
+        report = self.vn(("coach", "ok"), ("machine", none), ("coach", "tiếp"), ("machine", card))
+        self.assertFails(report, "day0_shape", "the coach named an email list, and Week 1 has no email")
+        for text, want in (("email thì có 250 người", True), ("email khoảng 300 người", True),
+                           ("email thì không có", False), ("Zalo khoảng 380 người", False)):
+            with self.subTest(text=text):
+                self.assertIs(bool(graders.LIST_NAMED_RE.search(text)), want)
+
+    # -- the kit changing at the same time: VK-33's "nhé" in cta.* reads as any particle or none
+    def test_cta_particle_in_the_strings(self):
+        for end in ("1 trang.", "1 trang nhé.", "1 trang nha.", "1 trang nghe anh."):
+            with self.subTest(end=end):
+                film = VG_MAP.replace("1 trang.\n", f"{end}\n")
+                report = self.vn(map_reply=film)
+                self.assertIs(self.item(report, "day0_shape", "FILM TODAY: caption")["pass"], True)
+                self.assertIs(self.item(report, "day0_shape", "YOUR WORD is the CTA keyword")["pass"], True)
+        run = graders.load_run(self.run_dir([("coach", "x")], persona="vn/khoa", edition="vn"), self.root)
+        self.assertEqual(graders.cta_keyword(run, "Nhắn tôi chữ TUYỂN HOÀI, tôi gửi mẫu phiếu việc nha."),
+                         ("TUYỂN HOÀI", True))
+        ok = graders._slot_pattern("Chạy thử 4 tuần nhé. OK hay sửa một dòng?", "vn", anchored=False)
+        for line in ("Chạy thử 4 tuần nha anh. OK hay sửa một dòng?", "Chạy thử 4 tuần. OK hay sửa một dòng?"):
+            self.assertTrue(ok.search(line), line)
+        self.assertFalse(ok.search("Chạy thử 6 tuần nha anh. OK hay sửa một dòng?"))
 
 
 class LoaderTests(TempRepo):
