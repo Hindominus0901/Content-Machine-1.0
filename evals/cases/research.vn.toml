@@ -20,6 +20,8 @@
 # QUAY HÔM NAY under it and map.ok; any answer but a Map change brings Tuần 1 (with the Zalo "hỏi 3 khách cũ một câu"
 # message), then the Brand Card. No inventory, no 7-line check, no stop point. The root cause Quick Listen finds feeds
 # big idea 1 and prints on "tại sao?", never on the Map.
+# Budgets (acceptance [day0], graders.py day0_timing): the Map within 7 coach turns, film-ready by active minute 20, at
+# most 10 coach turns, 0 detours between Start and Day 0's last reply; research never adds a Day-0 turn.
 #
 # Conventions (read with evals/README.md "Case files"):
 # - Assertions run on the machine reply to the last coach turn; lines starting "[turn n]" separate several coach turns.
@@ -519,7 +521,7 @@ kind = "P"
 persona = "coldstart-coach"
 lanes = ["S1"]
 title = "Starter brief for a cold start passes the Starter bar honestly"
-context = "Same state as research.vn.022. The judge reads the Starter brief."
+context = "Research Hour, route C (no clients; GROW file added). ChatGPT Free project with the method file, pair bạn–mình. Coach interview Part C answered (tagged HYPOTHESIS), listening turn 1 on research-paste.md done, one why turn done. The Starter brief is next; the judge reads it (the state of research.vn.022, spelled out because the simulator sees only this case)."
 input = """ok viết brief đi, mình đọc liền"""
 standard = "research-brief"
 critical = ["RB1", "RB9"]
@@ -676,7 +678,7 @@ context = "Day 0, Door B, ChatGPT Free, pair chị–em; she talks to her studen
 input = """[turn 1] ok em, tối chị quay
 [turn 2] <<simulator: only if part of Week 1 is still to come, send 'tiep em'; otherwise stop>>"""
 regex = [
-  '''(?s)```(?:(?!```).)*Hồi mới tìm đến chị, em đang loay hoay nhất chuyện gì\?(?:(?!```).)*```''',
+  '''(?s)```(?:(?!```).)*Hồi mới tìm (?:đến|tới) chị,? em đang loay hoay nhất chuyện gì\?(?:(?!```).)*```''',
   '''(?i)(?:gửi riêng|hỏi|nhờ|nhắn) 3 (?:em|khách cũ|học viên|chị em)''',
 ]
 not_regex = [

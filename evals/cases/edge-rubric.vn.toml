@@ -1,57 +1,102 @@
-# evals/cases/edge-rubric.vn.toml · Edge Check v2 for the VN edition: the five pillars (keyword,
-# value, authority, authenticity, character & polarity), the hard gates G1 polarity / G2 truth /
-# G3 voice, the borrowed-attractor detector, the Micro class, generic mode, the one-line verdict
-# (≤20 words, a Bank item as evidence, the coach's pronoun pair), "tại sao?", "sửa N2", "cứ đăng".
-# Sources: docs/research/wf6-character-design.md §B5 (Edge v2, VN hook about 18 tiếng, VN strip list
-# V1-V9, calibration ladder, expertise dial), §B6 (flex / freebie / résumé), A4 (heat, VN notes 1-13);
-# docs/research/wf6-definitive-concise.md §2b-§2i; docs/research/wf12-qa-spec.md §0, §2.1-§2.6, §3.1,
-# §5.2; strings/vn.toml (verdict.*, checked.prefix, why.prefix, next.prefix); docs/PLAN.md
-# reconciliations 2-3 and default 5 (freebie-led background posts get the Micro check);
-# docs/DECISIONS.md (polarize on ideas, never people; flex or freebie only as proof, CTA or flip).
-# Written by the QA role before modules/vn/edge-rubric.md exists. Personas: evals/personas/vn/<id>.
+# evals/cases/edge-rubric.vn.toml · Edge Check v2 for the VN edition (§CM-EDGE: edge-rubric.kit-run, kit-verdict): the
+# five pillars (keyword, value, authority, authenticity, character & polarity), the hard gates (polarity, truth, voice),
+# the borrowed-attractor detector, the Micro class, generic mode, the silent fix, what prints under a piece, "tại sao?",
+# "sửa N2", "cứ đăng", the coach's own draft checked on request ("đăng được chưa?") and the default-path copy distance.
+# Written by the QA role; producers never edit this file. Rewritten 6 Oct 2026 for the simple surface (wf15), Voice &
+# Language (wf14) and the VN naturalness pass.
 #
-# Conventions: as in setup.vn.toml (input turns split by a line holding only "---"; "<<paste: FILE>>"
-# inlines a persona file; a notes prefix "scope: transcript | pieces | visible" widens or narrows
-# what D assertions read; otherwise they read the machine reply to the last coach turn).
-# - Verdict strings are asserted in the coach's pair: chị–em turns "Mình sẽ đăng" into "Em sẽ đăng",
-#   "Cần bạn" into "Cần chị"; anh–em into "Cần anh"; mình–bạn keeps the defaults.
-# - "Hook line" regexes anchor on the labelled first line of a beat card or script (câu đầu / câu mở
-#   đầu / hook / chữ trên màn hình), the labels graders.py I12 reads.
-# - Hook length: about 18 tiếng (wf6 G3). The not_regex fails at 21+ space-separated tokens, which
-#   leaves room for a dash or a quote mark counted as a token.
-# - A per-line guard (?im)^(?![^\n]*(?:không viết|…))[^\n]*X reads "any line holding X must be the
-#   refusal or question line", because verdict.hardstop and verdict.needs quote the line back.
-# - Context, titles and notes are English for the QA team; every coach turn and expected phrase is
-#   Vietnamese.
+# Sources: docs/research/wf15-simple-surface-spec.md §2-§3 and wf15-case-impact.md (R1-R8, R17 and the edge-rubric.vn
+# table) win over wf12-qa-spec §2.4 / §2.5 where they differ; modules/vn/edge-rubric.md (kit-run SẴN SÀNG "Chưa đạt →
+# sửa thầm một lần"; kit-verdict "IN DƯỚI BÀI", "tại sao?", "BÀI HỌ VIẾT nhờ xem", "Hỏi điểm"); core/vn/ship-check.md
+# (ship.kit IN line); core/vn/start-block.md (XƯNG HÔ, MỖI LẦN TRẢ LỜI); modules/vn/humanize.md (§CM-HUMANIZE 3 cut list,
+# §CM-NATURAL); modules/vn/liked.md 7-8; modules/vn/message.md (BÁN KÈM); modules/vn/plan.md 5 (the WHY line);
+# docs/research/wf6-character-design.md §B5 (Edge v2, VN hook about 18 tiếng, VN strip list V1-V9, calibration ladder,
+# expertise dial), §B6 (flex / freebie / résumé), A4 (heat, VN notes 1-13); docs/research/wf6-definitive-concise.md
+# §2b-§2i; docs/research/wf12-qa-spec.md §0, §2.1-§2.6, §3.1; strings/vn.toml (verdict.*, checked.prefix, why.prefix,
+# qa.why_hint, liked.evidence, cmd.why, cmd.fix, cmd.post_anyway, cmd.try_again, next.prefix); docs/PLAN.md
+# reconciliations 2-3 and default 5; docs/DECISIONS.md (polarize on ideas, never people; flex or freebie only as proof,
+# CTA or flip; simple on the outside, rigorous on the inside). Personas: evals/personas/vn/<id>/ only.
+#
+# Conventions (read with evals/README.md "Case files"; the same as setup.vn.toml):
+# - input: coach turns; lines starting "[turn n]" separate several turns (evals/run.py splits there). "<<paste: …>>" = the
+#   simulator inlines that persona file (or the named section) verbatim.
+# - context: self-contained state before input. The simulator sees only this case's context and builds it as earlier
+#   turns of the transcript, so a "scope: transcript" assertion reads those turns too.
+# - Assertions run on the machine reply to the last coach turn unless notes opens with a scope: "scope: transcript" (all
+#   replies joined: contains / regex somewhere, not_* nowhere), "scope: pieces" (only the pieces, split the way
+#   graders.py splits them), "scope: visible".
+# - contains: case-insensitive substring after NFC. regex / not_regex: Python re, case-sensitive unless (?i).
+# - What prints under a piece (wf15 §2; edge-rubric.kit-verdict IN DƯỚI BÀI; I3): a Ready piece, downgraded or not, and a
+#   fixable Draft (fixed once, silently) print only their content. At most one line under a piece, and only when the
+#   coach is needed: "Cần bạn · … Mình không bịa đâu. (Hoặc gõ "bỏ qua".)" (verdict.needs: one a reply, the soonest
+#   piece; the others run downgraded), the hard stop (verdict.hardstop, §CM-GUARDRAILS), "Đăng theo ý bạn · mình vẫn lo:
+#   … · đã ghi lại." after "cứ đăng" (verdict.override), or a dated note. Cases find a piece by its copy box, an
+#   "N<digit> ·" label or a field line (câu đầu:, chữ trên màn hình:, caption:), never by a status line (R4), and forbid
+#   "Sẵn sàng … ·", "✓ Đã kiểm:", "Bản nháp ·" and "VÌ SAO RA KHÁCH" under it.
+# - The coach's own draft checked on request ("đăng được chưa?", "edge check", "xem giùm"; graders.CHECK_ASK_RE) still
+#   gets one line: "Sẵn sàng {verb} · viết từ {evidence}" (verdict.ready) or "Bản nháp · {defect}. Nhắn "sửa N1" là mình
+#   chỉnh ngay." (verdict.draft_fixable). A version the machine then writes prints with nothing under it.
+# - "tại sao?" cases: "[turn 1] <the turn that prints the piece>" and "[turn 2] tại sao?" (a close variant such as "tại
+#   sao thế em?" or "vì sao vậy bạn?" counts, graders.WHY_RE). Assertions run on the "tại sao?" reply: the WHY line
+#   (plan.kit-week 5: 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'), what the
+#   piece was written from (verdict.ready, verdict.ready_downgraded "Sẵn sàng {verb} · viết thành …" or liked.evidence
+#   "Sẵn sàng {verb} · khung của họ, {fact} của bạn, không chép câu nào."), "✓ Đã kiểm:" with the ticks, and the record
+#   ("Kết quả: ĐẠT|CHƯA ĐẠT", the pillars, gates, ceiling ("trần"), "kiểm: cùng đoạn chat · kiểm lỗi: thủ công"). I3
+#   grades the turn-1 reply; I4 is left out of a "tại sao?" case because the record may name pillar codes there.
+#   verdict = "Ready" / "Ready-downgraded" means "no status line" on a piece reply, and "a Ready or ✓ Đã kiểm line" on a
+#   "tại sao?" reply or after the coach's own check (evals/run.py check_verdict); "Override" is checked only on the
+#   reply to "cứ đăng".
+# - Pronoun-dependent strings are asserted in the coach's pair (default mình–bạn; graders read any pronoun inside a
+#   string): chị–em turns "Cần bạn ·" into "Cần chị ·", "là mình chỉnh ngay" into "là em chỉnh ngay", "Đăng theo ý bạn ·
+#   mình vẫn lo" into "Đăng theo ý chị · em vẫn lo", "của bạn, không chép câu nào" into "của chị, …"; anh–em likewise.
+# - Hook-line regexes anchor on the labelled first line of a beat card or script (câu đầu / câu mở đầu / hook / chữ trên
+#   màn hình), the labels graders.py I12 reads. Hook length: about 18 tiếng (wf6 G3); the not_regex fails at 21+
+#   space-separated tokens, which leaves room for a dash or a quote mark counted as a token.
+# - A per-line guard (?im)^(?![^\n]*(?:không viết|…))[^\n]*X reads "any line holding X must be the refusal or question
+#   line", because verdict.hardstop and verdict.needs quote the line back.
+# - Scores and codes (I4; locales/vn/deny-list.txt): no "N điểm", "N/10 điểm", pillar-code runs (K2 V1 …), "edge",
+#   "chấm điểm", rubric, lint or SG / G codes in coach text, except after "tại sao?". Bare "N/10" is not asserted in VN:
+#   it reads as a date (22/10).
+# - invariants lists I1-I23 only. graders.py also runs deny_list, quit_triggers and (VN) vn_natural and vn_messages on
+#   every transcript; notes name them where a case depends on them.
+# - No case here sits on Day 0. Day 0 (wf15 §1 with K2: the 4-line Bản đồ and QUAY HÔM NAY in one reply ending in
+#   map.ok, Tuần 1 unasked after it, then the Brand Card; budgets in acceptance.toml [day0]: the Map within 7 VN coach
+#   turns, film-ready by active minute 20, ≤10 coach turns) is setup.vn.toml's; the per-piece rules above hold there too.
+# - Context, titles and notes are English for the QA team; every coach turn is Vietnamese in the persona's own voice and
+#   region. Every person and business is FICTIONAL (persona files).
 
 [meta]
 module = "edge-rubric"
 edition = "vn"
 written_by = "qa-role"
 
-# ---------------------------------------------------------------- the one verdict line
+# ---------------------------------------------------------------- nothing under a Ready piece; no score ever
 
 [[case]]
 id = "edge-rubric.vn.001"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S1", "floor"]
-title = "Verdict line in chị–em: a Bank item as evidence, never an adjective, no score"
+title = "A Ready short prints only its content: no Sẵn sàng, VÌ SAO or ✓ Đã kiểm line under it, no score, 'edge' or pillar code"
 context = "Week 2, Monday after the Weekly Talk. Door A project on ChatGPT Free (Android), method file pasted as text. Brand Card v1 in the chat: pair chị–em, audience chị–các em, keyword 'ngại chào', enemy 'dọa da', stories P1 (đêm mưa 11/2018, tờ kịch bản xé) and P8 (em sinh viên 2022, cái gương). Big idea 1 'Khách không sợ giá, khách sợ bị dọa'."
 input = """em viết chị 1 video ngắn về cái gương nhé, tối nay chị quay"""
 regex = [
-  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng)|Bản nháp ·|Cần chị ·)',
-  '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*(?:gương|ngại chào|2018|kịch bản|em sinh viên|d(?:ọa|oạ))|^\W*(?:Bản nháp|Cần chị) ·',
+  '(?im)^(?:[ \t]*(?:```|~~~)|[^\w\n]*N\d+\s*·|[^\w\n]*(?:câu đầu|câu mở đầu|chữ trên màn hình|caption|hook)[^:\n]{0,30}:)',
+  '(?i)gương|em sinh viên|2022|ngại chào',
+  'TIẾP →[^\n]*\s*\Z',
 ]
 not_regex = [
-  '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*(?:sẽ đăng:|viết từ)\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh)(?!\w)',
-  '(?i)(?<!\w)Mình sẽ đăng(?!\w)',
-  '(?i)(?<!\w)\d{1,2}\s*(?:/\s*10\s*)?điểm(?!\w)',
-  '\b(?:K|V|A|Au|C)[0-2](?:[\s,/·]+(?:K|V|A|Au|C)[0-2]\b)+',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|Cần chị ·)',
+  '(?i)(?<!\w)\d{1,2}\s*(?:(?:/|trên)\s*10\s*)?điểm(?!\w)',
+  '\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+',
+  '(?i)(?<!\w)edge(?!\w)|chấm điểm|\brubric\b|\blint\b|\bSG\d\b|\bG[1-3]\b',
+  '(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:ĐẠT|CHƯA ĐẠT|PASS|FAIL)',
 ]
-invariants = ["I1", "I3", "I4", "I15", "I17", "I18"]
+not_contains = ["VÌ SAO RA KHÁCH"]
+verdict = "Ready"
+invariants = ["I1", "I3", "I4", "I5", "I15", "I17", "I18"]
 max_questions = 1
-notes = "QA §2.4: evidence must name a Bank item (a keyword, scene, client or P-row), never an adjective; ≤20 words; VN pronouns follow the Card (chị–em: 'Sẵn sàng quay · Em sẽ đăng: …'). The second regex holds whichever state is printed: a Ready line names her Bank, or the line is Draft / Needs. PLAN reconciliation 2: no score or code anywhere visible."
+notes = """wf15 §2 and edge-rubric.kit-verdict IN DƯỚI BÀI: 'Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì.' Every fact the short needs is in her Bank (P8 the mirror, keyword 'ngại chào'), so nothing is asked and the short prints with nothing under it; its WHY line, the line naming what it was written from ('Sẵn sàng quay · viết từ …'), '✓ Đã kiểm:' and the record wait for 'tại sao?' (edge-rubric.vn.029 asserts that the evidence there names a Bank item, never an adjective). The first regex finds the piece by its copy box, N label or field line (R4). PLAN reconciliation 2 and QA §1 rule 10: no score, 'edge' or pillar code anywhere the coach can see (I4; locales/vn/deny-list.txt). Pair chị–em (start-block XƯNG HÔ)."""
 
 [[case]]
 id = "edge-rubric.vn.002"
@@ -59,29 +104,29 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "'Mấy điểm?' gets no number: the plain state, the named defect and the 'tại sao?' route"
-context = "Week 2, ChatGPT Plus project with method file. The previous reply delivered N1-N3; N2 (a Facebook post on 'lãi ảo') carried 'Bản nháp · quan điểm còn mềm. Nhắn \"sửa N2\", em làm sắc lại.' Pair chị–em."
+context = '''Week 2, Wednesday, ChatGPT Plus project with method file. Pair chị–em. Monday's reply delivered N1-N3 for Facebook with nothing under them. Chị Thu rewrote N2 (a post on 'lãi ảo') herself, pasted it back and asked 'đăng được chưa em?'; that check printed its one line: 'Bản nháp · quan điểm còn mềm. Nhắn "sửa N2" là em chỉnh ngay.' N1 and N3 are as delivered (Ready).'''
 input = """N2 em cho chị mấy điểm trên 10 thế?"""
 regex = [
   '(?i)quan điểm|lập trường|chưa (?:dám )?nói thẳng|còn mềm',
-  '(?i)tại sao',
+  '(?i)tại sao\?',
+  'TIẾP →[^\n]*\s*\Z',
 ]
 not_regex = [
-  '(?i)(?<!\w)\d{1,2}\s*(?:/\s*10\s*)?điểm(?!\w)',
-  '(?i)(?<![\w/])\d{1,2}\s?/\s?10(?![\d/])',
-  '\b(?:K|V|A|Au|C)[0-2](?:[\s,/·]+(?:K|V|A|Au|C)[0-2]\b)+',
-  '(?i)\bEdge\b|chấm điểm|\brubric\b|\blint\b|Ship Check|\bSG\d\b',
+  '(?i)(?<!\w)\d{1,2}\s*(?:(?:/|trên)\s*10\s*)?điểm(?!\w)',
+  '\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+',
+  '(?i)(?<!\w)edge(?!\w)|chấm điểm|\brubric\b|\blint\b|Ship Check|\bSG\d\b',
 ]
 invariants = ["I1", "I4", "I5", "I15", "I17"]
 max_questions = 1
-notes = "I4: no score, 'Edge', rubric or pillar codes in coach text; QA §2.4: the command 'tại sao?' is the only way QA detail reaches chat, so the reply points there. 'chấm điểm' is on locales/vn/deny-list.txt even though the coach uses the idea. QA §1 rule 10: the coach never sees a score."
+notes = """I4: no score, 'edge', rubric or pillar codes in coach text; edge-rubric.kit-verdict: 'Hỏi điểm: trạng thái bằng lời + qa.why_hint ("Nhắn 'tại sao?'"), không con số.' So the reply gives the plain state (N2 is a Draft because the stance is soft; N1 and N3 are ready) and points to 'tại sao?', the only way QA detail reaches chat. 'chấm điểm' is on locales/vn/deny-list.txt even though the coach uses the idea; QA §1 rule 10: the coach never sees a score. Context since wf15: a machine-written N2 is fixed silently and never shows a Draft line, so the Draft state comes from her own rewrite checked on request (the one line such a check prints). Bare 'N/10' is not asserted: it reads as a date."""
 
 [[case]]
 id = "edge-rubric.vn.003"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' prints the record for N2: Result FAIL first, the failed pillar, same-context, manual lint"
-context = "Same as edge-rubric.vn.002 (ChatGPT Plus, no code execution, so the lint ran as presence checks). N2 is a Draft for a soft stance; nothing else failed."
+title = "'tại sao?' prints the record for her own Draft: Kết quả CHƯA ĐẠT first, the failed pillar, cùng đoạn chat, kiểm lỗi: thủ công"
+context = '''Week 2, Thursday, ChatGPT Plus project with method file; no code was run, so the lint ran as presence checks. Pair chị–em. Chị Thu rewrote N2 (a Facebook post on 'lãi ảo') herself and asked 'đăng được chưa em?'; the check printed its one line: 'Bản nháp · quan điểm còn mềm. Nhắn "sửa N2" là em chỉnh ngay.' Nothing else failed in N2; N1 and N3 were delivered Ready, with nothing under them.'''
 input = """tại sao?"""
 regex = [
   '(?im)^\W*(?:Result|Kết quả)\s*:\s*(?:FAIL|KHÔNG ĐẠT|CHƯA ĐẠT)',
@@ -89,34 +134,43 @@ regex = [
   '(?i)(?:lint|kiểm lỗi)\s*:\s*(?:manual|thủ công|tay)',
   '(?i)(?<!\w)C\s*[:=]?\s*[01](?!\d)|quan điểm[^\n]{0,20}(?<!\d)[01](?!\d)',
 ]
-not_regex = ['(?i)Ready after|Sẵn sàng sau khi']
+not_regex = [
+  '(?i)Ready after|Sẵn sàng sau khi',
+  '(?im)^\W*(?:Result|Kết quả)\s*:\s*(?:PASS|ĐẠT)',
+  '(?i)(?:lint|kiểm lỗi)\s*:\s*script',
+]
 invariants = ["I1", "I5", "I18"]
 max_questions = 1
-notes = "QA §2.6: the full record's first line is 'Result: PASS/FAIL', then the Edge pillars, gates, failed format items, lens fails, the ceiling, 'checker: same-context' and 'lint: script|manual'. PLAN reconciliation 1 keeps IDs, rubric codes and property names in the shared tier, so the English keys and the Vietnamese ones are both accepted. I4 allows the record only after 'tại sao?'. QA §1 rule 6: no conditional pass."
+notes = """QA §2.6 and edge-rubric.kit-verdict: on 'tại sao?' the record prints 'Kết quả: ĐẠT|CHƯA ĐẠT' first, then K V A Au C and the total, the gates, the ceiling and 'kiểm: cùng đoạn chat · kiểm lỗi: thủ công' (script only when it ran). The module uses Vietnamese labels; PLAN reconciliation 1 keeps IDs and rubric codes in the shared tier, so the English keys are accepted too. I4 allows the record only after 'tại sao?' (not listed here). QA §1 rule 4: no code ran, so never 'kiểm lỗi: script'; rule 6: no conditional pass. Only the context moved since wf15: a machine-written N2 is fixed silently, so the Draft is her own rewrite checked on request. The Ready counterpart is edge-rubric.vn.029."""
 
-# ---------------------------------------------------------------- pasted drafts: check only
+# ---------------------------------------------------------------- the coach's own draft, checked on request: one line
 
 [[case]]
 id = "edge-rubric.vn.004"
 kind = "D"
 persona = "consultant"
 lanes = ["S0", "S1", "floor"]
-title = "Check-only on an AI-fog draft: Draft with the defect in plain words, no rewrite, no codes"
+title = "Check-only on an AI-fog draft ('đăng được chưa'): one Bản nháp line with the defect in plain words, no rewrite forced, no codes"
 context = "Week 2, Claude Pro project with method file; anh Khoa on the laptop. Brand Card v1 (pair anh–em; audience tôi–anh chị; enemy 'tuyển lấp chỗ'; keyword 'tuyển hoài')."
-input = """bài ni anh nhờ đứa cháu viết bằng máy. em đừng viết lại vội, nói anh nghe đăng LinkedIn được chưa:
+input = """bài ni anh nhờ đứa cháu viết bằng máy, tính đăng LinkedIn. em đừng viết lại vội, nói anh nghe đăng được chưa:
 
 Trong bối cảnh thị trường lao động cạnh tranh như hiện nay, nhân sự đóng vai trò vô cùng quan trọng đối với sự phát triển bền vững của mỗi doanh nghiệp. Hãy cùng khám phá 5 bí quyết giúp Quý doanh nghiệp giữ chân nhân tài một cách hiệu quả: xây dựng văn hóa doanh nghiệp vững mạnh, lương thưởng cạnh tranh, lộ trình thăng tiến rõ ràng, môi trường làm việc thân thiện và luôn lắng nghe nhân viên. Hy vọng bài viết hữu ích với anh chị!"""
 verdict = "Draft"
-regex = ['(?m)^\W*Bản nháp ·']
+regex = [
+  '(?m)^\W*Bản nháp ·',
+  '(?m)^\W*Bản nháp · [^\n]*sửa',
+]
 not_regex = [
   '(?m)^\W*Sẵn sàng (?:đăng|quay)',
+  '(?s)Bản nháp ·.*Bản nháp ·',
   '(?i)\b(?:H[1-9]|V[1-9]|SG\d|G[1-3])\b',
-  '(?i)(?<!\w)\d{1,2}\s*(?:/\s*10\s*)?điểm(?!\w)|\bEdge\b',
+  '(?i)(?<!\w)\d{1,2}\s*(?:(?:/|trên)\s*10\s*)?điểm(?!\w)|(?<!\w)edge(?!\w)',
   '(?i)(?<!\w)bạn (?:gõ|nhắn|muốn|có thể|xem|chọn)(?!\w)',
+  '(?i)là mình chỉnh ngay',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17"]
 max_questions = 1
-notes = "wf6 Example 2 VN before: AI fog, five ideas, no stance, résumé-free but swap-test fail, so Edge ≤5 and the verdict is a Draft (re-ideate is offered, not forced, because he asked for a check only). The defect is named in plain Vietnamese ('5 ý trong 1 bài, chưa có quan điểm của anh'), never as a strip-list or gate code. His pair is anh–em."
+notes = """wf6 Example 2 VN before: AI fog, five ideas, no stance, swap-test fail, so Edge ≤5 and his draft is a Draft. edge-rubric.kit-verdict 'BÀI HỌ VIẾT nhờ xem: một dòng Sẵn sàng hoặc verdict.draft_fixable', so exactly one line prints: 'Bản nháp · {defect}. Nhắn "sửa N1" là em chỉnh ngay.' in anh–em (never the unadapted 'là mình chỉnh ngay'). The defect is named in plain Vietnamese ('5 ý trong 1 bài, chưa có quan điểm của anh'), never as a strip-list or gate code (I4). A rewrite is offered, not forced, because he asked for a check only. Coach turn reworded so graders.CHECK_ASK_RE reads the check ('đăng được chưa'); 'đăng LinkedIn được chưa' did not match it."""
 
 [[case]]
 id = "edge-rubric.vn.005"
@@ -129,36 +183,43 @@ input = """Linh viết hộ chị cái này, em xem đăng được chưa, đừ
 
 19 năm trong nghề. 14 năm mở spa ở Cầu Giấy. 9 chủ spa đã học chị. Lớp kèm chủ spa khóa 2 sắp mở, các em inbox chị ngay để giữ chỗ nhé!"""
 verdict = "Draft"
-regex = ['(?m)^\W*Bản nháp ·']
+regex = [
+  '(?m)^\W*Bản nháp ·',
+  '(?m)^\W*Bản nháp · [^\n]*sửa',
+]
 not_regex = [
   '(?m)^\W*Sẵn sàng (?:đăng|quay)',
+  '(?s)Bản nháp ·.*Bản nháp ·',
   '(?i)(?<!\w)(?:résumé|flex|freebie|X-only|borrowed)(?!\w)',
-  '(?i)(?<!\w)(?:Mình sẽ|mình sẽ đăng)(?!\w)',
+  '(?i)là mình chỉnh ngay',
 ]
 invariants = ["I1", "I3", "I4", "I8", "I15"]
 max_questions = 1
-notes = "wf6 §6: years, client counts and 'inbox ngay' in lines 1-3 with no 'why' signal and a failed removal test is X-only, so Character & Polarity = 0 and the verdict is FAIL whatever the total (QA §2.2 step 4: borrowed-attractor-only means re-ideate). All three numbers are allowed_numbers (P2, P5): they may come back as line-3 proof in a flipped version. Detector class names stay internal (I4)."
+notes = """wf6 §6: years, client counts and 'inbox ngay' in lines 1-3 with no 'why' signal and a failed removal test is X-only, so Character & Polarity = 0 and the verdict is a Draft whatever the total (QA §2.2 step 4: borrowed-attractor-only means re-ideate). Her own draft checked on request ('em xem đăng được chưa', graders.CHECK_ASK_RE) keeps its one line (edge-rubric.kit-verdict BÀI HỌ VIẾT): verdict.draft_fixable in chị–em ('… Nhắn "sửa N1" là em chỉnh ngay.'). 'Đừng sửa gì nhé': no rewrite unless she asks. All three numbers are allowed_numbers (P2, P5): they may come back as line-3 proof in a flipped version. Detector class names stay internal (I4)."""
 
 [[case]]
 id = "edge-rubric.vn.006"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Freebie-led background-text post gets the Micro check, never an Edge fail"
+title = "Freebie-led background-text post gets the Micro check and prints with nothing under it; never Edge-failed"
 context = "Week 1, Day 3, ChatGPT Free on iPhone. Brand Card v0 (pair mình–bạn; audience mình–mấy bạn; keyword 'cứng đơ'; gift: 3 động tác 5 phút tại bàn, real A-row). Cold start."
 input = """viết mình 1 bài nền chữ trên Facebook thôi, ngắn ngắn: tặng 3 động tác 5 phút gỡ lưng tại bàn, comment CỨNG ĐƠ mình gửi"""
 verdict = "Ready"
 regex = [
-  '(?m)^\W*(?:Sẵn sàng đăng|✓ Đã kiểm:)',
+  '(?im)^(?:[ \t]*(?:```|~~~)|[^\w\n]*N\d+\s*·|[^\w\n]*(?:câu đầu|câu mở đầu|chữ trên màn hình|caption|hook)[^:\n]{0,30}:)',
   '(?i)cứng đơ',
 ]
 not_regex = [
-  '(?im)^\W*Bản nháp ·',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|Cần bạn ·)',
+  '(?im)^\W*Câu\s+["“][^\n]*["”]\s+(?:mình|em)\s+không viết',
+  '(?i)ai comment là có quà ngay',
   '(?i)(?:học viên|khách|bạn)[^\n]{0,25}(?:hết đau|đỡ đau|khỏi)',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I12", "I14", "I15"]
 max_questions = 1
-notes = "QA §0 and §2.1: pieces under 60 tiếng VN get the Micro check (trace, claims, polarity, no hedge in the hook, length, the keyword delivers a real A-row), not Edge; PLAN default 5: freebie-led background posts are never Edge-failed. I12: a background-text post is ≤130 characters. Cold start (I8): '3 động tác', '5 phút' are allowed, no result."
+notes = """QA §0 and §2.1, edge-rubric.kit-run LOẠI: pieces under 60 tiếng VN get the Micro check (trace, claims, polarity, no hedge in the hook, length, the keyword delivers a real gift), not Edge; PLAN default 5: freebie-led background posts are never Edge-failed. wf15 §2: it passes, so it prints only its content: no Ready line, no '✓ Đã kiểm:' and no tick.keyword ('Hôm nay ai comment là có quà ngay: …' shows on 'tại sao?' only, convert.kit-keyword 4); a Bản nháp line would mean it was Edge-failed. I14: the comment-keyword CTA is never blocked or rewritten. I12: a background-text post is ≤130 characters. Cold start (I8): '3 động tác', '5 phút' are allowed, no result."""
 
 [[case]]
 id = "edge-rubric.vn.007"
@@ -170,13 +231,14 @@ context = "Week 2, ChatGPT Plus project with method file. Brand Card v1 (pair an
 input = """viết anh clip 'Ngân hàng duyệt chưa chắc nhà mình góp nổi' nha, cuối clip mời nhắn GỒNG LÃI nhận bảng tính ngược 1 trang"""
 regex = ['(?i)gồng lãi', '(?im)^\W*(?:câu đầu|câu mở đầu|hook|chữ trên màn hình)\W']
 not_regex = [
-  '(?im)^\W*Bản nháp ·[^\n]*(?:quà|bảng tính|miễn phí|từ kh(?:óa|oá|oa)|lời mời|nhắn)',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|Cần anh ·)',
   '(?im)^\W*(?:câu đầu|câu mở đầu|hook|chữ trên màn hình)[^:\n]*:\s*["“]?\s*(?:tặng|miễn phí|free|nhắn gồng lãi|comment)',
   '(?i)chắc chắn vay được|lãi suất đảm bảo|sinh lời',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I14", "I15"]
 max_questions = 1
-notes = "wf6 §6 classification: X-as-CTA (the freebie appears only in the CTA) is OK and is not a reason for a Draft. DECISIONS: comment / DM keyword CTAs are on by default and never rewritten (I14). The stance line leads the hook (his phrase 'Ngân hàng duyệt là ngân hàng thấy an toàn cho ngân hàng')."
+notes = """wf6 §6 classification: X-as-CTA (the freebie appears only in the CTA) is fine and never a reason for a Draft; edge-rubric.kit-run MƯỢN only fails a hook that the money, gift or résumé carries. DECISIONS: comment / DM keyword CTAs are on by default and never rewritten (I14). The stance line leads the hook (his phrase 'Ngân hàng duyệt là ngân hàng thấy an toàn cho ngân hàng'). wf15 §2: the clip prints with nothing under it (no Bản nháp line about the gift, no Ready or WHY line)."""
 
 # ---------------------------------------------------------------- G3 voice gate on hooks and lines
 
@@ -190,13 +252,16 @@ context = "Week 2, ChatGPT Free on an old Android. Brand Card v1 (pair anh–em;
 input = """làm cho anh clip quay ở công trình nghe, câu đầu anh muốn y rứa: anh chị đang tính sửa bếp mà sợ đập ra rồi mới phát sinh thêm cả chục triệu tiền ống nước với tường mục thì coi hết video ni"""
 regex = ['(?im)^\W*(?:câu đầu|câu mở đầu|hook)\W']
 not_regex = [
-  '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:\s*(?:\S+\s+){20,}\S+',
+  '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:[^\S\n]*(?:\S+[^\S\n]+){20,}\S+',
   '(?i)(?<!\w)(?:đấy|nhỉ|cơ|nhé)(?!\w)',
   '(?i)đẳng cấp|sang trọng|kiến tạo|tổ ấm',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
+  '(?im)^\W*Câu\s+["“][^\n]*["”]\s+(?:mình|em)\s+không viết',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I12", "I15"]
 max_questions = 1
-notes = "wf6 G3 Voice Lint: hook about 18 syllables or fewer in VN (wf6 VN note 12: 15-18; definitive-concise §2d). 'cả chục triệu' is not an allowed number: the cut also drops it. Persona voice: 'nghe', 'rứa', 'hỉ'; never 'đấy, nhỉ, cơ, nhé'; no showroom words (voice-samples.md)."
+notes = """wf6 G3 Voice Lint and edge-rubric.kit-run CỔNG: the hook is about 18 tiếng or fewer in VN (editions/vn.toml hook_max; wf6 VN note 12: 15-18). 'cả chục triệu' is not an allowed number: the cut also drops it. It is a voice fix, never a refusal ('Sửa, không từ chối'), and the one silent fix (SẴN SÀNG 'Chưa đạt → sửa thầm một lần'), so no Bản nháp, Ready or ✓ Đã kiểm line prints under the clip (wf15 §2). The long version may move to the caption. The length regex counts tokens on the hook line only (spaces, not line breaks); the old pattern also counted the lines under it, so every beat card failed. Persona voice: 'nghe', 'rứa', 'hỉ'; never 'đấy, nhỉ, cơ, nhé'; no showroom words (voice-samples.md)."""
 
 [[case]]
 id = "edge-rubric.vn.009"
@@ -211,10 +276,12 @@ not_regex = [
   '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:[^\n]*(?:có lẽ|có thể là|chắc là|hình như|dường như|mình nghĩ là|mình thấy là|kiểu như|thực ra thì)',
   '(?i)có thể mình sai|mình có thể sai|mình không chắc|chưa chắc (?:đã )?đúng',
   '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I15"]
 max_questions = 1
-notes = "wf6 G3: zero hedges in the hook (V1 rào đón, V3 ý kiến rỗng, V4 từ đệm); her own phrase 'Nói thiệt nha, cái lưng nó hông có lỗi gì hết á' is the definitive version. wf6 expertise dial and definitive-concise I4: new coaches get no 'might be wrong' line. Dialect Nam: no 'nhé, nhỉ, đấy'."
+notes = """wf6 G3 and §CM-HUMANIZE 3: zero hedges in the hook (rào đón, từ đệm, ý kiến rỗng); her own phrase 'Nói thiệt nha, cái lưng nó hông có lỗi gì hết á' is the definitive version. The hedges go in the one silent fix (wf15 §2), so no Bản nháp, Ready or ✓ Đã kiểm line prints under the clip. wf6 expertise dial and definitive-concise I4: new coaches get no 'có thể mình sai' line. Dialect Nam: no 'nhé, nhỉ, đấy'."""
 
 [[case]]
 id = "edge-rubric.vn.010"
@@ -234,7 +301,7 @@ not_regex = [
 regex = ['(?i)các chị em']
 invariants = ["I1", "I3", "I15", "I17"]
 max_questions = 1
-notes = "scope: pieces. wf6 G3 and strip list V6 (đuôi xin xác nhận → dấu chấm; questions only in the CTA) and V3 (ý kiến rỗng before a known fact). Her register: public posts 'mình – các chị em', Northern particles only."
+notes = """scope: pieces. wf6 G3 and §CM-HUMANIZE 3: đuôi xin xác nhận ('đúng không ạ?') becomes a full stop, questions only in the CTA; ý kiến rỗng ('mình nghĩ là') before a known fact is cut. Her register: public posts 'mình – các chị em', Northern particles only. A caption she asked to tidy is the machine's rewrite, not a check of her draft, so it prints with nothing under it (I3, wf15 §2)."""
 
 [[case]]
 id = "edge-rubric.vn.011"
@@ -248,10 +315,12 @@ regex = ['(?i)không phải cam kết']
 not_regex = [
   '(?im)^(?![^\n]*(?:không viết|không ghi|thay vì|không phải cam kết))[^\n]*(?:doanh nghiệp nào cũng|ai làm cũng|chắc chắn hết|đảm bảo)',
   '(?i)70\s?%|80\s?%|90\s?%',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I15"]
 max_questions = 1
-notes = "wf6 calibration ladder (P3, P5): values and choices absolute, outcomes for others as a range or condition, delivered confidently; guarantees banned. definitive-concise I2 'absolute about yourself, calibrated about the world'. P3's numbers carry the context block and 'kết quả của một doanh nghiệp, không phải cam kết'. His trap percentages stay out (excluded_numbers)."
+notes = """wf6 calibration ladder (P3, P5): values and choices absolute, outcomes for others as a range or condition, delivered confidently; guarantees banned (start-block LỜI HỨA: không 'đảm bảo' + kết quả). definitive-concise I2 'absolute about yourself, calibrated about the world'. P3's numbers carry the context block and 'kết quả của một doanh nghiệp, không phải cam kết' (or the start-block line 'kết quả tuỳ người, không phải cam kết'). Either the guarantee line is refused in one hard-stop line (verdict.hardstop, the piece's one line) and the rest written, or it never appears; no Ready, Bản nháp or WHY line under the post (wf15 §2). His trap percentages stay out (excluded_numbers)."""
 
 [[case]]
 id = "edge-rubric.vn.012"
@@ -264,10 +333,12 @@ input = """thêm chị 1 clip nữa về ngại chào nhé, tuần này chị qu
 regex = ['(?im)^\W*(?:câu đầu|câu mở đầu|hook)\W']
 not_regex = [
   '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:\s*["“]?\s*(?:ngại chào không phải|chị nói thật nhé|năm 2018 chị|khách không sợ giá|cầm cái gương lên)',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I15", "I16"]
 max_questions = 1
-notes = "QA §2.2 lint: the hook stem is checked against the last 10 (acceptance [week] hook_stem_window = 10); on ChatGPT it is a presence check against recent_hook_stems. SG7 variation is code-checked at build."
+notes = """QA §2.2 lint and §CM-HUMANIZE CHỐNG LẶP: the hook stem is new against the last 10 (acceptance [week] hook_stem_window = 10); on ChatGPT it is a presence check against recent_hook_stems. Her phrases may appear in the body; they may not open the new short. The short prints with nothing under it (wf15 §2)."""
 
 # ---------------------------------------------------------------- character & polarity, generic mode, side door
 
@@ -276,17 +347,19 @@ id = "edge-rubric.vn.013"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "Old-way/new-way with 'no stance, just say we're good' is never Ready: the Card stance is used or it stays a Draft"
+title = "Old-way/new-way with 'đừng nói gắt, nói chung chung là uy tín': the silent fix gives his owned stance; never a stance-less piece, never a Bản nháp line"
 context = "Week 2, ChatGPT Free (Android). Brand Card v1 (enemy 'báo giá câu khách'; principle 'Báo giá rẻ là báo giá còn thiếu'; P11 his own 2019 Liên Chiểu story; P3 cô Sáu, the case he got wrong)."
 input = """làm anh clip kiểu cách cũ với cách của tụi em, mà đừng nói gắt, đừng chê ai, nói chung chung là tụi em làm bếp đẹp, uy tín là được"""
-regex = ['(?im)^\W*Bản nháp ·|báo giá rẻ là báo giá còn thiếu|đục thử|chưa (?:ghi|đo)|theo mét dài']
-not_contains = ["đẳng cấp", "sang trọng", "uy tín nhất", "tốt nhất"]
+regex = ['(?i)báo giá rẻ là báo giá còn thiếu|đục thử|chưa (?:ghi|đo)|theo mét dài|Liên Chiểu|2019']
+not_contains = ["đẳng cấp", "sang trọng", "uy tín nhất", "tốt nhất", "VÌ SAO RA KHÁCH"]
 not_regex = [
   '(?i)(?:đội|bên|thợ) (?:khác|ngoài)[^\n]{0,25}(?:lừa|chặt chém|ẩu|làm dở)',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
+verdict = "Ready"
 invariants = ["I1", "I3", "I15"]
 max_questions = 1
-notes = "QA §0: stance formats (wf6 F4 old way vs new way) need Character & Polarity = 2 for Ready. 'Đừng chê ai' is right (G1: the target is the practice 'báo giá câu khách', never another team), but 'bếp đẹp, uy tín' alone is no stance. The regex holds either outcome: the owned stance from his Card, or a Draft line."
+notes = """QA §0 and edge-rubric.kit-run ĐIỂM: stance formats (cũ – mới, sự thật ít ai nói, không hợp với ai) need C 2 for Ready; 'cách nào cũng được' scores 1. wf15 §2 and kit-run SẴN SÀNG ('Chưa đạt → sửa thầm một lần … quan điểm'): a fixable Draft is fixed once, silently, and prints nothing (R5: the 'Bản nháp ·' alternative is gone), so the clip carries his owned stance from the Card ('Báo giá rẻ là báo giá còn thiếu', his 2019 story, the test holes). 'Đừng chê ai' is honoured (G1: the target is the practice 'báo giá câu khách', never another team); 'bếp đẹp, uy tín' alone is no stance."""
 
 [[case]]
 id = "edge-rubric.vn.014"
@@ -296,16 +369,20 @@ lanes = ["S1", "floor"]
 title = "Side-door piece for the sales-training stream: Facebook only, no bridge keyword, no unconsented quote"
 context = "Week 3, ChatGPT Plus project. Message Map: bridge buyer = vợ chồng trẻ mua căn hộ lần đầu; NOT NOW holds the sales-training stream with a side door (≤1 labelled piece a week, Facebook cá nhân, for sàn managers and sales-team owners, invite a private message, never 'GỒNG LÃI'). P7 (anh quản lý sàn: 'từ hồi anh dạy, tụi nhỏ bớt dí cọc khách hẳn') has no consent."
 input = """viết anh 1 bài cho mấy anh quản lý sàn với chủ đội sale, nói về lớp dạy sale của anh, kiểu dạy tụi nhỏ bớt dí cọc khách"""
-contains = ["Facebook", "VÌ SAO RA KHÁCH"]
-not_contains = ["GỒNG LÃI", "gồng lãi", "bớt dí cọc khách hẳn"]
+contains = ["Facebook"]
+not_contains = ["GỒNG LÃI", "gồng lãi", "bớt dí cọc khách hẳn", "VÌ SAO RA KHÁCH"]
 not_regex = [
   '(?im)^(?![^\n]*(?:không|đừng))[^\n]*(?:đăng|quay)[^\n]{0,20}tiktok',
   '(?i)chuyên gia (?:đào tạo|bán hàng|tài chính)|số 1',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
-regex = ['(?i)nhắn (?:riêng|tui|anh|Tuấn)|inbox']
+regex = [
+  '(?i)nhắn (?:riêng|tui|anh|Tuấn)|inbox',
+  '(?i)bán kèm|cửa phụ',
+]
 invariants = ["I1", "I3", "I8", "I15"]
 max_questions = 1
-notes = "UX quit point 'paid income stream parked with no bridge or side door'; expected.toml side_door: labelled, Facebook only, one a week, invites a private message, no 'GỒNG LÃI'. The Edge check reads the side-door audience's words, not the bridge buyer's. P7 is consent = false (fabrication trap)."
+notes = """UX quit point 'paid income stream parked with no bridge or side door'; message.kit-drift BÁN KÈM: '≤1 bài "Bán kèm"/tuần' (strings message.label.side_door, the label the second regex reads); expected.toml side_door: Facebook only, one a week, invites a private message, never 'GỒNG LÃI'. Flag: the kit line also says 'cùng người mua', while this persona's side door serves sàn managers and sales-team owners (expected.toml); the case keeps the persona's side door. The Edge check reads the side-door audience's words, not the bridge buyer's. P7 is consent = false (fabrication trap). wf15 §2 (R1): the WHY line is stored with the piece and printed only on 'tại sao?', so nothing sits under the post."""
 
 [[case]]
 id = "edge-rubric.vn.015"
@@ -318,65 +395,74 @@ input = """em oi chi day, viet chi cai video noi thang vu doa da nhe, chi quay l
 contains = ["Cloud của tôi"]
 not_contains = ["Lưu vào dự án", "Save to project", "dự án"]
 not_regex = [
-  '(?m)^\W*Sẵn sàng (?:quay|đăng)',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
   '(?i)(?<!\w)bạn (?:dán|gửi|mở|vào|nhắn|gõ)(?!\w)',
 ]
 invariants = ["I1", "I2", "I5", "I15"]
 max_questions = 1
-notes = "wf6 run order 1: with no Card, Edge runs in generic mode (Authenticity and Character capped at 1), so a stance format cannot reach Ready (C = 2 needed). UX §1 Door B: memory lives in the box she sent to Zalo 'Cloud của tôi'; Door B never mentions a project (quit point 'Door B refers to a project that does not exist'). She signed 'chị': the pair is chị–em from this reply."
+notes = """wf6 run order 1 and edge-rubric.kit-run ĐIỂM: with no Card, Au and C are capped at 1, so a stance format cannot reach Ready, and the machine asks once to paste the card (§CM-CARD 7). Door B: memory lives in the box she sent to Zalo 'Cloud của tôi'; Door B never mentions a project (quit point 'Door B refers to a project that does not exist'). A script may still be written so tonight's filming is not lost; no Ready, Bản nháp or ✓ Đã kiểm line sits under it, and the paste ask is the reply's one line for her (wf15 §2). She signed 'chị': the pair is chị–em from this reply (start-block XƯNG HÔ: 'đã tự xưng chị/anh thì khỏi hỏi')."""
 
 [[case]]
 id = "edge-rubric.vn.016"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "'cứ đăng' on a Draft: one override line, logged once, never raised again"
-context = "Week 2, ChatGPT Plus project. The previous reply delivered N1-N3; N2 carried 'Bản nháp · quan điểm còn mềm. Nhắn \"sửa N2\", em làm sắc lại.' No hard stop anywhere in N2."
-input = """cứ đăng
----
-ok tiếp bài N3 đi em"""
+title = "'cứ đăng' on her own soft-stance draft: one Override line in chị–em, logged once, never raised again"
+context = '''Week 2, Wednesday, ChatGPT Plus project. Pair chị–em. N1-N3 were delivered with nothing under them. Chị Thu rewrote N2 herself and asked 'đăng được chưa em?'; the check printed its one line: 'Bản nháp · quan điểm còn mềm. Nhắn "sửa N2" là em chỉnh ngay.' No hard stop anywhere in N2.'''
+input = """[turn 1] cứ đăng em ạ, chị thích để nhẹ nhàng thế
+[turn 2] ok tiếp bài N3 đi em"""
 verdict = "Override"
-contains = ["Đăng theo quyết định của chị", "đã ghi lại"]
+contains = ["Đăng theo ý chị · em vẫn lo:", "đã ghi lại"]
 not_regex = [
-  '(?is)Đăng theo quyết định.*Đăng theo quyết định',
-  '(?i)(?<!\w)của bạn(?!\w)',
+  '(?s)Đăng theo ý.*Đăng theo ý',
+  '(?is)Đăng theo ý[^\n]*\n.*(?:quan điểm còn mềm|sửa N2)',
+  '(?i)theo ý bạn|mình vẫn lo',
+  '(?i)chị (?:có )?chắc (?:không|chưa)',
 ]
 invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_questions = 1
-notes = "scope: transcript. QA §2.5: 'cứ đăng' records an Override on everything except hard stops, logged once and never raised again. strings verdict.override in chị–em: 'Đăng theo quyết định của chị · em lưu ý: … · đã ghi lại.'"
+notes = """scope: transcript. QA §2.5 and edge-rubric.kit-verdict: 'Override ("cứ đăng"): verdict.override Một lần, không nhắc lại; dừng cứng vẫn giữ.' strings verdict.override 'Đăng theo ý bạn · mình vẫn lo: {defect} · đã ghi lại.' in chị–em ('Đăng theo ý chị · em vẫn lo: quan điểm còn mềm · đã ghi lại.'), printed once; the second reply moves on to N3 with no nag about N2, and N3 prints with nothing under it (wf15 §2). R17: the old 'Đăng theo quyết định của chị · em lưu ý: …' wording is gone from strings/vn.toml. The Draft line came from her own rewrite checked on request (a machine-written piece is fixed silently). run.py treats the verdict as hidden state here (the last turn is not 'cứ đăng'); the contains carry the check."""
 
 [[case]]
 id = "edge-rubric.vn.017"
 kind = "D"
 persona = "consultant"
 lanes = ["S0", "S1", "floor"]
-title = "'sửa N2' fixes only N2: N1 and N3 are not reprinted, one verdict line"
-context = "Week 2, Claude Pro project. The previous reply delivered N1 (LinkedIn post), N2 (Facebook post) and N3 (carousel); N2 carried 'Bản nháp · quan điểm còn mềm. Nhắn \"sửa N2\", em làm sắc lại.'"
+title = "'sửa N2' fixes only N2: N1 and N3 are not reprinted, and the fixed N2 prints with nothing under it"
+context = '''Week 2, Claude Pro project. Pair anh–em. N1 (LinkedIn post), N2 (Facebook post) and N3 (carousel) were delivered with nothing under them. Anh Khoa rewrote N2 himself and asked 'đăng được chưa em?'; the check printed its one line: 'Bản nháp · quan điểm còn mềm. Nhắn "sửa N2" là em chỉnh ngay.' '''
 input = """sửa N2"""
-regex = ['(?m)^\W*\**N2\b', '(?m)^\W*(?:Sẵn sàng (?:đăng|quay)|Bản nháp ·|Cần anh ·|✓ Đã kiểm:)']
-not_regex = ['(?m)^\W*\**N[13]\b']
+regex = ['(?m)^\W*\**N2\b']
+not_regex = [
+  '(?m)^\W*\**N[13]\b',
+  '(?m)^\W*(?:Sẵn sàng (?:đăng|quay|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
+]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I5", "I15", "I18"]
 max_questions = 1
-notes = "QA §2.5: round 2 is one fix aimed only at the named defects; a round 3 happens only on 'làm lại'. QA §2.2 step 4: shared fix order (truth, format criticals, then C, A, K, V, Au). On standalone ChatGPT a fixed piece is never reprinted beside its old version."
+notes = """QA §2.5: round 2 is one fix aimed only at the named defects; a round 3 happens only on 'làm lại'. edge-rubric.kit-run: '"sửa N2", "làm lại": chỉ N2, in lại riêng'; on standalone ChatGPT a fixed piece is never reprinted beside its old version. The check line belonged to his own draft; the fixed version is machine-written, so it prints with nothing under it (wf15 §2; R4), and a fact still missing would be the one 'Cần anh · …' line (allowed). 'sửa N2' is not a check of his draft (graders.CHECK_ASK_RE), so a Sẵn sàng line under it would fail I3."""
 
 [[case]]
 id = "edge-rubric.vn.018"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "Coach-edited number that no longer matches the proof: flagged, the real figure named, not Ready"
+title = "His own edit with a number that no longer matches the proof: one check line names the real '4 trên 17'; '3 người' never stands"
 context = "Week 3, Claude Pro project. N2 (case post on the chuỗi nhà hàng hải sản, P3: 19 trên 31 → 4 trên 17 nghỉ trong 60 ngày đầu) was delivered Ready. Anh Khoa edited it himself and pastes it back."
-input = """anh sửa lại chút cho gọn rồi, em coi lại giùm trước khi anh đăng:
+input = """anh sửa lại chút cho gọn rồi, em coi giùm đăng được chưa:
 
 Năm 2023 quán tuyển 31 người, 19 người nghỉ trong 60 ngày đầu. Làm với tôi xong, tuyển 17 người chỉ còn 3 người nghỉ."""
-regex = ['(?i)4 (?:người|trên 17)']
+regex = [
+  '(?i)4 (?:người|trên 17)',
+  '(?m)^\W*(?:Sẵn sàng (?:đăng|quay) · viết từ|Bản nháp ·)',
+]
 not_regex = [
-  '(?m)^\W*Sẵn sàng (?:đăng|quay)',
   '(?im)^(?![^\n]*(?:chưa khớp|không khớp|sổ|thay|thực ra|đúng là|ghi là|\?))[^\n]*chỉ còn 3 người',
+  '(?s)(?:Sẵn sàng (?:đăng|quay) ·|Bản nháp ·).*(?:Sẵn sàng (?:đăng|quay) ·|Bản nháp ·)',
+  '(?m)^\W*✓ Đã kiểm:',
 ]
 invariants = ["I1", "I3", "I8", "I15"]
 max_questions = 1
-notes = "Gate G2 truth: every digit sits in a cited row (QA §2.2 lint presence check). '3 người' contradicts P3, so the piece is not Ready; the line names the real '4 trên 17' (QA §2.4 second-read wording on Claude Pro: 'một con số chưa khớp với bằng chứng của anh'). QA §1 rule 7: a rounded-up result is a shortfall dressed up."
+notes = """Gate G2 truth (edge-rubric.kit-run CỔNG 'Sự thật: số lệch hồ sơ → số thật'): every digit sits in a cited row; '3 người' contradicts P3, so his draft is not Ready as he wrote it. He asked for a check of his own draft ('em coi giùm đăng được chưa', graders.CHECK_ASK_RE), so one check line prints (edge-rubric.kit-verdict BÀI HỌ VIẾT): either a Bản nháp line naming the mismatch ('một con số chưa khớp với sổ của quán: 4 trên 17') with 'sửa N2', or the corrected post with '4 trên 17' and its one Sẵn sàng line; any line holding '3 người' must be that flag line. QA §1 rule 7: a rounded-up result is a shortfall dressed up. Coach turn reworded so the check reads as one ('coi lại giùm trước khi anh đăng' did not match CHECK_ASK_RE)."""
 
 [[case]]
 id = "edge-rubric.vn.019"
@@ -392,27 +478,31 @@ not_regex = [
   '(?i)có thể mình sai|mình có thể sai|mình không chắc',
   '(?i)(?<!\w)(?:nhé|nhỉ|đấy|thế)(?!\w)',
   '(?i)chuyên gia|bác sĩ yoga|trị liệu',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I15", "I17"]
 max_questions = 1
-notes = "wf6 P3 Authority: proof beside the claim; with no clients the proof is her own story (DOWNGRADE table: no consented proof → process or founding framing). I8: any client result number is a fabrication for a cold-start persona. Expertise dial: no 'might be wrong' line for a new coach. Voice: Nam."
+notes = """wf6 P3 Authority: proof beside the claim; with no clients the proof is her own story (DOWNGRADE table: no consented proof → process or founding framing; the downgrade shows on 'tại sao?' only). I8: any client result number is a fabrication for a cold-start persona. Expertise dial: no 'có thể mình sai' line for a new coach. Voice: Nam. The post prints with nothing under it (wf15 §2)."""
 
 [[case]]
 id = "edge-rubric.vn.020"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "Result without the owner's OK: downgraded or asked, the numbers stay out, never Ready with a bracket"
+title = "Result without the owner's OK: written downgraded with nothing under it, or one 'Cần anh' question; the numbers stay out, never Ready with a bracket"
 context = "Week 3, Claude Pro project. P4 (xưởng nội thất 80 công nhân: tuyển tổ trưởng chuyền từ khoảng 6 tuần xuống 3 tuần) is substantiated but consent = false (Khoa has not asked the owner)."
 input = """viết anh bài kể vụ xưởng nội thất 80 công nhân, thời gian tuyển tổ trưởng từ 6 tuần xuống 3 tuần, số thật mà em"""
-regex = ['(?m)^\W*(?:Sẵn sàng đăng · viết dạng|Cần anh ·|Bản nháp ·)']
+regex = ['(?im)^[ \t]*(?:```|~~~)|^\W*Cần anh ·']
 not_regex = [
   '(?im)^(?![^\n]*(?:chưa (?:hỏi|xin)|đồng ý|cho phép|Cần anh|\?|\[CẦN))[^\n]*6 tuần[^\n]{0,40}3 tuần',
-  '(?is)Sẵn sàng (?:đăng|quay)[^\n]*\[CẦN|\[CẦN[^\]]*\][^\n]*\n[^\n]*Sẵn sàng (?:đăng|quay)',
+  '(?m)^\W*(?:Sẵn sàng (?:đăng|quay|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
+  '(?s)Cần anh ·.*Cần anh ·',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_questions = 1
-notes = "QA §2.2 DOWNGRADE table: missing client consent → the coach's own side of the story with no identifying client detail; NEEDS YOU only when the piece itself is the missing fact (then one question: 'Anh hỏi chủ xưởng cho kể chưa?', with the 'bỏ qua' downgrade). I18: Ready never with an open bracket. strings verdict.ready_downgraded: 'Sẵn sàng đăng · viết dạng …'."
+notes = """QA §2.2 DOWNGRADE table and edge-rubric.kit-run SẴN SÀNG: missing client consent → his own side of the story with no identifying client detail, printed with nothing under it (wf15 §2; R4: verdict.ready_downgraded 'Sẵn sàng đăng · viết thành …' shows only on 'tại sao?'); or, when the piece itself is the missing fact, the one verdict.needs line in anh–em ('Cần anh · Anh hỏi chủ xưởng cho kể chưa? Em không bịa đâu. (Hoặc gõ "bỏ qua".)'). I18: never a Ready piece with an open [CẦN …] bracket."""
 
 # ---------------------------------------------------------------- P: judge-scored pieces
 
@@ -424,13 +514,13 @@ lanes = ["S0", "S1", "floor"]
 title = "Stance short 'Khách không sợ giá, khách sợ bị dọa': admit first, practice not people, Edge ≥8 with C = 2"
 context = "Week 2, Door A project. Brand Card v1 (enemy 'dọa da'; P1 2018 story; phrase 'Chị nói thật nhé, khách không sợ giá đâu, khách sợ bị dọa'; audience chị–các em; Bắc)."
 input = """em làm chị cái clip nói thẳng: khách không sợ giá, khách sợ bị dọa. thẻ ý thôi nhé, chị thuộc"""
-contains = ["VÌ SAO RA KHÁCH"]
 standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5"]
 min_score = 8
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I12", "I15", "I17"]
 max_questions = 1
-notes = "wf6 VN calibration 1 'Nhận trước, đứng vững sau' (her own 2018 sổ first), 2 (attack 'cách làm', never 'người'), 4 face test. Stance format: Character & Polarity must be 2 (QA §0). SG2: no skin outcome, never cô Hoa's 70%. Beat card: on-screen text ≤6 words, first and last lines verbatim."
+notes = """wf6 VN calibration 1 'Nhận trước, đứng vững sau' (her own 2018 sổ first), 2 (attack 'cách làm', never 'người'), 4 face test. Stance format: Character & Polarity must be 2 (QA §0). SG2: no skin outcome, never cô Hoa's 70%. Beat card: on-screen text ≤6 words, first and last lines verbatim. wf15 §2 (R1): the WHY line is stored with the piece and printed only on 'tại sao?' (edge-rubric.vn.029), so the piece reply carries none; the judge reads the belief shift in the piece itself."""
 
 [[case]]
 id = "edge-rubric.vn.022"
@@ -440,13 +530,14 @@ lanes = ["S1", "floor"]
 title = "LinkedIn text post for owners: claim before 'Xem thêm', B2B heat one notch lower, wording still definitive"
 context = "Week 2, Claude Pro project. Brand Card v1 (audience tôi–anh chị; big idea 1 'Tuyển hoài một vị trí không phải vì thiếu ứng viên'; story: quán hải sản 10 giờ đêm, tin xin nghỉ kèm sticker; phrase 'tuyển 15 phút thì người ta ở 15 ngày'; keyword 'tuyển hoài')."
 input = """viết bài LinkedIn ý lớn 1 đi em, anh đăng sáng mai"""
-contains = ["VÌ SAO RA KHÁCH", "anh chị"]
+contains = ["anh chị"]
 standard = "text-post"
 critical = ["TP1", "TP4", "TP6"]
 min_score = 13
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I15", "I17"]
 max_questions = 1
-notes = "QA §3.1 text-post: the claim lands before 'Xem thêm'; prose with rhythm, not stacked one-liners; a story includes a cost or flaw; the CTA closes the loop. wf6 A4: VN B2B and older audiences one notch lower in topic aggression, wording definitive. Judge also checks Edge ≥8 (shared)."
+notes = """QA §3.1 text-post: the claim lands before 'Xem thêm'; prose with rhythm, not stacked one-liners; a story includes a cost or flaw; the CTA closes the loop. wf6 A4: VN B2B and older audiences one notch lower in topic aggression, wording definitive. Judge also checks Edge ≥8 (shared). wf15 §2 (R1): the WHY line is stored with the piece and printed only on 'tại sao?', so the piece reply carries none."""
 
 [[case]]
 id = "edge-rubric.vn.023"
@@ -456,14 +547,13 @@ lanes = ["S1", "floor"]
 title = "Cash-now piece on the Map: 'tính thử căn này' for the 2 tỷ 68 flat reads as the method, not a listing"
 context = "Week 2, ChatGPT Plus project. Map cash_now: the 2-bedroom 68 m² flat, 2 tỷ 68, brokerage contract to 30/11, 'nhìn ra hồ bơi nội khu' (not river view). Audience mình–bạn, dialect Nam, keyword 'gồng lãi'."
 input = """viết anh clip tính thử căn 2 tỷ 68 nha, theo kiểu tính ngược, đừng giống tin rao"""
-contains = ["VÌ SAO RA KHÁCH"]
-not_contains = ["view sông", "giá tốt", "bán gấp", "căn cuối cùng", "cơ hội vàng", "siêu phẩm"]
+not_contains = ["view sông", "giá tốt", "bán gấp", "căn cuối cùng", "cơ hội vàng", "siêu phẩm", "VÌ SAO RA KHÁCH"]
 standard = "native-short"
 critical = ["NS1"]
 min_score = 10
 invariants = ["I1", "I3", "I8", "I12", "I15"]
 max_questions = 1
-notes = "expected.toml cash_now: one 'tính thử căn này' piece a week by the reverse calculation (lương hai vợ chồng, quỹ, ai đứng tên vay), keyword once, numbers exactly as papered. QA §3.1 native-short: ≥12/14, or 10/12 when NS4 (Buyer Filter, Likable/Entertain only) is N/A, as here. Judge also checks SG2: no rate prediction, no 'sinh lời'."
+notes = """expected.toml cash_now: one 'tính thử căn này' piece a week by the reverse calculation (lương hai vợ chồng, quỹ, ai đứng tên vay), keyword once, numbers exactly as papered. QA §3.1 native-short: ≥12/14, or 10/12 when NS4 (Buyer Filter, Likable/Entertain only) is N/A, as here. Judge also checks SG2: no rate prediction, no 'sinh lời'. wf15 §2 (R1): the WHY line is printed only on 'tại sao?', so the piece reply carries none."""
 
 [[case]]
 id = "edge-rubric.vn.024"
@@ -473,13 +563,13 @@ lanes = ["S1", "floor"]
 title = "Carousel 'Sổ 3 Cột': slide 1 ≤10 words, one rule per slide, last slide's gift continues the topic"
 context = "Week 2, ChatGPT Plus project. Brand Card v1 (method Sổ 3 Cột; gift: Sổ 3 Cột bản 1 trang + video 10 phút, real A-row; keyword 'lãi ảo'; public posts mình – các chị em)."
 input = """làm chị 1 carousel về Sổ 3 Cột nhé, đăng Facebook"""
-contains = ["VÌ SAO RA KHÁCH"]
 standard = "carousel"
 critical = ["CA1", "CA3", "CA5"]
 min_score = 13
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I12", "I14", "I15"]
 max_questions = 1
-notes = "QA §3.1 carousel: slide 1 ≤10 words and specific; one rule per slide; the last slide's lead magnet continues the topic and has a real A-row (CA5 because a keyword is used); worth saving without commenting. Numbers only from P1/P3/P4 (allowed_numbers)."
+notes = """QA §3.1 carousel: slide 1 ≤10 words and specific; one rule per slide; the last slide's lead magnet continues the topic and has a real gift (CA5 because a keyword is used); worth saving without commenting. Numbers only from P1/P3/P4 (allowed_numbers). wf15 §2 (R1): the WHY line is printed only on 'tại sao?', so the piece reply carries none."""
 
 [[case]]
 id = "edge-rubric.vn.025"
@@ -489,13 +579,13 @@ lanes = ["S1", "floor"]
 title = "Likable ritual short 'Đo hai lần, cưa một lần' passes the Buyer Filter: the habit shows the standard the buyer pays for"
 context = "Week 3, ChatGPT Free (Android). Brand Card v1 (ritual from his father: 'Đo hai lần, cưa một lần. Ba anh dạy rứa đó.'; principle 'Báo giá rẻ là báo giá còn thiếu'; posts xưng Đức / tụi em, gọi anh chị; dialect Trung)."
 input = """tuần ni làm anh 1 clip vui vui ở xưởng, kể vụ ba anh dạy đo hai lần cưa một lần, quay lúc tụi thợ đang đo tủ"""
-contains = ["VÌ SAO RA KHÁCH"]
 standard = "native-short"
 critical = ["NS1", "NS4"]
 min_score = 12
+not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I12", "I15"]
 max_questions = 1
-notes = "wf6 A3 F7 rituals (Likable) and the stage model: a Likable piece still carries a value the buyer cares about (measure before quoting = no surprise costs). QA §3.1 native-short NS4 Buyer Filter applies to Likable/Entertain. Entertainment ≤20-30% of the mix (PLAN)."
+notes = """wf6 A3 F7 rituals (Likable) and the stage model: a Likable piece still carries a value the buyer cares about (measure before quoting = no surprise costs). QA §3.1 native-short NS4 Buyer Filter applies to Likable/Entertain. Entertainment ≤20-30% of the mix (PLAN). wf15 §2 (R1): the WHY line is printed only on 'tại sao?', so the piece reply carries none."""
 
 # ---------------------------------------------------------------- added by the QA verifier: jargon request, cold-start downgrade, remix distance
 
@@ -515,38 +605,41 @@ regex = [
 ]
 not_regex = [
   '(?i)(?<!\w)edge(?!\w)',
-  '(?i)chấm điểm|điểm số|(?<![\w/])\d{1,2}\s?/\s?10(?![\d/])|(?<!\w)\d{1,2}\s*điểm(?!\w)',
+  '(?i)chấm điểm|điểm số|(?<!\w)\d{1,2}\s*(?:(?:/|trên)\s*10\s*)?điểm(?!\w)',
   '(?i)\brubric\b|\blint\b|\bSG\d\b|\bG[1-3]\b|\bpillars?\b|(?<!\w)trụ(?!\w)|Buyer Filter|3D test',
   '\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+',
   '(?i)(?:em|mình) không viết[^\n]*(?:comment|gồng lãi)',
-  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
+  '(?s)(?:Sẵn sàng (?:quay|đăng) · |Bản nháp · |Cần anh · ).*(?:Sẵn sàng (?:quay|đăng) · |Bản nháp · |Cần anh · )',
+  '(?i)là mình chỉnh ngay',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I14", "I15", "I17"]
 max_questions = 1
-notes = """arch §4 edge-rubric trigger ('Edge check this') rendered as a plain check (PLAN reconciliation 2; locales/vn/deny-list.txt bans 'edge check', 'điểm edge', 'chấm điểm', rubric codes): the coach's own English words never license the machine's jargon (I4). The caption hedges its only stance ('Mình nghĩ là có thể…', strip list V1/V3), has no scene of his and no number of his, so the plain outcome is a Draft naming the defect in words ('câu chính còn rào, chưa có chuyện của anh'); a rewrite with his toilet-of-the-show-flat story may follow with its own verdict line. His comment-keyword CTA stays (I14). Same decision as edge-rubric.en.004."""
+notes = """arch §4 edge-rubric trigger ('Edge check this') rendered as a plain check (PLAN reconciliation 2; locales/vn/deny-list.txt bans 'edge check', 'điểm edge', 'chấm điểm', rubric codes): the coach's own English words never license the machine's jargon (I4). The caption hedges its only stance ('Mình nghĩ là có thể…', §CM-HUMANIZE 3), has no scene of his and no number of his, so the plain outcome is one Bản nháp line naming the defect in words ('câu chính còn rào, chưa có chuyện của anh'), in anh–em ('là em chỉnh ngay'). It is his own draft checked on request ('edge check', 'đăng được chưa', graders.CHECK_ASK_RE), so exactly one check line prints (edge-rubric.kit-verdict BÀI HỌ VIẾT); a rewrite with his toilet-of-the-show-flat story may follow, with nothing under it (wf15 §2). The old ban on 'viết từ' is gone: 'Sẵn sàng {verb} · viết từ {evidence}' is today's verdict.ready. His comment-keyword CTA stays (I14). Same decision as edge-rubric.en.004."""
 
 [[case]]
 id = "edge-rubric.vn.027"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'Bài kể kết quả học viên' with no consented results: written as her own or first-group piece and said so in the verdict, no question"
+title = "'Bài kể kết quả học viên' with no consented results: written as her own or first-group piece with nothing under it; the downgrade shows on 'tại sao?'; no question"
 context = "Week 2, Monday, ChatGPT Free (iPhone). Brand Card v1 present (persona default: cold start, 0 online clients; pair bạn–mình; audience mình – mấy bạn; dialect Nam; keyword CỨNG ĐƠ; P1 her own March 2023 story, 9 giờ tối mùa quyết toán, vịn bàn; P3 nearly 3 years teaching studio group classes, no consented student words or results; P4 the 2024 lunchtime session, 22 people, an event not a result; P5 the friend's 'hết đau sau 3 tuần', unusable)."
 input = """viết giùm mình bài kể kết quả học viên đi, mấy bạn văn phòng tập theo mình rồi đỡ đau ra sao đó, người ta cần thấy bằng chứng á"""
 regex = [
-  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng) · viết dạng|Bản nháp · )',
+  '(?im)^(?:[ \t]*(?:```|~~~)|[^\w\n]*N\d+\s*·|[^\w\n]*(?:câu đầu|câu mở đầu|chữ trên màn hình|caption|hook)[^:\n]{0,30}:)',
   '(?i)lớp đầu tiên|nhóm đầu tiên|sáng lập|9 giờ tối|vịn bàn|2023|kế toán|22 người|buổi trưa|3 động tác|5 phút',
   'TIẾP →[^\n]*\s*\Z',
 ]
 not_regex = [
   '(?im)^(?![^\n]*(?<!\w)(?:chưa|không)(?!\w))[^\n]*(?:học viên|mấy bạn|khách)[^\n]{0,40}(?:hết đau|đỡ đau|khỏi đau|bớt đau|giảm đau|hết cứng)',
   '(?i)3 tuần|4 viên|nhỏ bạn',
-  '(?m)^\W*Cần bạn ·',
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|Cần bạn ·)',
   '(?im)^\W*["“][^"”\n]{5,}["”]\s*[—–-]\s*(?:học viên|bạn|chị|anh)\s',
 ]
+not_contains = ["VÌ SAO RA KHÁCH"]
+verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """QA §2.2 DOWNGRADE table: no consented proof → her own story, a process piece or a first-group (founding) framing, with the Authority ceiling kept internally; QA §2.4 verdict.ready_downgraded 'Sẵn sàng đăng · viết dạng {…}' says what it was written as. NEEDS YOU is only for a fact the coach can supply; a cold start has no consented student result to give, so no 'Cần bạn' question. I8: for a cold-start persona any client result is a fabrication; P5 (3 tuần, 4 viên) and P4 (an event, not a result) never become proof. No quoted 'student' line is invented (House rule 1). Same decision as edge-rubric.en.018."""
+notes = """QA §2.2 DOWNGRADE table and edge-rubric.kit-run SẴN SÀNG: no consented proof → her own story, a process piece or a first-group (founding) framing, with the Authority ceiling kept internally. wf15 §2 (R3): 'Ready, downgraded: the content only. The downgrade shows on "tại sao?"', so verdict.ready_downgraded ('Sẵn sàng đăng · viết thành …') prints only there (edge-rubric.vn.030). NEEDS YOU is only for a fact the coach can supply; a cold start has no consented student result to give, so no 'Cần bạn' question. I8: for a cold-start persona any client result is a fabrication; P5 (3 tuần, 4 viên) and P4 (an event, not a result) never become proof. No quoted 'student' line is invented (House rule 1). Same decision as edge-rubric.en.018."""
 
 [[case]]
 id = "edge-rubric.vn.028"
@@ -554,11 +647,126 @@ kind = "P"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S1", "floor"]
 title = "Her version of a saved post ('em làm bản của chị đi') clears the shared gates including SG-copy (distance from the other owner's post)"
-context = "Same state and input as liked.vn.005: Week 2, Thursday 22/10/2026, Android; L2 (another spa owner's caption) saved with its shape; Brand Card v1 (keyword NGẠI CHÀO, stories P1 and P8). Judge the piece only."
+context = '''Week 2, Thursday 22/10/2026, ChatGPT Free on her Android phone, Door A project. Earlier today chị Hạnh sent liked-paste L2 (a caption her daughter copied: a spa owner in Nam Định on the day she did not pitch a package); the machine saved its shape (a confession → one sentence the customer said → a one-line lesson → a soft question to readers) and offered 'làm bản của mình'. Brand Card v1 (persona default: pair chị–em; keyword NGẠI CHÀO; gift her 5 câu nói thật khi cầm gương; stories P1, đêm mưa tháng 11/2018 and the torn script, and P8, em sinh viên 2022 and the mirror). Judge the piece only.'''
 input = """em làm bản của chị đi"""
 standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG-copy", "SG5", "SG6"]
 min_score = 8
 invariants = ["I3", "I8", "I9", "I15"]
 max_questions = 1
-notes = """scope: pieces. shared.md SG-copy is critical on the default path (a remix the machine started): ≥2 of topic, stance, format and platform differ, no run of 8 tiếng from L2 (acceptance.toml [copy] vn_tieng = 8), no mirrored point order, and someone who follows both accounts would not call it the same post; the other owner's day, her customer's line and Nam Định never become chị Hạnh's (SG1). SG5 Edge ≥8 with no pillar at 0; SG6 keyword NGẠI CHÀO once outside the ask. The D twin with the 8-tiếng windows is liked.vn.005."""
+notes = """scope: pieces. shared.md SG-copy is critical on the default path (a remix the machine started): ≥2 of topic, stance, format and platform differ, no run of 8 tiếng from L2 (acceptance.toml [copy] vn_tieng = 8; liked.kit-make 7), no mirrored point order, and someone who follows both accounts would not call it the same post; the other owner's day, her customer's line and Nam Định never become chị Hạnh's (SG1). SG5 Edge ≥8 with no pillar at 0; SG6 keyword NGẠI CHÀO once outside the ask. The D twin with the 8-tiếng windows is liked.vn.005; 'tại sao?' on this version is edge-rubric.vn.031."""
+
+# ---------------------------------------------------------------- "tại sao?" after a piece, and her own draft that passes (wf15 §2)
+
+[[case]]
+id = "edge-rubric.vn.029"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "'tại sao?' after the Ready mirror short: the VÌ SAO line, 'Sẵn sàng quay · viết từ' her Bank (never an adjective), ✓ Đã kiểm and the record (Kết quả: ĐẠT, kiểm lỗi: thủ công)"
+context = "Week 2, Monday after the Weekly Talk. Door A project on ChatGPT Free (Android), method file pasted as text; no code is run, so the lint runs as presence checks. Brand Card v1 in the chat: pair chị–em, audience chị–các em, keyword 'ngại chào', enemy 'dọa da', stories P1 (đêm mưa 11/2018, tờ kịch bản xé) and P8 (em sinh viên 2022, cái gương). Big idea 1 'Khách không sợ giá, khách sợ bị dọa'. Turn 1 gets the mirror short with nothing under it; turn 2 asks why. Assertions run on the reply to 'tại sao?'; I3 also grades the turn-1 reply."
+input = """[turn 1] em viết chị 1 video ngắn về cái gương nhé, tối nay chị quay
+[turn 2] tại sao thế em?"""
+regex = [
+  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
+  '(?im)^\W*VÌ SAO RA KHÁCH[^\n]*dẫn tới',
+  '(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ [^\n]*(?:gương|em sinh viên|2022|ngại chào|2018|kịch bản|d(?:ọa|oạ)|P8|P1)',
+  '(?m)^\W*✓ Đã kiểm:',
+  '(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:ĐẠT|PASS)',
+  '(?i)(?:kiểm lỗi|lint)\s*:\s*(?:thủ công|manual)',
+]
+not_regex = [
+  '(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh|chạm)(?!\w)',
+  '(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:CHƯA ĐẠT|FAIL)',
+  '(?i)(?:kiểm lỗi|lint)\s*:\s*script',
+  '(?i)Sẵn sàng sau khi|Ready after',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
+max_questions = 1
+notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready … · checked.prefix mục đã qua, cả tick · hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT", K V A Au C + tổng, cổng, trần, "kiểm: cùng đoạn chat · kiểm lỗi: thủ công" (hay script). Bằng chứng: câu, cảnh, khách của họ; không tính từ.' plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "…" → "…" · dẫn tới: …'). The evidence names a Bank item (the mirror, em sinh viên, the keyword), never an adjective (the first not_regex, also I17). A Ready piece's record says ĐẠT; no code ran, so 'kiểm lỗi: thủ công', never 'script' (QA §1 rule 4). Scores and pillar codes are allowed here only because she asked (I4 not listed); the turn-1 reply carries none of it (edge-rubric.vn.001). Not on S0: the record's fields live in the method file (§CM-EDGE). The Draft counterpart is edge-rubric.vn.003."""
+
+[[case]]
+id = "edge-rubric.vn.030"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "'vì sao vậy bạn?' after the downgraded cold-start post: 'Sẵn sàng đăng · viết thành …' names the first-group or own-story framing, with ✓ Đã kiểm and the ceiling; still no student result"
+context = "Week 2, Monday, ChatGPT Free (iPhone). Brand Card v1 present (persona default: cold start, 0 online clients; pair bạn–mình; audience mình – mấy bạn; dialect Nam; keyword CỨNG ĐƠ; P1 her own March 2023 story, 9 giờ tối mùa quyết toán, vịn bàn; P3 nearly 3 years teaching studio group classes, no consented student words or results; P4 the 2024 lunchtime session, 22 people, an event not a result; P5 the friend's 'hết đau sau 3 tuần', unusable). Turn 1 gets the post written as her own or a first-group piece, with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."
+input = """[turn 1] viết giùm mình bài kể kết quả học viên đi, mấy bạn văn phòng tập theo mình rồi đỡ đau ra sao đó, người ta cần thấy bằng chứng á
+[turn 2] vì sao vậy bạn?"""
+regex = [
+  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
+  '(?im)^\W*Sẵn sàng (?:đăng|quay) · viết thành [^\n]*(?:lớp đầu|nhóm đầu|sáng lập|chuyện (?:của )?(?:bạn|mình)|cách làm|chưa có kết quả|9 giờ tối|2023|vịn bàn|buổi trưa)',
+  '(?m)^\W*✓ Đã kiểm:',
+  '(?i)(?<!\w)trần(?!\w)',
+]
+not_regex = [
+  '(?im)^(?![^\n]*(?:(?<!\w)(?:chưa|không)(?!\w)|VÌ SAO RA KHÁCH))[^\n]*(?:học viên|mấy bạn|khách)[^\n]{0,40}(?:hết đau|đỡ đau|khỏi đau|bớt đau|giảm đau|hết cứng)',
+  '(?i)3 tuần|4 viên|nhỏ bạn',
+  '(?m)^\W*Cần bạn ·',
+  '(?i)Sẵn sàng sau khi|Ready after',
+]
+verdict = "Ready-downgraded"
+invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
+max_questions = 1
+notes = """wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: on 'tại sao?', what it was written from is verdict.ready_downgraded ('Sẵn sàng {verb} · viết thành {evidence}', e.g. 'viết thành chuyện của bạn hồi 2023, chưa có kết quả học viên'), with the checks and the record. QA §2.2 DOWNGRADE table: the Authority ceiling is recorded and never waived, so the record names it ('trần', a record field in edge-rubric.kit-verdict). The student-result guard skips the WHY line, whose old belief may quote buyers ('phải thấy học viên hết đau mới tin'). The turn-1 reply carried none of this (edge-rubric.vn.027). Asking why unlocks no student result (I8, cold start); no question, because a cold start has no fact to give. 'vì sao vậy bạn?' is the command in her voice (graders.WHY_RE)."""
+
+[[case]]
+id = "edge-rubric.vn.031"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "'tại sao?' after her default version of a saved post: liked.evidence 'khung của họ, … của chị, không chép câu nào', the checks and the VÌ SAO line; no copy note"
+context = "Week 2, Thursday 22/10/2026, ChatGPT Free on her Android phone, Door A project. Earlier today chị Hạnh sent liked-paste L2 (a caption her daughter copied: a spa owner in Nam Định on the day she did not pitch a package); the machine saved its shape and offered 'làm bản của mình'. Brand Card v1 (persona default: pair chị–em; keyword NGẠI CHÀO; gift her 5 câu nói thật khi cầm gương; stories P1, đêm mưa tháng 11/2018, 41 thẻ, the torn script, and P8, em sinh viên 2022 and the mirror). Turn 1 gets her version with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."
+input = """[turn 1] em làm bản của chị đi
+[turn 2] tại sao em?"""
+regex = [
+  '(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]+ của chị[,;] không chép câu nào',
+  '(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]*(?:2018|kịch bản|gương|đêm mưa|em sinh viên|41 thẻ|ngại chào)',
+  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
+  '(?m)^\W*✓ Đã kiểm:',
+]
+not_regex = [
+  '(?i)bám sát bài của họ|Bài na ná dễ bị giảm hiển thị',
+  '(?i)Nam Định',
+  '(?i)khung của họ, [^\n]*của bạn',
+  '(?i)Sẵn sàng sau khi|Ready after',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8", "I15", "I17"]
+max_questions = 1
+notes = """liked.kit-make 7: 'Hỏi "tại sao?": liked.evidence' ('Sẵn sàng {verb} · khung của họ, {fact} của bạn, không chép câu nào.', in chị–em '… của chị, …') and wf15-case-impact R8: the evidence line moved from under the version to 'tại sao?'. The fact named is hers (the 2018 night, the mirror), never the Nam Định owner's day. Nothing was copied on request, so no F1 copy note, on 'tại sao?' either. The turn-1 reply carried no line (liked.vn.005 and edge-rubric.vn.028 judge the version itself)."""
+
+[[case]]
+id = "edge-rubric.vn.032"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "S0", "floor"]
+title = "His own post checked on request ('đăng được chưa'): one 'Sẵn sàng đăng · viết từ' line naming his own story; not rewritten, no Bản nháp, no score"
+context = "Week 2, Tuesday, ChatGPT Free on his Android phone. Brand Card v1 present (persona default: pair anh–em; posts xưng Đức / tụi em, gọi anh chị; dialect Trung; keyword PHÁT SINH; gift danh sách 7 chỗ hay phát sinh; principle 'Báo giá rẻ là báo giá còn thiếu'; his own 2019 Liên Chiểu story). He typed a post for the workshop Page himself (his written-posts.md W1 with a comment line added) and pastes it."
+input = """anh tự viết bài ni cho Trang, em coi giùm đăng được chưa:
+
+Báo giá rẻ là báo giá còn thiếu.
+Năm 2019 Đức báo giá theo mét dài cho một ông chú bên Liên Chiểu. Đập tường ra mới thấy mục hết, phải tính thêm. Ông chú đứng giữa đống xà bần cầm cây chổi chỉ vô mặt Đức. Đức nhớ tới chừ.
+Từ bữa đó tụi em đục thử hai chỗ rồi mới báo giá. Cái chi có trong bản vẽ là giá chốt, không tính thêm.
+Anh chị nào sắp sửa bếp thì trước khi ký với ai, hỏi thêm đúng một câu: cái chi chưa có trong tờ ni?
+Sợ đập ra rồi mới phát sinh thì comment PHÁT SINH, tụi em gửi danh sách 7 chỗ hay phát sinh."""
+regex = [
+  '(?im)^\W*Sẵn sàng đăng · viết từ [^\n]*(?:2019|Liên Chiểu|ông chú|mét dài|đục thử|chổi|xà bần)',
+  'TIẾP →[^\n]*\s*\Z',
+]
+not_regex = [
+  '(?m)^\W*(?:Bản nháp ·|Cần anh ·|✓ Đã kiểm:)',
+  '(?s)Sẵn sàng (?:đăng|quay) ·.*Sẵn sàng (?:đăng|quay) ·',
+  '(?im)^\W*Sẵn sàng đăng · viết từ\s*(?:bài|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh)(?!\w)',
+  '(?i)(?<!\w)\d{1,2}\s*(?:(?:/|trên)\s*10\s*)?điểm(?!\w)|(?<!\w)edge(?!\w)|chấm điểm',
+  '\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+',
+  '(?im)^\W*Câu\s+["“][^\n]*["”]\s+(?:mình|em)\s+không viết',
+  '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
+]
+not_contains = ["VÌ SAO RA KHÁCH"]
+verdict = "Ready"
+invariants = ["I1", "I3", "I4", "I5", "I14", "I15", "I17"]
+max_questions = 1
+notes = """edge-rubric.kit-verdict 'BÀI HỌ VIẾT nhờ xem: một dòng Sẵn sàng hoặc verdict.draft_fixable', and wf15-case-impact 'Not contradictions': a check the coach asks for on his own draft still prints one line. His post passes (stance 'Báo giá rẻ là báo giá còn thiếu', his own 2019 story as proof, a step for today, PHÁT SINH once in the ask), so the line is verdict.ready 'Sẵn sàng đăng · viết từ {evidence}', the evidence naming his story (Liên Chiểu, the test holes), never an adjective; nothing else prints under it (no ✓ Đã kiểm or VÌ SAO line: those wait for 'tại sao?'). It is his post: not rewritten or reprinted. run.py check_verdict reads 'đăng được chưa' as a check (graders.CHECK_ASK_RE), so verdict Ready wants the Sẵn sàng line here. His keyword CTA is never touched (I14); no Northern particles to a Central coach."""

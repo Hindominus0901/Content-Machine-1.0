@@ -697,7 +697,7 @@ regex = [
   '(?i)Sổ 3 Cột',
   '''(?i)(?:mẫu trả lời|tin nhắn trả lời|tin trả lời|trả lời inbox)''',
   '''(?i)tin (?:nhắn )?Zalo|Zalo ·''',
-  '''(?i)Hồi mới tìm đến[^\n?]{0,20}đang loay hoay nhất chuyện gì\?''',
+  '''(?i)Hồi mới tìm (?:đến|tới)[^\n?]{0,20}đang loay hoay nhất chuyện gì\?''',
 ]
 not_regex = [
   '(?i)(tiêu đề|subject)\s+(email|thư)',
@@ -820,7 +820,7 @@ input = """tiếp em"""
 contains = ["NÓI GÌ:", "NÓI THẾ NÀO:", "Lưu lại để em nhớ chị (30 giây)", "thứ Sáu", "đoạn chat mới nhất"]
 regex = [
   '''(?m)^TIẾP →[^\n]*[Qq]uay video hôm nay[^\n]*\. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]\.?\s*\Z''',
-  '''Muốn em nhắc vào thứ Ba và thứ Sáu không\? Nhắn ['"“‘]có['"”’]''',
+  '''Muốn em nhắc (?:chị )?vào thứ Ba (?:và|với) thứ Sáu không\? Nhắn ['"“‘]có['"”’]''',
 ]
 not_regex = [
   '(?i)(ngoài|bên ngoài)\s+dự án',
@@ -1016,9 +1016,9 @@ input = """[turn 1] <<paste: the rendered VN PHONE-STARTER.txt, whole>>
 [turn 3] <<simulator: coach side per answers.md through Day 0's last reply (the Door B close)>>"""
 contains = ["TIẾP →", "QUAY HÔM NAY"]
 not_contains = ["NEXT →", "Ready to", "✓ Checked", "WHY THIS GETS CLIENTS", "Needs you", "VÌ SAO RA KHÁCH", "✓ Đã kiểm"]
-not_regex = ['''(?i)(?<![\w-])(the|and|you|your|please|ready|checked|done|next|today|week|step|pillar|keyword|beat card|let's|here's)(?![\w-])''']
+not_regex = ['''(?i)(?<![\w=-])(the|and|you|your|please|ready|checked|done|next|today|week|step|pillar|keyword|beat card|let's|here's)(?![\w-])(?!\s*[:=])''']
 invariants = ["I4", "I15"]
-notes = "scope: transcript, visible. Allowlist for I15: script, hook, content, launch, Content Machine (plus the product term Brand Card that strings/vn.toml itself uses). The 'cho máy' block of the Brand Card keeps plain English field names by schema and is excluded (visible). She never asks 'tại sao?', so the Vietnamese status lines are absent too (R1, R2)."
+notes = "scope: transcript. Allowlist for I15: script, hook, content, launch, Content Machine (plus the product term Brand Card that strings/vn.toml itself uses). The 'cho máy' block of the Brand Card keeps plain English field names by schema (schemas/brand-card.toml: 'keyword: …', 'week=1', 'cta_style=keyword'); evals/run.py reads only the first scope word, so 'visible' cannot drop that block here, and the regex skips field syntax instead (a word right after '=' or right before ':' / '='). VG2 hanh S1 passes once its field names are skipped. She never asks 'tại sao?', so the Vietnamese status lines are absent too (R1, R2)."
 
 [[case]]
 id = "setup.vn.046"
