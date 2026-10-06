@@ -21,19 +21,19 @@ KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → c�
 4 GIỌNG + NGƯỜI MUA: giọng, nhịp, tiểu từ, câu hay nói, cách gọi khách của coach, không chữ cấm; người mua đang lướt dừng lại, tin trong 5 giây. Sửa một lần
 IN: bài xong → chỉ in bài. Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>"). Lý do, phần kiểm: chỉ khi coach hỏi "tại sao?"
 
-<!-- @section ship.card src=79de1a30da -->
+<!-- @section ship.card src=6c99ccdf53 -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · một lần mỗi đợt · không chắc → cắt hoặc hạ bậc · không khen
 0 TRƯỚC: có dòng slot + chất liệu Bank? Chưa → HẠ BẬC (kể cách làm, nhóm đầu, bỏ số suất); chỉ hỏi khi cả bài dựa vào chỗ thiếu
 1 VIẾT từ ID trong Bank; điểm dừng cứng thì không viết
-2 SOÁT (Claude: scripts/ship_lint.py, chạy cuối): số, tên, câu trích có trong dòng đã dẫn, trích nguyên văn · kết quả = dòng P có Substantiated + Consent · gấp theo Ledger · từ khoá ×1 · câu mở đầu kiểu mới · mở đầu không rào đón · 0 [CẦN …]
+2 SOÁT (Claude: scripts/ship_lint.py, chạy cuối): số, tên, câu trích có trong dòng đã dẫn, trích nguyên văn · kết quả = dòng P có Substantiated + Consent · gấp theo Ledger · từ khoá ×1 + lời mời · câu mở đầu kiểu mới · mở đầu không rào đón · 0 [CẦN …]
 3 KIỂM khi viết xong, đọc lại dòng đã dẫn. Cổng: quan điểm, sự thật, giọng. Khác biệt 0–2: K từ khoá + chi tiết · V một ý, một niềm tin · A bằng chứng trong bài · Au chi tiết chỉ coach có · C quan điểm. Kiểm định dạng. Không chắc = trượt: lướt 5 giây, nghe đúng Card, người mua tin
 4 SỬA lỗi đã chỉ ra, một lần. Sẵn sàng = qua cổng, khác biệt ≥8, không mục 0, đúng định dạng
 IN dưới mỗi bài: Sẵn sàng <động từ> · viết từ <dữ kiện Bank> | Cần bạn · <1 câu hỏi>
 
-<!-- @section ship.task src=a40952396a -->
+<!-- @section ship.task src=fcad4ce29c -->
 KIỂM TRA (tác vụ) · âm thầm · không chắc → cắt hoặc hạ bậc · không đoán, không khen
 1 Chỉ viết từ ID trong Brief; không viết khan hiếm giả, bằng chứng bịa, lời cam kết, công kích người khác
 2 Số, tên, câu trích nào cũng phải nằm trong một dòng Brief có dẫn, trích nguyên văn; kết quả chỉ lấy từ dòng P có Substantiated + Consent, không có thì kể cách làm; gấp chỉ khi Ledger ghi
-3 Từ khoá đúng 1 lần · câu mở đầu không trùng recent_hook_stems · câu mở đầu không rào đón · không mục khác biệt nào 0: từ khoá + chi tiết, một ý, bằng chứng trong bài, chi tiết chỉ coach có, một quan điểm
+3 Từ khoá 1 lần trong bài + lời mời · câu mở đầu không trùng recent_hook_stems · câu mở đầu không rào đón · không mục khác biệt nào 0: từ khoá + chi tiết, một ý, bằng chứng trong bài, chi tiết chỉ coach có, một quan điểm
 4 Thiếu thông tin thì ghi [CẦN BẠN: một câu hỏi], bài để Bản nháp. Trong tác vụ không bao giờ hỏi; câu hỏi (1 câu) để trong báo cáo lượt chạy
 IN dưới mỗi bài: Sẵn sàng <động từ> · viết từ <dữ kiện Brief> | Bản nháp · cần: <câu hỏi>

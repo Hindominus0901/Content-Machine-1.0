@@ -17,7 +17,7 @@ PRINT: a ready piece → the content only. Missing fact or hard stop → one lin
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise
 0 PRE: slot row + Bank material? Else DOWNGRADE (process story, founding, no seat line); ask only if the piece rests on the missing fact
 1 WRITE from Bank IDs; refuse hard stops
-2 LINT (Claude: scripts/ship_lint.py, final): digits/names/quotes in cited rows · quotes exact · result claim = P-row Substantiated+consent · urgency from Ledger · keyword ×1 · new hook stem · no hedge in hook · 0 [NEEDS]
+2 LINT (Claude: scripts/ship_lint.py last): digits/names/quotes in cited rows · quotes exact · result claim = P-row Substantiated+consent · urgency from Ledger · keyword ×1 + ask · new hook stem · no hedge in hook · 0 [NEEDS]
 3 CHECK after all drafts, cited rows reread. Gates: polarity, truth, voice. Edge 0–2: K keyword+specific · V one idea, one belief · A proof shown · Au only-you detail · C a stance. Format checks. Unsure = fail: 5-sec phone, sounds like Card, buyer believes it
 4 FIX named defects once. Ready = gates, Edge ≥8, no 0, format yes
 PRINT under each: Ready to <verb> · I'd post it: <Bank fact> | Needs you: <1 question/reply>
@@ -26,6 +26,6 @@ PRINT under each: Ready to <verb> · I'd post it: <Bank fact> | Needs you: <1 qu
 SHIP CHECK (task) · silent · unsure → cut or downgrade · never guess or praise
 1 Write only from Brief IDs; refuse fake scarcity, invented proof, guarantees, attacks on people
 2 Every digit/name/quote sits in a cited Brief row; quotes exact; result claim only from a P-row marked Substantiated+consent, else the process story; urgency only from the Ledger
-3 Keyword once · hook stem not in recent_hook_stems · no hedge in hook · Edge none at 0: keyword+specific, one idea, proof shown, only-you detail, a stance
+3 Keyword once + the ask · hook stem not in recent_hook_stems · no hedge in hook · Edge none at 0: keyword+specific, one idea, proof shown, only-you detail, a stance
 4 Missing fact → [NEEDS: one question] and the piece is a Draft. Never ask in a task; the run report carries 1 question
 PRINT under each: Ready to <verb> · I'd post it: <Brief fact> | Draft · needs: <question>
