@@ -32,12 +32,13 @@ from cmlib import CMError  # noqa: E402
 ZIP_DATE = (1980, 1, 1, 0, 0, 0)
 FILE_MODE = 0o100644          # regular file, rw-r--r--
 EXCLUDED_NAMES = {"__MACOSX", ".DS_Store", "Thumbs.db", "desktop.ini"}
+KEPT_DOT_NAMES = {".claude-plugin"}   # the manifest folder of a Claude plugin zip
 SHIPPED_FORBIDDEN_DIRS = {"qa", "evals"}   # E153
 
 
 def is_excluded(rel_parts: tuple[str, ...]) -> bool:
     """True for dotfiles, dot-directories and OS litter anywhere in the path."""
-    return any(p.startswith(".") or p in EXCLUDED_NAMES for p in rel_parts)
+    return any((p.startswith(".") and p not in KEPT_DOT_NAMES) or p in EXCLUDED_NAMES for p in rel_parts)
 
 
 def collect_files(src_dir: Path) -> list[tuple[str, Path]]:

@@ -477,6 +477,243 @@ class BuildTests(TempRepo):
         self.assertEqual(zips, {p: package.file_sha256(p) for p in (self.root / "dist").rglob("*.zip")})
 
 
+SAVE_SWAPPED = {"en": 'Save: email the card to yourself. Tomorrow say "{{t:cmd.next}}".',
+                "vn": 'Lưu: gửi card vào Zalo. Mai nhắn "{{t:cmd.next}}".'}
+COMMANDS = {"en": ("Start", "next"), "vn": ("Bắt đầu", "tiếp")}
+PLUGIN_ENTRIES = {
+    "content-machine/.claude-plugin/plugin.json",
+    "content-machine/README.md",
+    "content-machine/skills/content-machine-en/SKILL.md",
+    "content-machine/skills/content-machine-en/CONTENT-MACHINE-EN.md",
+    "content-machine/skills/content-machine-vn/SKILL.md",
+    "content-machine/skills/content-machine-vn/CONTENT-MACHINE-VN.md",
+}
+
+
+def make_portable_repo(root: Path) -> Path:
+    """make_repo plus what turns the plugin and the one-file kit on: strings portable.save (and the command words
+    it and the plugin use) and the kit's own save line, which the build swaps."""
+    make_repo(root)
+    for ed, (start, nxt) in COMMANDS.items():
+        with open(root / f"strings/{ed}.toml", "a", encoding="utf-8") as fh:
+            if ed == "en":
+                fh.write(f'"cmd.start" = {toml_str(start)}\n"cmd.next" = {toml_str(nxt)}\n'
+                         f'"portable.save" = {toml_str(SAVE_SWAPPED[ed])}\n')
+            else:
+                for key, text, en in (("cmd.start", start, COMMANDS["en"][0]), ("cmd.next", nxt, COMMANDS["en"][1]),
+                                      ("portable.save", SAVE_SWAPPED[ed], SAVE_SWAPPED["en"])):
+                    fh.write(f'"{key}" = {{ text = {toml_str(text)}, src = "{cmlib.sha10(en)}" }}\n')
+        write_kit(root, ed, build.PORTABLE[ed]["save_from"])
+    return root
+
+
+def write_kit(root: Path, lang: str, save_line: str | None) -> None:
+    lines = ["Preamble line that must not ship.", "<!-- @section start.block -->", "{{t:contract.output}}",
+             "{{#if kit}}KIT ROUTER{{else}}PHONE ONLY{{/if}}"]
+    if save_line is not None:
+        lines.append(save_line)
+    lines.append("Price in {{currency}}.")
+    write(root, f"core/{lang}/start-block.md", "\n".join(lines) + "\n")
+
+
+def swapped(ed: str) -> str:
+    return SAVE_SWAPPED[ed].replace("{{t:cmd.next}}", COMMANDS[ed][1])
+
+
+def front_matter(skill_md: str) -> tuple[dict, str]:
+    """name and description from a SKILL.md, and the text after the front matter (description is JSON-quoted)."""
+    head, sep, body = skill_md.partition("\n---\n\n")
+    lines = head.split("\n")
+    assert lines[0] == "---" and sep, skill_md[:80]
+    fields = {}
+    for line in lines[1:]:
+        key, _, value = line.partition(": ")
+        fields[key] = json.loads(value) if value.startswith('"') else value
+    return fields, body
+
+
+class PortableTests(TempRepo):
+    """dist/content-machine-plugin.zip (one plugin, both editions) and the per-edition one-file kit."""
+
+    def build_all(self, editions=("en", "vn")):
+        with contextlib.redirect_stdout(io.StringIO()):
+            return build.build(self.root, list(editions))
+
+    @property
+    def plugin(self) -> Path:
+        return self.root / "dist" / "content-machine-plugin.zip"
+
+    def paths(self, ed: str) -> dict[str, Path]:
+        out = self.root / "dist" / ed
+        return {"onefile": out / f"CONTENT-MACHINE-{ed.upper()}-1-FILE.md",
+                "kit": out / "1-INSTRUCTIONS.txt", "method": out / f"CONTENT-MACHINE-{ed.upper()}.md"}
+
+    def unzip(self) -> dict[str, bytes]:
+        with zipfile.ZipFile(self.plugin) as zf:
+            return {name: zf.read(name) for name in zf.namelist()}
+
+    def test_plugin_zip_layout(self):
+        make_portable_repo(self.root)
+        self.build_all()
+        files = self.unzip()
+        self.assertEqual(list(files), sorted(files))
+        self.assertEqual(set(files), PLUGIN_ENTRIES)
+        for ed in ("en", "vn"):
+            name, method = f"content-machine-{ed}", f"CONTENT-MACHINE-{ed.upper()}.md"
+            self.assertEqual(files[f"content-machine/skills/{name}/{method}"], self.paths(ed)["method"].read_bytes())
+            self.assertEqual(list((self.root / "dist" / ed).glob("*.zip")), [])    # one plugin, at dist/, not per edition
+
+    def test_plugin_json(self):
+        make_portable_repo(self.root)
+        self.build_all()
+        manifest = json.loads(self.unzip()["content-machine/.claude-plugin/plugin.json"])
+        self.assertEqual(set(manifest), {"name", "version", "description", "author", "keywords"})
+        self.assertEqual(manifest["name"], "content-machine")
+        self.assertEqual(manifest["version"], "1.2.3")                 # the repo's VERSION file
+        self.assertEqual(manifest["author"], {"name": "Content Machine"})
+        self.assertIn("Tiếng Việt", manifest["description"])           # bilingual
+        self.assertIn("English", manifest["description"])
+        self.assertEqual(manifest["keywords"], ["content", "coach", "vn", "en"])
+
+    def test_readme_is_bilingual_install_note(self):
+        make_portable_repo(self.root)
+        self.build_all()
+        readme = self.unzip()["content-machine/README.md"].decode("utf-8")
+        self.assertLess(readme.index("## Tiếng Việt"), readme.index("## English"))
+        for text in ("Customize → Plugins → Add → Upload plugin", "Settings → Security and login",
+                     "Developer mode", "`Bắt đầu`", "`Start`", "`tiếp`", "`next`"):
+            self.assertIn(text, readme)
+        self.assertNotIn("{{", readme)
+
+    def test_both_skills_front_matter_and_body(self):
+        make_portable_repo(self.root)
+        self.build_all()
+        files = self.unzip()
+        for ed in ("en", "vn"):
+            with self.subTest(ed=ed):
+                name, p = f"content-machine-{ed}", self.paths(ed)
+                fields, body = front_matter(files[f"content-machine/skills/{name}/SKILL.md"].decode("utf-8"))
+                self.assertEqual(set(fields), {"name", "description"})
+                self.assertEqual(fields["name"], name)               # the folder name
+                desc = fields["description"]
+                self.assertLessEqual(len(desc), 200)
+                self.assertNotIn("<", desc)
+                self.assertNotIn(">", desc)
+                for word in COMMANDS[ed]:                              # the coach's own command words
+                    self.assertIn(f'"{word}"', desc)
+                pointer = f"CONTENT-MACHINE-{ed.upper()}.md"
+                self.assertTrue(body.split("\n", 1)[0].count(pointer), body[:100])   # one-line pointer to the method file
+                kit, old = p["kit"].read_text(encoding="utf-8"), build.PORTABLE[ed]["save_from"]
+                self.assertIn(old, kit)                                # the kit itself keeps its own line
+                self.assertTrue(body.endswith(kit.replace(old, swapped(ed))), body[-200:])
+                self.assertNotIn(old, body)
+                self.assertEqual(body.count(swapped(ed)), 1)
+
+    def test_one_file_kit(self):
+        make_portable_repo(self.root)
+        self.build_all()
+        for ed, lead in (("en", "# Content Machine — a file for the AI\n\n"),
+                         ("vn", "# Content Machine — file cho AI đọc\n\n")):
+            with self.subTest(ed=ed):
+                p = self.paths(ed)
+                text = p["onefile"].read_text(encoding="utf-8")
+                kit, method = p["kit"].read_text(encoding="utf-8"), p["method"].read_text(encoding="utf-8")
+                old = build.PORTABLE[ed]["save_from"]
+                heads = ("INSTRUCTIONS", "METHOD") if ed == "en" else ("HƯỚNG DẪN", "PHƯƠNG PHÁP")
+                self.assertTrue(text.startswith(lead), text[:80])
+                self.assertIn(f"\n## {heads[0]}\n\n", text)
+                self.assertIn(kit.replace(old, swapped(ed)).rstrip(), text)    # the instruction block, save line swapped
+                self.assertNotIn(old, text)
+                self.assertTrue(text.endswith(method), "the method file closes the one-file kit")
+                self.assertLess(text.index(f"\n## {heads[0]}\n"), text.index(f"\n## {heads[1]}\n\n{method[:20]}"))
+                anchors = [ln for ln in method.splitlines() if ln.startswith("## §CM-")]
+                self.assertTrue(anchors)
+                for heading in anchors:                                        # every §CM anchor of the method file
+                    self.assertEqual(text.count("\n" + heading + "\n"), 1, heading)
+
+    def test_outputs_are_deterministic(self):
+        make_portable_repo(self.root)
+        first_manifest = self.build_all()
+
+        def snapshot():
+            return {"plugin": self.plugin.read_bytes(),
+                    **{ed: self.paths(ed)["onefile"].read_bytes() for ed in ("en", "vn")}}
+
+        first = snapshot()
+        time.sleep(1.1)                    # new mtimes must not change anything
+        for p in self.root.rglob("*"):
+            if p.is_file():
+                os.utime(p)
+        second_manifest = self.build_all()
+        self.assertEqual(first, snapshot())
+        self.assertEqual(first_manifest["build_sha256"], second_manifest["build_sha256"])
+        self.assertEqual(first_manifest["artifacts"]["content-machine-plugin.zip"],
+                         second_manifest["artifacts"]["content-machine-plugin.zip"])
+        with zipfile.ZipFile(self.plugin) as zf:
+            for info in zf.infolist():
+                self.assertEqual(info.date_time, (1980, 1, 1, 0, 0, 0), info.filename)
+                self.assertEqual(info.external_attr >> 16, 0o100644, info.filename)
+
+    def test_manifest_records_the_outputs(self):
+        make_portable_repo(self.root)
+        manifest = self.build_all()
+        art = manifest["artifacts"]["content-machine-plugin.zip"]
+        self.assertEqual((art["edition"], art["target"]), ("all", "plugin"))
+        self.assertEqual(art["sha256"], package.file_sha256(self.plugin))
+        self.assertEqual(art["entries"], sorted(PLUGIN_ENTRIES))
+        for ed in ("en", "vn"):
+            one = manifest["artifacts"][f"{ed}/CONTENT-MACHINE-{ed.upper()}-1-FILE.md"]
+            self.assertEqual(one["target"], "onefile")
+            self.assertEqual(one["sha256"], package.file_sha256(self.paths(ed)["onefile"]))
+        self.assertFalse([s for s in manifest["skipped"] if s["target"] in ("plugin", "onefile")])
+
+    def test_without_the_save_string_the_outputs_are_skipped(self):
+        make_repo(self.root)                # no strings portable.save: a later phase writes it
+        manifest = self.build_all()
+        self.assertIn({"edition": "en", "target": "onefile", "reason": "strings key portable.save not present yet"},
+                      manifest["skipped"])
+        self.assertIn({"edition": "all", "target": "plugin",
+                       "reason": "vn: strings key portable.save not present yet"}, manifest["skipped"])
+        self.assertFalse(self.plugin.exists())
+        self.assertFalse(self.paths("en")["onefile"].exists())
+
+    def test_a_one_edition_build_keeps_both_skills_and_never_leaves_a_stale_plugin(self):
+        make_portable_repo(self.root)
+        self.build_all()
+        before = self.plugin.read_bytes()
+        self.build_all(("en",))             # vn is read from dist/vn as the full build left it
+        self.assertEqual(self.plugin.read_bytes(), before)
+        self.assertEqual(set(self.unzip()), PLUGIN_ENTRIES)
+        strings = self.root / "strings/en.toml"
+        strings.write_text("".join(ln for ln in strings.read_text(encoding="utf-8").splitlines(True)
+                                   if not ln.startswith('"portable.save"')), encoding="utf-8")
+        manifest = self.build_all(("en",))  # en can no longer build its half: no old zip next to the new kit
+        self.assertFalse(self.plugin.exists())
+        self.assertNotIn("content-machine-plugin.zip", manifest["artifacts"])
+
+    def test_a_kit_that_loses_its_save_line_stops_the_build(self):
+        save = build.PORTABLE["en"]["save_from"]
+        for count, line in ((0, None), (2, save + "\n" + save)):
+            with self.subTest(found=count):
+                make_portable_repo(self.root)
+                write_kit(self.root, "en", line)
+                code, _, err = self.quiet(build.main, "--edition", "en", "--root", str(self.root))
+                self.assertEqual(code, 1)
+                self.assertTrue(err.startswith("E170 dist/en/1-INSTRUCTIONS.txt: the kit's save line must appear "
+                                               "exactly once"), err)
+                self.assertIn(f"found {count};", err)
+                self.assertIn("PORTABLE['en']['save_from']", err)
+
+    def test_the_real_kits_print_the_save_line_exactly_once(self):
+        for ed in ("en", "vn"):
+            with self.subTest(ed=ed):
+                start_block = cmlib.ROOT / "core" / ed / "start-block.md"
+                if not start_block.is_file():
+                    self.skipTest(f"{start_block} not present")
+                kit = render.render_file(start_block, cmlib.load_edition(ed, cmlib.ROOT), "kit", root=cmlib.ROOT)
+                self.assertEqual(kit.count(build.PORTABLE[ed]["save_from"]), 1)
+
+
 class BundleShiplintTests(TempRepo):
     def test_plain_copy_without_cmcore(self):
         write(self.root, "tools/shiplint.py", "import json\nprint(json.dumps(1))\n")

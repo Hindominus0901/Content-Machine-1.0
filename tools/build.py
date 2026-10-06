@@ -7,11 +7,13 @@ Per edition:
     1-INSTRUCTIONS.txt                 kit    core/<lang>/start-block.md
     PHONE-STARTER.txt                  phone  core/<lang>/phone-starter.md, else start-block.md
     CONTENT-MACHINE-<SUFFIX>.md        method core/method.toml [method] anchors
+    CONTENT-MACHINE-<SUFFIX>-1-FILE.md onefile the kit + the method file, as one file for ChatGPT
     Level-ups/GROW-<SUFFIX>.md         grow   core/method.toml [grow] anchors
     Level-ups/autopilot/<skill>.zip    skill  core/SKILL.md.tmpl + [skill] references + tools/shiplint.py
     START-HERE.html                    help   strings starthere.title / starthere.body
     Help/<name>.html                   help   guides/<name>.tmpl
     dist/site/<edition>/index.html     site   guides/setup-page.tmpl
+    dist/content-machine-plugin.zip    plugin both editions' kit + method file, one plugin for Claude and ChatGPT
     dist/maintainer/tasks/<edition>/   task   automation/*.tmpl (samples for lint budgets)
 
 A source that a later phase writes is skipped with a note in
@@ -24,16 +26,18 @@ import argparse
 import ast
 import hashlib
 import html
+import io
 import json
 import shutil
 import sys
+import zipfile
 from dataclasses import dataclass, field
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cmlib  # noqa: E402
 from cmlib import CMError  # noqa: E402
-from package import check_ascii, compute_build_sha256, make_zip, read_version  # noqa: E402
+from package import FILE_MODE, ZIP_DATE, check_ascii, compute_build_sha256, make_zip, read_version  # noqa: E402
 from render import CONTRACT_KEY, render_file, render_reference, render_string  # noqa: E402
 
 # Budgets in platform/targets.toml that apply to each top-level artifact.
@@ -47,6 +51,88 @@ FILE_BUDGETS = {
 SKILL_MD_BUDGETS = ["skill_md_lines", "skill_md_bytes"]
 REFERENCE_BUDGETS = ["reference_lines", "reference_bytes"]
 SITE_TEMPLATE = "setup-page.tmpl"
+
+# Portable kits (docs/BUILD.md §6): the one plugin (Claude and ChatGPT, both editions) and the per-edition one-file
+# kit. Most of their text lives here and not in strings/<ed>.toml: strings are coach-visible and lint E140 bars "§CM"
+# from them, but this text addresses the model (the pointer and the file header name the method file's §CM- parts).
+# Tags are filled per edition: {{name}} and {{file_suffix}} as in any string; {{cmd_start}} and {{cmd_next}} from
+# strings cmd.start and cmd.next (what the coach types); {{h_instructions}} and {{h_method}} from this table.
+#   description  the skill's description (SKILL.md): at most PLUGIN_DESCRIPTION_MAX characters, no '<' or '>'
+#   pointer      one line under the front matter that points SKILL.md to the method file next to it
+#   intro        the one-file kit's opening, then the headings h_instructions and h_method
+#   readme       this edition's half of the plugin's README.md: what to do in Claude and in ChatGPT, then what to type
+#   save_from    the kit's own save line, exactly as core/<lang>/start-block.md prints it in 1-INSTRUCTIONS.txt. The
+#                outputs carry strings key portable.save instead (a chat is not a project, so "Save to project" and
+#                "Add text content" do not apply). If the kit stops printing save_from exactly once, the build
+#                stops (portable_instructions). Without portable.save the outputs are skipped, like any target
+#                whose source a later phase writes.
+PORTABLE = {
+    "en": {
+        "description": 'Content Machine for coaches: from a voice dump to one message, a video to film today and a '
+                       'week plan. Use when the user says "{{cmd_start}}", "{{cmd_next}}", or asks for content.',
+        "pointer": "The method file CONTENT-MACHINE-{{file_suffix}}.md sits next to this file. Each part starts with "
+                   "§CM-…: read that part before the job it covers.",
+        "save_from": "Save: ChatGPT: ⋯ under the card → Save to project. Claude: copy it, + by the project files → "
+                     "Add text content. Backup: email it to yourself.",
+        "h_instructions": "INSTRUCTIONS",
+        "h_method": "METHOD",
+        "intro": "# {{name}} — a file for the AI\n\nYou are the AI receiving this file. Read all of it. "
+                 "{{h_instructions}} is how you work for this whole chat; {{h_method}} is the "
+                 "CONTENT-MACHINE-{{file_suffix}}.md file {{h_instructions}} mentions, with the §CM- parts to read "
+                 'before each job. When the user says "{{cmd_start}}" (or "{{cmd_next}}"), follow '
+                 "{{h_instructions}}. Don't summarise the file or mention it.",
+        "readme": "## English\n\n"
+                  "One file, `content-machine-plugin.zip`, for both Claude and ChatGPT, with the English and the "
+                  "Vietnamese edition in it. Keep it zipped; do not unzip it.\n\n"
+                  "**Claude (Pro)**\n"
+                  "1. claude.ai on a computer → Customize → Plugins → Add → Upload plugin → choose the zip.\n"
+                  "2. If Claude says it needs Code execution: Settings → Capabilities → turn it on.\n"
+                  "3. Open a new chat (web, desktop or phone) and type `{{cmd_start}}`.\n\n"
+                  "**ChatGPT (Plus/Pro)**\n"
+                  "1. Settings → Security and login → turn on Developer mode.\n"
+                  "2. Plugins → upload the zip.\n"
+                  "3. Open a new chat and type `{{cmd_start}}`.\n\n"
+                  "Next day: say `{{cmd_next}}` in the same chat. In a new chat, paste the Brand Card first.",
+    },
+    "vn": {
+        "description": 'Content Machine cho coach: từ lời kể ra thông điệp, video quay hôm nay, kế hoạch tuần. '
+                       'Dùng khi người dùng gõ "{{cmd_start}}", "{{cmd_next}}", hay nhờ làm content, video, bài đăng.',
+        "pointer": "File phương pháp CONTENT-MACHINE-{{file_suffix}}.md nằm cạnh file này. Mỗi phần bắt đầu bằng "
+                   "§CM-…: đọc đúng phần đó trước khi làm việc nó nói tới.",
+        "save_from": "Lưu: ChatGPT: ⋯ dưới card → Lưu vào dự án. Claude: chép card, + cạnh file của project → "
+                     'Add text content. Dự phòng: gửi vào Zalo "Cloud của tôi".',
+        "h_instructions": "HƯỚNG DẪN",
+        "h_method": "PHƯƠNG PHÁP",
+        "intro": "# {{name}} — file cho AI đọc\n\nBạn là AI đang nhận file này. Đọc hết file. Phần "
+                 "{{h_instructions}} là cách bạn làm việc suốt cuộc trò chuyện này; phần {{h_method}} chính là file "
+                 "CONTENT-MACHINE-{{file_suffix}}.md mà {{h_instructions}} nhắc tới, với các mục §CM- để tra trước "
+                 'mỗi việc. Khi người dùng gõ "{{cmd_start}}" (hay "{{cmd_next}}"), làm theo '
+                 "{{h_instructions}}. Không tóm tắt file, không nhắc tới file.",
+        "readme": "## Tiếng Việt\n\n"
+                  "Một file `content-machine-plugin.zip` dùng cho cả Claude và ChatGPT, có cả tiếng Việt lẫn tiếng "
+                  "Anh. Để nguyên file zip, không giải nén.\n\n"
+                  "**Claude (Pro)**\n"
+                  "1. claude.ai trên máy tính → Customize → Plugins → Add → Upload plugin → chọn file zip.\n"
+                  "2. Nếu Claude báo cần Code execution: Settings → Capabilities → bật lên.\n"
+                  "3. Mở chat mới (web, máy tính hay điện thoại), gõ `{{cmd_start}}`.\n\n"
+                  "**ChatGPT (Plus/Pro)**\n"
+                  "1. Settings → Security and login → bật Developer mode.\n"
+                  "2. Mục Plugins → tải file zip lên.\n"
+                  "3. Mở chat mới, gõ `{{cmd_start}}`.\n\n"
+                  "Hôm sau: nhắn `{{cmd_next}}` ngay trong đoạn chat cũ. Mở chat mới thì dán Brand Card vào trước.",
+    },
+}
+SAVE_KEY = "portable.save"
+PLUGIN_DESCRIPTION_MAX = 200     # claude.ai skill description limit (lint E102 holds the same line)
+# The one plugin at dist/content-machine-plugin.zip. Claude takes it as is; OpenAI's plugin portal accepts a Claude
+# plugin archive and converts it, so one package serves both apps. Skills go in this order.
+PLUGIN_ZIP = "content-machine-plugin.zip"
+PLUGIN_NAME = "content-machine"
+PLUGIN_EDITIONS = ("vn", "en")
+PLUGIN_DESCRIPTION = ("Content Machine for coaches (Tiếng Việt + English): a voice dump becomes one message, "
+                      "a video to film today and a week plan.")
+PLUGIN_KEYWORDS = ["content", "coach", "vn", "en"]
+PLUGIN_README_HEAD = "# Content Machine — plugin\n\nTiếng Việt: gõ `{vn}` · English: type `{en}`"
 
 
 def _matches(selector: str, sections: dict) -> bool:
@@ -286,6 +372,23 @@ def bundle_shiplint(root: Path) -> str | None:
     return src
 
 
+def portable_zip(files: dict[str, bytes], where: str) -> bytes:
+    """A plugin zip in memory, written like package.make_zip (sorted, fixed date and mode, level 9).
+
+    make_zip leaves dotfiles out and a Claude plugin must hold .claude-plugin/plugin.json, so it cannot write it.
+    """
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as zf:
+        for name in sorted(files):
+            check_ascii(name, where)
+            info = zipfile.ZipInfo(name, date_time=ZIP_DATE)
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = 3
+            info.external_attr = FILE_MODE << 16
+            zf.writestr(info, files[name], compresslevel=9)
+    return buf.getvalue()
+
+
 # ---------------------------------------------------------------- one edition
 
 class EditionBuild:
@@ -350,6 +453,7 @@ class EditionBuild:
         self.build_anchor_file("method", f"CONTENT-MACHINE-{self.ed.file_suffix}.md")
         self.build_anchor_file("grow", f"Level-ups/GROW-{self.ed.file_suffix}.md")
         self.build_skill()
+        self.build_portable()
         self.build_start_here()
         self.build_guides()
         self.build_tasks()
@@ -491,6 +595,78 @@ class EditionBuild:
             return {}
         return cmlib.load_toml(path)
 
+    def portable_text(self, key: str) -> str:
+        """One PORTABLE text for this edition, its {{tags}} filled."""
+        table = PORTABLE[self.ed.lang]
+        text = table[key]
+        local = {"h_instructions": table["h_instructions"], "h_method": table["h_method"],
+                 "cmd_start": render_string("cmd.start", self.ed, "kit"),
+                 "cmd_next": render_string("cmd.next", self.ed, "kit")}
+        for tag, value in local.items():
+            text = text.replace("{{%s}}" % tag, value)
+        return cmlib.render(text, self.ed, "kit", path=f"tools/build.py PORTABLE['{self.ed.lang}']['{key}']").strip()
+
+    def portable_instructions(self, kit: Path) -> str:
+        """The kit text with its save line swapped for the portable one; the build stops unless it is there once."""
+        text = kit.read_text(encoding="utf-8")
+        old = PORTABLE[self.ed.lang]["save_from"]
+        found = text.count(old)
+        if found != 1:
+            raise CMError("E170", f"the kit's save line must appear exactly once to be swapped for the plugin and "
+                                  f"the one-file kit, found {found}; update PORTABLE['{self.ed.lang}']['save_from'] "
+                                  f"in tools/build.py to match core/{self.ed.lang}/start-block.md",
+                          cmlib.rel(kit, self.root))
+        return text.replace(old, render_string("portable.save", self.ed, "kit"))
+
+    def portable_blocker(self) -> str | None:
+        """Why the portable outputs cannot be built for this edition yet, or None."""
+        if SAVE_KEY not in self.ed.strings:
+            return f"strings key {SAVE_KEY} not present yet"
+        if not (self.out / "1-INSTRUCTIONS.txt").exists() or not self.method_path().exists():
+            return "needs 1-INSTRUCTIONS.txt and the method file, which are not built yet"
+        if self.ed.lang not in PORTABLE:
+            return f"no PORTABLE texts for language '{self.ed.lang}' in tools/build.py"
+        return None
+
+    def method_path(self) -> Path:
+        return self.out / f"CONTENT-MACHINE-{self.ed.file_suffix}.md"
+
+    def portable_parts(self) -> dict:
+        """What the plugin and the one-file kit are made of, from the kit and method file built in dist/<ed>/."""
+        instructions = self.portable_instructions(self.out / "1-INSTRUCTIONS.txt")
+        method = self.method_path()
+        name = f"content-machine-{self.id}"
+        description = self.portable_text("description")
+        n = cmlib.nfc_len(description)
+        if n > PLUGIN_DESCRIPTION_MAX or "<" in description or ">" in description:
+            raise CMError("E102", f"skill description is {n} characters (max {PLUGIN_DESCRIPTION_MAX}) "
+                                  "and must not contain '<' or '>'", f"tools/build.py PORTABLE['{self.ed.lang}']")
+        # description as a double-quoted YAML scalar (JSON quoting is valid YAML): it holds ': ' and quotes
+        front = f"---\nname: {name}\ndescription: {json.dumps(description, ensure_ascii=False)}\n---\n\n"
+        heading = PORTABLE[self.ed.lang]
+        one = (self.portable_text("intro") + f"\n\n## {heading['h_instructions']}\n\n" + instructions.rstrip()
+               + f"\n\n## {heading['h_method']}\n\n" + method.read_text(encoding="utf-8"))
+        return {
+            "name": name,
+            "brand": self.ed.name,
+            "skill_md": cmlib.nfc(front + f"{self.portable_text('pointer')}\n\n{instructions}").encode("utf-8"),
+            "method_name": method.name,
+            "method": method.read_bytes(),
+            "one_file": cmlib.finish(one),
+            "readme": self.portable_text("readme"),
+            "cmd_start": render_string("cmd.start", self.ed, "kit"),
+        }
+
+    def build_portable(self) -> None:
+        """CONTENT-MACHINE-<SUFFIX>-1-FILE.md from the built kit and method file."""
+        reason = self.portable_blocker()
+        if reason:
+            self.report.skip(self.id, "onefile", reason)
+            return
+        out = self.write(self.out / f"CONTENT-MACHINE-{self.ed.file_suffix}-1-FILE.md",
+                         self.portable_parts()["one_file"])
+        self.record(out, "onefile")
+
     def build_start_here(self) -> None:
         keys = ("starthere.title", "starthere.body")
         if not all(k in self.ed.strings for k in keys):
@@ -556,6 +732,39 @@ class EditionBuild:
             self.record(out, "task", names, source=cmlib.rel(t, self.root))
 
 
+def build_plugin(root: Path, report: Report, builds: dict[str, EditionBuild]) -> None:
+    """dist/content-machine-plugin.zip: both editions' skills in one Claude-format plugin.
+
+    Read from dist/<edition>/ on disk, so a one-edition build still gets both skills if the other is built. A zip
+    from an earlier build is removed when this one cannot make a new one.
+    """
+    out = root / "dist" / PLUGIN_ZIP
+    parts: dict[str, dict] = {}
+    for ed in PLUGIN_EDITIONS:
+        edition = builds.get(ed) or EditionBuild(root, ed, report)
+        reason = edition.portable_blocker()
+        if reason:
+            report.skip("all", "plugin", f"{ed}: {reason}")
+            out.unlink(missing_ok=True)
+            return
+        parts[ed] = edition.portable_parts()
+    readme = "\n\n".join([PLUGIN_README_HEAD.format(**{ed: parts[ed]["cmd_start"] for ed in PLUGIN_EDITIONS}),
+                          *(parts[ed]["readme"] for ed in PLUGIN_EDITIONS)]) + "\n"
+    manifest = {"name": PLUGIN_NAME, "version": read_version(root), "description": PLUGIN_DESCRIPTION,
+                "author": {"name": parts[PLUGIN_EDITIONS[0]]["brand"]}, "keywords": PLUGIN_KEYWORDS}
+    files = {f"{PLUGIN_NAME}/.claude-plugin/plugin.json":
+             (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8"),
+             f"{PLUGIN_NAME}/README.md": cmlib.nfc(readme).encode("utf-8")}
+    for ed in PLUGIN_EDITIONS:
+        part = parts[ed]
+        files[f"{PLUGIN_NAME}/skills/{part['name']}/SKILL.md"] = part["skill_md"]
+        files[f"{PLUGIN_NAME}/skills/{part['name']}/{part['method_name']}"] = part["method"]
+    data = portable_zip(files, cmlib.rel(out, root))
+    out.write_bytes(data)
+    report.artifacts[PLUGIN_ZIP] = {"edition": "all", "target": "plugin", **text_stats(data),
+                                    "entries": sorted(files)}
+
+
 # ---------------------------------------------------------------- whole build
 
 def build(root: Path, editions: list[str]) -> dict:
@@ -567,8 +776,11 @@ def build(root: Path, editions: list[str]) -> dict:
     if not targets:
         report.note("all", "platform/targets.toml not present; no budgets in this manifest")
     version = read_version(root)
+    builds: dict[str, EditionBuild] = {}
     for ed in editions:
-        EditionBuild(root, ed, report).build()
+        builds[ed] = EditionBuild(root, ed, report)
+        builds[ed].build()
+    build_plugin(root, report, builds)
     manifest = {
         "schema": 1,
         "version": version,

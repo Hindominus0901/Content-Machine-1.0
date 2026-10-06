@@ -287,3 +287,6 @@
 "setup.cut_off"                = { text = "Đoạn đó bị đứt. Bạn nói lại thành 2 đoạn ngắn nhé.", src = "0ef31c83a9" }
 "card.label.address_1to1"      = { text = "Nhắn riêng thì gọi", src = "2196d4b686" }
 "card.label.connectors"        = { text = "Chữ nối hay dùng", src = "29e33dfe90" }
+
+# Portable kits (docs/BUILD.md §6): same key as strings/en.toml, whose note says what it does.
+"portable.save" = { text = "Lưu: chép card, gửi vào Zalo \"Cloud của tôi\". Hôm sau: nhắn \"{{t:cmd.next}}\" ngay trong đoạn chat này; mở chat mới thì dán card vào trước.", src = "66b4458871" }

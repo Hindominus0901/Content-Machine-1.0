@@ -169,17 +169,26 @@ dist/<edition>/                          → zipped by package.py as <zip_name>-
   START-HERE.html
   1-INSTRUCTIONS.txt
   CONTENT-MACHINE-<SUFFIX>.md
+  CONTENT-MACHINE-<SUFFIX>-1-FILE.md     ChatGPT one-file kit (below)
   PHONE-STARTER.txt
   Help/…
   Level-ups/GROW-<SUFFIX>.md
   Level-ups/autopilot/<skill_name>.zip
+dist/content-machine-plugin.zip          one plugin for Claude and ChatGPT, both editions (below)
 dist/site/<edition>/index.html
 dist/maintainer/manifest.json            sha256 + bytes + NFC chars + lines + % of budget per artifact
 dist/maintainer/tasks/<edition>/*.txt    rendered task samples (lint budgets)
 dist/maintainer/notion-build-prompt-<edition>.md, sheets-<edition>/*.csv
 ```
 
-**Zips are deterministic.** Entries are sorted, timestamps fixed at 1980-01-01 00:00, permissions fixed, and dotfiles, `__MACOSX` and `.DS_Store` are never included. File names are ASCII only.
+**Zips are deterministic.** Entries are sorted, timestamps fixed at 1980-01-01 00:00, permissions fixed, and dotfiles, `__MACOSX` and `.DS_Store` are never included (the one exception is the plugin's `.claude-plugin/` folder, below). File names are ASCII only.
+
+**Portable kits.** Two outputs carry the kit and the method file outside a Project, both built from `dist/<edition>/` by `tools/build.py`:
+
+- **`dist/content-machine-plugin.zip`** is one plugin for both apps and both editions, in Claude's plugin format: `content-machine/.claude-plugin/plugin.json` (name, `version` from `VERSION`, a bilingual description), `README.md` (a bilingual install note) and one skill per edition, `skills/content-machine-vn/` and `skills/content-machine-en/`, each with a `SKILL.md` and its method file next to it. `SKILL.md` is a front matter (name, a description of at most 200 characters), a one-line pointer to the method file, then the edition's instruction block. The coach installs it in Claude with Customize → Plugins → Add → Upload plugin, and in ChatGPT with Settings → Security and login → Developer mode → Plugins → upload (OpenAI's plugin portal accepts a Claude plugin archive and converts it, so there is no second package), then types `Bắt đầu` or `Start`. It is a root file: `package.py` zips only `dist/<edition>/` and `build_sha256` hashes only those folders, so hand it out next to the release zips. `build.py` writes it itself (`portable_zip`, same sorted, fixed-date, fixed-mode rules) because `make_zip` drops dotfiles and a Claude plugin must hold `.claude-plugin/plugin.json`. Check it with `claude plugin validate <extracted content-machine folder>`.
+- **`dist/<edition>/CONTENT-MACHINE-<SUFFIX>-1-FILE.md`** is the fallback for a ChatGPT account without plugins: a short header telling the model what the file is, the instruction block, then the method file. The coach attaches this one file in a ChatGPT chat and types `Bắt đầu` (VN) or `Start` (EN). It ships in the edition's release zip.
+
+Both carry the instruction block with its save line swapped: a plugin or one-file chat is not a Project, so the "Save to project" and "Add text content" line becomes strings key `portable.save` (copy the card and keep it; next day say `tiếp`/`next`, in a new chat paste the card first). The kit line being replaced is `PORTABLE[<lang>]["save_from"]` in `build.py`, and the build stops with E170 unless the rendered kit holds it exactly once, so a kit edit that touches that line must update `build.py` too. The other texts (skill description, pointer, one-file header, README) are `PORTABLE` constants in `build.py`, not strings: strings are coach-visible and E140 bars `§CM` from them. Without `portable.save` both outputs are skipped like any later-phase target; the plugin needs both editions, and a one-edition build reads the other from `dist/` or, if it cannot, removes an older plugin zip.
 
 A missing source for a later-phase target (for example `guides/` before P6) is skipped with a note in the manifest, not an error. `lint --release` turns every skipped target into an error.
 

@@ -273,3 +273,8 @@
 "setup.cut_off"                = "That got cut off. Say it again in 2 shorter pieces."
 "card.label.address_1to1"      = "One-to-one"
 "card.label.connectors"        = "Linking words"
+
+# Portable kits (docs/BUILD.md §6): the save line the Claude plugin, the ChatGPT plugin and the one-file kit
+# carry in place of the kit's own, since those chats are not projects. Its presence turns the three outputs
+# on; tools/build.py holds the kit line it replaces and stops the build if the kit stops printing it.
+"portable.save" = "Save: copy the card and email it to yourself. Tomorrow: say \"{{t:cmd.next}}\" in this same chat; in a new chat, paste the card first."

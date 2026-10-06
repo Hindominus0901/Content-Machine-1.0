@@ -111,6 +111,7 @@ FILL_WORDING = ("fill in", "fill out", "fill this", "fill-in", "điền vào", "
 DOS_EPOCH = (1980, 1, 1, 0, 0, 0)
 FIXED_MODES = {0, 0o644, 0o755}
 OS_LITTER = {"__MACOSX", ".DS_Store", "Thumbs.db", "desktop.ini"}
+KEPT_DOT_NAMES = {".claude-plugin"}   # the manifest folder of a Claude plugin zip (tools/package.py)
 FORBIDDEN_ZIP_DIRS = {"qa", "evals"}
 TIME_EXTRA_FIELDS = {0x5455: "extended-timestamp", 0x000A: "NTFS-timestamp", 0x5855: "Info-ZIP Unix"}
 
@@ -1511,7 +1512,7 @@ class Linter:
                 if not name.isascii():
                     self.add("E150", where, f"non-ASCII entry name '{name}'")
                     clean = False
-                if any(p.startswith(".") or p in OS_LITTER for p in parts):
+                if any((p.startswith(".") and p not in KEPT_DOT_NAMES) or p in OS_LITTER for p in parts):
                     self.add("E151", where, f"'{name}' is a dotfile, __MACOSX or OS litter")
                     clean = False
                 if any(p in FORBIDDEN_ZIP_DIRS for p in folders):
