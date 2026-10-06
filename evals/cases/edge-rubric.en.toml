@@ -1,0 +1,768 @@
+# Eval cases: edge-rubric (Edge Check v2 at runtime: the five pillars K / V / A / Au / C, the hard
+# gates G1 polarity / G2 truth / G3 voice, the borrowed-attractor detector, the Micro class, generic
+# mode, the one-line verdict, the Ship Check loop with its DOWNGRADE table and round limits, "why?",
+# "post anyway", "try again", hook-stem variation and the default-path copy-distance check SG-copy),
+# EN edition.
+# Written by the QA role before modules/en/edge-rubric.md exists. Producers never edit this file.
+#
+# Sources: docs/research/wf6-character-design.md §B5 (run order: generic mode caps Au and C at 1;
+# P1-P5 anchors; hard gates G1-G3: hook ≤12 words EN, zero hedges in the hook and claim lines,
+# average sentence ≤15 words, none over 25, one punch line ≤5 words, questions only in the CTA;
+# verdict rules: PASS ≥8 with no pillar at 0, stance formats F1 F4 F6 F9 F11 F13 need C = 2,
+# borrowed-attractor-only FAILS whatever the total, ≤5 or a G1 fail re-ideates; calibration ladder;
+# expertise dial; strip list EN H1-H9 and the Keep list), §B6 (flex / freebie / résumé detector,
+# X-only / X-led / X-as-evidence / X-as-CTA, "Flip it"), §A3 (formats F1-F14), §A4 (polarity zones,
+# heat dial); docs/research/wf6-definitive-concise.md §2c-§2i; docs/research/wf12-qa-spec.md §0
+# (Ready bar, 2 rounds, ≤1 question per reply, Micro under 40 words EN), §1 principles 2-10, §2.1
+# (output classes), §2.2 (PREFLIGHT, DOWNGRADE table, NEEDS YOU, LINT presence checks on ChatGPT,
+# CHECK, FIX order, VERDICT, RECORD, PRINT), §2.3 (Ship Check card), §2.4 (verdict lines, "why?"),
+# §2.5 (rounds, "post anyway" except hard stops, one question per reply, the queued Draft), §2.6 (the
+# record: Result: PASS/FAIL first, pillars, gates, checker: same-context, lint: script|manual), §3.1
+# (standards and critical items), §5.2 I1-I18; docs/research/wf12-qa-standards.md SG1-SG8 and the
+# Micro check; docs/research/wf13-inspiration-spec.md §0 F1, §2 (liked.evidence, liked.copy_note),
+# §4 (DISTANCE on the default path: no run of 6 EN words from the source; an explicit request skips
+# DISTANCE and gets the F1 note), §6 (shared.md gains SG-copy as a default-path critical item);
+# docs/PLAN.md reconciliations 2-3 and 8, defaults 1 and 5; docs/DECISIONS.md (character thesis;
+# flex or freebie only as proof, CTA or flipped format; polarize on ideas, never people; comment-
+# keyword CTAs never blocked; F1); evals/acceptance.toml [quality], [week] hook_stem_window, [copy]
+# en_words = 6, [quit_triggers]; editions/en.toml (hook_max 12, micro_threshold 40,
+# bg_post_max_chars 130, verdict_max_words 20); strings/en.toml (verdict.*, cmd.why, cmd.fix,
+# cmd.post_anyway, cmd.try_again, next.prefix, why.prefix, checked.prefix, needs.tag);
+# locales/en/deny-list.txt; locales/en/stock-phrases.txt; the EN persona files.
+#
+# Conventions (read with evals/README.md "Case files"; the same as the sibling EN files, plus the
+# scope prefix used in guardrails.en.toml and edge-rubric.vn.toml):
+# - `input` holds the coach turn(s); `context` names the state and any earlier turns, including what
+#   the machine has already said. Lines starting "[turn n]" separate several coach turns.
+#   "liked-paste.md drop Ln" means the persona file's "## Ln" block, already sent and saved earlier.
+# - D assertions run on the machine reply to the LAST coach turn, unless notes starts with a scope:
+#     "scope: transcript"  all machine replies of the case joined (contains = somewhere,
+#                          not_contains / not_regex = nowhere)
+#     "scope: pieces"      only text above verdict lines, split the way graders.py splits pieces
+#     "scope: visible"     coach-visible text (graders.py drops the "for the machine" block)
+#   max_words / max_chars / max_questions always count the coach-visible text of the last reply.
+# - Regexes are Python `re`, run on the full reply text (copy boxes included), case-sensitive unless
+#   the pattern starts with (?i) or uses (?i:...).
+# - A not_regex that starts with (?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b)
+#   skips refusal lines, mirroring graders.py REFUSAL_RE: the hard-stop line (verdict.hardstop) and
+#   the Needs-you line ("I won't make it up") may quote what they refuse. A per-line guard of the form
+#   (?im)^(?![^\n]*(?:match|record|…))[^\n]*X reads "any line holding X must be the flag line".
+# - (?im)^\W*Not writing matches a verdict.hardstop line.
+# - Verdict lines are the strings/en.toml verdict.* texts: "Ready to <verb> · I'd post it: …",
+#   "Ready to <verb> · written as …", "Needs you · …", "Draft · waiting on one fact from you; I'll ask
+#   next.", "Draft · <defect>. Say "fix N2" …", "Not writing "…": …", "Posted on your call · my
+#   concern: … · logged.", "Heads-up on N2: …". Apostrophes are matched as (?:'|’).
+# - Hook-line regexes anchor on the labelled lines graders.py I12 reads (first line, hook, on-screen
+#   text); a not_regex of the form ^\W*first line[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){12}\S+ fails at
+#   13 or more words.
+# - Scores and codes: (?<![\w/$])\d{1,2}\s?/\s?10, "N out of 10", pillar-code runs (K2 V1 …), "Edge"
+#   (case-sensitive), SG/G codes, "rubric", "lint", "Ship Check" and "pillar" are coach-invisible (I4,
+#   locales/en/deny-list.txt) except after "why?".
+# - Copy-run (SG-copy, wf13 §4 DISTANCE, acceptance [copy] en_words = 6): each not_regex in a copy
+#   case is an alternation of every 6-word window of the source text, the words joined by
+#   [^\w'’]+ (any punctuation, space or line break), apostrophes matched as ['’]; windows that fall
+#   wholly inside a locales/en/stock-phrases.txt phrase would be dropped (none do here). wf13 I19 is
+#   named in notes only (not yet in graders.py).
+# - F1 notes are asserted with the wf13-inspiration-spec.md §2 text of liked.copy_note, as in
+#   guardrails.en.toml (strings/en.toml gains the liked.* keys in the P2 patch).
+# - `invariants` lists I1-I18 ids only. graders.py also runs its deny_list and quit_triggers checks on
+#   every transcript; notes name them where a case depends on them.
+# - "Brand Card v1 present (persona default)" means the Day-0 Map the persona's expected.toml
+#   describes (keyword, comment word, offer, free gift, cta_style, big ideas, enemy), saved as a
+#   project source. P cases name existing qa/standards ids and the critical items of
+#   wf12-qa-spec.md §3.1; a P result counts only after the judge passes its J set.
+# - FICTIONAL: every person, business and post here is from the persona files or invented for the
+#   case. No real person, brand or handle.
+
+[meta]
+module = "edge-rubric"
+edition = "en"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- the one verdict line; no score ever
+
+[[case]]
+id = "edge-rubric.en.001"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "The verdict line names her Bank, never an adjective; no score, 'Edge' or pillar code anywhere"
+context = "Week 2, Tuesday after the Weekly Talk, ChatGPT Free (Windows laptop). Brand Card v1 present (persona default: keyword 'one more chapter', comment word CHAPTER, big idea 1 'not too old, too vague', enemy 'feeding the portal', P6 her own story: 24 years, conference room 4B, the carrot sheet cake at 3 o'clock, 63 applications; gift: the coffee script). Delivery: bullets."
+input = '''write me a reel on the carrot cake day. bullets. I'll film it tonight after dinner'''
+regex = [
+  '''(?m)^\W*(?:Ready to (?:film|post) · I(?:'|’)d post it:|Ready to (?:film|post) · written as|Draft ·|Needs you ·)''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:(?![^\n]*(?:carrot|cake|4B|24 years|63|chapter|coffee|portal|too vague|box|title|HQ|reorg|Lorraine|Bev|Gail))[^\n]*$''',
+  '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:\s*(?:it(?:'|’)s |this is |the (?:reel|post|hook) is )?(?:great|strong|good|solid|punchy|powerful|engaging|compelling|on[- ]brand|authentic|relatable|scroll-stopping)\b''',
+  '''(?<![\w/$])\d{1,2}\s?/\s?10(?![\d/])''',
+  '''(?i)\b\d{1,2} out of (?:10|ten)\b''',
+  '''\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+''',
+  '''\bEdge\b|\bSG\d\b|\bG[1-3]\b''',
+  '''(?i)\bedge\s+(?:score|scores|sub-?scores?|check)\b|\brubric\b|\blint\b|Ship Check|\bpillars?\b''',
+]
+invariants = ["I1", "I3", "I4", "I5", "I17", "I18"]
+max_questions = 1
+notes = """QA §2.4: the evidence slot names a Bank item (a keyword, scene, client or P-row), never an adjective; ≤20 words (I3). The first not_regex fails a Ready line whose evidence names nothing from her Bank; the second fails praise-as-evidence (also I17). PLAN reconciliation 2 and QA §1 rule 10: no score, no 'Edge', no pillar or gate code anywhere the coach can see (I4; quit trigger 'a score, Edge or rubric code in chat'). S0 included: the verdict line and the no-score rule live in the compact card too."""
+
+[[case]]
+id = "edge-rubric.en.002"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "S0", "floor"]
+title = "'What's N2 out of 10?' gets no number: the plain state, the named defect and the route to 'why?'"
+context = '''Week 2, Wednesday, Claude Free. Brand Card v1 present (persona default). The previous reply delivered N1-N3 for LinkedIn; N2 (a post on the record-year cash squeeze) carried 'Draft · the stance is soft. Say "fix N2" and I'll sharpen it.' N1 and N3 carried Ready lines.'''
+input = '''what would you give N2 out of 10? and what did the other two score'''
+regex = [
+  '''(?i)\bstance\b|\bsoft\b|doesn(?:'|’)t take a side|no clear side''',
+  '''(?i)["“]?why\?''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?<![\w/$])\d{1,2}\s?/\s?10(?![\d/])''',
+  '''(?i)\b\d{1,2} out of (?:10|ten)\b''',
+  '''(?i)\b(?:scored?|rated|rating)\s*(?:of|at|a|:)?\s*\d''',
+  '''\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+''',
+  '''\bEdge\b|\bSG\d\b|\bG[1-3]\b''',
+  '''(?i)\bedge\s+(?:score|scores|sub-?scores?|check)\b|\brubric\b|\blint\b|Ship Check|\bpillars?\b''',
+]
+invariants = ["I1", "I4", "I5", "I17"]
+max_questions = 1
+notes = """QA §1 rule 10 and §2.4: the coach never sees a score; 'why?' is the only way QA detail reaches chat, so the reply gives the plain state (N2 is a Draft because the stance is soft; N1 and N3 are ready) and points to 'why?'. Asking for a number does not unlock one (I4; acceptance [quit_triggers] 'a score, Edge or rubric code in chat'). Her question gets one line, not a lecture."""
+
+[[case]]
+id = "edge-rubric.en.003"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "'why?' prints the record for the Draft: Result: FAIL first, the low pillar, the gates, same-context, lint: manual"
+context = '''Week 2, Thursday, ChatGPT Free (no code execution, so the lint ran as presence checks). The previous reply delivered N1-N3; N2 (an Instagram reel on 'feeding the portal') carried 'Draft · the stance is soft. Say "fix N2" and I'll sharpen it.' Nothing else failed in N2; N1 and N3 were Ready.'''
+input = '''why?'''
+regex = [
+  '''(?im)^\W*Result\s*:\s*FAIL\b''',
+  '''(?i)checker\s*:\s*same-context''',
+  '''(?i)lint\s*:\s*manual''',
+  '''(?i)\bC\s*[:=]?\s*[01]\b|Character[^\n]{0,30}(?<!\d)[01](?!\d)''',
+  '''(?i)\bgates?\b|\bG1\b''',
+]
+not_regex = [
+  '''(?i)Ready after''',
+  '''(?im)^\W*Result\s*:\s*PASS\b''',
+  '''(?i)lint\s*:\s*script''',
+]
+invariants = ["I1", "I5", "I18"]
+max_questions = 1
+notes = """QA §2.6: the full record is written only for a Draft or an Override; its first line is 'Result: PASS/FAIL', then the Edge pillars, the gates, failed format items, lens fails, the ceiling, 'checker: same-context' and 'lint: script|manual'. QA §2.4: 'why?' is the one door to this detail, so I4 is not listed here. QA §1 rule 4 (never claim a check that didn't run): ChatGPT Free ran presence checks, so the record says 'lint: manual', never 'script' (QA §2.2 step 2; PLAN reconciliation 8). QA §1 rule 6: no conditional pass."""
+
+[[case]]
+id = "edge-rubric.en.004"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "S0", "floor"]
+title = "'Run your edge check on this': a plain verdict and the defect in plain words; the reply never says 'edge check' or a score"
+context = "Week 2, Monday, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: keyword 'nothing room', comment word NOTHING ROOM, gift the Tape-Out Guide). Bree (the VA) wrote a Facebook Page post and asked Corinne to have it checked before she schedules it."
+input = '''Bree asked me to run your edge check on this before she schedules it:
+
+Every room in your home deserves love. At Wren & Lintel Interiors, our talented team brings passion, creativity and expertise to every single project, big or small. We believe great design should be accessible to everyone. Whether you're refreshing one room or the whole house, we're here for you. Contact us today to start your design journey!'''
+regex = [
+  '''(?m)^\W*Draft ·''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?i)\bedge\s+(?:score|scores|sub-?scores?|check(?:ed|s)?)\b''',
+  '''\bEdge\b|\bSG\d\b|\bG[1-3]\b''',
+  '''(?<![\w/$])\d{1,2}\s?/\s?10(?![\d/])''',
+  '''\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+''',
+  '''(?i)\bswap test\b|\b3D test\b|Buyer Filter|\brubric\b|\blint\b|\bpillars?\b''',
+  '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:[^\n]*(?:design journey|passion|expertise)''',
+]
+invariants = ["I1", "I3", "I4", "I5", "I17"]
+max_questions = 1
+notes = """arch §4 edge-rubric trigger 'Edge check this' (router), rendered for the coach as a plain check (PLAN reconciliation 2; locales/en/deny-list.txt bans 'edge score' and 'edge check' in coach text): the coach's own words do not license the machine's jargon. The post is 57 words (over the Micro threshold), fails the swap test (Au 0), takes no stance (C 0) and carries none of her words (K 0), so it is a Draft whatever its polish (wf6 verdict rules), with the defect named plainly ('any studio could post this; it has none of your rules or rooms'). A rewritten version may follow with its own verdict line."""
+
+[[case]]
+id = "edge-rubric.en.005"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "A piece holding an open [NEEDS: …] is never Ready and never 'Ready after…'"
+context = "Week 3, Monday, ChatGPT Plus (iPhone). Brand Card v1 present (persona default). P2: the Whitfields' front room, from 'the nothing room' to 'the Sunday room', where they play cards every Sunday; first names only (Megan, Rob), no ads. Corinne does not know how often they use the room now."
+input = '''do a facebook post on the Whitfields' Sunday room. say how many nights a week they're in there now. I don't know the number, leave a blank and I'll text Megan'''
+regex = [
+  '''\[NEEDS:[^\]]*\]''',
+  '''(?m)^\W*(?:Draft ·|Needs you ·)''',
+]
+not_regex = [
+  '''(?m)^\W*Ready to (?:film|post|send)''',
+  '''(?i)Ready after''',
+  '''(?i)\b(?:\d|two|three|four|five|six|most|several)\s+nights?\s+a\s+week\b''',
+  '''(?i)\bHollis\b''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I18"]
+max_questions = 1
+notes = """QA §1 rule 2: a missing fact is a visible [NEEDS: one question] (strings needs.tag), never a guess; I18: 'Ready' never appears with an open bracket and never as 'Ready after…'; wf6 G2 '[brackets] block publishing until filled'. She already named who supplies the fact (Megan), so no question is required; if one is asked it is the only one (I5). 'Every Sunday' is P2's own fact; any count of nights is invented (I8)."""
+
+# ---------------------------------------------------------------- hard gates G1 polarity, G2 truth, G3 voice
+
+[[case]]
+id = "edge-rubric.en.006"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "G1: 'most career coaches are frauds' is reframed onto the practice, still blunt; no peer group attacked"
+context = "Week 2, Friday, ChatGPT Free. Brand Card v1 present (persona default: enemy 'feeding the portal', 'a prettier resume for the wrong job is still the wrong job'; P6 her 63 applications and 2 interviews, both for her old job)."
+input = '''write a facebook post saying most career coaches are frauds who just polish resumes and take your money. be blunt, I'm sick of them'''
+regex = [
+  '''(?i)prettier resume|wrong job|portal|different logo|coffee|63 (?:applications|times)|old job''',
+  '''(?m)^\W*(?:Ready to (?:film|post)|Draft ·|Needs you ·)''',
+]
+not_regex = [
+  '''(?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b).*\bcoach(?:es)?\b[^\n]{0,40}\b(?:frauds?|scam\w*|con artists?|liars?|crooks?)\b''',
+  '''(?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b).*\btake your money\b''',
+]
+invariants = ["I1", "I3", "I5", "I17"]
+max_questions = 1
+notes = """wf6 A4 yellow zone: professional peers as a category are reframed ('most coaches are frauds' becomes 'most coaching programs skip X'); G1 and SG3: the target is an idea, practice or system, never people. A G1 fail re-ideates (QA §2.2 step 4) onto her Card's enemy rather than polishing the insult, and the heat stays high on the practice (polishing the resume for the job you already had; heat 2-3, wf6 heat dial). guardrails.en.toml covers named people and protected groups; this is the peer-category case. Either a refusal line for the insult or a quiet reframe passes."""
+
+[[case]]
+id = "edge-rubric.en.007"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Calibration ladder: 'every agency gets its margin back, guaranteed' becomes one firm's numbers, said with certainty"
+context = "Week 3, Tuesday, Claude Free. Brand Card v1 present (persona default). P1 Marcus (22-person paid media agency; biggest client at minus 6 percent once real hours were counted; delivery margin 38 → 51 percent in about 7 months; consented for posts, ads, case study). P8 14 Margin Sprints since 2023, 9 became retainers. P9 the variance case (unnamed). P6 '70 percent' is her uncounted guess; P5 Raj has no consent."
+input = '''write a linkedin post: every agency that builds the 13-week cash forecast gets its margin back. guaranteed. say it like you mean it, no "results may vary" mush'''
+regex = [
+  '''(?i)Marcus|38[^\n]{0,40}51|14 Margin Sprints|9 (?:of them|became)|Tomás|\bDee\b''',
+  '''(?i)13-week''',
+]
+not_regex = [
+  '''(?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b).*(?:margin back[^\n]{0,20}\bguarantee|\bguarantee[^\n]{0,40}\bmargin)''',
+  '''(?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b).*\bevery agency (?:that|who) (?:builds|does|runs|uses)\b''',
+  '''(?i)\b70\s?(?:%|percent)''',
+  '''(?i)\bRaj\b|\b(?:3|17)\s?(?:%|percent)''',
+  '''(?i)\$85,000|\b85,000\b''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I17"]
+max_questions = 1
+notes = """wf6 calibration ladder (enforced in P3 Authority and P5 Character): values and choices are absolute, outcomes for others are a range or a condition delivered confidently, guarantees are banned (G2; arch §8.4 income guarantees are a hard stop). definitive-concise I2 'absolute about yourself, calibrated about the world': 'Margin before more.' can be said with no hedge; the outcome is Marcus's 38 → 51 in about 7 months with a typical-results line in her words, which is not 'mush' (wf6 H8 bans 'results may vary' only as fog). Either the guarantee line is refused in one line and the rest written, or it never appears. Her trap numbers stay out (excluded_numbers)."""
+
+[[case]]
+id = "edge-rubric.en.008"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "G2: a coach-edited result that no longer matches the proof is flagged and the real figure named; 55 never stands in the piece"
+context = "Week 3, Wednesday, Claude Free. Yesterday N2, a LinkedIn case post on Marcus (P1: biggest client at minus 6 percent once real hours were counted; repriced; delivery margin 38 → 51 percent in about 7 months; consented for posts), was delivered Ready. Erin edited it herself and pastes it back."
+input = '''I tightened it. check it before I post:
+
+Marcus runs a 22-person paid media agency. His biggest client was at minus 6 percent once we counted real hours. He repriced it. Delivery margin went from 38 percent to 55 percent in 7 months. Margin before more.'''
+regex = [
+  '''(?i)\b51\b''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?im)^(?![^\n]*(?:\bmatch|\brecord\b|\bproof\b|not 55|was 51|is 51|\bsays 51|\?))[^\n]*\b55\s?(?:%|percent)''',
+  '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:[^\n]*\b55\b''',
+]
+invariants = ["I1", "I3", "I5", "I8"]
+max_questions = 1
+notes = """wf6 G2 truth gate: no invented numbers; QA §2.2 lint presence check: every digit sits in a cited row (55 is not in P1; 51 is). QA §1 rule 7: a rounded-up result is a shortfall dressed up and fails. Either the corrected piece prints with 51 and its own verdict line, or a Draft line names the mismatch ('one number doesn't match Marcus's record') with 'fix N2'; any line holding 55 must be that flag line. On Claude Free with no script the record would say lint: manual."""
+
+[[case]]
+id = "edge-rubric.en.009"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "S0", "floor"]
+title = "G3: a 31-word dictated first line is cut to 12 words or fewer; her claim survives, no refusal"
+context = "Week 2, Thursday, ChatGPT Plus (iPhone, in the car between site visits). Brand Card v1 present (persona default: keyword 'nothing room', comment word NOTHING ROOM; P8 the 2012 gray sectional that never got past the stair landing; delivery: beat cards)."
+input = '''reel for this week. I want the first line exactly like this: if you are about to spend four thousand dollars on a sofa for a room nobody even sits in, you need to stop and watch this first'''
+regex = [
+  '''(?im)^\W*(?:first line|hook)\b''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?im)^\W*(?:first line|hook)[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){12}\S+''',
+  '''(?im)^\W*Not writing''',
+  '''(?i)\belevat\w*|\bcurated\b|\btimeless\b|forever home|dream home|transform your space|\bobsessed\b|game-changer''',
+  '''(?i)\bHollis\b|\b400\+?\s+rooms\b|\b30\s?(?:%|percent)''',
+]
+invariants = ["I1", "I3", "I5", "I12", "I17"]
+max_questions = 1
+notes = """wf6 G3 Voice Lint and SG4: the hook is 12 words or fewer in EN (editions/en.toml hook_max = 12; I12 reads labelled first-line and hook lines). The cut keeps her claim (a $4,000 sofa for a room with no job; $4,000 is an allowed number) and may move the long version into the caption. It is a voice fix, never a refusal, because nothing untrue was asked. Her never-words (voice-samples.md) and the persona traps (Hollis, 400-plus rooms, 30 percent) stay out."""
+
+[[case]]
+id = "edge-rubric.en.010"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "G3: hedges leave the first line; a new coach gets no 'I could be wrong' line"
+context = "Week 2, Sunday night, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: keyword KEEP UP, big idea 1 'you're not lazy, you're booked', enemy the all-or-nothing plan; proof locked: his own story only). Beat cards."
+input = '''first line I want: I mean, maybe you're probably not lazy, you might just be kind of booked. make me the reel for tonight'''
+regex = [
+  '''(?im)^\W*(?:first line|hook)\b''',
+  '''(?i)\bbooked\b''',
+]
+not_regex = [
+  '''(?im)^\W*(?:first line|hook|on-screen(?: text)?)[^:\n]{0,30}:[^\n]*\b(?:maybe|probably|might|may|could|possibly|perhaps|potentially|arguably|kind of|sort of|I think|I mean|I guess)\b''',
+  '''(?i)\b(?:I could be wrong|I might be wrong|might be wrong|I(?:'|’)m not sure but|I(?:'|’)m no expert)\b''',
+  '''\b(?:Owen|Lily|Jess|Tommy)\b''',
+  '''(?i)\b22\s*(?:lb|lbs|pounds)\b|\b200\+?\s+(?:people|clients|guys)\b''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I12"]
+max_questions = 1
+notes = """wf6 G3 and SG4: zero hedges in the hook (strip list H1 low-likelihood hedges, H2 minimizers, H7 'I think' before a known fact, H9 'I mean'); his own line 'You're not lazy, you're booked.' (voice-samples.md) is the definitive version. Expertise dial (wf6; definitive-concise I4): new coaches get no 'might be wrong' line. His kids' names and the trap numbers (the brother's 22 pounds, 'a couple hundred people') never appear."""
+
+[[case]]
+id = "edge-rubric.en.011"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "G3: one 100-word sentence is split; none over 25 words, a punch line of 5 words or fewer, her own line kept"
+context = "Week 2, Monday, Claude Pro (Mac). Brand Card v1 present (persona default: keyword 'without the badge', quiet CTA (reply or send me a message), P6 her own story: 26 years writing other people's words, the memo that consolidated her own job, 4 months and 23 plastic bins with a label maker)."
+input = '''tidy this up for LinkedIn, it's me but it rambles:
+
+I wrote other people's words for 26 years, town halls and the CEO's Friday email and even the memo that consolidated my own job, which is a strange thing to type with your own hands, and then I took the package and spent four months labeling plastic bins in the garage because I thought if the garage was organized my life would follow, and it didn't, and the only thing that got clearer was the garage, so if you just left a long career and you're waiting until you feel ready, I'd gently say that waiting doesn't make you ready.'''
+regex = [
+  '''(?m)(?:^|[.!?][^\S\n]+)[^\W\d_][^\s.!?]*(?:[^\S\n]+[^\s.!?]+){0,4}[.!]''',
+  '''(?i)waiting doesn(?:'|’)t make you ready''',
+]
+not_regex = [
+  '''(?m)(?:^|[.!?][^\S\n]+)(?:[^\s.!?]+[^\S\n]+){25,}[^\s.!?]+''',
+  '''(?i)\bI(?:'|’)d gently say\b''',
+  '''(?i)\bnext chapter\b|\bjourney\b|\breinvent\w*|\bpivot\w*|\bthrive\b|\bunlock\w*|\bempower\w*''',
+  '''(?i)comment below|\bDM me\b|link in bio|\bAgree\?|\bThoughts\?''',
+]
+invariants = ["I1", "I3", "I5", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf6 G3 and SG4: average sentence 15 words or fewer, none over 25, at least one punch line of 5 words or fewer (definitive-concise §2d). Her single sentence runs past 100 words and must be split; her own line 'Waiting doesn't make you ready.' (voice-samples.md) is the natural punch line and stays verbatim. 'I'd gently say' is H5 self-undercutting. The 15-word average is a judge item (QA §1 rule 3: counts are writing targets at runtime); the 25-word cap and the punch line are asserted here. Her never-words and quiet CTA from voice-samples.md and behaviour."""
+
+# ---------------------------------------------------------------- borrowed attractors, keyword placement, Micro, Edge-lite
+
+[[case]]
+id = "edge-rubric.en.012"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "S0", "floor"]
+title = "Check only: a résumé-only post is a Draft with the defect in plain words; detector names stay internal"
+context = "Week 2, Tuesday, Claude Pro (Mac). Brand Card v1 present (persona default). P7: 3 paying clients since September 2024. Credentials: a 10-month coach training, no ICF credential; never 'certified'."
+input = '''don't change anything yet, just tell me if this is ready for LinkedIn:
+
+Trained coach. 26 years in corporate communications, 11 of them as a director. 3 clients since September 2024. Message me to book a call.'''
+verdict = "Draft"
+regex = ['''(?m)^\W*Draft ·''']
+not_regex = [
+  '''(?m)^\W*Ready to (?:film|post)''',
+  '''(?i)\b(?:résumé-only|resume-only|X-only|X-led|borrowed attractors?|flex-only|freebie-only|detector|removal test|why signal)\b''',
+  '''\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+''',
+  '''\bEdge\b|\bSG\d\b|\bG[1-3]\b|\bH[1-9]\b''',
+  '''(?i)\bcertified\b|\bICF\b|master coach''',
+]
+invariants = ["I1", "I3", "I4", "I5", "I17"]
+max_questions = 1
+notes = """wf6 §6: years and client counts in lines 1-3, no 'why' signal (because, I chose, I refuse, it cost…) and a failed removal test make the post résumé-only: Character & Polarity = 0 and the verdict is FAIL whatever the total (QA §2.2 step 4: borrowed-attractor-only means re-ideate). She asked for a check only, so the reply states the Draft and names the defect in plain words ('it lists what you've done, not why anyone should care'); a flipped version (her memo story first, the 26 years as line-3 proof) may be offered, not forced. Detector class names stay internal (I4). Every number is allowed; 'certified' is her credential trap."""
+
+[[case]]
+id = "edge-rubric.en.013"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Keyword placement rotates: the last piece opened with 'one more chapter', so the new reel carries it somewhere else"
+context = "Week 3, Wednesday, ChatGPT Free. Brand Card v1 present (persona default: keyword 'one more chapter', comment word CHAPTER). Its machine block records that Monday's N3 carried the keyword in its first line ('One more chapter. Not in this cubicle.')."
+input = '''reel for friday on coffee before resume. bullets'''
+regex = [
+  '''(?im)^\W*(?:first line|hook)\b''',
+  '''(?i)one more chapter|\bCHAPTER\b''',
+]
+not_regex = [
+  '''(?im)^\W*(?:first line|hook)[^:\n]{0,30}:[^\n]*\bone more chapter\b''',
+  '''(?i)\breinvent\w*|\bpivot\w*|second act|dream job|never too late|\bjourney\b''',
+]
+invariants = ["I1", "I3", "I5", "I12", "I14", "I17"]
+max_questions = 1
+notes = """wf12-qa-standards SG6 (the keyword appears in a rotated placement) and SG7 (the keyword placement differs from the previous piece); arch §8.6 variation guard; acceptance [week] keyword_exactly_once_rate. On ChatGPT this is a presence check against the Card's record of the last placement (QA §2.2 step 2). The keyword still appears (caption line 1, a beat, the last line or the CHAPTER CTA); only the first line is ruled out."""
+
+[[case]]
+id = "edge-rubric.en.014"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "A freebie-led background-text post gets the Micro check and a Ready line; it is never Edge-failed"
+context = "Week 2, Wednesday lunch, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: comment word KEEP UP; gift: the minimum week one-pager, a real A-row; cold start, 0 clients)."
+input = '''short background text post: free minimum week one-pager, comment KEEP UP and I'll send it'''
+verdict = "Ready"
+regex = [
+  '''(?m)^\W*(?:Ready to post|✓ Checked:)''',
+  '''(?i)\bkeep up\b''',
+]
+not_regex = [
+  '''(?m)^\W*Draft ·''',
+  '''(?im)^\W*Not writing''',
+  '''(?i)\b(?:dads?|clients?|guys)\b[^\n]{0,30}\b(?:lost|dropped|pounds|lbs)\b''',
+  '''\b(?:Owen|Lily|Jess|Tommy)\b''',
+]
+invariants = ["I1", "I3", "I8", "I12", "I14"]
+max_questions = 1
+notes = """QA §0 and §2.1: pieces under 40 words EN get the Micro check (trace, claims, polarity, no hedge in the hook, length, the keyword delivers a real A-row, urgency from the Ledger), not Edge; PLAN default 5: freebie-led background posts are never Edge-failed. I14: the comment-keyword CTA is never blocked or rewritten. I12: a background-text post is ≤130 characters (editions/en.toml bg_post_max_chars; graders.py reads a piece titled 'background'). Cold start (I8): no result line."""
+
+[[case]]
+id = "edge-rubric.en.015"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "S0", "floor"]
+title = "Hook options are Edge-lite ideas: 5 lines, each 12 words or fewer, no scores or ranks, no credential or freebie lead, no hedge"
+context = "Week 2, Friday, Claude Free. Brand Card v1 present (persona default: keyword 'record year', big idea 1 'your biggest client is not your best client until you've done the math', enemy 'top-line theater')."
+input = '''give me 5 first lines for next week's linkedin posts. just the lines, numbered, nothing else'''
+regex = ['''(?s)(?:\A|\n)\s*1[.)].*\n\s*5[.)]''']
+not_regex = [
+  '''(?m)^\s*\d[.)][^\S\n]*(?:\S+[^\S\n]+){12}\S+''',
+  '''(?im)^\s*\d[.)][^\n]*(?:(?<![\w/$])\d{1,2}\s?/\s?(?:5|10)\b|\bscore\b|\bEdge\b|\brank(?:ed)?\b)''',
+  '''(?im)^\s*\d[.)][^\S\n]*["“]?(?:free\b|comment\b|DM\b|CPA\b|\d+\s+years\b|14 Margin Sprints|as a CPA|former\b)''',
+  '''(?im)^\s*\d[.)][^\n]*\b(?:might|maybe|perhaps|possibly|probably|kind of|sort of|I think)\b''',
+  '''(?i)\bAgree\?|\bThoughts\?|cash is king|\bscal(?:e|ing)\b|7-figure|\bunlock\w*|\bhack\b|\bsecret\b|skyrocket''',
+  '''(?i)\bRaj\b|\b70\s?(?:%|percent)''',
+]
+invariants = ["I1", "I4", "I5", "I17"]
+max_questions = 1
+notes = """QA §2.1 Idea class: hook and title options get Edge-lite (≥4/5 to enter the plan) and the kill rule, and a failing idea is dropped silently, so the coach sees 5 clean lines with no scores, ranks or reasons. SG4: hooks ≤12 words with no hedge; wf6 §6: no borrowed attractor (credentials, freebie, money) as the hook. Her behaviour 'No "agree?" at the end' and never-words (voice-samples.md). I3 is not listed: options are ideas, not pieces."""
+
+# ---------------------------------------------------------------- stance formats, generic mode, the DOWNGRADE table
+
+[[case]]
+id = "edge-rubric.en.016"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Old way vs new way with 'don't take a side, both can work' is never Ready: her owned stance, or a Draft"
+context = "Week 2, Thursday, ChatGPT Free. Brand Card v1 present (persona default: enemy 'feeding the portal' (applying online for your old job at a company with a different logo); method 'coffee before resume'; P6 63 applications in 7 months, 2 interviews, both for her old job)."
+input = '''old way vs new way reel: applying online vs having coffees. keep it nice though. don't take a side, just say both can work'''
+regex = ['''(?im)^\W*Draft ·|feeding the portal|coffee before resume|different logo|63 (?:applications|times)|prettier resume''']
+not_regex = [
+  '''(?ims)\bboth (?:can |ways? |of them )?work\b.*^\W*Ready to (?:film|post)''',
+  '''(?i)\b(?:recruiters|HR|hiring managers)\b[^\n]{0,20}\b(?:are|is)\b[^\n]{0,15}\b(?:lazy|idiots?|clueless|useless|the problem|the enemy)\b''',
+]
+invariants = ["I1", "I3", "I5", "I17"]
+max_questions = 1
+notes = """QA §0 and wf6 verdict rules: stance formats (F1, F4, F6, F9, F11, F13) need Character & Polarity = 2 for Ready; F4 old way vs new way is one (acceptance [quality] stance_formats_character_score = 2). 'Both can work' is no stance (C ≤1), so a piece that says it is a Draft; the alternative is her owned stance (the portal refuted with a reason, a boundary line) and one plain line why. 'Keep it nice' is honoured by aiming at the practice, never at recruiters or HR (G1). 'post anyway' would then log an Override."""
+
+[[case]]
+id = "edge-rubric.en.017"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0"]
+title = "Door B with no Card: generic mode, so the stance reel is not Ready; one ask to paste the MY CONTENT MACHINE box"
+context = "Door B, Week 2, Wednesday lunch. Dan opened a new plain chat in the ChatGPT phone app and pasted only the Phone Starter, not his MY CONTENT MACHINE box (kept in his phone's Notes since Day 0). No Brand Card is in this chat. Lane S0 stands in for the Phone Starter."
+input = '''hey it's dan. write me a reel saying the 6 day a week plan is garbage for dads. filming in the garage tonight'''
+contains = ["MY CONTENT MACHINE"]
+regex = ['''NEXT →[^\n]*\s*\Z''']
+not_regex = [
+  '''(?i)\bprojects?\b''',
+  '''(?m)^\W*Ready to (?:film|post)''',
+  '''(?i)PASS-GENERIC|generic mode|Character Excavation|\bexcavation\b''',
+  '''\b(?:Owen|Lily|Jess|Tommy)\b''',
+  '''(?i)\bmy clients\b|dads I (?:coach|train)|\bcertified\b''',
+]
+invariants = ["I1", "I2", "I5"]
+max_questions = 1
+notes = """wf6 run order 1: with no Card, Edge runs in generic mode (Authenticity and Character capped at 1), so a stance format cannot reach Ready (C = 2 needed); the internal 'PASS-GENERIC: run Character Excavation' never reaches the coach (I4, deny-list). UX §1.4 Door B: his memory is the MY CONTENT MACHINE box he sent to himself (Notes or email), so the one ask is to paste it; Door B never mentions a project (quit point 'Door B refers to a project that does not exist'). A Draft reel may still be written so tonight's filming is not lost."""
+
+[[case]]
+id = "edge-rubric.en.018"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'A post with client results' with zero clients: written as a founding or process piece and said so in the verdict, no question"
+context = "Week 2, Monday, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: cold start, 0 clients, proof locked; P1 his own: no pull-up at 35, sets of 8 by 37, 3 x 30 minutes a week in the garage; P2 former gym trainer 2011-2017; P3 the brother's '22 pounds', unweighed, no consent; P4 'a couple hundred people', never counted)."
+input = '''write me a post with some client results. dads who stuck with the 3 x 30 and what happened. people want proof'''
+regex = [
+  '''(?m)^\W*(?:Ready to (?:film|post) · written as|Draft ·)''',
+  '''(?i)founding|first (?:group|dads|5)|pilot|\b35\b|pull-?up|garage|sets of 8''',
+]
+not_regex = [
+  '''(?i)\b(?:clients?|dads? I(?:(?:'|’)ve)? (?:coached|trained))\b[^\n]{0,40}\b(?:lost|dropped|went from|gained|pounds|lbs)\b''',
+  '''(?i)\b22\s*(?:lb|lbs|pounds)\b|\b200\+?\b|\bbrother\b''',
+  '''(?m)^\W*Needs you ·''',
+  '''\b(?:Owen|Lily|Jess|Tommy)\b''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I18"]
+max_questions = 1
+notes = """QA §2.2 DOWNGRADE table: no consented proof → founding framing or a process story, with the Authority ceiling recorded internally and never waived; QA §2.4 Ready, downgraded: 'Ready to post · written as a founding offer (no client results yet).' NEEDS YOU is only for a missing fact the coach can supply; a cold start has none to give, so no question. I8: for a cold-start persona any client result number is a fabrication; the brother has no consent and was never weighed (P3)."""
+
+# ---------------------------------------------------------------- the loop: one question per reply, rounds, overrides
+
+[[case]]
+id = "edge-rubric.en.019"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "A week with two Drafts missing a fact: one Needs-you question for the soonest slot, the other queued"
+context = "Week 3, Tuesday after the Weekly Talk, ChatGPT Free. Brand Card v1 present (persona default). This week's plan from the Talk has N2 (Thursday) 'what Bev said on her first day as an instructional designer' and N4 (Saturday) 'what Gail told her first paying client'. Dana never said either woman's words; every other slot rests on her own story."
+input = '''ok write the week'''
+regex = [
+  '''(?m)^\W*Needs you ·''',
+  '''(?m)^\W*Draft · waiting on one fact from you; I(?:'|’)ll ask next\.''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?s)Needs you ·.*Needs you ·''',
+  '''(?i)\b(?:Bev|Gail)\b[^\n]{0,40}\b(?:said|says|told)\b[^\n]{0,6}["“]''',
+  '''(?im)^\W*Ready to (?:film|post)[^\n]*\[NEEDS''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I9", "I18"]
+max_questions = 1
+notes = """QA §2.5: at most one question per reply; it goes to the Draft that blocks the soonest slot (N2, Thursday, before N4, Saturday); the other Draft keeps its Needs and prints strings verdict.draft_queued 'Draft · waiting on one fact from you; I'll ask next.' The question offers 'skip' (the downgrade). I9: quotes are verbatim only, so neither woman is given invented words. Silence never zeroes a week: the other pieces ship."""
+
+[[case]]
+id = "edge-rubric.en.020"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "S0", "floor"]
+title = "'try again' runs a third round on N2 only: N1 and N3 are not reprinted, one verdict line, no question"
+context = '''Week 2, Thursday, Claude Free. N2 (a LinkedIn post) was 'Draft · the stance is soft.'; Erin said 'fix N2'; round 2 reprinted N2 and it stayed a Draft because she had asked to keep 'some agencies do fine without a forecast' in it. N1 and N3 were Ready.'''
+input = '''try again. you can drop the "some agencies do fine" line'''
+regex = [
+  '''(?m)^\W*\**N2\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post) · |Draft · |Needs you · )''',
+]
+not_regex = [
+  '''(?m)^\W*\**N[13]\b''',
+  '''(?i)Ready after''',
+  '''(?i)\bround\s*[1-3]\b''',
+]
+invariants = ["I1", "I3", "I5", "I18"]
+max_questions = 1
+notes = """QA §2.5: round 1 is the draft, round 2 one fix aimed only at the named defects, and a round 3 happens only when the coach says 'try again' (strings cmd.try_again); QA §1 rule 9 'two rounds, then the boss'. On standalone apps a fixed piece is never reprinted beside its old version, and only N2 is reprinted, with exactly one verdict line (I3). Round numbers are internal."""
+
+[[case]]
+id = "edge-rubric.en.021"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'post anyway' on a soft-stance Draft: one Override line, and the next reply never raises N2 again"
+context = '''Week 2, Wednesday, ChatGPT Free. The previous reply delivered N1-N3; N2 carried 'Draft · the stance is soft. Say "fix N2" and I'll sharpen it.' No hard stop anywhere in N2.'''
+input = '''[turn 1] post anyway. I like it gentle
+[turn 2] ok what's next'''
+verdict = "Override"
+contains = ["Posted on your call · my concern:", "logged"]
+not_regex = [
+  '''(?s)Posted on your call.*Posted on your call''',
+  '''(?is)Posted on your call.*\n.*\b(?:stance is soft|sharpen N2|fix N2)\b''',
+]
+invariants = ["I1", "I3", "I5", "I17"]
+max_questions = 1
+notes = """scope: transcript. QA §2.5 and House rule 11: 'post anyway' records an Override on everything except hard stops (strings verdict.override), logged once and never raised again, so the second reply moves on without a nag about N2. fmt-short.en.toml covers the single Override reply; this case adds the turn after it."""
+
+[[case]]
+id = "edge-rubric.en.022"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'post anyway' cannot override the truth gate: an uncounted '90 percent' stays out, no Override line"
+context = '''Week 2, Wednesday, ChatGPT Free. Dana asked for a caption saying '90 percent of my people end up somewhere better within six months'. The previous reply printed 'Not writing "90 percent of my people…": you've never counted it. Give me the real count and I'll write it.' and the caption built on her 11 paying clients and Lorraine's story instead.'''
+input = '''post anyway. everybody says 90 percent'''
+regex = [
+  '''(?i)\b11\b|Lorraine|\bcount''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b).*\b90\s?(?:%|percent)''',
+  '''(?i)Posted on your call''',
+]
+invariants = ["I1", "I5", "I8", "I17"]
+max_questions = 1
+notes = """QA §2.5 and §1 rule 9: 'post anyway' overrides everything except hard stops; an uncounted success rate is an unsubstantiated claim (wf6 G2; DECISIONS hard block; P5 substantiated = false; excluded_numbers). One short line keeps the stop and repeats the true version; no Override line, no lecture, no second argument. guardrails.en.toml covers the fake-scarcity variant. I3 is not listed: the reply may be the refusal line alone."""
+
+[[case]]
+id = "edge-rubric.en.023"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "New hook stem: none of the recent stems opens the new piece"
+context = '''Week 3, Monday, Claude Pro (Mac). Brand Card v1 present (persona default). Its machine block holds recent_hook_stems (the last 10 pieces): 'I wrote other people's words…', 'You didn't lose a job…', 'Don't plan the dream…', 'Waiting doesn't make you ready…', 'Here's what I wish someone had told me…', 'Linda, page three…', '23 plastic bins…'. She films word-for-word at the kitchen table.'''
+input = '''one short video for this week on the two-line answer. word for word, I'll read it at the kitchen table'''
+regex = ['''(?im)^\W*(?:first line|hook)\b''']
+not_regex = [
+  '''(?im)^\W*(?:first line|hook)[^:\n]{0,30}:\s*["“]?\s*(?:I wrote other people(?:'|’)s words|you didn(?:'|’)t lose a job|don(?:'|’)t plan the dream|waiting doesn(?:'|’)t make you ready|here(?:'|’)s what I wish someone had told me|Linda, page three|23 plastic bins)''',
+  '''(?im)^\W*(?:first line|hook)[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){12}\S+''',
+]
+invariants = ["I1", "I3", "I5", "I12"]
+max_questions = 1
+notes = """QA §2.2 lint and SG7: the hook stem is new against the last 10 pieces (acceptance [week] hook_stem_window = 10); off the script path it is a presence check against recent_hook_stems. Her phrases may appear in the body; they may not open the new piece. SG4: the first line is still ≤12 words in word-for-word mode."""
+
+# ---------------------------------------------------------------- SG-copy: distance on the default remix path
+
+[[case]]
+id = "edge-rubric.en.024"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Default 'make my version' of a liked post: their shape, her Bank, no 6-word run from the source, no copy note"
+context = '''Week 3, Thursday, ChatGPT Free. Brand Card v1 present (persona default). Earlier this week Dana sent liked-paste.md drop L2 (a Facebook post: a client with "no skills, just two decades of keeping things from falling apart", three questions, then "You don't have no skills. You have skills nobody ever gave a title to."); the machine saved its shape (liked.saved). She asked for nothing to be copied.'''
+input = '''make my version of that keepers list one. instagram reel, bullets'''
+regex = [
+  '''(?i)keepers list|in the box|\btitle\b|24 years|4B|carrot|store operations''',
+  '''(?im)^\W*(?:Ready to (?:film|post) · I(?:'|’)d post it:[^\n]*their shape[^\n]*nothing copied|Draft ·|Needs you ·)''',
+]
+not_regex = [
+  '''(?i)\b(?:a[^\w'’]+client[^\w'’]+told[^\w'’]+me[^\w'’]+last[^\w'’]+week|client[^\w'’]+told[^\w'’]+me[^\w'’]+last[^\w'’]+week[^\w'’]+she|told[^\w'’]+me[^\w'’]+last[^\w'’]+week[^\w'’]+she[^\w'’]+had|me[^\w'’]+last[^\w'’]+week[^\w'’]+she[^\w'’]+had[^\w'’]+no|last[^\w'’]+week[^\w'’]+she[^\w'’]+had[^\w'’]+no[^\w'’]+skills|week[^\w'’]+she[^\w'’]+had[^\w'’]+no[^\w'’]+skills[^\w'’]+just|she[^\w'’]+had[^\w'’]+no[^\w'’]+skills[^\w'’]+just[^\w'’]+two|had[^\w'’]+no[^\w'’]+skills[^\w'’]+just[^\w'’]+two[^\w'’]+decades)\b''',
+  '''(?i)\b(?:no[^\w'’]+skills[^\w'’]+just[^\w'’]+two[^\w'’]+decades[^\w'’]+of|skills[^\w'’]+just[^\w'’]+two[^\w'’]+decades[^\w'’]+of[^\w'’]+keeping|just[^\w'’]+two[^\w'’]+decades[^\w'’]+of[^\w'’]+keeping[^\w'’]+things|two[^\w'’]+decades[^\w'’]+of[^\w'’]+keeping[^\w'’]+things[^\w'’]+from|decades[^\w'’]+of[^\w'’]+keeping[^\w'’]+things[^\w'’]+from[^\w'’]+falling|of[^\w'’]+keeping[^\w'’]+things[^\w'’]+from[^\w'’]+falling[^\w'’]+apart|keeping[^\w'’]+things[^\w'’]+from[^\w'’]+falling[^\w'’]+apart[^\w'’]+so|things[^\w'’]+from[^\w'’]+falling[^\w'’]+apart[^\w'’]+so[^\w'’]+i)\b''',
+  '''(?i)\b(?:from[^\w'’]+falling[^\w'’]+apart[^\w'’]+so[^\w'’]+i[^\w'’]+asked|falling[^\w'’]+apart[^\w'’]+so[^\w'’]+i[^\w'’]+asked[^\w'’]+her|apart[^\w'’]+so[^\w'’]+i[^\w'’]+asked[^\w'’]+her[^\w'’]+three|so[^\w'’]+i[^\w'’]+asked[^\w'’]+her[^\w'’]+three[^\w'’]+questions|i[^\w'’]+asked[^\w'’]+her[^\w'’]+three[^\w'’]+questions[^\w'’]+who|asked[^\w'’]+her[^\w'’]+three[^\w'’]+questions[^\w'’]+who[^\w'’]+calls|her[^\w'’]+three[^\w'’]+questions[^\w'’]+who[^\w'’]+calls[^\w'’]+you|three[^\w'’]+questions[^\w'’]+who[^\w'’]+calls[^\w'’]+you[^\w'’]+when)\b''',
+  '''(?i)\b(?:questions[^\w'’]+who[^\w'’]+calls[^\w'’]+you[^\w'’]+when[^\w'’]+something|who[^\w'’]+calls[^\w'’]+you[^\w'’]+when[^\w'’]+something[^\w'’]+breaks|calls[^\w'’]+you[^\w'’]+when[^\w'’]+something[^\w'’]+breaks[^\w'’]+what|you[^\w'’]+when[^\w'’]+something[^\w'’]+breaks[^\w'’]+what[^\w'’]+do|when[^\w'’]+something[^\w'’]+breaks[^\w'’]+what[^\w'’]+do[^\w'’]+you|something[^\w'’]+breaks[^\w'’]+what[^\w'’]+do[^\w'’]+you[^\w'’]+fix|breaks[^\w'’]+what[^\w'’]+do[^\w'’]+you[^\w'’]+fix[^\w'’]+that|what[^\w'’]+do[^\w'’]+you[^\w'’]+fix[^\w'’]+that[^\w'’]+isn['’]t)\b''',
+  '''(?i)\b(?:do[^\w'’]+you[^\w'’]+fix[^\w'’]+that[^\w'’]+isn['’]t[^\w'’]+in|you[^\w'’]+fix[^\w'’]+that[^\w'’]+isn['’]t[^\w'’]+in[^\w'’]+your|fix[^\w'’]+that[^\w'’]+isn['’]t[^\w'’]+in[^\w'’]+your[^\w'’]+job|that[^\w'’]+isn['’]t[^\w'’]+in[^\w'’]+your[^\w'’]+job[^\w'’]+description|isn['’]t[^\w'’]+in[^\w'’]+your[^\w'’]+job[^\w'’]+description[^\w'’]+what|in[^\w'’]+your[^\w'’]+job[^\w'’]+description[^\w'’]+what[^\w'’]+would|your[^\w'’]+job[^\w'’]+description[^\w'’]+what[^\w'’]+would[^\w'’]+stop|job[^\w'’]+description[^\w'’]+what[^\w'’]+would[^\w'’]+stop[^\w'’]+working)\b''',
+  '''(?i)\b(?:description[^\w'’]+what[^\w'’]+would[^\w'’]+stop[^\w'’]+working[^\w'’]+the|what[^\w'’]+would[^\w'’]+stop[^\w'’]+working[^\w'’]+the[^\w'’]+week|would[^\w'’]+stop[^\w'’]+working[^\w'’]+the[^\w'’]+week[^\w'’]+you|stop[^\w'’]+working[^\w'’]+the[^\w'’]+week[^\w'’]+you[^\w'’]+left|working[^\w'’]+the[^\w'’]+week[^\w'’]+you[^\w'’]+left[^\w'’]+she|the[^\w'’]+week[^\w'’]+you[^\w'’]+left[^\w'’]+she[^\w'’]+filled|week[^\w'’]+you[^\w'’]+left[^\w'’]+she[^\w'’]+filled[^\w'’]+a|you[^\w'’]+left[^\w'’]+she[^\w'’]+filled[^\w'’]+a[^\w'’]+page)\b''',
+  '''(?i)\b(?:left[^\w'’]+she[^\w'’]+filled[^\w'’]+a[^\w'’]+page[^\w'’]+then|she[^\w'’]+filled[^\w'’]+a[^\w'’]+page[^\w'’]+then[^\w'’]+another|filled[^\w'’]+a[^\w'’]+page[^\w'’]+then[^\w'’]+another[^\w'’]+one|a[^\w'’]+page[^\w'’]+then[^\w'’]+another[^\w'’]+one[^\w'’]+you|page[^\w'’]+then[^\w'’]+another[^\w'’]+one[^\w'’]+you[^\w'’]+don['’]t|then[^\w'’]+another[^\w'’]+one[^\w'’]+you[^\w'’]+don['’]t[^\w'’]+have|another[^\w'’]+one[^\w'’]+you[^\w'’]+don['’]t[^\w'’]+have[^\w'’]+no|one[^\w'’]+you[^\w'’]+don['’]t[^\w'’]+have[^\w'’]+no[^\w'’]+skills)\b''',
+  '''(?i)\b(?:you[^\w'’]+don['’]t[^\w'’]+have[^\w'’]+no[^\w'’]+skills[^\w'’]+you|don['’]t[^\w'’]+have[^\w'’]+no[^\w'’]+skills[^\w'’]+you[^\w'’]+have|have[^\w'’]+no[^\w'’]+skills[^\w'’]+you[^\w'’]+have[^\w'’]+skills|no[^\w'’]+skills[^\w'’]+you[^\w'’]+have[^\w'’]+skills[^\w'’]+nobody|skills[^\w'’]+you[^\w'’]+have[^\w'’]+skills[^\w'’]+nobody[^\w'’]+ever|you[^\w'’]+have[^\w'’]+skills[^\w'’]+nobody[^\w'’]+ever[^\w'’]+gave|have[^\w'’]+skills[^\w'’]+nobody[^\w'’]+ever[^\w'’]+gave[^\w'’]+a|skills[^\w'’]+nobody[^\w'’]+ever[^\w'’]+gave[^\w'’]+a[^\w'’]+title)\b''',
+  '''(?i)\b(?:nobody[^\w'’]+ever[^\w'’]+gave[^\w'’]+a[^\w'’]+title[^\w'’]+to|ever[^\w'’]+gave[^\w'’]+a[^\w'’]+title[^\w'’]+to[^\w'’]+save|gave[^\w'’]+a[^\w'’]+title[^\w'’]+to[^\w'’]+save[^\w'’]+this|a[^\w'’]+title[^\w'’]+to[^\w'’]+save[^\w'’]+this[^\w'’]+for|title[^\w'’]+to[^\w'’]+save[^\w'’]+this[^\w'’]+for[^\w'’]+the|to[^\w'’]+save[^\w'’]+this[^\w'’]+for[^\w'’]+the[^\w'’]+next|save[^\w'’]+this[^\w'’]+for[^\w'’]+the[^\w'’]+next[^\w'’]+time|this[^\w'’]+for[^\w'’]+the[^\w'’]+next[^\w'’]+time[^\w'’]+you)\b''',
+  '''(?i)\b(?:for[^\w'’]+the[^\w'’]+next[^\w'’]+time[^\w'’]+you[^\w'’]+catch|the[^\w'’]+next[^\w'’]+time[^\w'’]+you[^\w'’]+catch[^\w'’]+yourself|next[^\w'’]+time[^\w'’]+you[^\w'’]+catch[^\w'’]+yourself[^\w'’]+saying|time[^\w'’]+you[^\w'’]+catch[^\w'’]+yourself[^\w'’]+saying[^\w'’]+you['’]re|you[^\w'’]+catch[^\w'’]+yourself[^\w'’]+saying[^\w'’]+you['’]re[^\w'’]+just|catch[^\w'’]+yourself[^\w'’]+saying[^\w'’]+you['’]re[^\w'’]+just[^\w'’]+anything)\b''',
+  '''(?i)this follows their post closely|Platforms may show copies less''',
+  '''(?i)\bswipe\b|\bproven\b|\boutliers?\b''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I17"]
+max_questions = 1
+notes = """wf13 §4 DISTANCE on the default path: ≥2 of topic, stance, format and platform differ; no run of 6 EN words from the source (acceptance [copy] en_words = 6; stock phrases exempt); no mirrored point order; the same-feed test. shared.md SG-copy is a default-path critical item (wf13 §6). The not_regex lines hold every 6-word window of the source text. Nothing was copied on request, so no F1 note; a Ready line closes with liked.evidence ('their shape, your …; nothing copied'). Her keepers list ('what goes in the box, not your title') carries the piece. wf13 I19 is not yet in graders.py."""
+
+[[case]]
+id = "edge-rubric.en.025"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Remix of a 'comment GUIDE' reel: her keyword and gift stay, the creator's word and handle stay out, no 6-word run"
+context = '''Week 3, Friday, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: comment word NOTHING ROOM, gift the Tape-Out Guide; P8 the 2012 sectional and 'Ma'am, did you measure the door?'). Corinne sent liked-paste.md drop L8 (a reel end card by another designer: "Measure a room in 5 minutes. Door, window, outlets, the path." and "Comment GUIDE and I'll send my printable measuring sheet"); the machine saved its shape.'''
+input = '''make my version for Thursday, Bree films it'''
+regex = [
+  '''(?i)\bnothing room\b''',
+  '''(?i)measure the door|tape it out|Tape-Out Guide|sectional|stair landing|2012''',
+]
+not_regex = [
+  '''(?i)\b(?:measure[^\w'’]+a[^\w'’]+room[^\w'’]+in[^\w'’]+5[^\w'’]+minutes|a[^\w'’]+room[^\w'’]+in[^\w'’]+5[^\w'’]+minutes[^\w'’]+door|room[^\w'’]+in[^\w'’]+5[^\w'’]+minutes[^\w'’]+door[^\w'’]+window|in[^\w'’]+5[^\w'’]+minutes[^\w'’]+door[^\w'’]+window[^\w'’]+outlets|5[^\w'’]+minutes[^\w'’]+door[^\w'’]+window[^\w'’]+outlets[^\w'’]+the|minutes[^\w'’]+door[^\w'’]+window[^\w'’]+outlets[^\w'’]+the[^\w'’]+path|door[^\w'’]+window[^\w'’]+outlets[^\w'’]+the[^\w'’]+path[^\w'’]+comment|window[^\w'’]+outlets[^\w'’]+the[^\w'’]+path[^\w'’]+comment[^\w'’]+guide)\b''',
+  '''(?i)\b(?:outlets[^\w'’]+the[^\w'’]+path[^\w'’]+comment[^\w'’]+guide[^\w'’]+and|the[^\w'’]+path[^\w'’]+comment[^\w'’]+guide[^\w'’]+and[^\w'’]+i['’]ll|path[^\w'’]+comment[^\w'’]+guide[^\w'’]+and[^\w'’]+i['’]ll[^\w'’]+send|comment[^\w'’]+guide[^\w'’]+and[^\w'’]+i['’]ll[^\w'’]+send[^\w'’]+my|guide[^\w'’]+and[^\w'’]+i['’]ll[^\w'’]+send[^\w'’]+my[^\w'’]+printable|and[^\w'’]+i['’]ll[^\w'’]+send[^\w'’]+my[^\w'’]+printable[^\w'’]+measuring|i['’]ll[^\w'’]+send[^\w'’]+my[^\w'’]+printable[^\w'’]+measuring[^\w'’]+sheet)\b''',
+  '''(?i)\bcomment\s+["“'‘]?guide\b''',
+  '''(?i)measure\.twice|\bPaloma\b|Ruiz-Brandt|#measuretwice''',
+  '''(?i)this follows their post closely|Platforms may show copies less''',
+]
+invariants = ["I1", "I3", "I5", "I14", "I17"]
+max_questions = 1
+notes = """wf13 §4 MAKE: keyword, gift, cta_style and platform mix stay the coach's (I14: her own comment word); 'GUIDE' is the creator's word and the creator's name and handle stay out of every piece (creator terms are on the avoid list; F4 allows names in the saved post only). DISTANCE (default path): no 6-word run from the source; 'Measure a room in 5 minutes' is the trap. The not_regex lines hold every 6-word window of the end card and caption. wf13 I19 is not yet in graders.py."""
+
+# ---------------------------------------------------------------- P: judge-scored pieces
+
+[[case]]
+id = "edge-rubric.en.026"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Stance reel 'You're not too old. You're too vague.': refutes the old belief with her own proof, Edge ≥8 with C = 2"
+context = "Week 2, Tuesday, ChatGPT Free. Brand Card v1 present (persona default). Bullets."
+input = '''reel on "you're not too old, you're too vague". say it straight, I'll film tonight'''
+contains = ["WHY THIS GETS CLIENTS"]
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
+min_score = 8
+invariants = ["I1", "I3", "I8", "I12", "I17"]
+max_questions = 1
+notes = """wf6 F1 stance post: claim ≤12 words → name the old belief ('it's my age') → refute it with a reason → proof (63 applications, 2 interviews, both for her old job) → 'I used to…' → boundary → question CTA. A stance format, so Character & Polarity must be 2 (QA §0; acceptance [quality] stance_formats_character_score = 2). G1: the old belief is the target, never younger bosses or recruiters. G2: no success rate, never Pam. The judge reads SG4 (hook ≤12, no hedge) and SG8 (read aloud in her register: 'Here's the thing nobody tells you', dry, plain). SG6 (one big idea, the keyword exactly once, the CTA for the rung) is critical in shared.md; SG-copy is N/A (no source post)."""
+
+[[case]]
+id = "edge-rubric.en.027"
+kind = "P"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "LinkedIn post 'your biggest client is not your best client until you've done the math' passes the text-post standard"
+context = "Week 2, Wednesday, Claude Free. Brand Card v1 present (persona default)."
+input = '''linkedin post for tomorrow 7am: your biggest client is not your best client until you've done the math'''
+contains = ["WHY THIS GETS CLIENTS"]
+standard = "text-post"
+critical = ["TP1", "TP4", "TP6"]
+min_score = 13
+invariants = ["I1", "I3", "I8", "I17"]
+max_questions = 1
+notes = """QA §3.1 text-post: the claim lands before 'See more' (TP1, hook ≤12 words); prose with rhythm, at most 40% single-sentence paragraphs after the hook (TP4); one action tied to the story closes the loop (TP6: RECORD YEAR → the client margin sheet, or a quiet reply ask). Proof from P1 (Marcus: minus 6 percent, 38 → 51 in about 7 months) or P4 (Tomás and the museum); never Raj, 70 percent or Dee's amount. Ends on a step, never 'Agree?'. The judge also checks the shared gates and Edge ≥8."""
+
+[[case]]
+id = "edge-rubric.en.028"
+kind = "P"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "Likable reel 'the gym words I banned' passes the native-short standard with the Buyer Filter"
+context = "Week 3, Sunday, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: never-words shred, beast mode, no pain no gain, summer body; enemy the all-or-nothing plan). Beat cards; garage, one take."
+input = '''reel idea: the gym words I banned in my garage. shred, beast mode, no days off. funny but not mean to anybody'''
+contains = ["WHY THIS GETS CLIENTS"]
+standard = "native-short"
+critical = ["NS1", "NS4"]
+min_score = 12
+invariants = ["I1", "I3", "I8", "I12", "I17"]
+max_questions = 1
+notes = """wf6 A3 F10 'Words I banned' (Likable and Admirable): each banned phrase → why it hurts → what we say instead; a stated choice with its value counts as an implicit stance (P5 note). NS4 Buyer Filter applies to Likable pieces: a moment only a desk-job dad has lived (the 6-day plan that broke the first time a kid got sick), sent to a peer. QA §3.1 native-short: ≥12/14. Polarity on the words and the plan, never on other men's bodies (voice-samples.md). Kids unnamed; cold start, so no client result (I8)."""
+
+[[case]]
+id = "edge-rubric.en.029"
+kind = "P"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Carousel 'Every room needs a job' passes the carousel standard; the last slide's gift continues the topic"
+context = "Week 2, Tuesday, ChatGPT Plus (MacBook Air). Brand Card v1 present (persona default: comment word NOTHING ROOM; gift the Tape-Out Guide, a real A-row; P5 64 Room Resets since March 2023)."
+input = '''instagram carousel: every room needs a job. Bree makes the slides tomorrow'''
+contains = ["WHY THIS GETS CLIENTS"]
+standard = "carousel"
+critical = ["CA1", "CA3", "CA5"]
+min_score = 13
+invariants = ["I1", "I3", "I8", "I12", "I14", "I17"]
+max_questions = 1
+notes = """QA §3.1 carousel: slide 1 ≤10 words, specific, no hedge (CA1); one rule per slide, ≤30 words (CA3); the last slide's lead magnet continues the topic and delivers a real A-row (CA5: NOTHING ROOM → the Tape-Out Guide); 10-12 slides (CA6); worth saving without commenting. Numbers only from her allowed list (64, $3,500); never 400-plus, 30 percent or the Hollis kitchen."""
+
+[[case]]
+id = "edge-rubric.en.030"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Her version of a told post (the succulent) passes the shared gates with SG-copy: their shape, her carrot cake"
+context = '''Week 4, Wednesday, ChatGPT Free. Brand Card v1 present (persona default). Dana told the machine about a TikTok she can't find again (liked-paste.md drop L10: a woman in her car with a work badge holds up a succulent, "twenty-six years and they gave me a succulent", then a cut to a year later in a garden-center apron with "what I did in the year between" and 3 quick steps on screen); she said "the plant. That's my carrot cake." The machine saved the shape.'''
+input = '''make my version of the plant one. my carrot cake'''
+contains = ["WHY THIS GETS CLIENTS"]
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG5", "SG6", "SG-copy"]
+min_score = 8
+invariants = ["I1", "I3", "I8", "I12", "I17"]
+max_questions = 1
+notes = """wf13 §4 MAKE and DISTANCE: the shape (object in hand → jump cut → steps on screen) carries her own Bank (24 years, conference room 4B, the carrot sheet cake at 3 o'clock, 63 applications, then coffees); shared.md SG-copy (default-path critical, wf13 §6): no 6-word run from what she told, no mirrored point order, the same-feed test passes. The steps are hers (keepers list, 10 coffees, a test drive), never the creator's; no F1 note, because nothing was copied on request. SG6 is critical in shared.md as well."""
+
+[[case]]
+id = "edge-rubric.en.031"
+kind = "P"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "Kitchen Table Notes on 'the Tuesday page' passes the email standard: one job, her voice, a reply ask"
+context = "Week 2, Saturday, Claude Pro (Mac). Brand Card v1 present (persona default: email-first; newsletter 'Kitchen Table Notes', about 900 subscribers, every other Sunday; gift the Tuesday page (the 5 questions); quiet CTA)."
+input = '''this Sunday's Kitchen Table Notes. the Tuesday page idea. end with reply to me, like always'''
+contains = ["WHY THIS GETS CLIENTS"]
+standard = "email-zalo"
+critical = ["EM1", "EM3", "EM6", "EM7"]
+min_score = 15
+invariants = ["I1", "I3", "I8", "I17"]
+max_questions = 1
+notes = """QA §3.1 email: one job and one ask (EM1: reply); house voice (EM3: her kitchen-table register, scene first: the parking lot, the label maker, the 23 bins, then one small step); opt-in list only, her email tool carries the unsubscribe line (EM6); no invented deadline, no fake 'Re:', clients quoted only with consent (EM7). Margaret never; Joan's package amount never. The judge also reads Edge ≥8 under the shared gates."""
+
+# ---------------------------------------------------------------- the flip, after the check
+
+[[case]]
+id = "edge-rubric.en.032"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "'fix N1' on the résumé-only Draft flips it: her story leads, the credentials drop to proof, one verdict line"
+context = '''Week 2, Tuesday, Claude Pro (Mac). Same state as edge-rubric.en.012: Linda's pasted post ('Trained coach. 26 years in corporate communications, 11 of them as a director. 3 clients since September 2024. Message me to book a call.') got 'Draft · it lists what you've done, not why anyone should care. Say "fix N1" and I'll sharpen it.' Brand Card v1 present (persona default: P6 the memo that consolidated her own job, 'Linda, page three.', the parking lot, the bins; quiet CTA).'''
+input = '''ok fix N1'''
+regex = [
+  '''(?i)memo|page three|parking lot|other people(?:'|’)s words|label maker|\bbins\b|Tuesday|lost your answer''',
+  '''(?m)^\W*(?:Ready to post · |Draft · |Needs you · )''',
+]
+not_regex = [
+  '''(?im)^\W*Trained coach\b''',
+  '''(?i)\bcertified\b|\bICF\b|master coach''',
+  '''(?i)comment below|\bDM me\b|link in bio|\bcomment\s+["“'‘]?BADGE\b''',
+  '''(?m)^\W*\**N[23]\b''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I17"]
+max_questions = 1
+notes = """wf6 §6 'Flip it': keep the asset, ask what choice it reveals, lead with that choice or story, demote the asset to proof (line 3) or the CTA; DECISIONS: a résumé is allowed only as proof, never as the whole hook. Round 2 (QA §2.5) fixes only the named defect and reprints only N1 with one verdict line (I3). Her own P6 story carries the lead (an 'I wrote other people's words for 26 years' opener is a story, not a résumé line); 3 clients and the 26 years may stay as proof. Quiet CTA kept; 'certified' never."""

@@ -26,6 +26,10 @@ lanes = ["S0", "S1", "floor"]
 title = "Quick Listen runs silently after the 'their words' answer: no search chatter, links or setup questions"
 context = "Day 0, persona default (ChatGPT Free). The 7-line pre-filled check is on screen with '?' on 'Their words' and 'Best result'; this is her answer to 'Their words'. The next reply asks the 'Best result' question."
 input = """their words, ok. Lorraine, she called me from her car in the bank parking lot on her lunch break, crying, and she said 'I've got one more chapter in me and I'm not spending it in this cubicle.' and almost every one of them asks me is it too late for me"""
+regex = [
+  '''(?i)\bresults?\b''',
+  '''\?''',
+]
 not_regex = [
   'https?://',
   '(?i)\b(I (searched|looked (it |this )?up|browsed|went online)|search results|sources?:|according to)\b',
@@ -45,6 +49,10 @@ lanes = ["S0", "S1", "floor"]
 title = "Coach offers to research first: kept for later, the Day-0 path keeps moving"
 context = "Day 0, persona default (iPhone, cold start). The pre-filled check is on screen; instead of answering, he asks about research."
 input = """wait should I like research what other dads are saying first? like go through the groups? I could do that tomorrow"""
+regex = [
+  '''(?i)\b(?:later|tomorrow|next week|this week|week (?:1|one|2|two)|first week|after today|once (?:the|your) (?:map|card|video))\b''',
+  '''NEXT →[^\n]*\s*\Z''',
+]
 not_regex = [
   '(?i)\b(paste|copy) (10|20|some|a few|the)\b[^.\n]{0,40}\b(comments|posts|lines)\b',
   '(?i)\b(do (that|this|the research) first|before (we|I) (continue|go on|make|build) (the|your) map)\b',
@@ -167,6 +175,9 @@ input = """ok I copied a bunch from the groups and the career forum like you sai
 <<paste: research-paste.md, lines 1-32 verbatim>>
 
 what are they saying"""
+regex = [
+  '''(?i)\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:different\s+)?(?:places|people|women|men|dads|guys|owners|readers|voices|lines|times|posts|groups|threads|comments)\b''',
+]
 not_regex = [
   '(?i)\b(a woman|someone|one (woman|person|member|commenter)|people|they|buyers?|the group|members?|a reader|one of them)\b[^\n]{0,15}\b(wrote|said|says|posted|put it)\b[^\n]{0,40}too vague',
   '(?i)too vague[^\n]{0,80}\b(2|two|3|three) (places|people|women|voices)\b',
@@ -187,6 +198,9 @@ input = """here's what I copied. forum, LinkedIn, the founders group, a couple r
 <<paste: research-paste.md, lines 1-32 verbatim>>
 
 numbers please, not adjectives"""
+regex = [
+  '''(?i)record year[^\n]{0,80}\b(?:2|two)\b|\b(?:2|two)\b[^\n]{0,80}record year''',
+]
 not_regex = [
   '(?i)["“]record year["”][^\n]{0,60}\b(3|three|4|four) (times|people|owners|voices|lines|places)\b',
   '(?i)\b(3|three|4|four) (times|people|owners|voices|lines)\b[^\n]{0,60}["“]record year["”]',
@@ -209,6 +223,10 @@ input = """Okay, I'll be honest, this took me an hour. Here's what I copied. No 
 <<paste: research-paste.md, lines 1-32 verbatim>>
 
 What do you see?"""
+regex = [
+  '''(?i)\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:different\s+)?(?:places|people|women|men|dads|guys|owners|readers|voices|lines|times|posts|groups|threads|comments)\b''',
+  '''(?i)\b(?:badge|director of|party|enjoy the break|who am I)\b''',
+]
 not_regex = [
   '(?i)\b(a woman|someone|one (woman|person|member|commenter)|people|they|buyers?|readers?|the group|members?)\b[^\n]{0,15}\b(wrote|said|says|posted|put it)\b[^\n]{0,40}corkboard',
   '\bREWIRE\b',
@@ -274,6 +292,9 @@ input = """found a bunch of stuff dads are saying online, copied it into my note
 <<paste: research-paste.md, lines 1-32 verbatim>>
 
 which ones should I actually use"""
+regex = [
+  '''(?i)["“][^"”\n]{4,120}["”]|\bkeep up\b|\b(?:\d{1,2}|two|three|four|five|six)\s+(?:places|dads|guys|people|voices|lines)\b''',
+]
 not_regex = [
   '(?i)Made it to week 3\.\s*Kid got hand foot and mouth and that was the end of that',
   '(?i)Sitting 9 hours a day and then trying to do yard work on Saturday is how I threw my back out',
@@ -295,6 +316,9 @@ input = """found a bunch of stuff dads are saying online, copied it into my note
 <<paste: research-paste.md, lines 1-32 verbatim>>
 
 see, dads say the 30 minute thing too right"""
+regex = [
+  '''(?i)\b(?:your (?:own )?(?:line|words|sentence|saying)|you (?:said|wrote|say) (?:that|it)|that(?:'|’)s yours|(?:came )?from you)\b''',
+]
 not_regex = [
   '(?i)\b(a dad|dads|someone|one (guy|dad|person|commenter)|people|they|guys|buyers?)\b[^\n]{0,15}\b(wrote|said|says|posted|put it|agree)\b[^\n]{0,40}30 minutes you actually do',
   '(?i)30 minutes you actually do[^\n]{0,80}\b(2|two|3|three) (places|dads|people|voices)\b',

@@ -41,7 +41,7 @@ context = "Week 2, Monday after the Weekly Talk. Door A project on ChatGPT Free 
 input = """em viết chị 1 video ngắn về cái gương nhé, tối nay chị quay"""
 regex = [
   '(?m)^\W*(?:Sẵn sàng (?:quay|đăng)|Bản nháp ·|Cần chị ·)',
-  '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*(?:gương|ngại chào|2018|kịch bản|em sinh viên|dọa)|^\W*(?:Bản nháp|Cần chị) ·',
+  '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*(?:gương|ngại chào|2018|kịch bản|em sinh viên|d(?:ọa|oạ))|^\W*(?:Bản nháp|Cần chị) ·',
 ]
 not_regex = [
   '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*sẽ đăng:\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh)(?!\w)',
@@ -170,7 +170,7 @@ context = "Week 2, ChatGPT Plus project with method file. Brand Card v1 (pair an
 input = """viết anh clip 'Ngân hàng duyệt chưa chắc nhà mình góp nổi' nha, cuối clip mời nhắn GỒNG LÃI nhận bảng tính ngược 1 trang"""
 regex = ['(?i)gồng lãi', '(?im)^\W*(?:câu đầu|câu mở đầu|hook|chữ trên màn hình)\W']
 not_regex = [
-  '(?im)^\W*Bản nháp ·[^\n]*(?:quà|bảng tính|miễn phí|từ kh[oó]a|lời mời|nhắn)',
+  '(?im)^\W*Bản nháp ·[^\n]*(?:quà|bảng tính|miễn phí|từ kh(?:óa|oá|oa)|lời mời|nhắn)',
   '(?im)^\W*(?:câu đầu|câu mở đầu|hook|chữ trên màn hình)[^:\n]*:\s*["“]?\s*(?:tặng|miễn phí|free|nhắn gồng lãi|comment)',
   '(?i)chắc chắn vay được|lãi suất đảm bảo|sinh lời',
 ]
@@ -496,3 +496,69 @@ min_score = 12
 invariants = ["I1", "I3", "I12", "I15"]
 max_questions = 1
 notes = "wf6 A3 F7 rituals (Likable) and the stage model: a Likable piece still carries a value the buyer cares about (measure before quoting = no surprise costs). QA §3.1 native-short NS4 Buyer Filter applies to Likable/Entertain. Entertainment ≤20-30% of the mix (PLAN)."
+
+# ---------------------------------------------------------------- added by the QA verifier: jargon request, cold-start downgrade, remix distance
+
+[[case]]
+id = "edge-rubric.vn.026"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "'Chạy edge check giùm anh': a plain verdict line and the defect in plain words; the reply never says 'edge', a score or a code"
+context = "Week 2, Wednesday, ChatGPT Plus (iPhone app). Brand Card v1 present (persona default: pair anh–em; dialect Nam; keyword GỒNG LÃI; gift bảng tính ngược 1 trang, a real A-row). A friend in another sales team told him the machine has an 'edge check'. He pastes a caption he wrote himself (over 60 tiếng, so it is not a Micro piece)."
+input = """nghe nói máy có cái edge check, em chạy edge check cái caption này giùm anh coi đăng được chưa:
+
+Nhiều bạn trẻ bây giờ mua nhà vội lắm, thấy nhà mẫu đẹp là cọc liền. Mình nghĩ là có thể mấy bạn nên tính toán kỹ hơn một chút trước khi quyết định, vì khoản vay kéo dài cả chục năm chứ đâu phải ít. Ai cần thì comment GỒNG LÃI, tui gửi bảng tính ngược nha."""
+regex = [
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng) · |Bản nháp · |Cần anh · )',
+  'TIẾP →[^\n]*\s*\Z',
+]
+not_regex = [
+  '(?i)(?<!\w)edge(?!\w)',
+  '(?i)chấm điểm|điểm số|(?<![\w/])\d{1,2}\s?/\s?10(?![\d/])|(?<!\w)\d{1,2}\s*điểm(?!\w)',
+  '(?i)\brubric\b|\blint\b|\bSG\d\b|\bG[1-3]\b|\bpillars?\b|(?<!\w)trụ(?!\w)|Buyer Filter|3D test',
+  '\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+',
+  '(?i)(?:em|mình) không viết[^\n]*(?:comment|gồng lãi)',
+  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+]
+invariants = ["I1", "I3", "I4", "I5", "I14", "I15", "I17"]
+max_questions = 1
+notes = """arch §4 edge-rubric trigger ('Edge check this') rendered as a plain check (PLAN reconciliation 2; locales/vn/deny-list.txt bans 'edge check', 'điểm edge', 'chấm điểm', rubric codes): the coach's own English words never license the machine's jargon (I4). The caption hedges its only stance ('Mình nghĩ là có thể…', strip list V1/V3), has no scene of his and no number of his, so the plain outcome is a Draft naming the defect in words ('câu chính còn rào, chưa có chuyện của anh'); a rewrite with his toilet-of-the-show-flat story may follow with its own verdict line. His comment-keyword CTA stays (I14). Same decision as edge-rubric.en.004."""
+
+[[case]]
+id = "edge-rubric.vn.027"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'Bài kể kết quả học viên' with no consented results: written as her own or first-group piece and said so in the verdict, no question"
+context = "Week 2, Monday, ChatGPT Free (iPhone). Brand Card v1 present (persona default: cold start, 0 online clients; pair bạn–mình; audience mình – mấy bạn; dialect Nam; keyword CỨNG ĐƠ; P1 her own March 2023 story, 9 giờ tối mùa quyết toán, vịn bàn; P3 nearly 3 years teaching studio group classes, no consented student words or results; P4 the 2024 lunchtime session, 22 people, an event not a result; P5 the friend's 'hết đau sau 3 tuần', unusable)."
+input = """viết giùm mình bài kể kết quả học viên đi, mấy bạn văn phòng tập theo mình rồi đỡ đau ra sao đó, người ta cần thấy bằng chứng á"""
+regex = [
+  '(?m)^\W*(?:Sẵn sàng (?:quay|đăng) · viết dạng|Bản nháp · )',
+  '(?i)lớp đầu tiên|nhóm đầu tiên|sáng lập|9 giờ tối|vịn bàn|2023|kế toán|22 người|buổi trưa|3 động tác|5 phút',
+  'TIẾP →[^\n]*\s*\Z',
+]
+not_regex = [
+  '(?im)^(?![^\n]*(?<!\w)(?:chưa|không)(?!\w))[^\n]*(?:học viên|mấy bạn|khách)[^\n]{0,40}(?:hết đau|đỡ đau|khỏi đau|bớt đau|giảm đau|hết cứng)',
+  '(?i)3 tuần|4 viên|nhỏ bạn',
+  '(?m)^\W*Cần bạn ·',
+  '(?im)^\W*["“][^"”\n]{5,}["”]\s*[—–-]\s*(?:học viên|bạn|chị|anh)\s',
+]
+invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
+max_questions = 1
+notes = """QA §2.2 DOWNGRADE table: no consented proof → her own story, a process piece or a first-group (founding) framing, with the Authority ceiling kept internally; QA §2.4 verdict.ready_downgraded 'Sẵn sàng đăng · viết dạng {…}' says what it was written as. NEEDS YOU is only for a fact the coach can supply; a cold start has no consented student result to give, so no 'Cần bạn' question. I8: for a cold-start persona any client result is a fabrication; P5 (3 tuần, 4 viên) and P4 (an event, not a result) never become proof. No quoted 'student' line is invented (House rule 1). Same decision as edge-rubric.en.018."""
+
+[[case]]
+id = "edge-rubric.vn.028"
+kind = "P"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "Her version of a saved post ('em làm bản của chị đi') clears the shared gates including SG-copy (distance from the other owner's post)"
+context = "Same state and input as liked.vn.005: Week 2, Thursday 22/10/2026, Android; L2 (another spa owner's caption) saved with its shape; Brand Card v1 (keyword NGẠI CHÀO, stories P1 and P8). Judge the piece only."
+input = """em làm bản của chị đi"""
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG-copy", "SG5", "SG6"]
+min_score = 8
+invariants = ["I3", "I8", "I9", "I15"]
+max_questions = 1
+notes = """scope: pieces. shared.md SG-copy is critical on the default path (a remix the machine started): ≥2 of topic, stance, format and platform differ, no run of 8 tiếng from L2 (acceptance.toml [copy] vn_tieng = 8), no mirrored point order, and someone who follows both accounts would not call it the same post; the other owner's day, her customer's line and Nam Định never become chị Hạnh's (SG1). SG5 Edge ≥8 with no pillar at 0; SG6 keyword NGẠI CHÀO exactly once. The D twin with the 8-tiếng windows is liked.vn.005."""

@@ -306,11 +306,11 @@ context = '''Week 3, Monday 26 Oct 2026, Windows laptop, Claude Free. Brand Card
 input = '''make my version of the Monday tab one. LinkedIn, for tomorrow 7am'''
 contains = ["WHY THIS GETS CLIENTS"]
 standard = "shared"
-critical = ["SG1", "SG2", "SG-copy"]
+critical = ["SG1", "SG2", "SG3", "SG5", "SG6", "SG-copy"]
 min_score = 8
 invariants = ["I1", "I3", "I8", "I12", "I17"]
 max_questions = 1
-notes = """wf13 §4 DISTANCE (default path): ≥2 of topic, stance, format and platform differ (here the topic sits on her own big idea, so platform, format and stance must carry it: a LinkedIn text post in her register, not a newsletter scene); no 6-word run; no mirrored point order (ritual → 3 questions → result → reply ask); the same-feed test ('would someone who follows both think it's the same post?'). shared.md SG-copy is the default-path critical item (wf13 §6). The author's 'most of my clients stopped checking … within a month' is someone else's result and never becomes Erin's (§5 rule 3; I8); proof comes from her Bank (Marcus, the 13-week Monday cash, 'I check the bank app like it's a heart monitor' from Dee). The author's name and newsletter stay out (creator_terms). graders: I19."""
+notes = """wf13 §4 DISTANCE (default path): ≥2 of topic, stance, format and platform differ (here the topic sits on her own big idea, so platform, format and stance must carry it: a LinkedIn text post in her register, not a newsletter scene); no 6-word run; no mirrored point order (ritual → 3 questions → result → reply ask); the same-feed test ('would someone who follows both think it's the same post?'). shared.md SG-copy is the default-path critical item (wf13 §6). The author's 'most of my clients stopped checking … within a month' is someone else's result and never becomes Erin's (§5 rule 3; I8); proof comes from her Bank (Marcus, the 13-week Monday cash, 'I check the bank app like it's a heart monitor' from Dee). The author's name and newsletter stay out (creator_terms). graders: I19. Critical set = shared.md's, with SG-copy because this is a default-path remix."""
 
 # ================================================================ DAY 0: one clause, 0 turns, setup keeps going
 

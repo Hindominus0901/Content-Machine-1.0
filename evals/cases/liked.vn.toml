@@ -138,7 +138,7 @@ not_regex = [
   '''(?i)bán chạy chưa chắc đã là bán có lãi''',
   '''(?i)tối nay mở sổ ra tính thử một mã''',
   '''(?i)chủ sạp|váy hoa''',
-  '''Nền tảng có thể giảm hiển thị''',
+  '''Nền tảng có thể giảm hiển thị bài giống bài khác''',
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
   '''Bài bạn thích|(?<!\w)của bạn(?!\w)''',
   '''(?i)(?<!\w)(?:nha|nè)(?!\w)''',
@@ -157,11 +157,11 @@ title = "Her version of the L2 post clears the shared gates and the distance rul
 context = "Same state and input as liked.vn.002. Judge the piece only."
 input = '''làm bản của mình'''
 standard = "shared"
-critical = ["SG1", "SG2", "SG3"]
+critical = ["SG1", "SG2", "SG3", "SG-copy"]
 min_score = 8
 invariants = ["I3", "I8", "I9", "I15"]
 max_questions = 1
-notes = """scope: pieces. QA §3.1 shared: SG1 trace (her story, her client words), SG2 claims, SG3 polarity, Edge ≥8 with no pillar at 0. wf13 §6 adds SG-copy to shared.md as a default-path critical item: a remix the machine started must pass DISTANCE (§4: ≥2 of topic, stance, format and platform differ; no run of 8 tiếng; no mirrored point order; the same-feed test, 'would someone who follows both accounts think it is the same post?'; no translation for posting). Until SG-copy exists the judge reads DISTANCE under SG1. Reference: expected.toml [liked] expected_shapes L2 and must_not; the founder-labelled 'same post?' pairs target ≤5% yes (acceptance.toml [copy] same_post_yes_max)."""
+notes = """scope: pieces. QA §3.1 shared: SG1 trace (her story, her client words), SG2 claims, SG3 polarity, Edge ≥8 with no pillar at 0. wf13 §6 adds SG-copy to shared.md as a default-path critical item: a remix the machine started must pass DISTANCE (§4: ≥2 of topic, stance, format and platform differ; no run of 8 tiếng; no mirrored point order; the same-feed test, 'would someone who follows both accounts think it is the same post?'; no translation for posting). SG-copy now exists in shared.md and is listed as critical (QA verifier update). Reference: expected.toml [liked] expected_shapes L2 and must_not; the founder-labelled 'same post?' pairs target ≤5% yes (acceptance.toml [copy] same_post_yes_max)."""
 
 [[case]]
 id = "liked.vn.004"
@@ -205,11 +205,11 @@ regex = [
 not_regex = [
   '''(?i)làm xong cho chị khách, em chỉ nói thật''',
   '''(?i)da chị không có gì đáng lo''',
-  '''(?i)lần đầu có chỗ không dọa chị''',
+  '''(?i)lần đầu có chỗ không d(?:ọa|oạ) chị''',
   '''(?i)em chỉ ngại nói những câu em không tin''',
   '''(?i)các chị em làm nghề có ai giống em không''',
   '''(?i)Nam Định''',
-  '''Nền tảng có thể giảm hiển thị''',
+  '''Nền tảng có thể giảm hiển thị bài giống bài khác''',
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
   '''Bài bạn thích|(?<!\w)của bạn(?!\w)''',
 ]
@@ -437,7 +437,7 @@ regex = [
 not_regex = [
   '''(?im)^(?![^\n]*(?<!\w)(?:không|chưa|chẳng|đừng)(?!\w))[^\n]*(?:ý lớn (?:thứ |số )?(?:4|bốn)|thêm (?:một )?ý lớn)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) · |Bản nháp · )''',
-  '''(?i)trẻ hóa|nâng cơ|xóa nhăn|trẻ ra|hiệu quả (?:ngay|sau)''',
+  '''(?i)trẻ h(?:óa|oá)|nâng cơ|x(?:óa|oá) nhăn|trẻ ra|hiệu quả (?:ngay|sau)''',
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
   '''Bài bạn thích|(?<!\w)của bạn(?!\w)''',
 ]
@@ -655,7 +655,7 @@ regex = [
 ]
 not_regex = [
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
-  '''(?s)Nền tảng có thể giảm hiển thị.*Nền tảng có thể giảm hiển thị''',
+  '''(?s)Nền tảng có thể giảm hiển thị bài giống.*Nền tảng có thể giảm hiển thị bài giống''',
   '''(?i)vẫn là bài của họ''',
   '''(?i)(?:không|chẳng)\s+(?:nên|thể)\s+(?:chép|đăng y|đăng nguyên)''',
   '''(?i)bạn có chắc''',
@@ -685,7 +685,7 @@ regex = [
 ]
 not_regex = [
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
-  '''(?s)Nền tảng có thể giảm hiển thị.*Nền tảng có thể giảm hiển thị''',
+  '''(?s)Nền tảng có thể giảm hiển thị bài giống.*Nền tảng có thể giảm hiển thị bài giống''',
   '''(?i)vẫn là bài của họ|cần (?:họ|tác giả) đồng ý''',
   '''Your bestseller|Busy is not the same|Save this for your next restock day|Before you run another sale''',
   '''Đăng hay không là quyền của bạn|Đăng theo quyết định của bạn''',
@@ -742,7 +742,7 @@ regex = [
 ]
 not_regex = [
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
-  '''(?s)Nền tảng có thể giảm hiển thị.*Nền tảng có thể giảm hiển thị''',
+  '''(?s)Nền tảng có thể giảm hiển thị bài giống.*Nền tảng có thể giảm hiển thị bài giống''',
   '''(?i)vẫn là bài của họ''',
   '''(?i)em phục vụ mới vô ca đầu tiên|không ai chỉ em cái tủ đồ|mai em có cần quay lại không''',
   '''(?<!\w)của bạn(?!\w)''',
@@ -806,7 +806,7 @@ not_regex = [
   '''(?s)AI CŨNG NÓI(?:(?!CHƯA AI NÓI|(?:BẠN|CHỊ) NÓI ĐƯỢC|TIẾP →).){0,800}?(?i:dán cao|cao dán|Mộc An)''',
   '''(?s)(?:BẠN|CHỊ) NÓI ĐƯỢC(?:(?!AI CŨNG NÓI|CHƯA AI NÓI|TIẾP →).){0,800}?Đừng [^\n]{1,40} nữa''',
   '''(?im)^(?![^\n]*(?<!\w)(?:không|chưa|chẳng|đừng)(?!\w))[^\n]*(?:ý lớn (?:thứ |số )?(?:4|bốn)|thêm (?:một )?ý lớn)''',
-  '''Hà Vy|Thanh Trúc|Hữu Phước|Kim Xuyến|Bảo Khuyên|Thúy Kiều|Mạnh Cường|Bích Thủy|Diễm Châu|Hồng Đào|Ngọc Hoa|Văn Lộc|Như Ý''',
+  '''Hà Vy|Thanh Trúc|Hữu Phước|Kim Xuyến|Bảo Khuyên|Th(?:úy|uý) Kiều|Mạnh Cường|Bích Th(?:ủy|uỷ)|Diễm Châu|Hồng Đào|Ngọc Hoa|Văn Lộc|Như Ý''',
   '''(?i)(?<!\w)(?:mình|em)\s+sẽ\s+(?:\S+\s+){0,2}?(?:theo dõi|canh|check|kiểm tra|cập nhật|soi)\s+(?:giúp\s+\S+\s+)?(?:các\s+|những\s+|mấy\s+|3\s+|ba\s+)?(?:kênh|trang|tài khoản)''',
   '''(?i)trung vị|tỷ lệ|\boutlier\b|\bswipe\b|white space|social listening|kiểm chứng''',
 ]
@@ -835,7 +835,7 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?s)AI CŨNG NÓI(?:(?!CHƯA AI NÓI|(?:BẠN|CHỊ) NÓI ĐƯỢC|TIẾP →).){0,800}?(?i:hóa đơn|bị phạt|Kế Toán Hộ)''',
+  '''(?s)AI CŨNG NÓI(?:(?!CHƯA AI NÓI|(?:BẠN|CHỊ) NÓI ĐƯỢC|TIẾP →).){0,800}?(?i:h(?:óa|oá) đơn|bị phạt|Kế Toán Hộ)''',
   '''(?s)(?:BẠN|CHỊ) NÓI ĐƯỢC(?:(?!AI CŨNG NÓI|CHƯA AI NÓI|TIẾP →).){0,800}?Đừng [^\n]{1,40} nữa''',
   '''(?im)^(?![^\n]*(?<!\w)(?:không|chưa|chẳng|đừng)(?!\w))[^\n]*(?:ý lớn (?:thứ |số )?(?:4|bốn)|thêm (?:một )?ý lớn)''',
   '''Bích Hồng|Thu Hiền|Ngọc Ánh|Kim Liên|Lưu Thị Huệ|Bùi Thị Yến|Hoàng Văn Tiến|Mẫn Thị Tâm|Giáp Thị Hằng|Đinh Thị Hòa|Trịnh Văn Quyết|Doãn Thị Nga|Tăng Văn Hùng''',
@@ -874,7 +874,7 @@ not_regex = [
   '''(?s)AI CŨNG NÓI(?:(?!CHƯA AI NÓI|(?:BẠN|CHỊ) NÓI ĐƯỢC|TIẾP →).){0,800}?(?i:máy công nghệ|đầu tư máy|Máy Spa Hàn Quốc)''',
   '''(?s)(?:BẠN|CHỊ) NÓI ĐƯỢC(?:(?!AI CŨNG NÓI|CHƯA AI NÓI|TIẾP →).){0,800}?Đừng [^\n]{1,40} nữa''',
   '''(?im)^(?![^\n]*(?<!\w)(?:không|chưa|chẳng|đừng)(?!\w))[^\n]*(?:ý lớn (?:thứ |số )?(?:4|bốn)|thêm (?:một )?ý lớn)''',
-  '''Bích Thủy|Hồng Nhung|Thanh Huyền|Mông Thị Sen|Kiều Trang|Nguyễn Thị Hiền|Lê Văn Khánh|Bế Thị Thắm|Tuyết Mai|Thu Hường|Tạ Đức Mạnh|Trần Ngọc Ánh|Đinh Thị Mơ''',
+  '''Bích Th(?:ủy|uỷ)|Hồng Nhung|Thanh Huyền|Mông Thị Sen|Kiều Trang|Nguyễn Thị Hiền|Lê Văn Khánh|Bế Thị Thắm|Tuyết Mai|Thu Hường|Tạ Đức Mạnh|Trần Ngọc Ánh|Đinh Thị Mơ''',
   '''(?i)(?<!\w)(?:mình|em)\s+sẽ\s+(?:\S+\s+){0,2}?(?:theo dõi|canh|check|kiểm tra|cập nhật|soi)\s+(?:giúp\s+\S+\s+)?(?:các\s+|những\s+|mấy\s+|4\s+|bốn\s+)?(?:kênh|trang|tài khoản)''',
   '''(?i)trung vị|tỷ lệ|\boutlier\b|\bswipe\b|white space|social listening|kiểm chứng''',
   '''BẠN NÓI ĐƯỢC|(?<!\w)của bạn(?!\w)''',
@@ -944,7 +944,7 @@ not_regex = [
   '''(?m)^(?![^\n]*(?:của họ|không phải|không dùng|thay bằng|chữ của|thay vì))[^\n]*\bGUIDE\b''',
   '''(?i)tính giá bán bằng cách lấy giá nhập nhân đôi''',
   '''(?i)làm sẵn một file tính giá vốn từng đơn''',
-  '''Nền tảng có thể giảm hiển thị''',
+  '''Nền tảng có thể giảm hiển thị bài giống bài khác''',
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
   '''Bài bạn thích|(?<!\w)của bạn(?!\w)''',
 ]

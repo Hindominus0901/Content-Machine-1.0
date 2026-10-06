@@ -17,6 +17,11 @@
 #   unless the pattern starts with (?i) or uses (?i:...).
 # - Exact strings asserted here come from strings/en.toml: the setup-check line, "NEXT →",
 #   "✓ Checked:", "WHY THIS GETS CLIENTS", the three mic tips and the verdict.* lines.
+# - The compact-mode setup-check line (strings setup.check_compact, still being added) is asserted
+#   loosely: "Setup check: ✓ instructions" plus no "✓ method file", never the exact string.
+# - FILM TODAY option lines ('quiet', 'Not filming today … post the caption as text') are statements,
+#   never questions: with a real question in the same reply a '?' there breaks I5. FILM TODAY cases carry
+#   a not_regex for a '?' on those lines.
 # - `invariants` lists I1-I18 ids only. graders.py also runs its day0_timing, deny_list and
 #   quit_triggers checks on every transcript; `notes` names them where a case depends on them.
 
@@ -549,6 +554,7 @@ not_regex = [
   '''(?i)screenshot[^\n]{0,40}\b(insights|analytics|stats)\b''',
   '''(?i)\b(upgrade|Plus plan|go Pro)\b''',
   '''(?i)\b(upload|download)\b''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = ""
 invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I17", "I18"]
@@ -582,6 +588,7 @@ not_regex = [
   '''\b(Owen|Lily|Jess|Tommy)\b''',
   '''(?i)\bcertified\b''',
   '''(?i)past clients''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = ""
 invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I17", "I18"]
@@ -614,6 +621,7 @@ not_regex = [
   '''(?i)\b(Notion|skill zip|Autopilot|connector)\b''',
   '''(?i)\block(ed|s)?\b[^.\n]{0,25}\b(map|message|big ideas?)\b''',
   '''(?i)\b90 days\b''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = ""
 invariants = ["I1", "I2", "I4", "I5", "I6", "I17"]
@@ -655,6 +663,7 @@ not_regex = [
   '''(?i)\b90\s*(%|percent)''',
   '''\bPam\b''',
   '''(?i)\b(reinvent|pivot|second act|dream job|transform your life|journey)\b''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I14", "I17", "I18"]
@@ -682,8 +691,8 @@ max_chars = 0
 max_questions = 1
 standard = "native-short"
 critical = ["NS1"]
-min_score = 12
-notes = """NS1 hooks aligned (on-screen text, first line and caption point at one idea; the hook opens a loop past the topic). NS2 beats joined by but/therefore; NS5 Mode B beat cards (she asked for bullets); NS7 one location, a phone, no props. Built on her own story ('24 years and a carrot cake' or 63 applications), never Pam."""
+min_score = 10
+notes = """NS1 hooks aligned (on-screen text, first line and caption point at one idea; the hook opens a loop past the topic). NS2 beats joined by but/therefore; NS5 Mode B beat cards (she asked for bullets); NS7 one location, a phone, no props. Built on her own story ('24 years and a carrot cake' or 63 applications), never Pam. The Day-0 piece is the reach opener, not a Likable or Entertain piece, so NS4 is N/A and the bar is ≥10/12 (native-short.md), as in fmt-short.en.013."""
 
 [[case]]
 id = "setup.en.022"
@@ -733,6 +742,7 @@ not_regex = [
   '''(?i)\d+\s*(lbs?|pounds)\b''',
   '''(?i)\b(beast mode|no pain,? no gain|summer body|alpha)\b''',
   '''(?i)\btestimonial''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = "Ready"
 invariants = ["I3", "I5", "I8", "I9", "I17", "I18"]
@@ -1132,6 +1142,7 @@ not_regex = [
   '''(?i)\bwho do you (help|work with)\b''',
   '''(?i)here(?:'|’)s what I heard''',
   '''(?i)\b(remind me|tell me again)\b''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
@@ -1269,6 +1280,7 @@ not_regex = [
   '''(?im)^\W*(first line|on-screen(?: text)?|hook)\b[^\n]*[:—–-][^\n]*\b(CPA|VP of Finance|9 years|14 sprints)\b''',
   '''(?i)\bformer CFO\b|\bBig 4\b|\bMBA\b''',
   '''(?i)\b(agree|thoughts)\?''',
+  '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]

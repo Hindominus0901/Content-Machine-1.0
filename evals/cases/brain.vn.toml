@@ -73,7 +73,7 @@ not_regex = [
   '\bB[1-7]\b',
   '(?i)\b(admirable|likable|likeable|credible|trustable|pillars?|focus score|edge score)\b',
   '(?i)(?<!\w)trụ(?!\w)',
-  '(?i)khóa 90|khoá 90|lock',
+  '(?i)khóa 90|khoá 90|(?<!\w)lock(?:ed|s)?(?!\w)',
 ]
 invariants = ["I8", "I10"]
 notes = "schemas/brand-card.toml [machine]: one 'name: value' line per field, names identical in both editions and never framework words (key_belief replaces Big Domino, idea_shifts replaces B1–B7); pronouns required for VN; proof_ready = yes because Ngân's result is consented and substantiated (persona proof items); trial_ends replaces any lock."
@@ -160,7 +160,7 @@ title = "Two cards in sources: v2 wins, one line to delete v1"
 context = "Week 2 Monday, Door A, new chat. Sources hold Brand Card v1 (cta_style keyword) and Brand Card v2 (cta_style quiet, saved after she typed 'nhẹ'); she forgot to delete v1."
 input = """tiếp"""
 contains = ["Brand Card v2"]
-regex = ['(?i)xo(á|a)[^.\n]{0,40}v1|v1[^.\n]{0,40}xo(á|a)']
+regex = ['(?i)x(?:óa|oá|oa)[^.\n]{0,40}v1|v1[^.\n]{0,40}x(?:óa|oá|oa)']
 not_contains = ["Brand Card v1 ✓"]
 invariants = ["I1", "I5", "I15"]
 max_questions = 1
@@ -319,9 +319,10 @@ context = "Week 1 day 2. Today's piece opened with 'Các chị em ơi,'."
 input = """không giống mình: các chị em ơi
 ---
 làm lại bài hôm nay giúp chị"""
+regex = ['(?i)lãi ảo']
 not_contains = ["các chị em ơi"]
 invariants = ["I3", "I15"]
-notes = "scope: pieces. QA §2.8 'not me: <line>' (VN 'không giống mình: <câu>') adds the line to the Card's banned list (brand-card never_say); strings cmd.not_me and cmd.try_again."
+notes = "scope: pieces. QA §2.8 'not me: <line>' (VN 'không giống mình: <câu>') adds the line to the Card's banned list (brand-card never_say); strings cmd.not_me and cmd.try_again. The rewrite still carries her keyword once (SG6), the positive anchor."
 
 [[case]]
 id = "brain.vn.018"
@@ -364,7 +365,7 @@ title = "Price update: card v2 with the new price in VN format, save the new one
 context = "Week 2 Wednesday, Door A. Brand Card v1 saved."
 input = """cập nhật giá giúp chị: từ khóa 5 tháng 3/2027 là 5.990.000đ nhé em, khóa 4 vẫn 4.990.000đ"""
 contains = ["5.990.000đ", "Lưu vào dự án"]
-regex = ['(?i)v2', '(?i)xo(á|a)[^.\n]{0,40}v1|v1[^.\n]{0,40}xo(á|a)', '(?m)^version:\s*2\s*$']
+regex = ['(?i)v2', '(?i)x(?:óa|oá|oa)[^.\n]{0,40}v1|v1[^.\n]{0,40}x(?:óa|oá|oa)', '(?m)^version:\s*2\s*$']
 not_regex = ['5,990,000|5990000|\$|VND', '(?i)(?<!\w)bạn(?!\w)']
 invariants = ["I1", "I8", "I15"]
 max_questions = 1
@@ -378,7 +379,7 @@ lanes = ["S1", "floor"]
 title = "Monthly check says KEEP: card v2 with a new trial end, two taps of upkeep"
 context = "Last Friday of Season 1, Door A on Claude Pro. 'plan next month' ran; the one decision offered KEEP (default) or sharpen one line."
 input = """giữ nguyên"""
-regex = ['(?m)^version:\s*2\s*$', '(?m)^trial_ends:\s*\S', '(?i)xo(á|a)[^.\n]{0,40}v1|v1[^.\n]{0,40}xo(á|a)']
+regex = ['(?m)^version:\s*2\s*$', '(?m)^trial_ends:\s*\S', '(?i)x(?:óa|oá|oa)[^.\n]{0,40}v1|v1[^.\n]{0,40}x(?:óa|oá|oa)']
 not_regex = ['(?i)(?<!\w)kh(óa|oá)(?!\w)[^.\n]{0,20}90', '(?i)(?<!\w)bạn(?!\w)(?!\s+(sinh viên|bè))']
 invariants = ["I1", "I4", "I6", "I15"]
 max_questions = 1

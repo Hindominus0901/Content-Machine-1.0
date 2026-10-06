@@ -132,10 +132,10 @@ title = "Week 1: the keyword appears exactly once per piece and its placement ro
 context = "Day 0 continued, persona default. Stop point passed with the Brand Card NOT saved; the coach says 'next' for Week 1 (3 Reels, 1 Facebook post, 1 email to the 140 list; 3 pieces per reply on Free)."
 input = """next"""
 standard = "shared"
-critical = ["SG6", "SG7"]
+critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 invariants = ["I1", "I3", "I5", "I12", "I14", "I17", "I18"]
-notes = "arch §5.4: every piece carries the chosen keyword exactly once, rotating placement (hook, on-screen text, spoken payoff, caption line 1, pinned comment), never the same placement twice in a row; spoken at most once per short. acceptance.toml [week] keyword_exactly_once_rate = 1.0. Week 1 must arrive with the Brand Card unsaved (save_gates = 0)."
+notes = "arch §5.4: every piece carries the chosen keyword exactly once, rotating placement (hook, on-screen text, spoken payoff, caption line 1, pinned comment), never the same placement twice in a row; spoken at most once per short. acceptance.toml [week] keyword_exactly_once_rate = 1.0. Week 1 must arrive with the Brand Card unsaved (save_gates = 0). Critical set = shared.md's (SG6 holds 'keyword exactly once'). SG7 (placement rotation) is a code gate read from the lint output, not a judged critical item, so it is not listed."
 
 [[case]]
 id = "signature.en.008"
@@ -456,7 +456,7 @@ title = "Weekly Talk week: the keyword is in every piece exactly once and never 
 context = "Week 2, Sunday night, persona default. Weekly Talk answers 1-5 were given from pillar-transcript.md; this is his last answer, after which the machine delivers the week (3 re-say shorts, 1 character short, 1 long Instagram post; no email, list is 0)."
 input = """ok that's the last one. Lily's up, give me the week"""
 standard = "shared"
-critical = ["SG6", "SG7"]
+critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 invariants = ["I1", "I3", "I5", "I8", "I10", "I12", "I14", "I17", "I18"]
-notes = "arch §5.4: exactly once per piece, rotating placement; spoken at most once per short. acceptance.toml keyword_exactly_once_rate 1.0. 'Lily' appears in the coach turn only; it must never appear in output (private_names)."
+notes = "arch §5.4: exactly once per piece, rotating placement; spoken at most once per short. acceptance.toml keyword_exactly_once_rate 1.0. 'Lily' appears in the coach turn only; it must never appear in output (private_names). Critical set = shared.md's (SG6 holds 'keyword exactly once'). SG7 (placement rotation) is a code gate read from the lint output, not a judged critical item, so it is not listed."

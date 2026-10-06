@@ -171,9 +171,11 @@ chị
 <<paste: proof-coach/answers.md, the '## Dump chunk 3' section verbatim>>
 ---
 <<simulator: coach side continues per answers.md "Answer bank" and "Behaviour" until the wrap-up>>"""
-not_contains = ["Cần bạn ·", "Mình sẽ đăng:", "Mình không tự bịa", "Muốn nhẹ nhàng hơn? Gõ 'nhẹ', mình", "Đây là Brand Card để mình nhớ bạn"]
+contains = ["QUAY HÔM NAY", "VÌ SAO RA KHÁCH"]
+not_contains = ["Cần bạn ·", "Mình sẽ đăng:", "Mình không tự bịa", "Đây là Brand Card để mình nhớ bạn"]
+not_regex = ['''(?i)nhẹ nhàng hơn[^\n]{0,25}gõ\s*['"“‘]?nhẹ['"”’]?\s*,?\s*mình\s+đổi''', '(?i)nhẹ nhàng hơn\s*\?']
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17", "I18"]
-notes = "scope: transcript. acceptance [language] vn_pronoun_slips = 0. The listed strings are the mình–bạn defaults of strings/vn.toml; any of them in a chị–em run is an unadapted string (QA §2.4 'VN xưng hô follows the Card')."
+notes = "scope: transcript. acceptance [language] vn_pronoun_slips = 0. The listed strings are the mình–bạn defaults of strings/vn.toml; any of them in a chị–em run is an unadapted string (QA §2.4 'VN xưng hô follows the Card'). The quiet-option line is matched in either form (with '?' or as a statement) and must be written as a statement (I5, fmt-short.vn header option-line rule)."
 
 # ---------------------------------------------------------------- Door B and pasted-block recovery
 
@@ -221,11 +223,11 @@ context = "Helper-installed Door A (Linh set it up on the shop computer; Hạnh 
 input = """ok em"""
 contains = ["QUAY HÔM NAY", "VÌ SAO RA KHÁCH", "✓ Đã kiểm:", "không có câu hứa rủi ro"]
 regex = ['VÌ SAO RA KHÁCH: đổi [^\n]+→', 'từ kh(oá|óa) 1 lần', '2018', '(?i)chưa quay[^\n]{0,60}(đăng|caption)']
-not_regex = ['(?i)(?<!\w)trụ(?!\w)', '\b[VSPXK]-\d+\b', 'Sẵn sàng quay · Mình', '(?i)(?<!\w)(nha|nè|hông|tui)(?!\w)']
+not_regex = ['(?i)(?<!\w)trụ(?!\w)', '\b[VSPXK]-\d+\b', 'Sẵn sàng quay · Mình', '(?i)(?<!\w)(nha|nè|hông|tui)(?!\w)', '(?i)nhẹ nhàng hơn\s*\?', '(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?']
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I8", "I9", "I10", "I12", "I14", "I15", "I17", "I18"]
 max_questions = 1
-notes = "UX §2 minute 20–24 VN '✓ Đã kiểm: 1 ý · đúng giọng chị · dùng chuyện spa 2018 · từ khoá 1 lần · không có câu hứa rủi ro'; PLAN reconciliation 2 (the Day-0 plain form of Ready); UX §6 Trust row (her own story in the ✓ line). Southern particles in her Northern voice are a voice slip (expected.toml avoid_regional_in_her_voice)."
+notes = "UX §2 minute 20–24 VN '✓ Đã kiểm: 1 ý · đúng giọng chị · dùng chuyện spa 2018 · từ khoá 1 lần · không có câu hứa rủi ro'; PLAN reconciliation 2 (the Day-0 plain form of Ready); UX §6 Trust row (her own story in the ✓ line). Southern particles in her Northern voice are a voice slip (expected.toml avoid_regional_in_her_voice). The option lines ('nhẹ', not filming today) are statements, never '?' (I5; fmt-short.vn header option-line rule)."
 
 [[case]]
 id = "setup.vn.013"
@@ -281,6 +283,7 @@ lanes = ["S0", "S1", "floor"]
 title = "Spoken Southern script: no Sino-Vietnamese stiffness, no Northern particles, no buzzwords"
 context = "Same as setup.vn.015."
 input = """ok"""
+regex = ['(?i)g(?:ồ|o)ng l(?:ã|a)i']
 not_regex = [
   '(?i)(?<!\w)(do đó|bởi lẽ|vô cùng|nhằm|tuy nhiên|bên cạnh đó)(?!\w)',
   '(?i)(?<!\w)(nhé|nhỉ|đấy|thế)(?!\w)',
@@ -730,6 +733,7 @@ tiep em oi
 <<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>
 ---
 <<simulator: coach side continues per answers.md "Answer bank" and "Behaviour" until the stop point>>"""
+contains = ["QUAY HÔM NAY", "Brand Card"]
 not_regex = [
   '(?i)(tải\s+(về|xuống|lên|file)|đính kèm|upload|tải tệp)',
   '(?i)(mở|vào|quay lại)\s+trang\s+(cài đặt|hướng dẫn)',
@@ -758,8 +762,10 @@ anh
 <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>
 ---
 <<simulator: coach side continues per answers.md "Answer bank" and "Behaviour" until the wrap-up>>"""
+contains = ["QUAY HÔM NAY", "VÌ SAO RA KHÁCH", "Brand Card"]
+regex = ['''(?m)^TIẾP →[^\n]*['"“‘]tiếp['"”’]''']
 invariants = ["I1", "I5", "I6", "I15", "I17"]
-notes = "scope: transcript. Graded by graders.py suite 'day0' against acceptance [day0]: early win ≤4 min after the dump starts, Map ≤9 coach turns and ≤20 min, film-ready ≤24 min, stop point ≤27 min, session ≤12 turns and ≤40 min. Tuấn types 'xong' early at minute 8–10 if nothing comes back (persona behaviour)."
+notes = "scope: transcript. Graded by graders.py suite 'day0' against acceptance [day0]: early win ≤4 min after the dump starts, Map ≤9 coach turns and ≤20 min, film-ready ≤24 min, stop point ≤27 min, session ≤12 turns and ≤40 min. Tuấn types 'xong' early at minute 8–10 if nothing comes back (persona behaviour). The contains/regex only prove the run reached film-ready, the card and the wrap-up TIẾP line; the timing is the day0 suite's."
 
 [[case]]
 id = "setup.vn.045"
@@ -773,6 +779,7 @@ input = """<<paste: the rendered VN PHONE-STARTER.txt, whole>>
 Gọi chị là chị thôi em, chị bốn lăm tuổi rồi.
 ---
 <<simulator: coach side per answers.md through the Door B close>>"""
+contains = ["TIẾP →", "VÌ SAO RA KHÁCH", "QUAY HÔM NAY"]
 not_contains = ["NEXT →", "Ready to", "✓ Checked", "WHY THIS GETS CLIENTS", "Needs you"]
 not_regex = ['''(?i)(?<![\w-])(the|and|you|your|please|ready|checked|done|next|today|week|step|pillar|keyword|beat card|let's|here's)(?![\w-])''']
 invariants = ["I4", "I15"]

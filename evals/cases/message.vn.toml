@@ -434,9 +434,9 @@ context = "Same as message.vn.023."
 input = """Thứ Ba em ạ, tối thứ Ba chị rảnh. Gạch đầu dòng thôi, đọc nguyên văn chị vấp lắm."""
 invariants = ["I9", "I15"]
 standard = "signature-keyword"
-critical = ["SK1", "SK2", "SK6"]
+critical = ["SK2", "SK6"]
 min_score = 13
-notes = "QA §3.1 signature-keyword ≥13/16; wf11-message-focus §0 'the machine pre-picks the keyword built from buyer words and shows the other two as alternates'. Expected pick 'lãi ảo' (or 'lãi thật'); never 'Sổ 3 Cột' (method name), 'chấm', 'ib', 'x3 doanh thu' (expected.toml [keyword])."
+notes = "QA §3.1 signature-keyword ≥13/16; wf11-message-focus §0 'the machine pre-picks the keyword built from buyer words and shows the other two as alternates'. Expected pick 'lãi ảo' (or 'lãi thật'); never 'Sổ 3 Cột' (method name), 'chấm', 'ib', 'x3 doanh thu' (expected.toml [keyword]). SK1 is not critical on this dump-only Day-0 pick: the standard scores an honestly marked provisional term SK1 = 1 until the first listening paste; SK1 = 0 (presented as proven) still fails via 'no item scores 0' (same decision as signature.vn.025)."
 
 [[case]]
 id = "message.vn.025"
@@ -461,7 +461,7 @@ title = "Swapping the keyword for an alternate is the one decision: applied, the
 context = "Map on screen with keyword 'gồng lãi' and alternates 'dí cọc', 'cọc trước tính sau'."
 input = """đổi từ khóa thành dí cọc đi em, khách nói câu đó nhiều hơn"""
 contains = ["dí cọc", "QUAY HÔM NAY"]
-not_regex = ['(?i)(duyệt|xác nhận|đồng ý)\s+lại', '''(?i)gõ\s+['"“‘]ok['"”’][^.\n]{0,20}(để|thì)\s+(em\s+)?(viết|làm)''']
+not_regex = ['(?i)nhẹ nhàng hơn\s*\?', '(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?', '(?i)(duyệt|xác nhận|đồng ý)\s+lại', '''(?i)gõ\s+['"“‘]ok['"”’][^.\n]{0,20}(để|thì)\s+(em\s+)?(viết|làm)''']
 invariants = ["I1", "I6", "I15"]
 max_questions = 1
 notes = "wf11-message-focus §0 'change swaps'; UX §2 minute 19–20 the one decision is 'ok' or 'sửa dòng n'. A swap is that decision; asking for a second approval breaks ≤1 decision per session (I6)."
@@ -475,7 +475,7 @@ title = "'sửa dòng 3' changes only that line and moves on to QUAY HÔM NAY"
 context = "Map on screen. Its line 3 is the old way, currently written as 'Chạy theo doanh thu'."
 input = """sửa dòng 3 thành đua doanh thu nhé em, chị hay gọi thế"""
 contains = ["đua doanh thu", "QUAY HÔM NAY"]
-not_regex = ['(?i)(duyệt|xác nhận|đồng ý)\s+lại', '(?i)(?<!\w)bạn(?!\w)']
+not_regex = ['(?i)(duyệt|xác nhận|đồng ý)\s+lại', '(?i)(?<!\w)bạn(?!\w)', '(?i)nhẹ nhàng hơn\s*\?', '(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?']
 invariants = ["I1", "I6", "I15"]
 max_questions = 1
 notes = "strings vn: 'ok' / 'sửa dòng 3' (UX §2 minute 19–20). The changed line uses her own name for the enemy (wf11-message-focus §1.5 Q3 probe)."
@@ -643,6 +643,7 @@ lanes = ["S1", "floor"]
 title = "Side-door piece never carries the Map keyword"
 context = "Same as message.vn.037."
 input = """tiếp"""
+regex = ['(?i)(quản lý sàn|chủ đội sale|đội sale|dạy sale)']
 not_regex = ['(?i)g(ồ|o)ng\s+l(ã|a)i']
 invariants = ["I3", "I15"]
 notes = "scope: pieces. expected.toml [map] side_door 'không có từ khóa GỒNG LÃI trong bài cửa phụ'; the keyword belongs to the one buyer."

@@ -30,6 +30,7 @@ lanes = ["S0", "S1", "floor"]
 title = "Day 0: Quick Listen stays silent; no paste, link, browse or file step between dump and Map"
 context = "Day 0, Door B (Phone Starter, ChatGPT Free, Android). Pair chị–em. Dump chunks 1-2 given. This turn is chunk 3, which ends 'Thôi chị nói thế thôi, xong rồi đấy em.' The next reply is the inventory + 7-line pre-filled check."
 input = """<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>"""
+regex = ['(?i)biết nhiều thật']
 not_regex = [
   '(?i)dán (?:bình luận|link|bài|đường dẫn)|mở (?:trình duyệt|Chrome|link)|tải (?:file|tệp)|đính kèm|chụp màn hình (?:bình luận|nhóm)',
   '(?i)nghiên cứu|lắng nghe|\bresearch\b|Quick Listen',
@@ -38,7 +39,7 @@ not_regex = [
 ]
 invariants = ["I1", "I2", "I5", "I10", "I15"]
 max_questions = 1
-notes = "UX §2 minute 12-17: 'Quick Listen runs silently.' acceptance.toml day0.detours_between_start_and_stop = 0 (downloads, uploads, setup-page visits, app switches). Her quit triggers include 'tải hay đính kèm file' and 'mở máy tính'. The aside to Linh in chunk 2 never surfaces."
+notes = "UX §2 minute 12-17: 'Quick Listen runs silently.' acceptance.toml day0.detours_between_start_and_stop = 0 (downloads, uploads, setup-page visits, app switches). Her quit triggers include 'tải hay đính kèm file' and 'mở máy tính'. The aside to Linh in chunk 2 never surfaces. Positive anchor: the reply is the inventory line ('Chị biết nhiều thật…', message.vn.006)."
 
 [[case]]
 id = "research.vn.002"
@@ -235,7 +236,7 @@ input = """<<paste: hanh-android-free-nocomputer/research-paste.md (body only)>>
 em đọc xem các em chủ spa nói gì nhé"""
 regex = [
   '(?i)khách (?:đi )?spa[^\n]{0,160}(?:không tính|không phải (?:người mua|chủ spa)|riêng|bằng chứng)|(?:không tính|không phải (?:người mua|chủ spa))[^\n]{0,160}khách (?:đi )?spa',
-  '(?i)sợ bị dọa|dọa da|bị dọa',
+  '(?i)sợ bị d(?:ọa|oạ)|d(?:ọa|oạ) da|bị d(?:ọa|oạ)',
   '(?i)ngại chào',
 ]
 not_contains = ["trắng da 100%", "gấp 3 sau 30 ngày", "an toàn tuyệt đối"]
@@ -562,7 +563,7 @@ context = "Research Hour, R1 setup (GROW file added). Brand Card v1 holds the br
 input = """nghiên cứu luôn khách cho lớp dạy sale với khách mua bảo hiểm sức khỏe cho ba mẹ nữa nha em, 1 lần cho tiện"""
 regex = [
   '(?i)vợ chồng trẻ',
-  '(?i)(?:dạy sale|sức khỏe)[^\n]{0,160}(?:để sau|sau|riêng|lần khác|cửa phụ)',
+  '(?i)(?:dạy sale|sức kh(?:ỏe|oẻ))[^\n]{0,160}(?:để sau|sau|riêng|lần khác|cửa phụ)',
 ]
 not_regex = ['(?im)^(?![^\n]*(?:không|chưa|chỉ))[^\n]*(?:ba|3|hai|2) (?:kiểu )?(?:khách|người mua) (?:cùng lúc|một lần)']
 invariants = ["I1", "I5", "I6", "I15"]

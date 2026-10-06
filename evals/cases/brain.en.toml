@@ -22,6 +22,8 @@
 #   on the coach-visible part use a "before the machine label" pattern:
 #   \A(?:(?!for the machine)[\s\S])*? … ; graders.py also strips blocks labelled "for the machine".
 # - `invariants` lists I1-I18 ids only; graders.py runs deny_list on every transcript.
+# - The later-chat self-check line "Brand Card v1 ✓" (strings setup.check_found, still being added) is
+#   asserted loosely: a regex that allows ✓ or ✔ and the order or spacing around it, never the exact string.
 
 [meta]
 module = "brain"
@@ -402,9 +404,9 @@ max_words = 0
 max_chars = 0
 max_questions = 1
 standard = "character-card"
-critical = ["CC1", "CC4", "CC8", "CC10"]
+critical = ["CC1", "CC4", "CC5", "CC8", "CC10"]
 min_score = 14
-notes = """wf12-qa-spec §3.1: Day-0 v0 bar ≥14/20 with [GAP] allowed. CC1 one extreme trait (e.g. spreadsheet-level practical, 'talks like a boss, not a therapist'); CC4 enemy is a practice (feeding the portal), never HR people; CC8 phrases verbatim from her dump; CC10 every field traced to an answer or marked [GAP]; nothing invented."""
+notes = """wf12-qa-spec §3.1: Day-0 v0 bar ≥14/20 with [GAP] allowed. CC1 one extreme trait (e.g. spreadsheet-level practical, 'talks like a boss, not a therapist'); CC4 enemy is a practice (feeding the portal), never HR people; CC8 phrases verbatim from her dump; CC10 every field traced to an answer or marked [GAP]; nothing invented. CC5 is critical at the Day-0 v0 bar too (character-card.md): a contrarian truth plus hills that pass 3D, traced to her dump."""
 
 # ---------------------------------------------------------------- later chats: the self-check
 
@@ -416,11 +418,12 @@ lanes = ["S1", "floor"]
 title = "Next chat with the card saved: the self-check reports Brand Card v1 and today's piece follows"
 context = "Day 2 (Tuesday of week 1). Project sources: method file + Brand Card v1 (persona default: keyword NOTHING ROOM; email-first). New chat in the project."
 input = '''next'''
-contains = ["Brand Card v1 ✓"]
+contains = []
 not_contains = ["we make it today"]
 regex = [
   '''\A\s*◆ Content Machine · ''',
   '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+  '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
 not_regex = [
   '''(?i)empty your head''',
@@ -443,7 +446,7 @@ title = "Missing card in a new chat: one-line fix (save from the first chat, or 
 context = "Day 3 (Wednesday of week 1), Android phone, ChatGPT Free. The Brand Card was never saved (forced test from Day 0); the project sources hold only the method file; project memory has nothing. New chat in the project."
 input = '''next'''
 contains = []
-not_contains = ["Brand Card v1 ✓"]
+not_contains = []
 regex = [
   '''(?i)\bBrand Card\b''',
   '''(?i)\bfirst chat\b''',
@@ -455,6 +458,7 @@ not_regex = [
   '''(?i)\b(what do you|who do you) (help|sell|do)\b''',
   '''(?i)\b(upgrade|Plus)\b''',
   '''(?i)\b(start over|from scratch)\b''',
+  '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
 verdict = ""
 invariants = ["I1", "I2", "I5"]
@@ -480,7 +484,7 @@ regex = [
 not_regex = [
   '''(?i)comment\s+["“'‘]?badge''',
   '''(?i)\bwhich (one|card|version)\b''',
-  '''(?i)Brand Card v1 ✓''',
+  '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I18"]
@@ -497,11 +501,12 @@ lanes = ["S1", "floor"]
 title = "The same card saved twice: one copy is used, one line about the extra copy, no question"
 context = "Day 4, ChatGPT Free on the laptop. Dana saved Brand Card v1 twice (two identical sources). New chat in the project."
 input = '''next'''
-contains = ["Brand Card v1 ✓"]
+contains = []
 not_contains = []
 regex = [
   '''(?i)\b(extra|second|duplicate|two|2) (copy|copies|cards?)\b|\btwice\b''',
   '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+  '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
 not_regex = [
   '''(?i)\bwhich (one|card|version|copy)\b''',
@@ -522,9 +527,12 @@ lanes = ["S1"]
 title = "'Start' pasted again after Day 0: the saved card is found and the session resumes"
 context = "Day 5 (Thursday of week 1), iPhone. Project sources: method file + Brand Card v1 (progress: day0 ✓ · week1 delivered). Dan forgot the 'next' phrase and pasted the Start text from the setup page into a new chat."
 input = '''Start'''
-contains = ["Brand Card v1 ✓"]
+contains = []
 not_contains = ["we make it today"]
-regex = ['''\A\s*◆ Content Machine · ''']
+regex = [
+  '''\A\s*◆ Content Machine · ''',
+  '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
+]
 not_regex = [
   '''(?i)empty your head''',
   '''(?i)\btalk (for )?5\b''',
@@ -546,11 +554,12 @@ lanes = ["S0"]
 title = "Method file missing in a later chat: one-line nudge, today's piece still delivered"
 context = "Day 2 (Tuesday of week 1), lane S0: on Day 0 the Free upload cap blocked step 3, so the project holds the instruction block and the saved Brand Card v1 only. New chat in the project."
 input = '''next'''
-contains = ["Brand Card v1 ✓"]
+contains = []
 not_contains = ["✓ method file"]
 regex = [
   '''(?i)method file''',
   '''(Ready to (film|post|send) ·|✓ Checked:|Needs you ·|Draft ·)''',
+  '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
 not_regex = [
   '''(?i)\b(can(?:'|’)t|won(?:'|’)t|cannot)\b[^\n]{0,30}\b(until|unless|without)\b[^\n]{0,30}\b(file|upload)''',

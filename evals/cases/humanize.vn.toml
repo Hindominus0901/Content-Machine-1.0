@@ -1,0 +1,645 @@
+# evals/cases/humanize.vn.toml · "Viết đúng giọng thật" (§CM-HUMANIZE), VN edition: "viết lại giọng mình",
+# the VN strip list (V1 rào đón, V3 ý kiến rỗng, V4 từ đệm, V5 xin phép / tự hạ, V6 đuôi xin xác nhận,
+# V7 mùi AI, V8 câu dài kiểu Tây, V9 danh từ hóa), spoken register over written Sino-Vietnamese, one xưng hô
+# pair per piece, dialect particles that match the speaker, warmth particles kept, the read-aloud loop
+# ("vấp câu nào thì gửi voice"), the before-filming ticks, "không giống mình:" / "mình có nói", specifics
+# only from the Bank, the coach's CTA left untouched, spelling and tone-mark consistency, formatting norms.
+# Sources: docs/research/arch-final-spec.md §8.1 (HUMANIZE line of the Ship Check) and §8.3 (the 6-step pass);
+# docs/research/wf6-character-design.md §B5 (G3 Voice Lint; "Strip list: VN" V1-V9 and "Giữ lại"), VN notes
+# 9-13; docs/research/wf6-definitive-concise.md §2b (Mùi AI), §2c, §2d (one sentence one idea; VN hook about
+# 15-18 âm tiết), §2f (calibration ladder), §2g (de-nominalize, "is" test), §2h, §2k (Trước và sau);
+# docs/research/wf2-vietnam-market.md §5 (xưng hô, register, dialect, code-switching, emojis and Unicode
+# bold, numbers, humility) and §8 (banned calques and buzzwords, pronoun drift, "đọc to", diacritics and
+# NFC, common confusions); docs/research/wf12-qa-spec.md §2.2 step 1 (writing rules carry most quality),
+# §2.8 (không giống mình: / mình có nói), §4 (Trước khi quay), §5.2 I1-I18; docs/research/wf12-qa-standards.md
+# SG4 voice-lint rules and SG8 read-aloud; locales/vn/banned-tells.txt; strings/vn.toml (cmd.voice,
+# cmd.not_me, cmd.i_do_say, verdict.*); the VN persona files (voice-samples.md "Câu … hay nói" and
+# "Từ … không bao giờ dùng", expected.toml [voice]).
+# Written by the QA role before modules/vn/humanize.md exists. Personas: evals/personas/vn/<id>.
+#
+# Conventions: as in setup.vn.toml and message.vn.toml.
+# - input: coach turns in order, separated by a line holding only "---". "<<paste: FILE …>>" = the
+#   simulator inlines that file (or the named section) verbatim there.
+# - context: the state when `input` starts, including what the machine has already said.
+# - D assertions run on the machine reply to the LAST coach turn, unless notes starts with a scope:
+#     "scope: transcript"  all machine replies of the case joined (contains = somewhere,
+#                          not_contains / not_regex = nowhere)
+#     "scope: pieces"      only text above verdict lines, split the way graders.py splits pieces
+#                          (of the last reply; prose to the coach is left out)
+#     "scope: visible"     coach-visible text (graders.py drops the "cho máy" block)
+#   max_words / max_chars / max_questions always count the coach-visible text of the last reply.
+# - contains: case-insensitive substring after NFC. regex / not_regex: Python re, case-sensitive unless
+#   the pattern starts with (?i). Vietnamese whole words are fenced with (?<!\w)…(?!\w).
+# - Pronoun-dependent strings are asserted in the pair the coach chose (default mình–bạn; chị–em turns
+#   "gửi voice câu bạn hay nói, mình sửa theo" into "gửi voice câu chị hay nói, em sửa theo").
+# - Most strip-list cases read pieces only: the machine's own chat line to the coach may name what it
+#   cut ("em bỏ câu 'Hy vọng bài viết hữu ích'"), the piece itself may not keep it.
+# - "Long sentence" uses a token run: 40 or more space-separated tiếng with no . ! ? … between them is a
+#   sentence over the V8 limit (wf6: "Câu trên 25 từ"; about 25 words ≈ 40 tiếng).
+# - `invariants` lists I1-I18 ids only. graders.py also runs its deny_list and quit_triggers checks.
+# - P cases name an existing qa/standards id with its §3.1 critical items; they count only after the
+#   judge passes its J set.
+# - Context, titles and notes are English for the QA team; every coach turn and expected phrase is
+#   Vietnamese. Every person and business here is fictional (persona folders).
+
+[meta]
+module = "humanize"
+edition = "vn"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- "viết lại giọng mình": AI fog out, the coach's voice in
+
+[[case]]
+id = "humanize.vn.001"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'viết lại giọng mình' on an AI-fog caption: every V7 tell out, 'các chị em', Northern warmth particles kept"
+context = "Week 2, Tuesday, ChatGPT Plus project with method file (S1) or instruction block only (S0). Brand Card v1: pair chị–em; public posts mình – các chị em; dialect Bắc; keyword 'lãi ảo'; P4 her own 28 Tết 2019 storeroom story; phrases 'Doanh thu là để khoe, lãi mới là để tiêu.'"
+input = """viết lại giọng mình cho chị cái caption này, con cháu chị nhờ máy viết mà đọc sượng quá:
+
+Trong thời đại ngày nay, quản lý tài chính đóng vai trò vô cùng quan trọng đối với mỗi chủ shop online. Hãy cùng khám phá hành trình giúp các bạn nâng tầm lợi nhuận và bứt phá doanh số. Sổ sách không chỉ giúp bạn hiểu rõ dòng tiền mà còn mang lại giá trị bền vững cho việc kinh doanh. Tóm lại, hãy bắt đầu ghi chép ngay hôm nay. Hy vọng bài viết hữu ích!"""
+contains = ["các chị em"]
+regex = ['(?i)(?<!\w)(?:nhé|đấy|thế|nhỉ|cơ|chứ|ạ)(?!\w)']
+not_regex = [
+  '(?i)thời đại ngày nay|bối cảnh|đóng vai trò|vô cùng|hãy cùng khám phá|hành trình|nâng tầm|bứt phá|mang lại giá trị|tóm lại|hy vọng bài viết hữu ích',
+  '(?i)không chỉ[^.!?\n]{1,80}mà còn',
+  '(?i)(?<!\w)(?:các bạn|nha|nè|hông|tui)(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. arch §8.3 step 3 (strip AI tells from the locale list) and step 2 (register, VN pair); wf6 VN strip list V7 and wf2 §8 banned calques; locales/vn/banned-tells.txt. Her public register is 'mình – các chị em' (voice-samples.md), never 'các bạn'; Northern particles stay (wf6 'Giữ lại: tiểu từ tạo quan hệ'), Southern ones never appear in her voice. Any number added comes from her Bank (I8)."""
+
+[[case]]
+id = "humanize.vn.002"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'Kính gửi Quý chủ spa' AI post rewritten as chị Hạnh talking to 'các em': no honorific stiffness, no sales buzzwords"
+context = "Week 2, Door A project on ChatGPT Free (Android). Brand Card v1: pair chị–em; audience chị – các em; dialect Bắc; keyword 'ngại chào'; enemy 'dọa da'. Linh (receptionist) asked a chatbot for a post and chị Hạnh pastes it."
+input = """Linh nhờ máy viết bài này, em sửa lại cho giống chị nói nhé, đọc lên chị thấy như người khác:
+
+Kính gửi Quý chủ spa! Trong bối cảnh ngành làm đẹp ngày càng cạnh tranh, kỹ năng tư vấn đóng vai trò then chốt giúp spa nâng tầm doanh thu. Hãy cùng khám phá bí quyết chốt sale thần tốc, biến mỗi khách hàng thành khách trung thành trong hành trình nhan sắc của họ!"""
+contains = ["các em"]
+not_regex = [
+  '(?i)kính gửi|(?<!\w)quý (?:chủ|khách|anh|chị)(?!\w)|chốt sale thần tốc|nâng tầm|đóng vai trò|hãy cùng khám phá|bối cảnh|hành trình',
+  '(?i)(?<!\w)(?:nha|nè|hông|dzậy|tui)(?!\w)',
+  '(?i)trị dứt điểm|trắng da|hết nám|thần dược|lột xác',
+]
+invariants = ["I1", "I3", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §8 item 3 (over-formality: 'Quý khách', 'Kính gửi' on social media) and item 2 (buzzwords); wf6 V7; her never-say list (voice-samples.md: chốt sale thần tốc, hành trình nhan sắc, Quý khách, Kính gửi; giọng Nam). The rewrite talks to spa owners as 'các em' in her Northern voice and adds no skin claim (expected.toml compliance, I11)."""
+
+[[case]]
+id = "humanize.vn.003"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "Showroom caption becomes Đức's workshop voice: 'Đức / tụi em', 'anh chị', Central particles, no 'nhé / đấy / nhỉ'"
+context = "Week 2, ChatGPT Free on an old Android. Brand Card v1: pair anh–em; public posts xưng 'Đức' or 'tụi em', gọi 'anh chị'; dialect Trung ('nghe', 'rứa', 'hỉ' kept light); keyword 'phát sinh'. Thảo (VA) found a caption online."
+input = """Thảo lấy trên mạng cái caption ni, em viết lại giọng anh nghe, đọc như showroom:
+
+Kiến tạo không gian sống đẳng cấp cùng giải pháp tủ bếp sang trọng, tinh tế chuẩn châu Âu. Chúng tôi tự hào mang đến tổ ấm hoàn hảo cho gia đình bạn. Liên hệ ngay để được tư vấn nhé!"""
+regex = ['(?i)anh chị', '(?<!\w)(?:Đức|[Tt]ụi em)(?!\w)']
+not_regex = [
+  '(?i)kiến tạo|đẳng cấp|sang trọng|tinh tế|chuẩn châu âu|tổ ấm|hoàn hảo|chúng tôi',
+  '(?i)(?<!\w)(?:đấy|nhỉ|cơ|nhé)(?!\w)',
+  '(?i)gia đình bạn|(?<!\w)các bạn(?!\w)',
+  '(?i)rẻ nhất|tốt nhất|uy tín nhất|không phát sinh một đồng',
+]
+invariants = ["I1", "I3", "I8", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §5 regional dialect ('Scripts must match the speaker's own accent') and xưng hô; his voice-samples.md never-say list (showroom words, 'các bạn', 'đấy, nhỉ, cơ', 'nhé'). The rewrite adds no superlative or no-extra-cost promise (expected.toml compliance, I11)."""
+
+[[case]]
+id = "humanize.vn.004"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Written Sino-Vietnamese register and Northern particles become Minh Anh's spoken Southern voice, 'mấy bạn'"
+context = "Week 2, ChatGPT Free (iPhone). Brand Card v0: pair bạn–mình; audience mình – mấy bạn; dialect Nam; keyword 'cứng đơ'. Cold start (0 clients)."
+input = """viết lại giùm mình đoạn này cho giống mình nói, đọc lên cứng quá à:
+
+Các bạn văn phòng thân mến, do đó việc ngồi lâu sẽ gây ra những tác động tiêu cực tới cột sống, tuy nhiên chúng ta hoàn toàn có thể cải thiện nhằm nâng cao sức khỏe bởi lẽ cơ thể vô cùng thông minh. Hãy tập ngay nhé, đấy là bí quyết đấy!"""
+regex = ['(?i)mấy bạn']
+not_regex = [
+  '(?i)(?<!\w)(?:do đó|tuy nhiên|nhằm|bởi lẽ|vô cùng|thân mến)(?!\w)',
+  '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
+  '(?i)trị dứt điểm|chữa khỏi|hết đau|chữa lành',
+]
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §5 Register: AI defaults to written Sino-Vietnamese ('do đó, tuy nhiên, nhằm, bởi lẽ, vô cùng'); scripts need spoken wording ('nên, nhưng mà, để, vì, cực kỳ'). Her dialect is Nam ('nha, nè, á, hông'); 'nhé, nhỉ, đấy' are on her never list (voice-samples.md). Cold start: no outcome claim is added (I8)."""
+
+[[case]]
+id = "humanize.vn.005"
+kind = "D"
+persona = "consultant"
+lanes = ["S0", "S1", "floor"]
+title = "HR English jargon for owners ('onboarding', 'talent', 'employer branding') becomes 'kèm người mới'; tôi – anh chị"
+context = "Week 2, Claude Pro project with method file (S1) or block only (S0); anh Khoa on the laptop. Brand Card v1: pair anh–em; audience tôi – anh chị (owners of 20-100-person firms, not HR people); dialect Trung, near-neutral in writing; keyword 'tuyển hoài'."
+input = """bài ni đứa cháu viết cho anh, em viết lại giọng anh, cho chủ doanh nghiệp đọc chứ không phải dân nhân sự:
+
+Onboarding hiệu quả là chìa khóa để giữ chân talent. Một chương trình employer branding mạnh giúp doanh nghiệp thu hút nhân tài. Các bạn ơi, hãy đầu tư vào văn hóa doanh nghiệp vững mạnh ngay hôm nay!"""
+regex = ['(?i)anh chị', '(?i)kèm|phiếu việc|làm thử']
+not_regex = [
+  '(?i)\b(?:onboarding|talent|employer branding|HRBP)\b',
+  '(?i)chìa khóa|chìa khoá|giữ chân nhân tài|văn hóa doanh nghiệp vững mạnh|nhân tài',
+  '(?i)(?<!\w)(?:các bạn|bạn ơi|cả nhà)(?!\w)',
+  '(?i)(?<!\w)(?:nha|nè|hông|nhỉ|đấy)(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §5 English code-switching: natural for urban professionals, stiff or opaque for owners; his voice-samples.md: 'onboarding, talent, employer branding, HRBP (với chủ doanh nghiệp; anh nói kèm người mới)', 'giữ chân nhân tài', 'bạn ơi, các bạn ơi'. Register tôi – anh chị; Southern and Northern particles are not his."""
+
+[[case]]
+id = "humanize.vn.006"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "floor"]
+title = "Stiff Zalo message to a young couple opens with 'Dạ', drops listing-ad words, and never keeps the false 'view sông'"
+context = "Week 3, ChatGPT Plus project. Brand Card v1: pair anh–em; dialect Nam; Zalo with clients opens with 'Dạ'. The flat he must close this month: 2 phòng ngủ, 68 m², 2 tỷ 68, sổ hồng có sẵn, looks over the inner pool (NOT a river view; persona must_close_this_month)."
+input = """viết lại giọng anh cái tin Zalo này, anh gửi cho cặp vợ chồng hỏi căn 2 phòng ngủ ở Thủ Đức:
+
+Kính gửi Quý khách hàng, chúng tôi xin trân trọng giới thiệu căn hộ siêu phẩm view sông, cơ hội vàng để an cư và sinh lời. Quý khách vui lòng liên hệ để được tư vấn chi tiết."""
+regex = ['(?m)^\W*Dạ', 'Tuấn']
+not_regex = [
+  '(?i)kính gửi|quý khách|siêu phẩm|view sông|cơ hội vàng|sinh lời|an cư|trân trọng',
+  '(?i)(?<!\w)(?:nhỉ|đấy|cơ|nhé)(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §5 'In sales DMs, open with Dạ and end with ạ'; §8 item 3 over-formality; his never-say list (giọng rao nhà: cơ hội vàng, siêu phẩm; chữ hứa tiền: sinh lời; Quý khách, Kính gửi; 'nhé' is not his word). 'view sông' is a fabrication trap and a compliance phrase (expected.toml, I11): humanize never keeps a false specific."""
+
+# ---------------------------------------------------------------- the strip list, one rule at a time
+
+[[case]]
+id = "humanize.vn.007"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "V8: one 60-tiếng Western sentence chained with 'mà / trong đó / nhằm' is split into short sentences with a punch line"
+context = "Week 2, ChatGPT Plus project. Brand Card v1 (pair chị–em; public posts mình – các chị em; Bắc)."
+input = """câu chữ dài quá em ạ, chị đọc hết hơi, em viết lại giọng chị cho gọn:
+
+Việc ghi chép sổ sách hằng ngày là điều mà nhiều chị em chủ shop thường bỏ qua mà không biết rằng chính điều đó khiến cho lợi nhuận thực tế của shop bị bào mòn dần dần trong đó có cả tiền ship hoàn, voucher sàn, quà tặng kèm và chi phí quảng cáo nhằm giúp mình hiểu rõ hơn về tình hình kinh doanh."""
+regex = ['(?m)(?:^|[.!?…]["”]?[ \t]+)(?:[^\s.!?…:]+[ \t]+){0,4}[^\s.!?…:]+[.!?…]']
+not_regex = [
+  '(?:[^\s.!?…]+[ \t]+){39,}[^\s.!?…]+',
+  '(?i)(?<!\w)(?:nhằm|trong đó|việc ghi chép|điều mà)(?!\w)',
+]
+invariants = ["I1", "I3", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf6 V8 'Câu trên 25 từ; chuỗi mà, trong đó, nhằm → tách câu, mỗi câu một ý' and V9 ('việc ghi chép'); wf12-qa-standards SG4 (none over 25 words, at least one punch line of 5 words or fewer); definitive-concise §2d rhythm. The regex asks for one sentence of 1-5 tiếng; the not_regex fails a run of 40+ tiếng with no sentence end."""
+
+[[case]]
+id = "humanize.vn.008"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "V9: 'tiến hành thực hiện việc đánh giá', 'công tác tuyển dụng' become plain verbs; 'đảm bảo' leaves with them"
+context = "Week 3, Claude Pro project. Brand Card v1 (pair anh–em; audience tôi – anh chị; method: phiếu việc 1 trang, làm thử 2 tiếng, kèm người mới 60 ngày)."
+input = """em sửa câu chữ bài ni giọng anh, anh đọc thấy như công văn:
+
+Doanh nghiệp cần tiến hành thực hiện việc đánh giá ứng viên một cách bài bản. Công tác tuyển dụng phải được tiến hành theo quy trình nhằm đảm bảo việc lựa chọn đúng người. Việc kèm cặp nhân viên mới cần được thực hiện trong 60 ngày đầu."""
+regex = ['(?i)60 ngày', '(?i)anh chị']
+not_regex = [
+  '(?i)tiến hành|thực hiện việc|công tác tuyển dụng|một cách bài bản|được thực hiện|(?<!\w)nhằm(?!\w)',
+  '(?i)(?<!\w)đảm bảo(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf6 V9 danh từ hóa ('tiến hành thực hiện việc…', 'công tác…', 'việc đánh giá…' → 'đánh giá'); definitive-concise §2g item 5 de-nominalize. 'đảm bảo' is on his expected.toml compliance list and his never-say list, so the rewrite drops it (I11)."""
+
+[[case]]
+id = "humanize.vn.009"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "V1 / V3 / V4 in the body: 'chị nghĩ là có lẽ… hình như… thì phải' becomes 'chị nói thật'; the outcome is not promised"
+context = "Week 2, Door A project on ChatGPT Free (Android). Brand Card v1 (pair chị–em; audience chị – các em; phrase 'Chị nói thật nhé, khách không sợ giá đâu, khách sợ bị dọa.')."
+input = """em viết lại giọng chị đoạn này, chị đọc thấy ngập ngừng quá:
+
+Chị nghĩ là có lẽ các em hình như hơi ngại chào thì phải, kiểu như sợ khách nghĩ mình chặt chém. Chị thấy là có thể là các em nên thử nói thật với khách xem sao, chắc là khách sẽ tự hẹn buổi sau."""
+regex = ['(?i)các em', '(?i)nói thật']
+not_regex = [
+  '(?i)(?<!\w)(?:có lẽ|hình như|dường như|thì phải|chị nghĩ là|chị thấy là|hơi hơi|kiểu như|chắc là|có thể là)(?!\w)',
+  '(?i)chắc chắn|(?<!\w)khách sẽ tự hẹn(?!\w)',
+  '(?i)(?<!\w)(?:nha|nè|hông)(?!\w)',
+]
+invariants = ["I1", "I3", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf6 V1 rào đón, V3 ý kiến rỗng, V4 từ đệm; SG4 'no hedges in claim lines'; calibration ladder (definitive-concise §2f): her values stated absolutely, outcomes for others as a condition or range ('nhiều khách tự hẹn', 'khách hay tự hẹn'), never 'khách sẽ tự hẹn' as a certainty. The edge-rubric.vn cases cover the hook; this one covers the body."""
+
+[[case]]
+id = "humanize.vn.010"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "V5 self-undercutting opener ('em xin phép chia sẻ vài tips nho nhỏ, nói sai mọi người bỏ qua') is cut; Southern voice"
+context = "Week 2, ChatGPT Plus project. Brand Card v1 (pair anh–em; dialect Nam; phrase 'Tính trước rồi hẵng cọc nha.'; keyword 'gồng lãi')."
+input = """em sửa lại giọng anh đoạn mở clip này, nghe khúm núm quá:
+
+Em xin phép chia sẻ vài tips nho nhỏ về việc mua nhà lần đầu, nói sai mọi người bỏ qua nha, không biết có đúng không nhưng hy vọng có ích cho mọi người ạ. Đây là lý do tại sao bạn nên tính trước khi cọc."""
+regex = ['(?i)tính trước']
+not_regex = [
+  '(?i)xin phép chia sẻ|tips nho nhỏ|nói sai mọi người bỏ qua|không biết có đúng không|hy vọng có ích|đây là lý do tại sao|góc nhìn nhỏ',
+  '(?i)(?<!\w)(?:nhỉ|đấy|cơ|nhé)(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I12", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf6 V5 xin phép, tự hạ (em xin phép chia sẻ, vài tips nho nhỏ, hy vọng có ích, không biết có đúng không, nói sai mọi người bỏ qua) and wf2 §8 calque 'Đây là lý do tại sao…'; definitive-concise §2k row 4. His voice: Nam, 'nhé' is not his word (voice-samples.md). I12: the opener is a hook and keeps the VN hook budget."""
+
+[[case]]
+id = "humanize.vn.011"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Throat-clearing hook ('Hello cả nhà! Hôm nay mình muốn nói một chút về…') becomes a claim-first line under ~18 tiếng"
+context = "Week 2, ChatGPT Free (iPhone). Brand Card v0 (pair bạn–mình; audience mình – mấy bạn; dialect Nam; big idea 'ngồi yên quá lâu, không phải ngồi sai'; phrase 'Nói thiệt nha, cái lưng nó hông có lỗi gì hết á.')."
+input = """câu mở clip mình định nói vầy: 'Hello cả nhà! Hôm nay mình muốn nói một chút về chuyện ngồi văn phòng bị đau lưng nha.' viết lại cho giống mình mà vô thẳng luôn"""
+regex = ['(?im)^\W*(?:câu đầu|câu mở đầu|hook|chữ trên màn hình)\W']
+not_regex = [
+  '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:\s*["“]?\s*(?:hello|xin chào|chào cả nhà|hôm nay mình muốn|mình muốn nói)',
+  '(?i)(?<!\w)cả nhà(?!\w)',
+  '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:\s*(?:\S+\s+){20,}\S+',
+  '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
+]
+invariants = ["I1", "I3", "I12", "I15"]
+max_questions = 1
+notes = """scope: pieces. wf6 strip list H4 / SG4 'No throat-clearing'; definitive-concise §2c item 1 'Answer first' and §2k row 9 ('Hello cả nhà! Hôm nay mình muốn nói một chút về mindset' → a claim); VN hook about 18 âm tiết (wf6 G3; the not_regex fails at 21+ tokens). 'cả nhà' is on her never list ('cả nhà iu'). Hook-line labels as graders.py I12 reads them."""
+
+[[case]]
+id = "humanize.vn.012"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "Recap ending and a validation tag ('Tóm lại…', 'Hy vọng bài viết hữu ích', 'anh chị thấy đúng không ạ?') are cut; the post ends on its rule"
+context = "Week 2, ChatGPT Free (Android). Brand Card v1 (pair anh–em; posts xưng Đức / tụi em, gọi anh chị; phrase 'Đập ra rồi mới tính là chết đó anh chị.')."
+input = """bài ni em viết lại giọng anh, cái đoạn cuối nghe như bài văn:
+
+Hôm qua tụi em khảo sát một căn nhà ống ở Thanh Khê, đục thử sau chậu rửa thì ống mục gần hết. Nếu báo giá luôn thì đập ra mới phát sinh. Tóm lại, trước khi sửa bếp, anh chị nên tìm hiểu kỹ. Hy vọng bài viết hữu ích với anh chị, anh chị thấy đúng không ạ?"""
+regex = ['(?i)đục thử']
+not_regex = [
+  '(?i)tóm lại|nói chung là|tổng kết|hy vọng bài viết|tìm hiểu kỹ',
+  '(?i)đúng không ạ|phải không ạ|anh chị thấy (?:sao|đúng)',
+  '(?i)(?<!\w)(?:đấy|nhỉ|cơ|nhé)(?!\w)',
+]
+invariants = ["I1", "I3", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. arch §8.1 HUMANIZE 'no recap ending'; SG4 'No recap ending' and 'Questions appear only in the CTA'; wf6 V6 đuôi xin xác nhận → dấu chấm; wf2 §8 'Tóm lại', 'Hy vọng bài viết hữu ích'. 'tìm hiểu kỹ' is the vague advice the recap carried: the post ends on a definitive line (his rule: đục thử trước khi báo giá)."""
+
+# ---------------------------------------------------------------- read aloud, before filming, the coach's own corrections
+
+[[case]]
+id = "humanize.vn.013"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Read-aloud: she stumbles on line 3 and says how she'd put it; her words go in verbatim, the stiff line is gone"
+context = "Week 2, ChatGPT Plus project. Brand Card v1 (pair chị–em). The previous reply delivered N1, a beat card for tonight's short video, whose line 3 read 'Doanh thu cao không đồng nghĩa với việc lợi nhuận thực tế của bạn cũng cao.', with its verdict line."
+input = """câu 3 chị đọc to bị vấp em ạ. chị hay nói thế này cơ: bán được hàng chưa chắc đã có tiền đâu nhé"""
+contains = ["bán được hàng chưa chắc đã có tiền đâu"]
+not_contains = ["không đồng nghĩa với việc", "lợi nhuận thực tế của bạn"]
+not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)tuyệt vời|rất hay|hay quá|chuẩn quá']
+invariants = ["I1", "I3", "I5", "I9", "I15", "I17"]
+max_words = 150
+max_questions = 1
+notes = """arch §8.3 step 6 Read aloud ('Stumbled on a line? Voice-note what you'd say; I'll match it'); SG8 read-aloud; her phrase is voice-samples.md #2 and is said in this turn, so it is quoted verbatim (I9). Only line 3 changes; the reply is short (no reprint of other pieces). No praise for her line (I17)."""
+
+[[case]]
+id = "humanize.vn.014"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Read-aloud with no wording given: a spoken Northern version of the last line plus the 'gửi voice' route, one question at most"
+context = "Week 2, Door B (ChatGPT Free, Android; Brand Card pasted at the top of the chat). The previous reply delivered N2, a Facebook video beat card ending with the machine's line 'Hãy để sự chân thành dẫn lối cho mỗi lời tư vấn của các em.'"
+input = """câu cuối chị đọc không trôi em ơi, nghe không giống chị"""
+regex = ['(?i)gửi voice|tin nhắn thoại|ghi âm']
+not_contains = ["dẫn lối", "sự chân thành"]
+not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)(?<!\w)(?:nha|nè|hông)(?!\w)']
+invariants = ["I1", "I5", "I15", "I17"]
+max_words = 140
+max_questions = 1
+notes = """arch §8.3 step 6; QA §4 Before filming tick 1 VN ('Nếu không, gửi voice câu bạn hay nói, mình sửa theo', here in chị–em). Her voice-mode habit makes a voice note the natural route. The abstract AI line ('dẫn lối', 'sự chân thành') is replaced, not polished."""
+
+[[case]]
+id = "humanize.vn.015"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Film list of 3 site clips opens with the before-filming ticks in anh–em ('Đọc to câu mở đầu và câu chốt…')"
+context = "Week 2, Monday, ChatGPT Free (Android). Brand Card v1 (pair anh–em; delivery beat-card: first and last line verbatim, middle as bullets; films walking around the site; keyword 'phát sinh')."
+input = """viết anh 3 clip quay tuần ni nghe, quay ở công trình"""
+contains = ["Đọc to câu mở đầu và câu chốt"]
+regex = ['(?i)giống anh nói', '(?i)gửi voice câu anh hay nói', '(?i)trước mặt khách']
+not_contains = ["giống bạn nói", "câu bạn hay nói"]
+invariants = ["I1", "I3", "I4", "I12", "I15", "I17"]
+max_questions = 1
+notes = """QA §4 'Before filming / Trước khi quay': at the top of every film list, no reply needed; VN rows 1-2 in the coach's pair ('Nghe có giống anh nói không? Nếu không, gửi voice câu anh hay nói, em sửa theo.' / 'Có câu nào anh sẽ không nói trước mặt khách không?'). The ticks are inside the reply he already gets, never an extra message."""
+
+[[case]]
+id = "humanize.vn.016"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "'không giống anh: <câu>' bans the line; the next post in the session never brings it back (and keeps cô Sáu unnamed)"
+context = "Week 3, ChatGPT Free. Brand Card v1 (pair anh–em). The previous reply delivered N1, a text post containing 'Tụi em luôn đặt sự hài lòng của khách hàng lên hàng đầu.' P3 (posts, no name, no house photos): cô Sáu in Cẩm Lệ, 2024, the hidden pipe, 3,2 triệu approved by Zalo photo first, 'răng không nói trước', since then he test-drills two spots."
+input = """không giống anh: luôn đặt sự hài lòng của khách hàng lên hàng đầu
+---
+ok. viết tiếp bài thứ Năm cho anh, chuyện cô Sáu với cái ống nước"""
+regex = ['(?i)ống nước|3,2 triệu|đục thử hai chỗ|răng không nói trước']
+not_regex = ['(?i)hài lòng của khách hàng|lên hàng đầu|hàng đầu', '(?i)cô Sáu']
+invariants = ["I1", "I3", "I8", "I9", "I11", "I15"]
+max_questions = 1
+notes = """scope: pieces. QA §2.8 'không giống mình: <câu>' adds the line to the personal banned list (strings cmd.not_me in his pair); the ban holds for later pieces, not only for N1. P3's consent is 'kể được, không nêu tên' (persona.toml), so the post tells the story without 'cô Sáu'. 'hàng đầu' is also a superlative tell."""
+
+[[case]]
+id = "humanize.vn.017"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'mình có nói góp phần': a locale banned tell is allowlisted in one line, not argued"
+context = "Week 3, ChatGPT Free (iPhone). Brand Card v0 (pair bạn–mình). 'góp phần' is on locales/vn/banned-tells.txt (V7) but not on her personal never list."
+input = """mình có nói 'góp phần' mà, kiểu 'mỗi ngày đứng dậy 5 phút là góp phần giữ cái lưng', để mình xài chữ đó nha"""
+regex = ['(?i)góp phần']
+not_regex = [
+  '(?i)(?:mình|em) không (?:viết|dùng|thêm)[^\n]{0,30}góp phần',
+  '(?i)(?:không nên|nên bỏ|nên tránh|vẫn nên)[^\n]{0,30}góp phần',
+]
+invariants = ["I1", "I5", "I15", "I17"]
+max_words = 80
+max_questions = 1
+notes = """QA §2.8 'mình có nói <từ>' adds it to the allowlist (brand-card do_say); only hard stops and polarity limits can never be allowlisted (character.vn and brain.vn cover those). A banned tell is a writing target, not a hard stop (banned-tells.txt header: lint scans shipped text; hedges and tells at runtime are writing targets). One confirming line, no lecture."""
+
+[[case]]
+id = "humanize.vn.018"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'thêm chi tiết đời thường cho thật': specifics come from her own Bank (2023 story), never invented clients"
+context = "Week 2, ChatGPT Free (iPhone). Brand Card v0. Cold start: 0 clients. P1 her own story (posts): 4 years in accounting (2019-2023); March 2023, 9 p.m. in closing season, could not stand up straight, had to hold the desk; quit in July to train as a yoga teacher. P5 (a friend 'hết đau sau 3 tuần') is unusable."
+input = """viết lại bài này cho thật hơn, thêm chi tiết đời thường vô giùm mình:
+
+Ngồi lâu rất có hại cho lưng. Nhiều người đã cải thiện được tình trạng đau lưng nhờ tập luyện đều đặn. Hãy bắt đầu ngay hôm nay."""
+regex = ['(?i)9 giờ tối|vịn|kế toán|quyết toán|26 tuổi|4 giờ chiều|45 phút|rót (?:ly )?nước']
+not_regex = [
+  '(?i)(?:học viên|khách|nhỏ bạn|bạn mình)[^\n]{0,30}(?:hết đau|đỡ đau|khỏi)',
+  '(?i)nhiều người đã|3 tuần|(?<!\w)hết đau(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. arch §8.3 step 1 'Specifics from the Banks'; QA §1 principle 2 (a coach with no results uses what she has, never borrows); I8 cold-start rule (any result number is a fabrication; '3 tuần' is a trap number). Details may come from P1 or her voice samples (4 giờ chiều, 45 phút, rót ly nước); 'nhiều người đã cải thiện' is an unsourced outcome and leaves."""
+
+[[case]]
+id = "humanize.vn.019"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Humanize leaves the coach's comment-keyword CTA word for word and the keyword appears once"
+context = "Week 2, ChatGPT Plus project. Brand Card v1 (keyword 'lãi ảo'; gift: file Sổ 3 Cột, a real A-row)."
+input = """viết lại giọng chị bài này, nhưng câu cuối giữ y cho chị nhé:
+
+Nhiều chủ shop hiện nay gặp khó khăn trong việc xác định lợi nhuận thực tế của từng đơn hàng. Điều này dẫn đến việc kinh doanh không hiệu quả. Comment LÃI ẢO mình gửi file Sổ 3 Cột nhé."""
+regex = ['(?i)Comment LÃI ẢO mình gửi file Sổ 3 Cột']
+not_regex = [
+  '(?is)lãi ảo.*lãi ảo',
+  '(?i)điều này dẫn đến|hiện nay|gặp khó khăn trong việc',
+]
+invariants = ["I1", "I3", "I14", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. DECISIONS: comment-keyword CTAs are never rewritten (I14); a voice pass rewrites the body only. SG6: the keyword appears exactly once (acceptance keyword_exactly_once_rate = 1.0), so the rewrite adds no second 'lãi ảo'. Calques out (wf2 §8: 'Điều này dẫn đến', passive nominal phrasing)."""
+
+# ---------------------------------------------------------------- spelling, formatting, register in messages
+
+[[case]]
+id = "humanize.vn.020"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Facebook story post: no Unicode 'bold' letters that break diacritics, at most 3 emoji, no skin claim"
+context = "Week 2, Door A project on ChatGPT Free (Android). Brand Card v1 (pair chị–em; audience chị – các em; P1 her own 2018 rainy-night story, never repeating the old melasma promise)."
+input = """viết chị bài Facebook kể chuyện đêm mưa năm 2018 nhé, chị đăng trang cá nhân"""
+regex = ['2018']
+not_regex = [
+  '[\U0001D400-\U0001D7FF]',
+  '(?s)(?:[\U0001F300-\U0001FAFF].*?){4,}',
+  '(?i)hết nám|trị dứt điểm|trắng da',
+]
+invariants = ["I1", "I3", "I8", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §5 Emojis and formatting: Unicode 'bold' fonts break Vietnamese diacritics; premium personal brands use few emojis; her voice-samples.md 'không emoji dày, thỉnh thoảng :))'. P1 note: retelling never repeats the old staff promise about melasma (expected.toml compliance_notes, I11)."""
+
+[[case]]
+id = "humanize.vn.021"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Mixed tone-mark styles in her draft ('khoá / khóa', 'hoà / hòa') come back in one style"
+context = "Week 4, ChatGPT Plus project. Brand Card v1 (pair chị–em). She typed the draft on her phone and on the laptop, so the tone-mark placement differs."
+input = """em sửa giúp chị bài này cho gọn, chị gõ lộn xộn dấu quá:
+
+Khoá 4 khai giảng tối thứ Tư. Ai học khóa trước rồi thì biết, hoà vốn chưa phải là lãi. Chị em nào muốn hòa vốn sớm thì đăng ký khoá này nhé."""
+regex = ['(?i)(?<!\w)kh(?:óa|oá)(?!\w)', '(?i)(?<!\w)h(?:òa|oà) vốn(?!\w)']
+not_regex = [
+  '(?s)(?:(?<!\w)[Kk]hoá(?!\w).*(?<!\w)[Kk]hóa(?!\w)|(?<!\w)[Kk]hóa(?!\w).*(?<!\w)[Kk]hoá(?!\w))',
+  '(?s)(?:(?<!\w)[Hh]oà(?!\w).*(?<!\w)[Hh]òa(?!\w)|(?<!\w)[Hh]òa(?!\w).*(?<!\w)[Hh]oà(?!\w))',
+]
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §8 item 4: pick one tone-mark style (hòa/thủy vs hoà/thuỷ) and use it consistently; normalise to NFC (decomposed text breaks fonts in Canva and CapCut). Either style passes; mixing fails. graders read text after NFC, so the two spellings stay distinct."""
+
+[[case]]
+id = "humanize.vn.022"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Dictated slips ('giành thời gian', 'chuẩn đoán', 'sáng lạn') are fixed without changing what she said"
+context = "Week 3, Door B (ChatGPT Free, Android). Brand Card pasted at the top of the chat. She dictated the paragraph with the Gboard mic."
+input = """em sửa chính tả với giọng cho chị đoạn chị nói bằng giọng này nhé:
+
+Các em giành thời gian nói thật với khách đi. Chuyện chuẩn đoán da là việc của bác sĩ, mình không làm thay được. Làm thế thì tương lai spa mình mới sáng lạn."""
+regex = ['(?i)bác sĩ', '(?i)nói thật']
+not_regex = ['(?i)giành thời gian|chuẩn đoán|sáng lạn']
+invariants = ["I1", "I3", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §8 item 4 common confusions (dành/giành, chẩn đoán, xán lạn); wf11-message-focus rule 6 (fix obvious speech-to-text slips, ask only about an unclear word). Her referral line to the dermatologist is kept (expected.toml compliance_notes: 'đi bác sĩ da liễu' is kept)."""
+
+[[case]]
+id = "humanize.vn.023"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "Zalo reply to a customer asking the price: opens with 'Dạ', em – chị, a public starting price, never 'giá ib'"
+context = "Week 2, ChatGPT Free. Brand Card v1 (Zalo with customers opens with 'Dạ', xưng em). Offer facts: an L-shaped kitchen of about 5 m of base cabinets with wall units, moisture-proof MDF with melamine, granite top, appliances not included, from 85.000.000đ; most jobs 95-140 triệu; 3D drawing 2.000.000đ, deducted on signing; survey and two test holes before the fixed quote. Thảo sends it."
+input = """viết giùm anh tin Zalo trả lời chị khách hỏi bếp chữ L chừng nhiêu tiền, Thảo gửi cho chị"""
+regex = ['(?m)^\W*Dạ', '85(?:\.000\.000\s?đ| triệu)', '(?i)bản vẽ|khảo sát|đục thử']
+not_regex = [
+  '(?i)giá ib|(?<!\w)ib (?:em|mình)(?!\w)|inbox (?:em|mình) báo giá|liên hệ để (?:biết|nhận) giá',
+  '(?i)(?<!\w)(?:đấy|nhỉ|cơ)(?!\w)',
+  '(?i)rẻ nhất|không phát sinh một đồng|cam kết không phát sinh',
+]
+invariants = ["I1", "I3", "I8", "I11", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §5 'In sales DMs, open with Dạ and end with ạ'; wf2 §6 '"Giá ib" annoys buyers. Public prices build trust'; his voice-samples.md Zalo paragraph (Dạ chị, em Đức đây ạ … nghe / nha). The price is a 'from' price with what it includes, from his offer facts (I8)."""
+
+[[case]]
+id = "humanize.vn.024"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S0", "S1", "floor"]
+title = "Calques out ('Đây là lý do tại sao', 'Ở cuối ngày', 'Bạn có biết rằng'), his own phrases and natural 'sale' kept"
+context = "Week 2, ChatGPT Plus project. Brand Card v1 (pair anh–em; dialect Nam; he code-switches like a salesperson: 'sale', 'chốt', 'OK'; phrases 'Tính trước rồi hẵng cọc nha.', 'Bên sale dí cọc quá')."
+input = """viết lại giọng anh, giữ câu 'Tính trước rồi hẵng cọc nha' với chữ 'bên sale dí cọc' của anh:
+
+Đây là lý do tại sao bạn cần cân nhắc kỹ trước khi đặt cọc. Ở cuối ngày, điều đó nói rằng tài chính gia đình là ưu tiên hàng đầu. Bạn có biết rằng nhiều cặp vợ chồng bị áp lực bởi bên sale dí cọc? Tính trước rồi hẵng cọc nha."""
+regex = ['(?i)Tính trước rồi hẵng cọc nha', '(?i)bên sale dí cọc']
+not_regex = [
+  '(?i)đây là lý do tại sao|ở cuối ngày|điều đó nói rằng|bạn có biết rằng|ưu tiên hàng đầu|bị áp lực bởi',
+  '(?i)(?<!\w)(?:nhỉ|đấy|cơ|nhé)(?!\w)',
+]
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """scope: pieces. wf2 §8 item 2 banned calques ('Đây là lý do tại sao…', 'Ở cuối ngày…', 'Điều đó nói rằng…', 'Bạn có biết rằng…?', passive 'được / bị… bởi'); wf2 §5 code-switching: 'sale' is natural for him and stays (do not over-translate); his phrases are kept verbatim (CC8 'never AI-polished'). 'sale' is on graders.py EN_ALLOW (I15)."""
+
+# ---------------------------------------------------------------- P cases (judge, after the J set passes)
+
+[[case]]
+id = "humanize.vn.025"
+kind = "P"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "Humanized mirror short for chị Hạnh passes the native-short standard (beat card she can say, not read)"
+context = "Week 2, Door A project on ChatGPT Free (Android). Brand Card v1. The previous reply delivered N1, a Likable short about the mirror at the counter, written in a flat, written register; she films tonight on one phone propped on a shelf."
+input = """viết lại giọng chị cái video cầm gương hôm qua em viết, để tối nay chị quay"""
+standard = "native-short"
+critical = ["NS1", "NS4"]
+min_score = 12
+invariants = ["I1", "I3", "I12", "I15", "I17"]
+max_questions = 1
+notes = """Judge checks NS1 (3 hooks, one idea, the final line pays off the hook) and NS4 Buyer Filter (a moment from a spa owner's day only a spa owner recognises). SG8 read-aloud: lines sound like voice-samples.md ('Cứ cầm cái gương lên, để khách tự nhìn, mình chỉ đúng một chỗ thôi'), Northern particles, beat card (delivery_mode = beat-card: first and last line verbatim, 3 short ideas, never read off the filming phone)."""
+
+[[case]]
+id = "humanize.vn.026"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Her 28 Tết 2019 story as a Facebook 'chia sẻ' post passes the text-post standard after the voice pass"
+context = "Week 2, ChatGPT Plus project. Brand Card v1 (pair chị–em; public posts mình – các chị em; P4 her own story: 28 Tết 2019 in the storeroom adding up 2018, revenue about 1,2 tỷ, real profit about 40 triệu, stock about 300 triệu)."
+input = """viết lại giọng chị bài Facebook chuyện 28 Tết 2019 ngồi cộng sổ trong kho nhé, đọc lên phải giống chị kể"""
+standard = "text-post"
+critical = ["TP1", "TP4", "TP6"]
+min_score = 13
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """TP1 the claim lands before 'Xem thêm'; TP4 rhythm (simple words, mixed sentence lengths, prose not stacked one-liners); TP6 the CTA closes the story's loop (keyword LÃI ẢO once). Her register mình – các chị em, her phrase 'Doanh thu là để khoe, lãi mới là để tiêu.' allowed verbatim; no V7 tells."""
+
+[[case]]
+id = "humanize.vn.027"
+kind = "P"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Zalo note to opted-in owners, rewritten in anh Khoa's voice, passes the email-zalo standard"
+context = "Week 3, Claude Pro project. Brand Card v1 (audience tôi – anh chị; owned channel Zalo, about 380 contacts who know him; keyword 'tuyển hoài'; gift phiếu việc 1 trang). The previous reply's Zalo draft read like a company newsletter ('Kính gửi Quý doanh nghiệp…')."
+input = """tin Zalo ni viết lại giọng anh, gửi mấy anh chị chủ quán chủ xưởng quen, đừng như thư công ty"""
+standard = "email-zalo"
+critical = ["EM1", "EM3", "EM6", "EM7"]
+min_score = 15
+invariants = ["I1", "I3", "I8", "I15", "I17"]
+max_questions = 1
+notes = """EM1 one job, one ask; EM3 house voice (simple words with rhythm; his register tôi – anh chị; no 'Kính gửi', 'Quý doanh nghiệp'); EM6 opt-in contacts only, the stop line 'Muốn dừng nhận tin, nhắn DỪNG' (wf12-qa-standards §12 VN note); EM7 no invented deadline. Line 1 does the subject line's job on Zalo."""
+
+[[case]]
+id = "humanize.vn.028"
+kind = "P"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "'Báo giá rẻ là báo giá còn thiếu' post after the voice pass clears the shared gates, stance intact"
+context = "Week 2, ChatGPT Free. Brand Card v1 (enemy 'báo giá câu khách'; phrase 'Báo giá rẻ là báo giá còn thiếu.'; P9 the two quotes at the café, posts, no names, never pointing at the other team)."
+input = """viết lại giọng anh bài 'Báo giá rẻ là báo giá còn thiếu', anh đọc thấy còn giọng máy"""
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
+min_score = 8
+invariants = ["I1", "I3", "I8", "I11", "I15", "I17"]
+max_questions = 1
+notes = """SG3 heat stays on the practice (báo giá thiếu dòng), never on a named team (P9 note); SG5 stance format: the voice pass keeps C = 2 (a softened 'có thể báo giá rẻ chưa đủ' fails); SG1 every number traces (P9 'gần 20 triệu'); SG6 keyword once. SG8 read-aloud: his Central voice ('nghe', 'rứa'), no showroom words."""
+
+# ---------------------------------------------------------------- F1 and DISTANCE inside a voice pass (wf13; added by the QA verifier)
+
+[[case]]
+id = "humanize.vn.029"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "floor"]
+title = "F1 'viết giọng anh mà giữ y câu của họ': that one line verbatim, the rest his own voice and story, ONE dated copy note, Override"
+context = """Week 3, Thursday 29/10/2026, ChatGPT Plus project (iPhone app). Brand Card v1 present (persona default: pair anh–em, dialect Nam, keyword GỒNG LÃI, P5 his own 2022 Dĩ An flat: ưu đãi 7,5% năm đầu, góp 9 triệu, năm 2023 thả nổi khoảng 12%, góp 13 triệu). F1 (DECISIONS, 5 Oct 2026) applies. On Thursday 22/10 he sent liked-paste.md L2 (a TikTok caption: a café table with a young couple, the bank said yes, one question about the payment after the first-year rate, a sheet of paper, the rule 'Tính bằng lãi năm thứ hai, đừng tính bằng lãi năm đầu.', a send-to-your-partner CTA); the machine saved its shape. Thursday's short video is not filmed yet."""
+input = """làm bản của anh cái clip ngồi quán cà phê đó, viết giọng anh nha, mà giữ y câu 'Tính bằng lãi năm thứ hai, đừng tính bằng lãi năm đầu.' của người ta, câu đó đúng quá"""
+contains = ["bài này bám sát bài của họ. Nền tảng có thể giảm hiển thị bài giống bài khác, và chữ là của họ."]
+regex = [
+  'Tính bằng lãi năm thứ hai, đừng tính bằng lãi năm đầu\.',
+  '(?i)Dĩ An|7,5\s?%|13 triệu|9 triệu|thả nổi|tờ khăn giấy|toilet nhà mẫu|tui gồng',
+  '(?i)gồng lãi',
+  'Đăng hay không là quyền của anh\.',
+  '(?im)^(?=[^\n]*bám sát bài của họ)(?=[^\n]*(?:\b20\d{2}\b|\b\d{1,2}/\d{1,2}\b|tháng\s+\d{1,2}))[^\n]*$',
+  'Đăng theo quyết định của anh',
+  'TIẾP →[^\n]*\s*\Z',
+]
+not_regex = [
+  '(?i)(?:mình|em|tôi)\s+không viết:',
+  '(?s)Nền tảng có thể giảm hiển thị bài giống.*Nền tảng có thể giảm hiển thị bài giống',
+  '(?i)vẫn là bài của họ|(?:không|chẳng)\s+(?:nên|thể)\s+(?:chép|giữ nguyên)',
+  'Đăng hay không là quyền của bạn|Đăng theo quyết định của bạn',
+  '(?i)nâng tầm|bứt phá|hành trình|sinh lời|lãi suất đảm bảo|chắc chắn vay được',
+  '''(?i)(?<!\w)(?:Tối[^\w]+qua[^\w]+ngồi[^\w]+với[^\w]+hai[^\w]+vợ[^\w]+chồng[^\w]+trẻ|qua[^\w]+ngồi[^\w]+với[^\w]+hai[^\w]+vợ[^\w]+chồng[^\w]+trẻ[^\w]+ở|ngồi[^\w]+với[^\w]+hai[^\w]+vợ[^\w]+chồng[^\w]+trẻ[^\w]+ở[^\w]+quán|với[^\w]+hai[^\w]+vợ[^\w]+chồng[^\w]+trẻ[^\w]+ở[^\w]+quán[^\w]+cà|hai[^\w]+vợ[^\w]+chồng[^\w]+trẻ[^\w]+ở[^\w]+quán[^\w]+cà[^\w]+phê|vợ[^\w]+chồng[^\w]+trẻ[^\w]+ở[^\w]+quán[^\w]+cà[^\w]+phê[^\w]+Ngân)(?!\w)''',
+  '''(?i)(?<!\w)(?:chồng[^\w]+trẻ[^\w]+ở[^\w]+quán[^\w]+cà[^\w]+phê[^\w]+Ngân[^\w]+hàng|trẻ[^\w]+ở[^\w]+quán[^\w]+cà[^\w]+phê[^\w]+Ngân[^\w]+hàng[^\w]+duyệt|ở[^\w]+quán[^\w]+cà[^\w]+phê[^\w]+Ngân[^\w]+hàng[^\w]+duyệt[^\w]+cho|quán[^\w]+cà[^\w]+phê[^\w]+Ngân[^\w]+hàng[^\w]+duyệt[^\w]+cho[^\w]+vay|cà[^\w]+phê[^\w]+Ngân[^\w]+hàng[^\w]+duyệt[^\w]+cho[^\w]+vay[^\w]+hai|phê[^\w]+Ngân[^\w]+hàng[^\w]+duyệt[^\w]+cho[^\w]+vay[^\w]+hai[^\w]+bạn)(?!\w)''',
+  '''(?i)(?<!\w)(?:Ngân[^\w]+hàng[^\w]+duyệt[^\w]+cho[^\w]+vay[^\w]+hai[^\w]+bạn[^\w]+mừng|hàng[^\w]+duyệt[^\w]+cho[^\w]+vay[^\w]+hai[^\w]+bạn[^\w]+mừng[^\w]+lắm|duyệt[^\w]+cho[^\w]+vay[^\w]+hai[^\w]+bạn[^\w]+mừng[^\w]+lắm[^\w]+Mình|cho[^\w]+vay[^\w]+hai[^\w]+bạn[^\w]+mừng[^\w]+lắm[^\w]+Mình[^\w]+hỏi|vay[^\w]+hai[^\w]+bạn[^\w]+mừng[^\w]+lắm[^\w]+Mình[^\w]+hỏi[^\w]+đúng|hai[^\w]+bạn[^\w]+mừng[^\w]+lắm[^\w]+Mình[^\w]+hỏi[^\w]+đúng[^\w]+một)(?!\w)''',
+  '''(?i)(?<!\w)(?:bạn[^\w]+mừng[^\w]+lắm[^\w]+Mình[^\w]+hỏi[^\w]+đúng[^\w]+một[^\w]+câu|mừng[^\w]+lắm[^\w]+Mình[^\w]+hỏi[^\w]+đúng[^\w]+một[^\w]+câu[^\w]+Hết|lắm[^\w]+Mình[^\w]+hỏi[^\w]+đúng[^\w]+một[^\w]+câu[^\w]+Hết[^\w]+ưu|Mình[^\w]+hỏi[^\w]+đúng[^\w]+một[^\w]+câu[^\w]+Hết[^\w]+ưu[^\w]+đãi|hỏi[^\w]+đúng[^\w]+một[^\w]+câu[^\w]+Hết[^\w]+ưu[^\w]+đãi[^\w]+năm|đúng[^\w]+một[^\w]+câu[^\w]+Hết[^\w]+ưu[^\w]+đãi[^\w]+năm[^\w]+đầu)(?!\w)''',
+  '''(?i)(?<!\w)(?:một[^\w]+câu[^\w]+Hết[^\w]+ưu[^\w]+đãi[^\w]+năm[^\w]+đầu[^\w]+thì|câu[^\w]+Hết[^\w]+ưu[^\w]+đãi[^\w]+năm[^\w]+đầu[^\w]+thì[^\w]+mỗi|Hết[^\w]+ưu[^\w]+đãi[^\w]+năm[^\w]+đầu[^\w]+thì[^\w]+mỗi[^\w]+tháng|ưu[^\w]+đãi[^\w]+năm[^\w]+đầu[^\w]+thì[^\w]+mỗi[^\w]+tháng[^\w]+góp|đãi[^\w]+năm[^\w]+đầu[^\w]+thì[^\w]+mỗi[^\w]+tháng[^\w]+góp[^\w]+bao|năm[^\w]+đầu[^\w]+thì[^\w]+mỗi[^\w]+tháng[^\w]+góp[^\w]+bao[^\w]+nhiêu)(?!\w)''',
+  '''(?i)(?<!\w)(?:đầu[^\w]+thì[^\w]+mỗi[^\w]+tháng[^\w]+góp[^\w]+bao[^\w]+nhiêu[^\w]+Hai|thì[^\w]+mỗi[^\w]+tháng[^\w]+góp[^\w]+bao[^\w]+nhiêu[^\w]+Hai[^\w]+bạn|mỗi[^\w]+tháng[^\w]+góp[^\w]+bao[^\w]+nhiêu[^\w]+Hai[^\w]+bạn[^\w]+nhìn|tháng[^\w]+góp[^\w]+bao[^\w]+nhiêu[^\w]+Hai[^\w]+bạn[^\w]+nhìn[^\w]+nhau|góp[^\w]+bao[^\w]+nhiêu[^\w]+Hai[^\w]+bạn[^\w]+nhìn[^\w]+nhau[^\w]+Chưa|bao[^\w]+nhiêu[^\w]+Hai[^\w]+bạn[^\w]+nhìn[^\w]+nhau[^\w]+Chưa[^\w]+ai)(?!\w)''',
+  '''(?i)(?<!\w)(?:nhiêu[^\w]+Hai[^\w]+bạn[^\w]+nhìn[^\w]+nhau[^\w]+Chưa[^\w]+ai[^\w]+tính|Hai[^\w]+bạn[^\w]+nhìn[^\w]+nhau[^\w]+Chưa[^\w]+ai[^\w]+tính[^\w]+Mình|bạn[^\w]+nhìn[^\w]+nhau[^\w]+Chưa[^\w]+ai[^\w]+tính[^\w]+Mình[^\w]+lấy|nhìn[^\w]+nhau[^\w]+Chưa[^\w]+ai[^\w]+tính[^\w]+Mình[^\w]+lấy[^\w]+tờ|nhau[^\w]+Chưa[^\w]+ai[^\w]+tính[^\w]+Mình[^\w]+lấy[^\w]+tờ[^\w]+giấy|Chưa[^\w]+ai[^\w]+tính[^\w]+Mình[^\w]+lấy[^\w]+tờ[^\w]+giấy[^\w]+ra)(?!\w)''',
+  '''(?i)(?<!\w)(?:ai[^\w]+tính[^\w]+Mình[^\w]+lấy[^\w]+tờ[^\w]+giấy[^\w]+ra[^\w]+tính|tính[^\w]+Mình[^\w]+lấy[^\w]+tờ[^\w]+giấy[^\w]+ra[^\w]+tính[^\w]+lại|Mình[^\w]+lấy[^\w]+tờ[^\w]+giấy[^\w]+ra[^\w]+tính[^\w]+lại[^\w]+bằng|lấy[^\w]+tờ[^\w]+giấy[^\w]+ra[^\w]+tính[^\w]+lại[^\w]+bằng[^\w]+lãi|tờ[^\w]+giấy[^\w]+ra[^\w]+tính[^\w]+lại[^\w]+bằng[^\w]+lãi[^\w]+thả|giấy[^\w]+ra[^\w]+tính[^\w]+lại[^\w]+bằng[^\w]+lãi[^\w]+thả[^\w]+nổi)(?!\w)''',
+  '''(?i)(?<!\w)(?:ra[^\w]+tính[^\w]+lại[^\w]+bằng[^\w]+lãi[^\w]+thả[^\w]+nổi[^\w]+Con|tính[^\w]+lại[^\w]+bằng[^\w]+lãi[^\w]+thả[^\w]+nổi[^\w]+Con[^\w]+số|lại[^\w]+bằng[^\w]+lãi[^\w]+thả[^\w]+nổi[^\w]+Con[^\w]+số[^\w]+mới|bằng[^\w]+lãi[^\w]+thả[^\w]+nổi[^\w]+Con[^\w]+số[^\w]+mới[^\w]+làm|lãi[^\w]+thả[^\w]+nổi[^\w]+Con[^\w]+số[^\w]+mới[^\w]+làm[^\w]+cả|thả[^\w]+nổi[^\w]+Con[^\w]+số[^\w]+mới[^\w]+làm[^\w]+cả[^\w]+hai)(?!\w)''',
+  '''(?i)(?<!\w)(?:nổi[^\w]+Con[^\w]+số[^\w]+mới[^\w]+làm[^\w]+cả[^\w]+hai[^\w]+im|Con[^\w]+số[^\w]+mới[^\w]+làm[^\w]+cả[^\w]+hai[^\w]+im[^\w]+luôn|Gửi[^\w]+cho[^\w]+vợ[^\w]+hoặc[^\w]+chồng[^\w]+bạn[^\w]+trước[^\w]+khi|cho[^\w]+vợ[^\w]+hoặc[^\w]+chồng[^\w]+bạn[^\w]+trước[^\w]+khi[^\w]+đi|vợ[^\w]+hoặc[^\w]+chồng[^\w]+bạn[^\w]+trước[^\w]+khi[^\w]+đi[^\w]+coi|hoặc[^\w]+chồng[^\w]+bạn[^\w]+trước[^\w]+khi[^\w]+đi[^\w]+coi[^\w]+nhà)(?!\w)''',
+  '''(?i)(?<!\w)(?:chồng[^\w]+bạn[^\w]+trước[^\w]+khi[^\w]+đi[^\w]+coi[^\w]+nhà[^\w]+mẫu)(?!\w)''',
+]
+verdict = "Override"
+invariants = ["I1", "I3", "I5", "I8", "I15", "I17"]
+max_questions = 1
+notes = """must-not-block. DECISIONS F1 and wf13 §4 ('An explicit coach request skips DISTANCE and gets the F1 note') and §5 rule 8: keeping one sentence of someone else's post on request is never blocked; it runs with ONE dated liked.copy_note in anh–em ('Lưu ý: bài này bám sát bài của họ. Nền tảng có thể giảm hiển thị bài giống bài khác, và chữ là của họ. Đăng hay không là quyền của anh.') and an Override ('Đăng theo quyết định của anh · em lưu ý: … · đã ghi lại.'). The voice pass works only on what he did not ask to keep: the rule line stays word for word, while the café couple, their question and the sheet of paper stay theirs (the not_regex windows are the source's other lines in runs of 8 tiếng, acceptance.toml [copy] vn_tieng = 8; graders: I19 exempts the requested line and needs the note). His own P5 story or Bank carries the rest, in his Southern voice, keyword GỒNG LÃI. Same decision as humanize.en.025 and liked.vn.025."""
+
+[[case]]
+id = "humanize.vn.030"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Default remix plus 'viết giọng anh': his own site story and words, no 8-tiếng run from the other post, no copy note"
+context = """Week 3, Wednesday 28/10/2026, ChatGPT Free on the old Android. Brand Card v1 present (persona default: pair anh–em; posts xưng Đức / tụi em, gọi anh chị; dialect Trung; keyword PHÁT SINH; stories P11 his own 2019 Liên Chiểu job quoted by the metre, P3 the hidden pipe case told without the client's name, P9 the two quotes at the café). On Thursday 22/10 he sent liked-paste.md L2 (another workshop's Facebook caption: an old tube house, a test hole behind the sink, rotten pipes, the owner's line about the quote, a one-line rule); the machine saved its shape (site scene → what was found → one sentence the owner said → one-line rule). No copy was asked for. Friday's post is not written yet."""
+input = """làm bản của anh cái bài đục thử bữa trước đó, viết giọng anh nghe, đừng giống giọng bên nớ"""
+regex = [
+  '(?i)Liên Chiểu|2019|mét dài|9 triệu|ống nước âm tường|3,2 triệu|đục thử hai chỗ|hai bản báo giá|tô vàng|bìa còng|báo giá rẻ là báo giá còn thiếu',
+  '(?i)phát sinh',
+  'Sẵn sàng (?:quay|đăng) · Em sẽ đăng: khung của họ, [^\n;]+ của anh; không chép câu nào',
+  'TIẾP →[^\n]*\s*\Z',
+]
+not_regex = [
+  '(?i)bám sát bài của họ|Nền tảng có thể giảm hiển thị bài giống',
+  '(?i)(?:mình|em|tôi)\s+không viết:',
+  '(?i)cô Sáu',
+  '(?i)đẳng cấp|sang trọng|kiến tạo|tổ ấm|rẻ nhất|không phát sinh một đồng|cam kết không phát sinh',
+  'Bài bạn thích|(?<!\w)của bạn(?!\w)',
+  '''(?i)(?<!\w)(?:Sáng[^\w]+nay[^\w]+khảo[^\w]+sát[^\w]+một[^\w]+căn[^\w]+nhà[^\w]+ống|nay[^\w]+khảo[^\w]+sát[^\w]+một[^\w]+căn[^\w]+nhà[^\w]+ống[^\w]+cũ|khảo[^\w]+sát[^\w]+một[^\w]+căn[^\w]+nhà[^\w]+ống[^\w]+cũ[^\w]+Trước|sát[^\w]+một[^\w]+căn[^\w]+nhà[^\w]+ống[^\w]+cũ[^\w]+Trước[^\w]+khi|một[^\w]+căn[^\w]+nhà[^\w]+ống[^\w]+cũ[^\w]+Trước[^\w]+khi[^\w]+báo|căn[^\w]+nhà[^\w]+ống[^\w]+cũ[^\w]+Trước[^\w]+khi[^\w]+báo[^\w]+giá)(?!\w)''',
+  '''(?i)(?<!\w)(?:nhà[^\w]+ống[^\w]+cũ[^\w]+Trước[^\w]+khi[^\w]+báo[^\w]+giá[^\w]+tụi|ống[^\w]+cũ[^\w]+Trước[^\w]+khi[^\w]+báo[^\w]+giá[^\w]+tụi[^\w]+mình|cũ[^\w]+Trước[^\w]+khi[^\w]+báo[^\w]+giá[^\w]+tụi[^\w]+mình[^\w]+xin|Trước[^\w]+khi[^\w]+báo[^\w]+giá[^\w]+tụi[^\w]+mình[^\w]+xin[^\w]+chủ|khi[^\w]+báo[^\w]+giá[^\w]+tụi[^\w]+mình[^\w]+xin[^\w]+chủ[^\w]+nhà|báo[^\w]+giá[^\w]+tụi[^\w]+mình[^\w]+xin[^\w]+chủ[^\w]+nhà[^\w]+cho)(?!\w)''',
+  '''(?i)(?<!\w)(?:giá[^\w]+tụi[^\w]+mình[^\w]+xin[^\w]+chủ[^\w]+nhà[^\w]+cho[^\w]+đục|tụi[^\w]+mình[^\w]+xin[^\w]+chủ[^\w]+nhà[^\w]+cho[^\w]+đục[^\w]+thử|mình[^\w]+xin[^\w]+chủ[^\w]+nhà[^\w]+cho[^\w]+đục[^\w]+thử[^\w]+một|xin[^\w]+chủ[^\w]+nhà[^\w]+cho[^\w]+đục[^\w]+thử[^\w]+một[^\w]+lỗ|chủ[^\w]+nhà[^\w]+cho[^\w]+đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+nhỏ|nhà[^\w]+cho[^\w]+đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+nhỏ[^\w]+sau)(?!\w)''',
+  '''(?i)(?<!\w)(?:cho[^\w]+đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+nhỏ[^\w]+sau[^\w]+chậu|đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+nhỏ[^\w]+sau[^\w]+chậu[^\w]+rửa|thử[^\w]+một[^\w]+lỗ[^\w]+nhỏ[^\w]+sau[^\w]+chậu[^\w]+rửa[^\w]+Ống|một[^\w]+lỗ[^\w]+nhỏ[^\w]+sau[^\w]+chậu[^\w]+rửa[^\w]+Ống[^\w]+nước|lỗ[^\w]+nhỏ[^\w]+sau[^\w]+chậu[^\w]+rửa[^\w]+Ống[^\w]+nước[^\w]+bên|nhỏ[^\w]+sau[^\w]+chậu[^\w]+rửa[^\w]+Ống[^\w]+nước[^\w]+bên[^\w]+trong)(?!\w)''',
+  '''(?i)(?<!\w)(?:sau[^\w]+chậu[^\w]+rửa[^\w]+Ống[^\w]+nước[^\w]+bên[^\w]+trong[^\w]+mục|chậu[^\w]+rửa[^\w]+Ống[^\w]+nước[^\w]+bên[^\w]+trong[^\w]+mục[^\w]+gần|rửa[^\w]+Ống[^\w]+nước[^\w]+bên[^\w]+trong[^\w]+mục[^\w]+gần[^\w]+hết|Ống[^\w]+nước[^\w]+bên[^\w]+trong[^\w]+mục[^\w]+gần[^\w]+hết[^\w]+Chị|nước[^\w]+bên[^\w]+trong[^\w]+mục[^\w]+gần[^\w]+hết[^\w]+Chị[^\w]+chủ|bên[^\w]+trong[^\w]+mục[^\w]+gần[^\w]+hết[^\w]+Chị[^\w]+chủ[^\w]+nhà)(?!\w)''',
+  '''(?i)(?<!\w)(?:trong[^\w]+mục[^\w]+gần[^\w]+hết[^\w]+Chị[^\w]+chủ[^\w]+nhà[^\w]+đứng|mục[^\w]+gần[^\w]+hết[^\w]+Chị[^\w]+chủ[^\w]+nhà[^\w]+đứng[^\w]+nhìn|gần[^\w]+hết[^\w]+Chị[^\w]+chủ[^\w]+nhà[^\w]+đứng[^\w]+nhìn[^\w]+một|hết[^\w]+Chị[^\w]+chủ[^\w]+nhà[^\w]+đứng[^\w]+nhìn[^\w]+một[^\w]+hồi|Chị[^\w]+chủ[^\w]+nhà[^\w]+đứng[^\w]+nhìn[^\w]+một[^\w]+hồi[^\w]+rồi|chủ[^\w]+nhà[^\w]+đứng[^\w]+nhìn[^\w]+một[^\w]+hồi[^\w]+rồi[^\w]+nói)(?!\w)''',
+  '''(?i)(?<!\w)(?:nhà[^\w]+đứng[^\w]+nhìn[^\w]+một[^\w]+hồi[^\w]+rồi[^\w]+nói[^\w]+Hồi|đứng[^\w]+nhìn[^\w]+một[^\w]+hồi[^\w]+rồi[^\w]+nói[^\w]+Hồi[^\w]+nãy|nhìn[^\w]+một[^\w]+hồi[^\w]+rồi[^\w]+nói[^\w]+Hồi[^\w]+nãy[^\w]+mà|một[^\w]+hồi[^\w]+rồi[^\w]+nói[^\w]+Hồi[^\w]+nãy[^\w]+mà[^\w]+báo|hồi[^\w]+rồi[^\w]+nói[^\w]+Hồi[^\w]+nãy[^\w]+mà[^\w]+báo[^\w]+giá|rồi[^\w]+nói[^\w]+Hồi[^\w]+nãy[^\w]+mà[^\w]+báo[^\w]+giá[^\w]+luôn)(?!\w)''',
+  '''(?i)(?<!\w)(?:nói[^\w]+Hồi[^\w]+nãy[^\w]+mà[^\w]+báo[^\w]+giá[^\w]+luôn[^\w]+thì|Hồi[^\w]+nãy[^\w]+mà[^\w]+báo[^\w]+giá[^\w]+luôn[^\w]+thì[^\w]+giờ|nãy[^\w]+mà[^\w]+báo[^\w]+giá[^\w]+luôn[^\w]+thì[^\w]+giờ[^\w]+là|mà[^\w]+báo[^\w]+giá[^\w]+luôn[^\w]+thì[^\w]+giờ[^\w]+là[^\w]+phát|báo[^\w]+giá[^\w]+luôn[^\w]+thì[^\w]+giờ[^\w]+là[^\w]+phát[^\w]+sinh|giá[^\w]+luôn[^\w]+thì[^\w]+giờ[^\w]+là[^\w]+phát[^\w]+sinh[^\w]+rồi)(?!\w)''',
+  '''(?i)(?<!\w)(?:luôn[^\w]+thì[^\w]+giờ[^\w]+là[^\w]+phát[^\w]+sinh[^\w]+rồi[^\w]+đó|thì[^\w]+giờ[^\w]+là[^\w]+phát[^\w]+sinh[^\w]+rồi[^\w]+đó[^\w]+em|giờ[^\w]+là[^\w]+phát[^\w]+sinh[^\w]+rồi[^\w]+đó[^\w]+em[^\w]+Đục|là[^\w]+phát[^\w]+sinh[^\w]+rồi[^\w]+đó[^\w]+em[^\w]+Đục[^\w]+thử|phát[^\w]+sinh[^\w]+rồi[^\w]+đó[^\w]+em[^\w]+Đục[^\w]+thử[^\w]+một|sinh[^\w]+rồi[^\w]+đó[^\w]+em[^\w]+Đục[^\w]+thử[^\w]+một[^\w]+lỗ)(?!\w)''',
+  '''(?i)(?<!\w)(?:rồi[^\w]+đó[^\w]+em[^\w]+Đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+trước|đó[^\w]+em[^\w]+Đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+trước[^\w]+đỡ|em[^\w]+Đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+trước[^\w]+đỡ[^\w]+cãi|Đục[^\w]+thử[^\w]+một[^\w]+lỗ[^\w]+trước[^\w]+đỡ[^\w]+cãi[^\w]+nhau|thử[^\w]+một[^\w]+lỗ[^\w]+trước[^\w]+đỡ[^\w]+cãi[^\w]+nhau[^\w]+một|một[^\w]+lỗ[^\w]+trước[^\w]+đỡ[^\w]+cãi[^\w]+nhau[^\w]+một[^\w]+trận)(?!\w)''',
+  '''(?i)(?<!\w)(?:lỗ[^\w]+trước[^\w]+đỡ[^\w]+cãi[^\w]+nhau[^\w]+một[^\w]+trận[^\w]+sau)(?!\w)''',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8", "I11", "I15", "I17", "I18"]
+max_questions = 1
+notes = """wf13 §4 MAKE and DISTANCE on the default path (shared.md SG-copy): the voice pass on a remix must not drift back to the creator's lines. No run of 8 tiếng from the source (acceptance.toml [copy] vn_tieng = 8; the not_regex windows are the caption's own text, joined across line breaks; graders: I19 finds any other run); the shape is theirs, the scene and words are his (P11, P3 told without 'cô Sáu', P9 or his phrases), keyword PHÁT SINH, liked.evidence in anh–em. No F1 note, because nothing was copied on request; a 'tụi mình' / 'chủ nhà đứng nhìn' line would be their story told as his (DECISIONS F1 hard-block). Same decision as humanize.en.026 and liked.vn.002."""

@@ -132,7 +132,7 @@ regex = [
 ]
 not_regex = [
   '(?im)^\W*từ kho[áa](?:\s+riêng)?[\s:*"“”\-–·]*(?:bảo hiểm|căn hộ|mua nhà|an cư|đầu tư|tài chính|view sông|sinh lời|sale|chấm)',
-  '(?i)kh[óo]a[^.\n]{0,20}90|khoá[^.\n]{0,20}90',
+  '(?i)kh[óo]a[^.\n]{0,20}90|kh(?:oá|óa)[^.\n]{0,20}90',
   '\b[VSPXK]-\d+\b',
 ]
 invariants = ["I1", "I4", "I5", "I8", "I11", "I15"]
@@ -428,10 +428,10 @@ regex = [
   '(?i)gõ\s*["“]?\s*nhẹ',
   '(?i)cứng đơ',
 ]
-not_regex = ['(?i)\b(?:keyword|CTA)\b']
+not_regex = ['(?i)\b(?:keyword|CTA)\b', '(?i)nhẹ nhàng hơn\s*\?', '(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?']
 invariants = ["I1", "I3", "I8", "I12", "I14", "I15", "I18"]
 max_questions = 1
-notes = "UX §2 minute 20-24: '✓ Đã kiểm: 1 ý · đúng giọng … · từ khoá 1 lần · không có câu hứa rủi ro' (strings checked.prefix '✓ Đã kiểm:'); quiet option 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\"'. Quit point 'keyword CTA with no quiet option'."
+notes = "UX §2 minute 20-24: '✓ Đã kiểm: 1 ý · đúng giọng … · từ khoá 1 lần · không có câu hứa rủi ro' (strings checked.prefix '✓ Đã kiểm:'); quiet option 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\"', written as a statement because a '?' on an option line is a second question (I5; fmt-short.vn header option-line rule). Quit point 'keyword CTA with no quiet option'."
 
 [[case]]
 id = "signature.vn.024"
@@ -458,11 +458,11 @@ title = "Map keyword record for chị Hạnh: audience origin, not owned, defaul
 context = "Same state as signature.vn.002 (Door B, the reply is the MAP screen). The judge reads the Map and the keyword record."
 input = """ờ kết quả thì là em Thảo ấy, trước khi học cứ 10 khách mới thì 2 khách hẹn lại, học xong tháng 7 em ấy đếm sổ thì 5 trên 10, giá không đổi đâu nhé, mà đừng đăng tên spa của nó"""
 standard = "signature-keyword"
-critical = ["SK1", "SK2", "SK6"]
+critical = ["SK2", "SK6"]
 min_score = 13
 invariants = ["I1", "I4", "I5", "I15"]
 max_questions = 1
-notes = "Day 0 has only the dump: 'ngại chào' is Thảo's line plus the coach's report that many owners say it. If SK1 cannot be met from the dump alone, the record marks the term provisional ([đoán]) and the Buyer Mirror / 'hỏi 3 khách cũ' becomes homework (wf12-qa-standards §4 auto-fix). The judge fails SK6 if no reason in plain words is shown."
+notes = "Day 0 has only the dump: 'ngại chào' is Thảo's line plus the coach's report that many owners say it (coach recall never counts). SK1 is deliberately not critical here: qa/standards/signature-keyword.md makes a dump-only pick an honest provisional result (SK1 = 1: marked [đoán], real count shown, the Buyer Mirror / 'hỏi 3 khách cũ' set as homework), re-scored after the first listening paste (signature.vn.024, .026). SK1 = 0 (a provisional term presented as proven) still fails through the standard's 'no item scores 0'. The judge fails SK6 if no reason in plain words is shown. Open founder item: the standard has no Day-0 Starter bar for SK."
 
 [[case]]
 id = "signature.vn.026"
