@@ -435,11 +435,15 @@ _ATTR_AFTER = re.compile(r"^[\s,]*(?:[—–-]\s*[" + UPPER + r"]|(?:she|he|they
                          r"one client)\s+(?:said|says|wrote|writes|asked|told me|texted|messaged)\b|(?:chị|anh|em|bạn|"
                          r"khách|học viên|[" + UPPER + r"][^\W\d_]+)\s+(?:ấy\s+)?(?:nói|bảo|nhắn|kể|viết|hỏi)\b)")
 # A hypothetical speaker is no attribution: a DM label 'someone asks the price, or "can you do my room"', 'if anyone
-# says "too expensive"', 'ai đó hỏi "giá sao"' (review G13). Past tense ("someone told me") stays attributed.
+# says "too expensive"', 'ai đó hỏi "giá sao"' (review G13). Past tense ("someone told me") stays attributed, and so do
+# a reported message ('A reader writes: "…"', unless "if / when" makes it a scenario) and an everyone-says claim
+# ('ai cũng nói "…"').
 _HYPOTHETICAL_BEFORE = re.compile(
-    r"(?i)(?:\b(?:someone|somebody|anyone|anybody|they|people|a (?:buyer|lead|prospect|reader|viewer|follower|stranger))"
+    r"(?i)(?:\b(?:someone|somebody|anyone|anybody|they|people"
+    r"|(?:if|when|whenever|once)\s+a (?:buyer|lead|prospect|reader|viewer|follower|stranger))"
     r"\s+(?:\w+\s+)?(?:asks?|says?|messages?|comments?|writes?|DMs?|replies|texts?)\b"
-    r"|(?<!\w)(?:ai đó|có ai|người nào|ai)\s+(?:\S+\s+){0,2}?(?:hỏi|nhắn|comment|nói)(?!\w))[^.!?\"]{0,30}$")
+    r"|(?<!\w)(?:ai đó|có ai|người nào|ai(?!\s+(?:cũng|mà chẳng|chả)(?!\w)))\s+(?:\S+\s+){0,2}?"
+    r"(?:hỏi|nhắn|comment|nói)(?!\w))[^.!?\"]{0,30}$")
 # A short quoted term followed by its meaning ('"insight" là điều khách nghĩ', '"CTA" means …') is a gloss.
 _GLOSS_AFTER = re.compile(r"^\s*[,:]?\s*(?:là|nghĩa là|có nghĩa là|tức là|means?|meaning|stands for|is short for|"
                           r"=|→|->)(?!\w)", re.I)

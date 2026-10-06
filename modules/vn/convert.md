@@ -8,13 +8,14 @@ Thêm so với EN: từ khoá nhận cả dạng không dấu; "tin nhắn đang
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 bỏ keyword_variants (dạng không dấu nằm ở start-block, dòng Từ khoá, luôn có trong ngữ cảnh); mục 9 trỏ tick.cap về §CM-GUARDRAILS và bản hạ bậc (verdict.ready_downgraded) về §CM-EDGE "tại sao?"; mục 6 bỏ "({date}: §CM-LOCALE 6)"; "nhóm khách đầu" → "suất nhóm đầu" (một chữ như §CM-WEEK 6, 9).
 G1 6/10 (theo EN): mục 5 K11 "Không tự bỏ; lời xả từ chối xin comment thì nhẹ từ đầu." (§CM-FORMATS 7 trỏ về đây cho ngày 0). cta.by_hand K14 bỏ "bạn hoặc trợ lý gửi".
 Cắt bù byte G1 (không bỏ luật): mục 1 cta.default → "lời mời ở ngày 0, bước 6" (start-block bước 6 in đúng chuỗi đó; §CM-WEEK 6 vẫn trỏ §CM-CTA-KIT 1).
+VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) → quiet ngay, không cãi, bài chưa đăng in lại lời mời; "Nghe như spam?" chỉ khi là câu hỏi (cta.not_pushy, VK-1). Mục 2, 4 VK-19: quà đến cùng caption đầu hứa nó, chưa viết thì không hứa; ngày 0 trỏ start-block bước 6–7 thay vì kể lại (byte).
 
-<!-- @section convert.kit-keyword src=6df708e7e9 -->
+<!-- @section convert.kit-keyword src=4dfa3663ae -->
 1 Mặc định: lời mời ở ngày 0, bước 6. Từ khoá viết HOA. Mỗi mùa một từ khoá, một quà.
-2 Quà: tự viết từ cách làm 3 bước của họ: checklist, kế hoạch hay kịch bản 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: Tuần 1, hoặc khi hỏi "gửi gì?". Đã hứa mà chưa có: viết ngay.
+2 Quà: tự viết từ cách làm 3 bước của họ: checklist, kế hoạch hay kịch bản 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: cùng caption đầu hứa nó, hoặc khi hỏi "gửi gì?"; chưa viết thì không hứa. Đã hứa mà chưa có: viết ngay.
 3 Trả lời dưới bài: ≥5 câu ngắn xoay vòng, xưng theo người comment, đều chỉ vào inbox.
-4 Bài có từ khoá: quà và tin trả lời inbox 1 xong trước khi đăng; "{{t:tick.keyword}}" chỉ hiện khi "{{t:cmd.why}}".
-5 "{{t:cmd.quiet}}" (gõ riêng) → cta_style quiet: bài sau mời "{{t:cta.quiet}}"; cụm từ khoá vẫn trong lời. "Nghe như spam?": "{{t:cta.not_pushy}}" Không tự bỏ; lời xả từ chối xin comment thì nhẹ từ đầu.
+4 Bài có từ khoá: quà và tin trả lời inbox 1 xong trước khi đăng (ngày 0: bước 6–7); "{{t:tick.keyword}}" chỉ hiện khi "{{t:cmd.why}}".
+5 "{{t:cmd.quiet}}" (gõ riêng) hay coach chê xin comment (cả lúc xả) → cta_style quiet luôn, không cãi: bài sau mời "{{t:cta.quiet}}", bài chưa đăng in lại lời mời; cụm từ khoá vẫn trong lời. Hỏi "Nghe như spam?": "{{t:cta.not_pushy}}" Không tự bỏ lời xin comment.
 
 <!-- @section convert.kit-choices src=921a084b77 -->
 6 Họ tự chọn ("chấm", "ib", "đủ 20 comment", emoji): nguyên văn, không chặn, không làm mềm; dưới bài chỉ một dòng: "{{t:cta.platform_note}}" Emoji: kèm "{{t:cta.emoji_trigger}}"

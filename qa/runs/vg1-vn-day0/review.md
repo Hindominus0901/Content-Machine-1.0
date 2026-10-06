@@ -664,3 +664,65 @@ VP-5. **Notes classify a few items differently from this review.**
 - coldstart calls film-ready 18.4 "talking-head"; I count it, since the machine could not know about her camera fear,
   but I report her filmable minute as 21.0.
 - Keep this reviewer pass for VN until VG-1 to VG-13 land.
+
+## Fix round
+
+Done 6 Oct, uncommitted. The founder's DECISIONS bullet "Long dumps, missing facts, an early piece to post" supersedes
+VK-5 and VK-14. Build OK; lint 0 errors (31 warnings); 397 tests OK. VN sizes: block 7,495 / 7,500 chars; method
+file 56,318 / 56,320 B; PHONE-STARTER 7,275 / 7,500; ship.kit 923 / 1,000; largest anchors MAP 3,339, SETUP 3,343
+(of 3,600 B). Each added byte is paid by a cut named in its module header or at the top of `strings/vn.toml`. Re-grade
+tables: `grader-fixes.md` "After the fix round".
+
+Kit:
+- VK-1 applied: `film.now_or_text` "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết."; step 6 "(ngại xin comment thì gõ 'nhẹ')"; `cta.not_pushy` drops "đâu có ép ai".
+- VK-2 applied: §CM-CTA-KIT 5, an objection in words (dump, Map or later) → quiet at once, unposted pieces reprinted; "Nghe như spam?" alone gets not_pushy.
+- VK-3 applied: `setup.multi_income` is one question (EN too).
+- VK-4 applied: "CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1" (EN too).
+- VK-5 superseded by DECISIONS: soft cut past ~1,500 tiếng, `dump.enough` carries the first guess.
+- VK-6 applied: inbox replies say "chưa cần thì nói mình"; DỪNG stays for Zalo series.
+- VK-7 applied: §CM-NATURAL 4 "không "anh/chị", [Tên]".
+- VK-8 applied: "Tin 1 = đủ quà".
+- VK-9 applied, own wording: "Nhờ bạn một chút"; ask3.question "Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?".
+- VK-10 applied: `message.pushback.who` "Ai đọc cũng được, bài chỉ nói với đúng một kiểu khách."
+- VK-11 applied: "{ai} nào hay than", "{kết quả theo khoảng, hay quy trình}".
+- VK-12 applied: reply 2 and `mic.claude_vn` drop "nhé"; "Chốt qua Zalo."; the (DANG KY = ĐĂNG KÝ) example dropped.
+- VK-13 applied: "proof: đếm được, khách đồng ý (không thì not_now)".
+- VK-14 superseded by DECISIONS: the dump prompt lists "đăng ở đâu, có danh sách Zalo, email chưa"; "số bạn Zalo" off the never-ask list; the plan line names the list.
+- VK-15 applied through `setup.plan_guess` ("{day} hằng tuần kể 15 phút cho tuần sau").
+- VK-16 partly: the `month.save_card` cut applied; the Map in the card's machine block deferred (schema change, needs bytes).
+- VK-17 applied: "(dưới 30 giây, nhớ ý rồi nói)".
+- VK-18 declined: no block budget for the gloss. Win+H verified to support Vietnamese, so `mic.windows` stays; the per-message "Lưu vào dự án" route is still unverified.
+- VK-19 applied: the gift in a copy box under today's caption; "chưa viết thì không hứa" (EN too).
+- VK-20 superseded by list_size = ask|{n}.
+- EN K mirrors: K22, K24, K25, K26, K27, K30, K31 applied; K28 declined (the block's Zalo backup already prints; no bytes); K29 deferred (about 38 B; method file has 2 B); K33 not needed (VN has no conflicting clause).
+
+Graders:
+- VG-1 applied.
+- VG-2 applied, narrowed in verify (only the inclusive "mình" of map.ok; only example brackets).
+- VG-3 applied (`word_head()`).
+- VG-4 applied.
+- VG-5 applied.
+- VG-6 applied.
+- VG-7 applied.
+- VG-8 applied.
+- VG-9 applied (kit-wording skip; low risk noted).
+- VG-10 applied.
+- VG-11 applied.
+- VG-12 applied.
+- VG-13 applied as the new `vn_messages` check; series labels narrowed to "chuỗi" / "series" in verify.
+- VG-14 applied: Tuấn's quit_triggers is now warn / confusion; his two-question defect still fails I5.
+- VG-15 applied.
+- VG-16 applied.
+
+Simulator and protocol:
+- VP-1 deferred (one Free-plan rule in COACH.md).
+- VP-2 deferred; the soft cut and facts asked up front cut its cost, but a re-run must show it.
+- VP-3 deferred ("chấm" in chunk 2).
+- VP-4 partly: G15 grades the early win against the persona's first send; chunk length unchanged.
+- VP-5 deferred (keep this reviewer pass until a VG2 run confirms VG-1..VG-13).
+
+Eval cases: `evals/cases/*.vn.toml` are stale and get a full rewrite next; none was edited (all regexes compile).
+
+Open: the VN budgets are spent (block 5 chars, method file 2 B), so K28/K29/VK-16/VK-18 each need a named cut; the
+service-biz whole card (7,078 > 6,600) has no fix; re-grading VG1 transcripts needs HEAD strings (the new
+`setup.dump_posts` hides their dump prompt); DỪNG in outbound one-to-one Zalo needs a reviewer's ruling; re-run VG2.

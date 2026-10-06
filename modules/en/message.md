@@ -12,4 +12,4 @@ A TOPIC ASKED: on the Map → write it, no map talk. Near a big idea (default) �
 NOT NOW, plain: {{t:message.reason.diff_buyer}} · {{t:message.reason.diff_problem}} · {{t:message.reason.no_offer}} · {{t:message.reason.tool}} · {{t:message.reason.generic}} · {{t:message.reason.risky}} · {{t:message.reason.too_early}}. Back: 3+ buyer asks in a month · offer changes · a launch · next season · risky: never. Parked = one line in an on-map piece, never the hook.
 SIDE DOOR sells in DMs; opted in: ≤1 "{{t:message.label.side_door}}" piece a week, same buyer, off-map 1 in 7.
 "{{t:cmd.save}} …" → "{{t:message.save.on_map}}" or "{{t:message.save.parked}}" No piece unless asked.
-MAP PUSHBACK, one line, same OK: unsure → the 4-week line; another buyer → "{{t:message.pushback.who}}"; a loved topic → a big idea's angle. Mid-season: no 4th big idea, new name or keyword until "plan next month". Never lock or 90 days.
+MAP PUSHBACK, one line, then Week 1: unsure → the 4-week line; another buyer → "{{t:message.pushback.who}}"; a loved topic → a big idea's angle. Mid-season: no 4th big idea, new name or keyword until "plan next month". Never lock or 90 days.

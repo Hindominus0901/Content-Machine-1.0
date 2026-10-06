@@ -7,11 +7,12 @@ tier=lean|standard và plan_start là tên trường trên Brand Card, giữ ti�
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): WEEK 6 lời mời mặc định trỏ §CM-CTA-KIT 1 (cta.default); WEEK 7 tính cách, giải trí trỏ video riêng §CM-FORMATS, chống lặp định dạng và kiểu mở trỏ §CM-HUMANIZE (CHỐNG LẶP).
 G1 6/10 (theo EN): WEEK 2 K10 "lean (mặc định)", "standard, chỉ khi xin"; WEEK 4 K9 "Từ khoá 1 lần + lời mời"; WEEK 10 K3 "ngày 0 chỉ một dòng trên mỗi khung".
 Cắt bù byte G1 (không bỏ luật): WEEK 3 trỏ mục 0 TRỌNG TÂM của KIỂM TRA TRƯỚC KHI GIAO (luôn trong khối hướng dẫn: một ý lớn, ý chính ≤20 tiếng, một niềm tin, không lấy chủ đề để dành), giữ "ý chính viết trước", "ĐỂ SAU không làm hook", tách hai ý; MONTH 3 điều kiện ĐỂ SAU vào lại trỏ §CM-MAP (Quay lại khi); MONTH 4 tháng cô hồn trỏ §CM-LOCALE 6; month.check bỏ dòng cuối "Trả lời 'không có gì thay đổi' là đủ." (TIẾP month.check_next nói y vậy trong cùng tin).
+G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS đã ghi danh sách quay "(Tuần 1, …) mở bằng" film.list_open, và WEEK 10 không có vế "không thêm lời" để vướng.
 
-<!-- @section plan.kit-week src=85482b0091 -->
+<!-- @section plan.kit-week src=fd75a46234 -->
 ### Tuần nói chuyện (Tuần 1: ngày 0, bước 7)
 1 Tuần n = (số tuần từ plan_start mod 4) + 1, đi đầu là ý lớn n: 1 vấn đề thật, nguyên nhân · 2 cách tốt hơn, cách của họ · 3 bằng chứng, "mình cũng làm được, dù…" · 4 cả ba + sản phẩm. ≥60% bài về ý đó.
-2 Video ngắn (FB, TikTok, IG): 3 video (tuần nói chuyện: 4), 1 bài dài, 1 tin Zalo. Kênh chữ (LinkedIn, bản tin): 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn. Danh sách 300+: tin gửi trước, xin trả lời; chưa có: tin riêng (§CM-MESSAGES 4). lean (mặc định) ≤60 phút/tuần; standard, chỉ khi xin, ≤90, thêm 1 video, 1 carousel. Xin bớt bài: giữ bài chính, ý lớn; không tuần nào trống.
+2 Video ngắn (FB, TikTok, IG): 3 video (tuần nói chuyện: 4), 1 bài dài, 1 tin Zalo. Kênh chữ (LinkedIn, bản tin): 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn. Danh sách 300+: tin gửi trước, xin trả lời; chưa có (nói hay đoán): tin riêng (§CM-MESSAGES 4). lean (mặc định) ≤60 phút/tuần; standard, chỉ khi xin, ≤90, thêm 1 video, 1 carousel. Xin bớt bài: giữ bài chính, ý lớn; không tuần nào trống.
 3 Mỗi bài qua mục 0 TRỌNG TÂM (KIỂM TRA TRƯỚC KHI GIAO); ý chính viết trước; ĐỂ SAU không làm hook. Hai ý thì tách, ý sau để dành.
 4 Từ khoá 1 lần + lời mời; chỗ xoay vòng: hook → chữ trên màn hình → câu chốt → dòng 1 caption → comment ghim.
 5 Dòng VÌ SAO lưu kèm mỗi bài, chỉ in khi hỏi "{{t:cmd.why}}": {{t:why.prefix}}: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}.

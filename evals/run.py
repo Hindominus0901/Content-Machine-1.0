@@ -641,10 +641,35 @@ def leak_items(pdir: Path, lang: str = "en") -> set[str]:
     return {" ".join(w) for w in (_content_words(i) for i in items) if len(w) >= least}
 
 
-def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str) -> dict:
+# The visible voice lines (strings): the card top's HOW YOU SAY IT and the Map's YOUR VOICE are Voice Card lines too.
+VOICE_LINE_KEYS = ("card.visible.how", "map.voice")
+
+
+def voice_labels(root: Path, edition: str) -> tuple[str, ...]:
+    """The rendered labels of the visible voice lines (VOICE_LINE_KEYS), folded for a prefix match."""
+    try:
+        strings, _ = graders.load_strings(root, edition)
+    except Exception:                                  # a repo without strings: field lines only
+        return ()
+    out = []
+    for key in VOICE_LINE_KEYS:
+        label = nfc(str(strings.get(key, ""))).strip().rstrip(":").strip().casefold()
+        if label:
+            out.append(label)
+    return tuple(out)
+
+
+def _visible_voice_line(line: str, labels: tuple[str, ...]) -> bool:
+    """A visible voice line (voice_labels): 'GIỌNG: thẳng · kể dài · hay nói "…"', 'HOW YOU SAY IT: …'."""
+    head = re.sub(r"^[\s#>*_`-]+", "", nfc(line)).casefold()
+    return any(head.startswith(label) for label in labels)
+
+
+def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str,
+                labels: tuple[str, ...] = ()) -> dict:
     """Persona wording in a machine turn that the coach never said before it and the kit does not hold:
     the simulator's machine side read the persona files (README "Keep the two apart"). A hit in a Voice
-    Card field line fails the run (it inflates I23 and the voice judging); other hits are listed for a
+    Card line (a voice field, or the visible HOW YOU SAY IT / YOUR VOICE line, read one quote apart from its label) fails the run (it inflates I23 and the voice judging); other hits are listed for a
     human read ("warn"), since a model can rebuild a coach's phrase from what they said. A machine line is read
     without its field labels and one list item at a time (leak_corpus reads the persona's TOML the same way); a list
     item that is a whole persona phrase the coach never said leaks however short it is (leak_items)."""
@@ -664,11 +689,16 @@ def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str) -
             said += " ".join(_content_words(r.get("text", ""))) + " | "
             continue
         for line in r.get("text", "").splitlines():
-            voice = bool(VOICE_FIELD_RE.match(line))
-            for item in ITEM_SPLIT_RE.split(FIELD_LABEL_RE.sub(" ", line)):
+            visible = _visible_voice_line(line, labels)
+            voice = visible or bool(VOICE_FIELD_RE.match(line))
+            items = ITEM_SPLIT_RE.split(FIELD_LABEL_RE.sub(" ", line))
+            if visible:                              # the kit's 'hay nói "{câu}"' never joins the coach's quote
+                items = [part for item in items for part in re.split(r"[\"“”]", item)]
+            for item in items:
                 words = _content_words(item)
                 phrase = " ".join(words)
-                if len(words) < n and phrase in whole and f" {phrase} " not in said and not ADDRESS_FIELD_RE.match(line):
+                if len(words) < n and phrase in whole and f" {phrase} " not in said and not ADDRESS_FIELD_RE.match(line) \
+                        and not visible:                 # a visible line's short parts (an address form): n-grams only
                     (fails if voice else warns).append(f'turn {r.get("turn")}: "{phrase}"')
                     continue
 
@@ -714,8 +744,9 @@ def check_edits(run_dir: Path, meta: dict) -> dict:
     """Machine turns are frozen after the first grade (review P8): every row that differs from transcript.raw.jsonl
     is an edit. Only a machine turn's text may change, only to remove a leak, and each change needs an entry in
     meta.json "edits" ({"turn", "field", "before", "after", "reason": "leak: …"}) whose "before" is in the frozen
-    text and whose "after" is in the edited text. Rows added after the last frozen row are new turns, not edits.
-    details: edited (rows changed), appended (rows added)."""
+    text and whose "after" is in the edited text, and the logged changes are the whole change: replaying them on the
+    frozen text (each "before" → "after", in log order) gives the edited text. Rows added after the last frozen row
+    are new turns, not edits. details: edited (rows changed), appended (rows added)."""
     raw_path = run_dir / RAW_TRANSCRIPT
     if not raw_path.exists():
         return _protocol("edits", [], edited=0, appended=0)
@@ -741,6 +772,7 @@ def check_edits(run_dir: Path, meta: dict) -> dict:
         if not entries:
             ev.append(f'turn {turn}: machine turn edited after the first grade with no entry in meta.json "edits"')
             continue
+        replay, logged_ok = old.get("text", ""), True
         for e in entries:
             missing = [k for k in EDIT_KEYS if k not in e]
             if missing:
@@ -749,6 +781,13 @@ def check_edits(run_dir: Path, meta: dict) -> dict:
                 ev.append(f'turn {turn}: an edit that is not a leak removal ("{e["reason"]}")')
             elif str(e["before"]) not in old.get("text", "") or str(e["after"]) not in new.get("text", ""):
                 ev.append(f"turn {turn}: the edit log's before/after does not match the frozen and edited text")
+            else:
+                replay = replay.replace(str(e["before"]), str(e["after"]), 1)
+                continue
+            logged_ok = False
+        if logged_ok and replay != new.get("text", ""):
+            ev.append(f"turn {turn}: the machine turn changed beyond its logged edits (replaying \"before\" → "
+                      "\"after\" on the frozen text does not give the edited text)")
     for e in log:
         if e.get("turn") not in {r.get("turn") for r, c in zip(raw, cur) if r != c}:
             ev.append(f"turn {e.get('turn')}: an edit log entry for a turn that did not change")
@@ -759,8 +798,9 @@ def protocol_checks(run_dir: Path, root: Path, meta: dict) -> list[dict]:
     rows = _rows(run_dir)
     lang = "vn" if meta.get("edition") == "vn" else "en"
     pdir = root / "evals" / "personas" / meta["persona"]
-    return [check_turns(rows), check_pace(rows, pdir), check_leaks(rows, pdir, run_dir / "packet" / "kit", lang),
-            check_edits(run_dir, meta)]
+    labels = voice_labels(root, meta.get("edition", lang))
+    return [check_turns(rows), check_pace(rows, pdir),
+            check_leaks(rows, pdir, run_dir / "packet" / "kit", lang, labels), check_edits(run_dir, meta)]
 
 
 # ---------------------------------------------------------------- grading

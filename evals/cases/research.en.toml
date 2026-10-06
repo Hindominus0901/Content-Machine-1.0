@@ -59,7 +59,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Coach offers to research first: kept for later, the Day-0 path keeps moving"
-context = "Day 0, persona default (iPhone, cold start). After 'Done.' the machine asked the one missing fact ('My guess: no client result to show yet, so I'll use your own story. Right?'); instead of answering, he asks about research."
+context = "Day 0, persona default (iPhone, cold start). After 'Done.' the machine asked the one missing fact ('My guess: no client result yet, so I'll use your own story. Right?'); instead of answering, he asks about research."
 input = """wait should I like research what other dads are saying first? like go through the groups? I could do that tomorrow"""
 regex = [
   '''(?i)\b(?:later|tomorrow|next week|this week|week (?:1|one|2|two)|first week|after today|once (?:the|your) (?:map|card|video))\b''',

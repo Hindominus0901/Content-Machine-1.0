@@ -8,7 +8,10 @@
 # wf11-ux-spec.md §4, §5.17; docs/DECISIONS.md; docs/research/wf15-case-impact.md (R1-R18);
 # modules/en/message.md (§CM-MAP), setup.md, voice.md; strings/en.toml (map.known "KNOWN FOR:",
 # map.topics "3 TOPICS:", map.word "YOUR WORD:", map.voice "YOUR VOICE:", map.ok, setup.guess*,
-# setup.multi_income, check.pick, check.bet, message.*, verdict.*, why.prefix, checked.prefix).
+# setup.multi_income, check.pick, message.*, verdict.*, why.prefix, checked.prefix).
+# G2/VG1 fix round (6 Oct): a Map pushback is one line, then Week 1 in the same reply (VK-4); a hedge on a
+# missing fact leaves the guess standing, no bet (K24). Day-0 contexts that send dump chunks 1-3 and then
+# 'done' replay as setup.en.toml's header says (the soft cut, K22).
 #
 # Coach-facing renames (locales/en/deny-list.txt): "Pillar n" → "big idea n"; "Parked as X-9" →
 # "Parked"; reason codes → plain reasons; "locked 90 days" → "try 4 weeks". Big Domino, B1-B7, scores,
@@ -51,7 +54,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "The Map: 4 lines (known for, 3 topics, your word, your voice) and one decision; nothing else on it"
-context = "Day 0, about minute 12, ChatGPT Free. Dana sent dump chunks 1-3 (her written posts pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answers it; this reply shows the Map."
+context = "Day 0, about minute 12, ChatGPT Free. Dana sent dump chunks 1-3 (her written posts pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
 contains = []
 not_contains = []
@@ -96,7 +99,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "KNOWN FOR passes the mechanical tests: one breath, her buyer's words, a name only she uses, no claim"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answers it; this reply shows the Map."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
 contains = []
 not_contains = []
@@ -125,7 +128,7 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Dana's Map passes the message-map standard"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answers it; this reply shows the Map. Judge the 4-line Map reply against expected.toml [map], read together with its hidden layer as the standard asks: the reply to 'why?' on it (as in message.en.009: why this one, the root cause, NOT NOW) and the Day-0 card's map fields."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map. Judge the 4-line Map reply against expected.toml [map], read together with its hidden layer as the standard asks: the reply to 'why?' on it (as in message.en.009: why this one, the root cause, NOT NOW) and the Day-0 card's map fields."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
 contains = []
 not_contains = []
@@ -213,7 +216,7 @@ kind = "P"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start Map passes the message-map standard with founding framing"
-context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result to show yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea; this reply shows the Map. Judge it against expected.toml [map] with its hidden layer: the reply to 'why?' on it (message.en.046) and the Day-0 card's map fields (offer_status founding)."
+context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea; this reply shows the Map. Judge it against expected.toml [map] with its hidden layer: the reply to 'why?' on it (message.en.046) and the Day-0 card's map fields (offer_status founding)."
 input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.'''
 contains = []
 not_contains = []
@@ -235,7 +238,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1"]
 title = "Cold-start Map: 4 lines for desk-job dads, KEEP UP as his word, no body outcome, nothing parked shown"
-context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result to show yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea; this reply shows the Map."
+context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea; this reply shows the Map."
 input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.'''
 contains = []
 not_contains = []
@@ -271,7 +274,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'why?' on the Map: why this one from her evidence, the root cause, NOT NOW (≤7) with plain reasons and return triggers"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). Turn 1 answers it and gets the 4-line Map. Her dump also named resume reviews (half her income some months), LinkedIn profiles, 2 life-coaching clients, menopause at work, 401(k)/pensions, 'can I sue' and salary negotiation. Turn 2 asks why; assertions run on the reply to 'why?'."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Turn 1 answers it and gets the 4-line Map. Her dump also named resume reviews (half her income some months), LinkedIn profiles, 2 life-coaching clients, menopause at work, 401(k)/pensions, 'can I sue' and salary negotiation. Turn 2 asks why; assertions run on the reply to 'why?'."
 input = '''[turn 1] The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
 [turn 2] why?'''
 contains = []
@@ -421,7 +424,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "YOUR WORD is pre-picked from buyer words; the coach is never asked to vote on keywords"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answers it; this reply shows the Map."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
 contains = []
 not_contains = []
@@ -446,7 +449,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "Multi-income answer steers the pick: the Map is built for the 12-week program's buyer; resume reviews and life coaching stay off it"
-context = "Day 0, after 'done'. The one missing fact was the multi-income line (setup.multi_income: 'You earn from 3 things. My guess: the ONE buyer who could buy more than one is … Right? Or tell me which pays the bills this month.'). Dana answers it; nothing else is missing, so this reply shows the Map."
+context = "Day 0, after 'done'. The one missing fact was the multi-income line (setup.multi_income: 'You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Dana answers it; nothing else is missing, so this reply shows the Map."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
 contains = []
 not_contains = []
@@ -504,7 +507,7 @@ id = "message.en.016"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
-title = "'Resume reviews pay my electric bill': a side door, not a 4th big idea and not a lecture"
+title = "'Resume reviews pay my electric bill': a side door, not a 4th big idea and not a lecture; Week 1 follows"
 context = "Day 0, the 4-line Map is on screen; resume reviews are on none of its lines (they are parked, which only 'why?' would show). Dana notices and pushes back."
 input = '''Hang on. Resume reviews pay my electric bill. You can't just park that.'''
 contains = []
@@ -512,6 +515,8 @@ not_contains = []
 regex = [
   '''(?i)\bresume''',
   '''(?i)\b(side door|DMs?|keep (doing|selling|offering)|still (do|sell|offer))\b''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+  '''(?s)\A(?:(?!```).){0,600}?(?i:resume)''',
 ]
 not_regex = [
   '''(?i)\b(4|four) big ideas\b''',
@@ -520,10 +525,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I5", "I17"]
-max_words = 150
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """persona pushback (verbatim); 'Accepts quickly: a side door for resume reviews if it stays in the DMs.' Quit point 6. UX §5.17, §CM-MAP SIDE DOOR: multi-income coaches keep a parked income stream through a side door (≤1 labelled piece a week if they opt in), never as a 4th big idea. MAP PUSHBACK: one line, same OK. The coach is never lectured (message-focus §2.5)."""
+notes = """persona pushback (verbatim); 'Accepts quickly: a side door for resume reviews if it stays in the DMs.' Quit point 6. UX §5.17, §CM-MAP SIDE DOOR: multi-income coaches keep a parked income stream through a side door (≤1 labelled piece a week if they opt in), never as a 4th big idea. MAP PUSHBACK: one line, then Week 1 in the same reply (VG1 VK-4; DECISIONS K2 'any other message brings Week 1'), so max_words is 0 and the answer must open the reply, before any copy box. The coach is never lectured (message-focus §2.5)."""
 
 [[case]]
 id = "message.en.017"
@@ -538,6 +543,8 @@ not_contains = []
 regex = [
   '''(?i)\bafter (corporate|the badge)\b''',
   '''(?i)\b(big idea|topic)\b''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+  '''(?s)\A(?:(?!```).){0,600}?(?i:after (?:corporate|the badge))''',
 ]
 not_regex = [
   '''(?i)\b(4|four) big ideas\b''',
@@ -547,17 +554,17 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I5", "I17"]
-max_words = 160
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """persona pushback (verbatim first sentence); expected.toml life_topics_bridge. §CM-MAP MAP PUSHBACK: a loved topic → a big idea's angle, one line, same OK. The machine bridges, it does not argue: the house got quiet and so did the answer → the first topic (coach-facing 'topic' on the Map, 'big idea' in later chats)."""
+notes = """persona pushback (verbatim first sentence); expected.toml life_topics_bridge. §CM-MAP MAP PUSHBACK: a loved topic → a big idea's angle, one line, then Week 1 in the same reply (VG1 VK-4), so max_words is 0 and the bridge opens the reply. The machine bridges, it does not argue: the house got quiet and so did the answer → the first topic (coach-facing 'topic' on the Map, 'big idea' in later chats)."""
 
 [[case]]
 id = "message.en.018"
 kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "S0"]
-title = "'What if it's wrong?': a 4-week try that checks what buyers say, never a lock"
+title = "'What if it's wrong?': a 4-week try that checks what buyers say, never a lock; Week 1 follows"
 context = "Day 0, the 4-line Map is on screen, ending 'We'll run this for 4 weeks. OK, or change a line.' Linda hesitates before saying OK."
 input = '''What if it's wrong? I don't want to be stuck with this.'''
 contains = []
@@ -566,6 +573,8 @@ regex = [
   '''(?i)\b(4|four) weeks\b''',
   '''(?i)\b(say back|reply|replies|tell you|what (your )?(readers|buyers|people|clients) (say|tell))''',
   '''(?i)\bOK\b''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+  '''(?s)\A(?:(?!```).){0,600}?(?i:\b(?:4|four) weeks\b)''',
 ]
 not_regex = [
   '''(?i)\block(ed|s)?\b''',
@@ -575,17 +584,17 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I5", "I17"]
-max_words = 120
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """UX §5.17, §CM-MAP MAP PUSHBACK ('unsure → the 4-week line'): coach-facing 'try 4 weeks' (map.ok) replaces 'locked 90 days'; the internal lock and the monthly KEEP default stay hidden (quit point 7; deny-list lock/90-day patterns). One line of reassurance, then the same decision (OK or change a line). Graded with graders.py checks deny_list as well as the invariants listed."""
+notes = """UX §5.17, §CM-MAP MAP PUSHBACK ('unsure → the 4-week line'): coach-facing 'try 4 weeks' (map.ok) replaces 'locked 90 days'; the internal lock and the monthly KEEP default stay hidden (quit point 7; deny-list lock/90-day patterns). One line of reassurance (the 4-week line), then Week 1 in the same reply (VG1 VK-4: a pushback is an answer, not a change), so max_words is 0 and the 4-week line opens the reply. Graded with graders.py checks deny_list as well as the invariants listed."""
 
 [[case]]
 id = "message.en.019"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0"]
-title = "'Can we leave the moms in?': who it's FOR, not who can watch; WHO stays dads"
+title = "'Can we leave the moms in?': who it's FOR, not who can watch; WHO stays dads; Week 1 follows"
 context = "Day 0, the 4-line Map is on screen: KNOWN FOR names desk-job dads 35-45 with kids under 10; the moms (his dump: 'the moms at school keep asking') are parked as a different buyer and on none of its lines."
 input = '''Can we leave the moms in? Jess's friends keep asking.'''
 contains = []
@@ -596,13 +605,15 @@ not_regex = [
   '''(?im)^\W*(?:WHO|KNOWN FOR)\b[^\n]*\bmoms?\b''',
   '''(?i)\b(4|four) big ideas\b''',
   '''(?i)\b(you need to|you must) (focus|narrow)''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+  '''(?s)\A(?:(?!```).){0,600}?(?i:everyone can (?:still )?watch|who it(?:'|’)s for|still watch)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I10", "I17"]
-max_words = 120
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """message-focus §1.5 and §CM-MAP MAP PUSHBACK (another buyer → message.pushback.who 'Everyone can still watch; we're choosing who it's for.'), one line, same OK. Anti-dilution rule 1: one person per Season; a 2nd buyer only after 8 consistent weeks AND ≥3 clients from the first. 'Jess' is a private name (persona.toml private_names) even when the coach says it."""
+notes = """message-focus §1.5 and §CM-MAP MAP PUSHBACK (another buyer → message.pushback.who 'Everyone can still watch; we're choosing who it's for.'), one line, then Week 1 in the same reply (VG1 VK-4), so max_words is 0 and the line opens the reply. Anti-dilution rule 1: one person per Season; a 2nd buyer only after 8 consistent weeks AND ≥3 clients from the first. 'Jess' is a private name (persona.toml private_names) even when the coach says it."""
 
 [[case]]
 id = "message.en.020"
@@ -666,22 +677,24 @@ id = "message.en.022"
 kind = "D"
 persona = ""
 lanes = ["S1", "S0"]
-title = "A hedge on a missing fact gets one bet, not a lecture or a second question"
+title = "A hedge on a missing fact: the guess stands as (my guess), no bet, no lecture, no second question"
 context = "Standalone. Day 0, after 'done'. The machine asked a missing fact with its guess ('My guess: your clients are therapists in their first year of private practice. Right?'). The fictional coach (Noor, 39, helps therapists fill a private practice; sells a 3-month 1:1 at $1,800) hedges."
 input = '''ugh I don't know. all of them? the new ones maybe, or the ones going online. honestly anybody who's stuck'''
 contains = []
 not_contains = []
-regex = ['''(?i)\bif you had to bet\b''']
+regex = ['''(?i)\bmy guess\b|\bfirst[- ]year\b|(?m:^\W*KNOWN FOR:)''']
 not_regex = [
+  '''(?i)\bif you had to bet\b''',
+  '''(?i)\b(which|who) (one|of them|is it)\b[^\n]*\?''',
   '''(?i)\b(you need to|you have to|you must) (pick|choose|narrow)''',
   '''(?i)\banyone\b[^\n]{0,20}\bis no one\b''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I17"]
-max_words = 90
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """setup.kit-facts 4: 'Hedge: check.bet once' ('If you had to bet $100, which one?'); message-focus §1.1 rule 2. The bet line is the reply's one question; a second hedge leaves the guess standing as (my guess)."""
+notes = """setup.kit-facts 4 since G2 K24 (the 'Hedge: check.bet once' line was cut; check.bet is gone): '"skip", "not sure", a new topic: the guess stands. No lists or re-asks.' A hedge is a 'not sure': the guess (first-year therapists) stands as (my guess) and the reply moves on, to the next missing fact or the Map (max_words 0 for that reason). No bet, no 'which one?', no lecture (message-focus §1.1)."""
 
 [[case]]
 id = "message.en.023"
@@ -760,7 +773,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'My brother lost 22 pounds, no name': refused, his own pull-up story offered instead"
-context = "Day 0, after 'done'. Dan has no clients, so the missing fact for the best result came as setup.guess_no_result ('My guess: no client result to show yet, so I'll use your own story. Right?')."
+context = "Day 0, after 'done'. Dan has no clients, so the missing fact for the best result came as setup.guess_no_result ('My guess: no client result yet, so I'll use your own story. Right?')."
 input = '''Can I just say my brother lost 22 pounds? No name, no picture.'''
 contains = []
 not_contains = []
@@ -876,8 +889,8 @@ id = "message.en.031"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0"]
-title = "One bet per missing fact: after a second hedge the guess stands, nothing is re-asked, and the Map follows"
-context = "Day 0, after 'done'. Dan's last missing fact was what he sells ('My guess: nothing to sell yet, so a first small group of dads. Right?'). He hedged once ('maybe? I don't know') and got the one bet line ('If you had to bet $100, which one?'). Nothing else is missing."
+title = "A hedge on the last missing fact: the guess stands, nothing is re-asked, and the Map follows"
+context = "Day 0, after 'done'. Dan's last missing fact was what he sells ('My guess: nothing to sell yet, so a first small group of dads. Right?'). Nothing else is missing."
 input = '''I don't know man. A small group I guess? 8 weeks? You name it.'''
 contains = []
 not_contains = []
@@ -896,7 +909,7 @@ invariants = ["I1", "I5", "I8"]
 max_words = 310
 max_chars = 0
 max_questions = 1
-notes = """setup.kit-facts 4: a hedge gets check.bet once; after that 'not sure' leaves the guess standing as (my guess), with no re-ask and no list. 'You name it' is permission: the offer is named from his words (a founding small group, 8 weeks; setup.kit-facts 7 'No offer: founding offer ("first 5") at their own price'). He gave no price here, so none is printed (I8): the offer piece will ask it as one Needs-you line. With all missing facts in, the reply is the Map (map.ok). Re-aimed from the old 'one probe on the old way' case: the old way is never asked on Day 0 (wf15 §1.3). max_words: the Map's 170 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
+notes = """setup.kit-facts 4 (the bet line cut in G2 K24): a hedge or 'not sure' leaves the guess standing as (my guess), with no re-ask, no bet and no list. 'You name it' is permission: the offer is named from his words (a founding small group, 8 weeks; setup.kit-facts 7 'No offer: founding offer ("first 5") at their own price'). He gave no price here, so none is printed (I8): the offer piece will ask it as one Needs-you line. With all missing facts in, the reply is the Map (map.ok). Re-aimed from the old 'one probe on the old way' case: the old way is never asked on Day 0 (wf15 §1.3). max_words: the Map's 170 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
 
 [[case]]
 id = "message.en.032"
@@ -1281,7 +1294,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1"]
 title = "'why?' on Dan's Map: an honest why-this-one with no paying clients; moms and TRT parked with plain reasons"
-context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result to show yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). Turn 1 answers the offer guess and gets the 4-line Map. Turn 2 asks why; assertions run on the reply to 'why?'."
+context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). Turn 1 answers the offer guess and gets the 4-line Map. Turn 2 asks why; assertions run on the reply to 'why?'."
 input = '''[turn 1] I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.
 [turn 2] why?'''
 contains = []
@@ -1419,7 +1432,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "YOUR VOICE in plain words: her tone, her rhythm, one phrase of hers verbatim, and how she talks to buyers ('you')"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answers it; this reply shows the Map. Her dump is the spoken voice; her pasted posts are the written voice."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map. Her dump is the spoken voice; her pasted posts are the written voice."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
 contains = []
 not_contains = []
@@ -1479,7 +1492,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'change 4' edits the voice line inside the one decision: line 4 reprinted with her words, the same OK, no voice quiz"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). Turn 1 answers it and gets the 4-line Map with FILM TODAY under it. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Turn 1 answers it and gets the 4-line Map with FILM TODAY under it. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
 input = '''[turn 1] The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
 [turn 2] change 4: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.'''
 contains = []

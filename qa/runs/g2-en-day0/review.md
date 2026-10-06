@@ -503,3 +503,50 @@ row; notes that misread the grader).
 **P11. `COACH.md` "say you are done … as one more turn".**
 - Keep it as is. After K22 the machine asks its question in the cut reply, and the coach answers it.
 - Re-run proof S1, proof S0, Linda and consultant S1 to confirm Map ≤6 and film-ready ≤20.
+
+## Fix round
+
+Done 6 Oct, uncommitted. The founder's DECISIONS bullet "Long dumps, missing facts, an early piece to post" overrides
+K22, K24 and K34 where they differ. Build OK; lint 0 errors (31 warnings); 397 tests OK. EN sizes: block 6,488 / 6,500
+chars; method file 49,032 / 51,200 B; SETUP 2,792, CARD 2,786, MAP 2,786 (of 2,800 B); ship.kit 899 / 900. Re-grade
+tables: `grader-fixes.md` "After the fix round".
+
+Kit:
+- K22 applied, as the founder amended it: past ~1,200 words, `dump.enough` = "That's plenty for today. If you have one more story, tell it now. If not: {your first guess | say 'done'.}"; the first missing fact rides with the cut (one question mark); no jogger after the cut.
+- K23 applied: YOUR WORD reads "{KEYWORD}, from their clients' words".
+- K24 applied, widened by DECISIONS: the dump prompt lists "where you post, and your email list (or none)" (no question mark); `setup.plan_guess` names "email list: {n | none}"; §CM-SETUP 5 rewritten; list_size = ask|{n} (schema type text, 12/12); "No list (said or guessed)" in §CM-WEEK 2; the Hedge line cut, and `check.bet` removed from both string files.
+- K25 applied: "first line ≤12 words, word-for-word"; "to memorize".
+- K26 applied: "the best result + the client's OK (never invent; unsure: no)"; the block's reminder line cut (S1 keeps the §CM-TODAY offer; S0 loses it on Day 0).
+- K27 applied: "a due week prints its boxes only, the card on the next message".
+- K28 applied (EN): "the app's route and backup".
+- K29 applied (EN), in the schema's trim_order: liked, passages, client_words, stories; voice last.
+- K30 applied: guess_no_result only when no client is named; clients with no outcome → ask what changed for one.
+- K31 applied: KNOWN FOR "one breath, ≤35 words".
+- K32 applied: "FILM TODAY · under 30 s, say it from memory".
+- K33 applied: "one line above each box (+ the film-list opener)".
+- K34 applied as founder decision (c): the best early-win line in a copy box + "Post it as text today if you like." (`dump.post_it`); §CM-POSTS 6 box rule (stands alone, no comment word).
+- Also mirrored from VG1: VK-2 (a spoken objection → quiet at once, S1 only; no room in the S0 block), VK-3 (`setup.multi_income` one question), VK-4 (Map pushback, then Week 1), VK-19 (the gift written out under the caption).
+
+Graders and protocol:
+- G11 applied (`word_head()`), hardened in verify for a leading "(my guess)".
+- G12 applied.
+- G13 applied, narrowed in verify ("a reader writes: …" exempt only after if/when).
+- G14 applied.
+- G15 applied with a change: graded against the coach's first send (a warning, not a fail); acceptance stays at 4. Flat fail deferred to the founder.
+- G16 applied.
+- G17 applied (keyword-once EN only; `known_for_max_en/vn`; before→after pairs in I8).
+- G18 applied, plus the whole-item rule; in verify, a persona fact in the visible voice lines now fails.
+- P8 applied: `transcript.raw.jsonl` frozen on first grade; logged edits must replay exactly.
+- P9 deferred (separate machine-side model, required-paste check, floor notes from grades.json).
+- P10 deferred (in-budget personas).
+- P11 deferred: re-run proof S1, proof S0, Linda and consultant S1 on the new kit; nothing above is proven until then.
+
+Eval cases (`evals/cases/*.en.toml`):
+- Updated in place: setup.en.002, 006, 012, 013, 015, 016, 017, 018, 019, 025, 029, 030, 035 (now S1 only), 038, 046, 047; message.en.016-019 (pushback → Week 1), 022, 031 (no bet); brain.en.006 (list_size 0|ask).
+- Updated in contexts and notes only: the new `setup.multi_income`, `setup.guess_no_result` and plan-guess wording across 8 files.
+- Added: setup.en.052 (soft cut), 053 (list guessed in the plan line, list_size ask), 054 (early win in a copy box).
+- Header notes in setup.en.toml and message.en.toml say how pre-cut "chunks 1-3, then 'done'" contexts replay.
+
+Open: the budgets are nearly spent (block 12 chars, SETUP 8 B, CARD 14 B, MAP 14 B, ship.kit 1 char); keyword only in
+the ask (2 runs) has no kit fix this round; G15 flat fail is the founder's call; evals/README.md lags the P8/G15/G18
+changes.

@@ -150,6 +150,11 @@ class QuoteTests(unittest.TestCase):
                 self.assertFalse(ck.quotes_in(text, "vn" if "ai đó" in text else "en")[0].attributed)
         self.assertTrue(ck.quotes_in('Someone told me "you saved my job".')[0].attributed)
         self.assertTrue(ck.quotes_in('Lorraine said "can you do my room".')[0].attributed)
+        # verifier: a reported message and an everyone-says claim stay attributed
+        self.assertTrue(ck.quotes_in('A reader writes: "your post saved my marriage"')[0].attributed)
+        self.assertFalse(ck.quotes_in('If a reader writes "too long", cut it.')[0].attributed)
+        self.assertTrue(ck.quotes_in('Ai cũng hỏi "giá sao em"', "vn")[0].attributed)
+        self.assertFalse(ck.quotes_in('Có ai hỏi "giá sao em" thì gửi bảng giá.', "vn")[0].attributed)
 
     def test_glossed_terms_are_not_attributed_quotes(self):
         """Baseline vn/hanh I9 false positive: the assistant explaining an English word."""

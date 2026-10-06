@@ -2052,6 +2052,13 @@ class G2RoundGraderTests(TempRepo):
         self.assertEqual(graders.word_head("CỨNG ĐƠ · không dấu: CUNG DO (mình đoán)"), "cứng đơ")
         wrong = self.day0(map_reply=MAP_REPLY.replace("YOUR WORD: CHAPTER", "YOUR WORD: COFFEE (my guess)"))
         self.assertFails(wrong, "day0_shape", 'the CTA asks for "CHAPTER" but YOUR WORD is "coffee"')
+        # verifier: a leading note is cut too; a real mismatch behind it, or after a bracket naming the CTA, still fails
+        self.assertEqual(graders.word_head("(my guess) CHAPTER: from their words"), "chapter")
+        for value in ("(my guess) COFFEE: from their words", "COFFEE (comment CHAPTER)", '"COFFEE" — CHAPTER',
+                      "the coffee, CHAPTER"):
+            with self.subTest(value=value):
+                bad = self.day0(map_reply=MAP_REPLY.replace("YOUR WORD: CHAPTER", "YOUR WORD: " + value))
+                self.assertFails(bad, "day0_shape", 'but YOUR WORD is "coffee"')
 
     # -- G12: a redacted name in someone's words is no placeholder; a "{first name}" slot in a copy box is
     def test_g12_placeholders(self):
@@ -2074,6 +2081,11 @@ class G2RoundGraderTests(TempRepo):
         self.assertPasses(self.grade([("coach", "next"), ("machine", label)]), "I9")
         said = label.replace("someone asks the price, or", "Lorraine said")
         self.assertFails(self.grade([("coach", "next"), ("machine", said)]), "I9", "can you do my room")
+        # verifier: a reported message is a claim ("A reader writes: …"), unless "if / when" makes it a scenario
+        post = f"{TAG}Week 1\n```\nA reader writes: \"your tape trick saved us four grand\"\n```\nNEXT → ok"
+        self.assertFails(self.grade([("coach", "next"), ("machine", post)]), "I9", "your tape trick")
+        scenario = post.replace("A reader writes:", "If a reader writes")
+        self.assertPasses(self.grade([("coach", "next"), ("machine", scenario)]), "I9")
 
     # -- G14: the whole card within platform/targets.toml [budgets.brand_card]
     def test_g14_whole_card_budget(self):
@@ -2282,6 +2294,11 @@ class VG1RoundGraderTests(TempRepo):
         self.assertFails(self.vn(("coach", "ok"), ("machine", slip)), "I15", 'pronoun "Mình" outside the pair anh–em')
         english = talk.replace("why_this_one đã ghi", "the plan đã ghi")
         self.assertFails(self.vn(("coach", "ok"), ("machine", english)), "I15", "English outside the allowlist: the")
+        # verifier: the map.ok line keeps its inclusive "mình" only; a bracket that is not an example is still read
+        ok_slip = self.vn(map_reply=VG_MAP.replace("Mình chạy thử 4 tuần nghe anh.", "Mình chạy thử 4 tuần nghe bạn."))
+        self.assertFails(ok_slip, "I15", 'pronoun "bạn" outside the pair anh–em')
+        bracket = talk.replace("(vd chị trưởng phòng hồi đó)", "(em đoán, bạn nhắn một chữ là đổi)")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", bracket)), "I15", 'pronoun "bạn" outside the pair anh–em')
 
     # VG-5 the Zalo backup; VG-9 the kit's "Cloud của tôi"; VG-10 negated claims, the never-list, principles, rhythm
     def test_vg5_vg9_vg10_card(self):
@@ -2342,6 +2359,10 @@ class VG1RoundGraderTests(TempRepo):
         self.assertFails(report, "vn_messages", '"Dạ" from the coach to an em')
         self.assertFails(report, "vn_messages", '"nhé" to a Trung coach before their region is heard')
         self.assertEqual(len(self.item(report, "vn_messages", "no DỪNG")["evidence"]), 1)   # the Zalo series keeps it
+        # verifier: a reply labelled "Zalo · trả lời …" is one-to-one, not a series
+        zalo_reply = msgs.replace("Tin Zalo · Chủ nhật · gửi khách cũ", "Zalo · trả lời khi họ nhắn lại")
+        report = self.vn(("coach", "ok"), ("machine", zalo_reply))
+        self.assertEqual(len(self.item(report, "vn_messages", "no DỪNG")["evidence"]), 2)
         clean = msgs.replace("Anh/chị ơi", "Anh ơi").replace("Không muốn nhận tin nữa thì nhắn tôi chữ DỪNG.",
                                                                "Chưa cần thì cứ nói tôi.") \
             .replace("Dạ, chị gửi em", "Chị gửi em")

@@ -153,3 +153,42 @@ the review never saw, coldstart's 36-word KNOWN FOR, may be at 35 by the review'
 
 P9 (separate machine-side model, required-paste check, floor notes from grades.json), P10 (in-budget personas) and P11
 (re-run) are protocol and persona work outside the grader files.
+
+## After the fix round
+
+Graded at the end of the fix round (6 Oct), after the verify pass hardened G11, G13, G18 and P8 (397 tests OK).
+- Scratch copies of the 8 run folders were graded twice with the final `evals/graders.py` / `evals/run.py`. The
+  run folders in `evals/runs/` were not touched; no `transcript.raw.jsonl` was written there.
+- **HEAD strings:** a scratch root with `strings/*.toml` from `c4c6298`, the strings the transcripts were made with.
+  Everything else (graders, acceptance, schemas, targets) is the working tree.
+- **Final strings:** the working tree as is (soft cut, `dump.post_it`, the new `setup.plan_guess`,
+  `setup.multi_income` and `setup.guess_no_result`).
+- **Result: the two gradings agree item for item, and both match the "After" column above.** The fixed kit strings
+  cause no false verdict on the old transcripts.
+
+| Run | Valid | Failed checks | Failed items | Map turn | Film-ready | Early win (first send) | Kit fix that targets it |
+|---|---|---|---|---|---|---|---|
+| proof S1 | yes | I8, day0_timing, day0_shape | `"0"` (list_size); Map at 7; TOO LATE only in the ask (short 2, 3); whole card 5,894; `{first name}` | 7 | 19.1 | 6.5 (6.3) | K24; K22; none (rule exists, §CM-WEEK 4); K29; none (machine slip) |
+| proof S0 | yes | I12, day0_timing, day0_shape | first line 13 words; Map at 7; KNOWN FOR 42; CHAPTER only in the ask (SHORT 2, 3) | 7 | 20.0 | 6.4 (5.9) | K25; K22; K31; none |
+| coldstart S1 | yes | I23, day0_shape | I23 33%; KNOWN FOR 36; no save backup; "Shorter" 164 words | 5 | 14.3 | 5.5 (5.3) | none (low); K31; K28; K27 |
+| consultant S1 | yes | day0_timing, day0_shape | film-ready 23.0; whole card 6,091 | 6 | 23.0 | 6.2 (6.0) | K22 (word trigger); K29 |
+| linda S1 | yes | day0_timing | Map at 7; film-ready 27.3 | 7 | 27.3 | 8.0 (7.7) | K22, K30 |
+| service S1 | yes | – | – | 4 | 16.1 (56.1) | 6.2 (5.9) | – |
+| service S0 | yes | day0_shape | KNOWN FOR 42; `Hi [name],` | 6 | 16.9 (61.9) | 6.6 (6.4) | K31; none (S0 has no ask-3 text) |
+| floor | no: turns, pace, leaks | I8, quit_triggers, day0_timing, day0_shape | "minus 6 → 51"; 334 words before a box; Map at 7; no save line | 7 | invalid | – | P9 |
+
+Early win: every run missed the 4-minute budget, each time in the reply to the coach's first send (minute in
+brackets), so G15 records a warning in `details.early_win`; day0_timing shows status "warn" only where nothing else
+fails (coldstart, both service runs).
+
+Counts in the 7 valid runs: 19 failed items, 0 false positives (11 real items from the review + 8 new ones the
+review's G12/G14/G17 asked for). Nothing changed between the grader agent's "After" and the final graders on these
+runs. The kit fixes in the last column are graded only by a re-run (P11): proof S1, proof S0, Linda and
+consultant S1 first.
+
+Still open for the graders:
+- G15 grades the early win against the coach's first send, so it warns rather than fails in every valid run; a flat
+  fail is the founder's call.
+- Keyword-only-in-the-ask (G17) fails 2 runs that no kit fix this round targets; §CM-WEEK 4 already has the rule.
+- evals/README.md does not yet describe `transcript.raw.jsonl`, the meta.json `edits` log, the `warn` status or the
+  visible voice-line leak rule.

@@ -288,6 +288,25 @@ class Protocol(TempRepo):
                          ("machine", "rhythm: the story first, then the step, every single time"))
         self.assertEqual(run.check_leaks(said, pdir, None, "en")["status"], "pass")
 
+    def test_leaks_fail_in_the_visible_voice_lines(self):
+        """Verifier hole: a persona line in the card top's HOW YOU SAY IT or the Map's YOUR VOICE only warned. The
+        line is read one quote apart from its label, so the kit's 'often says "…"' never joins the coach's words."""
+        self.write("evals/personas/en/test-coach/voice-samples.md",
+                   "## Phrases\n1. Tells the story first, then the step, every single time\n"
+                   "2. She often says cheap quotes are quotes still missing something\n")
+        pdir = self.root / "evals" / "personas" / "en" / "test-coach"
+        labels = ("how you say it", "your voice")
+        for line in ("HOW YOU SAY IT: tells the story first, then the step, every time · warm",
+                     "YOUR VOICE: tells the story first, then the step, every time"):
+            with self.subTest(line=line):
+                rows = self.rows(("coach", "I coach people out of corporate jobs."), ("machine", line))
+                self.assertFalse(run.check_leaks(rows, pdir, None, "en", labels)["pass"])
+                self.assertTrue(run.check_leaks(rows, pdir, None, "en")["pass"])       # no labels: a warning
+        said = self.rows(("coach", "I always say: cheap quotes are quotes still missing something."),
+                         ("machine", 'YOUR VOICE: warm · often says "cheap quotes are quotes still missing something"'))
+        self.assertTrue(run.check_leaks(said, pdir, None, "en", labels)["pass"])
+        self.assertEqual(run.voice_labels(REPO, "en"), ("how you say it", "your voice"))
+
     def test_leaks_read_toml_values_and_list_items_apart(self):
         """Review G18: a TOML key never joins its value, a machine field label never joins its value, and list items
         are read apart; a persona line the coach never said still fails a voice field."""
@@ -352,12 +371,25 @@ class Edits(TempRepo):
     def test_logged_leak_removal_is_valid_and_counted(self):
         d = self.run_dir(self.TURNS)
         run.grade_run(d, self.root)
-        self.edit(d, "plain · dry · warm", "plain · warm", [{"turn": 2, "field": "YOUR VOICE", "before": "plain · dry",
-                                                             "after": "plain · warm", "reason": "leak: dry"}])
+        self.edit(d, "plain · dry · warm", "plain · warm", [{"turn": 2, "field": "YOUR VOICE",
+                                                             "before": "plain · dry · warm", "after": "plain · warm",
+                                                             "reason": "leak: dry"}])
         g = run.grade_run(d, self.root)
         self.assertTrue(self.edits(g)["pass"], self.edits(g))
         self.assertEqual(g["edited"], 1)
         self.assertTrue(g["valid"])
+
+    def test_a_logged_leak_cannot_cover_other_rewrites_in_the_turn(self):
+        """Verifier hole: a small logged leak removal used to cover any other change in the same machine turn."""
+        d = self.run_dir(self.TURNS)
+        run.grade_run(d, self.root)
+        self.edit(d, "plain · dry · warm", "plain · warm", [{"turn": 2, "field": "YOUR VOICE",
+                                                             "before": "plain · dry · warm", "after": "plain · warm",
+                                                             "reason": "leak: dry"}])
+        self.edit(d, "YOUR WORD:", "YOUR WORD (fixed):")
+        g = run.grade_run(d, self.root)
+        self.assertFalse(g["valid"])
+        self.assertIn("changed beyond its logged edits", " ".join(self.edits(g)["evidence"]))
 
     def test_other_changes_invalidate(self):
         d = self.run_dir(self.TURNS)

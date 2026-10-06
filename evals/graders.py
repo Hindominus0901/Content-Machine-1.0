@@ -1878,17 +1878,25 @@ def _inclusive_minh(line: str, start: int, coach: str) -> bool:
 
 def _coach_self_line(run: Run, matcher: Matcher, plain: str) -> bool:
     """A line where the coach names themself in public, in their own words: the Map's KNOWN FOR ("… thì tìm mình /
-    tôi / chị Hạnh") and the card's WHAT YOU SAY ("NÓI GÌ: …"), or the Map's OK line (map.ok, "Mình chạy thử 4 tuần…")
-    (review VG-2)."""
+    tôi / chị Hạnh") and the card's WHAT YOU SAY ("NÓI GÌ: …") (review VG-2)."""
     folded = ck.fold(plain)
     known = _map_labels(run).get("map.known")
     if known and known.match(folded):
         return True
     what = ck.fold(ck.plain_line(run.strings.get("card.visible.what", ""))).rstrip(":").strip()
-    if what and folded.startswith(what):
-        return True
+    return bool(what and folded.startswith(what))
+
+
+def _map_ok_line(run: Run, matcher: Matcher, plain: str) -> bool:
+    """The Map's OK line (map.ok, "Mình chạy thử 4 tuần nhé chị. OK hay sửa một dòng?"): its "mình" is the kit's
+    inclusive "we" (review VG-2); any other pronoun on it is still read ("…nhé bạn" to a chị is a slip)."""
     ok = ck.plain_line(run.strings.get("map.ok", "")).split()
-    return matcher.says("map.ok", plain) or (len(ok) >= 4 and folded.startswith(ck.fold(" ".join(ok[:3]))))
+    return matcher.says("map.ok", plain) or (len(ok) >= 4 and ck.fold(plain).startswith(ck.fold(" ".join(ok[:3]))))
+
+
+# Bracketed text the pronoun scan leaves out: an example in brackets ("(vd chị trưởng phòng hồi đó)", "(ví dụ: anh
+# shipper)"; review VG-2). Other bracketed talk to the coach ("(em đoán, bạn nhắn một chữ là đổi)") is still read.
+EXAMPLE_BRACKET_RE = re.compile(r"\(\s*(?:vd|v\.d|ví dụ|chẳng hạn|kiểu như|như là|e\.g)(?!\w)[^()\n]*\)", re.I)
 
 
 def i15_vn_language(run: Run) -> dict:
@@ -1917,9 +1925,12 @@ def i15_vn_language(run: Run) -> dict:
             for i in sorted(set(r.prose) | set(r.verdicts) | set(r.nexts)):
                 if _coach_self_line(run, matcher, r.lines[i].plain):
                     continue
-                line = re.sub(r"\([^()\n]*\)|\[[^\[\]\n]*\]", " ", _unquoted(r.lines[i].text))
+                ok_line = _map_ok_line(run, matcher, r.lines[i].plain)
+                line = EXAMPLE_BRACKET_RE.sub(" ", _unquoted(r.lines[i].text))
                 for m in pron.finditer(line):
                     word = m.group(1).casefold()
+                    if ok_line and word == "mình":
+                        continue
                     after = line[m.end():m.end() + 6]
                     before = line[max(0, m.start() - 6):m.start()].casefold()
                     next_word = re.match(r"\s+([^\W\d_]+)", line[m.end():])
@@ -2881,9 +2892,11 @@ def check_vn_natural(run: Run) -> dict:
 
 SLASH_ADDRESS_RE = re.compile(r"(?<!\w)(?:anh|chị|em|bạn|cô|chú)\s*/\s*(?:anh|chị|em|bạn|cô|chú)(?!\w)", re.I)
 OPT_OUT_RE = re.compile(r"(?<!\w)DỪNG(?!\w)|(?<!\w)nhận(?: tin)? nữa(?!\w)")
-# A one-to-one reply (not a Zalo series): its label names a reply, the inbox or Messenger.
+# A one-to-one reply (not a Zalo series): its label names a reply, the inbox or Messenger. A label that starts with
+# "Zalo" is a series unless it names a reply ("Zalo · trả lời khi họ nhắn lại" is one-to-one); "chuỗi" / "series"
+# always is.
 REPLY_LABEL_RE = re.compile(r"trả lời|\breply\b|inbox|messenger|\bdm\b|nhắn riêng", re.I)
-SERIES_LABEL_RE = re.compile(r"^\W*(?:tin\s+)?zalo(?!\w)|chuỗi|series", re.I)
+SERIES_LABEL_RE = re.compile(r"chuỗi|series", re.I)
 # "Dạ" from the coach to someone younger: the line opens with "Dạ" and the coach writes as chị / anh to an "em".
 DA_LINE_RE = re.compile(r"^\W*(?:[^:\n]{1,24}:\s*)?Dạ(?!\w)", re.I)
 ABOVE_TO_EM_RE = re.compile(r"(?<!\w)(?:chị|anh|cô|chú|thầy)\s+(?:\S+\s+){0,2}?(?:gửi|nhắn|kể|chỉ|tặng|nói|hướng dẫn|"
@@ -3426,6 +3439,7 @@ def word_head(value: str) -> str:
     """The keyword at the head of a YOUR WORD value: quotes and a leading "the" dropped, cut where its note starts
     ('TOO LATE, from "Is it too late for me?" (my guess)' → "too late"; 'CỨNG ĐƠ · không dấu: CUNG DO' → "cứng đơ")."""
     text = ck.straight_quotes(ck.nfc(value)).strip()
+    text = re.sub(r"^(?:\s*\([^()\n]*\))+\s*", "", text)        # a leading note: "(my guess) MISTAKE"
     text = re.sub(r"^\s*(?:the|a|an)\s+", "", text, flags=re.I)
     m = re.match(r'^\s*"([^"\n]+)"', text)          # a quoted keyword: '"keep up" (what dads keep saying)'
     if m:

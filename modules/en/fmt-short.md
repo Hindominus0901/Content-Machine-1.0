@@ -7,9 +7,9 @@ Acceptance: evals/cases/fmt-short.en.toml, convert.en.toml (email, DM). CAPS lab
 2 Beats: 3 (FILM TODAY) to 5, ≤12 words, one per take, joined by "but"/"therefore", never "and then".
 3 Words: §CM-LOCALE 2; under 30 s ≈ 70. Voice: their spoken voice (§CM-VOICE).
 4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-WEEK 6).
-5 Print: "N1 · {day} · {s} s" (Day 0: "FILM TODAY · under 30 s"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}" when a fact is missing; its WHY line (§CM-WEEK 5) waits for "{{t:cmd.why}}".
+5 Print: "N1 · {day} · {s} s" (Day 0: "FILM TODAY · under 30 s, say it from memory"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}" when a fact is missing; its WHY line (§CM-WEEK 5) waits for "{{t:cmd.why}}".
 6 Client result: that line word-for-word + "{{t:claims.individual}}"; the client's OK is checked silently ("{{t:tick.client_ok}}" shows on "{{t:cmd.why}}").
-7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (dump refused comment asks: the quiet ask, §CM-CTA-KIT 5); then only "{{t:film.now_or_text}}", a statement, no push to film; as text = first line + caption, one box. No check, tick or WHY line.
+7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (they objected to comment asks: the quiet ask, §CM-CTA-KIT 5); the gift it names, written in full, in a copy box under the caption (never promise one that doesn't exist yet); then only "{{t:film.now_or_text}}", a statement, no push to film; as text = first line + caption, one box. No check, tick or WHY line.
 
 <!-- @section fmt-short.kit-video-delivery -->
 - Delivery: beat cards (default) · word-for-word: same budgets, "/" pauses · bullets: 3 points · off-camera interview: 4–6 questions for {who asks}, each "make sure you mention: …". First/last line always word-for-word.
@@ -25,7 +25,7 @@ Acceptance: evals/cases/fmt-short.en.toml, convert.en.toml (email, DM). CAPS lab
 3 Prose with rhythm: paragraphs of 2–3 sentences, ≤40% one-liners after the hook, no labels like "The lesson:", one reader, "you". A real scene, date or number of theirs at the cost. Voice: their written voice, else the spoken one tidied; LinkedIn plainer, fewer emoji (§CM-VOICE).
 4 No link in the body (DM or comment), ≤3 hashtags, never ending "Agree?" or "Thoughts?". Long post 150–300 words.
 5 CAROUSEL (LinkedIn: a PDF post, the slides saved as a PDF): 10–12 lines "Slide n: …". Slide 1 ≤10 words, specific: a number, an outcome or who. Slide 2 confirms the payoff. Then one rule per slide, ≤30 words, rule · why · example, each stands alone. A summary slide worth sending. Last: the gift + comment word (quiet: message me), the next step after the last rule. Every rule in the slides: worth saving with no comment. Caption adds context, no new claim.
-6 BACKGROUND post: ≤{{bg_post_max_chars}} characters, text only. "Post line 2?" during the dump: line 2 as a short post, no comment word, nothing under it, then "{{t:dump.keep_going}}"
+6 BACKGROUND post: ≤{{bg_post_max_chars}} characters, text only. The early win's box: of the 3 lines, the one that stands alone as a post, no comment word. "Post line 2?" during the dump: line 2 as a short post, no comment word, nothing under it, then "{{t:dump.keep_going}}"
 7 POSTS THAT SELL (offer post: §CM-CTA-KIT). Teaching: surprising claim → why the usual fix fails → their way in 3 numbered steps → one OK'd proof line → comment word for the how. Case: each decision → what changed → result → "{{t:claims.individual}}". Objection: their buyer's line verbatim → reframe → proof → process risk-reversal → one ask; no ROI, return figure or "pays for itself".
 8 Each piece: a copy box; under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}".
 

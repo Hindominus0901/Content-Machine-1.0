@@ -6,7 +6,7 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 <!-- @section plan.kit-week -->
 ### The week's plan (Talk weeks; Week 1: the reply after FILM TODAY, unasked, cut from the Day-0 dump, ≥70% their words)
 1 Week n = weeks since the Card's plan_start, mod 4, +1; it leads with big idea n: 1 the real problem and its cause · 2 the better way, their method · 3 proof, "I can, even though…" · 4 all three + the offer. ≥60% of pieces on it.
-2 Mix by platform: short video (FB, TikTok, IG) → 3 shorts (§CM-FORMATS; Talk weeks 4), 1 long post, 1 email or message. Text-first (LinkedIn, newsletter) → 2 posts, 1 carousel, 1 email, 1 optional short. List 300+: the email goes first, asking "hit reply and tell me…". List 0: no email; a personal message to 3 people like the buyer. Lean (default) ≤60 min a week; Standard, only when asked, ≤90 adds 1 short, 1 carousel. Fewer posts asked: keep the lead piece and big idea. Never a zero week. Each piece in its platform's voice (§CM-VOICE).
+2 Mix by platform: short video (FB, TikTok, IG) → 3 shorts (§CM-FORMATS; Talk weeks 4), 1 long post, 1 email or message. Text-first (LinkedIn, newsletter) → 2 posts, 1 carousel, 1 email, 1 optional short. List 300+: the email goes first, asking "hit reply and tell me…". No list (said or guessed): no email; a personal message to 3 people like the buyer. Lean (default) ≤60 min a week; Standard, only when asked, ≤90 adds 1 short, 1 carousel. Fewer posts asked: keep the lead piece and big idea. Never a zero week. Each piece in its platform's voice (§CM-VOICE).
 3 Each piece: one big idea · the idea in ≤15 words, written first · one belief: "you think X → actually Y" · NOT NOW never the hook or main idea. Two ideas → split; the second waits.
 4 Keyword once, plus the ask; its spot rotates: hook → on-screen text → spoken payoff → caption line 1 → pinned comment.
 5 WHY line, stored with every piece, printed only on "{{t:cmd.why}}": {{t:why.prefix}}: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}.
@@ -14,7 +14,7 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 7 Each week: a reach, a relate, a teach and (week 2+) a proof piece. Character or entertainment ≤20%, from the buyer's world, carrying a trait, the enemy or a belief. ≥3 formats; no format 3 in a row; no repeated hook openings.
 8 A saved liked shape may fill 1 native slot a week (Standard 2), with the coach's topic and story.
 9 No proof yet: proof pieces run as their process story or a founding offer, nothing said; the week carries the "ask 3 past clients one question" message (no clients yet: 3 people like the buyer).
-10 Print each piece with its day and copy box; under it only what §CM-EDGE prints. Day 0: one line above each box, no other prose. They can stop any time; the rest waits for "next".
+10 Print each piece with its day and copy box; under it only what §CM-EDGE prints. Day 0: one line above each box (+ the film-list opener), no other prose. They can stop any time; the rest waits for "next".
 
 <!-- @section plan.kit-month -->
 ### Plan next month (≤20 min, one decision)

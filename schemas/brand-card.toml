@@ -64,7 +64,7 @@ trim_order = ["liked", "recent_hooks", "passages", "client_words", "stories", "p
 
 [sources]
 dump = "the Day-0 brain-dump, verbatim"
-check = "guessed from the dump and named once above Week 1, one word changes it (wf15 replaced the 7-line check)"
+check = "heard in the dump (its prompt asks platform and list, G2 K24), else guessed and named once above Week 1, one word changes it (wf15 replaced the 7-line check)"
 map = "the message the coach said OK to"
 coach = "asked or confirmed in chat"
 bank = "top rows of the Bank (banks.toml [card_caps])"
@@ -643,11 +643,14 @@ label_key = "card.label.owned_channel"
 [[machine.field]]
 name = "list_size"
 group = "plan"
-type = "int"
+type = "text"
+max_chars = { en = 12, vn = 12 }
 source = "check"
 required = true
 label_key = "card.label.list_size"
-note = "email or Zalo contacts; 300 or more makes the week email-first"
+note = """email or Zalo contacts, or "ask" until the coach names a number (G2 K24): the Day-0 dump prompt asks, \
+an unheard list is guessed and named once above Week 1 (setup.plan_guess), never stored as fact. 300 or more \
+makes the week email-first"""
 
 [[machine.field]]
 name = "cta_style"

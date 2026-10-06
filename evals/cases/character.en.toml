@@ -66,7 +66,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "FILM TODAY under the Map stands on Dan's own story, never a client he doesn't have, kids unnamed, nothing under it"
-context = "Day 0, persona default (cold start, 0 clients, proof locked). The one missing fact was the best result ('My guess: no client result to show yet, so I'll use your own story. Right?'); his answer brings the 4-line Map with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' No Brand Card yet: it prints after Week 1."
+context = "Day 0, persona default (cold start, 0 clients, proof locked). The one missing fact was the best result ('My guess: no client result yet, so I'll use your own story. Right?'); his answer brings the 4-line Map with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' No Brand Card yet: it prints after Week 1."
 input = """yep"""
 regex = [
   '''FILM TODAY''',

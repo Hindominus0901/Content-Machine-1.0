@@ -151,7 +151,7 @@ invariants = ["I1", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card.toml [[machine.field]] required = true (EN): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, offer, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, trial_ends, offer_status, proof_ready, tone, rhythm, phrases, audience_address, code_mix, humour, trait, enemy, principles, passages, client_words, stories, plan_start, season, talk_day, week, tier, platform, owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations, not_now. wf15 S3: offer and week left the visible part, so they are machine-block fields now; message, big_ideas and keyword are not repeated in the block. pronouns and dialect are VN only. Platform, list size, talk day and delivery are never asked on Day 0 (setup.kit-facts 5): Instagram and 140 are in her dump; talk day is a guess (she is at her mom's on Mondays; her real answer is Tuesday) and delivery defaults to the beat-card form FILM TODAY uses. timezone is 'ask' until Dana names a zone, never blank (brain.kit-print 3: timezone=ask|{zone}, G1 K8). tier is lean, the default; Standard only when she asks (plan.kit-week 2, G1 K10). Voice fields in detail: brain.en.028."""
+notes = """scope: transcript. brand-card.toml [[machine.field]] required = true (EN): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, offer, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, trial_ends, offer_status, proof_ready, tone, rhythm, phrases, audience_address, code_mix, humour, trait, enemy, principles, passages, client_words, stories, plan_start, season, talk_day, week, tier, platform, owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations, not_now. wf15 S3: offer and week left the visible part, so they are machine-block fields now; message, big_ideas and keyword are not repeated in the block. pronouns and dialect are VN only. Platform and email list are asked only in the dump prompt's list, talk day and delivery never (setup.kit-facts 5, G2 K24): Instagram and 140 are in her dump; talk day is a guess (she is at her mom's on Mondays; her real answer is Tuesday) and delivery defaults to the beat-card form FILM TODAY uses. timezone is 'ask' until Dana names a zone, never blank (brain.kit-print 3: timezone=ask|{zone}, G1 K8). tier is lean, the default; Standard only when she asks (plan.kit-week 2, G1 K10). Voice fields in detail: brain.en.028."""
 
 [[case]]
 id = "brain.en.003"
@@ -263,7 +263,7 @@ not_contains = []
 regex = [
   '''(?m)^\s*offer_status:\s*(none|founding)\b''',
   '''(?m)^\s*proof_ready:\s*no\b''',
-  '''(?m)^\s*list_size:\s*0\b''',
+  '''(?m)^\s*list_size:\s*(?:0|ask)\b''',
   '''(?m)^\s*owned_channel:\s*none\b''',
   '''(?m)^\s*platform:\s*instagram\b''',
   '''(?m)^\s*delivery:\s*beat-cards\b''',
@@ -283,7 +283,7 @@ invariants = ["I5", "I8", "I10"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card.toml: offer_status live | founding | none; proof_ready 'yes once a consented, substantiated client result exists; hard asks wait for yes'. Dan has 0 clients: proof rows stay empty (his own story is a story row, not a P row). private_names never appear anywhere, the machine block included, because passages are the raw material for re-say pieces. His beat cards (FILM TODAY's form) are 'beat-cards' on the card (brain.kit-print 3 delivery enum, G1 K8; before it the enum forced 'bullets'). The number checks run from the card title on. Talk day is a guess now (setup.kit-facts 5): only a valid day is asserted."""
+notes = """scope: transcript. list_size (G2 K24, schemas/brand-card.toml ask|{n}): 0 when his dump says he has no list (the dump prompt asks), else ask; never a made-up number. brand-card.toml: offer_status live | founding | none; proof_ready 'yes once a consented, substantiated client result exists; hard asks wait for yes'. Dan has 0 clients: proof rows stay empty (his own story is a story row, not a P row). private_names never appear anywhere, the machine block included, because passages are the raw material for re-say pieces. His beat cards (FILM TODAY's form) are 'beat-cards' on the card (brain.kit-print 3 delivery enum, G1 K8; before it the enum forced 'bullets'). The number checks run from the card title on. Talk day is a guess now (setup.kit-facts 5): only a valid day is asserted."""
 
 [[case]]
 id = "brain.en.007"
@@ -974,7 +974,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'change 4' on the Map carries into the card: her tone word and her phrase on the HOW line and in the voice fields"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: … Right? Or tell me which pays the bills this month.'). She answered it and the 4-line Map is on screen with FILM TODAY under it. Turn 1 changes line 4 (line 4 reprinted, FILM TODAY only if it changes); turn 2 OKs it and gets Week 1, unasked (ChatGPT Free: ≤3 pieces a reply); turn 3 answers that and gets the rest; turn 4 answers the next reply; Day 0's last reply prints the card."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answered it and the 4-line Map is on screen with FILM TODAY under it. Turn 1 changes line 4 (line 4 reprinted, FILM TODAY only if it changes); turn 2 OKs it and gets Week 1, unasked (ChatGPT Free: ≤3 pieces a reply); turn 3 answers that and gets the rest; turn 4 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] change 4: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.
 [turn 2] ok
 [turn 3] ok I'll film it tomorrow morning

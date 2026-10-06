@@ -181,3 +181,44 @@ a reader:
 - a gift promised in today's caption before it exists;
 - the "cam kết" register;
 - the naturalness scores in §6.
+
+## After the fix round
+
+Graded at the end of the fix round (6 Oct), after the verify pass hardened VG-2, VG-13, G13, G18 and P8 (397 tests
+OK).
+- Scratch copies of the 7 run folders were graded twice with the final `evals/graders.py` / `evals/run.py`. The
+  run folders in `evals/runs/` were not touched.
+- **HEAD strings:** a scratch root with `strings/*.toml` from `c4c6298`, the strings the transcripts were made with.
+  Everything else is the working tree.
+- **Final strings:** the working tree as is.
+- **With HEAD strings the result matches the "After" column above item for item.** With the final strings it does
+  not, for one reason: the new `setup.dump_posts` (VK-12 cut) no longer matches the old transcripts' dump prompt, so
+  the graders cannot find it (see the last two columns).
+
+| Run | Failed checks (HEAD strings) | Failed items | Map turn | Film-ready | Early win (first send) | Kit fix that targets it | Final strings differ |
+|---|---|---|---|---|---|---|---|
+| proof | vn_messages | DỪNG in inbox reply 1; "Dạ, chị gửi em…" | 6 | 17.6 | 7.1 (6.9) | VK-6; VK-8 | day0_timing fails: early win timed from turn 1 |
+| coldstart | day0_timing, day0_shape, vn_natural, vn_messages | Map at 8, 11 turns; card top in the box; `[động tác 1–3]`, `[dán quà]`, `[Tên]`, `[tên]`; written particles 16%; "nhé" to a Nam coach | 8 | 18.4 | 6.5 (6.3) | VK-4, soft cut, K30; none (slip); VK-7, VK-19; none (soft); VK-12 | the "nhé" item is not run |
+| consultant | I8, vn_messages | trap "200 triệu" in proof; "anh/chị" in 4 messages; "nhé" to a Trung coach | 7 | 19.9 | 7.5 (7.4) | VK-13; VK-7; VK-12 | day0_timing fails; the "nhé" item is not run |
+| service-biz | day0_shape, vn_messages | whole card 7,078 (max 6,600); DỪNG in an inbox reply; "nhé" to a Trung coach | 7 | 17.7 | 7.2 (7.0) | none (K29 not mirrored to VN); VK-6; VK-12 | day0_timing fails; the "nhé" item is not run |
+| Hạnh S1 | day0_timing, vn_messages | film-ready 20.2; "Dạ, chị gửi em 3 bước…" | 6 | 20.2 (45.2) | 5.6 (5.5) | soft cut (~1,500 tiếng); VK-8 | none |
+| Tuấn | I5, vn_messages | `setup.multi_income` 2 questions; DỪNG; "nhé" to a Nam coach | 7 | 18.2 | 7.1 (7.0); quit_triggers warn | VK-3; VK-6; VK-12 | day0_timing fails; the "nhé" item is not run |
+| Hạnh S0 | day0_shape, vn_natural | `[Tên]`; written particles 13% | 7 | 19.9 (44.9) | 5.6 (5.1) | VK-7; none (soft) | day0_timing fails |
+
+Early win: every run missed the 4-minute budget, each time in the reply to the coach's first send (minute in
+brackets), so G15 records a warning in `details.early_win`; day0_timing shows status "warn" where nothing else fails
+it. All 7 runs are valid. Counts with HEAD strings: 8 carried real items + 13 new, 0 false positives, as in the "After"
+table above.
+
+The final-strings column is an artefact of re-grading old transcripts with new kit strings. A VG2 re-run carries the
+new `setup.dump_posts`, so the dump prompt is found again. Until then, grade VG1 runs with HEAD strings (a scratch
+root with `strings/*.toml` from `c4c6298`, passed to `evals/run.py --root`).
+
+Still open for the graders:
+- The dump-prompt finder keys on the `setup.dump_posts` text only, so any later rewording of that string breaks
+  timing on older runs again. A second anchor (the mic tip or the topic hint list) would make it robust.
+- G15 warns rather than fails when the early win comes in the reply to the first send (founder's call).
+- DỪNG in an outbound one-to-one Zalo message ("gửi riêng 3 học viên cũ") is not flagged; the kit (fmt-short 6.3) is
+  ambiguous on Zalo to acquaintances.
+- The service-biz whole card (7,078 > 6,600) has no VN kit fix: K29's trim order needs about 38 B the method file
+  does not have.

@@ -8,6 +8,7 @@ Văn nói, tiểu từ ba miền: §CM-NATURAL 4 (mục 1 chỉ trỏ về đó)
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 5 bỏ "email chỉ khi có danh sách" (start-block bước 7, §CM-MESSAGES 1); mục 7 trỏ dòng LỜI HỨA cho claims.individual; mục 10 trỏ §CM-MESSAGES 3; tiêu đề Luật VN bỏ "nên kết quả nào cũng cần hồ sơ" (§CM-GUARDRAILS LẶNG LẼ, KẾT QUẢ MỚI).
 G1 6/10 (theo EN, K4): mục 6 "Tuần lịch từ thứ Hai; tuần kế hoạch: §CM-CARD 3" (tuần kế hoạch đếm từ plan_start). locale.not_legal gọn hơn ("việc của bạn").
 Cắt bù byte G1 (không bỏ luật): mục 5 bỏ "Đường hỏi: {{cta_channel}}" (start-block bước 7 "Đường đi: {{cta_channel}}", luôn trong ngữ cảnh khi có file này); mục 1 bỏ "Văn nói, tiểu từ: §CM-NATURAL." và mục 3 bỏ "Danh sách cắt: §CM-HUMANIZE." (cả hai anchor có trong danh sách ĐỌC TRƯỚC, NATURAL "trước mọi chữ Việt"; §CM-VOICE 7 vẫn trỏ NATURAL).
+Cắt bù byte G2/VG1 6/10 (không bỏ luật): mục 5 định dạng tiền trỏ dòng TIẾNG VIỆT của khối hướng dẫn (cùng {{money_example}}, 1,5tr, 99k).
 
 <!-- @section locale.kit-language src=ca8f26cd51 -->
 1 Chỉ là mặc định; giọng trên card và lời coach thắng. Không chữ văn phòng (triển khai, giải pháp, Quý khách). Nhờ chọn cách gọi khách: đưa một cặp + lý do: mình – bạn (khách trẻ) · mình – anh chị (khách 30+) · em – anh chị (coach trẻ hơn khách) · tôi – anh chị (chuyên gia, B2B) · mình – các chị em (nhóm); không tao – mày.
@@ -16,7 +17,7 @@ Cắt bù byte G1 (không bỏ luật): mục 5 bỏ "Đường hỏi: {{cta_cha
 
 <!-- @section locale.kit-market src=ee314d4827 -->
 4 Chưa có nền tảng: khách 30+ → Facebook cá nhân + nhóm; khách trẻ → TikTok; B2B thêm LinkedIn. Luôn kèm Zalo để chốt, chăm khách.
-5 Giá công khai, không "giá ib"; chuyển khoản QR. Tiền: {{money_example}}, 1,99tr, 99k; số lẻ dấu phẩy (2,5).
+5 Giá công khai, không "giá ib"; chuyển khoản QR. Tiền như dòng TIẾNG VIỆT; số lẻ dấu phẩy (2,5).
 6 Ngày "thứ Hai, 19/10"; giờ 20h, 20h30, giờ Việt Nam (coach ở nước ngoài: hỏi múi giờ một lần). Tuần lịch từ thứ Hai; tuần kế hoạch: §CM-CARD 3. Tháng cô hồn (tháng 7 âm): không đề xuất mở bán, coach muốn thì làm. Lưu ý có ngày: một dòng; {date} = hôm nay, ngày/tháng/năm.
 
 <!-- @section locale.kit-claims src=5548312ed3 -->

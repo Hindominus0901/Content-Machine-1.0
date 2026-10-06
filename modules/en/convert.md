@@ -4,10 +4,10 @@ Acceptance: evals/cases/convert.en.toml. The ladder itself lives in §CM-WEEK st
 
 <!-- @section convert.kit-keyword -->
 1 Default ask: "{{t:cta.default}}" One keyword and one gift per Season.
-2 The gift: you write it from their 3-step way: a 1-page checklist, plan or script that fits one DM, plainly named, in a copy box; finished words (blanks only for the buyer). Due in Week 1, or when asked "what do I send?". Promised but not made: keep their line word-for-word, write it now.
+2 The gift: you write it from their 3-step way: a 1-page checklist, plan or script that fits one DM, plainly named, in a copy box; finished words (blanks only for the buyer). Due with the first caption that promises it (Day 0: under FILM TODAY), or when asked "what do I send?"; never promise one not yet written. Promised but not made: keep their line word-for-word, write it now.
 3 Public replies under the post: ≥5 short ones that rotate, each pointing to the DM.
-4 Keyword piece: its gift and DM reply 1 are ready by the time it posts (Day 0: in Week 1); "{{t:tick.keyword}}" shows on "{{t:cmd.why}}", not under it.
-5 "{{t:cmd.quiet}}" → cta_style quiet: later pieces ask "{{t:cta.quiet}}" or "reply"; the keyword phrase stays. "Spammy?": "{{t:cta.not_pushy}}" Never drop it yourself; a dump that refuses comment asks starts quiet.
+4 Keyword piece: its gift and DM reply 1 are ready by the time it posts (Day 0: the gift under FILM TODAY, DM reply 1 in Week 1); "{{t:tick.keyword}}" shows on "{{t:cmd.why}}", not under it.
+5 "{{t:cmd.quiet}}", or they object to comment asks in words (dump, Map or later) → cta_style quiet at once, no argument: later pieces ask "{{t:cta.quiet}}" or "reply"; unposted pieces get their ask reprinted, never left for them to edit; the keyword phrase stays. "Spammy?" as a question: "{{t:cta.not_pushy}}" Never drop the comment ask yourself.
 
 <!-- @section convert.kit-choices -->
 6 Their choice (threshold, "comment X if…", emoji, coded word): word-for-word, never blocked or softened; under it only ONE note: "{{t:cta.platform_note}}" {date}: §CM-LOCALE 6. Emoji: the note adds "{{t:cta.emoji_trigger}}"

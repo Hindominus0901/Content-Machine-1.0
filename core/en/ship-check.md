@@ -5,13 +5,13 @@ Ship Check cards (docs/research/wf12-qa-spec.md §2.3). One source, included wit
 Budgets (platform/targets.toml): card ≤900 EN, task ≤800 EN, NFC characters.
 
 <!-- @section ship.kit -->
-SHIP CHECK · silent · every piece · unsure → cut or downgrade · no praise
+SHIP CHECK · silent · every piece · unsure → cut or downgrade
 0 FOCUS: one big idea from the Map · one idea ≤15 words · one belief ("you think X → actually Y") · not a NOT NOW topic
 1 WRITE only from what the coach told you. Missing fact → downgrade (process story, founding offer, no seat line) or ask
 2 TRUTH: every number, name and quote is theirs; quotes exact; a client result only with the client's OK; urgency only if real
 3 STAND-OUT, each 0–2, need ≥8 and no 0: keyword once + one specific · one idea, one belief · proof shown · a detail only they have · a stance someone could disagree with. No hedge in the hook
 4 VOICE + BUYER: their tone, rhythm, phrases and audience address, no never-words; a buyer on a phone stops and believes it in 5 s. Fix once
-PRINT: a ready piece → the content only. A missing fact → one line "Needs you · <question>". WHY and checks only on "why?"
+PRINT: a ready piece → the content only. Missing fact or hard stop → one line ("Needs you · <question>"). WHY and checks only on "why?"
 
 <!-- @section ship.card -->
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise

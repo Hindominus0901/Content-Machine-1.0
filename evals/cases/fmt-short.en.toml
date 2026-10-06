@@ -120,7 +120,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
 title = "Compact mode: FILM TODAY under the Map is complete with no method file, prints nothing under it, and never asks for the file"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 17, iPhone. The one missing fact was the best result ('My guess: no client result to show yet, so I'll use your own story. Right?'); his 'yep' answers it, so this reply shows the 4-line Map (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; founding small group, no price set) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' His dump said reading a script makes him sound like a 'hostage video', so beat cards (the default)."
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 17, iPhone. The one missing fact was the best result ('My guess: no client result yet, so I'll use your own story. Right?'); his 'yep' answers it, so this reply shows the 4-line Map (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; founding small group, no price set) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' His dump said reading a script makes him sound like a 'hostage video', so beat cards (the default)."
 input = '''yep'''
 regex = [
   '''FILM TODAY''',
@@ -786,7 +786,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'Can I post line 2 tonight?' during the dump: one short postable version, nothing under it, then back to talking"
-context = "Day 0, about minute 4, ChatGPT Free. After dump chunk 1 the early win read 'Got it. 3 lines you just said that are worth money: 1 … 2 \"You're not too old. You're too vague.\" 3 …. Keep going, or say 'done'.' No Map yet, no keyword or free gift chosen."
+context = "Day 0, about minute 4, ChatGPT Free. After dump chunk 1 the early win read 'Got it. 3 lines you just said that are worth money:' with the best line in a copy box + 'Post it as text today if you like.', then 2 quoted lines (line 2: \"You're not too old. You're too vague.\") and 'Keep going, or say 'done'.' No Map yet, no keyword or free gift chosen."
 input = '''wait can I just post line 2 right now on facebook? like tonight'''
 regex = [
   '''(?i)too vague''',

@@ -102,9 +102,11 @@
 
 # Day 0 details and the Brand Card (§ SETUP, CARD; P2 method anchors)
 "setup.no_setup"         = "No, nothing today."
+# G2 (DECISIONS 6 Oct, long dumps): dump.enough is the soft cut and carries the first missing-fact guess in the same
+# message (one question mark in all); dump.post_it follows the early win's best line in its copy box.
 "dump.keep_going"        = "Keep going, or say 'done'."
-"dump.enough"            = "That's plenty for today. Say 'done', or one more minute."
-"check.bet"              = "If you had to bet $100, which one?"
+"dump.enough"            = "That's plenty for today. If you have one more story, tell it now. If not: {your first guess | say 'done'.}"
+"dump.post_it"           = "Post it as text today if you like."
 "check.pick"             = "My pick: {option}, because {reason}."
 "save.limit_claude_free" = "Hit the limit? Come back when it resets, same chat, say 'next'."
 "resume.brb"             = "No rush. Say 'ok back' when you're back."
@@ -251,9 +253,9 @@
 # Integrator pass, wf15 + wf14: Day-0 missing facts, the Map's OK line, card top labels, VOICE anchor, Voice Card labels
 "setup.link_unread"            = "Your page didn't open here; what you say is enough."
 "setup.guess"                  = "My guess: {guess}. Right?"
-"setup.guess_no_result"        = "My guess: no client result to show yet, so I'll use your own story. Right?"
-"setup.multi_income"           = "You earn from {n} things. My guess: the ONE buyer who could buy more than one is {buyer}. Right? Or tell me which pays the bills this month."
-"setup.plan_guess"             = "For {platform} · talk day {day} (my guess; one word changes it)."
+"setup.guess_no_result"        = "My guess: no client result yet, so I'll use your own story. Right?"
+"setup.multi_income"           = "You earn from {n} things. My guess: write for {buyer}, the one buyer who could buy more than one. Right?"
+"setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess; one word changes it)."
 "map.ok"                       = "We'll run this for 4 weeks. OK, or change a line."
 "card.visible.to_them"         = "to them:"
 "card.visible.never"           = "never:"
