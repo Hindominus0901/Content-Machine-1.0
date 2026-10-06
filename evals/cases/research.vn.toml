@@ -1,6 +1,7 @@
-# Research module cases (VN): Day-0 Quick Listen (silent), RESEARCH-LITE (weekly drip, paste flow) and the
-# GROW Research Hour (R0 access check, R1 one buyer, R2 primary kit, R3 listening, R4 context sweep, R5 why loop,
-# R6 brief and sign-off, digest). Written by the QA role before the module exists.
+# Research module cases (VN): Day-0 Quick Listen (silent), the Week-1 "hỏi 3 khách cũ một câu" message,
+# RESEARCH-LITE (weekly drip, paste flow; Paste is the VN default) and the GROW Research Hour (R0 access check, R1 one
+# buyer, R2 primary kit, R3 listening, R4 context sweep, R5 why loop, R6 brief and sign-off, digest). Written by the QA
+# role; producers never edit this file. Day-0 cases rewritten 6 Oct 2026 for the simple surface (wf15) and the VN kit.
 # Sources: docs/research/wf7-research-module-spec.md (§2.0 RESEARCH RULES, §2.3 VN differences, §3 access modes,
 # §4 capture/brief/digest, §5b Buyer Mirror VN, §5d survey, §7.1 gates G1-G13, §7.2 privacy incl. PDPL
 # 91/2025); wf10-access-modes-design.md (§1 modes: Paste is the VN default; never Computer Use; Zalo never
@@ -8,14 +9,32 @@
 # diacritics kept, private groups paraphrased; §5 failure ladder); wf12-qa-spec.md §3.1 research-brief (RB1, RB3,
 # RB4, RB8, RB9 critical; Starter: RB1, RB9 at 2, ≥14/20); wf12-qa-standards.md §1 VN note; wf11-ux-spec.md §2
 # (Quick Listen runs silently on Day 0; Cloud của tôi backup; Claude keyboard mic); docs/DECISIONS.md (no names
-# or handles in captured research; read-only listening; never full computer use).
+# or handles in captured research; read-only listening; never full computer use); wf15-simple-surface-spec.md §0 S5,
+# §1-§3 and wf15-case-impact.md (R1-R18); modules/vn/research.md (§CM-RESEARCH-LITE: research.kit-quick, -paste);
+# strings/vn.toml (research.*, ask3.*, verdict.*, why.prefix, checked.prefix, map.*).
 #
-# Conventions (same as character.vn.toml):
+# Day 0 since 6 Oct 2026 (wf15 §0 S5, §1; VN start-block NGÀY 0): Quick Listen runs silently during the dump (≤5
+# searches if the app can, else the dump; "Âm thầm: tìm chữ khách dùng, nguyên nhân thật (tra mạng nếu được)"), never a
+# question about research; past ~1,200 tiếng the soft cut carries the first câu đoán; only the missing facts follow
+# (≤3, one a message); then ONE reply with the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ: · 3 CHỦ ĐỀ: · TỪ KHOÁ: · GIỌNG:),
+# QUAY HÔM NAY under it and map.ok; any answer but a Map change brings Tuần 1 (with the Zalo "hỏi 3 khách cũ một câu"
+# message), then the Brand Card. No inventory, no 7-line check, no stop point. The root cause Quick Listen finds feeds
+# big idea 1 and prints on "tại sao?", never on the Map.
+#
+# Conventions (read with evals/README.md "Case files"):
+# - Assertions run on the machine reply to the last coach turn; lines starting "[turn n]" separate several coach turns.
 # - "<<paste: FILE ...>>" means the simulator inlines that persona file's body verbatim there. Research pastes
 #   never include the file's header note (it explains the traps).
 # - Research Hour cases assume the GROW file was added to the project (L4); the lane is S1.
 # - I8 is not listed where the reply derives counts (people, places, discards): those numbers are not claims and
 #   the grader would read them as unlisted digits. Fabricated results are asserted with not_contains instead.
+# - Status lines (wf15 §2, I3): a Ready piece (a post, a message, a questionnaire the machine wrote) prints only its
+#   content; "VÌ SAO RA KHÁCH", "✓ Đã kiểm:" or "Sẵn sàng … ·" under it fails unless the coach asked "tại sao?".
+#   "tại sao?" cases: "[turn 1] <the piece>" and "[turn 2] tại sao?" on their own lines; assertions run on the
+#   "tại sao?" reply (the WHY line 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: …',
+#   "Sẵn sàng {verb} · viết từ {evidence}", "✓ Đã kiểm:"), I3 grades the turn-1 reply, and verdict "Ready" makes
+#   evals/run.py want a Ready or ✓ Đã kiểm line there.
+# - `invariants` lists I1-I23 ids only; graders.py also runs day0_timing, deny_list, quit_triggers and (VN) vn_natural.
 
 [meta]
 module = "research"
@@ -27,19 +46,26 @@ id = "research.vn.001"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "Day 0: Quick Listen stays silent; no paste, link, browse or file step between dump and Map"
-context = "Day 0, Door B (Phone Starter, ChatGPT Free, Android). Pair chị–em. Dump chunks 1-2 given. This turn is chunk 3, which ends 'Thôi chị nói thế thôi, xong rồi đấy em.' The next reply is the inventory + 7-line pre-filled check."
-input = """<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>"""
-regex = ['(?i)biết nhiều thật']
+title = "Day 0: Quick Listen stays silent; the Map after the last missing fact has no research talk, link, paste or file step"
+context = "Day 0, Door B (Phone Starter, ChatGPT Free, Android). Pair chị–em. Quick Listen ran silently during the dump. Dump chunks 1-2 sent; past ~1,200 tiếng the soft cut followed chunk 2 and carried the one missing fact, the multi-income guess ('Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa nhỏ, …. Đúng không chị?'). This is her answer; the next reply is the 4-line Map with QUAY HÔM NAY under it."
+input = """Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi."""
+regex = [
+  '''(?m)^\W*ĐIỀU KHÁCH NHỚ:''',
+  '''chạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+]
 not_regex = [
   '(?i)dán (?:bình luận|link|bài|đường dẫn)|mở (?:trình duyệt|Chrome|link)|tải (?:file|tệp)|đính kèm|chụp màn hình (?:bình luận|nhóm)',
-  '(?i)nghiên cứu|lắng nghe|\bresearch\b|Quick Listen',
+  '''(?i)(?:em|mình) (?:đã |vừa )?(?:tìm|tra|search|nghiên cứu|lắng nghe|đọc)[^\n]{0,25}(?:trên mạng|Google|mạng xã hội|các nhóm)|kết quả tìm kiếm|theo nguồn|nguồn:|Quick Listen|\bresearch\b''',
+  '''(?i)nghiên cứu (?:khách|trước)[^\n]*\?''',
   '\b[VSPXK]-\d+\b',
+  '''https?://''',
+  '''(?i)biết nhiều thật|(?m:^\W*(?:Lời của họ|Cách cũ|Kết quả tốt nhất)\s*:)''',
+  '''(?m)^\W*(?:ĐỂ SAU|GỐC RỄ|Vì sao chọn)\b''',
   '(?i)(?<![\w-])(?:the|and|your|with|this|that|please|because)(?![\w-])',
 ]
-invariants = ["I1", "I2", "I5", "I10", "I15"]
+invariants = ["I1", "I2", "I3", "I5", "I10", "I15"]
 max_questions = 1
-notes = "UX §2 minute 12-17: 'Quick Listen runs silently.' acceptance.toml day0.detours_between_start_and_day0_end = 0 (downloads, uploads, setup-page visits, app switches). Her quit triggers include 'tải hay đính kèm file' and 'mở máy tính'. The aside to Linh in chunk 2 never surfaces. Positive anchor: the reply is the inventory line ('Chị biết nhiều thật…', message.vn.006)."
+notes = "wf15 §0 S5 and research.kit-quick: 'NGHE KHÁCH NÓI GÌ (ngày 0, lúc xả, làm thầm): … không nhắc chuyện tìm, link, xin lỗi, cài đặt'; never a question about research on Day 0. The root cause it finds feeds big idea 1 and prints on 'tại sao?' (message.kit-map: 'Không in: ĐỂ SAU, vì sao chọn, phương án nhì, gốc rễ, điểm'), not on the Map. The trigger is now the last missing-fact answer (R12: the inventory and the 7-line check are gone, so the old positive anchor 'Chị biết nhiều thật…' is a fail); the Map is 4 lines + QUAY HÔM NAY + map.ok (K2). acceptance [day0] detours_between_start_and_day0_end = 0 (downloads, uploads, setup-page visits, app switches). Her quit triggers include 'tải hay đính kèm file' and 'mở máy tính'. The aside to Linh in chunk 2 never surfaces."
 
 [[case]]
 id = "research.vn.002"
@@ -353,10 +379,11 @@ not_contains = ["Buyer Mirror"]
 not_regex = [
   '\[anh/chị\]|\[em\]|\[chủ đề\]|\[tên\]',
   '(?i)(?<!\w)(?:nha|nè|hông)(?!\w)',
+  '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
-invariants = ["I1", "I2", "I5", "I15"]
+invariants = ["I1", "I2", "I3", "I5", "I15"]
 max_questions = 1
-notes = "wf7 §5b VN invitation: 'Mình chỉ trích dẫn không kèm tên, và chỉ khi [anh/chị] đồng ý', with [anh/chị] resolved to 'em' for her students (Voice Card). The questions sit in a copy box, so they are not machine questions (I5). Never inside a sales conversation. Her Bắc voice: no 'nha/nè/hông'."
+notes = "wf7 §5b VN invitation: 'Mình chỉ trích dẫn không kèm tên, và chỉ khi [anh/chị] đồng ý', with [anh/chị] resolved to 'em' for her students (Voice Card). The questions sit in a copy box, so they are not machine questions (I5). Never inside a sales conversation. Her Bắc voice: no 'nha/nè/hông'. The message is a piece the machine wrote: nothing printed under it (wf15 §2, I3)."
 
 [[case]]
 id = "research.vn.019"
@@ -373,10 +400,13 @@ regex = [
   '(?s)```.+```',
 ]
 not_contains = ["Buyer Mirror", "Quý doanh nghiệp", "Kính gửi"]
-not_regex = ['(?i)số điện thoại[^\n]{0,40}(?:\*|bắt buộc)']
-invariants = ["I1", "I2", "I5", "I15"]
+not_regex = [
+  '(?i)số điện thoại[^\n]{0,40}(?:\*|bắt buộc)',
+  '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
+]
+invariants = ["I1", "I2", "I3", "I5", "I15"]
 max_questions = 1
-notes = "wf7 §5d: 6 questions plus consent; §7.2.11 VN: PDP Law 91/2025 in force from 1 Jan 2026, a consent line on every form, never build lists of people. wf12-qa-standards §1 VN note: surveys carry the purpose and consent line. His register with owners: tôi – anh chị; no 'Quý doanh nghiệp' (expected.toml voice.banned)."
+notes = "wf7 §5d: 6 questions plus consent; §7.2.11 VN: PDP Law 91/2025 in force from 1 Jan 2026, a consent line on every form, never build lists of people. wf12-qa-standards §1 VN note: surveys carry the purpose and consent line. His register with owners: tôi – anh chị; no 'Quý doanh nghiệp' (expected.toml voice.banned). Nothing printed under the survey (wf15 §2, I3)."
 
 [[case]]
 id = "research.vn.020"
@@ -584,3 +614,78 @@ min_score = 14
 invariants = ["I1", "I5", "I9", "I10", "I11", "I15"]
 max_questions = 1
 notes = "Judge checks: one buyer (vợ chồng trẻ, lần đầu mua căn hộ); patterns 'gồng lãi' and 'chồng/vợ đứng tên vay một mình' each ≥2 people in ≥2 places; sellers (vay 5,5%, căn hộ 1,6 tỷ) and his own line excluded; 'lên giá không' parked; quotes ≤25 tiếng, no names, no phone; RB8: each insight's hook would read false for a generic buyer."
+
+# ---------------------------------------------------------------- Day 0 and Week 1 (wf15), "tại sao?" (6 Oct 2026)
+
+[[case]]
+id = "research.vn.032"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "Coach offers to research first on Day 0: kept for Week 1 in one line, the open câu đoán stays, the Day-0 path keeps moving"
+context = "Day 0, iPhone, ChatGPT Free, pair bạn–mình, dialect Nam, cold start. Past ~1,200 tiếng the soft cut followed dump chunk 2 and carried the first câu đoán ('… không thì: mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?'). Instead of answering, she asks about research."
+input = """khoan, hay là mình đi coi trong mấy nhóm văn phòng người ta than gì trước rồi mới làm tiếp ha? mai mình coi cũng được á"""
+regex = [
+  '''(?i)Để Tuần 1 làm, 10 phút thôi''',
+  '''(?i)(?:mình đoán|chuyện của (?:chính )?bạn|đúng không\?|bỏ qua)''',
+  '''TIẾP →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?i)chép 10[–-]20 bài|tên đổi thành chữ cái''',
+  '''(?i)(?:làm|nghiên cứu|coi) (?:xong )?(?:cái đó|phần đó|nhóm) trước (?:đã|rồi)''',
+  '''(?i)trước khi (?:làm|lên|vẽ) (?:bản đồ|Bản đồ)''',
+  '''(?i)AI nào|gói nào|Chrome|tiện ích|extension''',
+  '''(?i)(?<!\w)(?:chị|em)(?!\w)''',
+]
+invariants = ["I1", "I5", "I15"]
+max_questions = 1
+notes = "research.kit-quick: 'Hỏi \"nghiên cứu trước?\" → research.later + bước đang dở'; research.later = 'Để Tuần 1 làm, 10 phút thôi.' The open step is the câu đoán the cut carried (setup.guess_no_result), still waiting for 'đúng' or 'bỏ qua', so it may be repeated once; nothing else is asked. Day 0 carries only the silent Quick Listen (wf15 §0 S5; PLAN reconciliation 10); 'nghiên cứu khách' (paste steps) comes after Day 0. acceptance [day0]: 0 detours, the Map within 7 coach turns (map_max_turns_vn)."
+
+[[case]]
+id = "research.vn.033"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "'tại sao?' on a post built from the research paste: the post carries nothing, the VÌ SAO line starts from the buyers' own words"
+context = "Brand Card v1 present (persona default: pair chị–em, audience mình – các chị em, keyword LÃI ẢO), Week 2, Wednesday, ChatGPT Plus project with the method file. The previous turn pasted research-paste.md (lines 1-32) with 'em xem giúp chị người ta nói gì, cái nào dùng được' and got the RESEARCH-LITE summary: conclusion first, buyer lines by pattern with '{n} người · {n} nơi' ('bán thì đắt mà không thấy tiền đâu', 'lãi ảo hết các chị ạ', 'tắt ads là đứng hình'), the 2 seller promos and 3 duplicates dropped, line 19 (her own 'Doanh thu là để khoe, lãi mới là để tiêu.', reposted) not counted."
+input = """[turn 1] ok em viết chị bài hôm nay từ cái câu 'bán thì đắt mà không thấy tiền đâu' nhé
+[turn 2] tại sao thế em?"""
+regex = [
+  '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:không thấy tiền|bán thì đắt|lãi ảo)[^\n]*(?:→|->)''',
+  '''(?m)^\W*Sẵn sàng (?:đăng|quay) · viết (?:từ|thành) ''',
+  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+]
+not_regex = [
+  '''(?i)399k|x3 doanh thu|giảm 40%|ra đơn ầm ầm''',
+  '''(?i)(?:\d+|hai|ba|bốn|năm) người[^\n]{0,60}Doanh thu là để khoe''',
+  '''(?i)Doanh thu là để khoe[^\n]{0,60}(?:\d+|hai|ba|bốn|năm) người''',
+  '''(?i)50 triệu|gấp 3|1 tỷ''',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I9", "I10", "I15", "I18"]
+max_questions = 1
+notes = "wf15 §2 and research.kit-paste: a piece built from the research prints with nothing under it (I3 grades the turn-1 reply). On 'tại sao?' (assertions here; §CM-EDGE 'tại sao?'): the stored WHY line (plan.kit-week 5 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}') starts from the buyers' words ('bán thì đắt mà không thấy tiền đâu', heard from 2+ people in 2+ places), 'Sẵn sàng đăng · viết từ {evidence}' names that pattern or her own story, and '✓ Đã kiểm:' lists the checks passed. Sellers' numbers and the coach's own line never count as buyer voices (RB1, G3). I8 is not listed: the reply may name '{n} người · {n} nơi' (header). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
+
+[[case]]
+id = "research.vn.034"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Week 1 carries the Zalo 'hỏi 3 khách cũ một câu' message: research.ask3 in her one-to-one voice, one question, no form, consent asked after they answer"
+context = "Day 0, Door B, ChatGPT Free, pair chị–em; she talks to her students as chị – em. The 4-line Map (TỪ KHOÁ: NGẠI CHÀO) is on screen with QUAY HÔM NAY under it. Her answer brings Week 1, unasked (all of it, or a first part with the rest on 'tiếp')."
+input = """[turn 1] ok em, tối chị quay
+[turn 2] <<simulator: only if part of Week 1 is still to come, send 'tiep em'; otherwise stop>>"""
+regex = [
+  '''(?s)```(?:(?!```).)*Hồi mới tìm đến chị, em đang loay hoay nhất chuyện gì\?(?:(?!```).)*```''',
+  '''(?i)(?:gửi riêng|hỏi|nhờ|nhắn) 3 (?:em|khách cũ|học viên|chị em)''',
+]
+not_regex = [
+  '''(?s)```(?:(?!```).)*loay hoay nhất chuyện gì\?(?:(?!```).)*\?(?:(?!```).)*```''',
+  '''(?s)```(?:(?!```).)*\?(?:(?!```).)*loay hoay nhất chuyện gì\?''',
+  '''(?i)khảo sát|biểu mẫu|google form|điền (?:vào|mẫu|form)''',
+  '''(?<!\w)Vân(?!\w)''',
+  '''(?i)Buyer Mirror''',
+  '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
+]
+invariants = ["I1", "I2", "I3", "I5", "I10", "I15"]
+notes = "scope: transcript. wf15 §1.6 and research.kit-quick HỎI 3 KHÁCH (Tuần 1, gửi Zalo): research.ask3 = 'Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn dùng đúng lời của bạn. Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?' in her one-to-one voice ('… Hồi mới tìm đến chị, em đang loay hoay nhất chuyện gì?'), in a copy box, nothing under it. fmt-short.vn: the ask-3 message holds one question only; the consent line (ask3.consent 'Mình đăng lại câu này được không, chỉ ghi tên thôi?') goes after they answer (§CM-MESSAGES 7). expected.toml [week1]: to Thảo, Loan and one private student, never Vân before she is asked. The question sits in a copy box, so it is not a question to the coach (I5). VG2 hanh S1 turn 7 is a passing reply."
