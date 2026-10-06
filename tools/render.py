@@ -184,10 +184,14 @@ def render_reference(edition: Edition, ref_entry: dict, sections: dict[str, Sect
 # ---------------------------------------------------------------- CLI
 
 def _resolve(path_arg: str, root: Path) -> Path:
+    """An absolute path as given; a relative one under the repo root first, then the current folder."""
     p = Path(path_arg)
-    if p.is_absolute() or p.exists():
+    if p.is_absolute():
         return p.resolve()
-    return (root / p).resolve()
+    under_root = root / p
+    if under_root.exists() or not p.exists():
+        return under_root.resolve()
+    return p.resolve()
 
 
 def main(argv: list[str] | None = None) -> int:
