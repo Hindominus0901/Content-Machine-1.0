@@ -91,3 +91,7 @@ When any spec, module or eval disagrees with this page, this page wins. Changes 
   - FILM TODAY prints in the same reply as the 4-line Map, right under it; "OK, or change a line." comes last, before NEXT. A changed line reprints that line, and the script if it changes.
   - "OK" (or any other message) then brings Week 1. This saves one coach turn and 1–2 minutes, and a coach who hits a plan limit right after the Map still leaves with something to film.
   - It amends the order in `research/wf15-simple-surface-spec.md` §1 steps 4–5. The Map is still the one decision.
+- **Long dumps, missing facts, an early piece to post (6 Oct 2026, golden rounds G2 / VG1).** Reviews: `../qa/runs/g2-en-day0/review.md`, `../qa/runs/vg1-vn-day0/review.md`.
+  - **Soft cut:** past about 1,200 words (VN about 1,500 tiếng) of talk, the machine says it's enough for today and asks whether there is one more thing. It combines that with its first missing-fact guess in one message ("One more story? Tell it now; otherwise: {guess} Right?"), so it stays one question and usually costs no extra turn.
+  - **Facts a cut can lose:** the dump prompt asks up front where they post and whether they have an email or Zalo list. What is still unheard is guessed and named once in one line above Week 1, changeable with one word.
+  - **Early win to post:** after the first chunk, one of the "3 lines worth money" comes in a copy box with "post it as text today if you like", so the coach has something usable at minute 5–6, before the Map.
