@@ -31,7 +31,7 @@ Gates are pass/fail: 2 = clear, 0 = not clear, there is no 1. Code gates are dec
 
 **CTA ladder (SG6):** Admirable = follow · Likable = send to a friend · Credible = save, or comment the keyword · Trustable = DM the keyword, or book.
 
-**SG4 voice-lint rules:** hook ≤12 words EN / ≈18 tiếng VN · 0 hedges in the hook and in claim lines; body ≤1 per 100 words unless odds or a condition follow · average sentence ≤15 words, none over 25, ≥1 punch line ≤5 words · ≤1 AI tell · ≤1 "not X but Y" · no throat-clearing · questions only in the CTA · no recap ending. Strip lists: `locales/<lang>/banned-tells.txt` (wf6 H1–H9 / V1–V9) plus the Card's personal banned list.
+**SG4 voice-lint rules:** hook ≤12 words EN / ≈18 tiếng VN · 0 hedges in the hook and in claim lines; body ≤1 per 100 words unless odds or a condition follow · average sentence ≤15 words, none over 25, ≥1 punch line ≤5 words · ≤1 AI tell · ≤1 "not X but Y" · no throat-clearing · questions only in the CTA · no recap ending. Strip lists: `locales/<lang>/banned-tells.txt` (wf6 H1–H9 / V1–V9) plus the Card's personal banned list. **Sounds like the coach** (judge lens, wf14 §5): the piece matches the Brand Card's Voice Card fields `tone`, `rhythm` (written voice for posts, spoken for scripts), `phrases` / `openers_closers` where natural and `audience_address` (VN: the coach-to-audience pair, kept apart from the machine-to-coach pair); 0 `never_say` hits; no jargon or English the coach doesn't use (`code_mix`).
 
 ### SG5 pillars (Edge v2, 0–2 each)
 
