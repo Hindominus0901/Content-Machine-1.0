@@ -78,6 +78,10 @@ id = "EDGE"
 sections = ["edge-rubric.kit-*"]
 
 [[method.anchor]]
+id = "VOICE"                     # wf14-voice-language-spec §6: the Voice Card, platform shifts, address
+sections = ["voice.kit-*"]
+
+[[method.anchor]]
 id = "HUMANIZE"
 sections = ["humanize.kit-*"]
 

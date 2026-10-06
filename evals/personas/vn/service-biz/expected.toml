@@ -167,6 +167,16 @@ banned = [
 ]
 banned_particles_in_his_content = ["đấy", "nhỉ", "nhé", "hông"]
 banned_particles_note = "Chỉ áp dụng cho chữ viết bằng giọng anh Đức (bài, kịch bản, mẫu tin nhắn), so khớp nguyên chữ; câu máy nói với anh dùng giọng chuẩn của bộ kit."
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "chắc · mộc · thật thà"
+rhythm = "câu ngắn chữ thợ; cảnh công trình trước, chốt một câu"
+audience_address = "Đức (tụi em) – anh chị"
+code_mix = "rất ít: '3D', 'MDF'; còn lại chữ thợ (mét dài, phụ lục)"
+written_vs_spoken = "Bớt giọng Quảng, giữ 'nghe', 'rứa'; micro ghi sai ('báo da'); tắt 'ko'"
+openers_closers = ["Báo giá rẻ là báo giá còn thiếu.", "Đo hai lần, cưa một lần.", "Cái chi có trong bản vẽ là giá chốt"]
 
 [research]
 lines_total = 32

@@ -244,3 +244,25 @@
 "card.save_line" = { text = "Lưu lại để mình nhớ bạn (30 giây).", src = "82bb29ab38" }
 "card.visible.what" = { text = "NÓI GÌ:", src = "3590ca99ac" }
 "card.visible.how" = { text = "NÓI THẾ NÀO:", src = "7a3df1f0ec" }
+
+# Integrator pass, wf15 + wf14: Day-0 missing facts, the Map's OK line, card top labels, VOICE anchor, Voice Card labels
+"setup.link_unread"            = { text = "Trang của bạn không mở được ở đây; bạn kể là đủ rồi.", src = "18d9ef7035" }
+"setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
+"setup.guess_no_result"        = { text = "Mình đoán: chưa có kết quả của khách để đưa ra, nên mình dùng câu chuyện của chính bạn. Đúng không?", src = "bb5673e233" }
+"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán: MỘT kiểu khách có thể mua nhiều hơn một thứ là {buyer}. Đúng không? Hoặc nói luôn: tháng này nguồn nào nuôi bạn?", src = "262f5be82e" }
+"setup.plan_guess"             = { text = "Cho {platform} · ngày nói chuyện {day} (mình đoán; nhắn một chữ là đổi).", src = "c7e7a165c3" }
+"map.ok"                       = { text = "Mình chạy thử 4 tuần nhé. OK, hoặc sửa một dòng.", src = "1e6d1e3eeb" }
+"card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }
+"card.visible.never"           = { text = "không bao giờ:", src = "3e2cc57c54" }
+"anchor.voice"                 = { text = "Giọng của bạn", src = "dc50b5a834" }
+"voice.not_me_ok"              = { text = "Rồi: từ giờ bỏ \"{line}\" khỏi giọng của bạn.", src = "7e5f0bc551" }
+"voice.do_say_ok"              = { text = "Rồi: bạn có nói \"{word}\".", src = "581bb8047e" }
+"card.label.voice_line"        = { text = "Giọng của bạn", src = "dc50b5a834" }
+"card.label.tone"              = { text = "Giọng điệu", src = "c2c8b72e30" }
+"card.label.rhythm"            = { text = "Nhịp câu", src = "5a165344e5" }
+"card.label.openers_closers"   = { text = "Cách bạn mở đầu và kết", src = "bb6497ce63" }
+"card.label.audience_address"  = { text = "Cách bạn xưng hô với khách", src = "a165bef07d" }
+"card.label.code_mix"          = { text = "Chữ tiếng Anh bạn hay chêm", src = "357f0ef710" }
+"card.label.humour"            = { text = "Kiểu hài hước", src = "8a590611f4" }
+"card.label.written_vs_spoken" = { text = "Lúc viết khác lúc nói", src = "ab8050b33a" }
+"setup.cut_off"                = { text = "Đoạn đó bị đứt. Bạn nói lại thành 2 đoạn ngắn nhé.", src = "0ef31c83a9" }

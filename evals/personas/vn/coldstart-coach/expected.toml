@@ -169,6 +169,16 @@ banned = [
   "ngồi thẳng lưng lên",
 ]
 avoid_regional_in_her_voice = ["nhé", "nhỉ", "đấy"]
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "thân thiện · nhanh · vui"
+rhythm = "câu ngắn như kể; mở bằng câu hỏi, chốt bằng việc làm liền"
+audience_address = "mình – mấy bạn"
+code_mix = "ít: 'clip', 'follow', 'online'; không chen câu tiếng Anh"
+written_vs_spoken = "Chữ thường đầu dòng, tắt 'ko', 'dc', ':))'; câu ngắn hơn, giữ 'nha', 'nè'"
+openers_closers = ["Mấy bạn văn phòng ơi", "Đứng dậy cái đã, rồi mình nói tiếp.", "Làm thử chiều nay đi"]
 
 [research]
 own_quote = "đi tập 90 phút cuối tuần mà cả tuần ngồi y chang thì cũng chỉ là chữa cháy thôi"

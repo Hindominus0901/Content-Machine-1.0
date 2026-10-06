@@ -154,6 +154,16 @@ banned = [
   "hữu duyên", "xin vía",
 ]
 banned_particles_whole_word = ["nha", "nè", "hông", "tui"]
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "thẳng · gần gũi · khiêm tốn"
+rhythm = "câu ngắn; kể cảnh rồi chốt một việc tối nay; số thật"
+audience_address = "mình – các chị em"
+code_mix = "chữ nghề online: át, mã, sàn, voucher, ship hoàn, comment"
+written_vs_spoken = "Gọn hơn khi nói: mỗi ý một dòng, một emoji cuối bài; Zalo tắt 'ko'"
+openers_closers = ["Các chị em ơi", "Thôi, chị em mình nói chuyện bằng con số nhé.", "Thế thôi, chưa cần làm gì to tát cả."]
 
 [research]
 lines_total = 32

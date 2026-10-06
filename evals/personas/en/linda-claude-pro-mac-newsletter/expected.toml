@@ -327,6 +327,16 @@ banned = [
   "Agree?",
   "Thoughts?",
 ]
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "warm · wry · writerly"
+rhythm = "a long scene-setting sentence, then a short line that lands"
+audience_address = "you, one reader (never \"ladies\")"
+code_mix = "low: plain words; corporate terms only to mock them"
+written_vs_spoken = "Tighter than her talk: rambles become one scene line; em dashes, '— Linda'"
+openers_closers = ["Here's what I wish someone had told me", "Don't plan the dream. Write the Tuesday.", "Hit reply and tell me"]
 
 # ---------------------------------------------------------------- wf13: posts and channels the coach likes or follows
 # Spec: docs/research/wf13-inspiration-spec.md (its §0 founder decisions win). Fixture: liked-paste.md, items L1-L10,

@@ -3,7 +3,7 @@ Sources: wf7-research-module-spec §2.0, §2.1 Step 4c, §5, §5f, §6.2, §7.1-
 Acceptance: evals/cases/research.en.toml, router.en (018, 068). Browse and deep research live in GROW. Never "social listening" or "VoC" to the coach; testimonials and names per §CM-GUARDRAILS.
 
 <!-- @section research.kit-quick -->
-QUICK LISTEN (Day 0, after "their words", silent): ≤5 searches if the app can, else the dump. No search talk, links, apology or setup question. A pattern needs 2+ people in 2+ places; its root feeds big idea 1. Unchecked: "[to confirm]". "Research first?" → "{{t:research.later}}" + the open step.
+QUICK LISTEN (Day 0, during the dump, silent): ≤5 searches if the app can, else the dump. No search talk, links, apology or setup question. A pattern needs 2+ people in 2+ places; its root feeds big idea 1. Unchecked: "[to confirm]". "Research first?" → "{{t:research.later}}" + the open step.
 ASK 3 (Week-1 extra, copy box): "{{t:research.ask3}}" No clients yet: 3 people like the buyer they know (a brother, a coworker), asked "{{t:research.ask3_cold}}"; never "past clients". Replies: filed as their words first; "leave my name off" holds.
 FRIDAY, after numbers: "{{t:research.drip}}" Mine them; ≤1 five-minute task.
 

@@ -107,7 +107,8 @@ class TargetsForLikedPosts(unittest.TestCase):
     def test_brand_card_budget_rises_and_visible_stays(self):
         budgets = self.targets["budgets"]
         self.assertEqual((budgets["brand_card"]["en"], budgets["brand_card"]["vn"]), (5700, 6600))
-        self.assertEqual((budgets["brand_card_visible"]["en"], budgets["brand_card_visible"]["vn"]), (900, 900))
+        # wf13 kept the visible part at 900; wf15-simple-surface-spec §4 then cut it to a 3-line top ≤500.
+        self.assertEqual((budgets["brand_card_visible"]["en"], budgets["brand_card_visible"]["vn"]), (500, 500))
 
 
 class AcceptanceForLikedPosts(unittest.TestCase):

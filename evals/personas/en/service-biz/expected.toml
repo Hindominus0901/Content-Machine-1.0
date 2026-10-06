@@ -276,6 +276,16 @@ banned = [
   "luxe",
   "your aesthetic",
 ]
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "quick · warm · bossy"
+rhythm = "punchy lines; the scene first, then the rule; imperatives"
+audience_address = "you; \"neighbors\" in the newsletter"
+code_mix = "low-mid: trade words explained (tape-out, lead times)"
+written_vs_spoken = "Texts from the car: '!!', 📏 or 😅, slips like 'would of'; same scene, then rule"
+openers_closers = ["Okay, so here's what I tell people.", "Every room needs a job.", "Rug before sofa. Always."]
 
 # ---------------------------------------------------------------- wf13: posts and channels the coach likes or follows
 # Spec: docs/research/wf13-inspiration-spec.md (its §0 founder decisions win). Fixture: liked-paste.md, items L1-L10,

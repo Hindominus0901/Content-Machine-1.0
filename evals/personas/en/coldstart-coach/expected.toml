@@ -226,6 +226,16 @@ banned = [
   "belly fat",
   "Coach Dan",
 ]
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "plain · dry · self-deprecating"
+rhythm = "short bursts, one run-on per story; fragments OK"
+audience_address = "you (one dad to another)"
+code_mix = "low: plain trainer words (sets, kettlebell); no gym slang"
+written_vs_spoken = "Flatter than his talk: lowercase, fragments, 'lol', your/you're, 1 emoji"
+openers_closers = ["So here's what I do now.", "I'm not gonna lie,", "Zero is the killer."]
 
 # ---------------------------------------------------------------- wf13: posts and channels the coach likes or follows
 # Spec: docs/research/wf13-inspiration-spec.md (its §0 founder decisions win). Fixture: liked-paste.md, items L1-L10,

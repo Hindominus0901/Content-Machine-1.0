@@ -33,12 +33,24 @@ Each folder holds one Day-0 session between an eval persona and a **plain genera
 
 | Persona | Coach turns | Minutes | Outcome | One message? | Templates asked | Max questions / reply | Invariants failed | Other checks failed |
 |---|---|---|---|---|---|---|---|---|
-| en/proof-coach | 7 | 32.4 | film-ready | no | 1 (an "I help [who]…" fill-in) | 3 | I1, I2, I5, I8, I17 | deny_list, quit_triggers, day0_timing |
-| en/coldstart-coach | 10 | 35.3 | film-ready | no | 1 (a 4-question intake form) | 4 | I1, I5, I8, I11, I17 | deny_list, quit_triggers, day0_timing |
+| en/proof-coach | 7 | 32.4 | film-ready | no | 1 (an "I help [who]…" fill-in) | 3 | I1, I2, I5, I8, I12, I17 | deny_list, quit_triggers, day0_timing |
+| en/coldstart-coach | 10 | 35.3 | film-ready | no | 1 (a 4-question intake form) | 4 | I1, I5, I8, I11, I12, I17 | deny_list, quit_triggers, day0_timing |
 | vn/proof-coach | 5 | 28.7 | quit | no | 1 (a 5-question intake form) | 5 | I1, I5, I8, I14, I15, I17 | deny_list, quit_triggers, day0_timing |
-| vn/hanh-android-free-nocomputer | 8 | 62.8 (about 38 active) | film-ready | no | 1 (a 5-question intake form) | 5 | I1, I5, I6, I8, I11 | deny_list, quit_triggers, day0_timing |
+| vn/hanh-android-free-nocomputer | 8 | 62.8 (about 38 active) | film-ready | no | 1 (a 5-question intake form) | 5 | I1, I5, I6, I8, I11, I23 | deny_list, quit_triggers, day0_timing |
 
-I16 is `not_run` everywhere because `locales/<lang>/examples.md` does not exist yet. I19–I21 (someone else's posts, wf13) are `n/a` on these Day-0 runs, which paste no one else's post, and I22 passes everywhere. The Day-0 target is 24 min. No run reached film-ready inside it, and no run produced one clear message.
+I16 is `not_run` everywhere because `locales/<lang>/examples.md` does not exist yet. I19–I21 (someone else's posts, wf13) are `n/a` on these Day-0 runs, which paste no one else's post, and I22 passes everywhere. The Day-0 target is now 20 min (wf15; it was 24). No run reached film-ready inside either, and no run produced one clear message.
+
+### Re-graded for the 6 Oct 2026 decisions (wf14 voice, wf15 simple surface)
+
+`graders.py` changed in the ways below. The transcripts did not change, and every verdict and hit not listed here stayed.
+
+- **Pieces without a status line.** A Ready piece now prints nothing under it (wf15 §2), so the graders find a piece by its title too: an `N<digit>` label, or a title that opens with a format ("Reel 1: …", "### Post this today: …"); lists of ideas or tips are not pieces. Before, a piece needed a verdict line, which no plain assistant prints, so every baseline had 0 pieces. Now en/coldstart-coach has 1 (reply 6's Reel script) and en/proof-coach has 2 (reply 5's Reel and its script).
+  - **I12 now fails on both EN runs**, for a real defect it could not see before: the on-screen text is 10 words (en/coldstart-coach reply 6) and 7 words (en/proof-coach reply 5); the cap is 6.
+  - **quit_triggers** counts words "before the first piece, status line or copy box" (it was "verdict line or copy box"). en/coldstart-coach drops from 1,569 to 984 words and en/proof-coach from 2,022 to 1,642. Both still fail the 300-word trigger; the VN counts are unchanged.
+- **I3 has the wf15 wording** (at most one status line per piece, only when the coach is needed; a Ready piece prints no Ready, WHY or ✓ Checked line unless "why?" was asked). No baseline prints a status line, so I3 still passes everywhere.
+- **New I23 (voice).** vn/hanh-android-free-nocomputer fails it: reply 5's post says "bước ngoặt thay đổi cả hành trình làm nghề của chị", and "hành trình" is a banned tell (`locales/vn/banned-tells.txt`) and on her never-list. In turn 6 she says so herself: "chị không bao giờ nói 'hành trình'". The other three pass: no never-word in their pieces, and the EN Reel scripts use the coach's own phrases. No run has the 4 pieces of 60+ words the phrase check needs.
+- **I15** now also checks the VN audience address in pieces (`expected.toml [voice] audience_address`). Neither VN baseline has a piece, so I15 is unchanged: vn/hanh passes and vn/proof-coach fails on the same reply-3 pronoun slip.
+- **day0_timing** uses the new budgets (Map ≤6 EN / ≤7 VN coach turns, film-ready ≤20 min, ≤10 coach turns, a 4-line Map). It fails for the same reasons as before (no running tags, so no Map or film step); en/coldstart-coach's 10 coach turns sit exactly at the new limit.
 
 ### Invented or unsupported claims (all runs)
 

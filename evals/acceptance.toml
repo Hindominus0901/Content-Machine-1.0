@@ -1,6 +1,8 @@
 # Release thresholds read by evals/graders.py and tools/preflight.py.
 # Sources: docs/research/wf11-ux-spec.md §6 (persona acceptance) and wf12-qa-spec.md §0, §5 (gates);
-# [copy] and [cases] liked_min from wf13-inspiration-spec.md §6.
+# [copy] and [cases] liked_min from wf13-inspiration-spec.md §6; [day0] turn and minute budgets, map_lines and
+# [week] why_available_rate from wf15-simple-surface-spec.md §3 (founder, 6 Oct 2026); [voice] from
+# wf14-voice-language-spec.md §5. wf14/wf15 win over wf11/wf12 where they differ.
 # Where they differ, the reconciliations in docs/PLAN.md apply (Ready = Edge >= 8; release floor 7).
 
 [install]
@@ -14,14 +16,15 @@ helper_path_max_minutes = 10
 
 [day0]
 early_win_max_minutes_after_dump_start = 4
-map_max_turns_en = 8
-map_max_turns_vn = 9
+map_max_turns_en = 6                      # wf15: missing facts only (max 3, one a message), no 7-line check screen
+map_max_turns_vn = 7                      # VN adds the xưng hô turn
 map_max_minutes = 20
-film_ready_max_minutes = 24
+map_lines = 4                             # KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE, then "OK, or change a line"
+film_ready_max_minutes = 20
 film_ready_max_minutes_from_email = 30
 stop_point_max_minutes = 27
 session_max_minutes = 40
-session_max_turns = 12
+session_max_turns = 10                    # Week 1 arrives in the next reply, unasked
 detours_between_start_and_stop = 0        # downloads, uploads, setup-page visits, app switches
 save_gates = 0                            # Week 1 must arrive with the Brand Card unsaved
 brand_card_visible_max_chars = 900
@@ -40,12 +43,16 @@ vn_en_leakage_outside_allowlist = 0
 lean_max_minutes = 60
 talk_max_minutes = 15
 on_map_min = 0.90                         # over 4 simulated weeks
-why_line_rate = 1.0
+why_available_rate = 1.0                  # a WHY is stored for every piece and printed on "why?" (none under a Ready piece)
 keyword_exactly_once_rate = 1.0
 own_words_min = 0.70                      # re-say shorts vs the coach's Talk transcript
 hook_stem_window = 10                     # no repeated stem in 10 consecutive pieces
 same_structure_max_in_a_row = 2
 running_tag_min = 0.98                    # over 30+ turns on ChatGPT Free / Claude Free
+
+[voice]                                   # I23 (wf14 §5)
+i23_phrase_share_min = 0.5                # in a week of >= 4 pieces of >= 60 words, this share uses one of their phrases
+never_words = 0                           # hits of the persona's never-words (and never-particles) in pieces
 
 [quality]
 ready_edge_min = 8                        # runtime "Ready": gates pass, Edge >= 8, no pillar at 0

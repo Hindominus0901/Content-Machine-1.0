@@ -48,7 +48,7 @@
     },
     {
       "id": "I3",
-      "title": "Exactly one verdict line per piece, ≤20 words, directly under it",
+      "title": "At most one status line per piece, only when the coach is needed; a Ready piece prints none (no Ready, WHY or ✓ Checked line unless \"why?\" was asked)",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -157,7 +157,7 @@
     },
     {
       "id": "I15",
-      "title": "VN: one pronoun pair; no English outside the allowlist",
+      "title": "VN: one pronoun pair with the coach; one audience address in pieces, theirs and apart from that pair; no English outside the allowlist",
       "pass": false,
       "status": "fail",
       "proxy": true,
@@ -189,7 +189,7 @@
     },
     {
       "id": "I18",
-      "title": "\"Ready\" never with an open bracket, never \"Ready after…\"",
+      "title": "\"Ready\" never with an open bracket (a piece with nothing under it is Ready), never \"Ready after…\"",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -226,6 +226,19 @@
       "status": "pass",
       "proxy": true,
       "evidence": []
+    },
+    {
+      "id": "I23",
+      "title": "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": [],
+      "details": {
+        "never_word_hits": 0,
+        "pieces_60_words": 0,
+        "with_phrase": 0
+      }
     }
   ],
   "checks": [
@@ -266,7 +279,7 @@
           "trigger": "more than 300 words before anything usable",
           "pass": false,
           "evidence": [
-            "1481 words before the first verdict line or copy box"
+            "1481 words before the first piece, status line or copy box"
           ]
         }
       ],
@@ -276,7 +289,7 @@
       ],
       "evidence": [
         "more than 1 question in a reply: turn 1: 5 questions: Chị đang kinh doanh hay làm dịch vụ gì? | Khách hàng chị muốn hướng tới là ai? | Chị đang dùng kênh nào, khoảng bao nhiêu người th… | Chị đã có sản phẩm hay gói dịch vụ nào để bán chư… | Mỗi tuần chị dành được bao nhiêu thời gian cho vi…; turn 3: 4 questions: Chị đang đăng bài và bán khóa chủ yếu ở đâu (Face… | Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Chị thích viết bài hay quay video hơn? | Khóa tiếp theo chị định mở khi nào?; turn 4: 2 questions: Hỏi lại: đơn đó lãi bao nhiêu? | Chị có muốn em viết luôn bài số 1 (câu chuyện 28 …",
-        "more than 300 words before anything usable: 1481 words before the first verdict line or copy box"
+        "more than 300 words before anything usable: 1481 words before the first piece, status line or copy box"
       ]
     },
     {

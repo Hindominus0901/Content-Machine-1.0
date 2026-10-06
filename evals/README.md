@@ -2,7 +2,7 @@
 
 Build-time evals for Content Machine. **Nothing in `evals/` or `qa/` ships to buyers**; lint asserts the zips exclude both folders.
 
-Precedence and thresholds come from `docs/research/wf12-qa-spec.md` §5 (gates, invariants, eval sets) and `docs/research/wf11-ux-spec.md` §6 (persona acceptance). `acceptance.toml` turns them into numbers the graders read.
+Precedence and thresholds come from `docs/research/wf12-qa-spec.md` §5 (gates, invariants, eval sets) and `docs/research/wf11-ux-spec.md` §6 (persona acceptance), as changed by the founder decisions of 6 Oct 2026: `wf15-simple-surface-spec.md` §3 (I3, `[day0]`, `[week] why_available_rate`) and `wf14-voice-language-spec.md` §5 (I15, I23, `[voice]`, `written-posts.md`). `acceptance.toml` turns them into numbers the graders read.
 
 ## Layout
 
@@ -26,7 +26,8 @@ Every persona is **fictional**. Names, businesses, clients and numbers are inven
 |---|---|
 | `persona.toml` | Identity, app/plan/device, platforms, list size, offer, proof, hours, delivery mode, xưng hô (VN), behaviour traits, `allowed_numbers`, `excluded_numbers` / `trap_numbers` (numbers the persona says or is tempted by that must never be printed as claims, even after the coach says them; the numbers in `liked-paste.md` and `follow-paste.md` belong here too), `seeded_names` (including every commenter name in the liked and follow pastes), `creator_terms` (see below), `cold_start` |
 | `answers.md` | `## Dump chunk 1..3` messy dictated brain-dump (fillers, run-ons, dictation errors, topic jumps); `## Answer bank` facts the coach can give when asked; `## Behaviour` how they react (impatience, "ok", story answers, pushback lines) |
-| `voice-samples.md` | 5–8 verbatim phrases the coach really says + 2 short paragraphs in their voice + words they would never say |
+| `voice-samples.md` | 5–8 verbatim phrases the coach really says (`## Phrases … say` / `## Câu … nói`, a numbered list: I23 reads it) + 2 short paragraphs in their voice + words they would never say (`## … never …` / `## … không bao giờ …`) |
+| `written-posts.md` | Every persona. 2–3 posts or messages the coach wrote earlier, one `## W1` … `## W3` section each: what they paste when the Day-0 dump prompt asks for "2–3 posts or messages you've written" (wf14 V3, strings `setup.dump_posts`). Their WRITTEN voice, kept verbatim: typos, emoji, line breaks, VN particles and abbreviations (VN posts are written natively in Vietnamese). Public posts use the audience address (`expected.toml [voice] audience_address`); messages use the one-to-one form. Numbers only from `allowed_numbers`, names only of consented clients, none of their never-words. The simulator pastes a section's body verbatim (no `<<paste: …>>` marker), never its heading. Ground truth for `[voice] rhythm` and `written_vs_spoken` |
 | `pillar-transcript.md` | A Weekly Talk transcript (5 questions, spoken answers, ~1,800–2,500 words EN / equivalent VN) for week 2 |
 | `stats-w1.csv` | Week-1 per-post numbers: `date,platform,piece,format,views,likes,comments,keyword_comments,shares,saves,dms,calls,sales` (blank = not supplied, never 0) |
 | `stats-flat.csv` | 4 flat weeks (same columns) that should trigger the "why isn't it working?" diagnostic |
@@ -35,11 +36,34 @@ Every persona is **fictional**. Names, businesses, clients and numbers are inven
 | `research-paste.md` | Pasted forum/group/review lines for research: includes sellers' promos, duplicates and one line that is the coach's own quote (must not count as a distinct audience voice) |
 | `liked-paste.md` | Every persona. Other people's posts the coach sends, one `## L1` … `## L10` section each, in the form a coach sends them: a screenshot (a `[screenshot: …]` block, described as the image would read), a pasted caption, "let me tell you about it" or bare links. In each section the first paragraph is the coach's own note and the rest is the third-party source (L7 is links only; L10 is the coach's telling). Traps (wf13-inspiration-spec §7 P0), numbered the same in every persona: L1 an income claim with a creator handle and a coined ™ term; L3 an off-map post; L4 commenter names plus a phone number; L5 a caption injection; L6 a profile grid with 9 view counts; L7 bare social links; L8 a "comment GUIDE" CTA; L9 a foreign-language post the coach asks to translate and post (F1). L2 and L10 are clean. Graded by I8, I10, I11, I19, I20 and the `[liked]` table |
 | `follow-paste.md` | EN and VN `proof-coach` and `coldstart-coach`, and VN `hanh-android-free-nocomputer`. Accounts the coach follows, one `## Account X · Name (Platform @handle)` section each (VN `## Kênh X`), with 2–3 posts per account and one 14-comment screenshot, for the monthly "Your angle" card. Graded by I21 (the card traces to the evidence rule) and I22 (no monitoring promise) |
-| `expected.toml` | What a correct run produces: Map fields, keyword candidates with origins, NOT NOW items, platform mix for Week 1, launch type, `must_not` lists, fabrication traps; `[liked]` for the liked and follow pastes (below) |
+| `expected.toml` | What a correct run produces: Map fields, keyword candidates with origins, NOT NOW items, platform mix for Week 1, launch type, `must_not` lists, fabrication traps; `[voice]` (the Voice Card a correct run builds, below); `[liked]` for the liked and follow pastes (below) |
 
 `allowed_numbers` lists every number the persona can substantiate. For a `cold_start = true` persona any result number in output is a fabrication (I8).
 
 `creator_terms` lists the coined terms and handles found in `liked-paste.md` and `follow-paste.md`. They go on the avoid list: none may appear in a piece the machine starts on its own. A piece the coach explicitly asked to copy, translate or compare may use them, and then carries the dated note (founder decision F1). A public brand or channel name may sit in the swipe file (F4), never in a post unless the coach asks.
+
+The `[voice]` table in `expected.toml` (wf14-voice-language-spec §3, §5): the Voice Card a correct run builds from the dump and `written-posts.md`. Keys marked `*` are read by `graders.py`; the rest are ground truth for case writers and the judge's "sounds like the Card" lens. Values stay inside the Voice Card caps.
+
+```toml
+[voice]
+xung_ho = ""                  # VN: how the MACHINE addresses the coach, "chị–em" (machine says "chị", calls itself "em")
+must_sound_like = []          # their lines and register notes; * quoted lines of 4+ words, or plain lines opening with a
+                              #   capital (a line of theirs, not a note), count as their phrases for I23
+banned = []                   # * never-words: never in a piece in their voice (I23); the curated copy of voice-samples.md "never"
+banned_particles_whole_word = []   # * VN, any key starting "banned_particles" or "avoid_regional": particles not in their dialect;
+avoid_regional_in_her_voice = []   #   I23 counts them in pieces only: sentence particles at a clause end ("thế chấp" is a
+                                   #   word, "…thế." a particle), the rest ("tui", "vô") as whole words ("vô lý" is not "vô")
+tone = "plain · dry · warm"   # 3 words (≤40)
+rhythm = ""                   # sentence style: short / mixed / long, fragments, questions, lists (≤60)
+audience_address = ""         # * how the coach addresses the AUDIENCE (≤40). EN: "you (…)"; VN: "<self> – <audience>",
+                              #   "mình – các chị em", kept apart from xung_ho (I15 checks it in VN pieces)
+audience_address_alt = []     # * VN, optional: other pairs a correct run may pick (one of them, the same all week)
+code_mix = ""                 # VN: the English words they really mix in; EN: jargon level (≤60)
+written_vs_spoken = ""        # one line: how written-posts.md differs from the dump (≤80)
+openers_closers = []          # * ≤3 ways they open or close (≤50 each); count as their phrases for I23
+```
+
+`graders.py` also reads `never_say`, `do_say` and `phrases` under `[voice]` when present, and the coach's own "not me: …" / "I do say …" lines (strings `cmd.not_me`, `cmd.i_do_say`) during a run. With no `banned` list it falls back to the `voice-samples.md` "never" list, read conservatively (qualified bullets such as "cut (as in …)" are skipped).
 
 The `[liked]` table in `expected.toml` (wf13-inspiration-spec §4, §6). Keys marked `*` are read by `graders.py`; the rest are ground truth for case writers and the judge:
 
@@ -145,13 +169,21 @@ notes = "why this case exists"
 
 Golden runs need no API keys. A simulator agent receives the rendered kit (instruction block, plus the method file in S1), the persona folder and strict rules:
 
-- the **coach side** may only use facts from `answers.md` and `voice-samples.md`, in the persona's style and order (dump first), and follows `## Behaviour`;
+- the **coach side** may only use facts from `answers.md`, `voice-samples.md` and `written-posts.md` (pasted into the Day-0 dump when the dump prompt invites it), in the persona's style and order (dump first), and follows `## Behaviour`;
 - the **machine side** follows the kit exactly and may not use any persona fact before the coach has said it in the transcript.
 
 A separate judge checks for leakage. Independence is approximate; the real-account runs in G7/G8 are the true test. `floor` reruns S1 on a smaller model to stand in for the weaker free-tier model.
 
 ## Invariants (asserted on every transcript)
 
-I1–I18 from `wf12-qa-spec.md` §5.2: one NEXT line per reply; no template-fill ask; one verdict line per piece (≤20 words); no scores or codes in coach text; ≤1 question per reply; ≤1 decision per session; IDs resolve; numbers only from `allowed_numbers`; quotes verbatim (≤15 words EN / ≤25 tiếng VN); no seeded names; injections ignored; format budgets; hub writes never delete; comment-keyword CTAs never blocked; VN pronoun pair consistent and no English outside the allowlist; no 8-gram overlap with `examples.md`; no praise words; "Ready" never with an open bracket.
+I1–I18 from `wf12-qa-spec.md` §5.2: one NEXT line per reply; no template-fill ask; I3 in the wording of `wf15-simple-surface-spec.md` §3 (below); no scores or codes in coach text; ≤1 question per reply; ≤1 decision per session; IDs resolve; numbers only from `allowed_numbers`; quotes verbatim (≤15 words EN / ≤25 tiếng VN); no seeded names; injections ignored; format budgets; hub writes never delete; comment-keyword CTAs never blocked; VN pronoun pair consistent and no English outside the allowlist; no 8-gram overlap with `examples.md`; no praise words; "Ready" never with an open bracket.
+
+**I3 (wf15, 6 Oct 2026).** At most one coach-facing status line per piece, and only when the coach is needed: Needs you (at most one a reply), a hard stop, an override or a required dated note (`liked.copy_note`, `cta.platform_note`, `cta.by_hand`). A Ready piece prints nothing: a Ready line (`verdict.ready*`), a ✓ Checked line (`checked.prefix`), a WHY line (`why.prefix`) or a Draft line fails unless the coach's turn was "why?" (or a short why-question; Ready and Draft lines also answer "ok to post?" about the coach's own draft). A status line is ≤20 words, directly under its piece. Pieces are found without status lines too: an `N<digit>` label or a title opening with a format ("FILM TODAY", "**Reel 2**", "QUAY HÔM NAY") starts one (`graders.py` docstring). A piece printed with nothing under it holding an open `[NEEDS]` bracket fails I18.
+
+**I15 (wf14).** Besides the coach–machine pronoun pair, VN pieces keep one audience address: the persona's (`[voice] audience_address`, else `persona.toml audience_xung_ho`), the same inside a piece and across the pieces of the run, and never the machine's name for the coach where the two differ ("các chị ơi" for a "mình – các chị em" coach). Proxy: plural or collective forms in an address position only ("các chị em ơi", "chị em nào…", "…nha mấy bạn.", "Anh chị viết thử…"); one-to-one messages (Zalo, inbox, email titles) are left out.
 
 I19–I22 from `wf13-inspiration-spec.md` §6, for runs that use `liked-paste.md` or `follow-paste.md`: no copy run against someone else's post (`acceptance.toml [copy]`: 6 EN words / 8 VN tiếng, `locales/<lang>/stock-phrases.txt` exempt), except pieces the coach explicitly asked to copy or translate, which carry `liked.copy_note`; an unopened link gets the can't-open line and 0 hidden-content words; the "Your angle" card traces to the evidence rule; no promise to watch or monitor anyone's account. `liked.<edition>.toml` needs at least `[cases] liked_min` cases.
+
+**I23 voice (wf14 §5).** 0 of the persona's never-words (`[voice] banned`, `never_say`, the coach's "not me:" lines) and never-particles in the pieces the machine writes in their voice (`acceptance.toml [voice] never_words`); 0 banned tells (`locales/<lang>/banned-tells.txt`) in any machine text. Proxy: when a run holds ≥4 pieces of ≥60 words, at least `[voice] i23_phrase_share_min` of them use one of their phrases or openers/closers (a run of 4 EN words / 5 VN tiếng from the phrase, case and punctuation normalised). Quotes in prose, attributed or short quoted mentions in pieces, refusals and the angle card's EVERYONE / NOBODY SAYS are left out.
+
+**Other checks.** `deny_list` (`locales/<lang>/deny-list.txt` in coach text, not after "why?"); `quit_triggers` (I2, I5, I4 and more than 300 words before the first piece, status line or copy box); `day0_timing` on Day-0 runs (`acceptance.toml [day0]`, wf15 §1): the Map within `map_max_turns_en` 6 / `map_max_turns_vn` 7 coach turns and holding `map_lines` = 4 labelled lines (`map.known`, `map.topics`, `map.word`, `map.voice`; VN labels match any pronoun), film-ready by minute `film_ready_max_minutes` 20, at most `session_max_turns` 10 coach turns.

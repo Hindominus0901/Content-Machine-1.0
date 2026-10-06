@@ -29,12 +29,27 @@ EN_STRINGS = {
     "verdict.draft_queued": "Draft · waiting on one fact from you; I'll ask next.",
     "verdict.draft_fixable": 'Draft · {defect}. Say "fix {n}" and I\'ll sharpen it.',
     "verdict.hardstop": 'Not writing "{line}": {defect}. Give me the real {fact} and I\'ll write it.',
+    "verdict.override": "Posted on your call · noted.",
+    "cmd.why": "why?",
+    "cmd.not_me": "not me:",
+    "cmd.i_do_say": "I do say",
+    "cta.platform_note": "Platform note (as of {date}): Facebook and Instagram may show 'comment if…' posts to fewer "
+                         "people. Your call.",
+    "map.known": "KNOWN FOR:",
+    "map.topics": "3 TOPICS:",
+    "map.word": "YOUR WORD:",
+    "map.voice": "YOUR VOICE:",
 }
 VN_STRINGS = {
     "next.prefix": "TIẾP →",
     "checked.prefix": "✓ Đã kiểm:",
     "verdict.ready": "Sẵn sàng {verb} · Mình sẽ đăng: {evidence}",
     "verdict.needs": 'Cần bạn · {question} Mình không tự bịa phần này. (Hoặc nhắn "bỏ qua".)',
+    "cmd.why": "tại sao?",
+    "map.known": "ĐƯỢC BIẾT ĐẾN VÌ:",
+    "map.topics": "3 CHỦ ĐỀ:",
+    "map.word": "TỪ KHOÁ CỦA BẠN:",
+    "map.voice": "GIỌNG CỦA BẠN:",
 }
 
 PERSONA = '''
@@ -92,10 +107,14 @@ class TempRepo(unittest.TestCase):
                 ''')
         self.write("evals/acceptance.toml", """
             [day0]
-            map_max_turns_en = 8
-            map_max_turns_vn = 9
-            film_ready_max_minutes = 24
-            session_max_turns = 12
+            map_max_turns_en = 6
+            map_max_turns_vn = 7
+            film_ready_max_minutes = 20
+            session_max_turns = 10
+            map_lines = 4
+            [voice]
+            i23_phrase_share_min = 0.5
+            never_words = 0
             """)
         self.write("evals/personas/en/test-coach/persona.toml", PERSONA)
         self.write("evals/personas/en/test-coach/expected.toml", EXPECTED)
@@ -143,9 +162,12 @@ class TempRepo(unittest.TestCase):
         self.assertIsNot(item["pass"], False, f"{iid} should not fail: {item}")
 
 
+# The Day-0 shape of wf15 §1: a 4-line Map + "OK?", FILM TODAY with nothing under it, Week 1 where only
+# the piece that needs the coach carries a line.
 FILM_REPLY = f'''
     {TAG}Film today
     FILM TODAY (under 30 s)
+    On-screen: 63 applications. 2 interviews.
     First line: "63 applications. 2 interviews."
     Beat 1: 24 years at HQ, out at 48.
     Last line: Comment CHAPTER for the coffee script.
@@ -153,19 +175,26 @@ FILM_REPLY = f'''
     ```
     Comment CHAPTER and I'll send you the coffee script.
     ```
-    WHY THIS GETS CLIENTS: your 63 applications story.
-    Ready to film · I'd post it: your 63 applications and CHAPTER.
+    Film it now, or post the caption as text.
     NEXT → Film it now, or say "next" for Week 1.
+    '''
+
+MAP_REPLY = f'''
+    {TAG}Map
+    KNOWN FOR: I help women who were walked out with a box find the next job, coffee before resume, instead of feeding the portal.
+    3 TOPICS: the keepers list · coffee before resume · the test drive
+    YOUR WORD: CHAPTER
+    YOUR VOICE: dry · plain · warm · short lines · "the best trade I ever made" · talks to them as "you"
+    We'll run this for 4 weeks. OK, or change a line.
+    NEXT → Say "ok" and I'll write today's video.
     '''
 
 GOOD = [
     ("coach", "Start"),
-    ("machine", f"{TAG}Setup check\nToday, about 30 min: 1) Empty your head. 2) I find the ONE thing.\n"
+    ("machine", f"{TAG}Setup check\nToday, about 25 min: 1) Talk about your work. 2) I find the ONE thing.\n"
                 "NEXT → Talk for 2-3 minutes, then send."),
     ("coach", ANSWERS),
-    ("machine", f"{TAG}Map\nONE MESSAGE: coffee before resume.\n"
-                'Lorraine told you "the best trade I ever made" and that line carries it.\n'
-                "Say OK, or change line 3.\nNEXT → Say \"ok\" and I'll write today's video."),
+    ("machine", MAP_REPLY),
     ("coach", "ok"),
     ("machine", FILM_REPLY),
     ("coach", "next"),
@@ -173,7 +202,6 @@ GOOD = [
         {TAG}Week 1
         N1 · Reel
         Coffee before resume. 11 clients took that route with me.
-        Ready to post · I'd post it: your 11 clients.
 
         N2 · Email
         Lorraine's story, in her words. [NEEDS: the month she started]
@@ -192,8 +220,15 @@ class GoodRunTests(TempRepo):
             self.assertEqual(self.inv(report, iid)["status"], "pass", iid)
         self.assertEqual(self.inv(report, "I15")["status"], "n/a")
         self.assertIn("I16", report["not_run"])                 # no locales/en/examples.md
+        self.assertIn("I23", report["not_run"])                 # no [voice], voice samples or banned tells
         day0 = self.inv(report, "day0_timing")
         self.assertEqual(day0["details"]["map_coach_turns"], 2)
+        self.assertEqual(day0["details"]["map_lines"], 4)
+        # FILM TODAY and N1 print nothing under them; N2 carries its one Needs you line
+        run = graders.load_run(self.run_dir(GOOD), self.root)
+        pieces = [(p.title, p.silent, p.kind) for r in run.replies for p in r.pieces]
+        self.assertEqual(pieces, [("FILM TODAY (under 30 s)", True, ""), ("N1 · Reel", True, ""),
+                                  ("N2 · Email", False, "needs")])
 
     def test_cli_exit_codes(self):
         good = self.run_dir(GOOD)
@@ -222,7 +257,8 @@ class InvariantTests(TempRepo):
         self.assertFails(report, "I1", "turn 4: 2 NEXT lines")
         self.assertFails(report, "I1", "turn 6: the NEXT line is not the last line")
 
-    def test_i3_verdict_lines(self):
+    def test_i3_a_ready_piece_prints_nothing(self):
+        """wf15 §2-§3: no Ready, ✓ Checked or WHY line under a piece unless the coach asked "why?"."""
         long_verdict = "Ready to film · I'd post it: " + " ".join(["word"] * 20)
         report = self.grade([("coach", "go"), ("machine", f'''
             {TAG}Week 1
@@ -232,25 +268,92 @@ class InvariantTests(TempRepo):
 
             N2 · Post
             Twelve weeks, one plan.
-            Ready to post · I'd post it: the plan.
-            Draft · waiting on one fact from you; I'll ask next.
+            WHY THIS GETS CLIENTS: your 12 weeks.
+            ✓ Checked: one idea · sounds like you
 
             N3 · Email
             A note to the list.
+            Draft · waiting on one fact from you; I'll ask next.
 
-            Ready to send · I'd post it: the list.
             N4 · Post
-            No verdict under this one.
+            Nothing under this one.
             NEXT → Say "next".
             ''')])
-        self.assertFails(report, "I3", "verdict line has 26 words")
-        self.assertFails(report, "I3", "two verdict lines for one piece")
-        self.assertFails(report, "I3", "piece N2 has 2 verdict lines")
-        self.assertFails(report, "I3", "piece N4 has 0 verdict lines")
+        self.assertFails(report, "I3", 'turn 2: Ready line under N1 without "why?"')
+        self.assertFails(report, "I3", "status line has 26 words")
+        self.assertFails(report, "I3", 'turn 2: WHY line under N2 without "why?"')
+        self.assertFails(report, "I3", 'turn 2: ✓ Checked line under N2 without "why?"')
+        self.assertFails(report, "I3", 'turn 2: Draft line under N3 without "why?"')
+        self.assertFalse(any("N4" in e for e in self.inv(report, "I3")["evidence"]))
+        self.assertEqual(report["summary"]["pieces"], 4)
 
-    def test_i3_verdict_not_directly_under(self):
-        report = self.grade([("coach", "go"), ("machine",
-                             f"{TAG}Today\nCoffee before resume.\n\n\nReady to post · I'd post it: coffee.\nNEXT → go")])
+    def test_i3_why_and_own_draft_checks_may_show_the_lines(self):
+        why_reply = f'''
+            {TAG}Why
+            WHY THIS GETS CLIENTS: they think it's their age; it's the portal. Next: the coffee ask.
+            Ready to film · I'd post it: your 63 applications.
+            ✓ Checked: one idea · sounds like you · keyword once
+            NEXT → Film it.
+            '''
+        for ask in ("why?", "Why this one?", "why"):
+            with self.subTest(ask=ask):
+                report = self.grade(GOOD + [("coach", ask), ("machine", why_reply)])
+                self.assertPasses(report, "I3")
+        own = self.grade([("coach", "Here's my draft: coffee before resume. ok to post?"),
+                          ("machine", f"{TAG}Check\nReady to post · I'd post it: your coffee line.\nNEXT → Post it.")])
+        self.assertPasses(own, "I3")
+        unasked = self.grade(GOOD + [("coach", "next"), ("machine", why_reply)])
+        self.assertFails(unasked, "I3", "WHY line without")
+        self.assertFails(unasked, "I3", "Ready line without")
+
+    def test_i3_one_status_line_only_when_the_coach_is_needed(self):
+        report = self.grade([("coach", "post anyway"), ("machine", f'''
+            {TAG}Week 1
+            N1 · Post
+            Coffee before resume. [NEEDS: her start month]
+            Needs you · Which month did she start? I won't make it up. (Or say "skip".)
+            Posted on your call · noted.
+
+            N2 · Post
+            Lorraine's coffee. [NEEDS: the café]
+            Needs you · Which café was it? I won't make it up. (Or say "skip".)
+            NEXT → Say "next".
+            ''')])
+        self.assertFails(report, "I3", "2 status lines under piece N1")
+        self.assertFails(report, "I3", "2 Needs you lines in one reply (max 1)")
+        noted = self.grade([("coach", "keep the comment word"), ("machine", f'''
+            {TAG}Week 1
+            N1 · Reel
+            First line: "Coffee before resume."
+            ```
+            Comment CHAPTER and I'll send you the coffee script.
+            ```
+            Platform note (as of 6 Oct 2026): Facebook and Instagram may show 'comment if…' posts to fewer people. Your call.
+            NEXT → Say "next".
+            ''')])
+        self.assertPasses(noted, "I3")                       # the one required dated note
+        two = self.grade([("coach", "keep it"), ("machine", f'''
+            {TAG}Week 1
+            N1 · Reel
+            First line: "Coffee before resume."
+            Posted on your call · noted.
+            Platform note (as of 6 Oct 2026): Facebook and Instagram may show 'comment if…' posts to fewer people. Your call.
+            NEXT → Say "next".
+            ''')])
+        self.assertFails(two, "I3", "2 status lines under piece N1")
+        hard = self.grade([("coach", "Just say 90% land a job."), ("machine", f'''
+            {TAG}Week 1
+            N1 · Post
+            Coffee before resume.
+            Not writing "90% land a job": you never counted it. Give me the real count and I'll write it.
+            NEXT → Say "next".
+            ''')])
+        self.assertPasses(hard, "I3")
+
+    def test_i3_status_line_not_directly_under(self):
+        report = self.grade([("coach", "go"), ("machine", f"{TAG}Today\nCoffee before resume.\n\n\n"
+                                                          "Needs you · Which month? I won't make it up. (Or say \"skip\".)\n"
+                                                          "NEXT → go")])
         self.assertFails(report, "I3", "not directly under its piece")
 
     def test_i5_questions(self):
@@ -402,7 +505,7 @@ class InvariantTests(TempRepo):
         self.assertFails(report, "deny_list", '"B3"')
         quit_item = self.inv(report, "quit_triggers")
         self.assertIs(quit_item["pass"], False)
-        self.assertTrue(any("words before the first verdict line" in e for e in quit_item["evidence"]))
+        self.assertTrue(any("words before the first piece, status line or copy box" in e for e in quit_item["evidence"]))
 
     def test_machine_blocks_are_not_coach_text(self):
         report = self.grade([("coach", "go"), ("machine", f'''
@@ -545,6 +648,232 @@ class BaselineFixTests(TempRepo):
             NEXT → See [the guide](https://example.com/a) or [the list](https://example.com/b).
             ''')])
         self.assertPasses(ok, "I2")
+
+
+class SimpleSurfaceTests(TempRepo):
+    """wf15 (6 Oct 2026): pieces with nothing under them, the 4-line Map, the new Day-0 budgets."""
+
+    def test_pieces_without_a_status_line(self):
+        reply = f"""
+            {TAG}Week 1
+            Here's your week.
+            N1 · Reel
+            On-screen: Too old? Too vague.
+            Beat 2: Why does nobody call back?
+            ```
+            Comment CHAPTER and I'll send you the coffee script.
+            ```
+
+            Want the email shorter?
+            N2 · Email
+            Coffee before resume, every time.
+            NEXT → Say "next".
+            """
+        report = self.grade([("coach", "next"), ("machine", reply)])
+        self.assertEqual(report["summary"]["pieces"], 2)
+        run = graders.load_run(self.run_dir([("coach", "next"), ("machine", reply)]), self.root)
+        r = run.replies[0]
+        self.assertEqual([(p.title, p.silent) for p in r.pieces], [("N1 · Reel", True), ("N2 · Email", True)])
+        self.assertEqual(graders.reply_questions(r), ["Want the email shorter?"])   # the beat's question is the piece's
+        self.assertEqual(graders.words_before_usable(run), 7)                       # tag + "Here's your week."
+        self.assertPasses(report, "I3")
+        self.assertPasses(report, "I5")
+
+    def test_format_titles_and_trailing_talk(self):
+        reply = f"""
+            {TAG}Today
+            ### Post this today: a short Reel
+            **On-screen text:** Coffee before resume.
+            **Script:**
+            "I applied for my own job at a different logo."
+
+            Want me to make a Facebook version too?
+            ### More post ideas
+            1. The keepers list
+            NEXT → ok
+            """
+        run = graders.load_run(self.run_dir([("coach", "go"), ("machine", reply)]), self.root)
+        r = run.replies[0]
+        self.assertEqual([p.title for p in r.pieces], ["### Post this today: a short Reel"])   # ideas are not a piece
+        self.assertEqual(graders.reply_questions(r), ["Want me to make a Facebook version too?"])
+        matcher = graders.Matcher(VN_STRINGS, "vn")
+        for text, want in (("### Bài 2: Chuyện 28 Tết", True), ("QUAY HÔM NAY", True), ("**Reel 2**", True),
+                           ("N3 · Email", True), ("### Bài học từ cái kho", False), ("**Thư giãn cổ vai**", False),
+                           ("**Script:**", False), ("### 5. Every post needs a hook", False), ("Reel 1", False)):
+            with self.subTest(title=text):
+                line = graders.Line(text, graders.ck.plain_line(text))
+                self.assertIs(graders._is_piece_title(line, matcher), want)
+
+    def test_i18_a_silent_piece_with_an_open_bracket(self):
+        report = self.grade([("coach", "go"), ("machine", f"{TAG}Week 1\nN1 · Post\nLorraine started in "
+                                                          "[NEEDS: the month] and never looked back.\nNEXT → Say \"next\".")])
+        self.assertFails(report, "I18", "open bracket in a piece with no Needs you line")
+
+    def test_day0_budgets_and_the_four_line_map(self):
+        slow = [("coach", "Start")] + [x for k in range(7) for x in (("machine", f"{TAG}Dump\nGot it.\nNEXT → go on"),
+                                                                      ("coach", f"chunk {k}"))]
+        report = self.grade(slow + [("machine", MAP_REPLY)])
+        self.assertFails(report, "day0_timing", "Map after 8 coach turns (max 6)")
+        screen = MAP_REPLY.replace("3 TOPICS:", "TOPICS ->").replace("YOUR WORD:", "WORD ->")
+        report = self.grade(GOOD[:3] + [("machine", screen)])
+        self.assertFails(report, "day0_timing", "the Map has 2 labelled lines (want 4)")
+        late = GOOD[:5] + [("machine", FILM_REPLY, {"t_min": 21.0})]
+        self.assertFails(self.grade(late), "day0_timing", "film-ready at minute 21 (max 20)")
+        long_session = GOOD + [x for k in range(7) for x in (("coach", "ok"), ("machine", f"{TAG}More\nNEXT → ok"))]
+        self.assertFails(self.grade(long_session), "day0_timing", "11 coach turns in the session (max 10)")
+
+    def test_vn_map_labels_follow_the_pronoun_and_spelling(self):
+        self.write("evals/personas/vn/thu/persona.toml", 'xung_ho = "chị–em"\nallowed_numbers = ["3"]\n'
+                                                        'seeded_names = ["Lương Khánh Vy"]\n')
+        vn_map = (f"{TAG}Bản đồ\nĐƯỢC BIẾT ĐẾN VÌ: dạy chị em chủ shop tính lãi thật.\n3 CHỦ ĐỀ: sổ · kho · giá\n"
+                  "TỪ KHÓA CỦA CHỊ: LÃI THẬT\nGIỌNG CỦA CHỊ: thẳng · ấm · câu ngắn\nChạy 4 tuần nhé chị. Ok, hay sửa dòng nào?\n"
+                  "TIẾP → Gõ \"ok\".")
+        report = self.grade([("coach", "Bắt đầu"), ("machine", vn_map)], persona="vn/thu", edition="vn")
+        self.assertEqual(self.inv(report, "day0_timing")["details"]["map_lines"], 4)
+
+    def test_why_asks(self):
+        for text, want in (("why?", True), ("Why this one?", True), ("tại sao?", True), ("vì sao chọn bài này", True),
+                           ("why", True), ("Here's why I left", False), ("next", False), ("explain why", False)):
+            with self.subTest(text=text):
+                self.assertIs(graders.is_why_ask(text, EN_STRINGS), want)
+
+
+class AudienceAddressTests(TempRepo):
+    """I15 extended (wf14 V4): the VN audience address in pieces, apart from the machine–coach pair."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/vn/thu/persona.toml", 'xung_ho = "chị–em"\nseeded_names = ["Lương Khánh Vy"]\n')
+        self.write("evals/personas/vn/thu/expected.toml", '[voice]\naudience_address = "mình – các chị em"\n')
+
+    def vn(self, *bodies):
+        turns = []
+        for body in bodies:
+            turns += [("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n{body}\nTIẾP → Gõ \"tiếp\".")]
+        return self.grade(turns, persona="vn/thu", edition="vn")
+
+    def test_their_address_in_every_piece(self):
+        good = self.vn("N1 · Bài\nCác chị em ơi, bán được hàng chưa chắc đã có tiền đâu nhé.\n"
+                       "Chị em nào cần file thì nhắn mình.",
+                       "N2 · Bài\nThôi, chị em mình nói chuyện bằng sổ nhé.\nHai chị em nhà ấy mở shop từ hồi đó.")
+        self.assertPasses(good, "I15")
+
+    def test_mixed_inside_a_piece_and_the_machines_name_for_the_coach(self):
+        mixed = self.vn("N1 · Bài\nCác chị em ơi, mở sổ ra.\nMấy bạn nào cần file thì nhắn mình nhé.")
+        self.assertFails(mixed, "I15", 'audience address changes inside a piece: "Các chị em", "Mấy bạn"')
+        self.assertFails(mixed, "I15", 'audience addressed as "Mấy bạn"; theirs is "mình – các chị em"')
+        coach_name = self.vn("N1 · Bài\nCác chị ơi, tối nay mở sổ ra đã.")
+        self.assertFails(coach_name, "I15", 'audience addressed as "Các chị" (how the machine addresses the coach)')
+
+    def test_one_address_across_the_week_and_messages_left_out(self):
+        week = self.vn("N1 · Bài\nCác chị em ơi, mở sổ ra.", "N2 · Bài\nCác bạn ơi, mở sổ ra.")
+        self.assertFails(week, "I15", 'audience address varies across the pieces: "Các chị em" (turn 2), "Các bạn" (turn 4)')
+        zalo = self.vn("N1 · Bài\nCác chị em ơi, mở sổ ra.", "N2 · Tin nhắn Zalo cho lớp\nCác em ơi, tối nay học sớm nhé.")
+        self.assertPasses(zalo, "I15")
+
+    def test_expected_address_parsing(self):
+        run = type("RunStub", (), {"expected": {"voice": {}}, "persona": {}})()
+        for written, canon in (("mình – các chị em", {"chị em"}), ("Đức (tụi em) – anh chị", {"anh chị"}),
+                               ("mình – mấy bạn / bạn", {"bạn"}), ("chị–các em", {"em"})):
+            with self.subTest(written=written):
+                run.expected = {"voice": {"audience_address": written}}
+                self.assertEqual(graders.audience_expected(run)[1], canon)
+        run.expected = {"voice": {"audience_address": "mình – bạn", "audience_address_alt": ["anh – em"]}}
+        self.assertEqual(graders.audience_expected(run)[1], {"bạn", "em"})
+        run.expected, run.persona = {}, {"audience_xung_ho": "tôi–anh chị"}
+        self.assertEqual(graders.audience_expected(run)[1], {"anh chị"})
+
+
+VOICE_SAMPLES = """
+# Dana · voice samples (test)
+
+## Phrases she really says (verbatim)
+
+1. "Here's the thing nobody tells you."
+2. "Coffee before resume. Every time."
+3. "You're not too old. You're too vague."
+
+## Words she would never use
+
+- pivot / second act
+- cut (as in "get cut")
+- "Agree?" or "Thoughts?" as a closing line
+"""
+FILLER = ("You sit at the kitchen table on a Sunday night and open the laptop again. The portal asks for the same "
+          "dates, the same titles, the same reasons you left. Nobody reads it. Nobody calls back. So you open a "
+          "second tab and start over with a different logo at the top of the page, and the week goes by.")
+
+
+class VoiceTests(TempRepo):
+    """I23 (wf14 §5): never-words, never-particles, banned tells and the coach's phrases."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/en/test-coach/voice-samples.md", VOICE_SAMPLES)
+        self.write("evals/personas/en/test-coach/expected.toml", EXPECTED + '\n[voice]\nbanned = ["journey", "Hey ladies"]\n')
+
+    def post(self, *bodies, coach="next"):
+        turns = []
+        for body in bodies:
+            turns += [("coach", coach), ("machine", f"{TAG}Week 1\n{body}\nNEXT → Say \"next\".")]
+        return self.grade(turns)
+
+    def test_never_words_in_pieces(self):
+        self.assertFails(self.post("N1 · Post\nYour journey starts with coffee."), "I23",
+                         'never-word "journey" in a piece (journey)')
+        self.assertPasses(self.post("N1 · Post\nForget \"journey\". Have coffee."), "I23")       # a short mention
+        self.assertPasses(self.post("N1 · Post\nLorraine said \"my journey ended in a parking lot\"."), "I23")
+        self.assertPasses(self.post("Saved. No journey talk in your posts."), "I23")             # the machine's prose
+        self.assertEqual(self.inv(self.post("N1 · Post\nCoffee first."), "I23")["status"], "pass")
+
+    def test_not_me_and_i_do_say(self):
+        turns = [("coach", "next"), ("machine", f"{TAG}Week 1\nN1 · Post\nHere's the game plan.\nNEXT → ok"),
+                 ("coach", "not me: game plan"), ("machine", f'{TAG}Voice\nGot it: "game plan" is out.\nNEXT → ok'),
+                 ("coach", "next"), ("machine", f"{TAG}Week 1\nN2 · Post\nHere's the game plan.\nNEXT → ok")]
+        report = self.grade(turns)
+        self.assertEqual(self.inv(report, "I23")["evidence"], ['turn 6: never-word "game plan" in a piece (game plan)'])
+        back = self.grade(turns[:4] + [("coach", "I do say game plan"), turns[5]])
+        self.assertPasses(back, "I23")
+
+    def test_never_list_from_voice_samples_when_expected_has_none(self):
+        self.write("evals/personas/en/test-coach/expected.toml", EXPECTED)
+        self.assertFails(self.post("N1 · Post\nTime to pivot."), "I23", 'never-word "pivot"')
+        self.assertFails(self.post("N1 · Post\nYour second act starts here."), "I23", "second act")
+        self.assertPasses(self.post("N1 · Post\nCut the résumé. Agree with me later."), "I23")    # qualified bullets
+
+    def test_banned_tells_anywhere_in_machine_text(self):
+        self.write("locales/en/banned-tells.txt", "delve\nlet's dive in\n")
+        self.assertFails(self.post("Let's dive in.\nN1 · Post\nCoffee first."), "I23", 'banned tell "Let\'s dive in"')
+        self.assertPasses(self.post('You asked me not to say "let\'s dive in".\nN1 · Post\nCoffee first.'), "I23")
+
+    def test_phrase_share_over_a_week(self):
+        theirs = "Here's the thing nobody tells you. " + FILLER
+        plain = "Monday. " + FILLER
+        low = self.post(*(f"N{k} · Post\n{text}" for k, text in enumerate([theirs, plain, plain, plain], 1)))
+        self.assertFails(low, "I23", "1 of 4 pieces of 60+ words use one of their phrases or openers (25%, min 50%)")
+        self.assertEqual(self.inv(low, "I23")["details"]["pieces_60_words"], 4)
+        ok = self.post(*(f"N{k} · Post\n{text}" for k, text in enumerate([theirs, plain, theirs, plain], 1)))
+        self.assertPasses(ok, "I23")
+        short_week = self.post(*(f"N{k} · Post\n{plain}" for k in range(1, 4)))         # 3 pieces: no proxy
+        self.assertPasses(short_week, "I23")
+        self.assertTrue(graders._uses_phrase("so here's the thing nobody tells you about it",
+                                             [graders.ck.copy_tokens("Here's the thing nobody tells you.")], "en"))
+        self.assertFalse(graders._uses_phrase("I'm not going to do it", [graders.ck.copy_tokens(
+            "I'm not going to blow smoke at you.")], "en"))                              # stopwords only
+
+    def test_vn_particles_at_a_clause_end_only(self):
+        self.write("evals/personas/vn/minh/persona.toml", 'xung_ho = "bạn–mình"\nseeded_names = ["Mèo Ú"]\n')
+        self.write("evals/personas/vn/minh/expected.toml", '[voice]\nbanned = ["hành trình"]\n'
+                                                           'avoid_regional_in_her_voice = ["nhé", "thế"]\n'
+                                                           'banned_particles_whole_word = ["vô"]\n')
+
+        def vn(body):
+            return self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n{body}\nTIẾP → Gõ \"tiếp\".")],
+                              persona="vn/minh", edition="vn")
+        self.assertFails(vn("N1 · Bài\nThử 5 phút thôi nhé."), "I23", '"nhé" in a piece is not their voice (nhé)')
+        self.assertFails(vn("N1 · Bài\nĐứng dậy đi vô bếp rót ly nước."), "I23", "(vô)")
+        self.assertPasses(vn("N1 · Bài\nĐừng thế chấp cái lưng. Nghe thì vô lý mà đúng á."), "I23")
+        self.assertFails(vn("N1 · Bài\nHành trình gỡ lưng bắt đầu từ cái ghế."), "I23", "hành trình")
 
 
 LIKED_PASTE = """

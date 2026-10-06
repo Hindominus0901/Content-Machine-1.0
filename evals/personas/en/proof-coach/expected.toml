@@ -166,6 +166,16 @@ banned = [
   "transform your life",
   "Hey ladies",
 ]
+# wf14 Voice Card fields (docs/research/wf14-voice-language-spec.md §3, §5): tone (3 words), rhythm,
+# audience_address (how the coach addresses the AUDIENCE, apart from xung_ho: how the machine addresses the coach),
+# code_mix (VN: the English they really mix in; EN: jargon level), written_vs_spoken (written-posts.md vs the dump),
+# openers_closers (≤3). graders.py reads audience_address (I15, VN) and openers_closers (I23).
+tone = "plain · dry · warm"
+rhythm = "short lines; story first, then the step; fragment punch"
+audience_address = "you (women 45+; never \"ladies\")"
+code_mix = "low: ops words in plain English (reorg, keepers list)"
+written_vs_spoken = "Shorter than her talk: no fillers, one-line paragraphs, 'dont', one ☕"
+openers_closers = ["Here's the thing nobody tells you.", "Okay. So picture this.", "Coffee before resume. Every time."]
 
 [research]
 # Extra table for the research grader (research-paste.md line numbers).

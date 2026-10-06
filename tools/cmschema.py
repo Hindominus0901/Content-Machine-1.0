@@ -673,6 +673,9 @@ def _check_card(card: dict, banks: dict | None, root: Path, out: _Findings) -> N
                 out.add(w, f"bank_type '{bt}' is not a Bank type")
             elif banks is not None and f.get("max_items") != caps.get(bt):
                 out.add(w, f"max_items must equal banks.toml card_caps.{bt} ({caps.get(bt)})")
+        if part == "machine" and "line" in f:
+            out.add(w, "line is for visible fields only")
+    _check_card_lines(card.get("visible", {}), f"{where} [visible]", out, labels)
     for name in budgets.get("trim_order", []):
         if name not in names:
             out.add(f"{where} [budgets]", f"trim_order names unknown field '{name}'")
@@ -681,6 +684,34 @@ def _check_card(card: dict, banks: dict | None, root: Path, out: _Findings) -> N
         limit = budgets.get("visible_chars", {}).get(e)
         if isinstance(limit, int) and total > limit:
             out.add(f"{where} [visible]", f"{e}: fields can reach {total} characters, over the {limit} budget")
+
+
+def _check_card_lines(visible: dict, where: str, out: _Findings, labels: set[str]) -> None:
+    """[visible] lines: the printed lines, in order (wf15 S3: title · what you say · how you say it).
+
+    Every visible field names its line, every line holds a field, and line labels are strings keys.
+    """
+    lines = visible.get("lines")
+    if not _is_str_list(lines) or not lines or len(set(lines)) != len(lines):
+        out.add(where, "lines must be a non-empty list of unique line names")
+        return
+    used = set()
+    for f in visible.get("field", []):
+        line = f.get("line")
+        if line not in lines:
+            out.add(f"{where} field '{f.get('name')}'", f"line '{line}' is not one of {', '.join(lines)}")
+        used.add(line)
+    for line in lines:
+        if line not in used:
+            out.add(where, f"line '{line}' has no field")
+    keys = visible.get("line_label_keys", {})
+    if not isinstance(keys, dict):
+        out.add(where, "line_label_keys must be a table of line = strings key")
+        return
+    for line, key in keys.items():
+        if line not in lines:
+            out.add(where, f"line_label_keys names unknown line '{line}'")
+        _check_key(key, f"{where} line '{line}'", out, labels)
 
 
 def _field_max(f: dict, edition: str) -> int:

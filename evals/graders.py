@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Transcript graders for the global invariants I1-I22 (QA spec §5.2; wf13-inspiration-spec §6;
-evals/README.md).
+"""Transcript graders for the global invariants I1-I23 (QA spec §5.2; wf13-inspiration-spec §6;
+wf14-voice-language-spec §5; wf15-simple-surface-spec §3; evals/README.md).
 
     python3 evals/graders.py evals/runs/<run-id> [--root PATH] [--strict]
 
@@ -18,13 +18,15 @@ Run folder (keep this format; evals/run.py and the simulator agents write it):
         optional "suite": "day0" applies the Day-0 turn budgets even without step markers.
 
 Inputs: evals/personas/<persona>/persona.toml (allowed_numbers, excluded_numbers,
-trap_numbers, seeded_names, creator_terms, cold_start, xung_ho, proof_items),
-expected.toml ([traps], [liked], [liked.angle] or [follow]) and the persona's *.md
-files (liked-paste.md and follow-paste.md among them); strings/<edition>.toml
-rendered through editions/<edition>.toml when present (verdict.*, next.prefix,
-checked.prefix, liked.copy_note, liked.cant_open, angle.labels);
-evals/acceptance.toml ([copy] en_words / vn_tieng); locales/<lang>/deny-list.txt,
-stock-phrases.txt and examples.md when present.
+trap_numbers, seeded_names, creator_terms, cold_start, xung_ho, audience_xung_ho,
+proof_items), expected.toml ([traps], [liked], [liked.angle] or [follow], [voice]) and
+the persona's *.md files (liked-paste.md, follow-paste.md and voice-samples.md among
+them); strings/<edition>.toml rendered through editions/<edition>.toml when present
+(verdict.*, next.prefix, why.prefix, checked.prefix, cmd.why, cmd.not_me, cmd.i_do_say,
+map.*, liked.copy_note, liked.cant_open, cta.platform_note, cta.by_hand, angle.labels);
+evals/acceptance.toml ([day0], [copy] en_words / vn_tieng, [voice]);
+locales/<lang>/deny-list.txt, banned-tells.txt, stock-phrases.txt and examples.md
+when present.
 
 Someone else's post in a run (I19) is any of: a coach turn marked "third_party";
 the text from a line opening with a bracketed label ("[screenshot: …",
@@ -42,18 +44,32 @@ How a machine reply is read:
   "machine" or that follow a "for the machine" / "cho máy" label. Other fenced
   blocks are copy boxes, or paste blocks (info paste/csv/tsv/sheet/notion, or a
   "paste"/"dán" label).
-- A verdict line is a line matching a rendered verdict.* string with each {slot}
-  as a wildcard (VN: any pronoun in place of the default ones), or starting with
-  checked.prefix (the Day-0 plain form of Ready).
-- A piece is the text above a verdict line, back to the previous verdict line, or
-  to the first heading, ALL-CAPS title, bold-only line or N<digit> label after it.
+- A status line (verdict line) is a line matching a rendered verdict.* string with
+  each {slot} as a wildcard (VN: any pronoun in place of the default ones), or
+  starting with checked.prefix. A WHY line starts with why.prefix. A note line is a
+  required dated note (liked.copy_note, cta.platform_note, cta.by_hand).
+- A piece (wf15 §2: a Ready piece prints nothing under it) is either
+  * the text above a status line, back to the previous status line, or to the
+    nearest piece title (or, with none, the first heading, ALL-CAPS title,
+    bold-only line or N<digit> label) after it; or
+  * a silent piece: a piece title with no status line before the next title, the
+    NEXT line or the end of the reply. A piece title is an N<digit> label or a
+    title line opening with a format, never a list of ideas or tips ("FILM TODAY",
+    "**Reel 2**", "### Email", "QUAY HÔM NAY"). A silent piece ends after its last
+    copy box, field line ("First line: …"), list item or "> " line, at the next
+    heading, or at a new paragraph asking the coach something; with no such lines,
+    at its first blank line.
   Text outside pieces is prose: the machine talking to the coach.
 - The running tag "◆ <name> · <step>" on the first line names the step.
+- A reply answers "why?" when the coach's turn is a short why-question (cmd.why,
+  "why this one?", "tại sao?", "vì sao?"); it answers a check when the coach asked
+  about their own draft ("ok to post?", "check this", "đăng được chưa?").
 
 Invariants marked "proxy": true cannot be checked from a transcript; they check
 the closest mechanical signal (I6 decisions, I7 IDs without the hub, I11
-injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns, I20
-unopened links, I21 the angle card's evidence, I22 monitoring promises).
+injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns and the
+audience address, I20 unopened links, I21 the angle card's evidence, I22 monitoring
+promises, I23 voice).
 Status is pass | fail | n/a | not_run; "pass" is null when the check did not run.
 """
 from __future__ import annotations
@@ -81,7 +97,33 @@ PASTE_INFOS = {"paste", "csv", "tsv", "sheet", "sheets", "notion"}
 PASTE_LABEL_RE = re.compile(r"\bpaste\b|(?<!\w)dán(?!\w)", re.I)
 TAG_RE = re.compile(r"^◆\s*(.+?)\s*·\s*(.+?)\s*$")
 LABEL_RE = re.compile(r"^N\d+\b")
-WHY_RE = re.compile(r"^\s*(?:why\??|tại sao\??|tai sao\??)\s*$", re.I)
+# The coach's "why?" (cmd.why) and short why-questions about the last piece ("why this one?", "vì sao?").
+WHY_RE = re.compile(r"^\W*(?:why|tại sao|tai sao|vì sao|vi sao)(?!\w)[^\n]{0,60}$", re.I)
+# The coach asks for a check on their own draft (edge-rubric: one line, Ready or Draft fixable).
+CHECK_ASK_RE = re.compile(
+    r"\bok(?:ay)? to (?:post|send|film)\b|\b(?:is|does) (?:this|it|that) (?:ok|okay|good|ready|work)\b"
+    r"|\bcheck (?:this|it|that|my|mine)\b|\bedge check\b|\bgood to (?:post|go)\b|\bready to post\?"
+    r"|(?<!\w)(?:đăng|gửi|quay) được (?:chưa|không)(?!\w)|(?<!\w)ổn (?:chưa|không)(?!\w)"
+    r"|(?<!\w)kiểm(?: tra)? (?:giúp|giùm|dùm|hộ|bài)(?!\w)|(?<!\w)xem (?:giúp|giùm|dùm|hộ)(?!\w)", re.I)
+# A piece title that starts a piece even with no status line under it (wf15 §2): an N<digit> label,
+# or a heading / bold / ALL-CAPS title naming a format.
+FORMAT_TITLE_RE = re.compile(
+    r"^(?:film today|quay hôm nay|today'?s (?:video|post|script)|ask 3"
+    r"|(?:(?:native|text|long|short|offer|teaching|case|objection|background|launch|story)\s+)?"
+    r"(?:reels?|shorts?|videos?|posts?|carousels?|emails?|newsletters?|messages?|dm repl(?:y|ies)|stories|"
+    r"gifts?)(?!\w)"
+    r"|(?:bài(?!\s+học)|video|tin nhắn|thư(?!\s+giãn)|quà|câu chuyện|trả lời tin nhắn)(?!\w))", re.I)
+# ("Script:", "Caption:", "Kịch bản:" are fields inside a piece, never its title.)
+# A title that lists ideas or tips is advice to the coach, not a piece ("### More post ideas").
+IDEAS_TITLE_RE = re.compile(r"\bideas?\b|\btips?\b|ý tưởng|gợi ý|(?<!\w)mẹo(?!\w)", re.I)
+HEADING_RE = re.compile(r"^\s*#{1,6}\s")
+FIELD_RE = re.compile(r"^[^\W\d_][^:\n]{0,32}:(?:\s|$)")          # "First line: …", "Caption:", "Câu đầu: …"
+LIST_ITEM_RE = re.compile(r"^\s*(?:>|(?:[-*•+]|\d{1,2}[.)]|\d{1,2}\s*·)\s+)")   # bullets, numbers, "> " post lines
+# Status lines by kind (wf15 §2): a Ready piece prints none; one line only when the coach is needed.
+STATUS_READY = {"ready", "ready_downgraded", "checked"}
+STATUS_DRAFT = {"draft_queued", "draft_fixable"}
+STATUS_LABELS = {"ready": "Ready line", "ready_downgraded": "Ready line", "checked": "✓ Checked line",
+                 "draft_queued": "Draft line", "draft_fixable": "Draft line", "why": "WHY line"}
 REFUSAL_RE = re.compile(r"\b(?:not writing|won't write|can't write|I won't|I will not)\b|không viết|mình không bịa",
                         re.I)
 ID_RE = re.compile(r"\b([VOSBPRKICAW])-(\d{1,4})\b")
@@ -306,6 +348,13 @@ class Matcher:
         arrow = nxt.replace("→", "->")
         self.next_prefixes = [p for p in {nxt, arrow} if p]
         self.why_prefix = ck.plain_line(strings.get("why.prefix", "")).casefold()
+        self.copy_note = strings.get("liked.copy_note", "")
+        # the required dated notes, read by their fixed opening (the text before the first {slot})
+        self.note_prefixes = []
+        for key in ("cta.platform_note", "cta.by_hand"):
+            head = ck.plain_line(strings.get(key, "")).split("{", 1)[0].strip()
+            if len(head) >= 8:
+                self.note_prefixes.append(re.sub(r"\s+", " ", head).casefold())
 
     def verdict_kind(self, plain: str) -> str | None:
         for kind, pattern in self.verdicts:
@@ -315,6 +364,16 @@ class Matcher:
 
     def is_next(self, plain: str) -> bool:
         return any(plain.casefold().startswith(p.casefold()) for p in self.next_prefixes)
+
+    def is_why(self, plain: str) -> bool:
+        return bool(self.why_prefix) and plain.casefold().startswith(self.why_prefix)
+
+    def is_note(self, plain: str) -> bool:
+        """A required dated note: the copy note (F1) or a keyword-CTA platform / by-hand note."""
+        if not plain:
+            return False
+        folded = re.sub(r"\s+", " ", plain).casefold()
+        return any(folded.startswith(p) for p in self.note_prefixes) or ck.has_copy_note(plain, self.copy_note or None)
 
 
 # ---------------------------------------------------------------- replies and pieces
@@ -331,11 +390,12 @@ class Line:
 class Piece:
     turn: int
     start: int
-    verdict_at: int
-    verdict: str
-    kind: str
+    verdict_at: int        # the status line's index; for a silent piece, the index after its last line
+    verdict: str           # the status line ("" for a silent piece)
+    kind: str              # the status line's verdict kind ("" for a silent piece)
     body: str
     title: str = ""
+    silent: bool = False   # no status line under it: printed as Ready (wf15 §2)
 
 
 @dataclass
@@ -353,6 +413,8 @@ class Reply:
     pieces: list[Piece] = field(default_factory=list)
     prose: list[int] = field(default_factory=list)
     after_why: bool = False
+    after_check: bool = False      # the coach asked whether their own draft is ok to post
+    kinds: dict[int, str] = field(default_factory=dict)    # status line index -> verdict kind
 
     def visible(self, blocks=("", "copy", "paste")) -> str:
         return "\n".join(ln.text for ln in self.lines if ln.block in blocks and not ln.fence)
@@ -424,6 +486,44 @@ def _is_marker(line: Line, matcher: Matcher) -> bool:
     return (len(caps) >= 2 or run >= 4) and ck.count_words(line.plain) <= 8
 
 
+def _is_piece_title(line: Line, matcher: Matcher) -> bool:
+    """A title that starts a piece even with no status line under it: an N<digit> label, or a marker line
+    opening with a format ("FILM TODAY (under 30 s)", "**Reel 2**", "### Email", "QUAY HÔM NAY", "**Bài 2: …**");
+    never a list of ideas or tips."""
+    if not _is_marker(line, matcher):
+        return False
+    if LABEL_RE.match(line.plain):
+        return True
+    head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", line.plain))    # "### 2. Reel: …" → "Reel: …"
+    return bool(FORMAT_TITLE_RE.match(head)) and not IDEAS_TITLE_RE.search(head)
+
+
+def _is_content(line: Line) -> bool:
+    """A line that belongs to a piece's body: a copy or paste box, a field ("First line: …"), a list item or a
+    quoted ("> ") post line."""
+    return bool(line.block) or line.fence or bool(line.plain and (FIELD_RE.match(line.plain)
+                                                                    or LIST_ITEM_RE.match(line.text)))
+
+
+def _silent_end(lines: list[Line], title: int, bound: int) -> int:
+    """Where a silent piece ends: after its last copy box, field line or list item before `bound`; with none
+    of those, at its first blank line. A new paragraph that asks the coach something ("…?") or leads into
+    something else ("…, I just need a few details:") ends it too: that is the machine talking to the coach."""
+    for i in range(title + 2, bound):
+        ln = lines[i]
+        if ln.plain and not _is_content(ln) and not lines[i - 1].text.strip() \
+                and re.search(r"[?:][\W_]*$", ln.plain):
+            bound = i
+            break
+    content = [i for i in range(title + 1, bound) if _is_content(lines[i])]
+    if content:
+        return max(content) + 1
+    end = title + 1
+    while end < bound and lines[end].plain:
+        end += 1
+    return end
+
+
 def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
     lines, machine = split_blocks(turn.text)
     r = Reply(turn.turn, index, turn.t_min, turn.text, lines, machine)
@@ -437,16 +537,38 @@ def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
             continue
         if matcher.is_next(ln.plain):
             r.nexts.append(i)
-        elif matcher.verdict_kind(ln.plain):
-            r.verdicts.append(i)
+        else:
+            kind = matcher.verdict_kind(ln.plain)
+            if kind:
+                r.verdicts.append(i)
+                r.kinds[i] = kind
+    stops = set(r.verdicts) | set(r.nexts)
+    titles = [i for i, ln in enumerate(lines) if i > r.tag_at and i not in stops and _is_piece_title(ln, matcher)]
+    heads = [i for i, ln in enumerate(lines) if not ln.block and HEADING_RE.match(ln.text)]
+
+    def silent(t: int, bound: int) -> None:
+        bound = min([bound] + [h for h in heads if h > t])      # a new section heading ends it
+        end = _silent_end(lines, t, bound)
+        if end > t + 1:
+            body = "\n".join(ln.text for ln in lines[t:end] if not ln.fence)
+            r.pieces.append(Piece(turn.turn, t, end, "", "", body, lines[t].plain, silent=True))
+
     prev = r.tag_at + 1
     for v in r.verdicts:
-        start = next((i for i in range(prev, v) if _is_marker(lines[i], matcher)), prev)
+        ts = [t for t in titles if prev <= t < v]
+        for a, b in zip(ts, ts[1:]):            # titled pieces above this one with nothing under them
+            silent(a, b)
+        from_ = ts[-1] if ts else prev
+        start = next((i for i in range(from_, v) if _is_marker(lines[i], matcher)), from_)
         body = "\n".join(ln.text for ln in lines[start:v] if not ln.fence)
         title = lines[start].plain if start < v and _is_marker(lines[start], matcher) else ""
-        r.pieces.append(Piece(turn.turn, start, v, lines[v].text, matcher.verdict_kind(lines[v].plain) or "",
-                              body, title))
+        r.pieces.append(Piece(turn.turn, start, v, lines[v].text, r.kinds[v], body, title))
         prev = v + 1
+    rest = [t for t in titles if t >= prev]
+    for k, t in enumerate(rest):
+        bound = min([rest[k + 1] if k + 1 < len(rest) else len(lines)] + [n for n in r.nexts if n > t])
+        silent(t, bound)
+    r.pieces.sort(key=lambda p: p.start)
     in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
     special = set(r.verdicts) | set(r.nexts) | {r.tag_at}
     r.prose = [i for i, ln in enumerate(lines)
@@ -470,6 +592,7 @@ class Run:
     params: dict
     acceptance: dict
     lang: str
+    matcher: Matcher | None = None
 
     @property
     def coach_turns(self) -> list[Turn]:
@@ -507,10 +630,18 @@ def load_run(run_dir: Path, root: Path) -> Run:
             last_coach = t.text
             continue
         r = analyse_reply(t, i, matcher)
-        r.after_why = bool(WHY_RE.match(last_coach))
+        r.after_why = is_why_ask(last_coach, strings)
+        r.after_check = bool(CHECK_ASK_RE.search(last_coach))
         replies.append(r)
     return Run(root, run_dir, meta, turns, replies, persona, expected, texts, strings, params,
-               _toml(root / "evals" / "acceptance.toml"), lang)
+               _toml(root / "evals" / "acceptance.toml"), lang, matcher)
+
+
+def is_why_ask(text: str, strings: dict | None = None) -> bool:
+    """The coach's turn asks "why?" about the last piece (cmd.why, or a short why-question)."""
+    text = ck.straight_quotes(ck.nfc(text)).strip()
+    cmd = ck.plain_line((strings or {}).get("cmd.why", "")).casefold().strip()
+    return bool(WHY_RE.match(text)) or bool(cmd and text.casefold().rstrip(" .!") == cmd)
 
 
 def result(iid: str, title: str, evidence: list[str], proxy: bool = False, status: str | None = None) -> dict:
@@ -795,39 +926,74 @@ def i2_template(run: Run) -> dict:
     return result("I2", "No template-fill ask", ev)
 
 
-def i3_verdict_lines(run: Run) -> dict:
-    title = "Exactly one verdict line per piece, ≤20 words, directly under it"
+def _status_kind(r: Reply, i: int, matcher: Matcher) -> str:
+    """"why" for a WHY line, the verdict kind for a status line, "note" for a required note, else ""."""
+    ln = r.lines[i]
+    if ln.block or ln.fence or not ln.plain:
+        return ""
+    if matcher.is_why(ln.plain):
+        return "why"
+    if i in r.kinds:
+        return r.kinds[i]
+    return "note" if matcher.is_note(ln.plain) else ""
+
+
+def _piece_name(p: Piece) -> str:
+    label = LABEL_RE.match(p.title) if p.title else None
+    return label.group(0) if label else (_short(p.title, 30) if p.title else "")
+
+
+def i3_status_lines(run: Run) -> dict:
+    """wf15 §2-§3: at most one coach-facing status line per piece, and only when the coach is needed
+    (Needs you, hard stop, override, a required dated note); a Ready piece prints none. A Ready line, a
+    ✓ Checked line, a WHY line or a Draft line fails unless the coach asked "why?" (or, for Ready and
+    Draft, asked whether their own draft is ok to post). Needs you: at most one per reply."""
+    title = ("At most one status line per piece, only when the coach is needed; a Ready piece prints none "
+             "(no Ready, WHY or ✓ Checked line unless \"why?\" was asked)")
     if not any(k.startswith("verdict.") for k in run.strings):
         return result("I3", title, ["strings: no verdict.* keys"], status="not_run")
+    matcher = run.matcher or Matcher(run.strings, run.lang)
     cap = int(run.params.get("verdict_max_words", ck.VERDICT_MAX_WORDS))
     ev = []
     for r in run.replies:
-        verdict_set = set(r.verdicts)
+        span = {i: p for p in r.pieces for i in range(p.start, p.verdict_at)}
+        kinds = {i: k for i in range(len(r.lines)) for k in [_status_kind(r, i, matcher)] if k}
+        owner = {}                                   # status line -> the piece it sits in or straight under
+        for i in kinds:
+            k = i
+            while k > r.tag_at and k not in span and (k in kinds or not r.lines[k].text.strip()):
+                k -= 1                               # stacked status lines and blank lines belong to the piece above
+            if k in span:
+                owner[i] = span[k]
+        needs = 0
+        for i, kind in sorted(kinds.items()):
+            plain = r.lines[i].plain
+            p = owner.get(i)
+            where = f" under {_piece_name(p)}" if p and _piece_name(p) else ""
+            if kind == "why" and not r.after_why:
+                ev.append(f'{_turn(r)}: WHY line{where} without "why?": "{_short(plain)}"')
+            elif kind in STATUS_READY | STATUS_DRAFT and not (r.after_why or r.after_check):
+                ev.append(f'{_turn(r)}: {STATUS_LABELS[kind]}{where} without "why?": "{_short(plain)}"')
+            if kind == "needs":
+                needs += 1
+            if kind not in ("why", "note"):
+                words = ck.count_words(plain, run.lang)
+                if words > cap:
+                    ev.append(f'{_turn(r)}: status line has {words} words: "{_short(plain)}"')
+        if needs > 1:
+            ev.append(f"{_turn(r)}: {needs} Needs you lines in one reply (max 1)")
+        if r.after_why:
+            continue                                 # "why?" prints the WHY line, the checks and the record
         for p in r.pieces:
-            v = p.verdict_at
-            words = ck.count_words(r.lines[v].plain, run.lang)
-            if words > cap:
-                ev.append(f'{_turn(r)}: verdict line has {words} words: "{_short(r.lines[v].plain)}"')
-            above = [i for i in range(r.tag_at + 1, v) if r.lines[i].text.strip()]
-            if not above:
-                ev.append(f'{_turn(r)}: verdict line with no piece above it: "{_short(r.lines[v].plain)}"')
-                continue
-            u = above[-1]
-            if u in verdict_set:
-                ev.append(f"{_turn(r)}: two verdict lines for one piece")
-            elif u in r.nexts or (r.tag_at >= 0 and u == r.tag_at):
-                ev.append(f'{_turn(r)}: verdict line with no piece above it: "{_short(r.lines[v].plain)}"')
-            elif v - u - 1 > 1:
-                ev.append(f"{_turn(r)}: verdict line is not directly under its piece")
-        labels = [i for i, ln in enumerate(r.lines) if not ln.block and LABEL_RE.match(ln.plain)]
-        for k, start in enumerate(labels):
-            end = labels[k + 1] if k + 1 < len(labels) else (r.nexts[0] if r.nexts and r.nexts[0] > start
-                                                              else len(r.lines))
-            n = sum(1 for v in r.verdicts if start < v < end)
-            if n != 1:
-                label = LABEL_RE.match(r.lines[start].plain).group(0)
-                ev.append(f"{_turn(r)}: piece {label} has {n} verdict lines")
-    return result("I3", title, ev)
+            mine = [i for i, k in kinds.items() if owner.get(i) is p and k not in ("why",)]
+            if len(mine) > 1:
+                name = _piece_name(p)
+                ev.append(f"{_turn(r)}: {len(mine)} status lines under " + (f"piece {name}" if name else "one piece"))
+            if not p.silent:
+                above = [i for i in range(p.start, p.verdict_at) if r.lines[i].text.strip()]
+                if above and p.verdict_at - above[-1] - 1 > 1:
+                    ev.append(f"{_turn(r)}: status line is not directly under its piece")
+    return result("I3", title, list(dict.fromkeys(ev)))
 
 
 def i4_codes(run: Run) -> dict:
@@ -1157,8 +1323,119 @@ KIN_COMPOUNDS = {
 THIRD_PERSON_KIN = ("cô", "chú", "anh")
 
 
+# wf14 V4: how the coach addresses the AUDIENCE in pieces, kept apart from the machine–coach pair. Only plural or
+# collective forms in an address position count (VN kin words are also third persons: "một chị khách", "hai anh em").
+AUDIENCE_FORMS = ("các chị em", "chị em", "các anh chị", "anh chị", "các cô chú", "cô chú", "các chị", "các anh",
+                  "các em", "các bạn", "mấy bạn", "mấy chị", "mấy anh", "mấy em", "mấy cô", "cả nhà", "mọi người",
+                  "các mom", "các mẹ", "các nàng", "nàng", "quý khách", "quý vị")
+_AUD = "(" + "|".join(re.escape(f) for f in sorted(AUDIENCE_FORMS, key=len, reverse=True)) + ")"
+_AUD_VERB = (r"(?:thử|cứ|đừng|hãy|nhớ|cần|muốn|nên|làm|đọc|xem|coi|tính|mở|lấy|hỏi|nhắn|comment|gõ|để ý|chú ý|biết|"
+             r"có biết|có bao giờ|đã bao giờ|thấy|nghĩ|ngồi|đứng|thở|ghé|inbox|bấm|lưu|viết|đăng|gửi|quay|tập|ghi|"
+             r"nói|kể|nghe|nhìn|đo|giữ|bỏ|mua|ký|gọi|cầm|không|hông|chưa)")
+_AUD_PARTICLE = r"(?:nha|nhé|nè|ạ|nghe|nghen|hen|đó|nhỉ|à|ha|hỉ|đi|luôn|chưa|không|hông|hả|nghe chưa|chứ)"
+AUDIENCE_ADDRESS_RE = [re.compile(p, re.I | re.M) for p in (
+    r"(?<!\w)" + _AUD + r"\s*,?\s*(?:ơi|nào)(?!\w)",                                 # "các chị em ơi", "chị em nào cần"
+    r"(?:^|[.!?…:]\s+)" + _AUD + r"\s+" + _AUD_VERB + r"(?!\w)",                         # "Anh chị viết thử…"
+    r"(?<!\w)" + _AUD_PARTICLE + r"\s*,?\s+" + _AUD + r"\s*(?=[.!?…]|$)",               # "…nha mấy bạn."
+    r"(?<!\w)(chị em) mình(?!\w)",                                                      # "chị em mình"
+)]
+MESSAGE_TITLE_RE = re.compile(r"zalo|inbox|tin nhắn|nhắn riêng|messenger|\bdm\b|e-?mail|(?<!\w)thư(?!\w)|trả lời|"
+                              r"\breply\b|\bmessage", re.I)
+
+
+def _audience_canon(form: str) -> str:
+    """"các chị em" / "chị em" → "chị em"; "mấy bạn" / "các bạn" / "bạn" → "bạn"; "cả nhà" stays."""
+    form = re.sub(r"\s+", " ", ck.nfc(form).strip().strip("\"“”'‘’()[]")).casefold()
+    return re.sub(r"^(?:các|mấy|những)\s+", "", form)
+
+
+def audience_expected(run: Run) -> tuple[list[str], set[str]]:
+    """(the persona's audience address(es) as written, their canonical forms): expected.toml [voice]
+    audience_address (+ audience_address_alt), else persona.toml audience_xung_ho. "mình – các chị em"
+    → {"chị em"}; "Đức (tụi em) – anh chị" → {"anh chị"}; "mình – mấy bạn / bạn" → {"bạn"}."""
+    voice = run.expected.get("voice", {}) if isinstance(run.expected.get("voice"), dict) else {}
+    pairs = [str(voice.get("audience_address", "")).strip()] + [str(x) for x in voice.get("audience_address_alt", [])]
+    pairs = [p for p in pairs if p] or [str(run.persona.get("audience_xung_ho", "")).strip()]
+    pairs = [p for p in pairs if p and re.search(r"[–—-]", p)]
+    canon = set()
+    for pair in pairs:
+        right = re.split(r"\s*[–—]\s*|\s+-\s+|(?<=\w)-(?=\w)", pair, maxsplit=1)[-1]
+        right = re.sub(r"\([^)]*\)", " ", right)
+        for part in re.split(r"\s*/\s*|\s*,\s*|\s+hoặc\s+|\s+or\s+", right):
+            if part.strip():
+                canon.add(_audience_canon(part))
+    return pairs, canon
+
+
+def audience_forms(text: str) -> list[tuple[str, str]]:
+    """(form as written, canonical form) for each audience address in an address position."""
+    text = ck.nfc(text)
+    hits = []
+    for pattern in AUDIENCE_ADDRESS_RE:
+        for m in pattern.finditer(text):
+            form = m.group(1)
+            before = text[max(0, m.start(1) - 6):m.start(1)].casefold()
+            if re.search(r"(?:hai|ba|bốn|năm|\d)\s+$", before):     # "hai chị em": two sisters, not an address
+                continue
+            hits.append((m.start(1), form, _audience_canon(form)))
+    return [(f, c) for _, f, c in sorted(set(hits))]
+
+
+def _audience_chunks(r: Reply) -> list[tuple[str, str]]:
+    """(label, text) for each piece and each copy box outside pieces; the label is the piece title or the
+    line just above the box, so one-to-one messages (Zalo, inbox, email) can be told apart."""
+    out = [(p.title or p.body.split("\n", 1)[0], p.body) for p in r.pieces if p.kind != "hardstop"]
+    in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
+    box, label = [], ""
+    for i, ln in enumerate(r.lines):
+        if ln.block != "copy" or i in in_piece:
+            continue
+        if ln.fence:
+            if box:
+                out.append((label, "\n".join(box)))
+                box = []
+            else:
+                label = next((r.lines[k].plain for k in range(i - 1, max(-1, i - 3), -1) if r.lines[k].plain), "")
+        else:
+            box.append(ln.text)
+    if box:
+        out.append((label, "\n".join(box)))
+    return out
+
+
+def _audience_checks(run: Run, pair: list[str]) -> list[str]:
+    """I15 (wf14 §5): one audience address inside a piece and across the run (the week), the persona's, and
+    not the machine's name for the coach where the two differ. One-to-one messages are left out."""
+    written, expected = audience_expected(run)
+    coach_name = _audience_canon(pair[0]) if pair else ""
+    theirs = " / ".join(f'"{w}"' for w in written)
+    ev, seen = [], {}
+    for r in run.replies:
+        coach = _last_coach(run, r)
+        if coach is not None and explicit_ask(coach_words(run, coach.text), EXPLICIT_COPY_RE):
+            continue                                 # F1: someone else's post, their address
+        for label, text in _audience_chunks(r):
+            if MESSAGE_TITLE_RE.search(label):
+                continue
+            found = audience_forms(text)
+            canon = list(dict.fromkeys(c for _, c in found))
+            if len(canon) > 1:
+                ev.append(f"{_turn(r)}: audience address changes inside a piece: "
+                          + ", ".join(f'"{f}"' for f in dict.fromkeys(f for f, _ in found)))
+            for form, c in dict.fromkeys(found):
+                seen.setdefault(c, (form, r.turn))
+                if expected and c not in expected:
+                    hint = " (how the machine addresses the coach)" if c == coach_name else ""
+                    ev.append(f'{_turn(r)}: audience addressed as "{form}"{hint}; theirs is {theirs}')
+    if len(seen) > 1:
+        ev.append("audience address varies across the pieces: "
+                  + ", ".join(f'"{f}" (turn {t})' for f, t in seen.values()))
+    return ev
+
+
 def i15_vn_language(run: Run) -> dict:
-    title = "VN: one pronoun pair; no English outside the allowlist"
+    title = ("VN: one pronoun pair with the coach; one audience address in pieces, theirs and apart from that pair; "
+             "no English outside the allowlist")
     if run.lang != "vn":
         return result("I15", title, [], proxy=True, status="n/a")
     pair = [p.strip().casefold() for p in re.split(r"[–—-]", str(run.persona.get("xung_ho", ""))) if p.strip()]
@@ -1192,7 +1469,8 @@ def i15_vn_language(run: Run) -> dict:
         leak = sorted((words & EN_FUNCTION_WORDS) - allow)
         if leak:
             ev.append(f"{_turn(r)}: English outside the allowlist: {', '.join(leak[:5])}")
-    return result("I15", title, ev, proxy=True)
+    ev += _audience_checks(run, pair)
+    return result("I15", title, list(dict.fromkeys(ev)), proxy=True)
 
 
 def i16_examples(run: Run) -> dict:
@@ -1241,14 +1519,20 @@ def i17_praise(run: Run) -> dict:
 
 
 def i18_ready(run: Run) -> dict:
+    """A Ready line never sits on an open [NEEDS] bracket; since a Ready piece prints nothing (wf15 §2), a
+    silent piece holding an open bracket fails too (a missing fact prints the Needs you line)."""
     ev = []
     for r in run.replies:
         for p in r.pieces:
             if p.kind in VERDICT_KINDS_READY and ck.ready_with_open_bracket(p.verdict, p.body):
                 ev.append(f'{_turn(r)}: Ready with an open bracket: "{_short(ck.needs_brackets(p.body + p.verdict)[0])}"')
+            elif p.silent and ck.needs_brackets(p.body):
+                ev.append(f'{_turn(r)}: open bracket in a piece with no Needs you line: '
+                          f'"{_short(ck.needs_brackets(p.body)[0])}"')
         for hit in ck.conditional_ready(r.visible()):
             ev.append(f'{_turn(r)}: "{hit}"')
-    return result("I18", '"Ready" never with an open bracket, never "Ready after…"', ev)
+    return result("I18", '"Ready" never with an open bracket (a piece with nothing under it is Ready), '
+                         'never "Ready after…"', ev)
 
 
 def i19_copy_runs(run: Run) -> dict:
@@ -1493,10 +1777,245 @@ def i22_no_monitoring(run: Run) -> dict:
     return result("I22", "No promise to watch, monitor or track anyone's account", ev, proxy=True)
 
 
-INVARIANTS = (i1_next_line, i2_template, i3_verdict_lines, i4_codes, i5_questions, i6_decisions, i7_ids,
+# ---------------------------------------------------------------- I23 voice (wf14-voice-language-spec §5)
+
+I23_MIN_WORDS = 60            # a piece long enough to carry one of the coach's phrases
+I23_MIN_PIECES = 4            # the phrase proxy needs a week's worth of such pieces
+I23_GRAM = {"en": 4, "vn": 5}  # a phrase is used when a run of this many of its words (all, if shorter) is in the piece
+# Particles a persona never uses ([voice] banned_particles_* / avoid_regional_*) count at a clause end only:
+# "thế chấp", "cơ hội", "đó là" are words, "…thế." and "…nhé các em" are particles.
+SENTENCE_PARTICLES = {"nha", "nhé", "nè", "nhỉ", "đấy", "thế", "cơ", "á", "hen", "hỉ", "nghe", "ha", "đó", "chứ",
+                      "ạ", "dzậy", "vậy", "à", "nghen", "luôn"}
+PARTICLE_COMPOUNDS = {"vô": {"lý", "tình", "cùng", "tư", "ích", "duyên", "số", "hạn", "địch", "cớ", "can", "dụng",
+                             "giá", "hình", "danh", "minh", "ơn", "tận", "vị", "sinh", "thức", "tâm", "trách", "phúc",
+                             "học", "lễ", "tội", "ý", "điều", "kể", "song", "cảm", "hiệu", "biên", "chủ", "gia",
+                             "nghĩa", "lương", "luân", "tri", "định", "thường", "ưu", "khuẩn", "trùng", "vọng"}}
+_CLAUSE_END = r"(?=\s*(?:[.,!?…:;)\"”'’]|$)|\s+(?:ạ|nha|nhé|nè|á|đó|ha|hen|luôn|nhỉ|đấy|chứ|cơ|thế|nghe|hỉ)(?!\w))"
+NOT_ME_RE = re.compile(r"^\W*(?:not me|không giống mình|không phải mình)\s*:\s*(.+)$", re.I | re.M)
+DO_SAY_RE = re.compile(r"^\W*(?:I do say|mình có nói|chị có nói|anh có nói|em có nói)\s*:?\s+(.+)$", re.I | re.M)
+
+
+def _voice_table(run: Run) -> dict:
+    voice = run.expected.get("voice", {})
+    return voice if isinstance(voice, dict) else {}
+
+
+def _md_section(text: str, heading: re.Pattern) -> str:
+    """The body of the first "## " section whose heading matches."""
+    parts = re.split(r"^##(?!#)[ \t]*(.*)$", ck.nfc(text), flags=re.M)
+    return next((body for head, body in zip(parts[1::2], parts[2::2]) if heading.search(head.strip())), "")
+
+
+def _clean_entry(entry: str) -> str:
+    entry = ck.straight_quotes(ck.nfc(str(entry))).strip()
+    entry = re.sub(r"\s*\([^)]*\)\s*$", "", entry).strip()          # a trailing gloss: "(about telling dads to …)"
+    return entry.strip(" \"'“”‘’…").rstrip(".,;").strip(" \"'…")
+
+
+def _never_from_samples(text: str) -> list[str]:
+    """voice-samples.md "never" section, read conservatively: plain bullets of short entries split at "," and
+    "/"; a bullet with a qualifier ("(as a verb)", "as a closing line", "only") or a sentence is skipped, so
+    "cut (as in 'get cut')" never bans "cut". expected.toml [voice] banned is the curated copy."""
+    out = []
+    for line in _md_section(text, re.compile(r"\bnever\b|không bao giờ", re.I)).splitlines():
+        m = re.match(r"^\s*[-*•]\s+(.+)$", line)
+        if not m or "(" in m.group(1) or re.search(r"\bas an?\b|\bonly\b|\bchỉ\b|\bkhi\b|anything", m.group(1), re.I):
+            continue
+        for entry in re.split(r"\s*[,/]\s*", m.group(1)):
+            entry = _clean_entry(entry)
+            if entry and len(entry.split()) <= 6 and len(entry) >= 3:
+                out.append(entry)
+    return out
+
+
+def voice_never_words(run: Run) -> tuple[list[str], list[str]]:
+    """(never-words, never-particles), both read in the pieces written in the coach's voice. Never-words:
+    expected.toml [voice] banned + never_say, else the voice-samples.md "never" list; minus [voice] do_say.
+    Particles: every [voice] list whose key starts with "banned_particles" or "avoid_regional"."""
+    voice = _voice_table(run)
+    words = [str(w) for key in ("banned", "never_say") for w in voice.get(key, []) if isinstance(w, str)]
+    if not voice.get("banned"):
+        words += _never_from_samples(run.persona_texts.get("voice-samples.md", ""))
+    do = {_clean_entry(w).casefold() for w in voice.get("do_say", []) if isinstance(w, str)}
+    words = [w for w in dict.fromkeys(_clean_entry(w) for w in words) if w and w.casefold() not in do]
+    particles = [str(w) for key, value in voice.items() if isinstance(value, list)
+                 and (key.startswith("banned_particles") or key.startswith("avoid_regional"))
+                 for w in value if isinstance(w, str) and str(w).strip()]
+    return words, [p for p in dict.fromkeys(_clean_entry(p) for p in particles) if p and p.casefold() not in do]
+
+
+def _particle_re(word: str) -> re.Pattern:
+    word = ck.nfc(word).strip()
+    if word.casefold() in SENTENCE_PARTICLES:
+        return re.compile(r"(?<!\w)" + re.escape(word) + _CLAUSE_END, re.I | re.M)
+    return ck.phrase_re(word)
+
+
+def voice_phrases(run: Run) -> list[list[str]]:
+    """The coach's own phrases as token lists: voice-samples.md "Phrases … say" / "Câu … nói" list, expected.toml
+    [voice] phrases, openers_closers, do_say, and the quoted lines (or short plain lines) of must_sound_like."""
+    samples = _md_section(run.persona_texts.get("voice-samples.md", ""),
+                          re.compile(r"\bphrases\b.*\bsays?\b|^câu\b.*\bnói\b", re.I))
+    found = [m.group(1) for m in re.finditer(r"^\s*\d+[.)]\s*(.+)$", samples, re.M)]
+    voice = _voice_table(run)
+    for key in ("phrases", "openers_closers", "do_say"):
+        found += [str(x) for x in voice.get(key, []) if isinstance(x, str)]
+    for entry in voice.get("must_sound_like", []):          # register notes mixed with their lines
+        entry = ck.straight_quotes(ck.nfc(str(entry)))
+        if '"' in entry:                                 # a note quoting words: only whole lines of theirs
+            found += [q for q in re.findall(r'"([^"\n]+)"', entry) if len(q.split()) >= 4]   # not "chị", "các chị em"
+        elif re.match(r"[" + ck.UPPER + r"\d]", entry) and not re.search(r"[:;]", entry) and len(entry.split()) <= 16:
+            found.append(entry)                         # a line of theirs, not a note ("câu ngắn, …" is a note)
+    out = []
+    for phrase in found:
+        toks = ck.copy_tokens(_clean_entry(phrase))
+        if len(toks) >= 2 and toks not in out:
+            out.append(toks)
+    return out
+
+
+def _uses_phrase(text: str, phrases: list[list[str]], lang: str) -> bool:
+    """A piece uses a phrase when a run of I23_GRAM[lang] of its words (all of them, if shorter) appears in it,
+    the run holding at least 2 words that are not stopwords (normalised: case, punctuation, quote marks)."""
+    hay = " " + " ".join(ck.copy_tokens(text)) + " "
+    k_max = I23_GRAM.get(lang, 4)
+    for toks in phrases:
+        k = min(len(toks), k_max)
+        for i in range(len(toks) - k + 1):
+            gram = toks[i:i + k]
+            if sum(1 for t in gram if t not in ck.STOPWORDS) >= min(2, k) and f" {' '.join(gram)} " in hay:
+                return True
+    return False
+
+
+def _angle_lines(r: Reply, patterns: dict[str, list[re.Pattern]]) -> set[int]:
+    """Lines of a "Your angle" card's EVERYONE SAYS / NOBODY SAYS sections: what others say, not the coach."""
+    out, current = set(), None
+    for i, ln in enumerate(r.lines):
+        if ln.fence or ln.block:
+            continue
+        kind = next((k for k, pats in patterns.items() for p in pats if ln.plain and p.match(ln.plain)), None)
+        if kind:
+            current = kind
+        elif i in r.nexts or i in r.verdicts or ln.text.lstrip().startswith("#"):
+            current = None
+        if current in ("everyone", "nobody") and ln.plain:
+            out.add(i)
+    return out
+
+
+def _voice_scrub(text: str, lang: str) -> str:
+    """A piece without the quotes that are not the coach's own voice: words someone is said to have said
+    ('Lorraine: "You were the first person who didn't tell me to follow my passion"') and short quoted
+    mentions of a phrase ('Forget "follow your passion".'). Spoken lines in quotes ('First line: "…"') stay."""
+    text = ck.straight_quotes(ck.nfc(text))
+    for q in reversed(ck.quotes_in(text, lang)):
+        if q.attributed or ck.count_words(q.text, lang) <= 4:
+            text = text[:q.start - 1] + " " * (q.end - q.start + 2) + text[q.end + 1:]
+    return text
+
+
+def _particle_hit(word: str, text: str) -> re.Match | None:
+    """A never-particle in a piece: at a clause end for sentence particles, else as a whole word that is not
+    the first half of a compound ("vô lý", "vô cùng" are not "vô" = vào)."""
+    for m in _particle_re(word).finditer(text):
+        nxt = re.match(r"\s+([^\W\d_]+)", text[m.end():])
+        if not (nxt and nxt.group(1).casefold() in PARTICLE_COMPOUNDS.get(word.casefold(), ())):
+            return m
+    return None
+
+
+def i23_voice(run: Run) -> dict:
+    """wf14 §5. The text the machine writes in the coach's voice (pieces and copy boxes) holds 0 of the persona's
+    never-words (expected.toml [voice] banned / never_say, else the voice-samples.md "never" list; plus the
+    coach's "not me:" lines from then on, minus "I do say") and 0 of their never-particles; all machine text
+    holds 0 banned tells (locales/<lang>/banned-tells.txt). Proxy: when the run (a Day 0 or a week) holds ≥4
+    pieces of ≥60 words, at least acceptance [voice] i23_phrase_share_min of them use one of the coach's phrases
+    or openers/closers. Left out: quotes in prose, attributed or short quoted mentions in pieces (_voice_scrub),
+    refusal lines, the angle card's EVERYONE / NOBODY SAYS, and pieces the coach asked to copy or translate.
+    The machine's own prose to the coach (the Map's "instead of {old way}") may name a never-word."""
+    title = "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases"
+    cfg = run.acceptance.get("voice", {})
+    share_min = float(cfg.get("i23_phrase_share_min", 0.5))
+    max_hits = int(cfg.get("never_words", 0))
+    never, particles = voice_never_words(run)
+    tells = load_term_list(run.root / "locales" / run.lang / "banned-tells.txt")
+    phrases = voice_phrases(run)
+    labels = _label_patterns(run)
+    never_ev, tell_ev, runtime = [], [], False
+    long_pieces = with_phrase = 0
+    for r in run.replies:
+        coach = _last_coach(run, r)
+        copy_reply = coach is not None and explicit_ask(coach_words(run, coach.text), EXPLICIT_COPY_RE)
+        skip = _angle_lines(r, labels)
+        keep = sorted(set(r.prose) | set(r.verdicts) | set(r.nexts))
+        prose = _unquoted("\n".join(r.lines[i].text for i in keep if i not in skip and not _is_refusal(r, i)))
+        pieces = [] if copy_reply else [_voice_scrub(c, run.lang) for c in _post_chunks(r)]
+        voiced = "\n".join(pieces)
+        said = _runtime_never(run, r)
+        runtime = runtime or bool(said)
+        for w in dict.fromkeys(never + said):
+            m = ck.phrase_re(w).search(voiced)
+            if m:
+                never_ev.append(f'{_turn(r)}: never-word "{m.group(0)}" in a piece ({w})')
+        for p in particles:
+            m = next((m for chunk in pieces for m in [_particle_hit(p, chunk)] if m), None)
+            if m:
+                never_ev.append(f'{_turn(r)}: "{m.group(0).strip()}" in a piece is not their voice ({p})')
+        text = prose + "\n" + voiced
+        for label, pattern in tells:
+            m = pattern.search(text)
+            if m:
+                tell_ev.append(f'{_turn(r)}: banned tell "{m.group(0)}" ({label})')
+        for chunk in pieces:
+            if ck.count_words(chunk, run.lang) >= I23_MIN_WORDS:
+                long_pieces += 1
+                with_phrase += _uses_phrase(chunk, phrases, run.lang)
+    ev = (never_ev if len(never_ev) > max_hits else []) + tell_ev
+    details = {"never_word_hits": len(never_ev), "pieces_60_words": long_pieces, "with_phrase": with_phrase}
+    proxy_ran = bool(phrases) and long_pieces >= I23_MIN_PIECES
+    if proxy_ran:
+        share = with_phrase / long_pieces
+        details["phrase_share"] = round(share, 2)
+        if share < share_min:
+            ev.append(f"{with_phrase} of {long_pieces} pieces of {I23_MIN_WORDS}+ words use one of their phrases "
+                      f"or openers ({share:.0%}, min {share_min:.0%})")
+    if not (never or particles or tells or proxy_ran or runtime):
+        out = result("I23", title, ["nothing to check: no [voice] never-words, voice-samples.md, banned-tells.txt "
+                                    f"or {I23_MIN_PIECES} pieces of {I23_MIN_WORDS}+ words"], proxy=True,
+                     status="not_run")
+    else:
+        out = result("I23", title, list(dict.fromkeys(ev)), proxy=True)
+    out["details"] = details
+    return out
+
+
+def _coach_lines(run: Run, r: Reply, pattern: re.Pattern, cmd: str) -> list[str]:
+    """What the coach said after "not me:" / "I do say" (or the edition's cmd string) before this reply."""
+    out = []
+    for t in run.turns[:r.index]:
+        if t.role != "coach":
+            continue
+        out += [m.group(1) for m in pattern.finditer(t.text)]
+        if cmd:
+            for line in t.text.splitlines():
+                at = line.casefold().find(cmd.casefold())
+                if at >= 0:
+                    out.append(line[at + len(cmd):])
+    return [e for e in (_clean_entry(x) for x in out) if e]
+
+
+def _runtime_never(run: Run, r: Reply) -> list[str]:
+    """The coach's "not me: <line>" never-words in force at this reply ("I do say <word>" takes one back)."""
+    said = _coach_lines(run, r, NOT_ME_RE, run.strings.get("cmd.not_me", ""))
+    back = {x.casefold() for x in _coach_lines(run, r, DO_SAY_RE, run.strings.get("cmd.i_do_say", ""))}
+    return [x for x in said if x.casefold() not in back]
+
+
+INVARIANTS = (i1_next_line, i2_template, i3_status_lines, i4_codes, i5_questions, i6_decisions, i7_ids,
               i8_numbers, i9_quotes, i10_names, i11_injection, i12_formats, i13_hub, i14_keyword_cta,
               i15_vn_language, i16_examples, i17_praise, i18_ready, i19_copy_runs, i20_unopened_links,
-              i21_angle_evidence, i22_no_monitoring)
+              i21_angle_evidence, i22_no_monitoring, i23_voice)
 
 
 # ---------------------------------------------------------------- other checks
@@ -1519,10 +2038,13 @@ def check_deny_list(run: Run) -> dict:
 
 
 def words_before_usable(run: Run) -> int:
+    """Words the coach reads before the first piece, status line or copy box (a Ready piece has no status
+    line, so a silent piece's title counts as the start of something usable)."""
     total = 0
     for r in run.replies:
+        starts = {p.start for p in r.pieces if p.silent}
         for i, ln in enumerate(r.lines):
-            if i in r.verdicts or (ln.fence and ln.block == "copy"):
+            if i in r.verdicts or i in starts or (ln.fence and ln.block == "copy"):
                 return total
             if not ln.fence:
                 total += ck.count_words(ln.text, run.lang)
@@ -1537,11 +2059,28 @@ def check_quit_triggers(run: Run, inv: dict) -> dict:
     words = words_before_usable(run)
     items.append({"trigger": "more than 300 words before anything usable", "pass": words <= USABLE_MAX_WORDS,
                   "evidence": [] if words <= USABLE_MAX_WORDS else
-                  [f"{words} words before the first verdict line or copy box"]})
+                  [f"{words} words before the first piece, status line or copy box"]})
     passed = all(i["pass"] is not False for i in items)
     return {"id": "quit_triggers", "pass": passed, "status": "pass" if passed else "fail", "items": items,
             "not_checked": ["more than 2 unexplained terms in one step", "options with no default"],
             "evidence": [f'{i["trigger"]}: {"; ".join(i["evidence"])}' for i in items if i["pass"] is False]}
+
+
+MAP_LABEL_KEYS = ("map.known", "map.topics", "map.word", "map.voice")
+_FOLDED_PRONOUNS = {ck.fold(p) for p in PRONOUNS}
+
+
+def _map_label_re(label: str, lang: str) -> re.Pattern:
+    """A Map label at the start of a line, compared without diacritics ("TỪ KHÓA" = "TỪ KHOÁ"); VN pronouns
+    match any pronoun ("TỪ KHOÁ CỦA CHỊ:" for "TỪ KHOÁ CỦA BẠN:")."""
+    parts = []
+    for word in ck.fold(ck.plain_line(label)).split():
+        bare = word.rstrip(":")
+        if lang == "vn" and bare in _FOLDED_PRONOUNS:
+            parts.append("(?:" + "|".join(sorted(_FOLDED_PRONOUNS)) + ")" + re.escape(word[len(bare):]))
+        else:
+            parts.append(re.escape(word))
+    return re.compile(r"^\W*" + r"\s+".join(parts), re.I)
 
 
 def check_day0(run: Run) -> dict:
@@ -1555,23 +2094,31 @@ def check_day0(run: Run) -> dict:
     ev, details = [], {}
     if map_reply:
         turns = len(run.coach_before(map_reply.index))
-        limit = int(day0.get(f"map_max_turns_{run.meta['edition']}", day0.get("map_max_turns_en", 8)))
+        limit = int(day0.get(f"map_max_turns_{run.meta['edition']}", day0.get("map_max_turns_en", 6)))
         details["map_coach_turns"] = turns
         if turns > limit:
             ev.append(f"Map after {turns} coach turns (max {limit})")
+        labels = [_map_label_re(run.strings[k], run.lang) for k in MAP_LABEL_KEYS if run.strings.get(k, "").strip()]
+        if labels:                                   # wf15 §1.4: the Map is 4 labelled lines, then "OK?"
+            want = int(day0.get("map_lines", len(labels)))
+            n = sum(1 for ln in map_reply.lines if not ln.block and ln.plain
+                    and any(p.match(ck.fold(ln.plain)) for p in labels))
+            details["map_lines"] = n
+            if n != want:
+                ev.append(f"the Map has {n} labelled lines (want {want})")
     else:
         ev.append("no Map step reached")
     if film_reply:
         details["film_ready_coach_turns"] = len(run.coach_before(film_reply.index))
         details["film_ready_minutes"] = film_reply.t_min
-        limit = float(day0.get("film_ready_max_minutes", 24))
+        limit = float(day0.get("film_ready_max_minutes", 20))
         if film_reply.t_min is not None and film_reply.t_min > limit:
             ev.append(f"film-ready at minute {film_reply.t_min:g} (max {limit:g})")
     else:
         ev.append("no film-ready step reached")
     total = len(run.coach_turns)
     details["coach_turns"] = total
-    limit = int(day0.get("session_max_turns", 12))
+    limit = int(day0.get("session_max_turns", 10))
     if total > limit:
         ev.append(f"{total} coach turns in the session (max {limit})")
     return {"id": "day0_timing", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
@@ -1605,7 +2152,7 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Grade one simulated-run transcript against I1-I22.")
+    parser = argparse.ArgumentParser(description="Grade one simulated-run transcript against I1-I23.")
     parser.add_argument("run_dir", type=Path, help="evals/runs/<run-id>")
     parser.add_argument("--root", type=Path, default=None, help="repository root (default: CM_ROOT or this repo)")
     parser.add_argument("--strict", action="store_true", help="a check that did not run also fails")

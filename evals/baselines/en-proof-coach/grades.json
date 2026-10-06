@@ -10,6 +10,7 @@
     "I2",
     "I5",
     "I8",
+    "I12",
     "I17",
     "deny_list",
     "quit_triggers",
@@ -21,7 +22,7 @@
   "summary": {
     "coach_turns": 7,
     "machine_replies": 6,
-    "pieces": 0
+    "pieces": 2
   },
   "invariants": [
     {
@@ -52,7 +53,7 @@
     },
     {
       "id": "I3",
-      "title": "Exactly one verdict line per piece, ≤20 words, directly under it",
+      "title": "At most one status line per piece, only when the coach is needed; a Ready piece prints none (no Ready, WHY or ✓ Checked line unless \"why?\" was asked)",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -131,10 +132,12 @@
     {
       "id": "I12",
       "title": "Format budgets hold (DROP ≤120 words, background text ≤130 characters, hooks)",
-      "pass": true,
-      "status": "n/a",
+      "pass": false,
+      "status": "fail",
       "proxy": true,
-      "evidence": []
+      "evidence": [
+        "turn 5: On-screen text has 7 words (max 6)"
+      ]
     },
     {
       "id": "I13",
@@ -154,7 +157,7 @@
     },
     {
       "id": "I15",
-      "title": "VN: one pronoun pair; no English outside the allowlist",
+      "title": "VN: one pronoun pair with the coach; one audience address in pieces, theirs and apart from that pair; no English outside the allowlist",
       "pass": true,
       "status": "n/a",
       "proxy": true,
@@ -184,7 +187,7 @@
     },
     {
       "id": "I18",
-      "title": "\"Ready\" never with an open bracket, never \"Ready after…\"",
+      "title": "\"Ready\" never with an open bracket (a piece with nothing under it is Ready), never \"Ready after…\"",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -221,6 +224,19 @@
       "status": "pass",
       "proxy": true,
       "evidence": []
+    },
+    {
+      "id": "I23",
+      "title": "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": [],
+      "details": {
+        "never_word_hits": 0,
+        "pieces_60_words": 2,
+        "with_phrase": 2
+      }
     }
   ],
   "checks": [
@@ -264,7 +280,7 @@
           "trigger": "more than 300 words before anything usable",
           "pass": false,
           "evidence": [
-            "2022 words before the first verdict line or copy box"
+            "1642 words before the first piece, status line or copy box"
           ]
         }
       ],
@@ -275,7 +291,7 @@
       "evidence": [
         "asked to fill a template: turn 1: \"[who]\"; turn 1: \"[who] go from [where they're stuck]\"",
         "more than 1 question in a reply: turn 2: 3 questions: What do you offer, and at what price? | Which platform do you want to focus on? | How much time can you realistically give content …",
-        "more than 300 words before anything usable: 2022 words before the first verdict line or copy box"
+        "more than 300 words before anything usable: 1642 words before the first piece, status line or copy box"
       ]
     },
     {

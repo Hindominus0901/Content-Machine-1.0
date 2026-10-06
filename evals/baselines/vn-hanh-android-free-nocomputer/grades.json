@@ -11,6 +11,7 @@
     "I6",
     "I8",
     "I11",
+    "I23",
     "deny_list",
     "quit_triggers",
     "day0_timing"
@@ -50,7 +51,7 @@
     },
     {
       "id": "I3",
-      "title": "Exactly one verdict line per piece, ≤20 words, directly under it",
+      "title": "At most one status line per piece, only when the coach is needed; a Ready piece prints none (no Ready, WHY or ✓ Checked line unless \"why?\" was asked)",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -164,7 +165,7 @@
     },
     {
       "id": "I15",
-      "title": "VN: one pronoun pair; no English outside the allowlist",
+      "title": "VN: one pronoun pair with the coach; one audience address in pieces, theirs and apart from that pair; no English outside the allowlist",
       "pass": true,
       "status": "pass",
       "proxy": true,
@@ -190,7 +191,7 @@
     },
     {
       "id": "I18",
-      "title": "\"Ready\" never with an open bracket, never \"Ready after…\"",
+      "title": "\"Ready\" never with an open bracket (a piece with nothing under it is Ready), never \"Ready after…\"",
       "pass": true,
       "status": "pass",
       "proxy": false,
@@ -227,6 +228,21 @@
       "status": "pass",
       "proxy": true,
       "evidence": []
+    },
+    {
+      "id": "I23",
+      "title": "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 5: banned tell \"hành trình\" (hành trình)"
+      ],
+      "details": {
+        "never_word_hits": 0,
+        "pieces_60_words": 0,
+        "with_phrase": 0
+      }
     }
   ],
   "checks": [
@@ -268,7 +284,7 @@
           "trigger": "more than 300 words before anything usable",
           "pass": false,
           "evidence": [
-            "2286 words before the first verdict line or copy box"
+            "2286 words before the first piece, status line or copy box"
           ]
         }
       ],
@@ -278,7 +294,7 @@
       ],
       "evidence": [
         "more than 1 question in a reply: turn 1: 5 questions: Chị đang kinh doanh gì ạ? | Khách hàng chị muốn có là ai? | Chị đang dùng kênh nào, mỗi kênh khoảng bao nhiêu… | Sản phẩm/dịch vụ chị muốn bán qua content là gì, … | Mỗi tuần chị dành được khoảng bao nhiêu thời gian…; turn 2: 2 questions: - Bây giờ chị dạy các em ấy tư vấn như thế nào, c… | - Việc kèm các em hiện chị làm theo hình thức nào…; turn 4: 2 questions: Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Và chị có muốn em viết luôn bài đầu tiên cho chị …",
-        "more than 300 words before anything usable: 2286 words before the first verdict line or copy box"
+        "more than 300 words before anything usable: 2286 words before the first piece, status line or copy box"
       ]
     },
     {

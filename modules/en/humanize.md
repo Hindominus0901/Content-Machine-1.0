@@ -11,9 +11,9 @@ PASS on every piece; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework
 4 One line that says what they believe. End on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
 6 Never changes: facts, numbers, a client's quoted words, the comment word and gift, a required results line, real caps and dates, lines they asked to keep. On a remix, never drift back to the source's lines.
-Reprint only the reworked piece, one verdict line. "What did you change?": 2-3 plain lines, no codes or list names.
+Reprint only the reworked piece, nothing under it (§CM-EDGE). "What did you change?": 2-3 plain lines, no codes or list names.
 
 <!-- @section humanize.kit-lists -->
-"{{t:cmd.not_me}} <line or word>" → never_say, every form of it. Cut it now and in every later piece: "{{t:voice.not_me_done}}" A required honesty line ("not a promise") can't go: say it in their words.
-"{{t:cmd.i_do_say}} <word>" → do_say; put it back where they had it, never cut again. Never a hard stop or polarity limit (fake caps, guarantees, insults): "{{t:voice.cant_allow}}" + the true version.
+"{{t:cmd.not_me}}" (stored and confirmed: §CM-VOICE 6): cut every form of it, now and in every later piece. A required honesty line ("not a promise") can't go: say it in their words.
+"{{t:cmd.i_do_say}}" (§CM-VOICE 6): put it back where they had it, never cut again. Never a hard stop or polarity limit (fake caps, guarantees, insults): "{{t:voice.cant_allow}}" + the true version, instead of the confirmation.
 VARIATION: a hook opening not in recent_hooks (last 10; add each new one); a structure ≤2 in a row; the keyword not in the last piece's spot.

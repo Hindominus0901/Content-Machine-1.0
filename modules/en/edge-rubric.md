@@ -1,19 +1,22 @@
-Maintainer: §CM-EDGE = how the Ship Check runs (the card itself is core/en/ship-check.md, never repeated here).
-Sources: wf12-qa-spec §0-§2.6; wf6-character-design §B5-§B6 (Edge v2, gates, detector, Flip it); qa/standards/shared.md, micro.md;
-PLAN reconciliations 2-3, 8, defaults 1, 5; DECISIONS. Acceptance: evals/cases/edge-rubric.en.toml.
-K V A Au C, gate names and "Edge" are internal labels: never printed except after "why?". Claims class → §CM-GUARDRAILS.
+Maintainer: §CM-EDGE = how the Ship Check runs and what prints per piece state (the card itself is core/en/ship-check.md, never repeated here).
+Sources: wf15-simple-surface-spec §2-§3 (what prints per state; WHY, checks and the record only on "why?"; I3 at most one status line, none for Ready); wf12-qa-spec §0-§2.6 (§2.4 superseded where wf15 differs); wf6-character-design §B5-§B6 (Edge v2, gates, detector, Flip it); qa/standards/shared.md, micro.md;
+PLAN reconciliations 2-3, 8, defaults 1, 5; DECISIONS (6 Oct: simple outside, rigorous inside). Acceptance: evals/cases/edge-rubric.en.toml.
+K V A Au C, gate names and "Edge" are internal labels: never printed except after "why?". Claims class → §CM-GUARDRAILS. Voice → §CM-VOICE.
 
 <!-- @section edge-rubric.kit-run -->
 CLASS: Ideas (options, plan rows): weak ones dropped silently, no ranks. Micro (under {{micro_threshold}} words): no score, a freebie lead is fine; truth, claims, polarity, length, real gift. Claims (results, money, prices, client words, urgency): + §CM-GUARDRAILS.
 SCORE 0-2: K keyword or buyer words in hook or punch line · V the idea by line 2, usable today · A proof by each claim; others' outcomes only as their record · Au a detail only they have · C a stance tied to their enemy, the old view refuted, a not-for line; "both work" = 1. Stance formats (stance, old vs new way, quiet truth, not for you) need C 2. No card here: Au, C max 1; ask once to paste it (phone: MY CONTENT MACHINE box).
-GATES. Polarity: heat on practices, never people ("coaches are frauds" → "programs skip X"), same heat. Truth: an off-record edit → the real figure. Voice: hook ≤{{hook_max}} words, no hedge in hook or claims, sentences ~15 words, none over 25, one ≤5; questions only in the CTA. Fix, never refuse.
+GATES. Polarity: heat on practices, never people ("coaches are frauds" → "programs skip X"), same heat. Truth: an off-record edit → the real figure. Voice (§CM-VOICE): hook ≤{{hook_max}} words, no hedge in hook or claims, sentences ~15 words, none over 25, one ≤5; questions only in the CTA. Fix, never refuse.
 BORROWED: money, freebie or résumé as the whole hook, no why by line 3 → C 0, Draft. Flip: lead with the choice or story; the asset drops to proof or CTA.
-READY: gates, ≥8, no 0, no [NEEDS]; never "Ready after". Round 2 fixes named defects only (≤5, polarity, borrowed → next idea, once); then the coach decides. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": only N2, reprinted alone.
+READY: gates, ≥8, no 0, no [NEEDS]; never "Ready after". Not Ready → one silent fix of the named defects only (≤5; polarity; borrowed → next idea). Still not → Needs you (the fact or choice that fixes it), else downgrade. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": only N2, reprinted alone.
 
 <!-- @section edge-rubric.kit-verdict -->
-Evidence: their phrase, scene or client; no adjectives.
-- downgraded: {{t:verdict.ready_downgraded}}
-- piece = the missing fact: {{t:verdict.needs}} Only the soonest Draft asks; others: {{t:verdict.draft_queued}}
-- a plain defect: {{t:verdict.draft_fixable}}
+WHAT PRINTS under a piece: ≤1 line, only if the coach is needed; all kept for "{{t:cmd.why}}".
+- Ready (also downgraded): nothing.
+- Draft: nothing; fixed silently (READY).
+- Needs you (a fact or choice only they have): {{t:verdict.needs}} One a reply, soonest first; others run downgraded, as "skip" does.
+- Hard stop: {{t:verdict.hardstop}}
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Once, never raised; hard stops stay.
-"{{t:cmd.why}}" → "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual". Asked for a score or "edge check": plain state + "{{t:qa.why_hint}}".
+- F1 copy/translate/compare, a CTA threshold or by-hand note: its one dated note; Override logged only.
+"{{t:cmd.why}}" (alone) → for the last piece: its WHY line · what it was written from: "{{t:verdict.ready}}" ({{t:verb.film}}/{{t:verb.post}}/{{t:verb.send}}; or "{{t:verdict.ready_downgraded}}") · "{{t:checked.prefix}}" the checks passed, ticks too · the record: "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual" (script if it ran). Evidence: their phrase, scene or client; no adjectives.
+THEIR OWN DRAFT checked ("ok to post?"): one line, the Ready line or "{{t:verdict.draft_fixable}}". Asked for a score or "edge check": the plain state + "{{t:qa.why_hint}}", never a number.

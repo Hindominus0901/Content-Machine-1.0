@@ -500,11 +500,12 @@ limit = ""
 note = "wf13-inspiration-spec §4: +700 EN / +800 VN for the machine block's liked line; the visible part gains 0."
 
 [budgets.brand_card_visible]
-artifact = "Brand Card visible part (one phone screen)"
+artifact = "Brand Card visible top (3 lines: title, what you say, how you say it)"
 unit = "chars_nfc"
-en = 900
-vn = 900
+en = 500
+vn = 500
 limit = ""
+note = "wf15-simple-surface-spec §0 S3, §4: a short top of 3 lines, ≤500 (was one 900-character screen). schemas/brand-card.toml [budgets] visible_chars must agree."
 
 [budgets.task_nudge]
 artifact = "automation/task-nudge.tmpl rendered"

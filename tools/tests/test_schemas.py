@@ -209,14 +209,69 @@ class SchemaFilesTest(TempRepo):
         for ed in cmlib.EDITIONS:
             with self.subTest(edition=ed):
                 self.assertLessEqual(cmschema.visible_max(self.card, ed), self.card["budgets"]["visible_chars"][ed])
-        self.assertEqual(self.card["budgets"]["whole_chars"], {"en": 5700, "vn": 6600})   # wf13 §4
-        self.assertEqual(self.card["budgets"]["visible_chars"], {"en": 900, "vn": 900})
+        self.assertEqual(self.card["budgets"]["whole_chars"], {"en": 5700, "vn": 6600})   # wf13 §4, wf14 §3
+        # wf15-simple-surface-spec §0 S3, §4 replaced the 900-character screen with a 3-line top ≤500.
+        self.assertEqual(self.card["budgets"]["visible_chars"], {"en": 500, "vn": 500})
+
+    def test_brand_card_visible_top_is_three_lines(self):
+        """wf15 S3 + wf14 §1: the title, WHAT YOU SAY (message · 3 topics · keyword), HOW YOU SAY IT (voice).
+
+        Until wf15 the visible part was 6 lines (title, message, big ideas, keyword, offer, week); offer and
+        week now live in the machine block, so nothing the machine needs is lost.
+        """
+        visible = self.card["visible"]
+        self.assertEqual(visible["lines"], ["title", "what", "how"])
+        by_line = {}
+        for f in visible["field"]:
+            by_line.setdefault(f["line"], []).append(f["name"])
+        self.assertEqual(by_line, {"title": ["title"], "what": ["message", "big_ideas", "keyword"],
+                                   "how": ["voice_line"]})
+        self.assertEqual(visible["line_label_keys"], {"what": "card.visible.what", "how": "card.visible.how"})
+        machine = {f["name"]: f for f in self.card["machine"]["field"]}
+        self.assertEqual((machine["offer"]["group"], machine["week"]["group"]), ("map", "plan"))
+        for ed in cmlib.EDITIONS:
+            self.assertLessEqual(cmschema.visible_max(self.card, ed), 500, ed)
+
+    def test_brand_card_voice_card_fields(self):
+        """wf14-voice-language-spec §3: the Voice Card lives in the machine block, group "voice"."""
+        machine = {f["name"]: f for f in self.card["machine"]["field"]}
+        voice = [f["name"] for f in self.card["machine"]["field"] if f["group"] == "voice"]
+        self.assertEqual(voice, ["tone", "rhythm", "phrases", "openers_closers", "audience_address", "pronouns",
+                                 "dialect", "code_mix", "humour", "written_vs_spoken", "never_say", "do_say"])
+        caps = {"tone": 40, "rhythm": 60, "openers_closers": 50, "audience_address": 40, "dialect": 40,
+                "code_mix": 60, "written_vs_spoken": 80}
+        for name, cap in caps.items():
+            self.assertEqual(machine[name]["max_chars"], {"en": cap, "vn": cap}, name)
+        self.assertEqual(machine["openers_closers"]["max_items"], 3)
+        self.assertEqual(machine["humour"]["options"], ["none", "dry", "playful", "self-roast"])
+        for name in ("tone", "rhythm", "audience_address", "code_mix", "humour"):
+            self.assertIs(machine[name]["required"], True, name)
+        for name in ("openers_closers", "written_vs_spoken", "never_say", "do_say"):
+            self.assertIs(machine[name]["required"], False, name)
+        # the audience address is the coach's, kept apart from the machine-coach pair (VN pronouns)
+        self.assertEqual((machine["pronouns"]["required"], machine["dialect"]["required"]), (["vn"], ["vn"]))
+        self.assertIn("particles", machine["dialect"]["note"])
+        self.assertEqual((machine["written_vs_spoken"]["source"], machine["openers_closers"]["source"]),
+                         ("posts", "posts"))
+        self.assertIn("posts", self.card["sources"])
+
+    def test_brand_card_trims_voice_last(self):
+        """wf14 §3: "voice is core": voice fields are trimmed last, phrases first among them."""
+        machine = {f["name"]: f for f in self.card["machine"]["field"]}
+        order = self.card["budgets"]["trim_order"]
+        groups = [machine[n]["group"] for n in order]
+        first_voice = groups.index("voice")
+        self.assertEqual(order[first_voice], "phrases")
+        self.assertTrue(all(g == "voice" for g in groups[first_voice:]), order)
+        self.assertNotIn("voice", groups[:first_voice])
+        self.assertEqual(order[-1], "never_say")
 
     def test_brand_card_machine_block_holds_the_ux_fields(self):
         machine = {f["name"]: f for f in self.card["machine"]["field"]}
         for name in ("phrases", "pronouns", "dialect", "trait", "enemy", "principles", "passages", "client_words",
                      "stories", "proof", "plan_start", "talk_day", "tier", "platform", "list_size", "cta_style",
-                     "not_now", "progress", "version", "date", "never_say", "do_say"):
+                     "not_now", "progress", "version", "date", "never_say", "do_say",
+                     "offer", "week"):     # visible until wf15 (3-line top); the machine block keeps them
             self.assertIn(name, machine)
         self.assertEqual(machine["phrases"]["max_items"], 5)
         self.assertEqual((machine["passages"]["max_items"], machine["passages"]["max_words"]), (5, 60))
@@ -413,7 +468,20 @@ class ValidatorFaultsTest(TempRepo):
     def test_visible_card_over_one_screen(self):
         def fn(d):
             d["brand-card"]["visible"]["field"][1]["max_chars"]["vn"] = 400
-        self.assertFlags(fn, "over the 900 budget")
+        self.assertFlags(fn, "over the 500 budget")      # wf15 §4: the visible top is ≤500, was 900
+
+    def test_visible_field_on_unknown_line(self):
+        def fn(d):
+            d["brand-card"]["visible"]["field"][-1]["line"] = "who"
+        self.assertFlags(fn, "line 'who' is not one of")
+
+    def test_visible_line_with_no_field(self):
+        self.assertFlags(lambda d: d["brand-card"]["visible"]["lines"].append("offer"), "line 'offer' has no field")
+
+    def test_machine_field_with_a_line(self):
+        def fn(d):
+            next(f for f in d["brand-card"]["machine"]["field"] if f["name"] == "tone")["line"] = "how"
+        self.assertFlags(fn, "line is for visible fields only")
 
     def test_card_cap_disagrees_with_banks(self):
         def fn(d):
@@ -442,7 +510,8 @@ class ValidatorFaultsTest(TempRepo):
         self.assertFlags(fn, "Bank Type options")
 
     def test_whole_card_smaller_than_visible(self):
-        self.assertFlags(lambda d: d["brand-card"]["budgets"]["whole_chars"].update(vn=800), "smaller than visible")
+        # 400 sits under the visible top's 500 (wf15 §4; the old 900 budget made 800 the probe)
+        self.assertFlags(lambda d: d["brand-card"]["budgets"]["whole_chars"].update(vn=400), "smaller than visible")
 
     def test_run_state_drift(self):
         self.assertFlags(lambda d: cmschema.prop(d["hub"], "runs", "Run State")["options"].append("Skipped"),
