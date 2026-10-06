@@ -396,19 +396,19 @@ id = "humanize.vn.019"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Humanize leaves the coach's comment-keyword CTA word for word and the keyword appears once"
+title = "Humanize leaves the coach's comment-keyword CTA word for word and the keyword appears once besides it"
 context = "Week 2, ChatGPT Plus project. Brand Card v1 (keyword 'lãi ảo'; gift: file Sổ 3 Cột, a real A-row)."
 input = """viết lại giọng chị bài này, nhưng câu cuối giữ y cho chị nhé:
 
 Nhiều chủ shop hiện nay gặp khó khăn trong việc xác định lợi nhuận thực tế của từng đơn hàng. Điều này dẫn đến việc kinh doanh không hiệu quả. Comment LÃI ẢO mình gửi file Sổ 3 Cột nhé."""
 regex = ['(?i)Comment LÃI ẢO mình gửi file Sổ 3 Cột']
 not_regex = [
-  '(?is)lãi ảo.*lãi ảo',
+  '(?is)lãi ảo.*lãi ảo.*lãi ảo',
   '(?i)điều này dẫn đến|hiện nay|gặp khó khăn trong việc',
 ]
 invariants = ["I1", "I3", "I14", "I15", "I17"]
 max_questions = 1
-notes = """scope: pieces. DECISIONS: comment-keyword CTAs are never rewritten (I14); a voice pass rewrites the body only. SG6: the keyword appears exactly once (acceptance keyword_exactly_once_rate = 1.0), so the rewrite adds no second 'lãi ảo'. Calques out (wf2 §8: 'Điều này dẫn đến', passive nominal phrasing)."""
+notes = """scope: pieces. DECISIONS: comment-keyword CTAs are never rewritten (I14); a voice pass rewrites the body only. SG6 and plan.kit-week 4 since G1 K9 ('Từ khoá 1 lần + lời mời'): the keyword once in the words plus the kept ask, so the rewrite holds 'lãi ảo' at most twice. Calques out (wf2 §8: 'Điều này dẫn đến', passive nominal phrasing)."""
 
 # ---------------------------------------------------------------- spelling, formatting, register in messages
 

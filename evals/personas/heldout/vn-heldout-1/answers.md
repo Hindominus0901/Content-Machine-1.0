@@ -85,7 +85,7 @@ cô bán khoá thì đăng bài trên Facebook cá nhân, cô bật chế độ 
 ## Behaviour
 
 - **Lượt 1:** máy hỏi gọi thế nào, cô gõ đúng một chữ: "cô".
-- **Micro:** quen bấm nút sóng âm (chế độ trò chuyện) vì hay nhờ ChatGPT ra đề chính tả. Lần đầu xả cô bấm nút đó, máy trả lời bằng giọng nói, cô gõ: "Ủa sao nó nói chuyện lại với cô vậy em?". Khi được chỉ micro nhỏ trên bàn phím thì làm theo được ngay. Mỗi lần nói 3–4 phút, có lần bị cắt ngang giữa chừng ("nó mất tiêu một khúc rồi em").
+- **Micro:** quen bấm nút sóng âm (chế độ trò chuyện) vì hay nhờ ChatGPT ra đề chính tả. Lần đầu xả cô bấm nút đó, máy trả lời bằng giọng nói, cô gõ: "Ủa sao nó nói chuyện lại với cô vậy em?". Khi được chỉ micro nhỏ trên bàn phím thì làm theo được ngay. Nói dài: mỗi lần nói 5–7 phút, có lần bị cắt ngang giữa chừng ("nó mất tiêu một khúc rồi em").
 - **Nhịp:** chậm, lễ phép, kiểu cô giáo: hay hỏi lại "em giải thích cô nghe coi"; câu ngắn thì đáp "ừ", "được em", "đúng rồi đó"; gặp câu hỏi trúng thì kể chuyện dài, hay lạc sang rèn chữ và chuyện trường lớp. Thấy micro ghi sai thì gõ thêm một dòng ngắn có "ko", "dc", "z".
 - **Bản miễn phí:** có lúc hết lượt giữa chừng, cô quay lại sau vài tiếng, cùng đoạn chat, gõ "tiếp".
 - **Câu phản đối (nguyên văn):**

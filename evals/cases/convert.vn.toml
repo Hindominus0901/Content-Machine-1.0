@@ -775,7 +775,7 @@ standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 max_questions = 1
-notes = """scope: pieces. SG1 every number traces to P3 (31, 19, 17, 4, 60 ngày, tháng 2 năm 2024); SG2 the result is a consented record with context and carries no promise for the reader; SG3 the target is the practice (tuyển lấp chỗ), never owners or the restaurant's staff; SG5 Edge ≥8, no 0; SG6 one belief, a CTA that matches the rung, keyword exactly once."""
+notes = """scope: pieces. SG1 every number traces to P3 (31, 19, 17, 4, 60 ngày, tháng 2 năm 2024); SG2 the result is a consented record with context and carries no promise for the reader; SG3 the target is the practice (tuyển lấp chỗ), never owners or the restaurant's staff; SG5 Edge ≥8, no 0; SG6 one belief, a CTA that matches the rung, keyword once outside the ask (plan.kit-week 4 'Từ khoá 1 lần + lời mời')."""
 
 [[case]]
 id = "convert.vn.031"

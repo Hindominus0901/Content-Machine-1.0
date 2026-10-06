@@ -69,7 +69,7 @@ must_include = [
   "mẫu trả lời inbox 1–2, xưng tôi–anh/chị, có một câu hỏi lọc (doanh nghiệp mấy người, vị trí nào đang tuyển hoài)",
   "tin Zalo 'hỏi 3 khách cũ một câu' gửi chủ quán hải sản, chị chủ phòng khám và một khách khác; không gửi chị bên du lịch",
   "từ khóa đúng 1 lần mỗi bài",
-  "mỗi bài có dòng VÌ SAO RA KHÁCH",
+  "mỗi bài lưu một câu VÌ SAO RA KHÁCH, chỉ in khi coach hỏi 'tại sao?'; dưới bài không in dòng nào",
   "mỗi bài nói với chủ doanh nghiệp, không nói với dân nhân sự",
 ]
 must_not_include = [
@@ -153,7 +153,7 @@ compliance = [
   "giá gốc",
   "hoàn tiền 100%",
 ]
-compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, bài, carousel, email, tin Zalo, quà, lời mời workshop, tin mở bán). Nhãn giao diện của bước kiểm 7 dòng ('Kết quả tốt nhất') không tính."
+compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, bài, carousel, email, tin Zalo, quà, lời mời workshop, tin mở bán). Câu đoán ngày 0 của máy (vd. hỏi về 'kết quả tốt nhất') không tính."
 compliance_notes = [
   "Câu của chính Khoa 'người phỏng vấn tốt nhất là người sẽ làm sếp trực tiếp' phải được viết lại khi đưa vào bài, không giữ 'tốt nhất'",
   "Câu 'tôi đảm bảo với anh chị là làm đúng thì giảm' không được đưa vào bài",

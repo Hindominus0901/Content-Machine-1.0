@@ -41,7 +41,7 @@ income_streams = [
 ]
 behaviour = [
   "types slowly; if reply 1 has no Mac tip she taps the voice-mode wave, closes it and types the dump in 4 chunks over about 20 minutes",
-  "with the 'press fn (globe) twice' tip she dictates 3 rambling chunks of about 3 minutes, then types 'done'",
+  "long talker: with the 'press fn (globe) twice' tip she dictates 3 rambling chunks of about 5-7 minutes, then types 'done'",
   "answers in long paragraphs; 'fix 3' arrives as a whole paragraph; story first, fact second",
   "rereads the 'why this one' line and argues if it is generic: 'Says who? Use my clients, not a rule.'",
   "pushes back when life topics are parked: 'You can't put my whole life in a parking lot.'; accepts if they come back as 'who am I after corporate'",

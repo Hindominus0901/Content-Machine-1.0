@@ -7,7 +7,7 @@
 [strings]
 
 # Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
-"contract.output" = "Always reply in English. Plain words, one screen per reply, end with one NEXT line."
+"contract.output" = "Always reply in English. First line ◆ {{name}} · <step>; pieces in copy boxes; one screen of talk; end with one NEXT line."
 "running.tag"     = "◆ {{name}} · {step}"
 "setup.check"     = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card: we make it today"
 "next.prefix"     = "NEXT →"
@@ -103,9 +103,10 @@
 # Day 0 details and the Brand Card (§ SETUP, CARD; P2 method anchors)
 "setup.no_setup"         = "No, nothing today."
 "dump.keep_going"        = "Keep going, or say 'done'."
+"dump.enough"            = "That's plenty for today. Say 'done', or one more minute."
 "check.bet"              = "If you had to bet $100, which one?"
 "check.pick"             = "My pick: {option}, because {reason}."
-"save.limit_claude_free" = "Hit the limit? Come back after {time}, same chat, say 'next'."
+"save.limit_claude_free" = "Hit the limit? Come back when it resets, same chat, say 'next'."
 "resume.brb"             = "No rush. Say 'ok back' when you're back."
 "card.stop_lines"        = "That's today done. This card is how I remember you. Save it (30 s): {route}. Then say 'next' for your Week 1 scripts (8 min), or stop here; they'll wait."
 "card.title"             = "Brand Card v{n} · {date}"
@@ -156,7 +157,7 @@
 "cta.quiet"             = "Message me {KEYWORD} and I'll send you {gift}."
 "cta.not_pushy"         = "A comment word gets people something real, so it isn't pushy. For a quieter ending, say '{{t:cmd.quiet}}'."
 "cta.platform_note"     = "Platform note (as of {date}): Facebook and Instagram may show 'comment if…' posts to fewer people. Your call."
-"cta.by_hand"           = "Replies go by hand, you or your VA."
+"cta.by_hand"           = "Replies go by hand."
 "cta.emoji_trigger"     = "Add it to your auto-reply's trigger words."
 "tick.client_ok"        = "It's true, and {client} said yes to being shown this way."
 "tick.keyword"          = "Your keyword delivers today: the DM reply is ready."
@@ -204,7 +205,7 @@
 "character.voice_first"       = "tap the mic, ramble 2-3 min"
 "character.bet"               = "If you had to bet $100, what's the answer?"
 "research.later"              = "Later: a 10-minute step in Week 1."
-"research.ask3"               = "Quick favour: I'm rewriting how I describe my work and want your words, not mine. {{t:ask3.question}} {{t:ask3.consent}}"
+"research.ask3"               = "Quick favor: I'm rewriting how I describe my work and want your words, not mine. {{t:ask3.question}} {{t:ask3.consent}}"
 "research.ask3_cold"          = "What's the hardest part of {problem} right now?"
 "research.drip"               = "Paste this week's 3 best comments or DMs, names swapped for letters, or say 'none'."
 "research.paste_steps"        = "Copy 10-20 posts or comments from 3 places your buyers talk when nobody's selling. Start each batch with [place · month]. Swap each name for a letter, same person same letter. Skip sellers."

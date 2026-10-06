@@ -192,7 +192,7 @@ id = "fmt-short.en.004"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'Hostage video' pushback: re-cut as beat cards in ≤90 words, no lecture, nothing under it"
+title = "'Hostage video' pushback: re-cut as beat cards with ≤90 words of talk, no lecture, nothing under it"
 context = "Week 1, day 2, iPhone in the school pickup line. Brand Card v1 present (persona default). The machine's 'next' reply gave short 2 with its middle written as a word-for-word paragraph."
 input = '''Bro I'm not reading that on camera, I'll sound like a hostage video. Shorter.'''
 regex = [
@@ -211,9 +211,9 @@ not_regex = [
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17"]
-max_words = 90
+max_words = 180
 max_questions = 1
-notes = """persona behaviour: 'refuses word-for-word scripts: wants beat cards'; 'Bro I'm on my phone. Shorter.' Quit triggers: a word-for-word script to read on camera; two screen-long replies in a row. Beat cards = first and last line word-for-word, beats as short cues (≤12 words). No line of 260+ characters (a paragraph) outside a copy box. §CM-TODAY 1: '"Shorter": next reply ≤90 words, no apology' (was ≤180 before the module set it). The re-cut short prints with nothing under it (wf15 §2); verdict Ready is hidden state, which evals/run.py checks as 'no status line' (R16)."""
+notes = """persona behaviour: 'refuses word-for-word scripts: wants beat cards'; 'Bro I'm on my phone. Shorter.' Quit triggers: a word-for-word script to read on camera; two screen-long replies in a row. Beat cards = first and last line word-for-word, beats as short cues (≤12 words). No line of 260+ characters (a paragraph) outside a copy box. §CM-TODAY 1 (G1 K3): '"Shorter": ≤90 words of talk; a due card or week prints its boxes only, no apology'; copy boxes don't count (start-block EVERY REPLY). run.py's max_words counts the boxes too, so the cap is 180: ≤90 of talk plus the re-cut beat-card box. The re-cut short prints with nothing under it (wf15 §2); verdict Ready is hidden state, which evals/run.py checks as 'no status line' (R16)."""
 
 [[case]]
 id = "fmt-short.en.005"
@@ -465,7 +465,7 @@ standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 max_questions = 1
-notes = """QA §0: stance formats need C = 2. SG3: the target is the practice (feeding the portal), never recruiters, HR people or younger workers. SG1: 63 applications, 7 months, 2 interviews trace to her own story (P6). SG2: no outcome promise. SG5 Edge ≥8, no 0. SG6 (one big idea, the keyword exactly once, the CTA for the rung) is critical in shared.md; SG-copy is N/A (no source post)."""
+notes = """QA §0: stance formats need C = 2. SG3: the target is the practice (feeding the portal), never recruiters, HR people or younger workers. SG1: 63 applications, 7 months, 2 interviews trace to her own story (P6). SG2: no outcome promise. SG5 Edge ≥8, no 0. SG6 (one big idea, the keyword once outside the ask, the CTA for the rung) is critical in shared.md; SG-copy is N/A (no source post)."""
 
 [[case]]
 id = "fmt-short.en.015"

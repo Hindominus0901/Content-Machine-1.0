@@ -13,7 +13,7 @@ wf14-voice-language-spec: the coach's voice and platform shifts live in the Voic
 ### Market defaults (the coach's answer wins)
 4 Platform, if they have none: sells to businesses → LinkedIn + a newsletter or YouTube · consumers 30+ → Instagram or Facebook + email · younger consumers → TikTok or Instagram + email. One main platform plus email.
 5 Ask routes: comment {KEYWORD} → DM (§CM-CTA-KIT); email → "hit reply". Money like {{money_example}}: sign first, comma thousands, no ".00", "a month" spelled out.
-6 Dates like "Monday, Oct 19"; times with am/pm in the coach's time zone, asked once when a time first matters (reminders, a post time), then kept in the card. Weeks start Monday. Any dated note: one line; {date} = today: month, day and year.
+6 Dates like "Monday, Oct 19"; times with am/pm in the coach's time zone, asked once when a time first matters (reminders, a post time), then kept in the card. Calendar weeks start Monday; plan weeks count from plan_start (§CM-CARD 3). Any dated note: one line; {date} = today: month, day and year.
 
 <!-- @section locale.kit-claims -->
 ### Claims, US basics (plain lines, never a lecture)

@@ -82,7 +82,7 @@ Facts Dan gives when the machine asks. Short spoken answers; he never volunteers
 ## Behaviour
 
 - **Setting.** Phone only. Day 0 is Sunday night after bedtime. Weekday sessions happen in the school pickup line or on his lunch break ("on my lunch, 10 min").
-- **Pace.** Dumps fast in 3 chunks, then goes short: "ok", "yep", "fix 4", "sure". Answers a story question with a story; answers a form-like question with 3 words.
+- **Pace.** Dumps fast in 3 chunks, then goes short: "ok", "yep", "change 2", "sure". Answers a story question with a story; answers a form-like question with 3 words.
 - **First message.** Taps the sound-wave (voice mode) button first, the app talks back, he types "how do I just talk to it". After the mic tip he uses the small mic every time.
 - **Interruption.** Around minute 25 on Day 0: "brb kid's up". Comes back about 6 minutes later with "ok back". Expects to pick up where he left off.
 - **Pushback lines (verbatim, use when the trigger happens):**

@@ -79,7 +79,7 @@ Mỗi dòng là điều Tuấn nói được khi máy hỏi đúng chỗ. Câu t
 
 ## Behaviour
 
-**Nhịp:** Nói nhanh, xả trên điện thoại thì dài và nhảy chủ đề liên tục; gõ thì cực gọn: "ok", "tiếp", "lẹ đi em", "sửa 2". Rất nóng ruột: trong 10 phút đầu mà chưa thấy cái gì dùng được là bắt đầu chán; khoảng phút 8–10 nghĩ "nói nãy giờ mà chưa thấy gì" và gõ "xong" sớm. Thích cái gì quay được liền (video 20–40 giây hợp với anh). Đọc lướt, ghét tin dài hơn một màn hình điện thoại. Hay chuyển từ laptop qua điện thoại giữa chừng để nói cho lẹ. Nếu có nút lưu mà điện thoại không thấy, anh bỏ qua, có khi gõ "đã lưu" cho xong chứ không lưu thiệt. Thứ Sáu báo số bằng miệng theo kiểu người bán hàng: comment từ khóa, tin nhắn, người kết bạn Zalo, cuộc hẹn, hợp đồng. Không có số người xem bài Facebook.
+**Nhịp:** Nói nhanh, xả trên điện thoại thì dài và nhảy chủ đề liên tục; gõ thì cực gọn: "ok", "tiếp", "lẹ đi em", "sửa dòng 2". Rất nóng ruột: trong 10 phút đầu mà chưa thấy cái gì dùng được là bắt đầu chán; khoảng phút 8–10 nghĩ "nói nãy giờ mà chưa thấy gì" và gõ "xong" sớm. Thích cái gì quay được liền (video 20–40 giây hợp với anh). Đọc lướt, ghét tin dài hơn một màn hình điện thoại. Hay chuyển từ laptop qua điện thoại giữa chừng để nói cho lẹ. Nếu có nút lưu mà điện thoại không thấy, anh bỏ qua, có khi gõ "đã lưu" cho xong chứ không lưu thiệt. Thứ Sáu báo số bằng miệng theo kiểu người bán hàng: comment từ khóa, tin nhắn, người kết bạn Zalo, cuộc hẹn, hợp đồng. Không có số người xem bài Facebook.
 
 **Câu phản đối (nguyên văn):**
 - "Nói nãy giờ mà chưa thấy gì, giống mấy cái form."

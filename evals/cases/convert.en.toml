@@ -355,7 +355,7 @@ standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 max_questions = 1
-notes = """SG1 every number traces (38, 51, about 7 months, minus 6 percent: Marcus, P1); SG2 the proof line is a consented record and carries no outcome promise for the reader; SG3 the target is the practice (top-line theater), never agency owners; SG5 Edge ≥8, no 0; SG6 one belief, the CTA matches a teaching piece (comment word → gift), keyword exactly once."""
+notes = """SG1 every number traces (38, 51, about 7 months, minus 6 percent: Marcus, P1); SG2 the proof line is a consented record and carries no outcome promise for the reader; SG3 the target is the practice (top-line theater), never agency owners; SG5 Edge ≥8, no 0; SG6 one belief, the CTA matches a teaching piece (comment word → gift), keyword once outside the ask."""
 
 [[case]]
 id = "convert.en.013"

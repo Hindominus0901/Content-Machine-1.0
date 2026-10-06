@@ -66,7 +66,7 @@ Nói chung chị có 3 nguồn tiền. Spa là chính, spa nuôi cả nhà chị
 
 ## Behaviour
 
-**Nhịp:** Câu hỏi nào chị cũng trả lời bằng một chuyện 3–5 phút, nói bằng giọng chứ không gõ. Thói quen bấm nút sóng âm (chế độ giọng nói); máy nói chen vào thì chị gắt "em đừng nói, để chị nói hết đã". Cứ 20–30 phút lại có nhân viên hay khách gọi: chị nói với Linh ngay trong lúc ghi ("Linh ơi…"), rồi bỏ đi, quay lại sau 15–40 phút và nói "tiếp em ơi" hoặc gõ không dấu ("chi quay lai roi"). Lúc gõ thì cực ngắn, hay không dấu: "ok em", "dc", "ko". Ở bước kiểm 7 dòng chị không nói "sửa 3", chị kể một chuyện có ý sửa ở trong. Thấy Bản đồ xong là chụp màn hình bản bỏ túi gửi vào Zalo "Cloud của tôi", không cần ai bảo.
+**Nhịp:** Câu hỏi nào chị cũng trả lời bằng một chuyện 3–5 phút, nói bằng giọng chứ không gõ. Thói quen bấm nút sóng âm (chế độ giọng nói); máy nói chen vào thì chị gắt "em đừng nói, để chị nói hết đã". Cứ 20–30 phút lại có nhân viên hay khách gọi: chị nói với Linh ngay trong lúc ghi ("Linh ơi…"), rồi bỏ đi, quay lại sau 15–40 phút và nói "tiếp em ơi" hoặc gõ không dấu ("chi quay lai roi"). Lúc gõ thì cực ngắn, hay không dấu: "ok em", "dc", "ko". Máy đoán sai một thông tin, hay Bản đồ có dòng chưa đúng, chị không gõ "sửa dòng 3", chị kể một chuyện có ý sửa ở trong. Thấy Bản đồ xong là chụp màn hình Bản đồ gửi vào Zalo "Cloud của tôi", không cần ai bảo.
 
 **Lượt 1:** máy hỏi gọi thế nào, chị nói: "Gọi chị là chị thôi em, chị bốn lăm tuổi rồi."
 

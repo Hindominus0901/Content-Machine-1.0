@@ -443,3 +443,58 @@ P6. **Free-plan limit.**
 P7. **Floor notes are unreliable.** The coldstart floor notes call real failures false positives: no running tags,
 "Perfect.", re-asked facts. Floor runs need this reviewer pass, or notes generated from `grades.json` and the
 transcript.
+
+## Fix round
+
+Integrated 6 Oct 2026, not committed. EN build `8c9a978cdbbc`: instruction block 6,344 of 6,500 NFC chars (6,498 B),
+method file 48,372 of 51,200 B, every §CM anchor ≤2,800 B, Phone Starter 5,644 of 7,500 chars. VN mirror: 7,499 of
+7,500 chars and 56,304 of 56,320 B. Lint 0 errors; 369 tests OK. Re-grade of the 9 runs: 22 failed checks, 0 false
+positives (`grader-fixes.md`, "After the fix round"). Kit items are EN and mirrored in VN unless noted.
+
+Kit:
+- K1 applied: step 2 closes a long dump after ~10 min with the new string `dump.enough`.
+- K2 deferred (founder decision): `docs/DECISIONS.md` (3bb7282) now records the founder's OK; the EN + VN change is its own pass. K18 applied meanwhile.
+- K3 applied: one phone screen of talk, boxes not counted; "Shorter" = ≤90 words of talk (VN ≤120 tiếng), a due card or week prints boxes only; Day-0 Week 1 has one line above each box.
+- K4 applied: plan_start = the day after Day 0, weeks = 7-day blocks from it (§CM-CARD 3, schema note, §CM-TODAY 4, §CM-LOCALE 6).
+- K5 applied: the Map's YOUR WORD is the {KEYWORD}.
+- K6 applied: the Week-1 mix prints in every lane (VN: "(có danh sách: email)").
+- K7 applied (EN): "Messy is fine."; the VN line was already not praise.
+- K8 applied: delivery=beat-cards|interview|bullets|word-for-word, timezone=ask|{zone}, tier=lean|standard; schema gains beat-cards and the timezone note. Declined: removing `va` from the schema's tier options (hub/task consumers).
+- K9 applied in §CM-WEEK 4 (EN "Keyword once, plus the ask", VN "1 lần + lời mời"), the acceptance comment and the eval cases. Declined: the ship.kit card wording (898 of 900 chars). Still "exactly once": the Ship Check LINT item "keyword ×1" with `tools/shiplint.py`, `schemas/banks.toml`, `schemas/hub.toml` and `qa/standards/shared.md` SG6.
+- K10 applied: Lean is the default; Standard only when asked.
+- K11 applied: a dump that refuses comment asks starts quiet (§CM-CTA-KIT 5, pointer in §CM-FORMATS 7).
+- K12 applied: "the Map's details and NOT NOW" (VN "chi tiết bản đồ").
+- K13 applied: the DM-question examples are marked e.g., "never these example words".
+- K14 applied: "Replies go by hand."
+- K15 applied (EN only): "Quick favor".
+- K16 applied: "an invite to their usual call"; side door asked → its price line.
+- K17 applied: {promise as a range, else their process}.
+- K18 applied: §CM-SETUP 10 "On Claude, once under the Map"; `save.limit_claude_free` drops {time}.
+- K19 applied: "guess the ONE buyer who could buy more than one ("Right?")".
+- K20 applied: as text = first line + caption, one box (§CM-FORMATS 7).
+- K21 applied: `contract.output` carries the running tag, copy boxes, one screen of talk and NEXT; the ALWAYS (VN LUÔN LUÔN) line is deleted.
+- Also settled: §CM-SETUP 9 prints Week 1, the card and the save line in one reply (card next only if the app would cut it); §CM-SETUP 7 never asks "nothing yet" again.
+
+Graders:
+- G1 applied with one change of approach: dates are kind `date` and I8 skips them (not structural, so ship lint still traces deadline dates); 401(k)-style ids; the cold-start rule reads posted text and talk minus verbatim kit; verifier holes (counts beside dates, 401k as money, ratios) closed.
+- G2 applied: one decision per reply, a reprinted map.ok counts once; guesses, save routes, declaratives and UI clicks are exempt.
+- G3 applied: I2 reads prose, plus paste blocks and boxes the coach must send back.
+- G4 applied: day-first and article/platform titles are pieces; the scrub keeps spoken-field quotes; the phrase share counts only phrases the coach said.
+- G5 applied: never_say / do_say values are dropped before I11.
+- G6 applied: words before copy-ready output and single-reply walls; the 7 S1/S0 "R (kit)" items now pass, their kit side is K3.
+- G7 applied: away_min, Map and FILM TODAY found by their labels, new running_tag check (`[day0] running_tag_min = 1.0`).
+- G8 applied, 7 of 8 checks (day0_shape). Declined: "no question about a fact already given" (needs a reader; listed as not_checked).
+- G9 applied (`evals/run.py` leak check, c044f06): a Voice Card field leak invalidates the run; 6 of the 9 runs are invalid.
+- G10 applied: I16 is n/a until `locales/<lang>/examples.md` exists.
+
+Protocol:
+- P1 partly applied: leak check, COACH.md bars `expected.toml` and `voice-samples.md`, "no leaks" needs a passing check. Deferred: a separate machine-side agent with no persona paths.
+- P2 applied as "long talkers on purpose": honest chunk durations in 6 personas; COACH.md says done when the machine closes the dump. Open: no in-budget persona per lane.
+- P3 partly applied: `check_pace` (≥ words / 160 wpm of active time) and `away_min`. Deferred: typing and reading pace, required away_min for site visits and plan limits.
+- P4 partly applied: `check_turns` (alternation, every coach turn answered, `"quit": true`). Deferred: the required-paste check.
+- P5 applied: MACHINE.md names the app, never the plan; a persona's own day0 is the machine's date (3cecf33).
+- P6 applied: proof-coach hits the Free limit once, after the first Week-1 reply; COACH.md models plan limits with away_min.
+- P7 deferred: floor notes are still hand-written; no reviewer pass or notes generated from `grades.json`.
+
+Also: persona fixtures rebuilt to the wf15 Day-0 shape (acceptance `[day0]`: stop point removed, detours key renamed,
+card top 500); 49 eval cases in 20 files aligned to the new kit wording (9 with assertion changes).

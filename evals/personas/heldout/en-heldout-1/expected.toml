@@ -4,19 +4,25 @@
 # Verbatim strings in problem_in_their_words, injection_text and research.coach_own_quote are exact substrings of the files.
 
 [day0]
+# wf15 §1 shape; budgets from evals/acceptance.toml [day0] (map_max_turns_en, session_max_turns).
 must_include = [
   "phone mic tip in the first reply: the small mic in the message box or the keyboard mic, not the voice-mode / sound-wave button",
   "an early win after chunk 1 that quotes 3 of Ren's own lines (e.g. 'He acts like the crib is lava.', 'have you tried one thing for 2 weeks?', 'I call it the trick of the week now')",
-  "inventory line: she knows a lot (10+ topics), nothing gets thrown away",
-  "income-streams line: sleep plans, toddler course, newborn night shifts; which one pays the bills (answer: the sleep plans)",
-  "pre-filled check with '?' on 2-3 lines at most; the dump already holds verbatim words and a result with numbers (Courtney)",
-  "film-today piece written word-for-word for reading off the phone in a parked car, under 30 s, with a Checked line naming her own story (3:40 a.m. hallway, the 7:10 red light) or Courtney's pantry call",
+  "missing facts only, one per message, each with a guess: the dump already holds verbatim words and a result with numbers (Courtney), so the one question is the income-streams guess",
+  "income-streams guess ('You earn from 3 things. My guess: …'): sleep plans, toddler course, newborn night shifts; which one pays the bills (answer: the sleep plans)",
+  "the 4-line Map (KNOWN FOR, 3 TOPICS, YOUR WORD, YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.'",
+  "film-today piece written word-for-word for reading off the phone in a parked car, under 30 s, built from her own story (3:40 a.m. hallway, the 7:10 red light) or Courtney's pantry call, nothing printed under it",
   "quiet CTA option offered with the keyword, with one plain line explaining that the keyword is a comment word, not a hashtag",
-  "Week 1 delivered even if the Brand Card is not saved",
+  "Week 1 in the reply after FILM TODAY, unasked, before the Brand Card; saving never gates it",
   "no child's name and no husband's name anywhere ('my oldest', 'my youngest', 'my husband')",
 ]
-max_coach_turns_to_map = 8
-max_coach_turns_session = 12
+must_not = [
+  "a check screen, an inventory line or 'fix N'",
+  "a question about platform, list size, talk day, delivery or hours (guessed from the dump; platform and talk day named once above Week 1)",
+  "'why this one' or NOT NOW on the Map (they print on 'why?')",
+]
+max_coach_turns_to_map = 6
+max_coach_turns_session = 10
 
 [map]
 buyer = "Parents, usually a mom back at work, of a baby about 6-18 months who still wakes several times a night and only falls asleep fed or rocked; they find Ren a few months after going back to work, when the tiredness turns scary (nodding off driving, crying at work) or the 3 a.m. arguments start. Not under 6 months."
@@ -104,8 +110,8 @@ must_include = [
   "DM replies 1-2; reply 1 asks one qualifying question (how old is your kid, or is it night wakes or bedtime?)",
   "the DM flow sends medical red flags (snoring, breathing pauses, reflux, under 6 months) to the pediatrician, and 2+ bedtime-stalling parents to the toddler course link",
   "'ask 3 past clients one question' message for Courtney, Dev and Marisa, and Leah",
-  "keyword LAVA exactly once per piece",
-  "at least one Week-1 piece names a WHY line tied to a big idea",
+  "keyword LAVA exactly once per piece outside the comment ask",
+  "every Week-1 piece stores a WHY tied to a big idea, printed only on 'why?' (nothing under a piece)",
   "no piece built on a NOT NOW topic (nap charts, daylight saving, newborns, melatonin, the toddler course, potty training)",
   "no child's name, no husband's name, no baby photos suggested for client stories",
 ]

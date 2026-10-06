@@ -60,6 +60,41 @@ class NumberTests(unittest.TestCase):
         self.assertEqual(kinds["2026-10-05"], "date")
         self.assertEqual([r for r in raws("2–3 tháng")], ["2", "3"])
 
+    def test_month_name_dates_and_retirement_accounts(self):
+        """G1 review (I8): month-name dates are dates and 401(k) / 403(b) are names, never claim numbers."""
+        text = ("Thu, Oct 8 · TUE, OCT 13: the talk · Monday, Oct 19 · Note (Oct 6, 2026) · 6 Oct 2026 · Oct 12–18 · "
+                "Oct 8th · May 2025 · her 401(k), a 401k, a 403(b) · $401k raised")
+        nums = {n.raw: n for n in ck.numbers_in(text)}
+        for raw in ("Oct 8", "OCT 13", "Oct 19", "Oct 6, 2026", "6 Oct 2026", "Oct 12", "18", "Oct 8th", "May 2025"):
+            self.assertEqual(nums[raw].kind, "date", raw)
+        for raw in ("401(k)", "401k", "403(b)"):
+            self.assertTrue(nums[raw].structural and nums[raw].kind == "id", raw)
+        self.assertEqual(nums["$401k"].value, 401_000)                     # money stays money
+        self.assertEqual(raws("you may 2x it in 12 months; march 3 miles"), ["2x", "12", "3"])   # verbs, not months
+        self.assertEqual(raws("Oct 8:30 call"), ["8:30"])                   # a time after a month is no day
+        self.assertEqual(ck.number_keys(nums["Oct 8"]), ck.allowed_number_keys(["oct 08"]))
+        self.assertEqual(ck.unsupported_numbers("Doors close Oct 31.", ["Oct 31"]), [])
+        self.assertEqual(ck.unsupported_numbers("Doors close Oct 31.", ["2026-10-30"]), ["Oct 31"])
+
+    def test_counts_beside_month_names_and_money_401k_stay_numbers(self):
+        """G1 verifier: a date reading must not swallow an invented count or amount next to a month name."""
+        for text, want in (("Oct 2026: 400 clients signed up.", ["400"]),
+                           ("In October 20 clients joined.", ["20"]),
+                           ("Since Oct 8 – 25 women booked a call.", ["25"]),
+                           ("May 3 clients said yes.", ["3"]),
+                           ("By June 30 women had an offer.", ["30"]),
+                           ("In October 25% of them", ["25%"]),
+                           ("Oct 20k followers, Oct 20+ clients", ["20k", "20+"]),
+                           ("We did 401k in revenue last year.", ["401k"]),
+                           ("I made 457k last year", ["457k"]),
+                           ("9/10 clients got hired.", ["9", "10"]), ("3/4 of my clients", ["3", "4"])):
+            with self.subTest(text=text):
+                self.assertEqual([n.raw for n in ck.numbers_in(text) if n.kind != "date" and not n.structural], want)
+        for text in ("Oct 7 email", "Oct 8 is talk day", "Oct 12th–18th", "Oct 12–18: plan", "her 401k/pension",
+                     "your 401(k), pension", "Talk day 13/10", "Đăng ngày 13/10 nhé"):
+            with self.subTest(text=text):
+                self.assertEqual([n.raw for n in ck.numbers_in(text) if n.kind != "date" and not n.structural], [])
+
     def test_labels_ids_and_tags_are_not_claims(self):
         text = "1. Beat 2: N2 cites P-3 and B2B (≤12 words)\n2) Week 1 · $249 (my guess) [NEEDS: 30% or not?]"
         claims = [n.raw for n in ck.numbers_in(text) if not n.structural and not n.tagged]

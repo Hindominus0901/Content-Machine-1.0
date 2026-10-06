@@ -76,7 +76,7 @@ Khóa 4 chị định khai giảng đầu tháng 12, chị muốn mở bán từ
 
 ## Behaviour
 
-- **Nhịp:** Nói nhanh, mỗi lần bấm micro nói liền 2–3 phút, kể chuyện rất dài và hay lạc sang quảng cáo, Shopee, Quảng Châu. Câu hỏi ngắn thì trả lời "ok em", "đúng rồi", "chuẩn". Gặp câu hỏi trúng chỗ chị thích thì kể chuyện thay vì trả lời thẳng. Thấy micro ghi sai thì gõ thêm một dòng ngắn, có "ko", "dc", "z".
+- **Nhịp:** Nói nhanh và dài, mỗi lần bấm micro nói liền 4–7 phút, kể chuyện rất dài và hay lạc sang quảng cáo, Shopee, Quảng Châu. Câu hỏi ngắn thì trả lời "ok em", "đúng rồi", "chuẩn". Gặp câu hỏi trúng chỗ chị thích thì kể chuyện thay vì trả lời thẳng. Thấy micro ghi sai thì gõ thêm một dòng ngắn, có "ko", "dc", "z".
 - **Lượt 1:** máy hỏi gọi thế nào, chị gõ đúng một chữ: "chị".
 - **Câu phản đối (nguyên văn):**
   - "Thôi em đừng bắt chị chọn mỗi một cái, chị biết nhiều thế mà chỉ nói một chuyện à?"

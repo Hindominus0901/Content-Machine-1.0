@@ -46,7 +46,7 @@ not_regex = ['\b[VSPXK]-\d+\b', '(?i)(?<!\w)trụ(?!\w)', '(?i)(dòng|ô)\s+tr�
 invariants = ["I1", "I2", "I4", "I8", "I15"]
 max_chars = 1300
 max_questions = 1
-notes = "scope: visible. schemas/brand-card.toml [visible] fields: title (name, version, date), message, big_ideas (2–3), keyword, offer, week. max_chars covers the stop-point lines + card + TIẾP line; the card part alone is ≤900 (budgets.visible_chars, lint brand_card_visible; acceptance [day0] brand_card_visible_max_chars)."
+notes = "scope: visible. schemas/brand-card.toml [visible] fields: title (name, version, date), message, big_ideas (2–3), keyword, offer, week. max_chars covers the stop-point lines + card + TIẾP line; the card part alone is ≤500 (budgets.visible_chars, lint brand_card_visible; acceptance [day0] brand_card_visible_max_chars)."
 
 [[case]]
 id = "brain.vn.002"

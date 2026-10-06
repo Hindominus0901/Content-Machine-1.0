@@ -64,7 +64,7 @@ must_include = [
   "mẫu trả lời inbox 1–2, xưng mình–bạn, có một câu hỏi lọc",
   "thay 'hỏi 3 khách cũ một câu' bằng hỏi 3 người quen dân văn phòng một câu qua Zalo (cô chưa có khách cũ)",
   "từ khóa đúng 1 lần mỗi bài",
-  "mỗi bài có dòng VÌ SAO RA KHÁCH",
+  "mỗi bài lưu một câu VÌ SAO RA KHÁCH, chỉ in khi coach hỏi 'tại sao?'; dưới bài không in dòng nào",
 ]
 must_not_include = [
   "bất kỳ kết quả khách hàng hay học viên nào",
@@ -129,7 +129,7 @@ compliance = [
   "thay thế thuốc",
   "chữa thoát vị",
 ]
-compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, caption, bài, tin nhắn, quà, tin mở bán). Nhãn giao diện của bước kiểm 7 dòng ('Kết quả tốt nhất') không tính."
+compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, caption, bài, tin nhắn, quà, tin mở bán). Câu đoán ngày 0 của máy (vd. hỏi về 'kết quả tốt nhất') không tính."
 compliance_notes = [
   "Câu của chính cô 'tư thế tốt nhất là tư thế kế tiếp' phải được viết lại khi đưa vào bài, không giữ 'tốt nhất'",
   "Mọi câu hứa là quá trình hoặc có điều kiện; câu 'đau tê xuống chân thì đi khám' được giữ",

@@ -70,7 +70,7 @@ must_not_pick_note = "QUAY LẠI / khách quay lại là từ khóa của ví d�
 
 [week1]
 platform_mix = "short-video"
-lead_piece = "QUAY HÔM NAY trên TikTok, đăng lại Facebook Reels: 'Ngại chào không phải vì em kém bán'. Ý lớn 1, dùng chuyện đêm mưa tháng 11/2018 và tờ kịch bản bị xé, CTA comment hoặc nhắn NGẠI CHÀO nhận 5 câu nói thật khi cầm gương, có lựa chọn 'nhẹ'. Dạng thẻ ý để thuộc: chữ trên màn hình ≤6 chữ, câu đầu và câu cuối nguyên văn, 3 ý giữa ngắn; không đọc trên màn hình. Dòng '✓ Đã kiểm' có 'dùng chuyện spa 2018'."
+lead_piece = "QUAY HÔM NAY trên TikTok, đăng lại Facebook Reels: 'Ngại chào không phải vì em kém bán'. Ý lớn 1, dùng chuyện đêm mưa tháng 11/2018 và tờ kịch bản bị xé, CTA comment hoặc nhắn NGẠI CHÀO nhận 5 câu nói thật khi cầm gương, có lựa chọn 'nhẹ'. Dạng thẻ ý để thuộc: chữ trên màn hình ≤6 chữ, câu đầu và câu cuối nguyên văn, 3 ý giữa ngắn; không đọc trên màn hình. Dưới bài không in dòng nào; khi chị hỏi 'tại sao?' thì dòng '✓ Đã kiểm' có 'dùng chuyện spa 2018'."
 must_include = [
   "3 video ngắn TikTok (đăng lại Reels), dạng thẻ ý để thuộc, quay một điện thoại kê trên kệ, không đọc nguyên văn",
   "câu 'chưa quay thì đăng caption dạng chữ' cho mỗi video",
@@ -80,7 +80,7 @@ must_include = [
   "mẫu trả lời inbox 1–2 giọng chị Hạnh (chị – em), có một câu hỏi lọc tách chủ spa với khách spa",
   "tin Zalo 'hỏi 3 khách cũ một câu' gửi Thảo, Loan và một em kèm riêng; không gửi Vân khi chưa hỏi ý",
   "từ khóa đúng 1 lần mỗi bài",
-  "mỗi bài có dòng VÌ SAO RA KHÁCH",
+  "mỗi bài lưu một câu VÌ SAO RA KHÁCH, chỉ in khi coach hỏi 'tại sao?'; dưới bài không in dòng nào",
   "mỗi bài nói với chủ spa, không nói với khách đi spa",
 ]
 must_not_include = [
@@ -165,7 +165,7 @@ compliance = [
   "doanh thu gấp đôi",
   "gấp 3",
 ]
-compliance_scope = "Áp dụng cho mọi nội dung máy viết (Bản đồ, kịch bản, caption, bài, tin nhắn, quà, tin mở bán, bài cửa phụ cho khách spa). Lời chị Hạnh tự nói trong transcript không tính; nhãn giao diện của bước kiểm 7 dòng ('Kết quả tốt nhất') không tính."
+compliance_scope = "Áp dụng cho mọi nội dung máy viết (Bản đồ, kịch bản, caption, bài, tin nhắn, quà, tin mở bán, bài cửa phụ cho khách spa). Lời chị Hạnh tự nói trong transcript không tính; câu đoán ngày 0 của máy (vd. hỏi về 'kết quả tốt nhất') không tính."
 compliance_notes = [
   "Kể lại chuyện 2018 thì không chép lời hứa cũ của nhân viên về nám; viết kiểu 'hứa một điều da không làm được'",
   "Câu dọa cũ ('để hai năm nữa là nám kín mặt') chỉ được trích như câu phải bỏ, không bao giờ như lời khuyên, không trong quảng cáo",
@@ -317,18 +317,18 @@ must = [
   "câu đáp đáng tiền đầu tiên (3 câu đáng tiền chị vừa nói) đến trong 4 phút sau khi chị bắt đầu xả",
   "bỏ qua câu chị nói với nhân viên trong bản ghi ('Linh ơi…', chuyện khách đến), không đưa vào bản đồ hay bài",
   "khi chị quay lại sau khi bị gọi đi ('tiếp em ơi', 'chi quay lai roi'), máy tiếp đúng chỗ, không hỏi lại câu đã trả lời",
-  "ở bước kiểm 7 dòng, nhận câu trả lời bằng chuyện kể như một lần sửa, không đòi chị gõ 'sửa 3'",
-  "Bản đồ trong ≤9 lượt của chị; có bản bỏ túi 3 dòng và câu gợi ý chụp màn hình",
-  "QUAY HÔM NAY dạng thẻ ý để thuộc, kèm câu 'chưa quay thì đăng caption dạng chữ'",
+  "sau 'xong' chỉ hỏi cái chưa nghe được (tối đa 3, mỗi tin một câu, kèm câu đoán 'Em đoán: …. Đúng không chị?'); chị trả lời câu đoán hay sửa một dòng Bản đồ bằng một chuyện kể thì máy nhận chuyện đó làm câu trả lời, không đòi chị gõ 'sửa dòng 3'",
+  "Bản đồ 4 dòng (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ, GIỌNG) trong ≤7 lượt của chị, rồi câu chạy thử 4 tuần, 'OK hay sửa một dòng?'; không có bảng kiểm 7 dòng, câu kiểm kê hay bản bỏ túi",
+  "QUAY HÔM NAY dạng thẻ ý để thuộc, dưới bài không in dòng nào, cuối là 'Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.'",
   "gợi ý giữ Brand Card bằng cách gửi vào Zalo 'Cloud của tôi' hoặc nhờ Linh, con gái lưu; không bao giờ chặn bước tiếp",
-  "tuần 1 giao được khi Brand Card chưa lưu",
+  "tuần 1 tới ở trả lời ngay sau QUAY HÔM NAY, không chờ hỏi, trước Brand Card; chưa lưu vẫn làm tiếp",
   "câu TIẾP cuối buổi không nhắc dự án nếu chị không có dự án; nói rõ hôm sau mở đâu và dán gì (tối đa 1 lần dán)",
   "mỗi tin vừa một màn hình điện thoại, toàn tiếng Việt, không §, không B1–B7, không mã",
   "số liệu thứ Sáu nhận bằng giọng nói",
   "Buổi nói chuyện tuần chỉ có tiếng, một máy, không quay, không cắt video",
 ]
 must_not = [
-  "bảo tải file, đính kèm file, mở máy tính, vào Notion hay trang cài đặt giữa lúc bắt đầu và điểm dừng",
+  "bảo tải file, đính kèm file, mở máy tính, vào Notion hay trang cài đặt giữa lúc bắt đầu và trả lời cuối của ngày 0",
   "bắt lưu Brand Card mới cho làm tiếp",
   "bảo đọc kịch bản trên màn hình trong lúc quay",
   "hai câu hỏi trong một tin",

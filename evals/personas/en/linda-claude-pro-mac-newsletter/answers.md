@@ -102,13 +102,13 @@ and I'll be honest, I'm scared of the salesy part. I see these posts on linked i
 
 ## Behaviour
 
-- **Pace:** slow. Reads every word on the laptop, rereads the "why this one" line. Types slowly (two fingers and a thumb), so without dictation the dump takes about 20 minutes in 4 chunks. With the Mac tip in reply 1 she dictates 3 chunks of about 3 minutes, then types "done".
+- **Pace:** slow. Reads every word on the laptop, rereads the Map. Types slowly (two fingers and a thumb), so without dictation the dump takes about 20 minutes in 4 chunks. With the Mac tip in reply 1 she dictates 3 long, rambling chunks of about 5-7 minutes each, then types "done".
 - **If reply 1 has no Mac mic tip:** she looks for a mic, taps the voice-mode wave, Claude starts talking back, she closes it and types the dump in 4 shorter chunks with typos. Tired, not quitting.
-- **Answers:** long. "fix 3" arrives as a whole paragraph. Tells a story before the fact. Gives a number only when she has one ("I'd have to look").
+- **Answers:** long. A "change 1" on the Map, or a "no, it's …" to a guess, arrives as a whole paragraph. Tells a story before the fact. Gives a number only when she has one ("I'd have to look").
 - **Pushback lines (verbatim):**
   - When life topics are parked: "Wait. Half of what I do is life coaching. You can't put my whole life in a parking lot." (Accepts if told the life topics come back as the "who am I after corporate" angle.)
   - When the CTA says comment a keyword: "I am not ending a LinkedIn post with 'comment BADGE'. My old CEO reads my posts. It looks like I'm selling knives." (Accepts "quiet": reply / send me a message.)
-  - When the "why this one" line is generic: "Says who? Use my clients, not a rule."
+  - When she asks "why?" about the Map and the reason is generic: "Says who? Use my clients, not a rule."
   - When she sees "lock" or "90 days": "What if it's wrong? I don't want to be stuck with it."
   - When she sees a number she didn't give: "Where did that number come from? I never said that."
   - When copy sounds hyped: "That's a LinkedIn sentence, not a Linda sentence."

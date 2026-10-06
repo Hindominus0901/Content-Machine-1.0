@@ -221,15 +221,15 @@ id = "signature.vn.011"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S0", "S1"]
-title = "Caption the coach wrote with the keyword three times comes back with it exactly once"
+title = "Caption the coach wrote with the keyword three times comes back with it once plus the comment ask"
 context = "Week 1, Day 2. Keyword 'gồng lãi'. He pastes his own caption for tonight's clip."
 input = """sửa cái caption này giùm anh, đăng tối nay:
 GỒNG LÃI là gì? Nhà nào sợ gồng lãi thì comment GỒNG LÃI, tui gửi bảng tính ngược. Đừng để gồng lãi 20 năm nha!"""
 regex = ['(?s)```.+```']
-not_regex = ['(?is)```(?:(?!```).)*gồng lãi(?:(?!```).)*gồng lãi(?:(?!```).)*```']
+not_regex = ['(?is)```(?:(?!```).)*gồng lãi(?:(?!```).)*gồng lãi(?:(?!```).)*gồng lãi(?:(?!```).)*```']
 invariants = ["I1", "I5", "I8", "I14", "I15"]
 max_questions = 1
-notes = "banks.toml [types.K.rules]: every piece carries the chosen keyword exactly once (QA §0 lint 'keyword ×1'). UX §2: the caption sits in a copy box, so the count is checked inside that box (the WHY line and verdict line may name the keyword outside it). The CTA itself stays a comment-keyword CTA (I14)."
+notes = "plan.kit-week 4 since G1 K9: 'Từ khoá 1 lần + lời mời': the keyword once in the words plus the comment ask, so a box holds it at most twice (banks.toml [types.K.rules] and QA §0 lint 'keyword ×1' still say exactly once: flagged). UX §2: the caption sits in a copy box, so the count is checked inside that box (the WHY line and verdict line may name the keyword outside it). The CTA itself stays a comment-keyword CTA (I14)."
 
 [[case]]
 id = "signature.vn.012"

@@ -672,7 +672,7 @@ tiep em oi
 <<simulator: coach side answers the check and the open lines with stories, per answers.md "Behaviour", until the Map>>"""
 contains = ["MỘT THÔNG ĐIỆP", "chạy thử 4 tuần"]
 invariants = ["I1", "I2", "I5", "I10", "I15", "I17"]
-notes = "scope: transcript. acceptance [day0] map_max_turns_vn = 9 and map_max_minutes = 20, graded by graders.py suite 'day0' (turns counted from the Phone Starter to the reply holding the Map; the xưng hô turn and 'tiep em oi' count). UX §2 budget; expected.toml [ux] 'Bản đồ trong ≤9 lượt của chị'."
+notes = "scope: transcript. acceptance [day0] map_max_turns_vn = 7 and map_max_minutes = 20, graded by graders.py suite 'day0' (turns counted from the Phone Starter to the reply holding the Map; the xưng hô turn and 'tiep em oi' count). UX §2 budget; expected.toml [ux] 'Bản đồ 4 dòng … trong ≤7 lượt của chị'."
 
 [[case]]
 id = "message.vn.040"

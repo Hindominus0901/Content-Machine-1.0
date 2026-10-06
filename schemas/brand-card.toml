@@ -583,7 +583,7 @@ type = "date"
 source = "machine"
 required = true
 label_key = "card.label.plan_start"
-note = "Monday of week 1; tasks work out the week as ((weeks since plan_start) mod 4) + 1"
+note = "the day after Day 0; week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1"
 
 [[machine.field]]
 name = "season"
@@ -663,7 +663,7 @@ note = "keyword by default; quiet when the coach says so"
 name = "delivery"
 group = "plan"
 type = "enum"
-options = ["interview", "bullets", "word-for-word"]
+options = ["beat-cards", "interview", "bullets", "word-for-word"]
 source = "check"
 required = true
 label_key = "card.label.delivery"
@@ -676,6 +676,7 @@ max_chars = { en = 40, vn = 40 }
 source = "coach"
 required = true
 label_key = "card.label.timezone"
+note = "the coach's zone, or \"ask\" until they name one (never asked on Day 0, never blank)"
 
 [[machine.field]]
 name = "hours_week"

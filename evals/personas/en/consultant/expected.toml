@@ -4,19 +4,25 @@
 # Verbatim strings in problem_in_their_words, injection_text and coach_own_quote_text are exact substrings of the files.
 
 [day0]
+# wf15 §1 shape; budgets from evals/acceptance.toml [day0] (map_max_turns_en, session_max_turns).
 must_include = [
   "Windows mic tip (Win+H) in the first reply; Erin types by habit and only dictates the dump after the tip",
   "an early win after chunk 1 that quotes 3 of her lines (e.g. 'Record year. Empty account. Make it make sense.', 'your biggest client is not your best client until you've done the math', 'I hear record year a lot')",
-  "inventory line: she knows a lot (6+ topics), nothing gets thrown away",
-  "income-streams line: sprint, retainer, deal prep, class; which one pays the bills (answer: the retainers; the sprint is what she wants to grow)",
-  "pre-filled check with '?' on 2-3 lines at most; the dump already holds verbatim words and a result with a number (Marcus)",
-  "Claude Free save point after the Map ('come back after {time}, same chat, say next')",
-  "film-today piece for a desk webcam, word-for-word (her delivery mode), under 30 s, first and last line verbatim, with a Checked line naming her own story (the stairwell or Marcus's call)",
+  "missing facts only, one per message, each with a guess: the dump already holds verbatim words and a result with a number (Marcus), so the one question is the income-streams guess",
+  "income-streams guess ('You earn from 4 things. My guess: …'): sprint, retainer, deal prep, class; which one pays the bills (answer: the retainers; the sprint is what she wants to grow)",
+  "the 4-line Map (KNOWN FOR, 3 TOPICS, YOUR WORD, YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.'",
+  "Claude Free line once under the Map ('Hit the limit? Come back when it resets, same chat, say 'next'.')",
+  "film-today piece for a desk webcam, word-for-word (her delivery mode), under 30 s, first and last line verbatim, built from her own story (the stairwell or Marcus's call), nothing printed under it",
   "quiet CTA option offered with the keyword, explained in one plain line ('keyword' is not SEO)",
-  "Week 1 delivered even if the Brand Card is not saved",
+  "Week 1 in the reply after FILM TODAY, unasked, before the Brand Card; saving never gates it",
 ]
-max_coach_turns_to_map = 8
-max_coach_turns_session = 12
+must_not = [
+  "a check screen, an inventory line or 'fix N'",
+  "a question about platform, list size, talk day, delivery or hours (guessed from the dump; platform and talk day named once above Week 1)",
+  "'why this one' or NOT NOW on the Map (they print on 'why?')",
+]
+max_coach_turns_to_map = 6
+max_coach_turns_session = 10
 
 [map]
 buyer = "Founders and owners of independent marketing agencies (about $1M-$5M revenue, 8-35 people, 4+ years in) who are not the numbers person and have a bookkeeper and a tax CPA but nobody looking forward; they find Erin right after a record year with no cash (payroll on a personal card, drawing on the line of credit, unsure they can afford a hire)."
@@ -89,7 +95,7 @@ must_not_pick = [
 [week1]
 platform_mix = "email-first"          # LinkedIn + newsletter, email_list 380 >= 300, so the lead piece is the email
 lead_piece = "Email to the 380 on the Monday Number with a 'reply to me' line, on big idea 1, built from Marcus's 'Record year. Empty account.' or her stairwell story, ending on one question (e.g. 'Which client would you fire first?'); keyword RECORD YEAR once, quiet option offered."
-film_today = "LinkedIn native video under 30 s at her desk webcam, word-for-word, first and last line verbatim, from the stairwell story or Marcus's 6 a.m. call; Checked line names her story."
+film_today = "LinkedIn native video under 30 s at her desk webcam, word-for-word, first and last line verbatim, from the stairwell story or Marcus's 6 a.m. call; nothing printed under it."
 must_include = [
   "the email to the 380 is the lead piece and asks for replies",
   "2 LinkedIn text posts",
@@ -98,8 +104,8 @@ must_include = [
   "free gift that fits in one DM: the client margin sheet (one page)",
   "DM replies 1-2; reply 1 asks one qualifying question (e.g. roughly how many people on payroll, or do you know your biggest client's margin)",
   "'ask 3 past clients one question' for Marcus, Dee and Tomás (not Raj)",
-  "keyword RECORD YEAR exactly once per piece",
-  "at least one Week-1 piece names a WHY line tied to a big idea",
+  "keyword RECORD YEAR exactly once per piece outside the comment ask",
+  "every Week-1 piece stores a WHY tied to a big idea, printed only on 'why?' (nothing under a piece)",
   "no piece built on a NOT NOW topic (tax, exits, AI, partner fights, the class)",
 ]
 must_not = [

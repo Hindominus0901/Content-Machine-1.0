@@ -83,7 +83,7 @@ Mỗi dòng là điều Khoa nói được khi máy hỏi đúng chỗ. Câu tro
 
 ## Behaviour
 
-**Nhịp:** Xả bằng micro bàn phím trên điện thoại thì dài, có đầu có đuôi, hay đánh số "thứ nhất, thứ hai". Gõ trên laptop thì cực gọn: "ok", "được", "sửa dòng 3", "tiếp". Đọc kỹ, đọc hết, nhưng ghét tin dài mà chưa có gì dùng được. Mỗi tuần chỉ có 2 tiếng, nên tới bước kiểm 7 dòng là muốn xong nhanh: gõ "ok, sửa 4" rồi nói một đoạn ngắn. Giọng Quảng làm micro nghe sai vài chữ ("dứa" thay "rứa", "nghĩ" thay "nghỉ", "chổ" thay "chỗ", "Sơn Chà" thay "Sơn Trà"); anh không sửa, máy phải tự hiểu hoặc hỏi lại một lần.
+**Nhịp:** Xả bằng micro bàn phím trên điện thoại thì dài, có đầu có đuôi, hay đánh số "thứ nhất, thứ hai". Gõ trên laptop thì cực gọn: "ok", "được", "sửa dòng 3", "tiếp". Đọc kỹ, đọc hết, nhưng ghét tin dài mà chưa có gì dùng được. Mỗi tuần chỉ có 2 tiếng, nên tới Bản đồ là muốn xong nhanh: gõ "ok, sửa dòng 1" rồi nói một đoạn ngắn. Giọng Quảng làm micro nghe sai vài chữ ("dứa" thay "rứa", "nghĩ" thay "nghỉ", "chổ" thay "chỗ", "Sơn Chà" thay "Sơn Trà"); anh không sửa, máy phải tự hiểu hoặc hỏi lại một lần.
 
 **Câu phản đối (nguyên văn):**
 - "Tôi làm tư vấn nhân sự chứ đâu phải chỉ tuyển dụng, thu hẹp vậy người ta tưởng tôi chỉ biết đăng tin."

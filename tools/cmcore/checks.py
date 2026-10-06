@@ -175,6 +175,54 @@ def _prev_word(text: str, pos: int) -> str:
     return m.group(1).casefold() if m else ""
 
 
+# Month-name dates ("Oct 8", "TUE, OCT 13", "Monday, Oct 19", "Oct 6, 2026", "6 Oct 2026", "Oct 12–18") are
+# dates, never claims; a lowercase "may" / "march" is a verb ("you may 2x it"), not a month.
+_MONTH = (r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+          r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)")
+_MONTH_BEFORE = re.compile(r"(?<![^\W\d_])(" + _MONTH + r")\.?\s+$", re.I)
+_MONTH_AFTER = re.compile(r"(?:st|nd|rd|th)?\s+(" + _MONTH + r")\.?(?![^\W\d_])", re.I)
+# "Oct 13: …" yes; "Oct 8:30", "Oct 25%", "Oct 20k", "Oct 20+" no (a time, a percent, a count)
+_DAY_SUFFIX = re.compile(r"(?:st|nd|rd|th)(?![^\W\d_])|(?![\d/%+]|:\d|[^\W\d_])")
+_YEAR_AFTER = re.compile(r",?\s+(?:19|20)\d{2}(?!\d)")
+_DATE_RANGE_GAP = re.compile(r"\s*[–—-]\s*$")
+# A day number that counts something is a claim, not a date: "In October 20 clients joined", "By June 30 women had
+# an offer", "May 3 clients said yes", "Oct 8 – 25 women booked".
+_COUNT_AFTER = re.compile(
+    r"\s+(?:(?:more|new|other|past|paying|happy|real|local|young|older|single|working|busy|former|current|"
+    r"extra|total)\s+)?(?:people|persons?|women|men|children|kids|guys|girls|ladies|folks|staff|clients|customers|"
+    r"students|members|dads|moms|mums|parents|families|couples|coaches|users|subscribers|followers|readers|viewers|"
+    r"leads|calls|sales|sign-?ups|buyers|patients|homeowners|homes|houses|rooms|jobs|offers|interviews|applications|"
+    r"hires|deals|projects|orders|bookings|views|likes|comments|shares|reviews|testimonials|lbs|pounds|kilos|kgs?|"
+    r"percent|times|teams|companies|businesses|agencies|owners|founders|leaders|managers|employees|workers|"
+    r"học viên|khách(?: hàng)?|người)(?![^\W\d_])", re.I)
+# "9/10 clients", "3/4 of my clients", "4/5 stars": a ratio, never a day/month date.
+_RATIO_AFTER = re.compile(r"\s+of\s+(?:my|our|the|your|their|them|those|these|all|every)(?![^\W\d_])|"
+                          r"\s+(?:stars?|ratings?)(?![^\W\d_])|" + _COUNT_AFTER.pattern, re.I)
+# US retirement accounts are names, not amounts: 401(k), 401k, 403(b), 457(b). A bare "401k" in a money context
+# ("we did 401k in revenue", "made 457k last year") is an amount.
+_RETIREMENT = re.compile(r"(?:401|403|457)\s?(?:(\([kKbB]\))|[kKbB](?![^\W\d_]))")
+_ACCOUNT_MONEY_BEFORE = re.compile(
+    r"(?<![^\W\d_])(?:made|make|makes|making|earned|earn|earns|earning|grossed|cleared|raised|billed|netted|"
+    r"brought in|bring in|generated|revenue of|income of|sales of|profit of)\s+$", re.I)
+_ACCOUNT_MONEY_AFTER = re.compile(
+    r"\s*(?:(?:in|of)\s+)?(?:revenue|sales|income|profit|billings?|bookings|fees|salary|arr|mrr|a\s+(?:year|month)|"
+    r"per\s+(?:year|month|yr|mo)|/\s?(?:yr|year|mo|month)|last\s+year|this\s+year)(?![^\W\d_])", re.I)
+
+
+def _retirement_account(text: str, start: int) -> re.Match | None:
+    """401(k), 401k, 403(b), 457(b) at `start`: an account name, unless a bare form reads as money."""
+    m = _RETIREMENT.match(text, start)
+    if m and not m.group(1) and (_ACCOUNT_MONEY_BEFORE.search(text[max(0, start - 24):start])
+                                 or _ACCOUNT_MONEY_AFTER.match(text, m.end())):
+        return None
+    return m
+
+
+def _month_word(word: str) -> bool:
+    """A month name as written: any case, except a lowercase "may" / "march", which are verbs."""
+    return not (word in ("may", "march", "mar"))
+
+
 _SECONDS_AFTER = re.compile(r"(?:\s*[–—-]\s*\d+(?:[.,]\d+)?)?\s*(?:giây|secs?|seconds?|s)(?![^\W\d_])", re.I)
 _SECONDS_BEFORE = re.compile(r"(?<![^\W\d_])(?:giây|seconds?|secs?)\s*(?:thứ\s*)?[#:]?\s*$", re.I)
 
@@ -193,15 +241,48 @@ def _is_timing(text: str, start: int, end: int, kind: str, percent: bool) -> boo
     return raw.endswith("s") and bool(re.search(r"\d\s*[–—-]\s*$", line_before))   # "0–3s"
 
 
-def numbers_in(text: str) -> list[Number]:
-    """Every number token: 1.990.000đ, 1,99tr, 99k, $2,400, 30%, 45+, 11:59, 23h59, 13/10, 2026-10-05.
+def _month_date(text: str, start: int, end: int, digits: str, last_date_end: int) -> tuple[int, int] | None:
+    """(raw start, end) when the digits are part of a month-name date ("Oct 8", "Oct 6, 2026", "6 Oct 2026",
+    "Oct 2026"), or the second day of a range after one ("Oct 12–18"); else None. A day number followed by what it
+    counts ("In October 20 clients joined", "Oct 8 – 25 women") is a number, not a date."""
+    day = re.fullmatch(r"\d{1,2}", digits) is not None and 1 <= int(digits) <= 31
+    year = re.fullmatch(r"(?:19|20)\d{2}", digits) is not None
+    if not (day or year):
+        return None
+    mb = _MONTH_BEFORE.search(text[max(0, start - 12):start])
+    if mb and _month_word(mb.group(1)):
+        raw_start = start - (len(mb.group(0)))
+        if year:
+            return raw_start, end
+        suffix = _DAY_SUFFIX.match(text, end)
+        if suffix is None or (suffix.end() == end and _COUNT_AFTER.match(text, end)):
+            return None
+        end = suffix.end()
+        yr = _YEAR_AFTER.match(text, end)
+        return raw_start, yr.end() if yr else end
+    if day:
+        ma = _MONTH_AFTER.match(text, end)
+        if ma and _month_word(ma.group(1)):
+            yr = _YEAR_AFTER.match(text, ma.end())
+            return start, yr.end() if yr else ma.end()
+        if last_date_end >= 0 and _DATE_RANGE_GAP.fullmatch(text[last_date_end:start]):
+            suffix = _DAY_SUFFIX.match(text, end)                # "Oct 12–18", "Oct 12th–18th"
+            if suffix is not None and not (suffix.end() == end and _COUNT_AFTER.match(text, end)):
+                return start, suffix.end()     # the range's second day
+    return None
 
-    Ranges ("2–3") give two numbers. Digits glued to letters (N2, B2B, P-3) are ids.
+
+def numbers_in(text: str) -> list[Number]:
+    """Every number token: 1.990.000đ, 1,99tr, 99k, $2,400, 30%, 45+, 11:59, 23h59, 13/10, 2026-10-05,
+    Oct 8, 6 Oct 2026.
+
+    Ranges ("2–3") give two numbers. Digits glued to letters (N2, B2B, P-3) are ids; so are 401(k), 401k, 403(b).
     """
     text = nfc(text)
     tagged_spans = [(m.start(), m.end()) for m in _TAG_SPAN.finditer(text)]
     out: list[Number] = []
     pos = 0
+    last_date_end = -1
     while True:
         m = _DIGITS.search(text, pos)
         if not m:
@@ -212,13 +293,27 @@ def numbers_in(text: str) -> list[Number]:
         prev = text[start - 1] if start else ""
         prev2 = text[start - 2] if start > 1 else ""
         kind, value, percent, structural = "number", None, False, False
+        retirement = _retirement_account(text, start) if prev != "$" and not (prev and prev.isalnum()) else None
+        if retirement:
+            raw = text[start:retirement.end()]
+            tagged = any(a <= start < b for a, b in tagged_spans)
+            out.append(Number(raw, None, "id", False, start, retirement.end(), True, tagged))
+            pos = retirement.end()
+            continue
+        month = _month_date(text, start, end, digits, last_date_end) if not (prev and prev.isalnum()) else None
+        if month:
+            raw_start, end = month
+            tagged = any(a <= raw_start < b for a, b in tagged_spans) or bool(_GUESS_AFTER.match(text[end:]))
+            out.append(Number(text[raw_start:end], None, "date", False, raw_start, end, False, tagged))
+            pos = last_date_end = end
+            continue
         # dates and times first: they swallow their separators
         iso = re.match(r"-\d{1,2}-\d{1,2}(?!\d)", text[end:]) if len(digits) == 4 else None
         dm = re.match(r"(?:/\d{1,4}){1,2}(?![\d/])", text[end:]) if re.fullmatch(r"\d{1,2}", digits) else None
         tm = re.match(r"(?::\d{2}|h\d{2}(?!\d)|h(?![^\W\d_]))", text[end:]) if re.fullmatch(r"\d{1,2}", digits) else None
         if iso:
             kind, end = "date", end + iso.end()
-        elif dm and prev != "/":
+        elif dm and prev != "/" and not _RATIO_AFTER.match(text, end + dm.end()):
             kind, end = "date", end + dm.end()
         elif tm and prev != ":":
             kind, end = "time", end + tm.end()
@@ -276,6 +371,9 @@ def numbers_in(text: str) -> list[Number]:
 
 
 def number_keys(n: Number) -> set:
+    if n.kind == "date" and re.search(r"[^\W\d_]{3}", n.raw):         # "Oct 8", "6 Oct 2026"
+        words = re.findall(r"[^\W\d_]+|\d+", n.raw.casefold())
+        return {("date", " ".join(w[:3] if w.isalpha() else str(int(w)) for w in words))}
     if n.kind in ("time", "date"):
         raw = re.sub(r"\s+", "", n.raw).replace("h", ":")
         raw = re.sub(r"(?<!\d)0(\d)", r"\1", raw)

@@ -114,7 +114,7 @@ invariants = ["I4", "I8", "I9"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """message-focus §2.2 tests the machine runs before showing the message, now on the KNOWN FOR line (start-block step 4: "I help {who} who "{their words}" {promise as a range} with {method}, instead of {old way}."): 1 one breath (≤35 words EN; the regex flags a 36+ word 'I help…' line); 2 their words (a quoted buyer phrase, e.g. 'one more chapter'); 3 narrow (stage or moment, judged in the P case); 4 swap test (the method or old-way name: coffee before resume / feeding the portal); 6 claims-safe (range or condition, no guarantee). Test 5 (money) left the Map with the offer line (wf15 S2): the offer is a card field (brain.en.003), so no price is asserted here. Her banned words come from expected.toml [voice]."""
+notes = """message-focus §2.2 tests the machine runs before showing the message, now on the KNOWN FOR line (start-block step 4: "I help {who} who "{their words}" {promise as a range, else their process} with {method}, instead of {old way}."): 1 one breath (≤35 words EN; the regex flags a 36+ word 'I help…' line); 2 their words (a quoted buyer phrase, e.g. 'one more chapter'); 3 narrow (stage or moment, judged in the P case); 4 swap test (the method or old-way name: coffee before resume / feeding the portal); 6 claims-safe (range or condition, no guarantee). Test 5 (money) left the Map with the offer line (wf15 S2): the offer is a card field (brain.en.003), so no price is asserted here. Her banned words come from expected.toml [voice]."""
 
 [[case]]
 id = "message.en.003"

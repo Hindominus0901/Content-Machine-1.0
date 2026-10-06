@@ -3,19 +3,25 @@
 # Verbatim strings below are exact substrings of answers.md unless marked otherwise.
 
 [day0]
+# wf15 §1 shape; budgets from evals/acceptance.toml [day0] (map_max_turns_en, session_max_turns).
 must_include = [
   "phone mic tip: the small mic in the message box, not the sound-wave button",
   "an early win after chunk 1 that quotes 3 of Dan's own lines (e.g. 'You're not lazy, you're booked')",
-  "inventory line: he knows a lot, nothing gets thrown away",
-  "pre-filled check with '?' on Best result and Offer (he has neither)",
+  "missing facts only, one per message, each with a guess: here just the best result ('My guess: no client result to show yet, so I'll use your own story. Right?'); his buyers' words are in the dump and 'nothing yet' already answers the offer",
   "cold-start branches: Offer v0 leading to a founding pilot; proof from zero (own story only)",
-  "best-result line uses Dan's own pull-up story or [NEEDS], never the brother",
-  "film-today piece as a beat card with a 'Checked' line naming his own story (birthday relay or kitchen floor)",
+  "the best result is Dan's own pull-up story, never the brother",
+  "the 4-line Map (KNOWN FOR, 3 TOPICS, YOUR WORD, YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.'",
+  "film-today piece as a beat card built from his own story (birthday relay or kitchen floor), nothing printed under it, ending 'Film it now, or post the caption as text.'",
   "quiet CTA option offered with the keyword",
-  "week 1 delivered even if the Brand Card is not saved",
+  "Week 1 in the reply after FILM TODAY, unasked, before the Brand Card; saving never gates it",
 ]
-max_coach_turns_to_map = 8
-max_coach_turns_session = 12
+must_not = [
+  "a check screen, an inventory line or 'fix N'",
+  "a question about platform, list size, talk day, delivery or hours (guessed from the dump; platform and talk day named once above Week 1)",
+  "'why this one' or NOT NOW on the Map (they print on 'why?')",
+]
+max_coach_turns_to_map = 6
+max_coach_turns_session = 10
 
 [map]
 buyer = "Desk-job dads, about 35-45, with kids under 10, who used to be athletic and haven't trained steadily since the first kid; they find Dan after a moment when they couldn't keep up with their kid"
@@ -79,7 +85,7 @@ must_include = [
   "free gift that fits in one DM (the minimum week one-pager)",
   "DM replies 1-2, the first one asking a single qualifying question",
   "'ask 3 dads you know one question' (brother, soccer dads, a guy at work), not 'past clients'",
-  "every piece about one big idea with a WHY line and the keyword once",
+  "every piece about one big idea, with the keyword once outside the comment ask; nothing printed under a piece (its WHY prints on 'why?')",
 ]
 must_not = [
   "an email newsletter or 'your list'",

@@ -103,11 +103,11 @@ lanes = ["S0", "S1", "floor"]
 title = "chị–em from reply 2: the dump prompt is in her pair with zero slips"
 context = "Reply 1 delivered (promise, small-mic tip, xưng hô question). Door B, ChatGPT Free, Android."
 input = """Gọi chị là chị thôi em, chị bốn lăm tuổi rồi."""
-contains = ["em chào chị", "Kể xong một chuyện thì gửi một lần", "sắp xếp để em lo"]
+contains = ["em chào chị", "kể xong một chuyện", "cho khỏi mất chữ", "sắp xếp để em lo"]
 not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)(?<!\w)anh(?!\w)']
 invariants = ["I1", "I5", "I15", "I17"]
 max_questions = 1
-notes = "UX §2 minute 0–1 VN dump prompt in chị–em; acceptance [language] vn_pronoun_slips = 0. Hạnh quits when called 'bạn' after she chose (persona behaviour)."
+notes = "UX §2 minute 0–1 VN dump prompt in chị–em (start-block step 2 since the G1 mirror: 'kể xong một chuyện (2–3 phút) thì gửi, cho khỏi mất chữ'); acceptance [language] vn_pronoun_slips = 0. Hạnh quits when called 'bạn' after she chose (persona behaviour)."
 
 [[case]]
 id = "setup.vn.006"
@@ -672,14 +672,14 @@ id = "setup.vn.040"
 kind = "D"
 persona = "consultant"
 lanes = ["S0", "S1", "floor"]
-title = "Claude Free variant: a save point after the dump says where to come back and what to type"
-context = "Variant of the persona: Claude FREE plan (not Pro), Door A on claude.ai. Dump chunks 1–2 already sent in this chat."
-input = """<<paste: consultant/answers.md, the '## Dump chunk 3' section verbatim>>"""
-regex = ['(?i)(quay lại|trở lại)[^.\n]{0,60}(đoạn chat này|chat này|cùng đoạn chat)', '''(?i)gõ\s+['"“‘]tiếp''']
+title = "Claude Free variant: the save line comes once, under the Bản đồ, and says where to come back and what to type"
+context = "Variant of the persona: Claude FREE plan (not Pro), Door A on claude.ai. Dump chunks 1–3 and 'xong' sent; the one missing fact asked was the multi-income guess (setup.multi_income). This is his answer, so the next reply is the Bản đồ."
+input = """đúng rồi em. Gói tư vấn 3 tháng là cái anh muốn làm lớn. Đào tạo nội bộ nửa ngày thì vẫn nhận. Tìm người hộ lấy phí 1 tháng lương, mà anh không muốn quảng bá cái đó."""
+regex = ['(?m)^\W*ĐIỀU KHÁCH NHỚ:', '(?i)(quay lại|quay về|trở lại)[^.\n]{0,60}(đoạn chat này|chat này|cùng đoạn chat)', '''(?i)(gõ|nhắn)\s+['"“‘]tiếp''']
 not_regex = ['(?i)(?<!\w)bạn(?!\w)(?!\s+(sinh viên|bè))', '(?i)(mở|tạo)\s+(đoạn\s+)?chat\s+mới']
 invariants = ["I1", "I5", "I15"]
 max_questions = 1
-notes = "UX §2 budget 'Claude Free: save points after the dump and after the Map (come back after {time}, same chat, say next)'; UX §6 Machine row 'resumes via next with no lost answers'."
+notes = "setup.kit-order 10 since G1 K18: 'Claude, một lần, dưới Bản đồ: save.limit_claude_free' ('Hết lượt dùng thì đợi có lượt lại, quay về đúng đoạn chat này, nhắn 'tiếp'.'): no {time}, no save point after the dump. UX §6 Machine row 'resumes via next with no lost answers'."
 
 [[case]]
 id = "setup.vn.041"
@@ -742,7 +742,7 @@ not_regex = [
   '(?i)Notion',
 ]
 invariants = ["I1", "I2", "I5", "I15"]
-notes = "scope: transcript. acceptance [day0] detours_between_start_and_stop = 0; UX §6 No-detours row (transcript grader). Hạnh quits on 'tải', 'đính kèm', 'mở máy tính' (persona behaviour)."
+notes = "scope: transcript. acceptance [day0] detours_between_start_and_day0_end = 0; UX §6 No-detours row (transcript grader). Hạnh quits on 'tải', 'đính kèm', 'mở máy tính' (persona behaviour)."
 
 [[case]]
 id = "setup.vn.044"

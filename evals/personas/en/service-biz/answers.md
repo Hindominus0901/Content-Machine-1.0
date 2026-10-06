@@ -97,7 +97,7 @@ what else. oh, my time. I have basically no time. like an hour and a half a week
 
 ## Behaviour
 
-- **Pace:** fast and interrupted. Dictates from the car between site visits; chunk 1 ends with "I'm at the site", chunk 3 with a school pickup at 3:15. Taps the sound-wave (voice mode) button first out of habit, then uses the small mic after the tip. After the dump she types short answers: "ok", "yes", "fix 3", "give that to Bree".
+- **Pace:** fast and interrupted. Dictates from the car between site visits; chunk 1 ends with "I'm at the site", chunk 3 with a school pickup at 3:15. Taps the sound-wave (voice mode) button first out of habit, then uses the small mic after the tip. After the dump she types short answers: "ok", "yes", "change 1", "give that to Bree".
 - **Reading:** reads on her phone in the car or on the MacBook at the studio. Skims anything longer than one screen. Wants a usable piece before her next appointment; if nothing usable has come back by about minute 10 she says "I have a site visit at 3, can we get to the part where I have something."
 - **Answers:** story first, number second. Knows her prices and capacity cold. For anything else: "Janelle would know" or "I've never counted."
 - **Delegates:** asks for everything in a form Bree can schedule: "Put it so Bree can just copy it." Asks "where does all this live?" once the week has more than 5 pieces.

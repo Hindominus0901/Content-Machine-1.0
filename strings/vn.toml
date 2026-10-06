@@ -2,11 +2,16 @@
 # Each value is { text = "...", src = "<first 10 hex of sha256 of the NFC EN text>" }.
 # Lint fails on a missing key (E110), a stale src (E111) or a different {slot} set (E112).
 # Default register is mình–bạn; the machine follows the pronoun pair the coach picks.
+# G1 mirror, 6 Oct (qa/runs/g1-en-day0/review.md): contract.output carries the running tag, copy boxes and one screen
+# of talk (K21; "bằng", "là" dropped for the kit budget); dump.enough is new (K1); save.limit_claude_free drops {time}
+# (K18); cta.by_hand drops "bạn hoặc trợ lý gửi" (K14); research.ask3 src only (K15 is EN spelling). Byte cuts, same
+# meaning: month.check drops its last line (month.check_next says it in the same message), levelup.offer_grow and
+# locale.not_legal are shorter.
 
 [strings]
 
 # Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
-"contract.output" = { text = "Luôn trả lời bằng tiếng Việt như người Việt nói, đúng xưng hô đã chọn. Mỗi lần một màn hình, cuối là một dòng TIẾP.", src = "01276cce59" }
+"contract.output" = { text = "Luôn trả lời tiếng Việt như người Việt nói, đúng xưng hô đã chọn. Dòng đầu ◆ {{name}} · <bước>; bài trong khung chép; lời nói một màn hình; cuối một dòng TIẾP.", src = "bec614b979" }
 "running.tag"     = { text = "◆ {{name}} · {step}", src = "82bae98171" }
 "setup.check"     = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card: hôm nay mình làm", src = "a5b0d1d40d" }
 "next.prefix"     = { text = "TIẾP →", src = "4c813654ab" }
@@ -102,9 +107,10 @@
 # Day 0 details and the Brand Card (§ SETUP, CARD; P2 method anchors)
 "setup.no_setup"         = { text = "Không, hôm nay chưa cần gì cả.", src = "3e6ebde339" }
 "dump.keep_going"        = { text = "Bạn cứ nói tiếp, hoặc nhắn 'xong'.", src = "ce841a838d" }
+"dump.enough"            = { text = "Hôm nay vậy là đủ rồi. Gõ 'xong', hoặc nói thêm một phút.", src = "cd14f9f83e" }
 "check.bet"              = { text = "Phải cược 1 triệu thì bạn chọn cái nào?", src = "000a022283" }
 "check.pick"             = { text = "Mình chọn {option}, vì {reason}.", src = "d1e588aea6" }
-"save.limit_claude_free" = { text = "Hết lượt dùng thì sau {time} quay lại đúng đoạn chat này, nhắn 'tiếp'.", src = "6ac37a3524" }
+"save.limit_claude_free" = { text = "Hết lượt dùng thì đợi có lượt lại, quay về đúng đoạn chat này, nhắn 'tiếp'.", src = "e2843e8de7" }
 "resume.brb"             = { text = "Không vội đâu. Quay lại thì nhắn 'ok rồi' nhé.", src = "6cf6995cec" }
 "card.stop_lines"        = { text = "Hôm nay xong rồi. Có tấm card này mình mới nhớ được bạn. Lưu lại (30 giây): {route}. Rồi nhắn 'tiếp' là có kịch bản Tuần 1 (8 phút), hoặc nghỉ ở đây, kịch bản vẫn đợi bạn.", src = "0a65150e2a" }
 "card.title"             = { text = "Brand Card v{n} · {date}", src = "27c96e5c42" }
@@ -127,7 +133,7 @@
 "levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Muốn mình nhắn vào thứ Hai, mỗi sáng và thứ Sáu không? Nhắn 'có'.", src = "4894256bfd" }
 "levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Google Sheets hoặc Notion. Nhắn 'có'.", src = "03fc7d8ead" }
 "levelup.offer_autopilot" = { text = "Muốn tuần nào bài cũng tự có sẵn trong Notion không? Nhắn 'có'.", src = "11eb7f42ec" }
-"levelup.offer_grow"      = { text = "Phần đó nằm trong file Phát triển (thư mục Level-ups). Tải file đó lên đây một lần, rồi hỏi lại mình.", src = "f90186ef14" }
+"levelup.offer_grow"      = { text = "Phần đó nằm trong file Phát triển (thư mục Level-ups). Tải file lên đây một lần rồi hỏi lại mình.", src = "f90186ef14" }
 "levelup.offer_character" = { text = "Muốn bài giống bạn hơn không? 3 buổi nói chuyện, mỗi buổi 20 phút. Nhắn 'có'.", src = "212af05855" }
 
 # Weekly Talk and mini-talk (§ TALK)
@@ -141,7 +147,7 @@
 "talk.mini_open" = { text = "Tuần bận thì 3 câu hỏi nhanh thôi, 5 phút, cứ nói là được.", src = "b7a36f9fc4" }
 
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)
-"month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Có gì đổi: khách, sản phẩm, giá hay lịch.\n2 Có gì mới: kết quả của khách, hay khách đồng ý cho chia sẻ.\n3 Có gì không còn đúng: điều từng nói công khai, hay điều giờ bạn không tin nữa.\nTrả lời 'không có gì thay đổi' là đủ.", src = "fe38499570" }
+"month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Có gì đổi: khách, sản phẩm, giá hay lịch.\n2 Có gì mới: kết quả của khách, hay khách đồng ý cho chia sẻ.\n3 Có gì không còn đúng: điều từng nói công khai, hay điều giờ bạn không tin nữa.", src = "fe38499570" }
 "month.check_next" = { text = "Nhắn 'không có gì thay đổi', hoặc kể mình nghe đổi gì.", src = "1ba0ba69ac" }
 "month.decide"     = { text = "Nhắn 'giữ' hoặc 'chỉnh lại'.", src = "6ed6468a53" }
 "month.save_card"  = { text = "Lưu bản này rồi xoá v{n-1} khỏi dự án, chạm 2 cái là xong.", src = "3ac6c30207" }
@@ -155,7 +161,7 @@
 "cta.quiet"             = { text = "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.", src = "5cdfb8b507" }
 "cta.not_pushy"         = { text = "Người xem comment là nhận được thứ có ích thật, đâu có ép ai. Muốn kết nhẹ hơn thì gõ '{{t:cmd.quiet}}'.", src = "5d113a312e" }
 "cta.platform_note"     = { text = "Lưu ý nền tảng ({date}): Facebook và Instagram có thể giảm hiển thị bài kiểu 'comment nếu…'. Bạn quyết nhé.", src = "c057b7f3d5" }
-"cta.by_hand"           = { text = "Tin trả lời phải gửi bằng tay, bạn hoặc trợ lý gửi.", src = "ec13910d6f" }
+"cta.by_hand"           = { text = "Tin trả lời phải gửi bằng tay.", src = "e51275b40f" }
 "cta.emoji_trigger"     = { text = "Thêm emoji đó vào danh sách từ kích hoạt trả lời tự động.", src = "0e03f7ee66" }
 "tick.client_ok"        = { text = "Chuyện có thật, {client} đồng ý cho kể như vậy.", src = "2dcea9c668" }
 "tick.keyword"          = { text = "Hôm nay ai comment là có quà ngay: tin trả lời soạn sẵn rồi.", src = "d2b4df38cc" }
@@ -203,7 +209,7 @@
 "character.voice_first"       = { text = "bấm micro, cứ nói tự nhiên 2-3 phút", src = "1414c9af7f" }
 "character.bet"               = { text = "Phải cược 1 triệu thì bạn trả lời sao?", src = "d86811d666" }
 "research.later"              = { text = "Để Tuần 1 làm, 10 phút thôi.", src = "0e68627662" }
-"research.ask3"               = { text = "Nhờ bạn chút xíu: mình đang viết lại phần giới thiệu công việc, muốn dùng đúng lời của bạn chứ không phải lời mình. {{t:ask3.question}}", src = "03b81104e2" }
+"research.ask3"               = { text = "Nhờ bạn chút xíu: mình đang viết lại phần giới thiệu công việc, muốn dùng đúng lời của bạn chứ không phải lời mình. {{t:ask3.question}}", src = "4a79ebae37" }
 "research.ask3_cold"          = { text = "Chuyện {problem}, giờ bạn thấy khó nhất chỗ nào?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, tên đổi thành chữ cái. Không có thì nhắn 'không có'.", src = "34c9df6797" }
 "research.paste_steps"        = { text = "Chép 10–20 bài đăng hoặc comment ở 3 chỗ khách bạn hay vào nói chuyện, chỗ không ai bán hàng. Đầu mỗi đợt ghi [nơi · tháng]. Tên đổi thành chữ cái, cùng người thì cùng chữ. Bỏ qua người bán.", src = "79be035ed1" }
@@ -233,7 +239,7 @@
 "review.bets_default" = { text = "Mình thử 3 việc này nhé, muốn đổi cái nào thì bạn nói.", src = "ed33307878" }
 "review.card_next"    = { text = "Nhắn 'ok' là mình in Brand Card tuần này cho bạn lưu.", src = "34c98b673a" }
 "review.whats_off"    = { text = "Chỗ chưa ổn: {một dòng}", src = "9c6a3ab8e2" }
-"locale.not_legal"    = { text = "Đây không phải tư vấn pháp lý, trường hợp của bạn thì nên hỏi luật sư.", src = "2565e90f29" }
+"locale.not_legal"    = { text = "Đây không phải tư vấn pháp lý; việc của bạn thì nên hỏi luật sư.", src = "2565e90f29" }
 
 # Simple surface + voice (wf15, wf14)
 "setup.dump_posts" = { text = "Có bài đăng, tin nhắn bạn từng viết thì dán 2–3 cái luôn, hoặc gửi link trang của bạn.", src = "fbfc38d52e" }

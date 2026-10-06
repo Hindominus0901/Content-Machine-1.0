@@ -51,7 +51,7 @@ not_regex = [
 ]
 invariants = ["I1", "I4", "I5", "I9"]
 max_questions = 1
-notes = "wf15 §0 S5 and research.kit-quick: Quick Listen runs during the dump, silently (≤5 searches if the app can, else the dump); no search talk, links, apology or setup question, and never a question about research on Day 0. Its root cause feeds big idea 1 and shows on 'why?', not on the Map. The trigger is now the last missing-fact answer (R12: the 7-line check is gone); the Map is 4 lines + 'We'll run this for 4 weeks. OK, or change a line.' acceptance [day0] detours_between_start_and_stop = 0."
+notes = "wf15 §0 S5 and research.kit-quick: Quick Listen runs during the dump, silently (≤5 searches if the app can, else the dump); no search talk, links, apology or setup question, and never a question about research on Day 0. Its root cause feeds big idea 1 and shows on 'why?', not on the Map. The trigger is now the last missing-fact answer (R12: the 7-line check is gone); the Map is 4 lines + 'We'll run this for 4 weeks. OK, or change a line.' acceptance [day0] detours_between_start_and_day0_end = 0."
 
 [[case]]
 id = "research.en.002"

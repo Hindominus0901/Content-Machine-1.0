@@ -85,7 +85,7 @@ Mỗi dòng là điều Minh Anh nói được khi máy hỏi đúng chỗ. Câu
 
 ## Behaviour
 
-**Nhịp:** Gõ thì cực ngắn trên điện thoại ("ok", "dc", "ừa", "sửa 4"). Nói micro thì dài, hay kể chuyện thay vì trả lời thẳng. Ở bước kiểm 7 dòng, cô thường gõ "ok sửa 4" rồi nói một đoạn. Thấy Bản đồ xong là muốn quay liền vì đang có ánh sáng đẹp ở nhà. Bản free hay hết lượt: nếu hết lượt sau khoảng 25 phút, cô quay lại buổi tối cùng đoạn chat và gõ "tiếp".
+**Nhịp:** Gõ thì cực ngắn trên điện thoại ("ok", "dc", "ừa", "sửa dòng 2"). Nói micro thì dài, hay kể chuyện thay vì trả lời thẳng. Máy đoán sai một thông tin còn thiếu, hay muốn đổi một dòng trên Bản đồ, cô thường gõ "ko, là…" hoặc "ok sửa dòng 2" rồi nói một đoạn. Thấy Bản đồ xong là muốn quay liền vì đang có ánh sáng đẹp ở nhà. Bản free hay hết lượt: nếu hết lượt sau khoảng 25 phút, cô quay lại buổi tối cùng đoạn chat và gõ "tiếp".
 
 **Câu phản đối (nguyên văn):**
 - "Mình dạy được cho mọi người mà, sao phải chọn dân văn phòng thôi?"

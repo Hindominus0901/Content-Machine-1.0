@@ -6,11 +6,12 @@ Nghiệm thu: evals/cases/humanize.vn.toml. Mã V1-V9 và tên danh sách chỉ 
 Thêm so với EN: mục 3 là danh sách cắt VN (rào đón, từ đệm, xin phép, đuôi xin xác nhận, chữ sáo); chữ dịch, văn viết, kết tóm, gạch ngang trỏ về §CM-NATURAL 7 cho khỏi lặp. "không chỉ… mà còn" cắt từ lần 1 (bản lint VN chặn cả lần 1; EN chỉ cắt lần 2).
 Từ đệm, đuôi nằm trong câu cửa miệng, cách mở, kết của coach trên card ("nói chung là", "thật ra là", "đúng không ạ") thì giữ (guide §2.7, §10.2 mục 2); câu họ nhờ sửa mà không có trên card thì vẫn cắt. "mình có nói" mở được cả chữ trong mục 3.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): HUMANIZE 2 trỏ §CM-VOICE 7, 9; HUMANIZE bỏ "dưới bài không thêm gì" (start-block: bài xong chỉ in bài). NATURAL: bỏ câu mở trùng tên anchor; bỏ 2 ví dụ (ăn sáng: trùng ví dụ mục 2 và dòng "việc + V", "là rất"; "Đó là lúc tôi nhận ra": trùng mục 5 và banned-tells); mục 6 gọn lại ("bài bán ghi giá" thay cặp "có giá"/"không giấu giá"); mục 7 thêm chữ đậm Unicode (từ fmt-short POSTS 3); "từ khóa", "hóa ra" → "từ khoá", "hoá ra" (LOCALE 3: một kiểu bỏ dấu); "…giúp em" → "…giúp mình" (câu mẫu mình – bạn). docs/research/vn-language-anchor-draft.md chưa đồng bộ.
+Cắt bù byte G1 6/10 (không bỏ luật): HUMANIZE 2 bỏ "không thêm từ đệm họ không dùng" (mục 3 cắt "từ đệm máy tự thêm"; §CM-VOICE 9 cấm thêm chữ họ không dùng). §CM-NATURAL không đổi.
 
 <!-- @section humanize.kit-pass src=e6b44709cf -->
 BÀI NÀO cũng qua lượt này; làm kỹ khi "{{t:cmd.voice}}", "nghe như máy", "sượng". Chỉ sửa chữ của coach.
 1 Chi tiết chỉ lấy từ chuyện họ kể. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
-2 Viết như họ nói: §CM-VOICE 7, 9, §CM-NATURAL; không thêm từ đệm họ không dùng.
+2 Viết như họ nói: §CM-VOICE 7, 9, §CM-NATURAL.
 3 Cắt: rào chồng, rào trước điều họ biết chắc (có lẽ, hình như, mình nghĩ là) · từ đệm máy tự thêm (kiểu như, thực ra thì) · tự hạ (em xin phép chia sẻ) · đuôi "đúng không ạ?" · mở vòng vo (Hello cả nhà…) · chữ sáo (hành trình, nâng tầm, bứt phá) · "không chỉ… mà còn" · liệt kê ba cho đủ · chữ dịch, văn viết, gạch ngang (§CM-NATURAL 7) · never_say. Giữ: điều kiện, khoảng số, do_say, một "mình thấy" trước câu gắt, câu của họ trên card (cả "nói chung là", "đúng không ạ" trong đó).
 4 Một câu nói rõ họ tin gì. Kết bằng một bước hay câu của họ, không tóm tắt.
 5 Đọc to: vấp thì tách. "Vấp dòng 2": chỉ làm lại dòng đó. Vẫn lệch: "{{t:voice.match}}"

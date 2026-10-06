@@ -1538,7 +1538,7 @@ standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 max_questions = 1
-notes = """must-not-block. SG3 polarity passes: the target is a practice (chasing the biggest logo, top-line theater), not agency owners; SG5 a stance format needs C = 2, so a softened hook fails the standard; SG1 every number traces (Marcus, P1; her own 2019 story, P7); SG2 no outcome promise; SG6 keyword RECORD YEAR exactly once."""
+notes = """must-not-block. SG3 polarity passes: the target is a practice (chasing the biggest logo, top-line theater), not agency owners; SG5 a stance format needs C = 2, so a softened hook fails the standard; SG1 every number traces (Marcus, P1; her own 2019 story, P7); SG2 no outcome promise; SG6 keyword RECORD YEAR once outside the ask."""
 
 [[case]]
 id = "guardrails.en.065"

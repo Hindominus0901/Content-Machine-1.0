@@ -65,7 +65,7 @@ must_include = [
   "quà = Sổ 3 Cột bản 1 trang, gửi vừa trong một tin nhắn",
   "câu trả lời inbox 1–2, mở bằng \"Dạ\", có một câu hỏi lọc (bán kênh nào, doanh thu tầm bao nhiêu)",
   "tin \"hỏi 3 khách cũ một câu\" gửi qua Zalo",
-  "mỗi bài có dòng VÌ SAO RA KHÁCH và từ khóa đúng 1 lần",
+  "từ khóa đúng 1 lần mỗi bài; mỗi bài lưu một câu VÌ SAO RA KHÁCH, chỉ in khi coach hỏi 'tại sao?'; dưới bài không in dòng nào",
   "có lựa chọn lời mời nhẹ (gõ \"nhẹ\")",
   "ít nhất một bài dùng chuyện của chính chị (Tết 2019 trong kho)",
 ]

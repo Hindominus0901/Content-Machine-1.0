@@ -13,6 +13,10 @@ Run folder (keep this format; evals/run.py and the simulator agents write it):
         {"turn": 1, "role": "coach" | "machine", "text": "...", "t_min": 0.0 | null}
         optional "third_party": true on a coach turn: the whole turn is someone else's
         post (a pasted caption, a forwarded post), the source text for I19.
+        optional "away_min": 40 on a coach turn: time away before it (a site visit, a plan
+        limit); day0_timing reads film-ready in active minutes (t_min minus time away).
+    evals/runs/<run-id>/packet/kit/*.txt   optional: the instruction block the machine ran on;
+        I17 does not count praise the machine printed verbatim from it (reported in details).
     evals/runs/<run-id>/meta.json
         {"persona": "en/proof-coach", "edition": "en", "lane": "S1", "build_sha": "..."}
         optional "suite": "day0" applies the Day-0 turn budgets even without step markers.
@@ -55,24 +59,33 @@ How a machine reply is read:
   * a silent piece: a piece title with no status line before the next title, the
     NEXT line or the end of the reply. A piece title is an N<digit> label or a
     title line opening with a format, never a list of ideas or tips ("FILM TODAY",
-    "**Reel 2**", "### Email", "QUAY HÔM NAY"). A silent piece ends after its last
+    "**Reel 2**", "### Email", "**Facebook post**", "Free gift", "QUAY HÔM NAY"), or a
+    day-first title naming a format or a length ("FRI, OCT 9 · LONG POST", "**Monday ·
+    15 s**"); a sentence that opens with a format ("**Your post is perfect.**") or a title
+    asking for a choice is talk, not a piece. A silent piece ends after its last
     copy box, field line ("First line: …"), list item or "> " line, at the next
     heading, or at a new paragraph asking the coach something; with no such lines,
     at its first blank line.
   Text outside pieces is prose: the machine talking to the coach.
 - The running tag "◆ <name> · <step>" on the first line names the step.
-- A reply answers "why?" when the coach's turn is a short why-question (cmd.why,
-  "why this one?", "tại sao?", "vì sao?"); it answers a check when the coach asked
-  about their own draft ("ok to post?", "check this", "đăng được chưa?").
+- A reply answers "why?" when the coach's turn is cmd.why or a close variant about the
+  last piece ("why this one?", "why N2?", "tại sao?", "vì sao chọn bài này?"), never any
+  other why-question; it answers a check when the coach asked about their own draft
+  ("ok to post?", "check this", "tell me if this is ready", "đăng được chưa?").
 
 Invariants marked "proxy": true cannot be checked from a transcript; they check
 the closest mechanical signal (I6 decisions, I7 IDs without the hub, I11
 injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns and the
 audience address, I20 unopened links, I21 the angle card's evidence, I22 monitoring
 promises, I23 voice).
-Other checks: deny_list, quit_triggers, day0_timing and, in VN runs, vn_natural (translationese
-density, Markdown bold, emoji lines, em dashes and the end-particle share of the pieces against the
-coach's written-posts.md; docs/research/vn-language-guide.md §9.3).
+Other checks: deny_list, quit_triggers, running_tag (every reply opens with the running tag),
+day0_timing (Map and film-ready turn and active-minute budgets), day0_shape (the Day-0 deliverables:
+FILM TODAY's caption box and quiet option, YOUR WORD = the CTA keyword, an email in Week 1 when the
+coach named a list, the card top ≤500 characters, the save route and backup, no unfilled placeholders,
+"Shorter" honoured; a re-asked fact needs a reader) and, in VN runs, vn_natural (translationese density, Markdown
+bold, emoji lines, em dashes and the end-particle share of the pieces against the coach's
+written-posts.md; docs/research/vn-language-guide.md §9.3). Every check reads its kit wording from
+strings/<edition>.toml keys (map.*, film.now_or_text, cmd.quiet, cta.*, card.*, setup.*, save.*).
 Status is pass | fail | n/a | not_run; "pass" is null when the check did not run.
 """
 from __future__ import annotations
@@ -101,25 +114,58 @@ PASTE_INFOS = {"paste", "csv", "tsv", "sheet", "sheets", "notion"}
 PASTE_LABEL_RE = re.compile(r"\bpaste\b|(?<!\w)dán(?!\w)", re.I)
 TAG_RE = re.compile(r"^◆\s*(.+?)\s*·\s*(.+?)\s*$")
 LABEL_RE = re.compile(r"^N\d+\b")
-# The coach's "why?" (cmd.why) and short why-questions about the last piece ("why this one?", "vì sao?").
-WHY_RE = re.compile(r"^\W*(?:why|tại sao|tai sao|vì sao|vi sao)(?!\w)[^\n]{0,60}$", re.I)
+# The coach's "why?" (cmd.why) and its close variants about the last piece: "why this one?", "why N2?", "why that
+# hook?", "tại sao?", "vì sao chọn bài này?". A why-question about anything else ("why do people even watch reels?",
+# "Why can't I talk about TRT?", "tại sao dạo này ai cũng quay video dọc?") is a question, not the command.
+_WHY_THING = (r"(?:one|piece|post|hook|line|first line|last line|script|reel|video|short|email|caption|word|keyword|"
+              r"topic|idea|order|day|ask|angle|story|cta)")
+WHY_RE = re.compile(
+    r"^\W*(?:why(?:\s+(?:(?:this|that|the)\s+" + _WHY_THING + r"|this|that|it|these|those|N\d+"
+    r"|(?:did|do|would)\s+you\s+(?:pick|choose|use|write|go with|say|put)\s+(?:this|that|it|N\d+)(?:\s+one)?))?"
+    r"|(?:tại sao|tai sao|vì sao|vi sao)(?:\s+(?:vậy|thế|á|à|ạ|nhỉ|hả|chọn|lại|là|bài|cái|câu|video|clip|này|đó|kia|"
+    r"em|chị|anh|bạn|mình|N\d+)){0,5})"
+    r"\s*[?!.…]*\s*$", re.I)
 # The coach asks for a check on their own draft (edge-rubric: one line, Ready or Draft fixable).
 CHECK_ASK_RE = re.compile(
-    r"\bok(?:ay)? to (?:post|send|film)\b|\b(?:is|does) (?:this|it|that) (?:ok|okay|good|ready|work)\b"
+    r"\bok(?:ay)? to (?:post|send|film)\b|\b(?:is|does) (?:this|it|that) (?:one )?(?:ok|okay|good|ready|work)\b"
     r"|\bcheck (?:this|it|that|my|mine)\b|\bedge check\b|\bgood to (?:post|go)\b|\bready to post\?"
+    r"|\b(?:tell me|let me know|see) (?:if|whether) (?:this|it|that|my (?:post|draft|caption|script|reel|email|video))"
+    r"(?: one)? (?:is|'s|looks?|reads?) (?:ready|ok|okay|good|fine|right)\b"
+    r"|\b(?:can|should|could) I (?:post|send|film) (?:this|it|that)(?: one)?(?: now| yet| as is| like this)?"
+    r"(?=\s*(?:[?!.:]|$))"
     r"|(?<!\w)(?:đăng|gửi|quay) được (?:chưa|không)(?!\w)|(?<!\w)ổn (?:chưa|không)(?!\w)"
     r"|(?<!\w)kiểm(?: tra)? (?:giúp|giùm|dùm|hộ|bài)(?!\w)|(?<!\w)xem (?:giúp|giùm|dùm|hộ)(?!\w)", re.I)
 # A piece title that starts a piece even with no status line under it (wf15 §2): an N<digit> label,
-# or a heading / bold / ALL-CAPS title naming a format.
+# or a heading / bold / ALL-CAPS title naming a format, with an optional article, platform or adjective in front
+# ("**Facebook post**", "Free gift", "THE GIFT · DM reply 1", "LinkedIn PDF post").
 FORMAT_TITLE_RE = re.compile(
     r"^(?:film today|quay hôm nay|today'?s (?:video|post|script)|ask 3"
-    r"|(?:(?:native|text|long|short|offer|teaching|case|objection|background|launch|story)\s+)?"
-    r"(?:reels?|shorts?|videos?|posts?|carousels?|emails?|newsletters?|messages?|dm repl(?:y|ies)|stories|"
+    r"|(?:(?:the|your|my|one|a|an)\s+)?"
+    r"(?:(?:facebook|fb|instagram|ig|insta|linkedin|tiktok|youtube|yt|threads|twitter|x|zalo|substack|pinterest)"
+    r"\s+)?"
+    r"(?:(?:native|text|long|short|offer|teaching|case|objection|background|launch|story|free|pdf|photo|video)\s+)?"
+    r"(?:reels?|shorts?|videos?|posts?|carousels?|slides|emails?|newsletters?|messages?|dm repl(?:y|ies)|stories|"
     r"gifts?)(?!\w)"
     r"|(?:bài(?!\s+học)|video|tin nhắn|thư(?!\s+giãn)|quà|câu chuyện|trả lời tin nhắn)(?!\w))", re.I)
+# A day-first piece title (each Week-1 piece prints with its day): "FRI, OCT 9 · LONG POST", "MONDAY, OCT 12 · Email
+# to …", "**Monday · 15 s**", "Thứ 3 · Video". After the day comes a format, or a duration alone.
+_DAY = (r"(?:mon(?:day)?|tue(?:s(?:day)?)?|wed(?:nesday)?|thu(?:r(?:s(?:day)?)?)?|fri(?:day)?|sat(?:urday)?|"
+        r"sun(?:day)?)(?!\w)\.?|thứ\s+(?:\d|hai|ba|tư|năm|sáu|bảy)(?!\w)|chủ nhật(?!\w)")
+_MONTH_DAY = (r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+              r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{1,2}(?:st|nd|rd|th)?")
+DAY_TITLE_RE = re.compile(r"^(?:(?:" + _DAY + r")(?:,?\s+" + _MONTH_DAY + r")?|" + _MONTH_DAY + r")"
+                          r"(?:,?\s+\d{4})?\s*(?:[·•|:–—-]+\s*|$)", re.I)
+DURATION_TITLE_RE = re.compile(r"^(?:under\s+)?\d{1,3}\s*(?:s|secs?|seconds?|giây|min|minutes?|phút)(?!\w)", re.I)
 # ("Script:", "Caption:", "Kịch bản:" are fields inside a piece, never its title.)
 # A title that lists ideas or tips is advice to the coach, not a piece ("### More post ideas").
 IDEAS_TITLE_RE = re.compile(r"\bideas?\b|\btips?\b|ý tưởng|gợi ý|(?<!\w)mẹo(?!\w)", re.I)
+# A sentence that opens with a format is talk, not a title: "**Your post is perfect.**", "**A video beats a carousel
+# here.**", "**The email can wait.**" (a verb right after the format). (A title asking for a choice, "**Your video:
+# which one do you want?**", is talk too: _is_piece_title.)
+TITLE_SENTENCE_RE = re.compile(
+    r"^\s*(?:is|are|was|were|be|been|isn'?t|aren'?t|wasn'?t|looks?|reads?|works?|feels?|sounds?|needs?|has|have|had|"
+    r"will|won'?t|would|could|should|can|can'?t|may|might|must|beats?|wins?|goes|gets?|does|doesn'?t|did|do|don'?t|"
+    r"stays?|comes?|là|thì|sẽ|đã|đang|nên|cần|hay quá|ổn)(?!\w)", re.I)
 HEADING_RE = re.compile(r"^\s*#{1,6}\s")
 FIELD_RE = re.compile(r"^[^\W\d_][^:\n]{0,32}:(?:\s|$)")          # "First line: …", "Caption:", "Câu đầu: …"
 LIST_ITEM_RE = re.compile(r"^\s*(?:>|(?:[-*•+]|\d{1,2}[.)]|\d{1,2}\s*·)\s+)")   # bullets, numbers, "> " post lines
@@ -138,6 +184,7 @@ _NOT_FILL = r"(?!(?:needs|cần|guess|đoán|gap|ước tính)(?!\w))"     # [NE
 _LOWER_START = r"(?![" + ck.UPPER + r"])[^\W\d_]"
 TEMPLATE_RE = [re.compile(p, re.I) for p in (
     r"\bfill[- ](?:in|out)\b", r"\bfill (?:the|this|my) (?:template|form|blanks?)\b",
+    r"\bfill (?:it|this|these|them|that|those|each one|every line)(?: one| all)? (?:in|out)\b",
     r"\b(?:complete|use|copy) (?:this|the|my) (?:template|form)\b", r"_{3,}",
     r"\b(?:complete|finish) (?:this|the|these) (?:sentences?|blanks?)\b",
     r"\[(?:your|insert|add|enter)\b[^\]]*\]", r"<(?:your|insert)\b[^>]*>", r"\{(?:your|insert)\b[^}]*\}",
@@ -206,9 +253,31 @@ EN_ALLOW = {"ok", "content", "machine", "brand", "card", "hook", "script", "laun
             "facebook", "tiktok", "instagram", "youtube", "notion", "chatgpt", "claude", "save", "to", "project"}
 MAP_STEP_RE = re.compile(r"\bmap\b|bản đồ|thông điệp", re.I)
 FILM_STEP_RE = re.compile(r"\bfilm\b|(?<!\w)quay(?!\w)", re.I)
+CARD_STEP_RE = re.compile(r"\bbrand card\b|\bcard\b|(?<!\w)thẻ(?!\w)", re.I)
 OVERLAP_N = 8
 OVERLAP_MAX_DEFAULT = 2
 USABLE_MAX_WORDS = 300
+SHORTER_MAX_WORDS = 90             # "Shorter": the next reply's talk (levelup.md §CM-TODAY 1; acceptance [day0])
+CARD_VISIBLE_MAX_CHARS = 500       # schemas/brand-card.toml budgets.visible_chars (wf15 §4)
+# The coach asks for a shorter reply ("Shorter.", "too long", "keep it short", "too much text", "ngắn thôi").
+SHORTER_ASK_RE = re.compile(r"\bshorter\b|\btoo long\b|\btl;?\s?dr\b|\bkeep it (?:short|brief)\b|\bless text\b"
+                            r"|\btoo (?:much|many) (?:text|words|to read|reading)\b|\bshort version\b"
+                            r"|(?<!\w)ngắn (?:hơn|lại|thôi|gọn)(?!\w)|(?<!\w)dài quá(?!\w)", re.I)
+# A placeholder left unfilled in machine text: "[today]", "[plan_start]", "{KEYWORD}", "{{name}}" (tags such as
+# "[guess]", "[NEEDS: …]" and links are never placeholders).
+PLACEHOLDER_RE = re.compile(r"\[(?!(?:guess|đoán|x|ok)\])[a-z][a-z0-9]*(?:_[a-z0-9]+)*\](?!\()"
+                            r"|\[(?i:(?:your |client'?s? |first |last |business |company |their )?(?:name|date|today|"
+                            r"day|time|link|url|price|number|city|company|business|keyword|offer|gift|email|phone|"
+                            r"handle|platform|tên|ngày|giá))\](?!\()"          # "[Name]", "[TODAY]", "[Client Name]"
+                            r"|\{\{?\s*[A-Za-z_][A-Za-z0-9_.:]*\s*\}?\}")
+# A save line's route and backup: an app with where to press, and a second copy outside the app.
+SAVE_ROUTE_RE = re.compile(r"\b(?:save to project|add text content|project files|project knowledge|rename|"
+                           r"saved memor(?:y|ies)|custom instructions)\b|(?<!\w)(?:lưu vào dự án|tệp dự án)(?!\w)", re.I)
+SAVE_BACKUP_RE = re.compile(r"\bback ?up\b|\b(?:email|e-mail|send|text|message)\s+(?:it|this|the card|a copy)\s+to "
+                            r"yourself\b|(?<!\w)(?:sao lưu|gửi cho chính mình|tự gửi)(?!\w)", re.I)
+# A coach turn naming their email list or newsletter (Week 1 then carries an email).
+LIST_NAMED_RE = re.compile(r"\b(?:e-?mail list|mailing list|newsletter|subscribers?|my list|email (?:to|out to) "
+                           r"(?:my|the|our) (?:list|people))\b|(?<!\w)(?:danh sách email|bản tin)(?!\w)", re.I)
 
 
 class GraderError(Exception):
@@ -224,6 +293,7 @@ class Turn:
     text: str
     t_min: float | None
     third_party: bool = False      # a coach turn that is someone else's post (I19)
+    away_min: float = 0.0          # a coach turn's time away before it (a site visit, a plan limit): not active time
 
 
 def load_turns(path: Path) -> list[Turn]:
@@ -246,7 +316,11 @@ def load_turns(path: Path) -> list[Turn]:
         third = row.get("third_party", False)
         if not isinstance(third, bool):
             raise GraderError(f"{path.name} line {i}: third_party must be true or false")
-        turns.append(Turn(row["turn"], row["role"], ck.nfc(row["text"]), None if t is None else float(t), third))
+        away = row.get("away_min") or 0
+        if not isinstance(away, (int, float)) or isinstance(away, bool) or away < 0:
+            raise GraderError(f"{path.name} line {i}: away_min must be a number of minutes, 0 or more")
+        turns.append(Turn(row["turn"], row["role"], ck.nfc(row["text"]), None if t is None else float(t), third,
+                          float(away)))
     if not turns:
         raise GraderError(f"{path.name} is empty")
     return turns
@@ -342,10 +416,18 @@ def _lit(text: str) -> str:
 
 class Matcher:
     def __init__(self, strings: dict, lang: str):
+        self.strings, self.lang = strings, lang
+        self._found: dict[str, re.Pattern | None] = {}
         self.verdicts: list[tuple[str, re.Pattern]] = []
+        # words of a status line's fixed tail (its string after the last {slot}): "I won't make it up. (Or say
+        # "skip".)" under Needs you, "and I'll write it." under a hard stop. I3's cap leaves them out.
+        self.tail_words: dict[str, int] = {}
         for key, text in sorted(strings.items()):
             if key.startswith("verdict.") and text.strip():
-                self.verdicts.append((key.split(".", 1)[1], _slot_pattern(text, lang)))
+                kind = key.split(".", 1)[1]
+                self.verdicts.append((kind, _slot_pattern(text, lang)))
+                tail = re.split(r"\{[a-z_][a-z0-9_]*\}", ck.plain_line(text))
+                self.tail_words[kind] = ck.count_words(tail[-1], lang) if len(tail) > 1 else 0
         if strings.get("checked.prefix", "").strip():
             self.verdicts.append(("checked", _slot_pattern(strings["checked.prefix"], lang, prefix_only=True)))
         nxt = strings.get("next.prefix", "").strip()
@@ -359,6 +441,20 @@ class Matcher:
             head = ck.plain_line(strings.get(key, "")).split("{", 1)[0].strip()
             if len(head) >= 8:
                 self.note_prefixes.append(re.sub(r"\s+", " ", head).casefold())
+
+    def pattern(self, key: str) -> re.Pattern | None:
+        """The rendered strings[key] as an unanchored pattern ({slots} as wildcards, a final "." optional), or
+        None when the edition has no such string."""
+        if key not in self._found:
+            text = self.strings.get(key, "").strip()
+            self._found[key] = _slot_pattern(text, self.lang, anchored=False) if text else None
+        return self._found[key]
+
+    def says(self, key: str, text: str) -> bool:
+        """The text holds the line strings[key] prints (any {slot} filled in)."""
+        p = self.pattern(key)
+        return bool(p and p.search(ck.plain_line(text) if "\n" not in text else
+                                    "\n".join(ck.plain_line(x) for x in text.splitlines())))
 
     def verdict_kind(self, plain: str) -> str | None:
         for kind, pattern in self.verdicts:
@@ -419,6 +515,7 @@ class Reply:
     after_why: bool = False
     after_check: bool = False      # the coach asked whether their own draft is ok to post
     kinds: dict[int, str] = field(default_factory=dict)    # status line index -> verdict kind
+    machine_at: list[int] = field(default_factory=list)    # where each machine block sat (a line index)
 
     def visible(self, blocks=("", "copy", "paste")) -> str:
         return "\n".join(ln.text for ln in self.lines if ln.block in blocks and not ln.fence)
@@ -435,7 +532,9 @@ class Reply:
         return "\n".join(parts + self.machine_blocks)
 
 
-def split_blocks(text: str) -> tuple[list[Line], list[str]]:
+def split_blocks(text: str, positions: list[int] | None = None) -> tuple[list[Line], list[str]]:
+    """(coach-visible lines, machine blocks). `positions`, when given, gets the line index where each
+    machine block sat (the index of the next visible line)."""
     raw = ck.nfc(text).splitlines()
     lines: list[Line] = []
     machine: list[str] = []
@@ -458,6 +557,8 @@ def split_blocks(text: str) -> tuple[list[Line], list[str]]:
         body = raw[i + 1:j]
         if "machine" in info or FOR_MACHINE_RE.search(label):
             machine.append("\n".join(body))
+            if positions is not None:
+                positions.append(len(lines))
         else:
             kind = "paste" if info.split(" ")[0] in PASTE_INFOS or PASTE_LABEL_RE.search(label) else "copy"
             lines.append(Line(raw[i], "", kind, True))
@@ -480,26 +581,45 @@ def _is_marker(line: Line, matcher: Matcher) -> bool:
         return True
     if re.fullmatch(r"(\*\*|__)[^*_]+(\*\*|__)\s*:?", raw):
         return True
+    day = DAY_TITLE_RE.match(line.plain)
+    if day and ck.count_words(re.sub(r"\([^()\n]*\)", " ", line.plain)) <= 12:
+        rest = line.plain[day.end():]                   # "Wed, Oct 7 · Email to your list (it goes first)"
+        if FORMAT_TITLE_RE.match(rest) or DURATION_TITLE_RE.match(rest):
+            return True
     caps = []
     for word in line.plain.split():
         letters = [c for c in word if c.isalpha()]
+        if caps and re.fullmatch(r"\d{1,3}", word):
+            continue                                    # "ASK 3 PAST CLIENTS", "WED, OCT 7 · EMAIL"
         if not letters or word != word.upper():
             break
         caps.append(word)
     run = sum(1 for w in caps for c in w if c.isalpha())
-    return (len(caps) >= 2 or run >= 4) and ck.count_words(line.plain) <= 8
+    # a parenthetical aside does not make a title long: "THE GIFT · DM reply 1 (send to everyone who comments)"
+    words = ck.count_words(re.sub(r"\([^()\n]*\)", " ", line.plain))
+    limit = 12 if DAY_TITLE_RE.match(line.plain) else 8          # "MONDAY, OCT 12 · Email to the Monday Number"
+    # 3+ capitals words open a title whatever follows: "ASK 3 PAST CLIENTS · you send it, by text or email"
+    return (len(caps) >= 2 or run >= 4) and (words <= limit or len(caps) >= 3)
 
 
 def _is_piece_title(line: Line, matcher: Matcher) -> bool:
     """A title that starts a piece even with no status line under it: an N<digit> label, or a marker line
-    opening with a format ("FILM TODAY (under 30 s)", "**Reel 2**", "### Email", "QUAY HÔM NAY", "**Bài 2: …**");
-    never a list of ideas or tips."""
+    opening with a format ("FILM TODAY (under 30 s)", "**Reel 2**", "### Email", "**Facebook post**", "Free gift",
+    "QUAY HÔM NAY", "**Bài 2: …**"), the format possibly after the piece's day ("FRI, OCT 9 · LONG POST",
+    "**Monday · 15 s**": a day with a length is a piece too); never a list of ideas or tips."""
     if not _is_marker(line, matcher):
         return False
     if LABEL_RE.match(line.plain):
         return True
     head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", line.plain))    # "### 2. Reel: …" → "Reel: …"
-    return bool(FORMAT_TITLE_RE.match(head)) and not IDEAS_TITLE_RE.search(head)
+    day = DAY_TITLE_RE.match(head)
+    if day:
+        head = head[day.end():]
+        if DURATION_TITLE_RE.match(head):
+            return True
+    m = FORMAT_TITLE_RE.match(head)
+    return bool(m) and not IDEAS_TITLE_RE.search(head) and not TITLE_SENTENCE_RE.match(head[m.end():]) \
+        and not any(p.search(_unquoted(head)) for p in DECISION_RE)       # "**Your video: which one do you want?**"
 
 
 def _is_content(line: Line) -> bool:
@@ -529,8 +649,9 @@ def _silent_end(lines: list[Line], title: int, bound: int) -> int:
 
 
 def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
-    lines, machine = split_blocks(turn.text)
-    r = Reply(turn.turn, index, turn.t_min, turn.text, lines, machine)
+    at: list[int] = []
+    lines, machine = split_blocks(turn.text, at)
+    r = Reply(turn.turn, index, turn.t_min, turn.text, lines, machine, machine_at=at)
     first = next((i for i, ln in enumerate(lines) if ln.plain), None)
     if first is not None:
         m = TAG_RE.match(lines[first].plain)
@@ -597,6 +718,11 @@ class Run:
     acceptance: dict
     lang: str
     matcher: Matcher | None = None
+    kit: str = ""          # kit wording as " token token … ": rendered strings + the packet's instruction block
+
+    @property
+    def is_day0(self) -> bool:
+        return self.meta.get("suite") == "day0" or any(day0_step(self, r) == "map" for r in self.replies)
 
     @property
     def coach_turns(self) -> list[Turn]:
@@ -638,7 +764,18 @@ def load_run(run_dir: Path, root: Path) -> Run:
         r.after_check = bool(CHECK_ASK_RE.search(last_coach))
         replies.append(r)
     return Run(root, run_dir, meta, turns, replies, persona, expected, texts, strings, params,
-               _toml(root / "evals" / "acceptance.toml"), lang, matcher)
+               _toml(root / "evals" / "acceptance.toml"), lang, matcher, kit_tokens(run_dir, strings))
+
+
+def kit_tokens(run_dir: Path, strings: dict) -> str:
+    """The kit's own wording, as normalised tokens: every rendered string, plus the instruction block the machine
+    ran on (packet/kit/*.txt, written by evals/run.py packet). Text the kit tells the machine to print is the
+    kit's responsibility, not the machine's (I17 reports it in details instead of failing)."""
+    parts = [str(v) for v in strings.values()]
+    kit_dir = Path(run_dir) / "packet" / "kit"
+    if kit_dir.is_dir():
+        parts += [f.read_text(encoding="utf-8") for f in sorted(kit_dir.glob("*.txt"))]
+    return " " + " ␞ ".join(" ".join(ck.copy_tokens(p)) for p in parts) + " "      # ␞: no window spans two parts
 
 
 def is_why_ask(text: str, strings: dict | None = None) -> bool:
@@ -677,9 +814,50 @@ def _is_refusal(r: Reply, i: int) -> bool:
                                                            for p in r.pieces)
 
 
-def _refusal_free(r: Reply) -> str:
+def _refusal_free(r: Reply, machine: list[str] | None = None) -> str:
     keep = [ln.text for i, ln in enumerate(r.lines) if not ln.fence and not _is_refusal(r, i)]
-    return "\n".join(keep + r.machine_blocks)
+    return "\n".join(keep + (r.machine_blocks if machine is None else machine))
+
+
+# The card's voice lists name words the coach never (or does) say; they quote banned phrases, never claim them.
+CARD_LIST_FIELDS = ("never_say", "do_say")
+
+
+@functools.lru_cache(maxsize=8)
+def card_field_names(root: Path) -> tuple[str, ...]:
+    """The machine block's field names (schemas/brand-card.toml [[machine.field]] name), longest first."""
+    data = _toml(Path(root) / "schemas" / "brand-card.toml")
+    names = {str(f.get("name", "")) for f in data.get("machine", {}).get("field", []) if f.get("name")}
+    return tuple(sorted(names, key=len, reverse=True))
+
+
+def without_card_lists(block: str, root: Path) -> str:
+    """A machine block minus the values of its never_say / do_say fields, in any layout the card prints
+    ("never_say=[…] do_say=[…]", "never_say: a · b", "never_say shred · beast_mode do_say dad_bod"): a bracketed
+    value to its closing bracket (over several lines too), else from the field name to the next field name of the
+    schema, or to the end of the line. Whatever follows a closed list on its line is still read."""
+    names = card_field_names(root)
+    nxt = re.compile(r"(?<![\w])(?:" + "|".join(re.escape(n) for n in names) + r")(?![\w])" if names
+                     else r"(?<![\w])[a-z][a-z0-9_]*\s*[:=]")
+    field_re = re.compile(r"(?<![\w])(?:" + "|".join(CARD_LIST_FIELDS) + r")(?![\w])")
+    out, pos = [], 0
+    for m in field_re.finditer(block):
+        if m.start() < pos:
+            continue
+        opened = re.match(r"\s*[:=]?\s*\[", block[m.end():])
+        if opened:
+            close = block.find("]", m.end() + opened.end())
+            end = len(block) if close < 0 else close + 1
+        else:
+            eol = block.find("\n", m.end())
+            eol = len(block) if eol < 0 else eol
+            end = next((x.start() for x in nxt.finditer(block, m.end(), eol) if x.group(0) not in CARD_LIST_FIELDS),
+                       eol)
+            end = min(end, next((x.start() for x in field_re.finditer(block, m.end(), eol)), eol))
+        out.append(block[pos:m.start()] + " ")
+        pos = end
+    out.append(block[pos:])
+    return "".join(out)
 
 
 def _without_refusals(text: str, r: Reply) -> str:
@@ -919,10 +1097,24 @@ def i1_next_line(run: Run) -> dict:
     return result("I1", title, ev)
 
 
+# The reply asks for a box back: the coach fills it and sends it to the machine ("fill it in and send it back").
+BACK_RE = re.compile(r"\b(?:send|paste|give|text|type|copy)\s+(?:it|this|them|that|these)\s+(?:all\s+)?back\b"
+                     r"|\bback (?:to me|here)\b|(?<!\w)(?:gửi lại|dán lại)(?!\w)", re.I)
+
+
 def i2_template(run: Run) -> dict:
+    """A template-fill ask is talk to the coach, or a box the coach fills: text outside copy boxes, a paste block (the
+    coach pastes it somewhere, so its blanks are theirs), and a copy box outside any piece when the reply asks for it
+    back ("fill it in and send it back"). A piece's copy box is buyer-facing (the gift's "Yours: ______" blanks are
+    for the buyer to fill: §CM-CTA-KIT 2, "blanks only for the buyer")."""
     ev = []
     for r in run.replies:
-        text = r.visible(("", "copy"))
+        talk = r.visible(("",))
+        in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
+        back = bool(BACK_RE.search(talk))
+        boxes = [ln.text for i, ln in enumerate(r.lines) if not ln.fence and (
+            ln.block == "paste" or (ln.block == "copy" and back and i not in in_piece))]
+        text = "\n".join([talk] + boxes)
         for p in TEMPLATE_RE:
             m = p.search(text)
             if m:
@@ -951,7 +1143,11 @@ def i3_status_lines(run: Run) -> dict:
     """wf15 §2-§3: at most one coach-facing status line per piece, and only when the coach is needed
     (Needs you, hard stop, override, a required dated note); a Ready piece prints none. A Ready line, a
     ✓ Checked line, a WHY line or a Draft line fails unless the coach asked "why?" (or, for Ready and
-    Draft, asked whether their own draft is ok to post). Needs you: at most one per reply."""
+    Draft, asked whether their own draft is ok to post). Needs you: at most one per reply.
+    The word cap (verdict_max_words) counts what the machine writes on the line: the line minus its string's
+    fixed tail (the text after the last {slot}: "I won't make it up. (Or say "skip".)", "and I'll write it."),
+    which is the same in every line of that kind and is the strings' budget, not the machine's. A "why?"
+    reply prints the evidence and the record, so the cap does not apply there."""
     title = ("At most one status line per piece, only when the coach is needed; a Ready piece prints none "
              "(no Ready, WHY or ✓ Checked line unless \"why?\" was asked)")
     if not any(k.startswith("verdict.") for k in run.strings):
@@ -980,10 +1176,11 @@ def i3_status_lines(run: Run) -> dict:
                 ev.append(f'{_turn(r)}: {STATUS_LABELS[kind]}{where} without "why?": "{_short(plain)}"')
             if kind == "needs":
                 needs += 1
-            if kind not in ("why", "note"):
-                words = ck.count_words(plain, run.lang)
+            if kind not in ("why", "note") and not r.after_why:
+                words = ck.count_words(plain, run.lang) - matcher.tail_words.get(kind, 0)
                 if words > cap:
-                    ev.append(f'{_turn(r)}: status line has {words} words: "{_short(plain)}"')
+                    ev.append(f'{_turn(r)}: status line has {words} words besides its fixed tail '
+                              f'(max {cap}): "{_short(plain)}"')
         if needs > 1:
             ev.append(f"{_turn(r)}: {needs} Needs you lines in one reply (max 1)")
         if r.after_why:
@@ -1018,23 +1215,133 @@ def reply_questions(r: Reply) -> list[str]:
     return _questions(r.prose_text())
 
 
+# The coach's private asks: the message to 3 past clients (or 3 people like the buyer), sent one to one from a copy
+# box of its own (§CM-RESEARCH ASK 3).
+PRIVATE_ASK_KEYS = ("research.ask3", "research.ask3_cold")
+
+
+def _public_piece(p: Piece) -> bool:
+    """A piece the public sees (a post, a video, a caption), not a one-to-one message, the gift or the ask itself."""
+    if not p.title or MESSAGE_TITLE_RE.search(p.title):
+        return False
+    head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
+    day = DAY_TITLE_RE.match(head)
+    m = FORMAT_TITLE_RE.match(head[day.end():] if day else head)
+    return not (m and re.search(r"ask 3|gifts?\b|(?<!\w)quà", m.group(0), re.I))
+
+
+def private_asks_in_public(run: Run, r: Reply) -> list[str]:
+    """Questions of a private ask (PRIVATE_ASK_KEYS) printed in a public piece's own text, outside any copy box
+    ("Caption: … Ask 3 past clients one question: What was going on right before you called me?"): there they are
+    the machine asking the coach to ask, not the piece's words to the audience, so I5 counts them as questions to the
+    coach. The ask in a copy box of its own is the ask itself (a piece end can run past an unlabelled box)."""
+    pats = []
+    for key in PRIVATE_ASK_KEYS:
+        for sent in ck.sentences(run.strings.get(key, "")):
+            if sent.rstrip().endswith("?"):
+                pats.append(_slot_pattern(sent, run.lang, anchored=False))
+    out = []
+    for p in r.pieces:
+        if not _public_piece(p):
+            continue
+        body = "\n".join(r.lines[i].plain for i in range(p.start, p.verdict_at) if not r.lines[i].block)
+        for pat in pats:
+            m = pat.search(body)
+            if m and m.group(0) not in out:
+                out.append(m.group(0))
+    return out
+
+
 def i5_questions(run: Run) -> dict:
+    """At most 1 question per reply to the coach: questions in the machine's talk (prose and the NEXT line); a
+    piece's own questions are its audience's, except a private ask printed inside a public piece
+    (private_asks_in_public)."""
     ev = []
     for r in run.replies:
-        qs = reply_questions(r)
+        qs = reply_questions(r) + private_asks_in_public(run, r)
         if len(qs) > 1:
             ev.append(f"{_turn(r)}: {len(qs)} questions: " + " | ".join(_short(q, 50) for q in qs))
     return result("I5", "At most 1 question per reply", ev)
 
 
+# Lines that carry a choice but are no decision: a guess the coach confirms ("My guess: …. Right? Or tell me which
+# pays the bills"), the machine's own pick, a save route's click ("choose Add text content").
+GUESS_KEYS = ("setup.guess", "setup.guess_no_result", "setup.multi_income", "setup.plan_guess")
+NOT_DECISION_KEYS = GUESS_KEYS + ("check.pick", "save.claude_plain", "save.limit_claude_free", "card.fix_missing",
+                                  "phone.save", "card.stop_lines")
+# "we pick one buyer", "I'll choose": the machine saying what it does, not asking the coach to choose.
+DECLARATIVE_BEFORE_RE = re.compile(r"(?:\b(?:we|i|i'll|we'll|i'd|let's|i've|we've|i'm|we're)\s+(?:just\s+|now\s+|"
+                                   r"will\s+|can\s+|then\s+|already\s+)?|(?<!\w)(?:mình|em|tôi)\s+(?:sẽ\s+)?)$", re.I)
+# A UI click: "choose Add text content", "pick Save to project" (a button or menu label in capitals).
+UI_CLICK_RE = re.compile(r"^(?:choose|pick|select|tap|chọn)\s+['\"“‘]?[A-Z]\w*(?:\s+[a-z]+){0,3}['\"”’]?"
+                         r"\s*(?:[,.;→>]|$)")
+
+
+# The guess's own follow-up on the next line: "Or tell me which pays the bills.", "Right? Or …", "Hay nói luôn: …".
+GUESS_TAIL_RE = re.compile(r"^\W*(?:(?:right|đúng không)\W*)?(?:or|hay|hoặc)(?!\w)", re.I)
+# The Map's own ask ("OK, or change a line", "OK hay sửa một dòng?") and the labels of a choice ("Option A: …").
+OK_CHANGE_RES = tuple(p for p in DECISION_RE if re.search(r"change|sửa", p.pattern))
+OPTION_RES = tuple(p for p in DECISION_RE if re.search(r"option|phương án", p.pattern))
+
+
+def _decision_hits(text: str) -> list[re.Match]:
+    """DECISION_RE hits in one sentence, minus a save click and the machine's declarative "we pick one buyer." (a
+    question is never declarative: "Should we choose the reel or the post?")."""
+    question = text.rstrip(" \"'”’)*_").endswith("?")
+    return [m for p in DECISION_RE for m in p.finditer(text)
+            if (question or not DECLARATIVE_BEFORE_RE.search(text[:m.start()]))
+            and not UI_CLICK_RE.match(text[m.start():])]
+
+
+def reply_decisions(r: Reply, matcher: Matcher) -> dict[str, str]:
+    """The decisions one reply asks the coach for, {key: the words}: "map.ok" for the Map's OK (the same decision in
+    every reply that prints it, its "OK or change a line" NEXT too), else one key per sentence that asks for a
+    choice. A NEXT line that repeats the reply's choice, the labels of its options ("Option A: …") and a short "Pick
+    one." beside it are that same decision. Not decisions: a guess the coach confirms (setup.guess*, setup.multi_income) with its own follow-up
+    line and its NEXT, setup.plan_guess, the machine's own pick, a declarative "we pick one buyer", a save click."""
+    idx = sorted(set(r.prose) | set(r.nexts))
+    confirm = [i for i in idx if any(matcher.says(k, r.lines[i].text) for k in GUESS_KEYS if k != "setup.plan_guess")]
+    out: dict[str, str] = {}
+    nexts, options = [], []
+    for pos, i in enumerate(idx):
+        line = r.lines[i].text
+        if any(matcher.says(k, line) for k in NOT_DECISION_KEYS):
+            continue
+        if confirm and (i in r.nexts or (pos and idx[pos - 1] in confirm and GUESS_TAIL_RE.match(ck.plain_line(line)))):
+            continue                                       # the guess's "Or tell me which pays the bills" and its NEXT
+        for k, sent in enumerate(re.split(r"(?<=[.?!…])\s+", _unquoted(ck.plain_line(line)))):
+            hits = _decision_hits(sent)
+            if not hits:
+                continue
+            words = f'"{hits[0].group(0)}"'
+            if any(m.re in OK_CHANGE_RES for m in hits):      # map.ok's "OK, or change a line", or its NEXT
+                out.setdefault("map.ok", words)
+            elif i in r.nexts:
+                nexts.append(words)
+            elif all(m.re in OPTION_RES for m in hits):
+                options.append(words)
+            elif ck.count_words(sent) <= 3 and any(x != "map.ok" for x in out):
+                continue                                   # "Pick one." beside the question
+            else:
+                out[f"{r.turn}.{i}.{k}"] = words
+    if not [k for k in out if k != "map.ok"]:          # a NEXT or the options alone: their own choice
+        if options:
+            out[f"{r.turn}.options"] = options[0]
+        elif nexts:
+            out[f"{r.turn}.next"] = nexts[0]
+    return out
+
+
 def i6_decisions(run: Run) -> dict:
-    asks = []
+    """At most one real decision per session (the Map's OK). Counted once per decision: every reply that prints the
+    Map's OK line (map.ok), the Map and its reprint after a pushback, asks the same one; two choices in one reply
+    are two (reply_decisions)."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    asks: dict[str, str] = {}
     for r in run.replies:
-        text = _unquoted(r.prose_text(with_verdicts=False))
-        hit = next((m.group(0) for p in DECISION_RE for m in [p.search(text)] if m), None)
-        if hit:
-            asks.append(f'{_turn(r)}: "{hit}"')
-    ev = [f"{len(asks)} decision prompts in one session: " + "; ".join(asks)] if len(asks) > 1 else []
+        for key, words in reply_decisions(r, matcher).items():
+            asks.setdefault(key, f"{_turn(r)}: {words}")
+    ev = [f"{len(asks)} decision prompts in one session: " + "; ".join(asks.values())] if len(asks) > 1 else []
     return result("I6", "At most 1 real decision per session", ev, proxy=True)
 
 
@@ -1083,7 +1390,11 @@ def i8_numbers(run: Run) -> dict:
     """Numbers come from allowed_numbers or from the coach's own words. Someone else's post is
     closed (wf13-inspiration-spec §4): its numbers never become allowed because the coach pasted
     them, and they count as trap numbers unless the coach said them in their own words or
-    allowed_numbers holds them (F1: others' results are never the coach's, even on a copy request)."""
+    allowed_numbers holds them (F1: others' results are never the coach's, even on a copy request).
+    Dates and times ("Thu, Oct 8", "2026-10-12", "11:59") place a piece in the week; they are not claims. The
+    cold-start rule (no client result numbers) reads what gets posted, and the machine's talk too (the Map's KNOWN
+    FOR, a line suggested to say on camera), except the kit's own wording ("2–3 clients before → after" in the
+    setup prompt) and the coach's own words played back to them."""
     title = "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]"
     allowed = ck.allowed_number_keys(run.persona.get("allowed_numbers", []))
     trap_keys, trap_phrases = _trap_matchers(run.persona.get("excluded_numbers", [])
@@ -1096,12 +1407,22 @@ def i8_numbers(run: Run) -> dict:
         said = ck.allowed_number_keys([own[i] for i in own if i < r.index]) - trap_keys
         source_keys = ck.allowed_number_keys([s.text for s in sources if s.index < r.index]) - allowed - said
         ok_keys = allowed | said
+        said_words = _said_tokens(run, r.index) if cold else ""
+
+        def cold_claim(line: str, talk: bool) -> bool:
+            """A cold-start result claim on the line. In talk, a claim worded as the kit words it or as the coach
+            said it is not the machine's."""
+            hits = [m for p in COLD_RESULT_RE for m in p.finditer(line)]
+            if talk:
+                hits = [m for m in hits if not (_verbatim_in(line, m.start(), m.end(), run.kit)
+                                                or _verbatim_in(line, m.start(), m.end(), said_words))]
+            return bool(hits)
 
         def check(text: str, claims_only: bool) -> None:
             for line in text.splitlines():
                 claim_line = bool(ck.result_claims(line, run.lang))
                 for n in ck.numbers_in(line):
-                    if n.structural or n.tagged:
+                    if n.structural or n.tagged or n.kind in ("date", "time"):
                         continue
                     if claims_only and not (n.percent or n.kind == "money" or claim_line):
                         continue
@@ -1112,8 +1433,8 @@ def i8_numbers(run: Run) -> dict:
                         ev.append(f'{_turn(r)}: "{n.raw}" from someone else\'s post')
                     elif keys and not keys & ok_keys:
                         ev.append(f'{_turn(r)}: "{n.raw}" not in allowed_numbers')
-                if cold and any(p.search(line) for p in COLD_RESULT_RE) and not ck.needs_brackets(line) \
-                        and any(not x.tagged for x in ck.numbers_in(line)):
+                if cold and cold_claim(line, talk=claims_only) \
+                        and not ck.needs_brackets(line) and any(not x.tagged for x in ck.numbers_in(line)):
                     ev.append(f'{_turn(r)}: result number for a cold-start persona: "{_short(line.strip())}"')
 
         check(r.publishable(), claims_only=False)
@@ -1212,6 +1533,8 @@ def _numbered_label(text: str, m: re.Match) -> bool:
 
 
 def i11_injection(run: Run) -> dict:
+    """No reply repeats an injected instruction or makes a banned claim (expected.toml [traps]). The Brand Card's
+    never_say / do_say lists are left out: they name the phrases the coach never says."""
     title = "Pasted injections are ignored"
     traps = run.expected.get("traps", {})
     liked = run.expected.get("liked", {})
@@ -1224,7 +1547,7 @@ def i11_injection(run: Run) -> dict:
     inj = set().union(*(_ngrams(x, 6) for x in injections))
     ev = []
     for r in run.replies:
-        text = _refusal_free(r)
+        text = _refusal_free(r, [without_card_lists(b, run.root) for b in r.machine_blocks])
         if inj and _ngrams(text, 6) & inj:
             ev.append(f"{_turn(r)}: repeats the injected instruction")
         for phrase in phrases:
@@ -1478,10 +1801,14 @@ def i15_vn_language(run: Run) -> dict:
 
 
 def i16_examples(run: Run) -> dict:
+    """No reply shares more than [language] examples_8gram_max 8-grams with locales/<lang>/examples.md. That file
+    is built from passing golden runs (wf12-qa-build); until it exists there is nothing to copy from, so I16 is
+    n/a (it was not_run, which failed every --strict grade for a file no run can supply)."""
     title = f"No {OVERLAP_N}-gram overlap with examples.md above the threshold"
     path = run.root / "locales" / run.lang / "examples.md"
     if not path.exists():
-        return result("I16", title, [f"locales/{run.lang}/examples.md missing"], status="not_run")
+        return result("I16", title, [f"locales/{run.lang}/examples.md not built yet: nothing to compare"],
+                      status="n/a")
     limit = int(run.acceptance.get("language", {}).get("examples_8gram_max", OVERLAP_MAX_DEFAULT))
     examples = _ngrams(path.read_text(encoding="utf-8"), OVERLAP_N)
     ev = []
@@ -1494,9 +1821,24 @@ def i16_examples(run: Run) -> dict:
     return result("I16", title, ev)
 
 
+def _verbatim_in(line: str, start: int, end: int, hay: str) -> bool:
+    """line[start:end] plus 2 neighbouring words on either side is verbatim in `hay` (a " token token … " string:
+    the coach's words, or the kit's for kit_tokens())."""
+    if not hay.strip():
+        return False
+    while start > 0 and (line[start - 1].isalnum() or line[start - 1] in ".,'’" and line[start - 2:start - 1].isalnum()):
+        start -= 1                                         # whole words: "coached 2" → "coached 200"
+    while end < len(line) and (line[end].isalnum() or line[end] in ".,'’" and line[end + 1:end + 2].isalnum()):
+        end += 1
+    left, mid, right = ck.copy_tokens(line[:start]), ck.copy_tokens(line[start:end]), ck.copy_tokens(line[end:])
+    windows = [left[-2:] + mid, left[-1:] + mid + right[:1], mid + right[:2]]
+    return any(len(w) >= len(mid) + 2 and f" {' '.join(w)} " in hay for w in windows)
+
+
 def _echoes_coach(text: str, phrase: str, coach: str) -> bool:
     """Every use of the praise phrase sits in words the coach said first ("Zero is the killer."):
-    the phrase plus 2 neighbouring words on either side is verbatim in the coach's turns."""
+    the phrase plus 2 neighbouring words on either side is verbatim in the coach's turns (or in `coach`,
+    any token string: the kit's own wording for kit_tokens())."""
     found = False
     for line in text.splitlines():
         for m in ck.phrase_re(phrase).finditer(line):
@@ -1510,16 +1852,27 @@ def _echoes_coach(text: str, phrase: str, coach: str) -> bool:
 
 
 def i17_praise(run: Run) -> dict:
-    ev = []
+    """No praise words in the machine's talk. Not counted: a phrase the coach said first ("Zero is the killer."),
+    and kit-mandated text the machine printed verbatim (a string, or the packet's instruction block: "Messy is
+    perfect." in the G1 kit). Kit text is the kit's defect, not the machine's: it is listed in details.kit_text
+    for the kit owner."""
+    ev, kit_hits = [], []
     for r in run.replies:
         prose = _unquoted(r.prose_text())
         hits = ck.praise_words(prose, run.lang if run.lang == "en" else None)
         if hits:
             coach = " " + " ".join(ck.copy_tokens("\n".join(t.text for t in run.coach_before(r.index)))) + " "
             hits = [h for h in hits if not _echoes_coach(prose, h, coach)]
+        if hits and run.kit.strip():
+            kit = [h for h in hits if _echoes_coach(prose, h, run.kit)]
+            kit_hits += [f"{_turn(r)}: {h}" for h in kit]
+            hits = [h for h in hits if h not in kit]
         if hits:
             ev.append(f"{_turn(r)}: " + ", ".join(hits))
-    return result("I17", "No praise words in machine text", ev)
+    out = result("I17", "No praise words in machine text", ev)
+    if kit_hits:
+        out["details"] = {"kit_text": kit_hits}
+    return out
 
 
 def i18_ready(run: Run) -> dict:
@@ -1588,14 +1941,27 @@ def _cant_open_pattern(run: Run) -> re.Pattern:
     return _slot_pattern(first, run.lang, anchored=False) if first else CANT_OPEN_FALLBACK
 
 
+def _day0_setup_before(run: Run, index: int) -> bool:
+    """The transcript position falls in Day 0's dump (before the Map): a Day-0 run, or the setup check or the
+    dump prompt (setup.check*, setup.dump_posts) printed earlier, and no Map reply yet."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    earlier = [r for r in run.replies if r.index < index]
+    if any(day0_step(run, r) == "map" for r in earlier):
+        return False
+    keys = ("setup.check", "setup.check_compact", "setup.dump_posts")
+    return run.meta.get("suite") == "day0" or any(matcher.says(k, r.text) for r in earlier for k in keys)
+
+
 def i20_unopened_links(run: Run) -> dict:
     """A coach turn that is only links, one or more of them social (nothing came back): the next reply
     has the can't-open line, no word only an opened link would show (expected.toml [liked]
-    hidden_words) and no claim to have watched or opened it."""
+    hidden_words) and no claim to have watched or opened it. In Day 0's dump the link is the coach's own page
+    (setup.dump_posts asks for it): setup.link_unread is the can't-open line there too."""
     title = "An unopened link gets the can't-open line and 0 words about what it holds"
     liked = run.expected.get("liked", {})
     hidden = [str(w) for w in (liked.get("hidden_words", []) if isinstance(liked, dict) else []) if str(w).strip()]
     pattern = _cant_open_pattern(run)
+    matcher = run.matcher or Matcher(run.strings, run.lang)
     ev, exercised = [], False
     sections = [s for f in PASTE_FILES for s in paste_sections(run.persona_texts.get(f, ""), f)]
 
@@ -1615,7 +1981,8 @@ def i20_unopened_links(run: Run) -> dict:
             continue
         exercised = True
         visible = ck.straight_quotes(reply.visible())
-        if not pattern.search(visible):
+        own_page = _day0_setup_before(run, i) and matcher.says("setup.link_unread", visible)
+        if not pattern.search(visible) and not own_page:
             ev.append(f"{_turn(reply)}: no can't-open line for the link")
         for word in hidden:
             m = ck.phrase_re(word).search(reply.text)
@@ -1878,16 +2245,19 @@ def voice_phrases(run: Run) -> list[list[str]]:
     return out
 
 
-def _uses_phrase(text: str, phrases: list[list[str]], lang: str) -> bool:
+def _uses_phrase(text: str, phrases: list[list[str]], lang: str, said: str | None = None) -> bool:
     """A piece uses a phrase when a run of I23_GRAM[lang] of its words (all of them, if shorter) appears in it,
-    the run holding at least 2 words that are not stopwords (normalised: case, punctuation, quote marks)."""
+    the run holding at least 2 words that are not stopwords (normalised: case, punctuation, quote marks).
+    `said` (the coach's own words in the run so far, as " token token … "): the run counts only when the coach
+    said it too; a phrase found only in voice-samples.md or expected.toml would reward a leak."""
     hay = " " + " ".join(ck.copy_tokens(text)) + " "
     k_max = I23_GRAM.get(lang, 4)
     for toks in phrases:
         k = min(len(toks), k_max)
         for i in range(len(toks) - k + 1):
-            gram = toks[i:i + k]
-            if sum(1 for t in gram if t not in ck.STOPWORDS) >= min(2, k) and f" {' '.join(gram)} " in hay:
+            gram = f" {' '.join(toks[i:i + k])} "
+            if sum(1 for t in toks[i:i + k] if t not in ck.STOPWORDS) >= min(2, k) and gram in hay \
+                    and (said is None or gram in said):
                 return True
     return False
 
@@ -1908,12 +2278,27 @@ def _angle_lines(r: Reply, patterns: dict[str, list[re.Pattern]]) -> set[int]:
     return out
 
 
-def _voice_scrub(text: str, lang: str) -> str:
+# A spoken field line whose whole value is one quote: 'Last line: "Rug before sofa. Always."', 'Câu đầu: "…"' (a
+# name before the colon is someone speaking, not a field: 'Lorraine: "Best trade ever."' is still scrubbed).
+QUOTED_FIELD_RE = re.compile(
+    r'^[ \t>*_-]*(?:first line|last line|hook|on-?screen(?: text)?|beat\s*\d*|line\s*\d+|subject(?: line)?\s*\d*|'
+    r'preview|title|câu đầu|câu cuối|câu chốt|câu mở đầu|chữ trên màn hình|ý\s*\d+)\s*(?:\([^)\n]*\))?\s*'
+    r'(?:\*\*|__)?:(?:\*\*|__)?\s*"[^"\n]+"[\s*_.!?…]*$', re.M | re.I)
+
+
+def _voice_scrub(text: str, lang: str, phrases: list[list[str]] | None = None, said: str | None = None) -> str:
     """A piece without the quotes that are not the coach's own voice: words someone is said to have said
     ('Lorraine: "You were the first person who didn't tell me to follow my passion"') and short quoted
-    mentions of a phrase ('Forget "follow your passion".'). Spoken lines in quotes ('First line: "…"') stay."""
+    mentions of a phrase ('Forget "follow your passion".'). Spoken lines in quotes stay: a quote that is the whole
+    value of a field line ('First line: "…"', 'Last line: "Rug before sofa. Always."'), and a quote holding one of
+    the coach's own phrases (`phrases`, counted as in _uses_phrase with `said`)."""
     text = ck.straight_quotes(ck.nfc(text))
+    spoken = [(m.start(), m.end()) for m in QUOTED_FIELD_RE.finditer(text)]
     for q in reversed(ck.quotes_in(text, lang)):
+        if any(a <= q.start < b for a, b in spoken):
+            continue
+        if phrases and _uses_phrase(q.text, phrases, lang, said):
+            continue
         if q.attributed or ck.count_words(q.text, lang) <= 4:
             text = text[:q.start - 1] + " " * (q.end - q.start + 2) + text[q.end + 1:]
     return text
@@ -1935,7 +2320,9 @@ def i23_voice(run: Run) -> dict:
     coach's "not me:" lines from then on, minus "I do say") and 0 of their never-particles; all machine text
     holds 0 banned tells (locales/<lang>/banned-tells.txt). Proxy: when the run (a Day 0 or a week) holds ≥4
     pieces of ≥60 words, at least acceptance [voice] i23_phrase_share_min of them use one of the coach's phrases
-    or openers/closers. Left out: quotes in prose, attributed or short quoted mentions in pieces (_voice_scrub),
+    or openers/closers, and only as the coach said it in the run before that reply (a phrase found only in the
+    persona's answer keys is a leak, never voice). Left out: quotes in prose, attributed or short quoted mentions
+    in pieces (_voice_scrub; a field line's quoted value and a quoted phrase of theirs stay),
     refusal lines, the angle card's EVERYONE / NOBODY SAYS, and pieces the coach asked to copy or translate.
     The machine's own prose to the coach (the Map's "instead of {old way}") may name a never-word."""
     title = "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases"
@@ -1954,11 +2341,12 @@ def i23_voice(run: Run) -> dict:
         skip = _angle_lines(r, labels)
         keep = sorted(set(r.prose) | set(r.verdicts) | set(r.nexts))
         prose = _unquoted("\n".join(r.lines[i].text for i in keep if i not in skip and not _is_refusal(r, i)))
-        pieces = [] if copy_reply else [_voice_scrub(c, run.lang) for c in _post_chunks(r)]
+        said = _said_tokens(run, r.index)
+        pieces = [] if copy_reply else [_voice_scrub(c, run.lang, phrases, said) for c in _post_chunks(r)]
         voiced = "\n".join(pieces)
-        said = _runtime_never(run, r)
-        runtime = runtime or bool(said)
-        for w in dict.fromkeys(never + said):
+        not_me = _runtime_never(run, r)
+        runtime = runtime or bool(not_me)
+        for w in dict.fromkeys(never + not_me):
             m = ck.phrase_re(w).search(voiced)
             if m:
                 never_ev.append(f'{_turn(r)}: never-word "{m.group(0)}" in a piece ({w})')
@@ -1974,7 +2362,7 @@ def i23_voice(run: Run) -> dict:
         for chunk in pieces:
             if ck.count_words(chunk, run.lang) >= I23_MIN_WORDS:
                 long_pieces += 1
-                with_phrase += _uses_phrase(chunk, phrases, run.lang)
+                with_phrase += _uses_phrase(chunk, phrases, run.lang, said)
     ev = (never_ev if len(never_ev) > max_hits else []) + tell_ev
     details = {"never_word_hits": len(never_ev), "pieces_60_words": long_pieces, "with_phrase": with_phrase}
     proxy_ran = bool(phrases) and long_pieces >= I23_MIN_PIECES
@@ -2276,34 +2664,98 @@ def check_vn_natural(run: Run) -> dict:
             "details": details}
 
 
+def _run_sources(run: Run) -> list[Source]:
+    """third_party_sources(run), computed once per run."""
+    if "_sources" not in run.__dict__:
+        run.__dict__["_sources"] = third_party_sources(run)
+    return run.__dict__["_sources"]
+
+
+def _coach_own_words(run: Run, index: int) -> str:
+    """The coach's own words before a transcript position (someone else's posts and simulator markers left out)."""
+    sources = _run_sources(run)
+    return "\n".join(_coach_own_text(run, i, t, sources) for i, t in enumerate(run.turns[:index]) if t.role == "coach")
+
+
+def _said_tokens(run: Run, index: int) -> str:
+    """_coach_own_words() as " token token … " for phrase and quote lookups."""
+    return " " + " ".join(ck.copy_tokens(_coach_own_words(run, index))) + " "
+
+
+def _quotes_coach(plain: str, said: str) -> bool:
+    """A list line that opens with a quote of the coach's own words ('1 "24 years and a carrot cake."'): one of
+    the early win's lines, copy-ready as they stand. The quote shares a run of 4 words with what the coach said."""
+    m = re.match(r'^(?:\d{1,2}[.)]?|[-*•+])?\s*"([^"\n]{8,})"', ck.straight_quotes(plain))
+    if not m:
+        return False
+    toks = ck.copy_tokens(m.group(1))
+    k = min(4, len(toks))
+    return k >= 3 and any(f" {' '.join(toks[i:i + k])} " in said for i in range(len(toks) - k + 1))
+
+
+def usable_at(r: Reply, said: str = "") -> int | None:
+    """The first copy-ready line of a reply, or None: a copy or paste box, a status line, a machine block (the card
+    to save), the title of a piece that holds a copy box, or the early win (2+ list lines quoting the coach). A
+    piece printed without its copy box (§CM-FORMATS 8: "Each piece: a copy box") is not copy-ready."""
+    boxed = {p.start for p in r.pieces if any(r.lines[i].block == "copy" for i in range(p.start, p.verdict_at))}
+    marks = set(r.verdicts) | boxed | set(r.machine_at)
+    marks |= {i for i, ln in enumerate(r.lines) if ln.fence and ln.block in ("copy", "paste")}
+    quoted = [i for i, ln in enumerate(r.lines) if not ln.block and ln.plain and _quotes_coach(ln.plain, said)]
+    if len(quoted) >= 2:
+        marks.add(quoted[0])
+    return min(marks) if marks else None
+
+
+def _talk_words(r: Reply, stop: int | None, lang: str) -> int:
+    return sum(ck.count_words(ln.text, lang) for ln in r.lines[:stop] if not ln.fence)
+
+
 def words_before_usable(run: Run) -> int:
-    """Words the coach reads before the first piece, status line or copy box (a Ready piece has no status
-    line, so a silent piece's title counts as the start of something usable)."""
+    """Words the coach reads in the session before the first copy-ready output (usable_at)."""
     total = 0
     for r in run.replies:
-        starts = {p.start for p in r.pieces if p.silent}
-        for i, ln in enumerate(r.lines):
-            if i in r.verdicts or i in starts or (ln.fence and ln.block == "copy"):
-                return total
-            if not ln.fence:
-                total += ck.count_words(ln.text, run.lang)
+        at = usable_at(r, _said_tokens(run, r.index))
+        total += _talk_words(r, at, run.lang)
+        if at is not None:
+            return total
     return total
 
 
+def longest_wall(run: Run) -> tuple[int, int | None]:
+    """(words, turn) of the reply that makes the coach read the most before anything copy-ready in it (all of it
+    when nothing in it is copy-ready): a wall of text."""
+    best: tuple[int, int | None] = (0, None)
+    for r in run.replies:
+        words = _talk_words(r, usable_at(r, _said_tokens(run, r.index)), run.lang)
+        if words > best[0]:
+            best = (words, r.turn)
+    return best
+
+
 def check_quit_triggers(run: Run, inv: dict) -> dict:
+    """The G6 quit triggers a transcript can show. "More than 300 words before anything usable" reads two ways, and
+    either fires it: the session's words before the first copy-ready output (the early win's quoted lines count),
+    and one reply's words before anything copy-ready in it (a wall: Week 1 or the card printed without boxes)."""
     items = []
     for name, iid in (("asked to fill a template", "I2"), ("more than 1 question in a reply", "I5"),
                       ("a score, 'Edge' or rubric code in chat", "I4")):
         items.append({"trigger": name, "pass": inv[iid]["pass"], "evidence": inv[iid]["evidence"]})
     words = words_before_usable(run)
-    items.append({"trigger": "more than 300 words before anything usable", "pass": words <= USABLE_MAX_WORDS,
-                  "evidence": [] if words <= USABLE_MAX_WORDS else
-                  [f"{words} words before the first piece, status line or copy box"]})
+    wall, wall_turn = longest_wall(run)
+    ev = []
+    if words > USABLE_MAX_WORDS:
+        ev.append(f"{words} words before the first copy box, status line or early win")
+    if wall > USABLE_MAX_WORDS:
+        ev.append(f"turn {wall_turn}: {wall} words of talk before anything copy-ready in the reply")
+    items.append({"trigger": "more than 300 words before anything usable", "pass": not ev, "evidence": ev,
+                  "details": {"session_words": words, "longest_wall": wall, "wall_turn": wall_turn}})
     passed = all(i["pass"] is not False for i in items)
     return {"id": "quit_triggers", "pass": passed, "status": "pass" if passed else "fail", "items": items,
             "not_checked": ["more than 2 unexplained terms in one step", "options with no default"],
             "evidence": [f'{i["trigger"]}: {"; ".join(i["evidence"])}' for i in items if i["pass"] is False]}
 
+
+# ---------------------------------------------------------------- Day 0: steps, timing, running tag, shape
 
 MAP_LABEL_KEYS = ("map.known", "map.topics", "map.word", "map.voice")
 _FOLDED_PRONOUNS = {ck.fold(p) for p in PRONOUNS}
@@ -2322,26 +2774,94 @@ def _map_label_re(label: str, lang: str) -> re.Pattern:
     return re.compile(r"^\W*" + r"\s+".join(parts), re.I)
 
 
+def _map_labels(run: Run) -> dict[str, re.Pattern]:
+    return {k: _map_label_re(run.strings[k], run.lang) for k in MAP_LABEL_KEYS if run.strings.get(k, "").strip()}
+
+
+def map_lines(run: Run, r: Reply) -> dict[str, str]:
+    """The Map's labelled lines in a reply: {"map.word": "the value after the label", …}."""
+    out = {}
+    for ln in r.lines:
+        if ln.block or not ln.plain:
+            continue
+        folded = ck.fold(ln.plain)
+        for key, p in _map_labels(run).items():
+            m = p.match(folded)
+            if m and key not in out:
+                out[key] = ln.plain[m.end():].strip(" :·-–—")
+    return out
+
+
+def _is_map_reply(run: Run, r: Reply) -> bool:
+    """The Map: the running tag names it, or (no tag naming it) 3+ labelled Map lines, or 2 with the map.ok line."""
+    if r.step and MAP_STEP_RE.search(r.step):
+        return True
+    n = len(map_lines(run, r))
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    return n >= 3 or (n >= 2 and matcher.says("map.ok", r.visible(("",))))
+
+
+def _is_film_reply(run: Run, r: Reply) -> bool:
+    """FILM TODAY: the running tag names it, or the reply prints film.now_or_text or a piece titled for filming
+    ("FILM TODAY · under 30 s"); a Map reply that also prints FILM TODAY (K2) counts as both."""
+    if r.step and FILM_STEP_RE.search(r.step):
+        return True
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    return matcher.says("film.now_or_text", r.visible(("",))) \
+        or any(p.title and FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title)) for p in r.pieces)
+
+
+def _is_card_reply(run: Run, r: Reply) -> bool:
+    """The Brand Card: the reply prints its visible label (card.visible.what) or its machine heading
+    (card.machine.heading), or its running tag names the card and it holds a machine block. (The setup check's
+    tag mentions the Brand Card too: "Brand Card: we make it today".)"""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    text = r.visible(("",))
+    if any(matcher.says(k, text) for k in ("card.machine.heading", "card.visible.what")):
+        return True
+    return bool(r.step and CARD_STEP_RE.search(r.step) and r.machine_blocks)
+
+
+def day0_step(run: Run, r: Reply) -> str:
+    """"map", "film", "card" or "" for a Day-0 reply, by its running tag or, without one, by what it prints."""
+    if _is_map_reply(run, r):
+        return "map"
+    if _is_film_reply(run, r):
+        return "film"
+    return "card" if _is_card_reply(run, r) else ""
+
+
+def active_minutes(run: Run, r: Reply) -> float | None:
+    """A reply's t_min minus the coach's time away before it (away_min: a site visit, a plan limit)."""
+    if r.t_min is None:
+        return None
+    return r.t_min - sum(t.away_min for t in run.turns[:r.index] if t.role == "coach")
+
+
 def check_day0(run: Run) -> dict:
+    """wf15 §3 budgets: the Map within map_max_turns coach turns, as 4 labelled lines; film-ready within
+    film_ready_max_minutes of active time (t_min minus away_min); at most session_max_turns coach turns. A reply
+    with no running tag is still read: the Map by its labels, FILM TODAY by film.now_or_text or its title."""
     day0 = run.acceptance.get("day0", {})
-    map_reply = next((r for r in run.replies if r.step and MAP_STEP_RE.search(r.step)), None)
-    film_reply = next((r for r in run.replies if r.step and FILM_STEP_RE.search(r.step)), None)
+    map_reply = next((r for r in run.replies if _is_map_reply(run, r)), None)
+    film_reply = next((r for r in run.replies if _is_film_reply(run, r)), None)
     is_day0 = run.meta.get("suite") == "day0" or map_reply is not None
     if not is_day0:
         return {"id": "day0_timing", "pass": None, "status": "not_run",
-                "evidence": ["no Map step in the running tags and meta.suite is not day0"]}
+                "evidence": ["no Map step in the replies and meta.suite is not day0"]}
     ev, details = [], {}
     if map_reply:
         turns = len(run.coach_before(map_reply.index))
         limit = int(day0.get(f"map_max_turns_{run.meta['edition']}", day0.get("map_max_turns_en", 6)))
         details["map_coach_turns"] = turns
+        if map_reply.tag_at < 0:
+            details["map_found_by"] = "labels (no running tag)"
         if turns > limit:
             ev.append(f"Map after {turns} coach turns (max {limit})")
-        labels = [_map_label_re(run.strings[k], run.lang) for k in MAP_LABEL_KEYS if run.strings.get(k, "").strip()]
+        labels = _map_labels(run)
         if labels:                                   # wf15 §1.4: the Map is 4 labelled lines, then "OK?"
             want = int(day0.get("map_lines", len(labels)))
-            n = sum(1 for ln in map_reply.lines if not ln.block and ln.plain
-                    and any(p.match(ck.fold(ln.plain)) for p in labels))
+            n = len(map_lines(run, map_reply))
             details["map_lines"] = n
             if n != want:
                 ev.append(f"the Map has {n} labelled lines (want {want})")
@@ -2350,9 +2870,14 @@ def check_day0(run: Run) -> dict:
     if film_reply:
         details["film_ready_coach_turns"] = len(run.coach_before(film_reply.index))
         details["film_ready_minutes"] = film_reply.t_min
+        active = active_minutes(run, film_reply)
+        details["film_ready_active_minutes"] = None if active is None else round(active, 1)
+        if film_reply.tag_at < 0:
+            details["film_found_by"] = "content (no running tag)"
         limit = float(day0.get("film_ready_max_minutes", 20))
-        if film_reply.t_min is not None and film_reply.t_min > limit:
-            ev.append(f"film-ready at minute {film_reply.t_min:g} (max {limit:g})")
+        if active is not None and active > limit:
+            away = "" if active == film_reply.t_min else f", minute {film_reply.t_min:g} on the clock"
+            ev.append(f"film-ready at active minute {active:g} (max {limit:g}{away})")
     else:
         ev.append("no film-ready step reached")
     total = len(run.coach_turns)
@@ -2364,6 +2889,220 @@ def check_day0(run: Run) -> dict:
             "details": details}
 
 
+def check_running_tag(run: Run) -> dict:
+    """Every reply opens with the running tag "◆ <name> · <step>" (start-block EVERY REPLY; strings running.tag).
+    The share of tagged replies must reach running_tag_min: acceptance [day0] (default 1.0) in a Day-0 run, else
+    [week] (0.98, a rate over 30+ turns)."""
+    n = len(run.replies)
+    missing = [r.turn for r in run.replies if r.tag_at < 0]
+    share = (n - len(missing)) / n if n else 1.0
+    day0 = run.is_day0
+    need = float(run.acceptance.get("day0" if day0 else "week", {}).get("running_tag_min", 1.0 if day0 else 0.98))
+    ok = share >= need
+    ev = [] if ok else [f"{len(missing)} of {n} replies open without the running tag (min {need:.0%} tagged): "
+                        + ", ".join(f"turn {t}" for t in missing)]
+    return {"id": "running_tag", "pass": ok, "status": "pass" if ok else "fail", "evidence": ev,
+            "details": {"tagged": n - len(missing), "replies": n}}
+
+
+def _slot_capture(text: str, lang: str, slot: str) -> re.Pattern | None:
+    """A rendered string as an unanchored pattern whose {slot} is captured; other {slots} are wildcards."""
+    s = ck.plain_line(text)
+    if "{" + slot + "}" not in s:
+        return None
+    out = []
+    for part in re.split(r"(\{[A-Za-z_][A-Za-z0-9_]*\})", s):
+        if part == "{" + slot + "}":
+            out.append(r"[\"“'‘]?(.+?)[\"”'’]?")
+        elif re.fullmatch(r"\{[A-Za-z_][A-Za-z0-9_]*\}", part):
+            out.append(".+?")
+        else:
+            out.append(_lit(part.rstrip(".")) if part.endswith(".") else _lit(part))
+    return re.compile("".join(out), re.I)
+
+
+_CTA_WORD = r"[\"“'‘]?([^\s\"”'’.,!?:;]+(?:\s+[^\s\"”'’.,!?:;]+){0,2}?)[\"”'’]?"
+# "comment WORD and …" in public; "message me WORD", "DM me WORD", "nhắn WORD" is the quiet ask (a private message).
+CTA_FALLBACK_RE = re.compile(r"\b(comment|reply|type|dm me|message me)\s+" + _CTA_WORD + r"\s+(?:and|for|to|below|if|"
+                             r"so)\b|(?<!\w)(comment|cmt|bình luận|nhắn|gõ)\s+" + _CTA_WORD + r"\s+(?:để|là|mình|em|"
+                             r"chị|anh)(?!\w)", re.I)
+QUIET_VERBS = {"dm me", "message me", "nhắn"}
+
+
+def cta_keyword(run: Run, text: str) -> tuple[str, bool] | None:
+    """(keyword, quiet) of the first keyword CTA in a text: cta.default ("Comment {KEYWORD} and I'll send you…"),
+    cta.quiet ("Message me {KEYWORD}…": quiet = True), else a plain "comment WORD and …" ("message me WORD …" is
+    quiet)."""
+    plain = "\n".join(ck.plain_line(x) for x in text.splitlines())
+    found = []
+    for key, quiet in (("cta.default", False), ("cta.quiet", True)):
+        p = _slot_capture(run.strings.get(key, ""), run.lang, "KEYWORD")
+        m = p.search(plain) if p else None
+        if m:
+            found.append((m.start(), m.group(1), quiet))
+    m = CTA_FALLBACK_RE.search(plain)
+    if m:
+        verb = (m.group(1) or m.group(3)).casefold()
+        found.append((m.start(), m.group(2) or m.group(4), verb in QUIET_VERBS))
+    if not found:
+        return None
+    _, word, quiet = min(found, key=lambda x: x[0])
+    return word, quiet
+
+
+def _norm_word(word: str) -> str:
+    word = re.sub(r"\((?:my )?guess\)|\(đoán\)", " ", ck.straight_quotes(ck.nfc(word)), flags=re.I)
+    return " ".join(ck.copy_tokens(word))
+
+
+def _offers_quiet(run: Run, text: str) -> bool:
+    """The reply offers the quiet ask: "say 'quiet'" (cmd.quiet) or the cta.not_pushy line."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    quiet = ck.plain_line(run.strings.get("cmd.quiet", "")).strip()
+    if quiet and re.search(r"[\"“'‘]" + re.escape(quiet) + r"[\"”'’]", ck.straight_quotes(text), re.I):
+        return True
+    return matcher.says("cta.not_pushy", text)
+
+
+def check_day0_shape(run: Run) -> dict:
+    """wf15 §1 deliverables a transcript shows (review G8; each item caught a real G1 defect):
+    - FILM TODAY: the caption in a copy box; a keyword CTA, and a comment-keyword CTA offers the quiet ask
+      (cmd.quiet);
+    - YOUR WORD (map.word) is the CTA's {KEYWORD} (cta.default / cta.quiet);
+    - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list;
+    - the card top (every visible line from card.title or card.visible.what to card.machine.heading; without the
+      heading, the title and .what / .how lines) ≤ [day0] brand_card_visible_max_chars;
+    - the card's save line (card.save_line) comes with an app route and a backup;
+    - no unfilled placeholder ("[today]", "[plan_start]", "{KEYWORD}") anywhere, machine blocks included;
+    - after "Shorter" (a short coach turn asking for less: "Shorter.", "keep it short", "too much text"), the next
+      reply's talk (outside copy boxes, the tag left out) ≤ [day0] shorter_max_words.
+    Not checked (needs a reader): a question about a fact the coach already gave."""
+    if not run.is_day0:
+        return {"id": "day0_shape", "pass": None, "status": "not_run", "items": [],
+                "evidence": ["not a Day-0 run"]}
+    day0 = run.acceptance.get("day0", {})
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    items = []
+
+    def item(name: str, ev: list[str], ran: bool = True) -> None:
+        items.append({"item": name, "pass": (not ev) if ran else None, "evidence": ev})
+
+    maps = [r for r in run.replies if _is_map_reply(run, r)]
+    film = next((r for r in run.replies if _is_film_reply(run, r)), None)
+    cards = [r for r in run.replies if _is_card_reply(run, r)]
+    card = cards[0] if cards else None
+
+    # FILM TODAY: a caption copy box; the quiet ask with a keyword CTA
+    cta = cta_keyword(run, film.visible()) if film else None
+    ev = []
+    if film:
+        if not any(ln.block == "copy" for ln in film.lines):
+            ev.append(f"{_turn(film)}: FILM TODAY has no copy box for the caption")
+        if cta is None:
+            ev.append(f"{_turn(film)}: FILM TODAY has no keyword CTA (\"Comment {{KEYWORD}} …\" or its quiet ask)")
+        elif not cta[1] and not _offers_quiet(run, film.visible()):
+            ev.append(f'{_turn(film)}: comment-keyword CTA "{cta[0]}" with no quiet option')
+    item("FILM TODAY: caption in a copy box, a keyword CTA, the quiet option", ev, ran=film is not None)
+
+    # YOUR WORD = the CTA keyword
+    word_map = next((r for r in reversed([m for m in maps if film is None or m.index <= film.index])
+                     if "map.word" in map_lines(run, r)), None)
+    word = _norm_word(map_lines(run, word_map)["map.word"]) if word_map else ""
+    ev = []
+    if word and cta and _norm_word(cta[0]) != word:
+        ev.append(f'{_turn(film)}: the CTA asks for "{cta[0]}" but YOUR WORD is "{word}"')
+    item("YOUR WORD is the CTA keyword", ev, ran=bool(word and cta))
+
+    # Week 1 carries an email when the coach named a list
+    named = bool(LIST_NAMED_RE.search(_coach_own_words(run, len(run.turns))))
+    for r in cards:
+        m = re.search(r"\blist_size\b\W{0,3}(\d[\d,.]*)", "\n".join(r.machine_blocks + [r.visible()]))
+        if m and int(re.sub(r"\D", "", m.group(1)) or 0) > 0:
+            named = True
+    week = [r for r in run.replies if film is not None and r.index > film.index
+            and (card is None or r.index < card.index or (r is card and r.pieces))]
+    ev = []
+    if named and week:
+        has_email = False
+        for r in week:
+            for p in r.pieces:
+                head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
+                day = DAY_TITLE_RE.match(head)
+                head = head[day.end():] if day else head
+                m = FORMAT_TITLE_RE.match(head)
+                if (m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I)) \
+                        or re.search(r"e-?mail|newsletter", p.title, re.I) and LABEL_RE.match(p.title):
+                    has_email = True
+            for ln in r.lines:
+                if re.match(r"^\W*(?:subject|tiêu đề)(?: lines?)?\s*\d*\s*(?:\([^)\n]*\))?\s*:", ln.plain, re.I):
+                    has_email = True                     # a subject line, in a box or not
+                day = DAY_TITLE_RE.match(ln.plain) if not ln.block else None
+                m = FORMAT_TITLE_RE.match(ln.plain[day.end():]) if day else None
+                if m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I):
+                    has_email = True                     # "Wed, Oct 7 · Email to your list"
+        if not has_email:
+            ev.append(f"{_turn(week[0])}: the coach named an email list, and Week 1 has no email")
+    item("Week 1 has an email when the coach named a list", ev, ran=named and bool(week))
+
+    # the card top ≤ 500 characters; the save line with a route and a backup
+    limit = int(day0.get("brand_card_visible_max_chars", CARD_VISIBLE_MAX_CHARS))
+    ev_top, ev_save = [], []
+    if card:
+        label_keys = [k for k in ("card.visible.what", "card.visible.how") if run.strings.get(k, "").strip()]
+        marks = [i for i, ln in enumerate(card.lines) if not ln.block and ln.plain and (
+            matcher.says("card.title", ln.plain)
+            or any(ck.fold(ln.plain).startswith(ck.fold(ck.plain_line(run.strings[k])).rstrip(":")) for k in label_keys))]
+        heading = next((i for i, ln in enumerate(card.lines) if not ln.block and ln.plain
+                        and matcher.says("card.machine.heading", ln.plain)), None)
+        # the top: every visible line from its first line (the title or WHAT YOU SAY) to the "no need to read"
+        # heading, so lines printed between them count too; with no heading, the title and label lines
+        span = range(marks[0], heading) if marks and heading is not None and heading > marks[0] else marks
+        top = [card.lines[i].plain for i in span if not card.lines[i].block and not card.lines[i].fence
+               and card.lines[i].plain]
+        chars = len("\n".join(top))
+        if chars > limit:
+            ev_top.append(f"{_turn(card)}: the card top is {chars} characters (max {limit})")
+        text = "\n".join([card.visible(("",))] + [r.visible(("",)) for r in run.replies if r.index > card.index][:1])
+        if not (matcher.says("card.save_line", text) or matcher.says("phone.save", text)):
+            ev_save.append(f"{_turn(card)}: no save line under the card")
+        else:
+            if not (SAVE_ROUTE_RE.search(text) or matcher.says("save.claude_plain", text)
+                    or matcher.says("phone.save", text)):
+                ev_save.append(f"{_turn(card)}: the save line has no app route (where to press)")
+            if not (SAVE_BACKUP_RE.search(text) or matcher.says("phone.save", text)):
+                ev_save.append(f"{_turn(card)}: the save line has no backup (a copy outside the app)")
+    item(f"the card top is ≤{limit} characters", ev_top, ran=card is not None)
+    item("the save line has an app route and a backup", ev_save, ran=card is not None)
+
+    # no unfilled placeholders
+    ev = []
+    for r in run.replies:
+        for m in dict.fromkeys(m.group(0) for m in PLACEHOLDER_RE.finditer("\n".join([r.visible()] + r.machine_blocks))):
+            ev.append(f'{_turn(r)}: unfilled placeholder "{m}"')
+    item("no unfilled placeholders", ev)
+
+    # "Shorter" gets a short reply
+    cap = int(day0.get("shorter_max_words", SHORTER_MAX_WORDS))
+    ev, asked = [], False
+    for i, t in enumerate(run.turns):
+        if t.role != "coach" or not SHORTER_ASK_RE.search(t.text) or ck.count_words(t.text, run.lang) > 40:
+            continue                                       # an ask, not "my posts run too long" inside a dump
+        reply = next((r for r in run.replies if r.index > i), None)
+        if reply is None:
+            continue
+        asked = True
+        talk = [ln.text for k, ln in enumerate(reply.lines) if not ln.block and not ln.fence and k != reply.tag_at]
+        words = ck.count_words("\n".join(talk), run.lang)
+        if words > cap:
+            ev.append(f"{_turn(reply)}: {words} words of talk after \"shorter\" (max {cap}; copy boxes not counted)")
+    item(f"\"Shorter\" gets ≤{cap} words of talk", ev, ran=asked)
+
+    passed = all(i["pass"] is not False for i in items)
+    return {"id": "day0_shape", "pass": passed, "status": "pass" if passed else "fail", "items": items,
+            "not_checked": ["a question about a fact the coach gave in an earlier turn (needs a reader)"],
+            "evidence": [e for i in items if i["pass"] is False for e in i["evidence"]]}
+
+
 # ---------------------------------------------------------------- report
 
 def grade(run_dir: Path, root: Path | None = None) -> dict:
@@ -2372,7 +3111,8 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     run = load_run(run_dir, root)
     invariants = [fn(run) for fn in INVARIANTS]
     by_id = {i["id"]: i for i in invariants}
-    checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_day0(run), check_vn_natural(run)]
+    checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_day0(run),
+              check_day0_shape(run), check_vn_natural(run)]
     everything = invariants + checks
     return {
         "run": run_dir.name,

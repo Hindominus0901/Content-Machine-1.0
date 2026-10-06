@@ -39,7 +39,7 @@ not_regex = [
 ]
 invariants = ["I1", "I2", "I5", "I10", "I15"]
 max_questions = 1
-notes = "UX §2 minute 12-17: 'Quick Listen runs silently.' acceptance.toml day0.detours_between_start_and_stop = 0 (downloads, uploads, setup-page visits, app switches). Her quit triggers include 'tải hay đính kèm file' and 'mở máy tính'. The aside to Linh in chunk 2 never surfaces. Positive anchor: the reply is the inventory line ('Chị biết nhiều thật…', message.vn.006)."
+notes = "UX §2 minute 12-17: 'Quick Listen runs silently.' acceptance.toml day0.detours_between_start_and_day0_end = 0 (downloads, uploads, setup-page visits, app switches). Her quit triggers include 'tải hay đính kèm file' and 'mở máy tính'. The aside to Linh in chunk 2 never surfaces. Positive anchor: the reply is the inventory line ('Chị biết nhiều thật…', message.vn.006)."
 
 [[case]]
 id = "research.vn.002"

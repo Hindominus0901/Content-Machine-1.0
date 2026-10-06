@@ -36,7 +36,7 @@ income_streams = [
   "life coaching: 2 existing monthly clients at $95/hour; taking no new ones",
 ]
 behaviour = [
-  "dictates the dump in 3 chunks of 2-4 minutes, then types 'done'",
+  "long talker: dictates the dump in 3 chunks of about 5-6 minutes, then types 'done'",
   "after the dump, types short answers: 'ok', 'yep', 'fix 4'",
   "answers 'tell me about' questions with a story first, the fact second",
   "skims anything longer than one screen; wants something usable before about minute 10",

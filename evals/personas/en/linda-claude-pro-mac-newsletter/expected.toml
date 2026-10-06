@@ -6,24 +6,29 @@
 # 3 past clients used, life topics parked WITH the "who am I after corporate" bridge, Claude save with a backup, no "lock".
 
 [day0]
+# wf15 §1 shape; budgets from evals/acceptance.toml [day0] (map_max_turns_en, session_max_turns).
 must_include = [
   "Mac mic tip in the first reply ('Mac: press fn (globe) twice'); Linda dictates the dump only after it",
   "an early win after chunk 1 that quotes 3 of her lines (e.g. 'I wrote other people's words for 26 years', 'Linda, page three.', 'waiting to feel ready')",
   "a jogger after chunk 1 for something not yet covered (chunk 1 has no paying clients yet: e.g. what clients ask most, or one client before -> after)",
-  "inventory line: she knows a lot (6+ topics), about 6 months of content, nothing gets thrown away",
-  "pre-filled check with '?' on 2-3 lines at most; line 7 carries LinkedIn + the 900-person newsletter, 3 past clients who'd vouch, about an hour a week, Monday, word-for-word",
-  "the Map's 'why this one' line cites her own evidence: 3 people paid, and all 3 came for the move out of corporate (not the life coaching)",
-  "NOT NOW with the life topics bridged to 'who am I after corporate'",
-  "framing 'we'll run this for 4 weeks, then check'; never 'lock' or '90 days'",
-  "film-today piece, word-for-word, under 30 s, first and last line verbatim, with 'Not filming today? Post the caption as text.'; the Checked line names her own story (the memo or the parking lot)",
-  "quiet CTA option offered with the keyword in one plain line; after she says 'quiet' the CTA becomes 'reply' / 'send me a message' and stays that way",
-  "Brand Card save on Claude with a picture-guided route and the 'email it to yourself' backup, at the end; never a gate; Week 1 delivered even if unsaved",
+  "no missing-fact question: her dump holds her clients' words, results and the offer, so the Map follows chunk 3 + 'done'",
+  "LinkedIn + the ~900-person newsletter, Monday, about an hour a week and word-for-word are never asked: guessed from the dump, platform and talk day named once above Week 1 ('For … · talk day … (my guess; one word changes it).'), the rest in the card's machine block; she corrects a wrong guess in one word",
+  "the 4-line Map (KNOWN FOR, 3 TOPICS, YOUR WORD, YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.'; never 'lock' or '90 days'",
+  "on 'why?', why this one cites her own evidence: 3 people paid, and all 3 came for the move out of corporate (not the life coaching)",
+  "the life topics are off the Map; NOT NOW (machine block, 'why?') bridges them to 'who am I after corporate', and her pushback gets that bridge in one line",
+  "film-today piece, word-for-word, under 30 s, first and last line verbatim, built from her own story (the memo or the parking lot), nothing printed under it, ending 'Film it now, or post the caption as text.'",
+  "the CTA starts quiet ('reply' / 'send me a message') because her dump already refuses comment asks ('my old CEO reads my posts. I can't.'), and stays that way",
+  "Week 1 in the reply after FILM TODAY, unasked, before the Brand Card",
+  "Brand Card save on Claude with a picture-guided route and the 'email it to yourself' backup, at the end; never a gate",
   "Week 1 email-first: the lead piece is an email to the 900 with 'reply to me'",
   "'ask your 3 past clients one question' in plain words, for Renée, Joan and Carol",
-  "wrap-up offers calendar links for the Monday talk day and Friday numbers (Claude Pro reminder route on Day 0)",
+  "NEXT ('Film today's video. Tomorrow: …') with a one-line offer of calendar reminders for the Monday talk day and Friday numbers (Claude Pro reminder route on Day 0)",
 ]
 must_not = [
-  "any download, upload, setup-page visit or app switch between Start and the stop point",
+  "a check screen, an inventory line or 'fix N'",
+  "a question about platform, list size, talk day, delivery or hours",
+  "'why this one' or NOT NOW on the Map (they print on 'why?')",
+  "any download, upload, setup-page visit or app switch between Start and Day 0's last reply",
   "'You earn from 3 things' (she has one paid stream; life coaching and ghostwriting are unpaid)",
   "Notion, a skill zip, a connector or Autopilot offered on Day 0",
   "Buyer Mirror, Belief Bomb, Big Domino, B1-B7, M1, Pancake, ManyChat, pillar, lock, Week 0 or 'keyword asset' in coach-visible text",
@@ -31,8 +36,8 @@ must_not = [
   "more than one question in a message",
   "filming plus clip trimming on day 1",
 ]
-max_coach_turns_to_map = 8
-max_coach_turns_session = 12
+max_coach_turns_to_map = 6
+max_coach_turns_session = 10
 
 [map]
 buyer = "Women in their 50s (about 50 to 60) who spent 20-30 years at one corporate company and left it within the last year (voluntary package, early retirement, or a layoff after a merger); not broke, not rich, kids mostly grown. They find Linda when 'so what do you do now?' has no answer, usually after a summer of 'enjoying the break'."
@@ -120,8 +125,8 @@ must_not_pick = [
 
 [week1]
 platform_mix = "email-first"            # LinkedIn + newsletter, email_list 900 >= 300, so the lead piece is the email
-lead_piece = "Email to the 900 on Kitchen Table Notes with a 'reply to me' line, on big idea 1 ('you didn't lose a job, you lost your answer'), built from her memo story ('Linda, page three.') or the grocery-store parking lot, ending on one question (e.g. 'What do you say when people ask what you do now?'); the keyword phrase 'without the badge' once; quiet CTA (reply), since she said 'quiet'."
-film_today = "Word-for-word piece under 30 s (first and last line verbatim, 3 beats, on-screen text of 6 words or fewer) from the memo story or the parking lot, offered with 'Not filming today? Post the caption as text.' She posts it as a LinkedIn text post. The Checked line names her own story."
+lead_piece = "Email to the 900 on Kitchen Table Notes with a 'reply to me' line, on big idea 1 ('you didn't lose a job, you lost your answer'), built from her memo story ('Linda, page three.') or the grocery-store parking lot, ending on one question (e.g. 'What do you say when people ask what you do now?'); the keyword phrase 'without the badge' once; quiet CTA (reply), quiet from Day 0 because her dump refuses comment asks."
+film_today = "Word-for-word piece under 30 s (first and last line verbatim, 3 beats, on-screen text of 6 words or fewer) from the memo story or the parking lot, ending 'Film it now, or post the caption as text.' She posts it as a LinkedIn text post. Nothing printed under it."
 must_include = [
   "the email to the 900 is the lead piece and asks for replies ('reply to me'), not a link click or a comment",
   "2 LinkedIn text posts",
@@ -130,8 +135,8 @@ must_include = [
   "free gift that fits in one message: the Tuesday page (the 5 questions)",
   "message replies 1-2; reply 1 asks one qualifying question (e.g. 'Have you already left, or are you still deciding?')",
   "'ask your 3 past clients one question' message for Renée, Joan and Carol (not Margaret), in plain words",
-  "keyword phrase 'without the badge' (or 'badge') exactly once per piece; CTA in the quiet form (reply / send me a message) after she chose quiet",
-  "at least one Week-1 piece names a WHY line tied to a big idea",
+  "keyword phrase 'without the badge' (or 'badge') exactly once per piece; CTA in the quiet form (reply / send me a message), as on Day 0",
+  "every Week-1 piece stores a WHY tied to a big idea, printed only on 'why?' (nothing under a piece)",
   "no piece built on a NOT NOW topic (menopause/sleep, the package/money, LinkedIn headlines, ghostwriting, journaling, caregiving); life topics appear only via the 'who am I after corporate' angle",
 ]
 must_not = [
@@ -139,7 +144,7 @@ must_not = [
   "3 shorts as the Week-1 core (the short-video mix)",
   "filming plus clip trimming, CapCut or any editing app",
   "an engagement-bait ending ('Agree?', 'Thoughts?')",
-  "'comment BADGE' after she chose quiet",
+  "'comment BADGE' (her dump refused comment asks; quiet from Day 0)",
   "Margaret in any form; Joan's package amount",
   "the email treated as a side item behind the posts",
 ]

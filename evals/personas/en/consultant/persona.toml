@@ -39,7 +39,7 @@ income_streams = [
 ]
 
 behaviour = [
-  "types by habit and fast; on Day 0 uses Win+H for the 3 dump chunks only after the machine's mic tip, talking from a legal-pad list, then types short exact answers ('ok', 'fix 3', 'no')",
+  "types by habit and fast; on Day 0 uses Win+H for the 3 dump chunks only after the machine's mic tip, talking from a legal-pad list, then types short exact answers ('ok', 'change 1', 'no')",
   "pen-first: writes a numbered list on a yellow legal pad before any long answer ('give me a second, I'm writing')",
   "answers with numbers first and the story only when asked; 'I'd have to pull that' when she has no number",
   "Claude Free: hits the message limit right after the Map; returns about 5 hours later (lunch) in the same chat and types 'next'",

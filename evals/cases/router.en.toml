@@ -529,7 +529,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'change the keyword' on the Map swaps to a pre-picked alternate with its origin"
-context = "Day 0, about minute 14, ChatGPT Free. The 4-line Map is on screen (YOUR WORD: one more chapter, comment word CHAPTER) with 'We'll run this for 4 weeks. OK, or change a line.'; the word's 2 alternates are pre-picked and not shown. Dana answers the one decision."
+context = "Day 0, about minute 14, ChatGPT Free. The 4-line Map is on screen (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) with 'We'll run this for 4 weeks. OK, or change a line.'; the word's 2 alternates are pre-picked and not shown. Dana answers the one decision."
 input = '''change the keyword'''
 contains = []
 not_contains = []
@@ -2055,7 +2055,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'ok' on the Map is the one decision: FILM TODAY follows at once"
-context = "Day 0, about minute 14, ChatGPT Free. The 4-line Map is on screen (KNOWN FOR · 3 TOPICS · YOUR WORD: one more chapter · YOUR VOICE) with 'We'll run this for 4 weeks. OK, or change a line.'"
+context = "Day 0, about minute 14, ChatGPT Free. The 4-line Map is on screen (KNOWN FOR · 3 TOPICS · YOUR WORD: CHAPTER · YOUR VOICE) with 'We'll run this for 4 weeks. OK, or change a line.'"
 input = '''ok'''
 contains = []
 not_contains = []
@@ -2642,7 +2642,7 @@ invariants = ["I1", "I3", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → Map → "ok" → FILM TODAY → Week 1, unasked'; §CM-TODAY 1 'After FILM TODAY any message gets all of Week 1 … never "want Week 1?"'. setup.kit-facts 5: platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
+notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → Map → "ok" → FILM TODAY → one reply, unasked (§CM-TODAY 1): Week 1 → Brand Card + save line → NEXT'; §CM-TODAY 1 'After FILM TODAY any message gets all of Week 1 … never "want Week 1?"'. setup.kit-facts 5: platform, list size, talk day, delivery and hours are never asked on Day 0; they are guessed from the dump and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
 
 [[case]]
 id = "router.en.095"

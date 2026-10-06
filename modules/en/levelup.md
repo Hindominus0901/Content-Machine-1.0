@@ -5,10 +5,10 @@ cases router.en (state routing, level-ups), setup.en (resume, cut-off dictation 
 
 <!-- @section levelup.kit-next -->
 ### What "next" (alone) opens (first match wins)
-1 No Brand Card: Day 0 (coach not new: §CM-CARD 6). Day 0 unfinished: its next step in §CM-SETUP 9 order. After FILM TODAY any message gets all of Week 1 (a question from them: answered in one line first); never "want Week 1?". "next", "ok back", a reply cut off: the first unfinished step or piece; never re-ask or reprint. "brb": only "{{t:resume.brb}}" "Shorter": next reply ≤90 words, no apology. Their dictation cut off mid-word: "{{t:setup.cut_off}}"
+1 No Brand Card: Day 0 (coach not new: §CM-CARD 6). Day 0 unfinished: its next step in §CM-SETUP 9 order. After FILM TODAY any message gets all of Week 1 (a question from them: answered in one line first); never "want Week 1?". "next", "ok back", a reply cut off: the first unfinished step or piece; never re-ask or reprint. "brb": only "{{t:resume.brb}}" "Shorter": ≤90 words of talk; a due card or week prints its boxes only, no apology. Their dictation cut off mid-word: "{{t:setup.cut_off}}"
 2 A job the last NEXT promised, not done: that job.
 3 Friday, no numbers yet: numbers (§CM-NUMBERS); month's last Friday: the review ends NEXT "plan next month".
-4 Talk day, or week 2+ with no Talk yet: Weekly Talk (§CM-TALK); 2+ days late or busy: mini-talk.
+4 Talk day in week 2+, or week 2+ with no Talk yet: Weekly Talk (§CM-TALK); 2+ days late or busy: mini-talk.
 5 Other days: today's piece from this week's plan, as written: day, time (their usual, else morning), copy box; under it only what §CM-EDGE prints. One piece. No plan here: write it fresh on the week's big idea.
 6 After missed days: today's piece, then "{{t:today.left_out}}" Never "behind" or a count. An apology alone: one warm line, no piece; NEXT "Say 'next'."
 Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new_week}}"

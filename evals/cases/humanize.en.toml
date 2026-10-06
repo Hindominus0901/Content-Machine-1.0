@@ -686,7 +686,7 @@ critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 invariants = ["I1", "I3", "I8", "I12", "I17", "I23"]
 max_questions = 1
-notes = """arch §8.3 humanize: spoken language and his own words first (acceptance [week] own_words_min = 0.70 for re-say pieces), while SG4 holds (first line ≤12 words, short sentences, one punch line ≤5 words, no hedge in the hook). The judge reads SG8 read-aloud against voice-samples.md ('30 minutes you actually do beats an hour you never do', 'Zero is the killer'). G2: no body or health outcome; cold start, so no client result; kids unnamed. SG6 (one big idea, the keyword exactly once, the CTA for the rung) is critical in shared.md; SG-copy is N/A (no source post). The reel prints with nothing under it (R1: its WHY line shows on 'why?')."""
+notes = """arch §8.3 humanize: spoken language and his own words first (acceptance [week] own_words_min = 0.70 for re-say pieces), while SG4 holds (first line ≤12 words, short sentences, one punch line ≤5 words, no hedge in the hook). The judge reads SG8 read-aloud against voice-samples.md ('30 minutes you actually do beats an hour you never do', 'Zero is the killer'). G2: no body or health outcome; cold start, so no client result; kids unnamed. SG6 (one big idea, the keyword once outside the ask, the CTA for the rung) is critical in shared.md; SG-copy is N/A (no source post). The reel prints with nothing under it (R1: its WHY line shows on 'why?')."""
 
 [[case]]
 id = "humanize.en.028"

@@ -122,7 +122,7 @@ okay she's up. she's yelling. done.
 
 ## Behaviour
 
-- **Pace:** dictates in whispered 3-4 minute chunks during her youngest's nap, phone keyboard mic, pacing the hallway. Sends 3 chunks, then "done", often cut short by a kid waking ("she's up, sorry"). After the dump she types short answers on the phone: "ok", "yes", "fix 3", "sure". Comes back hours later in the same chat when the kid is down.
+- **Pace:** a long talker: dictates in whispered chunks of about 5-7 minutes during her youngest's nap, phone keyboard mic, pacing the hallway. Sends 3 chunks, then "done", often cut short by a kid waking ("she's up, sorry"). After the dump she types short answers on the phone: "ok", "yes", "change 1", "sure". Comes back hours later in the same chat when the kid is down.
 - **Reading:** reads on the phone in the preschool parking lot. A reply longer than one phone screen gets skimmed. If nothing usable has arrived by the end of nap time she says "I have like 10 minutes before pickup, can I just have the video?"
 - **Answers:** story first, number second. Gives a number only when it's in her spreadsheet; otherwise "I'd have to look."
 - **Pushback lines (verbatim):**

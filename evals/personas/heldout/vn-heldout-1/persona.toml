@@ -29,7 +29,7 @@ devices = [
 ]
 devices_note = "Không có máy tính. Không tải file, không tải lên được nếu không có người giúp; thằng Tí (15 tuổi) cài app giùm."
 voice_input = "voice-mode-habit"
-voice_input_note = "Quen bấm nút sóng âm (chế độ trò chuyện) để nhờ ChatGPT ra đề chính tả. Lần đầu xả sẽ bấm nhầm nút đó; được chỉ micro nhỏ trên bàn phím thì làm theo ngay. Mỗi lần nói 3–4 phút, có lần bị cắt ngang."
+voice_input_note = "Quen bấm nút sóng âm (chế độ trò chuyện) để nhờ ChatGPT ra đề chính tả. Lần đầu xả sẽ bấm nhầm nút đó; được chỉ micro nhỏ trên bàn phím thì làm theo ngay. Nói dài: mỗi lần nói 5–7 phút, có lần bị cắt ngang."
 platforms_primary = "Facebook cá nhân (đã bật chế độ chuyên nghiệp)"
 platforms_other = [
   "TikTok (mới làm từ tháng 3/2026, chủ yếu video rèn chữ)",

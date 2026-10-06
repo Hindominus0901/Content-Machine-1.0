@@ -23,12 +23,14 @@ map_max_minutes = 20
 map_lines = 4                             # KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE, then "OK, or change a line"
 film_ready_max_minutes = 20
 film_ready_max_minutes_from_email = 30
-stop_point_max_minutes = 27
+# No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
 session_max_minutes = 40
 session_max_turns = 10                    # Week 1 arrives in the next reply, unasked
-detours_between_start_and_stop = 0        # downloads, uploads, setup-page visits, app switches
-save_gates = 0                            # Week 1 must arrive with the Brand Card unsaved
-brand_card_visible_max_chars = 900
+detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
+save_gates = 0                            # saving never gates anything; Week 1 arrives before the Brand Card (wf15 §1.6-§1.7)
+brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/brand-card.toml, targets [budgets.brand_card_visible]
+running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <name> · <step>" (graders running_tag)
+shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes not counted (§CM-TODAY 1)
 
 [memory]
 brand_card_saved_by_end_of_day1 = "5/6"
@@ -45,7 +47,7 @@ lean_max_minutes = 60
 talk_max_minutes = 15
 on_map_min = 0.90                         # over 4 simulated weeks
 why_available_rate = 1.0                  # a WHY is stored for every piece and printed on "why?" (none under a Ready piece)
-keyword_exactly_once_rate = 1.0
+keyword_exactly_once_rate = 1.0           # EN: once per piece outside the comment ask (plan.kit-week 4 "plus the ask")
 own_words_min = 0.70                      # re-say shorts vs the coach's Talk transcript
 hook_stem_window = 10                     # no repeated stem in 10 consecutive pieces
 same_structure_max_in_a_row = 2

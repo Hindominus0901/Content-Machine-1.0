@@ -69,7 +69,7 @@ must_include = [
   "quà = danh sách 7 chỗ hay phát sinh khi sửa bếp, gửi vừa trong một tin nhắn",
   "mẫu trả lời inbox 1–2 để Thảo dán: mở bằng \"Dạ\", xưng em, gửi danh sách, có một câu hỏi lọc (nhà phố hay chung cư, bếp xài bao lâu rồi), xin kết bạn Zalo, không xin số điện thoại công khai",
   "tin \"hỏi 3 khách cũ một câu\" gửi qua Zalo (chị Loan, anh Hưng chị Yến, chị ở Hải Châu)",
-  "mỗi bài có dòng VÌ SAO RA KHÁCH và từ khóa đúng 1 lần",
+  "từ khóa đúng 1 lần mỗi bài; mỗi bài lưu một câu VÌ SAO RA KHÁCH, chỉ in khi coach hỏi 'tại sao?'; dưới bài không in dòng nào",
   "có lựa chọn lời mời nhẹ (gõ \"nhẹ\")",
   "ít nhất một bài dùng chuyện của chính anh (năm 2019 ở Liên Chiểu)",
   "chỉ dùng hình của công trình đã đồng ý (P1 trên Trang, không quảng cáo; P2)",

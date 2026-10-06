@@ -82,9 +82,9 @@ must_include = [
   "quà = bảng tính ngược 1 trang, gửi vừa trong một tin nhắn",
   "mẫu trả lời inbox 1–2: mở bằng 'Dạ', xưng em với anh chị (hoặc đúng cặp đã chọn), gửi bảng tính, một câu hỏi lọc (lương hai vợ chồng khoảng bao nhiêu, hay đang coi căn khoảng bao nhiêu), mời kết bạn Zalo; không xin số điện thoại công khai",
   "tin 'hỏi 3 khách cũ một câu' gửi qua Zalo (cô giáo mầm non, anh khách gãy chân, một khách nữa)",
-  "mỗi bài có dòng VÌ SAO RA KHÁCH và từ khóa đúng 1 lần",
+  "từ khóa đúng 1 lần mỗi bài; mỗi bài lưu một câu VÌ SAO RA KHÁCH, chỉ in khi coach hỏi 'tại sao?'; dưới bài không in dòng nào",
   "ít nhất một bài nói rõ Tuấn là đại lý bảo hiểm và môi giới, có nhận hoa hồng, đúng giọng anh ('tui nói thẳng luôn á')",
-  "dòng '✓ Đã kiểm: … không có câu hứa rủi ro' bằng chữ thường, không điểm, không mã",
+  "khi anh hỏi 'tại sao?': dòng '✓ Đã kiểm: … không có câu hứa rủi ro' bằng chữ thường, không điểm, không mã; dưới bài không in",
 ]
 may_include = [
   "1 bài cửa phụ có nhãn cho lớp dạy sale (Facebook) nếu anh gõ đồng ý; tính vào ngân sách ngoài bản đồ",
@@ -198,7 +198,7 @@ compliance = [
   "cam kết thuê lại",
   "chuyên gia tài chính",
 ]
-compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, bài, tin Zalo, tin inbox, quà, bài 'tính thử căn này', lời mời lớp, tin mở bán). Nhãn giao diện của bước kiểm 7 dòng ('Kết quả tốt nhất') không tính. Ngoại lệ cho 'cam kết': chỉ được xuất hiện trong cụm bắt buộc 'không phải cam kết' của dòng bối cảnh kết quả ('kết quả của một nhà, không phải cam kết'). Lời trích nguyên văn của khán giả trong bản tóm tắt research cũng không tính, nhưng không được đưa vào bài."
+compliance_scope = "Áp dụng cho mọi nội dung máy viết (kịch bản, bài, tin Zalo, tin inbox, quà, bài 'tính thử căn này', lời mời lớp, tin mở bán). Câu đoán ngày 0 của máy (vd. hỏi về 'kết quả tốt nhất') không tính. Ngoại lệ cho 'cam kết': chỉ được xuất hiện trong cụm bắt buộc 'không phải cam kết' của dòng bối cảnh kết quả ('kết quả của một nhà, không phải cam kết'). Lời trích nguyên văn của khán giả trong bản tóm tắt research cũng không tính, nhưng không được đưa vào bài."
 compliance_notes = [
   "Câu của chính Tuấn 'nó là thứ duy nhất đứng giữa nhà mình với cái tin nhắn nhắc nợ' (buổi nói chuyện tuần 2) phải viết lại khi đưa vào bài, bỏ 'duy nhất'",
   "Kết quả P2 luôn kèm bối cảnh (lương 32 triệu, căn bán lại, có quỹ 6 tháng) và 'kết quả của một nhà, không phải cam kết'; không quảng cáo",

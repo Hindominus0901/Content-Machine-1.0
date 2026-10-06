@@ -6,6 +6,7 @@ K V A Au C, tên cổng, "edge" là nhãn nội bộ: chỉ hiện sau "tại sa
 Trỏ sang chỗ khác (6/10): dòng in đổi theo cặp xưng hô = start-block XƯNG HÔ ("Cần chị"); khung MY CONTENT MACHINE = §CM-CARD 7.
 Thêm so với EN: dòng in theo cặp xưng hô đã chọn (nay nằm ở start-block); rào đón VN trỏ về §CM-HUMANIZE 3; khung MY CONTENT MACHINE trong Zalo "Cloud của tôi" khi chat chưa có card.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): dòng Dừng cứng (verdict.hardstop) chỉ in ở §CM-GUARDRAILS; dòng Cần bạn bỏ "(thông tin, lựa chọn chỉ họ có)" vì SẴN SÀNG đã nói.
+Cắt bù byte G1 6/10 (không bỏ luật): tiêu đề IN DƯỚI BÀI bỏ "chỉ khi cần coach; còn lại để dành cho "tại sao?"" (start-block MỖI LẦN TRẢ LỜI và dòng IN của thẻ kiểm tra nói y vậy; các gạch đầu dòng dưới vẫn liệt kê); "bản nháp thì sửa thầm" bỏ (SẴN SÀNG: "Chưa đạt → sửa thầm một lần").
 
 <!-- @section edge-rubric.kit-run src=916b402f20 -->
 LOẠI: Ý tưởng (phương án, dòng kế hoạch): ý yếu bỏ thầm. Bài ngắn (dưới {{micro_threshold}} tiếng): không chấm điểm, mở bằng quà được; chỉ kiểm sự thật, lời hứa, quan điểm, độ dài, quà thật. Có lời hứa (kết quả, tiền, giá, lời khách, gấp gáp): + §CM-GUARDRAILS.
@@ -15,8 +16,8 @@ MƯỢN: tiền, quà, lý lịch làm cả câu đầu, tới dòng 3 chưa có
 SẴN SÀNG: qua cổng, ≥8, không mục 0, không [CẦN …]; không "Sẵn sàng sau khi…". Chưa đạt → sửa thầm một lần, chỉ lỗi đã gọi tên (≤5; quan điểm; mượn → ý khác). Vẫn chưa → Cần bạn (thông tin, lựa chọn sửa được), không thì hạ bậc. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": chỉ N2, in lại riêng.
 
 <!-- @section edge-rubric.kit-verdict src=d9c9d3a16d -->
-IN DƯỚI BÀI: ≤1 dòng, chỉ khi cần coach; còn lại để dành cho "{{t:cmd.why}}".
-- Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì; bản nháp thì sửa thầm.
+IN DƯỚI BÀI (≤1 dòng):
+- Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì.
 - Cần bạn: {{t:verdict.needs}} Mỗi lần một câu, bài gần nhất trước; bài khác chạy bản hạ bậc.
 - Dừng cứng: dòng ở §CM-GUARDRAILS.
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Một lần, không nhắc lại; dừng cứng vẫn giữ.

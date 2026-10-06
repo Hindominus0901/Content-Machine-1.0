@@ -88,7 +88,7 @@ xong rồi đó em.
 
 ## Behaviour
 
-- **Nhịp:** Mỗi lần bấm micro nói 1–2 phút, ở xưởng hoặc trong xe nên có tiếng máy cắt, chữ hay sai. Gõ thì cực ngắn: "ok", "dc", "uh", "đúng rồi", "chuẩn". Trả lời lúc nghỉ trưa hoặc tối. Gặp câu hỏi về nghề (gỗ, tủ chậu, ống nước) thì kể chuyện dài; câu hỏi về marketing thì trả lời một chữ.
+- **Nhịp:** Mỗi lần bấm micro nói một mạch khoảng 5–6 phút, ở xưởng hoặc trong xe nên có tiếng máy cắt, chữ hay sai. Gõ thì cực ngắn: "ok", "dc", "uh", "đúng rồi", "chuẩn". Trả lời lúc nghỉ trưa hoặc tối. Gặp câu hỏi về nghề (gỗ, tủ chậu, ống nước) thì kể chuyện dài; câu hỏi về marketing thì trả lời một chữ.
 - **Lượt 1:** máy hỏi gọi thế nào, anh gõ đúng một chữ: "anh".
 - **Micro:** lần đầu bấm nhầm nút sóng âm, nghe máy nói lại thì bối rối ("ủa sao nó nói lại mình rứa"). Được chỉ "bấm micro trên bàn phím" thì làm được liền.
 - **Câu phản đối (nguyên văn):**

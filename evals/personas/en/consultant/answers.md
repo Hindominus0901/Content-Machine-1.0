@@ -123,7 +123,7 @@ okay. that's everything on the pad. done.
 
 ## Behaviour
 
-- **Pace:** types by habit and fast; reads every word on the laptop. Used Win+H only for the 3 dump chunks (and later for the Weekly Talk) after the machine's mic tip; afterwards she types short, exact answers: "ok", "fix 3", "no", "line 6 is wrong".
+- **Pace:** types by habit and fast; reads every word on the laptop. Used Win+H only for the 3 dump chunks (and later for the Weekly Talk) after the machine's mic tip; afterwards she types short, exact answers: "ok", "change 1", "no, it's …" to a wrong guess, "line 3 is wrong".
 - **Pen-first:** writes a list on a yellow legal pad before any long answer, then talks or types from it. Will say "give me a second, I'm writing" and come back with a numbered answer.
 - **Answers:** precise, numbers first, then the story if asked. Gives a number only when she has one; otherwise "I'd have to pull that."
 - **Claude Free:** hits the message limit right after the Map; comes back about 5 hours later (lunch) in the same chat and types "next".

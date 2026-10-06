@@ -79,8 +79,8 @@ must_include = [
   "free gift that fits in one DM: the coffee script (how to ask for 20 minutes, what to ask)",
   "DM replies 1-2; reply 1 asks one qualifying question (still employed or already out?)",
   "'ask 3 past clients one question' message for Lorraine, Bev and Gail",
-  "keyword CHAPTER exactly once per piece",
-  "at least one Week-1 piece names a WHY line tied to a big idea",
+  "keyword CHAPTER exactly once per piece outside the comment ask",
+  "every Week-1 piece stores a WHY tied to a big idea, printed only on 'why?' (nothing under a piece)",
   "no piece built on a NOT NOW topic (resume tips, LinkedIn, menopause, 401(k), ageism law)",
 ]
 must_not = [

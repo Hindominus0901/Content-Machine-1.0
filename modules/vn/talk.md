@@ -5,6 +5,7 @@ Nghiệm thu: evals/cases/router.vn.toml (ngày nói chuyện, "lát nữa" gi�
 Thêm so với EN: câu micro bàn phím cho Claude (nay trỏ về start-block bước 2); tin Zalo thay email. Câu mẫu theo mình–bạn; đổi theo cặp xưng hô là luật chung (start-block, §CM-CARD).
 Ngân sách VN: anchor TALK ≤3.600 byte sau khi render.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 trỏ câu micro Claude về start-block bước 2, TIẾP cuối tuần về bước 9 (cùng một câu); "1 video riêng" trỏ §CM-FORMATS; tiêu đề bản ngắn bỏ "không tuần nào trống" (§CM-WEEK 2).
+Cắt bù byte G1 6/10: "1 video riêng" bỏ "(§CM-FORMATS)" (dòng trên đã trỏ §CM-FORMATS).
 
 <!-- @section talk.kit-talk src=da29a50eec -->
 1 Tin đầu: một dòng rồi chỉ hỏi câu 1: "{{t:talk.open}}" Claude: câu micro như ngày 0, bước 2.
@@ -15,7 +16,7 @@ Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 trỏ
 <!-- @section talk.kit-week src=cc77bd4c6a -->
 ### Sau câu 5: cả tuần, trong 2 tin (Free: ≤3 bài mỗi tin)
 - 3 bài nói lại, ≥70% chữ họ vừa nói, gọt bớt: video ngắn nói theo thẻ ý (§CM-FORMATS); kênh chữ: 2 bài viết + 1 carousel.
-- 1 video riêng (§CM-FORMATS).
+- 1 video riêng.
 - 1 bài dài (chỉ khi làm video) · 1 tin Zalo hoặc email (§CM-WEEK 2).
 ≥60% về ý lớn tuần; mỗi bài theo §CM-WEEK; giọng: §CM-VOICE 8, cùng chữ họ nói; làm thầm §CM-VOICE 4.
 Kết (video): "{{t:talk.film}}" TIẾP: câu ở ngày 0, bước 9.

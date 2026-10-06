@@ -139,7 +139,7 @@ invariants = ["I1", "I5"]
 max_words = 260
 max_chars = 0
 max_questions = 1
-notes = """UX §1.2: if step 3 fails, compact mode runs all of Day 0 from the instruction block (start-block: 'carry on; Day 0 never asks for a download'); Day 0 never sends the coach back to the setup page and nothing can block it. QA principle 4: never claim a check that didn't run, so the line must not tick the method file. acceptance.toml detours_between_start_and_stop = 0: any 'add the file' nudge waits until after Day 0's last reply (there is no stop point any more, wf15 §1). The promise is the new one ('about 25 min', R14). Dan quits on Day-0 setup homework."""
+notes = """UX §1.2: if step 3 fails, compact mode runs all of Day 0 from the instruction block (start-block: 'carry on; Day 0 never asks for a download'); Day 0 never sends the coach back to the setup page and nothing can block it. QA principle 4: never claim a check that didn't run, so the line must not tick the method file. acceptance.toml detours_between_start_and_day0_end = 0: any 'add the file' nudge waits until after Day 0's last reply (there is no stop point any more, wf15 §1). The promise is the new one ('about 25 min', R14). Dan quits on Day-0 setup homework."""
 
 [[case]]
 id = "setup.en.004"
@@ -567,7 +567,7 @@ invariants = ["I1", "I5", "I17"]
 max_words = 90
 max_chars = 0
 max_questions = 1
-notes = """persona Behaviour: quits on 'two replies in a row longer than his phone screen before anything usable'. §CM-TODAY 1: '"Shorter": next reply ≤90 words, no apology.' UX §2: one screen per reply."""
+notes = """persona Behaviour: quits on 'two replies in a row longer than his phone screen before anything usable'. §CM-TODAY 1: '"Shorter": ≤90 words of talk; a due card or week prints its boxes only, no apology.' Start-block EVERY REPLY: 'One phone screen of talk; copy boxes don't count.' Mid-dump nothing is due and nothing is boxed, so max_words 90 (run.py counts boxes too) is the talk cap here."""
 
 # ---------------------------------------------------------------- whole-run budgets
 
@@ -710,7 +710,7 @@ invariants = ["I1", "I2", "I3", "I4", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. acceptance.toml detours_between_start_and_stop = 0 and save_gates = 0 (the 'stop' is now Day 0's last reply: there is no stop point, R13). Quit points 3 (save-for-reward gate), 7 ('locked 90 days'), 8 ('new chat outside the project'). Linda quits on a mid-session download/upload or setup-page detour. She skips filming on Day 0: 'Film it now, or post the caption as text.' (film.now_or_text) is her path, and her 'I'm not filming today' gets all of Week 1 at once. Her ~900 list is never asked (R12): it is guessed from the dump, so Week 1 leads with the email ('reply to me', list 300+, plan.kit-week 2) and list_size sits in the card's machine block; the talk day is named once above Week 1 (setup.plan_guess). Claude save route with the 'email it to yourself' backup (start-block BRAND CARD). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+notes = """scope: each reply. acceptance.toml detours_between_start_and_day0_end = 0 and save_gates = 0 (the 'stop' is now Day 0's last reply: there is no stop point, R13). Quit points 3 (save-for-reward gate), 7 ('locked 90 days'), 8 ('new chat outside the project'). Linda quits on a mid-session download/upload or setup-page detour. She skips filming on Day 0: 'Film it now, or post the caption as text.' (film.now_or_text) is her path, and her 'I'm not filming today' gets all of Week 1 at once. Her ~900 list is never asked (R12): it is guessed from the dump, so Week 1 leads with the email ('reply to me', list 300+, plan.kit-week 2) and list_size sits in the card's machine block; the talk day is named once above Week 1 (setup.plan_guess). Claude save route with the 'email it to yourself' backup (start-block BRAND CARD). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
 
 # ---------------------------------------------------------------- film today
 
@@ -720,7 +720,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "FILM TODAY after 'ok': memorisable shape, her own story, quiet option, nothing printed under the piece"
-context = "Day 0, about minute 17. The Map is on screen (KNOWN FOR built on 'one more chapter' and coffee before resume; YOUR WORD: one more chapter, comment word CHAPTER; offer 12 weeks 1:1 at $2,400 from her dump). Dana asked for bullets, not word-for-word. ChatGPT Free."
+context = "Day 0, about minute 17. The Map is on screen (KNOWN FOR built on 'one more chapter' and coffee before resume; YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word; offer 12 weeks 1:1 at $2,400 from her dump). Dana asked for bullets, not word-for-word. ChatGPT Free."
 input = '''ok'''
 contains = []
 not_contains = []
@@ -800,7 +800,7 @@ max_questions = 1
 standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
-notes = """QA §0: runtime Ready = gates pass, Edge ≥8, no pillar at 0. SG1 every number/name/quote traces (24 years, 4B, 63, 2 interviews are hers); SG2 no outcome claim; SG3 the target is a practice (feeding the portal), never HR people; SG5 Edge ≥8 with no 0; SG6 one rung, one belief, keyword exactly once. S0 lane included: Day-0-critical."""
+notes = """QA §0: runtime Ready = gates pass, Edge ≥8, no pillar at 0. SG1 every number/name/quote traces (24 years, 4B, 63, 2 interviews are hers); SG2 no outcome claim; SG3 the target is a practice (feeding the portal), never HR people; SG5 Edge ≥8 with no 0; SG6 one rung, one belief, keyword once outside the ask. S0 lane included: Day-0-critical."""
 
 [[case]]
 id = "setup.en.023"
@@ -845,7 +845,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "S0"]
 title = "'quiet' swaps the comment word for a reply ask, with no lecture, and Week 1 follows in the quiet form"
-context = "Day 0, FILM TODAY on screen with a 'Comment BADGE and I'll send you …' line and '(quieter: say 'quiet')'. Linda posts on LinkedIn; her old CEO reads her posts. Any message after FILM TODAY gets all of Week 1 (§CM-TODAY 1)."
+context = "Day 0, FILM TODAY on screen with a 'Comment BADGE and I'll send you …' line and '(quieter: say 'quiet')'. Variant of the persona: her dump never mentioned comment asks (persona default: it refuses them, so FILM TODAY starts quiet, convert.kit-keyword 5). Linda posts on LinkedIn; her old CEO reads her posts. Any message after FILM TODAY gets all of Week 1 (§CM-TODAY 1)."
 input = '''My old CEO reads my posts. It looks like I'm selling knives. quiet'''
 contains = []
 not_contains = []
@@ -949,7 +949,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Forced test: day 2 with the Brand Card unsaved, 'next' still gives today's piece before any save talk"
-context = "Day 2 (Wednesday), morning, same chat, ChatGPT Free. Day 0 ended with Week 1, then the Brand Card + save line. The card is NOT saved (forced test): Dana switched to her Android phone and cannot find the ⋯ button. Map: YOUR WORD one more chapter (CHAPTER); platform Instagram; list 140."
+context = "Day 2 (Wednesday), morning, same chat, ChatGPT Free. Day 0 ended with Week 1, then the Brand Card + save line. The card is NOT saved (forced test): Dana switched to her Android phone and cannot find the ⋯ button. Map: YOUR WORD CHAPTER (from 'one more chapter'); platform Instagram; list 140."
 input = '''I can't find the dots thing on my phone. next'''
 contains = []
 not_contains = []
@@ -1219,7 +1219,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1"]
 title = "Claude Free: the Map reply leaves a save point in plain words"
-context = "Day 0, Claude Free. After 'done' the machine asked the one missing fact, the multi-income guess (setup.multi_income). This is Erin's answer; the next reply is the Map. Claude Free gets save points after the dump and after the Map."
+context = "Day 0, Claude Free. After 'done' the machine asked the one missing fact, the multi-income guess (setup.multi_income). This is Erin's answer; the next reply is the Map. On Claude the save line prints once, under the Map (setup.kit-order 10, G1 K18)."
 input = '''yes. the sprint, the retainer is the same owners after it. deal prep stays referral only. and please don't call any of it a method, margin before more is fine, nothing with a trademark sign.'''
 contains = []
 not_contains = []
@@ -1241,7 +1241,7 @@ invariants = ["I1", "I5", "I6"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """R12: the old trigger ('fix 3') answered a check line that no longer exists; the case now starts from the last missing-fact answer, which brings the Map (4 lines + map.ok; why this one and NOT NOW stay internal, R11). setup.kit-order 10: 'Claude Free: after the dump and the Map: save.limit_claude_free' ('Hit the limit? Come back after {time}, same chat, say 'next'.'). Erin hits the limit right after the Map (persona Behaviour). No upgrade ask (quit trigger for every EN persona)."""
+notes = """R12: the old trigger ('fix 3') answered a check line that no longer exists; the case now starts from the last missing-fact answer, which brings the Map (4 lines + map.ok; why this one and NOT NOW stay internal, R11). setup.kit-order 10: 'On Claude, once under the Map: save.limit_claude_free' ('Hit the limit? Come back when it resets, same chat, say 'next'.'; G1 K18: no {time}, no save point after the dump). Erin hits the limit right after the Map (persona Behaviour). No upgrade ask (quit trigger for every EN persona)."""
 
 [[case]]
 id = "setup.en.037"
@@ -1329,7 +1329,7 @@ invariants = ["I1", "I5"]
 max_words = 70
 max_chars = 0
 max_questions = 1
-notes = """No detours (acceptance.toml detours_between_start_and_stop = 0). Corinne quits on tool setup for herself. The reply answers in one line and sends her back to talking."""
+notes = """No detours (acceptance.toml detours_between_start_and_day0_end = 0). Corinne quits on tool setup for herself. The reply answers in one line and sends her back to talking."""
 
 # ---------------------------------------------------------------- Door B (phone only)
 
@@ -1529,7 +1529,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "After FILM TODAY a question gets one line, then Week 1 arrives unasked with the plan guess above it"
-context = "Day 0, about minute 19, ChatGPT Free on the laptop. Map OK'd (YOUR WORD: one more chapter, comment word CHAPTER). FILM TODAY is on screen, ending 'Film it now, or post the caption as text.' Her dump named Instagram (about 1,150 followers), a personal Facebook profile and a 140-person email list, said Mondays she is at her mom's and never named a talk day."
+context = "Day 0, about minute 19, ChatGPT Free on the laptop. Map OK'd (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word). FILM TODAY is on screen, ending 'Film it now, or post the caption as text.' Her dump named Instagram (about 1,150 followers), a personal Facebook profile and a 140-person email list, said Mondays she is at her mom's and never named a talk day."
 input = '''can I film it sitting at my kitchen table? standing up I sway'''
 contains = []
 not_contains = []
@@ -1617,7 +1617,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'why?' on the Map: why this one from her own evidence, the real cause in one line, NOT NOW with plain reasons"
-context = "Day 0, about minute 13, ChatGPT Free. The Map is on screen: 4 lines (KNOWN FOR built on 'one more chapter' and coffee before resume; 3 TOPICS; YOUR WORD: one more chapter; YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.' Nothing else was shown."
+context = "Day 0, about minute 13, ChatGPT Free. The Map is on screen: 4 lines (KNOWN FOR built on 'one more chapter' and coffee before resume; 3 TOPICS; YOUR WORD: CHAPTER; YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.' Nothing else was shown."
 input = '''why?'''
 contains = []
 not_contains = []
@@ -1652,7 +1652,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'why?' after FILM TODAY: the piece printed clean; the 'why?' reply gives the WHY line, what it was written from and the checks"
-context = "Day 0, about minute 17, ChatGPT Free. Same state as setup.en.020: the Map is on screen (YOUR WORD: one more chapter, comment word CHAPTER); Dana asked for bullets."
+context = "Day 0, about minute 17, ChatGPT Free. Same state as setup.en.020: the Map is on screen (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word); Dana asked for bullets."
 input = '''[turn 1] ok
 [turn 2] why?'''
 contains = []

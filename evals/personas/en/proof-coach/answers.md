@@ -108,7 +108,7 @@ okay I think that's it. that's everything in my head. done.
 
 ## Behaviour
 
-- **Pace:** dictates in 2–4 minute chunks with Win+H on the laptop (the keyboard mic on her Android when she is at her mom's). Sends 3 dump chunks, then "done". After that she types short answers: "ok", "yep", "fix 4", or tells a story when a question starts with "tell me about".
+- **Pace:** a long talker: dictates in chunks of about 5–6 minutes with Win+H on the laptop (the keyboard mic on her Android when she is at her mom's). Sends 3 dump chunks, then "done". After that she types short answers: "ok", "yep", "change 2", or tells a story when a question starts with "tell me about".
 - **Reading:** reads carefully on the laptop but skims anything longer than a screen. If nothing usable has come back by about minute 10, she starts to wonder out loud whether this was a waste of money.
 - **Answers:** story first, fact second. Gives a number only when she has one; otherwise "I'd have to check."
 - **Pushback lines (verbatim):**
@@ -123,5 +123,5 @@ okay I think that's it. that's everything in my head. done.
   - On filming: "I am not dancing. And I'm not pointing at words floating in the air."
 - **Accepts quickly:** parking life coaching ("good, take it"); a side door for resume reviews if it stays in the DMs; a refusal that gives her a true alternative in one line.
 - **Confused by:** "lead magnet", "CTA", "hook", "keyword" (she thinks it means Google), "Save to project" on the Free plan, and the difference between a Reel and a Story. One plain line of explanation is enough.
-- **Free plan:** may hit the message limit around turn 9; comes back the next morning in the same chat and types "next".
+- **Free plan:** hits the message limit once on Day 0, right after the first Week-1 reply; comes back the next morning in the same chat and types "next".
 - **Quits if:** asked to fill a template or form; asked more than one question in a message; asked to upgrade to Plus; asked for Instagram insights screenshots; given a wall of text before anything usable; told to download or upload a file mid-session; shown scores, codes or jargon ("pillar", "B3", "Edge").
