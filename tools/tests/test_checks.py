@@ -185,6 +185,11 @@ class HookKeywordPraiseTests(unittest.TestCase):
         self.assertEqual(ck.keyword_count("Comment CHAPTER. chapter? Chapters don't count.", "CHAPTER"), 2)
         self.assertEqual(ck.keyword_count("one more chapter", "one more chapter"), 1)
 
+    def test_guess_tag_with_its_follow_up(self):
+        for tail in (" (mình đoán)", " (mình đoán, Tuần 1 kiểm lại)", " (my guess; one word changes it)", " [guess]"):
+            self.assertTrue(ck._GUESS_AFTER.match(tail), tail)
+        self.assertFalse(ck._GUESS_AFTER.match(" (khách nói)"))
+
     def test_keyword_outside_ask_en(self):
         self.assertEqual(ck.keyword_outside_ask("Comment CHAPTER.", "CHAPTER"), 0)
         self.assertEqual(ck.keyword_outside_ask("A new chapter. Comment CHAPTER.", "CHAPTER"), 1)

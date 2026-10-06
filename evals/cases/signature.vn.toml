@@ -8,7 +8,7 @@
 # IDs); wf11-message-focus.md §3 (WHY line, CTA ladder, VN path inbox → Zalo), §4 rules 7, 8, 11; wf12-qa-spec.md §3.1
 # signature-keyword (SK1 ≥3 people in ≥2 places, SK2 not owned, SK6 default shown with origin and reason, coach can
 # swap); wf12-qa-standards.md §4 VN note (DANG KY = ĐĂNG KÝ, register both forms); wf7-research-module-spec §4.7, §6.1
-# (coach recall never counts; client words before coined terms); schemas/banks.toml [types.K], [types.A];
+# (research: coach recall never counts as a person; keyword: 3+ named clients the coach quotes count, DECISIONS 7 Oct 2026; client words before coined terms); schemas/banks.toml [types.K], [types.A];
 # wf15-simple-surface-spec.md §0-§3 and wf15-case-impact.md (R1-R18); core/vn/start-block.md NGÀY 0 steps 4-7;
 # modules/vn/signature.md (signature.kit-keyword), message.md (message.kit-map), convert.md (§CM-CTA-KIT 5);
 # strings/vn.toml (map.*, cta.*, signature.*, verdict.*, why.prefix, checked.prefix, tick.keyword).
@@ -62,7 +62,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I15"]
 max_questions = 1
-notes = "expected.toml keyword.preferred 'cứng đơ' (audience); 'chữa cháy' and 'gỡ lưng' are her coined terms (stored alternates at most). signature.kit-keyword: '≤5 tiếng, khách tự nói … Chọn sẵn + 2 dự phòng, không hỏi'; the Map's TỪ KHOÁ: line (map.word) shows the pick with its unaccented form, the alternates stay stored (no menu). UX §4: no candidate tables, no Bank IDs. DECISIONS: the keyword is a word the coach's tệp says. Cold start (I8). The trigger is her answer to the last missing fact (R12: the 7-line check is gone); QUAY HÔM NAY prints under the Map with nothing under it (K2, I3). VG2 coldstart S1 turn 7 is a passing reply."
+notes = "expected.toml keyword.preferred 'cứng đơ' (audience); 'chữa cháy' and 'gỡ lưng' are her coined terms (stored alternates at most). signature.kit-keyword: '≤5 tiếng khách nói (≥3 người ở ≥2 nơi, hay coach kể ≥3 khách có tên) … Chọn sẵn + 2 dự phòng, không hỏi'; the Map's TỪ KHOÁ: line (map.word) shows the pick with its unaccented form, the alternates stay stored (no menu). UX §4: no candidate tables, no Bank IDs. DECISIONS: the keyword is a word the coach's tệp says. Cold start (I8). The trigger is her answer to the last missing fact (R12: the 7-line check is gone); QUAY HÔM NAY prints under the Map with nothing under it (K2, I3). VG2 coldstart S1 turn 7 is a passing reply."
 
 [[case]]
 id = "signature.vn.002"
@@ -525,7 +525,7 @@ critical = ["SK2", "SK6"]
 min_score = 13
 invariants = ["I1", "I4", "I5", "I15"]
 max_questions = 1
-notes = "Day 0 has only the dump: 'ngại chào' is Thảo's line plus the coach's report that many owners say it (coach recall never counts). SK1 is deliberately not critical here: qa/standards/signature-keyword.md makes a dump-only pick an honest provisional result (SK1 = 1: marked (em đoán), real count shown, the 'hỏi 3 khách cũ' message set as homework), re-scored after the first listening paste (signature.vn.024, .026). SK1 = 0 (a provisional term presented as proven) still fails through the standard's 'no item scores 0'. SK6 'default shown with origin and reason': on the 4-line Map the reason no longer prints (R11, message.kit-map 'Không in: … vì sao chọn'); it shows on 'tại sao?', so the judge reads it there. Open founder item: the standard has no Day-0 Starter bar for SK."
+notes = "Day 0 has only the dump: 'ngại chào' is Thảo's line plus the coach's report that many owners say it: one named client plus 'many say it' is under the 3-named-client bar (DECISIONS 7 Oct 2026), so the pick stays a guess. SK1 is deliberately not critical here: qa/standards/signature-keyword.md makes a dump-only pick an honest provisional result (SK1 = 1: marked (em đoán, Tuần 1 kiểm lại), real count shown, the 'hỏi 3 khách cũ' message set as homework), re-scored after the first listening paste (signature.vn.024, .026). SK1 = 0 (a provisional term presented as proven) still fails through the standard's 'no item scores 0'. SK6 'default shown with origin and reason': on the 4-line Map the reason no longer prints (R11, message.kit-map 'Không in: … vì sao chọn'); it shows on 'tại sao?', so the judge reads it there. Open founder item: the standard has no Day-0 Starter bar for SK."
 
 [[case]]
 id = "signature.vn.026"

@@ -20,7 +20,7 @@ What good means: the term is built from words 3 or more buyers said in 2 or more
 
 | ID | Item | 0 | 1 | 2 | Critical |
 |---|---|---|---|---|---|
-| SK1 | Audience origin [D] | The origin doesn't recount; coach recall counted as people; or a provisional term presented as proven | Short of the bar and honestly marked provisional `[guess]`, with the real count shown, the Buyer Mirror set as homework, and pieces meanwhile using the top V-row phrase | Origin V-IDs show ≥3 different people in ≥2 places. The coach's own clients count; coach recall never does; duplicates and comments under one post count once per person and place | yes |
+| SK1 | Audience origin [D] | The origin doesn't recount; the coach's own line, or a quote from fewer than 3 named clients, counted as people; or a provisional term presented as proven | Short of the bar and honestly marked provisional `[guess]`, with the real count shown, the Buyer Mirror set as homework, and pieces meanwhile using the top V-row phrase | Origin V-IDs show ≥3 different people in ≥2 places, or a buyer phrase the coach quotes from ≥3 named clients (founder, 7 Oct 2026). The coach's own clients count; the coach's own lines never do; one client plus "lots of people say it" stays under the bar; duplicates and comments under one post count once per person and place | yes |
 | SK2 | Not owned | A named term, product or program of an alternative in the grid | Not owned as far as anyone looked, but the search isn't recorded | Not a named term of any alternative in the grid, and the search is recorded | yes |
 | SK3 | Meaning and role | No stated meaning | A meaning, but no role | A one-line meaning; it names a framework, mechanism, enemy, identity or result | no |
 | SK4 | Sayable [D] | More than 4 words, or it can't be said aloud naturally | Sayable score 1, or awkward in the coach's voice | ≤4 words, Sayable score ≥2 (of 3), and it reads naturally aloud in the coach's voice | no |
@@ -43,7 +43,7 @@ What good means: the term is built from words 3 or more buyers said in 2 or more
 
 - **No names or handles** in the origin record: people appear by role and V-ID only; commenters are never stored.
 - **No identity-group term and no competitor's brand** as a keyword (SK8 = 0 fails via "no 0").
-- **Coach recall never counts as a person** (wf7 G3).
+- **The coach's own line never counts as a person** (wf7 G3). A phrase the coach quotes from 3+ named clients counts as heard for the keyword; fewer than 3 named clients (one client plus "lots of people say it") stays "(my guess)" / "(mình đoán, Tuần 1 kiểm lại)" (DECISIONS 7 Oct 2026). The research KEEP / WATCH rule is unchanged.
 - **Never blocked:** keyword CTAs built on the term, thresholds and "chấm" are written as the coach asks, with one dated note (DECISIONS).
 
 ## Runtime check shipped
@@ -80,4 +80,4 @@ checks_vn = [
 
 **PASS.** EN, a bookkeeping coach for solo plumbers. Default: "Friday shoebox". Origin: V-03 (client DM), V-11 and V-14 (two forum posts), V-17 (a comment on her own post) = 4 people, 3 places. The grid search for "shoebox" is recorded: no alternative uses it. Shown as "I picked 'Friday shoebox': four plumbers called their receipts 'the shoebox', in a forum, your DMs and your comments. Say 'change' for 'receipt Fridays'." SK1 2 · SK2 2 · SK3 2 · SK4 2 · SK5 1 · SK6 2 · SK7 2 · SK8 2 = 15/16. **Result: PASS.**
 
-**FAIL.** VN, a coach for small flower-shop owners. Default: "hoa ế", origin listed as "V-02, V-05". V-05 is the coach's own recollection ("nhiều chủ tiệm nói vậy lắm"), so it is coach recall: 1 person in 1 place, presented as proven. SK1 = 0. **Result: FAIL** (SK1: origin "V-02, V-05", with V-05 = coach recall).
+**FAIL.** VN, a coach for small flower-shop owners. Default: "hoa ế", origin listed as "V-02, V-05". V-05 is the coach's own recollection ("nhiều chủ tiệm nói vậy lắm", no named client), so it is coach recall: 1 person in 1 place, presented as proven. SK1 = 0. **Result: FAIL** (SK1: origin "V-02, V-05", with V-05 = coach recall).

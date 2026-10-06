@@ -58,8 +58,8 @@
 #   mình không viết: {defect}. Bạn cho {fact} thật là mình viết ngay.') quotes the line it refuses.
 # - Strings are asserted as strings/vn.toml has them now, in the pair the coach chose (default mình–bạn): chị–em turns
 #   "Cần bạn" into "Cần chị", "Đăng theo ý bạn · mình vẫn lo:" into "Đăng theo ý chị · em vẫn lo:", "Bài bạn thích"
-#   into "Bài chị thích", "Lưu lại để mình nhớ bạn" into "Lưu lại để em nhớ chị", "(mình đoán, gõ một chữ là đổi)" into
-#   "(em đoán, …)"; anh–em the same with "anh". map.ok ("Chạy thử 4 tuần nhé.") has no subject, so it reads the same in any pair; regional
+#   into "Bài chị thích", "Lưu lại để mình nhớ bạn" into "Lưu lại để em nhớ chị", "(chưa nghe thì mình đoán, gõ một chữ là đổi)" into
+#   "(chưa nghe thì em đoán, …)"; anh–em the same with "anh". map.ok ("Chạy thử 4 tuần nhé.") has no subject, so it reads the same in any pair; regional
 #   particles follow the coach (nhé · nha · nghe), so exact-string regexes leave room for a particle or a pronoun.
 #   Pairs (persona.toml xung_ho): proof-coach chị–em (Bắc), hanh-android-free-nocomputer chị–em (Bắc), consultant anh–em
 #   (Trung, near neutral), service-biz anh–em (Trung, Quảng), tuan-multihat-plus anh–em (Nam), coldstart-coach bạn–mình
@@ -167,7 +167,7 @@ contains = []
 not_contains = []
 regex = [
   '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
-  '''\((?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
+  '''\(chưa nghe thì (?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -188,7 +188,7 @@ invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; §CM-TODAY 1 'Ngày 0 còn dở: bước kế (§CM-SETUP 9) … không hỏi lại, không in lại'; persona behaviour ('bản free hay hết lượt, quay lại buổi tối cùng đoạn chat và gõ tiếp'). K2 (DECISIONS 6 Oct 2026): QUAY HÔM NAY came in the Map reply, so she left with today's video; the next step is Tuần 1 (start-block step 7: it comes on any answer but a change; ChatGPT Free may split it, ≤3 pieces a reply, so at least 2 copy boxes here), with what the dump left unheard guessed once above it (setup.plan_guess '… (mình đoán, gõ một chữ là đổi).', §CM-SETUP 5). Neither the Map nor QUAY HÔM NAY is shown again, nothing restarts, the pieces print with nothing under them (wf15 §2, R1, R4) and no question about Week 1 or the plan is asked."""
+notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; §CM-TODAY 1 'Ngày 0 còn dở: bước kế (§CM-SETUP 9) … không hỏi lại, không in lại'; persona behaviour ('bản free hay hết lượt, quay lại buổi tối cùng đoạn chat và gõ tiếp'). K2 (DECISIONS 6 Oct 2026): QUAY HÔM NAY came in the Map reply, so she left with today's video; the next step is Tuần 1 (start-block step 7: it comes on any answer but a change; ChatGPT Free may split it, ≤3 pieces a reply, so at least 2 copy boxes here), with what the dump left unheard guessed once above it (setup.plan_guess '… (chưa nghe thì mình đoán, gõ một chữ là đổi).', §CM-SETUP 5). Neither the Map nor QUAY HÔM NAY is shown again, nothing restarts, the pieces print with nothing under them (wf15 §2, R1, R4) and no question about Week 1 or the plan is asked."""
 
 [[case]]
 id = "router.vn.003"
@@ -1769,7 +1769,7 @@ input = '''chiều nay anh quay ở nhà mẫu bên Dĩ An luôn, chỗ đó sá
 contains = []
 not_contains = []
 regex = [
-  '''\((?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
+  '''\(chưa nghe thì (?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
   '''(?i)hằng tuần kể 15 phút''',
   '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
   '''(?i)gồng lãi''',
@@ -1790,7 +1790,7 @@ invariants = ["I1", "I3", "I5", "I6", "I15", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13) as amended by K2 (DECISIONS 6 Oct 2026): start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; §CM-SETUP 9 'coach đáp (trừ sửa): 7–9 chung một tin, không chờ hỏi (app cắt: card ở tin sau)'; §CM-TODAY 1 'Sau Bản đồ + QUAY HÔM NAY, nhắn gì (trừ sửa Bản đồ) cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?"'. His message is not a change, so it also settles the Map. §CM-SETUP 5: platform and the Zalo/email list are asked only in the dump prompt's hint list, talk day never; what the dump left unheard is guessed and named once above Tuần 1 with setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).', a line only this step has). §CM-WEEK 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece (R1, R4); start-block step 7: the inbox replies and the Zalo message asking 3 past clients one question (research.ask3 '… Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?'). ChatGPT Plus: all of Tuần 1 in one reply. The Brand Card and save line may close this reply or come in the next; no stop point, no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file."""
+notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13) as amended by K2 (DECISIONS 6 Oct 2026): start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; §CM-SETUP 9 'coach đáp (trừ sửa): 7–9 chung một tin, không chờ hỏi (app cắt: card ở tin sau)'; §CM-TODAY 1 'Sau Bản đồ + QUAY HÔM NAY, nhắn gì (trừ sửa Bản đồ) cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?"'. His message is not a change, so it also settles the Map. §CM-SETUP 5: platform and the Zalo/email list are asked only in the dump prompt's hint list, talk day never; what the dump left unheard is guessed and named once above Tuần 1 with setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).', a line only this step has). §CM-WEEK 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece (R1, R4); start-block step 7: the inbox replies and the Zalo message asking 3 past clients one question (research.ask3 '… Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?'). ChatGPT Plus: all of Tuần 1 in one reply. The Brand Card and save line may close this reply or come in the next; no stop point, no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file."""
 
 [[case]]
 id = "router.vn.104"
@@ -1812,7 +1812,7 @@ regex = [
   '''TIẾP →[^\n]*tiếp[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''\((?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
+  '''\(chưa nghe thì (?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
   '''(?i)Tin trả lời inbox (?:1|2)''',
   '''(?i)loay hoay nhất''',
   '''(?im)^\W*N\d+ · ''',

@@ -676,7 +676,7 @@ title = "Cold-start card: founding or no offer, no proof yet, list_size ask, no 
 context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result), she typed 'ừa'; the last câu đoán (what she sells) got 'chưa có gì hết á, mình chưa bán gì…'; that reply showed the 4-line Map (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it. She skipped chunk 3, so her platform and Zalo list were never heard. No Brand Card yet. Turn 1 answers the Map reply and gets Tuần 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."""
 input = '''[turn 1] ok, tối mình quay
 [turn 2] ok'''
-contains = ["(mình đoán, gõ một chữ là đổi)"]
+contains = ["(chưa nghe thì mình đoán, gõ một chữ là đổi)"]
 not_contains = []
 regex = [
   '''(?m)^\s*offer_status:\s*(founding|none)\s*$''',
@@ -695,7 +695,7 @@ invariants = ["I1", "I8", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card offer_status / proof_ready enums; cold_start = true → any result number is a fabrication (I8); the proof rows stay empty until a consented result exists (her friend's '3 tuần hết đau' is a story at most, never proof). setup.kit-facts 5 and setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).'), named once above Tuần 1. brain.kit-print 3 list_size=ask|{n} (G2 K24): she named no list, so ask (or 0 if the guess says none), never a made-up number. The old '(mình đoán)' for the founding offer moved: the offer is a block field now."""
+notes = """scope: transcript. brand-card offer_status / proof_ready enums; cold_start = true → any result number is a fabrication (I8); the proof rows stay empty until a consented result exists (her friend's '3 tuần hết đau' is a story at most, never proof). setup.kit-facts 5 and setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).'), named once above Tuần 1. brain.kit-print 3 list_size=ask|{n} (G2 K24): she named no list, so ask (or 0 if the guess says none), never a made-up number. The old '(mình đoán)' for the founding offer moved: the offer is a block field now."""
 
 [[case]]
 id = "brain.vn.023"
@@ -777,7 +777,7 @@ invariants = ["I1", "I5", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """§CM-CARD 5 'Claude, cách lưu: save.claude_plain' ('Chép card, bấm + cạnh mục file của project, chọn Add text content, dán vào, bấm Save. Đoạn chat này không mất đâu.'); start-block Lưu 'Dự phòng: gửi vào Zalo "Cloud của tôi"'; quit point 10 (Claude save without a backup). Saving never gates anything (start-block step 8 'Chưa lưu vẫn làm tiếp'). The picture route of the old spec is not in the kit; the backup line covers the quit point."""
+notes = """§CM-CARD 5 'Claude, cách lưu: save.claude_plain' ('Chép card, bấm + cạnh mục file của project, chọn Add text content, dán vào, bấm Save. Dự phòng: Zalo "Cloud của tôi".'); start-block Lưu 'Dự phòng: gửi vào Zalo "Cloud của tôi"'; quit point 10 (Claude save without a backup). Saving never gates anything (start-block step 8 'Chưa lưu vẫn làm tiếp'). The picture route of the old spec is not in the kit; the backup line covers the quit point."""
 
 [[case]]
 id = "brain.vn.026"

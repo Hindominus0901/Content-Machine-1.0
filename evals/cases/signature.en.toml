@@ -327,7 +327,7 @@ critical = ["SK1", "SK2", "SK6"]
 min_score = 13
 invariants = ["I1", "I4", "I5", "I9", "I10"]
 max_questions = 1
-notes = "SK1 reaches 2 only from buyer words said by >=3 different people in >=2 places (Lorraine's own reply + 4 commenters + research line 7); Day-0 dump lines are coach recall and never count. SK2: not owned by an alternative (the 'Reinvention Blueprint' seller). SK6: default shown with origin and one reason, swap offered. Plain words to the coach: no 'registry', 'echo', 'K-1'."
+notes = "SK1 reaches 2 only from buyer words said by >=3 different people in >=2 places (Lorraine's own reply + 4 commenters + research line 7); a Day-0 dump line counts only when the coach quotes it from 3+ named clients (DECISIONS 7 Oct 2026); her own lines never count. SK2: not owned by an alternative (the 'Reinvention Blueprint' seller). SK6: default shown with origin and one reason, swap offered. Plain words to the coach: no 'registry', 'echo', 'K-1'."
 
 [[case]]
 id = "signature.en.017"

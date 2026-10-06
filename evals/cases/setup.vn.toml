@@ -52,7 +52,7 @@
 #   not_* and max_* on every reply), "scope: pieces", "scope: visible".
 # - contains: case-insensitive substring after NFC. regex / not_regex: Python re, case-sensitive unless (?i).
 # - Pronoun-dependent strings are asserted in the pair the coach chose (default mình–bạn): chị–em turns "Lưu lại để mình
-#   nhớ bạn" into "Lưu lại để em nhớ chị", "Cần bạn ·" into "Cần chị ·", "(mình đoán, gõ một chữ là đổi)" into "(em đoán,
+#   nhớ bạn" into "Lưu lại để em nhớ chị", "Cần bạn ·" into "Cần chị ·", "(chưa nghe thì mình đoán, gõ một chữ là đổi)" into "(chưa nghe thì em đoán,
 #   …)". map.ok "Chạy thử 4 tuần nhé. OK hay sửa một dòng?" has no subject (VK-31), so its regexes take "[Cc]hạy"; regional particles follow the coach (nhé · nha ·
 #   nghe), so exact-string regexes leave room for a particle or a pronoun.
 # - Status lines (wf15 §2, I3): a Ready piece prints only its content. "VÌ SAO RA KHÁCH", "✓ Đã kiểm:", "Sẵn sàng … ·" or
@@ -260,7 +260,7 @@ not_contains = [
   "3 câu đáng tiền bạn vừa nói",
   "Bạn cứ xả hết ra",
   "Đăng theo ý bạn",
-  "(mình đoán, gõ một chữ là đổi)",
+  "(chưa nghe thì mình đoán, gõ một chữ là đổi)",
   "VÌ SAO RA KHÁCH",
   "✓ Đã kiểm",
 ]
@@ -357,7 +357,7 @@ regex = [
   '''\A(?:(?!(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)))[\s\S])*?(?i:thuộc|nhớ)''',
   '''\A(?:(?!(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)))[\s\S])*?(?i:câu đầu|câu cuối|(?:3|ba) ý)''',
   '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)''',
-  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\((?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
+  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì (?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
 ]
 not_regex = [
   '(?i)(đọc|nhìn)[^.\n]{0,30}(màn hình|điện thoại|kịch bản)[^.\n]{0,30}(trong lúc|khi|lúc)\s+(đang\s+)?quay',
@@ -667,7 +667,7 @@ title = "ChatGPT Free: Week 1 arrives unasked after QUAY HÔM NAY, the plan gues
 context = "Door B, ChatGPT Free, pair chị–em. The 4-line Map (TỪ KHOÁ: NGẠI CHÀO) is on screen with QUAY HÔM NAY under it, ending '… OK hay sửa một dòng?'. Her dump named Facebook, TikTok and her Zalo but no talk day."
 input = """ok em. chi chup man hinh ban do gui vao cloud cua toi roi"""
 regex = [
-  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\((?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
+  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì (?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
   '''(?s)(?:(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)).*?){2}''',
   '''(?s)```.+?```''',
 ]
@@ -681,7 +681,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I8", "I12", "I14", "I15", "I17", "I18"]
 max_questions = 1
-notes = "start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)' and §CM-TODAY 1: her 'ok' (and the Zalo screenshot, persona behaviour) brings all of Week 1, unasked. Above it, once: setup.plan_guess 'Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).' in chị–em ('(em đoán, chị gõ một chữ là đổi)'). Every piece prints with nothing under it; the WHY of a piece shows on 'tại sao?' (setup.vn.053; R1). No upper bound on pieces: the old case asserted 3 pieces a reply on Free with a WHY line each, but the VN kit says all of Week 1 in the next reply (the card may move to the reply after); whether Free splits Week 1 into replies of ≤3 pieces is an open kit question (wf15-case-impact open flags), so either form passes."
+notes = "start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)' and §CM-TODAY 1: her 'ok' (and the Zalo screenshot, persona behaviour) brings all of Week 1, unasked. Above it, once: setup.plan_guess 'Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).' in chị–em ('(chưa nghe thì em đoán, chị gõ một chữ là đổi)'). Every piece prints with nothing under it; the WHY of a piece shows on 'tại sao?' (setup.vn.053; R1). No upper bound on pieces: the old case asserted 3 pieces a reply on Free with a WHY line each, but the VN kit says all of Week 1 in the next reply (the card may move to the reply after); whether Free splits Week 1 into replies of ≤3 pieces is an open kit question (wf15-case-impact open flags), so either form passes."
 
 [[case]]
 id = "setup.vn.030"
@@ -705,7 +705,7 @@ not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
 invariants = ["I1", "I3", "I8", "I9", "I12", "I14", "I15"]
-notes = "scope: transcript. start-block step 7 and §CM-WEEK 2: 3 video ngắn, 1 bài dài, 1 tin Zalo (có danh sách: email), 1-2 tin trả lời inbox, and one Zalo message asking 3 past students one question: research.ask3 'Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn dùng đúng lời của bạn. Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?' in her one-to-one voice; wf2 §1 Zalo replaces email nurture; expected.toml [week1]. Saying 'thay cho email' is fine; an email piece (subject line, 'gửi email cho') is not, because her list is 0. Her Zalo facts are in chunk 3, so the context has her tell it after the cut (else they are guessed above Week 1, setup.vn.051). Nothing under the pieces (R1, R4)."
+notes = "scope: transcript. start-block step 7 and §CM-WEEK 2: 3 video ngắn, 1 bài dài, 1 tin Zalo (có danh sách: email), 1-2 tin trả lời inbox, and one Zalo message asking 3 past students one question: research.ask3 'Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn lấy đúng câu của bạn. Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?' in her one-to-one voice; wf2 §1 Zalo replaces email nurture; expected.toml [week1]. Saying 'thay cho email' is fine; an email piece (subject line, 'gửi email cho') is not, because her list is 0. Her Zalo facts are in chunk 3, so the context has her tell it after the cut (else they are guessed above Week 1, setup.vn.051). Nothing under the pieces (R1, R4)."
 
 [[case]]
 id = "setup.vn.031"
@@ -980,7 +980,7 @@ regex = [
   '''(?m)^\W*GIỌNG:[^\n]*với khách:''',
   '''(?ms)\A(?=.*[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?)(?=.*^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA):.*^\W*GIỌNG:.*QUAY HÔM NAY)''',
   '''[Qq]uay luôn bây giờ, hoặc đăng phần chữ làm bài viết(?:[^\S\n]+\w+){0,2}[.:!]''',
-  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\((?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
+  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì (?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
   '''Phần còn lại là cho máy, không cần đọc:''',
@@ -1155,7 +1155,7 @@ context = "Variant of the persona: Claude Pro, Door A, pair anh–em. His dump c
 input = """[turn 1] ok. Tôi không quay video đâu, tôi viết thôi.
 [turn 2] <<simulator: only if the Brand Card has not printed yet, send 'tiếp'; otherwise stop>>"""
 regex = [
-  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(em đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
+  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì em đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
   '''(?i)list_size\s*[=:]\s*ask\b''',
   '''Lưu lại để em nhớ anh \(30 giây\)''',
 ]
@@ -1169,7 +1169,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I8", "I15", "I17"]
 max_questions = 1
-notes = "scope: each reply. DECISIONS 6 Oct (facts a cut can lose): the dump prompt asks where they post and about the Zalo/email list up front; what is still unheard is guessed and named once in one line above Week 1, changeable with one word: setup.kit-facts 5 'Nền tảng, danh sách Zalo/email: chỉ hỏi ở lời mời xả; … Chưa nghe thì đoán, trên Tuần 1: setup.plan_guess' = 'Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).' in anh–em. The card stores list_size = ask until he names a number (schemas/brand-card.toml), never 0 as fact, and 250 / 380 were never said, so they must not appear (I8). §CM-WEEK 2: no list (said or guessed) → no email piece. A deliberate variant: evals/run.py now has the coach add the list to chunk 1 when the prompt asks (VP-2), so this state needs the context's say-so. S1 and floor: setup.plan_guess lives in the method file. VG2 consultant S1 shows the plan line (with the wrong platform)."
+notes = "scope: each reply. DECISIONS 6 Oct (facts a cut can lose): the dump prompt asks where they post and about the Zalo/email list up front; what is still unheard is guessed and named once in one line above Week 1, changeable with one word: setup.kit-facts 5 'Nền tảng, danh sách Zalo/email: chỉ hỏi ở lời mời xả; … Chưa nghe thì đoán, trên Tuần 1: setup.plan_guess' = 'Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).' in anh–em. The card stores list_size = ask until he names a number (schemas/brand-card.toml), never 0 as fact, and 250 / 380 were never said, so they must not appear (I8). §CM-WEEK 2: no list (said or guessed) → no email piece. A deliberate variant: evals/run.py now has the coach add the list to chunk 1 when the prompt asks (VP-2), so this state needs the context's say-so. S1 and floor: setup.plan_guess lives in the method file. VG2 consultant S1 shows the plan line (with the wrong platform)."
 
 # ---------------------------------------------------------------- hidden checks via 'tại sao?' (wf15 §2-§3)
 

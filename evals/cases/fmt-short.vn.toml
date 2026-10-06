@@ -509,7 +509,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_questions = 1
-notes = """UX §6 'No detours': 0 instructions to download, upload, visit the setup page or switch app between Start and Day 0's last reply (graders.py day0 detour check); setup.kit-dump 3 'Không bắt tải, đính kèm, cài đặt, đổi máy'. DECISIONS: output is scripts only, no editing. fmt-short.kit-video-delivery: 'Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng…'. §CM-TODAY 1 (wf15 §1.6): after QUAY HÔM NAY any message gets all of Tuần 1, a question answered in one line first, so the 'no app' answer sits at the top and Tuần 1 follows (its copy boxes), never 'làm Tuần 1 không?'. The old ≤180-word cap went with the stop point. Week-1 pieces print with nothing under them (R1). Pair bạn–mình: no 'chị' in the answer to her."""
+notes = """UX §6 'No detours': 0 instructions to download, upload, visit the setup page or switch app between Start and Day 0's last reply (graders.py day0 detour check); setup.kit-dump 3 'Không bắt tải, cài đặt, đổi máy'. DECISIONS: output is scripts only, no editing. fmt-short.kit-video-delivery: 'Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng…'. §CM-TODAY 1 (wf15 §1.6): after QUAY HÔM NAY any message gets all of Tuần 1, a question answered in one line first, so the 'no app' answer sits at the top and Tuần 1 follows (its copy boxes), never 'làm Tuần 1 không?'. The old ≤180-word cap went with the stop point. Week-1 pieces print with nothing under them (R1). Pair bạn–mình: no 'chị' in the answer to her."""
 
 [[case]]
 id = "fmt-short.vn.013"

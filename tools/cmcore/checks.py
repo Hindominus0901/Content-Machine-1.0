@@ -148,7 +148,9 @@ _MULT_AFTER = [
 _MONEY_AFTER = re.compile(r"\s?(?:đồng|dong|vnđ|vnd|usd|dollars?|bucks|đ|₫)(?![^\W\d_])", re.I)
 _PERCENT_AFTER = re.compile(r"\s?(?:%|percent(?!\w)|per cent(?!\w)|phần trăm(?!\w))", re.I)
 _TAG_SPAN = re.compile(r"\[\s*(?:NEEDS|CẦN|guess|GAP|đoán|ước tính)\b[^\]\n]*(?:\]|$)", re.I | re.M)
-_GUESS_AFTER = re.compile(r"\s*(?:\[\s*(?:guess|đoán)\s*\]|\((?:my |mình |em |anh |chị )?(?:guess|đoán)\))", re.I)
+# "(mình đoán)", and the tag with its follow-up: "(mình đoán, Tuần 1 kiểm lại)", "(my guess; one word changes it)"
+_GUESS_AFTER = re.compile(r"\s*(?:\[\s*(?:guess|đoán)\s*\]|\((?:my |mình |em |anh |chị )?(?:guess|đoán)"
+                          r"(?:[,;][^)\n]{0,40})?\))", re.I)
 STRUCTURE_WORDS = {
     "beat", "beats", "slide", "slides", "line", "step", "part", "take", "hook", "option", "week", "day",
     "chunk", "round", "version", "question", "no", "n", "q", "tip", "point", "idea", "piece", "rung",
