@@ -20,7 +20,7 @@ Tóm một câu: máy phải viết như một người Việt đang nói chuy�
 5. Bán hàng, lời mời, tin nhắn, bình luận
 6. Khác nhau theo nền tảng
 7. Vùng miền và lứa tuổi
-8. 36 cặp trước / sau
+8. 39 cặp trước / sau, thêm 6 cặp ngắn
 9. Phép thử: đọc to, dịch ngược, đếm mật độ
 10. Cho maintainer: lint, chuẩn chấm, đề xuất sửa, câu hỏi mở, nguồn
 
@@ -69,24 +69,25 @@ Tóm một câu: máy phải viết như một người Việt đang nói chuy�
 ## 1. Mười lăm nguyên tắc gốc
 
 1. **Lời xả của coach là mẫu, không phải tư liệu.** Chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ của họ là thứ máy bắt chước trước tiên. Có 2–3 bài thật của coach thì đưa vào mọi lần viết (wf14 V3). Một bài thật dạy máy nhiều hơn mười luật cấm.
-2. **Hình dung, đừng dịch.** Cao Xuân Hạo: dịch sát từng chữ là cách tốt nhất để dịch sai. Trước khi viết, hình dung coach đang nói với **một** người khách: lúc mấy giờ, ở đâu, người đó vừa nói gì. Rồi viết lại y như vậy. Lệnh đúng là "viết như chị Hồng đang nhắn cho một em học viên lúc 9 giờ tối", không phải "viết bài về cắm hoa bằng tiếng Việt tự nhiên".
-3. **Đề trước, thuyết sau.** Tiếng Việt là ngôn ngữ đề–thuyết: nói cái đang bàn tới trước, rồi "thì / là / mà", rồi mới nhận xét. "Tiền cọc thì đừng chuyển vội." "Máy lạnh không mát thì coi cái lưới lọc trước." AI dựng câu chủ–vị kiểu Anh nên thừa chủ ngữ, thừa "của bạn", thừa "đã / sẽ", thừa "được… bởi".
+2. **Hình dung, đừng dịch.** Cao Xuân Hạo: dịch sát từng chữ là cách tốt nhất để dịch sai. Trước khi viết, hình dung coach đang nói với **một** người khách: lúc mấy giờ, ở đâu, người đó vừa nói gì. Rồi viết lại y như vậy. Lệnh đúng là "viết như chị Hồng đang nhắn cho một em học viên lúc 9 giờ tối", không phải "viết bài về cắm hoa bằng tiếng Việt tự nhiên". Coach nhờ dịch một bài nước ngoài để đăng lại (DECISIONS: được, kèm một dòng lưu ý) thì cũng dịch **ý**, kể lại bằng giọng coach, không dịch từng chữ.
+3. **Đề trước, thuyết sau.** Tiếng Việt là ngôn ngữ đề–thuyết: nói cái đang bàn tới trước, rồi "thì / là / mà", rồi mới nhận xét. "Giày chạy thì đừng ham rẻ." "Máy lạnh không mát thì coi cái lưới lọc trước." AI dựng câu chủ–vị kiểu Anh nên thừa chủ ngữ, thừa "của bạn", thừa "đã / sẽ", thừa "được… bởi".
 4. **Câu ngắn, nói một hơi.** Mỗi câu một ý, đọc lên không phải lấy hơi giữa chừng. Câu dài thì là câu kể nối bằng dấu phẩy và "rồi, xong, mà". Xen một câu cụt 2–5 chữ: "Thế thôi." "Run thật." "Bảy tháng thì đóng."
 5. **Nối bằng chữ nói.** *thì, mà, rồi, xong, nên, thế là / vậy là, tại, chứ, có điều, với lại, hóa ra, thế mà / vậy mà, mới*. Trong kho lời nói: "thì" 456 lần, "mà" 384, "rồi" 352, "xong" 92; còn *tuy nhiên, bên cạnh đó, ngoài ra, vì vậy, điều này, không chỉ… mà còn, một cách* đều 0.
 6. **Kể theo cảnh, ý đến sau.** Chuyện mở bằng giờ, chỗ, người, đồ vật; có câu người ta nói nguyên văn; ngoặt bằng một việc làm cụ thể; bài học là một câu ngắn ở cuối. Không mở bằng luận điểm rồi "Đây là lý do".
 7. **Lời người khác để nguyên văn.** Dẫn bằng *bảo, nói, kêu, nhắn, hỏi đúng một câu*, rồi hai chấm và ngoặc kép. Không "chia sẻ rằng", không "cho biết rằng". Đừng chuốt câu khách cho đúng ngữ pháp.
 8. **Bài học là một câu hai vế, hoặc nằm trong miệng người khác.** "Rẻ lúc học, đắt lúc đền." "Má dạy: tiền nào của nấy." Không "Bài học rút ra là…", không "Hãy luôn nhớ rằng…".
 9. **Kết bằng một việc nhỏ cho một người, hoặc một câu hỏi thật.** "Ai đang… thì tối nay thử…" Không "Hy vọng bài viết hữu ích", không "Đừng quên like, share".
-10. **Một cặp xưng hô, một vùng, đúng tuổi.** Cặp xưng hô là quyết định đầu tiên, không phải chi tiết. Đã Bắc thì không "nha, nè"; đã Nam thì không "nhé, đấy". Khách 45+ không gọi là "bạn".
+10. **Một cặp xưng hô, một vùng, đúng tuổi.** Cặp xưng hô là quyết định đầu tiên, không phải chi tiết. Mặc định giọng Bắc không "nha, nè", giọng Nam không "nhé, đấy"; nhưng bài thật của coach thắng mặc định (người Bắc dưới 30 viết "nha" trên mạng là thường, coach Bắc 40+ thì không). Khách 45+ không gọi là "bạn".
 11. **Tiểu từ là giọng, đặt đúng chỗ.** Ở chỗ dặn, rủ, làm thân, gỡ căng. Thiếu thì như bản dịch; rắc đều câu nào cũng có thì như diễn. Liều dùng lấy theo bài thật của chính coach.
 12. **Chữ thường ngày thay chữ sách.** *lắm, quá, ghê, thiệt* thay *rất, vô cùng*; *thấy* thay *cảm thấy*; *khách* thay *khách hàng*; *cái sổ, cái máy* (có "cái") thay danh từ trần. Kho lời nói: "cái" 508, "lắm" 73, "rất" 3, "cảm thấy" 0, "khách" 320, "khách hàng" 4.
 13. **Cảm xúc mộc, kể bằng việc làm.** *sợ, ngại, thương, tức, mừng, quê, nản*. Không *hạnh phúc vỡ òa, biết ơn sâu sắc, trân quý, chữa lành*. Kho lời nói: "sợ" 82, "ngại" 24, "thương" 21; "hạnh phúc", "biết ơn", "cảm động" đều 0.
-14. **Mời nhẹ mà rõ, giá nói thẳng.** Một việc, chữ khóa tiếng Việt, luôn có đường nhắn riêng cho người ngại, có giá nếu là bài bán. Không giục, không giấu giá, không nổ.
-15. **Đừng sửa quá tay.** "Nó" sau danh từ ("cái máy nó kêu"), "là" nhấn ("mệt là mệt thiệt"), "thì" nhiều trong lời nói, "nói thật / nói thiệt", câu mở "tóm lại là" giữa lời kể, chữ Anh coach thật sự dùng: đều là tiếng Việt thật. Cắt sạch thì câu lại trơ, lại giống văn dịch (mục 2.7).
+14. **Mời nhẹ mà rõ, giá nói thẳng.** Một việc, từ khóa tiếng Việt, luôn có đường nhắn riêng cho người ngại, có giá nếu là bài bán. Không giục, không giấu giá, không nổ.
+15. **Đừng sửa quá tay.** "Nó" sau danh từ ("cái máy nó kêu"), "là" nhấn ("mệt là mệt thiệt"), "thì" nhiều trong lời nói, "nói thật / nói thiệt", "tóm lại là" giữa lời kể, chữ Anh coach thật sự dùng: đều là tiếng Việt thật. Cắt sạch thì câu lại trơ, lại giống văn dịch (mục 2.7).
 
 **Phép thử chung:** đọc to lên, hỏi "người Việt có nói câu này với khách không?". Rồi chọn ba câu, dịch từng chữ ra tiếng Anh: câu nào dịch ra trơn tru, câu đó là câu Tây (dịch giả Trần Tiễn Cao Đăng nhận xét bản dịch kém có "cấu trúc ngữ pháp giống hệt như trong tiếng Anh").
 
 ---
+
 ## 2. Văn dịch: danh mục mẫu, vì sao cấn, sửa thế nào
 
 Văn AI tiếng Việt lệch theo **ba hướng cùng lúc**:
@@ -94,7 +95,7 @@ Văn AI tiếng Việt lệch theo **ba hướng cùng lúc**:
 | Nguồn lệch | Nghe như | Dấu hiệu | Ví dụ AI | Người thật nói |
 |---|---|---|---|---|
 | **A. Dịch từ tiếng Anh** | Sách hướng dẫn dịch | Câu chủ–vị kiểu Anh, thì động từ, danh từ hóa, bị động, hook kiểu Mỹ | "Đó là lúc tôi nhận ra rằng tôi đã sai." | "Lúc đấy mình mới biết là mình làm ngược." |
-| **B. Văn mẫu nhà trường, văn PR** | Bài nghị luận, thông cáo | Mở–thân–kết, "Như chúng ta đã biết", "đóng vai trò quan trọng", "Tóm lại" | "Có thể nói, sự kiên trì đóng vai trò vô cùng quan trọng." | "Ngày nào làm một chút, vẫn hơn tuần làm một bữa thật to." |
+| **B. Văn mẫu nhà trường, văn PR** | Bài nghị luận, thông cáo | Mở–thân–kết, "Như chúng ta đã biết", "đóng vai trò quan trọng", "Tóm lại" | "Có thể nói, sự kiên trì đóng vai trò vô cùng quan trọng." | "Ngày nào cũng làm một ít, vẫn hơn cả tuần dồn vào một bữa." |
 | **C. Tổng đài, trợ lý ảo, banner** | Nhân viên trực page, ChatGPT, tờ rơi | "Cảm ơn bạn đã liên hệ", "Chắc chắn rồi!", "Dưới đây là", "Nhanh tay kẻo lỡ!" | "Chắc chắn rồi! Dưới đây là 5 mẫu caption tuyệt vời dành cho bạn:" | "5 bản đây chị, chị chọn nha:" |
 
 Cả ba có chung một lỗi: **không có ai cụ thể đang nói với một người cụ thể.** Không tên, không vai (em, chị, mình), không giờ, không giá, không câu hỏi thật.
@@ -107,16 +108,16 @@ Danh mục dưới đây chia năm tầng: từ vựng, cấu trúc câu, nối 
 |---|---|---|---|---|---|
 | T1 | "giúp bạn…", "cho phép bạn…" (help you, allow you) | Đồ vật, khóa học làm chủ ngữ rồi "giúp bạn": tờ rơi dịch | Nói người ta được gì, đỡ gì: "đỡ", "khỏi", "là… liền" | "Ứng dụng này cho phép bạn đặt lịch dễ dàng." → "Đặt lịch trong app luôn, khỏi gọi điện." | Judge; ≥2 lần một bài thì viết lại |
 | T2 | "mang lại / mang đến / đem lại" (bring, deliver) | Động từ dịch, hay đi kèm danh từ hóa ("mang lại sự tự tin") | Tả kết quả thấy được | "Lớp bơi mang lại cho bé sự tự tin dưới nước." → "Học xong là bé dám úp mặt xuống nước, hết khóc." | Judge (nghĩa đen "mang tới tận nhà" thì giữ) |
-| T3 | Từ thổi phồng: nâng tầm, bứt phá, đột phá, đẳng cấp, vượt trội, thần tốc, giải pháp toàn diện, bùng nổ doanh số (elevate, breakthrough, premium) | Đọc là biết quảng cáo, mất tin ngay | Nói số và việc cụ thể | "Bứt phá doanh số cùng khóa TikTok đột phá." → "Học 3 buổi, về đứng bếp quay được luôn, điện thoại cũ cũng được." | Lint |
-| T4 | Ẩn dụ sáo: hành trình, chìa khóa (nghĩa bóng), khám phá, mở khóa tiềm năng, khai phá, hành trang, giải mã, đánh thức tiềm năng (journey, key, unlock) | Coach Việt không gọi lớp 8 buổi là "hành trình" | Nói lớp mấy buổi, làm gì, ra cái gì | "Hành trình 8 tuần trang bị hành trang vững chắc." → "8 tuần, tuần nào cũng ngồi sửa file của từng bạn." | Lint (nghĩa đen "mở khóa cửa", "đánh thức con dậy" thì giữ) |
+| T3 | Từ thổi phồng: nâng tầm, bứt phá, đột phá, đẳng cấp, vượt trội, thần tốc, giải pháp toàn diện, bùng nổ doanh số (elevate, breakthrough, premium) | Đọc là biết quảng cáo, mất tin ngay | Nói số và việc cụ thể | "Bứt phá doanh số cùng khóa TikTok đột phá." → "Học 3 buổi, về đứng bếp tự quay luôn, điện thoại cũ cũng được." | Lint |
+| T4 | Ẩn dụ sáo: hành trình, chìa khóa (nghĩa bóng), khám phá, mở khóa tiềm năng, khai phá, hành trang, giải mã, đánh thức tiềm năng (journey, key, unlock) | Coach Việt không gọi lớp 8 buổi là "hành trình" | Nói lớp mấy buổi, làm gì, ra cái gì | "Hành trình 8 tuần trang bị hành trang vững chắc." → "8 tuần, tuần nào cũng ngồi sửa file của từng bạn." | Lint (nghĩa đen "mở khóa cửa", "đánh thức con dậy", "chìa khóa để trên bàn", "chuẩn bị hành trang đi biển" thì giữ; "hành trình" nghĩa đen hiện vẫn bị bắt, xem 10.2) |
 | T5 | "giải pháp", "tối ưu (hóa)" (solution, optimize) | Chữ tài liệu doanh nghiệp; khách không mua "giải pháp" | Nói việc mình làm | "Giải pháp tối ưu cho ảnh sản phẩm." → "Điện thoại cũng chụp đủ sáng, miễn đặt đèn đúng chỗ." | Judge |
 | T6 | "trải nghiệm" làm danh từ (experience) | Chữ marketing, không tả được gì | Tả khách thấy gì, làm gì | "Mang đến trải nghiệm thư giãn tuyệt vời." → "Khách ngồi một lúc là quên luôn cái điện thoại." | Judge (động từ "làm thử, học thử" thì được) |
 | T7 | Động từ rỗng "thực hiện, tiến hành" (perform, conduct) | Thêm một động từ trước động từ thật | Dùng động từ thật | "Chúng ta sẽ tiến hành kiểm tra máy." → "Hiếu tháo cái lưới lọc ra coi trước." | Lint ("tiến hành"); Judge ("thực hiện") |
 | T8 | Hán Việt trang trọng trong lời nói: nhằm, bởi lẽ, gia tăng, sở hữu, tiếp cận, cải thiện, duy trì, đáng kể, thúc đẩy | Kịch bản nói nghe như bản tin | để, vì, tăng, có, tới được, đỡ hơn, giữ, nhiều | "Nhằm gia tăng tỷ lệ khách quay lại…" → "Muốn khách quay lại nhiều hơn thì…" | Đếm (kịch bản nói: từ 2 chữ thì sửa) |
-| T9 | Khung danh từ dịch: tầm quan trọng của việc, sức mạnh của, nghệ thuật của, ngành công nghiệp làm đẹp, mang tính…, đầy cảm hứng, cá nhân hóa | Dịch "the importance of, the power of, -al, inspiring, personalized"; "công nghiệp" là nhà máy | Nói thẳng bằng động từ; "nghề nail", "ngành làm đẹp" | "Tầm quan trọng của việc chăm sóc khách cũ trong ngành công nghiệp làm đẹp." → "Làm nail mà bỏ khách cũ là tự đuổi khách." | Lint (2 cụm đầu); Judge |
-| T10 | Cụm nhấn kiểu Anh: hơn bao giờ hết, không thể bỏ lỡ, bạn không thể bỏ qua, bất kể bạn là ai, bất kỳ | Khuôn tựa SEO dịch | Nói lý do thật, bỏ cụm nhấn | "5 sai lầm mà bạn không thể bỏ qua." → "5 cái sai hồi mới mở tiệm, em dính đủ năm." | Lint (3 cụm đầu); Đếm ("bất kỳ" ≥2) |
+| T9 | Khung danh từ dịch: tầm quan trọng của việc, sức mạnh của, nghệ thuật của, ngành công nghiệp làm đẹp, mang tính…, đầy cảm hứng, cá nhân hóa | Dịch "the importance of, the power of, -al, inspiring, personalized"; "công nghiệp" là nhà máy | Nói thẳng bằng động từ; "nghề nail", "ngành làm đẹp" | "Tầm quan trọng của việc chăm sóc khách cũ trong ngành công nghiệp làm đẹp." → "Làm nail mà bỏ bê khách cũ là tự đuổi khách đi." | Lint (2 cụm đầu); Judge |
+| T10 | Cụm nhấn kiểu Anh: hơn bao giờ hết, không thể bỏ lỡ, bạn không thể bỏ qua, bất kể bạn là ai, bất kỳ | Khuôn tựa SEO dịch | Nói lý do thật, bỏ cụm nhấn | "5 sai lầm mà bạn không thể bỏ qua." → "5 cái lỗi hồi mới mở tiệm, em dính đủ cả năm." | Lint (3 cụm đầu); Đếm ("bất kỳ" ≥2) |
 | T11 | Thành ngữ dịch sát: ở cuối ngày, đi thêm một dặm, phá vỡ băng, con voi trong phòng, đặt mình vào đôi giày của, tư duy ngoài chiếc hộp, thay đổi cuộc chơi | Người nghe phải dịch ngược ra tiếng Anh mới hiểu | Dùng câu Việt có sẵn: nói cho cùng, làm hơn người ta một chút, mở lời làm quen, chuyện ai cũng biết mà không ai nói, đặt mình vào hoàn cảnh người ta | "Hãy đặt mình vào đôi giày của khách." → "Thử nghĩ coi, mình là khách thì mình ngại chỗ nào." | Lint ("phá băng", "bước ra khỏi vùng an toàn" đã quen: Judge) |
-| T12 | Câu an ủi dịch từ sách self-help: bạn không đơn độc, bạn xứng đáng, phiên bản tốt nhất của chính mình, tôi đã từng ở vị trí của bạn | Dịch "You're not alone / You deserve / best version of yourself / I've been in your shoes" | An ủi bằng chuyện chung: "không phải mỗi mình chị đâu", "mình cũng từng y chang" | "Bạn không đơn độc. Bạn xứng đáng được nghỉ ngơi." → "Mệt thì nghỉ một bữa đi chị, đâu phải mỗi mình chị vậy." (Nam) | Lint |
+| T12 | Câu an ủi dịch từ sách self-help: bạn không đơn độc, bạn xứng đáng, phiên bản tốt nhất của chính mình, tôi đã từng ở vị trí của bạn | Dịch "You're not alone / You deserve / best version of yourself / I've been in your shoes" | An ủi bằng chuyện chung: "không phải mỗi mình chị đâu", "mình cũng từng y chang" | "Bạn không đơn độc. Bạn xứng đáng được nghỉ ngơi." → "Mệt thì nghỉ một bữa đi chị, đâu phải mỗi mình chị vậy." (Nam) | Lint (chỉ khung self-help: "bạn xứng đáng được nghỉ ngơi / hạnh phúc"; khen người thắng "giải này bạn xứng đáng mà" thì giữ) |
 | T13 | Chữ sến: vỡ òa, biết ơn vũ trụ, chữa lành, trân quý, thanh xuân, năng lượng tích cực, lan tỏa giá trị, truyền cảm hứng | Cảm xúc dán nhãn, không kể việc | Một chữ mộc + một việc làm (mục 3.14) | "Tôi hạnh phúc vỡ òa." → "Em mừng quá, khao cả tiệm trà sữa." (Nam) | Lint (vỡ òa, biết ơn vũ trụ, lan tỏa giá trị); Judge (còn lại, trừ khi coach tự nói) |
 | T14 | Chú thích tiếng Anh trong ngoặc, chữ nghề marketing: "câu mở đầu (hook)", "(CTA)", "nỗi đau (pain point) của khách hàng" | Giáo trình dịch; người đọc của coach không cần chữ nghề | Bỏ ngoặc; nói khách khổ chỗ nào, bằng câu khách nói | "Hãy xác định nỗi đau (pain point) của khách hàng mục tiêu." → "Khách khổ nhất chỗ nào? Ghi đúng câu họ than." | Lint |
 | T15 | "rất / thực sự / vô cùng / hoàn toàn" đặt trước tính từ (very, really, truly) | Tiếng Việt nhấn ở cuối: lắm, quá, ghê, thiệt, dữ lắm; hoặc từ láy | Dời nhấn ra sau, hoặc tả | "Câu chuyện thực sự rất ý nghĩa." → "Nghe xong ngồi im luôn." | Đếm ("rất" >2/100 chữ); "vô cùng" trong lời nói: sửa |
@@ -128,15 +129,15 @@ Danh mục dưới đây chia năm tầng: từ vựng, cấu trúc câu, nối 
 |---|---|---|---|---|---|
 | C1 | "một cách + tính từ" (effectively, easily) | Dịch trạng từ đuôi -ly, kéo câu dài như công văn | Tính từ đứng sau động từ; "cho kỹ", "lắm"; hoặc tả kết quả | "Cắm hoa một cách chuyên nghiệp và tinh tế." → "Cắm xong để ba ngày hoa vẫn tươi." | Lint ("có một cách đơn giản để…", "nói một cách dễ hiểu" thì giữ) |
 | C2 | "việc + động từ" làm chủ ngữ (V-ing) | Danh từ hóa kiểu Anh | Cho động từ đứng đầu, hoặc "Muốn… thì…" | "Việc chạy chậm giúp bạn chạy được lâu hơn." → "Chạy chậm thì chạy được lâu." | Đếm (≥2 một bài; lời nói 1 là sửa) |
-| C3 | "sự + động/tính từ", "với sự…" (change, confidence, with confidence) | Danh từ trừu tượng | Nói bằng động từ, tính từ, việc | "Đứng trước đám đông với sự tự tin." → "Lên nói mà không run giọng." | Judge ("với sự" thì sửa); "sự thật, sự việc, sự cố" là danh từ gốc |
+| C3 | "sự + động/tính từ", "với sự…" (change, confidence, with confidence) | Danh từ trừu tượng | Nói bằng động từ, tính từ, việc | "Đứng trước đám đông với sự tự tin." → "Lên nói mà giọng không run." | Judge ("với sự" thì sửa); "sự thật, sự việc, sự cố" là danh từ gốc |
 | C4 | Bị động "được / bị + động từ" dịch passive: được thiết kế, được tạo ra, được ghi nhận | Tiếng Việt chủ yếu nói chủ động; "được" khi có lợi, "bị" khi có hại | Đưa người làm lên đầu câu | "Khóa học được thiết kế dành riêng cho chủ quán." → "Lớp này mình soạn cho chủ quán ăn nhỏ." | Judge (≥2 lần một bài thì viết lại) |
-| C5 | "được / bị … bởi …", "bởi đội ngũ / chuyên gia" (by) | GS Nguyễn Văn Khang chỉ ra lối "làm bởi (ai)" thay cho "do ai làm"; lời nói gần như không ai dùng | "do… làm", hoặc chủ động | "Giáo trình được biên soạn bởi đội ngũ chuyên gia." → "Giáo trình này thầy tự soạn sau 10 năm dạy bơi." | Lint ("bởi vì, bởi lẽ" không tính) |
-| C6 | "là + rất / vô cùng / hoàn toàn + tính từ" (is very…) | Tính từ tiếng Việt tự làm vị ngữ | Bỏ "là"; nhấn ở cuối | "Việc khởi động là rất quan trọng." → "Khởi động kỹ, cái này quan trọng lắm." | Lint ("là" nhấn kiểu nói "mệt là mệt thiệt", "cái lưng là cứng đơ luôn" thì giữ) |
+| C5 | "được / bị … bởi …", "bởi đội ngũ / chuyên gia" (by) | GS Nguyễn Văn Khang chỉ ra lối "làm bởi (ai)" thay cho "do ai làm"; lời nói gần như không ai dùng | "do… làm", hoặc chủ động | "Giáo trình được biên soạn bởi đội ngũ chuyên gia." → "Giáo trình này thầy tự soạn, dạy bơi mười năm mới viết ra được." | Lint ("bởi vì, bởi lẽ" không tính) |
+| C6 | "là + rất / vô cùng / hoàn toàn + tính từ" (is very…) | Tính từ tiếng Việt tự làm vị ngữ | Bỏ "là"; nhấn ở cuối | "Việc khởi động là rất quan trọng." → "Khởi động kỹ, cái này quan trọng lắm." | Lint ("là" nhấn kiểu nói "mệt là mệt thiệt", "cái máy là cũ lắm rồi" thì giữ; "là" dẫn ý sau thấy, nói, bảo, khen: "khách khen là rất ngon" cũng giữ); Judge ("là cực kỳ" trong lời nói video) |
 | C7 | "Điều này / Điều đó" + khiến, cho thấy, có nghĩa là, giúp, dẫn đến (This means / This makes) | Một chữ "điều này" thay cả câu trước | "Vậy là", "nghĩa là", "nên", "chuyện đó", "vụ đó"; hoặc gộp hai câu | "Nhiều quán giảm giá 50%. Điều này khiến khách quen mất lòng." → "Giảm 50% thì khách mới tới, mà khách quen thấy mình hớ." | Lint |
 | C8 | "Điều quan trọng là…", "Điều mà… là…", "Sự thật là…", "Trên thực tế," (The important thing is / What… is / In fact) | Câu chẻ kiểu Anh | Nói thẳng ý; "nói thật", "có điều" | "Điều mà tôi muốn nói với bạn là…" → "Mình nói cái này thôi:" | Judge ("cái mà… là…" trong lời nói thì là tiếng Việt thật) |
 | C9 | "rằng" sau nghĩ, nói, biết, tin (that-clause) | Lời nói bỏ "rằng" hoặc dùng "là" | Bỏ "rằng", hoặc "là" | "Tôi tin rằng ai cũng có thể bơi." → "Ai cũng bơi được, thầy thấy tận mắt rồi." | Đếm (kịch bản nói: 1 lần là sửa) |
-| C10 | Chuỗi "của… của…" (of… of…) | Lồng sở hữu kiểu Anh | Ghép thẳng, bỏ "của" khi đã rõ | "Sự hài lòng của khách hàng của tiệm là thước đo của chúng tôi." → "Khách quay lại là biết tiệm làm được hay chưa." | Judge |
-| C11 | "bằng cách + động từ", "thông qua việc…" (by doing) | Việc trước, kết quả sau mới là thứ tự Việt | "Muốn… thì…", "… là…" | "Bạn có thể giữ khách bằng cách nhắn hỏi thăm sau 3 ngày." → "Muốn khách quay lại thì 3 ngày sau nhắn hỏi thăm một câu." | Judge ("bằng cách nào?" và "bán bằng cách đăng bài" khi kể thì giữ) |
+| C10 | Chuỗi "của… của…" (of… of…) | Lồng sở hữu kiểu Anh | Ghép thẳng, bỏ "của" khi đã rõ | "Sự hài lòng của khách hàng của tiệm là thước đo của chúng tôi." → "Khách có quay lại không, nhìn vậy là biết tiệm làm tốt hay chưa." | Judge |
+| C11 | "bằng cách + động từ", "thông qua việc…" (by doing) | Việc trước, kết quả sau mới là thứ tự Việt | "Muốn… thì…", "… là…" | "Bạn có thể giữ khách bằng cách nhắn hỏi thăm sau 3 ngày." → "Muốn khách quay lại thì 3 ngày sau nhắn hỏi thăm một câu." | Judge ("bằng cách nào?" và "kiếm khách bằng cách phát tờ rơi" khi kể thì giữ) |
 | C12 | "một" và "những / các" thừa (a / -s) | Tiếng Việt dùng danh từ trần khi nói chung | Bỏ; hoặc "mấy", "ai cũng", "nào cũng" | "Tôi là một huấn luyện viên và tôi giúp những người mới chạy." → "Mình dạy người mới chạy." | Đếm |
 | C13 | "đã / sẽ" gắn vào mọi động từ; "sẽ có thể", "đã và đang" | Tiếng Việt không bắt đánh dấu thì; "hồi đó, mai, giờ" là đủ | Bỏ "đã/sẽ" khi mốc thời gian đã rõ | "Sau khóa học, bạn sẽ có thể tự quay video." → "Học xong là tự quay được." | Lint ("sẽ có thể", "đã và đang"); Đếm (đã/sẽ >3/100 chữ) |
 | C14 | "Nó" đầu câu chỉ ý tưởng, sản phẩm (It…) | Dịch "It" | Lặp danh từ, "cái này", "vụ này", hoặc bỏ chủ ngữ | "Phương pháp này rất đơn giản. Nó giúp bạn tiết kiệm thời gian." → "Cách này dễ, làm 5 phút là xong." | Judge ("nó" sau danh từ cụ thể trong lời nói thì giữ: "cái máy nó kêu") |
@@ -144,7 +145,7 @@ Danh mục dưới đây chia năm tầng: từ vựng, cấu trúc câu, nối 
 | C16 | "Với hơn X năm kinh nghiệm,…", "Là một…,", "Với tư cách là…" (With over X years…, As a…) | Dịch phần giới thiệu tiếng Anh | Nói thẳng: "Tôi làm nghề này 10 năm", "Mình cũng làm mẹ nên…" | "Là một người mẹ, tôi hiểu nỗi lo con biếng ăn." → "Chị cũng có đứa con biếng ăn, chị hiểu." | Lint ("Là một…,", "Với tư cách"); Judge ("Với X năm,") |
 | C17 | "Để…, bạn cần (phải)…", "Nếu bạn muốn…, hãy…" (To…, you need to / If you want…, do…) | Khuôn hướng dẫn dịch | "Muốn… thì…", bỏ chủ ngữ, bỏ "cần phải" | "Để có thể bán được trên TikTok, bạn cần phải xây dựng lòng tin." → "Muốn bán được trên TikTok thì người ta phải tin mình trước đã." | Judge |
 | C18 | Khung động từ dịch: "khiến… cảm thấy", "trở nên", "có xu hướng", "hãy đảm bảo rằng" (make you feel, become, tend to, make sure) | Dịch khung câu | "làm mình thấy", "thấy", "hay", "nhớ… nha / nhé" | "Hãy đảm bảo rằng bé đã ăn nhẹ trước khi bơi." → "Nhớ cho con ăn nhẹ trước 4 giờ nha." (Nam) | Lint (2 cụm); Judge |
-| C19 | Dồn định ngữ thành một cục dài sau danh từ; "đến từ" (come from) | Tiếng Anh dồn tính từ trước danh từ, AI dời cả cục ra sau một hơi | Tách thành câu ngắn; "ở", "quê" | "Chương trình huấn luyện cá nhân hóa 1 kèm 1 chuyên sâu dành riêng cho người mới bắt đầu chạy bộ." → "Kèm 1–1. Cho người mới chạy, chạy ba bữa là đau gối." | Judge |
+| C19 | Dồn định ngữ thành một cục dài sau danh từ; "đến từ" (come from) | Tiếng Anh dồn tính từ trước danh từ, AI dời cả cục ra sau một hơi | Tách thành câu ngắn; "ở", "quê" | "Chương trình huấn luyện cá nhân hóa 1 kèm 1 chuyên sâu dành riêng cho người mới bắt đầu chạy bộ." → "Mình kèm riêng từng người, cho ai mới tập chạy, kiểu chạy ba bữa là đau gối á." (Nam) | Judge |
 | C20 | "trong khi" để đối lập (while / whereas) | Dịch "while" | "còn", "mà", "… mà đã…" | "Nhiều người chạy 10 cây số cuối tuần, trong khi họ không khởi động." → "Cuối tuần chạy 10 cây mà không khởi động thì gối nó khóc." | Judge ("trong khi chờ" chỉ thời gian thì giữ) |
 | C21 | Gọi người kiểu báo dịch: "một người phụ nữ 40 tuổi", "một khách hàng nam" | Người Việt gọi nhau bằng chữ họ hàng và một nét đời | "một chị tầm bốn mươi", "ông chú bên Sơn Trà", "em sinh viên năm hai" | "Một khách hàng nữ 50 tuổi liên hệ với tôi." → "Có một cô tầm năm chục gọi mình." | Judge |
 
@@ -153,18 +154,18 @@ Danh mục dưới đây chia năm tầng: từ vựng, cấu trúc câu, nối 
 | # | Mẫu (gốc tiếng Anh) | Vì sao cấn | Sửa | Ví dụ: sai → đúng | Mức |
 |---|---|---|---|---|---|
 | N1 | Liên từ văn viết đầu câu: Tuy nhiên, Do đó, Vì vậy, Ngoài ra, Bên cạnh đó, Hơn nữa, Thêm vào đó, Mặt khác (However, Therefore, Moreover) | Chữ của bài luận | "mà, nhưng mà, có điều, nên, thế nên / vậy nên, với lại, chưa kể, còn, rồi, xong" | "Chạy chậm giúp đỡ đau gối. Bên cạnh đó, nó còn giúp bạn thở đều hơn." → "Chạy chậm thì gối đỡ đau, thở cũng đều hơn. Mà khỏi cần mua giày xịn nha." (Nam) | Lint ("Bên cạnh đó,", "Thêm vào đó,"); Judge (kịch bản nói, tin nhắn: 0; bài dài: tối đa 1) |
-| N2 | "không chỉ / không những… mà còn…" (not only… but also) | Khung AI dùng nhiều nhất | "vừa… vừa…", "đã… lại còn…", "chưa kể", hoặc tách hai câu | "Lớp không chỉ dạy bơi mà còn dạy con tự tin." → "Học xong con bơi được, mà dám xuống nước một mình nữa." | Lint |
+| N2 | "không chỉ / không những… mà còn…" (not only… but also) | Khung AI dùng nhiều nhất | "vừa… vừa…", "đã… lại còn…", "chưa kể", hoặc tách hai câu | "Lớp không chỉ dạy bơi mà còn dạy con tự tin." → "Học xong con vừa bơi được, vừa dám tự xuống nước, khỏi cần ba mẹ đứng kè kè." | Lint ("không chỉ… mà còn"); Judge ("không những… mà còn" là cặp quan hệ từ Việt có sẵn, người lớn tuổi nói thật: một lần thì được, thành khung lặp mới sửa) |
 | N3 | "Không phải X, mà là Y" lặp mỗi đoạn; châm ngôn dịch "Khách không mua X, họ mua Y" | Dịch "It's not X, it's Y"; người Việt cũng nói, nhưng một lần, và hay nói ý chính trước rồi "chứ không phải" | Ý chính trước, "chứ đâu phải / chứ không phải" | "Khách không mua hoa. Họ mua cảm xúc." → "Khách quay lại là vì hoa để được lâu, chứ đâu phải vì rẻ." | Đếm (>1 lần một bài); Judge (châm ngôn dịch thì sửa) |
 | N4 | Bộ ba tu từ đều nhau; "Không X. Không Y. Chỉ Z." (rule of three) | Nhịp copywriting Mỹ, đoạn nào cũng ba | Một bài tối đa một bộ ba | "Đơn giản. Hiệu quả. Bền vững." → "Một trang giấy, làm thử một buổi. Vậy thôi." | Judge |
 | N5 | Tự hỏi tự đáp + hai chấm "bật mí": "Kết quả?", "Lý do rất đơn giản:", "Và đây là điều thú vị:" (The result? / Here's the thing:) | Nhịp copywriting Mỹ lặp mỗi đoạn | Kể thẳng: "Ba tuần sau, con bơi được 10 mét." | "Kết quả? Doanh thu tăng gấp đôi." → "Ba tháng sau, trưa thứ Bảy quán kín bàn." | Judge (tối đa một lần một bài) |
-| N6 | Chuyển cảnh kể chuyện dịch: Đó là lúc tôi nhận ra, Khoảnh khắc ấy, chợt nhận ra, Và đó là lúc, Tua nhanh 3 năm sau, Và rồi, Mọi thứ thay đổi khi, Ít ai biết rằng (That's when I realized / Fast forward / Little did I know) | Người Việt nối chuyện bằng mốc thời gian và chữ ngắn | "Bữa đó", "Hồi đó", "Rồi", "Xong", "Thế là", "Ai dè", "Hóa ra", "Mãi sau mới", "Từ hồi đó", "Ba năm sau" | "Khoảnh khắc ấy, tôi chợt nhận ra rằng mình đã sai." → "Đọc tới đó chị mới biết, ba năm nay chị làm ngược." | Lint (5 cụm đầu); Judge (còn lại) |
+| N6 | Chuyển cảnh kể chuyện dịch: Đó là lúc tôi nhận ra, Khoảnh khắc ấy, chợt nhận ra, Và đó là lúc, Tua nhanh 3 năm sau, Và rồi, Mọi thứ thay đổi khi, Ít ai biết rằng (That's when I realized / Fast forward / Little did I know) | Người Việt nối chuyện bằng mốc thời gian và chữ ngắn | "Bữa đó", "Hồi đó", "Rồi", "Xong", "Thế là", "Ai dè", "Hóa ra", "Mãi sau mới", "Từ hồi đó", "Ba năm sau" | "Khoảnh khắc ấy, tôi chợt nhận ra rằng mình đã sai." → "Đọc tới đó chị mới biết, ba năm nay chị làm ngược." | Lint ("Đó là lúc tôi nhận ra", "Khoảnh khắc ấy,", "chợt nhận ra rằng / một điều", "Và đó là lúc", "Tua nhanh"); Judge (còn lại; "chợt nhận ra" trơn là chữ Việt, "đang chạy thì chợt nhận ra quên khóa cửa" vẫn đúng, chỉ sửa khi nó làm công tắc ngoặt) |
 | N7 | "Khi nói đến…", "Đối với…", "Về mặt…", "Liên quan đến…" để mở chủ đề (When it comes to / Regarding) | Tiếng Việt đặt chủ đề lên đầu rồi "thì" | "Nói tới X thì…", "X thì…" | "Khi nói đến việc chọn giày chạy, nhiều người mắc sai lầm." → "Giày chạy thì người mới hay sai đúng một chỗ." | Judge |
 | N8 | Đếm ý "Đầu tiên,… Thứ hai,… Cuối cùng,…" trong lời nói (First, Second, Finally) | Dịch dàn ý | "Một là… Hai là… Ba là…", "Cái thứ nhất…, còn nữa…", hoặc kể theo thứ tự việc | "Đầu tiên, hãy chọn hoa. Thứ hai, cắt gốc. Cuối cùng, cắm." → "Một là chọn hoa còn búp. Hai là cắt xéo gốc trong nước. Xong mới cắm." | Judge (bài dạng danh sách thì được) |
 | N9 | Mở bài "Bạn có biết (rằng)…?", "Bạn đã bao giờ tự hỏi…?", "Đã bao giờ bạn…", "Hãy tưởng tượng…", "Bạn đang gặp khó khăn trong việc…?", "Bạn có đang…?" (Did you know / Have you ever wondered / Imagine / Are you struggling with) | Hook dịch; hook Việt đi thẳng vào cảnh, con số, câu khách nói | Mở bằng cảnh, người, câu khách nói (mục 3.5) | "Bạn có biết rằng 70% người mới chạy bị đau gối?" → "Bữa trước có bạn nhắn: 'Anh ơi em chạy được ba bữa là đau gối.'" | Lint ("Bạn đã bao giờ… chưa?" đúng ngữ pháp Việt, chỉ sáo khi làm câu mở: Judge) |
 | N10 | Mở bài "Trong thế giới / cuộc sống hiện đại…", "Trong thời đại / kỷ nguyên số…", "Ngày nay,", "Như chúng ta đã biết", "Chúng ta đều biết", "Không thể phủ nhận" (In today's world / As we all know) | Câu mở rỗng, văn nghị luận | Vào thẳng cảnh hoặc con số | "Trong cuộc sống hiện đại bận rộn, nhiều mẹ bỏ quên bữa sáng của con." → "Sáu giờ rưỡi, con còn ngái ngủ, mẹ thì cầm hộp sữa đứng chờ ở cửa." | Lint |
 | N11 | "Dưới đây là… / Sau đây là… / Đây là lý do tại sao… / Đó là lý do vì sao… / Câu chuyện dưới đây" (Here are / Here's why) | Câu mặc định của ChatGPT tiếng Việt, cả khi máy nói với coach | "Có 3 việc", "Mình làm vầy nè", hoặc vào thẳng việc thứ nhất | "Dưới đây là 5 bước giúp bạn chụp ảnh đẹp." → "Ảnh sản phẩm em chụp theo 5 bước, bước đầu dễ ợt." | Lint ("Đây là cái sổ mình ghi" khi chỉ vào vật trong video thì giữ; "Đây là cách…": Judge) |
-| N12 | "Hãy…", "Hãy cùng…", "Hãy để tôi…", "Hãy cho tôi biết…" (Let's / Let me / Make sure) | Chữ của khẩu hiệu, sách giáo khoa | "thử… đi", "cứ…", "nhớ… nha / nhé", "… đi chị", "Để mình kể" | "Hãy để tôi chia sẻ 3 bí quyết giữ hoa tươi." → "Giữ hoa tươi lâu, chị làm 3 việc." | Lint ("hãy cùng nhau / tìm hiểu", "hãy để tôi", "hãy cho tôi biết"); Đếm ("hãy" >1 lần một bài) |
-| N13 | Kết kiểu luận văn: Tóm lại, Kết luận:, Cuối cùng nhưng không kém phần quan trọng, Đầu tiên và quan trọng nhất, Chúc bạn thành công!, Hy vọng bài viết hữu ích, Bài học rút ra là, Hãy luôn nhớ (In conclusion / Last but not least / Good luck) | Bài mạng xã hội Việt kết bằng một câu chốt, một việc nhỏ, hoặc bỏ lửng | Câu chốt hai vế; "Ai đang… thì…"; "Thế thôi." | "Tóm lại, khởi động là chìa khóa. Chúc các bạn thành công!" → "Thế thôi. Sáng mai khởi động đủ 5 phút rồi hẵng chạy, xong kể mình nghe." | Lint ("tóm lại là" giữa lời kể là văn nói thật: xem mục 10.2) |
+| N12 | "Hãy…", "Hãy cùng…", "Hãy để tôi…", "Hãy cho tôi biết…" (Let's / Let me / Make sure) | Chữ của khẩu hiệu, sách giáo khoa | "thử… đi", "cứ…", "nhớ… nha / nhé", "… đi chị", "Để mình kể" | "Hãy để tôi chia sẻ 3 bí quyết giữ hoa tươi." → "Giữ hoa tươi lâu, chị làm 3 việc." | Lint ("hãy cùng nhau / tìm hiểu", "hãy để tôi chia sẻ / kể / giải thích", "hãy cho tôi biết"); Đếm ("hãy" >1 lần một bài; "hãy để em lo" không tính) |
+| N13 | Kết kiểu luận văn: Tóm lại, Kết luận:, Cuối cùng nhưng không kém phần quan trọng, Đầu tiên và quan trọng nhất, Chúc bạn thành công!, Hy vọng bài viết hữu ích, Bài học rút ra là, Hãy luôn nhớ (In conclusion / Last but not least / Good luck) | Bài mạng xã hội Việt kết bằng một câu chốt, một việc nhỏ, hoặc bỏ lửng | Câu chốt hai vế; "Ai đang… thì…"; "Thế thôi." | "Tóm lại, khởi động là chìa khóa. Chúc các bạn thành công!" → "Vậy thôi. Sáng mai khởi động đủ năm phút rồi mới chạy, chạy xong kể mình nghe nha." (Nam) | Lint ("Tóm lại," đầu câu, "Kết luận:", "Cuối cùng nhưng không kém phần quan trọng", "Chúc bạn thành công trên / trong / với…", "Hy vọng bài viết hữu ích", "Bài học rút ra", "Hãy luôn nhớ"); Judge ("tóm lại là" giữa lời kể là văn nói thật; "Chúc anh chị thành công nha!" trước một việc thật như khai trương, đi thi là lời chúc Việt bình thường, chỉ sáo khi làm câu kết mọi bài) |
 | N14 | Mở video kiểu YouTube dịch: "Xin chào các bạn, hôm nay mình muốn chia sẻ…", "Trong video này, tôi sẽ…", "đừng quên like, share và đăng ký" | TikTok, Reels Việt vào cảnh ngay giây đầu; lời chào chỉ hợp livestream | Câu đầu là cảnh hoặc câu nói thẳng vào người xem | "Xin chào các bạn, hôm nay mình sẽ hướng dẫn cách rửa máy lạnh." → "Máy lạnh chạy cả đêm mà không mát? Khoan gọi thợ, coi cái này đã." | Judge (video ngắn: sửa ở 3 giây đầu; video dài, live: được một lần) |
 | N15 | CTA dịch: "Bạn đã sẵn sàng… chưa?", "Đừng bỏ lỡ", "Hành động ngay hôm nay", "Hãy để lại bình luận" (Are you ready? / Don't miss out) | Lời giục kiểu Mỹ, sang tiếng Việt nghe như rao hàng | Ai cần thì làm gì, cụ thể và nhẹ (mục 5.1) | "Bạn đã sẵn sàng thay đổi chưa? Đăng ký ngay hôm nay!" → "Ai muốn vô lớp tháng này thì nhắn mình, lớp nhỏ thôi." | Lint (2 cụm); Judge ("Đừng bỏ lỡ" đã quen trong quảng cáo, nhưng lệch giọng coach) |
 
@@ -173,7 +174,7 @@ Danh mục dưới đây chia năm tầng: từ vựng, cấu trúc câu, nối 
 | # | Mẫu | Vì sao cấn | Sửa | Ví dụ: sai → đúng | Mức |
 |---|---|---|---|---|---|
 | X1 | "Bạn" làm chủ ngữ câu nào cũng có (you) | Câu tiếng Anh phải có chủ ngữ; "bạn" còn sai vai khi người nghe lớn tuổi | Bỏ chủ ngữ; gọi đúng nhóm ("mấy bạn văn phòng", "anh chị phụ huynh"); "ai", "người ta" | "Bạn có thấy mệt không? Bạn có biết bạn đang chạy sai không?" → "Mệt chưa? Chạy kiểu đó ba bữa là gối nó khóc đó." (Nam) | Đếm (>3/100 chữ hoặc 3 câu liền mở bằng "Bạn"); sai cặp xưng hô: Judge |
-| X2 | "của bạn" gắn vào mọi danh từ (your) | Tiếng Việt bỏ khi đã rõ, hoặc dùng "mình" | "nhà mình", "tiệm mình", hoặc bỏ | "Hãy kiểm tra máy lạnh của bạn trước khi gọi thợ của bạn." → "Trước khi gọi thợ, coi lại cái máy nhà mình đã." | Đếm (bài dưới 150 chữ: ≥2 lần) |
+| X2 | "của bạn" gắn vào mọi danh từ (your) | Tiếng Việt bỏ khi đã rõ, hoặc dùng "mình" | "nhà mình", "tiệm mình", hoặc bỏ | "Hãy kiểm tra máy lạnh của bạn trước khi gọi thợ của bạn." → "Khoan gọi thợ, coi lại cái máy nhà mình cái đã." | Đếm (bài dưới 150 chữ: ≥2 lần) |
 | X3 | Thiếu tiểu từ cuối câu | Câu trần đọc lên như thông báo; nhắn người lớn hơn mà thiếu "Dạ… ạ" là cộc | Thêm ở chỗ dặn, rủ, làm thân (mục 4.7) | "Em đã nhận được ảnh. Em sẽ gửi báo giá vào thứ Bảy." → "Dạ em nhận ảnh rồi ạ, sáng thứ Bảy em gửi báo giá anh nha." (Nam) | Đếm (so với bài thật của chính coach) |
 | X4 | Rắc tiểu từ đều mọi câu; tiểu từ sai vùng | Nghe như diễn, như giễu nhại giọng vùng | Một vùng một bài; không ba câu liền cùng một chữ | "Bạn đăng ký nha. Khóa học hay nha. Giá rẻ nha." → "Lớp 8 buổi, 1.890.000đ. Ai cần thì nhắn mình nha." | Judge |
 | X5 | "Chúng ta" trong bài bán; "chúng tôi" của người làm một mình; "Tại [Tên], chúng tôi tin rằng…" (We all know / At X, we believe) | Nghe như diễn văn, như công ty | Đúng cặp của coach; "bên mình, tụi em, bọn mình, chị em mình, nhà mình" | "Tại tiệm Trâm, chúng tôi tin rằng mỗi bộ móng đều xứng đáng được chăm chút." → "Tiệm em sơn xong là chụp cho chị coi, chưa ưng thì làm lại." (Nam) | Lint ("chúng tôi tin rằng", "chúng ta đều biết"); Judge |
@@ -187,7 +188,7 @@ Danh mục dưới đây chia năm tầng: từ vựng, cấu trúc câu, nối 
 
 | # | Mẫu | Vì sao cấn | Sửa | Ví dụ: sai → đúng | Mức |
 |---|---|---|---|---|---|
-| P1 | Markdown trong bài mạng xã hội: `**in đậm**`, `###`, dòng "Nhãn: nội dung" | Facebook, Zalo, TikTok hiện nguyên dấu sao; bài người thật không chia đề mục như báo cáo | Xuống dòng thường, câu nói | "**Bước 1: Chọn hoa**" → "Đầu tiên là chọn hoa còn búp đã." | Judge; chạy lúc runtime: bài Facebook, Zalo, TikTok có `**` là trượt |
+| P1 | Markdown trong bài mạng xã hội: `**in đậm**`, `###`, dòng "Nhãn: nội dung" | Facebook, Zalo, TikTok hiện nguyên dấu sao; bài người thật không chia đề mục như báo cáo | Xuống dòng thường, câu nói | "**Bước 1: Chọn hoa**" → "Trước hết phải chọn hoa còn búp đã." | Judge; chạy lúc runtime: bài Facebook, Zalo, TikTok có `**` là trượt |
 | P2 | Chữ in đậm Unicode (𝐁𝐎𝐋𝐃) | Vỡ dấu tiếng Việt | Bỏ | | Judge |
 | P3 | Emoji đầu dòng kiểu AI: 🚀 💡 ✨ 🎯 🌟 mỗi dòng một cái | Mùi bài bán hàng loạt; người Việt viết tay dùng :)) =)) hihi 😅 ❤️ ở chỗ có cảm xúc | Chỉ emoji coach dùng, đặt ở chỗ có cảm xúc | "🚀 Ảnh đẹp ✨ Bán chạy 💡 Bứt phá" → "Ảnh đẹp mà sai màu thì khách cũng trả hàng thôi 😅" | Judge (coach không dùng emoji: không thêm cái nào) |
 | P4 | Gạch dài (—), chấm phẩy (;), dấu phẩy trước "và" ở mục cuối | Bàn phím điện thoại Việt không có sẵn "—"; chấm phẩy hiếm trên mạng; tiếng Việt không có Oxford comma | Dấu phẩy, hai chấm, "...", xuống dòng | "Mang kính bơi, khăn tắm, và dép — thiếu là không xuống nước." → "Mang kính bơi, khăn tắm, dép nghe... thiếu cái nào là con ngồi trên bờ." (Trung) | Judge |
@@ -212,9 +213,14 @@ Khi chạy các mẫu trên kho lời nói của 6 nhân vật eval, những ch�
 | "anh ấy" (X6) | "Anh ấy gọi lại cho chị lúc nửa đêm." (Bắc) | Giọng Bắc dùng "anh ấy, chị ấy" tự nhiên; giọng Nam nói "ảnh, chỉ" |
 | "được" (C4) | "Uống thuốc được mấy hôm là lại đâu vào đấy." "Con bơi được rồi nè." | "Được" nghĩa là làm được, có được, kéo dài được là tiếng Việt gốc |
 | "là" nhấn (C6) | "Mệt là mệt thiệt." "Cái máy là cũ lắm rồi." | Dạng dịch là "là rất / là vô cùng / là hoàn toàn + tính từ" |
-| "Tóm lại là", "Nói chung là" giữa lời kể (N13) | "Tóm lại là tháng đó lỗ, mà học được nhiều." | Chỉ "Tóm lại," đầu đoạn kết là văn mẫu |
-| "chìa khóa" nghĩa đen (T4) | "Mẹ đưa chị cái chìa khóa xe máy." | Chỉ nghĩa bóng ("chìa khóa thành công") mới sáo |
-| "có thể nói" nghĩa đen | "Chuyện giày chạy thì mình có thể nói tới sáng." | Chỉ "Có thể nói," mở câu kiểu nghị luận mới sáo |
+| "Tóm lại là", "Nói chung là" giữa lời kể (N13) | "Tóm lại là tháng đó lỗ, mà học được nhiều." | Chỉ "Tóm lại," đầu đoạn kết là văn mẫu; lint giờ chỉ bắt dạng đó |
+| "chìa khóa" nghĩa đen (T4) | "Mẹ đưa chị cái chìa khóa xe máy." "Chìa khóa để trên bàn đó em." | Chỉ nghĩa bóng ("chìa khóa thành công", "là chìa khóa để…") mới sáo; lint giờ chỉ bắt nghĩa bóng |
+| "có thể nói" nghĩa đen | "Chuyện giày chạy thì mình có thể nói tới sáng." | Chỉ "Có thể nói," mở câu kiểu nghị luận mới sáo; lint giờ chỉ bắt dạng đó |
+| "là" dẫn ý + "rất" (C6) | "Khách khen là rất ngon." "Ai cũng bảo là rất dễ, làm mới biết." | Sau thấy, nói, bảo, khen, tưởng thì "là" nghĩa là "rằng", không phải "is"; lint bỏ qua |
+| "không những… mà còn" (N2) | "Con không những bơi được mà còn dám xuống nước một mình." | Cặp quan hệ từ Việt có sẵn; chỉ "không chỉ… mà còn" lặp làm khung mới là mùi AI |
+| "chợt nhận ra" (N6) | "Đang chạy thì chợt nhận ra quên khóa cửa." | Chữ Việt thường; chỉ "chợt nhận ra rằng / một điều" làm chỗ ngoặt chuyện mới là văn AI |
+| "Chúc… thành công" (N13) | "Mai khai trương hả chị? Chúc anh chị thành công nha!" | Lời chúc thật trước một việc thật; chỉ "Chúc bạn thành công trên hành trình…" cuối mọi bài mới sáo |
+| "hành trang" nghĩa đen (T4) | "Hành trang đi biển của con: kính bơi, phao tay." | Chỉ "hành trang vững chắc / vào đời" mới sáo |
 | "một cách" khi là danh từ | "Có một cách đơn giản để biết hoa còn tươi." "Nói một cách dễ hiểu là vầy." | Dạng dịch là "một cách + tính từ" làm trạng từ sau động từ |
 | Chữ nghề của chính coach | "tối ưu ảnh", "chạy ads", "feedback", "content" | Coach thật sự nói thì giữ (code_mix) |
 | "Đây là…" khi chỉ vào vật | "Đây là cái lưới lọc sau hai tháng không rửa." | Trong video thì tự nhiên |
@@ -227,6 +233,7 @@ Khi chạy các mẫu trên kho lời nói của 6 nhân vật eval, những ch�
 **Hệ quả cho danh sách cắt (wf6 V4 từ đệm, V6 đuôi xin xác nhận):** giữ nguyên "nói chung là", "thật ra là", "đúng không ạ" khi chúng nằm trong câu cửa miệng hay cách mở của chính coach (Voice Card `phrases`, `openers_closers`). Chỉ cắt khi máy tự thêm vào.
 
 ---
+
 ## 3. Nối chuyện: mở, nối, ngoặt, rút ý, kết
 
 Regex chỉ bắt được chữ và khung câu. Cái làm bài AI "cấn" nhiều nhất là **cách nối**: câu này sang câu kia, cảnh này sang cảnh kia, chuyện sang lời mời. Đây là phần hướng dẫn cho bước viết; chấm ở `vn-naturalness.md` mục VN3.
@@ -238,14 +245,14 @@ Regex chỉ bắt được chữ và khung câu. Cái làm bài AI "cấn" nhi�
 | Nhịp | Làm gì | Chữ hay dùng | Tránh |
 |---|---|---|---|
 | **1. Cảnh** | Mốc thời gian gần và cụ thể, chỗ, một người, một đồ vật nhìn thấy được. Câu đầu hoặc câu hai | "Tối qua gần mười một giờ", "Hè ni", "Hồi mới mở tiệm, có bữa", "Sáng thứ Bảy", "cái túi", "cái lưới lọc" | "Vào một ngày nọ", "Trong cuộc sống", "Bạn có biết", câu luận điểm |
-| **2. Chuyện xảy ra** | Việc nối việc, có câu người ta nói **nguyên văn** | "rồi", "xong", "xong rồi", "đang… thì…", "tự nhiên", "có bữa"; dẫn lời "bảo / nói / kêu / nhắn: '…'" | "Sau đó,", "Tiếp theo,", "chia sẻ rằng", "anh ấy nói rằng" |
+| **2. Chuyện xảy ra** | Việc nối việc, có câu người ta nói **nguyên văn** | "rồi", "xong", "xong rồi", "đang… thì…", "tự nhiên", "có bữa"; dẫn lời "bảo / nói / kêu / nhắn: '…'" | "Sau đó," mở mọi câu, "Tiếp theo,", "chia sẻ rằng", "anh ấy nói rằng" |
 | **3. Mình nhận ra** | Ngoặt bằng một việc làm hoặc đồ vật, rồi chữ "mới / hóa ra / thế mà / ai dè". Bài học là một câu ngắn hai vế, hoặc nằm trong miệng người khác | "Lúc đó mình mới biết", "Hóa ra", "Thế mà", "Ai dè", "Phải đến… thì… mới…", "chứ có… đâu" | "Đó là lúc tôi nhận ra", "Khoảnh khắc ấy", "chợt nhận ra", "Bài học rút ra là" |
 | **4. Bạn thì sao** | Quay sang **một** người đọc: một việc nhỏ làm được ngay, hoặc một câu hỏi thật, hẹp | "Ai đang… thì…", "Tối nay thử…", "Rồi kể mình nghe nha", "Có ai bị y vậy không hay mỗi mình?" | "Hy vọng bài viết hữu ích", "Bạn nghĩ sao?", "Đừng quên like, share" |
 
 **Ví dụ đủ bốn nhịp (Hiếu, thợ máy lạnh, Đà Nẵng, xưng Hiếu – anh chị):**
 
 > Hè ni có ông chú bên Sơn Trà gọi Hiếu, nói máy lạnh chạy cả đêm mà không mát, chắc hư rồi, thay cái mới cho chú. *(cảnh)*
-> Hiếu tới, tháo cái lưới lọc ra, bụi đóng dày như miếng bánh tráng. Rửa xong, bật lên, mười phút là mát rượi. Chú cười, nói: "Rứa mà chú tính bỏ gần chục triệu." *(chuyện xảy ra, có lời nguyên văn)*
+> Hiếu tới, tháo cái lưới lọc ra, bụi đóng dày như miếng bánh tráng. Rửa xong, bật lên, mười phút là mát rượi. Chú cười, nói: "Rứa mà chú tính bỏ gần chục triệu mua cái mới." *(chuyện xảy ra, có lời nguyên văn)*
 > Nhiều cái máy không hư chi hết, nó chỉ bị nghẹt thôi. *(mình nhận ra: đề–thuyết + "nó")*
 > Hai tháng anh chị tự tháo lưới ra rửa một lần, có năm phút thôi à. *(bạn thì sao: một việc nhỏ)*
 
@@ -273,7 +280,7 @@ Regex chỉ bắt được chữ và khung câu. Cái làm bài AI "cấn" nhi�
 | At first | Ban đầu | Mới đầu · Lúc đầu · Hồi đầu |
 | Little did I know | Tôi đâu biết rằng | Ai dè · Nào ngờ · Đâu có ngờ |
 | It turned out | Hóa ra là | Hóa ra (giữ; đây là chữ Việt) |
-| That's when I realized | Đó là lúc tôi nhận ra rằng | Lúc đó mới vỡ ra · Tới lúc đó mới hiểu · Mình mới ngộ ra |
+| That's when I realized | Đó là lúc tôi nhận ra rằng | Lúc đó mới vỡ lẽ · Tới lúc đó mới hiểu · Lúc đó mình mới biết |
 | Fast forward 3 years | Tua nhanh 3 năm sau | Ba năm sau · Tới giờ |
 | Since then | Kể từ đó | Từ hồi đó · Từ đấy (Bắc) · Từ bữa đó (Nam, Trung) |
 | To this day | Cho đến ngày nay | Tới giờ · Tới chừ (Trung) · Giờ vẫn nhớ hoài |
@@ -289,6 +296,8 @@ Regex chỉ bắt được chữ và khung câu. Cái làm bài AI "cấn" nhi�
 | Looking back | Nhìn lại, | Giờ nghĩ lại · Bây giờ nhớ lại |
 | I learned that | Tôi đã học được rằng | Từ bữa đó mình biết · Sau vụ đó mình mới hiểu |
 | That made me | Điều đó khiến tôi | Nghe xong mình… · Đọc tới đó mình… |
+
+"Sau đó" tự nó không sai, lời nói vẫn dùng ("sau đó mình mới gọi lại"); cấn là khi "Sau đó," mở câu nào cũng có trong một chuỗi việc.
 
 ### 3.3 Chữ nối theo chức năng và vùng
 
@@ -326,7 +335,7 @@ Ranh giới đề và thuyết đánh dấu bằng "thì, là, mà" (Cao Xuân H
 | "Việc bánh nở đẹp không có nghĩa là bánh ngon." | "Bánh nở đẹp *là* một chuyện, ăn ngon *là* chuyện khác." |
 | "Máy lạnh của bạn không bị hỏng." | "Cái máy *nó* có hư chi đâu." (Trung) |
 | "Tôi đã ngừng nhận lớp buổi trưa từ lâu." | "Lớp buổi trưa á, chị bỏ lâu rồi." |
-| "Doanh thu chỉ để trình diễn, lợi nhuận mới để chi tiêu." | "Học thuộc *là* để thi, nói được *mới là* để dùng." |
+| "Doanh thu chỉ để trình diễn, lợi nhuận mới để chi tiêu." | "Doanh thu *là* để khoe, tiền lời *mới là* tiền bỏ túi." |
 | "Người mới thường bỏ cuộc trong tuần đầu tiên." | "Người mới *mà* bỏ *thì* bỏ từ tuần đầu rồi." |
 
 Ba công cụ lời nói hay dùng:
@@ -353,7 +362,7 @@ Ba công cụ lời nói hay dùng:
 - "Rẻ lúc học, đắt lúc đền." → chuyện → nhắc lại.
 
 **F. Gọi đúng nhóm người, hỏi đúng tình huống.**
-- "Mấy bạn văn phòng ơi, 3 giờ chiều rồi đó, mắt cay chưa?" (Nam) · "Ba mẹ nào sắp cho con đi biển thì đọc cái này nhé." (Bắc) · "Anh chị nào sắp mở quán trước Tết thì nghe anh nói cái này đã." (Trung)
+- "Mấy bạn văn phòng ơi, 3 giờ chiều rồi đó, mắt cay chưa?" (Nam) · "Bố mẹ nào sắp cho con đi biển thì đọc cái này nhé." (Bắc) · "Anh chị nào tính mở quán trước Tết thì nghe tôi nói cái ni đã." (Trung; gọi "anh chị" thì xưng "tôi", không xưng "anh")
 
 **G. Con số trần, không trang trí.** "Bốn chục dĩa, chưa tới tám giờ." "Năm phút rửa lưới, ba năm đỡ tốn tiền thợ." Số phải thật, của coach (§CM-GUARDRAILS); số bịa là rủi ro pháp lý.
 
@@ -370,11 +379,11 @@ Ba công cụ lời nói hay dùng:
 |---|---|
 | "Bạn đã sẵn sàng thay đổi cuộc sống chưa?" | "Một tuần nấu cho con được mấy bữa sáng?" |
 | "Bạn có bao giờ cảm thấy mất động lực?" | "Có ai giống mình không, mở laptop ra là muốn ngủ?" |
-| "Điều gì đang ngăn cản bạn thành công?" | "Tháng rồi tiền điện lò bao nhiêu? Không nhớ à?" |
+| "Điều gì đang ngăn cản bạn thành công?" | "Tháng trước cái lò nướng ngốn hết bao nhiêu tiền điện? Không nhớ à?" |
 | "Bạn nghĩ sao về vấn đề này?" | "Mọi người có bị vậy không hay mỗi mình?" |
 | "Bạn có muốn biết bí quyết?" | "Biết sao không?" (rồi trả lời liền) |
 
-Câu hỏi thật thì **cụ thể, có số, có đồ vật, hỏi đúng một chuyện**, hay dùng "không, chưa, à, hả, hông". Câu hỏi tu từ chỉ dùng khi trả lời liền: "Tiệm nhỏ tính làm gì à? Tiệm càng nhỏ càng phải tính."
+Câu hỏi thật thì **cụ thể, có số, có đồ vật, hỏi đúng một chuyện**, hay dùng "không, chưa, à, hả, hông". Câu hỏi tu từ chỉ dùng khi trả lời liền: "Tiệm nhỏ cần gì tính toán à? Tiệm càng nhỏ càng phải tính kỹ."
 
 ### 3.7 Chuyển ngoặt: báo cái "à, ra thế"
 
@@ -411,7 +420,7 @@ Người Việt ghét bị "dạy đời" trên mạng, nhất là từ người
 
 | Kiểu kết | Ví dụ | Hợp với |
 |---|---|---|
-| "Ai đang … thì …" + việc nhỏ | "Ai đang để hóa đơn một túi thì tối nay xếp theo tháng thôi đã." | Bài Facebook, caption |
+| "Ai đang … thì …" + việc nhỏ | "Ai đang nhét hóa đơn chung một túi thì tối nay chia ra theo tháng trước đã." | Bài Facebook, caption |
 | Giao việc thử + mời kể lại | "Chiều nay làm thử, xong nhắn mình coi ra sao nha." | Video, bài |
 | Mời nhắn, giọng thấp | "Ai đang ngại hỏi thì cứ nhắn riêng, chị trả lời từng người." | Bài có lời mời ngầm |
 | Dừng cụt | "Thế thôi." / "Rứa thôi." / "Vậy thôi á." | Bài kể ngắn, câu chốt mạnh |
@@ -420,7 +429,7 @@ Người Việt ghét bị "dạy đời" trên mạng, nhất là từ người
 | Livestream: trả lượt | "Còn ai hỏi gì nữa hông, chị đọc tiếp nè." | Live |
 | Zalo: gỡ áp lực | "Em cứ coi lịch đã nha, chưa cần quyết liền đâu." / "Có gì anh nhắn tôi." | Tin một-một |
 
-**Không dùng:** "Hy vọng bài viết hữu ích", "Cảm ơn bạn đã đọc đến đây", "Hãy để lại bình luận bên dưới", "Đừng quên like, share và theo dõi", "Chúc bạn thành công trên hành trình…". Lời mời kiểu "comment 'có' nếu…" coi chừng luật mồi tương tác; chỉ dùng khi gắn với một việc thật đã giao trong bài.
+**Không dùng:** "Hy vọng bài viết hữu ích", "Cảm ơn bạn đã đọc đến đây", "Hãy để lại bình luận bên dưới", "Đừng quên like, share và theo dõi", "Chúc bạn thành công trên hành trình…". Lời mời comment từ khóa bật mặc định (DECISIONS); ngưỡng ("đủ 100 comment") và "chấm" là quyền của coach: máy viết y như coach chọn, thêm đúng một dòng lưu ý nền tảng có ngày, không chặn, không viết lại (§CM-CTA-KIT). Kiểu "comment 'có' nếu đồng ý" mà không kèm việc gì thì máy không tự đề xuất.
 
 ### 3.10 Giữ người nghe, trả lượt (video, live, tin nhắn)
 
@@ -470,7 +479,7 @@ Người Việt ghét bị "dạy đời" trên mạng, nhất là từ người
 
 **Xuống dòng, dấu câu, số.**
 - Facebook: dòng đầu đứng riêng. Bài ngắn một hai câu một dòng. Bài "chia sẻ thật" của người 40+ hay viết đoạn liền 3–5 câu; **đừng chặt mọi bài thành từng dòng một** (cũng là mùi "content thuê").
-- "..." để bỏ lửng chỗ không muốn nói: "cuối tháng nhìn hóa đơn tiền điện lò thì... thôi không nói nữa."
+- "..." để bỏ lửng chỗ không muốn nói: "cuối tháng nhìn hóa đơn tiền điện thì... thôi khỏi nói."
 - Mặt cười Việt: ":))", "=)))", "hihi", "huhu"; chỉ khi coach dùng.
 - Không gạch dài "—" trong văn VN của coach: dùng phẩy, hai chấm, xuống dòng.
 - Số trong video đọc bằng chữ ("mười lăm phút", "một tỷ hai"); bài viết: "15 phút", "1 tỷ 2", "40 triệu", "99k".
@@ -492,7 +501,7 @@ Người Việt ghét bị "dạy đời" trên mạng, nhất là từ người
 
 | Cảm xúc | Chữ người thật nói | Chữ sến, chữ AI | Cho thấy bằng chi tiết |
 |---|---|---|---|
-| Vui | sướng, mừng, vui ghê, mừng hết lớn (Nam), sướng rơn | hạnh phúc vỡ òa, niềm vui vô bờ, lâng lâng hạnh phúc | "khao cả tiệm đi ăn lẩu" |
+| Vui | sướng, mừng, vui ghê, mừng hết biết (Nam), sướng rơn | hạnh phúc vỡ òa, niềm vui vô bờ, lâng lâng hạnh phúc | "khao cả tiệm đi ăn lẩu" |
 | Buồn | buồn, tủi, chán, nản, nghẹn, buồn thiu | trái tim tan vỡ, nỗi buồn sâu thẳm | "ngồi bệt dưới sàn", "tắt mic im một lúc" |
 | Thương | thương, nghe mà thương, khổ thân (Bắc), tội ghê (Nam) | đồng cảm sâu sắc, thấu hiểu, trân quý | "vừa dỗ con vừa nói chuyện với chị" |
 | Biết ơn | cảm ơn, quý lắm, nhớ hoài | biết ơn vũ trụ, lòng biết ơn sâu sắc | "giờ ghé tiệm còn mang ổi cho cả thợ" |
@@ -514,13 +523,13 @@ Người Việt ghét bị "dạy đời" trên mạng, nhất là từ người
 
 **Bài Facebook "chia sẻ thật" · Bắc · 40+ · chị Vân, 47, Hải Phòng, làm sổ sách thuế cho hộ kinh doanh · mình – anh chị**
 
-> Chiều qua có cô bán bún đầu chợ cầm cái túi nilon đựng hóa đơn sang nhờ mình xem. Cô bảo: "Cô sợ cái thuế này lắm, cứ có số lạ gọi là run." Mình ngồi phân ra từng tờ, xong cộng lại. Hóa ra cô nộp thiếu có hơn ba trăm nghìn, chứ không phải mấy chục triệu như cô tưởng. Cô thở phào, còn dúi cho mình bó rau.
+> Chiều qua có cô bán bún đầu chợ cầm cái túi nilon đựng hóa đơn sang nhờ mình xem. Cô bảo: "Cô sợ cái thuế này lắm, cứ có số lạ gọi là run." Mình ngồi xếp ra từng tờ, xong cộng lại. Hóa ra cô nộp thiếu có hơn ba trăm nghìn, chứ không phải mấy chục triệu như cô tưởng. Cô thở phào, còn dúi cho mình bó rau.
 >
 > Thuế không đáng sợ bằng cái túi hóa đơn không ai dám mở ra.
 >
-> Anh chị nào đang để hóa đơn một túi như cô thì tối nay mở ra, xếp theo tháng thôi đã.
+> Anh chị nào đang dồn hóa đơn một túi như cô thì tối nay cứ mở ra, xếp theo tháng đã.
 
-Mở bằng giờ + người + đồ vật ("cái túi nilon") · lời nguyên văn ("số lạ gọi là run") · nối "xong" · ngoặt "Hóa ra… chứ không phải…" · cảm xúc bằng việc làm ("dúi cho bó rau") · câu chốt hai vế đứng riêng · kết "Anh chị nào… thì…" + "thôi đã" (Bắc: đừng làm gì to vội).
+Mở bằng giờ + người + đồ vật ("cái túi nilon") · lời nguyên văn ("số lạ gọi là run") · nối "xong" · ngoặt "Hóa ra… chứ không phải…" · cảm xúc bằng việc làm ("dúi cho bó rau") · câu chốt hai vế đứng riêng · kết "Anh chị nào… thì…" + "cứ… đã" (làm đúng một việc nhỏ này trước, chưa cần gì to).
 
 **Kịch bản TikTok · Nam · 25–39 · Khang, 31, coach chạy bộ · mình – mấy bạn**
 
@@ -542,17 +551,18 @@ Tên + "đây" + đã đọc tin · kể mình từng sai thay vì chê kế ho�
 
 **Kịch bản Reels · Bắc · 25–39 · Hoàng, 34, dạy nói trước đám đông · mình – bạn**
 
-> Chuyện là tuần trước mình đi đám cưới thằng bạn thân, bị gọi lên phát biểu. Mình dạy nói trước đám đông sáu năm rồi nhé. Thế mà cầm mic lên, tay vẫn run. Run thật. Cơ mà không ai biết, vì mình làm đúng một việc: câu đầu tiên nói chậm gấp đôi bình thường. Nói chậm thì hơi thở xuống, hơi thở xuống thì giọng hết rung. Bạn nào sắp phải lên nói gì đấy thì nhớ, run là bình thường, chỉ cần câu đầu chậm lại thôi.
+> Chuyện là tuần trước mình đi đám cưới thằng bạn thân, bị gọi lên phát biểu. Mình dạy nói trước đám đông sáu năm rồi đấy nhé. Thế mà cầm mic lên, tay vẫn run. Run thật. Cơ mà không ai biết, vì mình làm đúng một việc: câu đầu tiên nói chậm gấp đôi bình thường. Nói chậm thì thở sâu được, thở sâu thì giọng hết run. Bạn nào sắp phải lên nói gì đấy thì nhớ, run là bình thường, chỉ cần câu đầu chậm lại thôi.
 
 "Chuyện là" vào cảnh ngay · tự hạ mình · câu cụt lặp "Run thật." · "Cơ mà" (Bắc trẻ) · "đúng một việc" · chuỗi "thì" nối vòng thay cho "điều này giúp…" · bình thường hóa nỗi sợ rồi mới giao việc.
 
 **Bài Facebook · Nam · 50 · chị Mai, dạy nghề nấu cơm tấm bán sáng · chị – mọi người**
 
-> Sáng nay sáu giờ, em Thắm học viên khóa trước gọi chị, mới alo đã khóc. Chị hết hồn, tưởng có chuyện gì. Ai dè em nói: "Chị ơi em bán hết sạch rồi, bốn chục dĩa, chưa tới tám giờ." Năm ngoái em bị cho nghỉ ở xưởng may, bốn mươi lăm tuổi, đi xin chỗ nào cũng chê lớn tuổi. Chị nghe mà cũng rưng rưng theo. Nghề này hổng giàu nhanh được đâu, cực lắm. Mà được cái mình đứng bếp nhà mình, hổng ai cho mình nghỉ. Ai đang tính học nghề làm lại từ đầu thì nhắn chị, chị kể thiệt cho nghe cực cỡ nào.
+> Sáng nay sáu giờ, em Thắm học viên khóa trước gọi chị, vừa alo là khóc. Chị hết hồn, tưởng có chuyện gì. Ai dè em nói: "Chị ơi em bán hết sạch rồi, bốn chục dĩa, chưa tới tám giờ." Năm ngoái em bị cho nghỉ ở xưởng may, bốn mươi lăm tuổi, đi xin chỗ nào cũng chê lớn tuổi. Chị nghe mà cũng rưng rưng theo. Nghề này hổng giàu nhanh được đâu, cực lắm. Mà được cái mình đứng bếp nhà mình, hổng ai cho mình nghỉ. Ai đang tính học nghề làm lại từ đầu thì nhắn chị, chị kể thiệt cho nghe cực cỡ nào.
 
 Mở bằng giờ + cuộc gọi + việc bất ngờ · ngoặt giả rồi ngoặt thật ("hết hồn… Ai dè") · lời nguyên văn có số, giọng Nam ("dĩa") · lùi thời gian cho thấy cái giá · một chữ cảm xúc có "cũng… theo" · cân lại cho khỏi nổ ("hổng giàu nhanh… Mà được cái…") · mời nhắn, hứa nói thật về cái cực. (Chuyện kết quả của học viên chỉ đăng khi học viên đồng ý: §CM-GUARDRAILS.)
 
 ---
+
 ## 4. Xưng hô, tiểu từ, độ thẳng, chữ tiếng Anh, emoji
 
 ### 4.1 Cặp xưng hô: coach tự xưng – gọi khách
@@ -587,10 +597,10 @@ Cùng một lời dặn: *ghi âm 1 phút kể về ngày hôm nay, rồi nghe l
 
 | Cặp, vùng | Câu | Đổi gì |
 |---|---|---|
-| mình – bạn, Bắc | "Tối nay bạn thử ghi âm 1 phút kể về ngày hôm nay rồi nghe lại xem nhé. Mình cá là bạn sẽ bất ngờ đấy." | "thử … xem nhé": rủ ngang hàng; "mình cá là": đùa nhẹ |
+| mình – bạn, Bắc | "Tối nay bạn thử ghi âm 1 phút kể chuyện hôm nay, xong nghe lại xem nhé. Đảm bảo giật mình đấy." | "thử … xem nhé": rủ ngang hàng; "đảm bảo… đấy": đùa nhẹ, nhấn ở cuối (không "Mình cá là bạn sẽ…", dịch "I bet you'll…") |
 | mình – mấy bạn, Nam | "Tối nay mấy bạn ghi âm 1 phút kể chuyện hôm nay coi, rồi mở ra nghe lại. Bất ngờ lắm á." | "coi", "á": giọng Nam; câu cụt |
-| tôi – anh chị, trung tính | "Tối nay anh chị ghi âm 1 phút, kể lại ngày hôm nay, rồi nghe lại. Anh chị sẽ thấy mình nói 'ờ' nhiều hơn mình nghĩ." | Không tiểu từ; câu đủ; bảo thẳng vì có vị thế |
-| em – anh chị | "Tối nay anh chị thử giúp em một việc nhỏ ạ: ghi âm 1 phút kể về ngày hôm nay rồi nghe lại. Nghe xong thấy sao anh chị nhắn em với nhé." | Lời bảo thành lời nhờ; "ạ" một lần; "với nhé" mềm |
+| tôi – anh chị, trung tính | "Tối nay anh chị ghi âm 1 phút, kể lại chuyện trong ngày, rồi nghe lại. Nghe mới thấy mình 'ờ', 'à' nhiều đến mức nào." | Không tiểu từ; câu đủ; bảo thẳng vì có vị thế |
+| em – anh chị | "Tối nay anh chị thử giúp em một việc nhỏ ạ: ghi âm 1 phút kể chuyện hôm nay rồi nghe lại. Nghe xong thấy sao anh chị nhắn em với nhé." | Lời bảo thành lời nhờ; "ạ" một lần; "với nhé" mềm |
 | chị – các em, Bắc | "Tối nay các em ghi âm 1 phút kể chuyện hôm nay, xong nghe lại. Nghe là biết ngay mình hay vấp ở đâu. Làm đi rồi nhắn chị." | Bảo thẳng, không rào; thân, có trách nhiệm kèm |
 
 ### 4.3 Đổi cặp là đổi những chữ này
@@ -647,8 +657,8 @@ Cặp máy – coach hỏi ở trả lời 1, lưu ở `pronouns`, tách khỏi 
 | **Dạ** (đầu câu) | Cả nước; Nam dùng rộng hơn, cả thay "vâng" | Nhận lời, mở lời đáp người lớn hơn hoặc khách | Đầu tin trả lời khách, phụ huynh, học viên lớn tuổi | Câu nào cũng "Dạ"; "Dạ" trong bài công khai của người lớn tuổi hơn khán giả |
 | **ạ** (cuối câu) | Cả nước | Kính, mềm | Cuối câu hỏi, câu cảm ơn, câu báo tin với người lớn hơn | Sau mọi câu; "Hãy đăng ký ngay ạ"; coach 45+ viết "ạ" với khán giả 25 tuổi |
 | **vâng** | Bắc | Đồng ý | "Vâng ạ", "Dạ vâng" | Coach giọng Nam |
-| **nhé** | Bắc (trung tính trên báo) | Dặn, rủ, hẹn | "Tối nay thử nhé." | Coach giọng Nam, Trung; sau lời trách nghe kẻ cả: "Lần sau đọc kỹ nhé." |
-| **nha** | Nam; lan ra cả nước trên mạng, nhất là người trẻ | Dặn nhẹ, thân | Caption, tin nhắn, video giọng Nam | Coach Bắc 40+; "Hãy … nha" (trang trọng + thân = giả thân); ba câu liền "nha" |
+| **nhé** | Bắc (trung tính trên báo) | Dặn, rủ, hẹn | "Tối nay thử nhé." | Coach giọng Nam (người Nam nói "nha"); sau lời trách nghe kẻ cả: "Lần sau đọc kỹ nhé." (Trung viết dùng cả "nhé" lẫn "nha"; chữ vùng là "nghe") |
+| **nha** | Nam; lan ra cả nước trên mạng, nhất là người trẻ | Dặn nhẹ, thân | Caption, tin nhắn, video giọng Nam; coach Bắc trẻ khi bài thật của họ có | Coach Bắc 40+; "Hãy … nha" (trang trọng + thân = giả thân); ba câu liền "nha" |
 | **nè** | Nam | Chỉ, đưa, gọi chú ý | "Em gửi chị file nè.", "Thử cái này nè." | Tin đầu với khách lớn tuổi; câu nghiêm (giá, cam kết, xin lỗi) |
 | **á** | Nam, trẻ | Nhấn, kể | "Hay lắm á.", "Tầm 4 giờ á." | Dày đặc thành giọng teen; coach 45+ |
 | **hen / hén** | Nam | Rủ, chốt nhẹ như người quen | "Vậy thứ Bảy gặp hen." | Với người lạ, khách sang |
@@ -682,9 +692,9 @@ Cặp máy – coach hỏi ở trả lời 1, lưu ở `pronouns`, tách khỏi 
 | Mức | Câu | Nhận xét |
 |---|---|---|
 | 1. Mềm tới mức không nói gì | "Giảm giá cũng là một cách hay, nhưng anh chị cũng có thể cân nhắc thêm nhiều phương án khác nữa ạ." | Vô hại mà vô vị. AI hay dừng ở đây |
-| 2. Mềm có ý | "Giảm giá thì khách tới, mà hay là khách tới vì giá. Hết giảm là vắng." | Được với coach hiền, khán giả dễ tự ái |
+| 2. Mềm có ý | "Giảm giá thì khách tới thật, mà toàn khách tới vì giá. Hết giảm là vắng." | Được với coach hiền, khán giả dễ tự ái |
 | 3. **Thẳng ấm (mặc định)** | "Nói thiệt nha anh chị, giảm 50% là kéo người ham rẻ chứ hổng kéo khách quen. Hồi mới làm mình cũng xúi quán giảm, tháng sau vắng hơn tháng trước." | Thẳng về **cách làm**; tự nhận từng sai; có hậu quả cụ thể |
-| 4. Thẳng gắt (chỉ khi giọng coach vậy) | "Giảm 50% trên TikTok là đang trả tiền cho người không bao giờ quay lại. Dừng đi." | Gọn, gắt. Chỉ khi Hồ sơ giọng ghi coach nói thẳng như thế |
+| 4. Thẳng gắt (chỉ khi giọng coach vậy) | "Giảm 50% trên TikTok là bỏ tiền mời người lạ ăn một bữa rồi đi luôn. Dừng đi." | Gọn, gắt. Chỉ khi Hồ sơ giọng ghi coach nói thẳng như thế |
 | 5. Quá đà (không bao giờ) | "Quán nào còn giảm 50% là quán sắp dẹp, chủ quán không có não kinh doanh." | Chửi người, quơ đũa cả nắm, có thể thành khủng hoảng |
 
 **Phản bác mà giữ lòng nhau:**
@@ -700,18 +710,18 @@ Cặp máy – coach hỏi ở trả lời 1, lưu ở `pronouns`, tách khỏi 
 | Chỉ vào **một cách làm** cụ thể: "giảm 50% ngay tuần đầu mở quán" | Chỉ vào **một nhóm người** ("mấy ông chủ quán"), **một đối thủ** dù không nêu tên ("bên kia chặt chém") |
 
 - **Rào nhiều quá cũng là giọng AI.** "Có thể", "có lẽ", "trong một số trường hợp", "tùy thuộc vào nhiều yếu tố" xếp chồng làm câu nhũn. Coach Việt rào bằng **chính mình** ("theo mình thấy", "ở lớp mình thì") rồi nói thẳng.
-- **Chê đối thủ:** không nêu tên, không ám chỉ, không so sánh trực tiếp (Luật Quảng cáo cấm so sánh trực tiếp). Muốn nói khác biệt thì nói **mình làm gì**: "Giá ghi trên bảng là giá chốt."
+- **Chê đối thủ:** mặc định máy không nêu tên, không ám chỉ, không so sánh trực tiếp; muốn nói khác biệt thì nói **mình làm gì**: "Giá ghi trên bảng là giá chốt." Coach yêu cầu rõ một so sánh có tên thì máy viết, kèm đúng một dòng lưu ý có ngày (DECISIONS: không chặn; Luật Quảng cáo hạn chế so sánh trực tiếp trong quảng cáo, nên dòng lưu ý nói điều đó). Chê **cách làm**, không chê **người**.
 
 ### 4.8 Chêm tiếng Anh
 
 | Mức | Chữ | Khi nào |
 |---|---|---|
 | **Bình thường** với dân thành thị, dân bán hàng online | content, sale, deal, feedback, team, deadline, KPI, booking, order, ship, livestream / live, review, check, inbox / ib, link, file, online, offline, group, page, follow, like, share, comment, clip, app, ok / oke, tips, trend, viral, workshop, CV | Được, nếu coach cũng nói vậy |
-| **Tùy nghề, tùy người** | insight, mindset, case study, upsell, funnel, lead, branding, storytelling, mentor, coaching 1:1, JD, onboarding, target, dashboard, VBA | Chỉ khi coach dùng **và** khán giả cùng nghề (dân nhân sự hiểu "JD", chủ quán thì nói "phiếu việc") |
+| **Tùy nghề, tùy người** | insight, mindset, case study, upsell, funnel, lead, branding, storytelling, mentor, coaching 1:1, JD, onboarding, target, dashboard, VBA | Chỉ khi coach dùng **và** khán giả cùng nghề (dân nhân sự hiểu "JD", chủ quán thì nói "việc phải làm") |
 | **Nghe làm màu** với khách bình dân, 40+, tỉnh | handle, discuss, sure, actually, basically, problem, impact, value, solution, journey, empower, align, skill set, growth mindset, pain point, talent | Không dùng, trừ khi đó là giọng thật của coach |
 
 - Báo chí Việt từ lâu chê kiểu "Với problem này, chúng ta nên discuss lại" là làm màu (Báo Quốc tế, 2008). Sinh viên chêm tiếng Anh trong caption TikTok như chơi chữ là giọng của họ (ĐH Thái Nguyên).
-- **Chữ Anh đã Việt hóa cách viết**: "oke", "chạy át" (ads), "phây": chỉ dùng khi coach tự viết vậy.
+- **Chữ Anh đã Việt hóa cách viết**: "oke", "sốp" (shop), "phây": chỉ dùng khi coach tự viết vậy.
 - **Ngữ pháp vẫn là tiếng Việt:** "đi check", "chốt sale", "feedback của học viên". Không bê ngữ pháp Anh: "các bạn mà không sure".
 - **Đừng dịch ngược chữ ai cũng nói:** "tiếp thị nội dung" thay "content", "người có sức ảnh hưởng" thay "KOL", "trang đích" thay "landing page", "lời kêu gọi hành động" thay "CTA". Với dân văn phòng, dịch cứng còn lạ hơn để nguyên. Với khách bình dân thì nói bằng việc: "trang đăng ký", "câu mời".
 - **Luật cho máy:** dùng đúng danh sách `code_mix` của coach; không có trong danh sách thì nói tiếng Việt thường ngày; không bao giờ thêm chữ Anh coach không dùng.
@@ -752,7 +762,7 @@ Thang an toàn với luật mồi tương tác của Meta, TikTok ở wf5 F8. B�
 | Comment từ khóa | "Ai cần thì comment chữ TĂNG CA, mình gửi qua tin nhắn." | "Comment 'GUIDE' ngay bên dưới để nhận tài liệu độc quyền hoàn toàn miễn phí!" |
 | Đường lặng cho người ngại | "Ngại comment thì nhắn riêng mình chữ đó cũng được nha." | (AI gần như không bao giờ thêm câu này) |
 | "ib", "inbox" | "ib" là chữ chat, hợp bình luận giữa người ngang tuổi; "inbox mình" phổ biến, hơi mùi bán | "Check ib" trơn làm câu trả lời cho người hỏi giá: cụt, giấu giá |
-| "chấm" | Người comment "." để theo dõi bài là chuyện của họ | Bảo người ta "chấm" để nhận quà, "đủ 100 comment": mồi tương tác (coach tự chọn thì giữ nguyên, kèm một dòng lưu ý; §CM-CTA-KIT) |
+| "chấm", ngưỡng comment | Coach tự chọn thì là giọng của họ: "Chấm mình gửi file nha 👇", "Đủ 100 comment mình làm phần 2". Máy viết y vậy, thêm đúng một dòng lưu ý nền tảng có ngày, không chặn, không làm mềm (DECISIONS; §CM-CTA-KIT). Người comment "." để theo dõi bài là chuyện của họ | Máy **tự** đặt "chấm", tự đặt ngưỡng khi coach chưa chọn; "Comment CHẤM ngay để nhận tài liệu độc quyền!!!" |
 | Zalo | "Anh chị kết bạn Zalo số ở ảnh bìa giúp em, em gửi bản vẽ qua đó cho rõ ạ." · "Em add chị vô nhóm lớp nha." | "Để lại số điện thoại để được tư vấn" (dưới bình luận công khai: không bao giờ) |
 | TikTok | "Phần 2 mai lên." · "Link nhóm Zalo ở bio nha." | "Theo dõi để không bỏ lỡ những nội dung hữu ích tiếp theo!" |
 | Đăng ký | "Nhắn mình chữ ĐĂNG KÝ, mình gửi lịch và học phí." · "Form có 2 câu, link mình gửi qua tin nhắn." | "Đăng ký ngay!" · "Nhanh tay!" · "Số lượng có hạn!" · "Đừng bỏ lỡ cơ hội!" |
@@ -762,7 +772,7 @@ Lời giục kiểu Mỹ dịch sang tiếng Việt nghe như rao hàng; ngườ
 
 ### 5.2 Chữ từ khóa
 
-- **Tiếng Việt, 1–2 chữ, viết hoa, gọi đúng nỗi khổ hoặc món quà:** TĂNG CA, ẢNH TỐI, BIỂN, NGẠI CHÀO. Không GUIDE, FREE, INFO, EBOOK.
+- **Chữ của chính tệp khách coach, 1–2 chữ, viết hoa, gọi đúng nỗi khổ hoặc món quà:** TĂNG CA, ẢNH TỐI, BIỂN, NGẠI CHÀO (DECISIONS: từ khóa là chữ gắn với coach và là chữ khách của họ hay nói). Thường là tiếng Việt; chữ Anh chỉ khi đúng là chữ khách nói hằng ngày (dân IT nói "CV"). Không GUIDE, FREE, INFO, EBOOK do máy tự chọn.
 - Chính các coach trong bộ eval, khi thấy bài người khác bảo "comment GUIDE", đều chê: không hiểu chữ đó, thấy "hơi bán hàng", không ưa (bằng chứng ở `liked-paste.md`; không trích vào gói).
 - **Luôn kèm đường nhắn riêng** cho người ngại để tên mình dưới bài. "Ngại" là một cảm xúc riêng của người Việt: ngần ngừ vì nghĩ cho người kia, không phải nhút nhát. Viết trúng chữ "ngại" là chạm đúng chỗ; dịch thành "e ngại, rụt rè, thiếu tự tin" là trật.
 - Bài có từ khóa phải **cho đủ giá trị ngay trong bài**; món quà là phần đầy đủ, không phải phần bị giấu.
@@ -785,7 +795,7 @@ Vì sao không "giá ib": khách khó chịu và tự hỏi giá có đổi theo
 
 - **Số chỗ đi kèm lý do thật:** "20 bạn, vì buổi nào mình cũng mở file từng người ra sửa." Không có lý do thì như chiêu.
 - **Hạn có ngày giờ, nói luôn sau hạn thì sao:** "Đóng 23h59 thứ Sáu. Khóa sau chắc tầm tháng 3." Nói khóa sau là gỡ nỗi sợ bị bỏ lại.
-- **Không:** "chỉ còn 3 suất" ngày nào cũng đăng, "giá tăng gấp đôi lúc 0h", đồng hồ đếm ngược giả, mở lại ngay sau khi "đóng". Hạn và suất phải có trong Ledger (shared.md SG2).
+- **Không:** "chỉ còn 3 suất" ngày nào cũng đăng, "giá tăng gấp đôi lúc 0h" khi không tăng thật, đồng hồ đếm ngược giả, mở lại ngay sau khi "đóng". Hạn và suất **thật** thì nói thẳng, kể cả trong đợt mở bán (DECISIONS: gấp gáp, khan hiếm thật là một bước của launch); chỉ cái giả mới bị chặn. Hạn và suất phải có trong Ledger (shared.md SG2).
 
 ### 5.5 Nổ, lùa, hứa quá, dí: chữ nào làm mất tin
 
@@ -797,9 +807,9 @@ Các khóa "dạy làm giàu" bị báo chí bóc nhiều năm; "lùa gà" và "
 | "Đổi đời", "tự do tài chính", "thu nhập thụ động", "làm giàu" | Hội thảo làm giàu | Nói đúng cái thay đổi nhỏ, đo được |
 | "Bí kíp", "bí mật không ai nói", "công thức độc quyền", "Hệ … 4.0™" | Đóng gói chữ cho kêu để bán khóa | "Cách mình làm", "3 bước mình dùng" |
 | "Chuyên gia hàng đầu", "số 1", "duy nhất", "tốt nhất", "bậc thầy" | Nổ; "nhất, số 1" không có bằng chứng thì bị cấm | "Mình làm nghề này 7 năm." |
-| "Cam kết 100%", "đảm bảo thành công", "hết đau", "trắng bật tông" | Hứa thay kết quả; sức khỏe, làm đẹp còn rủi ro pháp lý | Cam kết **quy trình**: "Mình cam kết cách làm, không cam kết thay bạn kết quả." |
+| "Cam kết 100%", "đảm bảo thành công", "hết đau", "trắng bật tông" | Hứa thay kết quả; sức khỏe, làm đẹp còn rủi ro pháp lý | Cam kết **cách làm**: "Mình cam kết buổi nào cũng sửa bài từng người. Kết quả thì do bạn làm, mình không hứa thay được." |
 | "Hữu duyên", "chỉ dành cho người thật sự nghiêm túc", "người được chọn" | Chọn lọc giả, ép tâm lý | Nói thẳng ai **không** nên mua: "Không dành cho bạn nếu…" |
-| "Xin vía", ảnh chuyển khoản, ảnh bill, khoe xe | Khoe để câu khách | Kể việc học viên làm được, không kể tiền về túi mình |
+| "Xin vía", ảnh chuyển khoản, ảnh bill, khoe xe làm cả cái mồi | Khoe để câu khách | Số thật chỉ làm **bằng chứng**, đặt sau chuyện, có bối cảnh (DECISIONS: khoe chỉ làm bằng chứng, lời mời hay kiểu lật ngược, không làm cả hook); còn lại kể việc học viên làm được |
 | "Đánh thức", "khai phá", "kích hoạt", "thức tỉnh", "sức mạnh tiềm thức", "năng lượng" | Giọng hội thảo cảm xúc | Chữ việc: "tập", "sửa", "làm thử" |
 | "Thực chiến" lặp mọi bài | Chữ quảng cáo khóa học đã mòn | Nói học bằng việc gì: "cầm điện thoại quay ngay tại quán" |
 | "Nếu không đầu tư cho bản thân, bạn sẽ mãi nghèo" | Dọa, làm nhục | Bỏ |
@@ -874,7 +884,7 @@ Gọi tên, kèm "ơi" khi thân ("Hà ơi, …"). Bài "em – anh chị" thì 
 | Tránh (gốc) | Dùng |
 |---|---|
 | "Cảm ơn anh/chị đã quan tâm đến sản phẩm/dịch vụ của chúng tôi" | "Dạ chào chị," rồi trả lời luôn |
-| "Để được tư vấn chi tiết, vui lòng để lại số điện thoại" | (trong tin nhắn) "Chị cho em xin số Zalo, em gửi bảng giá qua đó cho dễ coi ạ." |
+| "Để được tư vấn chi tiết, vui lòng để lại số điện thoại" | (trong tin nhắn, sau khi đã nói giá) "Dạ học phí 1.890.000đ ạ. Chị cho em xin số Zalo, em gửi lịch học qua đó cho dễ coi." |
 | "Nhân viên sẽ liên hệ lại trong thời gian sớm nhất" | "Tối nay 8 giờ em gọi chị được không ạ?" |
 | "Xin lỗi vì sự bất tiện này" (Sorry for the inconvenience) | "Em xin lỗi chị, lỗi bên em để chị chờ." |
 | "Đừng ngần ngại liên hệ" (Don't hesitate) | "Có gì chị cứ nhắn em." |
@@ -889,7 +899,7 @@ Gọi tên, kèm "ơi" khi thân ("Hà ơi, …"). Bài "em – anh chị" thì 
 | "Đồng hành cùng bạn" | "Mình kèm bạn 6 tuần." |
 | "Trải nghiệm" (experience) | "học thử", "làm thử", "dùng thử", "ghé" |
 | "Sở hữu" (own) | "có", "mua" |
-| "Mang đến cho bạn …" (bring you) | Bỏ chủ ngữ: "Học xong, bạn …" |
+| "Mang đến cho bạn …" (bring you) | Nói kết quả, bỏ chủ ngữ: "Học xong là …" |
 | "Chỉ với 1.890.000đ" (for only) | "1.890.000đ" |
 | "Dành riêng cho bạn" (just for you) | Bỏ, hoặc nói thật: "cho người đã dự buổi thử" |
 | "Trở thành phiên bản tốt nhất của chính mình" | Nói cái làm được: "chủ trì được một buổi họp 15 phút" |
@@ -912,7 +922,7 @@ Gọi tên, kèm "ơi" khi thân ("Hà ơi, …"). Bài "em – anh chị" thì 
 | **Zalo một-một** | Như ngoài đời: em – chị, chị – em, tôi – anh | Ngắn; tin thoại; ảnh | "Dạ… ạ"; viết tắt nếu thân | Hẹn giờ cụ thể; QR chuyển khoản | Tin mẫu "anh/chị"; dồn tin; nhắn khuya |
 | **Nhóm Zalo (lớp, học viên)** | "Cả nhà / cả lớp" – mình / thầy / cô / chị | Thông báo ngắn, ghim | Ấm, gọn | Nhắc lịch, bài tập | Văn công văn "Kính đề nghị quý phụ huynh"; bán liên tục |
 | **Nhật ký Zalo** | Như Facebook cá nhân, đời hơn | Ngắn, ảnh thật | Mộc | Rất ít | Đăng bán mỗi ngày |
-| **LinkedIn** | tôi – anh chị / bạn; mình – bạn (người trẻ) | Gọn, danh sách số được; ký tên được | Gần như không tiểu từ; 0–1 emoji | "Ai cần mẫu, để lại bình luận hoặc nhắn tôi." | "nha, nè"; bài kiểu Facebook; calque "Tôi rất vinh dự và tự hào thông báo rằng…" (Humbled and honored to announce) → "Tuần này tôi vừa xong…" |
+| **LinkedIn** | tôi – anh chị / bạn; mình – bạn (người trẻ) | Gọn, danh sách số được; ký tên được | Gần như không tiểu từ; 0–1 emoji | "Ai cần mẫu thì bình luận hoặc nhắn tôi." | "nha, nè"; bài kiểu Facebook; calque "Tôi rất vinh dự và tự hào thông báo rằng…" (Humbled and honored to announce) → "Tuần này tôi vừa xong…" |
 | **Threads** | mình – mọi người; chữ thường | Một ý, ngắn, thú nhận | Như chat | Gần như không bán | Bài bán, bài dài |
 | **Livestream** | mình / chị – cả nhà, mọi người; gọi tên người xem | Chào và chờ; đọc bình luận; lạc đề rồi quay lại (K6) | Theo giọng nói | "Còn ai hỏi gì nữa hông", nhắc link ở bình luận ghim | Đọc kịch bản; không gọi tên ai |
 | **Email** | Như Zalo, đủ câu hơn; với doanh nghiệp: "Kính gửi anh Hùng" vẫn đúng | ≤375 tiếng; tiêu đề như thư riêng | Ít | Một việc | Tiêu đề kiểu khuyến mãi; "Re:" giả |
@@ -937,10 +947,10 @@ Gọi tên, kèm "ơi" khi thân ("Hà ơi, …"). Bài "em – anh chị" thì 
 | Tự xưng (thân) | mình, tớ (trẻ), chị, anh | tui, mình | tui, mình, tụi mình |
 
 **Luật cho máy:**
-1. **Một vùng một bài.** Không "nhé" lẫn "nha"; không "đấy" trong bài giọng Nam; không "hông" trong bài giọng Bắc. Đổi vùng là đổi cả **chữ nối** ("thế là" ↔ "vậy là", "rứa là"), không chỉ tiểu từ.
+1. **Một vùng một bài.** Không "đấy" trong bài giọng Nam; không "hông" trong bài giọng Bắc; không vừa "nhé" vừa "nha" trừ khi bài thật của coach trộn như vậy (người Bắc trẻ hay trộn). Đổi vùng là đổi cả **chữ nối** ("thế là" ↔ "vậy là", "rứa là") và chữ thường ngày ("bố mẹ" ↔ "ba mẹ", "bát" ↔ "chén", "nghìn" ↔ "ngàn"), không chỉ tiểu từ.
 2. **Giọng Trung khi viết:** bớt tiếng địa phương, giữ 1–3 chữ ("rứa", "chừ", "nghe", "hỉ") để người vùng khác vẫn đọc trôi. Video thì để nguyên giọng nói.
 3. **Giọng Nam khi viết:** "hông", "thiệt", "vô", "nè" giữ được; chính tả nói ("dzậy", "hông dám đâu") chỉ khi coach tự viết vậy.
-4. **Không đoán vùng khi không có bằng chứng.** Không rõ thì viết trung tính: bỏ cả "nhé" lẫn "nha", dùng "…thử xem", "…nhớ làm thử", "Có gì nhắn mình."
+4. **Không đoán vùng khi không có bằng chứng.** Không rõ thì viết trung tính: chữ chung cả nước ("đó", "thôi", "luôn", "nhé" thưa ở câu dặn; "nhé" là chữ trên báo, người Nam đọc vẫn quen), không "nè, hông, nhỉ, đấy, rứa". Đừng bỏ hết tiểu từ: câu trơn không tiểu từ nào lại nghe như bản dịch (X3).
 5. **Tiếng địa phương không phải trò cười.** Không rắc "rứa, mô, tê" dày đặc cho có màu: đó là giễu nhại, người miền Trung đọc sẽ phật ý.
 
 ### 7.2 Lứa tuổi
@@ -957,15 +967,21 @@ Gọi tên, kèm "ơi" khi thân ("Hà ơi, …"). Bài "em – anh chị" thì 
 
 **Luật cho máy:** tiếng lóng chỉ dùng khi (a) coach tự dùng trong lời xả hay bài dán **và** (b) khách cùng tuổi đó. Tối đa một chữ lóng mỗi bài. Không bao giờ cho coach 40+ nói giọng Gen Z để "bắt trend". Tiếng lóng của AI thường lỗi thời nhiều năm (wf2 §5). Gọi khách 40+ là "bạn" là lỗi văn hóa hay gặp; dùng anh chị, cô chú.
 
+**Lệch tuổi giữa coach và khách:**
+- **Coach 40+, khách trẻ hơn:** giữ giọng của coach, đừng "trẻ hóa": "chị – các em", "cô – các con", "anh – em", hoặc "mình – các bạn"; câu đủ chữ, ít lóng, emoji thưa. Không "ạ" với khán giả nhỏ tuổi hơn. Tự trào về tuổi thì được ("chị già rồi, nói chậm, các em chịu khó").
+- **Coach trẻ, khách 40+:** "em – anh chị", "Dạ… ạ" khi nhắn; không "mn", không lóng, không "bạn"; chữ Anh chỉ chữ đã quen (sale, ship, online).
+- **Khách trộn tuổi** (nhóm Facebook, live): "mình – mọi người" hoặc "mình – anh chị"; câu trả lời riêng thì đổi theo người hỏi.
+
 ### 7.3 Giao tiếp kiểu Việt: tế nhị, giữ thể diện, ghét nổ
 
 - **Tế nhị, nói giảm nói tránh.** Văn hóa ngữ cảnh cao, giữ thể diện cho nhau. Vì vậy lời mời tiếng Việt mềm hơn tiếng Anh: "ai cần thì nhắn", "cứ coi lịch đã", "chưa cần quyết liền".
 - **"Ngại"** là cảm xúc riêng: ngần ngừ vì nghĩ cho người kia. Khách "ngại hỏi giá", coach "ngại chào". Viết trúng chữ này là chạm đúng chỗ.
-- **Khiêm, ghét khoe.** Thành tích đặt vào khách ("Thắm làm đều nhất nên bán hết sớm nhất"), kèm chữ giảm nhẹ ("cũng được", "tạm ổn", "may là"). Khoe doanh thu, ảnh chuyển khoản là "nổ".
+- **Khiêm, ghét khoe.** Thành tích đặt vào khách ("Thắm làm đều nhất nên bán hết sớm nhất"), kèm chữ giảm nhẹ ("cũng được", "tạm ổn", "may là"). Khoe doanh thu, ảnh chuyển khoản làm cả bài là "nổ"; một con số thật đặt sau chuyện để làm bằng chứng thì được.
 - **Nói thẳng chuyện tiền thì được tin,** nếu là thẳng về *mình*. Thẳng kiểu ép người khác thì mất tin.
 - **"Dạ"** mở đầu khi trả lời người lớn hơn hoặc khách; "ạ" cuối câu. Một "Dạ" và một "ạ" mỗi tin là đủ; "Dạ vâng ạ" (Bắc), "Dạ, dạ" (Nam). Thiếu "Dạ… ạ" khi nhắn khách là thô.
 
 ---
+
 ## 8. Ba mươi chín cặp trước / sau
 
 Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, chụp lại, số chỗ) trong ví dụ là bịa; khi máy viết cho coach thật, chỉ dùng điều coach đã nói là thật. Mỗi cặp ghi: chỗ dùng · coach · cặp xưng hô · vùng. Dòng "Sửa gì" là lý do, để người viết học cách nghĩ, không phải để chép.
@@ -974,8 +990,8 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **A1 · Câu mở bài Facebook · cô Nga · mình – các chị · Bắc**
 - Trước: "Bạn có biết rằng 80% người làm bánh tại nhà đang định giá sai sản phẩm của mình? Hãy cùng mình khám phá nguyên nhân nhé!"
-- Sau: "Tuần trước có chị nhắn cô: 'Cô ơi em bán cả tháng mà tiền bơ tiền trứng vẫn nợ.' Cô nhìn bảng giá của chị ấy là hiểu ngay."
-- Sửa gì: bỏ "Bạn có biết rằng" và con số không nguồn; mở bằng câu khách nhắn nguyên văn; "Hãy cùng khám phá" thành một câu kể có người, có giờ.
+- Sau: "Tuần trước có chị nhắn mình: 'Cô ơi em bán cả tháng mà vẫn còn nợ tiền bơ tiền trứng.' Mình nhìn bảng giá của chị ấy là hiểu ngay."
+- Sửa gì: bỏ "Bạn có biết rằng" và con số không nguồn; mở bằng câu khách nhắn nguyên văn (khách gọi "cô", cô vẫn xưng "mình" với các chị đọc bài: lời trích giữ xưng hô của người nói); "Hãy cùng khám phá" thành một câu kể có người, có giờ.
 
 **A2 · Hook TikTok 3 giây · Hiếu · Hiếu – anh chị · Trung**
 - Trước: "Xin chào các bạn, hôm nay mình sẽ hướng dẫn các bạn cách vệ sinh máy lạnh tại nhà một cách đơn giản và hiệu quả."
@@ -984,7 +1000,7 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **A3 · Câu mở bài · Khang · mình – mấy bạn · Nam**
 - Trước: "Trong cuộc sống hiện đại bận rộn ngày nay, việc duy trì thói quen chạy bộ là vô cùng quan trọng đối với sức khỏe của chúng ta."
-- Sau: "5 giờ sáng, công viên Gia Định đông nhất là mấy ông chú chạy chậm rì. Mà mấy ổng chạy bền nhất."
+- Sau: "5 giờ sáng, công viên Gia Định đông nhất là mấy ông chú chạy chậm rì. Mà bền nhất cũng là mấy ổng."
 - Sửa gì: bỏ mở bài nghị luận ("Trong cuộc sống hiện đại", "việc duy trì", "vô cùng quan trọng", "chúng ta"); mở bằng giờ, chỗ, người; "mấy ổng" giọng Nam.
 
 **A4 · Câu mở bài · cô Lan · mình – anh chị phụ huynh · Bắc**
@@ -994,14 +1010,14 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **A5 · Câu mở bài · Ngọc · mình – mọi người · Bắc, Gen Z**
 - Trước: "Bạn đã bao giờ tự hỏi tại sao mình học tiếng Anh nhiều năm mà vẫn không thể giao tiếp một cách tự tin?"
-- Sau: "Kể nghe pha muối mặt nhất năm hai của mình."
+- Sau: "Kể mọi người nghe pha muối mặt nhất hồi năm hai của mình."
 - Sửa gì: bỏ hook dịch "Have you ever wondered"; thú nhận mở chuyện; một chữ lóng nhẹ, đúng tuổi ("muối mặt").
 
 ### B. Nối ý, chuyển ngoặt
 
 **B1 · Nối hai ý · chị Diễm · chị – các mẹ · Nam**
 - Trước: "Cho bé tự bốc giúp bé phát triển kỹ năng vận động. Bên cạnh đó, nó còn giúp bé hứng thú hơn với bữa ăn. Tuy nhiên, các mẹ cần chú ý an toàn."
-- Sau: "Cho bé tự bốc thì tay bé khéo lên, mà bé cũng ham ăn hơn. Có điều mẹ phải ngồi kế bên nha, đừng bỏ đi đâu."
+- Sau: "Cho bé tự bốc thì tay bé khéo hơn, mà bé cũng ham ăn hơn. Có điều mẹ phải ngồi kế bên nha, đừng bỏ đi đâu."
 - Sửa gì: "Bên cạnh đó", "Tuy nhiên" thành "mà", "có điều"; bỏ "giúp bé phát triển kỹ năng"; "nó" chỉ ý thì bỏ; tiểu từ ở câu dặn.
 
 **B2 · Chỗ ngoặt · chị Hồng · chị – em · Nam**
@@ -1011,12 +1027,12 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **B3 · Chuyển thời gian · Phát · mình – anh chị · Nam**
 - Trước: "Tua nhanh đến 2 năm sau, tôi đã xây dựng thành công kênh TikTok với hàng chục nghìn người theo dõi."
-- Sau: "Hai năm sau, kênh của quán có bốn chục nghìn người coi. Má vẫn la mình cầm điện thoại trong bếp, mà la nhỏ hơn rồi."
+- Sau: "Hai năm sau, kênh của quán có bốn chục ngàn người theo dõi. Má vẫn la mình cầm điện thoại trong bếp, mà la nhỏ hơn rồi."
 - Sửa gì: "Tua nhanh" thành "Hai năm sau"; số cụ thể thay "hàng chục nghìn"; thêm một chi tiết đời để khỏi "nổ".
 
 **B4 · Giải thích lại · Hoàng · mình – bạn · Bắc**
 - Trước: "Nói chậm giúp bạn kiểm soát hơi thở. Điều này có nghĩa là giọng của bạn sẽ trở nên ổn định hơn."
-- Sau: "Nói chậm thì hơi thở xuống, hơi thở xuống thì giọng hết rung."
+- Sau: "Nói chậm thì thở sâu được, thở sâu thì giọng hết run."
 - Sửa gì: "Điều này có nghĩa là", "giúp bạn", "sẽ trở nên", "của bạn" thành một chuỗi "thì" nối vòng.
 
 **B5 · Đối lập · thầy Tùng · thầy – anh chị · Trung**
@@ -1028,7 +1044,7 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **C1 · Dẫn lời · Quân · em – anh chị · Bắc**
 - Trước: "Chị chủ shop chia sẻ rằng chị ấy cảm thấy rất thất vọng vì khách phàn nàn về màu sắc sản phẩm."
-- Sau: "Chị chủ shop nhắn em: 'Khách bảo túi ngoài đời nâu hơn trên ảnh, đòi trả em ạ.'"
+- Sau: "Chị chủ shop nhắn em: 'Khách bảo túi ngoài đời nâu hơn trên ảnh, đòi trả hàng em ạ.'"
 - Sửa gì: "chia sẻ rằng… cảm thấy rất thất vọng" thành dẫn lời nguyên văn bằng "nhắn"; giữ chữ của người nói.
 
 **C2 · Bài học · Khang · mình – mấy bạn · Nam**
@@ -1043,12 +1059,12 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **C4 · Kết bài Facebook · cô Nga · mình – các chị · Bắc**
 - Trước: "Hy vọng bài viết hữu ích với các bạn. Đừng quên để lại bình luận và chia sẻ cho những người cần nhé!"
-- Sau: "Chị nào đang bán bánh mà chưa tính tiền điện lò thì tối nay ngồi cộng thử nhé, cộng xong là biết."
+- Sau: "Chị nào đang bán bánh mà chưa tính tiền điện chạy lò vào giá thì tối nay ngồi cộng thử nhé, cộng xong là biết."
 - Sửa gì: kết bằng một việc nhỏ cho đúng người ("Chị nào… thì tối nay…"); bỏ câu kết rỗng và lời giục tương tác.
 
 **C5 · Kết bài video · Ngọc · mình – mọi người · Bắc**
 - Trước: "Tóm lại, để cải thiện khả năng nói tiếng Anh, bạn cần luyện tập thường xuyên. Chúc các bạn thành công!"
-- Sau: "Ai sắp đi phỏng vấn thì tối nay thử nói to ba câu về mình thôi nhé, sai cũng nói."
+- Sau: "Ai sắp đi phỏng vấn thì tối nay thử nói to ba câu về mình thôi nhé, sai cũng cứ nói."
 - Sửa gì: bỏ "Tóm lại", "Để…, bạn cần…", "Chúc các bạn thành công"; một việc nhỏ có số, có giờ.
 
 ### D. Kịch bản video nói
@@ -1056,11 +1072,11 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 **D1 · Đoạn giữa video · Hiếu · Hiếu – anh chị · Trung**
 - Trước: "Sau khi tiến hành tháo lưới lọc, chúng ta sẽ thực hiện việc vệ sinh bằng nước sạch. Điều này giúp máy hoạt động hiệu quả hơn."
 - Sau: "Tháo cái lưới ra, xả nước cho sạch bụi, phơi khô rồi gắn lại. Mười phút là máy mát rượi."
-- Sửa gì: bỏ "tiến hành", "thực hiện việc", "Điều này giúp", "chúng ta"; chuỗi việc một hơi nối bằng dấu phẩy; kết quả bằng con số và từ láy.
+- Sửa gì: bỏ "tiến hành", "thực hiện việc", "Điều này giúp", "chúng ta"; chuỗi việc một hơi nối bằng dấu phẩy; kết quả bằng con số và chữ nhấn ("mát rượi").
 
 **D2 · Đoạn giữa video · Phát · mình – anh chị · Nam**
 - Trước: "Để có thể quay được video đẹp trong bếp, bạn cần phải đặt điện thoại ở vị trí phù hợp và đảm bảo rằng ánh sáng đầy đủ."
-- Sau: "Muốn quay trong bếp mà đẹp thì để điện thoại ngang ngực, quay lưng ra cửa sổ. Vậy thôi, khỏi mua đèn."
+- Sau: "Muốn quay trong bếp mà đẹp thì đứng quay mặt ra cửa sổ, để điện thoại ngang ngực. Vậy thôi, khỏi mua đèn."
 - Sửa gì: "Để có thể…, bạn cần phải…" thành "Muốn… thì…"; "đảm bảo rằng ánh sáng đầy đủ" thành chỉ dẫn thấy được; câu cụt "Vậy thôi".
 
 **D3 · Câu chốt video · Hoàng · mình – bạn · Bắc**
@@ -1087,7 +1103,7 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **E4 · Câu chốt video · Quân · em – anh chị · Bắc**
 - Trước: "Nếu thấy video hữu ích, đừng quên like, share và follow kênh để ủng hộ mình nhé! Hẹn gặp lại các bạn trong những video tiếp theo!"
-- Sau: "Anh chị nào đang bán mà ảnh chụp bằng điện thoại cứ bị tối, nhắn em chữ ẢNH TỐI, em gửi cái sơ đồ đặt đèn một trang, đèn bàn ở nhà cũng làm được ạ."
+- Sau: "Anh chị nào đang bán mà ảnh chụp bằng điện thoại cứ bị tối thì nhắn em chữ ẢNH TỐI, em gửi cái sơ đồ đặt đèn một trang, đèn bàn ở nhà cũng làm được ạ."
 - Sửa gì: một việc gắn đúng nỗi khổ; bản trước trôi xưng hô ("mình" rồi "các bạn" trong khi kênh xưng "em – anh chị"); món quà nhỏ, cụ thể; "ạ" một lần.
 
 ### F. Trả lời tin nhắn
@@ -1100,12 +1116,12 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **F2 · "Lớp này có hợp với em không?" · Vy · mình – bạn · Bắc**
 - Trước: "Chào bạn! Khóa học được thiết kế dành riêng cho những ai mong muốn nâng cao kỹ năng Excel một cách toàn diện. Với lộ trình bài bản cùng đội ngũ giảng viên giàu kinh nghiệm, chắc chắn bạn sẽ đạt được kết quả như mong đợi!"
-- Sau: "Chào Hà, cho mình hỏi lại một chút nhé: mỗi tuần Hà hay phải làm báo cáo gì, mất khoảng bao lâu? Lớp mình tập đúng việc gom số từ mấy file về một bảng. Nếu Hà cần học VBA hay làm dashboard thì lớp này chưa phải chỗ đâu, mình chỉ Hà chỗ khác hợp hơn."
+- Sau: "Chào Hà, cho mình hỏi lại một chút nhé: mỗi tuần Hà hay phải làm báo cáo gì, mất khoảng bao lâu? Lớp mình tập đúng việc gom số từ mấy file về một bảng. Nếu Hà cần học VBA hay làm dashboard thì lớp này không hợp đâu, mình chỉ Hà chỗ khác."
 - Sửa gì: hỏi trước khi bán; nói thật khi không hợp; bỏ "được thiết kế dành riêng", "một cách toàn diện", "chắc chắn"; Vy dạy một mình nên "đội ngũ giảng viên" là nói sai; "VBA, dashboard" là chữ dân văn phòng thật dùng.
 
 **F3 · Khách nói "để chị suy nghĩ thêm" · Quân · em – chị · Bắc**
 - Trước: "Dạ vâng ạ! Chị cứ thoải mái suy nghĩ nhé ạ. Tuy nhiên, chương trình ưu đãi chỉ áp dụng đến hết ngày hôm nay, chị nên nhanh chóng đưa ra quyết định để không bỏ lỡ cơ hội ạ!"
-- Sau: "Dạ vâng, chị cứ cân nhắc ạ. Em gửi lại bảng giá một trang ở trên để chị xem lúc rảnh. Giá này em giữ đến hết tháng 11. Nếu chị muốn xem em chụp đồ nhà mình ra sao, chị gửi em 1 món, em chụp thử 2 tấm không tính phí ạ."
+- Sau: "Dạ vâng, chị cứ thong thả ạ. Em gửi lại bảng giá một trang ở trên để chị xem lúc rảnh. Giá này em giữ đến hết tháng 11. Chị muốn xem em chụp đồ bên chị thế nào thì gửi em 1 món, em chụp thử 2 tấm, không lấy tiền."
 - Sửa gì: bỏ "Tuy nhiên… nhanh chóng… không bỏ lỡ" (vừa dí vừa gấp giả); hạn có ngày thật; một bước nhỏ giảm rủi ro cho khách; "ạ" vừa đủ (bản trước có bốn "ạ").
 
 **F4 · Nhắn lại khi khách đã xem mà chưa trả lời · Phát · em – anh (khách lớn tuổi hơn) · Nam**
@@ -1122,17 +1138,17 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **G1 · Tin chào khi khách vừa kết bạn · Vy · mình – bạn · Bắc**
 - Trước: "Xin chào! 🎉 Cảm ơn bạn đã kết bạn với Vy. Vy rất vui được đồng hành cùng bạn trên hành trình chinh phục Excel! Hãy cùng nhau khám phá những bí quyết giúp bạn làm việc hiệu quả hơn mỗi ngày nhé! 💪✨"
-- Sau: "Chào Hà, Vy đây. File mẫu báo cáo tuần mình để ở dưới nhé, Hà mở sheet 'Tổng' trước, điền số tuần này vào thử. Mình hỏi một câu thôi: báo cáo của Hà đang gom từ mấy file? (Zalo này mình chỉ dùng để gửi tài liệu và nhắc lịch lớp. Muốn dừng nhận tin, nhắn DỪNG.)"
+- Sau: "Chào Hà, Vy đây. File mẫu báo cáo tuần mình để ở dưới nhé, Hà mở sheet 'Tổng' trước, điền thử số tuần này vào xem. Mình hỏi một câu thôi: báo cáo của Hà đang gom từ mấy file? (Zalo này mình chỉ dùng để gửi tài liệu và nhắc lịch lớp. Muốn dừng nhận tin, nhắn DỪNG.)"
 - Sửa gì: vào việc ngay, chỉ đúng chỗ mở; một câu hỏi; dòng mục đích và dòng dừng; bỏ "đồng hành", "hành trình", "khám phá", "bí quyết".
 
 **G2 · Nhắc lịch trong nhóm Zalo lớp · thầy Tùng · thầy – anh chị · Trung**
 - Trước: "THÔNG BÁO: Buổi học sẽ diễn ra vào lúc 17h00 ngày mai. Kính đề nghị Quý phụ huynh nhắc nhở các em mang đầy đủ dụng cụ và có mặt đúng giờ. Trân trọng cảm ơn!"
-- Sau: "Anh chị ơi, mai 5 giờ chiều lớp mình học ở hồ như cũ. Mai tập úp mặt thở dưới nước nên anh chị cho con mang kính bơi giúp thầy, con nào chưa có thì báo thầy, thầy mượn cho. Cho con ăn nhẹ trước 4 giờ thôi nghe."
+- Sau: "Anh chị ơi, mai 5 giờ chiều lớp mình học ở hồ như cũ. Mai các con tập úp mặt thổi bong bóng nên anh chị cho con mang kính bơi giúp thầy, con nào chưa có thì báo thầy, thầy cho mượn. Cho con ăn nhẹ trước 4 giờ thôi nghe."
 - Sửa gì: bỏ văn công văn; nói lý do (mai tập gì); gỡ khó cho nhà chưa có kính; một chữ "nghe" giọng Trung ở cuối.
 
 **G3 · Báo tin không vui · Quân · em – anh (chủ shop, khoảng 40) · Bắc**
 - Trước: "Kính gửi anh, chúng tôi rất tiếc phải thông báo rằng do một số sự cố ngoài ý muốn, tiến độ giao ảnh sẽ bị chậm trễ. Rất mong anh thông cảm cho sự bất tiện này."
-- Sau: "Dạ anh Hùng, em Quân đây ạ. Bộ ảnh túi da em hẹn giao chiều nay thì em phải lùi sang trưa mai anh ạ: 6 tấm nền trắng bị ám vàng, em chụp lại cho đều màu chứ không muốn gửi anh ảnh sửa tạm. Em gửi trước 2 tấm đã xong ở trên để anh lên bài nếu cần gấp. Em xin lỗi anh."
+- Sau: "Dạ anh Hùng, em Quân đây ạ. Bộ ảnh túi da em hẹn giao chiều nay thì em phải lùi sang trưa mai anh ạ: 6 tấm nền trắng bị ám vàng, em chụp lại cho đều màu chứ không muốn gửi anh ảnh sửa tạm. 2 tấm xong rồi em gửi anh ở trên, anh cần gấp thì cứ lên bài trước. Em xin lỗi anh."
 - Sửa gì: lý do thật, cụ thể; giờ mới rõ ràng; bù ngay bằng 2 tấm xong trước; "Em xin lỗi anh" thay "sự bất tiện này"; bỏ "Kính gửi", "chúng tôi".
 
 ### H. Trả lời bình luận
@@ -1152,7 +1168,7 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 **H3 · Nghi "lùa gà" · Vy**
 - Bình luận: "Lại lùa gà à 🙂"
 - Trước: "Chúng tôi là đơn vị đào tạo uy tín với hàng nghìn học viên thành công. Mong bạn tìm hiểu kỹ trước khi đưa ra bình luận thiếu thiện chí."
-- Sau: "Hỏi thế là đúng đấy, giờ khóa online ảo nhiều thật. Học phí mình để công khai ở bài ghim, học 2 buổi đầu thấy không hợp thì mình hoàn đủ. Có 3 bạn khóa trước đồng ý cho người hỏi nhắn trực tiếp, cần thì mình gửi tên."
+- Sau: "Hỏi thế là phải, giờ khóa online kiểu đấy nhiều thật. Học phí mình để công khai ở bài ghim, học 2 buổi đầu thấy không hợp thì mình hoàn đủ. Có 3 bạn khóa trước đồng ý cho người hỏi nhắn trực tiếp, cần thì mình gửi tên."
 - Sửa gì: không tự ái, không phản công; đưa ba thứ kiểm được; bỏ "uy tín", "hàng nghìn học viên" (không kiểm được). "🙂" ở đây là cười mỉa: đọc đúng mới đáp đúng.
 
 **H4 · Phụ huynh kể chuyện · thầy Tùng**
@@ -1165,7 +1181,7 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **I1 · Câu mở bài bán · Vy · Bắc**
 - Trước: "🚀 CHÍNH THỨC RA MẮT KHÓA HỌC EXCEL THỰC CHIẾN – BỨT PHÁ HIỆU SUẤT, LÀM CHỦ CÔNG VIỆC! 🔥 Chương trình đào tạo toàn diện giúp bạn trở thành phiên bản chuyên nghiệp nhất của chính mình!"
-- Sau: "Mình mở lớp Báo Cáo Gọn khóa 4. 8 buổi tối thứ Ba và thứ Năm, 20 bạn. Học xong, báo cáo tuần của bạn gom từ mấy file về một bảng trong 15 phút, thay vì mất cả buổi chiều. Học phí 1.890.000đ."
+- Sau: "Mình mở lớp Báo Cáo Gọn khóa 4. 8 buổi tối thứ Ba và thứ Năm, 20 bạn. Học xong, báo cáo tuần gom từ mấy file về một bảng chỉ mất 15 phút, khỏi ngồi cả buổi chiều. Học phí 1.890.000đ."
 - Sửa gì: bỏ viết hoa cả câu, tên lửa, "thực chiến", "bứt phá", "phiên bản… của chính mình"; bốn câu ngắn nói đủ: lớp gì, lịch, mấy người, học xong làm được gì, giá.
 
 **I2 · Câu số chỗ · Vy · Bắc**
@@ -1187,8 +1203,8 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 
 **J2 · Máy nhắc coach một chỗ lệch · coach gõ kiểu bạn thân "t/m"**
 - Trước: "Lưu ý: Câu thứ 3 trong bài có thể chưa phù hợp với giọng văn của bạn. Bạn có thể cân nhắc chỉnh sửa để đảm bảo tính nhất quán."
-- Sau: "Câu 3 nghe chưa giống bạn lắm, chữ 'tối ưu' bạn không hay nói. Đổi thành 'làm cho gọn' nhé?"
-- Sửa gì: bỏ nhãn "Lưu ý:", "có thể cân nhắc", "đảm bảo tính nhất quán"; nói đúng chữ nào lệch và đổi thành gì; không đáp tao – mày, không "Dạ… ạ", giữ thân và thẳng.
+- Sau: "Câu 3 chưa giống giọng lắm, chữ 'tối ưu' ngoài đời đâu có nói. Đổi thành 'làm cho gọn' nhé?"
+- Sửa gì: bỏ nhãn "Lưu ý:", "có thể cân nhắc", "đảm bảo tính nhất quán"; nói đúng chữ nào lệch và đổi thành gì; không đáp tao – mày, không "Dạ… ạ", bớt xưng hô (không gọi lại "bạn" cho khỏi xa cách), giữ thân và thẳng.
 
 ### K. Sáu cặp ngắn (dùng làm few-shot)
 
@@ -1199,11 +1215,12 @@ Nhân vật hư cấu (bảng ở mục 0). Số, chính sách (hoàn tiền, ch
 | Nối | "Tuy nhiên, bên cạnh những lợi ích đó, phương pháp này cũng tồn tại một số hạn chế nhất định." | "Có điều cách này cũng có cái dở: mất công lắm." |
 | Dẫn lời | "Cô ấy chia sẻ rằng cô ấy cảm thấy rất lo lắng về tài chính gia đình." | "Chị ấy bảo: 'Em sợ cuối tháng lắm anh ạ.'" |
 | Bài học | "Bài học rút ra ở đây là: sự kiên trì chính là chìa khóa dẫn đến thành công." | "Ngày nào tập mười phút, vẫn hơn tuần tập một bữa hai tiếng." |
-| Kết | "Hy vọng bài viết hữu ích. Đừng quên để lại bình luận và chia sẻ cho những người cần nhé!" | "Ai đang bị y vậy thì thử đúng một việc này tuần này thôi, rồi nói mình nghe." |
+| Kết | "Hy vọng bài viết hữu ích. Đừng quên để lại bình luận và chia sẻ cho những người cần nhé!" | "Ai đang bị y vậy thì tuần này thử đúng một việc đó thôi, xong kể mình nghe." |
 
 Ví dụ "trước" nào được đưa vào `locales/vn/examples.md` thì dòng đó cần `<!-- lint-ok:E141 -->` (lint E141 quét file ví dụ).
 
 ---
+
 ## 9. Phép thử: đọc to, dịch ngược, đếm mật độ
 
 ### 9.1 Đọc to: mười lăm câu tự hỏi trước khi đưa bài
@@ -1281,33 +1298,30 @@ Các ngưỡng dưới đây là **gắn cờ**, không phải trượt tự đ�
 |---|---|---|
 | `docs/research/vn-language-guide.md` (file này) | Nguồn chuẩn cho người | Không ship |
 | `docs/research/vn-language-anchor-draft.md` | Bản nháp anchor máy đọc, ≤3.400 byte | Đề xuất anchor riêng trong file phương pháp VN; nhóm viết `modules/vn` quyết chỗ đặt và tên section |
-| `locales/vn/banned-tells.txt` | Lint E141 (chuỗi, ví dụ ship) và grader I23 (chữ máy viết trong eval) | 66 mục mới ở cuối file, mỗi mục một dòng chú thích; các mục cũ giữ nguyên |
+| `locales/vn/banned-tells.txt` | Lint E141 (chuỗi, ví dụ ship) và grader I23 (chữ máy viết trong eval) | 65 mục mới ở cuối file, mỗi mục một dòng chú thích; ba mục cũ đã thu hẹp (10.2 mục 1) |
 | `qa/standards/vn-naturalness.md` | Chuẩn chấm cho giám khảo và người duyệt bản ngữ | VN1–VN8, dòng kiểm lúc chạy, hai ví dụ hiệu chỉnh |
 
-**66 mục mới trong `banned-tells.txt`** chỉ gồm những mẫu đo được bằng máy mà gần như không có cách dùng tự nhiên trong bài coach. Mỗi mục nhắm vào **dạng dịch**, không vào chữ. Đã chạy trên lời nói, bài viết, kịch bản của 6 nhân vật eval (answers.md, voice-samples.md bỏ phần "không bao giờ dùng", written-posts.md, pillar-transcript.md): không trúng chỗ nào, trừ lúc coach nhắc tới chính chữ đó để chê ("đẳng cấp" trong danh sách chữ anh không bao giờ nói) và một quảng cáo đối thủ được dán vào làm tư liệu ("THẦN TỐC"). Đã chạy trên `strings/vn.toml`: 0. Đã chạy trên các câu "sửa" ở mục 2, 3, 8: 0. Những mẫu cố ý **không** đưa vào lint vì có cách dùng thật: "Tuy nhiên", "Do đó" (bài LinkedIn của tư vấn có thể dùng một lần), "bạn đã bao giờ… chưa", "vui lòng", "Kính gửi", "Trân trọng" (email trang trọng), "chỉ với + giá", "theo dõi để không bỏ lỡ" (đang nằm trong `stock-phrases.txt`), "$", AM/PM, tên tháng tiếng Anh (máy có thể nhắc "$10k" khi nói về một bài người khác; Gen Z viết "8pm"), "đổi đời", "thu nhập thụ động" (coach tài chính có thể bàn thật), "đến từ", "khoảnh khắc" (nhiếp ảnh gia nói "bắt khoảnh khắc"), "đánh thức" (đánh thức con dậy), "bùng nổ" (dịch bùng nổ), "toàn diện" (khám toàn diện), "vượt bậc" (con tiến bộ vượt bậc), "thêm vào đó" giữa câu (cho thêm vào đó ít muối), "tua nhanh" (tua nhanh video), "bên ngoài hộp", "trong đôi giày" (nghĩa đen).
+**65 mục mới trong `banned-tells.txt`** (66 lúc viết; bản duyệt bỏ "không những… mà còn" và thu hẹp 8 mục bắt nhầm tiếng Việt thật: "là" dẫn ý + "rất", "chợt nhận ra", "Chúc… thành công", "hành trang", "hãy để…", "bạn xứng đáng", "hân hạnh được", "xỏ chân vào đôi giày", "ngành công nghiệp giải trí / thời trang / du lịch") chỉ gồm những mẫu đo được bằng máy mà gần như không có cách dùng tự nhiên trong bài coach. Mỗi mục nhắm vào **dạng dịch**, không vào chữ. Đã chạy trên lời nói, bài viết, kịch bản của 6 nhân vật eval (answers.md, voice-samples.md bỏ phần "không bao giờ dùng", written-posts.md, pillar-transcript.md): không trúng chỗ nào, trừ lúc coach nhắc tới chính chữ đó để chê ("đẳng cấp" trong danh sách chữ anh không bao giờ nói) và một quảng cáo đối thủ được dán vào làm tư liệu ("THẦN TỐC"). Đã chạy trên `strings/vn.toml`: 0. Đã chạy trên các câu "sửa" ở mục 2, 3, 8: 0. Những mẫu cố ý **không** đưa vào lint vì có cách dùng thật: "Tuy nhiên", "Do đó" (bài LinkedIn của tư vấn có thể dùng một lần), "bạn đã bao giờ… chưa", "vui lòng", "Kính gửi", "Trân trọng" (email trang trọng), "chỉ với + giá", "theo dõi để không bỏ lỡ" (đang nằm trong `stock-phrases.txt`), "$", AM/PM, tên tháng tiếng Anh (máy có thể nhắc "$10k" khi nói về một bài người khác; Gen Z viết "8pm"), "đổi đời", "thu nhập thụ động" (coach tài chính có thể bàn thật), "đến từ", "khoảnh khắc" (nhiếp ảnh gia nói "bắt khoảnh khắc"), "đánh thức" (đánh thức con dậy), "bùng nổ" (dịch bùng nổ), "toàn diện" (khám toàn diện), "vượt bậc" (con tiến bộ vượt bậc), "thêm vào đó" giữa câu (cho thêm vào đó ít muối), "tua nhanh" (tua nhanh video), "bên ngoài hộp", "trong đôi giày" (nghĩa đen).
 
 ### 10.2 Đề xuất chưa làm (cần người có quyền quyết)
 
-1. **Ba mục cũ trong `banned-tells.txt` chặn nhầm tiếng Việt thật** (việc lần này chỉ được thêm, không được xóa):
-   - `chìa khóa`, `chìa khoá`: trúng chuyện thật kiểu "cái chìa khóa kho" trong kịch bản nói của một nhân vật eval. Đề xuất thay bằng `re:(?i)\b(?:là\s+)?chìa\s+kh(?:óa|oá)\s+(?:để|của|thành\s+công|vàng|cho|giúp|mở\s+ra|dẫn\s+đến)\b|\blà\s+chìa\s+kh(?:óa|oá)\s*(?:[.,!?]|$)` (chỉ nghĩa bóng).
-   - `tóm lại`: chặn cả "tóm lại là" giữa lời kể. Đề xuất `re:(?i)(?:^|[.!?\n]\s*)(?:tóm\s+lại|nói\s+tóm\s+lại)\s*[,:]` (chỉ "Tóm lại," đầu câu).
-   - `có thể nói`: trúng câu nói thật kiểu "mình có thể nói tới sáng về…" trong lời xả của một nhân vật eval. Đề xuất `re:(?i)(?:^|[.!?\n]\s*)có\s+thể\s+nói\s*(?:rằng\s*)?,` (chỉ "Có thể nói," mở câu kiểu nghị luận).
-   Chạy lại kho lời nói sau khi đổi; hiện cả ba chưa đụng tới chuỗi ship nên lint vẫn sạch.
+1. **Ba mục cũ trong `banned-tells.txt` chặn nhầm tiếng Việt thật: đã sửa ở bản duyệt (06/10).** `chìa khóa` / `chìa khoá` giờ chỉ bắt nghĩa bóng ("chìa khóa thành công", "là chìa khóa để…"; "chìa khóa kho", "chìa khóa để trên bàn" qua); `tóm lại` chỉ bắt "Tóm lại," / "Nói tóm lại:" mở câu; `có thể nói` chỉ bắt "Có thể nói," / "Có thể nói rằng" mở câu. Kho lời nói chạy lại: hết trúng "chìa khóa kho" (consultant) và "có thể nói cả buổi" (coldstart-coach). **Còn mở:** `hành trình` (mục cũ, start-block cũng cấm đích danh) vẫn bắt nghĩa đen "hành trình từ Huế vô Sài Gòn"; nhóm module quyết có thu hẹp không.
 2. **Danh sách cắt wf6 V4 (từ đệm) và V6 (đuôi xin xác nhận)** đang cắt "nói chung là, thật ra là, đúng không ạ". Cắt sạch thì câu Việt trơ hơn, giống văn dịch hơn. Đề xuất ghi rõ trong §CM-HUMANIZE: giữ khi chữ đó nằm trong câu cửa miệng, cách mở của chính coach; chỉ cắt khi máy tự thêm.
 3. **Hồ sơ giọng (Voice Card):** thêm trường nhỏ "chữ nối hay dùng" (2–3 chữ lấy từ lời xả: "xong", "thế là", "nói chung là", "tại"); tiểu từ đã có, mà chữ nối mới làm nên cách nối chuyện. Lưu **cả hai** cặp xưng hô (công khai và nhắn riêng) như `persona.toml content_pronouns` đã làm; voice.kit-shift 8 mới nói tin riêng gọi số ít, chưa nói chữ **tự xưng** cũng có thể đổi. Gộp vào trường sẵn có nếu ngân sách card chật: emoji coach dùng (≤4) vào `code_mix`; viết tắt trong Zalo vào `written_vs_spoken`; độ thẳng (mềm / thẳng ấm / thẳng gắt) vào `tone`. `openers_closers` nên có câu mở tin nhắn riêng của coach khi họ dán, vì tin nhắn là chỗ máy trôi về giọng tổng đài nhiều nhất.
 4. **Grader:** thêm các kiểm tra đếm ở 9.3, nhất là tiểu từ so với bài của chính coach, "Dạ / ạ" trong tin gửi khách, Markdown trong bài Facebook, Zalo, TikTok.
 5. **Kiểm tra lúc chạy (chỉ trên output):** bài Facebook, Zalo, TikTok có `**`, `##` hoặc chữ đậm Unicode → trượt; Title Case → cảnh báo; gạch dài trong bài VN → cảnh báo; trả lời câu hỏi giá mà không có giá → trượt (`micro`, `email-zalo`); từ khóa CTA là chữ Anh ASCII (GUIDE, FREE) → trượt, không có đường nhắn riêng → cảnh báo; tin gửi người lớn tuổi hơn không có "Dạ" lẫn "ạ" → cảnh báo; 🙂 trong tin trả lời khách → cảnh báo; tiểu từ sai vùng (đã có ở voice.kit-shift 7) mở thêm "hen, nghen, hông, hổng" (Nam) và "cơ, đấy, nhỉ" (Bắc).
 6. **Ca eval nên thêm** (`voice.vn.toml`, `micro`, `email-zalo`): hỏi giá dưới bình luận → có con số, không "check ib" trơn · CTA từ khóa → chữ Việt + đường nhắn riêng · coach "mình – các chị em" trên bài, "chị – em" trên Zalo, không trộn · người bình luận gọi "c" → không đáp "bạn" · "để chị suy nghĩ" → không hạn giả trong ngày, không "tuy nhiên… nhanh chóng" · nhắc sau khi "seen" → một tin, có lối ra, không "em thấy chị đã xem" · "lùa gà à 🙂" → không phản công, có ít nhất một thứ kiểm được · coach gõ "em xem cái này" → máy xưng "em", không giọng trợ lý · coach gõ "t/m" → máy không tao – mày, cũng không "Dạ… ạ" cứng · Zalo báo tin xấu → lý do thật, giờ mới, bù ngay, "Em xin lỗi anh" · coach Bắc 45+ → không "nha, nè, á", emoji ≤2, không lóng Gen Z · bài LinkedIn → không tiểu từ chat, ≤1 emoji · bài kể có câu khách → dẫn bằng bảo / nói, không "chia sẻ rằng" · bài kể → chỗ ngoặt có một việc làm cụ thể, không "khoảnh khắc ấy".
 7. **Ví dụ trong gói:** `locales/vn/examples.md` phải do người Việt viết từ đầu theo giọng từng vùng, **không dịch từ bản EN**. Lấy từ mục 3.15 và mục 8 của file này; đưa cả cặp "trước → sau" (cặp đối chiếu dạy máy nhanh hơn danh sách cấm); dòng "trước" cần `<!-- lint-ok:E141 -->`.
-8. **Ngân sách:** file phương pháp VN hiện đã vượt ngân sách (lint E101 lúc viết file này, do các module VN đang được viết lại). Anchor mới thêm khoảng 3,4 KB; nhóm module cần cân lại khi đặt anchor, có thể bằng cách chuyển các dòng trùng ở §CM-HUMANIZE mục 3 và §CM-LOCALE 1 sang anchor mới.
+8. **Ngân sách:** file phương pháp VN đang ở 56.261 / 56.320 byte (99,9%, lint W201 lúc viết file này). Anchor mới thêm khoảng 3,4 KB, nên nhóm module phải nhường chỗ khi đặt anchor: chuyển các dòng trùng ở §CM-HUMANIZE mục 3 (danh sách cắt chữ dịch), §CM-LOCALE 1 (tiểu từ vùng) và §CM-VOICE 7–8 (văn nói, tiểu từ) sang anchor mới, hoặc xin nâng trần `method_file` cho bản VN.
 
 ### 10.3 Phép thử đã chạy khi viết
 
-- 66 mục mới: mỗi mục có câu sai phải trúng và câu gần đúng phải không trúng (tổng cộng hơn 150 câu thử); 0 lỗi.
+- 66 mục mới: mỗi mục có câu sai phải trúng và câu gần đúng (tiếng Việt thật, dễ bắt nhầm) phải không trúng: 90 câu sai, 82 câu gần đúng, 0 lỗi.
+- Bản duyệt (người bản ngữ, 06/10): thêm 50 câu sai và 105 câu tiếng Việt thật dễ bắt nhầm ("khen là rất ngon", "chìa khóa để trên bàn", "Chúc anh chị thành công nha!", "chuẩn bị hành trang đi Đà Lạt", "hân hạnh được làm quen", "con không những bơi được mà còn…"). Trước khi sửa: 32 câu thật bị bắt nhầm. Sau: 0, trừ "hành trình" nghĩa đen (giữ có chủ ý, 10.2 mục 1); 50/50 câu sai vẫn trúng.
 - Kho lời nói 6 nhân vật eval (answers.md, voice-samples.md bỏ danh sách "không bao giờ dùng", written-posts.md, pillar-transcript.md, research-paste.md, paste-dump.md): 4 lần trúng, cả 4 là chỗ coach nhắc tới chữ đó để chê hoặc quảng cáo đối thủ dán vào làm tư liệu.
-- `strings/vn.toml`: 0. `modules/vn/*.md`, `core/vn/*.md` (không thuộc phạm vi E141): chỉ trúng ở chỗ module **trích** chữ cấm làm lời dặn ("không 'giá ib'", "văn viết (… tiến hành)"), không phải văn dịch.
-- 120 câu "sửa" của danh mục văn dịch, 37 câu người viết ở các bài nghiên cứu: 0 lần trúng.
-- `python3 tools/lint.py`: không thêm lỗi nào (lỗi E101 ngân sách file phương pháp VN có từ trước). `python3 -m unittest discover -s tools/tests`: qua hết.
+- `strings/vn.toml`: 0. `modules/vn/*.md`, `core/vn/*.md` (không thuộc phạm vi E141): chỉ trúng ở chỗ module **trích** chữ cấm làm lời dặn ("không 'giá ib'", "Hãy cùng khám phá", "tiến hành" trong danh sách cắt), không phải văn dịch.
+- 120 câu "sửa" của bản nghiên cứu văn dịch, 33 câu người viết của hai bản nghiên cứu kể chuyện và xưng hô, 132 câu "sau" trong file này và trong anchor: 0 lần trúng. Chiều ngược lại, lint (mục cũ + mới) bắt 61/120 câu "trước" của file này; phần còn lại là mẫu mức Judge và Đếm, đúng thiết kế.
+- `python3 tools/lint.py`: 0 lỗi (không mục mới nào gây E141 hay E161). `python3 -m unittest discover -s tools/tests`: 319 bài qua hết.
 
 ### 10.4 Kiểm tra chép (I19) trước khi đưa ví dụ vào gói
 
