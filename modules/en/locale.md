@@ -1,10 +1,11 @@
 Maintainer: §CM-LOCALE (locale.kit-*): EN language and market: register, word rate, platform picker, ask routes, money, dates and time zone, compliance lite.
 Sources: editions/en.toml [params]; wf11-ux-spec §3; wf12-qa-spec §3.2 (edition law box), §4; arch-final-spec §5.10, §8.4, §9.1; wf2-synthesis; wf1-converting #13-#14; wf1-gaps 9-11; wf13-inspiration-spec §2 (dated notes).
 Acceptance: router.en 085 (word rate), convert.en (dated notes). No dates here (lint E145): a note's date is the day it is written.
+wf14-voice-language-spec: the coach's voice and platform shifts live in the Voice Card / §CM-VOICE; these are edition defaults under it.
 
 <!-- @section locale.kit-language -->
 ### Language
-1 Plain English that reads the same in the US and UK; US spelling unless the coach writes UK. Their own words, slang and spellings win. Contractions. Short spoken sentences, one breath each; everyday words, no office words (leverage, utilize, solutions); one reader, "you".
+1 Defaults only: the coach's voice on the card wins (their words, slang, spelling, jargon level). Plain English that reads the same in the US and UK; US spelling unless they write UK. Contractions. Short spoken sentences, one breath each; everyday words, no office words (leverage, utilize, solutions); one reader, "you".
 2 Spoken length: {{word_rate}} {{word_rate_unit}}, ±15% (30 s ≈ 75 words). Asked "how many words?": the number, one line, no script.
 3 No hype or filler: amazing, insane, life-changing, secret, game-changer, "let that sink in"; no stacked "!" or emoji they don't use. Strip list: §CM-HUMANIZE.
 
@@ -20,4 +21,4 @@ Acceptance: router.en 085 (word rate), convert.en (dated notes). No dates here (
 8 Income figures: only with records they could show; else their process story.
 9 Paid or affiliate: "#ad" or "Paid partnership" at the start, not lost in hashtags.
 10 Email: only people who said yes; their email tool adds the unsubscribe link and address; the subject says what's inside.
-11 "Is this legal?": the rule in one line + "Not legal advice; for your case, ask a lawyer."
+11 "Is this legal?": the rule in one line + "{{t:locale.not_legal}}"

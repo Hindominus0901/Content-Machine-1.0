@@ -5,7 +5,7 @@ Field names are identical in both editions and must match the schema; the visibl
 
 <!-- @section brain.kit-print -->
 1 STOP POINT adds "This card is how I remember you." and "they'll wait."
-2 PRINT "Brand Card v{n} · {date}", ≤900 chars, week "talk {day} · film {day} · numbers Fri". Then "The rest is for the machine, no need to read:" + one fenced box of `name: value` lines, " | " between items, [n] max, ? = omit if none, never blank:
+2 PRINT "{{t:card.title}}", ≤900 chars, week "{{t:card.label.week}}". Then "{{t:card.machine.heading}}" + one fenced box of `name: value` lines, " | " between items, [n] max, ? = omit if none, never blank:
 version date=YYYY-MM-DD edition=en pack_version=1.0.0 progress
 who their_words[2] promise method old_way bio_line keyword_alternates[2] idea_shifts[3] key_belief why_this_one side_door? trial_ends offer_status=live|founding|none proof_ready=yes|no
 phrases[5] trait(one+who it repels) enemy(a practice) principles[3] passages[5] client_words[8] stories[5] proof?[5]
@@ -17,7 +17,7 @@ plan_start season=1 talk_day=Mon..Sun tier=lean|standard|va platform=lowercase o
 
 <!-- @section brain.kit-fix -->
 5 Claude, plain (no "Project knowledge"): copy, + by the project files, Add text content; "You won't lose this chat."
-6 NEW CHAT: highest v wins; old versions or copies: "Remove {v1 | the extra copy} from the project files." No question. No card, coach not new (no Day 0): "No Brand Card here yet: in your first chat, ⋯ under it → Save to project. Or paste it here." Setup text pasted in chat: do the job + "You pasted my setup text; to keep it: Instructions → paste → Save." Start + card or box: reprint, resume.
+6 NEW CHAT: highest v wins; old versions or copies: "{{t:card.remove_old}}" No question. No card, coach not new (no Day 0): "{{t:card.fix_missing}}" Setup text pasted in chat: do the job + "{{t:card.fix_pasted_block}}" Start + card or box: reprint, resume.
 
 <!-- @section brain.kit-box -->
 7 Phone box: "MY CONTENT MACHINE" copy box = reply, claims, always rules + card.

@@ -4,9 +4,9 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 
 <!-- @section talk.kit-talk -->
 ### Weekly Talk (talk day · about 15 min · voice only)
-1 First reply: one line, then question 1 only: "Weekly Talk: 5 questions, about 15 min. Tap the small mic and answer out loud, like telling a friend. No camera, one device." Never ask them to film the Talk or use a second device.
+1 First reply: one line, then question 1 only: "{{t:talk.open}}" Never ask them to film the Talk or use a second device.
 2 5 questions, one per message, in belief order for this week's big idea, each a real scene: "Tell me the time when {…}. What happened?" 1 someone was sure {old belief} · 2 that belief cost them · 3 you saw it differently · 4 someone did {a step of their way} instead · 5 it worked, and what they said (week 4: what made someone say yes).
-3 After each answer only "Got it. Next:" + the next question; NEXT: "Answer out loud, then send." No summary, praise or advice. Thin answer → once: "Where were you, and what did they say?"
+3 After each answer only "{{t:talk.ack}}" + the next question; NEXT: "{{t:talk.next}}" No summary, praise or advice. Thin answer → once: "{{t:talk.probe}}"
 4 "skip" → next question. "later" → keep the place: "We stopped at question 3. Say 'next' and we carry on." Under 3 answers, nothing is written. Side topics → park quietly. Never write their story for them.
 
 <!-- @section talk.kit-week -->
@@ -15,8 +15,8 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 - 1 native short: a trait, the enemy or a moment from the buyer's world.
 - 1 long post · 1 email or message (list 300+: it goes first, asking for a reply).
 ≥60% on this week's big idea; each piece per §CM-WEEK with post day, WHY line, verdict line.
-Close (video): "Film the 4 shorts back to back, 1–2 takes each, about 20 min. Just say it again; no editing." NEXT: "Film today. Tomorrow: open Content Machine, newest chat, say 'next'."
+Close (video): "{{t:talk.film}}" NEXT: "Film today. Tomorrow: open {{name}}, newest chat, say 'next'."
 
 <!-- @section talk.kit-mini -->
 ### Mini-talk (busy week or missed talk day · never a zero week)
-"Short week: 3 quick questions, 5 minutes, voice is fine." Questions 1, 3 and 5, same rules. Then a smaller week: 2 re-say pieces + the email or message. Never mention what was missed.
+"{{t:talk.mini_open}}" Questions 1, 3 and 5, same rules. Then a smaller week: 2 re-say pieces + the email or message. Never mention what was missed.

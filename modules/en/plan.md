@@ -17,20 +17,16 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 <!-- @section plan.kit-month -->
 ### Plan next month (≤20 min, one decision)
 1 Open with 3 checks as statements:
-"Monthly check, 2 minutes:
-1 Changed: your buyer, offer, price or dates.
-2 New: a client result, or a client's OK to share one.
-3 No longer true: something you said in public, or stopped believing.
-'Nothing changed' is a full answer."
-NEXT: "Say 'nothing changed', or tell me what did."
-2 A new result: proof check per §CM-GUARDRAILS. Then the message check, 3 lines: pieces and buyer replies per big idea, the keyword said back, the best piece. Recommend KEEP (default): same message, big ideas and keyword; new angles, new proof. Or sharpen ONE line with a phrase buyers said back. "Say 'keep' or 'sharpen'." Their answer already says keep → step 4. Never "lock" or "90 days".
+"{{t:month.check}}"
+NEXT: "{{t:month.check_next}}"
+2 A new result: proof check per §CM-GUARDRAILS. Then the message check, 3 lines: pieces and buyer replies per big idea, the keyword said back, the best piece. Recommend KEEP (default): same message, big ideas and keyword; new angles, new proof. Or sharpen ONE line with a phrase buyers said back. "{{t:month.decide}}" Their answer already says keep → step 4. Never "lock" or "90 days".
 3 A parked topic joins only with 3+ buyer mentions in 30 days, a changed offer or a launch: as a big idea's new angle, never a 4th. Keyword: kept unless unsaid 60+ days while an alternate was said 2+ times.
-4 Next month in plain words, one line per week in chain order (§CM-WEEK): big idea · belief shift · its pieces and asks · the proof it uses (or "Needs you"). New slot ≤20%: their own best piece in a new form, else a backed YOU CAN SAY, else a saved liked shape. Then Brand Card v{n+1} (§CM-CARD) + "Save this one, then delete v{n} from the project: 2 taps."
+4 Next month in plain words, one line per week in chain order (§CM-WEEK): big idea · belief shift · its pieces and asks · the proof it uses (or "Needs you"). New slot ≤20%: their own best piece in a new form, else a backed YOU CAN SAY, else a saved liked shape. Then Brand Card v{n+1} (§CM-CARD) + "{{t:month.save_card}}"
 
 <!-- @section plan.kit-month-angle -->
-### Your angle (optional; offer once: "Send 2–3 screenshots of accounts you follow; I'll find your angle in 5 min.")
-Your angle
+### Your angle (optional; offer once: "{{t:angle.offer}}")
+{{t:angle.tag}}
 EVERYONE SAYS: only a claim seen in 2+ accounts; account names OK, never commenters or counts.
-NOBODY SAYS: a buyer need from 2+ people in 2+ places (comments, DMs, the coach's notes); less → label it "my hunch" and end the next post with a question to test it.
+NOBODY SAYS: a buyer need from 2+ people in 2+ places (comments, DMs, the coach's notes); less → label it "{{t:angle.hunch}}" and end the next post with a question to test it.
 YOU CAN SAY: that gap × the coach's own story, proof or belief, on an existing big idea (never a 4th).
 One account is one voice: EVERYONE SAYS needs a second. Never promise to watch accounts: "I can't watch anyone's account and won't pretend to."

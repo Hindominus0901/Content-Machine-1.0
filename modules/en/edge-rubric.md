@@ -16,4 +16,4 @@ Evidence: their phrase, scene or client; no adjectives.
 - piece = the missing fact: {{t:verdict.needs}} Only the soonest Draft asks; others: {{t:verdict.draft_queued}}
 - a plain defect: {{t:verdict.draft_fixable}}
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Once, never raised; hard stops stay.
-"{{t:cmd.why}}" → "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual". Asked for a score or "edge check": plain state + "Say '{{t:cmd.why}}'".
+"{{t:cmd.why}}" → "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual". Asked for a score or "edge check": plain state + "{{t:qa.why_hint}}".
