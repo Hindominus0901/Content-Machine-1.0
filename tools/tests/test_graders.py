@@ -3112,6 +3112,196 @@ class VG4RoundGraderTests(TempRepo):
         self.assertFalse(ok.search("Chạy thử 6 tuần nha anh. OK hay sửa một dòng?"))
 
 
+# The VG5 round's Tuấn (qa/runs/retest-vg5-g6/review.md §4): a Southern anh–em coach whose own refusal names a banned
+# phrase, and whose written posts end 2 of 5 sentences on a particle (40%). The Map and card are VG_MAP / VG_CARD, so
+# the audience address is theirs ("tôi – anh chị").
+VG5_PERSONA = '''
+xung_ho = "anh–em"
+dialect = "Nam"
+allowed_numbers = ["2", "3", "6", "32"]
+'''
+VG5_EXPECTED = '''
+[traps]
+compliance = ["cam kết", "cam kết lợi nhuận", "sinh lời", "vừa bảo vệ vừa sinh lời", "tốt nhất"]
+[voice]
+audience_address = "tôi – anh chị"
+'''
+VG5_POSTS = """# Bài Tuấn từng viết
+
+## W1 · TikTok
+
+Tính trước rồi hẵng cọc nha. Sáng thứ Bảy có chị gọi mình từ trong toilet nhà mẫu. Mình hỏi đúng một câu.
+Lương hai vợ chồng cộng lại bao nhiêu. Đi coi nhà mẫu thì cầm theo tờ giấy ghi con số, đừng cầm theo tiền cọc nha bạn.
+"""
+
+
+class VG5RoundGraderTests(TempRepo):
+    """Grader fixes from the VG5 / G6 retest (qa/runs/retest-vg5-g6/review.md §4 and §8, G39-G43): every false
+    positive the review found must pass, every real defect the same check caught must still fail."""
+
+    CHUNK = ("Nên giờ tui làm bảo hiểm kiểu khác. Tui chỉ bán cái để che thôi, bảo vệ, ai hỏi tích lũy với sinh lời là "
+             "tui nói thẳng, cái đó không phải chỗ để kiếm lời. Mua cái để che, đừng mua cái để lời. Tui không bao giờ "
+             "nói cam kết lợi nhuận với khách.")
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", VG4_STRINGS))
+        self.write("evals/acceptance.toml", """
+            [day0]
+            map_max_turns_en = 6
+            map_max_turns_vn = 7
+            film_ready_max_minutes = 20
+            session_max_turns = 10
+            session_max_turns_vn = 11
+            map_lines = 4
+            """)
+        self.write("evals/personas/vn/tuan/persona.toml", VG5_PERSONA)
+        self.write("evals/personas/vn/tuan/expected.toml", VG5_EXPECTED)
+        self.write("evals/personas/vn/tuan/answers.md", f"## Dump chunk 1\n{self.CHUNK}\n")
+        self.write("evals/personas/vn/tuan/written-posts.md", VG5_POSTS)
+
+    def vn(self, *extra, **kw):
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", VG_MAP)] + list(extra)
+        return self.grade(turns, persona="vn/tuan", edition="vn", suite="day0", **kw)
+
+    def week(self, body: str) -> str:
+        return f"{TAG}Tuần 1\n{body}\nTIẾP → Nhắn 'tiếp'."
+
+    def item(self, report: dict, check: str, name: str) -> dict:
+        return next(i for i in self.inv(report, check)["items"] if i["item"].startswith(name))
+
+    # -- G39: a banned phrase in the coach's own negated sentence is their refusal, not a claim; guarantees stay claims
+    def test_g39_the_coachs_own_refusal_is_not_a_claim(self):
+        refusal = "Ai hỏi tích lũy với sinh lời là mình nói thẳng: cái đó không phải chỗ để kiếm lời."
+        post = self.week(f"N2 · Bài Facebook\n```\nNên giờ mình làm kiểu khác. Mình chỉ bán cái để che, bảo vệ. "
+                         f"{refusal}\n```")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", post)), "I11")          # Tuấn's FP
+        card = VG_CARD.replace("version: 1", 'version: 1\npassages: "Tui chỉ bán cái để che thôi, bảo vệ, ai hỏi tích '
+                                             'lũy với sinh lời là tui nói thẳng, cái đó không phải chỗ để kiếm lời."')
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", card)), "I11")
+        for claim, phrase in (
+                ("Gói mới vừa bảo vệ vừa sinh lời, mình nói thẳng luôn á.", "vừa bảo vệ vừa sinh lời"),  # no negation
+                ("Đừng lo, gói mới của công ty sinh lời đều mỗi năm.", "sinh lời"),    # negated, not his words
+                ("Ai hỏi tích lũy với sinh lời là mình nói thẳng.", "sinh lời"),       # his words, no negation
+                ("Mình không bao giờ nói cam kết lợi nhuận với khách.", "cam kết")):    # a guarantee stays a claim
+            with self.subTest(claim=claim):
+                report = self.vn(("coach", "ok"), ("machine", self.week(f"N2 · Bài\n```\n{claim}\n```")))
+                self.assertFails(report, "I11", f'injected or banned claim "{phrase}')
+        for text in ("cái đó không phải chỗ", "đừng mua", "chứ không phải", "hổng phải", "I never say", "it's not",
+                     "don't buy", "We don't"):
+            with self.subTest(text=text):
+                self.assertTrue(graders.NEGATION_RE.search(text))
+        self.assertFalse(graders.NEGATION_RE.search("Mua cái để che, mua cho đúng."))
+
+    # -- G40: "nhà chị …" is a household, a third person, not a pronoun slip to an anh coach
+    def test_g40_a_household_is_not_a_pronoun_slip(self):
+        guess = (f"{TAG}Xả ý\nAnh đang có 3 nguồn thu. Em đoán nên viết cho vợ chồng trẻ, như nhà chị dạy mầm non với "
+                 "nhà anh khách gãy chân. Đúng không anh?\nTIẾP → Gõ một chữ.")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", guess)), "I15")
+        slip = guess.replace("Đúng không anh?", "Chị thấy đúng không?")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", slip)), "I15", 'pronoun "Chị" outside the pair anh–em')
+
+    # -- G41: FILM TODAY's caption box with no "Caption" label is the first copy box after the script's last line
+    ERIN_FILM = f'''
+        {TAG}Film today
+        FILM TODAY · under 30 s, say it from memory
+        On-screen: 63 applications. 2 interviews.
+        First line: "63 applications. 2 interviews."
+        Beat 1: 24 years at HQ, out at 48.
+        Last line: "The coffee comes first."
+
+        ```
+        24 years at HQ and the portal still said no. Your next chapter starts with a coffee.
+        Comment CHAPTER and I'll send you the coffee script.
+        ```
+
+        Comment CHAPTER and I'll send you the coffee script. (quieter: say 'quiet')
+
+        ```
+        The coffee script (one page)
+        1. Ask for 20 minutes. Your next chapter starts there.
+        ```
+
+        Film it now, or post the caption as text.
+        NEXT → Say 'OK', or change a line.
+        '''
+
+    def test_g41_film_today_caption_box_without_a_label(self):
+        name = "FILM TODAY's text version"
+        base = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok")]
+        film = textwrap.dedent(self.ERIN_FILM)
+        ok = self.grade(base + [("machine", film)], suite="day0")                   # Erin's item now runs
+        self.assertIs(self.item(ok, "day0_shape", name)["pass"], True)
+        # the caption carries the keyword only in its ask (the gift box below it does not count)
+        only_ask = film.replace("Your next chapter starts with a coffee.", "It starts with a coffee.")
+        report = self.grade(base + [("machine", only_ask)], suite="day0")
+        self.assertFails(report, "day0_shape", 'FILM TODAY\'s text version carries YOUR WORD "chapter" only in the ask')
+        # the script in a box of its own: the caption is the next box, the first line is read inside the script box
+        boxed = only_ask.replace("On-screen:", "```\nOn-screen:").replace('Last line: "The coffee comes first."\n',
+                                                                         'Last line: "The coffee comes first."\n```\n')
+        self.assertIs(self.item(self.grade(base + [("machine", boxed)], suite="day0"), "day0_shape", name)["pass"],
+                      False)
+        first = boxed.replace('First line: "63 applications. 2 interviews."', 'First line: "A new chapter at 48."')
+        self.assertIs(self.item(self.grade(base + [("machine", first)], suite="day0"), "day0_shape", name)["pass"],
+                      True)
+        # no copy box at all: the item still does not run
+        bare = (f"{TAG}Film today\nFILM TODAY · under 30 s\nOn-screen: 63 applications.\nFirst line: \"A new chapter.\"\n"
+                "Last line: \"Coffee first.\"\nFilm it now, or post the caption as text.\nNEXT → Say 'OK'.")
+        self.assertIsNone(self.item(self.grade(base + [("machine", bare)], suite="day0"), "day0_shape", name)["pass"])
+
+    # -- G42: an identical sentence counts once in the particle share
+    def test_g42_an_identical_sentence_counts_once(self):
+        ask = "Nhắn mình chữ GỒNG LÃI, mình gửi tờ tính ngược trước khi cọc nha."
+        self.assertEqual(graders.particle_share([f"Câu này không có gì. {ask}", f"Câu kia cũng y như trên. {ask}",
+                                                 f"Thêm một câu khác nữa. {ask.upper()}"]), (1, 4))   # was (3, 6)
+        bodies = ("Chị gọi mình từ toilet nhà mẫu. Bên sale dí cọc quá trời. Mình hỏi lương hai vợ chồng. "
+                  "Chị nói ba mươi hai triệu.",
+                  "Lãi ưu đãi là lãi của năm đầu. Còn nợ là nợ hai chục năm. Tính bằng lãi thả nổi. "
+                  "Góp không quá bốn phần lương.",
+                  "Mua cái để che cho khoản vay. Chừa quỹ sáu tháng tiền góp. Ký rồi không đụng tới. "
+                  "Cầm tờ giấy đi coi nhà mẫu.")
+        week = self.week("\n\n".join(f"N{k} · Bài\n```\n{b} {ask}\n```" for k, b in enumerate(bodies, 1)))
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", "\n".join(VG5_POSTS.splitlines()[4:6])),
+                 ("machine", f"{TAG}Xả ý\nEm nhận rồi.\nTIẾP → Kể tiếp."), ("coach", self.CHUNK),
+                 ("machine", week)]
+        natural = self.inv(self.grade(turns, persona="vn/tuan", edition="vn"), "vn_natural")
+        self.assertEqual((natural["details"]["sentences"], natural["details"]["coach_particle_share"]), (13, 0.4))
+        self.assertFails({"invariants": [], "checks": [natural]}, "vn_natural",
+                         "pieces end 1 of 13 sentences with a particle (8%); their own posts 40% (min 50% of theirs)")
+        # the ask said in each piece's own words still counts each time: 3 of 15, half of theirs (pass)
+        varied = week.replace(f"{bodies[1]} {ask}", f"{bodies[1]} Nhắn mình chữ GỒNG LÃI, mình gửi bảng tính nha.") \
+            .replace(f"{bodies[2]} {ask}", f"{bodies[2]} Ai sắp cọc thì nhắn mình chữ GỒNG LÃI nha.")
+        natural = self.inv(self.grade(turns[:-1] + [("machine", varied)], persona="vn/tuan", edition="vn"),
+                           "vn_natural")
+        self.assertEqual(natural["details"]["sentences"], 15)
+        self.assertIs(natural["pass"], True, natural)
+
+    # -- G43: the VN session budget is 11 coach turns (the xưng hô turn), EN stays at 10
+    def session(self, n: int, edition: str = "vn") -> dict:
+        """A Day-0 run of `n` coach turns: Start, the dump, the Map, FILM TODAY, then "ok" turns."""
+        if edition == "vn":
+            turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", VG_MAP)]
+            more = ("machine", f"{TAG}Tuần 1\nN1 · Bài\n```\nTính trước rồi hẵng cọc nha.\n```\nTIẾP → Nhắn 'tiếp'.")
+            kw = dict(persona="vn/tuan", edition="vn")
+        else:
+            turns = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", FILM_REPLY)]
+            more = ("machine", f"{TAG}Week 1\nN1 · Reel\nCoffee before resume.\nNEXT → Say 'next'.")
+            kw = {}
+        while len([t for t in turns if t[0] == "coach"]) < n:
+            turns += [("coach", "ok"), more]
+        return self.inv(self.grade(turns, suite="day0", **kw), "day0_timing")
+
+    def test_g43_vn_session_turns(self):
+        self.assertFalse([e for e in self.session(11)["evidence"] if "coach turns in the session" in e])
+        self.assertIn("12 coach turns in the session (max 11)", self.session(12)["evidence"])
+        self.assertIn("11 coach turns in the session (max 10)", self.session(11, "en")["evidence"])
+        # the repo's budget matches the VN block's "coach nhắn ≤11 lượt"
+        day0 = graders._toml(REPO / "evals" / "acceptance.toml")["day0"]
+        self.assertEqual((day0["session_max_turns"], day0["session_max_turns_vn"]), (10, 11))
+        block = (REPO / "core" / "vn" / "start-block.md").read_text(encoding="utf-8")
+        self.assertRegex(block, r"coach nhắn ≤11 lượt")
+
+
 class LoaderTests(TempRepo):
     def test_bad_transcript_is_a_grader_error(self):
         d = self.root / "evals" / "runs" / "bad"

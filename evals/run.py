@@ -237,7 +237,9 @@ answer keys for the graders) and never let them shape a turn.
 1. Open the project chat with exactly: `{start}`.
 2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn per send, when
    the machine asks for the dump. A chunk over about 400 words (VN tiếng) goes in two sends, split at a
-   paragraph, as the dump prompt asks. When the dump prompt invites posts you've written, paste the body of
+   paragraph, as the dump prompt asks. Chunk 1's first send ends by about 300 words (VN tiếng), about 3 minutes
+   of talk, at a paragraph or sentence end, as the dump prompt says "every 2–3 minutes"; the rest of chunk 1 is
+   the next send (P16). When the dump prompt invites posts you've written, paste the body of
    `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
    or 2, the way this coach would. If the dump prompt asks where you post and about your list, and the
    persona's answer is in a later chunk, add it as one sentence at the end of chunk 1 (VP-2). Then say you are
@@ -335,10 +337,11 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
             accept = load_toml(root / "evals" / "acceptance.toml").get("day0", {})
             app, plan = persona_app(pdir)
             cut = int(accept.get(f"dump_cut_words_{edition}", graders.DUMP_CUT_WORDS))     # review retest-vg4-g5 P15
+            turns = int(accept.get(f"session_max_turns_{edition}", accept.get("session_max_turns", 10)))   # vg5-g6 G43
             coach = COACH_DAY0.format(persona=pid, edition=edition, pdir=rel(pdir, root),
                                       start=strings.get("cmd.start", "Start"),
                                       cut=f"{cut:,} {'tiếng' if edition == 'vn' else 'words'}",
-                                      max_turns=int(accept.get("session_max_turns", 10)) + 4,
+                                      max_turns=turns + 4,
                                       app=APP_NAMES.get(app, app or "the app"), plan=plan or "unknown plan")
             for n in range(1, repeat + 1):
                 rid = run_id(suite, edition, pid, lane, n, tag)
@@ -515,6 +518,10 @@ WORD_RE = re.compile(r"[^\W_]+(?:['’][^\W_]+)*")
 DICTATION_MAX_WPM = 160          # 130 wpm modelled, with slack
 PASTE_MIN_PER_POST = 0.5         # minutes per pasted written post (COACH.md "a pasted post takes about half a minute")
 LEAK_N = {"en": 6, "vn": 8}      # words / tiếng in a run shared with the persona files
+# A shorter run from an answers.md paragraph no coach turn covered (the POST_RUN test): a short lift of a fact the coach
+# never dictated ("rồi mới đi coi nhà", "ngồi tính trước rồi mới dẫn đi"). A warning, never a failure: P9, a machine
+# side that never sees the persona, stays the real fix (review retest-vg5-g6 P17).
+LEAK_SHORT_N = {"en": 5, "vn": 5}
 
 
 NUMBER_WORDS = set("""zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen
@@ -684,6 +691,43 @@ def leak_items(pdir: Path, lang: str = "en") -> set[str]:
     return {" ".join(w) for w in (_content_words(i) for i in items) if len(w) >= least}
 
 
+MD_HEADING_RE = re.compile(r"^\s*#{1,6}\s.*$", re.M)
+
+
+def answer_paragraphs(pdir: Path) -> list[str]:
+    """answers.md in paragraphs (blank-line apart, headings left out), each list item of a paragraph apart: one
+    answer-bank line ("- **Gói dịch vụ + giá:** …") is one paragraph."""
+    path = pdir / "answers.md"
+    if not path.exists():
+        return []
+    text = MD_HEADING_RE.sub("", nfc(path.read_text(encoding="utf-8")))
+    out = []
+    for para in graders._paragraphs(text):
+        items = re.split(r"\n(?=\s*(?:[-*•]|\d{1,2}[.)])\s)", para)
+        out += [item.strip() for item in items if item.strip()]
+    return out
+
+
+def undictated_corpus(rows: list[dict], pdir: Path, n: int) -> set[str]:
+    """The n-grams (_content_words) of the answers.md paragraphs no coach turn covered: fewer than half their tokens in
+    POST_RUN-token runs of the coach's turns (graders.is_pasted_post, the coverage test _split_pasted uses; review
+    retest-vg5-g6 P17)."""
+    said = graders.post_runs([r.get("text", "") for r in rows if r.get("role") == "coach"])
+    return set().union(*(_grams(_content_words(p), n) for p in answer_paragraphs(pdir)
+                         if not graders.is_pasted_post(p, said)), set())
+
+
+def _spans(hit: list[int], n: int) -> list[tuple[int, int]]:
+    """Overlapping n-gram hits (start indexes, ascending) merged into (start, end) spans."""
+    spans: list[tuple[int, int]] = []
+    for i in hit:
+        if spans and i <= spans[-1][1]:
+            spans[-1] = (spans[-1][0], i + n)
+        else:
+            spans.append((i, i + n))
+    return spans
+
+
 # The visible voice lines (strings): the card top's HOW YOU SAY IT and the Map's YOUR VOICE are Voice Card lines too.
 VOICE_LINE_KEYS = ("card.visible.how", "map.voice")
 
@@ -712,24 +756,37 @@ def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str,
                 labels: tuple[str, ...] = ()) -> dict:
     """Persona wording in a machine turn that the coach never said before it and the kit does not hold:
     the simulator's machine side read the persona files (README "Keep the two apart"). A hit in a Voice
-    Card line (a voice field, or the visible HOW YOU SAY IT / YOUR VOICE line, read one quote apart from its label) fails the run (it inflates I23 and the voice judging); other hits are listed for a
-    human read ("warn"), since a model can rebuild a coach's phrase from what they said. A machine line is read
-    without its field labels and one list item at a time (leak_corpus reads the persona's TOML the same way); a list
-    item that is a whole persona phrase the coach never said leaks however short it is (leak_items)."""
-    n = LEAK_N.get(lang, 6)
+    Card line (a voice field, or the visible HOW YOU SAY IT / YOUR VOICE line, read one quote apart from its label)
+    fails the run (it inflates I23 and the voice judging); other hits are listed for a human read ("warn"), since a
+    model can rebuild a coach's phrase from what they said. A machine line is read without its field labels and one
+    list item at a time (leak_corpus reads the persona's TOML the same way); a list item that is a whole persona phrase
+    the coach never said leaks however short it is (leak_items). A shorter run, LEAK_SHORT_N words / tiếng, of an
+    answers.md paragraph no coach turn covered (undictated_corpus) is a warning, never a failure, in any line: a short
+    lift of a fact the coach never dictated (review retest-vg5-g6 P17)."""
+    n, short_n = LEAK_N.get(lang, 6), LEAK_SHORT_N.get(lang, 5)
     corpus, whole = leak_corpus(pdir, n), leak_items(pdir, lang)
-    # a run whose first or last n-1 words the coach said, or the kit holds, is a restatement, not a leak
+    undictated = undictated_corpus(rows, pdir, short_n) if short_n < n else set()
+    unit = "tiếng" if lang == "vn" else "words"
+    # a run whose first or last n-1 words the coach said, or the kit holds, is a restatement, not a leak (the short
+    # tier the same, with its own n-1)
     known: set[str] = set()
+    known_short: set[str] = set()
     said = " "                                    # the coach's words so far, for whole-item matches
+
+    def learn(text: str) -> None:
+        nonlocal said
+        words = _content_words(text)
+        known.update(_grams(words, n - 1))
+        known_short.update(_grams(words, short_n - 1))
+        said += " ".join(words) + " | "
+
     if kit_dir and kit_dir.is_dir():
         for f in sorted(kit_dir.glob("*")):
-            known |= _grams(_content_words(f.read_text(encoding="utf-8")), n - 1)
-            said += " ".join(_content_words(f.read_text(encoding="utf-8"))) + " | "
+            learn(f.read_text(encoding="utf-8"))
     fails, warns = [], []
     for r in rows:
         if r.get("role") == "coach":
-            known |= _grams(_content_words(r.get("text", "")), n - 1)
-            said += " ".join(_content_words(r.get("text", ""))) + " | "
+            learn(r.get("text", ""))
             continue
         for line in r.get("text", "").splitlines():
             visible = _visible_voice_line(line, labels)
@@ -745,25 +802,22 @@ def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str,
                     (fails if voice else warns).append(f'turn {r.get("turn")}: "{phrase}"')
                     continue
 
-                def leaked(i: int) -> bool:
-                    g = words[i:i + n]
-                    return (" ".join(g) in corpus and " ".join(g[:-1]) not in known
-                            and " ".join(g[1:]) not in known)
+                def leaked(i: int, size: int, grams: set[str], seen: set[str]) -> bool:
+                    g = words[i:i + size]
+                    return (" ".join(g) in grams and " ".join(g[:-1]) not in seen
+                            and " ".join(g[1:]) not in seen)
 
-                hit = [i for i in range(len(words) - n + 1) if leaked(i)]
-                spans, start, end = [], None, -1
-                for i in hit:                          # merge overlapping n-gram hits into spans
-                    if start is None or i > end:
-                        if start is not None:
-                            spans.append((start, end))
-                        start = i
-                    end = i + n
-                if start is not None:
-                    spans.append((start, end))
+                spans = _spans([i for i in range(len(words) - n + 1) if leaked(i, n, corpus, known)], n)
                 for a, b in spans:
                     entry = f'turn {r.get("turn")}: "{" ".join(words[a:b])}"'
                     (fails if voice else warns).append(entry)
-    out = _protocol("leaks", fails, n=n, warnings=warns)
+                # the short tier (P17): a warning only, and only outside the spans already listed
+                short = [i for i in range(len(words) - short_n + 1) if leaked(i, short_n, undictated, known_short)]
+                for a, b in _spans(short, short_n):
+                    if not any(a < y and x < b for x, y in spans):
+                        warns.append(f'turn {r.get("turn")}: "{" ".join(words[a:b])}" (undictated answers.md, '
+                                     f"{short_n}+ {unit})")
+    out = _protocol("leaks", fails, n=n, short_n=short_n, warnings=warns)
     if not fails and warns:
         out["status"] = "warn"
     return out

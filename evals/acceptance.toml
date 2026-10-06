@@ -33,6 +33,8 @@ film_ready_max_minutes_from_email = 30
 # No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
 session_max_minutes = 40
 session_max_turns = 10                    # Week 1 arrives in the next reply, unasked
+session_max_turns_vn = 11                 # VN adds the xưng hô turn, as map_max_turns_vn does (the VN block: "coach
+                                          #   nhắn ≤11 lượt"; review retest-vg5-g6 G43)
 detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
 save_gates = 0                            # saving never gates anything; Week 1 arrives before the Brand Card (wf15 §1.6-§1.7)
 brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/brand-card.toml, targets [budgets.brand_card_visible]

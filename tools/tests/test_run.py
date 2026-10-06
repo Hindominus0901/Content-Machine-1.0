@@ -152,6 +152,26 @@ class RunPackets(TempRepo):
         self.assertIn("one coach turn per send", step2)
         self.assertNotIn("one coach turn each", step2)
 
+    def test_protocol_first_send_ends_by_300_words(self):
+        """Retest VG5/G6 §8 P16: chunk 1's first send ends by about 300 words (VN tiếng), about 3 minutes, as the dump
+        prompt says "every 2–3 minutes" (Erin's 425-word first send took 4.3 min and made the early win a warning)."""
+        step2 = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        self.assertIn("Chunk 1's first send ends by about 300 words (VN tiếng), about 3 minutes of talk, at a paragraph "
+                      "or sentence end, as the dump prompt says \"every 2–3 minutes\"; the rest of chunk 1 is the next "
+                      "send (P16).", step2)
+        self.assertIn("A chunk over about 400 words (VN tiếng) goes in two sends", step2)       # P10 still holds
+
+    def test_session_turn_cap_per_edition(self):
+        """Retest VG5/G6 §8 G43: the coach side stops after the session budget + 4 turns, VN from session_max_turns_vn
+        (11: the xưng hô turn), EN from session_max_turns (10)."""
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\nsession_max_turns_vn = 11\n")
+        en = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        self.assertIn("or after 14 coach turns.", en)
+        self.write("evals/personas/vn/test-vn/persona.toml", 'id = "test-vn"\nedition = "vn"\n')
+        vn = " ".join((self.packets(edition="vn", tag="vn")[0] / "packet" / "COACH.md").read_text(encoding="utf-8")
+                      .split())
+        self.assertIn("or after 15 coach turns.", vn)
+
     def test_protocol_states_the_soft_cut(self):
         """Retest VG4/G5 §8 P15: the round brief told the VN simulators "about 1,500 tiếng"; the packet now states the
         kit's cut from acceptance.toml [day0] (~1,200, pasted posts left out), so a simulator files no kit break over
@@ -408,6 +428,43 @@ class Protocol(TempRepo):
         said = self.rows(("coach", "Okay. Here's the math, honestly."),
                          ("machine", 'openers_closers=["Okay. Here\'s the math."]'))
         self.assertTrue(run.check_leaks(said, pdir, None, "en")["pass"])
+
+
+    def test_leaks_short_lifts_of_undictated_answers_warn(self):
+        """Retest VG5/G6 §8 P17: Tuấn's machine lifted 5-7 tiếng from answer-bank lines he never said ("ngồi tính trước
+        rồi mới dẫn đi"), under the 8-tiếng leak n-gram. A run of 5 from an answers.md paragraph no coach turn covered
+        is a warning, never a failure, even in a voice field; a dictated line or the coach's own words add none."""
+        line = "Tại tui ngồi tính trước rồi mới dẫn đi coi nhà."
+        self.write("evals/personas/vn/test-vn/answers.md",
+                   "## Dump chunk 1\nTui ngồi tính với từng nhà, mai mình ngồi tính rồi hẵng cọc.\n\n## Answer bank\n"
+                   f"- **Vì sao khách chọn mình:** \"{line}\"\n- **Số giờ/tuần:** \"2 tiếng là hết cỡ.\"\n")
+        pdir = self.root / "evals" / "personas" / "vn" / "test-vn"
+        chunk = "Tui ngồi tính với từng nhà, mai mình ngồi tính rồi hẵng cọc."
+        lift = "Nhà nào muốn coi thì mình ngồi tính trước rồi mới dẫn đi."
+        res = run.check_leaks(self.rows(("coach", chunk), ("machine", lift)), pdir, None, "vn")
+        self.assertEqual((res["pass"], res["status"], res["short_n"]), (True, "warn", 5))
+        self.assertEqual(res["warnings"], ['turn 1: "ngồi tính trước rồi mới dẫn đi" (undictated answers.md, 5+ tiếng)'])
+        voice = run.check_leaks(self.rows(("coach", chunk), ("machine", f"phrases: {lift}")), pdir, None, "vn")
+        self.assertTrue(voice["pass"], voice)                                   # a warning, never a failure
+        self.assertEqual(len(voice["warnings"]), 1)
+        # he said the line: its paragraph is covered (the POST_RUN test) and the lift is his words
+        said = self.rows(("coach", chunk), ("machine", "Em nhận rồi."), ("coach", line), ("machine", lift))
+        self.assertEqual(run.check_leaks(said, pdir, None, "vn")["status"], "pass")
+        corpus = run.undictated_corpus(said, pdir, 5)
+        self.assertNotIn("ngồi tính trước rồi mới", corpus)
+        self.assertIn("ngồi tính trước rồi mới", run.undictated_corpus(said[:2], pdir, 5))
+        self.assertNotIn("ngồi tính với từng nhà", corpus)                   # chunk 1 was dictated
+        # a run of 8+ is listed once, by the n-gram tier, not again by the short tier
+        long = run.check_leaks(self.rows(("coach", chunk), ("machine", line)), pdir, None, "vn")
+        self.assertEqual(long["warnings"], ['turn 1: "tại tui ngồi tính trước rồi mới dẫn đi coi nhà"'])
+        # EN reads 5 words
+        self.write("evals/personas/en/test-coach/answers.md",
+                   "## Dump chunk 1\nI was at HQ 24 years.\n\n## Answer bank\n- **Why they pick me:** \"I ask for "
+                   "the coffee before the resume, every time.\"\n")
+        en = run.check_leaks(self.rows(("coach", "I was at HQ 24 years."),
+                                       ("machine", "Coffee first, so the coffee before the resume.")),
+                             self.root / "evals" / "personas" / "en" / "test-coach", None, "en")
+        self.assertEqual(en["warnings"], ['turn 1: "the coffee before the resume" (undictated answers.md, 5+ words)'])
 
 
 class Edits(TempRepo):
