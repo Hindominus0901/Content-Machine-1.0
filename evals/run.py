@@ -12,14 +12,16 @@ the agent writes transcript.jsonl and notes.md there, and `grade` checks the tra
 
 Run folder (graders.py reads transcript.jsonl and meta.json; keep both formats):
 
-    meta.json          persona, edition, lane, build_sha, suite, repeat (+ case for the cases suite)
+    meta.json          persona, edition, lane, build_sha, suite, repeat (+ case for the cases suite); "edits":
+                       the simulator's log of leak removals after the first grade (turn, field, before, after, reason)
     packet/README.md   the protocol: who plays which side, the leakage rule, what to write back
     packet/MACHINE.md  the machine side: the lane, and the kit files it runs on (in packet/kit/)
     packet/COACH.md    the coach side: the persona files it may use and the suite's script
     packet/kit/        1-INSTRUCTIONS.txt (+ CONTENT-MACHINE-<ED>.md in S1 and floor), as built
     transcript.jsonl   written by the simulator
+    transcript.raw.jsonl  the transcript as first graded (written by `grade`; later edits are checked against it)
     notes.md           written by the simulator
-    grades.json        written by `grade`
+    grades.json        written by `grade` (with "edited": the rows changed since the first grade)
 
 Lanes: S0 compact mode (instruction block only, no method file); S1 the Project kit (instruction block +
 method file); floor S1 played by a smaller model (the weaker free-tier model); S3 the L3 skill with a fake
@@ -181,9 +183,12 @@ One simulator agent plays both sides, turn by turn, from the files in this folde
   `expected.toml`, the eval cases or `qa/`.
 - **Coach side:** `COACH.md`. Only facts from the persona files it names, in the persona's style and order.
 - Keep the two apart: write each machine reply from the transcript so far and the kit only. `grade` scans
-  every machine turn for persona wording the coach never said (the leak check): a leak makes the run invalid,
-  so rewrite that turn from what the coach had said and grade again. Never write "no leaks" in notes.md
-  without a passing leak check.
+  every machine turn for persona wording the coach never said (the leak check): a leak makes the run invalid.
+  Never write "no leaks" in notes.md without a passing leak check.
+- Machine turns are frozen after the first grade: it keeps the transcript as `transcript.raw.jsonl`. After that,
+  change only the leaked words of a machine turn, and log each change in `meta.json` under `"edits"`:
+  `{{"turn": 7, "field": "openers_closers", "before": "…", "after": "…", "reason": "leak: …"}}`. Any other change
+  (a coach turn, a time, a rewrite that is not a leak removal) makes the run invalid; `grade` prints "edited: n".
 
 ## Write back into this run folder ({run_dir})
 
@@ -199,7 +204,7 @@ One simulator agent plays both sides, turn by turn, from the files in this folde
    whether this coach comes back tomorrow, and why.
 3. Then run: `python3 evals/run.py grade {run_dir}`.
 
-Do not edit `meta.json` or the files in `packet/`.
+Do not edit the files in `packet/`, or `meta.json` beyond its `"edits"` log.
 """
 
 MACHINE = """# Machine side ({lane})
@@ -573,60 +578,189 @@ def check_pace(rows: list[dict], pdir: Path) -> dict:
 VOICE_FIELD_RE = re.compile(r"^\W*(?:tone|rhythm|phrases?|openers?(?:_closers)?|closers|never_say|do_say|passages|"
                             r"audience_address|address_1to1|connectors|written_vs_spoken|code_mix|humou?r|dialect)\b",
                             re.I)
+# A machine field's label ("openers_closers: ", "plan_start=", "list_size: ") is the card's wording, never the
+# persona's: it is cut before the leak scan, so "openers closers" never joins a value (review G18).
+FIELD_LABEL_RE = re.compile(r"^[\W_]*[a-z][a-z0-9_]*\s*(?:=|:(?=\s|$))"            # "openers_closers: …" at the start
+                            r"|(?:(?<=\s)|(?<=\|)|(?<=\[))[a-z][a-z0-9]*(?:_[a-z0-9]+)+\s*(?:=|:(?=\s|$))"   # "plan_start="
+                            r"|(?:(?<=\s)|(?<=\|))[a-z][a-z0-9]*=")                    # "season=1"
+LIST_SPLIT_RE = re.compile(r"\s+[|·]\s+")
+# A machine line's list items: " | ", " · ", and a bracketed list's quoted items ('["Okay. Here's the math.", "…"]').
+ITEM_SPLIT_RE = re.compile(r"\s+[|·]\s+|\"\s*,\s*\"|\[\s*\"|\"\s*\]")
+
+
+def _toml_strings(value) -> list[str]:
+    """Every string value in a parsed TOML document, one per string (keys and array brackets left out)."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [s for v in value.values() for s in _toml_strings(v)]
+    if isinstance(value, list):
+        return [s for v in value for s in _toml_strings(v)]
+    return []
+
+
+# A whole persona phrase this long (EN words / VN tiếng), copied as a list item, is a leak however short; a form of
+# address ("audience_address: chị – các em") is an inference from a closed set, never counted this way.
+LEAK_ITEM_MIN = {"en": 3, "vn": 5}
+ADDRESS_FIELD_RE = re.compile(r"^\W*(?:audience_address|address_1to1|pronouns|xung_ho)\b", re.I)
+MD_ITEM_RE = re.compile(r"^\s*(?:[-*•]|\d{1,2}[.)])\s+(.+)$", re.M)
+
+
+def _persona_values(pdir: Path) -> list[str]:
+    """The persona's phrases as written: every TOML string value, each list item (" | ", " · ") apart."""
+    out = []
+    for f in sorted(pdir.glob("*.toml")):
+        text = f.read_text(encoding="utf-8")
+        try:
+            values = _toml_strings(tomllib.loads(text))
+        except tomllib.TOMLDecodeError:
+            values = text.splitlines()
+        out += [item for value in values for item in LIST_SPLIT_RE.split(value)]
+    return out
+
+
+def leak_corpus(pdir: Path, n: int) -> set[str]:
+    """The persona's wording as n-grams: Markdown files whole, TOML files one string value at a time and each list item
+    (" | ", " · ") apart, so a key never joins its value and two values never join (review G18)."""
+    corpus: set[str] = set()
+    for f in sorted(pdir.glob("*.md")):
+        corpus |= _grams(_content_words(f.read_text(encoding="utf-8")), n)
+    for item in _persona_values(pdir):
+        corpus |= _grams(_content_words(item), n)
+    return corpus
+
+
+def leak_items(pdir: Path, lang: str = "en") -> set[str]:
+    """Whole persona phrases of LEAK_ITEM_MIN+ words (a TOML value or list item, a Markdown bullet): a machine list item
+    that is one of them word for word copied it, even when it is shorter than a leak n-gram ("Okay. Here's the
+    math.")."""
+    items = _persona_values(pdir)
+    for f in sorted(pdir.glob("*.md")):
+        items += [m.group(1) for m in MD_ITEM_RE.finditer(f.read_text(encoding="utf-8"))]
+    least = LEAK_ITEM_MIN.get(lang, 3)
+    return {" ".join(w) for w in (_content_words(i) for i in items) if len(w) >= least}
 
 
 def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str) -> dict:
     """Persona wording in a machine turn that the coach never said before it and the kit does not hold:
     the simulator's machine side read the persona files (README "Keep the two apart"). A hit in a Voice
     Card field line fails the run (it inflates I23 and the voice judging); other hits are listed for a
-    human read ("warn"), since a model can rebuild a coach's phrase from what they said."""
+    human read ("warn"), since a model can rebuild a coach's phrase from what they said. A machine line is read
+    without its field labels and one list item at a time (leak_corpus reads the persona's TOML the same way); a list
+    item that is a whole persona phrase the coach never said leaks however short it is (leak_items)."""
     n = LEAK_N.get(lang, 6)
-    corpus: set[str] = set()
-    for f in sorted(pdir.glob("*")):
-        if f.suffix in (".md", ".toml"):
-            corpus |= _grams(_content_words(f.read_text(encoding="utf-8")), n)
+    corpus, whole = leak_corpus(pdir, n), leak_items(pdir, lang)
     # a run whose first or last n-1 words the coach said, or the kit holds, is a restatement, not a leak
     known: set[str] = set()
+    said = " "                                    # the coach's words so far, for whole-item matches
     if kit_dir and kit_dir.is_dir():
         for f in sorted(kit_dir.glob("*")):
             known |= _grams(_content_words(f.read_text(encoding="utf-8")), n - 1)
+            said += " ".join(_content_words(f.read_text(encoding="utf-8"))) + " | "
     fails, warns = [], []
     for r in rows:
         if r.get("role") == "coach":
             known |= _grams(_content_words(r.get("text", "")), n - 1)
+            said += " ".join(_content_words(r.get("text", ""))) + " | "
             continue
         for line in r.get("text", "").splitlines():
-            words = _content_words(line)
+            voice = bool(VOICE_FIELD_RE.match(line))
+            for item in ITEM_SPLIT_RE.split(FIELD_LABEL_RE.sub(" ", line)):
+                words = _content_words(item)
+                phrase = " ".join(words)
+                if len(words) < n and phrase in whole and f" {phrase} " not in said and not ADDRESS_FIELD_RE.match(line):
+                    (fails if voice else warns).append(f'turn {r.get("turn")}: "{phrase}"')
+                    continue
 
-            def leaked(i: int) -> bool:
-                g = words[i:i + n]
-                return (" ".join(g) in corpus and " ".join(g[:-1]) not in known
-                        and " ".join(g[1:]) not in known)
+                def leaked(i: int) -> bool:
+                    g = words[i:i + n]
+                    return (" ".join(g) in corpus and " ".join(g[:-1]) not in known
+                            and " ".join(g[1:]) not in known)
 
-            hit = [i for i in range(len(words) - n + 1) if leaked(i)]
-            spans, start, end = [], None, -1
-            for i in hit:                              # merge overlapping n-gram hits into spans
-                if start is None or i > end:
-                    if start is not None:
-                        spans.append((start, end))
-                    start = i
-                end = i + n
-            if start is not None:
-                spans.append((start, end))
-            for a, b in spans:
-                item = f'turn {r.get("turn")}: "{" ".join(words[a:b])}"'
-                (fails if VOICE_FIELD_RE.match(line) else warns).append(item)
+                hit = [i for i in range(len(words) - n + 1) if leaked(i)]
+                spans, start, end = [], None, -1
+                for i in hit:                          # merge overlapping n-gram hits into spans
+                    if start is None or i > end:
+                        if start is not None:
+                            spans.append((start, end))
+                        start = i
+                    end = i + n
+                if start is not None:
+                    spans.append((start, end))
+                for a, b in spans:
+                    entry = f'turn {r.get("turn")}: "{" ".join(words[a:b])}"'
+                    (fails if voice else warns).append(entry)
     out = _protocol("leaks", fails, n=n, warnings=warns)
     if not fails and warns:
         out["status"] = "warn"
     return out
 
 
+RAW_TRANSCRIPT = "transcript.raw.jsonl"
+EDIT_KEYS = ("turn", "field", "before", "after", "reason")
+
+
+def freeze_transcript(run_dir: Path) -> bool:
+    """The first grade keeps the transcript as written (transcript.raw.jsonl); later grades compare against it (review
+    P8). True when this call froze it."""
+    raw = run_dir / RAW_TRANSCRIPT
+    if raw.exists() or not (run_dir / "transcript.jsonl").exists():
+        return False
+    shutil.copy2(run_dir / "transcript.jsonl", raw)
+    return True
+
+
+def check_edits(run_dir: Path, meta: dict) -> dict:
+    """Machine turns are frozen after the first grade (review P8): every row that differs from transcript.raw.jsonl
+    is an edit. Only a machine turn's text may change, only to remove a leak, and each change needs an entry in
+    meta.json "edits" ({"turn", "field", "before", "after", "reason": "leak: …"}) whose "before" is in the frozen
+    text and whose "after" is in the edited text. Rows added after the last frozen row are new turns, not edits.
+    details: edited (rows changed), appended (rows added)."""
+    raw_path = run_dir / RAW_TRANSCRIPT
+    if not raw_path.exists():
+        return _protocol("edits", [], edited=0, appended=0)
+    raw = [json.loads(line) for line in raw_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    cur = _rows(run_dir)
+    log = [e for e in meta.get("edits", []) if isinstance(e, dict)]
+    ev, edited = [], 0
+    for i, old in enumerate(raw):
+        new = cur[i] if i < len(cur) else None
+        if new == old:
+            continue
+        edited += 1
+        turn = old.get("turn")
+        if new is None:
+            ev.append(f"turn {turn}: a {old.get('role')} row was removed after the first grade")
+            continue
+        if old.get("role") != "machine" or {k: v for k, v in old.items() if k != "text"} \
+                != {k: v for k, v in new.items() if k != "text"}:
+            ev.append(f"turn {turn}: a {old.get('role')} row changed after the first grade (only a machine turn's "
+                      "text may change, to remove a leak)")
+            continue
+        entries = [e for e in log if e.get("turn") == turn]
+        if not entries:
+            ev.append(f'turn {turn}: machine turn edited after the first grade with no entry in meta.json "edits"')
+            continue
+        for e in entries:
+            missing = [k for k in EDIT_KEYS if k not in e]
+            if missing:
+                ev.append(f"turn {turn}: the edit log entry lacks {', '.join(missing)}")
+            elif not str(e["reason"]).strip().casefold().startswith("leak"):
+                ev.append(f'turn {turn}: an edit that is not a leak removal ("{e["reason"]}")')
+            elif str(e["before"]) not in old.get("text", "") or str(e["after"]) not in new.get("text", ""):
+                ev.append(f"turn {turn}: the edit log's before/after does not match the frozen and edited text")
+    for e in log:
+        if e.get("turn") not in {r.get("turn") for r, c in zip(raw, cur) if r != c}:
+            ev.append(f"turn {e.get('turn')}: an edit log entry for a turn that did not change")
+    return _protocol("edits", list(dict.fromkeys(ev)), edited=edited, appended=max(0, len(cur) - len(raw)))
+
+
 def protocol_checks(run_dir: Path, root: Path, meta: dict) -> list[dict]:
     rows = _rows(run_dir)
     lang = "vn" if meta.get("edition") == "vn" else "en"
     pdir = root / "evals" / "personas" / meta["persona"]
-    return [check_turns(rows), check_pace(rows, pdir), check_leaks(rows, pdir, run_dir / "packet" / "kit", lang)]
+    return [check_turns(rows), check_pace(rows, pdir), check_leaks(rows, pdir, run_dir / "packet" / "kit", lang),
+            check_edits(run_dir, meta)]
 
 
 # ---------------------------------------------------------------- grading
@@ -641,7 +775,10 @@ def grade_run(run_dir: Path, root: Path) -> dict:
         raise RunError(f"{run_dir.name}: standalone cases (no persona) cannot be graded by graders.py yet")
     report = graders.grade(run_dir, root)
     out = dict(report)
+    freeze_transcript(run_dir)
     out["protocol"] = protocol_checks(run_dir, root, meta) if meta.get("persona") else []
+    edits = next((p for p in out["protocol"] if p["id"] == "edits"), None)
+    out["edited"] = edits["edited"] if edits else 0
     out["valid"] = all(p["pass"] for p in out["protocol"])
     out["pass"] = bool(report["pass"]) and out["valid"]
     if meta.get("case"):
@@ -658,8 +795,18 @@ def grade_run(run_dir: Path, root: Path) -> dict:
     return out
 
 
+def film_cell(d: dict) -> str:
+    """Film-ready minutes for the summary: active minutes (the budget's unit), the clock in brackets when the coach
+    was away ("16.1 (56.1)"; review G16, VG-16)."""
+    active, clock = d.get("film_ready_active_minutes"), d.get("film_ready_minutes")
+    if active is None:
+        return "–" if clock is None else f"{clock:g}"
+    return f"{active:g}" if clock is None or abs(clock - active) < 0.05 else f"{active:g} ({clock:g})"
+
+
 def summary_rows(results: list[dict]) -> str:
-    head = "| Run | Persona | Lane | Valid | Pass | Failed | Coach turns | Map turns | Film-ready min | Case |"
+    head = ("| Run | Persona | Lane | Valid | Pass | Failed | Coach turns | Map turns | Film-ready min (clock) | "
+            "Case |")
     rows = [head, "|" + "---|" * 10]
     for g in results:
         day0 = next((c for c in g.get("checks", []) if c["id"] == "day0_timing"), {})
@@ -670,13 +817,14 @@ def summary_rows(results: list[dict]) -> str:
             case_cell = "pass" if case.get("pass") else ("P" if case.get("pass") is None else
                                                           "fail: " + "; ".join(case.get("failures", [])[:2]))
         bad = [p["id"] for p in g.get("protocol", []) if not p["pass"]]
+        valid = "no: " + ", ".join(bad) if bad else "yes"
+        if g.get("edited"):
+            valid += f" (edited: {g['edited']})"
         rows.append("| {run} | {persona} | {lane} | {valid} | {ok} | {failed} | {turns} | {map} | {film} | {case} |".format(
-            run=g.get("run", ""), persona=g.get("persona", ""), lane=g.get("lane", ""),
-            valid="no: " + ", ".join(bad) if bad else "yes",
+            run=g.get("run", ""), persona=g.get("persona", ""), lane=g.get("lane", ""), valid=valid,
             ok="yes" if g.get("pass") else "no", failed=", ".join(g.get("failed", [])) or "–",
             turns=g.get("summary", {}).get("coach_turns", ""), map=d.get("map_coach_turns", "–"),
-            film=d.get("film_ready_minutes", "–") if d.get("film_ready_minutes") is not None else "–",
-            case=case_cell.replace("|", "/")))
+            film=film_cell(d), case=case_cell.replace("|", "/")))
     return "\n".join(rows)
 
 
@@ -733,7 +881,7 @@ def main(argv: list[str] | None = None) -> int:
                 bad = [p["id"] for p in r.get("protocol", []) if not p["pass"]]
                 status = "pass" if r["pass"] else "FAIL " + (", ".join(r["failed"] + [f"invalid run: {b}" for b in bad])
                                                              or "case")
-                print(f"{r['run']}: {status}{extra}")
+                print(f"{r['run']}: {status}{extra} · edited: {r.get('edited', 0)}")
         return 0 if all(r.get("pass") for r in results) else 1
     except (RunError, graders.GraderError, cmlib.CMError, OSError, tomllib.TOMLDecodeError,
             json.JSONDecodeError) as exc:

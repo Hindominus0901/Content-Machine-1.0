@@ -226,6 +226,27 @@ class CaseAssertions(TempRepo):
         self.assertIn("| Run | Persona | Lane |", table)
         self.assertIn("| en/test-coach |", table)
 
+    def test_summary_prints_active_film_minutes_and_the_run_name(self):
+        """Review G16 / VG-16: film-ready in active minutes, the clock in brackets; a run graded from inside its
+        folder still has its name."""
+        self.assertEqual(run.film_cell({"film_ready_minutes": 56.1, "film_ready_active_minutes": 16.1}), "16.1 (56.1)")
+        self.assertEqual(run.film_cell({"film_ready_minutes": 19.1, "film_ready_active_minutes": 19.1}), "19.1")
+        self.assertEqual(run.film_cell({}), "–")
+        table = run.summary_rows([{"run": "r1", "persona": "en/x", "lane": "S1", "pass": False, "failed": ["I8"],
+                                   "edited": 2, "protocol": [], "summary": {"coach_turns": 5},
+                                   "checks": [{"id": "day0_timing", "details": {
+                                       "map_coach_turns": 4, "film_ready_minutes": 61.9,
+                                       "film_ready_active_minutes": 16.9}}]}])
+        self.assertIn("| yes (edited: 2) | no | I8 | 5 | 4 | 16.9 (61.9) |", table)
+        d = self.run_dir([("coach", "Tuesday."), ("machine", MAP_REPLY)])
+        here = Path.cwd()
+        try:
+            import os
+            os.chdir(d)
+            self.assertEqual(run.graders.grade(Path("."), self.root)["run"], d.name)
+        finally:
+            os.chdir(here)
+
 
 class Protocol(TempRepo):
     def rows(self, *turns):
@@ -266,6 +287,97 @@ class Protocol(TempRepo):
         said = self.rows(("coach", "I always tell the story first, then the step, every single time."),
                          ("machine", "rhythm: the story first, then the step, every single time"))
         self.assertEqual(run.check_leaks(said, pdir, None, "en")["status"], "pass")
+
+    def test_leaks_read_toml_values_and_list_items_apart(self):
+        """Review G18: a TOML key never joins its value, a machine field label never joins its value, and list items
+        are read apart; a persona line the coach never said still fails a voice field."""
+        self.write("evals/personas/en/test-coach/expected.toml",
+                   '[voice]\nopeners_closers = ["Here\'s the thing nobody tells you.", "Every time."]\n'
+                   'never_say = ["revenue is vanity, profit is sanity", "crush it"]\n')
+        pdir = self.root / "evals" / "personas" / "en" / "test-coach"
+        corpus = run.leak_corpus(pdir, 6)
+        self.assertNotIn("openers closers here's the thing nobody", corpus)
+        pasted = self.rows(("coach", "Here's the thing nobody tells you. Every time."),
+                           ("machine", 'openers_closers: "Here\'s the thing nobody tells you." | "Every time."'))
+        self.assertTrue(run.check_leaks(pasted, pdir, None, "en")["pass"])
+        joined = self.rows(("coach", "I say make it make sense, and I check the bank every morning."),
+                           ("machine", "phrases: make it make sense | I check the bank"))
+        self.assertTrue(run.check_leaks(joined, pdir, None, "en")["pass"])
+        copied = self.rows(("coach", "I run an agency."),
+                           ("machine", "never_say: revenue is vanity, profit is sanity | crush it"))
+        res = run.check_leaks(copied, pdir, None, "en")
+        self.assertFalse(res["pass"])
+        self.assertIn("revenue is vanity profit is sanity", res["evidence"][0])
+        # a whole persona phrase shorter than a leak n-gram, copied as a list item, still leaks
+        self.write("evals/personas/en/test-coach/voice-samples.md", "## Phrases\n1. Okay. Here's the math.\n")
+        short = self.rows(("coach", "I run an agency."),
+                          ("machine", 'phrases=["Client by client"] openers_closers=["Okay. Here\'s the math."]'))
+        self.assertIn("okay here's the math", " ".join(run.check_leaks(short, pdir, None, "en")["evidence"]))
+        said = self.rows(("coach", "Okay. Here's the math, honestly."),
+                         ("machine", 'openers_closers=["Okay. Here\'s the math."]'))
+        self.assertTrue(run.check_leaks(said, pdir, None, "en")["pass"])
+
+
+class Edits(TempRepo):
+    """Review P8: the first grade freezes the transcript; later changes must be logged leak removals."""
+
+    TURNS = [("coach", "Tuesday."), ("machine", MAP_REPLY)]
+
+    def edit(self, d: Path, old: str, new: str, log: list | None = None, role: str = "machine") -> None:
+        rows = [json.loads(x) for x in (d / "transcript.jsonl").read_text(encoding="utf-8").splitlines()]
+        for row in rows:
+            if row["role"] == role:
+                row["text"] = row["text"].replace(old, new)
+        (d / "transcript.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows),
+                                            encoding="utf-8")
+        if log is not None:
+            meta = json.loads((d / "meta.json").read_text(encoding="utf-8"))
+            meta["edits"] = log
+            (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+
+    def edits(self, g: dict) -> dict:
+        return next(p for p in g["protocol"] if p["id"] == "edits")
+
+    def test_first_grade_freezes_and_unlogged_edits_invalidate(self):
+        d = self.run_dir(self.TURNS)
+        first = run.grade_run(d, self.root)
+        self.assertTrue((d / "transcript.raw.jsonl").exists())
+        self.assertEqual((first["edited"], self.edits(first)["pass"]), (0, True))
+        self.edit(d, "plain · dry · warm", "plain · warm")
+        second = run.grade_run(d, self.root)
+        self.assertEqual(second["edited"], 1)
+        self.assertFalse(second["valid"])
+        self.assertIn('no entry in meta.json "edits"', " ".join(self.edits(second)["evidence"]))
+
+    def test_logged_leak_removal_is_valid_and_counted(self):
+        d = self.run_dir(self.TURNS)
+        run.grade_run(d, self.root)
+        self.edit(d, "plain · dry · warm", "plain · warm", [{"turn": 2, "field": "YOUR VOICE", "before": "plain · dry",
+                                                             "after": "plain · warm", "reason": "leak: dry"}])
+        g = run.grade_run(d, self.root)
+        self.assertTrue(self.edits(g)["pass"], self.edits(g))
+        self.assertEqual(g["edited"], 1)
+        self.assertTrue(g["valid"])
+
+    def test_other_changes_invalidate(self):
+        d = self.run_dir(self.TURNS)
+        run.grade_run(d, self.root)
+        self.edit(d, "plain · dry · warm", "plain · warm", [{"turn": 2, "field": "YOUR VOICE", "before": "plain · dry",
+                                                             "after": "plain · warm", "reason": "reads better"}])
+        self.assertIn("not a leak removal", " ".join(self.edits(run.grade_run(d, self.root))["evidence"]))
+        d2 = self.run_dir(self.TURNS)
+        run.grade_run(d2, self.root)
+        self.edit(d2, "Tuesday.", "Wednesday.", role="coach")
+        self.assertIn("a coach row changed", " ".join(self.edits(run.grade_run(d2, self.root))["evidence"]))
+
+    def test_new_turns_after_the_first_grade_are_not_edits(self):
+        d = self.run_dir(self.TURNS)
+        run.grade_run(d, self.root)
+        with open(d / "transcript.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"turn": 2, "role": "coach", "text": "ok", "t_min": 3.0}) + "\n")
+            fh.write(json.dumps({"turn": 2, "role": "machine", "text": TAG + "Week 1\nNEXT → ok", "t_min": 4.0}) + "\n")
+        g = run.grade_run(d, self.root)
+        self.assertEqual((g["edited"], self.edits(g)["appended"], self.edits(g)["pass"]), (0, 2, True))
 
 
 if __name__ == "__main__":

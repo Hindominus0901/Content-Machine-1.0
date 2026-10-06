@@ -434,6 +434,12 @@ _ATTR_BEFORE = {
 _ATTR_AFTER = re.compile(r"^[\s,]*(?:[—–-]\s*[" + UPPER + r"]|(?:she|he|they|[A-Z][a-z]+|a client|my client|"
                          r"one client)\s+(?:said|says|wrote|writes|asked|told me|texted|messaged)\b|(?:chị|anh|em|bạn|"
                          r"khách|học viên|[" + UPPER + r"][^\W\d_]+)\s+(?:ấy\s+)?(?:nói|bảo|nhắn|kể|viết|hỏi)\b)")
+# A hypothetical speaker is no attribution: a DM label 'someone asks the price, or "can you do my room"', 'if anyone
+# says "too expensive"', 'ai đó hỏi "giá sao"' (review G13). Past tense ("someone told me") stays attributed.
+_HYPOTHETICAL_BEFORE = re.compile(
+    r"(?i)(?:\b(?:someone|somebody|anyone|anybody|they|people|a (?:buyer|lead|prospect|reader|viewer|follower|stranger))"
+    r"\s+(?:\w+\s+)?(?:asks?|says?|messages?|comments?|writes?|DMs?|replies|texts?)\b"
+    r"|(?<!\w)(?:ai đó|có ai|người nào|ai)\s+(?:\S+\s+){0,2}?(?:hỏi|nhắn|comment|nói)(?!\w))[^.!?\"]{0,30}$")
 # A short quoted term followed by its meaning ('"insight" là điều khách nghĩ', '"CTA" means …') is a gloss.
 _GLOSS_AFTER = re.compile(r"^\s*[,:]?\s*(?:là|nghĩa là|có nghĩa là|tức là|means?|meaning|stands for|is short for|"
                           r"=|→|->)(?!\w)", re.I)
@@ -442,7 +448,8 @@ _GLOSS_AFTER = re.compile(r"^\s*[,:]?\s*(?:là|nghĩa là|có nghĩa là|tức l
 def quotes_in(text: str, lang: str = "en") -> list[Quote]:
     """Double-quoted spans (straight or curly), each marked attributed or not.
 
-    A quoted term of up to 3 words followed by its meaning is a gloss, never an attributed quote.
+    A quoted term of up to 3 words followed by its meaning is a gloss, and words given to a hypothetical speaker
+    ('someone asks "…"', 'ai đó hỏi "…"') are a scenario: neither is an attributed quote.
     """
     text = straight_quotes(nfc(text))
     out = []
@@ -452,6 +459,8 @@ def quotes_in(text: str, lang: str = "en") -> list[Quote]:
         after = text[m.end():text.find("\n", m.end()) if "\n" in text[m.end():] else len(text)]
         attributed = any(p.search(before) for p in _ATTR_BEFORE.values()) or bool(_ATTR_AFTER.match(after))
         if attributed and count_words(m.group(1)) <= 3 and _GLOSS_AFTER.match(after):
+            attributed = False
+        if attributed and _HYPOTHETICAL_BEFORE.search(before):
             attributed = False
         out.append(Quote(m.group(1), m.start(1), m.end(1), attributed))
     return out

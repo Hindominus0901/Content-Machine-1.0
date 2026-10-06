@@ -29,6 +29,9 @@ session_max_turns = 10                    # Week 1 arrives in the next reply, un
 detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
 save_gates = 0                            # saving never gates anything; Week 1 arrives before the Brand Card (wf15 §1.6-§1.7)
 brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/brand-card.toml, targets [budgets.brand_card_visible]
+                                          # (the whole card's budget is platform/targets.toml [budgets.brand_card])
+known_for_max_en = 35                     # the Map's KNOWN FOR, "one breath" (modules/en/message.md §CM-MAP)
+known_for_max_vn = 50                     # ĐIỀU KHÁCH NHỚ in tiếng (modules/vn/message.md §CM-MAP)
 running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <name> · <step>" (graders running_tag)
 shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes not counted (§CM-TODAY 1)
 

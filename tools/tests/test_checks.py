@@ -142,6 +142,15 @@ class QuoteTests(unittest.TestCase):
         self.assertTrue(ck.quotes_in('Chị Lan nói "mệt quá"', "vn")[0].attributed)
         self.assertTrue(ck.quotes_in('Một chị học viên kể "em toàn lãi ảo"', "vn")[0].attributed)
 
+    def test_hypothetical_speakers_are_not_attributed(self):
+        """Review G13: a scenario ('someone asks …') is not a claim that someone said it; a past event still is."""
+        for text in ('DM REPLY 1 · someone asks the price, or "can you do my room"',
+                     'If anyone says "too expensive", send the list.', 'Khi ai đó hỏi "giá sao em", gửi bảng giá.'):
+            with self.subTest(text=text):
+                self.assertFalse(ck.quotes_in(text, "vn" if "ai đó" in text else "en")[0].attributed)
+        self.assertTrue(ck.quotes_in('Someone told me "you saved my job".')[0].attributed)
+        self.assertTrue(ck.quotes_in('Lorraine said "can you do my room".')[0].attributed)
+
     def test_glossed_terms_are_not_attributed_quotes(self):
         """Baseline vn/hanh I9 false positive: the assistant explaining an English word."""
         text = '(Mấy chữ tiếng Anh: "pillar" là nhóm chủ đề, "CTA" là câu mời khách nhắn tin, "insight" là điều khách nghĩ.)'
