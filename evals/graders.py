@@ -80,16 +80,18 @@ audience address, I20 unopened links, I21 the angle card's evidence, I22 monitor
 promises, I23 voice).
 Other checks: deny_list, quit_triggers (the generic triggers, against the persona's own quit list),
 running_tag (every reply opens with the running tag), day0_timing (Map and film-ready turn and active-minute
-budgets, the session's minutes, the early win), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and
-quiet option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list,
-the keyword once outside each Week-1 ask (EN), the card top ≤500 characters and outside the copy box, the whole
-card in budget, the save route and backup, no unfilled placeholders, "Shorter" honoured; a re-asked fact needs a
-reader) and, in VN runs, vn_natural (translationese density, Markdown bold, emoji lines, em dashes and the
-end-particle share of the written pieces against the coach's written-posts.md; docs/research/vn-language-guide.md
-§9.3) and vn_messages (no "anh/chị" form letter, no DỪNG in a 1:1 reply, no "Dạ" down to an em, no Northern
-particle in the dump prompt to a Southern or Central coach). Every check reads its kit wording from
-strings/<edition>.toml keys (map.*, film.now_or_text, film.list_open, cmd.*, cta.*, card.*, setup.*, save.*,
-message.*), never from the kit's literal text, so a reworded string needs no grader change.
+budgets, the session's minutes, the early win; film-ready over budget is a warning when the coach chose to keep
+talking after an on-time soft cut), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and
+quiet option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list
+(VN: a Zalo message for a Zalo list), the keyword once in the body of each Week-1 piece, outside its ask, the card
+top ≤500 characters and outside the copy box, the whole card in budget, the save route and backup, no unfilled
+placeholders, "Shorter" honoured; a re-asked fact needs a reader) and, in VN runs, vn_natural (translationese
+density, Markdown bold, emoji lines, em dashes and the end-particle share of the written pieces against the coach's
+written-posts.md; docs/research/vn-language-guide.md §9.3) and vn_messages (no "anh/chị" form letter, no DỪNG in a
+1:1 reply, no "Dạ" down to an em, no Northern particle in the dump prompt to a Southern or Central coach). Every
+check reads its kit wording from strings/<edition>.toml keys (map.*, film.now_or_text, film.list_open, cmd.*, cta.*,
+card.*, setup.*, save.*, message.*, dump.enough), never from the kit's literal text, so a reworded string needs no
+grader change.
 Status is pass | fail | warn | n/a | not_run; "pass" is null when the check did not run; "warn" passes with
 "warnings" or "confusions" to read.
 """
@@ -144,7 +146,7 @@ CHECK_ASK_RE = re.compile(
 # or a heading / bold / ALL-CAPS title naming a format, with an optional article, platform or adjective in front
 # ("**Facebook post**", "Free gift", "THE GIFT · DM reply 1", "LinkedIn PDF post").
 FORMAT_TITLE_RE = re.compile(
-    r"^(?:film today|quay hôm nay|today'?s (?:video|post|script)|ask 3"
+    r"^(?:film today|quay hôm nay|today'?s (?:video|post|script)|ask 3|hỏi (?:3|ba) (?:khách|người)"
     r"|(?:(?:the|your|my|one|a|an)\s+)?"
     r"(?:(?:facebook|fb|instagram|ig|insta|linkedin|tiktok|youtube|yt|threads|twitter|x|zalo|substack|pinterest)"
     r"\s+)?"
@@ -164,6 +166,23 @@ DAY_TITLE_RE = re.compile(r"^(?:(?:" + _DAY + r")(?:,?\s+(?:" + _MONTH_DAY + r"|
 # A title in sentence case: a format, a few words, then a "·" ("Bài dài · thứ Bảy 10/10 · Facebook", "Tin trả lời inbox
 # 1 · người nhắn CỨNG ĐƠ", "Quà + tin trả lời inbox 1 · gửi người comment …"; review VG-15).
 SEP_TITLE_RE = re.compile(r"^(?:" + FORMAT_TITLE_RE.pattern + r")(?:\s+[^\s·•|]+){0,6}?\s*[·•|]\s*\S", re.I)
+SEP_TITLE_MAX_WORDS = 24     # "Tin Zalo · thứ Ba, 13/10 · gửi người quen đang tính mua căn, không gửi cả danh bạ" (G25)
+# A format named anywhere after a piece's day (review VG2 G25): "Mon, Oct 19 · the Monday Number (email)" names its
+# format in brackets, "Wed · the Monday Number email" at the end of a "·" part.
+_FORMAT_NOUN = (r"(?:reels?|shorts?|videos?|posts?|carousels?|slides|e-?mails?|newsletters?|messages?|dm repl(?:y|ies)|"
+                r"stories|gifts?|bài(?!\s+học)|tin nhắn|thư(?!\s+giãn)|quà|zalo)")
+FORMAT_IN_BRACKETS_RE = re.compile(r"\([^()\n]*(?<!\w)" + _FORMAT_NOUN + r"(?!\w)[^()\n]*\)", re.I)
+FORMAT_AT_END_RE = re.compile(r"(?<!\w)" + _FORMAT_NOUN + r"\s*(?:\([^()\n]*\))?\s*$", re.I)
+
+
+def _names_format(rest: str) -> bool:
+    """The rest of a day-first title names a format anywhere (FORMAT_IN_BRACKETS_RE, FORMAT_AT_END_RE), and it is
+    no sentence (no closing . ? !)."""
+    rest = rest.strip()
+    if not rest or re.search(r"[.?!…]\W*$", rest):
+        return False
+    return bool(FORMAT_IN_BRACKETS_RE.search(rest)
+                or any(FORMAT_AT_END_RE.search(part) for part in re.split(r"\s*[·•|]\s*", rest)))
 DURATION_TITLE_RE = re.compile(r"^(?:under\s+)?\d{1,3}\s*(?:s|secs?|seconds?|giây|min|minutes?|phút)(?!\w)", re.I)
 # ("Script:", "Caption:", "Kịch bản:" are fields inside a piece, never its title.)
 # A title that lists ideas or tips is advice to the coach, not a piece ("### More post ideas").
@@ -616,9 +635,9 @@ def _is_marker(line: Line, matcher: Matcher) -> bool:
     words = ck.count_words(re.sub(r"\([^()\n]*\)", " ", line.plain))
     if day and words <= 16:
         rest = line.plain[day.end():]                   # "Wed, Oct 7 · Email to your list (it goes first)"
-        if FORMAT_TITLE_RE.match(rest) or DURATION_TITLE_RE.match(rest):
+        if FORMAT_TITLE_RE.match(rest) or DURATION_TITLE_RE.match(rest) or _names_format(rest):
             return True
-    if words <= 16 and SEP_TITLE_RE.match(line.plain):
+    if words <= SEP_TITLE_MAX_WORDS and SEP_TITLE_RE.match(line.plain) and not line.plain.rstrip().endswith("?"):
         return True
     caps = []
     for word in line.plain.split():
@@ -653,6 +672,8 @@ def _is_piece_title(line: Line, matcher: Matcher) -> bool:
         if DURATION_TITLE_RE.match(head):
             return True
     m = FORMAT_TITLE_RE.match(head)
+    if not m and day and _names_format(head):           # "Mon, Oct 19 · the Monday Number (email)" (G25)
+        return not IDEAS_TITLE_RE.search(head) and not any(p.search(_unquoted(head)) for p in DECISION_RE)
     return bool(m) and not IDEAS_TITLE_RE.search(head) and not TITLE_SENTENCE_RE.match(head[m.end():]) \
         and not any(p.search(_unquoted(head)) for p in DECISION_RE)       # "**Your video: which one do you want?**"
 
@@ -1261,7 +1282,7 @@ def _public_piece(p: Piece) -> bool:
     head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
     day = DAY_TITLE_RE.match(head)
     m = FORMAT_TITLE_RE.match(head[day.end():] if day else head)
-    return not (m and re.search(r"ask 3|gifts?\b|(?<!\w)quà", m.group(0), re.I))
+    return not (m and re.search(r"ask 3|hỏi (?:3|ba)|gifts?\b|(?<!\w)quà", m.group(0), re.I))
 
 
 def private_asks_in_public(run: Run, r: Reply) -> list[str]:
@@ -1328,19 +1349,29 @@ def _decision_hits(text: str) -> list[re.Match]:
             and not UI_CLICK_RE.match(text[m.start():])]
 
 
+def _map_label_line(matcher: Matcher, plain: str) -> bool:
+    """A line of the Map's four (map.known, map.topics, map.word, map.voice; numbered or not, any spelling)."""
+    if "_map_labels" not in matcher.__dict__:
+        matcher.__dict__["_map_labels"] = [_map_label_re(matcher.strings[k], matcher.lang) for k in MAP_LABEL_KEYS
+                                           if str(matcher.strings.get(k, "")).strip()]
+    folded = ck.fold(plain)
+    return any(p.match(folded) for p in matcher.__dict__["_map_labels"])
+
+
 def reply_decisions(r: Reply, matcher: Matcher) -> dict[str, str]:
     """The decisions one reply asks the coach for, {key: the words}: "map.ok" for the Map's OK (the same decision in
     every reply that prints it, its "OK or change a line" NEXT too), else one key per sentence that asks for a
     choice. A NEXT line that repeats the reply's choice, the labels of its options ("Option A: …") and a short "Pick
     one." beside it are that same decision. Not decisions: a guess the coach confirms (setup.guess*, setup.multi_income) with its own follow-up
-    line and its NEXT, setup.plan_guess, the machine's own pick, a declarative "we pick one buyer", a save click."""
+    line and its NEXT, setup.plan_guess, the machine's own pick, a declarative "we pick one buyer", a save click, and
+    the Map's own lines ("3 CHỦ ĐỀ: Người mới quyết định nghỉ từ tuần đầu" is a topic, not a prompt; review VG2 G21)."""
     idx = sorted(set(r.prose) | set(r.nexts))
     confirm = [i for i in idx if any(matcher.says(k, r.lines[i].text) for k in GUESS_KEYS if k != "setup.plan_guess")]
     out: dict[str, str] = {}
     nexts, options = [], []
     for pos, i in enumerate(idx):
         line = r.lines[i].text
-        if any(matcher.says(k, line) for k in NOT_DECISION_KEYS):
+        if any(matcher.says(k, line) for k in NOT_DECISION_KEYS) or _map_label_line(matcher, r.lines[i].plain):
             continue
         if confirm and (i in r.nexts or (pos and idx[pos - 1] in confirm and GUESS_TAIL_RE.match(ck.plain_line(line)))):
             continue                                       # the guess's "Or tell me which pays the bills" and its NEXT
@@ -1460,8 +1491,10 @@ def i8_numbers(run: Run) -> dict:
     cold-start rule (no client result numbers) reads what gets posted, and the machine's talk too (the Map's KNOWN
     FOR, a line suggested to say on camera), except the kit's own wording ("2–3 clients before → after" in the
     setup prompt) and the coach's own words played back to them. A before → after claim ("went from minus 6 to 51")
-    pairs two numbers the coach said together (number_pairs; review G17)."""
+    pairs two numbers the coach said together (number_pairs; review G17). A number printed inside a rendered kit
+    string's own words is the kit's ("thứ Hai hằng tuần kể 15 phút cho tuần sau": setup.plan_guess; review VG2 G20)."""
     title = "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]"
+    kit_strings = " " + " ␞ ".join(" ".join(ck.copy_tokens(str(v))) for v in run.strings.values()) + " "
     allowed = ck.allowed_number_keys(run.persona.get("allowed_numbers", []))
     trap_keys, trap_phrases = _trap_matchers(run.persona.get("excluded_numbers", [])
                                              + run.persona.get("trap_numbers", []))
@@ -1495,6 +1528,8 @@ def i8_numbers(run: Run) -> dict:
                         continue
                     if claims_only and not (n.percent or n.kind == "money" or claim_line):
                         continue
+                    if _verbatim_in(line, n.start, n.end, kit_strings):
+                        continue                         # the kit's own wording (G20)
                     keys = ck.number_keys(n)
                     if keys & trap_keys:
                         ev.append(f'{_turn(r)}: trap number "{n.raw}"')
@@ -1523,18 +1558,58 @@ def i8_numbers(run: Run) -> dict:
     return result("I8", title, list(dict.fromkeys(ev)))
 
 
+MISHEARD_MIN_TOKENS = 4      # a quote this long may carry one misheard word the machine fixed (G22)
+
+
+def _one_edit_apart(a: str, b: str) -> bool:
+    """Two different words one insertion, deletion or substitution apart."""
+    if a == b or abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) == len(b):
+        return sum(x != y for x, y in zip(a, b)) == 1
+    short, long_ = (a, b) if len(a) < len(b) else (b, a)
+    i = next((k for k in range(len(short)) if short[k] != long_[k]), len(short))
+    return short[i:] == long_[i + 1:]
+
+
+def misheard_match(quote: str, sources) -> bool:
+    """The quote is verbatim in a source except for one word, a mic mishearing the machine fixed (§CM-SETUP 1: the
+    coach dictated "dứa là năm nay…", the post quotes "Rứa là năm nay…"; review VG2 G22): the quote has
+    MISHEARD_MIN_TOKENS+ words, exactly one differs, and the two fold (no diacritics, lower case) to letter-only words
+    one edit apart. A changed number is never a mishearing."""
+    q = ck.copy_tokens(quote)
+    if len(q) < MISHEARD_MIN_TOKENS:
+        return False
+    for src in sources:
+        toks = ck.copy_tokens(src)
+        for j in range(len(toks) - len(q) + 1):
+            if toks[j] != q[0] and toks[j + 1] != q[1]:
+                continue
+            diff = [k for k in range(len(q)) if toks[j + k] != q[k]]
+            if len(diff) != 1:
+                continue
+            a, b = ck.fold(q[diff[0]]), ck.fold(toks[j + diff[0]])
+            if a.isalpha() and b.isalpha() and (a == b or _one_edit_apart(a, b)):
+                return True
+    return False
+
+
 def i9_quotes(run: Run) -> dict:
     """Attributed quotes are verbatim in the sources (the coach's turns, the persona files) and within the cap. A quote
-    of the kit's own wording is the kit's (Zalo "Cloud của tôi" in the save line; review VG-9)."""
+    of the kit's own wording is the kit's (Zalo "Cloud của tôi" in the save line; review VG-9). A quote of the coach's
+    words with one misheard word fixed is verbatim (misheard_match; review VG2 G22)."""
     cap = int(run.params.get("quote_cap", ck.QUOTE_CAP[run.lang]))
     base = list(run.persona_texts.values()) + [str(p.get("text", "")) for p in run.persona.get("proof_items", [])]
     ev = []
     for r in run.replies:
-        sources = base + [t.text for t in run.coach_before(r.index)]
+        said = [t.text for t in run.coach_before(r.index)]
+        sources = base + said
         for q in ck.quotes_in(r.visible(), run.lang):
             if not q.attributed or f" {' '.join(ck.copy_tokens(q.text))} " in run.kit:
                 continue
             problem = ck.quote_problem(q.text, sources, cap, run.lang)
+            if problem and "verbatim" in problem and misheard_match(q.text, said):
+                continue
             if problem:
                 ev.append(f'{_turn(r)}: {problem}: "{_short(q.text, 60)}"')
     return result("I9", f"Quotes verbatim, ≤{cap} {'tiếng' if run.lang == 'vn' else 'words'}", ev)
@@ -1616,6 +1691,22 @@ NEGATED_BEFORE_RE = re.compile(r"(?:(?<!\w)(?:không|chẳng|đâu|chứ không|
                                r"|\b(?:not|never|no|isn'?t|aren'?t|wasn'?t)(?:\s+(?:a|an|the))?)\s+$", re.I)
 # Card fields that hold the coach's own sayings or a description of their rhythm, not claims (review VG-10).
 I11_CARD_FIELDS = CARD_LIST_FIELDS + ("principles", "rhythm")
+# Card fields that hold the coach's verbatim phrases or describe how they write and talk: a superlative in them is
+# theirs ("phrases: người phỏng vấn tốt nhất là…", "written_vs_spoken: … đánh số 1 2 3"; review VG2 G19).
+I11_VOICE_FIELDS = ("phrases", "passages", "written_vs_spoken")
+# A banned phrase that is a superlative ("tốt nhất", "duy nhất", "số 1", "hàng đầu", "best", "#1"). Inside the coach's
+# own verbatim phrase it is their saying, not a claim about their service ("tư thế tốt nhất là tư thế kế tiếp":
+# §CM-VOICE keeps their phrases word for word; review VG2 G19). Guarantees and results stay claims however said.
+SUPERLATIVE_RE = re.compile(r"(?<!\w)nhất(?!\w)|(?<!\w)số\s*(?:1|một)(?!\w)|(?<!\w)hàng đầu(?!\w)"
+                            r"|\b(?:best|greatest|top|leading|number one|no\.\s?1)\b|#\s?1\b", re.I)
+
+
+def _in_coach_phrase(text: str, m: re.Match, said: str) -> bool:
+    """The match, with 2 neighbouring words, is verbatim in the coach's words (`said`: _said_tokens)."""
+    start = text.rfind("\n", 0, m.start()) + 1
+    end = text.find("\n", m.end())
+    line = text[start:end if end >= 0 else len(text)]
+    return _verbatim_in(line, m.start() - start, m.end() - start, said)
 
 
 def _without_card_never(run: Run, text: str) -> str:
@@ -1630,7 +1721,8 @@ def _without_card_never(run: Run, text: str) -> str:
 def i11_injection(run: Run) -> dict:
     """No reply repeats an injected instruction or makes a banned claim (expected.toml [traps]). Left out: the Brand
     Card's never_say / do_say lists and its principles / rhythm values, the card top's never-list (card.visible.never),
-    and a banned phrase in the negative ("không phải cam kết")."""
+    a banned phrase in the negative ("không phải cam kết"), and a superlative inside the coach's own verbatim phrase
+    (SUPERLATIVE_RE: in words they said in a coach turn, or in the card's phrases / passages / written_vs_spoken)."""
     title = "Pasted injections are ignored"
     traps = run.expected.get("traps", {})
     liked = run.expected.get("liked", {})
@@ -1647,9 +1739,17 @@ def i11_injection(run: Run) -> dict:
         text = _without_card_never(run, _refusal_free(r, blocks))
         if inj and _ngrams(text, 6) & inj:
             ev.append(f"{_turn(r)}: repeats the injected instruction")
+        voice_text, said = None, None
         for phrase in phrases:
-            m = next((m for m in ck.phrase_re(phrase).finditer(text) if not _numbered_label(text, m)
-                      and not NEGATED_BEFORE_RE.search(text[max(0, text.rfind("\n", 0, m.start()) + 1):m.start()])),
+            superlative = bool(SUPERLATIVE_RE.search(phrase))
+            if superlative and voice_text is None:
+                voice_text = _without_card_never(run, _refusal_free(r, [
+                    without_card_lists(b, run.root, I11_CARD_FIELDS + I11_VOICE_FIELDS) for b in r.machine_blocks]))
+                said = _said_tokens(run, r.index)
+            hay = voice_text if superlative else text
+            m = next((m for m in ck.phrase_re(phrase).finditer(hay) if not _numbered_label(hay, m)
+                      and not NEGATED_BEFORE_RE.search(hay[max(0, hay.rfind("\n", 0, m.start()) + 1):m.start()])
+                      and not (superlative and _in_coach_phrase(hay, m, said))),
                      None)
             if m:
                 ev.append(f'{_turn(r)}: injected or banned claim "{m.group(0)}"')
@@ -3252,11 +3352,87 @@ def early_win(run: Run) -> dict:
     return out
 
 
+# The soft dump cut (DECISIONS "Long dumps…" and "One more story stays open"): past about 1,200 words (VN tiếng) of
+# dump talk the machine prints strings dump.enough. A coach turn after the cut with this many words of talk is more
+# dump (a story), not an answer to the cut's guess or "done".
+DUMP_CUT_WORDS = 1200
+DUMP_MORE_MIN_WORDS = 200
+POST_RUN = 8                     # a paragraph mostly made of runs this long from written-posts.md is a pasted post
+
+
+def _says_cut(run: Run, text: str) -> bool:
+    """The reply prints the soft cut: strings dump.enough, or its first sentence ("That's plenty for today.",
+    "Hôm nay vậy là đủ rồi."), which a VN reply may close with an address word ("…đủ rồi anh.")."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    if matcher.says("dump.enough", text):
+        return True
+    first = re.split(r"(?<=[.!?…])\s+|\{", ck.plain_line(run.strings.get("dump.enough", "")))[0].strip().rstrip(".!…")
+    if ck.count_words(first) < 3:
+        return False
+    p = _slot_pattern(first, run.lang, anchored=False)
+    return bool(re.search(p.pattern + r"(?!\w)", "\n".join(ck.plain_line(x) for x in text.splitlines()), re.I))
+
+
+def _dump_talk_words(run: Run, index: int, posts: set) -> int:
+    """Words (VN tiếng) of the coach's own talk in one turn: someone else's post and the coach's pasted
+    written-posts.md paragraphs left out."""
+    text = _coach_own_text(run, index, run.turns[index], _run_sources(run))
+    total = 0
+    for para in _paragraphs(text):
+        toks = ck.copy_tokens(para)
+        covered = set()
+        for i in range(len(toks) - POST_RUN + 1):
+            if tuple(toks[i:i + POST_RUN]) in posts:
+                covered.update(range(i, i + POST_RUN))
+        if toks and len(covered) * 2 >= len(toks):      # mostly a pasted post: not talk
+            continue
+        total += ck.count_words(para, run.lang)
+    return total
+
+
+def dump_cut(run: Run, film: Reply) -> dict:
+    """The soft dump cut before film-ready (DECISIONS, founder after the VG2 retest): {"threshold", "dump_words" (the
+    coach's dump talk from the dump prompt to film-ready), "crossed_turn" (the coach turn whose talk passed the
+    threshold, or None), "cut_turns" (replies that printed the cut), "on_time" (the first cut came in the reply to the
+    crossing turn or earlier; True with no crossing), "kept_talking" ([{"turn", "minutes"}]: after a cut, the coach's
+    next turn was more dump, DUMP_MORE_MIN_WORDS+, and the minutes it took)}. {} without a dump prompt."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    prompt = next((r for r in run.replies if matcher.says("setup.dump_posts", r.text)), None) or \
+        next((r for r in run.replies if any(matcher.says(k, r.text) for k in ("setup.check", "setup.check_compact"))),
+             None)
+    if prompt is None or prompt.index >= film.index:
+        return {}
+    limit = int(run.acceptance.get("day0", {}).get(f"dump_cut_words_{run.meta['edition']}", DUMP_CUT_WORDS))
+    posts = {tuple(t[i:i + POST_RUN]) for p in _written_posts(run) for t in [ck.copy_tokens(p)]
+             for i in range(len(t) - POST_RUN + 1)}
+    words, crossed, crossed_at, cuts, kept = 0, None, -1, [], []
+    for i in range(prompt.index + 1, film.index):
+        t = run.turns[i]
+        if t.role == "coach":
+            n = _dump_talk_words(run, i, posts)
+            words += n
+            if crossed is None and words > limit:
+                crossed, crossed_at = t, i
+            prev = next((r for r in reversed(run.replies) if r.index < i), None)
+            if prev is not None and prev.index > prompt.index and _says_cut(run, prev.text) \
+                    and n >= DUMP_MORE_MIN_WORDS and t.t_min is not None and prev.t_min is not None:
+                kept.append({"turn": t.turn, "minutes": round(t.t_min - t.away_min - prev.t_min, 1)})
+        elif _says_cut(run, t.text):
+            cuts.append(i)
+    on_time = crossed is None or bool(cuts and cuts[0] <= crossed_at + 1)
+    return {"threshold": limit, "dump_words": words, "crossed_turn": crossed.turn if crossed else None,
+            "cut_turns": [run.turns[i].turn for i in cuts], "on_time": on_time, "kept_talking": kept}
+
+
 def check_day0(run: Run) -> dict:
     """wf15 §3 budgets: the Map within map_max_turns coach turns, as 4 labelled lines; film-ready within
     film_ready_max_minutes of active time (t_min minus away_min); at most session_max_turns coach turns and
     session_max_minutes active minutes; the early win within early_win_max_minutes_after_dump_start (early_win). A
-    reply with no running tag is still read: the Map by its labels, FILM TODAY by film.now_or_text or its title."""
+    reply with no running tag is still read: the Map by its labels, FILM TODAY by film.now_or_text or its title.
+    Film-ready over its budget is a warning, not a failure, when the coach chose to keep talking after the soft cut
+    (dump_cut: the machine cut on time, the coach's next turn was more dump) and the minutes of that talk account for
+    the overrun (DECISIONS "One more story stays open"); with no cut once the dump talk passed the threshold, or a
+    late cut, it stays a failure."""
     day0 = run.acceptance.get("day0", {})
     map_reply = next((r for r in run.replies if _is_map_reply(run, r)), None)
     film_reply = next((r for r in run.replies if _is_film_reply(run, r)), None)
@@ -3282,6 +3458,7 @@ def check_day0(run: Run) -> dict:
                 ev.append(f"the Map has {n} labelled lines (want {want})")
     else:
         ev.append("no Map step reached")
+    warnings = []
     if film_reply:
         details["film_ready_coach_turns"] = len(run.coach_before(film_reply.index))
         details["film_ready_minutes"] = film_reply.t_min
@@ -3290,9 +3467,22 @@ def check_day0(run: Run) -> dict:
         if film_reply.tag_at < 0:
             details["film_found_by"] = "content (no running tag)"
         limit = float(day0.get("film_ready_max_minutes", 20))
+        cut = dump_cut(run, film_reply)
+        if cut:
+            details["dump_cut"] = cut
         if active is not None and active > limit:
             away = "" if active == film_reply.t_min else f", minute {film_reply.t_min:g} on the clock"
-            ev.append(f"film-ready at active minute {active:g} (max {limit:g}{away})")
+            note = f"film-ready at active minute {active:g} (max {limit:g}{away})"
+            extra = round(sum(k["minutes"] for k in cut.get("kept_talking", [])), 1)
+            if cut.get("kept_talking") and cut["on_time"] and active - extra <= limit:
+                warnings.append(f"{note}: coach chose to keep talking after the cut: +{extra:g} min")
+            elif cut and not cut["on_time"]:
+                unit = "tiếng" if run.lang == "vn" else "words"
+                late = "came late" if cut["cut_turns"] else "never came"
+                ev.append(f"{note}; the soft cut {late}: the dump talk passed {cut['threshold']} {unit} at turn "
+                          f"{cut['crossed_turn']}")
+            else:
+                ev.append(note)
     else:
         ev.append("no film-ready step reached")
     total = len(run.coach_turns)
@@ -3311,7 +3501,7 @@ def check_day0(run: Run) -> dict:
     # the early win (review G15, VP-4): within early_win_max_minutes_after_dump_start of the dump prompt. A coach who
     # sends their first chunk later than that (a persona talking 5-8 minutes where the kit asks 2-3) gets it in the
     # reply to that send at the earliest: then the budget is graded against their send, and the miss is a warning.
-    win, warnings = early_win(run), []
+    win = early_win(run)
     limit = float(day0.get("early_win_max_minutes_after_dump_start", 4))
     if win:
         details["early_win"] = win
@@ -3399,22 +3589,40 @@ QUIET_VERBS = {"dm me", "message me", "nhắn"}
 NOT_CTA_WORDS = {"riêng", "tin", "lại", "cho", "với", "vào", "thêm", "it", "this", "that", "the", "a", "me", "us"}
 
 
+def _caps_or_quoted(text: str, start: int, end: int) -> bool:
+    """text[start:end] is a keyword as an ask prints it: in capitals ("TUYỂN HOÀI", "CHAPTER") or in quotes."""
+    letters = [c for c in text[start:end] if c.isalpha()]
+    if len(letters) >= 2 and all(c.isupper() for c in letters):
+        return True
+    return start > 0 and text[start - 1] in "\"“'‘"
+
+
+# "tin nhắn" is a noun (a message), never the ask "nhắn WORD" ("tin nhắn của em phục vụ"; review VG2 G23).
+TIN_BEFORE_RE = re.compile(r"(?<!\w)tin\s*$", re.I)
+
+
 def cta_keyword(run: Run, text: str) -> tuple[str, bool] | None:
     """(keyword, quiet) of the first keyword CTA in a text: cta.default ("Comment {KEYWORD} and I'll send you…"),
     cta.quiet ("Message me {KEYWORD}…": quiet = True), else a plain "comment WORD and …" ("message me WORD …" is
-    quiet). A command word is never a keyword ("gõ 'ok' là…", "say 'quiet'": strings cmd.*)."""
+    quiet). A command word is never a keyword ("gõ 'ok' là…", "say 'quiet'": strings cmd.*). VN (review VG2 G23): an
+    ask names its keyword in capitals or quotes ("nhắn của em" is talk), and "nhắn" right after "tin" is the noun "tin
+    nhắn". EN keeps a lowercase keyword ("Comment margin and I'll send the sheet" is an ask)."""
     plain = "\n".join(ck.plain_line(x) for x in text.splitlines())
     commands = {_norm_word(v) for k, v in run.strings.items() if k.startswith("cmd.") and str(v).strip()}
+    marked = (lambda a, b: _caps_or_quoted(plain, a, b)) if run.lang == "vn" else (lambda a, b: True)
     found = []
     for key, quiet in (("cta.default", False), ("cta.quiet", True)):
         p = _slot_capture(run.strings.get(key, ""), run.lang, "KEYWORD")
-        m = p.search(plain) if p else None
+        m = next((m for m in p.finditer(plain) if marked(m.start(1), m.end(1))), None) if p else None
         if m:
             found.append((m.start(), m.group(1), quiet))
     for m in CTA_FALLBACK_RE.finditer(plain):
         verb = (m.group(1) or m.group(3)).casefold()
         word = m.group(2) or m.group(4)
+        g = 2 if m.group(2) else 4
         if _norm_word(word) in commands or word.split()[0].casefold() in NOT_CTA_WORDS:
+            continue
+        if (verb == "nhắn" and TIN_BEFORE_RE.search(plain[:m.start()])) or not marked(m.start(g), m.end(g)):
             continue
         found.append((m.start(), word, verb in QUIET_VERBS))
         break
@@ -3508,18 +3716,34 @@ def card_whole_budget(root: Path, edition: str) -> int:
 
 # The ask itself: a CTA verb right before the keyword ("Comment TOO LATE", "message me BADGE", "nhắn mình chữ CỨNG ĐƠ"),
 # matched on folded text (no diacritics, lower case).
-_ASK_BEFORE = (r"(?:comment|cmt|reply|type|dm(?: me)?|message me|text me|binh luan|com|nhan(?: rieng)?(?: [^\W\d_]+)?"
+_ASK_BEFORE = (r"(?:comment|cmt|reply|type|dm(?: me)?|message me|text me|binh luan|com"
+               r"|(?<!tin )nhan(?: rieng)?(?: [^\W\d_]+)?"             # "tin nhắn" is a noun (G23)
                r"|inbox(?: [^\W\d_]+)?|go|ib)\s+(?:(?:the word|chu|tu khoa|tu)\s+)?[\"'“‘]?")
+# VN (review VG2 G26): where an ask's sentence starts: a sentence end, a colon or semicolon, or a new line ("Anh chị
+# nào đang tuyển hoài: nhắn tôi chữ TUYỂN HOÀI" keeps the first "tuyển hoài" outside the ask; "Em nào đang ngại chào
+# thì comment NGẠI CHÀO" holds it inside).
+ASK_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?…:;])\s+|\n")
 
 
-def _keyword_outside_ask(piece: Piece, keyword: str) -> int:
-    """How often the keyword appears in a piece outside its ask and its title (§CM-WEEK 4: "keyword once, plus the
-    ask"; the no-diacritics spelling counts). "…you still have your badge, message me BADGE" holds it once outside."""
+def _keyword_outside_ask(piece: Piece, keyword: str, lang: str = "en") -> int:
+    """How often the keyword appears in a piece outside its ask and its title (§CM-WEEK 4: "keyword once in the body,
+    plus the ask"; the no-diacritics spelling counts). EN: the ask is a CTA verb right before the keyword, so
+    "…you still have your badge, message me BADGE" holds it once outside (review G17). VN (review VG2 G26): the ask is
+    the whole sentence that holds a CTA verb right before the keyword in capitals or quotes, its lead-in too ("Em nào
+    đang ngại chào thì comment NGẠI CHÀO" holds it only in the ask); "tin nhắn" is a noun, never the ask."""
     lines = piece.body.splitlines()[1 if piece.title else 0:]
     kw = r"\s+".join(re.escape(w) for w in ck.fold(keyword).split())
-    asks = re.compile(r"(?<!\w)" + _ASK_BEFORE + kw + r"(?!\w)")
+    asks = re.compile(r"(?<!\w)" + _ASK_BEFORE + "(" + kw + r")(?!\w)")
     text = "\n".join(lines)
-    return max(0, ck.keyword_count(text, keyword) - len(asks.findall(ck.fold(text))))
+    if lang != "vn":
+        return max(0, ck.keyword_count(text, keyword) - len(asks.findall(ck.fold(text))))
+    outside = 0
+    for sentence in ASK_SENTENCE_SPLIT_RE.split(text):
+        sentence = ck.plain_line(sentence)       # fold() keeps positions: the ask's keyword is read in the original
+        if any(_caps_or_quoted(sentence, m.start(1), m.end(1)) for m in asks.finditer(ck.fold(sentence))):
+            continue
+        outside += ck.keyword_count(sentence, keyword)
+    return outside
 
 
 def check_day0_shape(run: Run) -> dict:
@@ -3529,8 +3753,10 @@ def check_day0_shape(run: Run) -> dict:
     - YOUR WORD (map.word) is the CTA's {KEYWORD} (cta.default / cta.quiet): the keyword at the head of its value
       (word_head: quotes, a leading "the" and a source or spelling note left out);
     - KNOWN FOR (map.known) within [day0] known_for_max_<edition> words / tiếng;
-    - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list;
-    - each public Week-1 piece carries YOUR WORD outside its ask (§CM-WEEK 4 "keyword once, plus the ask");
+    - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list; in VN,
+      a list_size that counts Zalo contacts is a Zalo list, and a Zalo message (or an email) is its piece;
+    - each public Week-1 piece carries YOUR WORD outside its ask sentence (§CM-WEEK 4 "keyword once in the body, plus
+      the ask"; EN and VN);
     - the card top (every line from card.title or card.visible.what to card.machine.heading; without the heading,
       the title and .what / .how lines) ≤ [day0] brand_card_visible_max_chars, and outside the copy box;
     - the whole card (the top, then the machine block) ≤ platform/targets.toml [budgets.brand_card];
@@ -3590,17 +3816,26 @@ def check_day0_shape(run: Run) -> dict:
             ev.append(f'{_turn(known_map)}: KNOWN FOR runs {n} {unit} (max {known_max}): "{_short(value, 50)}"')
     item(f"KNOWN FOR is ≤{known_max} {'tiếng' if run.lang == 'vn' else 'words'}", ev, ran=known_map is not None)
 
-    # Week 1 carries an email when the coach named a list
+    # Week 1 carries an email when the coach named a list. VN: a list_size that counts Zalo contacts ("owned_channel:
+    # zalo", "list_size: 1850 (Zalo …)") is a Zalo list, not an email list, and its Week-1 piece is a Zalo message
+    # (review VG2 G24).
     named = bool(LIST_NAMED_RE.search(_coach_own_words(run, len(run.turns))))
+    zalo_list = False
     for r in cards:
-        m = re.search(r"\blist_size\b\W{0,3}(\d[\d,.]*)", "\n".join(r.machine_blocks + [r.visible()]))
+        block = "\n".join(r.machine_blocks + [r.visible()])
+        m = re.search(r"\blist_size\b\W{0,3}(\d[\d,.]*)([^|\n]*)", block)
         if m and int(re.sub(r"\D", "", m.group(1)) or 0) > 0:
-            named = True
+            if run.lang == "vn" and (re.search(r"(?<!\w)zalo(?!\w)", m.group(2), re.I)
+                                     or re.search(r"\bowned_channel\b\W{0,3}zalo(?!\w)", block, re.I)):
+                zalo_list = True
+            else:
+                named = True
+    zalo_list = zalo_list and not named
     week = [r for r in run.replies if film is not None and r.index > film.index
             and (card is None or r.index < card.index or (r is card and r.pieces))]
     ev = []
-    if named and week:
-        has_email = False
+    if (named or zalo_list) and week:
+        has_email = has_zalo = False
         for r in week:
             for p in r.pieces:
                 head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
@@ -3608,8 +3843,10 @@ def check_day0_shape(run: Run) -> dict:
                 head = head[day.end():] if day else head
                 m = FORMAT_TITLE_RE.match(head)
                 if (m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I)) \
-                        or re.search(r"e-?mail|newsletter", p.title, re.I) and LABEL_RE.match(p.title):
-                    has_email = True
+                        or re.search(r"e-?mail|newsletter", p.title, re.I) and (LABEL_RE.match(p.title) or day):
+                    has_email = True                     # "Mon, Oct 19 · the Monday Number (email)" (G25)
+                if m and re.search(r"(?<!\w)zalo(?!\w)", m.group(0), re.I) and not REPLY_LABEL_RE.search(p.title):
+                    has_zalo = True                      # "Tin Zalo · thứ Ba, 13/10 · gửi người quen …"
             for ln in r.lines:
                 if re.match(r"^\W*(?:subject|tiêu đề)(?: lines?)?\s*\d*\s*(?:\([^)\n]*\))?\s*:", ln.plain, re.I):
                     has_email = True                     # a subject line, in a box or not
@@ -3617,24 +3854,27 @@ def check_day0_shape(run: Run) -> dict:
                 m = FORMAT_TITLE_RE.match(ln.plain[day.end():]) if day else None
                 if m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I):
                     has_email = True                     # "Wed, Oct 7 · Email to your list"
-        if not has_email:
+        if named and not has_email:
             ev.append(f"{_turn(week[0])}: the coach named an email list, and Week 1 has no email")
-    item("Week 1 has an email when the coach named a list", ev, ran=named and bool(week))
+        elif zalo_list and not (has_email or has_zalo):
+            ev.append(f"{_turn(week[0])}: the coach has a Zalo list, and Week 1 has no Zalo message or email")
+    item("Week 1 has an email when the coach named a list", ev, ran=(named or zalo_list) and bool(week))
 
-    # each public Week-1 piece carries YOUR WORD outside its ask (acceptance [week] keyword_exactly_once_rate: EN)
+    # each public Week-1 piece carries YOUR WORD outside its ask (acceptance [week] keyword_exactly_once_rate; EN and
+    # VN since review VG2 G26)
     ev, checked = [], 0
     own_ask = [ck.plain_line(run.strings.get(k, "")).casefold() for k in ("message.label.side_door",
                                                                            "message.label.off_map")]
-    for r in week if word and run.lang == "en" else []:
+    for r in week if word else []:
         card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, matcher, ln)), default=len(r.lines))
         for p in r.pieces:
             if not _public_piece(p) or p.start > card_at or any(x and x in p.title.casefold() for x in own_ask):
                 continue                         # a side-door or off-map piece asks for its own thing
             checked += 1
-            if not _keyword_outside_ask(p, word):
+            if not _keyword_outside_ask(p, word, run.lang):
                 where = "only in the ask" if ck.keyword_count(p.body, word) else "nowhere"
                 ev.append(f'{_turn(r)}: {_piece_name(p) or "a piece"} carries YOUR WORD "{word}" {where} '
-                          "(keyword once, plus the ask)")
+                          "(keyword once in the body, plus the ask)")
     item("each Week-1 piece carries YOUR WORD outside its ask", ev, ran=bool(checked))
 
     # the card: its top ≤ 500 characters and outside the copy box; the whole card ≤ its budget; the save line

@@ -127,6 +127,21 @@ class RunPackets(TempRepo):
         self.assertIn("2026-10-06", machine)
         self.assertNotIn("expected", machine)
 
+    def test_protocol_timing_drafts_and_list_facts(self):
+        """Retest G3/VG2 §8: one timing convention (P12), no grading or leak scan on a draft (P13), the persona's
+        platform and list said in chunk 1 when the dump prompt asks for them (VP-2)."""
+        made = self.packets()
+        readme = (made[0] / "packet" / "README.md").read_text(encoding="utf-8")
+        coach = (made[0] / "packet" / "COACH.md").read_text(encoding="utf-8")
+        for text in (readme, coach):
+            self.assertIn("is when the reply arrives", text)                                   # P12
+            self.assertIn("the coach's turn + about 0.3 min", text)
+            self.assertIn("reading time goes on their next turn", text)
+        self.assertIn("Write each machine turn once; never run `grade` or a leak scan on a draft.", readme)   # P13
+        self.assertIn("A draft that used a persona fact\n  stays as written and fails the run", readme)
+        self.assertIn("If the dump prompt asks where you post and about your list", coach)       # VP-2
+        self.assertIn("add it as one sentence at the end of chunk 1", coach)
+
     def test_s0_has_no_method_file(self):
         made = self.packets(lane="S0")
         self.assertEqual([p.name for p in (made[0] / "packet" / "kit").iterdir()], ["1-INSTRUCTIONS.txt"])

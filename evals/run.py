@@ -185,6 +185,8 @@ One simulator agent plays both sides, turn by turn, from the files in this folde
 - Keep the two apart: write each machine reply from the transcript so far and the kit only. `grade` scans
   every machine turn for persona wording the coach never said (the leak check): a leak makes the run invalid.
   Never write "no leaks" in notes.md without a passing leak check.
+- Write each machine turn once; never run `grade` or a leak scan on a draft. A draft that used a persona fact
+  stays as written and fails the run (P13).
 - Machine turns are frozen after the first grade: it keeps the transcript as `transcript.raw.jsonl`. After that,
   change only the leaked words of a machine turn, and log each change in `meta.json` under `"edits"`:
   `{{"turn": 7, "field": "openers_closers", "before": "…", "after": "…", "reason": "leak: …"}}`. Any other change
@@ -194,11 +196,13 @@ One simulator agent plays both sides, turn by turn, from the files in this folde
 
 1. `transcript.jsonl`: one JSON object per turn, in order:
    `{{"turn": 1, "role": "coach" | "machine", "text": "...", "t_min": 0.5}}`. A coach turn and the machine
-   reply to it share the same `turn` number. `t_min` is the modelled minute the turn ends (dictation, typing
-   and reading speed plus time away). Optional keys on a coach row: `"away_min": 40` for time away
-   before it (a site visit, a plan limit; it does not count as active time), `"quit": true` on the coach's
-   quit line (the run then ends on that coach turn), `"third_party": true` when the whole turn is someone
-   else's post. Turns alternate coach, machine; every coach turn but a quit gets a reply.
+   reply to it share the same `turn` number. `t_min` is the modelled minute the turn ends, on one convention
+   (P12): a machine turn's `t_min` is when the reply arrives, the coach's turn + about 0.3 min; the coach's
+   reading time goes on their next turn, with their dictation or typing. Optional keys on a coach row:
+   `"away_min": 40` for time away before it (a site visit, a plan limit; it does not count as active time),
+   `"quit": true` on the coach's quit line (the run then ends on that coach turn), `"third_party": true` when
+   the whole turn is someone else's post. Turns alternate coach, machine; every coach turn but a quit gets a
+   reply.
 2. `notes.md`: outcome; the step reached and the minute; coach turns; where the machine broke the kit or a
    rule; any persona fact the machine used before the coach said it (a leak), and what you did about it;
    whether this coach comes back tomorrow, and why.
@@ -234,9 +238,10 @@ answer keys for the graders) and never let them shape a turn.
 2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn each, when
    the machine asks for the dump. When the dump prompt invites posts you've written, paste the body of
    `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
-   or 2, the way this coach would. Then say you are done in your own words ("done", "ok that's it"). If the
-   machine says the dump is enough, or asks you to wrap up, say done there and skip the chunks not yet
-   dictated (the machine then asks only what it is missing).
+   or 2, the way this coach would. If the dump prompt asks where you post and about your list, and the
+   persona's answer is in a later chunk, add it as one sentence at the end of chunk 1 (VP-2). Then say you are
+   done in your own words ("done", "ok that's it"). If the machine says the dump is enough, or asks you to wrap
+   up, say done there and skip the chunks not yet dictated (the machine then asks only what it is missing).
 3. After the dump, answer only what the machine asks, one answer per question, from `## Answer bank`, in
    the persona's style. Say "skip" when the answer bank has nothing and the behaviour fits.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
@@ -248,8 +253,9 @@ answer keys for the graders) and never let them shape a turn.
 
 Time: model `t_min` from dictation (about 130 words a minute), typing (about 30 words a minute on a phone,
 40 on a laptop), reading (about 200 words a minute) and the persona's time away (`away_min`). A pasted post
-takes about half a minute. Plan limits: if this persona's plan ({plan} on {app}) would hit a message limit
-during the run, model it (`away_min` on the coach's next turn) and say so in notes.md.
+takes about half a minute. A machine turn's `t_min` is when the reply arrives (the coach's turn + about 0.3 min);
+the coach's reading time goes on their next turn (P12). Plan limits: if this persona's plan ({plan} on {app})
+would hit a message limit during the run, model it (`away_min` on the coach's next turn) and say so in notes.md.
 """
 
 COACH_CASE = """# Coach side: case {case_id} ({edition})

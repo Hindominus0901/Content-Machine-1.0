@@ -22,6 +22,11 @@ map_max_turns_vn = 7                      # VN adds the xưng hô turn
 map_max_minutes = 20
 map_lines = 4                             # KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE, then "OK, or change a line"
 film_ready_max_minutes = 20
+# The soft dump cut (DECISIONS "Long dumps…", "One more story stays open"): past this much dump talk (EN words,
+# VN tiếng; pasted posts left out) the machine prints dump.enough. Film-ready over its budget is a warning when the
+# machine cut on time and the coach chose to keep talking; with no cut, or a late one, it stays a failure.
+dump_cut_words_en = 1200
+dump_cut_words_vn = 1200
 film_ready_max_minutes_from_email = 30
 # No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
 session_max_minutes = 40
