@@ -3843,12 +3843,7 @@ QUIET_VERBS = {"dm me", "message me", "nhắn"}
 NOT_CTA_WORDS = {"riêng", "tin", "lại", "cho", "với", "vào", "thêm", "it", "this", "that", "the", "a", "me", "us"}
 
 
-def _caps_or_quoted(text: str, start: int, end: int) -> bool:
-    """text[start:end] is a keyword as an ask prints it: in capitals ("TUYỂN HOÀI", "CHAPTER") or in quotes."""
-    letters = [c for c in text[start:end] if c.isalpha()]
-    if len(letters) >= 2 and all(c.isupper() for c in letters):
-        return True
-    return start > 0 and text[start - 1] in "\"“'‘"
+_caps_or_quoted = ck.caps_or_quoted         # a keyword as an ask prints it: in capitals or in quotes
 
 
 # "tin nhắn" is a noun (a message), never the ask "nhắn WORD" ("tin nhắn của em phục vụ"; review VG2 G23).
@@ -3968,15 +3963,9 @@ def card_whole_budget(root: Path, edition: str) -> int:
     return int(value)
 
 
-# The ask itself: a CTA verb right before the keyword ("Comment TOO LATE", "message me BADGE", "nhắn mình chữ CỨNG ĐƠ"),
-# matched on folded text (no diacritics, lower case).
-_ASK_BEFORE = (r"(?:comment|cmt|reply|type|dm(?: me)?|message me|text me|binh luan|com"
-               r"|(?<!tin )nhan(?: rieng)?(?: [^\W\d_]+)?"             # "tin nhắn" is a noun (G23)
-               r"|inbox(?: [^\W\d_]+)?|go|ib)\s+(?:(?:the word|chu|tu khoa|tu)\s+)?[\"'“‘]?")
-# VN (review VG2 G26): where an ask's sentence starts: a sentence end, a colon or semicolon, or a new line ("Anh chị
-# nào đang tuyển hoài: nhắn tôi chữ TUYỂN HOÀI" keeps the first "tuyển hoài" outside the ask; "Em nào đang ngại chào
-# thì comment NGẠI CHÀO" holds it inside).
-ASK_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?…:;])\s+|\n")
+# The ask and where its sentence starts live in tools/cmcore/checks.py (shared with ship_lint, K9); review VG2 G23/G26.
+_ASK_BEFORE = ck.ASK_BEFORE
+ASK_SENTENCE_SPLIT_RE = ck.ASK_SENTENCE_SPLIT_RE
 
 
 def _keyword_outside_ask(piece: Piece, keyword: str, lang: str = "en") -> int:
@@ -3986,18 +3975,7 @@ def _keyword_outside_ask(piece: Piece, keyword: str, lang: str = "en") -> int:
     the whole sentence that holds a CTA verb right before the keyword in capitals or quotes, its lead-in too ("Em nào
     đang ngại chào thì comment NGẠI CHÀO" holds it only in the ask); "tin nhắn" is a noun, never the ask."""
     lines = piece.body.splitlines()[1 if piece.title else 0:]
-    kw = r"\s+".join(re.escape(w) for w in ck.fold(keyword).split())
-    asks = re.compile(r"(?<!\w)" + _ASK_BEFORE + "(" + kw + r")(?!\w)")
-    text = "\n".join(lines)
-    if lang != "vn":
-        return max(0, ck.keyword_count(text, keyword) - len(asks.findall(ck.fold(text))))
-    outside = 0
-    for sentence in ASK_SENTENCE_SPLIT_RE.split(text):
-        sentence = ck.plain_line(sentence)       # fold() keeps positions: the ask's keyword is read in the original
-        if any(_caps_or_quoted(sentence, m.start(1), m.end(1)) for m in asks.finditer(ck.fold(sentence))):
-            continue
-        outside += ck.keyword_count(sentence, keyword)
-    return outside
+    return ck.keyword_outside_ask("\n".join(lines), keyword, lang)
 
 
 # The label of FILM TODAY's caption: "Caption:", "Caption (post as text: first line + caption):", "Caption (đăng chữ

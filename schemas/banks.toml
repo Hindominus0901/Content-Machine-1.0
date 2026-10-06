@@ -226,8 +226,8 @@ fields = [
 
 [types.K.rules]
 max_chosen = 3
-per_piece = "every piece carries a chosen keyword exactly once"
-placements = ["hook", "on-screen text", "spoken payoff", "caption line 1", "pinned comment"]
+per_piece = "every piece carries a chosen keyword once in its words, plus the ask (the ask is not counted)"
+placements = ["hook", "on-screen text", "spoken payoff", "caption line 1", "long post or carousel opening"]
 rotate = "never the same placement twice in a row"
 spoken_max = { short = 1, long = 3 }
 

@@ -273,7 +273,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I8", "I14", "I15"]
 max_questions = 1
-notes = "plan.kit-week 4 since G1 K9: 'Từ khoá 1 lần trong bài + lời mời': the keyword once in the words plus the comment ask, so a box holds it at most twice (banks.toml [types.K.rules] and QA §0 lint 'keyword ×1' still say exactly once: flagged). UX §2: the caption sits in a copy box, so the count is checked inside that box. 'sửa … giùm anh' is a rewrite request, not a check of his own draft ('đăng được chưa?'), so the rewritten caption is a Ready piece and prints with nothing under it (wf15 §2, I3). The CTA itself stays a comment-keyword CTA (I14)."
+notes = "plan.kit-week 4 since G1 K9: 'Từ khoá 1 lần trong bài + lời mời': the keyword once in the words plus the comment ask, so a box holds it at most twice (banks.toml [types.K.rules] and ship_lint count it the same way since K9). UX §2: the caption sits in a copy box, so the count is checked inside that box. 'sửa … giùm anh' is a rewrite request, not a check of his own draft ('đăng được chưa?'), so the rewritten caption is a Ready piece and prints with nothing under it (wf15 §2, I3). The CTA itself stays a comment-keyword CTA (I14)."
 
 [[case]]
 id = "signature.vn.012"
@@ -307,7 +307,7 @@ regex = ['(?i)\b20\d{2}\b|\b\d{1,2}/\d{1,2}\b|tháng\s+\d{1,2}']
 not_regex = ['(?i)(?:em|mình) không viết[^\n]*(?:chấm|100 comment)']
 invariants = ["I1", "I8", "I14", "I15"]
 max_questions = 1
-notes = "DECISIONS: 'chấm' and thresholds are allowed when the coach chooses them; the machine adds one dated platform note and never blocks or rewrites (I14). The keyword still appears exactly once elsewhere in the post. '100 comment' is in her allowed_numbers."
+notes = "DECISIONS: 'chấm' and thresholds are allowed when the coach chooses them; the machine adds one dated platform note and never blocks or rewrites (I14). The keyword still appears once elsewhere in the post, outside the ask. '100 comment' is in her allowed_numbers."
 
 [[case]]
 id = "signature.vn.014"

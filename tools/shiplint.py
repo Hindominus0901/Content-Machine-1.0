@@ -42,10 +42,11 @@ Output: one line per piece, in input order:
 Checks per piece (the card's LINT line): digits, names and quotes found in the
 cited rows; quotes exact and within the quote cap; a result claim needs a cited
 P-row marked Substantiated + consent (ads: consent for ads); urgency only with
-an enforced Ledger row; keyword exactly once; hook stem new against
-recent_hook_stems and the batch; no hedge in the hook; no open [NEEDS] in a
-Ready piece and no "Ready after"; the word budget for the format; every cited
-ID resolves. Idea and Structured pieces get only the trace checks (numbers,
+an enforced Ledger row; the keyword once in the words plus the ask, the ask
+itself not counted ("keyword only in the ask", "keyword ×2 outside the ask");
+hook stem new against recent_hook_stems and the batch; no hedge in the hook; no
+open [NEEDS] in a Ready piece and no "Ready after"; the word budget for the
+format; every cited ID resolves. Idea and Structured pieces get only the trace checks (numbers,
 names, quotes, IDs, brackets, copy runs).
 
 Someone else's post (DISTANCE, wf13-inspiration-spec §4, §6). A piece that cites
@@ -223,11 +224,15 @@ def lint_piece(piece: dict, data: dict, bank: dict, batch_stems: list) -> tuple[
         if not ok:
             defects.append(f'urgency without an enforced Ledger row: "{_sl_short(urgent[0])}"')
 
+    # the keyword once in the words, plus the ask (§CM-WEEK 4, K9): the ask itself is not counted
     keyword = str(data.get("keyword", "")).strip()
     if keyword:
-        n = ck.keyword_count(text, keyword, data.get("keyword_variants", []))
-        if n != 1:
-            defects.append(f"keyword ×{n}")
+        variants = data.get("keyword_variants", [])
+        n = ck.keyword_outside_ask(text, keyword, lang, variants)
+        if n == 0:
+            defects.append("keyword only in the ask" if ck.keyword_count(text, keyword, variants) else "keyword ×0")
+        elif n > 1:
+            defects.append(f"keyword ×{n} outside the ask")
 
     stem = ck.hook_stem(hook or body)
     recent = {ck.hook_stem(str(s)) for s in data.get("recent_hook_stems", [])}

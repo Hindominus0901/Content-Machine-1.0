@@ -185,6 +185,19 @@ class HookKeywordPraiseTests(unittest.TestCase):
         self.assertEqual(ck.keyword_count("Comment CHAPTER. chapter? Chapters don't count.", "CHAPTER"), 2)
         self.assertEqual(ck.keyword_count("one more chapter", "one more chapter"), 1)
 
+    def test_keyword_outside_ask_en(self):
+        self.assertEqual(ck.keyword_outside_ask("Comment CHAPTER.", "CHAPTER"), 0)
+        self.assertEqual(ck.keyword_outside_ask("A new chapter. Comment CHAPTER.", "CHAPTER"), 1)
+        self.assertEqual(ck.keyword_outside_ask("Still have your badge? Message me BADGE.", "BADGE"), 1)
+        self.assertEqual(ck.keyword_outside_ask("chapter, chapter. DM me CHAPTER", "CHAPTER"), 2)
+
+    def test_keyword_outside_ask_vn(self):
+        self.assertEqual(ck.keyword_outside_ask("Em nào đang ngại chào thì comment NGẠI CHÀO nhé.", "ngại chào", "vn"), 0)
+        self.assertEqual(ck.keyword_outside_ask("Anh chị nào đang tuyển hoài: nhắn tôi chữ TUYỂN HOÀI nha.",
+                                                "tuyển hoài", "vn"), 1)
+        self.assertEqual(ck.keyword_outside_ask("Tin nhắn tuyển hoài vẫn tới.", "tuyển hoài", "vn"), 1)
+        self.assertEqual(ck.keyword_outside_ask("Lai ao là vậy. Nhắn mình chữ LÃI ẢO nhé.", "lãi ảo", "vn"), 1)
+
     def test_keyword_count_vn_without_diacritics(self):
         text = "Lãi ảo là gì? Comment lai ao. Đừng lại áo nhé. LÃI ẢO"
         self.assertEqual(ck.keyword_count(text, "lãi ảo"), 3)                    # "lại áo" is another word
@@ -366,8 +379,8 @@ BATCH = {
     "recent_hook_stems": ["old start"],
     "pieces": [
         {"id": "N1", "format": "native-short", "hook": "Sixty-three applications. Two interviews.",
-         "body": "That was me at 48 after 24 years at HQ. Then I stopped applying and started having coffee. "
-                 "Comment CHAPTER and I'll send you the coffee script.",
+         "body": "That was me at 48 after 24 years at HQ. My next chapter started when I stopped applying and "
+                 "started having coffee. Comment CHAPTER and I'll send you the coffee script.",
          "cites": ["S-1"], "verdict_line": "Ready to film · I'd post it: your 63 applications and CHAPTER."},
         {"id": "N2", "format": "text-post", "hook": "Maybe you're not too old.",
          "body": "90% of my clients land a job in 12 weeks. Pam got a $15,000 raise. Only 2 spots left. "
@@ -433,7 +446,7 @@ class ShiplintTests(unittest.TestCase):
         self.assertTrue(n2.startswith("N2 FAIL: "), n2)
         for defect in ('number "$15,000" not in cited rows', 'name "Pam" not in cited rows',
                        "Ready with an open [NEEDS]", "result claim without a Substantiated+consent P-row",
-                       'urgency without an enforced Ledger row: "Only 2 spots left."', "keyword ×2",
+                       'urgency without an enforced Ledger row: "Only 2 spots left."', "keyword ×2 outside the ask",
                        'hedge in hook: "maybe"'):
             self.assertIn(defect, n2)
 
@@ -442,6 +455,17 @@ class ShiplintTests(unittest.TestCase):
         self.assertIn("cited ID does not resolve: X-9", n3)
         self.assertIn('quote not verbatim in the sources: "the best decision I ever made"', n3)
         self.assertIn('hook stem "old start" used recently', n3)
+
+    def test_keyword_once_in_the_words_plus_the_ask(self):
+        # K9: the ask is not counted; N3 and N4 hold CHAPTER only in "Comment CHAPTER."
+        lines = self.lines()
+        self.assertNotIn("keyword", lines["N1"])
+        self.assertIn("keyword only in the ask", lines["N3"])
+        self.assertIn("keyword only in the ask", lines["N4"])
+        bare = {"lang": "en", "keyword": "CHAPTER",
+                "pieces": [{"id": "N1", "format": "native-short", "hook": "Sixty-three applications.",
+                            "body": "Then I stopped applying.", "cites": []}]}
+        self.assertIn("keyword ×0", self.lint(bare)["N1"])
 
     def test_ad_needs_ads_consent(self):
         self.assertIn("result claim without a Substantiated+consent P-row", self.lines()["N4"])

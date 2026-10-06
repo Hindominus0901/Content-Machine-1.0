@@ -530,6 +530,48 @@ def keyword_count(text: str, keyword: str, variants=()) -> int:
     return len(spans)
 
 
+# The ask itself: a CTA verb right before the keyword ("Comment TOO LATE", "message me BADGE", "nhắn mình chữ CỨNG ĐƠ"),
+# matched on folded text (no diacritics, lower case).
+ASK_BEFORE = (r"(?:comment|cmt|reply|type|dm(?: me)?|message me|text me|binh luan|com"
+              r"|(?<!tin )nhan(?: rieng)?(?: [^\W\d_]+)?"             # "tin nhắn" is a noun
+              r"|inbox(?: [^\W\d_]+)?|go|ib)\s+(?:(?:the word|chu|tu khoa|tu)\s+)?[\"'“‘]?")
+# VN: where an ask's sentence starts: a sentence end, a colon or semicolon, or a new line ("Anh chị nào đang tuyển
+# hoài: nhắn tôi chữ TUYỂN HOÀI" keeps the first "tuyển hoài" outside the ask; "Em nào đang ngại chào thì comment
+# NGẠI CHÀO" holds it inside).
+ASK_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?…:;])\s+|\n")
+
+
+def caps_or_quoted(text: str, start: int, end: int) -> bool:
+    """text[start:end] is a keyword as an ask prints it: in capitals ("TUYỂN HOÀI", "CHAPTER") or in quotes."""
+    letters = [c for c in text[start:end] if c.isalpha()]
+    if len(letters) >= 2 and all(c.isupper() for c in letters):
+        return True
+    return start > 0 and text[start - 1] in "\"“'‘"
+
+
+def keyword_outside_ask(text: str, keyword: str, lang: str = "en", variants=()) -> int:
+    """Occurrences of the keyword outside the ask ("keyword once in the body, plus the ask").
+
+    EN: the ask is a CTA verb right before the keyword, so "…you still have your badge, message me BADGE" holds it
+    once outside. VN: the ask is the whole sentence holding a CTA verb right before the keyword in capitals or quotes,
+    its lead-in too ("Em nào đang ngại chào thì comment NGẠI CHÀO" holds it only in the ask); "tin nhắn" is a noun.
+    """
+    forms = [f for f in (keyword, *(variants or ())) if nfc(f).strip()]
+    if not forms:
+        return 0
+    kw = "|".join(r"\s+".join(re.escape(w) for w in fold(nfc(f)).split()) for f in forms)
+    asks = re.compile(r"(?<!\w)" + ASK_BEFORE + "(" + kw + r")(?!\w)")
+    if lang != "vn":
+        return max(0, keyword_count(text, keyword, variants) - len(asks.findall(fold(nfc(text)))))
+    outside = 0
+    for sentence in ASK_SENTENCE_SPLIT_RE.split(nfc(text)):
+        sentence = plain_line(sentence)          # fold() keeps positions: the ask's keyword is read in the original
+        if any(caps_or_quoted(sentence, m.start(1), m.end(1)) for m in asks.finditer(fold(sentence))):
+            continue
+        outside += keyword_count(sentence, keyword, variants)
+    return outside
+
+
 STOPWORDS = {
     # EN function words and contractions (apostrophes removed)
     "a", "an", "the", "and", "or", "but", "so", "if", "then", "i", "im", "ive", "id", "ill", "you", "youre",

@@ -185,7 +185,7 @@ group = "Plan"
 sheet_column = true
 internal = true
 description_key = "hub.content.keyword"
-note = "the chosen K-row it carries exactly once (K-1)"
+note = "the chosen K-row it carries once in its words, plus the ask (K-1)"
 
 [[databases.content.property]]
 name = "Phase"
