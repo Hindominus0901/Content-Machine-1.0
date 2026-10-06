@@ -1,0 +1,572 @@
+#!/usr/bin/env python3
+"""Simulated runs: build run packets, then grade the transcripts (docs/PLAN.md "How simulated runs work";
+evals/README.md "Lanes and simulated runs").
+
+    python3 evals/run.py packet --suite day0 --edition en --lane S1 [--persona ID ...] [--repeat 3] [--tag p2]
+    python3 evals/run.py packet --suite cases --edition en --lane S1 --module setup [--case setup.en.004 ...]
+    python3 evals/run.py grade evals/runs/<run-id> [...]
+    python3 evals/run.py summary evals/runs/<run-id> [...]
+
+No API keys are needed: `packet` writes everything a simulator agent needs into evals/runs/<run-id>/,
+the agent writes transcript.jsonl and notes.md there, and `grade` checks the transcript.
+
+Run folder (graders.py reads transcript.jsonl and meta.json; keep both formats):
+
+    meta.json          persona, edition, lane, build_sha, suite, repeat (+ case for the cases suite)
+    packet/README.md   the protocol: who plays which side, the leakage rule, what to write back
+    packet/MACHINE.md  the machine side: the lane, and the kit files it runs on (in packet/kit/)
+    packet/COACH.md    the coach side: the persona files it may use and the suite's script
+    packet/kit/        1-INSTRUCTIONS.txt (+ CONTENT-MACHINE-<ED>.md in S1 and floor), as built
+    transcript.jsonl   written by the simulator
+    notes.md           written by the simulator
+    grades.json        written by `grade`
+
+Lanes: S0 compact mode (instruction block only, no method file); S1 the Project kit (instruction block +
+method file); floor S1 played by a smaller model (the weaker free-tier model); S3 the L3 skill with a fake
+hub (needs the skill build, P4).
+
+`grade` runs graders.py (I1-I23 and the other checks) on each run. A cases-suite run also checks its
+case's D assertions (contains, regex, not_*, verdict, max_*, invariants) on the reply to the last coach
+turn, or on the scope named at the start of the case's notes ("scope: transcript | pieces | visible |
+each reply"). A run passes when graders.py passes and, for a case, every assertion holds.
+"""
+from __future__ import annotations
+
+import argparse
+import importlib.util
+import json
+import os
+import re
+import shutil
+import sys
+import tomllib
+import unicodedata
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+DEFAULT_ROOT = Path(os.environ.get("CM_ROOT", HERE.parent))
+sys.path.insert(0, str(HERE.parent / "tools"))
+import cmlib  # noqa: E402
+from cmcore import checks as ck  # noqa: E402
+
+_spec = importlib.util.spec_from_file_location("graders", HERE / "graders.py")
+graders = importlib.util.module_from_spec(_spec)
+sys.modules.setdefault("graders", graders)          # dataclasses resolve annotations through sys.modules
+_spec.loader.exec_module(graders)
+
+SUITES = ("day0", "cases")
+LANES = {
+    "S0": {"method": False, "model": "the session's model",
+           "about": "Compact mode: the project holds the instruction block only. The method file is missing, so "
+                    "the setup check shows ✗ method file and Day 0 runs from the instruction block alone."},
+    "S1": {"method": True, "model": "the session's model",
+           "about": "The Project kit: the instruction block is the project's instructions and the method file is "
+                    "a project file. Read a §CM- section of the method file only when the instructions say so."},
+    "floor": {"method": True, "model": "a smaller model (haiku), standing in for the weaker free-tier model",
+              "about": "Same kit as S1, played by a smaller model. Follow the instructions as written; do not "
+                       "compensate for what a weaker model would miss."},
+    "S3": {"method": False, "model": "the session's model",
+           "about": "The L3 skill with a fake hub (P4)."},
+}
+SCOPES = ("transcript", "pieces", "visible", "each reply", "each")
+SCOPE_RE = re.compile(r"^\s*scope:\s*(transcript|pieces|visible|each reply|each)\b", re.I)
+TURN_SPLIT_RE = re.compile(r"^\[turn \d+\]\s*", re.M)
+CASE_RUN_CHECKS = {"deny_list"}
+VERDICT_KINDS = {
+    "hard stop": {"hardstop"},
+    "needs you": {"needs"},
+    "draft": {"draft_queued", "draft_fixable"},
+    "override": {"override"},
+}
+
+
+class RunError(Exception):
+    """A packet cannot be built or a run cannot be graded."""
+
+
+# ---------------------------------------------------------------- helpers
+
+def nfc(text: str) -> str:
+    return unicodedata.normalize("NFC", text)
+
+
+def rel(path: Path, root: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def load_toml(path: Path) -> dict:
+    with open(path, "rb") as fh:
+        return tomllib.load(fh)
+
+
+def personas(root: Path, edition: str) -> list[str]:
+    base = root / "evals" / "personas" / edition
+    return sorted(p.name for p in base.iterdir() if (p / "persona.toml").exists()) if base.is_dir() else []
+
+
+def load_cases(root: Path, module: str, edition: str) -> list[dict]:
+    path = root / "evals" / "cases" / f"{module}.{edition}.toml"
+    if not path.exists():
+        raise RunError(f"{rel(path, root)} not found")
+    return load_toml(path).get("case", [])
+
+
+def find_case(root: Path, case_id: str) -> dict:
+    parts = case_id.split(".")
+    if len(parts) < 3:
+        raise RunError(f"case id '{case_id}' is not <module>.<edition>.<nnn>")
+    for case in load_cases(root, parts[0], parts[1]):
+        if case.get("id") == case_id:
+            return case
+    raise RunError(f"case {case_id} not found in evals/cases/{parts[0]}.{parts[1]}.toml")
+
+
+def coach_turns(case: dict) -> list[str]:
+    """The coach turns in a case's input: "[turn n]" lines separate several turns."""
+    text = nfc(str(case.get("input", ""))).strip()
+    turns = [t.strip() for t in TURN_SPLIT_RE.split(text)]
+    return [t for t in turns if t]
+
+
+# ---------------------------------------------------------------- packets
+
+def build_kit(root: Path, edition: str) -> tuple[dict[str, Path], str]:
+    """Build the edition (tools/build.py) and return its kit files and the build sha."""
+    import build as cm_build                         # tools/build.py, on sys.path above
+    try:
+        manifest = cm_build.build(root, [edition])
+    except cmlib.CMError as exc:
+        raise RunError(f"build failed: {exc}")
+    ed = cmlib.load_edition(edition, root)
+    out = root / "dist" / edition
+    files = {"instructions": out / "1-INSTRUCTIONS.txt", "method": out / f"CONTENT-MACHINE-{ed.file_suffix}.md",
+             "phone": out / "PHONE-STARTER.txt"}
+    if not files["instructions"].exists():
+        raise RunError(f"the {edition} build has no 1-INSTRUCTIONS.txt (core/{ed.lang}/start-block.md missing?)")
+    return files, str(manifest.get("build_sha256", ""))[:12]
+
+
+def run_id(suite: str, edition: str, persona: str, lane: str, repeat: int, tag: str = "",
+           case: str = "") -> str:
+    parts = [tag] if tag else []
+    parts += [case.replace(".", "_")] if case else [suite, edition, persona]
+    return "-".join(parts + [lane, f"r{repeat}"])
+
+
+PROTOCOL = """# Run packet: {run_id}
+
+One simulator agent plays both sides, turn by turn, from the files in this folder. No API keys, no real account.
+
+- **Machine side:** `MACHINE.md`. It runs on the kit files in `kit/` exactly as written. It may not use any
+  persona fact before the coach has said it in the transcript, and it never reads the persona folder,
+  `expected.toml`, the eval cases or `qa/`.
+- **Coach side:** `COACH.md`. Only facts from the persona files it names, in the persona's style and order.
+- Keep the two apart: write each machine reply from the transcript so far and the kit only.
+
+## Write back into this run folder ({run_dir})
+
+1. `transcript.jsonl`: one JSON object per turn, in order:
+   `{{"turn": 1, "role": "coach" | "machine", "text": "...", "t_min": 0.5}}`. A coach turn and the machine
+   reply to it share the same `turn` number. `t_min` is the modelled minute the turn ends (dictation, typing
+   and reading speed plus time away). Mark a coach turn that is entirely someone else's post with
+   `"third_party": true`.
+2. `notes.md`: outcome; the step reached and the minute; coach turns; where the machine broke the kit or a
+   rule; any persona fact the machine used before the coach said it (a leak), and what you did about it;
+   whether this coach comes back tomorrow, and why.
+3. Then run: `python3 evals/run.py grade {run_dir}`.
+
+Do not edit `meta.json` or the files in `packet/`.
+"""
+
+MACHINE = """# Machine side ({lane})
+
+{about}
+
+- **Model:** {model}.
+- **Edition:** {edition}. The app is {app}.
+- **Your instructions:** `kit/1-INSTRUCTIONS.txt`, verbatim, as the project's instructions.
+{method_line}
+- Reply only from these files and the transcript so far. Never use a fact the coach has not said.
+- Searching the web is not possible in this run: where the kit says "search if you can", you can't.
+- A link the coach sends is never opened here (unopened = unread).
+- Today's date: {today}.
+"""
+
+COACH_DAY0 = """# Coach side: {persona} ({edition}), Day 0
+
+Persona folder: `{pdir}`. Read `persona.toml` (identity, app and device, behaviour traits, quit triggers),
+`answers.md`, `voice-samples.md` and `written-posts.md`. Never read `expected.toml` and never let it shape a
+turn.
+
+## Script
+
+1. Open the project chat with exactly: `{start}`.
+2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn each, when
+   the machine asks for the dump. When the dump prompt invites posts you've written, paste the body of
+   `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
+   or 2, the way this coach would. Then say you are done in your own words ("done", "ok that's it").
+3. After the dump, answer only what the machine asks, one answer per question, from `## Answer bank`, in
+   the persona's style. Say "skip" when the answer bank has nothing and the behaviour fits.
+4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
+   (write the quit line and stop) the moment a quit trigger in `persona.toml` or `## Behaviour` happens.
+5. Accept the Map with a short OK unless something on it is wrong for this coach, then fix only that line.
+6. Stop when the machine has delivered Week 1 and the Brand Card with the save line and NEXT, or when the
+   coach quits, or after {max_turns} coach turns.
+
+Time: model `t_min` from dictation (about 130 words a minute), typing (about 30 words a minute on a phone,
+40 on a laptop), reading (about 200 words a minute) and the persona's time away.
+"""
+
+COACH_CASE = """# Coach side: case {case_id} ({edition})
+
+Persona: {persona_line}
+
+**Title:** {title}
+
+**Context** (the state before the case's input; build it as earlier turns of the transcript, briefly, using
+only persona facts and the context's own words, so the machine reaches this state honestly):
+
+{context}
+
+**Input:** the coach's turn(s) for this case, verbatim and in order (a `<<paste: file …>>` marker means: paste
+that part of the persona file, verbatim):
+
+{inputs}
+
+Stop after the machine's reply to the last input turn. Never read the case file or its assertions.
+"""
+
+
+def write_packet(root: Path, out_root: Path, rid: str, meta: dict, kit: dict[str, Path], lane: str,
+                 coach_md: str, today: str) -> Path:
+    run_dir = out_root / rid
+    if run_dir.exists():
+        raise RunError(f"{rel(run_dir, root)} exists; pass another --tag or remove it")
+    (run_dir / "packet" / "kit").mkdir(parents=True)
+    spec = LANES[lane]
+    shutil.copy2(kit["instructions"], run_dir / "packet" / "kit" / kit["instructions"].name)
+    method_line = "- **Method file:** none in this lane (compact mode)."
+    if spec["method"]:
+        if not kit["method"].exists():
+            raise RunError(f"lane {lane} needs {kit['method'].name}, which the build did not produce")
+        shutil.copy2(kit["method"], run_dir / "packet" / "kit" / kit["method"].name)
+        method_line = f"- **Method file:** `kit/{kit['method'].name}`, a project file."
+    ed = cmlib.load_edition(meta["edition"], root)
+    app = "ChatGPT (a Project)" if meta["edition"] == "vn" else "ChatGPT or Claude (a Project)"
+    files = {
+        "README.md": PROTOCOL.format(run_id=rid, run_dir=rel(run_dir, root)),
+        "MACHINE.md": MACHINE.format(lane=lane, about=spec["about"], model=spec["model"], edition=ed.id, app=app,
+                                     method_line=method_line, today=today),
+        "COACH.md": coach_md,
+    }
+    for name, text in files.items():
+        (run_dir / "packet" / name).write_text(nfc(text), encoding="utf-8")
+    (run_dir / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return run_dir
+
+
+def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: list[str], repeat: int = 1,
+                 tag: str = "", module: str = "", case_ids: list[str] | None = None,
+                 out_root: Path | None = None, today: str = "",
+                 kit: tuple[dict[str, Path], str] | None = None) -> list[Path]:
+    """Write one packet per persona (day0) or per D case (cases), times `repeat`. `kit` is (files, sha) from
+    build_kit; tests pass prebuilt files."""
+    if suite not in SUITES:
+        raise RunError(f"unknown suite '{suite}' ({', '.join(SUITES)})")
+    if lane not in LANES:
+        raise RunError(f"unknown lane '{lane}' ({', '.join(LANES)})")
+    if lane == "S3":
+        raise RunError("lane S3 needs the L3 skill build and the fake hub (P4); not available yet")
+    out_root = out_root or root / "evals" / "runs"
+    kit, sha = kit or build_kit(root, edition)
+    strings = graders.load_strings(root, edition)[0]
+    known = personas(root, edition)
+    made = []
+    if suite == "day0":
+        chosen = known if persona_ids in ([], ["all"]) else persona_ids
+        for pid in chosen:
+            if pid not in known:
+                raise RunError(f"persona '{pid}' not found under evals/personas/{edition}/")
+            pdir = root / "evals" / "personas" / edition / pid
+            accept = load_toml(root / "evals" / "acceptance.toml").get("day0", {})
+            coach = COACH_DAY0.format(persona=pid, edition=edition, pdir=rel(pdir, root),
+                                      start=strings.get("cmd.start", "Start"),
+                                      max_turns=int(accept.get("session_max_turns", 10)) + 4)
+            for n in range(1, repeat + 1):
+                rid = run_id(suite, edition, pid, lane, n, tag)
+                meta = {"persona": f"{edition}/{pid}", "edition": edition, "lane": lane, "build_sha": sha,
+                        "suite": suite, "repeat": n}
+                made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
+        return made
+    if not module:
+        raise RunError("the cases suite needs --module")
+    cases = load_cases(root, module, edition)
+    if case_ids:
+        missing = set(case_ids) - {c.get("id") for c in cases}
+        if missing:
+            raise RunError("case(s) not found: " + ", ".join(sorted(missing)))
+        cases = [c for c in cases if c.get("id") in case_ids]
+    for case in cases:
+        if case.get("kind", "D") != "D" or (case.get("lanes") and lane not in case.get("lanes", [])):
+            continue
+        pid = case.get("persona", "")
+        if pid and pid not in known:
+            raise RunError(f"{case['id']}: persona '{pid}' not found under evals/personas/{edition}/")
+        persona_line = (f"`{rel(root / 'evals' / 'personas' / edition / pid, root)}` (persona.toml, answers.md, "
+                        f"voice-samples.md, written-posts.md and the paste files; never expected.toml)"
+                        if pid else "none (a standalone case)")
+        inputs = "\n\n".join(f"Turn {i}:\n\n```text\n{t}\n```" for i, t in enumerate(coach_turns(case), 1))
+        coach = COACH_CASE.format(case_id=case["id"], edition=edition, persona_line=persona_line,
+                                  title=case.get("title", ""), context=case.get("context", "") or "none",
+                                  inputs=inputs or "(none)")
+        for n in range(1, repeat + 1):
+            rid = run_id(suite, edition, pid, lane, n, tag, case=case["id"])
+            meta = {"persona": f"{edition}/{pid}" if pid else "", "edition": edition, "lane": lane,
+                    "build_sha": sha, "suite": suite, "repeat": n, "case": case["id"]}
+            made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
+    if not made:
+        raise RunError(f"no D cases of {module}.{edition} run on lane {lane}")
+    return made
+
+
+# ---------------------------------------------------------------- case assertions
+
+def case_scope(case: dict) -> str:
+    m = SCOPE_RE.match(str(case.get("notes", "")))
+    if not m:
+        return "reply"
+    scope = m.group(1).lower()
+    return "each" if scope.startswith("each") else scope
+
+
+def _texts(run, scope: str) -> list[str]:
+    replies = run.replies
+    if not replies:
+        return []
+    last = replies[-1]
+    if scope == "transcript":
+        return ["\n\n".join(r.text for r in replies)]
+    if scope == "each":
+        return [r.text for r in replies]
+    if scope == "pieces":
+        return ["\n\n".join(p.body for p in last.pieces)]
+    if scope == "visible":
+        return [last.visible()]
+    return [last.text]
+
+
+def _status_kinds(run, reply) -> set[str]:
+    return {k for i in range(len(reply.lines)) for k in [graders._status_kind(reply, i, run.matcher)] if k}
+
+
+def check_verdict(run, want: str) -> tuple[bool | None, str]:
+    """The case's verdict field against the last reply's status lines (wf15 §2: Ready prints nothing)."""
+    w = want.strip().lower()
+    if not w or not run.replies:
+        return None, ""
+    r = run.replies[-1]
+    kinds = _status_kinds(run, r)
+    if w in ("ready", "ready-downgraded"):
+        if r.after_check or r.after_why:
+            ok = bool(kinds & graders.STATUS_READY)
+            return ok, "" if ok else f"no Ready line after the coach's check (found {sorted(kinds) or 'none'})"
+        bad = kinds & (graders.STATUS_READY | graders.STATUS_DRAFT | {"why"})
+        return not bad, "" if not bad else f"a Ready piece printed {sorted(bad)}"
+    if w == "override":
+        cmd = run.strings.get("cmd.post_anyway", "post anyway").casefold()
+        last_coach = next((t.text for t in reversed(run.turns) if t.role == "coach"), "")
+        if cmd and cmd in nfc(last_coach).casefold():
+            ok = "override" in kinds
+            return ok, "" if ok else "no override line after 'post anyway'"
+        return None, "hidden state (an F1 request logs the Override; its one note is asserted by the case)"
+    wanted = VERDICT_KINDS.get(w)
+    if wanted is None:
+        return None, f"unknown verdict '{want}'"
+    ok = bool(kinds & wanted)
+    return ok, "" if ok else f"no {want} line (found {sorted(kinds) or 'none'})"
+
+
+def check_case(case: dict, run, report: dict | None = None) -> dict:
+    """Every D assertion of the case on the run's transcript. Returns {"pass", "failures", "skipped"}."""
+    failures, skipped = [], []
+    if case.get("kind", "D") != "D":
+        return {"id": case.get("id"), "pass": None, "failures": [], "skipped": ["P case: scored by the judge"]}
+    if not run.replies:
+        return {"id": case.get("id"), "pass": False, "failures": ["no machine reply"], "skipped": []}
+    scope = case_scope(case)
+    texts = [nfc(t) for t in _texts(run, scope)]
+    every = scope == "each"
+
+    def some(pred) -> bool:
+        return any(pred(t) for t in texts)
+
+    def all_(pred) -> bool:
+        return all(pred(t) for t in texts)
+
+    for item in case.get("contains", []):
+        needle = nfc(item).casefold()
+        if not some(lambda t: needle in t.casefold()):
+            failures.append(f'contains "{item}": missing')
+    for item in case.get("not_contains", []):
+        needle = nfc(item).casefold()
+        if not all_(lambda t: needle not in t.casefold()):
+            failures.append(f'not_contains "{item}": present')
+    for pat in case.get("regex", []):
+        try:
+            rx = re.compile(pat)
+        except re.error as exc:
+            failures.append(f"regex /{pat}/ does not compile: {exc}")
+            continue
+        if not some(lambda t: rx.search(t) is not None):
+            failures.append(f"regex /{pat}/: no match")
+    for pat in case.get("not_regex", []):
+        try:
+            rx = re.compile(pat)
+        except re.error as exc:
+            failures.append(f"not_regex /{pat}/ does not compile: {exc}")
+            continue
+        hit = next((m for t in texts for m in [rx.search(t)] if m), None)
+        if hit:
+            failures.append(f'not_regex /{pat}/: matched "{hit.group(0)[:60]}"')
+
+    replies = run.replies if every else run.replies[-1:]
+    for r in replies:
+        visible = r.visible()
+        words = ck.count_words(visible, run.lang)
+        if case.get("max_words") and words > int(case["max_words"]):
+            failures.append(f"turn {r.turn}: {words} words (max {case['max_words']})")
+        if case.get("max_chars") and len(visible) > int(case["max_chars"]):
+            failures.append(f"turn {r.turn}: {len(visible)} characters (max {case['max_chars']})")
+        q = len(graders.reply_questions(r))
+        if case.get("max_questions") and q > int(case["max_questions"]):
+            failures.append(f"turn {r.turn}: {q} questions (max {case['max_questions']})")
+
+    ok, why = check_verdict(run, str(case.get("verdict", "")))
+    if ok is False:
+        failures.append(f"verdict {case['verdict']}: {why}")
+    elif ok is None and why:
+        skipped.append(f"verdict {case['verdict']}: {why}")
+
+    if report is not None:
+        by_id = {i["id"]: i for i in report.get("invariants", [])}
+        for iid in case.get("invariants", []):
+            inv = by_id.get(iid)
+            if inv is None:
+                skipped.append(f"{iid}: not a graders.py invariant")
+            elif inv["pass"] is False:
+                failures.append(f"{iid} failed: " + "; ".join(inv.get("evidence", [])[:3]))
+            elif inv["pass"] is None:
+                skipped.append(f"{iid}: {inv.get('status', 'not_run')}")
+    return {"id": case.get("id"), "scope": scope, "pass": not failures, "failures": failures, "skipped": skipped}
+
+
+# ---------------------------------------------------------------- grading
+
+def grade_run(run_dir: Path, root: Path) -> dict:
+    run_dir = Path(run_dir)
+    meta_path = run_dir / "meta.json"
+    if not meta_path.exists():
+        raise RunError(f"{run_dir}: meta.json missing")
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    if not meta.get("persona") and meta.get("case"):
+        raise RunError(f"{run_dir.name}: standalone cases (no persona) cannot be graded by graders.py yet")
+    report = graders.grade(run_dir, root)
+    out = dict(report)
+    if meta.get("case"):
+        # a case run is a slice of a session: the session checks (day0_timing, quit_triggers) are reported,
+        # not counted; every invariant and the deny list still count
+        run = graders.load_run(run_dir, root)
+        out["case"] = check_case(find_case(root, meta["case"]), run, report)
+        counted = report["invariants"] + [c for c in report["checks"] if c["id"] in CASE_RUN_CHECKS]
+        out["failed"] = [x["id"] for x in counted if x["pass"] is False]
+        out["info_failed"] = [c["id"] for c in report["checks"]
+                              if c["id"] not in CASE_RUN_CHECKS and c["pass"] is False]
+        out["pass"] = not out["failed"] and out["case"]["pass"] is not False
+    (run_dir / "grades.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return out
+
+
+def summary_rows(results: list[dict]) -> str:
+    head = "| Run | Persona | Lane | Pass | Failed | Coach turns | Map turns | Film-ready min | Case |"
+    rows = [head, "|" + "---|" * 9]
+    for g in results:
+        day0 = next((c for c in g.get("checks", []) if c["id"] == "day0_timing"), {})
+        d = day0.get("details", {})
+        case = g.get("case", {})
+        case_cell = ""
+        if case:
+            case_cell = "pass" if case.get("pass") else ("P" if case.get("pass") is None else
+                                                          "fail: " + "; ".join(case.get("failures", [])[:2]))
+        rows.append("| {run} | {persona} | {lane} | {ok} | {failed} | {turns} | {map} | {film} | {case} |".format(
+            run=g.get("run", ""), persona=g.get("persona", ""), lane=g.get("lane", ""),
+            ok="yes" if g.get("pass") else "no", failed=", ".join(g.get("failed", [])) or "–",
+            turns=g.get("summary", {}).get("coach_turns", ""), map=d.get("map_coach_turns", "–"),
+            film=d.get("film_ready_minutes", "–") if d.get("film_ready_minutes") is not None else "–",
+            case=case_cell.replace("|", "/")))
+    return "\n".join(rows)
+
+
+# ---------------------------------------------------------------- CLI
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description="Build simulated-run packets and grade transcripts.")
+    ap.add_argument("--root", type=Path, default=None, help="repository root (default: CM_ROOT or this repo)")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("packet", help="write run packets under evals/runs/")
+    p.add_argument("--suite", required=True, choices=SUITES)
+    p.add_argument("--edition", required=True, choices=list(cmlib.EDITIONS))
+    p.add_argument("--lane", required=True, choices=list(LANES))
+    p.add_argument("--persona", action="append", default=[], help="persona id; repeatable; default all (day0)")
+    p.add_argument("--module", default="", help="cases suite: the module whose D cases to run")
+    p.add_argument("--case", action="append", default=[], help="cases suite: only these case ids; repeatable")
+    p.add_argument("--repeat", type=int, default=1, help="runs per persona or case (G2 uses 3)")
+    p.add_argument("--tag", default="", help="prefix for the run ids (e.g. a round name)")
+    p.add_argument("--out", type=Path, default=None, help="folder for the runs (default evals/runs)")
+    p.add_argument("--today", default="", help="the date the machine side is told (YYYY-MM-DD)")
+    g = sub.add_parser("grade", help="grade run folders; writes grades.json in each")
+    g.add_argument("runs", nargs="+", type=Path)
+    s = sub.add_parser("summary", help="a markdown table of graded runs (grades them first if needed)")
+    s.add_argument("runs", nargs="+", type=Path)
+    args = ap.parse_args(argv)
+    root = (args.root or DEFAULT_ROOT).resolve()
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError):
+        pass
+    try:
+        if args.cmd == "packet":
+            if args.repeat < 1:
+                raise RunError("--repeat must be at least 1")
+            made = make_packets(root, args.suite, args.edition, args.lane, args.persona, args.repeat, args.tag,
+                                args.module, args.case, args.out, args.today or "the date in the transcript")
+            for d in made:
+                print(rel(d, root))
+            return 0
+        results = []
+        for d in args.runs:
+            if args.cmd == "summary" and (d / "grades.json").exists():
+                results.append(json.loads((d / "grades.json").read_text(encoding="utf-8")))
+            else:
+                results.append(grade_run(d, root))
+        if args.cmd == "summary":
+            print(summary_rows(results))
+        else:
+            for r in results:
+                case = r.get("case")
+                extra = ""
+                if case and case.get("pass") is False:
+                    extra = " · case: " + "; ".join(case["failures"][:3])
+                status = "pass" if r["pass"] else "FAIL " + (", ".join(r["failed"]) or "case")
+                print(f"{r['run']}: {status}{extra}")
+        return 0 if all(r.get("pass") for r in results) else 1
+    except (RunError, graders.GraderError, cmlib.CMError, OSError, tomllib.TOMLDecodeError,
+            json.JSONDecodeError) as exc:
+        print(f"run: {exc}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
