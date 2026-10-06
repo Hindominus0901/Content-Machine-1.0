@@ -29,7 +29,7 @@ KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
 1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; dịch bài nước ngoài thì dịch ý, bằng giọng coach.
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
 3 Nối bằng chữ nói, chữ của họ (connectors) trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
-4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ theo bài coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ), dày như bài họ, cả câu kể, câu mời. Nhắn khách, người lớn hơn: "Dạ… ạ".
+4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ theo bài coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ), dày như bài họ, cả câu kể, câu mời, câu nói. Nhắn khách, người lớn hơn: "Dạ… ạ".
 5 Kể: cảnh (giờ, chỗ, người, đồ vật) → chuyện xảy ra, lời người ta nguyên văn (bảo/nói/kêu: "…") → mình nhận ra, bằng một việc làm + "mới/hoá ra" → bạn thì sao: một việc nhỏ cho một người. Bài học là câu hai vế.
 6 Mời: một việc; từ khoá là chữ khách hay nói, kèm đường nhắn riêng cho người ngại; bài bán ghi giá. Hạn, suất thật thì nói thẳng, kèm lý do. Không rao.
 7 Không → viết:

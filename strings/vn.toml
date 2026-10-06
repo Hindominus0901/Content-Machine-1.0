@@ -131,7 +131,7 @@
 "card.remove_old"        = { text = "Xoá {v1 | bản thừa} khỏi file dự án.", src = "0cc183dade" }
 "card.fix_missing"       = { text = "Chưa thấy Brand Card ở đây: vào đoạn chat đầu tiên, bấm ⋯ dưới card → Lưu vào dự án. Hoặc dán card vào đây.", src = "bdf99dd62b" }
 "card.fix_pasted_block"  = { text = "Bạn vừa dán phần hướng dẫn vào chat. Muốn giữ thì vào Hướng dẫn → dán vào → Lưu.", src = "3f5d031c34" }
-"save.claude_plain"      = { text = "Chép card, bấm + cạnh mục file của project, chọn Add text content, dán vào, bấm Save.", src = "231b997849" }
+"save.claude_plain"      = { text = "Chép card, bấm + cạnh mục file của project, chọn Add text content, dán vào, bấm Save. Dự phòng: Zalo \"Cloud của tôi\".", src = "231b997849" }
 "phone.fresh_box"        = { text = "Dán khung này vào một đoạn chat mới tên {{name}}.", src = "958e3358e3" }
 
 # What 'next' opens, chats, level-up offers and nudge tasks (§ TODAY)
@@ -221,7 +221,7 @@
 "character.voice_first"       = { text = "bấm micro, cứ nói tự nhiên 2-3 phút", src = "1414c9af7f" }
 "character.bet"               = { text = "Phải cược 1 triệu thì bạn trả lời sao?", src = "d86811d666" }
 "research.later"              = { text = "Để Tuần 1 làm, 10 phút thôi.", src = "0e68627662" }
-"research.ask3"               = { text = "Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn dùng đúng lời của bạn. {{t:ask3.question}}", src = "4a79ebae37" }
+"research.ask3"               = { text = "Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn lấy đúng câu của bạn. {{t:ask3.question}}", src = "4a79ebae37" }
 "research.ask3_cold"          = { text = "Chuyện {problem}, giờ bạn thấy khó nhất chỗ nào?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, tên đổi thành chữ cái. Không có thì gõ 'không có'.", src = "34c9df6797" }
 "research.paste_steps"        = { text = "Chép 10–20 bài hoặc comment ở 3 chỗ khách bạn hay vào nói chuyện, chỗ không ai bán hàng. Đầu mỗi đợt ghi [nơi · tháng]. Tên đổi thành chữ cái, cùng người thì cùng chữ. Bỏ qua người bán.", src = "79be035ed1" }
@@ -269,7 +269,7 @@
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
 "setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?", src = "dba7f66234" }
 "setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì {why}. Đúng không?", src = "c52dee2060" }
-"setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).", src = "e94540bde7" }
+"setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "e94540bde7" }
 "map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }
 "card.visible.never"           = { text = "không bao giờ:", src = "3e2cc57c54" }

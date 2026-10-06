@@ -3,7 +3,7 @@ Sources: wf15-simple-surface-spec §1-§2 (a Ready piece prints only the content
 Acceptance: evals/cases/fmt-short.en.toml, convert.en.toml (email, DM). CAPS labels are internal; the coach sees plain labels only. kind=script sections keep a verdict.* string (lint E146): the one line printed when the coach is needed. What prints per state: §CM-EDGE.
 
 <!-- @section fmt-short.kit-video-short kind=script -->
-1 Last line first, word-for-word, paying off the first. 3 hooks, ONE idea: on-screen text ≤6 words · first frame: one filmable thing · first line word-for-word, ≤{{hook_max}} words, opening a loop past the topic.
+1 Last line first, word-for-word, paying off the first. 3 hooks, ONE idea: on-screen text ≤6 words (count) · first frame: one filmable thing · first line word-for-word, ≤{{hook_max}} words, opening a loop past the topic.
 2 Beats: 3 (FILM TODAY) to 5, ≤12 words, one per take, joined by "but"/"therefore", never "and then".
 3 Words: §CM-LOCALE 2; under 30 s ≈ 70. Voice: their spoken voice (§CM-VOICE).
 4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-WEEK 6).
