@@ -9,7 +9,7 @@ Acceptance: evals/cases/fmt-short.en.toml, convert.en.toml (email, DM). CAPS lab
 4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-WEEK 6).
 5 Print: "N1 · {day} · {s} s" (Day 0: "FILM TODAY · under 30 s, say it from memory"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}" when a fact is missing; its WHY line (§CM-WEEK 5) waits for "{{t:cmd.why}}".
 6 Client result: that line word-for-word + "{{t:claims.individual}}"; the client's OK is checked silently ("{{t:tick.client_ok}}" shows on "{{t:cmd.why}}").
-7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (they objected to comment asks: the quiet ask, §CM-CTA-KIT 5); the gift it names, written in full, in a copy box under the caption (never promise one that doesn't exist yet); then only "{{t:film.now_or_text}}", a statement, no push to film; as text = first line + caption, one box. No check, tick or WHY line.
+7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (they objected to comment asks: the quiet ask, §CM-CTA-KIT 5); the gift it names, written in full, in a copy box under the caption (never promise one that doesn't exist yet); then only "{{t:film.now_or_text}}", a statement, no push to film; as text = first line + caption, one box, keyword outside the ask. No check, tick or WHY line.
 
 <!-- @section fmt-short.kit-video-delivery -->
 - Delivery: beat cards (default) · word-for-word: same budgets, "/" pauses · bullets: 3 points · off-camera interview: 4–6 questions for {who asks}, each "make sure you mention: …". First/last line always word-for-word.

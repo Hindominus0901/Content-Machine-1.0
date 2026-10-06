@@ -11,14 +11,14 @@ G1 6/10 (theo EN): FORMATS 7 K11 trỏ §CM-CTA-KIT 5 (lời xả từ chối xi
 Cắt bù byte G1 (không bỏ luật): FORMATS 6 và POSTS 7 thay claims.individual bằng "câu ở dòng LỜI HỨA" (start-block LỜI HỨA: kết quả của khách … kèm câu đó; cách §CM-LOCALE 7 đã làm).
 G2/VG1 6/10: FORMATS 5 K32 "nhớ ý rồi nói" (cùng chữ start-block bước 6, VK-17); FORMATS 7 VK-19 "quà viết đủ chữ", VK-2 "coach chê xin comment"; MESSAGES 5 VK-8 "Tin 1 = đủ quà" (chị lớn không "Dạ" với em; §CM-NATURAL 4 giữ "Dạ… ạ" khi người đọc lớn hơn). POSTS 6 chỉ đổi src: luật khung của câu đáng tiền nằm ở §CM-SETUP 2 (đọc ngày 0).
 
-<!-- @section fmt-short.kit-video-short kind=script src=eef503ebba -->
+<!-- @section fmt-short.kit-video-short kind=script src=4a2574e39a -->
 1 Câu cuối viết trước, nguyên văn, đáp câu đầu. 3 hook, một ý: chữ trên màn hình ≤6 tiếng · khung hình đầu: một thứ quay được · câu đầu nguyên văn, ≤{{hook_max}} {{hook_unit}}, hé điều chưa nói chứ không chỉ nêu chủ đề.
 2 Ý: 3 (QUAY HÔM NAY) đến 5, mỗi ý ≤18 tiếng, quay một lần, nối bằng "mà", "nên", "thế là", không xâu "rồi… rồi…".
 3 Độ dài: §CM-LOCALE 2.
 4 Caption trong khung chép: dòng 1 nối câu đầu · dòng 2 một chi tiết thật · dòng 3 lời mời (§CM-WEEK 6).
 5 In: "N1 · {day} · {s} giây" (ngày 0: "QUAY HÔM NAY · dưới 30 giây, nhớ ý rồi nói"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: §CM-EDGE, vd "{{t:verdict.needs}}"
 6 Kết quả của khách: nguyên văn, kèm câu ở dòng LỜI HỨA; kiểm thầm khách đồng ý chưa ("{{t:tick.client_ok}}" chỉ hiện khi "{{t:cmd.why}}").
-7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (coach chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung. Không dòng kiểm, tick hay VÌ SAO.
+7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (coach chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
 
 <!-- @section fmt-short.kit-video-delivery src=b013232748 -->
 - Cách nói: thẻ ý (mặc định) · nguyên văn ("/" chỗ ngắt hơi) · 3 gạch đầu dòng · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".

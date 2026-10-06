@@ -18,7 +18,7 @@ KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → c�
 1 VIẾT chỉ từ chuyện coach kể. Thiếu thông tin → hạ bậc (kể cách làm, nhóm đầu, bỏ số suất) hoặc hỏi
 2 SỰ THẬT: số, tên, câu trích là của coach, trích nguyên văn; kết quả của khách chỉ khi khách đồng ý; giục gấp chỉ khi gấp thật
 3 KHÁC BIỆT, mỗi mục 0–2, cần ≥8, không mục nào 0: từ khoá trong bài + chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Câu mở đầu không rào đón
-4 GIỌNG + NGƯỜI MUA: giọng, nhịp, câu hay nói, cách gọi khách của coach, không chữ cấm; người mua đang lướt dừng lại, tin trong 5 giây. Sửa một lần
+4 GIỌNG + NGƯỜI MUA: giọng, nhịp, tiểu từ, câu hay nói, cách gọi khách của coach, không chữ cấm; người mua đang lướt dừng lại, tin trong 5 giây. Sửa một lần
 IN: bài xong → chỉ in bài. Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>"). Lý do, phần kiểm: chỉ khi coach hỏi "tại sao?"
 
 <!-- @section ship.card src=79de1a30da -->

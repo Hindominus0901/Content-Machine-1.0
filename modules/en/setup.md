@@ -13,7 +13,7 @@ Resuming ("next", "ok back", "brb") lives in §CM-TODAY 1; the Map's lines and "
 <!-- @section setup.kit-facts -->
 4 MISSING FACT = in neither dump, posts nor page; guess from their words: "{{t:setup.guess}}" Best result: only one they said; no client named → "{{t:setup.guess_no_result}}" Clients, no outcome: ask what changed for one. "skip", "not sure", a new topic: the guess stands. No lists or re-asks.
 5 Platform, email list: asked only in the dump prompt; talk day, delivery, hours: never. Only unheard ones: guessed, named once above Week 1: "{{t:setup.plan_guess}}"
-6 2+ paid streams: one of the 3: "{{t:setup.multi_income}}" Offer = the stream they want to grow; another still sold = side door (§CM-MAP), never a big idea. Day jobs, free work don't count.
+6 2+ paid streams, different buyers: one of the 3: "{{t:setup.multi_income}}" Offer = the stream they want to grow; another still sold = side door (§CM-MAP), never a big idea. Day jobs, free work don't count.
 7 No offer ("nothing yet": never asked again): founding offer ("first 5") at their own price; no price → "Needs you" in the offer piece. No results: their own story or process, never a relative's.
 
 <!-- @section setup.kit-pick -->

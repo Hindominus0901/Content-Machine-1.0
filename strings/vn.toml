@@ -131,7 +131,7 @@
 "card.remove_old"        = { text = "Xoá {v1 | bản thừa} khỏi file dự án.", src = "0cc183dade" }
 "card.fix_missing"       = { text = "Chưa thấy Brand Card ở đây: vào đoạn chat đầu tiên, bấm ⋯ dưới card → Lưu vào dự án. Hoặc dán card vào đây.", src = "bdf99dd62b" }
 "card.fix_pasted_block"  = { text = "Bạn vừa dán phần hướng dẫn vào chat. Muốn giữ thì vào Hướng dẫn → dán vào → Lưu.", src = "3f5d031c34" }
-"save.claude_plain"      = { text = "Chép card, bấm + cạnh mục file của project, chọn Add text content, dán vào, bấm Save. Đoạn chat này không mất đâu.", src = "231b997849" }
+"save.claude_plain"      = { text = "Chép card, bấm + cạnh mục file của project, chọn Add text content, dán vào, bấm Save.", src = "231b997849" }
 "phone.fresh_box"        = { text = "Dán khung này vào một đoạn chat mới tên {{name}}.", src = "958e3358e3" }
 
 # What 'next' opens, chats, level-up offers and nudge tasks (§ TODAY)
@@ -169,8 +169,8 @@
 "angle.hunch"      = { text = "mình đoán vậy", src = "d7a04cc448" }
 
 # Short videos, posts, messages, calls to action (§ FORMATS, POSTS, MESSAGES, CTA-KIT)
-"cta.default"           = { text = "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.", src = "c06c6746cc" }
-"cta.quiet"             = { text = "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.", src = "5cdfb8b507" }
+"cta.default"           = { text = "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift} nhé.", src = "c06c6746cc" }
+"cta.quiet"             = { text = "Nhắn mình chữ {KEYWORD}, mình gửi {gift} nhé.", src = "5cdfb8b507" }
 "cta.not_pushy"         = { text = "Không đâu, ai comment cũng nhận quà thật mà. Ngại xin comment thì gõ '{{t:cmd.quiet}}'.", src = "5d113a312e" }
 "cta.platform_note"     = { text = "Lưu ý nền tảng ({date}): Facebook và Instagram có thể giảm hiển thị bài kiểu 'comment nếu…'. Bạn quyết nhé.", src = "c057b7f3d5" }
 "cta.by_hand"           = { text = "Tin trả lời phải gửi bằng tay.", src = "e51275b40f" }
