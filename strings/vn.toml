@@ -233,3 +233,14 @@
 "review.card_next"    = { text = "Nhắn 'ok', mình in Brand Card tuần này để bạn lưu.", src = "34c98b673a" }
 "review.whats_off"    = { text = "Chỗ chưa ổn: {một dòng}", src = "9c6a3ab8e2" }
 "locale.not_legal"    = { text = "Đây không phải tư vấn pháp lý; với trường hợp của bạn, hãy hỏi luật sư.", src = "2565e90f29" }
+
+# Simple surface + voice (wf15, wf14)
+"setup.dump_posts" = { text = "Có bài hay tin nhắn bạn từng viết thì dán 2–3 cái luôn, hoặc gửi link trang của bạn.", src = "fbfc38d52e" }
+"map.known" = { text = "ĐƯỢC BIẾT ĐẾN VÌ:", src = "7057c1b511" }
+"map.topics" = { text = "3 CHỦ ĐỀ:", src = "0252b27a5e" }
+"map.word" = { text = "TỪ KHOÁ CỦA BẠN:", src = "e8e772ff8d" }
+"map.voice" = { text = "GIỌNG CỦA BẠN:", src = "6760c37637" }
+"film.now_or_text" = { text = "Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.", src = "5429a30c46" }
+"card.save_line" = { text = "Lưu lại để mình nhớ bạn (30 giây).", src = "82bb29ab38" }
+"card.visible.what" = { text = "NÓI GÌ:", src = "3590ca99ac" }
+"card.visible.how" = { text = "NÓI THẾ NÀO:", src = "7a3df1f0ec" }

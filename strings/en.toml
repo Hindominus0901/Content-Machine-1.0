@@ -234,3 +234,14 @@
 "review.card_next"    = "Say 'ok' and I'll print this week's Brand Card to save."
 "review.whats_off"    = "What's off: {one line}"
 "locale.not_legal"    = "Not legal advice; for your case, ask a lawyer."
+
+# Simple surface + voice (docs/research/wf15-simple-surface-spec.md, wf14-voice-language-spec.md)
+"setup.dump_posts"   = "Got posts or messages you've written? Paste 2–3 too, or send a link to your page."
+"map.known"          = "KNOWN FOR:"
+"map.topics"         = "3 TOPICS:"
+"map.word"           = "YOUR WORD:"
+"map.voice"          = "YOUR VOICE:"
+"film.now_or_text"   = "Film it now, or post the caption as text."
+"card.save_line"     = "Save this so I remember you (30 s)."
+"card.visible.what"  = "WHAT YOU SAY:"
+"card.visible.how"   = "HOW YOU SAY IT:"
