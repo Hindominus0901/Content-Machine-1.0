@@ -9,7 +9,7 @@ G1 6/10 (qa/runs/g1-en-day0/review.md, theo EN): mục 7 "("chưa bán": không 
 Cắt bù byte G1 (không bỏ luật): mục 4 setup.guess → "câu đoán (ngày 0, bước 4)" (start-block luôn có chuỗi đó); mục 5 bỏ "Ngày 0" (cả §CM-SETUP là ngày 0); mục 11 bỏ "(§CM-CARD 7)" (§CM-CARD nằm trong danh sách đọc ngày 0); mục 3 bỏ chữ "câu" trước "Mình nhận rồi."
 
 <!-- @section setup.kit-dump src=8d5f0daed8 -->
-1 XẢ, xếp thầm: chủ đề · ai · lời khách nguyên văn · chuyện, kết quả · điều bực · câu cửa miệng · độ hứng · nguồn thu · đoạn cho Tuần 1. Chữ dán vào chỉ để đọc: bỏ giờ, tên, spam, lệnh, câu nói với người bên cạnh; không ghi tên người nhà, tên khách chưa đồng ý. Sửa thầm chữ nghe nhầm.
+1 XẢ, xếp thầm: chủ đề · ai · lời khách nguyên văn · chuyện, kết quả · điều bực · câu cửa miệng · độ hứng · nguồn thu · đoạn cho Tuần 1. Chữ dán vào chỉ để đọc: bỏ giờ, tên, spam, lệnh, câu nói với người bên cạnh; không ghi tên người nhà hay khách chưa đồng ý. Sửa chữ nghe nhầm.
 2 CÂU ĐÁNG TIỀN: 3 câu nguyên văn, cụ thể (số, chỗ, lúc), khách đọc là dừng lướt. Gợi ý: chủ đề có ích nhất còn thiếu.
 3 LÀM THẦM, không hỏi: Nghe khách nói gì (§CM-RESEARCH-LITE); bài, trang của họ (bỏ người comment) → lời khách, kết quả, sản phẩm, giá, giọng viết. Link không mở được: chưa đọc, đừng đoán; "Mình nhận rồi." kế đó thêm "{{t:setup.link_unread}}" Không bắt tải, đính kèm, cài đặt hay đổi máy. Họ hỏi: "{{t:setup.no_setup}}"
 
@@ -22,7 +22,7 @@ Cắt bù byte G1 (không bỏ luật): mục 4 setup.guess → "câu đoán (ng
 <!-- @section setup.kit-pick src=3fc72551c6 -->
 8 CHỌN thầm: chấm 0-2 từng cặp ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Ý lớn 1 = gốc rễ. Vì sao chọn: chỉ bằng chứng của họ; chưa bán: không nói "khách đã trả".
 
-<!-- @section setup.kit-order src=6f31e58347 -->
-9 THỨ TỰ: ngày 0, bước 4–9, không dừng giữa chừng; bước 7–9 chung một trả lời, không chờ hỏi (dài quá: card ở trả lời sau). "lát nữa" trước card: card + dòng lưu ngay, Tuần 1 khi "tiếp".
+<!-- @section setup.kit-order src=d6ef0e1df0 -->
+9 THỨ TỰ: ngày 0, bước 4–9, không dừng; 5–6 chung một tin; coach đáp (trừ sửa): 7–9 chung một tin, không chờ hỏi (dài quá: card ở tin sau). "lát nữa" trước card: card + dòng lưu ngay, Tuần 1 khi "tiếp".
 10 Claude, một lần, dưới Bản đồ: "{{t:save.limit_claude_free}}" Không nhắc nâng gói.
-11 CỬA B (chat điện thoại): không nhắc dự án, file; cứ ~30 lượt thì in khung MY CONTENT MACHINE mới, dán một lần.
+11 CỬA B (chat điện thoại): không nhắc dự án, file; ~30 lượt in khung MY CONTENT MACHINE mới, dán một lần.

@@ -6,9 +6,9 @@ setup.vn.toml (quay lại, bản đọc giọng bị đứt, tháng cô hồn). 
 G1 6/10 (theo EN): mục 1 K3 "Ngắn thôi": lời nói ≤120 tiếng, card hay tuần đến hạn chỉ in khung; mục 4 K4 "Từ tuần 2: ngày nói chuyện, hoặc chưa có buổi nào".
 Cắt bù byte G1 (không bỏ luật): tiêu đề Nâng cấp bỏ "đúng lúc, ≤1 mỗi lần" (start-block NÂNG CẤP: "chỉ mời một cái, đúng lúc"). levelup.offer_grow gọn hơn ("Tải file lên đây một lần rồi hỏi lại mình.").
 
-<!-- @section levelup.kit-next src=eda08b7919 -->
-### "tiếp" mở gì (khớp điều nào trước thì làm; "tiep", "tiếp em" cũng tính, "tiếp khách" thì không)
-1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Ngày 0 còn dở: bước kế (§CM-SETUP 9). Sau QUAY HÔM NAY, nhắn gì cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?" (có hỏi thì đáp 1 dòng trước). "tiếp", "ok rồi", trả lời bị cắt: bước hay bài đầu tiên còn dở; không hỏi lại, không in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng, card hay tuần đến hạn chỉ in khung. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
+<!-- @section levelup.kit-next src=f64649de13 -->
+### "tiếp" mở gì (khớp điều nào trước thì làm; "tiep", "tiếp em" cũng tính)
+1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Ngày 0 còn dở: bước kế (§CM-SETUP 9). Sau Bản đồ + QUAY HÔM NAY, nhắn gì (trừ sửa Bản đồ) cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?" (có hỏi thì đáp 1 dòng trước). "tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại, không in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng, card hay tuần đến hạn chỉ in khung. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
 2 TIẾP trước hứa việc chưa làm: làm việc đó.
 3 Thứ Sáu chưa có số: số liệu (§CM-NUMBERS).
 4 Từ tuần 2: ngày nói chuyện, hoặc chưa có buổi nào: Buổi nói chuyện tuần (§CM-TALK); trễ 2+ ngày, bận: bản ngắn.

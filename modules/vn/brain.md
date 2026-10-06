@@ -11,7 +11,7 @@ G1 6/10 (theo EN): mục 3 K4 "plan_start = hôm sau ngày 0, tuần n = mỗi 7
 Cắt bù byte G1 (không bỏ luật): mục 1 bỏ "; không chặn gì" (start-block bước 8: "Chưa lưu vẫn làm tiếp"); mục 3 card.machine.heading → "dòng cho máy như BRAND CARD" (start-block BRAND CARD in đúng chuỗi đó).
 
 <!-- @section brain.kit-print src=eac33f5c98 -->
-1 KHI NÀO: ngày 0, sau Tuần 1 (§CM-SETUP 9); in lại: mục 4. Coach chỉ thấy dòng lưu và cách lưu (ngày 0, bước 8).
+1 KHI NÀO: ngày 0, sau Tuần 1 (§CM-SETUP 9); in lại: mục 4. Coach chỉ thấy dòng lưu (ngày 0, bước 8).
 2 PHẦN TRÊN, ≤500 ký tự, 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {3 chủ đề} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, giữ dòng giọng.
 3 Rồi dòng cho máy như BRAND CARD + một khung code, mỗi dòng `tên: giá trị`, " | " giữa mục, [n] tối đa, ? = không có thì bỏ, không để trống:
 version date=YYYY-MM-DD edition=vn pack_version=1.0.0 progress
