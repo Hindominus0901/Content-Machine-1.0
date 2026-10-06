@@ -564,6 +564,23 @@ class InvariantTests(TempRepo):
         self.assertFails(report, "I10", '"Khánh Vy"')
 
 
+class PasteBoxTests(unittest.TestCase):
+    def kinds(self, label: str) -> set[str]:
+        lines, _ = graders.split_blocks(f"{label}\n```\nEm nào nói hoài mà nhân viên vẫn quên.\n```")
+        return {ln.block for ln in lines if ln.block}
+
+    def test_a_box_to_post_or_send_is_a_copy_box(self):
+        for label in ("Caption (đăng chữ thì dán y khung này làm bài viết):", "The check you send, ready to paste:",
+                      "Quà, ai comment thì anh dán vô inbox:", "Caption (đăng bài chữ thì dán nguyên khung này):",
+                      "Paste this as your post:"):
+            self.assertEqual(self.kinds(label), {"copy"}, label)
+
+    def test_a_box_for_a_tool_stays_a_paste_box(self):
+        for label in ("Paste this into a new chat named Content Machine.", "Dán vào ô Hướng dẫn của project:",
+                      "Paste into your Notion page:"):
+            self.assertEqual(self.kinds(label), {"paste"}, label)
+
+
 class BaselineFixTests(TempRepo):
     """One regression test per grader error found by the no-pack baselines (evals/baselines/README.md)."""
 

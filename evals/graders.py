@@ -47,7 +47,7 @@ How a machine reply is read:
 - Coach-visible text is the reply minus fenced blocks whose info string holds
   "machine" or that follow a "for the machine" / "cho máy" label. Other fenced
   blocks are copy boxes, or paste blocks (info paste/csv/tsv/sheet/notion, or a
-  "paste"/"dán" label).
+  "paste"/"dán" label that names no post, caption or reply).
 - A status line (verdict line) is a line matching a rendered verdict.* string with
   each {slot} as a wildcard (VN: any pronoun in place of the default ones), or
   starting with checked.prefix. A WHY line starts with why.prefix. A note line is a
@@ -123,6 +123,11 @@ FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})\s*(.*)$")
 FOR_MACHINE_RE = re.compile(r"for the machine|cho máy|dành cho máy", re.I)
 PASTE_INFOS = {"paste", "csv", "tsv", "sheet", "sheets", "notion"}
 PASTE_LABEL_RE = re.compile(r"\bpaste\b|(?<!\w)dán(?!\w)", re.I)
+# A "paste"/"dán" label that names a post, a caption or a reply is a copy box the coach posts or sends ("Caption (đăng
+# chữ thì dán y khung này làm bài viết):", "The check you send, ready to paste:", "Quà, ai comment thì anh dán vô
+# inbox:"), not a block for a tool (review retest-vg4-g5 grader-fixes open item 3).
+POST_PASTE_LABEL_RE = re.compile(r"\bready to paste\b|\b(?:post|caption|reply|inbox|dm|comment|email|gift)s?\b"
+                                 r"|(?<!\w)(?:bài viết|đăng|tin trả lời|quà|cmt)(?!\w)", re.I)
 TAG_RE = re.compile(r"^◆\s*(.+?)\s*·\s*(.+?)\s*$")
 LABEL_RE = re.compile(r"^N\d+\b")
 # The coach's "why?" (cmd.why) and its close variants about the last piece: "why this one?", "why N2?", "why that
@@ -646,7 +651,8 @@ def split_blocks(text: str, positions: list[int] | None = None) -> tuple[list[Li
             if positions is not None:
                 positions.append(len(lines))
         else:
-            kind = "paste" if info.split(" ")[0] in PASTE_INFOS or PASTE_LABEL_RE.search(label) else "copy"
+            pasted = PASTE_LABEL_RE.search(label) and not POST_PASTE_LABEL_RE.search(label)
+            kind = "paste" if info.split(" ")[0] in PASTE_INFOS or pasted else "copy"
             lines.append(Line(raw[i], "", kind, True))
             lines += [Line(b, ck.plain_line(b), kind) for b in body]
             if j < len(raw):
