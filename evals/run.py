@@ -112,6 +112,12 @@ def persona_app(pdir: Path) -> tuple[str, str]:
     return str(data.get("app", "")).lower(), str(data.get("plan", ""))
 
 
+def persona_day0(pdir: Path) -> str:
+    """persona.toml day0 ("2026-10-11 20:45"): the persona's story is set on that date, so it wins over --today."""
+    path = pdir / "persona.toml"
+    return str(load_toml(path).get("day0", "")).strip() if path.exists() else ""
+
+
 def personas(root: Path, edition: str) -> list[str]:
     base = root / "evals" / "personas" / edition
     return sorted(p.name for p in base.iterdir() if (p / "persona.toml").exists()) if base.is_dir() else []
@@ -322,7 +328,7 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
                 rid = run_id(suite, edition, pid, lane, n, tag)
                 meta = {"persona": f"{edition}/{pid}", "edition": edition, "lane": lane, "build_sha": sha,
                         "suite": suite, "repeat": n, **({"app": app} if app else {})}
-                made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
+                made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, persona_day0(pdir) or today))
         return made
     if not module:
         raise RunError("the cases suite needs --module")
