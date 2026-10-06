@@ -127,7 +127,7 @@
 "task.today.name"         = "Today's one thing"
 "task.numbers.name"       = "Numbers day"
 "task.footer"             = "Open {{name}}, newest chat, say 'next'."
-"levelup.offer_reminders" = "Want a nudge on talk day and Friday? Say 'yes'."
+"levelup.offer_reminders" = "Want a nudge on {day} and Friday? Say 'yes'."
 "levelup.offer_nudges"    = "You did a full week. Want me to message you Monday, each morning and Friday? Say 'yes'."
 "levelup.offer_board"     = "Want one place for every piece? Notion, or Google Sheets. Say 'yes'."
 "levelup.offer_autopilot" = "Want each week written into Notion by itself? Say 'yes'."

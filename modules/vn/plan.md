@@ -9,12 +9,12 @@ G1 6/10 (theo EN): WEEK 2 K10 "lean (mặc định)", "standard, chỉ khi xin";
 Cắt bù byte G1 (không bỏ luật): WEEK 3 trỏ mục 0 TRỌNG TÂM của KIỂM TRA TRƯỚC KHI GIAO (luôn trong khối hướng dẫn: một ý lớn, ý chính ≤20 tiếng, một niềm tin, không lấy chủ đề để dành), giữ "ý chính viết trước", "ĐỂ SAU không làm hook", tách hai ý; MONTH 3 điều kiện ĐỂ SAU vào lại trỏ §CM-MAP (Quay lại khi); MONTH 4 tháng cô hồn trỏ §CM-LOCALE 6; month.check bỏ dòng cuối "Trả lời 'không có gì thay đổi' là đủ." (TIẾP month.check_next nói y vậy trong cùng tin).
 G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS đã ghi danh sách quay "(Tuần 1, …) mở bằng" film.list_open, và WEEK 10 không có vế "không thêm lời" để vướng.
 
-<!-- @section plan.kit-week src=fd75a46234 -->
+<!-- @section plan.kit-week src=6338992d95 -->
 ### Tuần nói chuyện (Tuần 1: ngày 0, bước 7)
 1 Tuần n = (số tuần từ plan_start mod 4) + 1, đi đầu là ý lớn n: 1 vấn đề thật, nguyên nhân · 2 cách tốt hơn, cách của họ · 3 bằng chứng, "mình cũng làm được, dù…" · 4 cả ba + sản phẩm. ≥60% bài về ý đó.
 2 Video ngắn (FB, TikTok, IG): 3 video (tuần nói chuyện: 4), 1 bài dài, 1 tin Zalo. Kênh chữ (LinkedIn, bản tin): 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn. Danh sách 300+: tin gửi trước, xin trả lời; chưa có (nói hay đoán): tin riêng (§CM-MESSAGES 4). lean (mặc định) ≤60 phút/tuần; standard, chỉ khi xin, ≤90, thêm 1 video, 1 carousel. Xin bớt bài: giữ bài chính, ý lớn; không tuần nào trống.
 3 Mỗi bài qua mục 0 TRỌNG TÂM (KIỂM TRA TRƯỚC KHI GIAO); ý chính viết trước; ĐỂ SAU không làm hook. Hai ý thì tách, ý sau để dành.
-4 Từ khoá 1 lần + lời mời; chỗ xoay vòng: hook → chữ trên màn hình → câu chốt → dòng 1 caption → comment ghim.
+4 Từ khoá 1 lần trong bài + lời mời; chỗ xoay vòng: hook → chữ trên màn hình → câu chốt → dòng 1 caption → comment ghim.
 5 Dòng VÌ SAO lưu kèm mỗi bài, chỉ in khi hỏi "{{t:cmd.why}}": {{t:why.prefix}}: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}.
 6 Lời mời theo chặng: kéo người mới → theo dõi, gửi bạn bè ("{{t:series.part2_tomorrow}}") · mặc định → từ khoá (§CM-CTA-KIT 1; nhẹ: trả lời, nhắn mình) · nhắn tin, đặt lịch → từ tuần 2, khi có bằng chứng (kết quả khách cho dùng, quy trình, suất nhóm đầu), lean ≤1/tuần, standard ≤2. Cho ≥3 lần mới xin 1 lần.
 7 Mỗi tuần: 1 bài kéo người mới, 1 đồng cảm, 1 dạy, (từ tuần 2) 1 bằng chứng. Tính cách, giải trí ≤20%, như video riêng (§CM-FORMATS). ≥3 định dạng; chống lặp: §CM-HUMANIZE.

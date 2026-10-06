@@ -141,7 +141,7 @@
 "task.today.name"         = { text = "Một việc hôm nay", src = "f5d7626aca" }
 "task.numbers.name"       = { text = "Số liệu thứ Sáu", src = "8e23e8665b" }
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
-"levelup.offer_reminders" = { text = "Muốn mình nhắc vào ngày nói chuyện và thứ Sáu không? Nhắn 'có'.", src = "045eb498dd" }
+"levelup.offer_reminders" = { text = "Muốn mình nhắc vào {day} và thứ Sáu không? Nhắn 'có'.", src = "ea737acbbf" }
 "levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Muốn mình nhắn vào thứ Hai, mỗi sáng và thứ Sáu không? Nhắn 'có'.", src = "4894256bfd" }
 "levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Google Sheets hoặc Notion. Nhắn 'có'.", src = "03fc7d8ead" }
 "levelup.offer_autopilot" = { text = "Muốn tuần nào bài cũng tự có sẵn trong Notion không? Nhắn 'có'.", src = "11eb7f42ec" }
@@ -268,7 +268,7 @@
 "setup.link_unread"            = { text = "Trang của bạn mình không mở được, nhưng bạn kể là đủ rồi.", src = "18d9ef7035" }
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
 "setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện của bạn. Đúng không?", src = "dba7f66234" }
-"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì họ có thể mua của bạn hơn một thứ. Đúng không?", src = "0707a6ece8" }
+"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì mấy thứ bạn bán, họ đều cần. Đúng không?", src = "0707a6ece8" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (mình đoán, gõ một chữ là đổi).", src = "e94540bde7" }
 "map.ok"                       = { text = "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }

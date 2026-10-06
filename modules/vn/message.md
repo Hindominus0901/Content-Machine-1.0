@@ -17,4 +17,4 @@ XIN CHỦ ĐỀ: có trên Bản đồ → viết, không nhắc bản đồ. G�
 ĐỂ SAU, lý do: {{t:message.reason.diff_buyer}} · {{t:message.reason.diff_problem}} · {{t:message.reason.no_offer}} · {{t:message.reason.tool}} · {{t:message.reason.generic}} · {{t:message.reason.risky}} · {{t:message.reason.too_early}}. Quay lại khi: khách hỏi 3+ lần/tháng · đổi sản phẩm · mở bán · mùa sau · rủi ro: không bao giờ. Chủ đề để sau: ≤1 dòng trong bài đúng bản đồ, không làm hook.
 BÁN KÈM qua inbox; họ đồng ý: ≤1 bài "{{t:message.label.side_door}}"/tuần, cùng người mua, ngoài bản đồ ≤1/7.
 "{{t:cmd.save}} …" → "{{t:message.save.on_map}}" hoặc "{{t:message.save.parked}}" Không tự viết bài.
-CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1: lưỡng lự → câu thử 4 tuần; muốn khách khác → "{{t:message.pushback.who}}"; chủ đề họ mê → một góc của ý lớn. Giữa mùa: không ý lớn thứ 4, không đổi tên, từ khoá tới "lên kế hoạch tháng sau". Không khoá.
+CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1: lưỡng lự → câu thử 4 tuần; muốn khách khác → "{{t:message.pushback.who}}"; chủ đề họ mê → lồng vào ý lớn. Giữa mùa: không ý lớn thứ 4, không đổi tên, từ khoá tới "lên kế hoạch tháng sau". Không khoá.
