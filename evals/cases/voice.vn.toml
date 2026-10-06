@@ -168,7 +168,7 @@ not_regex = [
   '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:(?:[^\S\n]+\S+){46,}''',
   '''(?i)(?:giọng (?:của )?chị (?:thế nào|ra sao)|tả giọng|chị (?:muốn|thích) giọng|chọn giọng|giọng nào)[^\n]*\?''',
   '''(?i)(?<!\w)(?:nha|nè|hông)(?!\w)''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)cô Hoa|(?<!\w)Vân(?!\w)|70\s*%|gấp đôi''',
 ]
 verdict = ""
@@ -243,7 +243,7 @@ invariants = ["I1", "I3", "I5", "I8", "I15", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. wf14 V1 ('changed inside the same one decision'); §CM-MAP SỬA ('"sửa dòng N: …" → in lại dòng đó (cả kịch bản nếu đổi) + câu hỏi OK'); start-block step 5 and step 7 (Tuần 1 as soon as she answers, except a change); §CM-TODAY 1 (never 'làm Tuần 1 không?'). Her words go in as given: 'Đứng dậy cái đã, rồi mình nói tiếp.' (voice-samples.md 2; W1) and 'mấy bạn' (her W1-W2 address). map.ok prints once in this transcript (with line 4); 'ok' then gives Tuần 1 (at least 3 copy boxes over the transcript) with nothing under the pieces (I3). Southern throughout (no 'nhé'); no health promise and none of the friend's '3 tuần' / '4 viên' (persona traps). Complements message.vn.048 (Thu, the change only)."""
+notes = """scope: transcript. wf14 V1 ('changed inside the same one decision'); §CM-MAP SỬA ('"sửa dòng N: …" → in lại dòng đó (cả kịch bản nếu đổi) + câu hỏi OK'); start-block step 5 and step 7 (Tuần 1 as soon as she answers, except a change); §CM-TODAY 1 (never 'làm Tuần 1 không?'). Her words go in as given: 'Đứng dậy cái đã, rồi mình nói tiếp.' (voice-samples.md 2; W1) and 'mấy bạn' (her W1-W2 address). map.ok prints once after the reprinted line 4 (the context's Map reply, which run.py's simulator builds into the transcript, holds the first one, so the guard counts from the new GIỌNG line); 'ok' then gives Tuần 1 (at least 3 copy boxes over the transcript) with nothing under the pieces (I3). Southern throughout (no 'nhé'); no health promise and none of the friend's '3 tuần' / '4 viên' (persona traps). Complements message.vn.048 (Thu, the change only)."""
 
 # ---------------------------------------------------------------- written posts vs the spoken dump (wf14 V3, §3 written_vs_spoken, §4.5)
 
@@ -303,7 +303,7 @@ not_regex = [
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:[\U0001F300-\U0001FAFF☀-⛿❤✨]|:\)\))''',
   '''(?im)(?:^|\|)\s*written_vs_spoken\s*:[^\S\n]*(?!(?:none|n/?a|-|—|\?|không có|chưa có|chưa)[^\S\n]*(?:\||$))[^\s|]''',
   '''(?i)(?:mình|em) (?:đã )?(?:xem|đọc|coi|lướt)(?: qua)? (?:trang|kênh|tiktok|video|clip|bài)(?: của)? bạn''',
-  '''(?i)không mở được''',
+  '''(?is)không mở được.*không mở được''',
   '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
   '''(?i)(?<!\w)(?:3 tuần|4 viên)(?!\w)''',
   '''(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)''',
@@ -313,7 +313,7 @@ invariants = ["I1", "I3", "I5", "I8", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. wf14 §4.5 'No written samples ever pasted: posts use the spoken voice, tidied'; §CM-VOICE 8 ('chưa có bài nào thì giọng nói làm gọn (bỏ ờ, à, câu vấp; giữ nhịp, tiểu từ)') and 9 (never add emoji, slang or humour they do not use); 1 (written_vs_spoken only when there are posts); setup.kit-dump 3 ('Link không mở được: chưa đọc, đừng đoán'). Her written habits (':))', 🙆‍♀️, ❤️, lowercase line starts) live in W1-W2, which the machine never saw, so none appear; her spoken lines and particles stay (answers.md chunks 1-3). The unread page is never claimed as read, and setup.link_unread, said once in context, is not repeated. The card's written_vs_spoken is left out (brain.kit-print 3 '? = không có thì bỏ'). ChatGPT Free splits Tuần 1 (at most 3 pieces a reply), so 3 turns cover it and the card (an open kit question whether the card lands in the last Tuần-1 reply or its own, wf15-case-impact Open flags). The machine block may hold verbatim dump passages, so the box patterns skip it."""
+notes = """scope: transcript. wf14 §4.5 'No written samples ever pasted: posts use the spoken voice, tidied'; §CM-VOICE 8 ('chưa có bài nào thì giọng nói làm gọn (bỏ ờ, à, câu vấp; giữ nhịp, tiểu từ)') and 9 (never add emoji, slang or humour they do not use); 1 (written_vs_spoken only when there are posts); setup.kit-dump 3 ('Link không mở được: chưa đọc, đừng đoán'). Her written habits (':))', 🙆‍♀️, ❤️, lowercase line starts) live in W1-W2, which the machine never saw, so none appear; her spoken lines and particles stay (answers.md chunks 1-3). The unread page is never claimed as read, and setup.link_unread, said once in context (built into the transcript by run.py's simulator), is not repeated: 'không mở được' may appear once in the transcript, never twice. The card's written_vs_spoken is left out (brain.kit-print 3 '? = không có thì bỏ'). ChatGPT Free splits Tuần 1 (at most 3 pieces a reply), so 3 turns cover it and the card (an open kit question whether the card lands in the last Tuần-1 reply or its own, wf15-case-impact Open flags). The machine block may hold verbatim dump passages, so the box patterns skip it."""
 
 # ---------------------------------------------------------------- the audience pair across a week; one-to-one messages (§CM-VOICE 3, 8; §CM-NATURAL 4)
 
@@ -361,13 +361,13 @@ input = '''[turn 1] Thảo chép tin ni trong Messenger của trang, em viết g
 contains = []
 not_contains = []
 regex = [
-  '''(?is)\A(?:(?!```).)*?```[^\n]*\n\s*Dạ(?!\w)(?:(?!```).)*?(?<!\w)em(?!\w)''',
-  '''(?is)\A(?:(?!```).)*?```[^\n]*\n(?:(?!```).)*?(?:từng món|từng dòng|dòng riêng|bản vẽ)''',
-  '''(?is)\A(?:(?!```).)*?```(?:(?!```).)*?```(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)anh chị(?!\w)''',
-  '''(?is)\A(?:(?!```).)*?```(?:(?!```).)*?```(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:tụi em|(?<!\w)Đức(?!\w))''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n\s*Dạ(?!\w)(?:(?!```).)*?(?<!\w)em(?!\w)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n\s*Dạ(?!\w)(?:(?!```).)*?(?:từng món|từng dòng|dòng riêng|bản vẽ)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:Dạ|version|date|edition)\b)(?:(?!```).)*?(?<!\w)anh chị(?!\w)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:Dạ|version|date|edition)\b)(?:(?!```).)*?(?:tụi em|(?<!\w)Đức(?!\w))''',
 ]
 not_regex = [
-  '''(?is)\A(?:(?!```).)*?```[^\n]*\n(?:(?!```).)*?(?:quý khách|(?<!\w)bạn(?!\w)|anh chị nào|các anh chị|mọi người|cả nhà|kính gửi)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n\s*Dạ(?!\w)(?:(?!```).)*?(?:quý khách|(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)|anh chị nào|các anh chị|mọi người|cả nhà|kính gửi)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:quý khách|kính gửi|đẳng cấp|sang trọng|kiến tạo không gian|tổ ấm hoàn hảo|cam kết không phát sinh|không phát sinh một đồng|rẻ nhất|bảo hành trọn đời)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)(?:nhé|nhỉ|đấy|cơ)(?=\s*(?:[.!?,…"”\n]|$))''',
   '''(?i)(?<!\w)Toàn(?!\w)''',
@@ -378,7 +378,7 @@ invariants = ["I1", "I3", "I5", "I10", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. §CM-VOICE 3 ('Nhắn riêng mà đổi cặp ("em – chị") → address_1to1') and 8 ('Zalo, inbox, email: viết cho một người (address_1to1 nếu có)'); §CM-NATURAL 4 ('tin riêng gọi một người, như coach gọi khách, không [Tên]' … 'Nhắn khách, người lớn hơn: "Dạ… ạ"'); fmt-short.kit-message 6 (answer the question asked, no name). persona content_pronouns: 'Inbox và Zalo với khách: mở bằng "Dạ", xưng "em", gọi anh, chị, cô, chú theo tuổi'. The question is a customer's Zalo line in paste-dump.md; his name stays out (I10). The first box (the reply) opens 'Dạ', says 'em' and answers with his own practice (W2 'Em ghi vô báo giá thành một dòng riêng'; 'Cái chi có trong bản vẽ là giá chốt, không tính thêm.'); never 'Quý khách', 'bạn', 'anh chị nào', 'mọi người'. The page post in a later box keeps his public pair ('tụi em' or 'Đức', 'anh chị'). Central voice in both: no 'nhé', 'nhỉ', 'đấy', 'cơ' at a clause end (expected.toml banned_particles_in_his_content), no showroom words or 'cam kết không phát sinh' (I23)."""
+notes = """scope: transcript. §CM-VOICE 3 ('Nhắn riêng mà đổi cặp ("em – chị") → address_1to1') and 8 ('Zalo, inbox, email: viết cho một người (address_1to1 nếu có)'); §CM-NATURAL 4 ('tin riêng gọi một người, như coach gọi khách, không [Tên]' … 'Nhắn khách, người lớn hơn: "Dạ… ạ"'); fmt-short.kit-message 6 (answer the question asked, no name). persona content_pronouns: 'Inbox và Zalo với khách: mở bằng "Dạ", xưng "em", gọi anh, chị, cô, chú theo tuổi'. The question is a customer's Zalo line in paste-dump.md; his name stays out (I10). The reply's box (the one that opens 'Dạ'; the patterns walk the fences from the start of the transcript, so a box the simulated context adds cannot stand in for it) says 'em' and answers with his own practice (W2 'Em ghi vô báo giá thành một dòng riêng'; 'Cái chi có trong bản vẽ là giá chốt, không tính thêm.'); never 'Quý khách', 'bạn', 'anh chị nào', 'mọi người'. The page post, a box that does not open 'Dạ', keeps his public pair ('tụi em' or 'Đức', 'anh chị'). Central voice in both: no 'nhé', 'nhỉ', 'đấy', 'cơ' at a clause end (expected.toml banned_particles_in_his_content), no showroom words or 'cam kết không phát sinh' (I23)."""
 
 [[case]]
 id = "voice.vn.009"
@@ -623,7 +623,7 @@ regex = [
 ]
 not_regex = [
   '''(?s)không dùng ["“][^\n]*["”] nữa.*không dùng ["“][^\n]*["”] nữa''',
-  '''(?im)^(?![^\n]*không dùng)[^\n]*muốn chia sẻ''',
+  '''(?ism)không dùng ["“][^\n]*["”] nữa.*^(?![^\n]*không dùng)[^\n]*muốn chia sẻ''',
   '''(?i)never_say|do_say|danh sách (?:cấm|cắt)''',
   '''(?i)(?:chị chắc (?:chưa|không)|xác nhận lại|sao chị không)''',
   '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
@@ -635,7 +635,7 @@ invariants = ["I1", "I3", "I5", "I8", "I10", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. §CM-VOICE 6 ('"không giống mình: {line}" → never_say: "Rồi, từ giờ mình không dùng "{line}" nữa." … Một dòng rồi làm việc; giữ cho mọi bài, tác vụ, card về sau'), in em–chị ('Dạ, từ giờ em không dùng "…" nữa.'); §CM-HUMANIZE lists ('cắt mọi dạng của câu đó, bài này và mọi bài sau'); §CM-NATURAL 5 (open on the scene). The confirmation prints once; the caption comes back without the opener, then the long post opens on her scene (dump chunk 1: the young teacher in a dripping raincoat at the counter, the torn script). The per-line guard skips the confirmation, which quotes the banned opener. I23 reads her 'không giống mình:' line; the banned text sits alone on that line, so NOT_ME_RE takes exactly it. No question back, no list names. Every number in her story is hers (allowed_numbers: tháng 11 năm 2018, 10 giờ đêm, 18 triệu, 12 buổi, 41 thẻ, 27 thẻ); cô Hoa and the '70%' never appear."""
+notes = """scope: transcript. §CM-VOICE 6 ('"không giống mình: {line}" → never_say: "Rồi, từ giờ mình không dùng "{line}" nữa." … Một dòng rồi làm việc; giữ cho mọi bài, tác vụ, card về sau'), in em–chị ('Dạ, từ giờ em không dùng "…" nữa.'); §CM-HUMANIZE lists ('cắt mọi dạng của câu đó, bài này và mọi bài sau'); §CM-NATURAL 5 (open on the scene). The confirmation prints once; the caption comes back without the opener, then the long post opens on her scene (dump chunk 1: the young teacher in a dripping raincoat at the counter, the torn script). The per-line guard skips the confirmation, which quotes the banned opener, and reads only what follows it (the context's caption, built into the transcript by run.py's simulator, still holds the opener). I23 reads her 'không giống mình:' line; the banned text sits alone on that line, so NOT_ME_RE takes exactly it. No question back, no list names. Every number in her story is hers (allowed_numbers: tháng 11 năm 2018, 10 giờ đêm, 18 triệu, 12 buổi, 41 thẻ, 27 thẻ); cô Hoa and the '70%' never appear."""
 
 [[case]]
 id = "voice.vn.017"
@@ -653,7 +653,7 @@ regex = [
   '''(?i)(?<!\w)Hông cần thảm,? hông cần thay đồ''',
 ]
 not_regex = [
-  '''(?i)không cần thảm''',
+  '''(?is)["“]hông["”] (?:mình|em) giữ lại.*không cần thảm''',
   '''(?s)["“]hông["”] (?:mình|em) giữ lại.*["“]hông["”] (?:mình|em) giữ lại''',
   '''(?i)Câu đó (?:mình|em) không thêm được''',
   '''(?i)(?:bạn chắc (?:chưa|không)|sao (?:bạn )?không)''',
@@ -666,7 +666,7 @@ invariants = ["I1", "I3", "I5", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. §CM-VOICE 6 ('"mình có nói {word}" → do_say: "Rồi, "{word}" mình giữ lại."'); §CM-HUMANIZE lists ('"mình có nói": trả về chỗ cũ, không cắt nữa'); §CM-NATURAL 4 (particles and spoken forms by the coach's own posts). 'Hông cần thảm, hông cần thay đồ, mặc váy công sở làm được luôn nè.' is her line (voice-samples.md 3; W1 'hông cần thảm'). The confirmation is the exact string in mình–bạn; N2 comes back with her word; the caption, if it uses the line, keeps it; 'không cần thảm' never comes back. Not a hard stop, so never voice.cant_allow ('Câu đó mình không thêm được: …'). Southern throughout; the friend's '3 tuần' never appears."""
+notes = """scope: transcript. §CM-VOICE 6 ('"mình có nói {word}" → do_say: "Rồi, "{word}" mình giữ lại."'); §CM-HUMANIZE lists ('"mình có nói": trả về chỗ cũ, không cắt nữa'); §CM-NATURAL 4 (particles and spoken forms by the coach's own posts). 'Hông cần thảm, hông cần thay đồ, mặc váy công sở làm được luôn nè.' is her line (voice-samples.md 3; W1 'hông cần thảm'). The confirmation is the exact string in mình–bạn; N2 comes back with her word; the caption, if it uses the line, keeps it; 'không cần thảm' never comes back after the confirmation (the context's N2, built into the transcript by run.py's simulator, still holds it). Not a hard stop, so never voice.cant_allow ('Câu đó mình không thêm được: …'). Southern throughout; the friend's '3 tuần' never appears."""
 
 [[case]]
 id = "voice.vn.018"
@@ -745,22 +745,22 @@ regex = [
   '''(?im)^(?!\W*(?:phrases|openers_closers|passages|client_words|stories|NÓI THẾ NÀO|NÓI GÌ|tone|rhythm|who|their_words|promise|method|old_way|key_belief|idea_shifts|principles|enemy|trait|connectors)\b)[^\n]*(?:ở 15 ngày|làm thử 2 tiếng|viết thử một trang|không có lỗi gì hết|không nằm ở chỗ đăng|người kèm|chỗ khác trả hơn|nghỉ từ tuần đầu)''',
 ]
 not_regex = [
-  '''(?im)^(?!\s*(?:passages|client_words|stories)\s*:)[^\n]*(?:bứt phá|nâng tầm)''',
+  '''(?im)^(?![^\n]*(?:passages|client_words|stories|never_say)\s*:)[^\n]*(?:bứt phá|nâng tầm)''',
   '''(?i)(?:hãy cùng khám phá|đây là lý do tại sao|bạn có biết rằng|trong thế giới hiện đại|hy vọng bài viết hữu ích|thay đổi cuộc chơi|lan tỏa giá trị|mang lại giá trị|góp phần)''',
   '''(?i)không chỉ[^.\n]{1,80}mà còn''',
   '''(?m)(?:^|[.!?]\s+)(?:Tuy nhiên|Do đó|Bên cạnh đó|Ngoài ra|Hơn nữa|Thêm vào đó|Tóm lại),''',
-  '''(?im)(?:^(?!\W*(?:phrases|openers_closers|passages|NÓI THẾ NÀO|tone|rhythm)\b)[^\n]*nói thật nghe anh chị[\s\S]*?){3}''',
-  '''(?im)(?:^(?!\W*(?:phrases|openers_closers|passages|NÓI THẾ NÀO|tone|rhythm)\b)[^\n]*ở 15 ngày[\s\S]*?){3}''',
+  '''(?ism)OK hay sửa một dòng\?.*?(?:^(?![^\n]*(?:phrases|openers_closers|passages|client_words|stories|their_words|principles|key_belief|NÓI THẾ NÀO|GIỌNG|tone|rhythm)\s*:)[^\n]*nói thật nghe anh chị.*?){3}''',
+  '''(?ism)OK hay sửa một dòng\?.*?(?:^(?![^\n]*(?:phrases|openers_closers|passages|client_words|stories|their_words|principles|key_belief|NÓI THẾ NÀO|GIỌNG|tone|rhythm)\s*:)[^\n]*ở 15 ngày.*?){3}''',
   '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
   '''(?i)70\s*%|80\s*%|6 tháng lương|200 triệu|tuyển đâu trúng đó''',
-  '''(?i)(?<!\w)(?:coach|KOL)(?!\w)''',
+  '''(?im)^(?![^\n]*(?:passages|client_words|stories|never_say)\s*:)[^\n]*(?<!\w)(?:coach|KOL)(?!\w)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I8", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. I23 (wf14 §5): 0 banned tells (locales/vn/banned-tells.txt: 'nâng tầm', 'bứt phá', 'Hãy cùng khám phá', 'không chỉ… mà còn', 'Tóm lại,' …) in any machine text, even where the coach said them: his chunk 3 says 'tôi ghét mấy bài kiểu bứt phá doanh thu, nâng tầm doanh nghiệp', and Tuần 1 is cut from his dump (≥70% his words, start-block step 7); the humanize pass strips them (§CM-HUMANIZE 3). The card's verbatim passages may keep his words, so the guards skip passages / client_words / stories lines. §CM-VOICE 7 ('một câu cửa miệng hay cách mở khi hợp, không gượng, không lặp hai bài liền'): at least one piece uses one of his lines (I23's proxy wants half of the pieces of 60+ tiếng), and none ('Nói thật nghe anh chị', 'tuyển 15 phút thì người ta ở 15 ngày') is stamped on 3+ lines outside the card's voice fields. 'Tôi không quay video đâu, tôi viết thôi.' is his verbatim pushback; film.now_or_text already offered the text route, so Tuần 1 follows with QUAY HÔM NAY posted as text. He hates being called 'coach' or 'KOL'. Traps: '70%', '80%', '6 tháng lương', '200 triệu', 'tuyển đâu trúng đó'."""
+notes = """scope: transcript. I23 (wf14 §5): 0 banned tells (locales/vn/banned-tells.txt: 'nâng tầm', 'bứt phá', 'Hãy cùng khám phá', 'không chỉ… mà còn', 'Tóm lại,' …) in any machine text, even where the coach said them: his chunk 3 says 'tôi ghét mấy bài kiểu bứt phá doanh thu, nâng tầm doanh nghiệp', and Tuần 1 is cut from his dump (≥70% his words, start-block step 7); the humanize pass strips them (§CM-HUMANIZE 3). The card's verbatim passages and its never_say field may keep his words, so the guards skip lines holding passages / client_words / stories / never_say (a field may share a line after ' | '). §CM-VOICE 7 ('một câu cửa miệng hay cách mở khi hợp, không gượng, không lặp hai bài liền'): at least one piece uses one of his lines (I23's proxy wants half of the pieces of 60+ tiếng), and none ('Nói thật nghe anh chị', 'tuyển 15 phút thì người ta ở 15 ngày') is stamped on 3+ lines of Tuần 1 outside the card's fields. The count starts after map.ok: the context's early win, GIỌNG line and QUAY HÔM NAY (built into the transcript by run.py's simulator) may each quote his best line. 'Tôi không quay video đâu, tôi viết thôi.' is his verbatim pushback; film.now_or_text already offered the text route, so Tuần 1 follows with QUAY HÔM NAY posted as text. He hates being called 'coach' or 'KOL' (chunk 3: 'tôi không muốn thành KOL hay coach gì hết'), so the card's never_say may list both: that line is skipped. Traps: '70%', '80%', '6 tháng lương', '200 triệu', 'tuyển đâu trúng đó'."""
 
 # ---------------------------------------------------------------- "viết lại giọng mình" (§CM-VOICE 5; §CM-HUMANIZE)
 
@@ -782,7 +782,7 @@ regex = [
 ]
 not_regex = [
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:kiến tạo không gian|đẳng cấp|tổ ấm hoàn hảo|giải pháp tối ưu|sang trọng|chuẩn châu âu|tinh tế|hãy cùng khám phá|hữu duyên|chúng tôi|ưu đãi)''',
-  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''\bV[1-9]\b''',
   '''(?i)danh sách (?:cấm|cắt)|never_say|do_say|banned|strip list''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)(?:nhé|nhỉ|đấy|cơ)(?=\s*(?:[.!?,…"”\n]|$))''',
@@ -811,9 +811,9 @@ regex = [
   '''(?i)GỒNG LÃI''',
 ]
 not_regex = [
-  '''(?im)^(?![^\n]*không dùng)[^\n]*chốt deal''',
+  '''(?ism)không dùng ["“][^\n]*["”] nữa.*^(?![^\n]*không dùng)[^\n]*chốt deal''',
   '''(?s)không dùng ["“][^\n]*["”] nữa.*không dùng ["“][^\n]*["”] nữa''',
-  '''(?im)^\W*N[124]\b''',
+  '''(?ism)không dùng ["“][^\n]*["”] nữa.*^\W*N[124]\b''',
   '''\bV[1-9]\b''',
   '''(?i)never_say|do_say|danh sách (?:cấm|cắt)''',
   '''(?im)^(?![^\n]*(?:không|hổng|đừng|chưa)(?!\w))[^\n]*(?:cơ hội vàng|siêu phẩm|đẳng cấp|căn cuối cùng|sinh lời|view sông)''',
@@ -825,7 +825,7 @@ invariants = ["I1", "I3", "I5", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. §CM-VOICE 5 ('Họ chỉ chỗ lệch → lưu như mục 6'): never_say + voice.not_me_ok, one line, then the work; in em–anh 'Dạ, từ giờ em không dùng "chốt deal" nữa.'. His code_mix is 'sale, chốt, booking, OK, free, inbox'; 'chốt deal' is the machine's, and he says so in his own words ('hổng phải tui'). Only N3 is reprinted (§CM-EDGE 'chỉ N2, in lại riêng'), with nothing under it; the keyword GỒNG LÃI never changes (§CM-HUMANIZE 6). His never-words and the 'view sông' trap stay out. graders.py I23 reads only 'không giống mình:' lines, so the plain-words form is checked here (see flags)."""
+notes = """scope: transcript. §CM-VOICE 5 ('Họ chỉ chỗ lệch → lưu như mục 6'): never_say + voice.not_me_ok, one line, then the work; in em–anh 'Dạ, từ giờ em không dùng "chốt deal" nữa.'. His code_mix is 'sale, chốt, booking, OK, free, inbox'; 'chốt deal' is the machine's, and he says so in his own words ('hổng phải tui'). Only N3 is reprinted (§CM-EDGE 'chỉ N2, in lại riêng'), with nothing under it; the keyword GỒNG LÃI never changes (§CM-HUMANIZE 6). The 'chốt deal' and N-label guards read only what follows the confirmation line: the context's clip (built into the transcript by run.py's simulator) and the turn-1 rewrite, which he says is still off, may hold 'chốt deal' and other N labels. His never-words and the 'view sông' trap stay out. graders.py I23 reads only 'không giống mình:' lines, so the plain-words form is checked here (see flags)."""
 
 # ---------------------------------------------------------------- the Brand Card's NÓI THẾ NÀO line (wf14 §2; brain.kit-print 2)
 
@@ -918,7 +918,7 @@ not_regex = [
   '''(?i)(?:phương pháp|công thức|hệ thống|bí quyết)\s+(?:tính ngược|3 bước|ba bước|quỹ 6 tháng|che vay)''',
   '''(?i)(?:tính ngược|quỹ 6 tháng|ba bước|3 bước)\s+(?:method|formula|system|framework)''',
   '''(?i)2 tỷ 1(?!\d)|2,1 tỷ|2 tỷ 9|2,9 tỷ|bán giùm em căn|gồng không nổi nữa rồi|ngân hàng đâu có ngu''',
-  '''(?im)^(?![^\n]*(?:không|hổng|chưa)(?!\w))[^\n]*(?:gói tích lũy|lãi suất năm sau|năm sau lãi suất)''',
+  '''(?im)^(?![^\n]*(?:(?:không|hổng|chưa|chờ|đợi)(?!\w)|để dành|để sau))[^\n]*(?:gói tích lũy|lãi suất năm sau|năm sau lãi suất)''',
   '''(?im)^(?![^\n]*(?:không|hổng|đừng|chưa)(?!\w))[^\n]*(?:sinh lời|lợi nhuận đảm bảo|lãi suất đảm bảo|đầu tư an toàn|không rủi ro|chắc chắn vay được|an cư lạc nghiệp|tổ ấm mơ ước|căn cuối cùng|cơ hội vàng)''',
   '''(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)''',
   '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
@@ -928,7 +928,7 @@ invariants = ["I1", "I3", "I8", "I9", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. talk.kit-week ('3 bài nói lại, ≥70% chữ họ vừa nói, gọt bớt'; 'giọng: §CM-VOICE 8, cùng chữ họ nói; làm thầm §CM-VOICE 4'); talk.kit-talk 4 ('Lạc đề: để dành. Không viết chuyện thay họ'); wf14 §4.2 ('never invent'). His Talk lines (pillar-transcript.md: 'ngân hàng không ngu, ngân hàng tính cho ngân hàng', 'Ai tính bằng lãi ưu đãi là đang tính cho một năm, rồi gồng mười chín năm.', 'coi chi cho thương rồi khổ', 'cái quỹ đó là tiền mua giấc ngủ', 'Người đi làm chính nằm là cả nhà nằm theo.', 'Che mà khai thiếu là che có lỗ.', 'thì ai góp?', 'nói để em về tính') reach the week verbatim (I9 ≤25 tiếng). The machine never names his steps as a method or formula (he asked for a name 'ngắn ngắn, người ta nghe là hiểu liền, đừng tiếng Anh' only on Day 0), never tells the answer-1 couple he asked to keep unrecognisable (2 tỷ 1, 2 tỷ 9, the wife's call, the husband's 'ngân hàng đâu có ngu'), and never writes the parked 'lãi suất năm sau' or the savings plans, except to say they wait. Southern particles; never-words stay out (I23). Pieces print with nothing under them (I3)."""
+notes = """scope: transcript. talk.kit-week ('3 bài nói lại, ≥70% chữ họ vừa nói, gọt bớt'; 'giọng: §CM-VOICE 8, cùng chữ họ nói; làm thầm §CM-VOICE 4'); talk.kit-talk 4 ('Lạc đề: để dành. Không viết chuyện thay họ'); wf14 §4.2 ('never invent'). His Talk lines (pillar-transcript.md: 'ngân hàng không ngu, ngân hàng tính cho ngân hàng', 'Ai tính bằng lãi ưu đãi là đang tính cho một năm, rồi gồng mười chín năm.', 'coi chi cho thương rồi khổ', 'cái quỹ đó là tiền mua giấc ngủ', 'Người đi làm chính nằm là cả nhà nằm theo.', 'Che mà khai thiếu là che có lỗ.', 'thì ai góp?', 'nói để em về tính') reach the week verbatim (I9 ≤25 tiếng). The machine never names his steps as a method or formula (he asked for a name 'ngắn ngắn, người ta nghe là hiểu liền, đừng tiếng Anh' only on Day 0), never tells the answer-1 couple he asked to keep unrecognisable (2 tỷ 1, 2 tỷ 9, the wife's call, the husband's 'ngân hàng đâu có ngu'), and never writes the parked 'lãi suất năm sau' or the savings plans, except to say they wait (the guard skips a line holding 'để dành', 'để sau', 'chờ' or a negation, as talk.kit-talk 4 words the park). Southern particles; never-words stay out (I23). Pieces print with nothing under them (I3)."""
 
 # ---------------------------------------------------------------- "tại sao?" shows the voice a piece used (wf15 §2; §CM-EDGE "tại sao?")
 

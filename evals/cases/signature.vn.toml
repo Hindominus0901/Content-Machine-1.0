@@ -196,7 +196,7 @@ not_regex = [
 ]
 invariants = ["I1", "I5", "I6", "I15"]
 max_questions = 1
-notes = "QA §3.1 signature-keyword runtime: 'The machine picks; change swaps.' message.kit-map SỬA: 'sửa dòng N: …' → reprint that line (and the script if it changes, here the CTA keyword) + the OK question (start-block step 5: 'sửa dòng nào in lại dòng đó (cả kịch bản nếu đổi)'). 'nghỉ ngang' is an audience alternate (expected.toml), so the swap needs no new evidence step and no menu. A change is the one exception to 'any answer brings Week 1', so no Week-1 piece here. I6 is listed; graders.py currently counts a reprinted map.ok as a new decision (open grader flag), so a failing I6 here needs reading."
+notes = "QA §3.1 signature-keyword runtime: 'The machine picks; change swaps.' message.kit-map SỬA: 'sửa dòng N: …' → reprint that line (and the script if it changes, here the CTA keyword) + the OK question (start-block step 5: 'sửa dòng nào in lại dòng đó (cả kịch bản nếu đổi)'). 'nghỉ ngang' is an audience alternate (expected.toml), so the swap needs no new evidence step and no menu. A change is the one exception to 'any answer brings Week 1', so no Week-1 piece here. I6 is listed: graders.py reply_decisions keys every map.ok print to the one decision, so the reprint after the swap stays one decision (checked on the Map reply plus a swap reply: I6 passes)."
 
 [[case]]
 id = "signature.vn.008"

@@ -273,7 +273,7 @@ regex = [
   '''(?i)Buổi nói chuyện tuần''',
 ]
 not_regex = [
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)xả hết''',
 ]
 verdict = ""
@@ -437,7 +437,7 @@ regex = [
 not_regex = [
   '''(?i)xả hết''',
   '''(?i)(kể|nói)\s+lại\s+(từ đầu|hết)''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15"]
@@ -462,7 +462,7 @@ regex = ['''(?i)đúng bản đồ:?\s*(?:chủ đề|ý lớn) [1-3]''']
 not_regex = [
   '''\b[VSPXK]-\d+\b''',
   '''(?i)(?<!\w)trụ\s*[1-9]''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?m)^\s*(?:```|~~~)''',
 ]
 verdict = ""
@@ -489,7 +489,7 @@ regex = [
 not_regex = [
   '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
   '''\b[VSPXK]-\d+\b''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?m)^\s*(?:```|~~~)''',
 ]
 verdict = ""
@@ -511,7 +511,7 @@ contains = []
 not_contains = ["VÌ SAO RA KHÁCH"]
 regex = ['''(?i)(đồng ý|cho phép|xin phép|hỏi em ấy)''']
 not_regex = [
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)(tuyệt vời|quá đỉnh)''',
   '''(?m)^\s*(?:```|~~~)''',
 ]
@@ -577,7 +577,7 @@ contains = []
 not_contains = []
 regex = ['''(?i)["“']ối giời["”'] (em|mình) giữ lại''']
 not_regex = [
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)(không nên|không chuyên nghiệp|tiếng lóng)''',
 ]
 verdict = ""
@@ -600,7 +600,7 @@ not_contains = []
 regex = ['''(?i)không\s+(viết|dùng|ghi|thêm|đưa)''']
 not_regex = [
   '''(?im)^(?!.*không\s+(viết|dùng|ghi|thêm|đưa)).*đảm bảo''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15"]
@@ -630,7 +630,7 @@ regex = [
 not_regex = [
   '''5,990,000|5990000|\$|VND''',
   '''Brand Card v2\W{0,4}·(?:(?!cho máy)[\s\S])*?(?:5\.990\.000|4\.990\.000)''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I8", "I15"]
@@ -656,7 +656,7 @@ regex = [
 ]
 not_regex = [
   '''(?i)(?<!\w)kh(óa|oá)(?!\w)[^.\n]{0,20}90''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+(sinh viên|bè))''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
 ]
 verdict = ""
 invariants = ["I1", "I4", "I6", "I15"]
@@ -769,7 +769,7 @@ regex = [
   '''(?i)(chép|dán)''',
 ]
 not_regex = [
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+(sinh viên|bè))''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
   '''(?i)(lưu|save)[^.\n]{0,40}(rồi mới|xong mới|mới\s+(làm|viết|được|tiếp))''',
 ]
 verdict = ""
@@ -822,7 +822,7 @@ not_regex = [
   '''(?m)^\s*(?:```|~~~)''',
   '''(?<!\w)(bạn Trang|anh Khải)(?!\w)''',
   '''(?im)^(?!.*(không|chưa)).*(gấp 3|x3|1 tỷ)''',
-  '''(?i)(?<!\w)bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]

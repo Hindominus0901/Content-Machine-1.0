@@ -452,7 +452,7 @@ not_regex = [
   '''(?i)(?:phải quay|nên quay ngay|đừng bỏ|tiếc lắm|cố quay)''',
   '''(?i)(?<!\w)(?:hết nám|trị dứt điểm|trắng da)(?!\w)''',
   '''(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)(?:muốn|làm|in|viết|gửi)[^\n?]{0,25}tuần 1[^\n?]{0,25}\?''',
 ]
@@ -551,7 +551,7 @@ not_regex = [
   '(?im)^(?![^\n]*(?:không|khỏi|chưa|đừng|chẳng)(?!\w))[^\n]*(?:cắt (?:ra|đoạn|clip|ghép)|ghép|tải|cài|CapCut)',
   '\b\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}\b',
   '(?im)^(?![^\n]*(?:không|khỏi|chưa|đừng|chẳng)(?!\w))[^\n]*(?:điện thoại thứ hai|máy thứ hai|mượn (?:thêm )?(?:máy|điện thoại)|chân máy|tripod)',
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
 ]
 invariants = ["I1", "I5", "I15", "I17"]
 max_words = 200
@@ -881,10 +881,10 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?i)comment\s+["“‘']?[A-ZĐÂĂÊÔƠƯ]{3,}''',
+  '''(?i)comment\s+["“‘']?[^\W\d_]{2,}''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)file phương pháp''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I9", "I15", "I17", "I18"]

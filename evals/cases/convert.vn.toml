@@ -99,7 +99,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Day 0, her 'ok' after the Map brings Tuần 1: follow/send and comment CỨNG ĐƠ only; no inbox-to-buy, no price, no booking ask, nothing under the pieces"
-context = '''Day 0, ChatGPT Free on her iPhone, pair bạn–mình (she chose 'bạn'). Cold start: no offer, no price, 0 online clients; audience mình – mấy bạn. The last reply held the 4-line Bản đồ (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it (the caption, 'Comment CỨNG ĐƠ hay nhắn riêng, mình gửi 3 động tác 5 phút tại bàn.', the quà in a copy box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.') and ended 'Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her answer brings Tuần 1 (ChatGPT Free: the first Tuần-1 reply, ≤3 pieces).'''
+context = '''Day 0, ChatGPT Free on her iPhone, pair bạn–mình (she chose 'bạn'). Cold start: no offer, no price, 0 online clients; audience mình – mấy bạn. The last reply held the 4-line Bản đồ (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it (the caption, 'Comment CỨNG ĐƠ hay nhắn riêng, mình gửi 3 động tác 5 phút tại bàn.', the quà in a copy box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.') and ended with map.ok in her region's particle, 'Chạy thử 4 tuần nha. OK hay sửa một dòng?'. Her answer brings Tuần 1 (ChatGPT Free: the first Tuần-1 reply, ≤3 pieces).'''
 input = """ok nha"""
 regex = [
   '(?i)cứng đơ',
@@ -178,7 +178,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Personal Facebook profile: LÃI ẢO stays, one dated note that replies go by hand, no detour to create a Page"
-context = "Week 1, day 1, ChatGPT Plus. Yesterday's Reel ended 'comment LÃI ẢO, chị gửi Sổ 3 Cột bản 1 trang'. She posts from her personal Facebook (professional mode, 4.800 friends, 1.900 followers) and her group Shop Nhỏ Lãi Thật; no Page."
+context = "Week 1, day 1, ChatGPT Plus. Yesterday's Reel ended 'comment LÃI ẢO, mình gửi Sổ 3 Cột bản 1 trang' (her public posts say 'mình' to 'các chị em'). She posts from her personal Facebook (professional mode, 4.800 friends, 1.900 followers) and her group Shop Nhỏ Lãi Thật; no Page."
 input = """người ta comment lãi ảo nhiều quá em ạ, trang cá nhân thì có tự gửi tin được không hay chị phải lập Trang?"""
 regex = [
   '(?i)lãi ảo',
@@ -450,19 +450,19 @@ regex = [
   'TIẾP →[^\n]*\s*\Z',
 ]
 not_regex = [
-  '(?i)gửi[^.\n]{0,30}(?:3\.200|cả danh bạ|toàn bộ danh bạ|khách spa)',
+  '(?im)^(?![^\n]*(?:không|đừng|chẳng|khỏi)\s+gửi)[^\n]*gửi[^.\n]{0,30}(?:3\.200|cả danh bạ|toàn bộ danh bạ|khách spa)',
   '(?im)^\W*(?:tiêu đề|subject)\s*[:：]',
   '(?i)(?:chỉ còn \d+ suất|hạn chót|giá (?:này )?chỉ hôm nay|sắp hết|hữu duyên)',
   '(?i)(?<!\w)(?:hết nám|trắng da|trị dứt điểm)(?!\w)|doanh thu gấp đôi|70\s?%',
   '(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)',
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
   '(?i)muốn dừng nhận tin,? nhắn DỪNG',
   '(?ms)\A(?:(?:(?!^[ \t]*(?:```|~~~)).)*^[ \t]*(?:```|~~~)[^\n]*\n(?:(?!^[ \t]*(?:```|~~~)).)*^[ \t]*(?:```|~~~)[^\n]*(?:\n|\Z))*?(?:(?!^[ \t]*(?:```|~~~)).)*^[ \t]*(?:```|~~~)[^\n]*\n(?:(?!^[ \t]*(?:```|~~~)).)*?^[^\w\n]*Dạ(?!\w)',
   '(?ims)\A(?:(?:(?!^[ \t]*(?:```|~~~)).)*^[ \t]*(?:```|~~~)[^\n]*\n(?:(?!^[ \t]*(?:```|~~~)).)*^[ \t]*(?:```|~~~)[^\n]*(?:\n|\Z))*?(?:(?!^[ \t]*(?:```|~~~)).)*^[ \t]*(?:```|~~~)[^\n]*\n(?:(?!^[ \t]*(?:```|~~~)).)*?(?<!\w)(?:anh|chị|em|bạn|cô|chú)\s*/\s*(?:anh|chị|em|bạn|cô|chú)(?!\w)',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I15", "I17", "I18"]
 max_questions = 1
-notes = """§CM-MESSAGES 1 and 3: Zalo replaces email in the private track (line 1 does the subject's job); a Zalo series carries 'Không muốn nhận nữa thì nhắn mình chữ DỪNG.', in her voice to the owners 'nhắn chị chữ DỪNG' (the older call-centre 'Muốn dừng nhận tin, nhắn DỪNG' is gone); EM6 opt-in only: the people in the trade, never the 3.200 customers (expected.toml launch must_respect 'tệp ấm là khoảng 380 chủ spa, không phải 3.200 Zalo'); EM7 no invented deadline. One job per message. Pair chị – các em throughout: she is older, so no line in a box opens with 'Dạ' (§CM-NATURAL 4, graders vn_messages)."""
+notes = """§CM-MESSAGES 1 and 3: Zalo replaces email in the private track (line 1 does the subject's job); a Zalo series carries 'Không muốn nhận nữa thì nhắn mình chữ DỪNG.', in her voice to the owners 'nhắn chị chữ DỪNG' (the older call-centre 'Muốn dừng nhận tin, nhắn DỪNG' is gone); EM6 opt-in only: the people in the trade, never the 3.200 customers (expected.toml launch must_respect 'tệp ấm là khoảng 380 chủ spa, không phải 3.200 Zalo'; a line that says so, 'không gửi khách spa', passes the send guard); EM7 no invented deadline. One job per message. Pair chị – các em throughout: she is older, so no line in a box opens with 'Dạ' (§CM-NATURAL 4, graders vn_messages)."""
 
 [[case]]
 id = "convert.vn.015"

@@ -208,7 +208,7 @@ not_regex = [
   '''Kiểm tra cài đặt''',
   '''(?i)anh, chị hay bạn''',
   '''(?i)(kể|nói) lại (từ đầu|hết)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)(?<!\w)(dự án|project)(?!\w)''',
   '''(?i)(?<!\w)(chi oi|ke tiep|em nhan|noi tiep)(?!\w)''',
   '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
@@ -240,7 +240,7 @@ not_regex = [
   '''VÌ SAO RA KHÁCH''',
   '''(?im)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · |✓ Đã kiểm:)''',
   '''(?i)(?<!không cần )(?<!khỏi )(?<!không )(bật|mở) (camera|máy quay)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I15"]
@@ -412,7 +412,7 @@ not_regex = [
   '''(?i)làm bản của mình''',
   '''(?i)đừng nhìn doanh thu nữa|file tính lãi''',
   '''(?<!\w)SỔ(?!\w)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)\(Bài đó (?:mình|em) giữ lại cho [^)\n]*; giờ làm video hôm nay trước\.?\)''',
 ]
 verdict = ""
@@ -619,7 +619,7 @@ not_regex = [
   '''(?i)làm bản của mình''',
   '''(?i)Bài của chị thì chị nhắn|nếu (đây )?là bài của chị''',
   '''(?i)khung của họ|bài của họ''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I9", "I15", "I17"]
@@ -689,7 +689,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'đổi từ khóa' on the Day-0 Map reply swaps to a pre-picked alternate with its origin: that line and the script reprinted, then the OK question; no Tuần 1 yet"
-context = '''Day 0, Monday 12 Oct 2026, about minute 18, ChatGPT Plus on the laptop; pair chị–em, Bắc. The last reply was the one Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: LÃI ẢO (lai ao) · GIỌNG), QUAY HÔM NAY under it with the CTA 'Comment LÃI ẢO hay nhắn riêng, chị gửi Sổ 3 Cột bản 1 trang' and the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. The keyword's 2 alternates (lãi thật, không thấy tiền đâu) sit in the machine's notes only. Chị Thu answers the one decision.'''
+context = '''Day 0, Monday 12 Oct 2026, about minute 18, ChatGPT Plus on the laptop; pair chị–em, Bắc. The last reply was the one Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: LÃI ẢO (lai ao) · GIỌNG), QUAY HÔM NAY under it with the CTA in her audience pair, 'Comment LÃI ẢO hay nhắn riêng, mình gửi Sổ 3 Cột bản 1 trang', and the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. The keyword's 2 alternates (lãi thật, không thấy tiền đâu) sit in the machine's notes only. Chị Thu answers the one decision.'''
 input = '''đổi từ khóa em ơi'''
 contains = []
 not_contains = []
@@ -734,7 +734,7 @@ not_regex = [
   '''[™®]''',
   '''(?i)bí kíp|công thức|thần tốc|triệu đô|đỉnh cao|(?<!\w)siêu(?!\w)|bí mật|hệ thống''',
   '''(?i)Kịch Bản Chốt Thẻ|Chốt Thẻ Thần Tốc|Học Viện''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I17"]
@@ -1233,7 +1233,7 @@ not_regex = [
   '''(?im)^(?![^\n]*(?:bỏ|thay|đổi|sửa|cắt))[^\n]*(thời đại ngày nay|đóng vai trò)''',
   '''(?i)nâng tầm|bứt phá|hành trình|lan tỏa giá trị|lan toả giá trị''',
   '''(?i)(em|mình) (thành thật )?xin lỗi''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
 ]
@@ -1528,7 +1528,7 @@ regex = [
 ]
 not_regex = [
   '''(?i)em sẽ (theo dõi|canh|xem giúp|báo chị|kiểm tra)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I22"]
@@ -2033,7 +2033,7 @@ regex = [
 ]
 not_regex = [
   '''Kiểm tra cài đặt''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)(?<!\w)(hom nay|bai dang|chi oi|em gui|tiep theo)(?!\w)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
@@ -2146,7 +2146,7 @@ not_regex = [
   '''(?i)Đã lưu vào Bài (?:anh|bạn) thích''',
   '''(?im)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · )''',
   '''(?i)để sau|(?<!\w)Để dành:''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = ""
@@ -2172,7 +2172,7 @@ regex = [
 ]
 not_regex = [
   '''(?<!\w)[VSPXKW]-\d+(?!\w)''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)Đã lưu vào Bài chị thích''',
   '''(?i)(?<!\w)(da luu|y lon|ban do|chu de)(?!\w)''',
 ]
@@ -2254,7 +2254,7 @@ not_regex = [
   '''(?im)^(?![^\n]*(?:bỏ|thay|đổi|sửa|cắt))[^\n]*(bối cảnh|đầy biến động|đóng vai trò|then chốt)''',
   '''(?i)nhân tài|(?<!\w)(onboarding|scorecard)(?!\w)''',
   '''(?i)điền vào|theo mẫu''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
 ]
@@ -2366,7 +2366,7 @@ regex = [
 not_regex = [
   '''VÌ SAO RA KHÁCH''',
   '''(?im)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · )''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = ""
@@ -2526,7 +2526,7 @@ regex = [
 ]
 not_regex = [
   '''(?im)^(?![^\n]*(?:không giống|không dùng|không viết|không đưa|bỏ|gạch|cắt))[^\n]*là một người thân''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
 ]
@@ -2839,7 +2839,7 @@ not_regex = [
   '''VÌ SAO RA KHÁCH''',
   '''(?m)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · |Cần chị · |✓ Đã kiểm:|Câu ["“])''',
   '''(?i)buổi nói chuyện tuần''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I17"]
@@ -2866,7 +2866,7 @@ not_regex = [
   '''(?m)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · |Cần chị · |✓ Đã kiểm:|Câu ["“])''',
   '''(?i)(?<!\w)dán(?!\w)|nghiên cứu''',
   '''```''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I17"]
@@ -2920,7 +2920,7 @@ not_regex = [
   '''VÌ SAO RA KHÁCH''',
   '''(?m)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · |Cần anh · |✓ Đã kiểm:)''',
   '''```''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I15"]
@@ -2947,7 +2947,7 @@ not_regex = [
   '''(?m)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · |Cần chị · |✓ Đã kiểm:)''',
   '''(?i)câu (hỏi )?(1|một) (trên|trong) (5|năm)|buổi nói chuyện tuần''',
   '''```''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I17"]
@@ -3076,7 +3076,7 @@ not_regex = [
   '''VÌ SAO RA KHÁCH''',
   '''(?m)^\W*(Sẵn sàng (quay|đăng|gửi) · |Bản nháp · |Cần chị · |✓ Đã kiểm:)''',
   '''```''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I17"]

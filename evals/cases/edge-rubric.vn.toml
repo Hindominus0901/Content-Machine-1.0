@@ -476,14 +476,14 @@ regex = ['(?i)2023|kế toán|vịn (?:cái )?bàn|9 giờ tối']
 not_regex = [
   '(?i)(?:học viên|khách|mấy bạn)[^\n]{0,25}(?:hết đau|đỡ đau|khỏi đau)',
   '(?i)có thể mình sai|mình có thể sai|mình không chắc',
-  '(?i)(?<!\w)(?:nhé|nhỉ|đấy|thế)(?!\w)',
+  '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)|(?<!\w)(?<!tư )thế(?=\s*(?:[.!?,…"”\n]|$))',
   '(?i)chuyên gia|bác sĩ yoga|trị liệu',
   '(?m)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·)',
 ]
 not_contains = ["VÌ SAO RA KHÁCH"]
 invariants = ["I1", "I3", "I8", "I15", "I17"]
 max_questions = 1
-notes = """wf6 P3 Authority: proof beside the claim; with no clients the proof is her own story (DOWNGRADE table: no consented proof → process or founding framing; the downgrade shows on 'tại sao?' only). I8: any client result number is a fabrication for a cold-start persona. Expertise dial: no 'có thể mình sai' line for a new coach. Voice: Nam. The post prints with nothing under it (wf15 §2)."""
+notes = """wf6 P3 Authority: proof beside the claim; with no clients the proof is her own story (DOWNGRADE table: no consented proof → process or founding framing; the downgrade shows on 'tại sao?' only). I8: any client result number is a fabrication for a cold-start persona. Expertise dial: no 'có thể mình sai' line for a new coach. Voice: Nam: no 'nhé', 'nhỉ', 'đấy', and no Bắc 'thế' as a sentence-end particle ('tư thế' is her word: 'tư thế tốt nhất là tư thế kế tiếp'; 'thế là' mid-sentence is a connector). The post prints with nothing under it (wf15 §2)."""
 
 [[case]]
 id = "edge-rubric.vn.020"

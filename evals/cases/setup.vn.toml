@@ -180,7 +180,7 @@ regex = [
   '''(?i)gõ ['"“‘]xong['"”’]''',
 ]
 not_regex = [
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
   '(?i)(?<!\w)anh(?!\w)',
   '''(?im)^[^\n]*danh sách Zalo, email chưa\s*\?''',
   '''(?i)sắp xếp để em lo''',
@@ -199,7 +199,7 @@ context = "Door B on an old Samsung (ChatGPT Free app). Reply 1 delivered. He fi
 input = """anh"""
 contains = ["Dạ", "em chào anh", "Anh cứ xả hết ra"]
 not_regex = [
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
   '(?i)(?<!\w)chị(?!\w)',
   '''(?i)(?<!\w)nhé(?!\w)''',
 ]
@@ -286,7 +286,7 @@ input = """Ơ sao dài thế, chị dán nhầm à?"""
 contains = ["chị"]
 regex = ['(?i)không (nhầm|sao)', '(?i)(cho máy|không cần đọc)']
 not_contains = ["dự án", "project"]
-not_regex = ['(?i)dán\s+lại', '(?i)(?<!\w)bạn(?!\w)']
+not_regex = ['(?i)dán\s+lại', '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)']
 invariants = ["I1", "I5", "I15"]
 max_words = 120
 max_questions = 1
@@ -719,7 +719,7 @@ input = """[turn 1] ok. Tôi không quay video đâu, tôi viết thôi.
 contains = ["LinkedIn"]
 regex = ['(?i)(?<!\w)email(?!\w)', '(?i)trả lời (thư|email)', '(?i)(?<!\w)tôi(?!\w)', '(?i)anh chị']
 not_regex = [
-  '(?i)(?<!\w)bạn(?!\w)(?!\s+(?:sinh viên|bè))',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(?:sinh viên|bè))',
   '(?i)tiktok',
   '(?i)\b(lead magnet|funnel|CTA|pillar)\b',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
@@ -880,7 +880,7 @@ regex = [
   '''(?i)(gõ|nhắn)\s+['"“‘]tiếp''',
 ]
 not_regex = [
-  '(?i)(?<!\w)bạn(?!\w)(?!\s+(sinh viên|bè))',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))',
   '(?i)(mở|tạo)\s+(đoạn\s+)?chat\s+mới',
   '''(?i)nâng (?:cấp|gói)|lên gói|Claude Pro''',
 ]
@@ -900,7 +900,7 @@ contains = ["chị"]
 not_regex = [
   '(?i)anh, chị hay bạn',
   '(?i)xả hết',
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
   '''(?i)\d+ nguồn thu[^\n]*\?''',
   '''(?i)(?:spa|lớp kèm)[^\n?]{0,60}nuôi[^\n]*\?''',
   '''(?i)biết nhiều thật|(?m:^\W*(?:Lời của họ|Cách cũ|Kết quả tốt nhất)\s*:)''',
@@ -923,7 +923,7 @@ regex = [
 ]
 not_contains = ["dự án", "anh, chị hay bạn", "VÌ SAO RA KHÁCH"]
 not_regex = [
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
   '(?i)(dán|gửi)\s+lại\s+(hộp|khối|Brand Card)',
   '''(?m)^\W*(?:✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
@@ -1060,7 +1060,7 @@ not_regex = [
   '''(?m)^\W*(?:ĐIỀU KHÁCH NHỚ|TỪ KH(?:OÁ|ÓA))\s*:''',
   '''QUAY HÔM NAY''',
   '''(?i)(?:em|mình) đoán[: ]''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
 invariants = ["I1", "I3", "I5", "I9", "I15", "I17"]
@@ -1189,7 +1189,7 @@ regex = [
 ]
 not_regex = [
   '''(?i)70\s?%|cô Hoa|gấp đôi''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
@@ -1293,7 +1293,7 @@ not_regex = [
   '''(?i)(?:bài|tin) (?:của chị|này|đó)[^\n]{0,40}(?:hay|tuyệt|xuất sắc|chạm|cảm động|mạnh)''',
   '''(?m)^\W*(?:ĐIỀU KHÁCH NHỚ|GIỌNG)\s*:''',
   '''(?i)(?:em|mình) đoán[: ]''',
-  '''(?i)(?<!\w)bạn(?!\w)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
 ]
 invariants = ["I1", "I5", "I15", "I17"]
 max_words = 80

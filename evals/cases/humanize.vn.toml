@@ -288,7 +288,7 @@ regex = ['(?im)^\W*(?:câu đầu|câu mở đầu|hook|chữ trên màn hình)\
 not_regex = [
   '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:\s*["“]?\s*(?:hello|xin chào|chào cả nhà|hôm nay mình muốn|mình muốn nói)',
   '(?i)(?<!\w)cả nhà(?!\w)',
-  '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:\s*(?:\S+\s+){20,}\S+',
+  '(?im)^\W*(?:câu đầu|câu mở đầu|hook)[^:\n]*:[^\S\n]*\n?[^\S\n]*(?:\S+[^\S\n]+){20,}\S+',
   '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
 ]
 invariants = ["I1", "I3", "I12", "I15"]
@@ -328,7 +328,7 @@ input = """câu 3 chị đọc to bị vấp em ạ. chị hay nói thế này c
 contains = ["bán được hàng chưa chắc đã có tiền đâu"]
 not_contains = ["không đồng nghĩa với việc", "lợi nhuận thực tế của bạn"]
 not_regex = [
-  '(?i)(?<!\w)bạn(?!\w)',
+  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
   '(?i)tuyệt vời|rất hay|hay quá|chuẩn quá',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
@@ -348,7 +348,7 @@ input = """[turn 1] câu cuối chị đọc không trôi em ơi, nghe không gi
 [turn 2] vẫn chưa giống chị nói em ạ"""
 regex = ['''(?i)gửi voice nói câu đó như chị hay nói,? em viết y vậy''']
 not_contains = ["dẫn lối", "sự chân thành"]
-not_regex = ['(?i)(?<!\w)bạn(?!\w)', '(?i)(?<!\w)(?:nha|nè|hông)(?!\w)']
+not_regex = ['(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)', '(?i)(?<!\w)(?:nha|nè|hông)(?!\w)']
 invariants = ["I1", "I5", "I15", "I17"]
 max_words = 140
 max_questions = 1
