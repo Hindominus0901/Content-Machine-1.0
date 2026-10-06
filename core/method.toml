@@ -13,58 +13,85 @@
 
 [method]
 title_key = "method.title"
+# Convention: sections named <module>.kit-<name> ship in this file; other sections are
+# for the L3 skill references (P4) or GROW (P5). Selectors ending in * are prefix matches.
+# Until a module is written its anchor is empty and build skips it (lint --release errors).
 
 [[method.anchor]]
-id = "TALK"
-sections = []
+id = "SETUP"
+sections = ["setup.kit-*"]
 
 [[method.anchor]]
-id = "WEEK"
-sections = []
+id = "CARD"
+sections = ["brain.kit-*"]
 
 [[method.anchor]]
 id = "TODAY"
-sections = []
+sections = ["levelup.kit-*"]
 
 [[method.anchor]]
-id = "NUMBERS"
-sections = []
+id = "TALK"
+sections = ["talk.kit-*"]
 
 [[method.anchor]]
-id = "MONTH"
-sections = []
+id = "WEEK"
+sections = ["plan.kit-week*"]
 
 [[method.anchor]]
 id = "FORMATS"
-sections = []
+sections = ["fmt-short.kit-video*"]
+
+[[method.anchor]]
+id = "POSTS"
+sections = ["fmt-short.kit-post*"]
+
+[[method.anchor]]
+id = "MESSAGES"
+sections = ["fmt-short.kit-message*"]
+
+[[method.anchor]]
+id = "NUMBERS"
+sections = ["review.kit-*"]
+
+[[method.anchor]]
+id = "MONTH"
+sections = ["plan.kit-month*"]
+
+[[method.anchor]]
+id = "MAP"
+sections = ["message.kit-*", "signature.kit-*"]
 
 [[method.anchor]]
 id = "CTA-KIT"
-sections = []
+sections = ["convert.kit-*"]
 
 [[method.anchor]]
 id = "CHARACTER-LITE"
-sections = []
+sections = ["character.kit-*"]
 
 [[method.anchor]]
 id = "RESEARCH-LITE"
-sections = []
+sections = ["research.kit-*"]
 
 [[method.anchor]]
 id = "EDGE"
-sections = []
+sections = ["edge-rubric.kit-*"]
 
 [[method.anchor]]
 id = "HUMANIZE"
-sections = []
+sections = ["humanize.kit-*"]
 
 [[method.anchor]]
 id = "GUARDRAILS"
-sections = []
+sections = ["guardrails.kit-*"]
+
+[[method.anchor]]
+id = "LIKED"
+sections = ["liked.kit-*"]
 
 [[method.anchor]]
 id = "LOCALE"
-sections = []
+sections = ["locale.kit-*"]
 
 # ---------------------------------------------------------------- Level-up GROW file
 # Level-ups/GROW-<SUFFIX>.md (≤60 KB): launch, deep research, ads, packaging library (P5).

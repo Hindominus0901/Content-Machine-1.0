@@ -24,6 +24,7 @@ ATTR_RE = re.compile(r"([a-z_]+)=([^\s>]+)")
 TAG_RE = re.compile(r"\{\{(.*?)\}\}", re.S)
 NAME_RE = re.compile(r"^[a-z_][a-z0-9_]*$")
 KEY_RE = re.compile(r"^[a-z0-9_.-]+$")
+SECTION_ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 
 
 class CMError(Exception):
@@ -84,6 +85,19 @@ class Edition:
     pending: dict
     strings: dict[str, str]
     string_src: dict[str, str] = field(default_factory=dict)
+    root: Path | None = None
+    _sections: dict | None = field(default=None, repr=False)
+
+    @property
+    def prose(self) -> str:
+        """Prose folder for method sections (core/<prose>, modules/<prose>)."""
+        return self.cfg.get("method_prose", self.lang)
+
+    def sections(self) -> dict:
+        """Sections of this edition's prose folder, loaded once (for {{>id}} includes)."""
+        if self._sections is None:
+            self._sections, _ = load_sections(self.prose, self.root)
+        return self._sections
 
     @property
     def name(self) -> str:
@@ -143,6 +157,7 @@ def load_edition(edition_id: str, root: Path | None = None) -> Edition:
         pending=data.get("pending", {}),
         strings=texts,
         string_src=srcs,
+        root=root,
     )
 
 
@@ -209,7 +224,7 @@ def select_sections(selectors: list[str], sections: dict[str, Section], where: s
     seen: set[str] = set()
     ordered = sorted(sections.values(), key=lambda s: s.order)
     for sel in selectors:
-        if sel.endswith(".*"):
+        if sel.endswith("*"):
             prefix = sel[:-1]
             hits = [s for s in ordered if s.id.startswith(prefix)]
         else:
@@ -314,6 +329,17 @@ def _eval(nodes: list, ctx: Ctx) -> str:
 
 
 def _var(name: str, ctx: Ctx) -> str:
+    if name.startswith(">"):
+        sid = name[1:].strip()
+        if not SECTION_ID_RE.match(sid):
+            raise CMError("E170", f"bad include '{{{{>{sid}}}}}'", ctx.path)
+        sections = ctx.edition.sections()
+        if sid not in sections:
+            raise CMError("E170", f"unknown section '{sid}' in include", ctx.path)
+        if ctx.depth > 4:
+            raise CMError("E170", f"include nesting too deep at '{sid}'", ctx.path)
+        inner = Ctx(ctx.edition, ctx.flags, ctx.path, ctx.depth + 1)
+        return strip_markers(render_text(sections[sid].body, inner)).strip()
     if name.startswith("t:"):
         key = name[2:].strip()
         if not KEY_RE.match(key):

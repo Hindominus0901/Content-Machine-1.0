@@ -65,7 +65,7 @@
 "anchor.today"          = { text = "Bài của hôm nay", src = "dfc1723246" }
 "anchor.numbers"        = { text = "Số liệu và tổng kết thứ Sáu", src = "6f4888f368" }
 "anchor.month"          = { text = "Lên kế hoạch tháng sau", src = "cd55e0a873" }
-"anchor.formats"        = { text = "Các dạng bài", src = "9f01769a42" }
+"anchor.formats"        = { text = "Video ngắn", src = "f3c1e91607" }
 "anchor.cta-kit"        = { text = "Lời kêu gọi và tin nhắn trả lời", src = "e459eeecc3" }
 "anchor.character-lite" = { text = "Tính cách, bản ngắn", src = "f8206fc127" }
 "anchor.research-lite"  = { text = "Lắng nghe nhanh", src = "7d8ce92785" }
@@ -83,3 +83,15 @@
 "ics.talk.description"   = { text = "Mở {{name}}, vào đoạn chat mới nhất, gõ \"tiếp\". 15 phút, chỉ cần nói.", src = "f65decd32f" }
 "ics.friday.summary"     = { text = "Số liệu thứ Sáu · {{name}}", src = "c796a97b41" }
 "ics.friday.description" = { text = "Mở {{name}}, vào đoạn chat mới nhất, gõ \"số liệu tuần này\". 5 phút.", src = "9c876b3e13" }
+
+# Setup-check variants, Phone Starter, new method anchors (P2)
+"anchor.setup" = { text = "Chi tiết buổi đầu", src = "744b6f620c" }
+"anchor.card" = { text = "Brand Card", src = "bef5186d8e" }
+"anchor.posts" = { text = "Bài viết và carousel", src = "f29c52a354" }
+"anchor.messages" = { text = "Email, tin nhắn Zalo và inbox", src = "72cd5a8ae5" }
+"anchor.map" = { text = "Giữ đúng bản đồ thông điệp", src = "78f7aee2ee" }
+"anchor.liked" = { text = "Những bài coach thích", src = "00e43012d8" }
+"setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: làm ngay hôm nay", src = "97b05e920a" }
+"setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
+"phone.opening" = { text = "Bạn chỉ cần bấm Gửi. Phần dưới là hướng dẫn cho máy, không cần đọc.", src = "b6a97fd51f" }
+"phone.save" = { text = "Lưu lại: cuối buổi, nhấn giữ đoạn chat này → Đổi tên → \"{{name}}\". Rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". Khi đoạn chat dài quá, mình in khung mới: dán vào một đoạn chat mới tên {{name}}.", src = "f6e358cc8f" }

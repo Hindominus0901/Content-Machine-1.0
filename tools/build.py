@@ -49,6 +49,13 @@ REFERENCE_BUDGETS = ["reference_lines", "reference_bytes"]
 SITE_TEMPLATE = "setup-page.tmpl"
 
 
+def _matches(selector: str, sections: dict) -> bool:
+    """True when a method.toml selector (exact id or prefix*) matches any section."""
+    if selector.endswith("*"):
+        return any(sid.startswith(selector[:-1]) for sid in sections)
+    return selector in sections
+
+
 # ---------------------------------------------------------------- report
 
 @dataclass
@@ -399,6 +406,10 @@ class EditionBuild:
             selectors = anchor.get("sections") or []
             if not selectors:
                 self.report.skip(self.id, target, "anchor has no sections yet", item=f"§CM-{aid}")
+                continue
+            if not any(_matches(sel, self.sections) for sel in selectors):
+                # Not one selector matches yet: the module is written in a later step.
+                self.report.skip(self.id, target, "anchor's modules not written yet", item=f"§CM-{aid}")
                 continue
             picked = cmlib.select_sections(selectors, self.sections, where)
             body = "\n".join(cmlib.render(s.body, self.ed, target, path=f"{s.file}#{s.id}") for s in picked)

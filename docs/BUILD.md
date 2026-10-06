@@ -132,6 +132,7 @@ Prose and templates use one small, deterministic syntax. No Jinja.
 | `{{t:key}}` | The edition's string for `key` (EN text, or VN `text`) |
 | `{{#if flag}}…{{else}}…{{/if}}` | Keep a branch by flag. Flags are the edition id (`en`, `vn`), the target (`kit`, `phone`, `method`, `grow`, `skill`, `task`, `help`, `site`) and the extra build flags (`connected`, `standalone`). `{{#if a,b}}` means a OR b. Blocks may nest |
 | `{{#unless flag}}…{{/unless}}` | The inverse |
+| `{{>section.id}}` | Include another section of the same edition's prose folder, rendered with the same flags (≤4 levels). One source for text shared by several targets, e.g. the Ship Check card in the start-block, SKILL.md and task templates |
 | `{name}` (single braces) | A runtime slot the model fills. Left as is |
 
 Unknown params, unknown string keys and unbalanced blocks are **errors**, never silent blanks.

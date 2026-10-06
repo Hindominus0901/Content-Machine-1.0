@@ -314,7 +314,16 @@ def template_problems(text: str, edition: cmlib.Edition) -> list[tuple[str, str 
         for node in nodes:
             if node[0] == "var":
                 name = node[1]
-                if name.startswith("t:"):
+                if name.startswith(">"):
+                    sid = name[1:].strip()
+                    try:
+                        known_ids = edition.sections()
+                    except CMError as exc:
+                        out.append((exc.message, sid))
+                        continue
+                    if sid not in known_ids:
+                        out.append((f"unknown section '{sid}' in include", sid))
+                elif name.startswith("t:"):
                     key = name[2:].strip()
                     if not cmlib.KEY_RE.match(key):
                         out.append((f"bad string key '{key}'", key))
@@ -1016,12 +1025,19 @@ class Linter:
                 self.add("E161", "core/method.toml", f"[[{table}.{kind}]] '{ident}' sections must be a list")
                 continue
             for lang in self.prose_langs():
+                misses = []
                 for sel in selectors:
                     try:
                         cmlib.select_sections([sel], self.sections.get(lang, {}))
                     except CMError:
-                        self.add("E130", "core/method.toml",
-                                 f"[[{table}.{kind}]] '{ident}': selector '{sel}' matches no {lang.upper()} section")
+                        misses.append(sel)
+                if misses and len(misses) == len(selectors) and not self.release:
+                    # Nothing written for this entry yet (build skips it too); an error on --release.
+                    self.note(f"[[{table}.{kind}]] '{ident}' has no {lang.upper()} sections yet")
+                    continue
+                for sel in misses:
+                    self.add("E130", "core/method.toml",
+                             f"[[{table}.{kind}]] '{ident}': selector '{sel}' matches no {lang.upper()} section")
             if kind == "anchor" and selectors:
                 # build.py titles the heading from this key and falls back to the bare id without it
                 key = f"anchor.{ident.lower()}"
@@ -1228,8 +1244,22 @@ class Linter:
 
     # -- Ship Check card budgets (E101)
 
+    # ship-check.md may hold one card, or several sections included with {{>ship.…}}:
+    # ship.kit and ship.card are budgeted as cards, ship.task as the task card.
+    CARD_SECTIONS = (("ship.kit", "ship_check_card", "kit"), ("ship.card", "ship_check_card", "skill"),
+                     ("ship.task", "ship_check_task", "task"))
+
     def check_cards(self) -> None:
         for ed_id, ed in sorted(self.editions.items()):
+            path = self.root / "core" / ed.lang / "ship-check.md"
+            sectioned = path.exists() and cmlib.parse_sections(self.text(path))[1]
+            if sectioned:
+                for sid, budget, target in self.CARD_SECTIONS:
+                    if sid in ed.sections():
+                        card = cmlib.render("{{>%s}}" % sid, ed, target, path=self.rel(path)).strip()
+                        self.check_budget(budget, ed_id, nfc_len(card), f"{self.rel(path)}#{sid}",
+                                          "Ship Check card", "characters")
+                continue
             for name, budget in (("ship-check.md", "ship_check_card"), ("ship-check-task.md", "ship_check_task")):
                 path = self.root / "core" / ed.lang / name
                 if path.exists():
@@ -1240,6 +1270,12 @@ class Linter:
         """'SHIP CHECK' plus the first line of the edition's card (task variant first for tasks)."""
         if (ed.id, task) not in self._cards:
             markers = [CARD_MARKER]
+            for sid in (("ship.task",) if task else ("ship.kit", "ship.card")):
+                if sid in ed.sections():
+                    card = cmlib.render("{{>%s}}" % sid, ed, "task" if task else "kit")
+                    first = next((ln.strip() for ln in card.splitlines() if len(re.sub(r"\W", "", ln)) >= 8), None)
+                    if first:
+                        markers.append(first)
             for name in (("ship-check-task.md", "ship-check.md") if task else ("ship-check.md",)):
                 path = self.root / "core" / ed.lang / name
                 if path.exists():
