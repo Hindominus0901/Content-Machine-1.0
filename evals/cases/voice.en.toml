@@ -1,0 +1,956 @@
+# Eval cases: voice ("how you say it": the Voice Card built silently on Day 0 from the dump and the
+# coach's pasted posts; the Map's YOUR VOICE line and "change 4"; the Brand Card's HOW YOU SAY IT line;
+# the audience address; "not me:" / "I do say"; platform shifts; jargon and humour limits; the no-samples
+# path; the Weekly Talk refresh; "make it sound like me"; "why?" on a piece's voice), EN edition.
+# Written by the QA role, 6 Oct 2026, after modules/en/voice.md. Producers never edit this file.
+#
+# Sources: docs/research/wf14-voice-language-spec.md §0-§5 and wf15-simple-surface-spec.md §0-§3 (win
+# over older specs); wf15-case-impact.md (rules R1-R18); modules/en/voice.md (§CM-VOICE 1-9),
+# humanize.md, message.md (CHANGE), brain.md (card 2-4), review.md 3, edge-rubric.md (WHAT PRINTS);
+# core/en/start-block.md steps 1-8; core/en/ship-check.md (ship.kit 4 VOICE); schemas/brand-card.toml
+# (group "voice", visible voice_line); evals/acceptance.toml [day0], [voice]; qa/standards/shared.md
+# SG4, SG8; strings/en.toml (map.*, setup.dump_posts, setup.link_unread, card.visible.*,
+# card.save_line, voice.not_me_ok, voice.do_say_ok, cmd.voice, film.now_or_text, verdict.*, why.prefix,
+# checked.prefix); each persona's voice-samples.md, written-posts.md, answers.md, pillar-transcript.md
+# and expected.toml [voice]. Every phrase quoted here appears in those fixture files.
+#
+# Day 0 now: promise → dump (+ optional pasted posts / page link) → early win after chunk 1 → only the
+# missing facts (≤3, one a message, "My guess: … Right?") → 4-line Map (KNOWN FOR · 3 TOPICS · YOUR WORD
+# · YOUR VOICE) + "We'll run this for 4 weeks. OK, or change a line." → FILM TODAY → Week 1 in the next
+# reply, unasked → Brand Card (top ≤500: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the machine block)
+# + "Save this so I remember you (30 s)." → NEXT. Never a voice question. Budgets (acceptance [day0]):
+# Map ≤6 coach turns, film-ready by minute 20, ≤10 coach turns.
+#
+# Conventions (read with evals/README.md "Case files"; as in setup.en.toml and humanize.en.toml):
+# - `input` holds the coach turn(s); `context` names the state and earlier turns. Lines starting
+#   "[turn n]" separate turns. "<<paste: FILE …>>" means the simulator inlines that persona file's text.
+# - D assertions run on the reply to the LAST coach turn, unless notes start with a scope:
+#   "scope: transcript" (all replies of the case joined: contains/regex somewhere, not_* nowhere) or
+#   "scope: each reply" (whole runs: regex in at least one reply, not_* and max_* in every reply).
+#   max_words / max_questions count the coach-visible text of the last reply.
+# - Regexes are Python `re`, case-sensitive unless (?i); apostrophes match as (?:'|’).
+# - Inside a copy box: patterns opening (?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```
+#   [^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*? find X inside a piece's fenced box, never in
+#   the prose around it and never in the card's machine block (it opens "version …").
+# - Card fields: (?im)^\s*<field>: reads a `name: value` line of the machine block; "HOW YOU SAY IT:"
+#   is the top's voice line (card.visible.how). Field names never print in coach text.
+# - A per-line guard (?im)^(?![^\n]*out of your voice)[^\n]*X reads "any line holding X is the
+#   voice.not_me_ok confirmation" ('Got it: "{line}" is out of your voice from now on.').
+# - Status lines (wf15 §2): a Ready piece prints only its content. A WHY, "✓ Checked:", "Ready to …" or
+#   "Draft ·" line under a piece fails unless the coach asked "why?" (I3). One confirmation line answers
+#   "not me:" (voice.not_me_ok) and "I do say" (voice.do_say_ok).
+# - "why?" follow-ups: "[turn 1] <the turn that prints the piece>" and "[turn 2] why?". Assertions run on
+#   the "why?" reply: the WHY line (old belief → new belief, next step), the checks, what it was written
+#   from, and here the voice it used (their phrase, tone, address; plain words, no field names). I3
+#   grades turn 1. `verdict = "Ready"` on a "why?" reply wants a Ready or ✓ Checked line (evals/run.py).
+# - `invariants` lists I1-I23 ids (I15 audience address, I23 voice: never-words, banned tells, the
+#   phrase-share proxy). graders.py also runs day0_timing, deny_list and quit_triggers.
+# - P cases score against qa/standards/shared.md: SG4 "sounds like the coach" (tone, rhythm, phrases,
+#   audience address, code_mix) and SG8 read-aloud are critical here.
+# - FICTIONAL: every person, business and draft comes from the persona files or is invented for the case.
+
+[meta]
+module = "voice"
+edition = "en"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- the Map's YOUR VOICE line (wf14 V1, §2; start-block 4)
+
+[[case]]
+id = "voice.en.001"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "YOUR VOICE for a cold-start dad on his phone: his tone words, his rhythm, one line of his verbatim, 'you' to one dad"
+context = "Day 0, Sunday night after bedtime, ChatGPT Plus on the iPhone. Dan dictated chunks 1-3 (chunk 3 ends 'Done.') and pasted his posts W1-W2 after chunk 1. After 'done' the machine asked his missing facts one per message: the best result (setup.guess_no_result) and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess; this reply shows the Map. His dump is the spoken voice (fillers, run-ons), his pasted posts the written voice (lowercase, fragments)."
+input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*YOUR VOICE:[^\n]*·[^\n]*·''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(plain|dry|self-deprecating|self-mocking|straight|blunt|casual|direct|honest|goofy|laid-back|down-to-earth|no-nonsense|easygoing)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*["“][^"”\n]*\b(not lazy|booked|zero is the killer|actually do beats|calendar problem|willpower problem|for a living|not gonna lie|real test|not a monster|nugget tax)''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\bto them\b[^\n]{0,30}\byou\b''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+]
+not_regex = [
+  '''(?im)^\W*YOUR VOICE:[^\n]*\bto them\b[^\n]*\b(bro|bros|king|kings|guys|fellas|dude|brother|champ|man|warriors?|y(?:'|’)all|Dan)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(authentic|inspiring|inspirational|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|magnetic|captivating|motivating)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(register|cadence|syntax|tonality|archetype|persona|brand voice|voice card|framework|audience[ _]address|code[ _]mix|openers?_closers|written_vs_spoken)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(shred\w*|beast mode|no days off|alpha|warrior|savage|transform\w*|hustle|grind|crush it|level up|unlock|elevate|Coach Dan)\b''',
+  '''(?im)^\W*YOUR VOICE:\**(?:[^\S\n]+\S+){31,}''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+  '''(?i)\b(how would you describe|what words would you use|describe your (?:voice|tone|style))\b''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I6", "I17"]
+max_words = 160
+max_chars = 0
+max_questions = 1
+notes = """wf14 V1, §2; start-block step 4 'YOUR VOICE: {3-word tone} · {rhythm} · "{their phrase}" · talks to them as "{how they address the audience}"'; voice.kit-build 2-3: tone in words he'd use about himself, no praise; rhythm in ≤4 plain words; his most repeated phrase, verbatim; the address exactly as he says it. expected.toml [voice]: tone 'plain · dry · self-deprecating', rhythm 'short bursts, one run-on per story; fragments OK', audience_address 'you (one dad to another)'. Every phrase in the pattern is in answers.md ('You're not lazy, you're booked.', 'Zero is the killer.', 'I'm not gonna lie'). The address is how he talks to buyers, never 'bro', 'king' or 'guys' (voice-samples.md never list) and never how the machine talks to him. Kids stay unnamed. He quits on long replies ('Bro I'm on my phone. Shorter.'): ≤160 words. ≤30 words on the line. Complements message.en.050 (Dana) and message.en.051 (Linda)."""
+
+[[case]]
+id = "voice.en.002"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "S0", "floor"]
+title = "YOUR VOICE for a precise CPA: tone in her own plain words (no 'data-driven' praise), short-line rhythm, one line of hers verbatim"
+context = "Day 0, Claude Free on the Windows laptop. Erin dictated chunks 1-3 from her legal pad and pasted her posts W1-W3 after chunk 1; her dump holds her clients' words, Marcus's result and the Margin Sprint, so the one missing fact was the multi-income line (retainers, sprints, deal prep, the class). She answers it; this reply shows the Map."
+input = '''The retainers pay the bills. The sprint is how people get to the retainer, and that's what I want to sell more of. Deal prep is my best hourly rate, but it's lumpy and it's a different person. The class is a hobby.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*YOUR VOICE:[^\n]*·[^\n]*·''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(calm|precise|dry|plain|direct|blunt|exact|steady|matter-of-fact|no-nonsense|straight)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(short|declarative|one (?:a|per) line|lines?|numbers first|steps|plain)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*["“][^"”\n]*\b(here(?:'|’)s the math|margin before more|client by client|bank app|on purpose|by accident|not a forecast)''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\bto them\b[^\n]{0,30}\byou\b''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+]
+not_regex = [
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(authentic|inspiring|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|data-driven|savvy|authoritative|polished|expert|thought leader|analytical|whiz)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(register|cadence|syntax|tonality|archetype|persona|brand voice|voice card|framework|audience[ _]address|code[ _]mix|openers?_closers|written_vs_spoken)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\b(cash is king|scal(?:e|ing)|7-figure|8-figure|crush it|financial freedom|hustle|game-changer|unlock|leverage|hack|secret|skyrocket|wealth)\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*\bto them\b[^\n]*\b(guys|folks|everyone|everybody|y(?:'|’)all|fam)\b''',
+  '''(?im)^\W*YOUR VOICE:\**(?:[^\S\n]+\S+){31,}''',
+  '''\bRaj\b''',
+  '''(?i)\b(?:former|ex-)\s*(?:agency\s+)?CFO\b''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I6", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """voice.kit-build 2: 'tone in words they'd use about themselves (direct · warm · dry), no praise'. expected.toml [voice]: tone 'calm · precise · dry', rhythm 'short declaratives, one per line; digits; numbered steps', audience_address 'you (one agency owner at a time)'. Her lines in the pattern are verbatim in answers.md ('margin before more', 'client by client', 'the bank app') or in her pasted posts W1-W2 ('Okay. Here's the math.', 'You can keep a client you love on purpose.', 'The bank app is not a forecast.'). 'Data-driven', 'savvy', 'expert' are labels about her, not her words. Her never-words (voice-samples.md: scale, leverage, hack, game-changer…) stay off the line."""
+
+# ---------------------------------------------------------------- "change 4": the voice line inside the one decision (§CM-MAP CHANGE)
+
+[[case]]
+id = "voice.en.003"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "'change 4' alone: two versions of the voice line from her own words, A) and B), with a pick; no Map reprint, no voice quiz"
+context = "Day 0, Claude Pro on the MacBook. Linda dictated chunks 1-3 and pasted her posts W1-W2 after chunk 1; nothing was missing, so the 4-line Map followed chunk 3. Its YOUR VOICE line is on screen with 'We'll run this for 4 weeks. OK, or change a line.' She wants line 4 different but does not say how."
+input = '''change 4'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\W*A\)[^\n]*["“][^"”\n]{3,}["”]''',
+  '''(?m)^\W*B\)[^\n]*["“][^"”\n]{3,}["”]''',
+  '''(?im)^\W*[AB]\)[^\n]*["“][^"”\n]*\b(write the tuesday|plan the dream|make you ready|other people(?:'|’)s words|corkboard|ramble|parking lot|label|lost your answer|wish someone had told me|hit reply)''',
+  '''(?is)^\W*A\)[^\n]*\byou\b[\s\S]*?^\W*B\)[^\n]*\byou\b''',
+  '''My pick: [^\n]{1,160}, because [^\n]{3,}\.''',
+]
+not_regex = [
+  '''(?m)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD):''',
+  '''(?m)^\W*C\)''',
+  '''(?i)\bFILM TODAY\b''',
+  '''(?im)^\W*[AB]\)[^\n]*\b(ladies|girls|gals|y(?:'|’)all|guys|everyone)\b''',
+  '''(?im)^\W*[AB]\)[^\n]*\b(authentic|inspiring|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|eloquent|captivating)\b''',
+  '''(?im)^\W*[AB]\)[^\n]*\b(next chapter|second act|reinvent\w*|pivot|encore career|journey|thrive|empower\w*)\b''',
+  '''(?i)\b(audience_address|code_mix|openers_closers|written_vs_spoken|never_say|do_say)\b''',
+  '''(?i)\b(how would you describe|what words would you use|describe your (?:voice|tone|style))\b''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I6", "I17"]
+max_words = 150
+max_chars = 0
+max_questions = 1
+notes = """§CM-MAP CHANGE: '"change N" alone → A) B) from the dump + check.pick ("My pick: {option}, because {reason}.")'; 'Voice line too'; voice.kit-build 2: '"change 4": §CM-MAP, same one decision'. Both options are built from her words (answers.md: 'Don't plan the dream. Write the Tuesday.', 'Okay, I'm going to ramble'; her pasted posts W1-W2: 'You didn't lose a job. You lost your answer.', 'Here's what I wish someone had told me in that parking lot', 'Hit reply and tell me…'), both keep 'you' to one reader. No full Map reprint, no third option, no voice questions, no FILM TODAY until she picks. The pattern with '(?is)^' anchors A) and B) at line starts."""
+
+[[case]]
+id = "voice.en.004"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'change 4: …' in his words: line 4 reprinted with his tone and his phrase, the same OK, then 'ok' goes straight to FILM TODAY"
+context = "Day 0, iPhone, ChatGPT Plus. The 4-line Map is on screen after his offer answer (as in voice.en.001); its YOUR VOICE line calls him dry. Turn 1 changes line 4 in his own words; turn 2 OKs the Map and gets FILM TODAY."
+input = '''[turn 1] change 4: not dry, I'm goofy. about me, never about other guys. and use zero is the killer, I say it all the time
+[turn 2] ok'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*YOUR VOICE:[^\n]*\bgoofy\b''',
+  '''(?im)^\W*YOUR VOICE:[^\n]*zero is the killer''',
+  '''(?i)\bFILM TODAY\b''',
+  '''Film it now, or post the caption as text\.''',
+]
+not_regex = [
+  '''(?im)^\W*YOUR VOICE:(?=[^\n]*\bgoofy\b)[^\n]*\bdry\b''',
+  '''(?s)We(?:'|’)ll run this for 4 weeks.*We(?:'|’)ll run this for 4 weeks''',
+  '''(?m)^\W*[AB]\)\s''',
+  '''(?i)\b(how would you describe|what words would you use|describe your (?:voice|tone|style)|are you sure)\b''',
+  '''(?i)\b(skinny-fat|fat guys?|lazy dads?)\b''',
+  '''(?i)\b(shred\w*|beast mode|no days off|summer body|alpha|savage|crush it|level up|hustle|grind|Coach Dan)\b''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I6", "I17", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. wf14 V1 ('changed inside the same one decision'); §CM-MAP CHANGE '"change N: …" → that line reprinted + map.ok'; voice.kit-build 2. His words go in as given: 'goofy' replaces 'dry', and 'Zero is the killer.' (answers.md chunk 3) is the quoted phrase. The OK line prints once in this transcript (with line 4); 'ok' then gives FILM TODAY with film.now_or_text and nothing under it (I3). His humour stays on himself (voice-samples.md: 'Self-deprecating about himself, never about other guys' bodies'). Complements message.en.052 (Dana, the change only)."""
+
+# ---------------------------------------------------------------- written posts vs the spoken dump (wf14 V3, §3 written_vs_spoken, §4.5)
+
+[[case]]
+id = "voice.en.005"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Her pasted posts set the written voice: the card's rhythm and written_vs_spoken come from them, and her email signs off like her posts"
+context = "Day 0, Claude Free on the Windows laptop. Erin dictated chunks 1-3 and pasted her own posts after chunk 1 (written-posts.md W1-W3: a LinkedIn post, the opening of a Monday Number issue signed 'Erin', an email to Dee signed 'E.'). The one missing fact (the multi-income line) is answered; the Map OK'd (YOUR WORD: record year; LinkedIn + the Monday Number, 380 subscribers); FILM TODAY (a LinkedIn native video, word-for-word) delivered. Turn 1 answers it and gets Week 1, unasked, the email first (list 300+); turn 2 answers the next reply; Day 0's last reply prints the card."
+input = '''[turn 1] I'll post it as text today. no camera at my desk this week.
+[turn 2] ok'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\s*written_vs_spoken:[^\n]*\b(?:tidier|tighter|shorter|cleaner|neater|line per|one (?:sentence|line) (?:a|per) line|no fillers?|no emoji|signs?|sign-?off)\b''',
+  '''(?im)^\s*rhythm:[^\n]*\b(?:short|declaratives?|one (?:per|a) line|lines?|numbered|steps|digits)\b''',
+  '''(?im)^\s*openers_closers:[^\n]*(?:here(?:'|’)s the math|margin before more|on purpose|by accident|bank app)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\n[^\S\n]*(?:—[^\S\n]*)?(?:Erin|E\.)[^\S\n]*(?:\n|$)''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:\bum+\b|\buh+\b|\blike I said\b|\bI mean,|\byou know\?)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?[\U0001F300-\U0001FAFF☀-⛿❤✨]''',
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:agree|thoughts)\?\W*$''',
+  '''(?im)^\s*(?:tone|rhythm|written_vs_spoken):[^\n]*\b(?:authentic|inspiring|engaging|compelling|powerful|polished|charismatic|amazing)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bRaj\b''',
+  '''(?i)\b85,000\b''',
+  '''(?i)\b70\s*(?:%|percent)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I10", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. wf14 V3 (posts pasted as part of the dump), §3 (rhythm from dump + posts; written_vs_spoken one line, posts vs dump; openers_closers from posts), §CM-VOICE 1 ('written vs spoken, one line, only from their posts') and 8 ('Posts, carousels: the written voice'). expected.toml [voice]: rhythm 'short declaratives, one per line; digits; numbered steps', written_vs_spoken 'Tidier than her talk: a line per sentence, no fillers or emoji, signs "E."', openers_closers from W1 ('Okay. Here's the math.', 'Margin before more.'). Her lead email follows her written voice: signed like W2/W3 ('Erin' or 'E.'), no spoken fillers, no emoji, never 'Agree?' or 'Thoughts?' (behaviour: she quits on them). Field values carry no praise. Pieces print with nothing under them (I3)."""
+
+[[case]]
+id = "voice.en.006"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "No posts pasted, page link unread: posts use his spoken voice tidied (fillers out, contractions and his lines kept), no invented written style"
+context = "Day 0, iPhone, ChatGPT Plus. Dan skipped the posts clause: he pasted no posts or messages; at the end of chunk 1 he sent his Instagram link, which did not open here, so the next 'Got it.' said 'Your page didn't open here; what you say is enough.' once. Missing facts answered (no result: his own story; offer: the 8-week small group); the Map OK'd (YOUR WORD: keep up); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. His only voice source is his dictated dump ('um', 'like', 'dude', 'oh my god', 'lol', run-ons)."
+input = '''[turn 1] ok filming it tonight in the garage after bedtime
+[turn 2] ok'''
+contains = []
+not_contains = []
+regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b\w+(?:'|’)(?:re|s|t|ll|m|ve|d)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:not lazy|you(?:'|’)re booked|zero is the killer|actually do beats|calendar problem|willpower problem|for a living|not gonna lie|real test|not a monster|nugget tax)''',
+  '''(?m)^\W*(?:The rest is )?for the machine, no need to read''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:um+|uh+|dude|oh my god|lol|you know what I mean|so yeah)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?[\U0001F300-\U0001FAFF☀-⛿❤✨]''',
+  '''(?im)^\s*written_vs_spoken:[^\S\n]*(?!(?:none|n/?a|-|—|\[\]|\?)[^\S\n]*$)\S''',
+  '''(?i)\b(?:I (?:read|saw|looked at|checked) your|from your) (?:page|profile|feed|grid|posts|captions)\b''',
+  '''(?i)didn(?:'|’)t open here''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+  '''(?i)\b22 pounds\b|\bcertified\b|\bCoach Dan\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. wf14 §4.5 'No written samples ever pasted: posts use the spoken voice, tidied (contractions, rhythm kept, filler removed)'; §CM-VOICE 8 ('no posts ever pasted → the spoken voice tidied (fillers and false starts out; contractions, rhythm, phrases kept)') and 9 ('Never add slang, emoji, swearing, catchphrases or humour they don't use'); 1 ('their page if it opens'; written_vs_spoken only from their posts). An unopened page is unread (setup.link_unread already said once, in context): no claim to have read it, no written style guessed from it, so the card's written_vs_spoken is left out (brain.kit-print 3: '? = omit if none'). Emoji are his written habit (W1 🫡), which the machine never saw, so none appear. The machine block may hold verbatim dump passages, so the box patterns skip it."""
+
+[[case]]
+id = "voice.en.007"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "Her lead email is written, not spoken: no rambling markers, her sign-off and 'hit reply' closer, one reader, none of her never-words"
+context = "Day 0, Claude Pro on the MacBook. Linda dictated chunks 1-3 and pasted her own posts after chunk 1 (written-posts.md W1-W2: one Kitchen Table Notes issue signed '— Linda', one LinkedIn post); nothing was missing, so the Map came after chunk 3 and she OK'd it (YOUR WORD: without the badge; LinkedIn + Kitchen Table Notes, about 900 subscribers; quiet CTA after her pushback). FILM TODAY was delivered as a LinkedIn native video script. Her answer gets Week 1, unasked; with a list of 900 the email goes first, asking for a reply."
+input = '''I'll write it. I'm not ready to be a talking head.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\n[^\S\n]*(?:—|–|-)?[^\S\n]*Linda[^\S\n]*(?:\n|$)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:hit reply|reply and tell me)''',
+  '''(?im)^\W*subject\b''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:going to ramble|\bstop me\b|\bwhere was I\b|\bum+\b|\buh+\b)''',
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:^\W*(?:hey|hi|hello|dear)\b[^\n]{0,12}\b(?:ladies|girls|gals|everyone|everybody|all|guys|folks|y(?:'|’)all)\b|\b(?:ladies|y(?:'|’)all|you guys|all of you)\b)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:next chapter|second act|reinvent\w*|pivot\w*|encore career|unretire\w*|rewire\w*|find your passion|follow your bliss|live your best life|journey|empower\w*|unlock\w*|unleash\w*|thrive\w*|manifest\w*|abundance|hustle|girlboss|boss babe|comment below|DM me|link in bio)\b''',
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:agree|thoughts)\?\W*$''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bMargaret\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I10", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf14 §3-§4 and §CM-VOICE 8: 'Posts, carousels: the written voice'; an email is one-to-one, 'you' in the singular. expected.toml [voice]: written_vs_spoken 'Tighter than her talk: rambles become one scene line; em dashes, "— Linda"', openers_closers 'Hit reply and tell me', audience_address 'you, one reader (never "ladies")'. Her spoken markers ('Okay, I'm going to ramble. Stop me.', 'where was I') stay out of the written email; 'Hi friends,' (her own W1 greeting) is allowed, 'Hi all' or 'ladies' is not. Her never-words include 'DM me', 'comment below', 'link in bio' and closing 'Agree?' / 'Thoughts?' (voice-samples.md; I23). plan.kit-week 2: list 300+, the email goes first, asking 'hit reply and tell me…'. Pieces print with nothing under them (I3)."""
+
+# ---------------------------------------------------------------- "not me:" / "I do say" (§CM-VOICE 5-6; voice.not_me_ok, voice.do_say_ok)
+
+[[case]]
+id = "voice.en.008"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "'not me:' prints the one confirmation line once; the opener is gone from the reworked caption and from the next piece"
+context = "Week 1, Tuesday, ChatGPT Plus on the MacBook at the studio. Brand Card v1 present (persona default: keyword NOTHING ROOM; email-first; newsletter 'The Floor Plan', sent by Bree; never_say empty). Earlier in this chat 'next' printed today's Instagram caption, which opens 'Hey friends! Quick one about rugs.' Turn 1 rejects that opener; turn 2 asks for this month's Floor Plan email."
+input = '''[turn 1] not me: "Hey friends!" I never open like that. I'm not a lifestyle blogger
+[turn 2] now the Floor Plan email for Bree. the tape-out one'''
+contains = []
+not_contains = []
+regex = [
+  '''Got it: ["“]Hey friends!?["”] is out of your voice from now on\.''',
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?i)\btape\b''',
+]
+not_regex = [
+  '''(?s)out of your voice from now on\..*out of your voice from now on\.''',
+  '''(?im)^(?![^\n]*out of your voice)[^\n]*\b(?:hey|hi|hello)[,!]?[^\S\n]+friends\b''',
+  '''(?i)\b(?:never_say|do_say|banned list)\b''',
+  '''(?i)\b(?:are you sure|just to confirm|why not)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''(?i)\b(?:elevated?|curated|timeless|forever home|dream home|pinterest-worthy|decor tips|transform your space|obsessed|game-changer|on-trend|investment piece|statement piece|luxe|your aesthetic)\b''',
+  '''(?i)\bHollis\b''',
+  '''(?i)\b400\b|\b30\s*(?:%|percent)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I10", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. §CM-VOICE 6: '"not me: {line}" → never_say: voice.not_me_ok … One line, then the work. Both hold for every later piece, task and card.' §CM-HUMANIZE lists: 'cut every form of it, now and in every later piece.' The confirmation prints once, in the exact string ('Got it: "{line}" is out of your voice from now on.'); then the caption without the opener, then the email (W2 shows how she greets newsletter readers: 'Hi neighbors,'). No question back, no list names. The guard skips the confirmation line, which quotes the banned opener. I23 reads the coach's 'not me:' lines in later pieces."""
+
+[[case]]
+id = "voice.en.009"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "'I do say literally': one confirmation line, his line put back word-for-word, and later pieces never cut it again"
+context = "Week 1, Thursday, iPhone, in the school pickup line. Brand Card v1 present (persona default: keyword KEEP UP, beat cards; do_say empty). Today's reel N4 was printed earlier in this chat; the humanize pass cut 'literally' as an intensifier, so its first line reads 'I used to do this for a living.' Turn 1 puts it back; turn 2 asks for the long Instagram post on the birthday relay."
+input = '''[turn 1] I do say literally. "I literally used to do this for a living" is my line, put it back
+[turn 2] now the long post about the birthday relay'''
+contains = []
+not_contains = []
+regex = [
+  '''Got it: you do say ["“]literally["”]\.''',
+  '''(?i)\bI literally used to do this for a living''',
+]
+not_regex = [
+  '''(?i)\bI used to do this for a living''',
+  '''(?s)you do say ["“]literally["”]\..*you do say ["“]literally["”]\.''',
+  '''(?i)\b(?:can(?:'|’)t|won(?:'|’)t) (?:add|allow|use)\b[^\n]{0,20}\bliterally\b''',
+  '''(?i)\b(?:are you sure|why not)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+  '''(?i)\bcertified\b|\bCoach Dan\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. §CM-VOICE 6: '"I do say {word}" → do_say: voice.do_say_ok … Both hold for every later piece'; §CM-HUMANIZE: '"I do say": put it back where they had it, never cut again'. 'literally' is on the humanize strip list (intensifiers), but 'I literally used to do this for a living.' is his verbatim line (answers.md chunk 1; voice-samples.md 5). The confirmation is the exact string; N4 comes back with the word; the long post, if it uses the line, keeps it. Not a hard stop or polarity word, so never voice.cant_allow. The birthday-relay story names no kids."""
+
+[[case]]
+id = "voice.en.010"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "A Friday 'that line wasn't me' counts as 'not me:': the review plus one confirmation line, the line never repeated"
+context = "Week 1, Friday, ChatGPT Free on the laptop. Brand Card v1 present (persona default: keyword CHAPTER). 'my numbers' got review.ask. Wednesday's long post, written by the machine, ended with 'Let that sink in.' She answers with her numbers and that line."
+input = '''CHAPTER comments 4, DMs 2, calls 1, sales 0. best post was the carrot cake one, people said it was so me. and that "Let that sink in." line at the end of Wednesday's post was not me. I'd never say that'''
+contains = []
+not_contains = []
+regex = [
+  '''Got it: ["“]Let that sink in\.?["”] is out of your voice from now on\.''',
+  '''(?ms)^\W*Posted\b.*^\W*Hands up\b.*^\W*Best post\b''',
+]
+not_regex = [
+  '''(?s)out of your voice from now on\..*out of your voice from now on\.''',
+  '''(?im)^(?![^\n]*out of your voice)[^\n]*\bsink in\b''',
+  '''(?i)\b(?:never_say|do_say)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''(?i)\b(?:median|ratio|benchmark|average)\b|\bEdge\b''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I8"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-VOICE 6 ('A Friday "that wasn't me" counts the same (§CM-NUMBERS)'); review.kit-review 3 ('A line they say wasn't them: never-say from now on, one confirmation line'); wf14 §4.4 (tick 3 of the weekly review). The review's lines print (review.labels: Posted · Hands up · Your message · Best post · Next week), with her numbers only (I8), and the confirmation is voice.not_me_ok once. No status lines for past pieces, no averages or ratios."""
+
+# ---------------------------------------------------------------- never-words and banned tells (I23)
+
+[[case]]
+id = "voice.en.011"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "A topic that begs for 'it's never too late': none of her never-words in the post, still 'you' to one woman"
+context = "Week 2, Wednesday, ChatGPT Free. Brand Card v1 present (persona default: keyword CHAPTER; never_say empty; her never-words in voice-samples.md and expected.toml [voice] banned)."
+input = '''write me a facebook post for the women who think they missed their window. 52, 26 years at one company, scared it's over for them'''
+contains = []
+not_contains = []
+regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\byou\b''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:it(?:'|’)s never too late|never too late|second act|reinvent\w*|pivot\w*|dream job|unlock your potential|journey|empower\w*|manifest\w*|level up|hustle|transform your life|boss babe|girlboss)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\bladies\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bPam\b''',
+  '''(?i)\b90\s*(?:%|percent)|\b15,000\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I8", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """I23 (wf14 §5): 0 never_say hits in a piece in her voice. voice-samples.md 'Words she would never use' (reinvent, pivot, second act, dream job, it's never too late, unlock your potential, journey, empower, manifest, level up, hustle, transform your life, 'Hey ladies!'); expected.toml [voice] banned. The topic invites exactly those clichés; her own answer is 'You're not too old. You're too vague.' 'Follow your passion' is left to I23, which skips short quoted mentions (she names it to refute it). 52 and 26 are allowed numbers; Pam and the uncounted 90 percent never appear."""
+
+[[case]]
+id = "voice.en.012"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Week 1 cut from her dump: no banned tells even where she said them ('buckle up', 'if that makes sense'), and her phrases are not stamped on every piece"
+context = "Day 0, ChatGPT Free, persona default: dump chunks 1-3 as in answers.md (chunk 1 holds 'the long version is long so, buckle up' and 'if that makes sense'), her posts W1-W2 pasted after chunk 1; one missing fact (the multi-income line) answered; the Map OK'd (YOUR WORD: one more chapter, keyword CHAPTER); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked (ChatGPT Free: ≤3 pieces a reply); turn 2 gets the rest; Day 0's last reply prints the card."
+input = '''[turn 1] ok I'll film it tomorrow morning
+[turn 2] next'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?im)^(?!\W*(?:phrases|openers_closers|passages|client_words|stories|how you say it|what you say|tone|rhythm|who|their_words|promise|method|old_way|key_belief|idea_shifts|principles|enemy|trait)\b)[^\n]*(?:nobody tells you|too vague|blow smoke|picture this|ops person|feeding the portal|keepers list|carrot cake)''',
+]
+not_regex = [
+  '''(?im)^(?!\s*(?:passages|client_words|stories)\s*:)[^\n]*\bbuckle up\b''',
+  '''(?im)^(?!\s*(?:passages|client_words|stories)\s*:)[^\n]*\bif that makes sense\b''',
+  '''(?i)\b(?:delve|game[- ]changer|let(?:'|’)s dive in|deep dive|in today(?:'|’)s (?:fast-paced|digital|busy) world|at the end of the day|it(?:'|’)s worth noting|it(?:'|’)s important to note|hopefully this helps|I hope this helps|look no further)\b''',
+  '''(?m)(?:^|[.!?]\s+)(?:Moreover|Furthermore|Additionally),''',
+  '''(?i)\b(?:your|my|her|our)\s+(?:\w+\s+)?journey\b''',
+  '''(?im)(?:^(?!\W*(?:phrases|openers_closers|passages|how you say it|tone|rhythm)\b)[^\n]*nobody tells you[\s\S]*?){3}''',
+  '''(?im)(?:^(?!\W*(?:phrases|openers_closers|passages|how you say it|tone|rhythm)\b)[^\n]*picture this[\s\S]*?){3}''',
+  '''(?im)(?:^(?!\W*(?:phrases|openers_closers|passages|how you say it|tone|rhythm)\b)[^\n]*blow smoke[\s\S]*?){3}''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bPam\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I8", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. I23 (wf14 §5): 0 banned tells (locales/en/banned-tells.txt: 'buckle up', 'if that makes sense', 'game-changer', 'journey' as a metaphor, 'Moreover,' …) in any machine text, even where the coach said them: Week 1 is cut from her dump (≥70% her words), and the humanize pass strips them (§CM-HUMANIZE 3). The card's verbatim passages may keep her words, so the guards skip passages/client_words/stories lines. §CM-VOICE 7: 'one of their phrases or openers where it fits, never forced, not the same one twice in a row': at least one piece uses one of her lines (I23's proxy wants half of the pieces of 60+ words), and no opener of hers ('Here's the thing nobody tells you.', 'Okay. So picture this.', 'I'm not going to blow smoke at you.') is stamped on 3+ lines outside the card's voice fields."""
+
+# ---------------------------------------------------------------- platform shifts (§CM-VOICE 8)
+
+[[case]]
+id = "voice.en.013"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "Her own Instagram caption made into a LinkedIn post: plainer, no emoji or '!!', her lines kept, no copy note for her own words"
+context = "Week 2, Monday, ChatGPT Plus on the MacBook. Brand Card v1 present (persona default). She pastes her own caption from last week (written-posts.md W1, with '(hi Priya!!)' and 📏) and asks for a LinkedIn version for the realtors and builders Bree says are there."
+input = '''Bree says the realtors and builders are all on LinkedIn. make this one a LinkedIn post. it's mine, I wrote it last week:
+<<paste: written-posts.md, the "## W1" section body, verbatim, without its heading>>'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:rug before sofa|tape it out|painter(?:'|’)s tape)''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?[\U0001F300-\U0001FAFF☀-⛿❤✨]''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?!!''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?:(?!```).)*?#\w+){4}''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:elevated?|curated|timeless|forever home|dream home|pinterest-worthy|decor tips|transform your space|obsessed|game-changer|on-trend|investment piece|statement piece|luxe|your aesthetic)\b''',
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:agree|thoughts)\?\W*$''',
+  '''(?i)this follows their post closely|If it(?:'|’)s yours, say''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''(?i)\bHollis\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-VOICE 8 'LinkedIn: plainer, fewer emoji'; wf14 §3 platform shifts; §CM-POSTS 3-4 (one reader, ≤3 hashtags, never 'Agree?'). Her Instagram voice (W1: '(hi Priya!!)', 📏; expected.toml [voice] written_vs_spoken "'!!', 📏 or 😅") becomes plainer on LinkedIn: no emoji (from one to none), no '!!', at most 3 hashtags, and her own lines stay ('Rug before sofa.', 'Tape it out before you buy it.', 'Blue painter's tape'). It is her own post ('it's mine'): no F1 copy note and no liked.mine_clause. Her never-words stay out (I23)."""
+
+[[case]]
+id = "voice.en.014"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "A TikTok from his line: on-screen ≤6 words, a first line that lands in about 3 seconds, short beats, no TikTok slang he doesn't use"
+context = "Week 2, Tuesday, lunch break, iPhone, ChatGPT Plus. Brand Card v1 present (persona default: keyword KEEP UP, beat cards, Instagram + TikTok)."
+input = '''make a tiktok out of "you're not lazy, you're booked". I'll film it in the truck before pickup'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*first line[^:\n]{0,30}:''',
+  '''(?i)not lazy,? you(?:'|’)re booked''',
+  '''(?m)^\s*(?:```|~~~)''',
+]
+not_regex = [
+  '''(?im)^\W*first line[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){9}\S+''',
+  '''(?im)^\W*on-screen[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
+  '''(?im)^\W*beat\s*\d[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){12}\S+''',
+  '''(?i)(?:\bPOV:|\b(?:wait for it|no cap|it(?:'|’)s giving|let(?:'|’)s go+|fam|sheesh|rent free|main character)\b)''',
+  '''(?i)\b(?:shred\w*|beast mode|no days off|summer body|alpha|savage|crush it|level up|hustle|grind|transform\w*)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I12", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-VOICE 8 'TikTok, Reels: shorter; the hook lands in 3 s'; wf14 §3; §CM-FORMATS 1-2 (on-screen ≤6 words, first line ≤12 words, beats ≤12). Read here as: a first line of ≤9 words (about 3 seconds at his pace), on-screen ≤6, every beat ≤12, his line verbatim ('You're not lazy, you're booked.', answers.md chunk 2). §CM-VOICE 9: never add slang or catchphrases he doesn't use ('POV:', 'no cap', 'let's go'), nor his never-words (I23). No beat-count bound: shorts already run 3-5 beats."""
+
+[[case]]
+id = "voice.en.015"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "The email to her 140 is one-to-one: 'you', no group greeting, no guilt about not writing, subject lines"
+context = "Week 1, Thursday, ChatGPT Free. Brand Card v1 present (persona default: keyword CHAPTER; list_size 140, owned_channel email; cta_style keyword). Today's plan slot is the email; she asks for it herself."
+input = '''ok the email to my list. 140 people, I've emailed them like twice in 2 years. I feel bad about that'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*subject\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\byou\b''',
+]
+not_regex = [
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:hey|hi|hello|dear)\b[^\n]{0,15}\b(?:everyone|everybody|all|friends|ladies|girls|folks|guys|y(?:'|’)all)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:all of you|you all|y(?:'|’)all|you guys|ladies)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:\b(?:sorry|apologi[sz]e)\b[^\n]{0,40}\b(?:email|inbox|quiet|silen\w*|while|haven(?:'|’)t|written|writing|twice)\b|it(?:'|’)s been (?:a while|ages|forever|too long)|\bI feel bad\b|I(?:'|’)ve been (?:quiet|MIA|terrible|bad)\b)''',
+  '''(?i)\bI saw you opened\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:it(?:'|’)s never too late|second act|reinvent\w*|pivot\w*|dream job|unlock your potential|journey|empower\w*|level up|hustle|transform your life)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bPam\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I8", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-VOICE 8 'Email, message, DM: one-to-one, the address in the singular, a note to one client'; wf14 §3; §CM-MESSAGES 1 ('One-to-one: "you", the audience address in the singular'), 3 ('Never "I saw you opened", a talk that didn't happen, or guilt'). Her own 'I feel bad about that' is a note to the machine, never a line in the email. No group greeting ('Hi everyone', 'Hi ladies'), no 'you all'. Three subject lines (§CM-MESSAGES 1). Her never-words stay out (I23)."""
+
+[[case]]
+id = "voice.en.016"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Jargon at her level: 'coffees', never 'informational interviews', 'ATS', 'transferable skills' or 'personal brand'"
+context = "Week 2, Monday, ChatGPT Free. Brand Card v1 present (persona default: code_mix 'low: ops words in plain English (reorg, keepers list)'; client words from her dump only; she calls her method's step 'the coffees' and the ATS 'the 80s keywords or whatever they're called')."
+input = '''write a facebook post about the coffees. why 10 coffees beat 100 applications'''
+contains = []
+not_contains = []
+regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\bcoffees?\b''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:ATS|applicant tracking|transferable skills?|personal brand(?:ing)?|skill ?sets?|stakeholders?|value proposition|elevator pitch|upskill\w*|leverage your network|informational interviews?|optimi[sz]e your (?:resume|LinkedIn|profile)|career capital|hidden job market)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:circle back|move the needle|bandwidth|deep dive)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:it(?:'|’)s never too late|second act|reinvent\w*|pivot\w*|dream job|journey|empower\w*|level up|hustle)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-VOICE 9 'JARGON (code_mix): only the field words they really use, at their level; any other term → their plain word, or cut'; wf14 §3 code_mix (EN: jargon level); §CM-LOCALE 1 (no office words). expected.toml [voice] code_mix 'low: ops words in plain English (reorg, keepers list)'. Career-coach terms she never uses in her dump or posts stay out of the post; her word is 'coffee'. ('informational interview' appears once in research-paste.md, a pasted stranger's comment not used in this case.)"""
+
+# ---------------------------------------------------------------- "make it sound like me" (§CM-VOICE 5, §CM-HUMANIZE)
+
+[[case]]
+id = "voice.en.017"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "'make it sound like me' on a generic AI draft: her phrases or scenes, her one reader, the fog gone; 'what did you change?' answered in plain lines"
+context = "Week 2, Wednesday, Claude Pro on the MacBook. Brand Card v1 present (persona default: tone 'warm · wry · writerly', rhythm 'a long scene-setting sentence, then a short line that lands', 5 phrases from her dump and posts, audience 'you, one reader', her never-words). She pastes a LinkedIn draft a friend's AI tool wrote; turn 2 asks what changed."
+input = '''[turn 1] make it sound like me. a friend's AI thing wrote this for LinkedIn and it's awful:
+Are you navigating the next chapter of your career journey after corporate? Many professionals feel they must wait until they are fully ready before taking action. However, readiness is a product of action, not time. Take the first step today and unlock your potential. Agree? Thoughts?
+[turn 2] what did you change?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:waiting doesn(?:'|’)t make you ready|write the tuesday|plan the dream|lost your answer|wish someone had told me|parking lot|label|26 years|other people(?:'|’)s words|hit reply)''',
+  '''(?i)\b(?:took out|cut|dropped|swapped|replaced|changed|removed)\b''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:next chapter|journey|unlock\w*|navigat\w*|professionals|readiness|however)\b''',
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:agree|thoughts)\?\W*$''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:ladies|you all|y(?:'|’)all|you guys)\b''',
+  '''(?i)\b(?:H[1-9]|strip list|voice card|never_say|do_say|banned[- ]tells?|AI tells?|SG\d|I23|rubric)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bMargaret\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I23"]
+max_words = 90
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. wf14 §4.3 and §CM-VOICE 5: '"make it sound like me": rewrite with the card as in 7, then read aloud (§CM-HUMANIZE 5)'; §CM-HUMANIZE 1-4 (their scenes; the card's phrases and rhythm; strip fog: navigate, journey, unlock, Moreover; end on a step, never 'Agree?'); 'Reprint only the reworked piece, nothing under it'; '"What did you change?": 2-3 plain lines, no codes or list names' (max_words bounds that last reply). The rework draws on her card: one of her lines or scenes (voice-samples.md and W1-W2: 'Waiting doesn't make you ready.', 'Don't plan the dream. Write the Tuesday.', the parking lot, the label maker, 26 years), one reader, none of her never-words (next chapter, journey, unlock; I23)."""
+
+[[case]]
+id = "voice.en.018"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "After 'make it sound like me', what's still off in plain words is stored as not-me: one confirmation line, only N3 reprinted, the word gone"
+context = "Week 2, Thursday, in the school pickup line, iPhone, ChatGPT Plus. Brand Card v1 present (persona default: keyword KEEP UP, beat cards; never_say empty). Today's reel N3 is on screen; its last line is 'Let's go, dads. Comment KEEP UP.' Turn 1 asks for his voice; turn 2 says what is still off, in plain words (no 'not me:' prefix)."
+input = '''[turn 1] make it sound like me
+[turn 2] closer. but "let's go" is not me, that's a gym bro thing. never use it'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)Got it: ["“]let(?:'|’)s go[,.!]?["”] is out of your voice from now on\.''',
+  '''(?i)\bkeep up\b''',
+]
+not_regex = [
+  '''(?im)^(?![^\n]*out of your voice)[^\n]*\blet(?:'|’)s go\b''',
+  '''(?s)out of your voice from now on\..*out of your voice from now on\.''',
+  '''(?im)^\W*N[124]\b''',
+  '''(?im)^(?![^\n]*out of your voice)[^\n]*\b(?:bro|king|beast mode|crush it|grind)\b''',
+  '''(?i)\b(?:H[1-9]|strip list|never_say|do_say|banned list)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. §CM-VOICE 5: '"make it sound like me": rewrite with the card…, then read aloud. They say what's off → store it as in 6' (never_say + voice.not_me_ok, one line, then the work). His behaviour: 'I don't want to sound like one of those fitness guys.' The confirmation is the exact string; only N3 is reprinted (§CM-EDGE: 'only N2, reprinted alone'), with nothing under it; the comment word KEEP UP never changes (§CM-HUMANIZE 6). graders.py I23 reads only 'not me:' lines, so the plain-words form is checked here (see flags)."""
+
+# ---------------------------------------------------------------- the Brand Card's HOW YOU SAY IT line (wf14 §2; brain.kit-print 2)
+
+[[case]]
+id = "voice.en.019"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "S0", "floor"]
+title = "HOW YOU SAY IT on the Day-0 card: her tone, rhythm, two of her lines verbatim, 'to them: you'; the top ≤500 characters; no field names"
+context = "Day 0, ChatGPT Plus. Corinne dictated 3 dump chunks from the car and pasted her posts W1-W2 after chunk 1; the one missing fact (the multi-income line) is answered; the Map OK'd (YOUR WORD: nothing room); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card. She never said 'not me:'."
+input = '''[turn 1] ok I'll film it tonight after pickup
+[turn 2] ok'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\W*HOW YOU SAY IT:[^\n]*["“][^"”\n]{6,}["”][^\n]*["“][^"”\n]{6,}["”]''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*["“][^"”\n]*(?:tape it out|rug before sofa|measure the door|judge your ikea|on a tuesday|shop your way|what I tell people|doesn(?:'|’)t have a job)''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(?:quick|warm|bossy|practical|direct|plain|friendly|brisk|blunt|no-nonsense)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bto them:\s*["“](?:you|neighbors)\b''',
+  '''Brand Card v1\b[^\n]*\n[\s\S]{0,500}?for the machine, no need to read''',
+  '''Save this so I remember you \(30 s\)\.''',
+]
+not_regex = [
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(?:tone|rhythm|phrases|audience_address|code_mix|humour|written_vs_spoken)\s*[:=]''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(?:authentic|inspiring|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|stylish|chic)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(?:elevated?|curated|timeless|forever home|dream home|pinterest-worthy|decor tips|obsessed|game-changer|luxe|your aesthetic)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bnever:''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]{170,}''',
+  '''(?i)\bHollis\b''',
+  '''(?i)\b400\b|\b30\s*(?:%|percent)''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I17", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. wf14 §2 'HOW YOU SAY IT: {tone} · {rhythm} · "{phrase}", "{phrase}" / to them: "{address}" · never: "{word}"'; brain.kit-print 2 (top ≤500 chars, 3 lines; 'never:' only after a 'not me:'); schemas/brand-card.toml voice_line (≤124 chars, plain words, no field names). expected.toml [voice]: tone 'quick · warm · bossy', rhythm 'punchy lines; the scene first, then the rule; imperatives', audience_address 'you; "neighbors" in the newsletter'. Her lines are in her dump ('tape it out', 'rug before sofa', 'measure the door', 'judge your IKEA') or W1-W2 ('Okay, so here's what I tell people.', 'It just doesn't have a job.'). Her never-words (I23) and praise (I17) stay off the line. The top window runs from the card title to the machine heading."""
+
+[[case]]
+id = "voice.en.020"
+kind = "D"
+persona = "service-biz"
+lanes = ["S1", "floor"]
+title = "One audience address all week: 'you' in her Week-1 pieces, 'neighbors' only as her newsletter greeting, never 'friends', 'ladies' or 'y'all'"
+context = "Same Day-0 state as voice.en.019: Corinne pasted W1-W2 with chunk 1 (W2, her newsletter intro, opens 'Hi neighbors,'); Map OK'd (YOUR WORD: nothing room; email-first, list 1,200, The Floor Plan sent by Bree); FILM TODAY delivered. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply."
+input = '''[turn 1] ok I'll film it tonight after pickup
+[turn 2] ok'''
+contains = []
+not_contains = []
+regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?:(?!```).)*?```(?:(?!```).)*?\byou\b(?:(?!```).)*?```(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?){3}''',
+]
+not_regex = [
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:hey|hi|hello|dear)\b[^\n]{0,15}\b(?:friends|everyone|everybody|all|ladies|guys|folks|y(?:'|’)all|homeowners)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:y(?:'|’)all|you guys|ladies|all of you|babes?|mama)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''(?i)\bHollis\b''',
+  '''(?i)\b400\b|\b30\s*(?:%|percent)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I15", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. §CM-VOICE 3 ('AUDIENCE ADDRESS = how they speak to buyers, as heard … Same address within a piece and across the week') and 8 (email one-to-one); wf14 §4.1 (inferred from the dump and posts); expected.toml [voice] audience_address 'you; "neighbors" in the newsletter' (W2 'Hi neighbors,'). At least 3 of her Week-1 boxes talk to 'you'; no other greeting or group address appears in any piece. I15's audience-address proxy is VN-only; this case checks the EN side."""
+
+[[case]]
+id = "voice.en.021"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "'make it funny' keeps her humour dry and at her own expense: no memes, emoji, 'lol' or jokes about clients"
+context = "Week 3, Monday, Claude Free on the laptop. Brand Card v1 present (persona default: humour 'dry', at her own expense; tone 'calm · precise · dry'; the Monday Number newsletter, 380 subscribers). This month's Monday Number is 20 (the minutes the 13-week cash forecast takes each Monday)."
+input = '''make this month's Monday Number funny. like actually funny, people love memes'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b20\b''',
+]
+not_regex = [
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?[\U0001F300-\U0001FAFF☀-⛿❤✨]''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:lol|lmao|rofl|haha+)\b''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:\bNobody:|\bMe:|\bPOV:|\btell me you(?:'|’)re\b[^\n]*without telling me|\bI can(?:'|’)t even\b|\bit me\b|\bliterally dying\b|\bwho did this\b)''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?!!''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:clients? from hell|nightmare clients?|dumb|idiots?|clueless)\b''',
+  '''(?ism)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?^\W*(?:agree|thoughts)\?\W*$''',
+  '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?\b(?:cash is king|scale your|scaling|7-figure|crush it|financial freedom|hustle|game-changer|unlock|skyrocket|wealth)\b''',
+  '''(?i)\b(?:I can(?:'|’)t|I won(?:'|’)t) (?:make|write)[^\n]{0,20}funn''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bRaj\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I8", "I17", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-VOICE 9 ('Never add slang, emoji, swearing, catchphrases or humour they don't use'); wf14 §3 humour (none | dry | playful | self-roast). voice-samples.md: 'mildly funny at her own expense'; W2 shows her level ('P.S. Yes, I still start on a yellow legal pad. Old habits.'). The email gets funnier her way, never by meme formats, emoji, 'lol', '!!' or jokes at clients' expense, and is never refused. Her never-words and closing 'Agree?' / 'Thoughts?' stay out (I23). The number 20 is hers (allowed_numbers)."""
+
+# ---------------------------------------------------------------- the Weekly Talk refreshes phrases, never invents them (wf14 §4.2; §CM-VOICE 4)
+
+[[case]]
+id = "voice.en.022"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "After a Weekly Talk, the reprinted card carries a real new phrase of hers; nobody else's words, no creator's coined term, no tidied 'phrase'"
+context = "Week 2, Friday, ChatGPT Free, the same chat as Tuesday's Weekly Talk (her answers are those of pillar-transcript.md; the LinkedIn-headlines aside was parked). Brand Card v1 present (persona default: phrases from her Day-0 dump and posts W1-W2; tone 'plain · dry · warm'). Earlier this week she sent two posts she liked (liked-paste.md L1 and L2), saved as shapes. Today she gave her numbers; the review's NEXT said 'Say 'ok' and I'll print this week's Brand Card to save.'"
+input = '''ok'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\s*phrases:[^\n]*(?:got a sentence|not begging, it(?:'|’)s research|boss of the coffee|free education|10 good coffees|one name and three lines|look you in the eye|warm white wine|brain picked|somebody else(?:'|’)s Tuesday|you(?:'|’)re not broken)''',
+  '''(?m)^\W*HOW YOU SAY IT:''',
+  '''(?im)^\s*tone:[^\n]*\b(?:plain|dry|warm)\b''',
+]
+not_regex = [
+  '''(?im)^\s*phrases:(?:[^\n|]*\|){5}''',
+  '''(?im)^\s*(?:phrases|openers_closers):[^\n]*(?:Blackout|Second Wind|Fearless at Fifty|Midlife R[ée]sum[ée]|unstuck\.at\.fifty|late ?bloomer)''',
+  '''(?im)^\s*(?:phrases|openers_closers):[^\n]*\b(?:never too late|reinvent\w*|pivot|second act|journey|empower\w*|unlock|level up|hustle|dream job|transform\w*)\b''',
+  '''(?im)^\s*(?:phrases|openers_closers):[^\n]*(?:kidney|waste of a scone|instructional design for 19 years|before they gave you a title|that(?:'|’)s a job)''',
+  '''(?im)^\s*(?:phrases|openers_closers):[^\n]*\bcoffee comes before\b''',
+  '''(?im)^\s*tone:[^\n]*\b(?:emotional|vulnerable|inspiring|passionate)\b''',
+  '''\bPam\b''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I10", "I11"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf14 §4.2 ('Every Weekly Talk: refresh phrases / openers_closers from the transcript. Keep the newest real phrases; never invent'); §CM-VOICE 4 ('the newest real ones replace the oldest (5 phrases, 3 openers or closers). Verbatim only: never invented, tidied or taken from a liked post. Tone and rhythm change only when 2 Talks show it. The next card carries them'); brain.kit-keep 4 (reprint on a Friday with new liked posts; 'A Talk's new phrases and openers ride the next reprint'). At least one phrase is hers from the Talk, verbatim (pillar-transcript.md: 'I didn't get a job from Ron. I got a sentence.', 'it's not begging, it's research', 'You're the boss of the coffee.', 'the bad ones are free education', 'You don't need 10 good coffees.'). Never someone else's line from the Talk (her husband's 'not a kidney', Gail's 'waste of a scone', Nadine's and Ron's lines), never a creator's coined term from L1 ('Résumé Blackout Method'), never a tidied version. ≤5 phrases; tone unchanged after one Talk."""
+
+[[case]]
+id = "voice.en.023"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "The Talk week is in her new words: at least one fresh line of hers verbatim, no coined 'method' name, nothing invented"
+context = "Week 2, Tuesday (talk day), ChatGPT Free. Brand Card v1 present (persona default). The Weekly Talk ran in this chat: questions 1-4 asked and answered (her answers in pillar-transcript.md). Turn 1 is her answer to question 5; the week comes in 2 replies (ChatGPT Free: ≤3 pieces a reply); turn 2 gets the second."
+input = '''[turn 1] <<paste: pillar-transcript.md, Dana's last answer (from "Okay. I'd say, I know." to "That felt long."), verbatim>>
+[turn 2] next'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(?:got a sentence|not begging, it(?:'|’)s research|boss of the coffee|free education|10 good coffees|you need 10 coffees|one name and three lines|look you in the eye|somebody else(?:'|’)s Tuesday|you(?:'|’)re not broken|exactly where you are right now)''',
+  '''(?m)^\s*(?:```|~~~)''',
+]
+not_regex = [
+  '''(?:™|®)''',
+  '''(?i)\b(?:the\s+)?(?:coffee|keepers?|test[- ]drive|10[- ]coffee)\s+(?:method|framework|system|formula|blueprint|protocol)\b''',
+  '''(?i)\bcoffee comes before\b''',
+  '''(?i)\b(?:it(?:'|’)s never too late|second act|reinvent\w*|pivot\w*|dream job|unlock your potential|empower\w*|level up|hustle|transform your life)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\bPam\b''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I9", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. talk.kit-week ('3 re-say pieces, ≥70% their spoken words'; 'Silently: refresh their phrases and openers from the answers, only words they said'); wf14 §4.2 ('never invent'); §CM-VOICE 4. Her Talk lines (pillar-transcript.md: 'I got a sentence', 'it's not begging, it's research', 'You're the boss of the coffee.', 'the bad ones are free education', 'You need one name and three lines.') reach the week verbatim; the machine never names her steps ('Can we not call it a method? I'm not a guru.', answers.md behaviour), never tidies her lines, never adds her never-words (I23). Pieces print with nothing under them (I3)."""
+
+# ---------------------------------------------------------------- "why?" shows the voice a piece used (wf15 §2; §CM-EDGE "why?")
+
+[[case]]
+id = "voice.en.024"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'why?' after today's piece: the WHY line, the checks, and the voice it used (her line, her 'you') in plain words; the piece itself carried none"
+context = "Week 1, Tuesday, ChatGPT Free, new chat in the project. Brand Card v1 present (persona default: tone 'plain · dry · warm'; phrases include 'Coffee before resume. Every time.' and 'You're not too old. You're too vague.'; audience 'you'). Turn 1 gets today's piece with nothing under it; turn 2 asks why."
+input = '''[turn 1] next
+[turn 2] why?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?im)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·)[^\n]*(?:nobody tells you|too vague|too old|coffee before resume|carrot cake|blow smoke|picture this|reorg|ops person|feeding the portal|keepers list|different logo|your (?:words|phrase|line|voice|tone)|sounds like you|in your voice)''',
+  '''(?i)\b(?:your (?:voice|words|phrases?|tone|rhythm|line)|sounds like you|to (?:one|a) (?:reader|woman|person)|talks? to (?:them|her|you) as|(?:no|none of your) never[- ]words?|words you(?:'|’)d never say)\b''',
+]
+not_regex = [
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?i)\b(?:audience_address|code_mix|written_vs_spoken|openers_closers|never_say|do_say)\b''',
+  '''\bPam\b''',
+  '''(?i)\b90\s*(?:%|percent)''',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from'); §CM-EDGE "why?" ('Evidence: their phrase, scene or client'); ship.kit 4 VOICE ('their tone, rhythm, phrases and audience address, no never-words'). Turn 1 prints the piece with nothing under it (I3 grades it). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the piece used, shown in plain words: one of her lines or 'your words', her 'you', no never-words. No string fixes how 'why?' names the voice, so it is asserted loosely (see flags). Field names stay internal; the piece is not reprinted. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+
+[[case]]
+id = "voice.en.025"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "'why?' after her lead email: the voice it used (her line, her sign-off, one owner at a time) prints here, never under the email"
+context = "Week 1, Monday, Claude Free. Brand Card v1 present (persona default: email-first; the Monday Number, 380 subscribers; keyword RECORD YEAR; tone 'calm · precise · dry'; openers 'Okay. Here's the math.', 'Margin before more.'; she signs 'Erin' or 'E.'). Turn 1 gets this week's lead email with nothing under it; turn 2 asks why."
+input = '''[turn 1] next
+[turn 2] why?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?im)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·)[^\n]*(?:here(?:'|’)s the math|margin before more|client by client|bank app|on purpose|stairwell|record year|Marcus|your (?:words|phrase|line|voice|tone|sign-off)|signed|one (?:reader|owner|person)|sounds like you)''',
+  '''(?i)\b(?:your (?:voice|words|phrases?|tone|rhythm|line|sign-off)|sounds like you|to (?:one|a) (?:reader|owner|person)|signed (?:like|as) you|(?:no|none of your) never[- ]words?|words you(?:'|’)d never say)\b''',
+]
+not_regex = [
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?i)\b(?:audience_address|code_mix|written_vs_spoken|openers_closers|never_say|do_say)\b''',
+  '''\bRaj\b''',
+  '''(?i)\b85,000\b''',
+  '''(?i)\b70\s*(?:%|percent)''',
+  '''(?i)\b(?:former|ex-)\s*(?:agency\s+)?CFO\b''',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf15 §2 and §CM-EDGE "why?"; ship.kit 4 VOICE. Turn 1 prints the email with nothing under it (I3 grades it; setup.en.028 asserts its shape). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the email used: one of her lines ('Okay. Here's the math.', 'Margin before more.', 'client by client'), her sign-off or her one reader, in plain words, no field names. Asserted loosely: no string fixes how 'why?' names the voice (see flags). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+
+# ---------------------------------------------------------------- Day 0 never asks about voice (wf14 V3; §CM-VOICE 1)
+
+[[case]]
+id = "voice.en.026"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "Whole run to the Map: the dump prompt invites her posts once, never a gate; no voice question; YOUR VOICE on the Map by coach turn 4"
+context = "Whole run, Day 0, Claude Pro on the MacBook, from Start to the Map reply, persona default (answers.md order; with the Mac tip she dictates 3 chunks, then types 'okay done.'). When the dump prompt invites them, she pastes her posts W1-W2 after chunk 1. Nothing is missing, so the Map follows chunk 3. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."
+input = '''WHOLE RUN: [turn 1] Start · [turn 2] dump chunk 1, then written-posts.md W1-W2 bodies pasted below it (no headings) · [turn 3] dump chunk 2 · [turn 4] dump chunk 3, ending 'okay done.' Stop after the Map reply.'''
+contains = []
+not_contains = []
+regex = [
+  '''Got posts or messages you(?:'|’)ve written\? Paste 2[–-]3 too, or send a link to your page\.''',
+  '''Mac: press fn \(globe\) twice\.''',
+  '''(?i)3 lines you just said that are worth money''',
+  '''(?m)^\W*YOUR VOICE:[^\n]*["“][^"”\n]{3,}["”]''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+]
+not_regex = [
+  '''(?i)\b(?:how would you describe|what(?:'|’)s|what is|describe)\b[^\n?]{0,40}\byour (?:tone|voice|style|brand voice|writing style|personality)\b[^\n]*\?''',
+  '''(?i)\b(?:formal or casual|casual or formal|funny or serious|serious or funny|short or long sentences)\b''',
+  '''(?i)\b(?:you (?:need|have) to|please) paste\b|\bbefore we (?:start|begin)\b[^\n]{0,40}\bpaste\b''',
+  '''(?i)\b(?:typos?|grammar|spelling)\b''',
+  '''(?i)\b(?:your|these|the) (?:posts?|writing|newsletter)\b[^\n]{0,40}\b(?:great|beautiful|lovely|strong|powerful|amazing|wonderful)\b''',
+  '''(?m)^\W*(?:WHY THIS GETS CLIENTS|✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''(?i)\b(?:upload|download)\b''',
+  '''(?i)\block(?:ed)?\b|\b90 days\b''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5", "I6", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: each reply. wf14 V3 ('Ask on Day 0. The dump prompt invites "paste 2–3 posts or messages you've written". It is part of the dump: optional, no extra turn, never a gate'; strings setup.dump_posts); §CM-VOICE 1 ('Never a voice question; unsure → the plainer guess'); start-block steps 1-4; acceptance [day0] map_max_turns_en = 6 (the Map is the reply to coach turn 4 here). Her pasted posts get the usual 'Got it.' and no comment on her writing (setup.en.045). Linda quits on downloads, uploads or a 'locked for 90 days' Map (answers.md behaviour). Graded with graders.py day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+
+# ---------------------------------------------------------------- P cases: the judge's "sounds like the coach" lens (shared.md SG4, SG8)
+
+[[case]]
+id = "voice.en.027"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Her long Facebook post reads like her written voice and clears the shared gates"
+context = "Week 1, Wednesday, ChatGPT Free on the laptop. Brand Card v1 present, built on Day 0 from her dump and her pasted posts W1-W2 (tone 'plain · dry · warm'; rhythm 'short lines; story first, then the step; fragment punch'; phrases and openers from her dump and W1; audience 'you'; code_mix low). Today's plan slot is the long Facebook post."
+input = '''the long facebook post. the 63 applications one'''
+not_contains = ["WHY THIS GETS CLIENTS"]
+not_regex = [
+  '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+]
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG4", "SG5", "SG6", "SG8"]
+min_score = 8
+invariants = ["I1", "I3", "I8", "I23"]
+max_questions = 1
+notes = """qa/standards/shared.md SG4 'Sounds like the coach' (judge lens, wf14 §5): the post matches the Voice Card's tone, rhythm (her WRITTEN voice for a post: written-posts.md W1-W2, 'Shorter than her talk: no fillers, one-line paragraphs'), her phrases or openers where natural ('Here's the thing nobody tells you.', 'Coffee before resume. Every time.', 'I'm not going to blow smoke at you.') and 'you' to one woman; 0 never-words; no career jargon she doesn't use. SG8: she would say every line to a buyer tomorrow. Her own W2 tells this story (63 applications, 2 interviews, coffee), so reusing her words is right; numbers only from allowed_numbers (63, 7, 2). Nothing under the post (I3)."""
+
+[[case]]
+id = "voice.en.028"
+kind = "P"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "His kitchen-floor reel is his spoken voice cut short for Reels, and clears the shared gates"
+context = "Week 2, Sunday night, iPhone, ChatGPT Plus. Brand Card v1 present (persona default: tone 'plain · dry · self-deprecating'; rhythm 'short bursts, one run-on per story; fragments OK'; phrases from his dump; audience 'you (one dad to another)'; humour self-roast; beat cards; Instagram + TikTok). He asks for a reel from his own story."
+input = '''the kitchen floor one. lily said I sound like grandpa when my knees cracked. make it a reel'''
+not_contains = ["WHY THIS GETS CLIENTS"]
+not_regex = [
+  '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+  '''\b(Owen|Lily|Jess|Tommy)\b''',
+]
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG4", "SG5", "SG6", "SG8"]
+min_score = 8
+invariants = ["I1", "I3", "I8", "I12", "I23"]
+max_questions = 1
+notes = """shared.md SG4 'Sounds like the coach' (spoken voice for scripts) and SG8 read-aloud against voice-samples.md and answers.md chunk 3 (the Lego castle, 'You sound like grandpa', the floor thing). §CM-VOICE 8: video follows the spoken voice; Reels shorter, the hook lands in about 3 s; his run-on story cut into short beats. Humour on himself only; no gym slang or never-words (I23); his daughter stays unnamed even though he named her; no health claim from the floor-test study he half-remembers (SG2). Nothing under the reel (I3)."""
+
+[[case]]
+id = "voice.en.029"
+kind = "P"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "Her Kitchen Table Notes issue reads like her own newsletter and clears the shared gates"
+context = "Week 3, Saturday, Claude Pro on the MacBook. Brand Card v1 present (persona default: tone 'warm · wry · writerly'; rhythm 'a long scene-setting sentence, then a short line that lands'; openers and closers from W1-W2 ('Here's what I wish someone had told me', 'Hit reply and tell me'); audience 'you, one reader'; written_vs_spoken from her pasted posts; quiet CTA)."
+input = '''this Sunday's Kitchen Table Notes. the corkboard story'''
+not_contains = ["WHY THIS GETS CLIENTS"]
+not_regex = [
+  '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
+]
+standard = "shared"
+critical = ["SG1", "SG2", "SG3", "SG4", "SG5", "SG6", "SG8"]
+min_score = 8
+invariants = ["I1", "I3", "I8", "I10", "I23"]
+max_questions = 1
+notes = """shared.md SG4 'Sounds like the coach' for an email in her WRITTEN voice (written-posts.md W1: the scene first, then one small homework, 'You didn't lose a job. You lost your answer.', 'Hit reply and tell me…', signed '— Linda') and SG8 against voice-samples.md ('Nobody ever moved forward because of a corkboard.', answers.md). One reader, 'you'; ends on a reply invitation, never a hard sell or 'Agree?'; none of her never-words (next chapter, journey, DM me, link in bio; I23). Margaret (no consent) never appears (I10). Nothing under the email (I3)."""

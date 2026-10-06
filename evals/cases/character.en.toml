@@ -509,6 +509,8 @@ not_regex = ['(?i)\b(live longer|die sooner|studies? (show|says?))\b']
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 notes = "wf6 F7 rituals: each ritual plus the value behind it. The kitchen-floor Lego story uses 'my daughter', never her name (private_names). The longevity study stays out (character.en.016)."
 
+# ---------------------------------------------------------------- "why?" follow-ups (wf15 §2: WHY, checks and evidence print only here)
+
 [[case]]
 id = "character.en.028"
 kind = "D"

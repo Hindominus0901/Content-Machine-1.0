@@ -77,6 +77,7 @@
 "anchor.research-lite"  = "Quick Listen"
 "anchor.edge"           = "Stand-out check"
 "anchor.humanize"       = "Sound like the coach"
+"anchor.natural"        = "Write the way they talk"
 "anchor.guardrails"     = "Guardrails and claims"
 "anchor.liked"          = "Posts the coach likes"
 "anchor.locale"         = "Language and market"
@@ -267,3 +268,5 @@
 "card.label.humour"            = "Humor"
 "card.label.written_vs_spoken" = "Writing vs talking"
 "setup.cut_off"                = "That got cut off. Say it again in 2 shorter pieces."
+"card.label.address_1to1"      = "One-to-one"
+"card.label.connectors"        = "Linking words"

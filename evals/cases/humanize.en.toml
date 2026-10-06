@@ -37,7 +37,8 @@
 #   piece", §CM-HUMANIZE). Posts, captions and emails print in a copy box (§CM-POSTS 8, §CM-FORMATS 4,
 #   §CM-MESSAGES 8), so their patterns read inside one: (?is)\A(?:…```…```)*?…```[^\n]*\n(?:(?!```).)*?X
 #   finds X inside a fenced block and never in the prose around it, where a coach-facing line may name
-#   what was cut ("I took out 'journey'"). Script lines outside a box (beat cards) use a per-line guard:
+#   what was cut (I took out "journey"; I23 skips double-quoted mentions in prose, not single-quoted
+#   ones). Script lines outside a box (beat cards) use a per-line guard:
 #   (?im)^(?![^\n]*\b(?:cut|took out|dropped|removed|swapped|replaced|instead of)\b)[^\n]*?X. ("scope:
 #   pieces" is no longer used: graders.py finds a piece without a status line only by an N<digit> label
 #   or a format title, so a reworked caption in a bare copy box had no piece to read.)
@@ -720,6 +721,8 @@ min_score = 13
 invariants = ["I1", "I3", "I8", "I17", "I23"]
 max_questions = 1
 notes = """arch §8.3 humanize (spoken language, contractions, one point of view) on her own P7 story in her register ('Okay. Here's the math.', short declarative sentences, dry humour at her own expense). QA §3.1 text-post: the claim lands before 'See more' (TP1); rhythm, not stacked fragments (TP4); one action tied to the story (TP6). No number she did not give (no line-of-credit amount); the former employer stays unnamed; ends on a step, never 'Agree?'. The post prints with nothing under it (R1: its WHY line shows on 'why?')."""
+
+# ---------------------------------------------------------------- "why?" follow-ups (wf15 §2: WHY, checks and evidence print only here)
 
 [[case]]
 id = "humanize.en.030"

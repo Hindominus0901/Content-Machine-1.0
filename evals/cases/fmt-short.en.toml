@@ -392,7 +392,7 @@ title = "Short-video Week 1 on Free: three reels as beat cards, each with on-scr
 context = "Day 0, ChatGPT Free. FILM TODAY was delivered; this message gets Week 1, unasked (the Brand Card prints only after Week 1). Instagram first, list 140 (<300) → short-video mix (3 shorts, 1 long post, 1 email). On Free, Week 1 comes in 2 replies of at most 3 pieces. This is Week-1 reply 1."
 input = '''next. I'll film today's one after lunch'''
 regex = [
-  '''(?s)(on-screen.*?){3}''',
+  '''(?is)(on-screen.*?){3}''',
   '''(?i)\bbeats?\b''',
   '''(?i)chapter''',
   '''NEXT →[^\n]*\s*\Z''',
@@ -410,7 +410,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I17", "I18"]
 max_questions = 1
-notes = """UX §2 and plan.kit-week 2: FB/TikTok/IG → 3 shorts, 1 long post, 1 email; at most 3 per reply on Free. Every short keeps the FILM TODAY budgets and prints with nothing under it (wf15 §2, I3; R1): its WHY line is stored and prints on 'why?'. She will not dance or use trend audio. Week 1 arrives before the Brand Card exists (wf15 §1.6-§1.7), so no save talk gates it (save_gates = 0)."""
+notes = """UX §2 and plan.kit-week 2: FB/TikTok/IG → 3 shorts, 1 long post, 1 email; at most 3 per reply on Free. Every short keeps the FILM TODAY budgets and prints with nothing under it (wf15 §2, I3; R1): its WHY line is stored and prints on 'why?'. The on-screen count is case-insensitive (the module prints 'On-screen'). She will not dance or use trend audio. Week 1 arrives before the Brand Card exists (wf15 §1.6-§1.7), so no save talk gates it (save_gates = 0)."""
 
 [[case]]
 id = "fmt-short.en.012"
@@ -1172,6 +1172,8 @@ not_regex = [
 invariants = ["I1", "I3", "I5", "I8", "I17"]
 max_questions = 1
 notes = """must-block (their results as hers), while the remix itself is never refused. DECISIONS F1: still hard-blocked: someone else's results, testimonials, numbers or story presented as the coach's own (wf13 §0, §5 rule 3; §4 closing the source puts the post's numbers on the I8 trap list; persona.toml excluded_numbers: $312K, 1,400, 97%, 9,000+ students). The reel keeps the shape (a striking first three seconds over a room filling up) and carries her own counted number (64 Resets) or her own rooms; a hard-stop line may quote the refused numbers. 'Make my version' is the default path, so the creator's name, handle and coined term stay out (F4, creator_terms) and her banned decor-speak never comes in."""
+
+# ---------------------------------------------------------------- "why?" follow-ups (wf15 §2: WHY, checks and evidence print only here)
 
 [[case]]
 id = "fmt-short.en.044"

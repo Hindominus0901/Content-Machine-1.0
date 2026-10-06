@@ -236,8 +236,12 @@ class SchemaFilesTest(TempRepo):
         """wf14-voice-language-spec §3: the Voice Card lives in the machine block, group "voice"."""
         machine = {f["name"]: f for f in self.card["machine"]["field"]}
         voice = [f["name"] for f in self.card["machine"]["field"] if f["group"] == "voice"]
-        self.assertEqual(voice, ["tone", "rhythm", "phrases", "openers_closers", "audience_address", "pronouns",
-                                 "dialect", "code_mix", "humour", "written_vs_spoken", "never_say", "do_say"])
+        self.assertEqual(voice, ["tone", "rhythm", "phrases", "openers_closers", "audience_address", "address_1to1",
+                                 "connectors", "pronouns", "dialect", "code_mix", "humour", "written_vs_spoken",
+                                 "never_say", "do_say"])
+        # VN language guide §4.1, §10.2.3: the one-to-one address and their own linking words
+        self.assertEqual((machine["connectors"]["max_items"], machine["connectors"]["max_chars"]), (5, {"en": 20, "vn": 20}))
+        self.assertIs(machine["address_1to1"]["required"], False)
         caps = {"tone": 40, "rhythm": 60, "openers_closers": 50, "audience_address": 40, "dialect": 40,
                 "code_mix": 60, "written_vs_spoken": 80}
         for name, cap in caps.items():

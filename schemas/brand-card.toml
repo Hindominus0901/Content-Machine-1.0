@@ -60,7 +60,7 @@ label_allowance = 10
 # `liked` goes first, oldest entry first (wf13-inspiration-spec §4). Voice fields go
 # last, phrases first among them (wf14 §3: "voice is core"); never_say is the very last.
 trim_order = ["liked", "recent_hooks", "passages", "client_words", "stories", "proof", "side_door",
-              "phrases", "openers_closers", "written_vs_spoken", "do_say", "never_say"]
+              "phrases", "openers_closers", "connectors", "written_vs_spoken", "address_1to1", "do_say", "never_say"]
 
 [sources]
 dump = "the Day-0 brain-dump, verbatim"
@@ -395,6 +395,30 @@ label_key = "card.label.audience_address"
 note = """how the coach addresses buyers, inferred from the dump and posts, shown on the Map and corrected there: \
 EN the "you" style (you, y'all, friend); VN the coach's pronoun + the audience's (mình – các chị em). \
 Never the machine–coach pair (pronouns)"""
+
+[[machine.field]]
+name = "address_1to1"
+group = "voice"
+type = "text"
+max_chars = { en = 30, vn = 30 }
+source = "posts"
+required = false
+label_key = "card.label.address_1to1"
+note = """how the coach addresses ONE buyer in a DM, inbox or Zalo message when it differs from audience_address \
+(VN: "em – chị", "Dạ… ạ"; EN: first name, no "guys"). Empty: one-to-one pieces use audience_address in the singular \
+(VN language guide §4.1)"""
+
+[[machine.field]]
+name = "connectors"
+group = "voice"
+type = "list"
+max_items = 5
+max_chars = { en = 20, vn = 20 }
+source = "dump"
+required = false
+label_key = "card.label.connectors"
+note = """the linking words they really use when they tell a story, verbatim from the dump and posts \
+(EN "so", "and then", "turns out"; VN "thì", "mà", "rồi", "xong", "hóa ra"). §CM-NATURAL 3 links with these first"""
 
 [[machine.field]]
 name = "pronouns"

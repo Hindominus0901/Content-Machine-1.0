@@ -71,6 +71,7 @@
 "anchor.research-lite"  = { text = "Lắng nghe nhanh", src = "7d8ce92785" }
 "anchor.edge"           = { text = "Kiểm tra độ khác biệt", src = "4a0e74c272" }
 "anchor.humanize"       = { text = "Viết đúng giọng thật", src = "2f1de845f2" }
+"anchor.natural"        = { text = "Viết như người Việt nói", src = "0302e99f55" }
 "anchor.guardrails"     = { text = "Giới hạn an toàn và lời hứa kết quả", src = "e4c4889869" }
 "anchor.locale"         = { text = "Ngôn ngữ và thị trường", src = "b54ab26ed4" }
 
@@ -266,3 +267,5 @@
 "card.label.humour"            = { text = "Kiểu hài hước", src = "8a590611f4" }
 "card.label.written_vs_spoken" = { text = "Lúc viết khác lúc nói", src = "ab8050b33a" }
 "setup.cut_off"                = { text = "Đoạn đó bị đứt. Bạn nói lại thành 2 đoạn ngắn nhé.", src = "0ef31c83a9" }
+"card.label.address_1to1"      = { text = "Nhắn riêng thì gọi", src = "2196d4b686" }
+"card.label.connectors"        = { text = "Chữ nối hay dùng", src = "29e33dfe90" }
