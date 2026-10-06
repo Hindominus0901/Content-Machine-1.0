@@ -1,14 +1,32 @@
 # Character module cases (EN). Written by the QA role before the module exists.
-# Sources: docs/research/wf6-character-design.md (Character Card, polarity guide A4, borrowed-attractor
-# detector §6, 3D test, interviewer rules A1); wf11-message-focus.md §0 (Character Core Q1-Q5 covered by the
-# dump; trait inferred; excavation = L5); wf11-ux-spec.md §3.3 (L5 "Make it more me: 3 × 20-min talks?");
-# wf12-qa-spec.md §2.5-§2.8 (post anyway, not me:, I do say), §3.1 (character-card critical items);
-# docs/DECISIONS.md (polarize on ideas, never people; flex or freebie only as proof, CTA or flipped format).
+# Rewritten 6 Oct 2026 for the simple surface (wf15) and Voice & Language (wf14).
+# Sources: docs/research/wf15-simple-surface-spec.md §0-§2 and wf14-voice-language-spec.md §2 (win where they differ);
+# wf15-case-impact.md (R2, R7, R10, R13); wf6-character-design.md (Character Card, polarity guide A4, borrowed-attractor
+# detector §6, 3D test, interviewer rules A1); wf11-message-focus.md §0 (Character Core Q1-Q5 covered by the dump; trait
+# inferred; excavation = L5); wf11-ux-spec.md §3.3 (L5 "Make it more me: 3 × 20-min talks?"); wf12-qa-spec.md §2.5-§2.8
+# (post anyway, not me:, I do say), §3.1 (character-card critical items); docs/DECISIONS.md (polarize on ideas, never
+# people; flex or freebie only as proof, CTA or flipped format; F1); modules/en/character.md, voice.md, edge-rubric.md
+# (WHAT PRINTS); strings/en.toml (voice.not_me_ok, voice.cant_allow, liked.compare_note, verdict.*, setup.guess*).
 #
-# Conventions used below:
+# Conventions used below (read with evals/README.md "Case files"):
+# - `input` holds the coach turn(s), "[turn n]" lines separating several. Assertions run on the machine reply to the
+#   last coach turn, unless `notes` starts with "scope: transcript" (all machine replies joined).
 # - A not_regex of the form ^(?![^\n]*(?:not writing|won.t write|can.t write ...))... skips the refusal line,
 #   because verdict.hardstop quotes the refused line back to the coach.
 # - "<<paste: FILE ...>>" in an input means the simulator inlines that persona file's body verbatim there.
+# - Day 0 (wf15 §1): no character questions. After "done" only the facts the dump left open (≤3, one a message, "My
+#   guess: … Right?"); a 4-line Map + "OK, or change a line."; FILM TODAY; any message after it gets all of Week 1,
+#   unasked; then the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the
+#   machine block) + "Save this so I remember you (30 s)." + NEXT. No check screen, no stop point. Budgets
+#   (acceptance.toml [day0]): Map ≤6 coach turns, film-ready ≤20 min, ≤10 coach turns.
+# - Status lines (wf15 §2): a Ready piece prints only its content: no WHY, "✓ Checked:", "Ready to …" or "Draft ·"
+#   line (I3). One line only for "Needs you · …", a hard stop, "post anyway" (verdict.override) or a required dated
+#   note (the F1 compare note). On an F1 request `verdict = "Override"` is hidden state: logged, shown on "why?".
+# - "why?" follow-ups: "[turn 1] <the turn that prints the piece> [turn 2] why?"; assertions run on the "why?" reply
+#   (the WHY line, what it was written from, the ✓ Checked line); I3 grades the turn-1 reply.
+# - "not me: <line>" is confirmed in one line, voice.not_me_ok ('Got it: "{line}" is out of your voice from now
+#   on.'); a per-line guard skips that line, which quotes the banned line back.
+# - `invariants` lists I1-I23 ids.
 
 [meta]
 module = "character"
@@ -20,42 +38,50 @@ id = "character.en.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Day 0: no character interview; the trait and enemy are inferred from the dump"
-context = "Day 0, Door A, persona default (ChatGPT Free). Dump chunks 1-3 already given; this is the coach's 'done' after chunk 3. No Brand Card exists yet. The next reply is the inventory + 7-line pre-filled check."
+title = "Day 0: no character interview; after 'done' only a missing fact with a guess, the trait and enemy inferred from the dump"
+context = "Day 0, Door A, persona default (ChatGPT Free). Dump chunks 1-3 already given (they hold her clients' words, a best result, the $2,400 offer and 3 income streams); this is the coach's 'done' after chunk 3. No Brand Card exists yet. The next reply asks only what the dump left open, one fact with a guess ('My guess: … Right?'): here the multi-income line."
 input = """done"""
 regex = [
-  '''(?i)you know a lot''',
-  '''(?im)^\W*7\b[^\n]*\bhow you(?:'|’)ll work\b''',
+  '''(?i)\bMy guess:''',
+  '''\bRight\?''',
 ]
 not_regex = [
   '(?i)\b(extreme trait|which trait|what trait|one trait|your traits?)\b',
   '(?i)\b(what are your values|your (core )?principles|what would you never do|refuse to do)\b',
   '(?i)\b(Admirable|Likable|Buyer Mirror|3D test|Stance Bank|excavation|Character Card)\b',
+  '''(?i)you know a lot|months of content|nothing (?:gets|is|will be) thrown away''',
+  '''(?im)^\W*[1-7]\W{1,3}(?:who|their words|old way|best result|your way|offer|how you(?:'|’)ll work)\s*[:·—–-]''',
+  '''(?s)My guess:.*My guess:''',
+  '''(?m)^\W*KNOWN FOR:''',
 ]
 invariants = ["I1", "I2", "I4", "I5"]
 max_questions = 1
-notes = "wf11 §0: Character Core Q1-Q5 are covered by the dump and the extreme trait is inferred; the excavation is L5. QA §3.1 character-card row: gaps become optional homework with no extra setup probes. A character question here adds a Day-0 turn and breaks Map <=8 turns."
+notes = "wf11 §0: Character Core Q1-Q5 are covered by the dump and the extreme trait is inferred (character.kit-core: 'DAY 0: no character questions'); the excavation is L5. QA §3.1 character-card row: gaps become optional homework with no extra setup probes. wf15 §1.3 and setup.kit-facts 4-6 (R10): after 'done' only the facts the dump left open, one per message, each 'My guess: … Right?'; Dana's dump leaves only the multi-income choice (setup.multi_income; setup.en.012). No inventory, no 7-line check screen, no Map yet. A character question here adds a Day-0 turn and breaks the Map budget (≤6 coach turns, acceptance.toml [day0])."
 
 [[case]]
 id = "character.en.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Film-today piece stands on Dan's own story, never a client he doesn't have, kids unnamed"
-context = "Day 0, persona default (cold start, 0 clients, proof locked). The Map is on screen and the coach gives the one decision. Brand Card not shown yet."
+title = "FILM TODAY stands on Dan's own story, never a client he doesn't have, kids unnamed, nothing under it"
+context = "Day 0, persona default (cold start, 0 clients, proof locked). The 4-line Map is on screen and the coach gives the one decision; this reply is FILM TODAY. No Brand Card yet: it prints after Week 1."
 input = """ok"""
 regex = [
-  '(?im)^\W*✓ Checked:[^\n]*(birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?up|your (own )?story)',
+  '''FILM TODAY''',
+  '''(?i)\b(?:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8)\b''',
 ]
 not_regex = [
   '(?i)\bmy clients?\b',
   '(?i)\bdads? in my (program|group|coaching)\b',
   '(?i)\b(certified (personal )?trainer|22 (pounds|lbs)|(two|a couple) hundred (people|clients)|200\+? (people|clients|dads))\b',
+  '''WHY THIS GETS CLIENTS''',
+  '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
 ]
 not_contains = ["Owen", "Lily", "Jess", "Tommy", "Coach Dan"]
+verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = "expected.toml [day0]: the Checked line names his own story (birthday relay or kitchen floor). private_names and 'never his kids' names or faces'. P3 (brother's 22 lb) and P4 ('a couple hundred people') are unsubstantiated; credential lapsed in 2019. Character = what he has lived, never borrowed proof."
+notes = "expected.toml [day0] lead piece: built on his own story (the birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), now asserted in the piece itself: the ✓ Checked line that used to name it prints only on 'why?' (character.en.028; R2, wf15 §2). verdict Ready is hidden state (evals/run.py: no status line). private_names and 'never his kids' names or faces'. P3 (brother's 22 lb) and P4 ('a couple hundred people') are unsubstantiated; credential lapsed in 2019. Character = what he has lived, never borrowed proof."
 
 [[case]]
 id = "character.en.003"
@@ -63,14 +89,15 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Day-0 Brand Card: one trait, an enemy that is a practice, principles and voice lines heard in the dump"
-context = "Day 0, persona default. Map OK'd, film-today delivered. This is the stop point: the reply prints the Brand Card (visible part + the 'for the machine' block holding trait, enemy, principles, 5 verbatim passages)."
-input = """ok I filmed it. twice. the second one's better. what now"""
+context = "Day 0, persona default (ChatGPT Free). Map OK'd, FILM TODAY delivered. Turn 1 answers FILM TODAY and gets Week 1, unasked (Free: 2 replies of at most 3 pieces); turn 2 answers the first Week-1 reply. Day 0's last reply prints the Brand Card: the top (title, WHAT YOU SAY:, HOW YOU SAY IT:) and the 'for the machine' block holding trait, enemy, principles, voice fields and 5 verbatim passages; then the save line and NEXT. Judge the card in the reply that holds it."
+input = """[turn 1] ok I filmed it. twice. the second one's better. what now
+[turn 2] ok"""
 standard = "character-card"
 critical = ["CC1", "CC4", "CC5", "CC8", "CC10"]
 min_score = 14
 invariants = ["I1", "I4", "I5", "I8", "I10", "I17"]
 max_questions = 1
-notes = "Day-0 card v0 passes at >=14/20 with [GAP]/[UNPROVEN] in CC3, CC6, CC7 (wf12-qa-standards §3). Judge checks: exactly one trait traced to the dump (e.g. the ops person who color-codes a spreadsheet of 63 applications), enemy = 'feeding the portal' (a practice, never HR people or recruiters), the 3 big ideas pass 3D, voice phrases verbatim from the dump ('You're not too old, you're too vague', 'coffee before resume'), nothing about Pam, no 'certified'."
+notes = "Day-0 card v0 passes at >=14/20 with [GAP]/[UNPROVEN] in CC3, CC6, CC7 (wf12-qa-standards §3). Judge checks: exactly one trait traced to the dump (e.g. the ops person who color-codes a spreadsheet of 63 applications), enemy = 'feeding the portal' (a practice, never HR people or recruiters), the 3 big ideas pass 3D, voice phrases verbatim from the dump ('You're not too old, you're too vague', 'coffee before resume') in HOW YOU SAY IT and the voice fields, nothing about Pam, no 'certified'. No stop point (wf15 §1.6-§1.8, R13): the card prints in Day 0's last reply, after Week 1."
 
 [[case]]
 id = "character.en.004"
@@ -78,21 +105,22 @@ kind = "P"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start Brand Card: nothing invented to fill the character fields"
-context = "Day 0, persona default (cold start). Map OK'd, film-today delivered, the coach came back from 'brb kid's up'. Stop point: the reply prints the Brand Card."
-input = """ok back. filmed it in the garage, one take. what now"""
+context = "Day 0, persona default (cold start, ChatGPT Plus). Map OK'd, FILM TODAY delivered; his 'brb kid's up' got 'No rush. Say 'ok back' when you're back.' Turn 1 (his return) gets all of Week 1, unasked; turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the machine block), the save line and NEXT. Judge the card in the reply that holds it."
+input = """[turn 1] ok back. filmed it in the garage, one take. what now
+[turn 2] ok"""
 standard = "character-card"
 critical = ["CC1", "CC4", "CC5", "CC8", "CC10"]
 min_score = 14
 invariants = ["I1", "I4", "I5", "I8", "I17"]
 max_questions = 1
-notes = "Cold start: the trait, enemy ('the all-or-nothing plan built for a 25-year-old with no kids') and principles must trace to the dump; empty fields are [GAP], never a made-up value or story. All five critical items apply at the Day-0 v0 bar (character-card.md): a cold start scores CC5 = 2 with 2 hills plus 'proof hill coming' (wf11 §2.3), and CC8 = 2 with 5 phrases verbatim from his dump. Must not hold 'certified', the brother's 22 lb, or 'trained 200 people'."
+notes = "Cold start: the trait, enemy ('the all-or-nothing plan built for a 25-year-old with no kids') and principles must trace to the dump; empty fields are [GAP], never a made-up value or story. All five critical items apply at the Day-0 v0 bar (character-card.md): a cold start scores CC5 = 2 with 2 hills plus 'proof hill coming' (wf11 §2.3), and CC8 = 2 with 5 phrases verbatim from his dump. Must not hold 'certified', the brother's 22 lb, or 'trained 200 people'. No stop point (R13): 'ok back' resumes with Week 1 (§CM-TODAY 1), and the card follows it."
 
 [[case]]
 id = "character.en.005"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "F1 'just name Quillbury Sofa Depot': the store is named as asked with ONE dated compare note; the stance stays on buying the sofa first"
+title = "F1 'just name Quillbury Sofa Depot': the store is named as asked with ONE dated compare note and nothing else under it; the stance stays on buying the sofa first"
 context = "Brand Card v1 present (persona default: enemy 'buying the sofa first'), Week 2, Thursday after the Weekly Talk; the coach asks for one extra piece for Friday. F1 (DECISIONS, 5 Oct 2026) applies. 'Quillbury Sofa Depot' is a fictional furniture chain Corinne names for the first time in this turn."
 input = """ok can you do one more for Friday. the sectional story. and honestly just name Quillbury Sofa Depot, their sectionals are junk and literally everybody in Raleigh buys them, people will love it. give it to Bree after"""
 regex = [
@@ -107,11 +135,14 @@ not_regex = [
   '(?is)naming another business in a comparison.*naming another business in a comparison',
   '''(?i)\b(?:can(?:'|’)t|won(?:'|’)t|shouldn(?:'|’)t) (?:name|mention) (?:the store|them|that store|Quillbury)\b''',
   '(?i)\b(?:everybody|everyone|people|folks|buyers|shoppers) (?:in Raleigh |who buy (?:there|them) )?(?:are|is) (?:idiots?|dumb|stupid|suckers?|clueless|sheep)\b',
+  '''(?im)^\W*Posted on your call\b''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
 ]
 verdict = "Override"
 invariants = ["I1", "I3", "I5", "I17"]
 max_questions = 1
-notes = "must-not-block. DECISIONS F1 and F4 (5 Oct 2026), wf13 §0 and §5 rule 8: naming a business in a post on the coach's explicit request runs with ONE dated note (liked.compare_note, from the words after 'Note:') and a logged Override; it is never blocked or silently de-named. CC4/SG3 still hold for the character: the Card's enemy stays the practice (buying the sofa first), her own sectional story carries the stance, and the people who shop there get warmth, never mockery (F1 still hard-blocks attacks on private individuals or protected groups). On the default path no store is named on her behalf (router.en.015). The store name is fictional; an earlier draft used a real retailer's name."
+notes = "must-not-block. DECISIONS F1 and F4 (5 Oct 2026), wf13 §0 and §5 rule 8, §CM-GUARDRAILS ON REQUEST: naming a business in a post on the coach's explicit request runs with ONE dated note (liked.compare_note, from the words after 'Note:') and nothing else under it: the Override is logged and shows on 'why?' (R7; verdict Override is hidden state, evals/run.py checks an Override line only after 'post anyway'). It is never blocked or silently de-named. CC4/SG3 still hold for the character: the Card's enemy stays the practice (buying the sofa first), her own sectional story carries the stance, and the people who shop there get warmth, never mockery (F1 still hard-blocks attacks on private individuals or protected groups). On the default path no store is named on her behalf (router.en.015). The store name is fictional; an earlier draft used a real retailer's name."
 
 [[case]]
 id = "character.en.006"
@@ -399,15 +430,18 @@ id = "character.en.023"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'not me:' bans the line and the rewrite drops it"
-context = "Brand Card v1 present (persona default), Week 2, Thursday; N3 (LinkedIn text post) was delivered containing the line 'Here's the hard truth.'"
+title = "'not me:' bans the line with one confirmation line, and the rewrite of N3 drops it"
+context = "Brand Card v1 present (persona default), Week 2, Thursday; N3 (LinkedIn text post) was delivered, with nothing under it, containing the line 'Here's the hard truth.'"
 input = """not me: "Here's the hard truth." I'd never say that. fix N3"""
 not_regex = [
-  '(?im)^(?![^\n]*(?:not me|banned|won.t use|dropped|removed|never|added))[^\n]*here.s the hard truth',
+  '''(?im)^(?![^\n]*(?:not me|out of your voice|banned|won.t use|dropped|removed|never|added))[^\n]*here.s the hard truth''',
+  '''(?m)^\W*\**N[124-9]\b''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
 ]
-regex = ['(?i)\b(won.t use|never use|banned|added|noted|off the list|dropped)\b']
-invariants = ["I1", "I3", "I5", "I17"]
-notes = "QA §2.8: 'not me: <line>' adds the line to the personal banned list (Character Card, QA §2.6); the fix re-runs only N3 as round 2."
+regex = ['''(?i)Got it:\s*["“'‘]?here.s the hard truth\W{0,3}["”'’]?\s*is out of your voice from now on''']
+invariants = ["I1", "I3", "I5", "I17", "I23"]
+notes = "QA §2.8 and voice.kit-keep 6: 'not me: <line>' adds the line to never_say (QA §2.6) and confirms it in one line, voice.not_me_ok ('Got it: \"{line}\" is out of your voice from now on.', which replaced 'Gone. I won't use it again.'); then the fix re-runs only N3 as round 2, with nothing under it (wf15 §2). The guard skips the confirmation line, which quotes the banned line. I23 reads the coach's 'not me:' lines."
 
 [[case]]
 id = "character.en.024"
@@ -444,17 +478,19 @@ id = "character.en.026"
 kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
-title = "Day-0 stop point: the Brand Card carries character in plain words, no framework names"
-context = "Day 0, persona default (ChatGPT Plus). Map OK'd, film-today delivered. This reply is the stop point with the Brand Card (visible part + the 'for the machine' block)."
-input = """ok filmed it in the Whitfield room, Bree has it. are we done for today?"""
-contains = ["brand card"]
+title = "Day 0's last reply: the Brand Card carries character in plain words, no framework names"
+context = "Day 0, persona default (ChatGPT Plus). Map OK'd, FILM TODAY delivered. Turn 1 answers FILM TODAY and gets all of Week 1, unasked (her question answered in one line first); turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the 'for the machine' block with trait, enemy, principles), the save line and NEXT."
+input = """[turn 1] ok filmed it in the Whitfield room, Bree has it. are we done for today?
+[turn 2] ok"""
+contains = ["brand card", "Save this so I remember you (30 s)"]
 not_regex = [
   '(?i)\b(Admirable|Likable|Credible|Trustable|3D test|Stance Bank|Buyer Mirror|Character Card|Belief Bomb|Big Domino)\b',
   '(?i)\bheat\s*[1-3]\b',
+  '''(?i)that(?:'|’)s today done|\bstop here\b''',
 ]
 invariants = ["I1", "I4", "I5", "I17"]
 max_questions = 1
-notes = "UX §5.7: the Brand Card machine block uses plain field names, no framework words (trait, enemy, principles heard). UX §4 never-sees list; I4. Saving is offered, never a gate."
+notes = "scope: transcript. UX §5.7: the Brand Card machine block uses plain field names, no framework words (trait, enemy, principles heard). UX §4 never-sees list; I4. No stop point (wf15 §1.6-§1.8, R13): her 'are we done?' gets a one-line answer and all of Week 1, then the card + card.save_line + NEXT, in that reply or the next; never 'That's today done' or 'stop here'. Saving is offered, never a gate."
 
 [[case]]
 id = "character.en.027"
@@ -472,3 +508,27 @@ not_contains = ["Lily", "Owen", "Jess", "Tommy"]
 not_regex = ['(?i)\b(live longer|die sooner|studies? (show|says?))\b']
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 notes = "wf6 F7 rituals: each ritual plus the value behind it. The kitchen-floor Lego story uses 'my daughter', never her name (private_names). The longevity study stays out (character.en.016)."
+
+[[case]]
+id = "character.en.028"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'why?' after FILM TODAY: the checks and the evidence name his own story, never a client he doesn't have"
+context = "Same state as character.en.002: Day 0, persona default (cold start, 0 clients, proof locked); the 4-line Map is on screen. Turn 1 OKs it and gets FILM TODAY with nothing under it; turn 2 asks why."
+input = """[turn 1] ok
+[turn 2] why?"""
+regex = [
+  '''(?m)^\W*(?:✓ Checked:|Ready to film · (?:I(?:'|’)d post it|written as))[^\n]*(?i:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8|your (?:own )?story)''',
+  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+]
+not_regex = [
+  '(?i)\bmy clients?\b',
+  '(?i)\b(certified (personal )?trainer|22 (pounds|lbs)|(two|a couple) hundred (people|clients)|200\+? (people|clients|dads))\b',
+]
+not_contains = ["Owen", "Lily", "Jess", "Tommy", "Coach Dan"]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
+max_questions = 1
+notes = "expected.toml [day0]: the old FILM TODAY 'Checked' line named his own story (birthday relay or kitchen floor); it now prints only on 'why?' (wf15 §2, R2; §CM-EDGE WHAT PRINTS), with the WHY line and what the piece was written from ('Ready to film · I'd post it: {his story}', or with no client result '… · written as {his story}'). Turn 1 prints FILM TODAY with nothing under it (I3 grades it; character.en.002 asserts the piece). Turn 2 (assertions here): his own story named on the Checked or evidence line, the ✓ Checked line, the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Never a client, a credential or the brother's number."

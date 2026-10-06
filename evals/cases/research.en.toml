@@ -8,10 +8,21 @@
 # dump, tagged); wf12-qa-standards.md §1 (RB1-RB10, Starter brief); docs/DECISIONS.md (privacy and safety);
 # docs/PLAN.md reconciliation 10 (Day 0 carries only RESEARCH-LITE).
 #
-# Conventions used below:
+# Day 0 since 6 Oct 2026 (wf15-simple-surface-spec.md §0 S5, §1; wf15-case-impact.md R10-R13): Quick Listen
+# runs silently during the dump; after "done" only the missing facts (≤3, one a message, "My guess: … Right?"),
+# then the 4-line Map, FILM TODAY, and Week 1 (with the ask-3 message) in the next reply, unasked; the Brand
+# Card comes after Week 1. No check screen and no stop point.
+#
+# Conventions used below (read with evals/README.md "Case files"):
+# - Assertions run on the machine reply to the last coach turn; "[turn n]" lines separate several coach turns.
 # - "<<paste: FILE ...>>" in an input means the simulator inlines that persona file's body verbatim there.
 # - A not_regex of the form ^(?![^\n]*(?:not writing|won.t write|can.t write ...))... skips the refusal line,
 #   because verdict.hardstop quotes the refused line back to the coach.
+# - Status lines (wf15 §2): a Ready piece prints only its content; a WHY, "✓ Checked:" or "Ready to …" line
+#   under it fails unless the coach asked "why?" (I3). "why?" cases: "[turn 1] <the piece>" and "[turn 2] why?"
+#   on their own lines; assertions run on the "why?" reply, I3 grades the turn-1 reply, verdict "Ready" makes
+#   evals/run.py want a Ready or ✓ Checked line there.
+# - `invariants` lists I1-I23 ids.
 
 [meta]
 module = "research"
@@ -23,12 +34,12 @@ id = "research.en.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Quick Listen runs silently after the 'their words' answer: no search chatter, links or setup questions"
-context = "Day 0, persona default (ChatGPT Free). The 7-line pre-filled check is on screen with '?' on 'Their words' and 'Best result'; this is her answer to 'Their words'. The next reply asks the 'Best result' question."
-input = """their words, ok. Lorraine, she called me from her car in the bank parking lot on her lunch break, crying, and she said 'I've got one more chapter in me and I'm not spending it in this cubicle.' and almost every one of them asks me is it too late for me"""
+title = "Quick Listen runs silently: the Map after the last missing fact has no search chatter, links or setup questions"
+context = "Day 0, persona default (ChatGPT Free). Quick Listen ran silently during the dump. After 'done' the machine asked the one missing fact, the multi-income guess (setup.multi_income); this is her answer. The next reply is the Map."
+input = """yep, the 12 weeks. resume reviews pay the electric bill some months but that's not what I want to grow. the life coaching ladies stay, no new ones"""
 regex = [
-  '''(?i)\bresults?\b''',
-  '''\?''',
+  '''(?m)^\W*KNOWN FOR:''',
+  '''We(?:'|’)ll run this for 4 weeks''',
 ]
 not_regex = [
   'https?://',
@@ -36,10 +47,11 @@ not_regex = [
   '(?i)\b(can.t|cannot|unable to) (browse|search|access the (web|internet))\b',
   '(?i)\b(which AI|what plan|Chrome|extension|Computer Use|research mode)\b',
   '(?i)\bpaste (some|10|20|a few)\b',
+  '(?i)\b(?:my|some|quick|the) research\b',
 ]
 invariants = ["I1", "I4", "I5", "I9"]
 max_questions = 1
-notes = "UX §2 minutes 12-17: Quick Listen runs silently; wf11 §1.6: <=5 searches, a pattern counts only in >=2 places; without browsing it uses the dump and tags the result [verify in Week 1], with no apology. acceptance [day0] detours_between_start_and_stop = 0."
+notes = "wf15 §0 S5 and research.kit-quick: Quick Listen runs during the dump, silently (≤5 searches if the app can, else the dump); no search talk, links, apology or setup question, and never a question about research on Day 0. Its root cause feeds big idea 1 and shows on 'why?', not on the Map. The trigger is now the last missing-fact answer (R12: the 7-line check is gone); the Map is 4 lines + 'We'll run this for 4 weeks. OK, or change a line.' acceptance [day0] detours_between_start_and_stop = 0."
 
 [[case]]
 id = "research.en.002"
@@ -47,10 +59,11 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Coach offers to research first: kept for later, the Day-0 path keeps moving"
-context = "Day 0, persona default (iPhone, cold start). The pre-filled check is on screen; instead of answering, he asks about research."
+context = "Day 0, persona default (iPhone, cold start). After 'Done.' the machine asked the one missing fact ('My guess: no client result to show yet, so I'll use your own story. Right?'); instead of answering, he asks about research."
 input = """wait should I like research what other dads are saying first? like go through the groups? I could do that tomorrow"""
 regex = [
   '''(?i)\b(?:later|tomorrow|next week|this week|week (?:1|one|2|two)|first week|after today|once (?:the|your) (?:map|card|video))\b''',
+  '''(?i)(?:\bown story\b|\bmy guess\b|\bright\?|\bskip\b)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -60,7 +73,7 @@ not_regex = [
 ]
 invariants = ["I1", "I5"]
 max_questions = 1
-notes = "acceptance [day0]: 0 detours and 0 gates between Start and the stop point; Map <=8 turns. Day 0 carries only the silent Quick Listen (PLAN reconciliation 10); 'research my audience' comes after Day 0."
+notes = "research.kit-quick: 'Research first?' → research.later ('Later: a 10-minute step in Week 1.') + the open step (here the best-result guess, still waiting for 'right' or 'skip'). acceptance [day0]: 0 detours and 0 gates between Start and Day 0's last reply; Map within 6 coach turns (map_max_turns_en). Day 0 carries only the silent Quick Listen (PLAN reconciliation 10; wf15 §0 S5); 'research my audience' comes after Day 0."
 
 [[case]]
 id = "research.en.003"
@@ -68,7 +81,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Week 1 carries 'ask 3 past clients one question': one question, consent built in, no form"
-context = "Day 0 continued, persona default. Stop point passed with the Brand Card NOT saved; the Week-1 pieces were delivered; this 'next' brings the extras (free gift, DM replies 1-2, the ask-3-past-clients message in a copy box)."
+context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was delivered; her next message got Week 1 reply 1 (3 Reels; Free shows at most 3 pieces a reply), unasked; the Brand Card is not printed yet. This 'next' brings the rest of Week 1 (free gift, DM replies 1-2, the ask-3-past-clients message in a copy box)."
 input = """next"""
 regex = [
   '(?i)\b(3|three)\b[^\n]{0,30}\bpast clients?\b',
@@ -78,10 +91,12 @@ not_regex = [
   '(?i)\b(fill (it )?(in|out)|survey|google form|questionnaire)\b',
   '(?i)\bBuyer Mirror\b',
   '(?i)\bPam\b',
+  'WHY THIS GETS CLIENTS',
+  '(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)',
 ]
-invariants = ["I1", "I2", "I4", "I5", "I10"]
+invariants = ["I1", "I2", "I3", "I4", "I5", "I10"]
 max_questions = 1
-notes = "UX §2 minutes 26-34 and §3.1: 'ask 3 past clients one question' (unlocks real proof for Week 3). wf7 §5: ask permission before using anyone's words. Lorraine, Bev and Gail consented; Pam never. The client question sits in a copy box, so it is not a question to the coach."
+notes = "wf15 §1.6 and research.kit-quick ASK 3: 'ask 3 past clients one question' rides in Week 1 (unlocks real proof for Week 3), as a copy box with research.ask3 ('… What was going on right before you called me? Can I share your answer, first name only?'), printed with nothing under it. wf7 §5: ask permission before using anyone's words. Lorraine, Bev and Gail consented; Pam never. The client question sits in a copy box, so it is not a question to the coach."
 
 [[case]]
 id = "research.en.004"
@@ -89,8 +104,8 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold start: 'ask 3 dads you know one question', never 'past clients'"
-context = "Day 0 continued, persona default (0 clients). Stop point passed with the Brand Card NOT saved; this 'next' brings the Week-1 extras."
-input = """next"""
+context = "Day 0 continued, persona default (0 clients; iPhone, ChatGPT Plus). FILM TODAY was delivered; this message gets all of Week 1, unasked, extras included; the Brand Card follows it."
+input = """ok. filming it tonight after the kids are down"""
 regex = [
   '(?i)\b(3|three)\b[^\n]{0,30}\b(dads?|guys|people|friends)\b',
   '(?i)\b(brother|soccer|at work|you know)\b',
@@ -98,11 +113,13 @@ regex = [
 not_regex = [
   '(?i)\b(past|your|former) clients?\b',
   '(?i)\b(fill (it )?(in|out)|survey|google form|questionnaire)\b',
+  'WHY THIS GETS CLIENTS',
+  '(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)',
 ]
 not_contains = ["Tommy", "Owen", "Lily"]
-invariants = ["I1", "I2", "I5", "I8"]
+invariants = ["I1", "I2", "I3", "I5", "I8"]
 max_questions = 1
-notes = "expected.toml [week1] must_include \"'ask 3 dads you know one question' (brother, soccer dads, a guy at work), not 'past clients'\"; must_not 'past clients' or 'your clients'. private_names never appear."
+notes = "research.kit-quick ASK 3: no clients yet → 3 people like the buyer he knows (a brother, a coworker), asked research.ask3_cold ('What's the hardest part of {problem} right now?'); never 'past clients'. expected.toml [week1] must_include \"'ask 3 dads you know one question' (brother, soccer dads, a guy at work), not 'past clients'\"; must_not 'past clients' or 'your clients'. Week 1 arrives with any message after FILM TODAY (wf15 §1.6). private_names never appear."
 
 [[case]]
 id = "research.en.005"
@@ -205,7 +222,7 @@ not_regex = [
   '(?i)["“]record year["”][^\n]{0,60}\b(3|three|4|four) (times|people|owners|voices|lines|places)\b',
   '(?i)\b(3|three|4|four) (times|people|owners|voices|lines)\b[^\n]{0,60}["“]record year["”]',
   '\bSCALE\b',
-  '(?i)\b(300\+|20\+ hours|24 hours)\b',
+  '(?i)(?:\b300\+|\b20\+ hours\b|\b24 hours\b)',
 ]
 invariants = ["I1", "I5", "I8", "I9"]
 max_questions = 1
@@ -231,7 +248,7 @@ not_regex = [
   '(?i)\b(a woman|someone|one (woman|person|member|commenter)|people|they|buyers?|readers?|the group|members?)\b[^\n]{0,15}\b(wrote|said|says|posted|put it)\b[^\n]{0,40}corkboard',
   '\bREWIRE\b',
   '(?i)\bunretire\b',
-  '(?i)\b(300\+|48-hour|30% off)\b',
+  '(?i)(?:\b300\+|\b48-hour\b|\b30% off\b)',
 ]
 invariants = ["I1", "I5", "I8", "I9"]
 max_questions = 1
@@ -559,3 +576,30 @@ not_regex = [
 invariants = ["I1", "I5", "I17"]
 max_questions = 1
 notes = "wf7 §7.2 rules 1-2: read-only; never join a group just to mine it; never post or comment while researching. §5f: the listening post goes on the coach's own account or newsletter (her list is 1,200)."
+
+[[case]]
+id = "research.en.027"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "'why?' on a post built from the research paste: the post carries nothing, the WHY starts from the buyers' own words"
+context = "Brand Card v1 present (persona default), Week 2, Wednesday. The previous turn inlined research-paste.md (lines 1-32) and got the RESEARCH-LITE summary: conclusion first, buyer phrases by pattern with '{n} people · {n} places' ('Is it too late for me?', 'one more chapter'), sellers (lines 8, 9) dropped, line 15 (her own 'not too old, too vague' line, reposted) not counted."
+input = """[turn 1] ok write today's post from that. the too late one
+[turn 2] why?"""
+regex = [
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?m)^\W*Ready to (?:post|film) · (?:I(?:'|’)d post it|written as)''',
+  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)too late''',
+]
+not_regex = [
+  '(?i)(?:\b500\+|\b48-hour\b|\b20% off\b)',
+  '(?i)\bBLUEPRINT\b',
+  '\bPam\b',
+  '(?i)\b(?:\d+|two|three|four|five)\s+(?:people|women|voices|places)\b[^\n]{0,60}too vague',
+  '(?i)too vague[^\n]{0,60}\b(?:\d+|two|three|four|five)\s+(?:people|women|voices|places)\b',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8", "I9", "I10", "I18"]
+max_questions = 1
+notes = "wf15 §2 and research.kit-paste OUT: a piece built from the research prints with nothing under it (I3 grades the turn-1 reply). On 'why?' (assertions here): the stored WHY line (plan.kit-week 5) starts from the buyers' words ('Is it too late for me?', heard from 2+ people in 2+ places), 'Ready to post · I'd post it: {evidence}' names that pattern or her own story, and the ✓ Checked line lists the checks passed. Sellers' numbers and the coach's own line never count as buyer voices (RB1, G3). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."

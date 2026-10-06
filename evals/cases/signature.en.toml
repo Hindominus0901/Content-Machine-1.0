@@ -7,7 +7,19 @@
 # ("the machine picks; 'change' swaps"); docs/DECISIONS.md (keyword = a word the coach's own people say, not SEO;
 # comment-keyword CTAs never blocked).
 #
-# "<<paste: FILE ...>>" in an input means the simulator inlines that persona file's body verbatim there.
+# Day 0 since 6 Oct 2026 (wf15-simple-surface-spec.md §0-§2; wf15-case-impact.md R2, R9-R13): after "done" only
+# the missing facts (≤3, one a message, "My guess: … Right?"); then a 4-line Map whose YOUR WORD: line is the
+# keyword (the 2 alternates stay stored; "change" brings the next one); FILM TODAY carries the keyword and the
+# comment ask with "(quieter: say 'quiet')", nothing under it; Week 1 follows unasked.
+#
+# Conventions (read with evals/README.md "Case files"):
+# - Assertions run on the machine reply to the last coach turn; "[turn n]" lines separate several coach turns.
+# - "<<paste: FILE ...>>" in an input means the simulator inlines that persona file's body verbatim there.
+# - Status lines (wf15 §2): a Ready piece prints only its content; the keyword check ("✓ Checked: … keyword
+#   once"), the ticks and the WHY line print only on "why?" (I3). "why?" cases: "[turn 1] <the piece>" and
+#   "[turn 2] why?" on their own lines; assertions run on the "why?" reply, I3 grades the turn-1 reply,
+#   verdict "Ready" makes evals/run.py want a Ready or ✓ Checked line there.
+# - `invariants` lists I1-I23 ids.
 
 [meta]
 module = "signature"
@@ -19,12 +31,11 @@ id = "signature.en.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Map pre-picks the keyword from client words and shows 2 alternates; no pick-a-keyword question"
-context = "Day 0, persona default (ChatGPT Free). Dump chunks 1-3 done; pre-filled check answered 'ok, fix 4'; this is the coach's answer to the last '?' line. The next reply is the Map screen."
-input = """Lorraine's the one. 26 years bank ops, now she runs operations at a community food bank, 11 weeks from her first coffee to the offer. she took a pay cut, won't tell me how much, says it's the best trade she ever made. most of mine land somewhere between week 11 and about 5 months after"""
+title = "The Map's YOUR WORD line pre-picks the keyword from client words; no pick-a-keyword question"
+context = "Day 0, persona default (ChatGPT Free). Dump chunks 1-3 done (they hold Lorraine's 'one more chapter', the clients' 'Is it too late for me?' and a commenter's 'bored out'). After 'done' the machine asked the one missing fact, the multi-income guess; this is her answer. The next reply is the Map."
+input = """yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all"""
 regex = [
-  '(?i)one more chapter',
-  '(?i)(too late|bored out)',
+  '''(?im)^\W*YOUR WORD:[^\n]*\bone more chapter\b''',
 ]
 not_regex = [
   '(?i)\b(pick|choose|which)\b[^.\n?]{0,40}\b(keywords?|words?|phrases?)\b[^.\n]{0,40}\?',
@@ -33,7 +44,7 @@ not_regex = [
 ]
 invariants = ["I1", "I4", "I5", "I6", "I8"]
 max_questions = 1
-notes = "wf11 §0 and UX §5.8: the keyword is pre-picked from buyer words with 2 alternates; the day's one decision is 'OK / change a line', not 'pick 1 of 3 keywords'. expected.toml [keyword]: preferred 'one more chapter' (comment word CHAPTER); alternates from 'too late' / 'bored out'; must_not_pick list."
+notes = "wf11 §0, UX §5.8 and signature.kit-keyword: the keyword is pre-picked from buyer words and shown on the Map's YOUR WORD: line (map.word, wf15 §1.4); its 2 alternates are stored, never offered as a menu, and come one at a time on 'change' (signature.en.008). The day's one decision is 'OK, or change a line' (map.ok), not 'pick 1 of 3 keywords'. expected.toml [keyword]: preferred 'one more chapter' (comment word CHAPTER); must_not_pick list. The trigger is the last missing-fact answer (R12: the check screen is gone)."
 
 [[case]]
 id = "signature.en.002"
@@ -41,16 +52,16 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold start: the keyword is the dads' 'keep up', not his own coined line or body words"
-context = "Day 0, persona default (cold start, iPhone). Pre-filled check shown with '?' on Best result and Offer; this is his answer. The next reply is the Map."
-input = """yep. fix 4: no clients, just me. couldn't do one pull-up at 35, sets of 8 by 37. I can carry both kids up the stairs at once. offer, nothing yet, skip"""
-regex = ['(?i)keep up']
+context = "Day 0, persona default (cold start, iPhone). After 'Done.' the machine asked the one missing fact, 'My guess: no client result to show yet, so I'll use your own story. Right?'; this is his answer. The next reply is the Map."
+input = """yep. no clients, just me. couldn't do one pull-up at 35, sets of 8 by 37. I can carry both kids up the stairs at once"""
+regex = ['''(?im)^\W*YOUR WORD:[^\n]*\bkeep up\b''']
 not_regex = [
   '(?i)comment\W{0,3}(DAD BOD|SHRED|TRT|GARAGE|FLOOR|BEAST|BOOKED|MINIMUM)\b',
   '(?i)\b(beast mode|summer body)\b',
 ]
 invariants = ["I1", "I4", "I5", "I8"]
 max_questions = 1
-notes = "expected.toml [keyword]: KEEP UP is audience words (soccer dad, 2015 gym member, keep-up comments); BOOKED and MINIMUM start with Dan; must_not_pick DAD BOD, SHRED, TRT, GARAGE, FLOOR, BEAST. SK8: no body-shaming or generic terms."
+notes = "expected.toml [keyword]: KEEP UP is audience words (soccer dad, 2015 gym member, keep-up comments); BOOKED and MINIMUM start with Dan; must_not_pick DAD BOD, SHRED, TRT, GARAGE, FLOOR, BEAST. SK8: no body-shaming or generic terms. The keyword shows on the Map's YOUR WORD: line; the trigger is his answer to the one missing fact (R12)."
 
 [[case]]
 id = "signature.en.003"
@@ -58,16 +69,16 @@ kind = "D"
 persona = "consultant"
 lanes = ["S0", "S1", "floor"]
 title = "B2B coach: keyword is the owners' 'record year', not finance jargon or her method name"
-context = "Day 0 on Claude Free, persona default. Pre-filled check answered 'ok'; this is her answer to the 'Best result' '?' line. The next reply is the Map."
-input = """ok. fix 4: Marcus, the paid media shop, 22 people. his biggest client was at minus 6 percent once you count real hours. delivery margin 38 to 51 percent in about 7 months, 2 months of payroll in the bank by month 9"""
-regex = ['(?i)record year']
+context = "Day 0 on Claude Free, persona default. Her dump holds Marcus's 'Record year. Empty account.' and his result. After 'done' the machine asked the one missing fact, the multi-income guess; this is her answer. The next reply is the Map."
+input = """yes. the sprint. the retainer is the same owners after the sprint, deal prep stays referral only"""
+regex = ['''(?im)^\W*YOUR WORD:[^\n]*\brecord year\b''']
 not_regex = [
   '(?i)comment\W{0,3}(SCALE|PIPELINE|PROFIT|MARGIN|CASH IS KING|EBITDA|CFO|7 FIGURES)\b',
   '(?i)\b(cash is king|revenue is vanity|7-figure|scale your agency)\b',
 ]
 invariants = ["I1", "I4", "I5", "I8"]
 max_questions = 1
-notes = "expected.toml [keyword]: 'record year' preferred (Marcus's first words, 8 audience members later); 'margin before more' is the method name and 'top-line theater' the old-way name, so neither is the keyword; must_not_pick list. Persona voice bans 'cash is king' and 'scale your agency'."
+notes = "expected.toml [keyword]: 'record year' preferred (Marcus's first words, 8 audience members later); 'margin before more' is the method name and 'top-line theater' the old-way name, so neither is the keyword; must_not_pick list. Persona voice bans 'cash is king' and 'scale your agency'. The keyword shows on the Map's YOUR WORD: line; the trigger is her answer to the one missing fact (R12)."
 
 [[case]]
 id = "signature.en.004"
@@ -75,16 +86,16 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
 title = "Service business: keyword 'nothing room' from a client's own words; the after-state is not the keyword"
-context = "Day 0, persona default (ChatGPT Plus). Pre-filled check answered; this is her answer to the 'Best result' '?' line. The next reply is the Map."
-input = """ok fix 4: the Whitfields. Megan called it the nothing room, now it's the Sunday room, they play cards in there every Sunday. about 8 weeks from the first visit. gotta go to a site visit at 3"""
-regex = ['(?i)nothing room']
+context = "Day 0, persona default (ChatGPT Plus). Her dump holds Megan's 'Honestly it's the nothing room' and the Whitfields' later 'it's the Sunday room'. After 'done' the machine asked the one missing fact, the multi-income guess; this is her answer. The next reply is the Map."
+input = """yes the Reset. full projects are most of the money but they come from referrals and builders. gotta go to a site visit at 3"""
+regex = ['''(?im)^\W*YOUR WORD:[^\n]*\bnothing room\b''']
 not_regex = [
   '(?i)comment\W{0,3}(SUNDAY ROOM|DESIGN|SCALE|TAPE)\b',
   '(?i)\b(forever home|dream home|elevated|curated|pinterest-worthy)\b',
 ]
 invariants = ["I1", "I4", "I5", "I8"]
 max_questions = 1
-notes = "expected.toml [keyword]: 'nothing room' preferred; 'Sunday room' is one family's after-state; 'tape it out' is the method name; must_not_pick list."
+notes = "expected.toml [keyword]: 'nothing room' preferred; 'Sunday room' is one family's after-state; 'tape it out' is the method name; must_not_pick list. The keyword shows on the Map's YOUR WORD: line; the trigger is her answer to the one missing fact (R12)."
 
 [[case]]
 id = "signature.en.005"
@@ -92,7 +103,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S0", "S1", "floor"]
 title = "LinkedIn coach takes 'quiet': no comment-word CTA, the signature phrase still appears"
-context = "Day 0, persona default (Claude Pro, Mac). Map OK'd; film-today delivered with 'comment BADGE' and the one-line quiet option. This is her answer."
+context = "Day 0, persona default (Claude Pro, Mac). Map OK'd; FILM TODAY delivered with 'Comment BADGE and I'll send you …' and '(quieter: say 'quiet')'. This is her answer; any message after FILM TODAY also brings all of Week 1 (§CM-TODAY 1), quiet from here on."
 input = """Okay, I'll be honest, I can't do 'comment BADGE'. My old CEO reads my posts. It looks like I'm selling knives. Can we do the quiet one?"""
 regex = [
   '(?i)badge',
@@ -101,27 +112,38 @@ regex = [
 not_regex = [
   '(?i)comment\W{0,3}BADGE',
   '(?i)\b(DM me|link in bio|comment below)\b',
+  'WHY THIS GETS CLIENTS',
+  '(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)',
 ]
 invariants = ["I1", "I3", "I5", "I14", "I17"]
 max_questions = 1
-notes = "UX §2 quiet CTA option and §5.16 cta_style = quiet stored in the Brand Card. 'Keyword CTA with no quiet option' is a quit point. The keyword itself ('without the badge') still appears once in the piece (hook, caption line 1 or spoken payoff). Linda bans 'DM me', 'link in bio', 'comment below'."
+notes = "UX §2 quiet CTA option and §5.16 cta_style = quiet stored in the Brand Card. 'Keyword CTA with no quiet option' is a quit point. Her question gets a one-line yes, then Week 1 follows in the same reply (wf15 §1.6), every piece quiet. The keyword itself ('without the badge') still appears once in each piece (hook, caption line 1 or spoken payoff). Linda bans 'DM me', 'link in bio', 'comment below'. Nothing under the pieces (wf15 §2)."
 
 [[case]]
 id = "signature.en.006"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Film-today carries the keyword, offers the quiet option, and the Checked line confirms the keyword"
-context = "Day 0, persona default. The Map (keyword 'one more chapter', comment word CHAPTER) is on screen; the coach gives the one decision."
+title = "FILM TODAY carries the keyword in its words and the comment ask with the quiet option; no Checked line under it"
+context = "Day 0, persona default. The Map (YOUR WORD: one more chapter, comment word CHAPTER) is on screen; the coach gives the one decision."
 input = """ok"""
 regex = [
-  '(?i)chapter',
-  '(?i)\bquiet\b',
-  '(?im)^\W*✓ Checked:[^\n]*\bkeyword\b',
+  '''(?im)^(?![^\n]*\bcomment\b)[^\n]*\bone more chapter\b''',
+  '''(?i)\bcomment\W{0,3}["“'‘]?chapter\b''',
+  '''(?i)say ["“'‘]?quiet''',
 ]
+not_regex = [
+  '''(?m)^\W*✓ Checked:''',
+  'WHY THIS GETS CLIENTS',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|Draft ·)''',
+  '''(?i)isn(?:'|’)t pushy''',
+  '''(?i)your keyword delivers today''',
+  '''(?i)keyword (?:is in|once)''',
+]
+verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I14", "I17", "I18"]
 max_questions = 1
-notes = "UX §2 minutes 20-24: '✓ Checked: one idea · sounds like you · … · keyword once · no risky claims'; quiet line 'A comment word gets people something real, so it isn't pushy. Prefer quieter? Say quiet.'"
+notes = "wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {gift}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
 
 [[case]]
 id = "signature.en.007"
@@ -129,13 +151,13 @@ kind = "P"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "Week 1: the keyword appears exactly once per piece and its placement rotates"
-context = "Day 0 continued, persona default. Stop point passed with the Brand Card NOT saved; the coach says 'next' for Week 1 (3 Reels, 1 Facebook post, 1 email to the 140 list; 3 pieces per reply on Free)."
+context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was delivered; Week 1 arrives with her next message, unasked (3 Reels, 1 Facebook post, 1 email to the 140 list; at most 3 pieces a reply on Free). The Brand Card is printed only after Week 1, so Week 1 arrives with it unsaved."
 input = """next"""
 standard = "shared"
 critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 invariants = ["I1", "I3", "I5", "I12", "I14", "I17", "I18"]
-notes = "arch §5.4: every piece carries the chosen keyword exactly once, rotating placement (hook, on-screen text, spoken payoff, caption line 1, pinned comment), never the same placement twice in a row; spoken at most once per short. acceptance.toml [week] keyword_exactly_once_rate = 1.0. Week 1 must arrive with the Brand Card unsaved (save_gates = 0). Critical set = shared.md's (SG6 holds 'keyword exactly once'). SG7 (placement rotation) is a code gate read from the lint output, not a judged critical item, so it is not listed."
+notes = "arch §5.4 and plan.kit-week 4: every piece carries the chosen keyword exactly once, rotating placement (hook, on-screen text, spoken payoff, caption line 1, pinned comment), never the same placement twice in a row; spoken at most once per short. acceptance.toml [week] keyword_exactly_once_rate = 1.0. Week 1 arrives before the Brand Card exists (save_gates = 0; wf15 §1.6-§1.7). Critical set = shared.md's (SG6 holds 'keyword exactly once'). SG7 (placement rotation) is a code gate read from the lint output, not a judged critical item, so it is not listed."
 
 [[case]]
 id = "signature.en.008"
@@ -143,7 +165,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
 title = "'change the keyword' swaps to a buyer-word alternate; no new menu"
-context = "Day 0, persona default. The Map is on screen with keyword 'one more chapter' (CHAPTER) and its 2 alternates."
+context = "Day 0, persona default. The Map is on screen (4 lines; YOUR WORD: one more chapter, comment word CHAPTER). Its 2 alternates are stored, not shown."
 input = """change the keyword. chapter feels a little greeting-card to me"""
 regex = ['(?i)(too late|bored out)']
 not_regex = [
@@ -152,7 +174,7 @@ not_regex = [
 ]
 invariants = ["I1", "I5", "I6"]
 max_questions = 1
-notes = "QA §3.1 signature-keyword row: 'The machine picks; change swaps.' A fresh three-option menu would be a second decision (I6). Alternates are built from buyer words, never from the banned list."
+notes = "QA §3.1 signature-keyword row: 'The machine picks; change swaps.' signature.kit-keyword: '\"change\" → next alternate + who said it, by role'; the YOUR WORD: line is reprinted inside the same one decision (message.kit-map CHANGE). A fresh three-option menu would be a second decision (I6). Alternates are built from buyer words, never from the banned list."
 
 [[case]]
 id = "signature.en.009"
@@ -191,7 +213,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "floor"]
 title = "A generic word she floats is not adopted over the buyer word without her say-so"
-context = "Day 0, persona default. Map on screen with keyword 'without the badge' (quiet CTA already chosen)."
+context = "Day 0, persona default. The Map is on screen with YOUR WORD: without the badge (her dump said she can't end posts with 'comment …', so the CTA style is quiet)."
 input = """Could the word be GROWTH? Something hopeful. Badge feels a little sad, honestly."""
 regex = ['(?i)badge']
 not_regex = [
@@ -261,7 +283,7 @@ regex = ['(?i)record year']
 not_regex = [
   '\bSCALE\b',
   '(?i)comment\W{0,3}SCALE',
-  '(?i)\b(300\+|20\+ hours|24 hours|7-figure|12 months or less)\b',
+  '(?i)(?:\b300\+|\b20\+ hours\b|\b24 hours\b|\b7-figure\b|\b12 months or less\b)',
 ]
 invariants = ["I1", "I5", "I8", "I9"]
 max_questions = 1
@@ -281,7 +303,7 @@ regex = ['(?i)badge']
 not_regex = [
   '\bREWIRE\b',
   '(?i)\bunretire\b',
-  '(?i)\b(300\+|48-hour|30% off)\b',
+  '(?i)(?:\b300\+|\b48-hour\b|\b30% off\b)',
   '(?i)\b(next chapter|second act|encore|reinvent|pivot)\b',
 ]
 invariants = ["I1", "I5", "I8", "I9"]
@@ -380,16 +402,19 @@ kind = "D"
 persona = ""
 lanes = ["S0", "S1", "floor"]
 title = "No buyer words in the dump: the keyword is marked as a guess and checked in Week 1"
-context = "Standalone Day 0 (no persona folder). Fictional bookkeeper for wedding photographers; one short dump with no client quotes; she said 'skip' to the 'their words' question. The next reply is the Map."
-input = """um ok so I'm a bookkeeper, I work with wedding photographers, they're creative, they hate numbers, they get all their money between April and October and then panic in January. I have 6 clients. I don't remember what they say exactly, honestly. skip"""
-regex = ['(?i)(my guess|\[guess\]|to confirm|we.ll check|check (it|this) with)']
+context = "Standalone Day 0 (no persona folder). Fictional bookkeeper for wedding photographers. Her one short dump had no client quotes: 'um ok so I'm a bookkeeper, I work with wedding photographers, they're creative, they hate numbers, they get all their money between April and October and then panic in January. I have 6 clients. I don't remember what they say exactly, honestly.' After 'done' the machine asked the one missing fact, her clients' exact words, with a guess built from her own words ('My guess: …. Right?'). This is her answer; the next reply is the Map."
+input = """honestly I don't know what they'd say. skip"""
+regex = [
+  '(?i)(my guess|\[guess\]|to confirm|we.ll check|check (it|this) with)',
+  '''(?m)^\W*YOUR WORD:''',
+]
 not_regex = [
   '(?i)["“][^"”\n]{4,60}["”][^\n]{0,20}\b(they|clients|photographers) (say|said|tell me)\b',
   '(?i)\b(they|clients|photographers) (say|said|tell me)\b[^\n]{0,10}["“][^"”\n]{4,60}["”]',
 ]
 invariants = ["I1", "I5"]
 max_questions = 1
-notes = "wf11 §1.1 rules 3-4: never pre-fill words you didn't hear; 'skip' fills a default marked '(my guess)'. SK pass rule: if nothing passes SK1 the term ships provisional [guess], meanwhile the top client phrase is used and 'ask 3 past clients one question' becomes Week-1 homework. No invented client quotes."
+notes = "setup.kit-facts 4 ('skip': the guess stands, marked '(my guess)') and signature.kit-keyword ('Else: the best buyer phrase \"(my guess)\", checked in Week 1'): never pre-fill words you didn't hear as their clients' quotes. SK pass rule: if nothing passes SK1 the term ships provisional, the top client phrase is used meanwhile and 'ask 3 past clients one question' becomes Week-1 homework. No invented client quotes. The trigger is her 'skip' on the missing fact (R12)."
 
 [[case]]
 id = "signature.en.022"
@@ -460,3 +485,49 @@ critical = ["SG1", "SG2", "SG3", "SG5", "SG6"]
 min_score = 8
 invariants = ["I1", "I3", "I5", "I8", "I10", "I12", "I14", "I17", "I18"]
 notes = "arch §5.4: exactly once per piece, rotating placement; spoken at most once per short. acceptance.toml keyword_exactly_once_rate 1.0. 'Lily' appears in the coach turn only; it must never appear in output (private_names). Critical set = shared.md's (SG6 holds 'keyword exactly once'). SG7 (placement rotation) is a code gate read from the lint output, not a judged critical item, so it is not listed."
+
+[[case]]
+id = "signature.en.026"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S0", "S1", "floor"]
+title = "'why?' after FILM TODAY shows the keyword check that no longer prints under the piece"
+context = "Day 0, persona default (ChatGPT Free). Same state as signature.en.006: the Map (YOUR WORD: one more chapter, comment word CHAPTER) is on screen."
+input = """[turn 1] ok
+[turn 2] why?"""
+regex = [
+  '''(?im)^\W*✓ Checked:[^\n]*\bkeyword\b''',
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?m)^\W*Ready to film · (?:I(?:'|’)d post it|written as)''',
+]
+not_regex = [
+  '(?i)\b(signature (keyword|phrase)s?|K-\d|registry|echo)\b',
+  '(?i)\b(second act|pivot|reinvent|reinvention|dream job|BLUEPRINT)\b',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I14", "I18"]
+max_questions = 1
+notes = "wf15 §2 and §CM-EDGE WHAT PRINTS: the old '✓ Checked: … keyword once …' line moved to 'why?' (R2, R9). Turn 1 prints FILM TODAY with nothing under it (I3 grades it; signature.en.006 asserts the piece). Turn 2 (assertions here): the ✓ Checked line names the keyword check (once, in the words, not only in the CTA), next to the WHY line and what the piece was written from; tick.keyword may print here too. Internal words stay out ('registry', 'echo'). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."
+
+[[case]]
+id = "signature.en.027"
+kind = "D"
+persona = "linda-claude-pro-mac-newsletter"
+lanes = ["S1", "floor"]
+title = "'why?' on a Week-2 LinkedIn post: the keyword check names where the phrase sits; the post itself carries nothing"
+context = "Same state as signature.en.024: Brand Card v1 present (persona default: keyword 'without the badge', cta_style quiet), Week 2, Tuesday after Monday's Weekly Talk; today's piece is a LinkedIn text post."
+input = """[turn 1] next
+[turn 2] why?"""
+regex = [
+  '''(?im)^\W*✓ Checked:[^\n]*\b(?:keyword|badge)\b''',
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?m)^\W*Ready to post · (?:I(?:'|’)d post it|written as)''',
+]
+not_regex = [
+  '(?i)#(withoutthebadge|badge|nobadge)\b',
+  '(?i)\b(signature (keyword|phrase)s?|K-\d|registry|placements?_last|uses_30d)\b',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I14", "I18"]
+max_questions = 1
+notes = "arch §5.4 and plan.kit-week 4: the keyword sits once in the words, its spot rotating (hook, caption line 1, spoken payoff), never only in the CTA or a hashtag; that check prints only on 'why?' now (wf15 §2). Turn 1 prints the post with nothing under it (I3 grades it; signature.en.024 asserts the post). Turn 2 (assertions here): the ✓ Checked line names the keyword check, beside the WHY line and 'Ready to post · I'd post it: {evidence}'. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."

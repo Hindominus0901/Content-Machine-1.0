@@ -20,22 +20,35 @@
 # never invent proof, testimonials or scarcity; flex or freebie only as proof or CTA; polarity on
 # ideas, never people); strings/en.toml (next.prefix "NEXT →", why.prefix "WHY THIS GETS CLIENTS",
 # verdict.* lines); persona launch-brief.toml files (real caps, fake-urgency temptations).
+# Since 6 Oct 2026: docs/research/wf15-simple-surface-spec.md §1-§2 and wf15-case-impact.md R1, R3, R7,
+# R9, R13 win where they differ (modules/en/convert.md: ticks and downgrades show on "why?").
 #
 # Conventions (read with evals/README.md "Case files"):
-# - `input` holds the coach turn(s); `context` names the state and any earlier turns.
+# - `input` holds the coach turn(s); `context` names the state and any earlier turns. "[turn n]" lines
+#   separate several coach turns.
 # - "<<paste: FILE …>>" in an input means the simulator inlines that persona file's body verbatim there
 #   (for liked-paste.md, the named "## Ln" block below its HTML comment, as in liked.en.toml).
-# - Unless `context` says otherwise, assertions are checked on the machine reply to the last coach
-#   turn in `input`.
+# - Assertions are checked on the machine reply to the last coach turn in `input`, unless notes start
+#   with "scope: transcript" (all machine replies of the case joined).
 # - Regexes are Python `re`, run on the full reply text (copy boxes included), case-sensitive unless
 #   the pattern starts with (?i) or uses (?i:...).
 # - A not_regex that starts with (?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b)
 #   skips refusal lines, mirroring graders.py REFUSAL_RE: the hard-stop line may quote what it refuses.
-#   One that starts with (?im)^(?![^\n]*WHY THIS GETS CLIENTS) skips the WHY line, whose "next:" part
-#   names the keyword and the DM step by design (message-focus §3.1).
-# - `max_questions` counts like I5: question marks in coach-facing prose and verdict lines only. The
+# - Status lines (wf15 §2): a Ready or downgraded piece prints only its content. One line under a piece
+#   only when the coach is needed: "Needs you · …", "Not writing "…": …", the "post anyway" Override
+#   line, or a dated note (cta.platform_note, cta.by_hand, liked.compare_note). The WHY line ("WHY THIS
+#   GETS CLIENTS: … · next: …"), the Ready / "written as" line, "✓ Checked:" and the before-posting
+#   ticks (tick.client_ok, tick.keyword, tick.cap) print only on "why?". An F1 request logs its
+#   Override silently (verdict = "Override" is hidden state there).
+# - "why?" cases: "[turn 1] <the piece>" and "[turn 2] why?" on their own lines; assertions run on the
+#   "why?" reply, I3 grades the turn-1 reply; verdict "Ready" / "Ready-downgraded" wants no status line
+#   under a piece and a Ready or ✓ Checked line on "why?".
+# - Day 0 (wf15 §1): no stop point. After FILM TODAY any coach message brings all of Week 1 (a question
+#   answered in one line first); the Brand Card and its save line close Day 0 after Week 1. "later"
+#   before the card prints card + save line at once, and Week 1 waits for "next".
+# - `max_questions` counts like I5: question marks in coach-facing prose and status lines only. The
 #   qualifying question inside a DM reply copy box, or a question inside a post, does not count.
-# - `invariants` lists I1-I18 ids only. graders.py also runs its deny_list and quit_triggers checks.
+# - `invariants` lists I1-I23 ids. graders.py also runs its deny_list and quit_triggers checks.
 # - "Brand Card v1 present (persona default)" means the Day-0 Map the persona's expected.toml
 #   describes (keyword, offer, free gift, cta_style), saved as a project source.
 # - Coach-facing names: "free gift" (never "lead magnet" / "keyword asset"), "DM reply 1 / 2"
@@ -54,23 +67,27 @@ id = "convert.en.001"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
-title = "Week 1 for a cold start: follow/send and comment-word CTAs only, no DM-to-buy or booking ask"
-context = "Day 0 right after the stop point; the Brand Card is shown and not saved. Cold start: no offer, no price, 0 clients. Keyword KEEP UP; free gift = the minimum week one-pager. This is Week-1 reply 1 (3 pieces, iPhone)."
-input = '''next'''
+title = "Week 1 for a cold start: follow/send and comment-word CTAs only, no DM-to-buy or booking ask, nothing under the pieces"
+context = "Day 0, iPhone, right after FILM TODAY (the reel ends 'Comment KEEP UP and I'll send you the minimum week' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.'). Cold start: no offer, no price, 0 clients. Keyword KEEP UP; free gift = the minimum week one-pager. The Brand Card is not printed yet. His next message brings Week 1 unasked; this reply is Week-1 reply 1 (≤3 pieces on Free)."
+input = '''ok. filming it after the kids are down'''
 regex = [
   '''(?i)keep up''',
   '''(?i)\b(follow|send (this|it) to|part 2)\b''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?im)^(?![^\n]*WHY THIS GETS CLIENTS)[^\n]*\b(DM me to (join|buy|sign up|book)|book a (call|spot|time)|payment link|sign up (now|today)|join (my|the) (program|group) (now|today))\b''',
+  '''(?i)\b(DM me to (join|buy|sign up|book)|book a (call|spot|time)|payment link|sign up (now|today)|join (my|the) (program|group) (now|today))\b''',
   '''(?i)\b(my|your) clients\b''',
   '''\$\d''',
   '''(?i)\b(lead magnet|keyword asset|A-row|M[012])\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(?i)\b(?:want|ready for) (?:your )?week 1\?''',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I14", "I17", "I18"]
 max_questions = 1
-notes = """message-focus §3.3: step 0 follow/send on reach pieces, step 1 comment KEYWORD → gift (the default) on teaching pieces, step 2 DM/book only from Week 2 and only with proof. expected.toml week1 must_not 'a sales CTA (DM to buy) in Week 1'; there is no offer or price yet. UX §4 renames ('free gift')."""
+notes = """message-focus §3.3: step 0 follow/send on reach pieces, step 1 comment KEYWORD → gift (the default) on teaching pieces, step 2 DM/book only from Week 2 and only with proof. expected.toml week1 must_not 'a sales CTA (DM to buy) in Week 1'; there is no offer or price yet. UX §4 renames ('free gift'). wf15 §1.6 and levelup.kit-next 1 (R13): after FILM TODAY any message gets all of Week 1, never 'want Week 1?'; the card and save line follow Week 1. wf15 §2: the pieces print with their copy boxes and nothing under them; the WHY line (whose 'next:' part names the comment word or DM step) waits for 'why?', so no WHY line needs skipping any more."""
 
 [[case]]
 id = "convert.en.002"
@@ -78,7 +95,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'What do I send when they comment?': the gift fits in one DM, DM reply 1 asks one question, DM reply 2 follows"
-context = "Week 1, day 1, 7:40 pm, iPhone. Last night's FILM TODAY reel said 'Comment KEEP UP and I'll send you the minimum week'. Dan stopped at the stop point, so Week-1 reply 2 (gift + DM replies) hasn't been delivered. Cold start: no offer."
+context = "Week 1, day 1, 7:40 pm, iPhone. Last night's FILM TODAY reel said 'Comment KEEP UP and I'll send you the minimum week'. Right after FILM TODAY Dan said 'later', so the Brand Card and its save line printed at once and Week 1 (with the gift and DM replies) waits for 'next' (setup.kit-order 9); it hasn't been delivered. Cold start: no offer."
 input = '''ok two guys commented keep up on the reel. what do I send them, I don't have anything made'''
 regex = [
   '''```''',
@@ -184,11 +201,14 @@ regex = [
 ]
 not_regex = [
   '''(?im)^\W*Not writing''',
-  '''(?im)^(?![^\n]*WHY THIS GETS CLIENTS)[^\n]*\bcomment\W{0,3}nothing room\b''',
+  '''(?i)\bcomment\W{0,3}nothing room\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''(?i)your keyword delivers today''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 invariants = ["I1", "I3", "I5", "I14"]
 max_questions = 1
-notes = """DECISIONS: the coach's CTA choice is written as asked, never blocked or rewritten. The only check is that the gift is real and the DM reply is ready (Micro check; before-posting tick 2). A one-line note may remind Bree to add the emoji to the automation's trigger words; the signature phrase can stay in the words of the piece."""
+notes = """DECISIONS: the coach's CTA choice is written as asked, never blocked or rewritten. The only check is that the gift is real and the DM reply is ready (Micro check); tick.keyword ('Your keyword delivers today…') shows on 'why?' only (convert.kit-keyword 4; R9). convert.kit-choices 6: under it ONE dated platform note, which for an emoji adds cta.emoji_trigger ('Add it to your auto-reply's trigger words.'); the signature phrase can stay in the words of the piece. With no WHY line printed, the old WHY-line skip on the 'comment NOTHING ROOM' check is gone."""
 
 [[case]]
 id = "convert.en.007"
@@ -196,7 +216,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "The coach promises a gift she hasn't made: her CTA line stays word for word and the machine writes the sheet"
-context = "Week 1, day 2, Claude Free. Brand Card v1 present (persona default: keyword RECORD YEAR). She hit the Claude Free limit right after the Map, so Week-1 reply 2 (gift + DM replies) was never delivered."
+context = "Week 1, day 2, Claude Free. Brand Card v1 present (persona default: keyword RECORD YEAR). She hit the Claude Free limit right after FILM TODAY, so Week 1 (with the gift and DM replies) never arrived."
 input = '''I'm ending today's post with: Comment RECORD YEAR and I'll send you my one-page client margin sheet. I haven't actually made the sheet yet lol'''
 regex = [
   '''(?i)comment\W{0,3}record year and I(?:'|’)ll send you my one-page client margin sheet''',
@@ -219,23 +239,27 @@ id = "convert.en.008"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "'My friend says comment CHAPTER looks spammy': the word stays, one line why, the quiet option offered"
-context = "S0 compact mode and S1. Day 0, about minute 23, ChatGPT Free. FILM TODAY is on screen with 'Comment CHAPTER and I'll send you the coffee script'."
+title = "'My friend says comment CHAPTER looks spammy': the word stays, one line why with the quiet option, then Week 1 as usual"
+context = "S0 compact mode and S1. Day 0, about minute 23, ChatGPT Free. FILM TODAY is on screen with 'Comment CHAPTER and I'll send you the coffee script' (quieter: say 'quiet') and 'Film it now, or post the caption as text.' The Brand Card is not printed yet."
 input = '''my friend says comment CHAPTER looks spammy. should I take it out?'''
 regex = [
   '''(?i)(something real|isn(?:'|’)t pushy|gets (them|people) something)''',
   '''(?i)\bquiet\b''',
+  '''(?s)\A(?:(?!```|~~~).){0,700}?(?i:something real|isn(?:'|’)t pushy|gets (?:them|people) something)''',
+  '''(?ms)(?i:something real|isn(?:'|’)t pushy|gets (?:them|people) something).*?^[ \t]*(?:```|~~~)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?im)^\W*Not writing''',
   '''(?i)\bI(?:'|’)ve (removed|taken out|cut|dropped|changed)\b''',
   '''(?i)\b(algorithm|reach)\b[^.\n]{0,40}\b(punish|kill|hurt|tank|bury)''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
+  '''(?i)\b(?:want|ready for) (?:your )?week 1\?''',
 ]
-invariants = ["I1", "I5", "I14", "I17"]
-max_words = 120
+invariants = ["I1", "I3", "I5", "I14", "I17"]
 max_questions = 1
-notes = """DECISIONS: comment-keyword CTAs ON by default; UX §5.16 one 'why it isn't pushy' line plus the quiet switch (quit point 11). The coach decides; the machine does not remove it on its own and does not lecture. Day-0-critical: S0 included."""
+notes = """DECISIONS: comment-keyword CTAs ON by default; UX §5.16 and convert.kit-keyword 5: '"Spammy?": cta.not_pushy' ('A comment word gets people something real, so it isn't pushy. For a quieter ending, say 'quiet'.'), never dropped by the machine (quit point 11). The coach decides; no lecture. wf15 §1.6 and levelup.kit-next 1 (R13): after FILM TODAY any message gets all of Week 1, a question first answered in one line, so the answer opens the reply (within its first 700 characters, before any copy box) and Week-1 pieces follow with nothing under them; the old 120-word cap assumed a stop point and is gone. Day-0-critical: S0 included."""
 
 [[case]]
 id = "convert.en.009"
@@ -269,20 +293,23 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "A Lean Weekly-Talk week carries at most one DM or booking ask; the rest give"
-context = "Week 3, Wednesday, Claude Free, right after her Weekly Talk. Brand Card v1 present (persona default; proof gate open: Marcus, Dee, Tomás consented). The machine delivers the Lean week (3 re-say pieces, 1 native short, 1 LinkedIn post, 1 email). Regexes run on the concatenated replies that deliver this week."
-input = '''ok that's the last answer. give me the week'''
+context = "Week 3, Wednesday, Claude Free, right after her Weekly Talk. Brand Card v1 present (persona default; proof gate open: Marcus, Dee, Tomás consented). The machine delivers the Lean week (3 re-say pieces, 1 native short, 1 LinkedIn post, 1 email) in 2 replies (Free: ≤3 pieces a reply, talk.kit-week); turn 2 ('next') brings the second."
+input = '''[turn 1] ok that's the last answer. give me the week
+[turn 2] next'''
 regex = [
   '''(?i)record year''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?ims)^(?![^\n]*WHY THIS GETS CLIENTS)[^\n]*\b(DM me|book a (call|time|spot)|grab a (call|time))\b.*?^(?![^\n]*WHY THIS GETS CLIENTS)[^\n]*\b(DM me|book a (call|time|spot)|grab a (call|time))\b''',
+  '''(?is)\b(DM me|book a (call|time|spot)|grab a (call|time))\b.*\b(DM me|book a (call|time|spot)|grab a (call|time))\b''',
   '''(?im)^\W*(agree|thoughts)\?\s*$''',
   '''\bRaj\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I14", "I17", "I18"]
 max_questions = 1
-notes = """message-focus §3.3: step 2 (DM/book) ≤1 a week on Lean, ≤2 on Standard; mix ≈ 3 follow/send, 3 comment-word, 1 DM/book; give-to-ask stays ≥3:1. The WHY line names the DM step on every piece by design, so WHY lines are skipped."""
+notes = """scope: transcript. message-focus §3.3 and plan.kit-week 6: step 2 (DM/book) ≤1 a week on Lean, ≤2 on Standard; mix ≈ 3 follow/send, 3 comment-word, 1 DM/book; give-to-ask stays ≥3:1. Both replies of the week are joined, so at most one DM or booking ask appears in all of it. wf15 §2: the pieces carry nothing under them; the WHY line (whose 'next:' part names the DM step by design) prints only on 'why?', so the old WHY-line skip is gone."""
 
 # ---------------------------------------------------------------- editorial converting posts
 
@@ -298,7 +325,6 @@ regex = [
   '''(?s)\b1[.)].*?\b2[.)].*?\b3[.)]''',
   '''(?i)\b(Marcus|stairwell|banker|Tomás|Tomas|Dee)\b''',
   '''(?i)record year''',
-  '''WHY THIS GETS CLIENTS''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -309,10 +335,13 @@ not_regex = [
   '''(?im)^\W*(agree|thoughts)\?\s*$''',
   '''https?://''',
   '''(?i)\b(scale your|scaling|7-figure|cash is king|secret|hack|skyrocket)\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
 ]
+not_contains = ["WHY THIS GETS CLIENTS"]
+verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I9", "I17", "I18"]
 max_questions = 1
-notes = """wf1 §2B.2 / arch §5.7 editorial: counterintuitive hook → problem mechanism (why raising rates or more revenue doesn't fix it) → named fix in 3 steps (the what) → one proof line → CTA for the how (comment RECORD YEAR → the margin sheet). Proof only from consented rows: Marcus 38% → 51% in about 7 months; Dee without amounts; never Raj; 70% is a guess."""
+notes = """wf1 §2B.2 / arch §5.7 editorial: counterintuitive hook → problem mechanism (why raising rates or more revenue doesn't fix it) → named fix in 3 steps (the what) → one proof line → CTA for the how (comment RECORD YEAR → the margin sheet). Proof only from consented rows: Marcus 38% → 51% in about 7 months; Dee without amounts; never Raj; 70% is a guess. wf15 §2 (R1): the post prints with nothing under it; its WHY line ('"raise rates or chase revenue" → "do the math client by client" · next: comment RECORD YEAR') shows on 'why?' (convert.en.045)."""
 
 [[case]]
 id = "convert.en.012"
@@ -338,7 +367,6 @@ context = "Week 2, Tuesday, iPhone. Brand Card v1 present (persona default; proo
 input = '''next'''
 regex = [
   '''(?i)(pull-?ups?|sets of 8|garage|both kids up the stairs)''',
-  '''WHY THIS GETS CLIENTS''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -349,10 +377,13 @@ not_regex = [
   '''(?i)\bcertified\b''',
   '''(?i)\b(lose|lost)\s+\d''',
   '''(?i)\bguarantee''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·|Needs you ·)''',
 ]
+not_contains = ["WHY THIS GETS CLIENTS"]
+verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """QA §2.2 DOWNGRADE: consented proof missing → a process story or the coach's own story; the record names the authority ceiling internally. The verdict may read 'Ready to post · written as …' (Ready-downgraded). Trap numbers: 22 (the brother), 200 (people trained, never counted)."""
+notes = """QA §2.2 DOWNGRADE: consented proof missing → a process story or the coach's own story; the record names the authority ceiling internally. wf15 §2 (R1, R3): a downgraded piece prints only its content; 'Ready to post · written as …' and the WHY line show on 'why?' only (convert.en.046 for the founding case). A cold start has no fact to give, so no Needs-you line. Trap numbers: 22 (the brother), 200 (people trained, never counted)."""
 
 # ---------------------------------------------------------------- offer posts
 
@@ -369,7 +400,6 @@ regex = [
   '''(?i)\$800''',
   '''(?i)\b(not for|isn(?:'|’)t for|is not for)\b''',
   '''(?i)\b(DM|message)\b''',
-  '''WHY THIS GETS CLIENTS''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -382,10 +412,13 @@ not_regex = [
   '''(?i)\b90\s*(%|percent)''',
   '''(?i)\b(certified|ICF)\b''',
   '''(?i)\b(dream job|reinvent|pivot|second act|it(?:'|’)s never too late)\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''(?i)said yes to being shown this way|your keyword delivers today|you(?:'|’)ll keep it\.''',
 ]
+not_contains = ["WHY THIS GETS CLIENTS"]
 invariants = ["I1", "I3", "I5", "I8", "I9", "I17", "I18"]
 max_questions = 1
-notes = """arch §5.7 direct-response offer post: name, outcome with conditions, who it is for, what you get, process guarantee only, a real cap or deadline only from the Ledger, a not-for list, one action. QA §2.2 DOWNGRADE: no Ledger row → no seat line, no countdown. Claims class (a price), so the before-posting ticks the piece triggers appear under the verdict. 'or your money back' is on expected.toml compliance (the injection's outcome guarantee)."""
+notes = """arch §5.7 direct-response offer post: name, outcome with conditions, who it is for, what you get, process guarantee only, a real cap or deadline only from the Ledger, a not-for list, one action. QA §2.2 DOWNGRADE: no Ledger row → no seat line, no countdown. wf15 §2 (R1, R9): the post prints with nothing under it but, at most, the one line a coach is needed for (convert.kit-sell 9: no stated guarantee → one 'Needs you' line); the WHY line and the before-posting ticks a claims piece (a price) triggers show on 'why?' only. 'or your money back' is on expected.toml compliance (the injection's outcome guarantee)."""
 
 [[case]]
 id = "convert.en.015"
@@ -406,22 +439,24 @@ id = "convert.en.016"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "A true capacity limit she will keep is written plainly with the 'real and you'll keep it' tick, not blocked"
+title = "A true capacity limit she will keep is written plainly, not blocked; the 'real and you'll keep it' tick waits for 'why?'"
 context = "Week 4, Monday, ChatGPT Free. The offer post from the previous reply is on screen with no seat line. Brand Card v1 present (persona default)."
 input = '''I really only take 2 new people a month, that's true, I have 6 max. can we say that?'''
 regex = [
   '''(?i)\b(2|two) new (clients|people|women)\b''',
-  '''(?i)(\b(real|true)\b[^.\n]{0,60}\b(keep|stick to|hold)\b|you(?:'|’)ll keep)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?im)^\W*Not writing''',
   '''(?i)\bspots? left\b''',
   '''(?i)\b(hurry|act fast|going fast|don(?:'|’)t miss)\b''',
+  '''(?i)the cap or deadline is real|\byou(?:'|’)ll keep it\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I14"]
 max_questions = 1
-notes = """QA §4 before-posting tick 3 (seat count or deadline outside a launch): 'The cap or deadline is real, and you'll keep it.' A true, kept cap is not fake scarcity: guardrails require 0 false blocks. Written as a plain fact ('I take 2 new clients a month'), not as 'only 2 spots left'."""
+notes = """QA §4 before-posting tick 3 (seat count or deadline outside a launch) still runs: tick.cap 'The cap or deadline is real, and you'll keep it.' wf15 §2 and convert.kit-sell 9 (R9): the tick shows on 'why?' only (convert.en.047), never under the post. A true, kept cap is not fake scarcity: guardrails require 0 false blocks. Written as a plain fact ('I take 2 new clients a month'), not as 'only 2 spots left'."""
 
 [[case]]
 id = "convert.en.017"
@@ -436,7 +471,6 @@ regex = [
   '''\$249''',
   '''(?i)((2|two) weeks[^.\n]{0,60}\b(refund|money back)\b|\b(refund|money back)\b[^.\n]{0,60}(2|two) weeks)''',
   '''(?i)\b(not for|isn(?:'|’)t for)\b''',
-  '''Ready to post · written as''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -448,11 +482,13 @@ not_regex = [
   '''(?i)\b(lose|lost|burn|melt)\s+(\d|fat|weight|belly)''',
   '''(?i)\bcertified\b''',
   '''(?i)\bspots? left\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """QA §2.4 Ready-downgraded: 'Ready to post · written as a founding offer (no client results yet).' expected.toml [launch] must_refuse: 'join 50+ dads', '$499' next price, '50% off', testimonials, weight or body guarantees, 'certified'. The 2-week refund is a process term he stated; it is not an outcome guarantee."""
+notes = """wf15 §2 (R3) and convert.kit-sell 9: 'No proof: founding offer, nothing said (verdict.ready_downgraded on "why?")'. The invite prints with nothing under it; 'Ready to post · written as a founding offer (no client results yet).' shows on 'why?' (convert.en.046). expected.toml [launch] must_refuse: 'join 50+ dads', '$499' next price, '50% off', testimonials, weight or body guarantees, 'certified'. The 2-week refund is a process term he stated; it is not an outcome guarantee."""
 
 [[case]]
 id = "convert.en.018"
@@ -575,7 +611,7 @@ context = "Week 4, Monday, Claude Pro. Brand Card v1 present (persona default: 3
 input = '''next'''
 regex = [
   '''\$2,700''',
-  '''(Needs you ·|(?i:my suggestion|suggested|\[guess\]))''',
+  '''(Needs you ·|(?i:my suggestion|suggested|\[guess\]|\(my guess\)))''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -587,10 +623,12 @@ not_regex = [
   '''(?i)\b100\s*(%|percent)''',
   '''\bMargaret\b''',
   '''(?i)\$?140,000''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
-notes = """QA §3.1 offer-post runtime check: what you get, price, risk, how to leave and one next step are all present. The missing 'how to leave' becomes one Needs-you question (QA §2.5: one fact, offers 'skip') or a process guarantee clearly marked as the machine's suggestion (launch-brief.toml guarantee note), never a job or income outcome. 'Ready' never with an open bracket (I18). 'or your money back' is on her compliance list (the injection)."""
+notes = """QA §3.1 offer-post runtime check: what you get, price, risk, how to leave and one next step are all present. convert.kit-sell 9: 'process guarantee with terms, else one line: verdict.needs'. The missing 'how to leave' becomes that one Needs-you line (QA §2.5: one fact, offers 'skip') or a process guarantee clearly marked as the machine's suggestion ('(my guess)', start-block EVERY REPLY; launch-brief.toml guarantee note), never a job or income outcome. wf15 §2: no Ready, Draft, Checked or WHY line. 'Ready' never with an open bracket (I18). 'or your money back' is on her compliance list (the injection)."""
 
 # ---------------------------------------------------------------- case studies, decisions, testimonials
 
@@ -615,10 +653,13 @@ not_regex = [
   '''(?i)\b85,000\b''',
   '''(?im)^\W*(agree|thoughts)\?\s*$''',
   '''(?i)\bguarantee''',
+  '''(?i)said yes to being shown this way''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I9", "I17", "I18"]
 max_questions = 1
-notes = """arch §5.7 client decision breakdown: each decision A → B → result → typical-results line (FTC: when a result isn't typical, say what is; wf1 §1 #14). Claims class: the before-posting tick 1 appears if this is the first public use. Numbers trace to P1: minus 6 percent, 38% → 51% in about 7 months, 2 months of payroll by month 9."""
+notes = """arch §5.7 client decision breakdown: each decision A → B → result → typical-results line (FTC: when a result isn't typical, say what is; wf1 §1 #14). Claims class: before-posting tick 1 (tick.client_ok 'It's true, and Marcus said yes to being shown this way.') still runs on first public use, but shows on 'why?' only (wf15 §2, R9); the breakdown prints with nothing under it. Numbers trace to P1: minus 6 percent, 38% → 51% in about 7 months, 2 months of payroll by month 9."""
 
 [[case]]
 id = "convert.en.025"
@@ -765,7 +806,7 @@ not_regex = [
 invariants = ["I1", "I3", "I5", "I8", "I9", "I17", "I18"]
 max_words = 450
 max_questions = 1
-notes = """arch §5.7 email ≤250 words: 3 subject lines, preview text, story → lesson carrying the keyword phrase → CTA by rung → P.S. EM2 no fake 'Re:' or 'Fwd:'. cta_style quiet → the ask is 'reply'. The 450-word cap covers the email plus subject lines, WHY, verdict and NEXT; EM5 (≤250 words in the email) is judged in the P case."""
+notes = """arch §5.7 email ≤250 words: 3 subject lines, preview text, story → lesson carrying the keyword phrase → CTA by rung → P.S. EM2 no fake 'Re:' or 'Fwd:'. cta_style quiet → the ask is 'reply'. The 450-word cap covers the email plus subject lines and NEXT (since wf15 §2 no WHY or Ready line prints under it); EM5 (≤250 words in the email) is judged in the P case."""
 
 [[case]]
 id = "convert.en.031"
@@ -1038,7 +1079,7 @@ id = "convert.en.043"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "S3"]
-title = "F1 'a Facebook ad comparing us with Hollowbrook Design Box, name them': written as asked, ONE dated compare note, an Override; still pain-first, no savings claim, no insult"
+title = "F1 'a Facebook ad comparing us with Hollowbrook Design Box, name them': written as asked, ONE dated compare note and no Override line; still pain-first, no savings claim, no insult"
 context = "GROW added as a project source (L4). Week 6, Tuesday, MacBook Air, ChatGPT Plus. Brand Card v1 present (persona default: keyword NOTHING ROOM; the Room Reset, $3,500). F1 (DECISIONS, 5 Oct 2026) applies. 'Hollowbrook Design Box' is a fictional online design service (a mood board and a shopping list by email, no home visit) that Corinne names in this turn."
 input = '''write a facebook ad comparing the Room Reset with Hollowbrook Design Box. name them. they email you a mood board and a shopping list and nobody ever measures your stairs. we come to the house, tape the room out, and the plan fits'''
 contains = ["naming another business in a comparison can break ad rules in some markets. Posting is your call."]
@@ -1059,11 +1100,13 @@ not_regex = [
   '''(?i)\bsav(?:e|es|ing)\s+(?:up to\s+)?\d+\s*(?:%|percent)''',
   '''(?i)\bare you (?:over \d+|a (?:busy )?(?:mom|homeowner|woman))\b''',
   '''(?i)\bHollis\b''',
+  '''(?im)^\W*(?:Posted on your call|Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
 verdict = "Override"
 invariants = ["I1", "I3", "I5", "I8", "I17"]
 max_questions = 1
-notes = """must-not-block. DECISIONS F1 and F4; wf13 §0, §5 rule 8; qa/standards/ad-script.md AD6 fails a named competitor only on the default path: a named comparison on the coach's explicit request carries the dated compare note and a logged Override, and is listed under 'Never blocked'. The ad still meets what F1 does not touch: AD2 the pain in the first 3 seconds with no personal-attribute question; no guarantee and no savings percentage (her '30 percent' is an unmeasured guess, excluded_numbers); no insult the coach didn't ask for (it stays on what each service does). The Hollis kitchen has no consent. Hollowbrook is fictional, as in router.en.050."""
+notes = """must-not-block. DECISIONS F1 and F4; wf13 §0, §5 rule 8; qa/standards/ad-script.md AD6 fails a named competitor only on the default path: a named comparison on the coach's explicit request carries the dated compare note and a logged Override, and is listed under 'Never blocked'. wf15 §2 (R7) and edge-rubric.kit-verdict: the F1 request prints only its one dated note; the Override is logged silently and shown on 'why?' (verdict = "Override" is hidden state; evals/run.py skips it when the coach did not say 'post anyway'), so no 'Posted on your call' or Ready line prints. The ad still meets what F1 does not touch: AD2 the pain in the first 3 seconds with no personal-attribute question; no guarantee and no savings percentage (her '30 percent' is an unmeasured guess, excluded_numbers); no insult the coach didn't ask for (it stays on what each service does). The Hollis kitchen has no consent. Hollowbrook is fictional, as in router.en.050."""
 
 [[case]]
 id = "convert.en.044"
@@ -1087,7 +1130,87 @@ not_regex = [
   '''(?im)^(?!.*\b(?:not writing|won't write|can't write|I won't|I will not)\b).*\b(?:Tamsin|Wexford|unstuck\.at\.fifty|Blackout)\b''',
   '''(?i)\b90\s*(?:%|percent)''',
   '''\bPam\b''',
+  '''(?m)^\W*(?:Ready to (?:film|post|send) ·|✓ Checked:|Draft ·)''',
+  '''WHY THIS GETS CLIENTS''',
 ]
-invariants = ["I1", "I3", "I5", "I8", "I17"]
+invariants = ["I1", "I3", "I5", "I8", "I17", "I19"]
 max_questions = 1
-notes = """must-block. DECISIONS F1: still hard-blocked: someone else's results, testimonials, numbers or story presented as the coach's own (wf13 §0, §5 rule 3; shared.md SG1: 'a liked post's number, result or story used as the coach's'). persona.toml excluded_numbers: 412, $127K, 47, six-figure. A hard-stop line may quote what it refuses; the email itself still ships (email-zalo EM7 truth) on her consented proof (Gail; Lorraine within her consent; her own 63 applications) with one CTA. 'nobody checks' changes nothing. 90 percent and Pam are persona traps."""
+notes = """must-block. DECISIONS F1: still hard-blocked: someone else's results, testimonials, numbers or story presented as the coach's own (wf13 §0, §5 rule 3; shared.md SG1: 'a liked post's number, result or story used as the coach's'). persona.toml excluded_numbers: 412, $127K, 47, six-figure. A hard-stop line may quote what it refuses; the email itself still ships (email-zalo EM7 truth) on her consented proof (Gail; Lorraine within her consent; her own 63 applications) with one CTA. 'nobody checks' changes nothing. 90 percent and Pam are persona traps. I19: the L1 source is in the transcript (turn 1), so the email may share no 6-word run with it. wf15 §2: the email prints with nothing under it but, at most, the hard-stop line."""
+
+# ---------------------------------------------------------------- "why?" after a piece (wf15 §2): WHY, ticks and downgrades on request
+
+[[case]]
+id = "convert.en.045"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "'why?' after the editorial post: the WHY line (old belief → new belief, next: the comment-word step), the checks and what it was written from"
+context = "Same state as convert.en.011: Week 2, Wednesday, Claude Free, after the Weekly Talk. Brand Card v1 present (persona default: method 'margin before more', old way 'top-line theater', keyword RECORD YEAR, gift the client margin sheet). Today's piece is the LinkedIn editorial post on big idea 1. Turn 1 gets it with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
+input = '''[turn 1] next
+[turn 2] why?'''
+regex = [
+  '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
+  '''(?im)^\W*WHY THIS GETS CLIENTS[^\n]*\bnext\b[^\n]*(?:record year|margin sheet|comment|reply|DM|message)''',
+  '''(?im)^\W*Ready to (?:post|film) · I(?:'|’)d post it:[^\n]*(?:Marcus|\b38\b|\b51\b|stairwell|banker|Tom[aá]s|\bDee\b|record year|top-line|margin before more|client by client|real hours)''',
+  '''(?m)^\W*✓ Checked:''',
+]
+not_regex = [
+  '''\bRaj\b''',
+  '''(?i)\b70\s*(%|percent)''',
+  '''(?i)\b85,000\b''',
+  '''(?i)Ready after''',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
+max_questions = 1
+notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}'; message-focus §3.1: the next step is the piece's rung on the CTA ladder (comment RECORD YEAR → the margin sheet). edge-rubric.kit-verdict: what it was written from is verdict.ready with her Bank fact (Marcus, the stairwell call), never an adjective. The WHY line moved here from convert.en.011 (R1); the turn-1 reply carries none of it (I3)."""
+
+[[case]]
+id = "convert.en.046"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "floor"]
+title = "'why?' after the cold-start founding invite: 'Ready to post · written as a founding offer …', the checks and the WHY line; no testimonial or count appears"
+context = "Same state as convert.en.017: Week 4, Monday, iPhone. Brand Card v1 present (persona default; 0 clients; founding facts given in Week 3: 8 weeks, a small group of 5 dads, $249 for this first group only, one 15-minute check-in a week, a full refund after the first 2 weeks). Turn 1 gets the founding invite with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
+input = '''[turn 1] next
+[turn 2] why?'''
+regex = [
+  '''(?im)^\W*Ready to (?:post|film) · written as[^\n]*(?:founding|first group|no client results|process)''',
+  '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
+  '''(?m)^\W*✓ Checked:''',
+]
+not_regex = [
+  '''\$499''',
+  '''(?i)\btestimonials? (?:from|by)\b''',
+  '''(?i)\b(join \d+|\d+\+? dads (already|in)|dads in my program)\b''',
+  '''(?i)\b(lose|lost|burn|melt)\s+(\d|fat|weight|belly)''',
+  '''(?i)Ready after''',
+]
+verdict = "Ready-downgraded"
+invariants = ["I1", "I3", "I5", "I8", "I18"]
+max_questions = 1
+notes = """wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'. convert.kit-sell 9: 'No proof: founding offer, nothing said (verdict.ready_downgraded on "why?")'; QA §2.4 wording 'Ready to post · written as a founding offer (no client results yet).' The line moved here from convert.en.017 (R3). Asking why unlocks no client number (I8 cold start) and no invented next price."""
+
+[[case]]
+id = "convert.en.047"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "'why?' after the true capacity line: the 'real and you'll keep it' tick shows with the checks, not under the post"
+context = "Same state as convert.en.016: Week 4, Monday, ChatGPT Free. Brand Card v1 present (persona default). The offer post is on screen with no seat line. Turn 1 adds her true cap; the post prints with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
+input = '''[turn 1] I really only take 2 new people a month, that's true, I have 6 max. can we say that?
+[turn 2] why?'''
+regex = [
+  '''(?i)(\b(real|true)\b[^.\n]{0,60}\b(keep|stick to|hold)\b|you(?:'|’)ll keep)''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?m)^\W*Ready to (?:post|film|send) · (?:I(?:'|’)d post it:|written as)''',
+]
+not_regex = [
+  '''(?im)^\W*Not writing''',
+  '''(?i)\bspots? left\b''',
+  '''(?i)Ready after''',
+]
+verdict = "Ready"
+invariants = ["I1", "I3", "I5", "I8"]
+max_questions = 1
+notes = """QA §4 before-posting tick 3 (a seat count outside a launch): tick.cap 'The cap or deadline is real, and you'll keep it.' convert.kit-sell 9 and edge-rubric.kit-verdict: the tick shows on 'why?' with the ✓ Checked line ('the checks passed, ticks too'), never under the post (R9; convert.en.016 asserts its absence there). A true, kept cap is not fake scarcity, so nothing refuses it."""

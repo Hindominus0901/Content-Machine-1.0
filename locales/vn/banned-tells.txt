@@ -47,3 +47,162 @@ hy vọng có ích
 em xin phép chia sẻ
 vài tips nho nhỏ
 nói sai mọi người bỏ qua
+
+# ---------------------------------------------------------------------------
+# Văn dịch, câu Tây: khung câu, chữ nối kể chuyện, giọng tổng đài và trợ lý dịch.
+# Source: docs/research/vn-language-guide.md §2 (catalogue rows marked "Lint").
+# Judge-only and density patterns (Tuy nhiên, "bạn" lặp, thiếu tiểu từ, Markdown,
+# emoji, gạch dài) are scored in qa/standards/vn-naturalness.md, not here.
+# Every entry below was run on the VN persona speech in evals/personas/vn/*/
+# (answers.md, voice-samples.md minus the never-lists, written-posts.md,
+# pillar-transcript.md): no hits except a coach naming a word to reject it.
+# Entries target the translated FORM, not the word, so natural Vietnamese stays
+# legal: "nói một cách đơn giản", "cho thêm vào đó ít muối", "đánh thức con dậy",
+# "dịch bùng nổ", "khám toàn diện", "tua nhanh đoạn đầu", "cát trong đôi giày".
+# A "before" line quoted in locales/vn/examples.md needs <!-- lint-ok:E141 -->.
+
+# Cấu trúc câu dịch, danh từ dịch
+# một cách + tính từ (dịch trạng từ -ly: effectively, easily); "có một cách hay để…" không tính
+re:(?i)(?<!\bnói\s)(?<!\bcó\s)(?<!\blà\s)(?<!\btìm\s)(?<!\bchỉ\s)(?<!\bcòn\s)(?<!\bthêm\s)(?<!\bchọn\s)(?<![.!?\n]\s)(?<![.!?\n])(?<!^)\bmột\s+cách\s+(?:rất\s+|thật\s+|vô\s+cùng\s+|hết\s+sức\s+)?(?:hiệu\s+quả|dễ\s+dàng|nhanh\s+chóng|tự\s+nhiên|chân\s+thành|chuyên\s+nghiệp|chính\s+xác|rõ\s+ràng|đơn\s+giản|bền\s+vững|toàn\s+diện|tối\s+ưu|khoa\s+học|thông\s+minh|tự\s+tin|nhẹ\s+nhàng|hoàn\s+hảo|chủ\s+động|triệt\s+để|đáng\s+kể|linh\s+hoạt|sâu\s+sắc|nghiêm\s+túc|an\s+toàn|thoải\s+mái|nhất\s+quán|hợp\s+lý|hợp\s+lí|tích\s+cực|mạnh\s+mẽ|đều\s+đặn|bài\s+bản|trọn\s+vẹn|tốt\s+nhất|thuận\s+tiện)\b(?!\s+(?:để|nào|khác|hơn)\b)
+# không những … mà còn (biến thể của "không chỉ … mà còn" ở trên)
+re:(?i)\bkhông\s+những\b[^.!?\n]{1,80}\bmà\s+còn\b
+# là + rất / vô cùng / hoàn toàn + tính từ (dịch "is very …"); "là cứng đơ luôn" (là nhấn) không tính
+re:(?i)\blà\s+(?:rất|vô\s+cùng|hết\s+sức|hoàn\s+toàn|cực\s+kỳ|cực\s+kì)\s+(?!là\b)\w+
+# "bởi" chỉ người làm sau bị động (được/bị … bởi; dịch "by"); "bởi vì, bởi lẽ" không tính
+re:(?i)\b(?:được|bị)\s+(?:\w+\s+){1,4}bởi(?!\s+(?:vì|lẽ|thế|vậy|chưng|tại)\b)\b
+# bởi + đội ngũ / chuyên gia / hàng nghìn… (tác nhân kiểu dịch)
+re:(?i)\bbởi\s+(?:đội\s+ngũ|các\s+chuyên\s+gia|chuyên\s+gia|chính\s+(?:tôi|mình|bạn)|hàng\s+(?:nghìn|ngàn|trăm|triệu))\b
+# "Là một …," / "Với tư cách là" đầu câu (dịch "As a mother, I …")
+re:(?im)(?:^|[.!?]\s+)(?:với\s+tư\s+cách\s+(?:là\s+)?|là\s+một\s+(?:người|chuyên\s+gia|coach|huấn\s+luyện\s+viên|chủ|bà\s+mẹ|người\s+mẹ|kế\s+toán))\b[^.!?\n]{0,80},
+# "Điều này / Điều đó" + động từ thay cả câu trước (dịch "This means / This makes …")
+re:(?i)\bđiều\s+(?:này|đó|ấy)\s+(?:có\s+nghĩa\s+là|nghĩa\s+là|cho\s+thấy|khiến|đồng\s+nghĩa|chứng\s+tỏ|dẫn\s+đến|dẫn\s+tới|giúp)\b
+# khiến … cảm thấy / trở nên (dịch "make you feel")
+re:(?i)\bkhiến\s+(?:cho\s+)?(?:bạn|các\s+bạn|khách(?:\s+hàng)?|người\s+(?:đọc|xem|nghe)|họ|chúng\s+ta)\s+(?:cảm\s+thấy|trở\s+nên)\b
+# "hãy đảm bảo rằng" (dịch "make sure that")
+hãy đảm bảo rằng
+# "chia sẻ rằng" để dẫn lời (dịch "she shared that"); dẫn bằng bảo / nói / kể + nguyên văn
+chia sẻ rằng
+# "gặp khó khăn trong việc …" (dịch "struggling with")
+gặp khó khăn trong việc
+# khung danh từ dịch "ngành công nghiệp làm đẹp" (beauty industry); nghề dịch vụ không gọi là công nghiệp
+re:(?i)\bngành\s+công\s+nghiệp\s+(?:làm\s+đẹp|spa|nội\s+dung|giải\s+trí|thời\s+trang|bất\s+động\s+sản|bảo\s+hiểm|giáo\s+dục|coaching|nhân\s+sự|ẩm\s+thực|du\s+lịch)\b
+# "sẽ có thể", "đã và đang" (thì động từ dịch: will be able to / have been and are)
+re:(?i)\bsẽ\s+có\s+thể\b|\bđã\s+và\s+đang\b
+# "tầm quan trọng của việc …" (dịch "the importance of …")
+tầm quan trọng của việc
+# "tiến hành" + động từ (động từ rỗng: conduct / carry out)
+tiến hành
+# "nỗi đau (của) khách hàng" (dịch "customer pain point"); nói khách khổ chỗ nào, bằng câu khách nói
+re:(?i)\bnỗi\s+đau\s+(?:của\s+)?khách(?:\s+hàng)?\b
+
+# Mở bài và câu hỏi hook dịch
+# câu mở "Bạn có đang … / Bạn đang gặp khó khăn / Bạn đang tìm kiếm / Bạn có từng tự hỏi" (dịch "Are you …?")
+re:(?i)(?:^|[.!?\n]\s*)bạn\s+(?:có\s+đang\s+(?:gặp|cảm\s+thấy|mệt|loay\s+hoay|tìm|muốn|phải|bị|ngồi)|đang\s+gặp\s+khó\s+khăn|đang\s+tìm\s+kiếm|có\s+từng\s+tự\s+hỏi)\b
+# "có bao giờ bạn tự hỏi / đã bao giờ bạn …" (dịch "Have you ever wondered")
+re:(?i)\b(?:có\s+bao\s+giờ\s+bạn\s+(?:tự\s+hỏi|cảm\s+thấy)|đã\s+bao\s+giờ\s+bạn|bạn\s+(?:đã|có)\s+bao\s+giờ\s+tự\s+hỏi)\b
+# "Hãy tưởng tượng …" (dịch "Imagine …")
+hãy tưởng tượng
+# "Dưới đây là / Sau đây là" đầu câu (dịch "Here are …"), cả khi máy nói với coach
+re:(?i)(?:^|[.!?:\n]\s*)(?:dưới\s+đây\s+là|sau\s+đây\s+là)\b
+# "Đó là lý do tại sao / vì sao", "Đây là lý do vì sao" (dịch "That's why / Here's why")
+re:(?i)\b(?:đó|đây)\s+là\s+(?:lý|lí)\s+do\s+(?:tại|vì)\s+sao\b
+# "Câu chuyện dưới đây …" (mở bài kiểu bản dịch)
+câu chuyện dưới đây
+# mở bài "Trong thế giới / cuộc sống … hiện đại, ngày nay, bận rộn" (dịch "In today's world")
+re:(?i)\btrong\s+(?:thế\s+giới|cuộc\s+sống)\s+(?:hiện\s+đại|ngày\s+nay|bận\s+rộn|hối\s+hả|xô\s+bồ|số|kinh\s+doanh|đầy)\b
+# "trong kỷ nguyên …" (dịch "in the era of")
+re:(?i)\btrong\s+(?:kỷ|kỉ)\s+nguyên\b
+# "Ngày nay," đầu câu làm câu mở (dịch "Nowadays,")
+re:(?i)(?:^|[.!?\n]\s*)ngày\s+nay\s*,
+# "Như chúng ta (đã / đều) biết" (văn mẫu nhà trường)
+re:(?i)\bnhư\s+chúng\s+ta\s+(?:đã\s+|đều\s+)?biết\b
+# "Chúng ta đều biết / ai cũng biết" (diễn văn, dịch "We all know")
+re:(?i)\bchúng\s+ta\s+(?:đều|ai\s+cũng)\s+biết\b
+# "Không thể phủ nhận (rằng)" (văn nghị luận)
+không thể phủ nhận
+
+# Nối ý, chuyển cảnh kể chuyện, kết bài
+# "Thêm vào đó," đầu câu (dịch "In addition,"); "cho thêm vào đó ít muối" không tính
+re:(?i)(?:^|[.!?\n]\s*)thêm\s+vào\s+đó\s*,
+# "Bên cạnh đó," đầu câu làm chữ nối (dịch "Besides,"); "ngồi bên cạnh đó" không tính
+re:(?i)(?:^|[.!?\n]\s*)bên\s+cạnh\s+đó\s*,
+# chuyển ngoặt dịch "That's when I realized": đó là lúc / khoảnh khắc + tôi nhận ra
+re:(?i)\b(?:đó|đây)\s+là\s+(?:lúc|khi|khoảnh\s+khắc)\s+(?:tôi|mình|em|chị|anh)\s+(?:chợt\s+)?(?:nhận\s+ra|hiểu\s+ra|biết)\b
+# "Và đó là lúc" (dịch "And that's when")
+và đó là lúc
+# "Khoảnh khắc đó / ấy," đầu câu làm chỗ ngoặt (dịch "in that moment"); người Việt kể "lúc đó" + một việc làm
+re:(?i)(?:^|[.!?\n]\s*)(?:và\s+)?(?:ngay\s+|vào\s+|trong\s+)?khoảnh\s+khắc\s+(?:đó|ấy)\s*(?:,|(?:tôi|mình|em|chị|anh)\b)
+# "chợt nhận ra" (công tắc ngoặt của văn AI)
+chợt nhận ra
+# "Tua nhanh (đến) 3 năm sau" trong chuyện kể (dịch "Fast forward"); "tua nhanh video" không tính
+re:(?i)(?:^|[.!?\n]\s*)tua\s+nhanh\s*,|\btua\s+nhanh\s+(?:đến\s+|tới\s+|qua\s+)?(?:\d+|vài|mấy|một|hai|ba|năm|mười)\s+(?:năm|tháng|tuần)\s+sau\b
+# "Bài học rút ra" (văn mẫu; bài học nói bằng một câu hai vế)
+bài học rút ra
+# "Hãy luôn nhớ (rằng)" (giảng đạo, dịch "Always remember")
+hãy luôn nhớ
+# kết bài kiểu luận văn: "Cuối cùng nhưng không kém phần quan trọng", "Đầu tiên và quan trọng nhất"
+re:(?i)\bcuối\s+cùng\s+nhưng\s+không\s+kém\s+phần\s+quan\s+trọng\b|\bđầu\s+tiên\s+và\s+quan\s+trọng\s+nhất\b
+# "Kết luận:" / "Tổng kết lại," đầu dòng (nhãn báo cáo)
+re:(?i)(?:^|[.!?\n]\s*)(?:tổng\s+kết\s+lại|kết\s+luận)\s*[,:]
+# "Chúc bạn / các bạn … thành công!" ở cuối bài
+re:(?i)\bchúc\s+(?:bạn|các\s+bạn|anh\s+chị|mọi\s+người|cả\s+nhà)\s+thành\s+công\b
+
+# Thành ngữ dịch, từ thổi phồng, ẩn dụ sáo
+# thành ngữ dịch sát: đi thêm một dặm, phá vỡ băng, con voi trong phòng, đặt mình vào đôi giày của, tư duy bên ngoài chiếc hộp ("phá băng" đã quen thì để; "cát trong đôi giày", "dán bên ngoài hộp" nghĩa đen không tính)
+re:(?i)\bđi\s+thêm\s+(?:một\s+)?dặm\b|\bphá\s+vỡ\s+(?:lớp\s+)?băng\b|\bcon\s+voi\s+trong\s+phòng\b|\b(?:đặt\s+(?:mình\s+)?vào|xỏ\s+chân\s+vào|đứng\s+trong|đi\s+trong|bước\s+vào)\s+(?:trong\s+)?đôi\s+giày\s+của\b|\b(?:suy\s+nghĩ|tư\s+duy|nghĩ)\s+(?:ra\s+)?(?:bên\s+)?ngoài\s+(?:chiếc\s+)?hộp\b
+# "hơn bao giờ hết" (dịch "more than ever")
+hơn bao giờ hết
+# "không thể bỏ lỡ", "(mà) bạn không thể bỏ qua" (tựa SEO dịch "you can't miss"); "lỗi này không thể bỏ qua" không tính
+re:(?i)\bkhông\s+thể\s+bỏ\s+lỡ\b|\b(?:mà\s+)?(?:bạn|các\s+bạn)\s+không\s+thể\s+bỏ\s+qua\b
+# từ thổi phồng (dịch breakthrough / premium / superior): đột phá, đẳng cấp, vượt trội, thần tốc, giải pháp / lộ trình toàn diện, bùng nổ doanh số ("khám toàn diện", "dịch bùng nổ", "tiến bộ vượt bậc" không tính)
+re:(?i)\b(?:đột\s+phá|đẳng\s+cấp|vượt\s+trội|thần\s+tốc)\b|\b(?:giải\s+pháp|lộ\s+trình|thay\s+đổi)\s+toàn\s+diện\b|\bbùng\s+nổ\s+(?:doanh\s+(?:số|thu)|đơn(?:\s+hàng)?|tương\s+tác|lượt\s+xem|view)\b|\b(?:doanh\s+(?:số|thu)|đơn(?:\s+hàng)?|tương\s+tác)\s+bùng\s+nổ\b
+# ẩn dụ sáo (dịch unlock / unleash / decode / big picture): mở khóa tiềm năng, khai phá, hành trang, giải mã, bức tranh toàn cảnh, đánh thức / khơi dậy tiềm năng ("đánh thức con dậy" không tính)
+re:(?i)\bmở\s+kh(?:óa|oá)\s+(?:tiềm\s+năng|bí\s+mật|sức\s+mạnh|thành\s+công)|\bkhai\s+phá\b|\bhành\s+trang\b|\bgiải\s+mã\b|\bbức\s+tranh\s+toàn\s+cảnh\b|\b(?:đánh\s+thức|khơi\s+dậy)\s+(?:tiềm\s+năng|sức\s+mạnh|đam\s+mê|niềm\s+đam\s+mê|nội\s+lực|con\s+người|phiên\s+bản|ngọn\s+lửa|khát\s+vọng)\b
+
+# Lời rủ, lời mời, câu an ủi kiểu dịch
+# "hãy cùng nhau", "hãy cùng (mình) tìm hiểu / điểm qua / khám phá" (dịch "Let's …")
+re:(?i)\bhãy\s+cùng\s+(?:nhau|(?:mình\s+|tôi\s+|em\s+)?(?:tìm\s+hiểu|điểm\s+qua|đi\s+sâu|xem\s+qua|bắt\s+đầu|khám\s+phá))\b
+# "Hãy để tôi / mình …" (dịch "Let me …"); người Việt nói "Để mình kể"
+re:(?i)\bhãy\s+để\s+(?:tôi|mình|em|chị|anh|chúng\s+tôi)\b
+# "Hãy cho tôi biết … / Hãy để lại bình luận" (CTA dịch "Let me know in the comments")
+re:(?i)\bhãy\s+(?:cho\s+(?:tôi|mình|em|chị|anh|chúng\s+tôi)\s+biết|để\s+lại\s+(?:bình\s+luận|comment|ý\s+kiến))\b
+# "Bạn đã sẵn sàng … chưa?" (CTA dịch "Are you ready?")
+re:(?i)\b(?:bạn|các\s+bạn|anh\s+chị|chị\s+em)\s+đã\s+sẵn\s+sàng\b[^.!?\n]{0,100}\bchưa\b
+# an ủi dịch từ self-help: "bạn không đơn độc / bạn xứng đáng" (You're not alone / You deserve)
+re:(?i)\bbạn\s+không\s+(?:hề\s+)?(?:đơn\s+độc|cô\s+đơn|một\s+mình)\b|\bbạn\s+xứng\s+đáng\b
+# "phiên bản tốt (hơn / nhất) của chính mình" (best version of yourself)
+re:(?i)\bphiên\s+bản\s+(?:tốt|hoàn\s+hảo|chuyên\s+nghiệp)\s+(?:hơn|nhất)\s+của\b
+# "từng ở vị trí của bạn" (I've been in your shoes); nói "mình cũng từng y chang vậy"
+re:(?i)\b(?:từng|đã)\s+(?:ở|đứng\s+ở)\s+vị\s+trí\s+của\s+(?:bạn|các\s+bạn|anh\s+chị|chị\s+em)\b
+# chữ sến của văn AI: "vỡ òa", "biết ơn vũ trụ"
+re:(?i)\bvỡ\s+(?:òa|oà)\b|\bbiết\s+ơn\s+vũ\s+trụ\b
+
+# Giọng tổng đài, trợ lý dịch, bán kiểu lùa
+# tổng đài: "Cảm ơn bạn / anh/chị / quý khách đã liên hệ / đã quan tâm đến dịch vụ" (Thanks for reaching out); trả lời luôn điều được hỏi
+re:(?i)\bc[ảá]m\s+ơn\s+(?:bạn|các\s+bạn|anh/chị|anh\s+chị|quý\s+khách|quý\s+anh\s+chị)\s+(?:vì\s+)?đã\s+(?:liên\s+hệ|quan\s+tâm\s+(?:đến|tới)\s+(?:sản\s+phẩm|dịch\s+vụ|khóa\s+học|khoá\s+học|chương\s+trình))\b
+# tổng đài: "đừng ngần ngại" (Don't hesitate to …)
+đừng ngần ngại
+# tổng đài: "nếu … có bất kỳ câu hỏi / thắc mắc nào" (If you have any questions)
+re:(?i)\bcó\s+bất\s+(?:kỳ|kì|cứ)\s+(?:câu\s+hỏi|thắc\s+mắc)\s+nào\b
+# tổng đài: "rất vui được hỗ trợ / phục vụ", "rất hân hạnh được" (Happy to help)
+re:(?i)\b(?:rất|thật)\s+vui\s+(?:được|khi\s+được)\s+(?:hỗ\s+trợ|giúp\s+đỡ|đồng\s+hành|phục\s+vụ)\b|\b(?:rất\s+)?hân\s+hạnh\s+được\b
+# tổng đài: "xin lỗi vì sự bất tiện" (Sorry for the inconvenience); nói "em xin lỗi chị"
+re:(?i)\bxin\s+lỗi\s+(?:vì|về)\s+(?:sự|những)\s+bất\s+tiện\b|\bsự\s+bất\s+tiện\s+này\b
+# tổng đài: "trong thời gian sớm nhất" (as soon as possible); nói giờ cụ thể
+trong thời gian sớm nhất
+# tổng đài: "vui lòng để lại số điện thoại" (để lại số trong bình luận công khai còn là điểm dừng cứng)
+re:(?i)\bvui\s+lòng\s+để\s+lại\s+(?:số\s+điện\s+thoại|sđt|thông\s+tin)\b
+# tổng đài: "chúng tôi luôn lắng nghe (và tiếp thu)"; nói đã sửa gì
+re:(?i)\bchúng\s+tôi\s+luôn\s+lắng\s+nghe\b
+# "Chúng tôi tin rằng" của người làm một mình (dịch "We believe")
+chúng tôi tin rằng
+# trợ lý dịch: "Câu hỏi hay / tuyệt vời!" (Great question!)
+re:(?i)(?:^|[.!?\n]\s*)câu\s+hỏi\s+(?:rất\s+)?(?:hay|tuyệt\s+vời)\s*!
+# bán hàng kiểu lùa: "(người / bạn) hữu duyên" (chọn lọc giả, ép tâm lý)
+re:(?i)\b(?:người|bạn|ai|anh\s+chị|chị\s+em|các\s+bạn)\s+hữu\s+duyên\b
+# giấu giá: "giá ib / giá inbox"; bài bán thì ghi giá, người hỏi giá thì trả lời bằng con số
+re:(?i)\bgiá\s+(?:ib|inbox)\b
+
+# Chữ nghề tiếng Anh chú thích trong ngoặc
+# chú thích tiếng Anh trong ngoặc kiểu giáo trình: "câu mở đầu (hook)", "(CTA)", "(pain point)"
+re:(?i)\((?:hook|cta|call\s+to\s+action|storytelling|origin\s+story|content\s+pillars?|usp|insight|pain\s+points?|engagement|reach|target\s+audience|mindset|framework|lead\s+magnet|funnel|conversion)\)
