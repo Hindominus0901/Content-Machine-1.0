@@ -1452,7 +1452,7 @@ input = '''em theo dõi kênh của chị Diễm Quyên giúp chị nhé, tuần
 contains = []
 not_contains = []
 regex = [
-  '''(?i)không theo dõi kênh của ai được''',
+  '''(?i)không (?:tự )?theo dõi kênh (?:nào|của ai) được''',
   '''(?i)ảnh chụp|chụp màn hình''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]

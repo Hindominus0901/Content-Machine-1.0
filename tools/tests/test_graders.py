@@ -1302,6 +1302,192 @@ class LikedPostTests(TempRepo):
         self.assertFails(report, "I11", "repeats the injected instruction")
 
 
+GUIDE = REPO / "docs" / "research" / "vn-language-guide.md"
+
+
+def _unquote(s: str) -> str:
+    s = s.strip()
+    return s[1:-1].strip() if len(s) >= 2 and s[0] in '"“' and s[-1] in '"”' else s
+
+
+def guide_examples() -> tuple[list[str], list[str]]:
+    """(before, after) lines of the VN guide: §8 "Trước:" / "Sau:" and the K table, the "sai → đúng" column of
+    the §2 tables; the §3.15 sample posts count as "after"."""
+    text = GUIDE.read_text(encoding="utf-8")
+    s2 = text[text.index("## 2. Văn dịch"):text.index("### 2.6")]
+    s8 = text[text.index("## 8. Ba mươi chín"):text.index("## 9. Phép thử")]
+    s315 = text[text.index("### 3.15"):text.index("## 4. Xưng hô")]
+    before, after = [], []
+    for line in s8.splitlines():
+        if line.startswith("- Trước: "):
+            before.append(_unquote(line[9:]))
+        elif line.startswith("- Sau: "):
+            after.append(_unquote(line[7:]))
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) == 3 and cells[1].startswith('"') and cells[2].startswith('"'):
+            before.append(_unquote(cells[1]))
+            after.append(_unquote(cells[2]))
+    for line in s2.splitlines():
+        for cell in line.strip().strip("|").split("|"):
+            cell = cell.strip()
+            if cell.startswith('"') and "→" in cell:
+                left, right = cell.split("→", 1)
+                before.append(_unquote(left))
+                after.append(_unquote(right))
+    for block in s315.split("\n\n"):
+        post = [ln[1:].strip() for ln in block.splitlines() if ln.startswith(">") and ln[1:].strip()]
+        if post:
+            after.append("\n".join(post))
+    return before, after
+
+
+NAT_POSTS = """
+# written-posts.md · nat (test)
+
+## W1 · Bài Facebook
+
+Tối qua có chị nhắn mình hỏi sổ lãi ghi sao.
+Mình chỉ đúng một cột thôi nhé.
+Chị ghi xong thì chụp gửi mình nha.
+Cuối tuần mình xem lại cho.
+
+## W2 · Tin Zalo
+
+Chị nhận được file rồi đó em.
+Tối nay em mở cột hai ra trước nhé.
+Có chỗ nào chưa hiểu thì nhắn chị.
+Tuần sau chị em mình ngồi lại với nhau.
+"""
+
+
+class VnNaturalTests(TempRepo):
+    """vn_natural (vn-language-guide §9.3, §10.2 items 4-5): translationese density, Markdown bold, emoji lines,
+    em dashes and the end-particle share of the machine's VN pieces."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/vn/nat/persona.toml", 'xung_ho = "chị–em"\nseeded_names = ["Mèo Ú"]\n')
+        self.write("evals/personas/vn/nat/expected.toml", '[voice]\naudience_address = "mình – các chị em"\n')
+
+    def vn(self, *bodies, coach="tiếp", persona="vn/nat"):
+        """One machine reply holding each body as a piece in a copy box (N1 · Bài, N2 · Bài, …)."""
+        pieces = "\n".join(f"N{k} · Bài\n```\n{body}\n```\n" for k, body in enumerate(bodies, 1))
+        report = self.grade([("coach", coach), ("machine", f"{TAG}Tuần 1\n{pieces}TIẾP → Gõ \"tiếp\".")],
+                            persona=persona, edition="vn")
+        return report, self.inv(report, "vn_natural")
+
+    def test_en_runs_are_not_applicable(self):
+        self.assertEqual(self.inv(self.grade(GOOD), "vn_natural")["status"], "n/a")
+        self.assertEqual(self.vn("Ngắn thôi.")[1]["status"], "pass")              # a piece: the format checks ran
+        report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\nChị gõ tiếp nhé.\nTIẾP → Gõ \"tiếp\".")],
+                            persona="vn/nat", edition="vn")
+        self.assertEqual(self.inv(report, "vn_natural")["status"], "n/a")         # no piece in the run
+
+    def test_guide_after_lines_pass_and_before_lines_fail(self):
+        before, after = guide_examples()
+        self.assertGreaterEqual(len(after), 110)
+        report, item = self.vn(*after)
+        self.assertEqual(item["status"], "pass", item["evidence"])
+        self.assertEqual(item["details"]["patterns"], 0)
+        report, item = self.vn(*before)
+        self.assertEqual(item["status"], "fail")
+        self.assertGreater(item["details"]["per_100"], 2.0)
+        # each of these "before" lines fails on its own (the rest are lint, I23 or judge-level tells)
+        heads = ("Bạn có biết rằng 80%", "Trong cuộc sống hiện đại bận rộn ngày nay", "Cho bé tự bốc",
+                 "Chị chủ shop chia sẻ rằng", "Hãy luôn nhớ rằng", "Sau khi tiến hành", "Chào bạn! Khóa học",
+                 "Kính gửi anh", "Bạn đã sẵn sàng nâng cao", "🚀 CHÍNH THỨC", "🚀 Ảnh đẹp", "Mang kính bơi, khăn tắm, và")
+        for head in heads:
+            line = next(b for b in before if b.startswith(head))
+            with self.subTest(head=head):
+                self.assertEqual(self.vn(line)[1]["status"], "fail", line)
+
+    def test_the_personas_own_posts_pass(self):
+        src = REPO / "evals" / "personas" / "vn"
+        for pdir in sorted(p for p in src.iterdir() if (p / "written-posts.md").exists()):
+            for name in ("persona.toml", "expected.toml", "written-posts.md", "voice-samples.md"):
+                if (pdir / name).exists():
+                    self.write(f"evals/personas/vn/{pdir.name}/{name}", (pdir / name).read_text(encoding="utf-8"))
+            posts = graders._written_posts(type("R", (), {"persona_texts": {
+                "written-posts.md": (pdir / "written-posts.md").read_text(encoding="utf-8")}})())
+            with self.subTest(persona=pdir.name):
+                report, item = self.vn(*posts, persona=f"vn/{pdir.name}")
+                self.assertEqual(item["status"], "pass", item["evidence"])
+                self.assertEqual(item["details"]["particle_share"], item["details"]["coach_particle_share"])
+
+    def test_natural_forms_are_not_counted(self):
+        natural = ["Có một cách đơn giản để biết hoa còn tươi.", "Nói một cách dễ hiểu là vầy.",
+                   "Giảm giá cũng là một cách hay.", "Sự thật là chị cũng sợ.", "Thực sự là mệt.",
+                   "Nói chuyện lịch sự với khách.", "Chị tâm sự với em.", "Đó là sự cố ngoài ý muốn.",
+                   "Việc nhà thì để tối.", "Lo cho việc học của con.", "Việc đầu tiên là mở sổ.",
+                   "Chuyện chẩn đoán da là việc của bác sĩ.", "Xong việc, mình đi uống trà.", "Bởi vì hồi đó nghèo.",
+                   "Trời hãy còn sớm.", "Hãy để em lo.", "Con không những bơi được mà còn dám xuống nước.",
+                   "Hồi đó tiệm kiếm khách bằng cách phát tờ rơi ở chợ.", "Đang chạy thì chợt nhận ra quên khóa cửa."]
+        for line in natural:
+            with self.subTest(line=line):
+                self.assertEqual(graders.vn_tells(line), [])
+        self.assertEqual([c for c, _ in graders.vn_tells(
+            "Việc chạy chậm giúp bạn. Tuy nhiên, chúng ta cần làm một cách đều đặn. Điều này được chứng minh bởi "
+            "chuyên gia. Hãy thử với sự kiên trì.")], ["C2", "N1", "X5", "C1", "C7", "C5", "N12", "C3"])
+
+    def test_density_in_a_piece_and_across_the_run(self):
+        bad = "Việc ghi sổ rất quan trọng. Tuy nhiên, nhiều chị em vẫn gặp khó khăn trong việc tính giá."
+        report, item = self.vn(bad)
+        self.assertFails(report, "vn_natural", '3 translationese patterns in a piece of 19 tiếng')
+        self.assertFails(report, "vn_natural", '"Việc ghi" (C2)')
+        one = "Tối qua có chị nhắn mình hỏi sổ lãi. Tuy nhiên chị chưa gửi ảnh, mình chờ thêm một chút nhé."
+        self.assertEqual(self.vn(one)[1]["status"], "pass")                       # one hit: under the minimum
+        spread = [f"Hôm qua mình ngồi với chị bán số {k}. Điều này làm mình nhớ hoài nha." for k in range(1, 4)]
+        report, item = self.vn(*spread)
+        self.assertFails(report, "vn_natural", "3 translationese patterns in 48 tiếng of pieces")
+        self.write("evals/acceptance.toml", "[vn_natural]\npatterns_per_100_max = 50\n")
+        self.assertEqual(self.vn(bad)[1]["status"], "pass")                       # thresholds come from acceptance
+
+    def test_their_own_words_do_not_count(self):
+        self.write("evals/personas/vn/nat/written-posts.md",
+                   "## W1 · Bài\n\nTuy nhiên, mình vẫn ghi sổ. Hãy thử một tuần nhé.\n")
+        line = "Tuy nhiên chị cứ ghi tiếp nhé. Hãy mở sổ ra, tuy nhiên đừng vội. Hãy thử một tuần thôi nha."
+        self.assertEqual(self.vn(line)[1]["details"]["patterns"], 0)
+
+    def test_bold_emoji_lines_ai_emoji_and_em_dash(self):
+        report, _ = self.vn("Trước hết **chọn hoa còn búp** đã, cắm xong để ba ngày vẫn tươi nha.")
+        self.assertFails(report, "vn_natural", 'Markdown bold in a piece: "**chọn hoa còn búp**"')
+        report, _ = self.vn("**Bước 1: Chọn hoa**\nChọn hoa còn búp, cắt xéo gốc trong nước rồi mới cắm nha.")
+        self.assertFails(report, "vn_natural", 'Markdown bold in a piece: "**Bước 1: Chọn hoa**"')
+        title = f"{TAG}Tuần 1\n**Bài 2: chuyện kho**\nCâu đầu: Mình ngồi cộng sổ trong kho tới khuya.\n" \
+                f"**Câu cuối:** Ai đang bán mà chưa tính lãi thì tối nay thử nhé.\nTIẾP → Gõ \"tiếp\"."
+        report = self.grade([("coach", "tiếp"), ("machine", title)], persona="vn/nat", edition="vn")
+        self.assertPasses(report, "vn_natural")                                   # title and field labels
+        report, _ = self.vn("👉 Sổ một cột\n👉 Ghi mỗi tối\n👉 Cuối tuần cộng\nThế thôi nha.")
+        self.assertFails(report, "vn_natural", "3 lines open with an emoji in a piece (max 2)")
+        report, _ = self.vn("Ảnh đẹp mà sai màu thì khách cũng trả hàng thôi ✨")
+        self.assertFails(report, "vn_natural", "✨ in a piece; not in their own posts")
+        report, _ = self.vn("Mang kính bơi, khăn tắm — thiếu là không xuống nước nghe.")
+        self.assertFails(report, "vn_natural", "em dash in a piece")
+        self.write("evals/personas/vn/nat/written-posts.md", "## W1 · Bài\n\nTối nay — thử nhé ✨\n")
+        self.assertPasses(self.vn("Mang kính bơi, khăn tắm — thiếu là không xuống nước nghe ✨")[0], "vn_natural")
+
+    def test_particle_share_against_their_own_posts(self):
+        self.write("evals/personas/vn/nat/written-posts.md", NAT_POSTS)
+        flat = "\n".join(f"Hôm thứ {k} mình ngồi cộng sổ cho một chị bán đồ bộ." for k in range(2, 14))
+        report, item = self.vn(flat)
+        self.assertEqual(item["details"]["coach_particle_share"], 0.5)
+        self.assertFails(report, "vn_natural", "pieces end 0 of 12 sentences with a particle (0%); their own posts 50%")
+        warm = flat + "\nTối nay thử nhé.\nXong nhắn mình nha.\nMột cột thôi á."
+        self.assertPasses(self.vn(warm)[0], "vn_natural")                         # 3 of 15 = 20% ≥ 40% of 50%
+        short = "\n".join(f"Hôm thứ {k} mình ngồi cộng sổ cho một chị bán đồ bộ." for k in range(2, 8))
+        self.assertPasses(self.vn(short)[0], "vn_natural")                        # 6 sentences: not compared
+        self.assertTrue(graders._particle_end("Dạ chị, sơn gel bên em 150k nha chị."))
+        self.assertTrue(graders._particle_end("Chị em nào làm xong thì nhắn mình với nhé ❤️"))
+        self.assertFalse(graders._particle_end("Em gửi chị."))
+
+    def test_a_copy_ask_is_left_out_a_translation_is_not(self):
+        bad = "Việc ghi sổ rất quan trọng. Tuy nhiên, nhiều chị em vẫn gặp khó khăn trong việc tính giá."
+        _, copied = self.vn(bad, coach="copy y nguyên bài này giúp chị nhé")
+        self.assertEqual(copied["status"], "n/a")
+        report, _ = self.vn(bad, coach="dịch bài này sang tiếng Việt giúp chị, chị muốn đăng")
+        self.assertFails(report, "vn_natural", "translationese patterns")
+
+
 class LoaderTests(TempRepo):
     def test_bad_transcript_is_a_grader_error(self):
         d = self.root / "evals" / "runs" / "bad"

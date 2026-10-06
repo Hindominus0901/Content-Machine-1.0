@@ -115,7 +115,7 @@ not_regex = [
   '(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)',
   '(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3|(?<![\d,.])1 tỷ|lãi gấp đôi',
   '(?i)(?:nâng tầm|bứt phá|hành trình|hãy cùng khám phá|đây là lý do tại sao|ra đơn ầm ầm|bùng nổ doanh số|hữu duyên)',
-  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I12", "I14", "I15", "I17", "I18"]
@@ -223,7 +223,7 @@ not_regex = [
   '(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+',
   '(?i)nhẹ nhàng hơn\s*\?',
   '(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?',
-  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I15", "I17", "I18"]
@@ -382,7 +382,7 @@ not_regex = [
   '(?i)(?<!\w)(?:hết nám|trị dứt điểm|trắng da)(?!\w)',
   '(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)',
   '(?i)(?<!\w)bạn(?!\w)',
-  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I14", "I15", "I17", "I18"]
@@ -737,7 +737,7 @@ not_regex = [
   '(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3',
   '(?i)(?:có lẽ|hình như)',
   '(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)',
-  'Sẵn sàng đăng · Mình sẽ đăng',
+  'Sẵn sàng đăng · (?:Mình sẽ đăng|viết từ)',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I12", "I15", "I17", "I18"]
 max_questions = 1
@@ -821,7 +821,7 @@ regex = [
 ]
 not_regex = [
   '(?s)(?:VÌ SAO RA KHÁCH.*?){2}',
-  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
   '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
 ]
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
@@ -1177,7 +1177,7 @@ regex = [
 ]
 not_regex = [
   '(?m)^\W*N[13-9]\b',
-  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
   '(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)',
 ]
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]

@@ -83,7 +83,11 @@ sections = ["voice.kit-*"]
 
 [[method.anchor]]
 id = "HUMANIZE"
-sections = ["humanize.kit-*"]
+sections = ["humanize.kit-pass", "humanize.kit-lists"]
+
+[[method.anchor]]
+id = "NATURAL"                   # VN language guide (6 Oct): talk, link and tell stories like a person
+sections = ["humanize.kit-natural"]
 
 [[method.anchor]]
 id = "GUARDRAILS"

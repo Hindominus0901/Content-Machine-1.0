@@ -20,11 +20,11 @@ Run folder (keep this format; evals/run.py and the simulator agents write it):
 Inputs: evals/personas/<persona>/persona.toml (allowed_numbers, excluded_numbers,
 trap_numbers, seeded_names, creator_terms, cold_start, xung_ho, audience_xung_ho,
 proof_items), expected.toml ([traps], [liked], [liked.angle] or [follow], [voice]) and
-the persona's *.md files (liked-paste.md, follow-paste.md and voice-samples.md among
-them); strings/<edition>.toml rendered through editions/<edition>.toml when present
+the persona's *.md files (liked-paste.md, follow-paste.md, voice-samples.md and
+written-posts.md among them); strings/<edition>.toml rendered through editions/<edition>.toml when present
 (verdict.*, next.prefix, why.prefix, checked.prefix, cmd.why, cmd.not_me, cmd.i_do_say,
 map.*, liked.copy_note, liked.cant_open, cta.platform_note, cta.by_hand, angle.labels);
-evals/acceptance.toml ([day0], [copy] en_words / vn_tieng, [voice]);
+evals/acceptance.toml ([day0], [copy] en_words / vn_tieng, [voice], [vn_natural]);
 locales/<lang>/deny-list.txt, banned-tells.txt, stock-phrases.txt and examples.md
 when present.
 
@@ -70,6 +70,9 @@ the closest mechanical signal (I6 decisions, I7 IDs without the hub, I11
 injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns and the
 audience address, I20 unopened links, I21 the angle card's evidence, I22 monitoring
 promises, I23 voice).
+Other checks: deny_list, quit_triggers, day0_timing and, in VN runs, vn_natural (translationese
+density, Markdown bold, emoji lines, em dashes and the end-particle share of the pieces against the
+coach's written-posts.md; docs/research/vn-language-guide.md §9.3).
 Status is pass | fail | n/a | not_run; "pass" is null when the check did not run.
 """
 from __future__ import annotations
@@ -81,6 +84,7 @@ import os
 import re
 import sys
 import tomllib
+import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -2037,6 +2041,241 @@ def check_deny_list(run: Run) -> dict:
     return {"id": "deny_list", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev}
 
 
+# ---------------------------------------------------------------- vn_natural (vn-language-guide §9.3, §10.2 items 4-5)
+
+# Flag-level translationese (guide §2), counted per 100 tiếng in the pieces. Each pattern aims at the translated
+# FORM, never the word (§2.7): "việc nhà", "sự thật", "thực sự", "có một cách đơn giản để…", "bởi vì", "hãy còn",
+# "hãy để em lo" do not count.
+_VIEC_NOUN_NEXT = (r"(?:nhà|gì|đó|này|ấy|nấy|nào|nhỏ|lớn|to|riêng|chung|làm|học|vặt|ni|nớ|kia|thì|là|mà|cần|của|"
+                   r"đầu|thứ|chính|khác|ngay|luôn|liền|xong|rồi|nữa|đâu|tốt|khó|dễ|cũ|mới|hệ|quan|tay|cỏn|"
+                   r"tiếp|sau|trước|kế|duy nhất|đơn giản|ít|quá|vậy|như|hôm|ngày|tuần|tháng|năm|bữa|"
+                   r"mình|em|chị|anh|tôi|bạn|họ|nó|ta|cũng|vẫn|chứ|đi|cho|với|ở|trong|nha|nhé|à|hả)(?!\w)")
+_VIEC_BEFORE = r"(?:trong|cho|về|đến|tới|với|qua|bằng|nhờ|vào|thông qua|của|thực hiện|tiến hành|rằng|là)"
+_SU_PREFIX = ("thực", "lịch", "tâm", "nhân", "hình", "dân", "quân", "thời", "gia", "sinh", "vô", "hữu", "phục",
+              "can", "tư", "đại", "chủ", "lão", "binh", "thái", "nữ", "hiệu", "kỹ", "kĩ", "biên", "luật", "hội")
+_SU_NOUN_NEXT = (r"(?:thật|thực|việc|cố|kiện|nghiệp|vụ|tình|đời|thể|vật|tích|sống|thế|đâu|gì|ấy|đó|nào|này|lạ)"
+                 r"(?!\w)")
+_PASSIVE_VERBS = (r"(?:thiết kế|biên soạn|soạn|tạo ra|tạo|viết|phát triển|sáng lập|tổ chức|cung cấp|dẫn dắt|"
+                  r"giảng dạy|đào tạo|thực hiện|chụp|làm|xây dựng|kiểm chứng|chứng nhận|công nhận|ghi nhận|"
+                  r"tin dùng|tin tưởng|yêu thích|đánh giá)")
+_BOI_NOT_PASSIVE = r"(?!\s+(?:vì|lẽ|vậy|thế|nên|đâu|sao|chưng|nhẽ|vậy nên)(?!\w))"
+VN_TELLS = [(code, re.compile(p, re.I | re.M)) for code, p in (
+    # C2 "việc + V" opening a sentence or clause, or after a preposition ("trong việc tính giá")
+    ("C2", r"(?:^[\W_]*|[.!?…:;,]\s+)Việc\s+(?!" + _VIEC_NOUN_NEXT + r")[^\W\d_]+"),
+    ("C2", r"(?<!\w)" + _VIEC_BEFORE + r"\s+việc\s+(?!" + _VIEC_NOUN_NEXT + r")[^\W\d_]+"),
+    # C3 "sự + …" ("với sự tự tin", "sự kiên trì"), never "sự thật", "thực sự", "lịch sự", "tâm sự"
+    ("C3", "".join(f"(?<!{w} )" for w in _SU_PREFIX) + r"(?<!\w)sự\s+(?!" + _SU_NOUN_NEXT + r")[^\W\d_]+"),
+    # C1 "một cách + tính từ" as an adverb; "có / nói / là một cách…" and "một cách … để…" are nouns
+    ("C1", r"(?<!\w)(?<!có )(?<!nói )(?<!là )(?<!thêm )(?<!tìm )(?<!chọn )(?<!theo )(?<!mỗi )(?<!chỉ )"
+           r"một cách\s+(?!(?:để|là|khác|nữa|nào|này|đó|thôi|hay|mà|vậy|rứa|làm)(?!\w))"
+           r"(?![^\W\d_]+(?:\s+[^\W\d_]+){0,2}\s+để(?!\w))[^\W\d_]+"),
+    # C5 passive "được / bị … bởi …", "biên soạn bởi …" (never "bởi vì", "bởi lẽ")
+    ("C5", r"(?<!\w)(?:được|bị)\s+(?:[^\W\d_]+\s+){1,5}?bởi(?!\w)" + _BOI_NOT_PASSIVE),
+    ("C5", r"(?<!được )(?<!bị )(?<!\w)" + _PASSIVE_VERBS + r"\s+bởi(?!\w)" + _BOI_NOT_PASSIVE),
+    # C4 the brochure passive ("được thiết kế dành riêng", "được tạo ra"), with no "bởi" after it (C5 counts that)
+    ("C4", r"(?<!\w)được (?:thiết kế|tạo ra|ghi nhận|biên soạn|chứng minh|công nhận|đánh giá cao|tin dùng|"
+           r"cá nhân hóa|cá nhân hoá)(?!\w)(?!\s+bởi(?!\w))"),
+    # C9 "rằng" (that-clause; speech drops it or says "là") · T16 "cảm thấy" · T15 "vô cùng"
+    ("C9", r"(?<!\w)rằng(?!\w)"),
+    ("T16", r"(?<!\w)cảm thấy(?!\w)"),
+    ("T15", r"(?<!\w)vô cùng(?!\w)"),
+    # C7 / C8 "điều này", "điều đó khiến…", "điều quan trọng là", "điều mà"
+    ("C7", r"(?<!\w)điều này(?!\w)"),
+    ("C7", r"(?<!\w)điều đó\s+(?:khiến|cho thấy|có nghĩa|nghĩa là|giúp|dẫn|làm cho|nói lên|chứng tỏ|cho phép|"
+           r"đồng nghĩa)(?!\w)"),
+    ("C8", r"(?<!\w)điều (?:quan trọng(?: nhất)?|mà)(?!\w)"),
+    # N1 essay connectors: "tuy nhiên" anywhere; the others opening a sentence ("ngoài ra chợ" is a place)
+    ("N1", r"(?<!\w)tuy nhiên(?!\w)"),
+    ("N1", r"(?:^[\W_]*|[.!?…:;]\s+)(?:Bên cạnh đó|Do đó|Vì vậy|Ngoài ra|Hơn nữa|Thêm vào đó|Mặt khác|"
+           r"Chính vì vậy|Chính vì thế)(?!\w)"),
+    # N12 "Hãy…", "Hãy cùng…" (never "hãy còn", "hãy để em lo")
+    ("N12", r"(?<!\w)hãy(?!\s+còn(?!\w))(?!\s+để\s+(?:em|chị|anh|mình|tôi|tụi em|bên em|thầy|cô)\s+lo(?!\w))"
+            r"(?!\w)"),
+    # X5 "chúng ta" in a coach's piece; "chúng tôi" of a coach who works alone
+    ("X5", r"(?<!\w)chúng (?:ta|tôi)(?!\w)"),
+)]
+# End-of-sentence particles (guide §4.6), counted the same way in the pieces and in the coach's written-posts.md.
+VN_END_PARTICLES = SENTENCE_PARTICLES | {"thôi", "đi", "mà", "hén", "nhen", "nhá", "hả", "hông", "ấy", "đâu", "hở",
+                                         "hử", "nhể", "chớ", "rứa", "hè", "nghen", "nghe", "ơi", "nhờ"}
+_ADDRESS_TAIL = {"chị", "anh", "em", "bạn", "cô", "chú", "bác", "các", "mấy", "mọi", "người", "cả", "nhà",
+                 "con", "thầy", "ơi", "nha", "nhé", "ạ", "mn"}
+TRANSLATE_ASK_RE = re.compile(r"(?<!\w)dịch(?!\s+(?:vụ|bệnh|chuyển)(?!\w))(?!\w)|\btranslat", re.I)
+_EMOJI_NOT = re.compile(r"[\u2190-\u21ff\u2500-\u25ff\u00a9\u00ae\u2122]")   # arrows, box drawing, shapes, ©®™
+VN_NATURAL_DEFAULTS = {"min_tieng": 15, "patterns_per_100_max": 2.0, "patterns_min_hits": 2, "bold_max": 0,
+                       "emoji_line_max": 2, "ai_emoji": ["🚀", "💡", "✨", "🎯", "🌟"], "em_dash_max": 0,
+                       "particle_share_ratio_min": 0.4, "particle_share_floor": 0.1, "particle_min_sentences": 10}
+
+
+def _is_emoji(ch: str) -> bool:
+    return bool(ch) and unicodedata.category(ch) == "So" and not _EMOJI_NOT.match(ch)
+
+
+def _piece_lines(text: str) -> list[str]:
+    """The lines of a piece that a coach posts or says: no field label ("Câu đầu:", "**Caption:**"), no fence.
+    The title line is left out by the caller."""
+    out = []
+    for line in ck.nfc(text).splitlines():
+        if FENCE_RE.match(line):
+            continue
+        line = re.sub(r"^\s*(?:\*\*|__)[^*_\n]{1,40}?(?::(?:\*\*|__)|(?:\*\*|__):)\s*", "", line)   # "**Câu đầu:** …"
+        stripped = re.sub(r"^\s*(?:>\s*)+", "", line)
+        m = FIELD_RE.match(stripped)
+        if m and ck.count_words(m.group(0)) <= 4:
+            stripped = stripped[m.end():]
+        out.append(stripped)
+    return out
+
+
+def vn_tells(text: str) -> list[tuple[str, str]]:
+    """(code, matched text) of each flag-level translationese pattern in a VN text (guide §2; VN_TELLS)."""
+    text = ck.straight_quotes(ck.nfc(text))
+    hits = {}
+    for code, pattern in VN_TELLS:
+        for m in pattern.finditer(text):
+            span = m.group(0).strip(" \t\n.,!?…:;")
+            hits.setdefault(m.end(), (code, span))
+    return [hits[k] for k in sorted(hits)]
+
+
+def _particle_end(sentence: str) -> bool:
+    """A sentence that ends in a particle, before any address tail ("… nha chị", "… nhé các chị em")."""
+    toks = [t.casefold() for t in re.findall(r"[^\W\d_]+", sentence)]
+    while toks and toks[-1] in _ADDRESS_TAIL and toks[-1] not in VN_END_PARTICLES:
+        toks.pop()
+    return bool(toks) and toks[-1] in VN_END_PARTICLES
+
+
+def vn_sentences(text: str) -> list[str]:
+    """Sentences of a VN piece or post for the particle share: lines split at . ! ? …, hashtag-only and link
+    lines left out, sentences of one word left out."""
+    out = []
+    for line in _piece_lines(text):
+        line = re.sub(r"https?://\S+", " ", line).strip()
+        if not line or re.fullmatch(r"(?:#\S+\s*)+", line):
+            continue
+        for part in re.split(r"(?<=[.!?…])\s+|[.!?…]+$", line):
+            if len(re.findall(r"[^\W\d_]+", part)) >= 2:
+                out.append(part.strip())
+    return out
+
+
+def particle_share(texts) -> tuple[int, int]:
+    """(sentences ending in a particle, sentences) over some VN texts."""
+    sents = [s for t in texts for s in vn_sentences(t)]
+    return sum(1 for s in sents if _particle_end(s)), len(sents)
+
+
+def _written_posts(run: Run) -> list[str]:
+    """The bodies of written-posts.md (## W1 … sections): the coach's own written voice (wf14 V3)."""
+    text = re.sub(r"<!--.*?-->", "", ck.nfc(run.persona_texts.get("written-posts.md", "")), flags=re.S)
+    parts = re.split(r"^##(?!#)[ \t]*.*$", text, flags=re.M)
+    return [p.strip() for p in parts[1:] if p.strip()]
+
+
+def _vn_pieces(run: Run) -> list[tuple[Reply, str]]:
+    """(reply, text) of each VN piece the machine wrote: piece bodies without their title line and copy boxes
+    outside pieces (_post_chunks), minus "why?" replies and pieces the coach asked to copy verbatim. A post the
+    coach asked to translate stays: it is translated for meaning, in their voice (guide §1 item 2)."""
+    out = []
+    for r in run.replies:
+        if r.after_why:
+            continue
+        coach = _last_coach(run, r)
+        words = coach_words(run, coach.text) if coach else ""
+        if coach and explicit_ask(words, EXPLICIT_COPY_RE) and not TRANSLATE_ASK_RE.search(words):
+            continue
+        titles = {p.title for p in r.pieces if p.title}
+        for chunk in _post_chunks(r):
+            lines = chunk.split("\n")
+            if lines and ck.plain_line(lines[0]) in titles:
+                lines = lines[1:]
+            out.append((r, "\n".join(lines)))
+    return out
+
+
+def check_vn_natural(run: Run) -> dict:
+    """VN pieces read like a Vietnamese person wrote them (vn-language-guide §9.3, §10.2 items 4-5; flags, lenient
+    thresholds in acceptance.toml [vn_natural]). In each piece the machine wrote (copy-verbatim asks and "why?"
+    replies left out; attributed and short quoted mentions scrubbed): flag-level translationese (VN_TELLS) per 100
+    tiếng, in a piece and across the run; Markdown bold, lines opening with an emoji, the AI emoji set and the em
+    dash, unless the coach's own written-posts.md uses them; and the share of sentences that end in a particle,
+    compared with the coach's own posts (no posts: a floor). A pattern the coach's own posts or [voice] do_say hold
+    is theirs and does not count. EN runs: n/a."""
+    if run.lang != "vn":
+        return {"id": "vn_natural", "pass": True, "status": "n/a", "evidence": []}
+    cfg = dict(VN_NATURAL_DEFAULTS, **run.acceptance.get("vn_natural", {}))
+    posts = _written_posts(run)
+    theirs = ck.straight_quotes("\n".join(posts)).casefold()
+    theirs += "\n" + "\n".join(str(w).casefold() for w in _voice_table(run).get("do_say", []))
+    ai_emoji = [e for e in cfg["ai_emoji"] if e not in theirs]
+    dash_ok = "—" in theirs
+    ev, piece_flagged, seen = [], False, 0
+    total_hits, total_tieng, voiced = [], 0, []
+    for r, text in _vn_pieces(run):
+        scrubbed = _voice_scrub(text, "vn")
+        body = "\n".join(_piece_lines(scrubbed))
+        tieng = ck.count_words(body, "vn")
+        if not body.strip():
+            continue
+        seen += 1
+        if tieng >= int(cfg["min_tieng"]):
+            hits = [(c, s) for c, s in vn_tells(body) if s.casefold() not in theirs]
+            total_hits += hits
+            total_tieng += tieng
+            voiced.append(scrubbed)
+            per_100 = 100 * len(hits) / tieng
+            if len(hits) >= int(cfg["patterns_min_hits"]) and per_100 > float(cfg["patterns_per_100_max"]):
+                piece_flagged = True
+                ev.append(f"{_turn(r)}: {len(hits)} translationese patterns in a piece of {tieng} tiếng "
+                          f"({per_100:.1f} per 100, max {float(cfg['patterns_per_100_max']):g}): "
+                          + ", ".join(f'"{_short(s, 30)}" ({c})' for c, s in hits[:5]))
+        bold = re.findall(r"(?:\*\*|__)(?=\S)[^*_\n]{1,80}?(?<=\S)(?:\*\*|__)", body)
+        if len(bold) > int(cfg["bold_max"]):
+            ev.append(f'{_turn(r)}: Markdown bold in a piece: "{_short(bold[0], 40)}"')
+        lines = [re.sub(r"^[-*•+]\s+", "", ln.strip()) for ln in body.splitlines() if ln.strip()]
+        emoji_lines = [ln for ln in lines if _is_emoji(ln[0])]
+        if len(emoji_lines) > int(cfg["emoji_line_max"]):
+            ev.append(f"{_turn(r)}: {len(emoji_lines)} lines open with an emoji in a piece "
+                      f"(max {int(cfg['emoji_line_max'])}): \"{_short(emoji_lines[0], 30)}\"")
+        found = [e for e in ai_emoji if e in body]
+        if found:
+            ev.append(f"{_turn(r)}: {' '.join(found)} in a piece; not in their own posts")
+        dashes = body.count("—")
+        if not dash_ok and dashes > int(cfg["em_dash_max"]):
+            at = body.index("—")
+            ev.append(f'{_turn(r)}: em dash in a piece: "{_short(body[max(0, at - 25):at + 15], 45)}"')
+    details = {"pieces": seen, "pieces_15_tieng": len(voiced), "tieng": total_tieng, "patterns": len(total_hits)}
+    if total_tieng:
+        per_100 = 100 * len(total_hits) / total_tieng
+        details["per_100"] = round(per_100, 2)
+        if not piece_flagged and len(total_hits) >= int(cfg["patterns_min_hits"]) \
+                and per_100 > float(cfg["patterns_per_100_max"]):
+            ev.append(f"{len(total_hits)} translationese patterns in {total_tieng} tiếng of pieces "
+                      f"({per_100:.1f} per 100, max {float(cfg['patterns_per_100_max']):g}): "
+                      + ", ".join(f'"{_short(s, 30)}" ({c})' for c, s in total_hits[:5]))
+    ends, sents = particle_share(voiced)
+    details["sentences"] = sents
+    if sents:
+        details["particle_share"] = round(ends / sents, 2)
+    own_ends, own_sents = particle_share([_voice_scrub(p, "vn") for p in posts])
+    if own_sents:
+        details["coach_particle_share"] = round(own_ends / own_sents, 2)
+    if sents >= int(cfg["particle_min_sentences"]):
+        share = ends / sents
+        if own_sents:
+            floor = float(cfg["particle_share_ratio_min"]) * own_ends / own_sents
+            if share < floor:
+                ev.append(f"pieces end {ends} of {sents} sentences with a particle ({share:.0%}); their own posts "
+                          f"{own_ends / own_sents:.0%} (min {float(cfg['particle_share_ratio_min']):.0%} of theirs)")
+        elif share < float(cfg["particle_share_floor"]):
+            ev.append(f"pieces end {ends} of {sents} sentences with a particle ({share:.0%}, min "
+                      f"{float(cfg['particle_share_floor']):.0%}; no written-posts.md)")
+    if not seen:
+        return {"id": "vn_natural", "pass": True, "status": "n/a", "evidence": [], "details": details}
+    return {"id": "vn_natural", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
+            "details": details}
+
+
 def words_before_usable(run: Run) -> int:
     """Words the coach reads before the first piece, status line or copy box (a Ready piece has no status
     line, so a silent piece's title counts as the start of something usable)."""
@@ -2133,7 +2372,7 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     run = load_run(run_dir, root)
     invariants = [fn(run) for fn in INVARIANTS]
     by_id = {i["id"]: i for i in invariants}
-    checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_day0(run)]
+    checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_day0(run), check_vn_natural(run)]
     everything = invariants + checks
     return {
         "run": run_dir.name,

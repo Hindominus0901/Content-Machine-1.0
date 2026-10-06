@@ -44,7 +44,7 @@ regex = [
   '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*(?:gương|ngại chào|2018|kịch bản|em sinh viên|d(?:ọa|oạ))|^\W*(?:Bản nháp|Cần chị) ·',
 ]
 not_regex = [
-  '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*sẽ đăng:\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh)(?!\w)',
+  '(?im)^\W*Sẵn sàng (?:quay|đăng)[^\n]*(?:sẽ đăng:|viết từ)\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh)(?!\w)',
   '(?i)(?<!\w)Mình sẽ đăng(?!\w)',
   '(?i)(?<!\w)\d{1,2}\s*(?:/\s*10\s*)?điểm(?!\w)',
   '\b(?:K|V|A|Au|C)[0-2](?:[\s,/·]+(?:K|V|A|Au|C)[0-2]\b)+',
@@ -519,7 +519,7 @@ not_regex = [
   '(?i)\brubric\b|\blint\b|\bSG\d\b|\bG[1-3]\b|\bpillars?\b|(?<!\w)trụ(?!\w)|Buyer Filter|3D test',
   '\b(?:K|V|A|Au|C)\s?[0-2](?:[\s,/·]+(?:K|V|A|Au|C)\s?[0-2]\b)+',
   '(?i)(?:em|mình) không viết[^\n]*(?:comment|gồng lãi)',
-  'Sẵn sàng (?:quay|đăng) · Mình sẽ đăng',
+  'Sẵn sàng (?:quay|đăng) · (?:Mình sẽ đăng|viết từ)',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I14", "I15", "I17"]
 max_questions = 1

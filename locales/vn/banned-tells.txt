@@ -15,9 +15,15 @@
 nâng tầm
 bứt phá
 khai phá tiềm năng
-hành trình
-chìa khóa
-chìa khoá
+# "hành trình" nghĩa bóng ("hành trình thay đổi", "hành trình của bạn", "trên hành trình…", "là một hành trình",
+# "Hành Trình Chinh Phục…"): mọi "hành trình" trừ khung đi đường thật, viết thường: "hành trình từ Huế vô Sài Gòn",
+# "xuyên Việt", "Hà Nội – Sài Gòn", "dài 300 km", "3 ngày 2 đêm", "bằng xe máy", "hành trình bay", "về quê", "camera /
+# giám sát hành trình"; và "thực hành trình bày". "hành trình từ con số 0", "đi tìm chính mình" vẫn trúng.
+# Persona nào có "hành trình" trong never_say / banned (expected.toml) thì I23 vẫn bắt mọi dạng, kể cả nghĩa đen.
+re:(?i)(?<!camera\s)(?<!sát\s)(?<!vị\s)(?<!đen\s)(?<!thực\s)(?<!vận\s)(?<!điều\s)\bhành\s+trình\b(?!\s+(?:(?-i:(?:từ|xuyên|đi|về|ra|vô|vào|lên|xuống|qua|sang|tới|đến|quanh|dọc)\s+[A-ZĐÀ-ÖØ-ÝĂÂÊÔƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ]|[A-ZĐÀ-ÖØ-ÝĂÂÊÔƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ][^\s,.!?]*(?:\s+[A-ZĐÀ-ÖØ-ÝĂÂÊÔƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ][^\s,.!?]*)*\s*[–-]\s*[A-ZĐÀ-ÖØ-ÝĂÂÊÔƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ])|về\s+quê|(?:dài\s+)?(?:gần\s+|hơn\s+|khoảng\s+)?\d[\d.,]*\s*(?:km|cây\s+số|tiếng|giờ|ngày\s+\d+\s+đêm)|(?:bằng|trên)\s+(?:xe|tàu|máy\s+bay|ô\s+tô|thuyền|ghe)|(?:bay|du\s+lịch|tour|di\s+chuyển|xe|tàu|của\s+(?:chuyến|đoàn|tour|xe|tàu|máy\s+bay)|bày|độ|tự|duyệt|diễn)\b))
+# "chìa khóa" nghĩa bóng only ("chìa khóa thành công", "là chìa khóa để…"); "cái chìa khóa xe", "chìa khóa kho",
+# "chìa khóa để trên bàn", "đây là chìa khóa phòng" are literal and stay legal
+re:(?i)\bchìa\s+kh(?:óa|oá)\s+(?:để(?!\s+(?:ở|trên|dưới|trong|ngoài|đâu|chỗ|lại|quên|đó|đây|kế|cạnh|bên|sau|trước)\b)|của\s+(?:sự\s+)?(?:thành\s+công|hạnh\s+phúc|mọi)|thành\s+công|vàng|dẫn\s+(?:đến|tới)|mở\s+ra|giúp|cho\s+(?:sự|mọi|thành)|quan\s+trọng|nằm\s+ở)\b|\blà\s+(?:chiếc\s+)?chìa\s+kh(?:óa|oá)\b(?!\s+(?:xe|nhà|phòng|cửa|tủ|kho|két|cổng|ổ|dự\s+phòng|của\s+(?:anh|chị|em|tôi|mình|ai|nhà|tiệm)))
 thay đổi cuộc chơi
 lan tỏa giá trị
 lan toả giá trị
@@ -35,12 +41,14 @@ bạn có biết rằng
 trong thế giới hiện đại ngày nay
 trong thời đại ngày nay
 re:(?i)\btrong\s+(thời\s+đại|bối\s+cảnh)\s+(số|công\s+nghệ|ngày\s+nay|hiện\s+nay|4\.0)\b
-có thể nói
+# "Có thể nói," mở câu kiểu nghị luận; "mình có thể nói tới sáng", "chị có thể nói chậm lại không" là nghĩa đen
+re:(?i)(?:^|[.!?\n]\s*)có\s+thể\s+nói\s*(?:rằng\s*|là\s*)?,|(?:^|[.!?\n]\s*)có\s+thể\s+nói\s+rằng\b
 điều quan trọng cần lưu ý
 re:(?i)\bkhông\s+chỉ\b[^.!?\n]{1,80}\bmà\s+còn\b
 
 # Closers and self-undercutting
-tóm lại
+# "Tóm lại," / "Nói tóm lại:" mở câu kết; "tóm lại là tháng đó lỗ" giữa lời kể là văn nói thật
+re:(?i)(?:^|[.!?\n]\s*)(?:nói\s+)?tóm\s+lại\s*[,:]
 hy vọng bài viết hữu ích
 hi vọng bài viết hữu ích
 hy vọng có ích
@@ -58,16 +66,21 @@ nói sai mọi người bỏ qua
 # pillar-transcript.md): no hits except a coach naming a word to reject it.
 # Entries target the translated FORM, not the word, so natural Vietnamese stays
 # legal: "nói một cách đơn giản", "cho thêm vào đó ít muối", "đánh thức con dậy",
-# "dịch bùng nổ", "khám toàn diện", "tua nhanh đoạn đầu", "cát trong đôi giày".
+# "dịch bùng nổ", "khám toàn diện", "tua nhanh đoạn đầu", "cát trong đôi giày",
+# "khen là rất ngon", "chợt nhận ra quên khóa cửa", "Chúc anh chị thành công nha!",
+# "chuẩn bị hành trang đi Đà Lạt", "hân hạnh được làm quen", "hãy để em lo".
+# Native pairs that AI overuses but people also say ("không những … mà còn",
+# "Chúc các bạn thành công!") are judge items (guide §2), not lint.
+# "hành trình" (old entry) now hits the figurative use only; literal travel frames pass (see its comment).
 # A "before" line quoted in locales/vn/examples.md needs <!-- lint-ok:E141 -->.
 
 # Cấu trúc câu dịch, danh từ dịch
 # một cách + tính từ (dịch trạng từ -ly: effectively, easily); "có một cách hay để…" không tính
 re:(?i)(?<!\bnói\s)(?<!\bcó\s)(?<!\blà\s)(?<!\btìm\s)(?<!\bchỉ\s)(?<!\bcòn\s)(?<!\bthêm\s)(?<!\bchọn\s)(?<![.!?\n]\s)(?<![.!?\n])(?<!^)\bmột\s+cách\s+(?:rất\s+|thật\s+|vô\s+cùng\s+|hết\s+sức\s+)?(?:hiệu\s+quả|dễ\s+dàng|nhanh\s+chóng|tự\s+nhiên|chân\s+thành|chuyên\s+nghiệp|chính\s+xác|rõ\s+ràng|đơn\s+giản|bền\s+vững|toàn\s+diện|tối\s+ưu|khoa\s+học|thông\s+minh|tự\s+tin|nhẹ\s+nhàng|hoàn\s+hảo|chủ\s+động|triệt\s+để|đáng\s+kể|linh\s+hoạt|sâu\s+sắc|nghiêm\s+túc|an\s+toàn|thoải\s+mái|nhất\s+quán|hợp\s+lý|hợp\s+lí|tích\s+cực|mạnh\s+mẽ|đều\s+đặn|bài\s+bản|trọn\s+vẹn|tốt\s+nhất|thuận\s+tiện)\b(?!\s+(?:để|nào|khác|hơn)\b)
-# không những … mà còn (biến thể của "không chỉ … mà còn" ở trên)
-re:(?i)\bkhông\s+những\b[^.!?\n]{1,80}\bmà\s+còn\b
-# là + rất / vô cùng / hoàn toàn + tính từ (dịch "is very …"); "là cứng đơ luôn" (là nhấn) không tính
-re:(?i)\blà\s+(?:rất|vô\s+cùng|hết\s+sức|hoàn\s+toàn|cực\s+kỳ|cực\s+kì)\s+(?!là\b)\w+
+# là + rất / vô cùng / hết sức / hoàn toàn + tính từ (dịch "is very …"); "là cứng đơ luôn" (là nhấn) không tính;
+# "là" sau động từ nói, nghĩ ("khen là rất ngon", "thấy là rất ổn", "phải nói là rất mệt") là "là" dẫn ý, không tính;
+# "là cực kỳ" để cho văn nói ("bước này là cực kỳ quan trọng nha")
+re:(?i)(?<!\bthấy\s)(?<!\bnói\s)(?<!\bbảo\s)(?<!\bkêu\s)(?<!\bkhen\s)(?<!\bchê\s)(?<!\bnghĩ\s)(?<!\btưởng\s)(?<!\bnghe\s)(?<!\bbiết\s)(?<!\bnhận\s)(?<!\bhỏi\s)(?<!\bnhắn\s)(?<!\bđoán\s)(?<!\bhiểu\s)(?<!\btin\s)(?<!\bchắc\s)(?<!\blẽ\s)(?<!\bnhư\s)(?<!\bkiểu\s)\blà\s+(?:rất|vô\s+cùng|hết\s+sức|hoàn\s+toàn)\s+(?!là\b)\w+
 # "bởi" chỉ người làm sau bị động (được/bị … bởi; dịch "by"); "bởi vì, bởi lẽ" không tính
 re:(?i)\b(?:được|bị)\s+(?:\w+\s+){1,4}bởi(?!\s+(?:vì|lẽ|thế|vậy|chưng|tại)\b)\b
 # bởi + đội ngũ / chuyên gia / hàng nghìn… (tác nhân kiểu dịch)
@@ -85,7 +98,8 @@ chia sẻ rằng
 # "gặp khó khăn trong việc …" (dịch "struggling with")
 gặp khó khăn trong việc
 # khung danh từ dịch "ngành công nghiệp làm đẹp" (beauty industry); nghề dịch vụ không gọi là công nghiệp
-re:(?i)\bngành\s+công\s+nghiệp\s+(?:làm\s+đẹp|spa|nội\s+dung|giải\s+trí|thời\s+trang|bất\s+động\s+sản|bảo\s+hiểm|giáo\s+dục|coaching|nhân\s+sự|ẩm\s+thực|du\s+lịch)\b
+# ("công nghiệp giải trí", "thời trang", "du lịch" đã thành chữ báo chí quen: không tính)
+re:(?i)\bngành\s+công\s+nghiệp\s+(?:làm\s+đẹp|spa|nail|nội\s+dung|bất\s+động\s+sản|bảo\s+hiểm|giáo\s+dục|coaching|nhân\s+sự|ẩm\s+thực)\b
 # "sẽ có thể", "đã và đang" (thì động từ dịch: will be able to / have been and are)
 re:(?i)\bsẽ\s+có\s+thể\b|\bđã\s+và\s+đang\b
 # "tầm quan trọng của việc …" (dịch "the importance of …")
@@ -132,8 +146,8 @@ re:(?i)\b(?:đó|đây)\s+là\s+(?:lúc|khi|khoảnh\s+khắc)\s+(?:tôi|mình|e
 và đó là lúc
 # "Khoảnh khắc đó / ấy," đầu câu làm chỗ ngoặt (dịch "in that moment"); người Việt kể "lúc đó" + một việc làm
 re:(?i)(?:^|[.!?\n]\s*)(?:và\s+)?(?:ngay\s+|vào\s+|trong\s+)?khoảnh\s+khắc\s+(?:đó|ấy)\s*(?:,|(?:tôi|mình|em|chị|anh)\b)
-# "chợt nhận ra" (công tắc ngoặt của văn AI)
-chợt nhận ra
+# "chợt nhận ra rằng / một điều" (công tắc ngoặt của văn AI); "chợt nhận ra quên khóa cửa" là chữ Việt thường, chấm ở VN3
+re:(?i)\bchợt\s+nhận\s+ra\s+(?:rằng|một\s+điều|điều)\b
 # "Tua nhanh (đến) 3 năm sau" trong chuyện kể (dịch "Fast forward"); "tua nhanh video" không tính
 re:(?i)(?:^|[.!?\n]\s*)tua\s+nhanh\s*,|\btua\s+nhanh\s+(?:đến\s+|tới\s+|qua\s+)?(?:\d+|vài|mấy|một|hai|ba|năm|mười)\s+(?:năm|tháng|tuần)\s+sau\b
 # "Bài học rút ra" (văn mẫu; bài học nói bằng một câu hai vế)
@@ -144,32 +158,35 @@ hãy luôn nhớ
 re:(?i)\bcuối\s+cùng\s+nhưng\s+không\s+kém\s+phần\s+quan\s+trọng\b|\bđầu\s+tiên\s+và\s+quan\s+trọng\s+nhất\b
 # "Kết luận:" / "Tổng kết lại," đầu dòng (nhãn báo cáo)
 re:(?i)(?:^|[.!?\n]\s*)(?:tổng\s+kết\s+lại|kết\s+luận)\s*[,:]
-# "Chúc bạn / các bạn … thành công!" ở cuối bài
-re:(?i)\bchúc\s+(?:bạn|các\s+bạn|anh\s+chị|mọi\s+người|cả\s+nhà)\s+thành\s+công\b
+# "Chúc bạn thành công trên / trong / với …" ở cuối bài (kết kiểu luận văn); "Chúc anh chị thành công nha!"
+# trước một việc thật (khai trương, đi thi) là lời chúc Việt bình thường: không tính, chấm ở VN3
+re:(?i)\bchúc\s+(?:bạn|các\s+bạn|anh\s+chị|mọi\s+người|cả\s+nhà)\s+(?:luôn\s+)?thành\s+công\s+(?:trên|trong|với)\b
 
 # Thành ngữ dịch, từ thổi phồng, ẩn dụ sáo
-# thành ngữ dịch sát: đi thêm một dặm, phá vỡ băng, con voi trong phòng, đặt mình vào đôi giày của, tư duy bên ngoài chiếc hộp ("phá băng" đã quen thì để; "cát trong đôi giày", "dán bên ngoài hộp" nghĩa đen không tính)
-re:(?i)\bđi\s+thêm\s+(?:một\s+)?dặm\b|\bphá\s+vỡ\s+(?:lớp\s+)?băng\b|\bcon\s+voi\s+trong\s+phòng\b|\b(?:đặt\s+(?:mình\s+)?vào|xỏ\s+chân\s+vào|đứng\s+trong|đi\s+trong|bước\s+vào)\s+(?:trong\s+)?đôi\s+giày\s+của\b|\b(?:suy\s+nghĩ|tư\s+duy|nghĩ)\s+(?:ra\s+)?(?:bên\s+)?ngoài\s+(?:chiếc\s+)?hộp\b
+# thành ngữ dịch sát: đi thêm một dặm, phá vỡ băng, con voi trong phòng, đặt mình vào đôi giày của, tư duy bên ngoài chiếc hộp ("phá băng" đã quen thì để; "cát trong đôi giày", "xỏ chân vào đôi giày của con", "dán bên ngoài hộp" nghĩa đen không tính)
+re:(?i)\bđi\s+thêm\s+(?:một\s+)?dặm\b|\bphá\s+vỡ\s+(?:lớp\s+)?băng\b|\bcon\s+voi\s+trong\s+phòng\b|\b(?:đặt\s+(?:mình\s+)?vào|đứng\s+trong|đi\s+trong|bước\s+vào)\s+(?:trong\s+)?đôi\s+giày\s+của\b|\b(?:suy\s+nghĩ|tư\s+duy|nghĩ)\s+(?:ra\s+)?(?:bên\s+)?ngoài\s+(?:chiếc\s+)?hộp\b
 # "hơn bao giờ hết" (dịch "more than ever")
 hơn bao giờ hết
 # "không thể bỏ lỡ", "(mà) bạn không thể bỏ qua" (tựa SEO dịch "you can't miss"); "lỗi này không thể bỏ qua" không tính
 re:(?i)\bkhông\s+thể\s+bỏ\s+lỡ\b|\b(?:mà\s+)?(?:bạn|các\s+bạn)\s+không\s+thể\s+bỏ\s+qua\b
 # từ thổi phồng (dịch breakthrough / premium / superior): đột phá, đẳng cấp, vượt trội, thần tốc, giải pháp / lộ trình toàn diện, bùng nổ doanh số ("khám toàn diện", "dịch bùng nổ", "tiến bộ vượt bậc" không tính)
 re:(?i)\b(?:đột\s+phá|đẳng\s+cấp|vượt\s+trội|thần\s+tốc)\b|\b(?:giải\s+pháp|lộ\s+trình|thay\s+đổi)\s+toàn\s+diện\b|\bbùng\s+nổ\s+(?:doanh\s+(?:số|thu)|đơn(?:\s+hàng)?|tương\s+tác|lượt\s+xem|view)\b|\b(?:doanh\s+(?:số|thu)|đơn(?:\s+hàng)?|tương\s+tác)\s+bùng\s+nổ\b
-# ẩn dụ sáo (dịch unlock / unleash / decode / big picture): mở khóa tiềm năng, khai phá, hành trang, giải mã, bức tranh toàn cảnh, đánh thức / khơi dậy tiềm năng ("đánh thức con dậy" không tính)
-re:(?i)\bmở\s+kh(?:óa|oá)\s+(?:tiềm\s+năng|bí\s+mật|sức\s+mạnh|thành\s+công)|\bkhai\s+phá\b|\bhành\s+trang\b|\bgiải\s+mã\b|\bbức\s+tranh\s+toàn\s+cảnh\b|\b(?:đánh\s+thức|khơi\s+dậy)\s+(?:tiềm\s+năng|sức\s+mạnh|đam\s+mê|niềm\s+đam\s+mê|nội\s+lực|con\s+người|phiên\s+bản|ngọn\s+lửa|khát\s+vọng)\b
+# ẩn dụ sáo (dịch unlock / unleash / decode / big picture): mở khóa tiềm năng, khai phá, hành trang, giải mã, bức tranh toàn cảnh, đánh thức / khơi dậy tiềm năng ("đánh thức con dậy", "chuẩn bị hành trang đi Đà Lạt" không tính)
+re:(?i)\bmở\s+kh(?:óa|oá)\s+(?:tiềm\s+năng|bí\s+mật|sức\s+mạnh|thành\s+công)|\bkhai\s+phá\b|\bhành\s+trang\s+(?:vững\s+chắc|vào\s+đời|kiến\s+thức|quý\s+(?:giá|báu)|cho\s+(?:tương\s+lai|hành\s+trình|con\s+đường|cuộc\s+sống|sự\s+nghiệp))\b|\btrang\s+bị\s+(?:cho\s+\w+\s+)?hành\s+trang\b|\bgiải\s+mã\b|\bbức\s+tranh\s+toàn\s+cảnh\b|\b(?:đánh\s+thức|khơi\s+dậy)\s+(?:tiềm\s+năng|sức\s+mạnh|đam\s+mê|niềm\s+đam\s+mê|nội\s+lực|con\s+người|phiên\s+bản|ngọn\s+lửa|khát\s+vọng)\b
 
 # Lời rủ, lời mời, câu an ủi kiểu dịch
 # "hãy cùng nhau", "hãy cùng (mình) tìm hiểu / điểm qua / khám phá" (dịch "Let's …")
 re:(?i)\bhãy\s+cùng\s+(?:nhau|(?:mình\s+|tôi\s+|em\s+)?(?:tìm\s+hiểu|điểm\s+qua|đi\s+sâu|xem\s+qua|bắt\s+đầu|khám\s+phá))\b
-# "Hãy để tôi / mình …" (dịch "Let me …"); người Việt nói "Để mình kể"
-re:(?i)\bhãy\s+để\s+(?:tôi|mình|em|chị|anh|chúng\s+tôi)\b
+# "Hãy để tôi / mình chia sẻ, kể, giải thích …" (dịch "Let me …"); người Việt nói "Để mình kể".
+# "Hãy để chị ấy nghỉ", "hãy để em lo" không tính
+re:(?i)\bhãy\s+để\s+(?:tôi|mình|em|chúng\s+tôi)\s+(?:chia\s+sẻ|kể|giới\s+thiệu|giải\s+thích|chỉ|hướng\s+dẫn|giúp|nói|bật\s+mí|tiết\s+lộ|đưa|dẫn|đồng\s+hành)\b
 # "Hãy cho tôi biết … / Hãy để lại bình luận" (CTA dịch "Let me know in the comments")
 re:(?i)\bhãy\s+(?:cho\s+(?:tôi|mình|em|chị|anh|chúng\s+tôi)\s+biết|để\s+lại\s+(?:bình\s+luận|comment|ý\s+kiến))\b
 # "Bạn đã sẵn sàng … chưa?" (CTA dịch "Are you ready?")
 re:(?i)\b(?:bạn|các\s+bạn|anh\s+chị|chị\s+em)\s+đã\s+sẵn\s+sàng\b[^.!?\n]{0,100}\bchưa\b
-# an ủi dịch từ self-help: "bạn không đơn độc / bạn xứng đáng" (You're not alone / You deserve)
-re:(?i)\bbạn\s+không\s+(?:hề\s+)?(?:đơn\s+độc|cô\s+đơn|một\s+mình)\b|\bbạn\s+xứng\s+đáng\b
+# an ủi dịch từ self-help: "bạn không đơn độc", "bạn xứng đáng được nghỉ ngơi / hạnh phúc" (You're not alone / You deserve);
+# "giải này bạn xứng đáng mà" (khen người thắng) không tính
+re:(?i)\bbạn\s+không\s+(?:hề\s+)?(?:đơn\s+độc|cô\s+đơn|một\s+mình)\b|\bbạn\s+xứng\s+đáng\s+(?:được\s+|có\s+|với\s+)?(?:hạnh\s+phúc|nghỉ\s+ngơi|yêu\s+thương|yêu|những\s+điều|điều\s+tốt|tốt\s+hơn|nhiều\s+hơn|một\s+cuộc\s+sống|cuộc\s+sống|sống)
 # "phiên bản tốt (hơn / nhất) của chính mình" (best version of yourself)
 re:(?i)\bphiên\s+bản\s+(?:tốt|hoàn\s+hảo|chuyên\s+nghiệp)\s+(?:hơn|nhất)\s+của\b
 # "từng ở vị trí của bạn" (I've been in your shoes); nói "mình cũng từng y chang vậy"
@@ -184,8 +201,8 @@ re:(?i)\bc[ảá]m\s+ơn\s+(?:bạn|các\s+bạn|anh/chị|anh\s+chị|quý\s+kh
 đừng ngần ngại
 # tổng đài: "nếu … có bất kỳ câu hỏi / thắc mắc nào" (If you have any questions)
 re:(?i)\bcó\s+bất\s+(?:kỳ|kì|cứ)\s+(?:câu\s+hỏi|thắc\s+mắc)\s+nào\b
-# tổng đài: "rất vui được hỗ trợ / phục vụ", "rất hân hạnh được" (Happy to help)
-re:(?i)\b(?:rất|thật)\s+vui\s+(?:được|khi\s+được)\s+(?:hỗ\s+trợ|giúp\s+đỡ|đồng\s+hành|phục\s+vụ)\b|\b(?:rất\s+)?hân\s+hạnh\s+được\b
+# tổng đài: "rất vui được hỗ trợ / phục vụ", "rất hân hạnh được phục vụ" (Happy to help); "hân hạnh được làm quen" không tính
+re:(?i)\b(?:rất|thật)\s+vui\s+(?:được|khi\s+được)\s+(?:hỗ\s+trợ|giúp\s+đỡ|đồng\s+hành|phục\s+vụ)\b|\b(?:rất\s+)?hân\s+hạnh\s+được\s+(?:phục\s+vụ|hỗ\s+trợ|đồng\s+hành|đón\s+tiếp|tư\s+vấn)\b
 # tổng đài: "xin lỗi vì sự bất tiện" (Sorry for the inconvenience); nói "em xin lỗi chị"
 re:(?i)\bxin\s+lỗi\s+(?:vì|về)\s+(?:sự|những)\s+bất\s+tiện\b|\bsự\s+bất\s+tiện\s+này\b
 # tổng đài: "trong thời gian sớm nhất" (as soon as possible); nói giờ cụ thể

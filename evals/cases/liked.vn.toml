@@ -127,7 +127,7 @@ input = '''làm bản của mình'''
 regex = [
   '''(?i)28 Tết|Tết 2019|trong kho|Sổ 3 Cột|Ngân''',
   '''(?i)(?<!\w)lãi ảo(?!\w)''',
-  '''Sẵn sàng (?:quay|đăng) · Em sẽ đăng: khung của họ, [^\n;]+ của chị; không chép câu nào''',
+  '''Sẵn sàng (?:quay|đăng) · khung của họ, [^\n;]+ của chị[,;] không chép câu nào''',
   '''TIẾP → Bài này thay [^\n]*bỏ qua[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -199,7 +199,7 @@ input = '''em làm bản của chị đi'''
 regex = [
   '''(?i)2018|tờ kịch bản|cái gương|cầm gương|đêm mưa|em sinh viên''',
   '''(?i)ngại chào''',
-  '''Sẵn sàng (?:quay|đăng) · Em sẽ đăng: khung của họ, [^\n;]+ của chị; không chép câu nào''',
+  '''Sẵn sàng (?:quay|đăng) · khung của họ, [^\n;]+ của chị[,;] không chép câu nào''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -471,7 +471,7 @@ Bài 4:
 Bài 5:
 "Một ngày của chủ spa: 7 giờ mở cửa, 9 giờ khách đầu, 12 giờ ăn vội, 9 giờ tối tắt đèn. Ai làm nghề này cũng thế thôi."'''
 regex = [
-  '''Sẵn sàng (?:quay|đăng) · Em sẽ đăng: khung của họ, [^\n;]+ của chị; không chép câu nào''',
+  '''Sẵn sàng (?:quay|đăng) · khung của họ, [^\n;]+ của chị[,;] không chép câu nào''',
   '''(?i)(?<!\w)(?:lưu|giữ lại|để dành)(?!\w)''',
   '''(?i)ngại chào''',
   '''TIẾP →[^\n]*\s*\Z''',
@@ -763,7 +763,7 @@ title = "'tuần nào em cũng vào xem mấy kênh giúp chị': liked.no_watch
 context = '''Week 5, Thursday 12/11/2026, Android. Brand Card v1 present (persona default). Earlier this month she sent screenshots from two channels she follows; their shapes are in Bài chị thích.'''
 input = '''Em ơi tuần nào em cũng vào xem mấy kênh chị hay xem giúp chị nhé, kênh Spa Nhỏ Hải Phòng với kênh chị Diễm Quyên ấy, có bài nào hay thì em báo chị'''
 regex = [
-  '''(?i)không theo dõi kênh của ai được''',
+  '''(?i)không (?:tự )?theo dõi kênh (?:nào|của ai) được''',
   '''(?i)2\s?[–-]\s?3 ảnh chụp''',
   '''(?i)kế hoạch tháng''',
   '''TIẾP →[^\n]*\s*\Z''',

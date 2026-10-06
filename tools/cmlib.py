@@ -25,6 +25,8 @@ TAG_RE = re.compile(r"\{\{(.*?)\}\}", re.S)
 NAME_RE = re.compile(r"^[a-z_][a-z0-9_]*$")
 KEY_RE = re.compile(r"^[a-z0-9_.-]+$")
 SECTION_ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
+# Decimal separator by language when [edition] sets no decimal_sep: VN writes 3,5 and 1.500.000đ (guide §2.5 P6).
+DECIMAL_SEP = {"vn": ","}
 
 
 class CMError(Exception):
@@ -114,6 +116,18 @@ class Edition:
     @property
     def zip_name(self) -> str:
         return self.cfg["zip_name"]
+
+    @property
+    def decimal_sep(self) -> str:
+        """The edition's decimal separator: [edition] decimal_sep, else by language ("," for VN), else "."."""
+        return str(self.cfg.get("decimal_sep") or DECIMAL_SEP.get(self.lang, "."))
+
+    def format_value(self, value) -> str:
+        """A scalar param as printed in the edition's text: a float takes the edition's decimal separator
+        (VN word_rate 3.5 → "3,5"); integers, booleans and strings print as they are."""
+        if isinstance(value, float):
+            return str(value).replace(".", self.decimal_sep)
+        return str(value)
 
     def lookup(self, name: str):
         if name in self.params:
@@ -358,7 +372,7 @@ def _var(name: str, ctx: Ctx) -> str:
         raise CMError("E170", f"unknown param '{name}'", ctx.path)
     if isinstance(value, (dict, list)):
         raise CMError("E170", f"param '{name}' is not a scalar", ctx.path)
-    return str(value)
+    return ctx.edition.format_value(value)
 
 
 def render_text(text: str, ctx: Ctx) -> str:

@@ -171,7 +171,7 @@ lanes = ["S0", "S1", "floor"]
 title = "3 income streams: the bridge-buyer line, asked once"
 context = "Door A, ChatGPT Plus. Chunks 1–3 sent; chunk 1 named insurance, apartment broking and sales training."
 input = """xong em"""
-contains = ["3 nguồn thu", "MỘT kiểu khách", "nguồn nào nuôi anh"]
+contains = ["3 nguồn thu", "kiểu khách mua được nhiều món", "nguồn nào nuôi anh"]
 not_regex = ['(?i)(chọn|bỏ)\s+(một|1)\s+(nghề|việc|nguồn)', '(?i)(?<!\w)tôi(?!\w)']
 invariants = ["I1", "I15", "I17"]
 notes = "UX §2 minute 11–12 VN line 'Anh đang có 3 nguồn thu. Em tìm MỘT kiểu khách có thể mua nhiều thứ của anh. Hoặc anh nói luôn: tháng này nguồn nào nuôi anh?'; quit point 6 (paid stream parked with no bridge). Telling him to drop a stream fails."
@@ -304,7 +304,7 @@ title = "Bridge-buyer Map: the apartment he must close stays on the Map, sales t
 context = "Door A, ChatGPT Plus. Inventory + check shown with the 3-streams line; check confirmed ('ok, sửa 2') and live answers given. The open item was the income question."
 input = """Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11."""
 contains = ["ĐỂ SAU", "chạy thử 4 tuần", "gồng lãi"]
-regex = ['(?i)(vợ chồng|gia đình) trẻ', '(?i)dạy sale', '(?i)cửa phụ', '2 tỷ 68|2,68 tỷ']
+regex = ['(?i)(vợ chồng|gia đình) trẻ', '(?i)dạy sale', '(?i)(cửa phụ|bán kèm)', '2 tỷ 68|2,68 tỷ']
 not_regex = [
   '(?i)view sông',
   '(?i)(giá tốt|bán gấp|căn cuối|cơ hội vàng|siêu phẩm)',
@@ -413,7 +413,7 @@ title = "NOT NOW for a knows-too-much coach: ads, livestream, sourcing, tax park
 context = "Door A. Check confirmed; the last open item was line 7."
 input = """Thứ Ba em ạ, tối thứ Ba chị rảnh. Gạch đầu dòng thôi, đọc nguyên văn chị vấp lắm."""
 contains = ["ĐỂ SAU"]
-regex = ['(?i)quảng cáo', '(?i)live', '(?i)Quảng Châu', '(?i)thuế', '(?i)(công cụ|khác vấn đề|ngoài chuyên môn|giai đoạn sau|dễ (sai|dính))']
+regex = ['(?i)quảng cáo', '(?i)live', '(?i)Quảng Châu', '(?i)thuế', '(?i)(công cụ|khác vấn đề|ngoài chuyên môn|giai đoạn sau|để sau mới hợp|hứa quá lời|dễ (sai|dính))']
 not_regex = [
   'DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b',
   '\b[VSPXK]-\d+\b',
@@ -506,7 +506,7 @@ lanes = ["S0", "S1", "floor"]
 title = "'Spa nuôi cả nhà chị': the spa keeps a labelled side door, the buyer stays spa owners"
 context = "Door B. Map on screen; spa care for her customers is not a topic on it."
 input = """Thế còn cái spa của chị thì sao? Spa nuôi cả nhà chị đấy, em bảo chị để sau là thế nào?"""
-regex = ['(?i)(cửa phụ|khách spa)', '(?i)(1|một)\s+bài[^.\n]{0,20}(mỗi|một|/)\s*tuần']
+regex = ['(?i)(cửa phụ|bán kèm|khách spa)', '(?i)(1|một)\s+bài[^.\n]{0,20}(mỗi|một|/)\s*tuần']
 not_regex = ['(?im)^(?!.*(không|chưa)).*(đổi|chuyển)\s+(người mua|bản đồ|thông điệp)', '(?i)(?<!\w)bạn(?!\w)', '(?im)^(?!.*(không|chẳng|đâu)).*(bỏ|dẹp)\s+(spa|cái spa)']
 invariants = ["I1", "I5", "I15", "I17"]
 max_words = 120
@@ -584,11 +584,11 @@ title = "Bridgeable drift: ads angled to a big idea, written, 'giữ nguyên' of
 context = "Week 2, Brand Card v1 in sources (keyword 'lãi ảo'; ads parked as a tool). She asks between Talk days."
 input = """tuần này viết cho chị một bài về chạy quảng cáo đi em, khách hỏi chị về quảng cáo nhiều nhất"""
 contains = ["giữ nguyên", "VÌ SAO RA KHÁCH"]
-regex = ['(?i)ý lớn [1-3]', '(?i)bản đồ']
+regex = ['(?i)(?:ý lớn|chủ đề) [1-3]', '(?i)bản đồ']
 not_regex = ['(?<!\w)[Tt]rụ\s+[1-9]', '\b[VSPXK]-\d+\b', '(?i)(?<!\w)bạn(?!\w)', '(?i)(không được phép|sai bản đồ|lạc đề)']
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17"]
 max_questions = 1
-notes = "wf11-message-focus §2.5 drift outcome 2 VN line, with the coach-facing 'ý lớn n' in place of the design doc's 'Trụ 2' (deny-list). The coach is never lectured."
+notes = "wf11-message-focus §2.5 drift outcome 2 VN line, with the coach-facing 'chủ đề n' (the Map's 3 CHỦ ĐỀ; 'ý lớn n' still accepted) in place of the design doc's 'Trụ 2' (deny-list). The coach is never lectured."
 
 [[case]]
 id = "message.vn.035"
@@ -601,7 +601,7 @@ input = """viết giùm tôi một bài lời khuyên cho sinh viên mới ra tr
 ---
 cứ viết đi em"""
 contains = ["ngoài bản đồ"]
-regex = ['(?i)(để sau|khác người mua)', '(?i)((1|một)\s+(bài\s+)?|duy nhất\s+)(trong|trên)\s+10']
+regex = ['(?i)(để sau|khác người mua)', '(?i)((1|một)\s+(bài\s+)?|duy nhất\s+)(trong|trên)\s+10|10\s+bài\s+chỉ\s+(được\s+)?(1|một)']
 not_regex = ['\b[VSPXK]-\d+\b', '(?<!\w)[Tt]rụ\s+[1-9]', '(?i)(em|tôi)\s+không\s+viết']
 invariants = ["I1", "I4", "I5", "I15"]
 notes = "scope: transcript. wf11-message-focus §2.5 outcome 3: parked (DIFF-BUYER shown in plain words; the design doc's 'X-9' is an ID the coach never sees), comes back on a trigger, written on insistence and counted (≤1 in 10). Refusing an off-map piece is wrong: only hard stops are refused."
@@ -614,7 +614,7 @@ lanes = ["S1", "floor"]
 title = "Off-map budget already used: says so in one line and offers the bridge or 'để sau'"
 context = "Week 3, Brand Card v1. One off-map piece (Shopee flash-sale tips, at her request) is already among the last 10."
 input = """viết thêm cho chị bài nhập hàng Quảng Châu đi em"""
-regex = ['(?i)ngoài bản đồ', '(?i)((1|một)\s+(bài\s+)?|duy nhất\s+)(trong|trên)\s+10', '(?i)(để sau|ý lớn [1-3])']
+regex = ['(?i)ngoài bản đồ', '(?i)((1|một)\s+(bài\s+)?|duy nhất\s+)(trong|trên)\s+10|10\s+bài\s+chỉ\s+(được\s+)?(1|một)', '(?i)(để sau|ý lớn [1-3]|chủ đề [1-3])']
 not_regex = ['\b[VSPXK]-\d+\b', '(?i)(?<!\w)bạn(?!\w)', '(?i)(không được phép|cấm)']
 invariants = ["I1", "I4", "I5", "I15"]
 max_words = 110
@@ -629,7 +629,7 @@ lanes = ["S1", "floor"]
 title = "Side-door piece for the sales-training income: labelled, Facebook only"
 context = "Week 2 Thursday. Brand Card v1 has side_door = sales training (he said yes on Day 0). This week's plan holds 1 side-door slot today."
 input = """tiếp"""
-regex = ['(?i)cửa phụ', '(?i)facebook', '(?i)(quản lý sàn|chủ đội sale|đội sale)']
+regex = ['(?i)(cửa phụ|bán kèm)', '(?i)facebook', '(?i)(quản lý sàn|chủ đội sale|đội sale)']
 not_regex = ['(?im)^(?!.*(không|đừng)).*tiktok', '\b[VSPXK]-\d+\b', '(?i)(?<!\w)trụ(?!\w)']
 invariants = ["I1", "I3", "I4", "I15"]
 max_questions = 1
