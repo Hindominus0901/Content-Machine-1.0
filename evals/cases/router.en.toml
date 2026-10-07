@@ -77,7 +77,7 @@
 # - "Brand Card v1 present (persona default)" means the Day-0 Map the persona's expected.toml describes
 #   (keyword, offer, free gift, cta_style, talk day), saved as a project source. Day 0 for every EN persona
 #   is Monday 12 Oct 2026 (stats-w1.csv), so Week 1 = 12-16 Oct, Week 2 = 19-23 Oct, and Friday 30 Oct is
-#   the last Friday of the month. "GROW added" means Level-ups/GROW-EN.md is a project source (L4); the S3
+#   the last Friday of the month. "GROW added" means the area's level-up file (Level-ups/LAUNCH-EN.md, RESEARCH-EN.md, BOARD-EN.md or STRATEGY-EN.md) is a project source (L4); the S3
 #   skill has it built in.
 # - F1 (DECISIONS.md, 5 Oct 2026; wf13 §0): copying, translating a foreign post to repost, or a comparison
 #   that names another business, when the coach asks explicitly, is done with ONE dated note
@@ -967,13 +967,13 @@ id = "router.en.032"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "Without GROW, the same launch request offers the GROW level-up (one file) and nothing else"
-context = "Same request as router.en.031, but GROW has NOT been added: the project holds the instruction block, the method file and Brand Card v1 only (L0-L1)."
+title = "Without the launch file, the same launch request offers that level-up (one file) and nothing else"
+context = "Same request as router.en.031, but the launch level-up file (Level-ups/LAUNCH-EN.md) has NOT been added: the project holds the instruction block, the method file and Brand Card v1 only (L0-L1)."
 input = '''I want to do a real launch for a January start. 4 spots, $2,400, no lives, I'll record something instead. plan it'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)\bgrow(-EN\.md| file)\b|Content Machine · Grow|\bGROW\b''',
+  '''(?i)\b(launch|research|strategy|board)-EN\.md\b''',
   '''(?i)\b(one|1|a) (file|upload)\b|\badd (it|the file|this file)\b''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
@@ -986,7 +986,7 @@ invariants = ["I1", "I2", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: levelup (route set). UX §3.3 L4 GROW file: trigger = the first 'plan a launch', 'research deeper' or 'write an ad'; 1 upload; launch lives in GROW (UX §5.6). Only this level-up is offered."""
+notes = """route: levelup (route set). UX §3.3 L4 level-up file (7 Oct: one file per area, Level-ups/LAUNCH-EN.md here): trigger = the first 'plan a launch', 'research deeper' or 'write an ad'; 1 upload; launch and ads live in LAUNCH (UX §5.6). §CM-TODAY levelup.offer_grow names the file. Only this level-up is offered."""
 
 [[case]]
 id = "router.en.033"

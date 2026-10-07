@@ -666,6 +666,187 @@ class RealBuild(LintCase):
         self.assertTrue(list((self.repo.root / "dist").rglob("*.zip")))
 
 
+class LevelUpFixtures(LintCase):
+    """Level-up files (core/method.toml [levelup.<area>]): file budget, section budget, anchors, §CM- references,
+    the nudge data and the plugin. Each test starts from a valid fixture and injects one defect."""
+
+    EN_BODY = "### Rules\nRead first. The plan is in §CM-TALK."
+    VN_BODY = "### Luật\nĐọc trước. Kế hoạch ở §CM-TALK."
+
+    def setUp(self) -> None:
+        super().setUp()
+        repo = self.repo
+        repo.prose["en"]["modules/en/research.md"] = [["research.grow-a", "", self.EN_BODY]]
+        repo.prose["vn"]["modules/vn/research.md"] = [["research.grow-a", "", self.VN_BODY]]
+        repo.write_prose()
+        repo.write("core/method.toml", repo.read("core/method.toml") + '''
+[levelup.research]
+file = "RESEARCH"
+skill = "cm-research"
+title_key = "levelup.research.title"
+budget = "levelup_research"
+[[levelup.research.anchor]]
+id = "RESEARCH"
+sections = ["research.grow-a"]
+''')
+        for lang, title, anchor in (("en", "{{name}} · Research", "Rules"), ("vn", "{{name}} · Nghiên cứu", "Luật")):
+            repo.strings[lang]["levelup.research.title"] = title
+            repo.strings[lang]["anchor.research"] = anchor
+        repo.strings["en"]["anchor.research"] = "Rules"
+        repo.write_strings()
+        repo.write("platform/targets.toml", repo.read("platform/targets.toml") + '''
+[budgets.levelup_research]
+artifact = "Level-ups/RESEARCH-{EN,VN}.md"
+unit = "bytes"
+en = 400
+vn = 500
+limit = ""
+
+[budgets.method_section]
+artifact = "each section"
+unit = "bytes"
+en = 120
+vn = 160
+limit = ""
+''')
+
+    def write_levelups(self, en_extra: str = "", vn_extra: str = "") -> None:
+        for ed, suffix, title, body in (("en", "EN", "Research", self.EN_BODY), ("vn", "VN", "Nghiên cứu", self.VN_BODY)):
+            extra = en_extra if ed == "en" else vn_extra
+            self.repo.write(f"dist/{ed}/Level-ups/RESEARCH-{suffix}.md",
+                            f"# Content Machine · {title}\n\n## §CM-RESEARCH · Rules\n\n{body}\n{extra}")
+
+    def test_valid_level_up_repo_is_clean(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        self.assertClean(self.repo.lint())
+
+    def test_E101_level_up_file_over_its_budget(self):
+        self.repo.build_dist()
+        self.write_levelups(en_extra="Filler line to go past the budget. " * 14)
+        report = self.assertCatches("E101", where="dist/en/Level-ups/RESEARCH-EN.md")
+        self.assertTrue(any("levelup_research" in f.message and "research level-up file" in f.message
+                            for f in report.errors), self.dump(report))
+        self.assertFalse([f for f in report.errors if f.path.endswith("RESEARCH-VN.md")], self.dump(report))
+
+    def test_E101_a_section_over_the_chunk_budget_even_inside_a_bigger_anchor(self):
+        self.repo.set_both("modules/en/research.md", "research.grow-a",
+                           "### Rules\n" + "Read the buyer's own words first, one place at a time. " * 4,
+                           "### Luật\n" + "Đọc lời của chính khách trước, từng nơi một. " * 4)
+        report = self.assertCatches("E101", where="modules/en/research.md")
+        self.assertTrue(any("section research.grow-a" in f.message and "method_section" in f.message
+                            for f in report.errors), self.dump(report))
+
+    def test_E130_a_section_ref_to_no_anchor(self):
+        self.repo.build_dist()
+        self.write_levelups(en_extra="Then read §CM-RESERCH-PLAN for the plan.\n")
+        report = self.assertCatches("E130", where="dist/en/Level-ups/RESEARCH-EN.md")
+        self.assertTrue(any("§CM-RESERCH-PLAN" in f.message for f in report.errors), self.dump(report))
+
+    def test_E161_the_same_anchor_id_in_the_method_file_and_a_level_up_file(self):
+        method = self.repo.read("core/method.toml").replace('id = "RESEARCH"', 'id = "TALK"')
+        self.repo.write("core/method.toml", method)
+        report = self.assertCatches("E161", where="core/method.toml")
+        self.assertTrue(any("'TALK' is in [method] and [levelup.research]" in f.message for f in report.errors),
+                        self.dump(report))
+
+    def test_E161_a_budget_that_targets_does_not_have(self):
+        method = self.repo.read("core/method.toml").replace('budget = "levelup_research"', 'budget = "levelup_gone"')
+        self.repo.write("core/method.toml", method)
+        report = self.assertCatches("E161", where="core/method.toml")
+        self.assertTrue(any("levelup_gone" in f.message for f in report.errors), self.dump(report))
+
+    def test_E170_an_anchor_without_a_title_string(self):
+        del self.repo.strings["en"]["anchor.research"]
+        del self.repo.strings["vn"]["anchor.research"]
+        self.repo.write_strings()
+        report = self.assertCatches("E170", where="core/method.toml")
+        self.assertTrue(any("anchor.research" in f.message for f in report.errors), self.dump(report))
+
+    def test_E161_nudge_data_with_a_template_that_is_not_there(self):
+        self.repo.write("automation/tasks.toml", '''schema_version = 1
+[caps]
+max_chars_filled = 900
+[[task]]
+id = "week"
+template = "task-nudge-gone.tmpl"
+section = "research.grow-a"
+name = { en = "Your week", vn = "Bài tuần này" }
+''')
+        report = self.assertCatches("E161", where="automation/tasks.toml")
+        self.assertTrue(any("task-nudge-gone.tmpl" in f.message for f in report.errors), self.dump(report))
+
+    def plugin_zip(self, drop: str | None = None, edit: dict[str, str] | None = None) -> Path:
+        """A plugin zip with the main and companion skills the fixture promises (minus `drop`)."""
+        self.repo.write("VERSION", "1.0.0\n")
+        self.repo.write("plugin/companions.toml", "schema_version = 1\n")
+        self.repo.write("plugin/agents/cm-writer.md", "---\nname: cm-writer\ndescription: \"Writes.\"\n---\nBody.\n")
+        entries = {"content-machine/.claude-plugin/plugin.json": json.dumps({"name": "content-machine", "version": "1.0.0"}).encode(),
+                   "content-machine/agents/cm-writer.md": b"---\nname: cm-writer\ndescription: \"Writes.\"\n---\nBody.\n"}
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            for name in (f"content-machine-{ed}", f"cm-research-{ed}"):
+                desc = "Content Machine, for a test."
+                text = f"---\nname: {name}\ndescription: {json.dumps(desc)}\n---\n\nBody. See §CM-RESEARCH.\n"
+                entries[f"content-machine/skills/{name}/SKILL.md"] = (edit or {}).get(name, text).encode()
+            entries[f"content-machine/skills/cm-research-{ed}/RESEARCH-{suffix}.md"] = \
+                (self.repo.root / f"dist/{ed}/Level-ups/RESEARCH-{suffix}.md").read_bytes()
+        if drop:
+            entries.pop(drop)
+        path = self.repo.root / "dist" / "content-machine-plugin.zip"
+        write_zip(path, entries)
+        return path
+
+    def test_a_valid_plugin_is_clean(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        self.plugin_zip()
+        self.assertClean(self.repo.lint())
+
+    def test_E170_a_companion_skill_missing_from_the_plugin(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        self.plugin_zip(drop="content-machine/skills/cm-research-vn/SKILL.md")
+        report = self.assertCatches("E170", where="dist/content-machine-plugin.zip")
+        self.assertTrue(any("cm-research-vn" in f.message for f in report.errors), self.dump(report))
+
+    def test_E170_the_level_up_file_in_the_plugin_differs_from_dist(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        path = self.plugin_zip()
+        entries = zip_entries(path)
+        entries["content-machine/skills/cm-research-en/RESEARCH-EN.md"] += b"edited\n"
+        write_zip(path, entries)
+        report = self.assertCatches("E170", where="dist/content-machine-plugin.zip!content-machine/skills/cm-research-en")
+        self.assertTrue(any("differs from dist/en/Level-ups/RESEARCH-EN.md" in f.message for f in report.errors),
+                        self.dump(report))
+
+    def test_E102_a_companion_description_over_200_characters(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        long = f"---\nname: cm-research-en\ndescription: {json.dumps(sentence(201))}\n---\n\nBody.\n"
+        self.plugin_zip(edit={"cm-research-en": long})
+        self.assertCatches("E102", where="dist/content-machine-plugin.zip!content-machine/skills/cm-research-en/SKILL.md")
+
+    def test_E103_an_agent_over_60_lines(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        path = self.plugin_zip()
+        entries = zip_entries(path)
+        entries["content-machine/agents/cm-writer.md"] = ("---\nname: cm-writer\ndescription: \"Writes.\"\n---\n"
+                                                         + "line\n" * 70).encode()
+        write_zip(path, entries)
+        self.assertCatches("E103", where="dist/content-machine-plugin.zip!content-machine/agents/cm-writer.md")
+
+    def test_E130_a_companion_names_a_part_no_file_has(self):
+        self.repo.build_dist()
+        self.write_levelups()
+        bad = ("---\nname: cm-research-en\ndescription: \"Content Machine, for a test.\"\n---\n\n"
+               "Body. See §CM-RESEARCH and §CM-GONE.\n")
+        self.plugin_zip(edit={"cm-research-en": bad})
+        report = self.assertCatches("E130", where="dist/content-machine-plugin.zip!content-machine/skills/cm-research-en")
+        self.assertTrue(any("§CM-GONE" in f.message for f in report.errors), self.dump(report))
+
+
 class ShippedWordLists(unittest.TestCase):
     """The real locales/*/deny-list.txt and banned-tells.txt parse (no bad regex)."""
 

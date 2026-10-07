@@ -1,0 +1,21 @@
+Maintainer: GROW long video (fmt-long.grow-*): the opt-in filmed long video, 20-40 minutes (§CM-LONG), and cutting it into the week (§CM-LONG-CUTS).
+Sources: founder-sources (Soo Wei Goh: long-form first for high-ticket, most shorts cut from long-form, client decision and one-on-one breakdowns; Hormozi: one main channel, cut-downs with plain "How I… / Why…" titles; Nik Setting: every minute adds value, the live consult; Matt Gray: package first, re-hooks, repurpose the winners); wf8-mattgray-playbook §3, §6.4; wf2-synthesis §2, §4b (film the deep piece first, cut the rest); DECISIONS (Weekly Talk stays the default; the filmed long video is opt-in; scripts only, no editor briefs or shot lists).
+Kit hooks untouched: §CM-TALK stays the default weekly source; the kit's "say it again" rule for the Talk holds. Clips here come only from a long video the coach filmed.
+
+<!-- @section fmt-long.grow-outline -->
+### The filmed long video (opt-in: "long video", "YouTube", "podcast", "I want to film something longer"; that week it replaces the Weekly Talk)
+1 Offered once in NEXT, after a month of posting, to coaches on YouTube, Facebook video or a podcast: "Want to film one longer video this week instead of the Talk? I'll cut the week from it." No → only if asked again.
+2 Package first (§CM-PACKAGING): 3 titles with thumbnail words; they pick one. Then the outline, 20-40 minutes, spoken lines and bullets only, no shot lists or edit notes:
+- Intro ≤45 s: proof, promise, plan, one loop (§CM-LONG-INTRO), word for word.
+- 3-5 sections, each: the claim in one line · a story or client decision of theirs (Card, a Talk answer) · the step, as they'd say it to a client · one line worth quoting · a bridge to the next.
+- The gift at about a third ("the checklist for step 2: comment {KEYWORD}"); the offer at about two thirds, only if one exists; the last part pays off the loop; one ask; the next video to watch.
+3 Shapes: the full method · a client decision broken down · a live consult · "if I had to start over" · the N mistakes. A real client: written OK first; never a composite passed off as one person.
+4 Bullets per section (they talk, not read); word for word only the intro and the last line. It's the week's lead piece inside the same time budget (§CM-WEEK 2). Missing story or proof: [NEEDS: …] in the outline, never invented.
+
+<!-- @section fmt-long.grow-cuts -->
+### Cutting the long video into the week (after filming)
+1 One ask: "Paste the transcript (YouTube makes one), or the outline you used." Outline only → re-say pieces from it, as beat cards (§CM-FORMATS).
+2 From the transcript, find 5-8 moments that stand alone: a claim with its reason, a story with a turn, a buyer's question answered, a number of theirs, a closing line. Keep those that stop a stranger, make sense without the video and sit on this week's big idea.
+3 Print the week, ≤3 pieces a reply: each short as on-screen words ≤6 · first line · last line · "from '…' to '…'", quoted exactly from the transcript · caption and ask; 2 posts in their written voice; 1 carousel from the steps; 1 email or message pointing to the long video; optional, one 4-12 minute single-idea cut titled plainly ("How I…", "Why…").
+4 Never a line that isn't in the transcript; a clip that needs one becomes a re-say. The words come first; how it's edited is theirs.
+5 Helpers or parallel tasks available: one per piece, a separate reviewer reads all before printing; the coach sees only the result.

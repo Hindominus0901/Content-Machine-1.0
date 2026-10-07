@@ -484,11 +484,33 @@ vn = 3600
 limit = ""
 note = "Retrieval reads files in chunks (ChatGPT file search: ~800-token chunks, about 3,200 EN characters). Raised from 2,048 / 2,304 on 2026-10-06: 2,800 B EN stays inside one chunk; VN needs ~1.3x the bytes for the same content (diacritics are 2-3 bytes in UTF-8). The whole file stays within method_file."
 
-[budgets.grow_file]
-artifact = "GROW-{EN,VN}.md"
+[budgets.levelup_research]
+artifact = "Level-ups/RESEARCH-{EN,VN}.md"
 unit = "bytes"
-en = 61440
-vn = 61440
+en = 24576
+vn = 24576
+limit = ""
+note = "One level-up file per area (core/method.toml [levelup.<area>]), 24 KB each so a coach adds only the ones needed: the Project route has 5 files on Free (chatgpt_free_project_files), method + Brand Card + the level-ups wanted. Each anchor block also stays within method_section."
+
+[budgets.levelup_launch]
+artifact = "Level-ups/LAUNCH-{EN,VN}.md"
+unit = "bytes"
+en = 24576
+vn = 24576
+limit = ""
+
+[budgets.levelup_board]
+artifact = "Level-ups/BOARD-{EN,VN}.md"
+unit = "bytes"
+en = 24576
+vn = 24576
+limit = ""
+
+[budgets.levelup_strategy]
+artifact = "Level-ups/STRATEGY-{EN,VN}.md"
+unit = "bytes"
+en = 24576
+vn = 24576
 limit = ""
 
 [budgets.brand_card]
@@ -607,8 +629,9 @@ vn = 1
 limit = "chatgpt_free_uploads_per_day"
 
 [budgets.lifetime_sources]
-artifact = "project sources the kit ever needs (method, Brand Card, GROW)"
+artifact = "project sources the kit ever needs on Free (method, Brand Card, up to 3 of the 4 level-up files)"
 unit = "files"
-en = 3
-vn = 3
+en = 5
+vn = 5
 limit = "chatgpt_free_project_files"
+note = "Was 3 (method, Brand Card, one GROW file). The level-ups are now four files (RESEARCH, LAUNCH, BOARD, STRATEGY); a coach adds the ones needed, and the Claude plugin loads them as companion skills with no upload."

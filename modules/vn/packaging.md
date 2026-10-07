@@ -1,0 +1,35 @@
+Bản VN của modules/en/packaging.md, cho phần đóng gói trong GROW (packaging.grow-*): tiêu đề và chữ trên ảnh bìa (§CM-PACKAGING), hook làm ba việc (§CM-HOOKS), 45 giây đầu của video dài (§CM-LONG-INTRO), carousel, tin Zalo/email, bài dài Facebook và LinkedIn (§CM-TEXT-FORMATS). Viết thẳng bằng tiếng Việt, không dịch từng chữ.
+Nguồn: như EN (founder-sources: Matt Gray, Soo Wei Goh, Hormozi, Nik Setting; wf8-mattgray-playbook §0-§5, §9, đổi sang lời thường, không dùng tên khung của ông); thêm wf9-pov-vietnam §3 (khoe số, hứa quá đọc ra "nổ"; lời mời để ở caption).
+Thêm so với EN: ví dụ cho YouTube, Facebook, TikTok, Zalo viết thẳng bằng tiếng Việt; tiêu đề ≤70 ký tự (EN ≤60); carousel TikTok dạng ảnh; tin Zalo thay bản tin email khi chưa có danh sách email; LinkedIn chỉ một dòng, cho coach B2B; dáng câu mở "Ai từng ___ sẽ hiểu" nằm ở §CM-MOMENTS. Từ khoá comment viết hoa không dấu (GIA).
+
+<!-- @section packaging.grow-titles src=72dd6a574e -->
+### Tiêu đề và chữ ảnh bìa ("đặt tiêu đề", "ảnh bìa", "thumbnail"; mọi video dài, carousel, trước khi viết)
+1 Đóng gói trước: có tiêu đề rồi mới viết; bài giữ đúng lời tiêu đề hứa. Nháp thầm khoảng 20; cái tốt nhất đặt luôn lên bài, 2 cái sau chỉ đưa khi họ hỏi (video dài: §CM-LONG 2).
+2 Dáng tiêu đề: cách {kết quả} mà không {điều họ sợ} · {việc} khó cho tới khi bạn {làm X} kiểu này · {một chi tiết nhỏ} đã đổi {kết quả} · nếu làm lại từ đầu, mình sẽ làm thế này · {N} lỗi {khách} hay mắc khi {X} · một {vai khách} hỏi mình cách {kết quả} (nói hết từ A tới Z) · đừng {việc ai cũng làm} trước khi xem video này.
+3 Luật: kết quả của người xem, không phải thành tích coach · đúng chữ khách · số lẻ, chính xác, chỉ từ dữ kiện của coach, không lấy thu nhập làm hook · ngoặc gỡ nỗi lo ("không cần chạy quảng cáo") hay tặng thêm ("mà tối vẫn ăn cơm nhà") · ≤70 ký tự.
+4 Chữ ảnh bìa: 2-4 chữ NÓI THÊM điều tiêu đề chưa nói (cảm xúc, cú lật, con số của họ), không lặp: "Tăng giá mà không mất khách (làm cái này trước)" + "đừng xin lỗi khách." Ảnh một ý (con số trước → sau, mặt bình thản, bảng các bước); chỉ chữ, không hướng dẫn thiết kế.
+5 Có 6+ video dài: video nào sau 7 ngày lượt xem thấp hơn mọi khi thì đổi tiêu đề HOẶC chữ ảnh bìa, không cả hai.
+
+<!-- @section packaging.grow-hooks src=04fbec5d2c -->
+### Hook làm ba việc (TikTok, Reels, video ngắn; đào sâu §CM-FORMATS 1)
+1 Một ý, ba hook, không lặp nhau: chữ trên màn hình (tiêu đề) · khung đầu, một thứ thấy ngay (coach cầm bảng giá 3 trang của khách) · câu nói đầu. Mỗi cái hé một điều chưa nói, lớn hơn chủ đề.
+2 Dáng câu mở: "Nhiều {khách} cứ nghĩ X. Thật ra là Y." · "Mình làm {X} {N} lần rồi. Hoá ra chỉ một chuyện quyết định." · hai việc người xem vừa làm ("Đăng bài xong mở ra coi năm lần. Nửa đêm thì xoá.") · "{Khách} nào cũng từng sai chỗ này khi {lúc}?" (hỏi, hoặc "hầu hết", không "100%") · nguyên văn câu khách, rồi "mình nói với chị ấy thế này".
+3 Bài xây lòng tin (tuần 3-4, §CM-SEASON) đi hình phễu: hook đủ rộng cho khách lẫn người hay chia sẻ cho họ → một câu vì sao nên nghe (dữ kiện, không khoe) → đúng chữ khách, người không hợp tự lướt → đổi niềm tin → một lời mời. Kiểm thầm: phá một niềm tin · hook đủ rộng · một thông điệp.
+4 Số trong hook là số thật của coach và quyết định ai tới: mốc ngay trên chỗ khách đang đứng, không vượt bằng chứng. Kết quả trước, cách làm sau. Cho thấy bằng chứng, không nói "có bằng chứng".
+5 Cả cái hook không bao giờ chỉ là: khoe tiền, quà miễn phí (§CM-EDGE), "bạn sẽ không tin đâu", "họ giấu bạn điều này", "X chết rồi".
+
+<!-- @section packaging.grow-intro src=74f97942cb -->
+### 45 giây đầu video dài (YouTube, podcast, video Facebook, livestream; §CM-LONG dùng)
+1 Bằng chứng, lời hứa, lộ trình; phần 1 bắt đầu trước giây 45. Bằng chứng: một dữ kiện của họ đủ giữ người xem thêm một phút. Lời hứa: xem xong làm được gì, bằng chữ khách. Lộ trình: 3-5 bước gọi bằng lời thường, cộng một câu treo, cuối video mới trả lời ("cuối video: câu hỏi giúp biết ngay khách có mua không").
+2 Chọn cách mở theo thứ họ có:
+- NGƯỢC Ý: "Coach không thiếu người hỏi đâu. Cái thiếu là người tin." → bằng chứng → hai việc người xem đang làm → lộ trình.
+- CHUYỆN: hai thói quen của người xem → chính họ ngày trước → "mình bỏ X, chuyển qua Y" → bằng chứng → lộ trình.
+- BUỔI LÀM VỚI KHÁCH: câu của khách lên trước → "nếu bạn đang kẹt ở…" → chẩn đoán một câu → lộ trình. Khách đồng ý bằng chữ, mặc định giấu tên.
+3 Một câu "chưa có … vẫn làm được" gỡ nỗi lo (danh sách khách, tiền quảng cáo, thời gian). Rồi "Vào việc luôn."
+4 Giữa các phần, một câu nối gợi tò mò cho phần sau: "Giờ bạn biết đăng gì rồi. Bước 3 mới quyết định có ai thấy không." Mỗi phần chốt một câu đáng trích. Chưa có bằng chứng: lời hứa, lộ trình gánh; bằng chứng thành [CẦN BẠN: …].
+
+<!-- @section packaging.grow-text src=1daee41892 -->
+### Carousel, tin Zalo/email, bài dài Facebook (đào sâu §CM-POSTS)
+1 CAROUSEL (Facebook, TikTok dạng ảnh): chữ trước, không ghi chú thiết kế. Slide 1 là hook chữ to; mỗi slide một thông điệp (tiêu đề ngắn, ý chính, ≤3 gạch đầu dòng, câu chốt), chụp riêng vẫn hiểu; slide cuối tặng một món đặt tên theo kết quả của CHÍNH carousel đó + một từ khoá: "Comment GIA, mình gửi bảng tính giá mình đang dùng." Chưa có món đó: [CẦN BẠN: món quà].
+2 TIN ZALO hoặc EMAIL: dòng đầu (tiêu đề email) bằng chữ khách: mình đã {kết quả} thế nào (dù {giới hạn}) · mình bỏ qua {X} suốt {N} năm (và trả giá thế này) · {N} dấu hiệu bạn đang {vấn đề} · một câu lật ("Bạn không lười đâu, chỉ là chưa rõ đường."). Thân: một cảnh 60-100 tiếng → bài học một câu → cách của họ 3-5 phần ngắn → một tài liệu → "Trả lời tin này kể mình nghe…". Zalo ngắn hơn. Quảng bá tối đa một đoạn; sản phẩm chỉ ở tái bút, khi có.
+3 BÀI DÀI FACEBOOK: một cảnh ("Tháng 3 năm ngoái, có chị khách khóc ngay trong cuộc gọi.") → bề ngoài, bên trong → khúc ngoặt → nguyên tắc thành hai vai ("Người chữa cháy ngày nào cũng đi dập lửa. Người xây nhà lo cho khỏi cháy.") → "Một việc bạn dùng được ngay tuần này:" 3-5 điều tự kiểm → "thử 14 ngày" → lời mời. LINKEDIN (coach B2B): cùng dáng, không hashtag, ≤1 emoji.

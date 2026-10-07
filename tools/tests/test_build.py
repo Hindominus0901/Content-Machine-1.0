@@ -5,12 +5,16 @@ import contextlib
 import hashlib
 import io
 import json
+import csv
 import os
+import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import textwrap
 import time
+import tomllib
 import unittest
 import zipfile
 from pathlib import Path
@@ -894,6 +898,519 @@ class IcsTests(TempRepo):
         lines = ics.unfold(text)
         self.assertIn("DTSTART;TZID=Asia/Ho_Chi_Minh:20261006T093000", lines)
         self.assertIn("TZOFFSETTO:+0700", lines)
+
+
+# ---------------------------------------------------------------- level-up files, companion skills, agents
+
+REPO = TOOLS.parent
+LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.<area>] lists them (P3-P5 proposals)
+    "research": ("RESEARCH", ["RESEARCH", "RESEARCH-PLAN", "LISTEN", "RESEARCH-ROOT", "RESEARCH-LOOP"]),
+    "launch": ("LAUNCH", ["LAUNCH", "LAUNCH-BRIEF", "LAUNCH-STEPS", "LAUNCH-DAYS", "LAUNCH-DESK", "LAUNCH-POSTS",
+                          "LAUNCH-MESSAGES", "LAUNCH-LIVE", "LAUNCH-DEBRIEF", "ADS"]),
+    "board": ("BOARD", ["BOARD", "BOARD-COLUMNS", "BOARD-ROWS", "BOARD-CAMPAIGNS", "NUDGES", "NUDGE-JOBS",
+                        "NUDGE-RULES", "NUDGE-TEXTS", "NUDGE-CLAUDE", "NUDGE-LAUNCH"]),
+    "strategy": ("STRATEGY", ["STRATEGY", "SEASON", "WHAT-TO-SAY", "STRATEGY-REVIEW", "CHARACTER-DEEP",
+                              "CHARACTER-SCENES", "IDEAS", "MOMENTS", "PACKAGING", "HOOKS", "TEXT-FORMATS", "LONG",
+                              "LONG-INTRO", "LONG-CUTS"]),
+}
+PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy"]
+PLUGIN_AGENTS = ["cm-listener", "cm-researcher", "cm-reviewer", "cm-writer"]
+FIXTURE_AREAS = ("research", "launch", "board")      # the areas make_levelup_repo builds (a subset of the real four)
+
+LEVELUP_METHOD = '''
+[levelup.research]
+file = "RESEARCH"
+skill = "cm-research"
+title_key = "levelup.research.title"
+budget = "levelup_research"
+[[levelup.research.anchor]]
+id = "RESEARCH"
+sections = ["research.grow-rules"]
+[[levelup.research.anchor]]
+id = "RESEARCH-PLAN"
+sections = ["research.grow-plan", "research.grow-listen"]
+
+[levelup.launch]
+file = "LAUNCH"
+skill = "cm-launch"
+title_key = "levelup.launch.title"
+budget = "levelup_launch"
+[[levelup.launch.anchor]]
+id = "LAUNCH"
+sections = ["launch.grow-start"]
+
+[levelup.board]
+file = "BOARD"
+skill = "cm-board"
+title_key = "levelup.board.title"
+budget = "levelup_board"
+assets = "Board"
+assets_from = "templates/sheets/{lang}"
+[[levelup.board.anchor]]
+id = "BOARD"
+sections = ["hub.grow-board"]
+'''
+
+
+def make_levelup_repo(root: Path) -> Path:
+    """make_portable_repo plus three level-up areas (research with two anchors, launch with one, board with CSV
+    assets), the real plugin/companions.toml and plugin/agents/: what turns the level-up files and the companion
+    skills on."""
+    make_portable_repo(root)
+    en = {"research.grow-rules": "### Rules\nRead first. The plan is in §CM-RESEARCH-PLAN.",
+          "research.grow-plan": "### Plan\nOne buyer.{{#if vn}} VN only.{{/if}}",
+          "research.grow-listen": "### Listen\nRead-only. {{t:contract.output}}",
+          "launch.grow-start": "### Start\nPick a type; the real limits are in §CM-LAUNCH.",
+          "hub.grow-board": "### Board\nOne sheet, five tabs: the files are in Level-ups/Board."}
+    vn = {"research.grow-rules": "### Luật\nĐọc trước. Kế hoạch ở §CM-RESEARCH-PLAN.",
+          "research.grow-plan": "### Kế hoạch\nMột tệp khách.{{#if vn}} Chỉ VN.{{/if}}",
+          "research.grow-listen": "### Nghe\nChỉ đọc. {{t:contract.output}}",
+          "launch.grow-start": "### Mở đầu\nChọn kiểu; giới hạn thật ở §CM-LAUNCH.",
+          "hub.grow-board": "### Bảng\nMột sheet, năm tab: file ở Level-ups/Board."}
+    for module in ("research", "launch", "hub"):
+        e = {k: v for k, v in en.items() if k.startswith(module + ".")}
+        v = {k: x for k, x in vn.items() if k.startswith(module + ".")}
+        write(root, f"modules/en/{module}.md", sections_file(e))
+        write(root, f"modules/vn/{module}.md", sections_file(v, {k: cmlib.sha10(b) for k, b in e.items()}))
+    method = (root / "core/method.toml").read_text(encoding="utf-8")
+    write(root, "core/method.toml", method + LEVELUP_METHOD)
+    titles = {"levelup.research.title": ("{{name}} · Research", "{{name}} · Nghiên cứu"),
+              "levelup.launch.title": ("{{name}} · Launch", "{{name}} · Mở bán"),
+              "levelup.board.title": ("{{name}} · Board", "{{name}} · Bảng"),
+              "anchor.research": ("Rules", "Luật"), "anchor.research-plan": ("Plan and listening", "Kế hoạch và nghe"),
+              "anchor.launch": ("Launch start", "Mở bán"), "anchor.board": ("Your board", "Bảng của bạn")}
+    with open(root / "strings/en.toml", "a", encoding="utf-8") as fh:
+        for key, (e, _) in titles.items():
+            fh.write(f'"{key}" = {toml_str(e)}\n')
+    with open(root / "strings/vn.toml", "a", encoding="utf-8") as fh:
+        for key, (e, v) in titles.items():
+            fh.write(f'"{key}" = {{ text = {toml_str(v)}, src = "{cmlib.sha10(e)}" }}\n')
+    targets = (root / "platform/targets.toml").read_text(encoding="utf-8")
+    budgets = "".join(f'\n[budgets.levelup_{a}]\nartifact = "Level-ups/{LEVELUP_AREAS[a][0]}-{{EN,VN}}.md"\n'
+                      f'unit = "bytes"\nen = 2000\nvn = 3000\nlimit = ""\n' for a in FIXTURE_AREAS)
+    write(root, "platform/targets.toml", targets + budgets)
+    write(root, "templates/sheets/en/Campaigns.csv", "Key,Campaign\n")
+    write(root, "templates/sheets/vn/Chien-dich.csv", "Mã,Chiến dịch\n")
+    for rel in ["plugin/companions.toml"] + [f"plugin/agents/{n}.md" for n in PLUGIN_AGENTS]:
+        write(root, rel, (REPO / rel).read_text(encoding="utf-8"))
+    return root
+
+
+class LevelUpTests(TempRepo):
+    """Level-ups/<FILE>-<SUFFIX>.md, one per area per edition, from core/method.toml [levelup.<area>]."""
+
+    def build_all(self, editions=("en", "vn")):
+        with contextlib.redirect_stdout(io.StringIO()):
+            return build.build(self.root, list(editions))
+
+    def test_one_file_per_area_with_its_anchors(self):
+        make_levelup_repo(self.root)
+        manifest = self.build_all()
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            self.assertFalse((self.root / "dist" / ed / "Level-ups" / f"GROW-{suffix}.md").exists())
+            for file in ("RESEARCH", "LAUNCH", "BOARD"):
+                self.assertTrue((self.root / "dist" / ed / "Level-ups" / f"{file}-{suffix}.md").is_file(), file)
+        text = (self.root / "dist/en/Level-ups/RESEARCH-EN.md").read_text(encoding="utf-8")
+        self.assertTrue(text.startswith("# Content Machine · Research\n\n## §CM-RESEARCH · Rules\n\n### Rules\n"),
+                        text[:90])
+        self.assertLess(text.index("§CM-RESEARCH ·"), text.index("§CM-RESEARCH-PLAN ·"))
+        self.assertIn("### Plan\nOne buyer.", text)
+        self.assertIn("### Listen\nRead-only. Always reply in English.", text)   # two sections, one anchor
+        self.assertNotIn("VN only", text)
+        self.assertNotIn("@section", text)
+        self.assertEqual(text.count("Always reply in English."), 1)      # the contract only inside the section's own tag
+        self.assertTrue(text.endswith("\n") and not text.endswith("\n\n"))
+        vn = (self.root / "dist/vn/Level-ups/RESEARCH-VN.md").read_text(encoding="utf-8")
+        self.assertTrue(vn.startswith("# Content Machine · Nghiên cứu\n\n## §CM-RESEARCH · Luật\n"), vn[:80])
+        self.assertIn("Chỉ VN.", vn)
+        art = manifest["artifacts"]["en/Level-ups/RESEARCH-EN.md"]
+        self.assertEqual((art["target"], art["level_up"]), ("grow", "research"))
+        self.assertEqual(art["budgets"]["levelup_research"]["budget"], 2000)
+        self.assertEqual(set(art["anchors"]), {"§CM-RESEARCH", "§CM-RESEARCH-PLAN"})
+        # a level-up anchor may hold several sections: lint checks them one by one, so no per-anchor budget here
+        self.assertNotIn("method_section", art["anchors"]["§CM-RESEARCH"].get("budgets", {}))
+        self.assertEqual(manifest["artifacts"]["vn/Level-ups/LAUNCH-VN.md"]["budgets"]["levelup_launch"]["budget"], 3000)
+
+    def test_board_files_ship_next_to_the_board_file(self):
+        make_levelup_repo(self.root)
+        manifest = self.build_all()
+        self.assertEqual((self.root / "dist/en/Level-ups/Board/Campaigns.csv").read_text(encoding="utf-8"),
+                         "Key,Campaign\n")
+        self.assertEqual((self.root / "dist/vn/Level-ups/Board/Chien-dich.csv").read_text(encoding="utf-8"),
+                         "Mã,Chiến dịch\n")
+        self.assertEqual(manifest["artifacts"]["en/Level-ups/Board/Campaigns.csv"]["level_up"], "board")
+        self.assertFalse((self.root / "dist/en/Level-ups/Board/Chien-dich.csv").exists())
+
+    def test_anchor_ids_are_unique_across_files(self):
+        make_levelup_repo(self.root)
+        method = self.root / "core/method.toml"
+        method.write_text(method.read_text(encoding="utf-8").replace('id = "LAUNCH"', 'id = "TALK"'), encoding="utf-8")
+        code, _, err = self.quiet(build.main, "--edition", "en", "--root", str(self.root))
+        self.assertEqual(code, 1)
+        self.assertTrue(err.startswith("E161 core/method.toml: anchor id 'TALK' is in [method] and [levelup.launch]"),
+                        err)
+
+    def test_without_level_up_tables_the_target_is_skipped(self):
+        make_repo(self.root)
+        manifest = self.build_all()
+        self.assertIn({"edition": "en", "target": "grow",
+                       "reason": "core/method.toml has no [levelup.<area>] tables yet"}, manifest["skipped"])
+        self.assertEqual(list((self.root / "dist/en").glob("Level-ups/*.md")), [])
+
+    def test_plugin_has_a_companion_skill_per_area_and_the_agents(self):
+        make_levelup_repo(self.root)
+        self.build_all()
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            files = {n: zf.read(n) for n in zf.namelist()}
+        self.assertEqual(list(files), sorted(files))
+        skills = {n.split("/")[2] for n in files if n.startswith("content-machine/skills/")}
+        stems = ("cm-research", "cm-launch", "cm-board")
+        want = {f"content-machine-{ed}" for ed in ("en", "vn")} | {f"{s}-{ed}" for s in stems for ed in ("en", "vn")}
+        self.assertEqual(skills, want)
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            edition = cmlib.load_edition(ed, self.root)
+            for stem, file in (("cm-research", "RESEARCH"), ("cm-launch", "LAUNCH"), ("cm-board", "BOARD")):
+                name = f"{stem}-{ed}"
+                fields, body = front_matter(files[f"content-machine/skills/{name}/SKILL.md"].decode("utf-8"))
+                self.assertEqual(set(fields), {"name", "description"})
+                self.assertEqual(fields["name"], name)
+                self.assertTrue(0 < len(fields["description"]) <= 200)
+                self.assertNotIn("<", fields["description"])
+                self.assertNotIn(">", fields["description"])
+                self.assertTrue(body.startswith(render.render_string("contract.output", edition, "kit")), body[:80])
+                self.assertIn(f"{file}-{suffix}.md", body)
+                self.assertIn(f"content-machine-{ed}", body)
+                for other in stems:
+                    self.assertEqual(f"{other}-{ed}" in body, other != stem, (name, other))   # siblings, never itself
+                self.assertEqual(files[f"content-machine/skills/{name}/{file}-{suffix}.md"],
+                                 (self.root / "dist" / ed / "Level-ups" / f"{file}-{suffix}.md").read_bytes())
+            main = files[f"content-machine/skills/content-machine-{ed}/SKILL.md"].decode("utf-8")
+            first = main.split("---\n\n", 1)[1].split("\n", 1)[0]
+            self.assertIn(f"CONTENT-MACHINE-{suffix}.md", first)      # the pointer is still one line ...
+            for stem in stems:
+                self.assertIn(f"{stem}-{ed}", first)                   # ... and names the companions
+        self.assertIn("content-machine/skills/cm-board-en/Board/Campaigns.csv", files)
+        self.assertIn("content-machine/skills/cm-board-vn/Board/Chien-dich.csv", files)
+        self.assertEqual({n for n in files if n.startswith("content-machine/agents/")},
+                         {f"content-machine/agents/{a}.md" for a in PLUGIN_AGENTS})
+        manifest = json.loads(files["content-machine/.claude-plugin/plugin.json"])
+        self.assertEqual(manifest["keywords"], ["content", "coach", "vn", "en"])
+        self.assertIn("Companions", manifest["description"])
+
+    def test_every_companion_body_carries_the_house_rules_and_the_harness(self):
+        make_levelup_repo(self.root)
+        self.build_all()
+        rules = {"en": ("one NEXT line", "[NEEDS: …]", "never post, react, follow, DM or join",
+                        "subagents or parallel tasks", "separate reviewer", "sees only the result",
+                        "Claude in Chrome or ChatGPT agent", "asking once", "never on Day 0", "fake scarcity"),
+                 "vn": ("một dòng TIẾP", "[CẦN BẠN: …]", "không đăng, thả cảm xúc, theo dõi, nhắn tin hay vào nhóm",
+                        "trợ lý con hay việc song song", "người soát riêng", "Coach chỉ thấy kết quả",
+                        "Claude in Chrome hay ChatGPT agent", "hỏi đúng một lần", "không bao giờ ngày 0",
+                        "khan hiếm giả")}
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            for ed, phrases in rules.items():
+                for stem in ("cm-research", "cm-launch", "cm-board"):
+                    body = zf.read(f"content-machine/skills/{stem}-{ed}/SKILL.md").decode("utf-8")
+                    for phrase in phrases:
+                        self.assertIn(phrase, body, (stem, ed))
+
+    def test_agents_are_valid_and_short(self):
+        for name in PLUGIN_AGENTS:
+            text = (REPO / "plugin" / "agents" / f"{name}.md").read_text(encoding="utf-8")
+            lines = text.splitlines()
+            self.assertLessEqual(len(lines), 60, name)
+            self.assertEqual(lines[0], "---")
+            end = lines.index("---", 1)
+            fields = {ln.split(":", 1)[0]: ln.split(":", 1)[1].strip() for ln in lines[1:end]}
+            self.assertEqual(fields["name"], name)
+            self.assertTrue(fields["description"].startswith('"') and "/" in fields["description"], name)   # EN / VN
+        for name, must in (("cm-researcher", ("Never post", "role only", "VERBATIM")),
+                           ("cm-listener", ("2 or more different people in 2 or more independent places", "WATCH")),
+                           ("cm-writer", ("ONE piece", "[NEEDS: …]", "[CẦN BẠN: …]")),
+                           ("cm-reviewer", ("never rewrite", "fake scarcity", "Vietnamese naturalness"))):
+            text = (REPO / "plugin" / "agents" / f"{name}.md").read_text(encoding="utf-8")
+            for phrase in must:
+                self.assertIn(phrase.lower(), text.lower(), (name, phrase))
+        for name in ("cm-listener", "cm-writer", "cm-reviewer"):     # these never touch the web or write files
+            text = (REPO / "plugin" / "agents" / f"{name}.md").read_text(encoding="utf-8")
+            self.assertIn("\ntools: Read, Grep, Glob\n", text, name)
+
+    def test_a_missing_level_up_file_skips_the_plugin_not_the_edition(self):
+        make_levelup_repo(self.root)
+        self.build_all()
+        (self.root / "dist/vn/Level-ups/BOARD-VN.md").unlink()
+        manifest = self.build_all(("en",))                  # vn is read from dist/vn as it stands
+        self.assertIn({"edition": "all", "target": "plugin",
+                       "reason": "vn: Level-ups/BOARD-VN.md is not built yet"}, manifest["skipped"])
+        self.assertFalse((self.root / "dist/content-machine-plugin.zip").exists())
+
+    def test_companion_description_over_200_characters_stops_the_build(self):
+        make_levelup_repo(self.root)
+        path = self.root / "plugin/companions.toml"
+        text = path.read_text(encoding="utf-8")
+        path.write_text(text.replace("Content Machine board and nudges:",
+                                     "Content Machine board and nudges: " + "x" * 120, 1), encoding="utf-8")
+        code, _, err = self.quiet(build.main, "--edition", "all", "--root", str(self.root))
+        self.assertEqual(code, 1)
+        self.assertTrue(err.startswith("E102 plugin/companions.toml: cm-board-en: description is"), err)
+
+    def test_an_agent_over_60_lines_stops_the_build(self):
+        make_levelup_repo(self.root)
+        path = self.root / "plugin/agents/cm-writer.md"
+        path.write_text(path.read_text(encoding="utf-8") + "extra line\n" * 40, encoding="utf-8")
+        code, _, err = self.quiet(build.main, "--edition", "all", "--root", str(self.root))
+        self.assertEqual(code, 1)
+        self.assertIn("E161 plugin/agents/cm-writer.md", err)
+        self.assertIn("over the 60", err)
+
+    def test_the_plugin_is_deterministic(self):
+        make_levelup_repo(self.root)
+        first = self.build_all()
+        zip1 = (self.root / "dist/content-machine-plugin.zip").read_bytes()
+        time.sleep(1.1)
+        for p in self.root.rglob("*"):
+            if p.is_file():
+                os.utime(p)
+        second = self.build_all()
+        self.assertEqual(zip1, (self.root / "dist/content-machine-plugin.zip").read_bytes())
+        self.assertEqual(first["build_sha256"], second["build_sha256"])
+
+
+class TaskTargetTests(TempRepo):
+    """automation/*.tmpl rendered for lint; automation/tasks.toml names what each one is."""
+
+    def build_all(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            return build.build(self.root, ["en", "vn"])
+
+    def make(self):
+        make_repo(self.root)
+        en = "### Nudge\nOpen {{name}} and say 'next'."
+        vn = "### Nhắc\nMở {{name}} rồi nhắn 'tiếp'."
+        ids = ("automation.grow-task-week", "automation.grow-task-today")
+        write(self.root, "modules/en/automation.md", sections_file({i: en for i in ids}))
+        write(self.root, "modules/vn/automation.md", sections_file({i: vn for i in ids}, {i: cmlib.sha10(en) for i in ids}))
+        write(self.root, "automation/task-nudge.tmpl", "{{>automation.grow-task-week}}\n")
+        write(self.root, "automation/task-nudge-today.tmpl", "{{>automation.grow-task-today}}\n")
+        write(self.root, "automation/tasks.toml", textwrap.dedent('''
+            schema_version = 1
+            [[task]]
+            id = "week"
+            template = "task-nudge.tmpl"
+            section = "automation.grow-task-week"
+            [[task]]
+            id = "today"
+            template = "task-nudge-today.tmpl"
+            section = "automation.grow-task-today"
+            '''))
+        targets = (self.root / "platform/targets.toml").read_text(encoding="utf-8")
+        write(self.root, "platform/targets.toml", targets + textwrap.dedent('''
+            [budgets.task_nudge]
+            artifact = "automation/task-nudge.tmpl rendered"
+            unit = "chars_nfc"
+            en = 900
+            vn = 900
+            limit = ""
+            '''))
+
+    def test_every_nudge_stem_carries_the_task_nudge_budget_and_its_task_id(self):
+        self.make()
+        manifest = self.build_all()
+        for ed in ("en", "vn"):
+            for stem, task in (("task-nudge", "week"), ("task-nudge-today", "today")):
+                art = manifest["artifacts"][f"maintainer/tasks/{ed}/{stem}.txt"]
+                self.assertEqual(art["target"], "task")
+                self.assertEqual(art["task_id"], task)
+                self.assertEqual(art["budgets"]["task_nudge"]["budget"], 900, (ed, stem))
+        self.assertIn("Open Content Machine and say 'next'.",
+                      (self.root / "dist/maintainer/tasks/en/task-nudge-today.txt").read_text(encoding="utf-8"))
+
+    def test_a_task_that_names_a_missing_template_or_section_stops_the_build(self):
+        self.make()
+        path = self.root / "automation/tasks.toml"
+        good = path.read_text(encoding="utf-8")
+        path.write_text(good.replace('"task-nudge-today.tmpl"', '"task-nudge-gone.tmpl"'), encoding="utf-8")
+        code, _, err = self.quiet(build.main, "--edition", "en", "--root", str(self.root))
+        self.assertEqual(code, 1)
+        self.assertTrue(err.startswith("E161 automation/tasks.toml: [[task]] 'today' names template "
+                                       "'task-nudge-gone.tmpl'"), err)
+        path.write_text(good.replace('section = "automation.grow-task-today"', 'section = "automation.grow-task-none"'),
+                        encoding="utf-8")
+        code, _, err = self.quiet(build.main, "--edition", "en", "--root", str(self.root))
+        self.assertEqual(code, 1)
+        self.assertIn("section 'automation.grow-task-none', which does not exist", err)
+
+
+class RealRepoLevelUps(unittest.TestCase):
+    """The real source tree, built once into a temp folder: the four level-up files, the Board CSVs, the nudge
+    texts and the plugin with its 10 skills and 4 agents."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls._tmp = tempfile.TemporaryDirectory()
+        cls.root = Path(cls._tmp.name).resolve()
+        for name in ("core", "modules", "strings", "editions", "platform", "schemas", "locales", "templates",
+                     "automation", "plugin"):
+            if (REPO / name).is_dir():
+                shutil.copytree(REPO / name, cls.root / name, ignore=shutil.ignore_patterns("__pycache__"))
+        shutil.copy(REPO / "VERSION", cls.root / "VERSION")
+        with contextlib.redirect_stdout(io.StringIO()):
+            cls.manifest = build.build(cls.root, ["en", "vn"])
+        cls.method = tomllib.loads((cls.root / "core/method.toml").read_text(encoding="utf-8"))
+        cls.targets = tomllib.loads((cls.root / "platform/targets.toml").read_text(encoding="utf-8"))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._tmp.cleanup()
+
+    def test_the_four_level_up_tables_hold_the_proposed_anchors_in_order(self):
+        tables = {a: cfg for a, cfg in cmlib.levelup_tables(self.method)}
+        self.assertEqual(list(tables), list(LEVELUP_AREAS))
+        for area, (file, anchors) in LEVELUP_AREAS.items():
+            self.assertEqual(tables[area]["file"], file)
+            self.assertEqual([a["id"] for a in tables[area]["anchor"]], anchors, area)
+            self.assertEqual(tables[area]["skill"], f"cm-{area}")
+        self.assertNotIn("grow", self.method)           # the one GROW file is gone
+
+    def test_every_anchor_renders_in_both_editions_within_the_budget(self):
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            edition = cmlib.load_edition(ed, self.root)
+            titles = edition.strings
+            for area, (file, anchors) in LEVELUP_AREAS.items():
+                with self.subTest(edition=ed, area=area):
+                    path = self.root / "dist" / ed / "Level-ups" / f"{file}-{suffix}.md"
+                    text = path.read_text(encoding="utf-8")
+                    heads = [ln for ln in text.splitlines() if ln.startswith("## §CM-")]
+                    self.assertEqual([h.split(" ")[1] for h in heads], [f"§CM-{a}" for a in anchors])
+                    for head, anchor in zip(heads, anchors):
+                        title = cmlib.render(titles[f"anchor.{anchor.lower()}"], edition, "grow").strip()
+                        self.assertEqual(head, f"## §CM-{anchor} · {title}")      # a title string, never the bare id
+                    self.assertTrue(text.startswith("# Content Machine · "), text[:60])
+                    self.assertNotIn("@section", text)
+                    self.assertNotIn("{{", text)
+                    budget = self.targets["budgets"][f"levelup_{area}"][ed]
+                    self.assertEqual(budget, 24576)
+                    self.assertLessEqual(len(text.encode("utf-8")), budget, f"{path.name}: {len(text.encode('utf-8'))} B")
+                    entry = self.manifest["artifacts"][f"{ed}/Level-ups/{file}-{suffix}.md"]
+                    self.assertEqual(entry["budgets"][f"levelup_{area}"]["budget"], budget)
+                    self.assertEqual(entry["bytes"], len(text.encode("utf-8")))
+
+    def test_no_matt_gray_framework_names_in_the_level_up_files(self):
+        banned = ("Content Waterfall", "Content GPS", "4-3-2-1", "Authenticity Machine", "Founder OS")
+        for path in sorted((self.root / "dist").glob("*/Level-ups/*.md")):
+            text = path.read_text(encoding="utf-8")
+            for word in banned:
+                self.assertNotIn(word, text, path.name)
+
+    def test_the_board_files_are_in_level_ups_board_and_match_the_schema(self):
+        hub = tomllib.loads((self.root / "schemas/hub.toml").read_text(encoding="utf-8"))
+        for ed, fkey, nkey in (("en", "file", "name"), ("vn", "file_vn", "name_vn")):
+            for table in hub["campaign_board"]["tables"]:
+                path = self.root / "dist" / ed / "Level-ups" / "Board" / table[fkey]
+                self.assertTrue(path.is_file(), path)
+                header = next(csv.reader(io.StringIO(path.read_text(encoding="utf-8"))))
+                self.assertEqual(header, [cmlib.nfc(c[nkey]) for c in table["columns"]], f"{ed} {table[fkey]}")
+            self.assertEqual(len(list((self.root / "dist" / ed / "Level-ups" / "Board").glob("*.csv"))), 5)
+
+    def test_the_column_lines_of_the_board_prose_match_the_schema(self):
+        hub = tomllib.loads((self.root / "schemas/hub.toml").read_text(encoding="utf-8"))
+        for ed, nkey in (("en", "name"), ("vn", "name_vn")):
+            text = (self.root / "dist" / ed / "Level-ups" / f"BOARD-{ed.upper()}.md").read_text(encoding="utf-8")
+            block = text.split("## §CM-BOARD-COLUMNS", 1)[1].split("\n## §CM-", 1)[0]
+            lines = {ln.split(":", 1)[0]: ln.split(":", 1)[1] for ln in block.splitlines() if ":" in ln}
+            for table in hub["campaign_board"]["tables"]:
+                want = [cmlib.nfc(c[nkey]) for c in table["columns"]]
+                got = [re.sub(r"\s*\(.*\)$", "", c.strip()) for c in lines[cmlib.nfc(table[nkey])].split(" · ")]
+                self.assertEqual(got, want, f"{ed} {table[nkey]}")
+
+    def test_nudge_texts_are_within_the_task_nudge_budget(self):
+        tasks = tomllib.loads((self.root / "automation/tasks.toml").read_text(encoding="utf-8"))
+        self.assertEqual(tasks["caps"]["max_chars_filled"], self.targets["budgets"]["task_nudge"]["en"])
+        for ed in ("en", "vn"):
+            for row in tasks["task"]:
+                stem = row["template"].removesuffix(".tmpl")
+                path = self.root / "dist/maintainer/tasks" / ed / f"{stem}.txt"
+                self.assertLessEqual(cmlib.nfc_len(path.read_text(encoding="utf-8")), 900, (ed, stem))
+                art = self.manifest["artifacts"][f"maintainer/tasks/{ed}/{stem}.txt"]
+                self.assertEqual((art["task_id"], art["budgets"]["task_nudge"]["budget"]), (row["id"], 900))
+
+    def test_the_plugin_has_the_ten_skills_and_four_agents(self):
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            files = {n: zf.read(n) for n in zf.namelist()}
+        skills = sorted({n.split("/")[2] for n in files if n.startswith("content-machine/skills/")})
+        want = sorted([f"content-machine-{ed}" for ed in ("en", "vn")]
+                      + [f"{s}-{ed}" for s in PLUGIN_SKILLS for ed in ("en", "vn")])
+        self.assertEqual(len(skills), 10)
+        self.assertEqual(skills, want)
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            for area, (file, anchors) in LEVELUP_AREAS.items():
+                name = f"cm-{area}-{ed}"
+                fields, body = front_matter(files[f"content-machine/skills/{name}/SKILL.md"].decode("utf-8"))
+                self.assertEqual(set(fields), {"name", "description"})
+                self.assertEqual(fields["name"], name)
+                self.assertLessEqual(len(fields["description"]), 200, name)
+                self.assertGreater(len(fields["description"]), 80, name)
+                self.assertTrue(re.fullmatch(r"[a-z0-9-]{1,64}", name))
+                self.assertNotIn("claude", name)
+                for ch in "<>":
+                    self.assertNotIn(ch, fields["description"])
+                if ed == "vn":     # the description is Vietnamese
+                    self.assertRegex(fields["description"], "[ạảãàáâấầẩẫậăắằẳẵặẹẻẽèéêếềểễệịỉĩìíọỏõòóôốồổỗộơớờởỡợụủũùúưứừửữựỳỷỹýđ]")
+                self.assertGreaterEqual(fields["description"].count('"'), 4)     # >= 2 quoted plain trigger phrases
+                self.assertEqual(files[f"content-machine/skills/{name}/{file}-{suffix}.md"],
+                                 (self.root / "dist" / ed / "Level-ups" / f"{file}-{suffix}.md").read_bytes())
+                for anchor in anchors:        # the body points at every part of its file
+                    self.assertIn(f"§CM-{anchor}", body, (name, anchor))
+        self.assertEqual(sorted(n for n in files if n.startswith("content-machine/agents/")),
+                         [f"content-machine/agents/{a}.md" for a in PLUGIN_AGENTS])
+        entry = self.manifest["artifacts"]["content-machine-plugin.zip"]
+        self.assertEqual(entry["entries"], sorted(files))
+
+    def test_the_main_skill_pointer_names_the_four_companions(self):
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            for ed, suffix in (("en", "EN"), ("vn", "VN")):
+                text = zf.read(f"content-machine/skills/content-machine-{ed}/SKILL.md").decode("utf-8")
+                first = text.split("---\n\n", 1)[1].split("\n", 1)[0]
+                self.assertIn(f"CONTENT-MACHINE-{suffix}.md", first)
+                for stem in PLUGIN_SKILLS:
+                    self.assertIn(f"{stem}-{ed}", first)
+                self.assertIn("Level-ups", first)
+
+    def test_the_kits_level_up_line_names_files_that_exist(self):
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            kit = (self.root / "dist" / ed / f"CONTENT-MACHINE-{suffix}.md").read_text(encoding="utf-8")
+            line = next(ln for ln in kit.splitlines() if "{LAUNCH-" in ln)
+            self.assertIn(f"{{LAUNCH-{suffix}.md}}", line)
+            self.assertTrue((self.root / "dist" / ed / "Level-ups" / f"LAUNCH-{suffix}.md").is_file())
+            self.assertNotIn("GROW", kit)
+
+    def test_claude_plugin_validate_passes(self):
+        cli = shutil.which("claude") or "/opt/node22/bin/claude"
+        if not Path(cli).exists():
+            self.skipTest("the claude CLI is not installed")
+        with tempfile.TemporaryDirectory() as tmp:
+            with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+                zf.extractall(tmp)
+            for target in ("content-machine", "content-machine/skills", "content-machine/agents"):
+                done = subprocess.run([cli, "plugin", "validate", str(Path(tmp) / target)], capture_output=True,
+                                      text=True, timeout=120)
+                self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
+                self.assertIn("Validation passed", done.stdout)
+
+    def test_building_the_real_tree_twice_gives_the_same_bytes(self):
+        def snapshot():
+            return {p.relative_to(self.root).as_posix(): package.file_sha256(p)
+                    for p in sorted((self.root / "dist").rglob("*")) if p.is_file() and p.name != "manifest.json"}
+
+        before = snapshot()
+        time.sleep(1.1)
+        for p in self.root.rglob("*"):
+            if p.is_file() and "dist" not in p.parts:
+                os.utime(p)
+        with contextlib.redirect_stdout(io.StringIO()):
+            second = build.build(self.root, ["en", "vn"])
+        self.assertEqual(before, snapshot())
+        self.assertEqual(second["build_sha256"], self.manifest["build_sha256"])
 
 
 if __name__ == "__main__":

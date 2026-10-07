@@ -101,7 +101,7 @@
 #   Week 1 = 12-16 Oct, Week 2 = 19-23 Oct, Week 3 = 26-30 Oct, and Friday 30 Oct is the last Friday of the month. Talk
 #   days: proof-coach thứ Ba; hanh-android-free-nocomputer and tuan-multihat-plus thứ Hai; coldstart-coach, consultant
 #   and service-biz Chủ nhật. hanh-android-free-nocomputer runs Door B until Linh moves her into a project on Week-1
-#   day 4 (brain.vn.012). "GROW added" means Level-ups/GROW-VN.md is a project source (L4).
+#   day 4 (brain.vn.012). "GROW added" means the area's level-up file (Level-ups/LAUNCH-VN.md, RESEARCH-VN.md, BOARD-VN.md or STRATEGY-VN.md) is a project source (L4).
 # - Keywords and gifts (expected.toml): proof-coach LÃI ẢO + Sổ 3 Cột bản 1 trang; coldstart-coach CỨNG ĐƠ + 3 động
 #   tác 5 phút; consultant TUYỂN HOÀI + phiếu việc 1 trang; hanh NGẠI CHÀO + 5 câu nói thật khi cầm gương; service-biz
 #   PHÁT SINH + danh sách 7 chỗ hay phát sinh; tuan GỒNG LÃI + bảng tính ngược 1 trang.
@@ -1135,14 +1135,14 @@ id = "router.vn.036"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "Without GROW, a launch request offers the GROW level-up (one file) and nothing else"
-context = "Week 4, Tuesday 3 Nov 2026, Claude Pro. The project holds the instruction block, the method file and Brand Card v1 only (L0-L1); GROW has NOT been added."
+title = "Without the launch file, a launch request offers that level-up (one file) and nothing else"
+context = "Week 4, Tuesday 3 Nov 2026, Claude Pro. The project holds the instruction block, the method file and Brand Card v1 only (L0-L1); the launch level-up file (Level-ups/LAUNCH-VN.md) has NOT been added."
 input = '''anh muốn mở đợt nhận gói 3 tháng cho đầu năm, tối đa 3 doanh nghiệp. lên kế hoạch launch giúp anh'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)GROW-VN\.md|(?<!\w)GROW(?!\w)|Phát triển''',
-  '''(?i)file Phát triển|tải lên đây một lần|(một|1) (file|tệp)|thêm (file|tệp)''',
+  '''(?i)(launch|research|strategy|board)-VN\.md''',
+  '''(?i)tải lên đây một lần|(một|1) (file|tệp)|thêm (file|tệp)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1154,7 +1154,7 @@ invariants = ["I1", "I2", "I5", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: levelup (route set). UX §3.3 L4 GROW file: trigger = the first 'plan a launch', 'research deeper' or 'write an ad'; 1 upload; launch lives in GROW (UX §5.6). §CM-TODAY Nâng cấp: levelup.offer_grow in anh–em ('Phần đó nằm trong file Phát triển (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại em.'); strings grow.title '{{name}} · Phát triển'. Only this level-up is offered."""
+notes = """route: levelup (route set). UX §3.3 L4 level-up file (7 Oct: one file per area, Level-ups/LAUNCH-VN.md here): trigger = the first 'plan a launch', 'research deeper' or 'write an ad'; 1 upload; launch and ads live in LAUNCH (UX §5.6). §CM-TODAY Nâng cấp: levelup.offer_grow in anh–em ('Phần đó nằm trong LAUNCH-VN.md (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại em.'). Only this level-up is offered."""
 
 [[case]]
 id = "router.vn.037"

@@ -17,11 +17,11 @@ G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sa
 6 Sau mấy ngày bỏ trống: bài hôm nay, rồi "{{t:today.left_out}}" Không nói "trễ", không đếm bài lỡ. Chỉ xin lỗi: một câu ấm, không kèm bài; TIẾP "Nhắn 'tiếp' nhé."
 Đoạn chat: "{{name}}, đoạn chat mới nhất." Chỉ TIẾP trước ngày nói chuyện mới nói "{{t:chat.new_week}}"
 
-<!-- @section levelup.kit-offers src=1419ec9791 -->
+<!-- @section levelup.kit-offers src=9b9cf2a4ed -->
 ### Nâng cấp: 1 dòng trên TIẾP; không giữa buổi nói chuyện hay ngày 0 (trừ tin cuối)
 - Cuối ngày 0, hoặc khi họ hỏi: "{{t:levelup.offer_reminders}}" Rồi 2 link Google Calendar hằng tuần.
-- Tổng kết thứ Sáu Tuần 1: "{{t:levelup.offer_nudges}}" ChatGPT: 3 tác vụ (hoặc khung chép), ≤900 ký tự, có Bản đồ: thứ Hai "{{t:task.week.name}}", ngày thường "{{t:task.today.name}}", thứ Sáu "{{t:task.numbers.name}}", đều kết bằng "{{t:task.footer}}" Claude: một link lịch hằng ngày.
-- Có trợ lý, hoặc "mọi thứ nằm đâu?": "{{t:levelup.offer_board}}" Rồi Sheets (Tạo bản sao) hoặc Notion (Duplicate).
+- Tổng kết thứ Sáu Tuần 1: "{{t:levelup.offer_nudges}}" ChatGPT: 3 tác vụ (hoặc khung chép), ≤900 ký tự, có Bản đồ: thứ Hai "{{t:task.week.name}}", thứ Ba–Năm "{{t:task.today.name}}", thứ Sáu "{{t:task.numbers.name}}", đều kết bằng "{{t:task.footer}}" Claude: 1 tác vụ (§CM-NUDGES).
+- Có trợ lý, hoặc "mọi thứ nằm đâu?": "{{t:levelup.offer_board}}" Rồi §CM-BOARD.
 - Claude Pro, từ tuần 3: "{{t:levelup.offer_autopilot}}"
-- Lần đầu mở bán, nghiên cứu sâu, quảng cáo: "{{t:levelup.offer_grow}}"
+- Mở bán, quảng cáo (LAUNCH), nghiên cứu, chiến lược, bảng, thiếu file: "{{t:levelup.offer_grow}}"
 - Từ tuần 3, hoặc bài nghe chung chung: "{{t:levelup.offer_character}}" Rồi §CM-CHARACTER-LITE, buổi 1/3.

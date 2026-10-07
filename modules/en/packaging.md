@@ -1,0 +1,35 @@
+Maintainer: GROW packaging (packaging.grow-*): titles and thumbnail words (§CM-PACKAGING), hooks that do three jobs (§CM-HOOKS), the first 45 seconds of a long video (§CM-LONG-INTRO), carousels, newsletters and LinkedIn (§CM-TEXT-FORMATS).
+Sources: founder-sources (Matt Gray: title shapes, thumbnail words that add, the long-form open, the 5-line story, carousels, the contextual gift; Soo Wei Goh: three hooks per short, the funnel-shaped trust script, YouTube packaging; Hormozi: proof, promise, plan; Nik Setting: numbers in hooks set who comes, outcome over method, show proof); wf8-mattgray-playbook §0-§5 (renamed in plain words; his framework names never used), §9 (what not to copy); DECISIONS (strategy references 7 Oct; scripts only).
+Kit hooks untouched: §CM-FORMATS 1 (three hooks), §CM-POSTS 5 (carousel) keep their budgets; these sections add depth when GROW is loaded. EN examples here; VN examples are written natively in the VN file.
+
+<!-- @section packaging.grow-titles -->
+### Titles and thumbnail words ("title", "packaging", "thumbnail"; every long video and carousel, before it's written)
+1 Package first: the title before the piece; the piece keeps its promise. Draft about 20 silently; the best goes on the piece, 2 more only if asked (long video: §CM-LONG 2).
+2 Title shapes: how to {result} (without {what they fear}) · {area} is hard until you {do X} like this · the {small specific thing} that changed {result} · if I had to {get result} from zero, I'd do this · {N} mistakes {buyers} make with {X} · a {client role} asked me how to {result} (full breakdown) · don't {common move} until you watch this.
+3 Rules: the viewer's result, never the coach's brag · buyers' own words · exact odd numbers only from the coach's own facts, never income as the hook · the bracket removes an objection ("without ads") or adds a bonus ("and keep your evenings") · ≤60 characters; casual case is fine.
+4 Thumbnail words: 2-4 words that ADD to the title (the feeling, the twist or their proof number), never repeat it: "how to raise your prices without losing clients" + "skip the apology." · "why most new coaches quit in year one" + "it's not the niche." One idea in the picture (their before → after number, a calm face, the board with the steps); words only, no design brief.
+5 Re-package once: with 6+ long videos, one under their usual views after 7 days gets a new title OR new thumbnail words, never both.
+
+<!-- @section packaging.grow-hooks -->
+### Hooks that do three jobs (shorts, reels; deepens §CM-FORMATS 1)
+1 One idea, three hooks, none repeating another: the words on screen (the title) · the first frame, one thing a viewer sees (the coach holding a client's 3-page price list) · the first spoken line. Each opens a loop bigger than the topic.
+2 First-line shapes: "Most {buyers} think X. It's Y." · "I've {done X} {N} times. Only one thing mattered." · two things the viewer did today ("You checked the post five times. You deleted it at midnight.") · "Most {buyers} get this wrong when {moment}" (most, never 100%) · a buyer's line word for word, then "here's what I told her."
+3 Trust pieces (weeks 3-4, §CM-SEASON) run narrowing: a hook wide enough for buyers and the friends who share → one line why listen (their fact, never a brag) → the buyer's own words, so the wrong crowd drops off and buyers stay → the belief shift → one ask. Silent check: it breaks one belief · the hook is wide enough · one message.
+4 Numbers in a hook are theirs and decide who comes: the stage just above the buyer, never past their proof. Outcome over method. Show the proof; never say "with proof".
+5 Never the whole hook: a money flex or freebie (§CM-EDGE), "you won't believe", "they don't want you to know", "X is dead".
+
+<!-- @section packaging.grow-intro -->
+### The first 45 seconds of a long video (YouTube, podcast, Facebook video, live; used by §CM-LONG)
+1 Proof, promise, plan; the first section starts by 0:45. Proof: one fact of theirs that earns the next minute. Promise: what the viewer can do by the end, in buyer words. Plan: the 3-5 steps by plain name, plus one loop paid off near the end ("at the end, the one question that tells you if a lead will buy").
+2 Pick the opening by what they have:
+- CONTRARIAN: "Most coaches don't have a lead problem. They have a trust problem." → proof → two things the viewer does today → plan.
+- STORY: the viewer's two habits → their own old self → "I stopped X and started Y" → proof → plan.
+- CLIENT SESSION: the client's own words first → "if you're stuck at…" → one-line diagnosis → plan. Written client OK first.
+3 One "even if you…" line removes the objection (no list, no budget, no time). Then "Let's go."
+4 Between sections one bridge line sells the next: "So now you know what to post. Step 3 decides whether anyone sees it." Each section ends on one line worth quoting. No proof yet: the promise and plan carry it; proof becomes [NEEDS: …].
+
+<!-- @section packaging.grow-text -->
+### Carousels, newsletters, LinkedIn (deepens §CM-POSTS)
+1 CAROUSEL: words first, no design notes. Slide 1 the hook in big type; one message per slide (a short title, the claim, ≤3 bullets, a closing line), each a screenshot that stands alone; the last slide offers a gift named after THIS carousel's result + one comment word: "Comment PRICE and I'll send the price sheet I use." No such gift yet: [NEEDS: the gift].
+2 NEWSLETTER (email, Zalo): subject in buyer words: how I {result} (with {limit}) · I ignored {X} (it cost me {Y}) · {N} signs you've {problem} · a reframe ("You're not lazy. You're unclear."). Body: a scene, 80-120 words → the lesson in one line → their method in 3-5 short parts → one resource → "Hit reply and tell me…". One promo block at most; the offer only in a P.S. when one exists.
+3 LINKEDIN: a scene ("Last March a client cried on our call.") → how it looked vs felt → the turn → the principle as two roles ("A firefighter answers every call. A builder makes fewer calls happen.") → "One thing you can steal this week:" 3-5 checks → "try it for 14 days" → the ask. Or a list: hook ending ":", 5-7 items, each a 2-5 word head, one fact of theirs, a quotable last line. One-sentence paragraphs, no hashtags, ≤1 emoji; an image's words differ from the post's.

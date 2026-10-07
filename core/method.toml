@@ -14,7 +14,7 @@
 [method]
 title_key = "method.title"
 # Convention: sections named <module>.kit-<name> ship in this file; other sections are
-# for the L3 skill references (P4) or GROW (P5). Selectors ending in * are prefix matches.
+# for the L3 skill references (P4) or the level-up files (P5). Selectors ending in * are prefix matches.
 # Until a module is written its anchor is empty and build skips it (lint --release errors).
 
 [[method.anchor]]
@@ -101,15 +101,202 @@ sections = ["liked.kit-*"]
 id = "LOCALE"
 sections = ["locale.kit-*"]
 
-# ---------------------------------------------------------------- Level-up GROW file
-# Level-ups/GROW-<SUFFIX>.md (≤60 KB): launch, deep research, ads, packaging library (P5).
-# Same shape as [method]:
-#   [[grow.anchor]]
-#   id = "LAUNCH"
-#   sections = ["launch-plan.*"]
+# ---------------------------------------------------------------- Level-up files (P5)
+# One file per area under Level-ups/, built like the method file: Level-ups/<FILE>-<SUFFIX>.md, each
+# with a title line, the output contract line top and bottom, and one "## §CM-<ID> · <title>" block per
+# anchor (title from strings key "anchor.<id in lower case>"). Each file has its own byte budget
+# (platform/targets.toml, `budget` below, E101) and its own companion skill in the plugin (`skill`).
+# Anchor ids are unique across the method file and all level-up files: prose points at "§CM-<ID>" and
+# the model finds the id in whichever file holds it (the project route loads the files the coach added;
+# the plugin route loads the companion skill that owns the file).
+#   [levelup.<area>]                     file = "<FILE>"  skill = "<skill name stem>"  budget = "<budgets key>"
+#   [[levelup.<area>.anchor]]            id = "..."  sections = ["module.section", ...]
 
-[grow]
-title_key = "grow.title"
+# --- Level-ups/RESEARCH-<SUFFIX>.md: the research plan, read-only listening, the root and the brief
+[levelup.research]
+file = "RESEARCH"
+skill = "cm-research"
+title_key = "levelup.research.title"
+budget = "levelup_research"
+
+[[levelup.research.anchor]]
+id = "RESEARCH"
+sections = ["research.grow-rules", "research.grow-access"]
+
+[[levelup.research.anchor]]
+id = "RESEARCH-PLAN"
+sections = ["research.grow-plan", "research.grow-primary"]
+
+[[levelup.research.anchor]]
+id = "LISTEN"
+sections = ["research.grow-listen", "research.grow-boxes", "research.grow-paste"]
+
+[[levelup.research.anchor]]
+id = "RESEARCH-ROOT"
+sections = ["research.grow-context", "research.grow-why", "research.grow-brief"]
+
+[[levelup.research.anchor]]
+id = "RESEARCH-LOOP"
+sections = ["research.grow-drip", "research.grow-reforage"]
+
+# --- Level-ups/LAUNCH-<SUFFIX>.md: the launch program (type, math, brief, steps, calendars, desk, scripts, debrief) and ads
+[levelup.launch]
+file = "LAUNCH"
+skill = "cm-launch"
+title_key = "levelup.launch.title"
+budget = "levelup_launch"
+
+[[levelup.launch.anchor]]
+id = "LAUNCH"
+sections = ["launch-plan.grow-start"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-BRIEF"
+sections = ["launch-plan.grow-brief"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-STEPS"
+sections = ["launch-plan.grow-steps"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-DAYS"
+sections = ["launch-plan.grow-days"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-DESK"
+sections = ["launch-plan.grow-desk"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-POSTS"
+sections = ["launch-scripts.grow-posts"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-MESSAGES"
+sections = ["launch-scripts.grow-messages"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-LIVE"
+sections = ["launch-scripts.grow-live"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-DEBRIEF"
+sections = ["launch-plan.grow-debrief"]
+
+[[levelup.launch.anchor]]
+id = "ADS"
+sections = ["convert.grow-ads"]
+
+# --- Level-ups/BOARD-<SUFFIX>.md: the campaign board (one Google Sheet) and the three nudges
+[levelup.board]
+file = "BOARD"
+skill = "cm-board"
+title_key = "levelup.board.title"
+budget = "levelup_board"
+assets = "Board"                         # Level-ups/Board/: the five header-row CSVs that §CM-BOARD 2 imports ...
+assets_from = "templates/sheets/{lang}"  # ... copied from here (the plugin's board skill carries them too)
+
+[[levelup.board.anchor]]
+id = "BOARD"
+sections = ["hub.grow-board"]
+
+[[levelup.board.anchor]]
+id = "BOARD-COLUMNS"
+sections = ["hub.grow-columns"]
+
+[[levelup.board.anchor]]
+id = "BOARD-ROWS"
+sections = ["hub.grow-rows"]
+
+[[levelup.board.anchor]]
+id = "BOARD-CAMPAIGNS"
+sections = ["hub.grow-campaign"]
+
+[[levelup.board.anchor]]
+id = "NUDGES"
+sections = ["automation.grow-setup"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-JOBS"
+sections = ["automation.grow-jobs"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-RULES"
+sections = ["automation.grow-rules"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-TEXTS"
+sections = ["automation.grow-task-week", "automation.grow-task-today", "automation.grow-task-numbers"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-CLAUDE"
+sections = ["automation.grow-task-claude"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-LAUNCH"
+sections = ["automation.grow-task-launch"]
+
+# --- Level-ups/STRATEGY-<SUFFIX>.md: what to say and how to say it (positioning, season, ideas, packaging, hooks, long video)
+[levelup.strategy]
+file = "STRATEGY"
+skill = "cm-strategy"
+title_key = "levelup.strategy.title"
+budget = "levelup_strategy"
+
+[[levelup.strategy.anchor]]
+id = "STRATEGY"
+sections = ["strategy.grow-position"]
+
+[[levelup.strategy.anchor]]
+id = "SEASON"
+sections = ["strategy.grow-season"]
+
+[[levelup.strategy.anchor]]
+id = "WHAT-TO-SAY"
+sections = ["strategy.grow-what"]
+
+[[levelup.strategy.anchor]]
+id = "STRATEGY-REVIEW"
+sections = ["strategy.grow-review"]
+
+[[levelup.strategy.anchor]]
+id = "CHARACTER-DEEP"
+sections = ["character.grow-dig"]
+
+[[levelup.strategy.anchor]]
+id = "CHARACTER-SCENES"
+sections = ["character.grow-scenes"]
+
+[[levelup.strategy.anchor]]
+id = "IDEAS"
+sections = ["ideas.grow-engine"]
+
+[[levelup.strategy.anchor]]
+id = "MOMENTS"
+sections = ["ideas.grow-moments"]
+
+[[levelup.strategy.anchor]]
+id = "PACKAGING"
+sections = ["packaging.grow-titles"]
+
+[[levelup.strategy.anchor]]
+id = "HOOKS"
+sections = ["packaging.grow-hooks"]
+
+[[levelup.strategy.anchor]]
+id = "TEXT-FORMATS"
+sections = ["packaging.grow-text"]
+
+[[levelup.strategy.anchor]]
+id = "LONG"
+sections = ["fmt-long.grow-outline"]
+
+[[levelup.strategy.anchor]]
+id = "LONG-INTRO"
+sections = ["packaging.grow-intro"]
+
+[[levelup.strategy.anchor]]
+id = "LONG-CUTS"
+sections = ["fmt-long.grow-cuts"]
 
 # ---------------------------------------------------------------- L3 Autopilot skill references
 # One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by

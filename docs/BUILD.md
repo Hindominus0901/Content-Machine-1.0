@@ -19,9 +19,9 @@ A **target** is one shipped artifact family. Prose can switch on targets with fl
 | `kit` | `1-INSTRUCTIONS.txt` (the Project instruction block) | `core/<lang>/start-block.md` |
 | `phone` | `PHONE-STARTER.txt` | `core/<lang>/start-block.md` rendered with `phone` (or `core/<lang>/phone-starter.md` if present) |
 | `method` | `CONTENT-MACHINE-<EN|VN>.md` | `core/method.toml` `[method]` anchors → module sections |
-| `grow` | `Level-ups/GROW-<EN|VN>.md` | `core/method.toml` `[grow]` anchors → module sections |
+| `grow` | `Level-ups/<RESEARCH|LAUNCH|BOARD|STRATEGY>-<EN|VN>.md`, `Level-ups/Board/*.csv` | `core/method.toml` `[levelup.<area>]` anchors → module sections; `templates/sheets/<lang>/*.csv` |
 | `skill` | `Level-ups/autopilot/<skill_name>.zip` → `<skill_name>/SKILL.md`, `references/*.md`, `scripts/ship_lint.py` | `core/SKILL.md.tmpl`, `core/method.toml` `[skill]` references, `tools/shiplint.py` |
-| `task` | Task texts (nudge, standalone, connected, daily machine) printed by the machine in-session; samples rendered to `dist/maintainer/tasks/` for lint | `automation/*.tmpl` |
+| `task` | Task texts (nudge, standalone, connected, daily machine) printed by the machine in-session; samples rendered to `dist/maintainer/tasks/` for lint | `automation/*.tmpl`, listed in `automation/tasks.toml` |
 | `help` | `Help/*.html`, `START-HERE.html` | `guides/*.tmpl` |
 | `site` | `site/index.html` (hosted setup page) | `guides/setup-page.tmpl` |
 
@@ -37,7 +37,7 @@ id = "en"                    # en | vn
 lang = "en"                  # prose folder under core/ and modules/
 name = "Content Machine"     # the brand name lives in this one field
 skill_name = "content-machine"
-file_suffix = "EN"           # CONTENT-MACHINE-EN.md, GROW-EN.md
+file_suffix = "EN"           # CONTENT-MACHINE-EN.md, RESEARCH-EN.md, LAUNCH-EN.md ...
 zip_name = "Content-Machine-EN"
 
 [params]                     # {{param}} values used in prose and templates
@@ -100,7 +100,7 @@ Model-facing prose lives in `core/<lang>/*.md` and `modules/<lang>/*.md`. A file
 - Prose names hub properties as `` `hub:Status` ``. Lint E160 checks each name against `schemas/hub.toml`.
 - A line that must quote a banned phrase (e.g. a rule "never write 'fill in'") ends with `<!-- lint-ok:E143 -->`. Render strips the waiver.
 
-**`core/method.toml`** assembles targets from sections. Selectors are exact IDs or `module.*`.
+**`core/method.toml`** assembles targets from sections. Selectors are exact IDs or `module.*`. Anchor ids are unique across the method file and all level-up files (E161), so prose can point at `§CM-<ID>` and the model finds it in whichever file holds it. A `[levelup.<area>]` table may also carry `assets` and `assets_from` (a folder under `Level-ups/` and the source folder, `{lang}` filled) for files the coach uses next to the level-up; the board table ships its five CSVs this way.
 
 ```toml
 [method]                       # CONTENT-MACHINE-<SUFFIX>.md, the Day-0 kit method file
@@ -109,10 +109,14 @@ title_key = "method.title"     # strings key for the file title
 id = "TALK"                    # rendered as a heading carrying "§CM-TALK"
 sections = ["talk.core", "talk.mini"]
 
-[grow]                         # GROW-<SUFFIX>.md, same shape
-[[grow.anchor]]
-id = "LAUNCH"
-sections = ["launch-plan.*"]
+[levelup.launch]               # Level-ups/LAUNCH-<SUFFIX>.md: one table per area (research, launch, board, strategy)
+file = "LAUNCH"                # the file name stem
+skill = "cm-launch"            # the plugin's companion skill: cm-launch-<edition>
+title_key = "levelup.launch.title"
+budget = "levelup_launch"      # platform/targets.toml budget for the file (E101)
+[[levelup.launch.anchor]]      # same shape as [[method.anchor]]
+id = "LAUNCH-BRIEF"
+sections = ["launch-plan.grow-brief"]
 
 [skill]                        # Level-3 skill references, one file per entry
 [[skill.reference]]
@@ -172,20 +176,28 @@ dist/<edition>/                          → zipped by package.py as <zip_name>-
   CONTENT-MACHINE-<SUFFIX>-1-FILE.md     ChatGPT one-file kit (below)
   PHONE-STARTER.txt
   Help/…
-  Level-ups/GROW-<SUFFIX>.md
+  Level-ups/RESEARCH-<SUFFIX>.md         one level-up file per area, each <= 24,576 B (below)
+  Level-ups/LAUNCH-<SUFFIX>.md
+  Level-ups/BOARD-<SUFFIX>.md
+  Level-ups/STRATEGY-<SUFFIX>.md
+  Level-ups/Board/*.csv                  the five header-row files the board setup imports
   Level-ups/autopilot/<skill_name>.zip
-dist/content-machine-plugin.zip          one plugin for Claude and ChatGPT, both editions (below)
+dist/content-machine-plugin.zip          one plugin for Claude and ChatGPT, both editions, with companion skills and agents (below)
 dist/site/<edition>/index.html
 dist/maintainer/manifest.json            sha256 + bytes + NFC chars + lines + % of budget per artifact
 dist/maintainer/tasks/<edition>/*.txt    rendered task samples (lint budgets)
 dist/maintainer/notion-build-prompt-<edition>.md, sheets-<edition>/*.csv
 ```
 
+**Level-up files.** `build.py` writes one file per `[levelup.<area>]` table of `core/method.toml`: `Level-ups/<FILE>-<SUFFIX>.md` for RESEARCH, LAUNCH, BOARD and STRATEGY, in each edition. A file opens with a title line (strings key `levelup.<area>.title`) and holds one `## §CM-<ID> · <title>` block per anchor, the title coming from `anchor.<id in lower case>`; unlike the method file it does not repeat the output contract line (the kit's instruction block in a Project, or the companion skill in the plugin, carries it). The `grow` target flag renders it. Each file has its own byte budget (`budgets.levelup_<area>`, 24,576 B in both editions; lint E101) and every section it pulls in stays within `budgets.method_section` (one retrieval chunk; an anchor may hold two or three sections, so the check is per section, E101). A coach adds only the files the job needs: in a Project, one upload each (the kit's `levelup.offer_grow` line names the file); in the plugin nothing, because each file also sits next to its companion skill. `Level-ups/Board/` holds the five header-row CSVs that `§CM-BOARD` step 2 tells the coach to import into one Google Sheet; their column order is checked against `schemas/hub.toml [campaign_board]`.
+
+**Nudge texts.** `automation/tasks.toml` lists the scheduled nudges as data (`[[task]]`: id, template, section; `[caps]`, `[catch_up]`, `[launch_mode]`, `[apps.*]`). Each `automation/task-nudge*.tmpl` is `{{>automation.grow-task-<x>}}`; the `task` target renders it for both editions to `dist/maintainer/tasks/<edition>/<stem>.txt` with the `task_nudge` budget (900 characters, NFC; every stem that starts `task-nudge` shares it) and the task id in the manifest. A task that names a missing template or section stops the build (E161); lint checks `[caps] max_chars_filled` against the budget. Nudge texts are not exempt from the budget, only from the Ship Check card (they hand over to the project or the skill).
+
 **Zips are deterministic.** Entries are sorted, timestamps fixed at 1980-01-01 00:00, permissions fixed, and dotfiles, `__MACOSX` and `.DS_Store` are never included (the one exception is the plugin's `.claude-plugin/` folder, below). File names are ASCII only.
 
 **Portable kits.** Two outputs carry the kit and the method file outside a Project, both built from `dist/<edition>/` by `tools/build.py`:
 
-- **`dist/content-machine-plugin.zip`** is one plugin for both apps and both editions, in Claude's plugin format: `content-machine/.claude-plugin/plugin.json` (name, `version` from `VERSION`, a bilingual description), `README.md` (a bilingual install note) and one skill per edition, `skills/content-machine-vn/` and `skills/content-machine-en/`, each with a `SKILL.md` and its method file next to it. `SKILL.md` is a front matter (name, a description of at most 200 characters), a one-line pointer to the method file, then the edition's instruction block. The coach installs it in Claude with Customize → Plugins → Add → Upload plugin, and in ChatGPT with Settings → Security and login → Developer mode → Plugins → upload (OpenAI's plugin portal accepts a Claude plugin archive and converts it, so there is no second package), then types `Bắt đầu` or `Start`. It is a root file: `package.py` zips only `dist/<edition>/` and `build_sha256` hashes only those folders, so hand it out next to the release zips. `build.py` writes it itself (`portable_zip`, same sorted, fixed-date, fixed-mode rules) because `make_zip` drops dotfiles and a Claude plugin must hold `.claude-plugin/plugin.json`. Check it with `claude plugin validate <extracted content-machine folder>`.
+- **`dist/content-machine-plugin.zip`** is one plugin for both apps and both editions, in Claude's plugin format: `content-machine/.claude-plugin/plugin.json` (name, `version` from `VERSION`, a bilingual description), `README.md` (a bilingual install note) and one skill per edition, `skills/content-machine-vn/` and `skills/content-machine-en/`, each with a `SKILL.md` and its method file next to it. `SKILL.md` is a front matter (name, a description of at most 200 characters), a one-line pointer to the method file (with one sentence naming the companion skills), then the edition's instruction block. With `plugin/companions.toml` the plugin also holds, per edition and per `[levelup.<area>]`, a **companion skill** `skills/cm-<area>-<edition>/` (`cm-research-en`, `cm-launch-vn` ... 8 in all, 10 skills with the two main ones): a `SKILL.md` whose front matter is `name` (= the folder) and a quoted `description` of at most 200 characters in the edition's language that names the plain trigger phrases, then a body (the output contract line; speak as the main skill does, with the same Brand Card, address, voice and house rules and one NEXT line; a job-to-`§CM-` list so the model reads only the part it needs; the house rules; the harness: with subagents or parallel tasks split research by source and the week's pieces by piece and have a separate reviewer read before printing, browse only with the coach's own Claude in Chrome or ChatGPT agent after asking once), the area's level-up file as built in `dist/<edition>/Level-ups/`, and for the board skill the `Board/*.csv`. The words around the files are in `plugin/companions.toml` (model-facing text, so not in `strings/`). `plugin/agents/*.md` are copied to `content-machine/agents/` (Claude Code and Cowork load them; claude.ai chat loads skills only): `cm-researcher` (one source per run, read-only, people by role, returns verbatim buyer lines and where), `cm-listener` (KEEP needs 2+ people in 2+ places, else WATCH), `cm-writer` (one piece per run in the coach's voice) and `cm-reviewer` (an independent second read that flags and never rewrites). Each agent has a front matter `name` (= the file name) and `description` and at most 60 lines (E161). `lint` reads the built zip: every skill the sources promise is there with a valid front matter (E102) and its level-up file byte for byte (E170), every `§CM-` id a skill names exists (E130), the agents are short (E103). If a level-up file is not built yet the plugin is skipped with a note, like any later-phase target. The coach installs it in Claude with Customize → Plugins → Add → Upload plugin, and in ChatGPT with Settings → Security and login → Developer mode → Plugins → upload (OpenAI's plugin portal accepts a Claude plugin archive and converts it, so there is no second package), then types `Bắt đầu` or `Start`. It is a root file: `package.py` zips only `dist/<edition>/` and `build_sha256` hashes only those folders, so hand it out next to the release zips. `build.py` writes it itself (`portable_zip`, same sorted, fixed-date, fixed-mode rules) because `make_zip` drops dotfiles and a Claude plugin must hold `.claude-plugin/plugin.json`. Check it with `claude plugin validate <extracted content-machine folder>` (and the same on its `skills/` and `agents/` folders, which validates the components).
 - **`dist/<edition>/CONTENT-MACHINE-<SUFFIX>-1-FILE.md`** is the fallback for a ChatGPT account without plugins: a short header telling the model what the file is, the instruction block, then the method file. The coach attaches this one file in a ChatGPT chat and types `Bắt đầu` (VN) or `Start` (EN). It ships in the edition's release zip.
 
 Both carry the instruction block with its save line swapped: a plugin or one-file chat is not a Project, so the "Save to project" and "Add text content" line becomes strings key `portable.save` (copy the card and keep it; next day say `tiếp`/`next`, in a new chat paste the card first). The kit line being replaced is `PORTABLE[<lang>]["save_from"]` in `build.py`, and the build stops with E170 unless the rendered kit holds it exactly once, so a kit edit that touches that line must update `build.py` too. The other texts (skill description, pointer, one-file header, README) are `PORTABLE` constants in `build.py`, not strings: strings are coach-visible and E140 bars `§CM` from them. Without `portable.save` both outputs are skipped like any later-phase target; the plugin needs both editions, and a one-edition build reads the other from `dist/` or, if it cannot, removes an older plugin zip.
@@ -198,9 +210,9 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 
 | Code | Rule |
 |---|---|
-| E101 | Budget exceeded (artifact vs `targets.toml` budget, NFC chars, bytes or lines) |
-| E102 | Skill name or description invalid (length, charset, folder match, forbidden words) |
-| E103 | Reference over 150 lines or 9 KB; references over 200 KB total; a route loads more than 4 files |
+| E101 | Budget exceeded (artifact vs `targets.toml` budget, NFC chars, bytes or lines): the method file and each level-up file, each method anchor and each section of a level-up anchor (`method_section`), each task text |
+| E102 | Skill name or description invalid (length, charset, folder match, forbidden words), in the Autopilot skill and in every plugin skill and agent front matter |
+| E103 | Reference over 150 lines or 9 KB; references over 200 KB total; a route loads more than 4 files; a plugin agent over 60 lines |
 | E110 | VN string missing (parity), including a `trigger_vn` / `rules_vn` (router) or `checks_vn` (format checks) that a skill reference needs |
 | E111 | VN string stale (`src` hash mismatch) |
 | E112 | Placeholder set differs between EN and VN |
@@ -209,7 +221,7 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 | E120 | PENDING_VN key not accepted (release) |
 | E121 | `verified_on` older than `max_age_days`, or a release-blocking limit still `VERIFY` (release) |
 | E122 | Limit marked VERIFY carries a date, or a verified limit has no date |
-| E130 | Router: a route loads a missing file, a reference is unreachable, or a kit anchor is not named in the start-block |
+| E130 | Router: a route loads a missing file, a reference is unreachable, or a kit anchor is not named in the start-block; a `§CM-<ID>` in a built method file, level-up file or companion skill that no anchor has |
 | E131 | Instruction sandwich missing (contract line at top and bottom of a reference or the start-block) |
 | E132 | Ship Check card missing from the start-block, SKILL.md or a task template |
 | E140 | Deny-listed jargon in coach-visible text (`locales/<lang>/deny-list.txt`) |
@@ -225,7 +237,7 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 | E153 | `qa/` or `evals/` content inside a shipped zip |
 | E160 | Unknown hub property name used in prose (not in `schemas/hub.toml`) |
 | E161 | Bad TOML, or a schema file missing a required key (`tools/cmschema.py` checks `schemas/*.toml` as a set) |
-| E170 | Render error (unknown param or string key, unbalanced block), including an anchor with sections but no `anchor.<id>` title string |
+| E170 | Render error (unknown param or string key, unbalanced block), including an anchor with sections but no `anchor.<id>` title string; a plugin skill or agent the sources promise that is missing, or a level-up file in the plugin that differs from `dist/<edition>/Level-ups/` |
 | W2xx | Warnings: budget above 90%, a string unused by any template, a section unused by any target |
 
 ## 8. Runtime lint and graders

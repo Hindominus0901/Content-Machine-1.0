@@ -8,13 +8,16 @@ Per edition:
     PHONE-STARTER.txt                  phone  core/<lang>/phone-starter.md, else start-block.md
     CONTENT-MACHINE-<SUFFIX>.md        method core/method.toml [method] anchors
     CONTENT-MACHINE-<SUFFIX>-1-FILE.md onefile the kit + the method file, as one file for ChatGPT
-    Level-ups/GROW-<SUFFIX>.md         grow   core/method.toml [grow] anchors
+    Level-ups/<FILE>-<SUFFIX>.md       grow   core/method.toml [levelup.<area>] anchors; <FILE> is RESEARCH, LAUNCH,
+                                              BOARD or STRATEGY, one file per area
+    Level-ups/Board/*.csv              grow   templates/sheets/<lang>/*.csv: the five header-row files of the board
     Level-ups/autopilot/<skill>.zip    skill  core/SKILL.md.tmpl + [skill] references + tools/shiplint.py
     START-HERE.html                    help   strings starthere.title / starthere.body
     Help/<name>.html                   help   guides/<name>.tmpl
     dist/site/<edition>/index.html     site   guides/setup-page.tmpl
-    dist/content-machine-plugin.zip    plugin both editions' kit + method file, one plugin for Claude and ChatGPT
-    dist/maintainer/tasks/<edition>/   task   automation/*.tmpl (samples for lint budgets)
+    dist/content-machine-plugin.zip    plugin both editions' kit + method file + 4 level-up companions each, 4 agents;
+                                              one plugin for Claude and ChatGPT
+    dist/maintainer/tasks/<edition>/   task   automation/*.tmpl (samples for lint budgets; task-nudge* at task_nudge)
 
 A source that a later phase writes is skipped with a note in
 dist/maintainer/manifest.json, never an error; `lint --release` turns every
@@ -45,7 +48,6 @@ FILE_BUDGETS = {
     "kit": ["instructions_block"],
     "phone": ["phone_starter"],
     "method": ["method_file"],
-    "grow": ["grow_file"],
     "skill": ["skill_zip"],
 }
 SKILL_MD_BUDGETS = ["skill_md_lines", "skill_md_bytes"]
@@ -61,6 +63,8 @@ SITE_TEMPLATE = "setup-page.tmpl"
 #   pointer      one line under the front matter that points SKILL.md to the method file next to it
 #   intro        the one-file kit's opening, then the headings h_instructions and h_method
 #   readme       this edition's half of the plugin's README.md: what to do in Claude and in ChatGPT, then what to type
+#   companions   one sentence added to the pointer when the plugin has companion skills (plugin/companions.toml);
+#                {{skills}} is filled with their names and plain part names
 #   save_from    the kit's own save line, exactly as core/<lang>/start-block.md prints it in 1-INSTRUCTIONS.txt. The
 #                outputs carry strings key portable.save instead (a chat is not a project, so "Save to project" and
 #                "Add text content" do not apply). If the kit stops printing save_from exactly once, the build
@@ -74,6 +78,8 @@ PORTABLE = {
                    "§CM-…: read that part before the job it covers.",
         "save_from": "Save: ChatGPT: ⋯ under the card → Save to project. Claude: copy it, + by the project files → "
                      "Add text content. Backup: email it to yourself.",
+        "companions": "Companion skills carry the level-ups: {{skills}}. When a job is theirs, use that skill, and never "
+                      "ask the coach to upload a Level-ups file.",
         "h_instructions": "INSTRUCTIONS",
         "h_method": "METHOD",
         "intro": "# {{name}} — a file for the AI\n\nYou are the AI receiving this file. Read all of it. "
@@ -101,6 +107,8 @@ PORTABLE = {
                    "§CM-…: đọc đúng phần đó trước khi làm việc nó nói tới.",
         "save_from": "Lưu: ChatGPT: ⋯ dưới card → Lưu vào dự án. Claude: chép card, + cạnh file của project → "
                      'Add text content. Dự phòng: gửi vào Zalo "Cloud của tôi".',
+        "companions": "Các skill đồng hành giữ phần nâng cấp: {{skills}}. Việc nào của skill đó thì dùng skill đó, "
+                      "không bảo coach tải file Level-ups lên.",
         "h_instructions": "HƯỚNG DẪN",
         "h_method": "PHƯƠNG PHÁP",
         "intro": "# {{name}} — file cho AI đọc\n\nBạn là AI đang nhận file này. Đọc hết file. Phần "
@@ -131,7 +139,11 @@ PLUGIN_NAME = "content-machine"
 PLUGIN_EDITIONS = ("vn", "en")
 PLUGIN_DESCRIPTION = ("Content Machine for coaches (Tiếng Việt + English): a voice dump becomes one message, "
                       "a video to film today and a week plan.")
+PLUGIN_DESCRIPTION_COMPANIONS = " Companions for research, launch and ads, board and nudges, strategy."
 PLUGIN_KEYWORDS = ["content", "coach", "vn", "en"]
+COMPANIONS_FILE = Path("plugin") / "companions.toml"     # the companion skills' words (docs/BUILD.md §6)
+AGENTS_DIR = Path("plugin") / "agents"                    # the plugin's agents, copied as they are
+AGENT_MAX_LINES = 60
 PLUGIN_README_HEAD = "# Content Machine — plugin\n\nTiếng Việt: gõ `{vn}` · English: type `{en}`"
 
 
@@ -451,7 +463,8 @@ class EditionBuild:
         self.build_kit()
         self.build_phone()
         self.build_anchor_file("method", f"CONTENT-MACHINE-{self.ed.file_suffix}.md")
-        self.build_anchor_file("grow", f"Level-ups/GROW-{self.ed.file_suffix}.md")
+        self.build_levelups()
+        self.build_levelup_assets()
         self.build_skill()
         self.build_portable()
         self.build_start_here()
@@ -486,13 +499,58 @@ class EditionBuild:
         key = f"anchor.{anchor_id.lower()}"
         return render_string(key, self.ed, target) if key in self.ed.strings else anchor_id
 
-    def build_anchor_file(self, table: str, relpath: str) -> None:
-        """CONTENT-MACHINE-*.md from [method], GROW-*.md from [grow]."""
-        target = table
+    def build_levelups(self) -> None:
+        """Level-ups/<FILE>-<SUFFIX>.md from each [levelup.<area>] table (RESEARCH, LAUNCH, BOARD, STRATEGY)."""
+        if self.method is None:
+            self.report.skip(self.id, "grow", "core/method.toml not present yet")
+            return
+        tables = cmlib.levelup_tables(self.method)
+        if not tables:
+            self.report.skip(self.id, "grow", "core/method.toml has no [levelup.<area>] tables yet")
+            return
+        seen: dict[str, str] = {}
+        for table, rows in [("method", (self.method.get("method") or {}).get("anchor", []))] + \
+                [(f"levelup.{a}", cfg.get("anchor", [])) for a, cfg in tables]:
+            for row in rows:
+                aid = row.get("id")
+                if aid in seen:
+                    raise CMError("E161", f"anchor id '{aid}' is in [{seen[aid]}] and [{table}]; §CM-ids are unique "
+                                          "across the method file and the level-up files", "core/method.toml")
+                seen[aid] = table
+        for area, cfg in tables:
+            name = cfg.get("file")
+            if not isinstance(name, str) or not name.isascii() or not name.isalnum():
+                raise CMError("E161", f"[levelup.{area}] needs file = an ASCII name such as \"RESEARCH\"",
+                              "core/method.toml")
+            budget = cfg.get("budget")
+            self.build_anchor_file(f"levelup.{area}", f"Level-ups/{name}-{self.ed.file_suffix}.md", cfg=cfg,
+                                   target="grow", budgets=[budget] if budget else [], area=area)
+
+    def build_levelup_assets(self) -> None:
+        """Level-ups/<assets>/*: the files a level-up tells the coach to use (the board's five header-row CSVs)."""
+        for area, cfg in cmlib.levelup_tables(self.method):
+            folder = cfg.get("assets")
+            if not folder:
+                continue
+            src = self.src(*str(cfg.get("assets_from", "")).format(lang=self.ed.lang).split("/"))
+            files = sorted(src.glob("*.csv")) if src.is_dir() else []
+            if not files:
+                self.report.skip(self.id, "grow", f"{cmlib.rel(src, self.root)}/*.csv not present yet",
+                                 item=f"Level-ups/{folder}/")
+                continue
+            for f in files:
+                out = self.write(self.out / "Level-ups" / folder / f.name, f.read_bytes())
+                self.record(out, "grow", source=cmlib.rel(f, self.root), level_up=area)
+
+    def build_anchor_file(self, table: str, relpath: str, cfg: dict | None = None, target: str | None = None,
+                          budgets: list[str] | None = None, area: str | None = None) -> None:
+        """CONTENT-MACHINE-*.md from [method]; a Level-ups/<FILE>-*.md from one [levelup.<area>] (target grow)."""
+        target = target or table
         if self.method is None:
             self.report.skip(self.id, target, "core/method.toml not present yet")
             return
-        cfg = self.method.get(table) or {}
+        cfg = cfg if cfg is not None else (self.method.get(table) or {})
+        budgets = FILE_BUDGETS.get(target, []) if budgets is None else budgets
         anchors = cfg.get("anchor", [])
         if not anchors:
             self.report.skip(self.id, target, f"core/method.toml [{table}] has no anchors yet")
@@ -523,7 +581,10 @@ class EditionBuild:
             return
         head = [f"# {self.title_for(table, cfg, target)}\n"]
         contract = []
-        if CONTRACT_KEY in self.ed.strings:
+        # The method file opens and closes with the output contract line (the instruction sandwich). A level-up file
+        # carries only its title: the kit's instruction block (Project route) or the companion skill (plugin) says it,
+        # and the bytes go to the content (VN needs about 1.3x the bytes of EN for the same words).
+        if table == "method" and CONTRACT_KEY in self.ed.strings:
             contract = [render_string(CONTRACT_KEY, self.ed, target) + "\n"]
         text = cmlib.finish("\n".join(head + contract + [b for _, b in blocks] + contract))
         out = self.write(self.out / relpath, text)
@@ -535,7 +596,8 @@ class EditionBuild:
             if b:
                 entry["budgets"] = {"method_section": b}
             anchor_sizes[f"§CM-{aid}"] = entry
-        self.record(out, target, FILE_BUDGETS[target], anchors=anchor_sizes)
+        extra = {"level_up": area} if area else {}
+        self.record(out, target, budgets, anchors=anchor_sizes, **extra)
 
     def build_skill(self) -> None:
         tmpl = self.src("core", "SKILL.md.tmpl")
@@ -595,13 +657,13 @@ class EditionBuild:
             return {}
         return cmlib.load_toml(path)
 
-    def portable_text(self, key: str) -> str:
+    def portable_text(self, key: str, **tags: str) -> str:
         """One PORTABLE text for this edition, its {{tags}} filled."""
         table = PORTABLE[self.ed.lang]
         text = table[key]
         local = {"h_instructions": table["h_instructions"], "h_method": table["h_method"],
                  "cmd_start": render_string("cmd.start", self.ed, "kit"),
-                 "cmd_next": render_string("cmd.next", self.ed, "kit")}
+                 "cmd_next": render_string("cmd.next", self.ed, "kit"), **tags}
         for tag, value in local.items():
             text = text.replace("{{%s}}" % tag, value)
         return cmlib.render(text, self.ed, "kit", path=f"tools/build.py PORTABLE['{self.ed.lang}']['{key}']").strip()
@@ -631,8 +693,10 @@ class EditionBuild:
     def method_path(self) -> Path:
         return self.out / f"CONTENT-MACHINE-{self.ed.file_suffix}.md"
 
-    def portable_parts(self) -> dict:
-        """What the plugin and the one-file kit are made of, from the kit and method file built in dist/<ed>/."""
+    def portable_parts(self, skills: str = "") -> dict:
+        """What the plugin and the one-file kit are made of, from the kit and method file built in dist/<ed>/.
+
+        `skills` names the companion skills for the pointer line ("" when the plugin has none)."""
         instructions = self.portable_instructions(self.out / "1-INSTRUCTIONS.txt")
         method = self.method_path()
         name = f"content-machine-{self.id}"
@@ -643,19 +707,80 @@ class EditionBuild:
                                   "and must not contain '<' or '>'", f"tools/build.py PORTABLE['{self.ed.lang}']")
         # description as a double-quoted YAML scalar (JSON quoting is valid YAML): it holds ': ' and quotes
         front = f"---\nname: {name}\ndescription: {json.dumps(description, ensure_ascii=False)}\n---\n\n"
+        pointer = self.portable_text("pointer")
+        if skills:
+            pointer += " " + self.portable_text("companions", skills=skills)
         heading = PORTABLE[self.ed.lang]
         one = (self.portable_text("intro") + f"\n\n## {heading['h_instructions']}\n\n" + instructions.rstrip()
                + f"\n\n## {heading['h_method']}\n\n" + method.read_text(encoding="utf-8"))
         return {
             "name": name,
             "brand": self.ed.name,
-            "skill_md": cmlib.nfc(front + f"{self.portable_text('pointer')}\n\n{instructions}").encode("utf-8"),
+            "skill_md": cmlib.nfc(front + f"{pointer}\n\n{instructions}").encode("utf-8"),
             "method_name": method.name,
             "method": method.read_bytes(),
             "one_file": cmlib.finish(one),
             "readme": self.portable_text("readme"),
             "cmd_start": render_string("cmd.start", self.ed, "kit"),
         }
+
+    # -- companion skills (plugin/companions.toml: one per [levelup.<area>], next to the main skill)
+
+    def levelup_path(self, cfg: dict) -> Path:
+        return self.out / "Level-ups" / f"{cfg['file']}-{self.ed.file_suffix}.md"
+
+    def companion_blocker(self) -> str | None:
+        """Why the companion skills cannot be built for this edition yet (a level-up file is not in dist/), or None."""
+        for area, cfg in cmlib.levelup_tables(self.method):
+            if not self.levelup_path(cfg).exists():
+                return f"Level-ups/{cfg['file']}-{self.ed.file_suffix}.md is not built yet"
+        return None
+
+    def companion_parts(self, companions: dict) -> list[dict]:
+        """One dict per companion skill: its folder name, part name, SKILL.md bytes and the files next to it."""
+        lang, where = self.ed.lang, cmlib.rel(self.root / COMPANIONS_FILE, self.root)
+        common = (companions.get("common") or {}).get(lang) or {}
+        for key in ("body", "agents"):
+            if not isinstance(common.get(key), str) or not common[key].strip():
+                raise CMError("E161", f"[common.{lang}] needs a {key} text", where)
+        tables = cmlib.levelup_tables(self.method)
+        names = {area: f"{cfg.get('skill')}-{self.id}" for area, cfg in tables}
+        out = []
+        for area, cfg in tables:
+            text = ((companions.get("area") or {}).get(area) or {}).get(lang) or {}
+            for key in ("description", "part", "jobs", "extra"):
+                if not isinstance(text.get(key), str):
+                    raise CMError("E161", f"[area.{area}.{lang}] needs {key}", where)
+            name = names[area]
+            if not name.isascii() or not all(c.islower() or c.isdigit() or c == "-" for c in name) or len(name) > 64 \
+                    or any(w in name for w in ("claude", "anthropic")):
+                raise CMError("E102", f"companion skill name '{name}' is invalid (a-z, 0-9, -, at most 64, "
+                                      "no 'claude' or 'anthropic')", "core/method.toml")
+            desc = cmlib.nfc(text["description"]).strip()
+            if cmlib.nfc_len(desc) > PLUGIN_DESCRIPTION_MAX or "<" in desc or ">" in desc:
+                raise CMError("E102", f"{name}: description is {cmlib.nfc_len(desc)} characters (max "
+                                      f"{PLUGIN_DESCRIPTION_MAX}) and must not contain '<' or '>'", where)
+            level_file = self.levelup_path(cfg)
+            tags = {
+                "contract": render_string("contract.output", self.ed, "kit"),
+                "part": text["part"], "main": f"content-machine-{self.id}", "file": level_file.name,
+                "jobs": text["jobs"].rstrip("\n"), "extra": text["extra"],
+                "siblings": ", ".join(n for a, n in names.items() if a != area), "agents": common["agents"],
+            }
+            body = common["body"]
+            for tag, value in tags.items():
+                body = body.replace("{{%s}}" % tag, value)
+            body = cmlib.render(body, self.ed, "kit", path=f"{where} [common.{lang}] for {name}")
+            front = f"---\nname: {name}\ndescription: {json.dumps(desc, ensure_ascii=False)}\n---\n\n"
+            files = {level_file.name: level_file.read_bytes()}
+            assets = cfg.get("assets")
+            if assets:
+                folder = self.out / "Level-ups" / assets
+                for f in sorted(folder.glob("*")) if folder.is_dir() else []:
+                    files[f"{assets}/{f.name}"] = f.read_bytes()
+            out.append({"name": name, "area": area, "part": text["part"],
+                        "skill_md": cmlib.nfc(front + body.strip() + "\n").encode("utf-8"), "files": files})
+        return out
 
     def build_portable(self) -> None:
         """CONTENT-MACHINE-<SUFFIX>-1-FILE.md from the built kit and method file."""
@@ -717,40 +842,116 @@ class EditionBuild:
         self.record(out, "site", source=cmlib.rel(site, self.root))
 
     def build_tasks(self) -> None:
+        """automation/*.tmpl rendered with the task flag to dist/maintainer/tasks/<edition>/<stem>.txt.
+
+        automation/tasks.toml lists the scheduled nudges as data ([[task]]: id, template, section); a template or a
+        section it names that does not exist stops the build. Each rendered text carries the budget its stem
+        names: task-nudge* at task_nudge (900 characters), task-standalone* and task-connected* at their own.
+        """
         auto = self.src("automation")
         tmpls = sorted(auto.glob("*.tmpl")) if auto.is_dir() else []
         if not tmpls:
             self.report.skip(self.id, "task", "automation/*.tmpl not present yet")
             return
+        listed = self.listed_tasks(auto, {t.name for t in tmpls})
         budgets = self.report.targets.get("budgets", {})
         for t in tmpls:
             extra = tuple(f for f in cmlib.EXTRA_FLAGS if f in t.stem)
             text = render_file(t, self.ed, "task", extra, root=self.root)
             out = self.write(self.dist / "maintainer" / "tasks" / self.id / f"{t.stem}.txt", text)
-            names = [n for n, spec in budgets.items()
-                     if str(spec.get("artifact", "")).startswith(f"automation/{t.name}")]
-            self.record(out, "task", names, source=cmlib.rel(t, self.root))
+            names = [n for n, spec in budgets.items() if task_budget_matches(spec, t.stem)]
+            more = {"task_id": listed[t.name]} if t.name in listed else {}
+            self.record(out, "task", names, source=cmlib.rel(t, self.root), **more)
+
+    def listed_tasks(self, auto: Path, templates: set[str]) -> dict[str, str]:
+        """{template file: task id} from automation/tasks.toml; E161 when a task names a missing template or section."""
+        path = auto / "tasks.toml"
+        if not path.exists():
+            return {}
+        where = cmlib.rel(path, self.root)
+        data = cmlib.load_toml(path)
+        out: dict[str, str] = {}
+        for row in data.get("task", []):
+            tid, template, section = row.get("id"), row.get("template"), row.get("section")
+            if not tid or template not in templates:
+                raise CMError("E161", f"[[task]] '{tid}' names template '{template}', which is not in automation/", where)
+            if section not in self.sections:
+                raise CMError("E161", f"[[task]] '{tid}' names section '{section}', which does not exist", where)
+            out[template] = tid
+        return out
+
+
+def task_budget_matches(spec: dict, stem: str) -> bool:
+    """True when a targets.toml budget whose artifact is "automation/<name>.tmpl rendered" covers this template stem.
+
+    The budget is named for the family, so task-nudge-today and task-nudge-claude share task_nudge (lint E101 reads
+    them by the same prefix rule)."""
+    artifact = str(spec.get("artifact", ""))
+    if not artifact.startswith("automation/"):
+        return False
+    return stem.startswith(artifact[len("automation/"):].split(".tmpl")[0])
+
+
+def join_names(items: list[str], lang: str) -> str:
+    """'a, b and c' (EN) or 'a, b và c' (VN)."""
+    if len(items) < 2:
+        return "".join(items)
+    return ", ".join(items[:-1]) + (" và " if lang == "vn" else " and ") + items[-1]
+
+
+def plugin_agents(root: Path) -> dict[str, bytes]:
+    """plugin/agents/*.md as content-machine/agents/<name>.md: front matter name (= file name) and description,
+    at most AGENT_MAX_LINES lines (E161)."""
+    out: dict[str, bytes] = {}
+    folder = root / AGENTS_DIR
+    for f in sorted(folder.glob("*.md")) if folder.is_dir() else []:
+        where = cmlib.rel(f, root)
+        text = cmlib.nfc(f.read_text(encoding="utf-8"))
+        lines = text.splitlines()
+        if not lines or lines[0].strip() != "---" or "---" not in [ln.strip() for ln in lines[1:]]:
+            raise CMError("E161", "an agent file starts with a --- front matter", where)
+        head = lines[1:[ln.strip() for ln in lines[1:]].index("---") + 1]
+        fields = {ln.partition(":")[0].strip(): ln.partition(":")[2].strip() for ln in head if ":" in ln}
+        if fields.get("name") != f.stem or not fields.get("description"):
+            raise CMError("E161", f"front matter needs name: {f.stem} and a description", where)
+        if len(lines) > AGENT_MAX_LINES:
+            raise CMError("E161", f"{len(lines)} lines, over the {AGENT_MAX_LINES} an agent may have", where)
+        out[f"{PLUGIN_NAME}/agents/{f.name}"] = cmlib.finish(text).encode("utf-8")
+    return out
 
 
 def build_plugin(root: Path, report: Report, builds: dict[str, EditionBuild]) -> None:
     """dist/content-machine-plugin.zip: both editions' skills in one Claude-format plugin.
 
     Read from dist/<edition>/ on disk, so a one-edition build still gets both skills if the other is built. A zip
-    from an earlier build is removed when this one cannot make a new one.
+    from an earlier build is removed when this one cannot make a new one. With plugin/companions.toml it also holds
+    one companion skill per level-up area per edition (SKILL.md + that area's level-up file) and plugin/agents/*.md.
     """
     out = root / "dist" / PLUGIN_ZIP
+    companions_path = root / COMPANIONS_FILE
+    companions = cmlib.load_toml(companions_path) if companions_path.exists() else None
     parts: dict[str, dict] = {}
+    extra: dict[str, list[dict]] = {}
+    langs: dict[str, str] = {}
     for ed in PLUGIN_EDITIONS:
         edition = builds.get(ed) or EditionBuild(root, ed, report)
-        reason = edition.portable_blocker()
+        langs[ed] = edition.ed.lang
+        reason = edition.portable_blocker() or (edition.companion_blocker() if companions else None)
         if reason:
             report.skip("all", "plugin", f"{ed}: {reason}")
             out.unlink(missing_ok=True)
             return
-        parts[ed] = edition.portable_parts()
+        extra[ed] = edition.companion_parts(companions) if companions else []
+        skills = join_names([f"{c['name']} ({c['part']})" for c in extra[ed]], edition.ed.lang)
+        parts[ed] = edition.portable_parts(skills)
+    readme_parts = [parts[ed]["readme"] for ed in PLUGIN_EDITIONS]
+    if companions:
+        readme_parts = [f"{parts[ed]['readme']}\n\n{companions['readme'][langs[ed]]['body'].strip()}"
+                        for ed in PLUGIN_EDITIONS]
     readme = "\n\n".join([PLUGIN_README_HEAD.format(**{ed: parts[ed]["cmd_start"] for ed in PLUGIN_EDITIONS}),
-                          *(parts[ed]["readme"] for ed in PLUGIN_EDITIONS)]) + "\n"
-    manifest = {"name": PLUGIN_NAME, "version": read_version(root), "description": PLUGIN_DESCRIPTION,
+                          *readme_parts]) + "\n"
+    description = PLUGIN_DESCRIPTION + (PLUGIN_DESCRIPTION_COMPANIONS if companions else "")
+    manifest = {"name": PLUGIN_NAME, "version": read_version(root), "description": description,
                 "author": {"name": parts[PLUGIN_EDITIONS[0]]["brand"]}, "keywords": PLUGIN_KEYWORDS}
     files = {f"{PLUGIN_NAME}/.claude-plugin/plugin.json":
              (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8"),
@@ -759,6 +960,13 @@ def build_plugin(root: Path, report: Report, builds: dict[str, EditionBuild]) ->
         part = parts[ed]
         files[f"{PLUGIN_NAME}/skills/{part['name']}/SKILL.md"] = part["skill_md"]
         files[f"{PLUGIN_NAME}/skills/{part['name']}/{part['method_name']}"] = part["method"]
+        for comp in extra[ed]:
+            base = f"{PLUGIN_NAME}/skills/{comp['name']}"
+            files[f"{base}/SKILL.md"] = comp["skill_md"]
+            for rel, data in comp["files"].items():
+                files[f"{base}/{rel}"] = data
+    if companions:
+        files.update(plugin_agents(root))
     data = portable_zip(files, cmlib.rel(out, root))
     out.write_bytes(data)
     report.artifacts[PLUGIN_ZIP] = {"edition": "all", "target": "plugin", **text_stats(data),

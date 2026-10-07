@@ -68,6 +68,18 @@ def load_toml(path: Path) -> dict:
         raise CMError("E161", f"bad TOML: {exc}", str(path))
 
 
+def levelup_tables(method: dict | None) -> list[tuple[str, dict]]:
+    """The [levelup.<area>] tables of core/method.toml in file order, as (area, table).
+
+    Each table is one Level-ups/<file>-<SUFFIX>.md (docs/BUILD.md §3): `file`, `skill`, `title_key`, `budget`
+    and its [[levelup.<area>.anchor]] entries. Malformed rows are returned as they are; lint reports them.
+    """
+    cfg = (method or {}).get("levelup")
+    if not isinstance(cfg, dict):
+        return []
+    return [(area, row) for area, row in cfg.items() if isinstance(row, dict)]
+
+
 def rel(path: Path, root: Path | None = None) -> str:
     root = root or ROOT
     try:

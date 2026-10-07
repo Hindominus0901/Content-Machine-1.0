@@ -74,9 +74,12 @@
 "mic.windows"   = { text = "Windows: bấm Win+H.", src = "d7e0fdfd3f" }
 "mic.claude_vn" = { text = "Bạn dùng micro trên bàn phím điện thoại, micro của Claude chưa nghe được tiếng Việt.", src = "0272e26c0b" }
 
-# Method and GROW file titles; one title per §CM anchor (core/method.toml)
+# Method and level-up file titles; one title per §CM anchor (core/method.toml [method], [levelup.<area>])
 "method.title"          = { text = "{{name}} · Phương pháp", src = "f30ce5ef69" }
-"grow.title"            = { text = "{{name}} · Phát triển", src = "5d8bb44be5" }
+"levelup.research.title" = { text = "{{name}} · Nghiên cứu", src = "758346b3b4" }
+"levelup.launch.title"  = { text = "{{name}} · Mở bán", src = "6e6ded3622" }
+"levelup.board.title"   = { text = "{{name}} · Bảng nội dung và lời nhắc", src = "a775a59ccf" }
+"levelup.strategy.title" = { text = "{{name}} · Chiến lược", src = "6f72338d42" }
 "anchor.talk"           = { text = "Buổi nói chuyện tuần", src = "9d5e232fb4" }
 "anchor.week"           = { text = "Viết bài cả tuần", src = "7a7c4293bc" }
 "anchor.today"          = { text = "Bài hôm nay", src = "dfc1723246" }
@@ -91,6 +94,46 @@
 "anchor.natural"        = { text = "Viết như người Việt nói", src = "0302e99f55" }
 "anchor.guardrails"     = { text = "Giới hạn và lời hứa", src = "e4c4889869" }
 "anchor.locale"         = { text = "Ngôn ngữ và thị trường", src = "b54ab26ed4" }
+# Level-up file anchors (research, launch, board, strategy)
+"anchor.research"       = { text = "Luật và cách đọc", src = "465ad5bba1" }
+"anchor.research-plan"  = { text = "Kế hoạch nghiên cứu và lời khách", src = "344dc04dcf" }
+"anchor.listen"         = { text = "Nghe khách nói, chỉ đọc", src = "5b118efa41" }
+"anchor.research-root"  = { text = "Bối cảnh, gốc rễ và brief", src = "1040f1383b" }
+"anchor.research-loop"  = { text = "Mỗi tuần, mỗi tháng", src = "431f61031c" }
+"anchor.launch"         = { text = "Chọn kiểu, tính số", src = "8752f88d52" }
+"anchor.launch-brief"   = { text = "Hồ sơ và giới hạn thật", src = "39490eed05" }
+"anchor.launch-steps"   = { text = "Mười chặng", src = "d8ff248ebb" }
+"anchor.launch-days"    = { text = "Lịch 7, 14, 21 ngày", src = "2e2d1c1cff" }
+"anchor.launch-desk"    = { text = "Chế độ mở bán và Bàn mở bán", src = "ef93046f0b" }
+"anchor.launch-posts"   = { text = "Bài và video mở bán", src = "fdb7313b50" }
+"anchor.launch-messages" = { text = "Tin Zalo, inbox, email", src = "989e8a1ff1" }
+"anchor.launch-live"    = { text = "Buổi live, lớp Zalo và bài mời", src = "9ddaa6edfe" }
+"anchor.launch-debrief" = { text = "Sau khi đóng đăng ký", src = "49616f6992" }
+"anchor.ads"            = { text = "Quảng cáo từ bài đã chạy tốt", src = "12fa347f37" }
+"anchor.board"          = { text = "Bảng nội dung: một Google Sheet", src = "69044226f2" }
+"anchor.board-columns"  = { text = "Cột của bảng", src = "b0a43b06a7" }
+"anchor.board-rows"     = { text = "Dòng để dán", src = "6128dea6f4" }
+"anchor.board-campaigns" = { text = "Chiến dịch", src = "30e9a08939" }
+"anchor.nudges"         = { text = "Ba lời nhắc", src = "b961114d9c" }
+"anchor.nudge-jobs"     = { text = "Mỗi lời nhắc chạy việc gì", src = "ad6de1f566" }
+"anchor.nudge-rules"    = { text = "Giới hạn và làm bù", src = "337f914aab" }
+"anchor.nudge-texts"    = { text = "Lời nhắc cho ChatGPT", src = "9c8ea0fa36" }
+"anchor.nudge-claude"   = { text = "Lời nhắc cho Claude", src = "46162914d3" }
+"anchor.nudge-launch"   = { text = "Lời nhắc ngày mở bán", src = "3f1d9ba480" }
+"anchor.strategy"       = { text = "Bạn đứng ở đâu", src = "1d7d7f2d3f" }
+"anchor.season"         = { text = "Mùa niềm tin", src = "2d155b0cd9" }
+"anchor.what-to-say"    = { text = "Đăng gì bây giờ?", src = "ac83e813a9" }
+"anchor.strategy-review" = { text = "Soát chiến lược cuối tháng", src = "a261502df4" }
+"anchor.character-deep" = { text = "Đào sâu tính cách", src = "558e7bcda7" }
+"anchor.character-scenes" = { text = "Cho thấy, đừng tự khen", src = "92c712b006" }
+"anchor.ideas"          = { text = "Máy ra ý tưởng", src = "63928cb7de" }
+"anchor.moments"        = { text = "Khoảnh khắc trong đời khách", src = "31f1dcab57" }
+"anchor.packaging"      = { text = "Tiêu đề và chữ ảnh bìa", src = "99ed9bff12" }
+"anchor.hooks"          = { text = "Hook làm ba việc", src = "a90c7b37af" }
+"anchor.text-formats"   = { text = "Carousel, tin Zalo, bài dài", src = "ea8da2ceab" }
+"anchor.long"           = { text = "Video dài có quay", src = "acb5ba897a" }
+"anchor.long-intro"     = { text = "45 giây đầu video dài", src = "5ac6842b38" }
+"anchor.long-cuts"      = { text = "Cắt video dài ra cả tuần", src = "a88b496f91" }
 
 # START-HERE.html (built until guides/ takes over in P6)
 "starthere.title" = { text = "Bắt đầu từ đây: {{name}}", src = "78db6907b6" }
@@ -143,9 +186,9 @@
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
 "levelup.offer_reminders" = { text = "Muốn mình nhắc vào {day} và thứ Sáu không? Nhắn 'có'.", src = "ea737acbbf" }
 "levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Muốn mình nhắn vào thứ Hai, mỗi sáng và thứ Sáu không? Nhắn 'có'.", src = "4894256bfd" }
-"levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Google Sheets hoặc Notion. Nhắn 'có'.", src = "03fc7d8ead" }
+"levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Google Sheets hoặc Notion. Nhắn 'có'.", src = "a757a80284" }
 "levelup.offer_autopilot" = { text = "Muốn tuần nào bài cũng tự có sẵn trong Notion không? Nhắn 'có'.", src = "11eb7f42ec" }
-"levelup.offer_grow"      = { text = "Phần đó nằm trong file Phát triển (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại mình.", src = "f90186ef14" }
+"levelup.offer_grow"      = { text = "Phần đó nằm trong {LAUNCH-VN.md} (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại mình.", src = "80d274bfc4" }
 "levelup.offer_character" = { text = "Muốn bài giống bạn hơn không? 3 buổi, mỗi buổi 20 phút. Nhắn 'có'.", src = "212af05855" }
 
 # Weekly Talk and mini-talk (§ TALK)

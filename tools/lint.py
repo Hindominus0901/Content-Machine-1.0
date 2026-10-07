@@ -73,8 +73,8 @@ except ImportError as exc:  # pragma: no cover - lint still runs, but E152 then 
     ZIP_WRITER_ERROR = repr(exc)
 
 SOURCE_EDITION = "en"
-SHIPPED_DIRS = ("core", "modules", "locales", "strings", "guides", "automation")
-TOML_DIRS = ("editions", "strings", "core", "schemas", "automation", "locales", "platform")
+SHIPPED_DIRS = ("core", "modules", "locales", "strings", "guides", "automation", "plugin")
+TOML_DIRS = ("editions", "strings", "core", "schemas", "automation", "locales", "platform", "plugin")
 TEXT_SUFFIXES = {".md", ".txt", ".toml", ".tmpl", ".html", ".htm", ".csv", ".json", ".ics",
                  ".css", ".js", ".svg", ".xml"}
 LIST_FILES = ("deny-list.txt", "banned-tells.txt")
@@ -122,6 +122,7 @@ STRING_TAG_RE = re.compile(r"\{\{\s*t:([a-z0-9_.-]+)\s*\}\}")
 KEY_LITERAL_RE = re.compile(r"[\"']([a-z0-9_]+(?:\.[a-z0-9_-]+)+)[\"']")
 HUB_REF_RE = re.compile(r"`hub:([^`\n]+)`")
 CM_HEADING_RE = re.compile(r"^#{1,6}\s.*§CM-([A-Za-z0-9][A-Za-z0-9-]*)", re.M)
+CM_REF_RE = re.compile(r"§CM-([A-Z0-9][A-Z0-9]*(?:-[A-Z0-9]+)*)")
 
 PII_RULES = (
     ("email", re.compile(r"(?<![\w.%+-])[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}\b")),
@@ -205,6 +206,36 @@ class Report:
 
 
 # ---------------------------------------------------------------- small helpers
+
+def front_matter_fields(text: str) -> dict[str, str]:
+    """name, description and any other `key: value` line of a SKILL.md or agent front matter (a quoted JSON value is
+    unquoted)."""
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return {}
+    out: dict[str, str] = {}
+    for line in lines[1:]:
+        if line.strip() == "---":
+            return out
+        key, sep, value = line.partition(":")
+        if sep:
+            value = value.strip()
+            if value.startswith('"'):
+                try:
+                    value = json.loads(value)
+                except json.JSONDecodeError:
+                    pass
+            out[key.strip()] = value
+    return {}
+
+
+def method_table(method: dict, table: str):
+    """core/method.toml table by dotted name: "method", "skill", "levelup.research". {} when missing."""
+    cur: object = method
+    for part in table.split("."):
+        cur = cur.get(part, {}) if isinstance(cur, dict) else {}
+    return cur
+
 
 def norm(text: str) -> str:
     return " ".join(nfc(text).split())
@@ -532,7 +563,8 @@ class Linter:
             self.load_allowlist, self.load_toml_files, self.load_editions, self.load_strings,
             self.load_terms, self.check_strings, self.check_sections, self.check_pending,
             self.check_targets, self.check_schemas, self.check_router, self.check_templates, self.check_hub_refs,
-            self.check_source_text, self.check_cards, self.check_dist, self.check_unused,
+            self.check_source_text, self.check_cards, self.check_tasks_data, self.check_levelup_sections,
+            self.check_dist, self.check_unused,
         ]
         for step in steps:
             try:
@@ -897,7 +929,7 @@ class Linter:
         refs: list[dict] = []
         if method:
             self.check_method_table(method, "method", "anchor")
-            self.check_method_table(method, "grow", "anchor")
+            self.check_levelup_tables(method)
             refs = self.check_method_table(method, "skill", "reference")
 
         fmt_table = (formats or {}).get("format", {})
@@ -1015,7 +1047,7 @@ class Linter:
 
     def check_method_table(self, method: dict, table: str, kind: str) -> list[dict]:
         """Validate [[<table>.<kind>]] entries and their selectors; return the valid entries."""
-        cfg = method.get(table, {})
+        cfg = method_table(method, table)
         if not isinstance(cfg, dict):
             self.add("E161", "core/method.toml", f"[{table}] must be a table")
             return []
@@ -1067,6 +1099,32 @@ class Linter:
                     self.add("E170", "core/method.toml",
                              f"[{table}] title_key '{title_key}' is not a strings key ({ed_id})")
         return good
+
+    def check_levelup_tables(self, method: dict) -> None:
+        """[levelup.<area>] tables: file, budget, anchors, and one §CM-id space with the method file (E161)."""
+        raw = method.get("levelup")
+        if raw is not None and not isinstance(raw, dict):
+            self.add("E161", "core/method.toml", "[levelup] must hold [levelup.<area>] tables")
+            return
+        seen: dict[str, str] = {}
+        base = method_table(method, "method")
+        for entry in (base.get("anchor") or []) if isinstance(base, dict) else []:
+            if isinstance(entry, dict) and isinstance(entry.get("id"), str):
+                seen[entry["id"]] = "method"
+        for area, cfg in cmlib.levelup_tables(method):
+            table = f"levelup.{area}"
+            name = cfg.get("file")
+            if not isinstance(name, str) or not name.isascii() or not name.isalnum():
+                self.add("E161", "core/method.toml", f"[{table}] needs file = an ASCII name such as \"RESEARCH\"")
+            budget = cfg.get("budget")
+            if budget is not None and not self.target_row("budgets", budget):
+                self.add("E161", "core/method.toml", f"[{table}] budget '{budget}' is not in platform/targets.toml")
+            for entry in self.check_method_table(method, table, "anchor"):
+                aid = entry["id"]
+                if aid in seen:
+                    self.add("E161", "core/method.toml",
+                             f"anchor id '{aid}' is in [{seen[aid]}] and [{table}]; §CM-ids are unique across files")
+                seen[aid] = table
 
     def check_start_block_anchors(self, method: dict) -> None:
         cfg = method.get("method") if isinstance(method.get("method"), dict) else {}
@@ -1329,6 +1387,7 @@ class Linter:
             self.check_skill_zip(ed, out / "Level-ups" / "autopilot" / f"{ed.skill_name}.zip")
             self.check_tasks(ed, dist / "maintainer" / "tasks" / ed_id)
         self.check_zips(dist)
+        self.check_plugin(dist)
         self.check_dist_text(dist)
 
     def check_manifest(self, dist: Path) -> None:
@@ -1368,17 +1427,24 @@ class Linter:
             self.check_budget("phone_starter", ed.id, nfc_len(self.text(phone)), self.rel(phone),
                               "phone starter", "characters")
         method = self.toml.get("core/method.toml") or {}
-        for table, relpath, budget in (("method", f"CONTENT-MACHINE-{ed.file_suffix}.md", "method_file"),
-                                       ("grow", f"Level-ups/GROW-{ed.file_suffix}.md", "grow_file")):
+        # (core/method.toml table, target flag, built path, budget, label): the method file and one file per level-up
+        files = [("method", "method", f"CONTENT-MACHINE-{ed.file_suffix}.md", "method_file", "method file")]
+        for area, row in cmlib.levelup_tables(method):
+            name = row.get("file")
+            if isinstance(name, str) and name.isalnum() and isinstance(row.get("budget"), str):
+                files.append((f"levelup.{area}", "grow", f"Level-ups/{name}-{ed.file_suffix}.md", row["budget"],
+                              f"{area} level-up file"))
+        secs = self.sections.get(ed.cfg.get("method_prose", ed.lang), {})
+        defined = self.anchor_ids(method)
+        for table, target, relpath, budget, label in files:
             path = out / relpath
             if not path.exists():
                 continue
             text, where = self.text(path), self.rel(path)
-            self.check_budget(budget, ed.id, len(text.encode("utf-8")), where, f"{table} file", "bytes")
-            blocks = self.anchor_blocks(text, self.contract(ed, table))
-            cfg = method.get(table) if isinstance(method.get(table), dict) else {}
+            self.check_budget(budget, ed.id, len(text.encode("utf-8")), where, label, "bytes")
+            blocks = self.anchor_blocks(text, self.contract(ed, target))
+            cfg = method_table(method, table)
             entries = cfg.get("anchor") if isinstance(cfg.get("anchor"), list) else []
-            secs = self.sections.get(ed.cfg.get("method_prose", ed.lang), {})
             for anchor in entries:
                 if isinstance(anchor, dict) and anchor.get("sections") and anchor.get("id") not in blocks:
                     written = any(_selector_matches(sel, secs) for sel in anchor["sections"]
@@ -1387,14 +1453,103 @@ class Linter:
                         continue  # build skipped it: its modules are not written yet (noted above)
                     self.add("E130", where,
                              f"anchor §CM-{anchor.get('id')} has sections but no heading in the built file")
-            if table == "method":
+            if table == "method":  # a level-up anchor may hold several sections: those are checked one by one
                 for aid, block in blocks.items():
                     self.check_budget("method_section", ed.id, len(block.encode("utf-8")), where,
                                       f"section §CM-{aid}", "bytes")
+            for ref in sorted(set(CM_REF_RE.findall(text)) - defined):
+                self.add("E130", where, f"§CM-{ref} is named here but is no anchor of the method file or a level-up file")
+
+    def check_tasks_data(self) -> None:
+        """automation/tasks.toml: every [[task]] has a template file, a prose section and a name; the 900-character
+        cap in [caps] is the task_nudge budget (E161)."""
+        where = "automation/tasks.toml"
+        data = self.toml.get(where)
+        if not data:
+            return
+        auto = self.root / "automation"
+        rows = data.get("task", [])
+        if not isinstance(rows, list) or not rows:
+            self.add("E161", where, "[[task]] entries expected")
+            return
+        ids: set[str] = set()
+        for i, row in enumerate(rows, 1):
+            if not isinstance(row, dict):
+                self.add("E161", where, f"[[task]] #{i} must be a table")
+                continue
+            tid = row.get("id")
+            if not isinstance(tid, str) or not tid or tid in ids:
+                self.add("E161", where, f"[[task]] #{i} needs a unique id")
+            ids.add(str(tid))
+            template = row.get("template")
+            if not isinstance(template, str) or not (auto / template).is_file():
+                self.add("E161", where, f"[[task]] '{tid}': template '{template}' is not in automation/")
+            elif f"{{{{>{row.get('section')}}}}}" not in (auto / template).read_text(encoding="utf-8"):
+                self.add("E161", where, f"[[task]] '{tid}': {template} does not include its section '{row.get('section')}'")
+            for lang in self.prose_langs():
+                if row.get("section") not in self.sections.get(lang, {}):
+                    self.add("E161", where, f"[[task]] '{tid}': section '{row.get('section')}' has no {lang.upper()} text")
+            key = row.get("name_key")
+            if key is not None:
+                for ed_id, ed in sorted(self.editions.items()):
+                    if key not in ed.strings:
+                        self.add("E161", where, f"[[task]] '{tid}': name_key '{key}' is not a strings key ({ed_id})")
+            elif not (isinstance(row.get("name"), dict) and all(e in row["name"] for e in self.editions)):
+                self.add("E161", where, f"[[task]] '{tid}' needs name_key or name = {{ en = ..., vn = ... }}")
+        cap = (data.get("caps") or {}).get("max_chars_filled")
+        for ed_id in sorted(self.editions):
+            want = self.budget("task_nudge", ed_id)
+            if want and cap != want:
+                self.add("E161", where, f"[caps] max_chars_filled is {cap}, the task_nudge budget is {want}")
+
+    def check_levelup_sections(self) -> None:
+        """Every section a level-up anchor pulls in, as rendered, stays within the method_section budget (E101).
+
+        An anchor of a level-up file may hold two or three sections (research does); each section still has to fit
+        one retrieval chunk, like each §CM anchor of the method file.
+        """
+        method = self.toml.get("core/method.toml") or {}
+        tables = cmlib.levelup_tables(method)
+        for ed_id, ed in sorted(self.editions.items()):
+            lang = ed.cfg.get("method_prose", ed.lang)
+            secs = self.sections.get(lang, {})
+            seen: set[str] = set()
+            for area, cfg in tables:
+                for anchor in cfg.get("anchor", []) if isinstance(cfg.get("anchor"), list) else []:
+                    selectors = anchor.get("sections") if isinstance(anchor, dict) else None
+                    if not isinstance(selectors, list):
+                        continue
+                    try:
+                        picked = cmlib.select_sections([s for s in selectors if isinstance(s, str)], secs)
+                    except CMError:
+                        continue  # reported as E130 by check_router
+                    for sec in picked:
+                        if sec.id in seen:
+                            continue
+                        seen.add(sec.id)
+                        try:
+                            body = cmlib.render(sec.body, ed, "grow", path=f"{sec.file}#{sec.id}")
+                        except CMError:
+                            continue  # reported as E170 by check_templates
+                        self.check_budget("method_section", ed_id, len(nfc(body).encode("utf-8")),
+                                          self.section_where.get((lang, sec.id), sec.file), f"section {sec.id}",
+                                          "bytes")
+
+    @staticmethod
+    def anchor_ids(method: dict) -> set[str]:
+        """Every anchor id in core/method.toml: the method file and all level-up files."""
+        ids: set[str] = set()
+        tables = ["method"] + [f"levelup.{area}" for area, _ in cmlib.levelup_tables(method)]
+        for table in tables:
+            cfg = method_table(method, table)
+            for entry in (cfg.get("anchor") if isinstance(cfg, dict) and isinstance(cfg.get("anchor"), list) else []):
+                if isinstance(entry, dict) and isinstance(entry.get("id"), str):
+                    ids.add(entry["id"])
+        return ids
 
     @staticmethod
     def anchor_blocks(text: str, contract: str | None) -> dict[str, str]:
-        """Each '## §CM-<ID>' block of a method or GROW file, up to the next one."""
+        """Each '## §CM-<ID>' block of a method or level-up file, up to the next one."""
         heads = list(CM_HEADING_RE.finditer(text))
         blocks = {}
         for i, m in enumerate(heads):
@@ -1486,6 +1641,83 @@ class Linter:
                 self.check_budget(budget, ed.id, nfc_len(text), where, "task text", "characters")
             if not path.stem.startswith(CARDLESS_TASKS):
                 self.check_card(ed, text, where, task=True)
+
+    def check_plugin(self, dist: Path) -> None:
+        """dist/content-machine-plugin.zip: the skills the sources promise, each with its front matter and files.
+
+        Per edition: the main skill and one companion per [levelup.<area>] (name <skill>-<edition>, SKILL.md and the
+        level-up file as built in dist/<edition>/Level-ups/); plugin/agents/*.md as agents. E102 front matter,
+        E103 agent length, E130 a §CM- id the skill names that no file has, E170 a skill or file that is missing.
+        """
+        path = dist / "content-machine-plugin.zip"
+        if not path.exists():
+            return
+        where = self.rel(path)
+        try:
+            zf = zipfile.ZipFile(io.BytesIO(path.read_bytes()))
+        except zipfile.BadZipFile:
+            return  # reported by check_zips
+        with zf:
+            names = set(zf.namelist())
+            base = "content-machine"
+            try:
+                manifest = json.loads(zf.read(f"{base}/.claude-plugin/plugin.json"))
+            except (KeyError, json.JSONDecodeError):
+                self.add("E161", where, f"{base}/.claude-plugin/plugin.json is missing or not JSON")
+                manifest = {}
+            version = (self.root / "VERSION").read_text(encoding="utf-8").strip() if (self.root / "VERSION").exists() else None
+            if manifest and version and manifest.get("version") != version:
+                self.add("E170", where, f"plugin.json version {manifest.get('version')} is not VERSION {version}")
+            method = self.toml.get("core/method.toml") or {}
+            defined = self.anchor_ids(method)
+            wanted: dict[str, tuple[str, dict | None]] = {}   # skill folder -> (edition id, [levelup] table or None)
+            companions = (self.root / "plugin" / "companions.toml").exists()
+            for ed_id, ed in sorted(self.editions.items()):
+                wanted[f"content-machine-{ed_id}"] = (ed_id, None)
+                if companions:
+                    for area, cfg in cmlib.levelup_tables(method):
+                        wanted[f"{cfg.get('skill')}-{ed_id}"] = (ed_id, cfg)
+            for name, (ed_id, cfg) in sorted(wanted.items()):
+                skill = f"{base}/skills/{name}/SKILL.md"
+                if skill not in names:
+                    self.add("E170", where, f"skill '{name}' is missing from the plugin")
+                    continue
+                text = zf.read(skill).decode("utf-8")
+                fields = front_matter_fields(text)
+                inner = f"{where}!{skill}"
+                if fields.get("name") != name:
+                    self.add("E102", inner, f"front matter name '{fields.get('name')}' must be the folder name '{name}'")
+                desc = fields.get("description", "")
+                if not desc or nfc_len(desc) > SKILL_DESCRIPTION_HARD_MAX or "<" in desc or ">" in desc:
+                    self.add("E102", inner, f"description must be 1-{SKILL_DESCRIPTION_HARD_MAX} characters without "
+                                            f"< or > (is {nfc_len(desc)})")
+                if cfg is None:
+                    continue
+                ed = self.editions[ed_id]
+                file = f"{cfg.get('file')}-{ed.file_suffix}.md"
+                built = dist / ed_id / "Level-ups" / file
+                inside = f"{base}/skills/{name}/{file}"
+                if inside not in names:
+                    self.add("E170", inner, f"{file} is not next to the skill")
+                elif built.exists() and zf.read(inside) != built.read_bytes():
+                    self.add("E170", inner, f"{file} differs from dist/{ed_id}/Level-ups/{file}")
+                for ref in sorted(set(CM_REF_RE.findall(text)) - defined):
+                    self.add("E130", inner, f"§CM-{ref} is named here but is no anchor of the method file or a level-up file")
+            if companions:
+                src = sorted((self.root / "plugin" / "agents").glob("*.md"))
+                for f in src:
+                    inner = f"{base}/agents/{f.name}"
+                    if inner not in names:
+                        self.add("E170", where, f"agent '{f.stem}' is missing from the plugin")
+                        continue
+                    agent = zf.read(inner).decode("utf-8")
+                    fields = front_matter_fields(agent)
+                    if fields.get("name") != f.stem or not fields.get("description"):
+                        self.add("E102", f"{where}!{inner}", f"front matter needs name: {f.stem} and a description")
+                    if count_lines(agent) > 60:
+                        self.add("E103", f"{where}!{inner}", f"agent is {count_lines(agent)} lines, over 60")
+                if not src:
+                    self.add("E170", where, "plugin/companions.toml exists but plugin/agents/ holds no agent")
 
     def check_zips(self, dist: Path) -> None:
         for path in sorted(dist.rglob("*.zip")):
@@ -1624,8 +1856,9 @@ class Linter:
                 used.update(STRING_TAG_RE.findall(self.text(path)))
             for path in sorted((self.root / "tools").glob("*.py")) + sorted((self.root / "evals").glob("*.py")):
                 used.update(KEY_LITERAL_RE.findall(self.text(path)))  # evals/graders.py reads next.prefix etc.
-            for table in ("method", "grow"):
-                cfg = method.get(table) if isinstance(method.get(table), dict) else {}
+            for table in ["method"] + [f"levelup.{area}" for area, _ in cmlib.levelup_tables(method)]:
+                cfg = method_table(method, table)
+                cfg = cfg if isinstance(cfg, dict) else {}
                 used.add(cfg.get("title_key") or f"{table}.title")
                 for anchor in cfg.get("anchor", []) if isinstance(cfg.get("anchor"), list) else []:
                     if isinstance(anchor, dict):
@@ -1640,8 +1873,11 @@ class Linter:
             lang = self.source_lang()
             sections = self.sections.get(lang, {})
             selected: set[str] = set()
-            for table, kind in (("method", "anchor"), ("grow", "anchor"), ("skill", "reference")):
-                cfg = method.get(table) if isinstance(method.get(table), dict) else {}
+            kinds = [("method", "anchor")] + [(f"levelup.{a}", "anchor") for a, _ in cmlib.levelup_tables(method)] \
+                + [("skill", "reference")]
+            for table, kind in kinds:
+                cfg = method_table(method, table)
+                cfg = cfg if isinstance(cfg, dict) else {}
                 for entry in cfg.get(kind, []) if isinstance(cfg.get(kind), list) else []:
                     for sel in (entry.get("sections") or []) if isinstance(entry, dict) else []:
                         try:

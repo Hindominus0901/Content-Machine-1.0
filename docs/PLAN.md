@@ -94,7 +94,7 @@ Founder: delivery must be very simple, and coaches won't read the artifacts. Tho
   - L1: the 3 automations (ChatGPT nudge tasks ≤900 characters), offered after the Week-1 Friday.
   - L2: the board (Notion default; Sheets Lite).
   - L3: Autopilot (Claude Pro: skill zip + Notion + scheduled tasks).
-  - L4: the GROW file (launch, deep research, ads, packaging library).
+  - L4: the level-up files, one per area: research, launch and ads, board and nudges, strategy (7 Oct: was one GROW file).
   - L5: deep character excavation.
 - **5 phrases:**
   - next / tiếp
@@ -190,7 +190,7 @@ README.md  CHANGELOG.md  VERSION  .gitignore (dist/, evals/runs/)  .github/workf
 docs/  PLAN.md  DECISIONS.md  founder/phase0-checks.md  research/ (whole corpus + README index + founder-sources.md)
 editions/  en.toml  vn.toml  vn.acceptance.toml        params, platform_mix, PENDING_VN markers
 strings/   en.toml  vn.toml                              every coach-facing line, keyed; VN keys carry src_hash
-core/      router.toml  format-checks.toml  method.toml (which modules/anchors go into kit / GROW / skill)  SKILL.md.tmpl
+core/      router.toml  format-checks.toml  method.toml (which modules/anchors go into kit / level-up files / skill)  SKILL.md.tmpl
 core/{en,vn}/  start-block.md  phone-starter.md  self-check.md  ship-check.md  ship-check-task.md
 modules/{en,vn}/  setup message talk levelup brain character research signature ideas plan fmt-short fmt-long
                   packaging convert launch-plan launch-scripts edge-rubric humanize guardrails review hub automation
@@ -198,6 +198,8 @@ locales/{en,vn}/  language market compliance platform-notes (only file with date
                   lib/{hooks,titles,moments,launch-phrases}.toml  banned-tells.txt  deny-list.txt
 schemas/   brand-card.toml  banks.toml  hub.toml (Notion + Sheets + paste formats from one schema)  keys.toml
 automation/ tasks.toml  task-nudge.tmpl (≤900)  task-standalone.tmpl (VA)  task-connected.tmpl (L3)  daily-machine.tmpl
+templates/sheets/{en,vn}/*.csv                             header rows of the five board tabs (shipped as Level-ups/Board/)
+plugin/    companions.toml  agents/{cm-researcher,cm-listener,cm-writer,cm-reviewer}.md   the plugin's companion skills and agents
 platform/targets.toml                                    every limit: value, source, verified_on (90-day lint)
 guides/    setup-page.tmpl  troubleshooting.tmpl  helper-message.tmpl  house-rules.tmpl  standards.tmpl  whats-new.tmpl
 qa/        README LEDGER CALIBRATION rubric-proposals incidents  standards/ (18)  verdicts/  releases/  runs/  inbox/
@@ -217,8 +219,10 @@ Content-Machine-{EN,VN}-v1.0.0.zip
                                  CHARACTER-LITE RESEARCH-LITE EDGE HUMANIZE GUARDRAILS LOCALE
   PHONE-STARTER.txt              ≤7,500 chars; no § signs, no English in VN
   Help/                          troubleshooting, helper-message, house-rules (noi-quy), standards (tieu-chuan), reminders/*.ics, examples/
-  Level-ups/                     GROW-{EN,VN}.md (≤60 KB), autopilot/content-machine(-vn).zip (≤300 KB, with scripts/ship_lint.py), Notion + Sheets links
+  Level-ups/                     {RESEARCH,LAUNCH,BOARD,STRATEGY}-{EN,VN}.md (≤24 KB each, replacing the one GROW file), Board/*.csv (5 header-row files),
+                                 autopilot/content-machine(-vn).zip (≤300 KB, with scripts/ship_lint.py), Notion link
 site/{en,vn}/index.html          hosted setup page
+content-machine-plugin.zip        one plugin, both apps, both editions: 2 main + 8 companion skills (cm-<area>-<ed>) and 4 agents (next to the release zips)
 maintainer/                      manifest.json (sha256 + % of each budget), notion-build-prompt-{en,vn}.md, sheets-{en,vn}/*.csv
 ```
 
@@ -269,7 +273,7 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
     - `{{param}}`, `{{t:key}}` and `{{#if}}`;
     - a generated WHEN/RULES header and a CHECK BEFORE ANSWERING footer drawn from `format-checks.toml`;
     - the output-contract sandwich.
-  - `build.py`: assembles per edition from `core/method.toml`: instructions, phone starter, method file, GROW, skill.
+  - `build.py`: assembles per edition from `core/method.toml`: instructions, phone starter, method file, the four level-up files, skill, plugin.
   - `lint.py`:
     - budgets from `targets.toml`, after NFC;
     - parity and `src_hash` staleness; PENDING_VN acceptance; the 90-day `verified_on` rule;
@@ -330,6 +334,8 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
 - **Exit:** G1–G6 pass on both editions. The founder gets a **preview kit** to try in their own ChatGPT or Claude: the earliest real check of the experience.
 
 ### P3 Weekly loop, checklists and L0.5–L2 (EN, then VN)
+**Status (7 Oct 2026):** the strategy and board parts are written, EN + VN, and ship in the STRATEGY and BOARD level-up files (ideas, moments, packaging, hooks, long video and cuts, positioning, season, deep character; the campaign-type Google Sheet with its five CSVs). Open: the Notion template and a live board test (founder's OK), the 4-week simulated journeys.
+
 - **Modules:**
   - talk: Weekly Talk, mini-talk, re-say shorts;
   - plan: Season, slot grids per tier, repetition, CTA ladder, monthly re-plan;
@@ -352,6 +358,8 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
   - the judge passes.
 
 ### P4 Automations and L3 Autopilot (EN, then VN)
+**Status (7 Oct 2026):** the nudge texts are done (3 ChatGPT, 1 Claude, 1 launch day; `automation/tasks.toml`, `task-nudge*` ≤900 characters, built to `dist/maintainer/tasks/`), and the plugin carries 8 companion skills and 4 agents. Open: `core/SKILL.md.tmpl` and the L3 Autopilot skill, `task-standalone`, `task-connected`, `daily-machine`, `.ics`, idempotency tests, the live week on Claude Pro.
+
 - **Automations:**
   - the automation module;
   - `tasks.toml`: BATCH Mon, DROP weekdays, REVIEW Fri; Slot and Run keys; caps; catch-up; launch-mode variants;
@@ -374,6 +382,8 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
 - **Founder:** one live week on Claude Pro.
 
 ### P5 GROW: research, launch, packaging, ads, entertainment, deep character (EN, then VN)
+**Status (7 Oct 2026):** research R0–R8, the launch program with ads, and deep character are written, EN + VN, and ship as one level-up file per area (`Level-ups/RESEARCH`, `LAUNCH`, `BOARD`, `STRATEGY` `-{EN,VN}.md`, each ≤24,576 B, replacing `GROW-{EN,VN}.md`) and as companion skills in the plugin. Open: the golden launch runs, the `qa/standards` for research-brief, offer-post, ad-script and launch-assets, `launch-phrases`, the Browse smoke tests (`limits.browse_agents_read_comments`).
+
 - **research, R0–R8:**
   - R0 access check;
   - R1 plan;
@@ -403,7 +413,7 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
   - Blocked: "fake 3 seats left", "guarantee 100tr in 30 days", an AI testimonial.
   - Founder-override test: "đủ 100 comment" and "chấm" are written as asked, with one note.
   - The persona's research brief passes G1–G13.
-  - GROW is ≤60 KB.
+  - Each level-up file is ≤24 KB (`budgets.levelup_*`).
 
 ### P6 Guides, setup page and release
 - **Guides:**
