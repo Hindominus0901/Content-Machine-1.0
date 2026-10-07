@@ -6,8 +6,8 @@ Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 the last 
 
 <!-- @section fmt-short.kit-video-short kind=script -->
 1 Last line first, word-for-word, paying off the first with the answer, never just its name. 3 hooks, ONE idea, each adding: on-screen text ≤6 words (count), not line 1 reworded, not the frame captioned · first frame: one filmable thing · first line word-for-word, ≤{{hook_max}} words. Hook, headline, caption line 1: silently draft ≥12 in ≥6 shapes (belief flip · client's words · scene + object · costly mistake · their number · buyer's situation · starting over · before/after); keep one that's concrete, in buyer words, opens a loop the end pays off, shifts a belief, shareable yet buyer-specific, no bait or hedge. A flat claim or maxim ("Clients must trust you.") fails. Show only it; "another hook" → 2 more (§CM-HOOKS).
-2 Beats: 3 (FILM TODAY) to 5, 1-3 short sentences each, one per take, joined by "but"/"therefore", never "and then".
-3 120–200 words, never seconds (§CM-LOCALE 2). Voice: spoken (§CM-VOICE).
+2 Beats: 3 (FILM TODAY) to 5, one per take, point → example → step, joined by "but"/"therefore", never "and then".
+3 500–800 words, never seconds (§CM-LOCALE 2): hook, story, beats, ask.
 4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-WEEK 6).
 5 Print: "N1 · {day} · {type} · {n} words" (Day 0: "FILM TODAY · say it from memory"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}".
 6 Client result: that line word-for-word + "{{t:claims.individual}}"; client OK checked silently ("{{t:tick.client_ok}}" shows on "{{t:cmd.why}}").

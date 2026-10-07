@@ -88,7 +88,7 @@ since the founder's v10 run, 7 Oct 2026 night: the dump, the interview about the
 strategy and no piece, FILM TODAY and Week 1 only after the coach's OK; the early win only quotes 3 lines; the research
 said once; WHAT I FOUND with its sources; at most 6 interview questions, none for what the dump gave; 3-5 broad CONTENT
 PILLARS; the ATTRACT / TRUST / CONVERT mix adding to 100; YOUR SYSTEM; Week 1 on all three types and a pillar per piece),
-lengths (in WORDS, never seconds: a short video 120-200, a long post about 1,000, a long video 1,000-1,500 in parts),
+lengths (in WORDS, never seconds: a short video 500-800, a long post about 1,000, a long video 1,000-1,500 in parts),
 day0_shape (the Day-0 deliverables: FILM TODAY's caption box and quiet
 option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list (VN: a
 Zalo message for a Zalo list), the keyword once in the body of FILM TODAY, of its text version and of each Week-1
@@ -4822,7 +4822,7 @@ def piece_words(run: Run, p: Piece) -> int:
 
 def check_lengths(run: Run) -> dict:
     """Lengths are in words, never seconds (founder, 7 Oct 2026 night: "the length has to be measured by words, not
-    seconds, because people speak at different speeds"): a short video's spoken script 120-200 words (his default; the
+    seconds, because people speak at different speeds"): a short video's spoken script 500-800 words (founder, 7 Oct night; the
     bounds read with [lengths] tolerance), a long post about 1,000 words (±15%), a long video 1,000-1,500 words in parts
     (a numbered part, 3 or more, with a hook and an ask), and no length in seconds on a piece's title ("FILM TODAY (under
     30 s)", "N1 · thứ Năm 8/10 · 30 giây": [lengths] seconds_budget_fails). Pieces are told apart by their titles ("long
@@ -6479,7 +6479,7 @@ def check_strategy_doc(run: Run) -> dict:
     - the 7 parts, numbered and in order, under the edition's plain headings, and in VN every heading's pronoun is the
       one the machine uses with this coach (persona xung_ho: "chị" for Hạnh, "bạn" for Nhi), never the other;
     - part 2 has 3-5 content pillars (its "###" sections) that are the ones of the strategy the coach OK'd, part 3's mix
-      adds up to 100 (ATTRACT, TRUST, CONVERT with a share each), part 4 gives lengths in words (short video 120-200,
+      adds up to 100 (ATTRACT, TRUST, CONVERT with a share each), part 4 gives lengths in words (short video 500-800,
       long post about 1,000, long video 1,000-1,500) and none in seconds;
     - the hooks of its content pillars' big ideas are no flat claim, label or maxim, repeat no line, hold no hedge
       (short_findings, the hook_lab's own tests; an on-screen text that is just a pillar's name is a label here too);
@@ -6546,7 +6546,7 @@ def check_strategy_doc(run: Run) -> dict:
             ev_mix.append(f"part 3's mix adds up to {sum(shares.values())}%, not 100")
     if 4 in part_text:
         body4 = part_text[4]
-        for label, pat in (("short video 120-200", r"120\s*(?:-|–|đến|to)\s*200"), ("long post about 1,000", r"\b1[.,]?000\b"),
+        for label, pat in (("short video 500-800", r"500\s*(?:-|–|đến|to)\s*800"), ("long post about 1,000", r"\b1[.,]?000\b"),
                            ("long video 1,000-1,500", r"1[.,]?000\s*(?:-|–|đến|to)\s*1[.,]?500")):
             if not re.search(pat, body4):
                 ev_len.append(f"part 4 gives no length for the {label} words")

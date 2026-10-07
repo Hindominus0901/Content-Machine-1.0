@@ -81,8 +81,8 @@ shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.m
                                           #   not seconds, because people speak at different speeds"). VN counts tiếng (whitespace
                                           #   tokens: what a word counter shows, the founder's "chữ").
 tolerance = 0.10                          # a short video's bounds are read with this much slack (counting differs by a few words)
-short_words_min = 120                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
-short_words_max = 200                     #   first frame, the caption or the ask), 120-200 words (the founder left it open: default)
+short_words_min = 500                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
+short_words_max = 800                     #   first frame, the caption or the ask), 500-800 words (founder, 7 Oct night)
 long_post_words = 1000                    # long post: about 1,000 words ...
 long_post_tolerance = 0.15                #   +-15%
 long_video_words_min = 1000               # long video: 1,000-1,500 words, in parts ...

@@ -4406,7 +4406,7 @@ THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%
 
 ## 4. Hệ thống nội dung của bạn
 
-Video ngắn 120–200 chữ · bài dài ≈1.000 chữ · video dài 1.000–1.500 chữ.
+Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1.500 chữ.
 
 ## 5. 30 ngày đầu
 
@@ -5127,7 +5127,7 @@ class StrategyFirstTimingTests(StrategyFirstBase):
 
 class StrategyFirstLengthsTests(StrategyFirstBase):
     """The founder, 7 Oct night: "the length has to be measured by words, not seconds, because people speak at different
-    speeds": a short video 120-200 words, a long post about 1,000, a long video 1,000-1,500 in parts."""
+    speeds": a short video 500-800 words, a long post about 1,000, a long video 1,000-1,500 in parts."""
 
     @staticmethod
     def words(n: int, seed: str = "word") -> str:
@@ -5241,7 +5241,7 @@ Women walked out with a box.
 ## 3. Your content mix: attract, trust, convert
 ATTRACT 40% · TRUST 40% · CONVERT 20%
 ## 4. Your content system
-Short video 120-200 words · long post about 1,000 words · long video 1,000-1,500 words.
+Short video 500-800 words · long post about 1,000 words · long video 1,000-1,500 words.
 ## 5. Your first 30 days
 ## 6. What this is built on
 ## 7. How to use this
@@ -5276,9 +5276,9 @@ Short video 120-200 words · long post about 1,000 words · long video 1,000-1,5
                       self.check(self.doc(self.DOC.replace("ATTRACT 40% · TRUST 40% · CONVERT 20%", "ATTRACT, TRUST, CONVERT")), "part 3")["evidence"][0])
 
     def test_part_4_gives_lengths_in_words_never_seconds(self):
-        none = self.DOC.replace("Short video 120-200 words · long post about 1,000 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
+        none = self.DOC.replace("Short video 500-800 words · long post about 1,000 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
         self.assertEqual(len(self.check(self.doc(none), "part 4")["evidence"]), 3)
-        secs = self.DOC.replace("Short video 120-200 words", "Short video 120-200 words (30 seconds)")
+        secs = self.DOC.replace("Short video 500-800 words", "Short video 500-800 words (30 seconds)")
         self.assertIn("measures a length in seconds", self.check(self.doc(secs), "part 4")["evidence"][0])
 
 
@@ -5319,7 +5319,7 @@ class StrategyFirstRealKitTests(unittest.TestCase):
         self.assertEqual((day0["strategy_max_minutes"], day0["film_ready_max_minutes"], day0["session_max_minutes"]), (25, 35, 45))
         lengths = graders._toml(REPO / "evals" / "acceptance.toml")["lengths"]
         self.assertEqual((lengths["short_words_min"], lengths["short_words_max"], lengths["long_post_words"],
-                          lengths["long_video_words_min"], lengths["long_video_words_max"]), (120, 200, 1000, 1000, 1500))
+                          lengths["long_video_words_min"], lengths["long_video_words_max"]), (500, 800, 1000, 1000, 1500))
 
 
 class StrategyFirstPersonaTests(unittest.TestCase):
