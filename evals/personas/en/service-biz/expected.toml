@@ -78,9 +78,9 @@ must_not = [
 ]
 
 [keyword]
-# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
-# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
-# Megan Whitfield is the one named client who says "nothing room".
+# day0_heard: the Day-0 dump (chunks 1-2) quotes the buyer phrase AND the coach says many clients use it, or quotes it from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). A phrase only the coach uses, or one client once with no "many say it", stays a guess (DECISIONS 7 Oct).
+# Chunk 1: Megan "Honestly it's the nothing room"; Corinne's "every house has one. I swear every Reset we've done is somebody's nothing room" is about the room, not clients saying the phrase; chunk 2 never repeats it (the "everyone says" lines there are other phrases).
 day0_heard = false
 candidates = [
   { term = "nothing room", origin = "Megan Whitfield's verbatim words in dump chunk 1 ('Honestly it's the nothing room'); echoed unprompted-style by 8 different people in paste-dump.md (11 distinct comments/DMs/replies, plus 3 duplicates) and research-paste.md line 7 (cross-posted as line 17)", said_by_audience = true },

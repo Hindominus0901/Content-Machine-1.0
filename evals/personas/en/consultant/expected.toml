@@ -72,10 +72,10 @@ must_not = [
 ]
 
 [keyword]
-# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
-# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
-# Marcus is the one named client who says "record year"; the rest is "all of them say some version of it" (anonymous, does not count).
-day0_heard = false
+# day0_heard: the Day-0 dump (chunks 1-2) quotes the buyer phrase AND the coach says many clients use it, or quotes it from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). A phrase only the coach uses, or one client once with no "many say it", stays a guess (DECISIONS 7 Oct).
+# Chunk 1: Marcus "Record year. Empty account. Make it make sense.", then Erin: "that's what all of them say, some version of it ... I hear record year a lot."
+day0_heard = true
 candidates = [
   { term = "record year", origin = "Marcus's first words 'Record year. Empty account. Make it make sense.' (dump chunk 1); Erin: 'I hear record year a lot'; 8 distinct audience members in paste-dump.md (10 items incl. 1 duplicate; 2 typed RECORD YEAR as a keyword); research lines 6 (duplicate 17) and 22", said_by_audience = true },
   { term = "heart monitor", origin = "Dee's quote (dump chunk 1); one audience member echoes it in a comment and a DM; research line 7 (duplicate 25) is a close variant ('check our bank balance every morning')", said_by_audience = true },

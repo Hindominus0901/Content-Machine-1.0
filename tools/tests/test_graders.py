@@ -3368,7 +3368,8 @@ class VG6G7RoundGraderTests(TempRepo):
             self.root).replies[0], body_only=True)
         self.assertNotIn("đổi chị/anh", "\n".join(text for _, text in chunks))
 
-    # -- G46: YOUR WORD carries the guess tag exactly when the dump does not give it from 3+ named clients
+    # -- G46: YOUR WORD carries the guess tag exactly when the dump does not give it: 3+ named clients, or the coach
+    # says many clients use it (DECISIONS 7 Oct, latest); one client once with no "many say it" stays a guess
     GUESS = "YOUR WORD carries the guess tag"
 
     def keyword(self, heard=None, persona: str = "en/test-coach") -> None:
@@ -3379,7 +3380,7 @@ class VG6G7RoundGraderTests(TempRepo):
     def test_g46_a_keyword_the_dump_does_not_give_is_tagged(self):
         name = self.GUESS
         self.keyword(False)
-        untagged = self.grade(GOOD)                                    # "YOUR WORD: CHAPTER": one client + "they all say it"
+        untagged = self.grade(GOOD)                                    # "YOUR WORD: CHAPTER": one client once, no "many say it"
         self.assertFails(untagged, "day0_shape", 'YOUR WORD "chapter" has no guess tag')
         self.assertIs(self.item(untagged, "day0_shape", name)["pass"], False)
         for tag in ("(my guess)", "(my guess, where unheard; one word changes it)", "[guess]",
@@ -3399,6 +3400,28 @@ class VG6G7RoundGraderTests(TempRepo):
         self.assertIs(self.item(self.grade(GOOD), "day0_shape", name)["pass"], True)
         tagged = [(r, t.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER (my guess)")) for r, t in GOOD]
         self.assertFails(self.grade(tagged), "day0_shape", 'YOUR WORD "chapter" is tagged as a guess')
+
+    def test_g46_one_named_client_plus_they_all_say_it_is_heard(self):
+        """DECISIONS 7 Oct (latest): the coach quotes one client AND says many clients use the phrase: heard, no tag.
+        The grader reads day0_heard (the persona's ground truth), so the dump here is the case the key describes."""
+        name = self.GUESS
+        dump = ("## Dump chunk 1\nLorraine called me from her car and said \"I've got one more chapter in me.\" "
+                "They all say it, every single client.\n")
+        heard = [GOOD[0], GOOD[1], ("coach", dump)] + GOOD[3:]
+        self.keyword(True)
+        untagged = self.grade(heard)
+        self.assertIs(self.item(untagged, "day0_shape", name)["pass"], True)               # untagged passes
+        self.assertNotIn("day0_shape", untagged["failed"])
+        tagged = [(r, t.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER (my guess)")) for r, t in heard]
+        self.assertFails(self.grade(tagged), "day0_shape", 'YOUR WORD "chapter" is tagged as a guess')   # tagged fails
+        self.assertFails(self.grade(tagged), "day0_shape", "or the coach says many clients use it")
+        # the same client once, no "many say it" (day0_heard = false): the untagged Map fails, the tagged one passes
+        once = [GOOD[0], GOOD[1], ("coach", "## Dump chunk 1\nLorraine told me \"I've got one more chapter in me.\"\n")] \
+            + GOOD[3:]
+        self.keyword(False)
+        self.assertFails(self.grade(once), "day0_shape", 'YOUR WORD "chapter" has no guess tag')
+        tagged_once = [(r, t.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER (my guess)")) for r, t in once]
+        self.assertIs(self.item(self.grade(tagged_once), "day0_shape", name)["pass"], True)
 
     def test_g46_runs_only_with_the_key_and_a_printed_map(self):
         name = self.GUESS
@@ -3435,7 +3458,7 @@ class VG6G7RoundGraderTests(TempRepo):
                 turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", text)]
                 report = self.grade(turns, persona="vn/tuan", edition="vn", suite="day0")
                 self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
-        self.keyword(True, "vn/tuan")                                  # heard (3+ named clients): no tag wanted
+        self.keyword(True, "vn/tuan")                                  # heard (3+ named clients, or "ai cũng nói"): no tag
         self.assertIs(self.item(self.vn(), "day0_shape", name)["pass"], True)
 
     def test_g46_the_tag_pattern(self):

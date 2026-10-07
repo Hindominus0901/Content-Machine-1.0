@@ -45,10 +45,10 @@ runner_up_candidate = "Chủ shop hỏi về quảng cáo (\"chị ơi sao em ch
 side_door = ""
 
 [keyword]
-# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
-# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
-# Ngân is the one named client who says "lãi ảo"; "nhóm Zalo ai cũng nói" is anonymous.
-day0_heard = false
+# day0_heard: the Day-0 dump (chunks 1-2) quotes the buyer phrase AND the coach says many clients use it, or quotes it from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). A phrase only the coach uses, or one client once with no "many say it", stays a guess (DECISIONS 7 Oct).
+# Chunk 2: Ngân "Chị ơi hóa ra em toàn lãi ảo", rồi "từ hôm đấy trong nhóm Zalo học viên ai cũng nói lãi ảo".
+day0_heard = true
 candidates = [
   { term = "lãi ảo", origin = "audience: Ngân nhắn \"Chị ơi hóa ra em toàn lãi ảo\"; nhóm Zalo học viên và người lạ tự dùng (paste-dump, research-paste)", said_by_audience = true },
   { term = "lãi thật", origin = "audience + coach: Ngân \"giờ em mới biết lãi thật của em là bao nhiêu\"; người lạ xin \"cách tính lãi thật\"; trùng chữ trong tên khóa", said_by_audience = true },
