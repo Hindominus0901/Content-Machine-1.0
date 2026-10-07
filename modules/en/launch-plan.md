@@ -21,7 +21,7 @@ seats = the lower of (revenue goal ÷ price) and what they can deliver well;
 close rate = theirs: "Of the last 10 people who asked about working with you, how many paid?";
 leads needed = seats ÷ close rate; warm pool = list + contacts + people who messaged or commented in 90 days.
 Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed > the warm pool → say so in one line; they choose: A with fewer seats, or 4 runway weeks first.
-5 Print the math in 3 lines (seats · leads needed · warm pool now), the type and its first step; then the Brief (§CM-LAUNCH-BRIEF) and the calendar (§CM-LAUNCH-DAYS). Never promise the seats will sell.
+5 Print the math in 3 lines (seats · leads needed · warm pool now), the type and its first step; then the Brief (§CM-LAUNCH-BRIEF) and the calendar (§CM-LAUNCH-DAYS), then the campaign's day cards if the CAMPAIGNS file is loaded (§CM-CAMPAIGNS). Never promise the seats will sell.
 
 <!-- @section launch-plan.grow-brief -->
 ### Launch Brief and the real limits

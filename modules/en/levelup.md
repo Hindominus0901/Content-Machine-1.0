@@ -19,5 +19,5 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 - Week-1 Friday review: "{{t:levelup.offer_nudges}}" ChatGPT: 3 tasks (else copy boxes), ≤900 chars with the Map: Mon "{{t:task.week.name}}", Tue–Thu "{{t:task.today.name}}", Fri "{{t:task.numbers.name}}", each ending "{{t:task.footer}}" Claude: 1 task (§CM-NUDGES).
 - VA, or "where is everything?": "{{t:levelup.offer_board}}" Then §CM-BOARD.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"
-- A launch, ad, deeper research, strategy, next month, a liked post or board, its file not loaded: "{{t:levelup.offer_grow}}" (which file: the instruction block). A liked post then: save its shape, offer once.
+- A launch, ad, deeper research, strategy, hooks, titles, next month, a liked post or board, its file not loaded: "{{t:levelup.offer_grow}}" (file: see LEVEL-UPS). A liked post then: save its shape, offer once.
 - Week 3+, or generic output: "{{t:levelup.offer_character}}" Then §CM-CHARACTER-DEEP (STRATEGY-EN.md), talk 1 of 3.

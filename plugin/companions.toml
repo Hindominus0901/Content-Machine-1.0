@@ -61,6 +61,7 @@ description = "Content Machine launch and ads: plan a launch, the calendar, the 
 part = "launch and ads"
 jobs = """\
 - "launch", "I want to launch", "open the doors", "open cart", "plan a launch", "founding members", "challenge", "workshop": §CM-LAUNCH, then §CM-LAUNCH-BRIEF (the real limits) and §CM-LAUNCH-DAYS
+- a whole campaign (day cards, checkpoints, objections, FAQ, sales page, the live): §CM-CAMPAIGNS (cm-campaigns)
 - the ten steps, writing one step: §CM-LAUNCH-STEPS
 - launch posts and videos: §CM-LAUNCH-POSTS · messages (email, Zalo, DMs): §CM-LAUNCH-MESSAGES · the live, the class, the offer page: §CM-LAUNCH-LIVE
 - during the launch ("today", "seats left 12", pasted questions): §CM-LAUNCH-DESK
@@ -89,6 +90,7 @@ jobs = """\
 - "make it more me", "who am I online": §CM-CHARACTER-DEEP, then §CM-CHARACTER-SCENES ("stance", "spicier")
 - "ideas", "give me ideas": §CM-IDEAS · "make it funny", "trend", "viral": §CM-MOMENTS · a post they like, "make my version": §CM-LIKED
 - "title", "headline", "packaging", "thumbnail": §CM-PACKAGING · a short video, "hook", "another hook": §CM-HOOKS · "carousel", "newsletter", "LinkedIn post": §CM-TEXT-FORMATS
+- "hook library", "more hooks", "hook ideas", many hook shapes by surface: §CM-HOOK-LIBRARY (cm-hooks)
 - "long video", "YouTube", "podcast": §CM-LONG with §CM-LONG-INTRO · after filming, "cut it": §CM-LONG-CUTS"""
 extra = ""
 
@@ -100,9 +102,35 @@ jobs = """\
 - positioning alone ("positioning", "what makes me different"): §CM-STRATEGY (cm-strategy) · the 2 hooks per big idea: §CM-HOOKS (cm-strategy)"""
 extra = ""
 
+[area.hooks.en]
+description = "Content Machine hook library: hooks, titles, slide 1, subject lines, ad hooks and asks, drafted from over 100 shapes in your words. Use for \"hook library\", \"more hooks\", \"hook ideas\"."
+part = "hook library"
+jobs = """\
+- "hook library", "more hooks", "hook ideas", or any hook, title, slide 1, subject or opener: §CM-HOOK-LIBRARY, then the mechanisms it picks (§CM-HOOK-FLIP, §CM-HOOK-PROOF, §CM-HOOK-SCENE, §CM-HOOK-CALLOUT, §CM-HOOK-MISTAKE)
+- a short's three hooks: §CM-HOOK-SHORT
+- titles, thumbnail words, live titles: §CM-HOOK-TITLES
+- slide 1, line 1 of a long post, email subjects, chat openers: §CM-HOOK-TEXT
+- ad hooks: §CM-HOOK-ADS · the ask under a piece: §CM-HOOK-CTA"""
+extra = """\
+The hook lab that picks and checks (§CM-FORMATS 1 in the method, §CM-HOOKS in cm-strategy) is not in this file: this file is the shapes it draws from.
+"""
+
+[area.campaigns.en]
+description = "Content Machine launch campaigns: six ready campaigns with day cards and checkpoints, objections, FAQ, sales page, emails, the live. Use for \"launch\", \"campaign\", \"livestream sale\"."
+part = "launch campaigns"
+jobs = """\
+- "launch", "campaign", "open the doors", "livestream sale": §CM-CAMPAIGNS (pick the campaign, the day cards, the checkpoints), then the campaign's own part
+- the six campaigns: founding seats §CM-CAMPAIGN-FOUNDING · free-gift launch §CM-CAMPAIGN-GIFT · challenge or group class §CM-CAMPAIGN-CLASS · live sales event §CM-CAMPAIGN-EVENT · by application §CM-CAMPAIGN-APPLY · relaunch or evergreen §CM-CAMPAIGN-RELAUNCH
+- before opening, "am I ready?": §CM-LAUNCH-PREP · "too expensive", "let me think": §CM-OBJECTIONS · FAQ: §CM-LAUNCH-FAQ · the sales page: §CM-SALES-PAGE
+- emails, Zalo, inbox during the campaign: §CM-LAUNCH-SEQUENCES · the live, minute by minute: §CM-RUN-OF-SHOW · live selling, groups, comment asks: §CM-LIVE-SELLING
+- the best hours, days, seasons: §CM-LAUNCH-TIMING · after the close: §CM-LAUNCH-AFTER"""
+extra = """\
+The type picker, the math and the real limits (§CM-LAUNCH, §CM-LAUNCH-BRIEF, §CM-LAUNCH-DAYS) are in cm-launch: read them before the campaign. The hook shapes are in cm-hooks.
+"""
+
 [readme.en]
 body = """\
-**Also inside:** five companion skills, one per level-up (research, launch and ads, board and nudges, strategy, the playbook), and four helper agents for Claude Code and Cowork. Nothing to upload: they load when the job needs them."""
+**Also inside:** seven companion skills, one per level-up (research, launch and ads, launch campaigns, board and nudges, strategy, hooks, the playbook), and four helper agents for Claude Code and Cowork. Nothing to upload: they load when the job needs them."""
 
 # ------------------------------------------------------------------ Tiếng Việt
 [common.vn]
@@ -147,6 +175,7 @@ description = "Content Machine mở bán và quảng cáo: kế hoạch mở bá
 part = "mở bán và quảng cáo"
 jobs = """\
 - "mở bán", "ra mắt khoá", "mở đăng ký", "mở lớp mới", "launch", "chạy mồi", "lớp mini Zalo", "thử thách 5 ngày", "suất nhóm đầu", hay dán câu mồi của coach: §CM-LAUNCH, rồi §CM-LAUNCH-BRIEF (giới hạn thật) và §CM-LAUNCH-DAYS
+- cả một chiến dịch dựng sẵn (thẻ từng ngày, mốc soát, kho lăn tăn, hỏi đáp, trang bán, buổi live): §CM-CAMPAIGNS (cm-campaigns)
 - mười chặng, viết một chặng: §CM-LAUNCH-STEPS
 - bài và video mở bán: §CM-LAUNCH-POSTS · tin Zalo, inbox, email: §CM-LAUNCH-MESSAGES · live, lớp Zalo, bài mời: §CM-LAUNCH-LIVE
 - trong đợt ("hôm nay", "còn 12 suất", dán câu hỏi của khách): §CM-LAUNCH-DESK
@@ -175,6 +204,7 @@ jobs = """\
 - "giống mình hơn nữa", "trên mạng mình là ai": §CM-CHARACTER-DEEP, rồi §CM-CHARACTER-SCENES ("gắt hơn")
 - "cho mình ý tưởng", "gợi ý bài": §CM-IDEAS · "làm cho vui", "bắt trend", "viral": §CM-MOMENTS · bài coach thích, "làm bản của mình": §CM-LIKED
 - "đặt tiêu đề", "tiêu đề", "ảnh bìa", "thumbnail": §CM-PACKAGING · video ngắn, "hook khác": §CM-HOOKS · "carousel", "tin Zalo", "bài dài Facebook": §CM-TEXT-FORMATS
+- "thư viện hook", "thêm hook", "gợi ý hook", nhiều dáng hook theo từng nơi đăng: §CM-HOOK-LIBRARY (cm-hooks)
 - "video dài", "YouTube", "podcast": §CM-LONG cùng §CM-LONG-INTRO · quay xong, "cắt ra": §CM-LONG-CUTS"""
 extra = ""
 
@@ -186,6 +216,32 @@ jobs = """\
 - chỉ hỏi định vị ("định vị", "mình khác người ta chỗ nào"): §CM-STRATEGY (cm-strategy) · 2 hook cho mỗi ý lớn: §CM-HOOKS (cm-strategy)"""
 extra = ""
 
+[area.hooks.vn]
+description = "Content Machine thư viện hook: hook, tiêu đề, slide 1, tiêu đề email, hook quảng cáo, lời mời, nháp từ hơn 100 dáng bằng chữ của bạn. Dùng khi nghe \"thư viện hook\", \"thêm hook\", \"gợi ý hook\"."
+part = "thư viện hook"
+jobs = """\
+- "thư viện hook", "thêm hook", "gợi ý hook", hay mọi hook, tiêu đề, slide 1, tiêu đề email, câu mở: §CM-HOOK-LIBRARY, rồi các dáng nó chọn (§CM-HOOK-FLIP, §CM-HOOK-PROOF, §CM-HOOK-SCENE, §CM-HOOK-CALLOUT, §CM-HOOK-MISTAKE)
+- ba hook của video ngắn: §CM-HOOK-SHORT
+- tiêu đề, chữ ảnh bìa, tên buổi live: §CM-HOOK-TITLES
+- slide 1, dòng 1 bài dài, tiêu đề email, tin Zalo: §CM-HOOK-TEXT
+- hook quảng cáo: §CM-HOOK-ADS · lời mời dưới bài: §CM-HOOK-CTA"""
+extra = """\
+Lab hook chọn và kiểm (§CM-FORMATS 1 trong phần phương pháp, §CM-HOOKS ở skill cm-strategy) không nằm trong file này: file này là các dáng nó lấy ra dùng.
+"""
+
+[area.campaigns.vn]
+description = "Content Machine chiến dịch mở bán: sáu chiến dịch dựng sẵn, thẻ từng ngày, mốc soát, kho lăn tăn, hỏi đáp, trang bán, tin Zalo, buổi live. Dùng khi nghe \"mở bán\", \"chiến dịch\", \"livestream bán\"."
+part = "chiến dịch mở bán"
+jobs = """\
+- "mở bán", "chiến dịch", "launch", "livestream bán": §CM-CAMPAIGNS (chọn chiến dịch, thẻ từng ngày, mốc soát), rồi phần riêng của chiến dịch đó
+- sáu chiến dịch: suất nhóm đầu §CM-CAMPAIGN-FOUNDING · Mồi, tặng quà rồi mở bán §CM-CAMPAIGN-GIFT · lớp mini Zalo hay thử thách §CM-CAMPAIGN-CLASS · live chốt lớp §CM-CAMPAIGN-EVENT · ứng tuyển §CM-CAMPAIGN-APPLY · chạy lại, mở quanh năm §CM-CAMPAIGN-RELAUNCH
+- trước khi mở bán, "mình sẵn sàng chưa?": §CM-LAUNCH-PREP · khách lăn tăn "đắt quá", "để em nghĩ đã": §CM-OBJECTIONS · hỏi đáp: §CM-LAUNCH-FAQ · trang bán: §CM-SALES-PAGE
+- tin Zalo, email, inbox trong đợt: §CM-LAUNCH-SEQUENCES · buổi live từng phút: §CM-RUN-OF-SHOW · live chốt lớp, nhóm Zalo, chấm: §CM-LIVE-SELLING
+- giờ, ngày, mùa nào nên mở: §CM-LAUNCH-TIMING · sau khi đóng: §CM-LAUNCH-AFTER"""
+extra = """\
+Bộ chọn loại, phép tính và giới hạn thật (§CM-LAUNCH, §CM-LAUNCH-BRIEF, §CM-LAUNCH-DAYS) nằm ở skill cm-launch: đọc trước khi vào chiến dịch. Các dáng hook ở skill cm-hooks.
+"""
+
 [readme.vn]
 body = """\
-**Có sẵn thêm:** năm skill đồng hành, mỗi nâng cấp một skill (nghiên cứu, mở bán và quảng cáo, bảng nội dung và lời nhắc, chiến lược, file chiến lược), và bốn agent phụ cho Claude Code và Cowork. Không cần tải gì thêm: cần việc nào thì skill đó tự mở."""
+**Có sẵn thêm:** bảy skill đồng hành, mỗi nâng cấp một skill (nghiên cứu, mở bán và quảng cáo, chiến dịch mở bán, bảng nội dung và lời nhắc, chiến lược, thư viện hook, file chiến lược), và bốn agent phụ cho Claude Code và Cowork. Không cần tải gì thêm: cần việc nào thì skill đó tự mở."""

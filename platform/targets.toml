@@ -523,6 +523,22 @@ vn = 30720
 limit = ""
 note = "The content strategy document (§CM-STRATEGY-DOC), 7 Oct 2026: its own file because STRATEGY is full. Each anchor block still stays within method_section."
 
+[budgets.levelup_hooks]
+artifact = "Level-ups/HOOKS-{EN,VN}.md"
+unit = "bytes"
+en = 45056
+vn = 58368
+limit = ""
+note = "The hook library (founder, 7 Oct: 'the hook library and the launch campaigns need to be set up thoroughly'): over 100 hook shapes in 20 mechanisms plus the surface rules. Its own file because STRATEGY is full; sized to the measured file plus about 15% headroom (44 KB EN / 57 KB VN). Each anchor block still stays within method_section."
+
+[budgets.levelup_campaigns]
+artifact = "Level-ups/CAMPAIGNS-{EN,VN}.md"
+unit = "bytes"
+en = 53248
+vn = 72704
+limit = ""
+note = "The launch campaign library: six campaigns with day cards and checkpoints, then the checklist, objections, FAQ, sales page, sequences, the live, live selling, timing and after. Its own file because LAUNCH holds the picker and the math; sized to the measured file plus about 15% headroom (52 KB EN / 71 KB VN). Each anchor block still stays within method_section."
+
 [budgets.brand_card]
 artifact = "Brand Card (whole)"
 unit = "chars_nfc"
@@ -639,9 +655,9 @@ vn = 1
 limit = "chatgpt_free_uploads_per_day"
 
 [budgets.lifetime_sources]
-artifact = "project sources the kit ever needs on Free (method, Brand Card, up to 3 of the 4 level-up files)"
+artifact = "project sources the kit ever needs on Free (method, Brand Card, up to 3 of the 7 level-up files)"
 unit = "files"
 en = 5
 vn = 5
 limit = "chatgpt_free_project_files"
-note = "Was 3 (method, Brand Card, one GROW file). The level-ups are now four files (RESEARCH, LAUNCH, BOARD, STRATEGY); a coach adds the ones needed, and the Claude plugin loads them as companion skills with no upload."
+note = "Was 3 (method, Brand Card, one GROW file). The level-ups are now seven files (RESEARCH, LAUNCH, CAMPAIGNS, BOARD, STRATEGY, HOOKS, PLAYBOOK); a coach adds the ones needed, and the Claude plugin loads them as companion skills with no upload."

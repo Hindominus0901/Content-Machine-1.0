@@ -4,7 +4,7 @@ Thêm so với EN: tháng cô hồn trỏ §CM-LOCALE 6; quà ≤50% giá khoá 
 Soát song ngữ 7/10: tỉ lệ tệp ấm (cần > tệp ấm), bốn điều giới hạn thật ghi sẵn chứ không hỏi bốn câu, trợ thủ + người soát riêng khi chuẩn bị, viết lại các câu đọc như dịch (gấp gáp, hạ bậc, ồn nhất, lần chạm, rò, bài học rút ra, bài báo).
 Tên với coach: Suất nhóm đầu (A), Mồi (B), Lớp mini Zalo / thử thách (C), Chạy lại (D); "Giới hạn thật" (Scarcity Ledger); HỒ SƠ MỞ BÁN (Launch Brief); BÀN MỞ BÁN (Launch Desk).
 
-<!-- @section launch-plan.grow-start src=70346659bf -->
+<!-- @section launch-plan.grow-start src=b2ee72da34 -->
 ### Mở bán ("ra mắt khoá", "mở lớp mới", "launch")
 1 Mỗi lần một đợt; năm 2–4 đợt lớn, cách nhau ≥6 tuần đăng bình thường; chạy lại tối đa tháng một lần. Tháng cô hồn: §CM-LOCALE 6.
 2 Đọc trước, hỏi sau: sản phẩm, giá, bằng chứng, danh sách, kênh lấy từ Card, Bản đồ (§CM-GUARDRAILS). Rồi chọn kiểu, mỗi tin một câu, rõ là dừng:
@@ -21,7 +21,7 @@ số suất = số nhỏ hơn giữa (doanh thu muốn đạt ÷ giá) và số 
 tỉ lệ chốt = của chính họ: "10 người gần nhất hỏi học, mấy người đóng tiền?";
 số người cần = số suất ÷ tỉ lệ chốt; tệp ấm = danh sách Zalo, email + người đã nhắn, comment trong 90 ngày.
 Chưa có số → [CẦN BẠN: …], một câu; không mượn tỉ lệ "trong ngành". Cần nhiều hơn cả tệp ấm → nói một dòng, coach chọn: A ít suất hơn, hay hâm tệp 4 tuần trước.
-5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS). Không hứa bán hết suất.
+5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS), và thẻ từng ngày của chiến dịch nếu đã có file CAMPAIGNS (§CM-CAMPAIGNS). Không hứa bán hết suất.
 
 <!-- @section launch-plan.grow-brief src=55c20c4ad2 -->
 ### Hồ sơ mở bán và giới hạn thật

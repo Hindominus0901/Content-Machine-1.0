@@ -1,6 +1,6 @@
 # Hook library standard (`hook-library`)
 
-Build-only rubric (wf12-qa-spec §3.1 shape). Never shipped. It scores the **entries** of the hook library (`modules/{en,vn}/hook-library.md`, sections `hook-library.grow-*`, proposed level-up file HOOKS) and the machine's **use** of it. The winner a piece prints is still scored by `hook-lab.md`; this file scores what the lab drafts from.
+Build-only rubric (wf12-qa-spec §3.1 shape). Never shipped. It scores the **entries** of the hook library (`modules/{en,vn}/hook-library.md`, sections `hook-library.grow-*`, level-up file HOOKS) and the machine's **use** of it. The winner a piece prints is still scored by `hook-lab.md`; this file scores what the lab drafts from.
 Sources, in order: founder, 7 Oct ("thư viện hook, chiến dịch launching … cần phải thiết lập kĩ") · founder decisions 7 Oct (Soo Wei Goh and Matt Gray the two strategy references, Matt Gray's framework names never in coach text; content types ATTRACT / TRUST / CONVERT; VN pieces native, never translated) · docs/research/founder-sources.md (Goh: three hooks per short, wide for the sharer and specific for the buyer, loops past the topic; Nik Setting: numbers decide who comes, outcome over method, show don't say; Hormozi: proof, promise, plan) · wf8-mattgray-playbook §1-§4 and the youtube, instagram, linkedin-x, newsletter sweeps (shapes renamed; §9 what not to copy) · wf9-entertainment-catalog (moments) · `hook-lab.md` HL1-HL9, HG1-HG3 · `vn-naturalness.md` · `shared.md` SG1, SG2.
 
 ## Purpose

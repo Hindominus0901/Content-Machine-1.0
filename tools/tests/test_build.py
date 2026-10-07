@@ -1009,10 +1009,21 @@ LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.
                               "CHARACTER-SCENES", "IDEAS", "MOMENTS", "LIKED", "PACKAGING", "HOOKS", "TEXT-FORMATS",
                               "LONG", "LONG-INTRO", "LONG-CUTS"]),
     "playbook": ("PLAYBOOK", ["STRATEGY-DOC"]),
+    "hooks": ("HOOKS", ["HOOK-LIBRARY", "HOOK-FLIP", "HOOK-PROOF", "HOOK-SCENE", "HOOK-CALLOUT", "HOOK-MISTAKE",
+                        "HOOK-SHORT", "HOOK-TITLES", "HOOK-TEXT", "HOOK-ADS", "HOOK-CTA"]),
+    "campaigns": ("CAMPAIGNS", ["CAMPAIGNS", "CAMPAIGN-FOUNDING", "CAMPAIGN-GIFT", "CAMPAIGN-CLASS", "CAMPAIGN-EVENT",
+                                "CAMPAIGN-APPLY", "CAMPAIGN-RELAUNCH", "LAUNCH-PREP", "OBJECTIONS", "LAUNCH-FAQ",
+                                "SALES-PAGE", "LAUNCH-SEQUENCES", "RUN-OF-SHOW", "LIVE-SELLING", "LAUNCH-TIMING",
+                                "LAUNCH-AFTER"]),
 }
-PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy", "cm-playbook"]
+LEVELUP_BUDGETS = {   # bytes (en, vn) where an area is not the 30,720 B default
+    "strategy": (36864, 36864),      # +MONTH, LIKED (7 Oct)
+    "hooks": (45056, 58368),         # the hook library, built size + ~15% (7 Oct)
+    "campaigns": (53248, 72704),     # the launch campaign library, built size + ~15% (7 Oct)
+}
+PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy", "cm-playbook", "cm-hooks", "cm-campaigns"]
 PLUGIN_AGENTS = ["cm-listener", "cm-researcher", "cm-reviewer", "cm-writer"]
-FIXTURE_AREAS = ("research", "launch", "board")      # the areas make_levelup_repo builds (a subset of the real four)
+FIXTURE_AREAS = ("research", "launch", "board")      # the areas make_levelup_repo builds (a subset of the real seven)
 
 LEVELUP_METHOD = '''
 [levelup.research]
@@ -1370,8 +1381,8 @@ class TaskTargetTests(TempRepo):
 
 
 class RealRepoLevelUps(unittest.TestCase):
-    """The real source tree, built once into a temp folder: the four level-up files, the Board CSVs, the nudge
-    texts and the plugin with its 10 skills and 4 agents."""
+    """The real source tree, built once into a temp folder: the seven level-up files, the Board CSVs, the nudge
+    texts and the plugin with its 16 skills and 4 agents."""
 
     @classmethod
     def setUpClass(cls):
@@ -1391,7 +1402,7 @@ class RealRepoLevelUps(unittest.TestCase):
     def tearDownClass(cls):
         cls._tmp.cleanup()
 
-    def test_the_four_level_up_tables_hold_the_proposed_anchors_in_order(self):
+    def test_the_seven_level_up_tables_hold_the_proposed_anchors_in_order(self):
         tables = {a: cfg for a, cfg in cmlib.levelup_tables(self.method)}
         self.assertEqual(list(tables), list(LEVELUP_AREAS))
         for area, (file, anchors) in LEVELUP_AREAS.items():
@@ -1417,7 +1428,7 @@ class RealRepoLevelUps(unittest.TestCase):
                     self.assertNotIn("@section", text)
                     self.assertNotIn("{{", text)
                     budget = self.targets["budgets"][f"levelup_{area}"][ed]
-                    self.assertEqual(budget, 36864 if area == "strategy" else 30720)   # STRATEGY: +MONTH, LIKED (7 Oct)
+                    self.assertEqual(budget, LEVELUP_BUDGETS.get(area, (30720, 30720))[ed == "vn"])
                     self.assertLessEqual(len(text.encode("utf-8")), budget, f"{path.name}: {len(text.encode('utf-8'))} B")
                     entry = self.manifest["artifacts"][f"{ed}/Level-ups/{file}-{suffix}.md"]
                     self.assertEqual(entry["budgets"][f"levelup_{area}"]["budget"], budget)
@@ -1462,13 +1473,13 @@ class RealRepoLevelUps(unittest.TestCase):
                 art = self.manifest["artifacts"][f"maintainer/tasks/{ed}/{stem}.txt"]
                 self.assertEqual((art["task_id"], art["budgets"]["task_nudge"]["budget"]), (row["id"], 900))
 
-    def test_the_plugin_has_the_twelve_skills_and_four_agents(self):
+    def test_the_plugin_has_the_sixteen_skills_and_four_agents(self):
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             files = {n: zf.read(n) for n in zf.namelist()}
         skills = sorted({n.split("/")[2] for n in files if n.startswith("content-machine/skills/")})
         want = sorted([f"content-machine-{ed}" for ed in ("en", "vn")]
                       + [f"{s}-{ed}" for s in PLUGIN_SKILLS for ed in ("en", "vn")])
-        self.assertEqual(len(skills), 12)
+        self.assertEqual(len(skills), 16)
         self.assertEqual(skills, want)
         for ed, suffix in (("en", "EN"), ("vn", "VN")):
             for area, (file, anchors) in LEVELUP_AREAS.items():
@@ -1554,7 +1565,7 @@ class RealRepoLevelUps(unittest.TestCase):
                 for anchor in anchor_headings(method):
                     self.assertEqual(count_line(one, anchor), 1, anchor)
 
-    def test_the_main_skill_pointer_names_the_four_companions(self):
+    def test_the_main_skill_pointer_names_the_seven_companions(self):
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             for ed, suffix in (("en", "EN"), ("vn", "VN")):
                 text = zf.read(f"content-machine/skills/content-machine-{ed}/SKILL.md").decode("utf-8")
@@ -1571,6 +1582,23 @@ class RealRepoLevelUps(unittest.TestCase):
             self.assertIn(f"{{LAUNCH-{suffix}.md}}", line)
             self.assertTrue((self.root / "dist" / ed / "Level-ups" / f"LAUNCH-{suffix}.md").is_file())
             self.assertNotIn("GROW", kit)
+
+    def test_the_instruction_block_routes_to_every_level_up_file(self):
+        """The kit's LEVEL-UPS line is the router: each level-up file is named there, or a coach never learns it exists."""
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            kit = (self.root / "dist" / ed / "1-INSTRUCTIONS.txt").read_text(encoding="utf-8")
+            line = next(ln for ln in kit.splitlines() if f"RESEARCH-{suffix}.md" in ln)
+            for area, (file, _) in LEVELUP_AREAS.items():
+                self.assertIn(f"{file}-{suffix}.md", line, (ed, file))
+            self.assertLessEqual(cmlib.nfc_len(kit), {"en": 6500, "vn": 7500}[ed], ed)
+
+    def test_the_strategy_and_launch_skills_point_to_the_hook_and_campaign_skills(self):
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            for ed in ("en", "vn"):
+                strategy = zf.read(f"content-machine/skills/cm-strategy-{ed}/SKILL.md").decode("utf-8")
+                launch = zf.read(f"content-machine/skills/cm-launch-{ed}/SKILL.md").decode("utf-8")
+                self.assertIn("§CM-HOOK-LIBRARY (cm-hooks)", strategy, ed)
+                self.assertIn("§CM-CAMPAIGNS (cm-campaigns)", launch, ed)
 
     def test_claude_plugin_validate_passes(self):
         cli = shutil.which("claude") or "/opt/node22/bin/claude"

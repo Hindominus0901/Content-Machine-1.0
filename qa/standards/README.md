@@ -28,7 +28,7 @@ Each file is used three ways:
 
 ## Index
 
-All 18 standards in spec §3.1, plus `strategy-doc` (founder request, 7 Oct), each written as `<id>.md` in this folder (≤150 lines, with a 3–5 line runtime check in EN and VN).
+All 18 standards in spec §3.1, plus `strategy-doc`, `hook-library` and `launch-campaign` (founder requests, 7 Oct), each written as `<id>.md` in this folder (≤150 lines, with a 3–5 line runtime check in EN and VN).
 
 | id | Artifact | Critical items (must score 2) | Build pass |
 |---|---|---|---|
@@ -51,6 +51,8 @@ All 18 standards in spec §3.1, plus `strategy-doc` (founder request, 7 Oct), ea
 | `launch-assets` | Launch assets P0–P9 | LA1 Ledger, LA2 proof and claims, LA4 keyword CTAs written as asked, LA6 consent and capture | ≥16/20, every asset passes its format, second read on the Ledger and P5–P8 |
 | `weekly-review` | Weekly review | WR1 traced, WR2 blank is not zero, WR4 honest calls | ≥15/18 |
 | `strategy-doc` | Content strategy document (CONTENT-STRATEGY.md / CHIEN-LUOC-NOI-DUNG.md) | SD1 complete, SD2 the coach's own words, SD3 nothing invented, SD4 big ideas distinct and on-Map, SD7 a system they can run, SD10 plain, natural, deliverable | ≥16/20 |
+| `hook-library` | Hook library entries (`HOOKS-EN/VN.md`) and the machine's use of it | HB1 fill-in shape, HB3 surfaces fit, HB4 passes the lab, HB5 example truth (+ HB6 VN native); per file HB9-HB12 and gates HG1-HG3; transcript HU1-HU3 | Per entry: the critical items at 2, HB2, HB7, HB8 ≥1; per file all yes and gates clear; build sample of 20 entries per edition |
+| `launch-campaign` | One campaign plan (types 1-6) and the shared parts printed with it (`CAMPAIGNS-EN/VN.md`) | LC1 fit, LC2 math in their numbers, LC6 real limits, LC8 consent and mechanics, LC9 proof, LC10 the coach's own CTAs (+ LC12 VN native) | EN ≥18/22, VN ≥20/24; second read on the math, every checkpoint and every cart message |
 
 ## Changing a standard
 

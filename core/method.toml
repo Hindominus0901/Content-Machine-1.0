@@ -319,6 +319,130 @@ budget = "levelup_playbook"
 id = "STRATEGY-DOC"
 sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-pillars", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
 
+# --- Level-ups/HOOKS-<SUFFIX>.md: the hook library (100+ hook shapes in 20 mechanisms, by surface: shorts, titles, slide 1, subjects, ads, the ask).
+# §CM-HOOKS (STRATEGY) stays the lab that picks and checks; HOOK-LIBRARY is how it draws from the shapes.
+[levelup.hooks]
+file = "HOOKS"
+skill = "cm-hooks"
+title_key = "levelup.hooks.title"
+budget = "levelup_hooks"
+
+[[levelup.hooks.anchor]]
+id = "HOOK-LIBRARY"
+sections = ["hook-library.grow-use", "hook-library.grow-pick"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-FLIP"
+sections = ["hook-library.grow-flip", "hook-library.grow-compare"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-PROOF"
+sections = ["hook-library.grow-proof", "hook-library.grow-change"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-SCENE"
+sections = ["hook-library.grow-scene", "hook-library.grow-day"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-CALLOUT"
+sections = ["hook-library.grow-callout", "hook-library.grow-objection"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-MISTAKE"
+sections = ["hook-library.grow-mistake", "hook-library.grow-restart"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-SHORT"
+sections = ["hook-library.grow-short"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-TITLES"
+sections = ["hook-library.grow-titles"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-TEXT"
+sections = ["hook-library.grow-slides", "hook-library.grow-subject"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-ADS"
+sections = ["hook-library.grow-ads"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-CTA"
+sections = ["hook-library.grow-cta"]
+
+# --- Level-ups/CAMPAIGNS-<SUFFIX>.md: the launch campaign library (six campaigns with day cards and checkpoints, then the checklist,
+# objections, FAQ, sales page, sequences, the live, live selling, timing, after). §CM-LAUNCH (LAUNCH) still picks the type and does the math.
+[levelup.campaigns]
+file = "CAMPAIGNS"
+skill = "cm-campaigns"
+title_key = "levelup.campaigns.title"
+budget = "levelup_campaigns"
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGNS"
+sections = ["launch-campaigns.grow-library", "launch-campaigns.grow-beats"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-FOUNDING"
+sections = ["launch-campaigns.grow-founding"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-GIFT"
+sections = ["launch-campaigns.grow-gift", "launch-campaigns.grow-gift-cart"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-CLASS"
+sections = ["launch-campaigns.grow-class", "launch-campaigns.grow-class-cart"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-EVENT"
+sections = ["launch-campaigns.grow-event"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-APPLY"
+sections = ["launch-campaigns.grow-apply"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-RELAUNCH"
+sections = ["launch-campaigns.grow-relaunch"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-PREP"
+sections = ["launch-campaigns.grow-prep"]
+
+[[levelup.campaigns.anchor]]
+id = "OBJECTIONS"
+sections = ["launch-campaigns.grow-objections-a", "launch-campaigns.grow-objections-b"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-FAQ"
+sections = ["launch-campaigns.grow-faq"]
+
+[[levelup.campaigns.anchor]]
+id = "SALES-PAGE"
+sections = ["launch-campaigns.grow-page"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-SEQUENCES"
+sections = ["launch-campaigns.grow-seq-open", "launch-campaigns.grow-seq-close", "launch-campaigns.grow-inbox"]
+
+[[levelup.campaigns.anchor]]
+id = "RUN-OF-SHOW"
+sections = ["launch-campaigns.grow-runshow"]
+
+[[levelup.campaigns.anchor]]
+id = "LIVE-SELLING"
+sections = ["launch-campaigns.grow-live-selling"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-TIMING"
+sections = ["launch-campaigns.grow-timing"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-AFTER"
+sections = ["launch-campaigns.grow-after"]
+
 # ---------------------------------------------------------------- L3 Autopilot skill references
 # One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by
 # tools/render.py with the router row's WHEN TO USE / RULES and the formats' CHECK BEFORE

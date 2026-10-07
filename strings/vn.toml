@@ -84,6 +84,8 @@
 "levelup.board.title"   = { text = "{{name}} · Bảng nội dung và lời nhắc", src = "a775a59ccf" }
 "levelup.strategy.title" = { text = "{{name}} · Chiến lược", src = "6f72338d42" }
 "levelup.playbook.title" = { text = "{{name}} · File chiến lược", src = "a04d571b9b" }
+"levelup.hooks.title" = { text = "{{name}} · Thư viện hook", src = "0de79ff1cb" }
+"levelup.campaigns.title" = { text = "{{name}} · Chiến dịch", src = "90441237b7" }
 "anchor.talk"           = { text = "Buổi nói chuyện tuần", src = "9d5e232fb4" }
 "anchor.week"           = { text = "Viết bài cả tuần", src = "7a7c4293bc" }
 "anchor.today"          = { text = "Bài hôm nay", src = "dfc1723246" }
@@ -139,6 +141,33 @@
 "anchor.long-intro"     = { text = "Phần mở video dài (khoảng 120 chữ)", src = "f3f0efd5c3" }
 "anchor.long-cuts"      = { text = "Cắt video dài ra cả tuần", src = "a88b496f91" }
 "anchor.strategy-doc"   = { text = "File chiến lược nội dung", src = "2aa55199d6" }
+"anchor.hook-library" = { text = "Thư viện hook: dùng thế nào", src = "99b81a0381" }
+"anchor.hook-flip" = { text = "Lật niềm tin, lời khuyên quen, cách cũ cách mới", src = "886fffedf1" }
+"anchor.hook-proof" = { text = "Số của coach, kết quả thật, trước và sau", src = "475a78a2ac" }
+"anchor.hook-scene" = { text = "Mở bằng cảnh, câu nghe được, một ngày của khách", src = "beb8227da2" }
+"anchor.hook-callout" = { text = "Gọi đúng người, câu khách hỏi, băn khoăn, thử thách", src = "7f9ae3efde" }
+"anchor.hook-mistake" = { text = "Lỗi đắt giá, thú nhận, làm lại từ đầu, các bước", src = "3a12a420eb" }
+"anchor.hook-short" = { text = "Ba hook của video ngắn", src = "7d69817fa1" }
+"anchor.hook-titles" = { text = "Tiêu đề, chữ ảnh bìa, tên buổi live", src = "3e9e9aee38" }
+"anchor.hook-text" = { text = "Slide 1, dòng 1, tiêu đề email, tin Zalo", src = "a69bbb5ace" }
+"anchor.hook-ads" = { text = "Hook quảng cáo", src = "af03232633" }
+"anchor.hook-cta" = { text = "Lời mời theo bậc", src = "fd3711ed10" }
+"anchor.campaigns" = { text = "Thư viện chiến dịch: chọn, thẻ ngày, mốc soát", src = "a8056ce3bc" }
+"anchor.campaign-founding" = { text = "Chiến dịch 1: suất nhóm đầu", src = "b99ac8d898" }
+"anchor.campaign-gift" = { text = "Chiến dịch 2: Mồi, tặng quà rồi mở bán", src = "99265f9e41" }
+"anchor.campaign-class" = { text = "Chiến dịch 3: lớp mini Zalo hay thử thách", src = "7740d3c40c" }
+"anchor.campaign-event" = { text = "Chiến dịch 4: live chốt lớp", src = "15dfbf21aa" }
+"anchor.campaign-apply" = { text = "Chiến dịch 5: ứng tuyển", src = "458388c254" }
+"anchor.campaign-relaunch" = { text = "Chiến dịch 6: chạy lại, mở quanh năm", src = "61fd616eb0" }
+"anchor.launch-prep" = { text = "Việc cần xong trước khi mở bán", src = "c5931aa241" }
+"anchor.objections" = { text = "Kho lăn tăn", src = "9f691ce7fb" }
+"anchor.launch-faq" = { text = "Soạn hỏi đáp", src = "1990950929" }
+"anchor.sales-page" = { text = "Sườn trang bán", src = "3a9e99f954" }
+"anchor.launch-sequences" = { text = "Tin Zalo, email và inbox trong đợt", src = "afd5b999f2" }
+"anchor.run-of-show" = { text = "Buổi live từng phút", src = "281a76ef85" }
+"anchor.live-selling" = { text = "Live chốt lớp, nhóm Zalo, chấm", src = "8269fd221c" }
+"anchor.launch-timing" = { text = "Giờ, ngày, mùa trong năm", src = "63a9a6b932" }
+"anchor.launch-after" = { text = "Sau chiến dịch", src = "03b372add6" }
 
 # START-HERE.html (built until guides/ takes over in P6)
 "starthere.title" = { text = "Bắt đầu từ đây: {{name}}", src = "78db6907b6" }

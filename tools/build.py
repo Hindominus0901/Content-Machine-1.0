@@ -15,7 +15,7 @@ Per edition:
     START-HERE.html                    help   strings starthere.title / starthere.body
     Help/<name>.html                   help   guides/<name>.tmpl
     dist/site/<edition>/index.html     site   guides/setup-page.tmpl
-    dist/content-machine-plugin.zip    plugin both editions' kit + method file + 4 level-up companions each, 4 agents;
+    dist/content-machine-plugin.zip    plugin both editions' kit + method file + 7 level-up companions each, 4 agents;
                                               one plugin for Claude and ChatGPT
     dist/maintainer/tasks/<edition>/   task   automation/*.tmpl (samples for lint budgets; task-nudge* at task_nudge)
 
@@ -153,7 +153,7 @@ PLUGIN_NAME = "content-machine"
 PLUGIN_EDITIONS = ("vn", "en")
 PLUGIN_DESCRIPTION = ("Content Machine for coaches (Tiếng Việt + English): a voice dump becomes one message, "
                       "a video to film today and a week plan.")
-PLUGIN_DESCRIPTION_COMPANIONS = " Companions for research, launch and ads, board and nudges, strategy."
+PLUGIN_DESCRIPTION_COMPANIONS = " Companions for research, launch and ads, launch campaigns, board and nudges, strategy, hooks, playbook."
 PLUGIN_KEYWORDS = ["content", "coach", "vn", "en"]
 COMPANIONS_FILE = Path("plugin") / "companions.toml"     # the companion skills' words (docs/BUILD.md §6)
 AGENTS_DIR = Path("plugin") / "agents"                    # the plugin's agents, copied as they are
