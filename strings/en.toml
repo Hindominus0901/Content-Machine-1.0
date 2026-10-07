@@ -255,7 +255,7 @@
 "setup.guess"                  = "My guess: {guess}. Right?"
 "setup.guess_no_result"        = "My guess: no client result yet, so I'll use your own story. Right?"
 "setup.multi_income"           = "You earn from {n} things. My guess: write for {buyer}, because {why}. Right?"
-"setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess; one word changes it)."
+"setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it)."
 "map.ok"                       = "We'll run this for 4 weeks. OK, or change a line."
 "card.visible.to_them"         = "to them:"
 "card.visible.never"           = "never:"
