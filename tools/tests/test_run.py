@@ -339,6 +339,25 @@ class FT1Packets(TempRepo):
         self.assertIn("Add `## Research log` to `notes.md`", readme)
         self.assertNotIn("## Web lane", (off / "packet" / "README.md").read_text(encoding="utf-8"))
 
+    def test_the_web_lane_runs_the_pass_as_a_separate_agent_and_logs_the_real_turns(self):
+        """Retest-ft2 fix 4: the research pass sees only the transcript so far, never the persona files, and each query is
+        logged with the turn it really ran after; the leak check on that log is named in the packet."""
+        [off] = self.packets()
+        [on] = self.packets(web=True, tag="w")
+        text = self.machine(on)
+        for phrase in ("Run the research pass as if by a separate agent that sees only the transcript so far",
+                       "never the persona files, `answers.md`, `expected.toml`", "Log the real turn of each query",
+                       "`Q<n> · after turn <N> · <query>`", "not a turn it is modelled in later or earlier",
+                       "a run of two or more content words that only the persona's answer bank holds",
+                       "is a leak and makes the run invalid"):
+            self.assertIn(phrase, text)
+        self.assertNotIn("separate agent", self.machine(off))
+        readme = (on / "packet" / "README.md").read_text(encoding="utf-8")
+        for phrase in ("Run the research pass as if by a separate agent", "Q6 · after turn 3 · \"which clients\" agency owner",
+                       "A modelled turn", "research_leaks", "research_log", "`KEEP: <pattern> (lines 1, 2, 3)`"):
+            self.assertIn(phrase, readme)
+        self.assertNotIn("research_leaks", (off / "packet" / "README.md").read_text(encoding="utf-8"))
+
     def test_the_plugin_form_ships_the_companion_skills(self):
         [packet] = self.packets(plugin=True, tag="p")
         self.assertEqual(packet.name, "p-day0-en-test-coach-S1-plugin-r1")
@@ -413,6 +432,137 @@ class FT1Packets(TempRepo):
                  "t_min": None}]
         self.assertEqual(run.check_leaks(rows, pdir, kit, "en")["status"], "pass")
         self.assertFalse(run.check_leaks(rows, pdir, None, "en")["pass"])          # without the kit's wording it leaks
+
+
+class ResearchLeaks(TempRepo):
+    """Retest-ft2 §8 fix 4 (qa/runs/retest-ft2/review.md §2): the research pass of a web run is audited. EN's topic 1 changed
+    on "which clients", a phrase of the persona's undictated answer bank that sat in queries 6, 10 and 11 and that a
+    5-word leak window cannot see."""
+
+    ANSWERS = ("## Dump chunk 1\nI run an agency. Best year in the history of the company and I'm asking the bank for payroll.\n\n"
+               "## Answer bank\n- **What clients ask most:** \"Which clients actually make us money?\" Then \"Can we afford to hire?\"\n"
+               "- Cash is tight in the bank every March.\n")
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/en/test-coach/answers.md", self.ANSWERS)
+        self.pdir = self.root / "evals" / "personas" / "en" / "test-coach"
+
+    def rows(self, *turns):
+        return [dict({"turn": i // 2 + 1, "role": role, "text": text, "t_min": None})
+                for i, (role, text) in enumerate(turns)]
+
+    def log_dir(self, queries: str, name="a") -> Path:
+        d = self.root / "evals" / "runs" / name
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "notes.md").write_text("# notes\n\n## Research log\n\n### Queries\n" + queries + "\n### Pages opened\n"
+                                    "1. https://x.com/a · X · Jan 2026\n\n## Grade\nfine\n", encoding="utf-8")
+        return d
+
+    def check(self, queries, rows, lang="en", web=True, kit=None):
+        return run.check_research_leaks(self.log_dir(queries), rows, self.pdir, kit, lang, web)
+
+    DIALOGUE = ("coach", "Start"), ("machine", "Hi."), ("coach", "I run an agency and it was our best year."), \
+        ("machine", "Go on."), ("coach", "We're busy and broke, the bank account is empty."), ("machine", "Map.")
+
+    def test_a_phrase_only_the_answer_bank_holds_makes_the_run_invalid(self):
+        res = self.check('Q6 · after turn 3 · "we\'re busy" agency owner "which clients" making money\n',
+                         self.rows(*self.DIALOGUE))
+        self.assertFalse(res["pass"])
+        self.assertEqual(res["status"], "fail")
+        self.assertIn('query 6', res["evidence"][0])
+        self.assertIn('"which clients" is in the persona\'s answer bank and was never said (2+ words in a row)', res["evidence"][0])
+        self.assertIn("after turn 3", res["evidence"][0])
+        self.assertEqual(res["queries"], 1)
+
+    def test_the_words_the_coach_said_by_that_turn_are_fine_and_later_ones_warn(self):
+        said = self.rows(*self.DIALOGUE[:2], ("coach", "Everyone asks which clients make us money."), ("machine", "Go on."),
+                         ("coach", "Cash."), ("machine", "Map."))
+        self.assertEqual(self.check('Q6 · after turn 2 · "which clients" agency owner\n', said)["status"], "pass")
+        res = self.check('Q6 · after turn 1 · "which clients" agency owner\n', said)                       # said at turn 2: a modelled turn
+        self.assertEqual((res["pass"], res["status"]), (True, "warn"))
+        late = self.rows(*self.DIALOGUE[:2], ("coach", "Hello."), ("machine", "Go on."),
+                         ("coach", "Everyone asks which clients make us money."), ("machine", "Map."))
+        res = self.check('Q6 · after turn 2 · "which clients" agency owner\n', late)          # said, but at turn 3
+        self.assertTrue(res["pass"])
+        self.assertEqual(res["status"], "warn")
+        self.assertIn("first said at turn 3, after the turn the log gives", res["warnings"][0])
+        # the machine's own earlier reply and the kit's wording are known, too
+        said_by_machine = self.rows(("coach", "Start"), ("machine", "Which clients are they?"), ("coach", "Agency owners."),
+                                    ("machine", "Go on."))
+        self.assertTrue(self.check('Q1 · after turn 2 · "which clients" agency\n', said_by_machine)["pass"])
+        kit = self.root / "kit"
+        kit.mkdir()
+        (kit / "1-INSTRUCTIONS.txt").write_text("Ask which clients make money.", encoding="utf-8")
+        self.assertTrue(self.check('Q1 · after turn 1 · "which clients" agency\n', self.rows(*self.DIALOGUE), kit=kit)["pass"])
+
+    def test_one_word_function_words_quotes_and_plurals(self):
+        rows = self.rows(*self.DIALOGUE)
+        for query, ok in (('Q1 · after turn 3 · clients forum\n', True),                           # one word of a phrase
+                          ('Q1 · after turn 3 · money in the bank\n', True),                       # "in the" runs hold a function word
+                          ('Q1 · after turn 3 · "cash" "bank" agency\n', True),                    # separate quotes are separate runs
+                          ('Q1 · after turn 3 · which, clients\n', True),                          # a comma ends a run
+                          ('Q1 · after turn 3 · which client make money\n', False),                # the singular is the same phrase
+                          ('Q1 · after turn 3 · Cash is tight in the bank every March\n', False),
+                          ('Q1 · after turn 3 · "afford to hire" owners\n', True)):                # "afford to": a function word breaks it
+            with self.subTest(query=query):
+                self.assertEqual(self.check(query, rows)["pass"], ok, query)
+
+    def test_vn_runs_need_four_tieng(self):
+        self.write("evals/personas/vn/test-hanh/answers.md",
+                   "## Dump chunk 1\nMình mở spa.\n\n## Answer bank\n- Các em hay nói: \"em ngại chào liệu trình lắm chị ơi\".\n")
+        pdir = self.root / "evals" / "personas" / "vn" / "test-hanh"
+        rows = self.rows(("coach", "Chị mở spa nhỏ."), ("machine", "Dạ."), ("coach", "Khách làm một buổi rồi thôi."), ("machine", "Dạ."))
+        d = self.log_dir('- T2: Q1 "chủ spa nhỏ ngại chào liệu trình cho khách" · Q2 "chủ spa ngại chào liệu" · Q3 "spa khách làm một buổi"\n')
+        res = run.check_research_leaks(d, rows, pdir, None, "vn")
+        self.assertFalse(res["pass"])
+        self.assertEqual(len(res["evidence"]), 1, res["evidence"])
+        self.assertIn('query 1', res["evidence"][0])
+        self.assertIn('"ngại chào liệu trình" is in the persona\'s answer bank', res["evidence"][0])
+        self.assertIn("4+ tiếng in a row", res["evidence"][0])
+        self.assertEqual(res["n"], 4)
+
+    def test_every_query_names_the_turn_it_ran_after(self):
+        rows = self.rows(*self.DIALOGUE)
+        res = self.check("1. agency owner forum\n2. cash payroll agency\n", rows)
+        self.assertFalse(res["pass"])
+        self.assertIn('queries 1, 2 name no turn: log each as "Q<n> · after turn <N> · <query>"', res["evidence"][0])
+        res = self.check("Q1 · after turn 9 · agency owner forum\n", rows)
+        self.assertIn("logged after turn 9, a turn this run does not have (3 coach turns)", res["evidence"][0])
+        res = self.check("Reply 2 (after chunk 1):\n1. agency owner forum\nT3: Q2 \"cash payroll agency\"\n", rows)   # the older headers
+        self.assertTrue(res["pass"], res)
+
+    def test_a_web_run_needs_its_log_and_a_plain_run_is_not_asked(self):
+        d = self.root / "evals" / "runs" / "none"
+        d.mkdir(parents=True)
+        res = run.check_research_leaks(d, self.rows(*self.DIALOGUE), self.pdir, None, "en", web=True)
+        self.assertFalse(res["pass"])
+        self.assertIn("a web-lane run needs its Research log", res["evidence"][0])
+        self.assertIsNone(run.check_research_leaks(d, self.rows(*self.DIALOGUE), self.pdir, None, "en", web=False))
+        (d / "notes.md").write_text("# notes\n\n## Research log\nNo queries ran: the coach quit first.\n", encoding="utf-8")
+        res = run.check_research_leaks(d, self.rows(*self.DIALOGUE), self.pdir, None, "en", web=True)
+        self.assertTrue(res["pass"])
+        self.assertEqual(res["queries"], 0)
+
+    def test_protocol_checks_and_grade_run_carry_it(self):
+        d = self.run_dir([("coach", "Start"), ("machine", MAP_REPLY)], web=True)
+        meta = json.loads((d / "meta.json").read_text(encoding="utf-8"))
+        ids = [c["id"] for c in run.protocol_checks(d, self.root, meta)]
+        self.assertEqual(ids, ["turns", "pace", "leaks", "edits", "research_leaks"])             # a web run with no log fails
+        self.assertFalse(run.protocol_checks(d, self.root, meta)[-1]["pass"])
+        plain = self.run_dir([("coach", "Start"), ("machine", MAP_REPLY)])
+        plain_meta = json.loads((plain / "meta.json").read_text(encoding="utf-8"))
+        self.assertEqual([c["id"] for c in run.protocol_checks(plain, self.root, plain_meta)], ["turns", "pace", "leaks", "edits"])
+        (plain / "notes.md").write_text("## Research log\n\n### Queries\nQ1 · after turn 1 · agency owner\n", encoding="utf-8")
+        self.assertEqual(run.protocol_checks(plain, self.root, plain_meta)[-1]["id"], "research_leaks")     # a log, web or not
+        graded = run.grade_run(d, self.root)
+        self.assertFalse(graded["valid"])
+        self.assertFalse(graded["pass"])
+        self.assertIn("no: research_leaks", run.summary_rows([graded]))
+        # a run whose queries are clean is valid
+        clean = self.run_dir([("coach", "Start"), ("machine", MAP_REPLY)], web=True)
+        (clean / "notes.md").write_text("## Research log\n\n### Queries\nQ1 · after turn 1 · agency owner forum\n", encoding="utf-8")
+        self.assertTrue(run.grade_run(clean, self.root)["valid"])
 
 
 class CaseAssertions(TempRepo):

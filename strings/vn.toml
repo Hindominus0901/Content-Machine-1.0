@@ -19,6 +19,9 @@
 # levelup.offer_character, angle.offer, review.ask, research.drip, research.paste_steps, proof.intake (drops English
 # "case study"), talk.open, talk.film. check.bet, unused by either edition after the K24 cut, was
 # removed from both files together in the integration pass (E110 otherwise).
+# Retest FT2 7/10 (qa/runs/retest-ft2/review.md §5 #4-5, §8 item 7), language fixes, src unchanged: dig.story ("nhớ lại",
+# "Hồi mới tìm tới bạn"), dig.proof ("giờ khách đó ra sao rồi?"), research.ask3 ("Cho mình nhờ chút xíu: … sửa lại phần
+# giới thiệu, muốn dùng đúng lời bạn nói."). Method file: §CM-DIG −9 B, §CM-RESEARCH-LITE −10 B.
 
 [strings]
 
@@ -267,7 +270,7 @@
 "character.voice_first"       = { text = "bấm micro, cứ nói tự nhiên 2–3 phút", src = "1414c9af7f" }
 "character.bet"               = { text = "Phải cược 1 triệu thì bạn trả lời sao?", src = "d86811d666" }
 "research.later"              = { text = "Để Tuần 1 làm, 10 phút thôi.", src = "0e68627662" }
-"research.ask3"               = { text = "Nhờ bạn một chút: mình đang viết lại cách giới thiệu công việc, muốn lấy đúng câu của bạn. {{t:ask3.question}}", src = "4a79ebae37" }
+"research.ask3"               = { text = "Cho mình nhờ chút xíu: mình đang sửa lại phần giới thiệu, muốn dùng đúng lời bạn nói. {{t:ask3.question}}", src = "4a79ebae37" }
 "research.ask3_cold"          = { text = "Chuyện {problem}, giờ bạn thấy khó nhất chỗ nào?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, tên đổi thành chữ cái. Không có thì gõ 'không có'.", src = "34c9df6797" }
 "research.paste_steps"        = { text = "Lúc nào rảnh 15 phút: mở 3 video {platform} nhiều view nhất khi tìm \"{phrase}\", mỗi video chép 20 comment của người rõ là {buyer}, bỏ người bán. Đầu đợt ghi [{place} · {month}], tên đổi thành chữ cái, cùng người cùng chữ. Rồi dán hết vào đây.", src = "b5dd208def" }
@@ -316,10 +319,10 @@
 "setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?", src = "dba7f66234" }
 "setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì {why}. Đúng không?", src = "c52dee2060" }
 # Hỏi sâu ngày 0 (§CM-DIG, founder 7/10): hỏi bằng một chuyện, mỗi câu một dấu hỏi, không kèm câu đoán; cặp xưng hô đổi theo coach chọn
-"dig.story"                    = { text = "Bạn nghĩ tới người khách bạn giúp được nhiều nhất nhé. Tuần đầu tìm tới bạn, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
+"dig.story"                    = { text = "Bạn nhớ lại người khách bạn giúp được nhiều nhất. Hồi mới tìm tới bạn, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
 "dig.words"                    = { text = "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.", src = "ec4e67239a" }
 "dig.offer"                    = { text = "Khách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?", src = "fb41fa4d52" }
-"dig.proof"                    = { text = "Làm với bạn xong, khách đó khác đi thế nào?", src = "d186151f3e" }
+"dig.proof"                    = { text = "Làm với bạn xong, giờ khách đó ra sao rồi?", src = "d186151f3e" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
 "dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, lúc mới tìm tới bạn họ đang ra sao?", src = "4df4d2ad4e" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "df8c84d17e" }

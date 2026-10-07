@@ -1364,3 +1364,52 @@ min_score = 16
 invariants = ["I1", "I3", "I5", "I8"]
 max_questions = 1
 notes = """scope: pieces. qa/standards/hook-lab.md; HL8 N/A (not a short); HG3 EXEMPTS the email's 3 subject lines (the kit prints 3 by design, §CM-MESSAGES 'Email'; review retest-ft1 §3 and fix 11), so 3 subjects is never the fail here. The retest's first subject 'The Monday Number: minus 6' is a series label with no result for the reader (HL9) and a bare figure with no scene. Scored: the first subject on HL1-HL7 and HL9 (a title shape in plain words, the reader's result, ≤60 characters), the other two as drafts of it (free of hype, hedge, bait: HL6); the preview opens a loop the email closes."""
+
+# ---------------------------------------------------------------- hook lab, the other hooks of a week (review retest-ft2 §7 item 5, §8 fix 8)
+# graders.py hook_lab now reads a text post's line 1, a slide 1 and an email's subject lines (hedges; slide 1 and the first
+# subject within 60 characters EN), besides the shorts. Seeded from the retest's EN consultant run: PDF slide 1 "Your biggest
+# client might be underwater. Here's how to check." (61 characters, "might").
+
+[[case]]
+id = "fmt-short.en.052"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Hook lab, EN PDF post: slide 1 is a result in 60 characters or fewer, with no hedge"
+context = "Week 1, Thursday, Claude Free on her Windows laptop. Brand Card v1 present (persona default: LinkedIn; YOUR WORD RECORD YEAR). In her dump she said Marcus, a 22-person paid media agency owner, had his biggest client, about a third of his revenue, at minus 6 percent once the real hours went in (name and numbers OK'd, never his clients), and that her check is client by client: fees minus pass-throughs, every hour, sorted by margin. She asks for a PDF post of the check."
+input = """[turn 1] write this week's LinkedIn PDF post: how to check which client is underwater"""
+regex = [
+  '''(?im)^\W*Slide 1\s*[:.)–—-]''',
+  '''(?i)client''',
+]
+not_regex = [
+  '''(?im)^\W*Slide 1\s*[:.)–—-]\s*[^\n]{61,}$''',
+  '''(?im)^\W*Slide 1\s*[:.)–—-][^\n]*\b(?:might|maybe|perhaps|possibly|potentially|arguably|somewhat)\b''',
+  '''(?im)^\W*Slide 1\s*[:.)–—-]\s*(?:Start here|Intro|Introduction)\b''',
+  '''(?im)^\W*(?:Ready to|✓ Checked:|WHY THIS GETS CLIENTS)''',
+]
+invariants = ["I1", "I3", "I5", "I8", "hook_lab"]
+max_questions = 1
+notes = """scope: pieces. qa/standards/hook-lab.md HL6 (no hedge) and HL9 (slide 1 ≤60 characters EN, a result, never a label); graders.py hook_lab reads slide 1 (hedges, flat claims, length). The retest printed 'Your biggest client might be underwater. Here's how to check.': 61 characters and 'might' (hedging the premise the whole deck proves). Passing shapes: 'Which client is losing you money? A 6-step check' (48), 'Your biggest client is at minus 6 percent. Check yours.' (only with Marcus's OK, which she gave). No client result beyond Marcus's; no dollar amount for Dee."""
+
+[[case]]
+id = "fmt-short.en.053"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Hook lab, EN email: three subject lines print by design, the first within 60 characters, none hedged"
+context = "Week 1, Monday, Claude Free on her Windows laptop. Brand Card v1 present (persona default: audience 'you'; her list is the Monday Number, 380 subscribers; YOUR WORD RECORD YEAR). Marcus (first name OK'd) had his biggest client at minus 6 percent once the real hours went in, and repriced them. She asks for this week's email on that story."
+input = """[turn 1] write this week's Monday Number email, Marcus's story, the client who was at minus 6 percent"""
+regex = [
+  '''(?im)^\W*Subject(?: lines?)?\s*:''',
+  '''(?i)minus 6 percent|6 percent|minus 6''',
+]
+not_regex = [
+  '''(?im)^\W*(?:Subject:\s*|1[.)]\s+)[^\n]{61,}$''',
+  '''(?im)^\W*(?:Subject:|[123][.)])\s+[^\n]*\b(?:might|maybe|perhaps|possibly|potentially|arguably|somewhat)\b''',
+  '''(?i)\$\s?85(?:,000|k)\b''',
+  '''(?im)^\W*(?:Ready to|✓ Checked:|WHY THIS GETS CLIENTS)''',
+]
+invariants = ["I1", "I3", "I5", "I8", "hook_lab"]
+max_questions = 1
+notes = """scope: pieces. HG3 exempts the email's 3 subject lines (kit design). graders.py hook_lab reads every subject line for hedges and the first for length (HL9: ≤60 characters EN; the 2nd and 3rd are drafts held to hedge, hype and bait only). A subject that hedges ('Maybe your biggest client is underwater') or runs past 60 characters fails. Marcus's numbers only as the coach said them."""

@@ -3,13 +3,14 @@ Ship Check cards (docs/research/wf12-qa-spec.md §2.3). One source, included wit
 - ship.card  → SKILL.md and the L3 skill (hub rows, scripts/ship_lint.py)
 - ship.task  → standalone task text (VA tier)
 Budgets (platform/targets.toml): card ≤900 EN, task ≤800 EN, NFC characters.
+Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 items 1, 2): ship.kit 3 runs the hook check on every hook and caption line 1 (no hedge, flat claim or maxim; on-screen ≠ line 1 reworded); 2 TRUTH covers a client action or thought. Paid by dropping "a client result only with the client's OK; urgency only if real" (the CLAIMS line right after the card says both, as VN did in FT1). ship.kit 897 → 899.
 
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
 0 FOCUS: one big idea from the Map · one idea ≤15 words · one belief ("you think X → actually Y") · not a NOT NOW topic
-1 WRITE only from what the coach told you. Missing fact → downgrade (process story, founding offer, no seat line) or ask
-2 TRUTH: every number, name and quote is theirs; quotes exact; a client result only with the client's OK; urgency only if real
-3 STAND-OUT 0–2 each, ≥8, no 0: keyword in the body + a specific · one idea, one belief · proof shown · a detail only they have · a stance someone could dispute. Hook: no hedge or flat claim
+1 WRITE only from what they said. Missing fact → downgrade (process story, founding offer, no seat line) or ask
+2 TRUTH: every number, name, quote, client action or thought is theirs; quotes exact
+3 STAND-OUT 0–2 each, ≥8, no 0: keyword in the body + a specific · one idea, one belief · proof shown · a detail only they have · a stance someone could dispute. Hooks, caption line 1: no hedge, flat claim or maxim; on-screen ≠ line 1 reworded
 4 VOICE + BUYER: their tone, rhythm, phrases and audience address, no never-words; a buyer on a phone stops and believes it in 5 s. Fix once
 PRINT: a ready piece → the content only. Missing fact or hard stop → one line ("Needs you · <question>"). WHY and checks only on "why?"
 

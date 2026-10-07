@@ -12,15 +12,16 @@ repos read these real files against their own tiny strings tables (tools/lint.py
 Integration 6 Oct: the ship.card and ship.task PRINT lines quote verdict.ready as it now reads in strings/vn.toml ("· viết từ <dữ kiện>", native judge fix round 6 Oct, A4); ship.card's needs line uses the verdict.needs separator ("Cần bạn · <1 câu hỏi>"), as ship.kit does.
 G2 6 Oct (EN merge): ship.kit drops "· không khen" (MỖI LẦN TRẢ LỜI says it) and its IN line takes the block's old bullet: "Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>")". Block budget: ship.kit 4 "phải dừng lại" → "dừng lại". ship.kit is 923 of 1,000 chars.
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 1, 7): ship.kit 3 thêm "chữ trên màn hình ≠ câu đầu"; 4 "tiểu từ cuối câu dày như họ (đếm)"; 2 bỏ "kết quả của khách chỉ khi họ đồng ý; giục gấp chỉ khi gấp thật" (dòng LỜI HỨA ngay sau card nói đúng hai luật đó). ship.kit 944 of 1,000 chars.
+Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 items 1, 2, 5): ship.kit 1 "cả khách làm gì, nghĩ gì"; 3 "Hook, dòng 1 caption: không rào đón, phán suông, châm ngôn; chữ trên màn hình ≠ ý câu đầu". Câu hay nói ở mỗi video ngắn nằm ở §CM-VOICE 7 (khối hết chỗ); tiểu từ "dày như họ (đếm)" đã có ở mục 4. ship.kit 944 → 986 of 1,000.
 
-<!-- @section ship.kit src=9c51d9e18b -->
+<!-- @section ship.kit src=fb1b6c85ec -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → cắt hoặc hạ bậc
 0 TRỌNG TÂM: một ý lớn trên bản đồ · ý chính ≤20 tiếng · một niềm tin ("tưởng X, hoá ra Y") · không lấy chủ đề để dành
-1 VIẾT chỉ từ chuyện coach kể. Thiếu thông tin → hạ bậc (kể cách làm, nhóm đầu, bỏ số suất) hoặc hỏi
+1 VIẾT chỉ từ chuyện coach kể, cả khách làm gì, nghĩ gì. Thiếu thông tin → hạ bậc (kể cách làm, nhóm đầu, bỏ số suất) hoặc hỏi
 2 SỰ THẬT: số, tên, câu trích là của coach, trích nguyên văn
-3 KHÁC BIỆT 0–2 mỗi mục, ≥8, không mục 0: từ khoá trong bài + chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Câu mở không rào đón, không phán suông; chữ trên màn hình ≠ câu đầu
+3 KHÁC BIỆT 0–2 mỗi mục, ≥8, không mục 0: từ khoá trong bài + chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Hook, dòng 1 caption: không rào đón, phán suông, châm ngôn; chữ trên màn hình ≠ ý câu đầu
 4 GIỌNG + NGƯỜI MUA: giọng, nhịp, câu hay nói, cách gọi khách của coach; tiểu từ cuối câu dày như họ (đếm); không chữ cấm, câu tiếng Anh; người mua đang lướt dừng lại, tin trong 5 giây. Sửa một lần
-IN: bài xong → chỉ in bài. Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>"). Lý do, phần kiểm: chỉ khi coach hỏi "tại sao?"
+IN: bài xong → chỉ in bài. Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>"). Lý do, phần kiểm: chỉ khi hỏi "tại sao?"
 
 <!-- @section ship.card src=6c99ccdf53 -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · một lần mỗi đợt · không chắc → cắt hoặc hạ bậc · không khen

@@ -34,7 +34,11 @@ Lane options (flags of `packet`, kept in meta.json and shown as "S1+web" in the 
             follow, DM or join; never the coach's computer) and asks for a "## Research log" in notes.md
             (every query, every page opened, what was kept) for the reviewer to re-fetch. A link the coach sends is
             still never opened here (I20). The run id gets "-web" (…-S1-web-r1). Stands in for the coach's own
-            browser or search tool (Claude in Chrome, ChatGPT Work); without it a run ends with 0 KEEP lines.
+            browser or search tool (Claude in Chrome, ChatGPT Work); without it a run ends with 0 KEEP lines. The pass is
+            run as if by a separate agent that sees only the transcript up to the turn it runs after (never the persona
+            files), and each query is logged with the turn it really ran after ("Q6 · after turn 3 · …"); `grade` adds
+            the protocol check research_leaks (a run of 2+ content words in a query that only the persona's answer bank
+            holds invalidates the run; retest-ft2 fix 4) and graders.py checks the log itself (research_log).
   --plugin  the coach installed the plugin form: packet/kit/plugin/ holds the edition's skills (the main skill and
             its companion skills, one per level-up area: SKILL.md) and the plugin's agents, read from
             dist/content-machine-plugin.zip. The run id gets "-plugin".
@@ -309,7 +313,15 @@ WEB_ON = (
     "and never goes in a piece; people by role, never by name or handle; never log in, post, react, follow, DM or join; "
     "never touch the coach's computer or apps. A page that will not open is \"unread\" on the Map, not guessed. Keep "
     "a log as you go and put it in notes.md under \"## Research log\": each query, each page opened (URL, place, "
-    "month, role) and the lines kept, so the reviewer can re-fetch them. Do not search before the kit says to.\n")
+    "month, role) and the lines kept, so the reviewer can re-fetch them. Do not search before the kit says to. "
+    "**Run the research pass as if by a separate agent that sees only the transcript so far** (the coach's turns and "
+    "your replies up to the turn it runs after) and the kit, never the persona files, `answers.md`, `expected.toml` or "
+    "anything about the coach that is not in the transcript at that turn: a query holds only words the coach has said by "
+    "then, and the buyer's, never the persona's, wording. **Log the real turn of each query**, one line each, "
+    "`Q<n> · after turn <N> · <query>`, N being the last coach turn the pass could see, the turn it really ran after "
+    "(not a turn it is modelled in later or earlier). `grade` reads the log: a query that holds a run of two or more "
+    "content words that only the persona's answer bank holds (a phrase the coach never said, such as "
+    "\"which clients\") is a leak and makes the run invalid.\n")
 LEVELUPS_LINE = (
     "- **Level-ups:** {names} are project files in `kit/Level-ups/`, next to the method file, as in the coach's Project or "
     "folder. Open one only when the instructions name it for the job (research and listening: RESEARCH; strategy, hooks, "
@@ -386,6 +398,16 @@ This run has the `web` option: the machine side may search and fetch pages for t
 lines kept and the lines dropped, and what the research changed on the Map (line 1, the keyword, big idea 1: before →
 after), or "nothing". The reviewer re-fetches the kept lines. A line that was not seen on an opened page is never
 quoted in a piece.
+
+Run the research pass as if by a separate agent: it sees only the transcript up to the turn it runs after and the kit,
+never the persona files. Log each query as it really ran, one line each under "### Queries":
+`Q6 · after turn 3 · "which clients" agency owner`, where 3 is the last coach turn the pass could see. A modelled turn
+("ran after turn 3" when the words came at turn 8) is a false log. Under "### Pages opened" number the pages (`1. <URL> ·
+place · month · role · result`); under "### Lines kept" number the lines (`1. "the line" · role · place · month`, with
+`(page 9)` when the page is not the group's); name the lines behind each pattern (`KEEP: <pattern> (lines 1, 2, 3)`).
+`grade` checks the queries against the persona's answer bank (research_leaks: two or more content words in a row that
+answers.md holds and nobody had said by that turn make the run invalid) and each KEEP against its pages
+(research_log: lines from 2 or more distinct pages on 2 or more distinct hosts).
 """
 
 
@@ -953,6 +975,129 @@ def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str,
     return out
 
 
+# ---- the research log's queries (web lane; review retest-ft2 §8 fix 4)
+# The research pass is the one place where the machine side reaches outside the transcript, and it did so with the persona
+# files at hand: EN's topic 1 changed because "which clients" (a phrase of the persona's answer bank, never dictated) was
+# in queries 6, 10 and 11, and a 5-word window cannot see a 2-word echo. check_research_leaks reads each logged query
+# ("Q6 · after turn 3 · …"; graders.research_queries) for a run of RESEARCH_LEAK_N content words, none a function word,
+# that the persona's answer bank (answers.md) holds and that neither the coach (turns up to the one it ran after) nor the machine (its replies
+# before) nor the kit ever said, and fails the run on it. Words the coach said only LATER are a warning: the query claims
+# a turn it could not have run in (the log's turn is modelled, not real).
+RESEARCH_LEAK_N = {"en": 2, "vn": 4}          # content words / tiếng in a row (a VN word is 1-2 tiếng: 2 words ≈ 4 tiếng)
+_QUERY_SPLIT_RE = re.compile(r"[\"“”()\[\]·|;:,.!?…\n/]+|\s[-–—]\s|\b(?:OR|AND)\b")
+RESEARCH_STOP_EN = set("""a an the and or but so if then i you your we our us it its is are was were be been am to of in on at
+for with from by as this that these those there here my me he she they them do does did not no just very can will would
+should could have has had all any some than too also now up out off per into over about each own""".split())
+RESEARCH_STOP_VN = {graders.ck.fold(w) for w in (
+    "thì là mà và của cái những các một này đó ấy kia ạ nhé nha à ơi với cho để khi nếu vì nên có được đã đang sẽ rồi cũng "
+    "thế vậy đi lại ra vào lên xuống mình bạn em anh chị tôi mấy hả hở đấy nhỉ luôn không chưa phải rất cứ nữa hay hoặc "
+    "chỉ còn đều bị nhưng cần muốn tui cô chú").split()}
+
+
+def _research_stem(word: str, lang: str) -> str:
+    word = word.split("'")[0] if "'" in word else word
+    if lang == "vn":
+        return graders.ck.fold(word)
+    if len(word) > 4 and word.endswith("ies"):
+        return word[:-3] + "y"
+    return word[:-1] if len(word) > 3 and word.endswith("s") and not word.endswith("ss") else word
+
+
+def _research_windows(text: str, n: int, lang: str, raw: dict[str, str] | None = None) -> set[str]:
+    """The runs of n content words in a row of a text, per clause (a quote, a comma, a sentence ends a run), none of them
+    a function word; stemmed ("clients" → "client"). `raw`, when given, gets each run as written (the first time)."""
+    stop = RESEARCH_STOP_VN if lang == "vn" else RESEARCH_STOP_EN
+    out: set[str] = set()
+    for seg in _QUERY_SPLIT_RE.split(nfc(text)):
+        written = _content_words(seg)
+        words = [_research_stem(w, lang) for w in written]
+        for i in range(len(words) - n + 1):
+            win = words[i:i + n]
+            if not any(w in stop or len(w) < 2 for w in win):
+                out.add(" ".join(win))
+                if raw is not None:
+                    raw.setdefault(" ".join(win), " ".join(written[i:i + n]))
+    return out
+
+
+def _answer_bank_windows(pdir: Path, n: int, lang: str) -> set[str]:
+    """The runs of n content words in the persona's answer bank (answers.md: the dump and the Q&A the coach draws from).
+    Not the persona's other files (the pastes it offers later, expected.toml): those share generic search words
+    ("forum thread", "agency founder") with any query."""
+    path = pdir / "answers.md"
+    return _research_windows(path.read_text(encoding="utf-8"), n, lang) if path.exists() else set()
+
+
+def _kit_text(kit_dir: Path | None) -> str:
+    if not kit_dir or not kit_dir.is_dir():
+        return ""
+    return "\n".join(f.read_text(encoding="utf-8") for f in sorted(kit_dir.rglob("*"))
+                     if f.is_file() and f.suffix.lower() in (".txt", ".md"))
+
+
+def check_research_leaks(run_dir: Path, rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str,
+                         web: bool = True) -> dict | None:
+    """Protocol check for the web lane's Research log (notes.md "## Research log", queries as "Q6 · after turn 3 · …"):
+    - every query names the turn it really ran after, a turn the run has;
+    - no query holds a run of RESEARCH_LEAK_N content words (no function word among them) that the persona's answer
+      bank (answers.md) holds and no one had said at the turn it ran after: the coach's turns up to it, the machine's replies before it, the
+      kit's own wording (a phrase the coach said only later is a warning: "ran after turn 3" cannot be true).
+    A web run without a Research log fails (nothing to audit); a run that is not a web run and has no log returns None."""
+    log = graders.research_log_text(run_dir)
+    if not log.strip():
+        return _protocol("research_leaks", ["a web-lane run needs its Research log in notes.md (\"## Research log\" with "
+                                            "its queries)"]) if web else None
+    n = RESEARCH_LEAK_N.get(lang, 2)
+    queries = graders.research_queries(log)
+    last_coach = max((r.get("turn", 0) for r in rows if r.get("role") == "coach"), default=0)
+    persona = _answer_bank_windows(pdir, n, lang)
+    kit = _research_windows(_kit_text(kit_dir), n, lang)
+    when: dict[str, int] = {}                  # the first turn a window is available: a coach turn's own, a reply's + 1
+    said_at: dict[str, int] = {}               # the first coach turn that says it
+    for r in rows:
+        k = r.get("turn", 0)
+        for win in _research_windows(r.get("text", ""), n, lang):
+            if r.get("role") == "coach":
+                said_at.setdefault(win, k)
+            when[win] = min(when.get(win, 10 ** 6), k if r.get("role") == "coach" else k + 1)
+    fails, warns, no_turn = [], [], []
+    unit = "tiếng" if lang == "vn" else "words"
+    for q in queries:
+        label = f'query {q["n"]} "{_short_q(q["text"])}"'
+        turn = q["turn"]
+        if turn is None:
+            no_turn.append(q["n"])
+            continue
+        if turn > last_coach or turn < 1:
+            fails.append(f"{label}: logged after turn {turn}, a turn this run does not have ({last_coach} coach turns)")
+            continue
+        leaked, ahead, written = [], [], {}
+        for win in sorted(_research_windows(q["text"], n, lang, written)):
+            if when.get(win, 10 ** 6) <= turn or win in kit:
+                continue
+            if win in said_at:
+                ahead.append((written[win], said_at[win]))
+            elif win in persona:
+                leaked.append(written[win])
+        if leaked:
+            fails.append(f'{label} (after turn {turn}): "{"; ".join(leaked[:4])}" is in the persona\'s answer bank and was '
+                         f"never said ({n}+ {unit} in a row)")
+        if ahead:
+            warns.append(f'{label} (after turn {turn}): "{"; ".join(w for w, _ in ahead[:3])}" first said at turn '
+                         f'{max(t for _, t in ahead)}, after the turn the log gives')
+    if no_turn:
+        fails.append(f"queries {', '.join(map(str, no_turn[:8]))}{'…' if len(no_turn) > 8 else ''} name no turn: log each "
+                     'as "Q<n> · after turn <N> · <query>"')
+    out = _protocol("research_leaks", fails, n=n, queries=len(queries), warnings=warns)
+    if not fails and warns:
+        out["status"] = "warn"
+    return out
+
+
+def _short_q(text: str, limit: int = 60) -> str:
+    return text if len(text) <= limit else text[:limit - 1].rstrip() + "…"
+
+
 RAW_TRANSCRIPT = "transcript.raw.jsonl"
 EDIT_KEYS = ("turn", "field", "before", "after", "reason")
 
@@ -1026,8 +1171,10 @@ def protocol_checks(run_dir: Path, root: Path, meta: dict) -> list[dict]:
     lang = "vn" if meta.get("edition") == "vn" else "en"
     pdir = root / "evals" / "personas" / meta["persona"]
     labels = voice_labels(root, meta.get("edition", lang))
-    return [check_turns(rows), check_pace(rows, pdir),
-            check_leaks(rows, pdir, run_dir / "packet" / "kit", lang, labels), check_edits(run_dir, meta)]
+    checks = [check_turns(rows), check_pace(rows, pdir),
+              check_leaks(rows, pdir, run_dir / "packet" / "kit", lang, labels), check_edits(run_dir, meta)]
+    research = check_research_leaks(run_dir, rows, pdir, run_dir / "packet" / "kit", lang, web=bool(meta.get("web")))
+    return checks + [research] if research else checks
 
 
 # ---------------------------------------------------------------- grading

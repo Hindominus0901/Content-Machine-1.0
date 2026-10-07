@@ -62,6 +62,19 @@ onscreen_repeat_share = 0.75              # a short's on-screen text fails when 
                                           #   brings a word or number of its own ("Record year. Still no cash." over "Best
                                           #   year ever. I'm in a stairwell, asking the bank for payroll.": 1 of 3) stays under
 onscreen_min_words = 2                    # content words needed in the on-screen text to judge the repeat
+onscreen_new_words_min = 1                # the on-screen text must also hold this many content words that are in neither the first
+                                          #   line nor the first frame; 0 = every word may come from them. Retest-ft2: "Tim nhiều, hộp
+                                          #   tin nhắn trống" over a frame "một bài nhiều tim, lướt sang hộp tin nhắn trống" and a line
+                                          #   "…thả tim, mà không ai nhắn hỏi giá hết" says one fact three times (33% passed the share).
+headline_max_chars_en = 60                # slide 1 and the first email subject line, in characters (qa/standards/hook-lab.md HL9;
+headline_max_chars_vn = 70                #   packaging.md "≤60 characters"; VN "≤70"). Retest-ft2: "Your biggest client might be underwater.
+                                          #   Here's how to check." is 61. A subject line's 2nd and 3rd drafts are held to hedges only.
+
+[research_log]                            # check research_log (graders.py; the web lane's Research log in notes.md; review retest-ft2 fix 8)
+keep_min_pages = 2                        # a KEEP is backed by lines from this many distinct pages ...
+keep_min_hosts = 2                        #   on this many distinct hosts (reviews under one product page are one place; "{n} nơi" counts
+                                          #   sites, threads shown apart). Retest-ft2: EN's KEEP stood on 3 Capterra reviews of one product
+                                          #   page, Nhi's on 3 people in 2 threads of one forum.
 
 [memory]
 brand_card_saved_by_end_of_day1 = "5/6"

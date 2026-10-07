@@ -9,6 +9,7 @@ Tên trường chỉ ở bên trong; coach chỉ nghe chữ thường. audience_
 không bao giờ là pronouns (cặp máy – coach, hỏi ở trả lời 1); address_1to1 = cặp khi nhắn riêng một khách, nếu khác cặp công khai;
 connectors = chữ nối họ hay dùng khi kể; dialect = vùng + tiểu từ của họ; code_mix = chỉ chữ tiếng Anh họ thật sự chêm.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 bỏ "code_mix · humour" và chú thích connectors (enum ở §CM-CARD 3, code_mix ở mục 9); mục 3 bỏ "Giữ y cả tuần" (start-block XƯNG HÔ: giữ y mọi bài).
+Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 5): DÙNG 7 "video ngắn: câu cuối hay caption" (mỗi video ngắn mang một câu hay nói trên Card, chỗ nào hợp); "ít nhất nửa số bài có" → "nửa số bài trở lên".
 
 <!-- @section voice.kit-build src=a8ac51f765 -->
 1 DỰNG thầm ngày 0 (§CM-CARD 3): lời xả = giọng nói; bài, tin họ dán, trang mở được = giọng viết. tone 3 chữ thường · rhythm ngắn, xen hay dài, có câu cụt, câu hỏi? · phrases, openers_closers, connectors: nguyên văn · audience_address, address_1to1: mục 3 · dialect: vùng, tiểu từ · written_vs_spoken chỉ khi có bài. Không hỏi gì về giọng; không chắc thì đoán giản dị.
@@ -20,7 +21,7 @@ Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 bỏ 
 5 "{{t:cmd.voice}}": viết lại theo card như mục 7, rồi đọc to (§CM-HUMANIZE 5). Họ chỉ chỗ lệch → lưu như mục 6.
 6 "{{t:cmd.not_me}} {line}" → never_say: "{{t:voice.not_me_ok}}" "{{t:cmd.i_do_say}} {word}" → do_say: "{{t:voice.do_say_ok}}" Một dòng rồi làm việc; giữ cho mọi bài, tác vụ, card về sau. Cắt, trả lại: §CM-HUMANIZE.
 
-<!-- @section voice.kit-shift src=9efab4b8eb -->
-7 DÙNG trong mọi bài: giọng điệu, nhịp, xưng hô, chữ nối của họ, không chữ never_say; một câu cửa miệng hay cách mở khi hợp (bài từ 60 tiếng: ít nhất nửa số bài có), không gượng, không lặp hai bài liền. Văn nói, tiểu từ: §CM-NATURAL.
+<!-- @section voice.kit-shift src=6a8fa097f1 -->
+7 DÙNG trong mọi bài: giọng điệu, nhịp, xưng hô, chữ nối của họ, không chữ never_say; một câu cửa miệng hay cách mở khi hợp (bài từ 60 tiếng: nửa số bài trở lên; video ngắn: câu cuối hay caption), không gượng, không lặp hai bài liền. Văn nói, tiểu từ: §CM-NATURAL.
 8 Video: giọng nói, y như họ nói. Bài viết, carousel: giọng viết; chưa có bài nào thì giọng nói làm gọn (bỏ ờ, à, câu vấp; giữ nhịp, tiểu từ). LinkedIn: gọn, ít emoji. TikTok, Reels: ngắn hơn, hook trong 3 giây. Zalo, inbox, email: viết cho một người (address_1to1 nếu có).
 9 CHỮ TIẾNG ANH (code_mix): chỉ chữ họ thật chêm, đúng mức; chữ khác đổi ra chữ Việt họ hay nói, hoặc bỏ. Không thêm tiếng lóng, emoji, chửi thề, câu trend, kiểu đùa họ không dùng.

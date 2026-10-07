@@ -1612,3 +1612,35 @@ min_score = 16
 invariants = ["I8", "I15", "hook_lab"]
 max_questions = 1
 notes = """scope: pieces. The retest's N1 failed HL8 (on-screen = first line), HL3 (a last line that adds pain and no answer) and HL4 (pain only, no shift). The review's rewrite scores 16: chữ '10 khách, 2 người hẹn lại' · khung chị lật cuốn sổ hẹn ở quầy · câu đầu her client's line, word for word · câu cuối 'Chị không bán thẻ đâu các em, chị bán buổi hẹn sau.' (her phrase and her 'các em', with a particle) · caption keeps 'kết quả tuỳ người, không phải cam kết'; no spa name, no ads."""
+
+# ---------------------------------------------------------------- hook lab, labels and maxims (review retest-ft2 §7 items 1-4, §8 fix 8)
+# graders.py hook_lab also fails: an on-screen text whose every word is in the first line and the first frame ("Tim nhiều, hộp
+# tin nhắn trống"), a label on screen ("Nghiên cứu có hai lớp", "Không cần chiến dịch lớn", "Câu đúng nằm ở khách cũ"), a
+# maxim in caption line 1 ("Viết sao thì để sau, tại sao phải có trước.", "Người quen mua vì đã biết bạn. Người lạ thì
+# chưa."), and it reads a caption printed in a copy box of its own with no "Caption:" label (Hạnh's, Nhi's FILM TODAY).
+
+[[case]]
+id = "fmt-short.vn.058"
+kind = "D"
+persona = "copywriter-thin"
+lanes = ["S1", "floor"]
+title = "Hook lab, Nhi: the on-screen text is no label and no paraphrase of the frame, and the caption's first line is no maxim"
+context = "Week 1, Thursday 8/10/2026, Claude Pro (Cowork, kit folder). Brand Card v1 present (persona default: pair bạn–mình; audience mình – bạn; TỪ KHOÁ KHÔNG AI NHẮN (mình đoán); ý lớn: người lạ chưa tin thì chưa nhắn). Her Day-0 dump (Vietnamese): một chị coach tài chính nói với chị 'Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.' và 'Em bán được cho người quen thôi, người lạ coi xong là lướt.'. Cô muốn một video ngắn từ hai câu đó."
+input = """[turn 1] làm cho mình video ngắn từ câu 'bài nào cũng có người thả tim mà không ai nhắn hỏi giá' của chị coach tài chính đi"""
+regex = [
+  '''(?im)^\W*Chữ trên màn hình:''',
+  '''(?im)^\W*Khung hình đầu:''',
+  '''(?im)^\W*Câu đầu:''',
+]
+not_regex = [
+  '''(?im)^\W*Chữ trên màn hình:\s*[^\n]*\bcó\s+(?:hai|ba|bốn|2|3|4)\s+(?:lớp|tầng|bước|cách|loại|phần)\b''',
+  '''(?im)^\W*Chữ trên màn hình:\s*(?:Không|Chẳng)\s+cần\b''',
+  '''(?im)^\W*Chữ trên màn hình:\s*[^\n]*\bnằm\s+(?:ở|trong)\b''',
+  '''(?i)\bthì\s+để\s+sau\b''',
+  '''(?i)\b(?:phải\s+)?có\s+trước\b''',
+  '''(?i)Người quen mua vì đã biết bạn\.\s+Người lạ thì chưa''',
+  '''(?im)^\W*Chữ trên màn hình:\s*(?:Đó|Vậy|Đây|Cái đó|Như vậy)\s+(?:không|chưa|chẳng)\s+phải''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I9", "I15", "hook_lab"]
+max_questions = 1
+notes = """qa/standards/hook-lab.md HL7 + HL8; review retest-ft2 §3 (Nhi FILM TODAY: on-screen 'Tim nhiều, hộp tin nhắn trống' over the frame 'một bài nhiều tim, lướt sang hộp tin nhắn trống' and the line 'thả tim … không ai nhắn hỏi giá': one fact three times; N3's label 'Nghiên cứu có hai lớp'; the captions' maxims 'Viết sao thì để sau, tại sao phải có trước.' and 'Người quen mua vì đã biết bạn. Người lạ thì chưa.'). The review's rewrites pass: chữ 'AI đâu có gọi khách cũ' (a word the line and frame do not hold), 'Người quen mua, người lạ lướt' over a different line, caption line 1 'Khách hay hỏi mình: viết bài sao, làm sao có thêm người theo dõi.'. The client's two lines are hers (HG1: a line the coach reported, in her own words)."""

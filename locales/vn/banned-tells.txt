@@ -108,6 +108,10 @@ tầm quan trọng của việc
 tiến hành
 # "nỗi đau (của) khách hàng" (dịch "customer pain point"); nói khách khổ chỗ nào, bằng câu khách nói
 re:(?i)\bnỗi\s+đau\s+(?:của\s+)?khách(?:\s+hàng)?\b
+# "có ở đó vì họ", "có đúng thứ cho họ" (dịch "you're there for them", "you have the right stuff for them"; retest FT2
+# review §5 #2); nói thẳng: "Người lạ thì đâu biết chị giúp được gì cho họ." "Hôm đó chị có ở đó không?", "có đúng cái chị cần" không tính
+re:(?i)\bcó\s+ở\s+đó\s+vì\s+(?:họ|bạn|các\s+bạn|anh|chị|em|mình|khách|mọi\s+người)\b
+re:(?i)\bcó\s+đúng\s+thứ\s+cho\s+(?:họ|bạn|các\s+bạn|anh|chị|em|mình|khách|mọi\s+người)\b
 
 # Mở bài và câu hỏi hook dịch
 # câu mở "Bạn có đang … / Bạn đang gặp khó khăn / Bạn đang tìm kiếm / Bạn có từng tự hỏi" (dịch "Are you …?")

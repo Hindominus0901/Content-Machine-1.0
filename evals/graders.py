@@ -97,6 +97,18 @@ review retest-ft1 fix 2) reads every short the machine printed ("On-screen:" / "
 "Câu đầu:", "Caption:"): the on-screen text must not be the first spoken line again (acceptance [hook_lab]
 onscreen_repeat_share of its content words, 0.75), and no flat claim stands on screen, in the first line or in the
 caption's line 1 ("That's not research.", "Vậy chưa phải nghiên cứu", "Khách phải tin bạn."; quoted buyer lines left out).
+Retest-ft2 (§8 fix 8) widened it: the on-screen words may not all sit inside the first line and the first frame together
+(a paraphrase of both, acceptance [hook_lab] onscreen_new_words_min); labels on screen ("Nghiên cứu có hai lớp", "Không cần
+chiến dịch lớn", "Câu đúng nằm ở khách cũ", "That's a rearview mirror."); maxims in a first line or a caption's line 1
+("Viết sao thì để sau, tại sao phải có trước."); a caption in a copy box of its own with no "Caption:" label; and the other
+hooks of a week: a text post's line 1, a slide 1 and an email's subject lines (hedges, flat claims; slide 1 and the first
+subject within headline_max_chars_en / _vn, 60 / 70). strategy_doc reads the saved CONTENT-STRATEGY.md /
+CHIEN-LUOC-NOI-DUNG.md in the run folder (the 7 parts and, in VN, their headings' pronoun pair; the hooks of its big ideas
+by the hook_lab's own tests; every line quoted from buyers online verbatim among the kept lines of notes.md's Research
+log; what it calls held is a KEEP the log backs; the deny-list). research_log reads that "## Research log" itself: each
+KEEP names the lines behind it, from acceptance [research_log] keep_min_pages distinct pages on keep_min_hosts distinct
+hosts, each line sharing a content word with the pattern. n/a without the file or the log. I23 leaves the kit's own
+paste-steps box (strings research.paste_steps) out of the pieces.
 day0_timing adds the dig questions the run really asked (a reply that asks one of the strings dig.*, adapted to the
 client in hand) to the Map's and the session's turn budgets, up to [day0] dig_answers_max (4; review retest-ft1 fix
 10); film-ready stays at film_ready_max_minutes. The CTA read in day0_shape is FILM TODAY's own (its script and caption),
@@ -1006,31 +1018,63 @@ def _last_coach(run: Run, r: Reply) -> Turn | None:
     return next((t for t in reversed(run.turns[:r.index]) if t.role == "coach"), None)
 
 
-def _post_chunk_lines(r: Reply) -> list[tuple[Piece | None, list[int]]]:
+def _fold_words(text: str) -> str:
+    return " ".join(ck.copy_tokens(ck.fold(ck.nfc(text))))
+
+
+def paste_steps_marks(strings: dict) -> tuple[str, str]:
+    """(head, tail), folded, of the kit's research.paste_steps string: its opening up to the first ":" or slot ("Lúc nào
+    rảnh 15 phút", "15 minutes, any day") and its last 4 words ("dán hết vào đây", "paste it all here"); "" for one that
+    is under 3 words or when the edition has no such string. The machine prints the steps as numbered lines in a copy
+    box (retest-ft2: Nhi's TikTok box, Hạnh's), which is no post of the coach's."""
+    text = ck.plain_line(str(strings.get("research.paste_steps", "")))
+    head = _fold_words(re.split(r"[:{]", text, maxsplit=1)[0])
+    tail = " ".join(_fold_words(re.split(SLOT, text)[-1]).split()[-4:])
+    return (head if len(head.split()) >= 3 else "", tail if len(tail.split()) >= 3 else "")
+
+
+def is_paste_steps_box(r: Reply, idx: list[int], marks: tuple[str, str]) -> bool:
+    """A copy box (its line indexes) that is the kit's paste steps: it opens with the string's head, or the line above
+    it does, or it ends with the string's tail."""
+    head, tail = marks
+    lines = [r.lines[i].plain for i in idx if r.lines[i].plain]
+    if not lines or not (head or tail):
+        return False
+    above = next((r.lines[k].plain for k in range(idx[0] - 2, max(-1, idx[0] - 5), -1)
+                  if r.lines[k].plain and not r.lines[k].fence), "")
+    return bool(head and (_fold_words(lines[0]).startswith(head) or _fold_words(above).startswith(head))
+                or tail and _fold_words(lines[-1]).endswith(tail))
+
+
+def _post_chunk_lines(r: Reply, steps: tuple[str, str] | None = None) -> list[tuple[Piece | None, list[int]]]:
     """What the coach would post, as (piece, line indices): each piece body (hard stops left out; fences left out),
-    then each copy box outside pieces (piece None)."""
+    then each copy box outside pieces (piece None). `steps` (paste_steps_marks): the kit's own paste-steps box is not a
+    piece and is left out."""
     chunks: list[tuple[Piece | None, list[int]]] = [
         (p, [i for i in range(p.start, p.verdict_at) if not r.lines[i].fence])
         for p in r.pieces if p.kind != "hardstop" and p.body.strip()]
     in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
     box: list[int] = []
+
+    def flush() -> None:
+        if box and not (steps and is_paste_steps_box(r, box, steps)):
+            chunks.append((None, box))
+
     for i, ln in enumerate(r.lines):
         if ln.block != "copy" or i in in_piece:
             continue
         if ln.fence:
-            if box:
-                chunks.append((None, box))
+            flush()
             box = []
         else:
             box.append(i)
-    if box:
-        chunks.append((None, box))
+    flush()
     return chunks
 
 
-def _post_chunks(r: Reply) -> list[str]:
+def _post_chunks(r: Reply, steps: tuple[str, str] | None = None) -> list[str]:
     """What the coach would post: each piece body (hard stops left out), then each copy box outside pieces."""
-    return ["\n".join(r.lines[i].text for i in idx) for _, idx in _post_chunk_lines(r)]
+    return ["\n".join(r.lines[i].text for i in idx) for _, idx in _post_chunk_lines(r, steps)]
 
 
 # ---------------------------------------------------------------- someone else's posts (wf13)
@@ -2844,7 +2888,8 @@ def i23_voice(run: Run) -> dict:
         keep = sorted(set(r.prose) | set(r.verdicts) | set(r.nexts))
         prose = _unquoted("\n".join(r.lines[i].text for i in keep if i not in skip and not _is_refusal(r, i)))
         said = _said_tokens(run, r.index)
-        pieces = [] if copy_reply else [_voice_scrub(c, run.lang, phrases, said) for c in _post_chunks(r)]
+        pieces = [] if copy_reply else [_voice_scrub(c, run.lang, phrases, said)
+                                        for c in _post_chunks(r, paste_steps_marks(run.strings))]
         voiced = "\n".join(pieces)
         not_me = _runtime_never(run, r)
         runtime = runtime or bool(not_me)
@@ -3159,7 +3204,7 @@ def _vn_pieces(run: Run) -> list[tuple[Reply, str]]:
         if coach and explicit_ask(words, EXPLICIT_COPY_RE) and not TRANSLATE_ASK_RE.search(words):
             continue
         top = _card_lines(run, r) if _is_card_reply(run, r) else set()
-        for p, idx in _post_chunk_lines(r):
+        for p, idx in _post_chunk_lines(r, paste_steps_marks(run.strings)):
             keep = []
             for i in idx:
                 ln = r.lines[i]
@@ -4599,15 +4644,18 @@ ON_SCREEN_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:on[- ]screen(?:\s+(?:te
 HOOK_WINDOW = 16                 # lines after an on-screen label that still belong to the same short
 ONSCREEN_REPEAT_SHARE = 0.75     # acceptance [hook_lab] onscreen_repeat_share: this share of the on-screen words, or more
 ONSCREEN_MIN_WORDS = 2           # acceptance [hook_lab] onscreen_min_words: content words needed to judge the repeat
+ONSCREEN_NEW_WORDS_MIN = 1       # acceptance [hook_lab] onscreen_new_words_min: content words the on-screen text must hold that are
+                                 #   in neither the first line nor the first frame (0 switches the check off)
 # Words that carry no idea, per language (the two never mix: "than" is an EN function word and the VN verb "to
 # complain"; "an" is "safe"): function words, plus the ones a hook leans on ("không", "chưa", "phải", "rất", "cứ"; EN
 # "still", "always", "never"). A number or a noun is always content.
-HOOK_STOP_VN = {ck.fold(w) for w in (
+HOOK_STOP_VN_RAW = {
     "thì", "là", "mà", "và", "của", "cái", "những", "các", "một", "này", "đó", "ấy", "kia", "ạ", "nhé", "nha", "à", "ơi",
     "với", "cho", "để", "khi", "nếu", "vì", "nên", "có", "được", "đã", "đang", "sẽ", "rồi", "cũng", "thế", "vậy", "đi",
     "nào", "gì", "ai", "đâu", "sao", "lại", "ra", "vào", "lên", "xuống", "mình", "bạn", "em", "anh", "chị", "tôi", "mấy",
     "hả", "hở", "đấy", "nhỉ", "luôn", "không", "chưa", "phải", "rất", "cứ", "nữa", "hay", "hoặc", "thật", "quá", "vẫn",
-    "chỉ", "còn", "đều", "bị", "nhưng", "cần", "muốn", "tui", "cô", "chú")}
+    "chỉ", "còn", "đều", "bị", "nhưng", "cần", "muốn", "tui", "cô", "chú"}
+HOOK_STOP_VN = {ck.fold(w) for w in HOOK_STOP_VN_RAW}
 HOOK_STOP_EN = {w.replace("'", "") for w in (
     "a an the and or but so if then i i'm i've i'd i'll you you're you've your yours we we're our us it it's its is are "
     "was be been am to of in on at for with from by as about this that these those there there's here here's my me he she "
@@ -4626,38 +4674,132 @@ def _hook_tokens(text: str) -> list[str]:
     return out
 
 
+def _hook_all(text: str, lang: str) -> list[str]:
+    """Every word of a hook text, as written (lowercase, VN with its diacritics: "đau" is not "đâu"), an EN plural "s"
+    dropped ("applications"). For the new checks (onscreen_adds, the KEEP's own words, the topic label); onscreen_repeat
+    keeps its folded _hook_tokens (see _hook_content)."""
+    out = []
+    for tok in ck.copy_tokens(text):
+        out.append(tok[:-1] if len(tok) > 3 and tok.endswith("s") and tok.isascii() else tok)
+    return out
+
+
+def _hook_content(text: str, lang: str) -> list[str]:
+    """The content words of a hook text (_hook_all minus the function words). Read with their diacritics, so the content
+    words "đau" (pain) and "đơ" (stiff) are never lost to the stop words "đâu" and "đó", which the folded stop set of
+    onscreen_repeat loses (left as it was: changing it would turn vg1-day0-vn-coldstart-coach's hook_lab from pass to
+    fail at exactly the 75% line)."""
+    stop = HOOK_STOP_VN_RAW if lang == "vn" else HOOK_STOP_EN
+    return [w for w in _hook_all(text, lang) if w not in stop]
+
+
 def _unquote(text: str) -> str:
     return text.strip().strip("\"'“”‘’ ").strip()
 
 
+# The first frame and the last line of a short ("First frame:", "Khung hình đầu:", "Last line:", "Câu cuối:"), with
+# their text: the on-screen words are read against the frame and the first line together (review retest-ft2 §8 fix 8).
+FRAME_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:first frame|khung hình đầu|khung hình|cảnh đầu)\s*(?:\([^)\n]*\))?"
+                      r"(?:\*\*|__)?\s*:\s*(\S.*)$", re.I)
+LAST_TEXT_RE = re.compile(r"^[\s>*_-]*(?:\*\*|__)?(?:câu cuối|câu chốt|last line)\s*(?:\([^)\n]*\))?"
+                          r"(?:\*\*|__)?\s*:\s*(\S.*)$", re.I)
+
+
+def _boxes(r: Reply) -> list[tuple[int, int]]:
+    """(opening fence, closing fence) line indexes of every fenced block of a reply; an unclosed one ends at the last
+    line. Machine blocks are not in r.lines."""
+    out, opening = [], None
+    for i, ln in enumerate(r.lines):
+        if not ln.fence:
+            continue
+        if opening is None:
+            opening = i
+        else:
+            out.append((opening, i))
+            opening = None
+    if opening is not None:
+        out.append((opening, len(r.lines) - 1))
+    return out
+
+
+def _caption_box(r: Reply, boxes: list[tuple[int, int]], s: dict, bound: int) -> str:
+    """The caption of a short printed in a copy box of its own with no "Caption:" label (retest-ft2: Hạnh's three
+    captions and Nhi's FILM TODAY caption sat under the script's box and read as empty): the first line of the box
+    that opens right after the script (its box's closing fence, or its last labelled line), before the next short
+    (`bound`). A box that holds another script ("Chữ trên màn hình:") is that short's, never this one's; a line of
+    talk between the script and the box (a label, "The gift, sent in the DM:") means the box is something else."""
+    lines = r.lines
+    own = next((b for b in boxes if b[0] < s["at"] < b[1]), None)
+    k = (own[1] if own else s["end"]) + 1
+    while k < bound and not lines[k].text.strip():
+        k += 1
+    nxt = next((b for b in boxes if b[0] == k), None)
+    if nxt is None or nxt[0] >= bound:
+        return ""
+    inner = [x for x in lines[nxt[0] + 1:nxt[1]] if x.text.strip()]
+    if not inner or any(ON_SCREEN_RE.match(x.plain) or FIRST_LINE_RE.match(x.plain) for x in inner):
+        return ""
+    return inner[0].plain
+
+
 def hook_shorts(run: Run) -> list[dict]:
     """Every short the machine printed: its on-screen text and, when the lines follow it within HOOK_WINDOW lines, its
-    first spoken line and its caption's first line. A short starts at its on-screen label; copy boxes are read too
-    ("Caption:" then its box: the first line of the box)."""
+    first frame, first spoken line, last line and its caption's first line. A short starts at its on-screen label;
+    copy boxes are read too ("Caption:" then its box: the first line of the box; with no label, the box under the
+    script's own: `caption_box` True)."""
     out = []
     for r in run.replies:
+        boxes = _boxes(r)
+        found: list[dict] = []
         cur = None
         for i, ln in enumerate(r.lines):
             if ln.fence:
                 continue
             m = ON_SCREEN_RE.match(ln.plain)
             if m:
-                cur = {"turn": r.turn, "at": i, "on": _unquote(m.group(1)), "first": "", "caption": ""}
-                out.append(cur)
+                cur = {"turn": r.turn, "at": i, "on": _unquote(m.group(1)), "frame": "", "first": "", "last": "",
+                       "caption": "", "caption_box": False, "end": i}
+                found.append(cur)
                 continue
             if cur is None or i - cur["at"] > HOOK_WINDOW:
                 continue
-            m = FIRST_LINE_RE.match(ln.plain)
-            if m and not cur["first"]:
-                cur["first"] = _unquote(m.group(1))
-            elif CAPTION_LABEL_RE.match(ln.plain) and not cur["caption"]:
-                rest = ln.plain.split(":", 1)[1].strip() if ":" in ln.plain else ""
-                if not rest:
-                    k = next((j for j in range(i + 1, min(i + 4, len(r.lines)))
-                              if r.lines[j].plain and not r.lines[j].fence), None)
-                    rest = r.lines[k].plain if k is not None else ""
-                cur["caption"] = rest
+            for key, pat in (("first", FIRST_LINE_RE), ("frame", FRAME_RE), ("last", LAST_TEXT_RE)):
+                m = pat.match(ln.plain)
+                if m:
+                    if not cur[key]:
+                        cur[key] = _unquote(m.group(1))
+                    cur["end"] = i
+                    break
+            else:
+                if CAPTION_LABEL_RE.match(ln.plain) and not cur["caption"]:
+                    rest = ln.plain.split(":", 1)[1].strip() if ":" in ln.plain else ""
+                    if not rest:
+                        k = next((j for j in range(i + 1, min(i + 4, len(r.lines)))
+                                  if r.lines[j].plain and not r.lines[j].fence), None)
+                        rest = r.lines[k].plain if k is not None else ""
+                    cur["caption"] = rest
+                    cur["end"] = i
+        for n, s in enumerate(found):
+            if not s["caption"]:
+                bound = found[n + 1]["at"] if n + 1 < len(found) else len(r.lines)
+                s["caption"] = _caption_box(r, boxes, s, bound)
+                s["caption_box"] = bool(s["caption"])
+        out += found
     return out
+
+
+def onscreen_adds(on: str, first: str, frame: str = "", min_words: int = ONSCREEN_MIN_WORDS,
+                  lang: str = "vn") -> tuple[list[str], list[str]] | None:
+    """(the on-screen text's content words, the ones that are in neither the first spoken line nor the first frame):
+    an empty second list is a caption of the other two ("Tim nhiều, hộp tin nhắn trống" over a frame with a post full
+    of hearts then the empty inbox, and a line that says "thả tim … không ai nhắn": 33% of the words are in the line,
+    all of them are in line and frame; retest-ft2 §3 Nhi FILM TODAY). None when there are fewer than `min_words`
+    content words to judge, or neither a line nor a frame to read them against."""
+    words = _hook_content(on, lang)
+    if len(words) < min_words or not (first or frame):
+        return None
+    seen = set(_hook_all(first, lang)) | set(_hook_all(frame, lang))
+    return words, [w for w in words if w not in seen]
 
 
 def onscreen_repeat(on: str, first: str, min_words: int = ONSCREEN_MIN_WORDS,
@@ -4715,11 +4857,57 @@ _PERSONAL_EN = re.compile(r"\b(?:i|i'm|i've|my|me|we|our|us)\b", re.I)
 _PERSONAL_VN = re.compile(r"(?<!\w)(?:mình|tôi|tui|em|chị|anh|bạn)(?!\w)", re.I)
 _QUOTED = re.compile(r"\"[^\"\n]*\"|“[^”\n]*”")
 
+# What the first families missed (retest-ft2 §7 and §8 fix 8; Nhi's labels and caption maxims):
+#   label   on screen only, small texts that name the topic, its shape or the answer instead of showing a scene, a
+#           number or a flip: structure "Nghiên cứu có hai lớp" / "Research has two layers"; no-need "Không cần chiến
+#           dịch lớn" / "You don't need a big campaign" (not when it flips: "…, chỉ cần 1 email", "(you need …)");
+#           answer "Câu đúng nằm ở khách cũ" / "The answer is …" / "It all comes down to …"; a bare positive
+#           demonstrative "That's a rearview mirror." (the equation's other half: "That's not research.").
+#   maxim   in a first line or a caption's line 1 with no "I", digit, quote or question: a rule of thumb that says the
+#           ending. Order "Viết sao thì để sau, tại sao phải có trước." / "Why comes before how."; two generic
+#           sentences side by side "Người quen mua vì đã biết bạn. Người lạ thì chưa." / "Clients buy from people they
+#           trust. Strangers don't." (a client's own line, in quotes, or an "I" line is a scene, not a maxim).
+_LBL_COUNT = r"(?:hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|\d+)"
+VN_STRUCT_LABEL = re.compile(r"^[^\W\d_]+(?:\s+[^\W\d_]+){0,4}\s+có\s+" + _LBL_COUNT + r"\s+(?:lớp|tầng|bước|cách|loại|phần|kiểu|"
+                             r"mặt|cấp|chặng|giai đoạn|dạng|nguyên tắc|bí quyết)\s*[.!]?$", re.I)
+EN_STRUCT_LABEL = re.compile(r"^(?:the\s+|a\s+|an\s+|your\s+|our\s+)?[a-z][\w'’&-]*(?:\s+[a-z][\w'’&-]*){0,3}\s+(?:has|have|"
+                             r"comes?\s+in)\s+(?:two|three|four|five|six|seven|\d+)\s+(?:layers?|levels?|steps?|parts?|kinds?|"
+                             r"types?|sides?|stages?|phases?|ways?|principles?|tiers?)\s*[.!]?$", re.I)
+VN_NO_NEED = re.compile(r"^(?:không|chẳng)\s+cần\s+\S+", re.I)
+EN_NO_NEED = re.compile(r"^(?:you\s+)?(?:don'?t|do\s+not|doesn'?t|never)\s+need\s+\S+|^no\s+need\s+(?:for|to)\s+\S+", re.I)
+_VN_NEED_FLIP = re.compile(r"(?<!\w)(?:chỉ cần|cần|mà|chứ|nhưng)(?!\w)", re.I)
+_EN_NEED_FLIP = re.compile(r"(?<!\w)(?:but|instead|just|you need|need)(?!\w)", re.I)
+VN_ANSWER = re.compile(r"(?<!\w)(?:câu|đáp án|lời giải|chìa khoá|chìa khóa|bí quyết|điều|chỗ|vấn đề|lỗi|gốc rễ|cái|lý do|lí do)"
+                       r"\s+(?:[^\W\d_]+\s+){0,2}?(?:nằm ở|nằm trong|nằm tại)(?!\w)"
+                       r"|(?<!\w)(?:đáp án|lời giải|chìa khoá|chìa khóa|bí quyết)\s+là(?!\w)", re.I)
+EN_ANSWER = re.compile(r"(?<!\w)(?:the\s+)?(?:real\s+|right\s+|true\s+|only\s+)?(?:answer|secret|key|fix|reason|difference|"
+                       r"truth|problem)\s+(?:is|lies|lives|sits|starts|was)(?!\w)"
+                       r"|(?<!\w)it(?:'s|’s| is)\s+all\s+about(?!\w)|(?<!\w)comes?\s+down\s+to(?!\w)", re.I)
+EN_DEM_EQ = re.compile(r"^(?:that|this|it)(?:\s*'s|\s*’s|\s+is)\s+(?:an?|the)\s+[\w'’-]+(?:\s+[\w'’-]+){0,2}[.!]?$", re.I)
+VN_MAXIM_ORDER = re.compile(r"(?<!\w)(?:phải\s+)?có\s+trước(?!\w)|(?<!\w)thì\s+để\s+sau(?!\w)", re.I)
+EN_MAXIM_ORDER = re.compile(r"^[a-z][\w'’-]*(?:\s+[a-z][\w'’-]*){0,3}\s+(?:comes?|goes)\s+(?:first|before)\b", re.I)
+_VN_GENERIC = r"(?:người ta|người|khách|mọi người|ai cũng|ai)"
+VN_MAXIM_CONTRAST = re.compile(r"^" + _VN_GENERIC + r"(?!\w)[^.!?\n]{2,70}[.!?]\s+" + _VN_GENERIC
+                               + r"(?!\w)[^.!?\n]{0,50}(?<!\w)(?:thì|mới|lại|chưa|không)(?!\w)[^.!?\n]{0,30}[.!?]?$", re.I)
+_EN_GENERIC = r"(?:people|strangers?|clients?|customers?|buyers?|everyone|nobody|owners?|founders?|most\s+\w+)"
+EN_MAXIM_CONTRAST = re.compile(r"^" + _EN_GENERIC + r"\b[^.!?\n]{2,70}[.!?]\s+" + _EN_GENERIC + r"\b[^.!?\n]{0,50}[.!?]?$",
+                               re.I)
+_SPEAKER_EN = re.compile(r"\b(?:i|i'm|i've|i'd|i'll|my|me|we|our|us)\b", re.I)
+_SPEAKER_VN = re.compile(r"(?<!\w)(?:mình|tôi|tui|em|chị|anh)(?!\w)", re.I)
+# A hedge in a hook (SG4 "0 hedges in the hook"; wf6 strip list A, low-likelihood hedges, EN and VN): a hedged hook
+# promises less than the piece keeps. "probably" and "likely" are the allowed, high-likelihood ones. Minimizers ("kind of")
+# and spoken fillers ("I think") are not read: they are a story's voice more often than a hook's hedge.
+EN_HEDGE = re.compile(r"(?<!\w)(?:might|maybe|perhaps|possibly|potentially|arguably|somewhat|to\s+some\s+extent|"
+                      r"(?:could|may)\s+(?:be|well|actually|have\s+been))(?!\w)", re.I)
+VN_HEDGE = re.compile(r"(?<!\w)(?:có lẽ|chắc là|hình như|dường như|có thể là|hơi hơi|khá là|tương đối|phần nào|hay sao ấy)(?!\w)",
+                      re.I)
+
 
 def flat_claims(text: str, where: str, lang: str) -> list[tuple[str, str]]:
     """(family, the words that matched) for each flat claim in a short's text. `where` is "on" (the on-screen text:
-    the whole text is read, all families), "first" or "caption" (a spoken line or a caption's line 1: quoted words
-    are a buyer's line and left out; equation, trust and key only)."""
+    the whole text is read, all families, labels too), "first" or "caption" (a spoken line, a text post's line 1, a
+    slide 1, or a caption's line 1: quoted words are a buyer's line and left out; equation, trust, key and maxim
+    only)."""
     text = ck.nfc(text).strip()
     body = text if where == "on" else _QUOTED.sub(" ", ck.straight_quotes(text))
     hits: list[tuple[str, str]] = []
@@ -4742,52 +4930,733 @@ def flat_claims(text: str, where: str, lang: str) -> list[tuple[str, str]]:
             hits.append(("modal", text))
         if small and (VN_COPULA if vn else EN_COPULA).match(text) and not any(h[0] == "equation" for h in hits):
             hits.append(("copula", text))
+        # labels (retest-ft2): a small text that names the topic, its shape or the answer
+        small_label = len(text.split()) <= (9 if vn else 8) and not re.search(r"[\d?,;:\"“”]", text)
+        if small_label:
+            m = (VN_STRUCT_LABEL if vn else EN_STRUCT_LABEL).match(text)
+            if m:
+                hits.append(("label", text))
+            m = (VN_NO_NEED if vn else EN_NO_NEED).match(text)
+            if m and not (_VN_NEED_FLIP if vn else _EN_NEED_FLIP).search(text[m.end():]):
+                hits.append(("no_need", text))
+            m = (VN_ANSWER if vn else EN_ANSWER).search(text)
+            if m:
+                hits.append(("answer", text))
+            if not vn and EN_DEM_EQ.match(text) and not any(h[0] in ("equation", "copula") for h in hits):
+                hits.append(("equation", text))
+    else:
+        line = re.sub(r"\s+", " ", body).strip()
+        if line and not (_SPEAKER_VN if vn else _SPEAKER_EN).search(line) and not re.search(r"[\d?\"“”]", line):
+            for pat in (VN_MAXIM_ORDER, VN_MAXIM_CONTRAST) if vn else (EN_MAXIM_ORDER, EN_MAXIM_CONTRAST):
+                m = pat.search(line)
+                if m:
+                    hits.append(("maxim", m.group(0)))
+                    break
     return hits
 
 
-def check_hook_lab(run: Run) -> dict:
-    """The two defects of the founder's Day 0 that no grader read (qa/standards/hook-lab.md HL7, HL8; review
-    retest-ft1 fix 2), on every short the machine printed (hook_shorts):
-    - the on-screen text adds something: at least ONSCREEN_REPEAT_SHARE of its content words coming back in the first
-      spoken line is the same claim twice (acceptance [hook_lab] onscreen_repeat_share, onscreen_min_words);
-    - no flat claim on screen (flat_claims: "Vậy chưa phải nghiên cứu", "Khách phải tin bạn.", "The bank app isn't a
-      forecast."), and none in the first line or the caption's line 1 (quoted words, a buyer's line, are left out).
-    A proxy: the rubric's other items (HL1-HL6, HL9, HG1-HG3) need a reader. n/a when the run printed no short."""
+def hook_hedges(text: str, where: str, lang: str) -> list[str]:
+    """The hedges in a hook line (EN_HEDGE / VN_HEDGE). `where` "first" or "caption": quoted words are a buyer's and
+    left out ("Maybe I'm doing it wrong," she said); any other `where` reads the whole text."""
+    text = ck.nfc(text)
+    body = _QUOTED.sub(" ", ck.straight_quotes(text)) if where in ("first", "caption") else text
+    return [m.group(0) for m in (VN_HEDGE if lang == "vn" else EN_HEDGE).finditer(body)]
+
+
+# The other hooks of a week (retest-ft2 §7 item 5, §8 fix 8: "hook_lab reads shorts only, not slides, titles or
+# subjects"): a text post's line 1, a carousel's or PDF's slide 1, an email's subject lines. Found by the label or
+# title of the piece or copy box that holds them; a one-to-one message (DM, Zalo, inbox reply) opens in the coach's own
+# words and is never read.
+SLIDE1_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:slide|trang|ảnh)\s*0?1\s*(?:\([^)\n]*\))?\s*[:.)–—-]\s*(?:\*\*|__)?\s*"
+                       r"(\S.*)$", re.I)
+SUBJECT_LABEL_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:subject(?:\s+lines?)?|tiêu đề(?:\s+thư)?)\s*\d*\s*"
+                              r"(?:\([^)\n]*\)|,[^:\n]{0,24})?\s*(?:\*\*|__)?\s*:\s*(.*)$", re.I)
+SUBJECT_ITEM_RE = re.compile(r"^\s*(?:\d{1,2}[.)]|[-*•])\s+(\S.*)$")
+EMAIL_LABEL_RE = re.compile(r"\be-?mails?\b|\bnewsletters?\b|(?<!\w)thư(?!\w)", re.I)
+POST_LABEL_RE = re.compile(r"\bposts?\b|(?<!\w)(?:bài dài|bài đăng|bài viết|bài chữ)(?!\w)", re.I)
+NOT_POST_RE = re.compile(r"\b(?:pdf|carousel|slides?|reels?|shorts?|videos?|repl(?:y|ies)|inbox|dms?|zalo|comments?|"
+                         r"captions?|messages?|scripts?|film)\b|(?<!\w)(?:quay|trả lời|tin nhắn|nhắn riêng|băng chuyền)(?!\w)",
+                         re.I)
+
+
+def _hook_blocks(r: Reply) -> list[tuple[str, list[str]]]:
+    """(title or label, plain body lines) of every piece and every copy box outside the pieces: the label of a box is
+    the line just above it."""
+    out = []
+    for p in r.pieces:
+        if p.kind == "hardstop":
+            continue
+        body = p.body.splitlines()[1:] if p.title else p.body.splitlines()
+        out.append((p.title, [ck.plain_line(x) for x in body]))
+    in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
+    for a, b in _boxes(r):
+        if a in in_piece:
+            continue
+        label = next((r.lines[k].plain for k in range(a - 1, max(-1, a - 3), -1)
+                      if r.lines[k].plain and not r.lines[k].fence), "")
+        out.append((label, [x.plain for x in r.lines[a + 1:b] if not x.fence]))
+    return out
+
+
+def hook_headlines(run: Run) -> list[dict]:
+    """The text-post line 1, carousel slide 1 and email subject lines the machine printed:
+    {"turn", "kind": "post" | "slide" | "subject", "text", "n": the subject's number, "label"}. A piece or box with a
+    "Slide 1:" line is a carousel, one with "Subject lines:" / "Tiêu đề:" an email (every subject, numbered), a piece
+    titled as a post ("LinkedIn post", "Bài dài") a text post, read at its first line."""
+    out = []
+    for r in run.replies:
+        for label, body in _hook_blocks(r):
+            slide = next((m for x in body for m in [SLIDE1_RE.match(x)] if m), None)
+            if slide:
+                out.append({"turn": r.turn, "kind": "slide", "text": _unquote(slide.group(1)), "n": 1, "label": label})
+                continue
+            subjects = []
+            for k, x in enumerate(body):
+                m = SUBJECT_LABEL_RE.match(x)
+                if not m:
+                    continue
+                if m.group(1).strip():
+                    subjects.append(_unquote(m.group(1)))
+                    continue
+                for y in body[k + 1:]:
+                    item = SUBJECT_ITEM_RE.match(y)
+                    if not item:
+                        break
+                    subjects.append(_unquote(item.group(1)))
+            if subjects:
+                out += [{"turn": r.turn, "kind": "subject", "text": t, "n": n, "label": label}
+                        for n, t in enumerate(subjects, start=1)]
+                continue
+            if label and POST_LABEL_RE.search(label) and not NOT_POST_RE.search(label) \
+                    and not EMAIL_LABEL_RE.search(label) and not any(ON_SCREEN_RE.match(x) for x in body):
+                first = next((x for x in body if x.strip() and not x.startswith("#")), "")
+                if first:
+                    out.append({"turn": r.turn, "kind": "post", "text": _unquote(first), "n": 1, "label": label})
+    return out
+
+
+def _hook_cfg(run: Run) -> dict:
     cfg = run.acceptance.get("hook_lab", {})
-    share_max = float(cfg.get("onscreen_repeat_share", ONSCREEN_REPEAT_SHARE))
-    min_words = int(cfg.get("onscreen_min_words", ONSCREEN_MIN_WORDS))
-    shorts = hook_shorts(run)
-    if not shorts:
+    return {"share": float(cfg.get("onscreen_repeat_share", ONSCREEN_REPEAT_SHARE)),
+            "min_words": int(cfg.get("onscreen_min_words", ONSCREEN_MIN_WORDS)),
+            "new_words_min": int(cfg.get("onscreen_new_words_min", ONSCREEN_NEW_WORDS_MIN)),
+            "max_chars": int(cfg.get("headline_max_chars_vn" if run.lang == "vn" else "headline_max_chars_en",
+                                     HEADLINE_MAX_CHARS[run.lang]))}
+
+
+def short_findings(s: dict, cfg: dict, lang: str, topics=()) -> dict:
+    """The defects of one short (a hook_shorts dict): {"repeat", "adds", "flat_on", "flat_line", "hedge", "warn"}, each a
+    list of messages ready for the evidence. `topics`, when given (the strategy file's hooks), also read an on-screen
+    text that is a Map topic's name as a label."""
+    turn, on = s.get("turn"), _short(s["on"], 50)
+    where = s.get("where", f"turn {turn}: " if turn is not None else "")
+    out = {"repeat": [], "adds": [], "flat_on": [], "flat_line": [], "hedge": [], "warn": []}
+    if s.get("first"):
+        found = onscreen_repeat(s["on"], s["first"], cfg["min_words"], lang)
+        if found and found[0] >= cfg["share"]:
+            out["repeat"].append(f'{where}on-screen "{on}" says the first line again '
+                                 f'({found[0]:.0%} of its words: {", ".join(found[1][:5])}); it should add what the first '
+                                 "line does not (a number, a contrast, a question)")
+    if (s.get("first") or s.get("frame")) and not out["repeat"]:
+        got = onscreen_adds(s["on"], s.get("first", ""), s.get("frame", ""), cfg["min_words"], lang)
+        if got and len(got[1]) < cfg["new_words_min"]:
+            source = "the first line and the first frame" if s.get("first") and s.get("frame") else \
+                ("the first line" if s.get("first") else "the first frame")
+            out["adds"].append(f'{where}on-screen "{on}" has no word that is not already in {source} '
+                               f'({", ".join(got[0][:5])}): it paraphrases them; give it a number, a contrast or a question')
+    for fam, words in flat_claims(s["on"], "on", lang):
+        out["flat_on"].append(f'{where}flat claim on screen "{on}" ({fam}: "{words}"): show a scene, a flip or the '
+                              "buyer's words instead")
+    folded = {" ".join(_hook_content(t, lang)) for t in topics}
+    mine = " ".join(_hook_content(s["on"], lang))
+    if mine and mine in folded and len(mine.split()) >= 2 and not flat_claims(s["on"], "on", lang):
+        out["flat_on"].append(f'{where}label on screen "{on}" (a Map topic\'s own name): show a scene, a flip or the '
+                              "buyer's words instead")
+    for key, label in (("first", "first line"), ("caption", "caption line 1")):
+        text = s.get(key, "")
+        for fam, words in flat_claims(text, key, lang) if text else []:
+            out["flat_line"].append(f'{where}flat claim in the {label} ({fam}: "{words}"): "{_short(text, 60)}"')
+    for key, where_key, label in (("on", "on", "on-screen text"), ("first", "first", "first line"),
+                                  ("caption", "caption", "caption line 1")):
+        text = s["on"] if key == "on" else s.get(key, "")
+        for word in hook_hedges(text, where_key, lang) if text else []:
+            out["hedge"].append(f'{where}hedge "{word}" in the {label}: "{_short(text, 60)}"')
+    last = s.get("last", "")
+    if last and (NAME_CLOSE_VN if lang == "vn" else NAME_CLOSE_EN).search(last):
+        out["warn"].append(f'{where}the last line names the method instead of landing the answer: "{_short(last, 60)}"')
+    return out
+
+
+HEADLINE_MAX_CHARS = {"en": 60, "vn": 70}     # acceptance [hook_lab] headline_max_chars_en / _vn (hook-lab.md HL9)
+NAME_CLOSE_VN = re.compile(r"(?<!\w)(?:gọi là|tên là|tên gọi là|đặt tên là)(?!\w)", re.I)
+NAME_CLOSE_EN = re.compile(r"\b(?:i|we)\s+call\s+(?:it|this|that)\b|\b(?:it|this|that)(?:'s|’s|\s+is)\s+called\b", re.I)
+
+
+def check_hook_lab(run: Run) -> dict:
+    """The defects of the founder's Day 0 that no grader read (qa/standards/hook-lab.md HL6-HL9; reviews retest-ft1
+    fix 2, retest-ft2 §7 and §8 fix 8), on every hook the machine printed:
+    - on every short (hook_shorts): the on-screen text adds something. At least ONSCREEN_REPEAT_SHARE of its content
+      words coming back in the first spoken line is the same claim twice (acceptance [hook_lab] onscreen_repeat_share,
+      onscreen_min_words); and no on-screen word may be missing from the first line and the first frame together
+      (a paraphrase of both, onscreen_adds);
+    - no flat claim or label on screen (flat_claims: "Vậy chưa phải nghiên cứu", "Khách phải tin bạn.", "The bank app
+      isn't a forecast.", "Nghiên cứu có hai lớp", "Không cần chiến dịch lớn", "Câu đúng nằm ở khách cũ"), and no flat
+      claim or maxim in the first line, the caption's line 1 (a caption in a box of its own with no label too), a text
+      post's line 1 or a slide 1 (quoted words, a buyer's line, are left out);
+    - no hedge in any of them, nor in an email's subject lines (hook_hedges);
+    - slide 1 and the subject lines read within HEADLINE_MAX_CHARS characters (EN 60, VN 70; acceptance [hook_lab]
+      headline_max_chars_en / _vn; HL9: a subject line's 2nd and 3rd drafts are held to hedges only).
+    A warning (the check still passes) when a short's last line names the method instead of landing the answer.
+    A proxy: the rubric's other items (HL1-HL5, HG1-HG3) need a reader. n/a when the run printed none of these."""
+    cfg = _hook_cfg(run)
+    shorts, heads = hook_shorts(run), hook_headlines(run)
+    if not shorts and not heads:
         return {"id": "hook_lab", "pass": True, "status": "n/a", "items": [],
-                "evidence": ["no short with an on-screen line was printed"], "details": {"shorts": 0}}
-    repeat, flat_on, flat_line = [], [], []
+                "evidence": ["no short with an on-screen line, text post, slide or subject line was printed"],
+                "details": {"shorts": 0}}
+    lang = run.lang
+    repeat, flat_on, flat_line, hedge, long, warn = [], [], [], [], [], []
     for s in shorts:
-        turn, on = s["turn"], _short(s["on"], 50)
-        if s["first"]:
-            found = onscreen_repeat(s["on"], s["first"], min_words, run.lang)
-            if found and found[0] >= share_max:
-                repeat.append(f'turn {turn}: on-screen "{on}" says the first line again '
-                              f'({found[0]:.0%} of its words: {", ".join(found[1][:5])}); it should add what the first '
-                              "line does not (a number, a contrast, a question)")
-        for fam, words in flat_claims(s["on"], "on", run.lang):
-            flat_on.append(f'turn {turn}: flat claim on screen "{on}" ({fam}: "{words}"): show a scene, a flip or the '
-                           "buyer's words instead")
-        for where, label in (("first", "first line"), ("caption", "caption line 1")):
-            text = s["first" if where == "first" else "caption"]
-            for fam, words in flat_claims(text, where, run.lang) if text else []:
-                flat_line.append(f'turn {turn}: flat claim in the {label} ({fam}: "{words}"): "{_short(text, 60)}"')
+        f = short_findings(s, cfg, lang)
+        repeat += f["repeat"] + f["adds"]
+        flat_on += f["flat_on"]
+        flat_line += f["flat_line"]
+        hedge += f["hedge"]
+        warn += f["warn"]
+    names = {"post": "text post line 1", "slide": "slide 1", "subject": "subject line"}
+    for h in heads:
+        where = f"turn {h['turn']}: "
+        what = names[h["kind"]] + (f" {h['n']}" if h["kind"] == "subject" else "")
+        if h["kind"] in ("post", "slide"):
+            for fam, words in flat_claims(h["text"], "first", lang):
+                flat_line.append(f'{where}flat claim in the {what} ({fam}: "{words}"): "{_short(h["text"], 60)}"')
+        for word in hook_hedges(h["text"], "headline", lang):
+            hedge.append(f'{where}hedge "{word}" in the {what}: "{_short(h["text"], 60)}"')
+        if h["kind"] in ("slide", "subject") and not (h["kind"] == "subject" and h["n"] > 1) \
+                and len(h["text"]) > cfg["max_chars"]:
+            long.append(f'{where}{what} is {len(h["text"])} characters, over {cfg["max_chars"]}: "{_short(h["text"], 70)}"')
     items = [
         {"item": "on-screen text adds to the first spoken line (never repeats it)", "pass": not repeat,
          "evidence": list(dict.fromkeys(repeat))},
         {"item": "no flat claim on screen", "pass": not flat_on, "evidence": list(dict.fromkeys(flat_on))},
         {"item": "no flat claim in the first line or the caption's line 1", "pass": not flat_line,
          "evidence": list(dict.fromkeys(flat_line))},
+        {"item": "no hedge in a hook", "pass": not hedge, "evidence": list(dict.fromkeys(hedge))},
+        {"item": f"slide 1 and the first subject line within {cfg['max_chars']} characters", "pass": not long,
+         "evidence": list(dict.fromkeys(long))},
     ]
     passed = all(i["pass"] for i in items)
-    return {"id": "hook_lab", "pass": passed, "status": "pass" if passed else "fail", "items": items,
+    out = {"id": "hook_lab", "pass": passed, "status": "pass" if passed else "fail", "items": items,
+           "evidence": [e for i in items if not i["pass"] for e in i["evidence"]],
+           "details": {"shorts": len(shorts), "with_first_line": sum(1 for s in shorts if s["first"]),
+                       "with_frame": sum(1 for s in shorts if s["frame"]),
+                       "captions_in_a_box": sum(1 for s in shorts if s["caption_box"]),
+                       "text_posts": sum(1 for h in heads if h["kind"] == "post"),
+                       "slides": sum(1 for h in heads if h["kind"] == "slide"),
+                       "subjects": sum(1 for h in heads if h["kind"] == "subject"),
+                       "onscreen_repeat_share": cfg["share"], "headline_max_chars": cfg["max_chars"]}}
+    if warn:
+        out["warnings"] = list(dict.fromkeys(warn))
+        if passed:
+            out["status"] = "warn"
+    return out
+
+
+# ---------------------------------------------------------------- research_log and strategy_doc (review retest-ft2 §7, §8 fix 8)
+
+# The web lane (evals/run.py `--web`) has the machine side search and write "## Research log" in notes.md: its queries,
+# the pages it opened (numbered, with URL), the lines it kept (numbered or K1, K2…) and the patterns built on them
+# ("KEEP: … (lines 1, 2, 3)", "Kept as a pattern: … (K1, K4, K8)"). Nobody graded that log: the retest found KEEPs backed
+# by 3 reviews under one product page, and by 3 people in 2 threads of one forum. research_log reads it; strategy_doc reads
+# the file the machine saved (CONTENT-STRATEGY.md, CHIEN-LUOC-NOI-DUNG.md) against it.
+RESEARCH_HEAD_RE = re.compile(r"^[ \t]{0,3}(#{1,4})[ \t]*research log\b[^\n]*$", re.I | re.M)
+_LOG_SECTION_RE = re.compile(r"^[\W_]*(?P<title>queries|pages(?:\s+opened)?|lines\s+kept|kept\s+lines|patterns|lines\s+dropped|"
+                             r"dropped|what\s+the\s+research\s+changed)\b(?P<rest>[^\n]*)$", re.I)
+KEEP_RE = re.compile(r"^\s*(?:[-*•]\s*)?(?:\*\*)?(?P<tag>KEEP|GIỮ|Giữ|Kept\s+as\s+a\s+pattern|Kept\s+pattern)\b(?:\*\*)?\s*"
+                     r"(?:\([^)\n]*\)\s*)?[:\-–]\s*(?P<body>\S.*)$")
+RESEARCH_PAGE_RE = re.compile(r"^\s*(?:[-*•]\s*)?(?:page\s+)?(?P<n>\d+)[.):]?\s+(?:[A-Za-z]+\s+)?(?P<url>https?://\S+)(?P<rest>.*)$")
+RESEARCH_ITEM_RE = re.compile(r"^\s*(?:[-*•]\s*)?(?P<id>[A-Za-z]{0,2}\d+)[.):]?\s+(?P<rest>(?:…|\.\.\.)?\s*[\"“].*)$")
+MONTH_NAMES = (r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+               r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)")
+MONTH_DATE_RE = re.compile(r"(?<!\w)(?:" + MONTH_NAMES + r"[a-z]*\.?\s+(?:\d{1,2},?\s+)?(?:19|20)\d{2}|\d{1,2}\s*/\s*(?:19|20)\d{2}"
+                           r"|(?:th[aá]ng\s*)\d{1,2}\s*(?:/|\s)\s*(?:19|20)\d{2})(?!\w)", re.I)
+VN_LETTER_RE = re.compile(r"[ăâđêôơưàáạảãằắặẳẵầấậẩẫèéẹẻẽềếệểễìíịỉĩòóọỏõồốộổỗờớợởỡùúụủũừứựửữỳýỵỷỹ]", re.I)
+# Words that do not carry a pattern on their own: a line "backs" a KEEP only by sharing one of its other words.
+KEEP_GENERIC_EN = {"want", "see", "make", "get", "need", "say", "know", "have", "take", "give", "use", "like", "think", "look",
+                   "people", "person", "thing", "way", "often", "mostly", "more", "many", "much", "owner", "own"}
+KEEP_GENERIC_VN = {"người", "khách", "chủ", "yếu", "qua", "được", "nhiều", "hay", "rất", "làm", "biết", "thấy", "nói"}
+RESEARCH_MIN_PAGES = 2
+RESEARCH_MIN_HOSTS = 2
+
+
+def research_log_text(run_dir: Path) -> str:
+    """The "## Research log" section of notes.md ("" without one): from its heading to the next heading of the same or a
+    higher level ("## Grade")."""
+    notes = Path(run_dir) / "notes.md"
+    if not notes.exists():
+        return ""
+    text = ck.nfc(notes.read_text(encoding="utf-8"))
+    m = RESEARCH_HEAD_RE.search(text)
+    if not m:
+        return ""
+    rest = text[m.end():]
+    end = re.search(r"^[ \t]{0,3}#{1," + str(len(m.group(1))) + r"}[ \t]+\S", rest, re.M)
+    return rest[:end.start()] if end else rest
+
+
+def log_sections(log: str) -> dict[str, list[str]]:
+    """The log's lines by section: queries, pages, kept, patterns, dropped, changed. A section opens at a heading
+    ("### Lines kept (13 lines …)") or a label line ("Queries (17):", "Kept lines: 0."); the lines before the first one
+    are "head"."""
+    out: dict[str, list[str]] = {"head": []}
+    cur = "head"
+    for line in log.splitlines():
+        m = _LOG_SECTION_RE.match(line)
+        if m and (line.lstrip().startswith("#") or re.match(r"\s*[(:·\-–]|\s*$|\s+\d", m.group("rest"))):
+            title = re.sub(r"\s+", " ", m.group("title").lower())
+            cur = ("queries" if title.startswith("queries") else "pages" if title.startswith("pages")
+                   else "kept" if "kept" in title else "patterns" if title == "patterns"
+                   else "changed" if title.startswith("what") else "dropped")
+            out.setdefault(cur, [])
+            if cur == "kept" and m.group("rest").strip() and not line.lstrip().startswith("#"):
+                out[cur].append(m.group("rest"))                  # "Kept lines: 0." holds its count on the label line
+            continue
+        out.setdefault(cur, []).append(line)
+    return out
+
+
+_HEADER_TURN_RE = re.compile(r"\b(?:reply|turns?|lượt)\s+(\d+)(?:\s*[–-]\s*(\d+))?|\bT(\d+)\b|\bafter\s+turn\s+(\d+)", re.I)
+_QUERY_LINE_RE = re.compile(r"^\s*(?:[-*•]\s*)?Q?(?P<n>\d+)[.):]?\s+(?P<rest>\S.*)$")
+_QUERY_TURN_RE = re.compile(r"^(?:after\s+)?(?:turn|reply|lượt)\s*(\d+)\s*(?:[·|:\-–]\s*(?P<q>\S.*))?$", re.I)
+
+
+def _query_text(text: str) -> str:
+    """A query as logged: a pair of quotes wrapping the whole of it is dropped ("\"which clients\"" stays when more
+    follows: `"which clients" agency owner`)."""
+    text = text.strip().strip("`").strip()
+    for a, b in (('"', '"'), ("“", "”")):
+        if len(text) > 2 and text[0] == a and text[-1] == b and text.count(a) + (text.count(b) if b != a else 0) == 2:
+            return text[1:-1].strip()
+    return text
+
+
+def _turn_of(header: str) -> int | None:
+    """The coach turn a header names ("Reply 2 (after chunk 1, first send):", "T3:", "Phase 1 … (turns 3–4):", "Phase 2,
+    after turn 8"): its highest number (a range's end: the latest the pass could have seen)."""
+    nums = []
+    for m in _HEADER_TURN_RE.finditer(header):
+        nums += [int(g) for g in m.groups() if g]
+    return max(nums) if nums else None
+
+
+def research_queries(log: str) -> list[dict]:
+    """The queries of the log: {"n", "text", "turn": the coach turn it says it ran after, or None}. A query line is
+    numbered ("4. query") or in the form the web lane asks for ("Q6 · after turn 3 · query"); a "T3: Q1 "…" · Q2 "…""
+    line holds several. A line that is no query and names a turn sets the turn of the queries under it ("Reply 2 (…):",
+    "Phase 2, after turn 8"); a query's own "after turn N" overrides it."""
+    out: list[dict] = []
+    turn = None
+    for line in log_sections(log).get("queries", []):
+        if not line.strip():
+            continue
+        t_line = re.match(r"^\s*(?:[-*•]\s*)?T(\d+)\s*:\s*(.*)$", line)
+        if t_line:
+            turn = int(t_line.group(1))
+            for part in re.split(r"\s+·\s+(?=Q\d+\s)", t_line.group(2)):
+                m = re.match(r"^\s*Q(\d+)\s*[.):]?\s*(\S.*)$", part)
+                if m:
+                    out.append({"n": int(m.group(1)), "text": _query_text(m.group(2)), "turn": turn})
+            continue
+        m = _QUERY_LINE_RE.match(line)
+        if m and not RESEARCH_PAGE_RE.match(line):
+            text, own = re.sub(r"^[·|:\-–]\s*", "", m.group("rest")), None
+            # "Q6 · after turn 3 · text": the turn, then the query; "3 · text" is a number and its query
+            tm = _QUERY_TURN_RE.match(text.split(" · ", 1)[0].strip()) if " · " in text else None
+            if tm and not tm.group("q"):
+                own, text = int(tm.group(1)), text.split(" · ", 1)[1]
+            out.append({"n": int(m.group("n")), "text": _query_text(text), "turn": own if own is not None else turn})
+            continue
+        found = _turn_of(line)
+        if found is not None:
+            turn = found
+    return out
+
+
+# One site under two hosts ("{n} nơi counts sites"): Hacker News and its search API, Reddit's old and new fronts.
+HOST_ALIASES = {"hn.algolia.com": "news.ycombinator.com", "old.reddit.com": "reddit.com", "np.reddit.com": "reddit.com",
+                "webtretho.vn": "webtretho.com"}
+
+
+def _norm_url(url: str) -> tuple[str, str]:
+    """(host, page key) of a URL: the host without "www.", and host + path with pagination left out ("?page=3", a
+    trailing "/page-2"), so two pages of reviews of one product are one page."""
+    from urllib.parse import parse_qsl, urlsplit
+    parts = urlsplit(url.strip().rstrip(".,;)"))
+    host = (parts.hostname or "").lower()
+    for prefix in ("www.", "m.", "mobile.", "mbasic."):
+        host = host.removeprefix(prefix)
+    host = HOST_ALIASES.get(host, host)
+    path = re.sub(r"/page-\d+/?$", "", parts.path).rstrip("/")
+    query = "&".join(f"{k}={v}" for k, v in parse_qsl(parts.query)
+                     if k.lower() not in {"page", "p", "pg", "start", "offset", "sort", "utm_source", "utm_medium"})
+    return host, f"{host}{path}" + (f"?{query}" if query else "")
+
+
+def research_pages(log: str) -> dict[int, dict]:
+    """The pages opened, by number: {"url", "host", "key", "place", "dates", "read": False for an UNREAD page}."""
+    out: dict[int, dict] = {}
+    for line in log_sections(log).get("pages", []):
+        m = RESEARCH_PAGE_RE.match(line)
+        if not m:
+            continue
+        url = m.group("url")
+        rest = m.group("rest")
+        fields = [f.strip() for f in re.split(r"\s+·\s+", rest) if f.strip()]
+        host, key = _norm_url(url)
+        out[int(m.group("n"))] = {"url": url, "host": host, "key": key, "place": fields[0] if fields else "",
+                                  "dates": {re.sub(r"\s+", "", d.group(0)).casefold() for d in MONTH_DATE_RE.finditer(rest)},
+                                  "text": rest, "read": not re.search(r"\bUNREAD\b", line + " " + rest)}
+    return out
+
+
+def research_kept(log: str, pages: dict[int, dict]) -> dict[str, dict]:
+    """The kept lines by id ("1", "K1"): {"id", "quote", "page": the page number or None, "host", "key", "place"}.
+    A line's page is its own "(page 9)", else its group's ("Capterra (page 16 unless noted):"), else the one page whose
+    place and month match the line's ("Voz", "11/2020")."""
+    out: dict[str, dict] = {}
+    group_page, group_text = None, ""
+    for line in log_sections(log).get("kept", []):
+        m = RESEARCH_ITEM_RE.match(line)
+        if not m:
+            if line.strip().endswith(":"):
+                gp = re.search(r"\bpage\s+(\d+)", line, re.I)
+                group_page, group_text = (int(gp.group(1)) if gp else None), line
+            continue
+        rest = m.group("rest")
+        q = re.match(r"^\s*(?:…|\.\.\.)?\s*[\"“](.+?)[\"”](?=\s*(?:\(sic\)|·|\(|$))", rest) \
+            or re.search(r"[\"“](.+?)[\"”]", rest)
+        quote = q.group(1) if q else ""
+        after = rest[q.end():] if q else rest
+        page = None
+        pm = re.search(r"\(page\s+(\d+)\)|\bpage\s+(\d+)\b", after, re.I)
+        if pm:
+            page = int(pm.group(1) or pm.group(2))
+        elif group_page is not None:
+            page = group_page
+        meta = after + " " + group_text
+        if page is None:
+            dates = {re.sub(r"\s+", "", d.group(0)).casefold() for d in MONTH_DATE_RE.finditer(meta)}
+            places = [n for n, pg in pages.items()
+                      if pg["place"] and re.search(r"(?<!\w)" + re.escape(pg["place"].split("(")[0].strip()) + r"(?!\w)", meta, re.I)
+                      and (not dates or dates & pg["dates"])]
+            if places and (dates or len(places) == 1):
+                words = _stems(after, False) | _stems(after, True)
+                page = max(places, key=lambda n: len(words & (_stems(pages[n]["text"], False) | _stems(pages[n]["text"], True))))
+        pg = pages.get(page) if page is not None else None
+        place = ""
+        if pg is None:
+            fields = [f.strip() for f in re.split(r"\s+·\s+", after) if f.strip()]
+            place = fields[1] if len(fields) > 1 else (fields[0] if fields else group_text.strip(" :"))
+        out[m.group("id")] = {"id": m.group("id"), "quote": quote, "page": page if pg else None,
+                              "host": pg["host"] if pg else ("?" + place.casefold()),
+                              "key": pg["key"] if pg else ("?" + place.casefold()), "place": pg["place"] if pg else place}
+    return out
+
+
+def _refs(text: str) -> list[str]:
+    """The line ids a KEEP names: "(lines 1, 2, 3, 5, 8, 9: 6 people, 2 places)" → 1 2 3 5 8 9; "(K1, K4, K8: 3 people)";
+    a bare "(1, 2, 3)". The first parenthesis that is a list of ids; "(3 people, 2 places)" is not one."""
+    for m in re.finditer(r"\(([^()]*)\)", text):
+        inner = re.split(r"[:;·]", m.group(1), maxsplit=1)[0].strip()
+        if not (re.match(r"^(?:lines?|dòng|câu)\s+[A-Za-z]{0,2}\d", inner, re.I)
+                or re.match(r"^[A-Za-z]{1,2}\d+(?:\s*[,–-]\s*[A-Za-z]{0,2}\d+)*$", inner)
+                or re.match(r"^\d+(?:\s*[,–-]\s*\d+)*$", inner)):
+            continue
+        ids: list[str] = []
+        for t in re.finditer(r"([A-Za-z]{0,2})(\d+)(?:\s*[-–]\s*([A-Za-z]{0,2})?(\d+))?", re.sub(r"^(?:lines?|dòng|câu)\s+", "", inner, flags=re.I)):
+            lo, hi = int(t.group(2)), int(t.group(4)) if t.group(4) else None
+            if hi and hi >= lo and not t.group(1) and hi - lo < 30:
+                ids += [str(i) for i in range(lo, hi + 1)]
+            else:
+                ids.append(t.group(1).upper() + t.group(2))
+        return ids
+    return []
+
+
+def research_keeps(log: str) -> list[dict]:
+    """The KEEP patterns: {"text": the pattern, "refs": the line ids it names, "line": the log line}. Only the patterns
+    the log keeps ("KEEP:", "GIỮ:", "Kept as a pattern:"), never a WATCH."""
+    out = []
+    for line in log.splitlines():
+        m = KEEP_RE.match(line)
+        if not m:
+            continue
+        body = m.group("body")
+        refs = _refs(body)
+        pat = re.split(r"\s*\((?:lines?|dòng|câu|[A-Za-z]{0,2}\d)", body, maxsplit=1, flags=re.I)[0].strip(" .:;")   # cut at "(lines", "(K1", "(3 people"
+        out.append({"text": pat, "refs": refs, "line": line.strip()})
+    return out
+
+
+def _stems(text: str, lang_vn: bool) -> set[str]:
+    gen = KEEP_GENERIC_VN if lang_vn else KEEP_GENERIC_EN
+    return {w[:5] for w in _hook_content(text, "vn" if lang_vn else "en") if w not in gen and not w.isdigit()}
+
+
+def keep_backing(keep: dict, kept: dict[str, dict], min_pages: int = RESEARCH_MIN_PAGES,
+                 min_hosts: int = RESEARCH_MIN_HOSTS) -> dict:
+    """One KEEP read against the lines it names: {"cited": the kept lines, "missing": ids not in the log, "own": the
+    cited lines that say it in their own words (a content word in common with the pattern; every line counts when the
+    pattern is written in another language than the lines), "pages", "hosts" (of `own`), and the problems by kind:
+    "named" (no line named, or one that is not kept), "backing" (too few pages or hosts), "words" (a line that does not
+    say it, a part of a two-part pattern without its own backing)."""
+    by_num = {re.sub(r"^[A-Za-z]+", "", k): v for k, v in kept.items()}
+    cited, missing = [], []
+    for ref in keep["refs"]:
+        line = kept.get(ref) or by_num.get(re.sub(r"^[A-Za-z]+", "", ref))
+        if line:
+            cited.append(line)
+        else:
+            missing.append(ref)
+    pat_vn = bool(VN_LETTER_RE.search(keep["text"]))
+    lines_vn = any(VN_LETTER_RE.search(c["quote"]) for c in cited)
+    testable = pat_vn == lines_vn or not lines_vn
+    pat_stems = _stems(keep["text"], pat_vn)
+    own = [c for c in cited if not testable or not pat_stems or pat_stems & _stems(c["quote"], lines_vn)]
+    pages = list(dict.fromkeys(c["key"] for c in own))
+    hosts = list(dict.fromkeys(c["host"] for c in own))
+    problems: dict[str, list[str]] = {"named": [], "backing": [], "words": []}
+    name = f'KEEP "{_short(keep["text"], 70)}"'
+
+    def ids(lines: list[dict]) -> str:
+        return ", ".join(c["id"] for c in lines) or "none"
+
+    if not keep["refs"]:
+        problems["named"].append(f"{name} names no kept line: say which lines back it")
+    if missing:
+        problems["named"].append(f'{name} names lines that are not among the kept lines: {", ".join(missing)}')
+    if cited:
+        if len(own) < len(cited):
+            drop = [c for c in cited if c not in own]
+            many = len(drop) > 1
+            problems["words"].append(f"{name}: line{'s' if many else ''} {ids(drop)} {'do' if many else 'does'} not say it in "
+                                     f"its own words (nothing of the pattern in {'them' if many else 'it'}), so "
+                                     f"{'they do' if many else 'it does'} not back it; lines {ids(own)} left")
+        if len(pages) < min_pages or len(hosts) < min_hosts:
+            problems["backing"].append(
+                f"{name} is backed by {len(pages)} page{'s' if len(pages) != 1 else ''} "
+                f"({', '.join(_short(p, 45) for p in pages) or 'none'}) on {len(hosts)} host{'s' if len(hosts) != 1 else ''} "
+                f"({', '.join(hosts) or 'none'}), lines {ids(own)}: a KEEP needs {min_pages}+ pages on {min_hosts}+ hosts "
+                "(reviews under one product page, or the threads of one forum, are one place)")
+    # a pattern in two parts ("A, and B") needs each part backed by lines of 2+ pages
+    parts = [x.strip(" .") for x in re.split(r",\s+(?:and|và|but)\s+|;\s+", keep["text"]) if len(x.split()) >= 3]
+    if testable and len(parts) == 2 and cited:
+        for part in parts:
+            stems = _stems(part, pat_vn)
+            hit = [c for c in cited if stems and stems & _stems(c["quote"], lines_vn)]
+            if len({c["key"] for c in hit}) < min_pages:
+                problems["words"].append(f'{name}: the part "{_short(part, 50)}" is backed by '
+                                         f'{len({c["key"] for c in hit})} page(s) (lines {ids(hit)}): a two-part pattern '
+                                         "needs both parts backed")
+    return {"cited": cited, "missing": missing, "own": own, "testable": testable, "pages": pages, "hosts": hosts,
+            "problems": problems}
+
+
+def check_research_log(run: Run) -> dict:
+    """The web lane's Research log (notes.md; evals/run.py --web), the part a reviewer cannot re-fetch from the
+    transcript: each KEEP ("KEEP: …", "GIỮ: …", "Kept as a pattern: …") names the lines that back it, and those lines
+    come from at least RESEARCH_MIN_PAGES distinct pages on RESEARCH_MIN_HOSTS distinct hosts (acceptance [research_log]
+    keep_min_pages, keep_min_hosts; reviews under one product page and the threads of one forum are one place:
+    pagination is left out of a page's identity), each saying the pattern in its own words (it shares a content word
+    with it; not tested when the pattern is written in another language than the lines), a two-part pattern with both
+    parts backed. n/a without a Research log in notes.md. What it cannot see: a typo silently fixed, a line trimmed
+    without "…", a page whose lines say something else (re-fetch the kept lines)."""
+    log = research_log_text(run.run_dir)
+    if not log.strip():
+        return {"id": "research_log", "pass": True, "status": "n/a", "items": [],
+                "evidence": ["no Research log in notes.md"], "details": {}}
+    cfg = run.acceptance.get("research_log", {})
+    min_pages = int(cfg.get("keep_min_pages", RESEARCH_MIN_PAGES))
+    min_hosts = int(cfg.get("keep_min_hosts", RESEARCH_MIN_HOSTS))
+    pages = research_pages(log)
+    kept = research_kept(log, pages)
+    keeps = research_keeps(log)
+    found: dict[str, list[str]] = {"named": [], "backing": [], "words": []}
+    for k in keeps:
+        for kind, problems in keep_backing(k, kept, min_pages, min_hosts)["problems"].items():
+            found[kind] += problems
+    items = [
+        {"item": "each KEEP names the lines that back it", "pass": not found["named"],
+         "evidence": list(dict.fromkeys(found["named"]))},
+        {"item": f"each KEEP is backed by lines from {min_pages}+ distinct pages on {min_hosts}+ distinct hosts",
+         "pass": not found["backing"], "evidence": list(dict.fromkeys(found["backing"]))},
+        {"item": "the lines say it in their own words, both parts of a two-part pattern", "pass": not found["words"],
+         "evidence": list(dict.fromkeys(found["words"]))},
+    ]
+    passed = all(i["pass"] for i in items)
+    return {"id": "research_log", "pass": passed, "status": "pass" if passed else "fail", "items": items,
             "evidence": [e for i in items if not i["pass"] for e in i["evidence"]],
-            "details": {"shorts": len(shorts), "with_first_line": sum(1 for s in shorts if s["first"]),
-                        "onscreen_repeat_share": share_max}}
+            "details": {"keeps": len(keeps), "pages_opened": len(pages), "kept_lines": len(kept),
+                        "queries": len(research_queries(log)), "keep_min_pages": min_pages, "keep_min_hosts": min_hosts}}
+
+
+# ---- strategy_doc
+
+STRATEGY_PARTS = {
+    "en": (r"who you help", r"buyer.*step by step", r"big ideas", r"week runs|your week", r"first 30 days", r"built on",
+           r"how to use"),
+    "vn": (r"giúp ai", r"khách cần nghe gì", r"ba ý lớn", r"mỗi tuần làm gì", r"30 ngày đầu", r"dựa vào đâu", r"dùng file này"),
+}
+STRATEGY_FILE_GLOBS = ("CONTENT-STRATEGY*.md", "CHIEN-LUOC-NOI-DUNG*.md")
+HOOK_LINE_RE = re.compile(r"^\W*hooks?\s*:\s*(\S.*)$", re.I)
+_HOOK_ON_LABEL = re.compile(r"(?:on[- ]screen(?: text)?|text on screen|chữ trên màn hình|chữ màn hình|chữ)\s*:?\s*", re.I)
+_HOOK_FIRST_LABEL = re.compile(r"(?:first line|câu đầu)\s*:?\s*", re.I)
+_HOOK_SPLIT_RE = re.compile(r"\s+\|\s+|\s+·\s+(?=(?:on[- ]screen|text on screen|chữ)\b)", re.I)
+HELD_QUOTE_RE = re.compile(r"\"([^\"\n]{4,})\"\s*[·(,|–-]\s*[^\"\n]{0,160}?(" + MONTH_DATE_RE.pattern + r")", re.I)
+HELD_CLAIM_RE = re.compile(r"^\W*(?:what\s+holds|đã\s*giữ|điều\s+đã\s+giữ|giữ)\b[^:\n]*:\s*(\S.*)$", re.I)
+_NOTHING_RE = re.compile(r"^\W*(?:none|nothing|chưa có|chưa|không có|n/a)(?!\w)", re.I)
+
+
+def strategy_doc_path(run_dir: Path) -> Path | None:
+    for pattern in STRATEGY_FILE_GLOBS:
+        found = sorted(Path(run_dir).glob(pattern))
+        if found:
+            return found[0]
+    return None
+
+
+def strategy_hooks(text: str) -> list[dict]:
+    """The hooks of the file's big ideas: {"on", "first", "where": the "### Big idea n: …" heading above}. A hook line is
+    `- Hooks: on screen "…" / first line "…" · on screen "…" / first line "…"` (EN) or `- Hook: chữ "…" · câu đầu "…" | chữ
+    "…" · câu đầu "…"` (VN); quotes inside a line's own quotes stay."""
+    out, heading = [], ""
+    for raw in ck.straight_quotes(ck.nfc(text)).splitlines():
+        if raw.lstrip().startswith("#"):
+            heading = raw.lstrip("# ").strip()
+            continue
+        m = HOOK_LINE_RE.match(ck.plain_line(raw))
+        if not m:
+            continue
+        for seg in _HOOK_SPLIT_RE.split(m.group(1)):
+            on_m = _HOOK_ON_LABEL.search(seg)
+            fl_m = _HOOK_FIRST_LABEL.search(seg, on_m.end() if on_m else 0)
+            if not on_m or not fl_m:
+                continue
+            on = seg[on_m.end():fl_m.start()].strip(" /·|,;-")
+            first = seg[fl_m.end():].strip(" /·|,;-")
+            out.append({"on": _unquote(on), "first": _unquote(first), "where": f'{heading}: ' if heading else ""})
+    return out
+
+
+def doc_held_lines(text: str) -> list[str]:
+    """The lines the file quotes as heard from buyers online: a quote followed by an attribution holding a month and a
+    year (a place and a date: "· Capterra review · Nov 2020", "(người làm tự do, Voz, 10/2022)"); the coach's clients'
+    own lines carry none."""
+    return [m.group(1) for line in ck.straight_quotes(ck.nfc(text)).splitlines() if not HOOK_LINE_RE.match(ck.plain_line(line))
+            for m in HELD_QUOTE_RE.finditer(line)]
+
+
+def _norm_quote(text: str) -> str:
+    s = re.sub(r"\s+", " ", ck.straight_quotes(ck.nfc(text))).strip().casefold()
+    return s.strip(" .,;:!?…\"'")
+
+
+def verbatim_in_kept(quote: str, kept: dict[str, dict]) -> bool:
+    """The quote, cut at its own "…", is in one kept line (case and the edge punctuation left out): exactly as on the
+    page, trims shown with "…"."""
+    frags = [f for f in (_norm_quote(x) for x in re.split(r"…|\.\.\.", quote)) if f]
+    return any(all(f in _norm_quote(k["quote"]) for f in frags) for k in kept.values()) if frags else True
+
+
+def check_strategy_doc(run: Run) -> dict:
+    """The saved content strategy file (CONTENT-STRATEGY.md, CHIEN-LUOC-NOI-DUNG.md in the run folder; modules/{en,vn}/
+    strategy-doc.md; qa/standards/strategy-doc.md SD1, SD3, SD5, SD10; review retest-ft2 §4, §7 item 6):
+    - the 7 parts, numbered and in order, under the edition's plain headings, and in VN every heading's pronoun is the
+      one the machine uses with this coach (persona xung_ho: "chị" for Hạnh, "bạn" for Nhi), never the other;
+    - the hooks of its big ideas are no flat claim, label or maxim, repeat no line, hold no hedge (short_findings, the
+      hook_lab's own tests; an on-screen text that is just a Map topic's name is a label here too);
+    - every line it quotes as heard online (a quote with a place and a month) is verbatim among the kept lines of the
+      run's notes.md Research log (acceptance: trims shown with "…"), and what it calls held (GIỮ, "What holds") is a
+      KEEP the log backs (research_log);
+    - no deny-list word (locales/<lang>/deny-list.txt; "(content pillars)" in part 3's heading is the one exception).
+    n/a without the file."""
+    path = strategy_doc_path(run.run_dir)
+    if path is None:
+        return {"id": "strategy_doc", "pass": True, "status": "n/a", "items": [],
+                "evidence": ["no CONTENT-STRATEGY.md / CHIEN-LUOC-NOI-DUNG.md in the run folder"], "details": {}}
+    text = ck.nfc(path.read_text(encoding="utf-8"))
+    lang = run.lang
+    heads = [(int(m.group(1)), m.group(2).strip(), m.start())
+             for m in re.finditer(r"^#{2}\s*(\d)\.\s*(.+)$", text, re.M)]
+    ev_heads = []
+    for n, pattern in enumerate(STRATEGY_PARTS[lang], start=1):
+        found = [h for h in heads if h[0] == n]
+        if len(found) != 1:
+            ev_heads.append(f"part {n} has {len(found)} headings, needs 1 (/{pattern}/)")
+        elif not re.search(pattern, ck.nfc(found[0][1]), re.I):
+            ev_heads.append(f'part {n} is headed "{found[0][1]}", which does not read as {pattern.split("|")[0]!r}')
+    if [h[0] for h in heads] != sorted(h[0] for h in heads):
+        ev_heads.append("the parts are out of order: " + ", ".join(str(h[0]) for h in heads))
+    pair = [p.strip().casefold() for p in re.split(r"[–—-]", str(run.persona.get("xung_ho", ""))) if p.strip()]
+    if lang == "vn" and pair:
+        for n, title, _ in heads:
+            for m in re.finditer(r"(?<!\w)(" + "|".join(PRONOUNS) + r")(?!\w)", title, re.I):
+                if m.group(1).casefold() != pair[0]:
+                    ev_heads.append(f'part {n} "{title}" says "{m.group(1)}"; with this coach the machine says "{pair[0]}" '
+                                    f"(the file's headings follow that pair)")
+                    break
+    cfg = _hook_cfg(run)
+    doc_topics = [m.group(1).strip() for m in re.finditer(r"^###\s*(?:big idea|ý)\s*\d\s*[:·.\-–]\s*(.+)$", text, re.I | re.M)]
+    topics = list(dict.fromkeys(map_topics(run) + doc_topics))
+    hooks = strategy_hooks(text)
+    ev_hooks, warns = [], []
+    for h in hooks:
+        f = short_findings(h, cfg, lang, topics)
+        ev_hooks += f["repeat"] + f["flat_on"] + f["flat_line"] + f["hedge"] + f["adds"]
+        warns += f["warn"]
+    log = research_log_text(run.run_dir)
+    kept = research_kept(log, research_pages(log)) if log else {}
+    held = doc_held_lines(text)
+    ev_held = []
+    if held and (run.run_dir / "notes.md").exists():
+        for q in dict.fromkeys(held):
+            if not verbatim_in_kept(q, kept):
+                ev_held.append(f'held line "{_short(q, 70)}" is not verbatim among the kept lines of the Research log'
+                               if kept else f'held line "{_short(q, 70)}": the Research log keeps no line to check it against')
+    ev_holds = []
+    claims = [m.group(1) for line in text.splitlines() for m in [HELD_CLAIM_RE.match(ck.plain_line(line))]
+              if m and not _NOTHING_RE.match(m.group(1))]
+    if claims and log:
+        keeps = research_keeps(log)
+        mp, mh = (int(run.acceptance.get("research_log", {}).get(k, v))
+                  for k, v in (("keep_min_pages", RESEARCH_MIN_PAGES), ("keep_min_hosts", RESEARCH_MIN_HOSTS)))
+        bad = [p for k in keeps for ps in keep_backing(k, kept, mp, mh)["problems"].values() for p in ps]
+        if not keeps:
+            ev_holds.append(f'the file says "{_short(claims[0], 70)}" holds; the Research log keeps nothing')
+        elif bad:
+            ev_holds.append(f'the file says "{_short(claims[0], 70)}" holds; the Research log does not back it: {bad[0]}')
+    terms = load_term_list(run.root / "locales" / lang / "deny-list.txt")
+    ev_deny = [f'"{m.group(0)}" ({label})' for label, pattern in terms for m in [pattern.search(text)] if m]
+    items = [
+        {"item": "the 7 parts, in order, under the edition's headings (VN: the coach's pronoun pair)",
+         "pass": not ev_heads, "evidence": ev_heads},
+        {"item": "no flat claim, label, maxim, repeat or hedge on its hooks", "pass": not ev_hooks,
+         "evidence": list(dict.fromkeys(ev_hooks))},
+        {"item": "each line quoted from buyers online is verbatim among the notes' kept lines", "pass": not ev_held,
+         "evidence": ev_held},
+        {"item": "what the file calls held is a KEEP the Research log backs", "pass": not ev_holds, "evidence": ev_holds},
+        {"item": "no deny-list word", "pass": not ev_deny, "evidence": ev_deny},
+    ]
+    passed = all(i["pass"] for i in items)
+    out = {"id": "strategy_doc", "pass": passed, "status": "pass" if passed else "fail", "items": items,
+           "evidence": [e for i in items if not i["pass"] for e in i["evidence"]],
+           "details": {"file": path.name, "parts": len(heads), "hooks": len(hooks), "held_lines": len(held),
+                       "kept_lines": len(kept)}}
+    if warns:
+        out["warnings"] = list(dict.fromkeys(warns))
+        if passed:
+            out["status"] = "warn"
+    return out
 
 
 # ---------------------------------------------------------------- report
@@ -4799,7 +5668,8 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     invariants = [fn(run) for fn in INVARIANTS]
     by_id = {i["id"]: i for i in invariants}
     checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_day0(run),
-              check_day0_shape(run), check_vn_natural(run), check_vn_messages(run), check_hook_lab(run)]
+              check_day0_shape(run), check_vn_natural(run), check_vn_messages(run), check_hook_lab(run),
+              check_strategy_doc(run), check_research_log(run)]
     everything = invariants + checks
     return {
         "run": run_dir.resolve().name,         # "." graded from inside the folder still names it (review G16)

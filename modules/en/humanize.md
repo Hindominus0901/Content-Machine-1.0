@@ -2,10 +2,11 @@ Maintainer: §CM-HUMANIZE = the humanize pass, "make it sound like me", the coac
 Sources: arch-final-spec §8.1, §8.3, §8.6; wf6-character-design §B5 (P4, G3, strip list H1-H9 and Keep); wf6-definitive-concise §2d, §2g, §2h;
 wf12-qa-spec §2.5, §2.6, §2.8; schemas/brand-card.toml (phrases, never_say, do_say, recent_hooks). Acceptance: evals/cases/humanize.en.toml.
 Strip-list codes and list names are internal: the coach hears plain words only.
+Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 2): PASS 1 "A client does, says or thinks only what the coach reported."
 
 <!-- @section humanize.kit-pass -->
 PASS on every piece; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework only the coach's words.
-1 Specifics only from what they said: scenes, numbers, phrases. Asked to "make it real": their own scenes, never a new client, number, study, seat or story.
+1 Specifics only from what they said: scenes, numbers, phrases. A client does, says or thinks only what the coach reported. Asked to "make it real": their own scenes, never a new client, number, study, seat or story.
 2 Spoken, in their register: contractions, the card's 5 phrases and rhythm, one breath per line. No slang, emoji or fillers they don't use.
 3 Strip: hedges (might, maybe, kind of, I think) · intensifiers (really, literally) · warm-ups (hey guys, so today) · undercutting (hopefully this helps) · tags (right?, you know?) · recaps (in conclusion) · fog (journey, unlock, elevate, navigate, serves as, crucial role, Moreover, dive in) · clichés (crush it, dream job, reinvent, thrilled to announce) · a 2nd "not just" · lists of three · dashes in spoken lines · never_say. Keep conditions, ranges, their phrases, do_say.
 4 One line that says what they believe. End on a step or their line, never a summary or "Agree?".

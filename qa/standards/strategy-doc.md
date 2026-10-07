@@ -42,7 +42,7 @@ What good means: all 7 parts, in order, under the edition's plain headings. Ever
 ## Hard gates
 
 - Invented proof: a result, testimonial, client line or number the coach never gave; a client shown without their OK.
-- Coach-visible jargon: "pillar", "trụ cột", a stage label (Admirable…Trustable), "Buyer Filter", "Dream Follower", any Matt Gray framework name, a score, code or § id.
+- Coach-visible jargon: "pillar", "trụ cột" (exempt: "(content pillars)" once, in part 3's heading, "Your 3 big ideas (content pillars)" / "Ba ý lớn của bạn (content pillars)"; founder, 7 Oct), a stage label (Admirable…Trustable), "Buyer Filter", "Dream Follower", any Matt Gray framework name, a score, code or § id.
 - A 4th big idea, or a NOT NOW topic leading a part.
 - Fake scarcity or an income promise anywhere in the document.
 - **Never blocked:** the coach's comment keyword and their own CTA wording; an off-map idea the coach insisted on, shown as theirs.
@@ -57,19 +57,19 @@ checks = [
   "Are all 7 parts there, in order, each element filled from my sources or marked [NEEDS: …] or (my guess)?",
   "Is every number, result, quote and count one the coach or a buyer actually gave?",
   "Are the 3 big ideas exactly the Map's, distinct, each with 6-8 things to post, 2 hooks and an ask?",
-  "Does the week fit their tier's minutes, with no 'pillar', stage label or framework name in sight?",
+  "Does the week fit their tier's minutes, with no 'pillar' (part 3's heading \"(content pillars)\" aside), stage label or framework name in sight?",
 ]
 checks_vn = [
   "Đủ 7 phần, đúng thứ tự, mỗi ý lấy từ nguồn mình có, không thì ghi [CẦN BẠN: …] hay (mình đoán)?",
   "Con số, kết quả, câu trích, số đếm nào cũng do coach hay khách đưa thật?",
   "3 ý lớn đúng 3 chủ đề trên Bản đồ, không trùng nhau, mỗi ý có 6-8 bài, 2 hook và lời mời?",
-  "Tuần vừa số phút của gói, không có chữ \"trụ cột\", tên bậc hay tên khung nào?",
+  "Tuần vừa số phút của gói, không có chữ \"trụ cột\", \"pillar\" (trừ \"(content pillars)\" ở tiêu đề phần 3), tên bậc hay tên khung nào?",
 ]
 ```
 
 ## VN note
 
-- File CHIEN-LUOC-NOI-DUNG.md; headings: "1. Bạn giúp ai, và vì sao là bạn" · "2. Khách cần nghe gì, ở từng chặng" · "3. Ba ý lớn của bạn" · "4. Mỗi tuần làm gì" · "5. 30 ngày đầu" · "6. Chiến lược này dựa vào đâu" · "7. Dùng file này thế nào".
+- File CHIEN-LUOC-NOI-DUNG.md; headings: "1. Bạn giúp ai, và vì sao là bạn" · "2. Khách cần nghe gì, ở từng chặng" · "3. Ba ý lớn của bạn (content pillars)" · "4. Mỗi tuần làm gì" · "5. 30 ngày đầu" · "6. Chiến lược này dựa vào đâu" · "7. Dùng file này thế nào".
 - Tin Zalo before email; the ladder runs comment từ khoá → inbox → quà → Zalo or a call → the offer, price said plainly (never "giá ib").
 - Gap tags [CẦN BẠN: …] and "(mình đoán)"; held / watching lines are GIỮ / THEO DÕI with "{n} người · {n} nơi".
 - Xưng hô follows the Card from the title to the last line; the document talks to the coach, the quotes keep each speaker's own pronouns.

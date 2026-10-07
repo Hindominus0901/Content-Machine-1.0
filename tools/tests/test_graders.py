@@ -3606,7 +3606,7 @@ class FT1RoundGraderTests(TempRepo):
         self.assertFails(report, "hook_lab", 'flat claim on screen "Vậy chưa phải nghiên cứu"')
         self.assertFails(report, "hook_lab", 'flat claim in the caption line 1 (equation: "đó chưa phải nghiên")')
         self.assertIn("hook_lab", report["failed"])
-        names = [i["item"] for i in self.inv(report, "hook_lab")["items"]]
+        names = [i["item"] for i in self.inv(report, "hook_lab")["items"]][:3]      # the first 3 items; hedges and headline length follow
         self.assertEqual([self.item(report, "hook_lab", n)["pass"] for n in names], [False, False, False])
         fixed = f"{TAG}Tuần 1\n\n{NHI_N3_FIXED}\n\nTIẾP → Nhắn 'tiếp'."
         report = self.vn(("coach", "tiếp"), ("machine", fixed))
@@ -3624,7 +3624,7 @@ class FT1RoundGraderTests(TempRepo):
     def test_the_threshold_is_acceptance_hook_lab(self):
         week = f"{TAG}Tuần 1\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."
         self.assertFails(self.vn(("coach", "tiếp"), ("machine", week)), "hook_lab")
-        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nonscreen_repeat_share = 1.1\n")
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nonscreen_repeat_share = 1.1\nonscreen_new_words_min = 0\n")
         self.assertPasses(self.vn(("coach", "tiếp"), ("machine", week)), "hook_lab")
 
     def test_no_short_no_check(self):
@@ -3870,6 +3870,647 @@ class FT1RoundGraderTests(TempRepo):
         slow = self.dig_session(4, 6)                      # the Map and FILM TODAY arrive at minute 26 of the transcript
         self.assertFails(slow, "day0_timing", "film-ready at active minute")
         self.assertEqual(self.inv(slow, "day0_timing")["details"]["map_dig_answers"], 4)
+
+
+# ---- retest-ft2 (qa/runs/retest-ft2/review.md §7, §8 fix 8; fix 5 for I23)
+
+# Nhi's FILM TODAY as the retest printed it: the on-screen text is the frame and the first line again (33% of its words are
+# in the line, all of them in line and frame), the caption sits in a box of its own with no label.
+NHI_FILM = ("QUAY HÔM NAY · dưới 30 giây, nhớ ý rồi nói\n```\nChữ trên màn hình: Tim nhiều, hộp tin nhắn trống\n"
+            "Khung hình đầu: Màn hình điện thoại, một bài nhiều tim, lướt sang hộp tin nhắn trống\n"
+            "Câu đầu: Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.\n"
+            "Ý 1: Câu này một chị coach tài chính nói với mình.\n"
+            "Câu cuối: Người lạ chỉ nhắn khi đọc thấy đúng câu của chính họ.\n```\n"
+            "```\nBài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.\n"
+            "Comment KHÔNG AI NHẮN hay nhắn riêng, mình gửi kịch bản gọi 3 khách cũ nha.\n```")
+# Nhi's N1 and N2: caption line 1 is a maxim ("Viết sao thì để sau, tại sao phải có trước."; "Người quen mua vì đã biết bạn.
+# Người lạ thì chưa.") and N3's on-screen text is a label ("Nghiên cứu có hai lớp").
+NHI_N1 = ("N1 · thứ Năm 8/10 · 30 giây\n```\nChữ trên màn hình: Đăng đều mà không ai nhắn\n"
+          "Khung hình đầu: Lịch đăng bài kín cả tuần trên màn hình máy tính\n"
+          "Câu đầu: Ai cũng hỏi mình viết bài sao. Mình chỉ hỏi lại: tại sao người ta phải đọc.\n"
+          "Câu cuối: Trả lời được câu tại sao rồi, viết sao mới có nghĩa.\nCaption:\n"
+          "Viết sao thì để sau, tại sao phải có trước.\nCâu khách hay hỏi mình: viết bài sao.\n```")
+NHI_N2 = ("N2 · thứ Sáu 9/10 · 30 giây\n```\nChữ trên màn hình: Một bài thì chưa ai tin\n"
+          "Khung hình đầu: Ngón tay lướt nhanh qua một bài nhiều tim\n"
+          "Câu đầu: Em bán được cho người quen thôi, người lạ coi xong là lướt.\n"
+          "Câu cuối: Người ta coi xong mà không biết gì về bạn, thì không ai nhắn đâu.\n```\n"
+          "```\nNgười quen mua vì đã biết bạn. Người lạ thì chưa.\nCâu ở đầu video là của một chị coach tài chính.\n```")
+NHI_N3_LABEL = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: Nghiên cứu có hai lớp\n"
+                "Khung hình đầu: Cuốn sổ ghi tay đúng câu khách nói, cạnh điện thoại\n"
+                "Câu đầu: Nhiều người bảo đã nghiên cứu khách: đọc vài bài, hỏi AI ít từ khoá.\n"
+                "Câu cuối: Hiểu khách là ngồi nghe họ kể.\n```")
+# Hạnh's N2: the last line names the method instead of landing the answer.
+HANH_N2 = ("N2 · thứ Hai 12/10 · 24 giây\n```\nChữ trên màn hình: Chào liệu trình bằng cái gương\n"
+           "Khung hình đầu: chị cầm cái gương đưa về phía máy\n"
+           "Câu đầu: Chào liệu trình mà không dọa da câu nào thì chào thế nào?\n"
+           "Câu cuối: Chị gọi là cầm gương nói thật, đơn giản lắm.\n```\n"
+           "```\nEm nào ngại chào thì thử ở khách tiếp theo: đưa gương trước, nói sau.\n```")
+
+EN_WEEK = f'''{TAG}Week 1
+
+Tue, Oct 13 · Email to your list, first this week:
+```
+Subject lines:
+1. How are you out of cash in your best year, and what do you do about it?
+2. Maybe the stairwell call
+3. Record year, empty account
+Preview: The question I couldn't answer for 3 weeks.
+
+Hi all, in 2019 I was in a stairwell.
+```
+
+Wed, Oct 14 · LinkedIn post:
+```
+That's not research.
+
+Record year. Empty account. Marcus called me at 6 in the morning.
+```
+
+Thu, Oct 15 · LinkedIn PDF post (save the slides as a PDF):
+```
+Slide 1: Your biggest client might be underwater. Here's how to check.
+Slide 2: Record year, empty account? Usually one client is losing you money.
+```
+
+DM reply 1 (to each RECORD YEAR comment):
+```
+Thanks for commenting. Maybe the check below helps. Here it is.
+```
+
+NEXT → Say "next".'''
+
+
+class FT2RoundGraderTests(TempRepo):
+    """Grader fixes from the FT2 retest (qa/runs/retest-ft2/review.md §7, §8 fix 8 and fix 5's I23): the hooks the first
+    hook_lab never read (a paraphrased on-screen text, labels, caption maxims, a caption in its own box, a text post's
+    line 1, slide 1, subject lines), the strategy file and the research log."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", FT1_STRINGS))
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.write("evals/personas/vn/nhi/persona.toml", FT1_PERSONA)
+        self.write("evals/personas/vn/nhi/expected.toml", FT1_EXPECTED)
+        self.write("evals/personas/vn/nhi/answers.md", "## Dump chunk 1\nMình viết thuê cho coach.\n")
+        self.write("locales/vn/deny-list.txt", "# test\nre:(?i)(?<!ý lớn của \\w{3} \\(content )\\bpillars?\\b\ntrụ cột\n")
+        self.write("locales/en/deny-list.txt", "# test\nre:(?i)(?<!big ideas \\(content )\\bpillars?\\b\n")
+
+    def vn(self, *bodies, **kw):
+        text = f"{TAG}Tuần 1\n\n" + "\n\n".join(bodies) + "\n\nTIẾP → Nhắn 'tiếp'."
+        return self.grade([("coach", "tiếp"), ("machine", text)], persona="vn/nhi", edition="vn", **kw)
+
+    def load(self, *turns, **kw):
+        return graders.load_run(self.run_dir(list(turns), persona="vn/nhi", edition="vn", **kw), self.root)
+
+    def en(self, text):
+        return self.grade([("coach", "go"), ("machine", text)])
+
+    # ---- hook_lab: the on-screen words against the first line and the first frame
+    def test_onscreen_adds_nothing_to_the_first_line_and_the_frame(self):
+        adds = graders.onscreen_adds
+        words, new = adds("Tim nhiều, hộp tin nhắn trống", "Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.",
+                          "Màn hình điện thoại, một bài nhiều tim, lướt sang hộp tin nhắn trống", lang="vn")
+        self.assertEqual(new, [])                                                  # 33% of the words in the line alone
+        self.assertGreater(len(words), 3)
+        for on, first, frame, lang in (
+                ("AI đâu có gọi khách cũ", "Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?",
+                 "khung chat AI gõ dở", "vn"),
+                ("Người quen mua, người lạ lướt", "Bài nào em đăng cũng có người thả tim", "một bài nhiều tim", "vn"),
+                ("22 million. Out of cash.", "Our best year ever, and I'm asking the bank for payroll.",
+                 "You at your desk, legal pad in front of you.", "en"),
+                ("Minus 6 percent.", "6 in the morning, from a hockey rink parking lot.", "", "en")):
+            with self.subTest(on=on):
+                got = adds(on, first, frame, lang=lang)
+                self.assertTrue(got and got[1], got)                              # a word of its own
+        # "đau" (pain) is no "đâu" (where): the stop word is read with its diacritics, so the word is not lost
+        self.assertEqual(adds("Ngồi thẳng mà vẫn đau", "Lưng cứng đơ hông phải tại mấy bạn ngồi sai đâu.",
+                              "bạn ngồi thẳng ở bàn", lang="vn")[1], ["đau"])
+        self.assertIsNone(adds("Lỗ?", "Lỗ nặng.", "frame", lang="vn"))             # one content word: nothing to judge
+        self.assertIsNone(adds("Tim nhiều, hộp tin nhắn trống", "", "", lang="vn"))   # neither a line nor a frame
+
+    def test_the_film_today_paraphrase_fails_and_the_threshold_is_acceptance(self):
+        report = self.vn(NHI_FILM)
+        self.assertFails(report, "hook_lab", 'on-screen "Tim nhiều, hộp tin nhắn trống" has no word that is not already in the '
+                                             "first line and the first frame")
+        self.assertEqual(self.inv(report, "hook_lab")["details"]["captions_in_a_box"], 1)
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nonscreen_new_words_min = 0\n")
+        self.assertPasses(self.vn(NHI_FILM), "hook_lab")
+
+    def test_a_caption_in_a_box_of_its_own_is_read(self):
+        run = self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{NHI_N2}\n\nTIẾP → Nhắn 'tiếp'."))
+        [short] = graders.hook_shorts(run)
+        self.assertEqual(short["caption"], "Người quen mua vì đã biết bạn. Người lạ thì chưa.")
+        self.assertTrue(short["caption_box"])
+        self.assertEqual(short["frame"], "Ngón tay lướt nhanh qua một bài nhiều tim")
+        self.assertEqual(short["last"], "Người ta coi xong mà không biết gì về bạn, thì không ai nhắn đâu.")
+        self.assertFails(self.vn(NHI_N2), "hook_lab", 'flat claim in the caption line 1 (maxim: "Người quen mua vì đã biết bạn.')
+        # a box under a line of talk ("The gift, sent in the DM:") is not the caption; a labelled caption stays labelled
+        gift = NHI_N2.split("```\nNgười quen")[0] + "Quà gửi trong tin nhắn:\n```\nNgười quen mua vì đã biết bạn. Người lạ thì chưa.\n```"
+        [short] = graders.hook_shorts(self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{gift}\n\nTIẾP → Nhắn 'tiếp'.")))
+        self.assertEqual((short["caption"], short["caption_box"]), ("", False))
+        run = self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{NHI_N1}\n\nTIẾP → Nhắn 'tiếp'."))
+        [short] = graders.hook_shorts(run)
+        self.assertEqual((short["caption"], short["caption_box"]), ("Viết sao thì để sau, tại sao phải có trước.", False))
+
+    def test_label_families_on_screen(self):
+        flat = graders.flat_claims
+        for text, family, lang in (("Nghiên cứu có hai lớp", "label", "vn"), ("Không cần chiến dịch lớn", "no_need", "vn"),
+                                   ("Câu đúng nằm ở khách cũ", "answer", "vn"), ("Research has two layers.", "label", "en"),
+                                   ("You don't need a big campaign.", "no_need", "en"), ("No need for a big campaign", "no_need", "en"),
+                                   ("The answer is your old clients.", "answer", "en"), ("It all comes down to trust", "answer", "en"),
+                                   ("That's a rearview mirror.", "equation", "en"), ("The real problem is revenue", "answer", "en")):
+            with self.subTest(text=text):
+                self.assertIn(family, [h[0] for h in flat(text, "on", lang)], text)
+        for text, lang in (("Không cần chiến dịch lớn, chỉ cần 1 email", "vn"), ("Không cần chiến dịch? Chỉ một email", "vn"),
+                           ("You don't need more leads (you need people who trust you)", "en"),
+                           ("You don't need a big campaign, just one email", "en"),
+                           ("AI đâu có gọi khách cũ", "vn"), ("Đăng kín lịch, không ai nhắn", "vn"),
+                           ("Người quen mua, người lạ lướt", "vn"), ("Một bài thì chưa ai tin", "vn"),
+                           ("Tim nhiều, hộp tin nhắn trống", "vn"), ("Bank app beat Instagram", "en"),
+                           ("Which client is losing you money? A 6-step check", "en"), ("Minus 6 percent.", "en"),
+                           ("3 mistakes agency owners make", "en"), ("Cầm gương nói thật", "vn"),
+                           ("27 trên 41 thẻ bỏ dở", "vn")):
+            with self.subTest(text=text):
+                self.assertEqual(flat(text, "on", lang), [], text)
+
+    def test_maxims_in_a_caption_or_a_first_line(self):
+        flat = graders.flat_claims
+        for text, lang in (("Viết sao thì để sau, tại sao phải có trước.", "vn"),
+                           ("Người quen mua vì đã biết bạn. Người lạ thì chưa.", "vn"),
+                           ("Clients buy from people they trust. Strangers don't.", "en"), ("Why comes before how.", "en")):
+            for where in ("caption", "first"):
+                with self.subTest(text=text, where=where):
+                    self.assertIn("maxim", [h[0] for h in flat(text, where, lang)], text)
+        for text, lang in (("Khách hay hỏi mình: viết bài sao, làm sao có thêm người theo dõi.", "vn"),   # the review's rewrite
+                           ("Em bán được cho người quen thôi, người lạ coi xong là lướt.", "vn"),         # her client's line
+                           ("Chị nói: \"Người quen mua vì đã biết bạn. Người lạ thì chưa.\" Mình ngồi nghe.", "vn"),
+                           ("Người quen mua vì đã biết bạn, mình biết vậy.", "vn"),
+                           ("Record year, empty account. I hear some version of that every month.", "en"),
+                           ("Clients keep asking me one thing. Which clients make money?", "en"),
+                           ("Marcus called me at 6 in the morning.", "en")):
+            with self.subTest(text=text):
+                self.assertEqual([h for h in flat(text, "caption", lang) if h[0] == "maxim"], [], text)
+        # a maxim is not read on screen: there "Người quen mua, người lạ lướt" is the review's own rewrite
+        self.assertEqual(flat("Người quen mua vì đã biết bạn. Người lạ thì chưa.", "on", "vn"), [])
+
+    def test_the_week_one_shorts_of_nhi_fail_and_the_rewrite_passes(self):
+        report = self.vn(NHI_N1, NHI_N2, NHI_N3_LABEL)
+        evidence = self.inv(report, "hook_lab")["evidence"]
+        self.assertTrue(any('flat claim in the caption line 1 (maxim: "thì để sau")' in e for e in evidence), evidence)
+        self.assertTrue(any('flat claim on screen "Nghiên cứu có hai lớp" (label' in e for e in evidence), evidence)
+        fixed = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: AI đâu có gọi khách cũ\n"
+                 "Khung hình đầu: Cuốn sổ ghi tay đúng câu khách nói, cạnh điện thoại đang mở khung chat AI\n"
+                 "Câu đầu: Nhiều người bảo đã nghiên cứu khách: đọc vài bài, hỏi AI ít từ khoá.\n"
+                 "Câu cuối: Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI đoán không ra đâu.\nCaption:\n"
+                 "Khách hay hỏi mình: viết bài sao, làm sao có thêm người theo dõi.\n```")
+        self.assertPasses(self.vn(fixed), "hook_lab")
+
+    def test_a_last_line_that_names_the_method_is_a_warning_not_a_fail(self):
+        report = self.vn(HANH_N2)
+        check = self.inv(report, "hook_lab")
+        self.assertIs(check["pass"], True)
+        self.assertEqual(check["status"], "warn")
+        self.assertIn("names the method instead of landing the answer", check["warnings"][0])
+        self.assertNotIn("hook_lab", report["failed"])
+
+    # ---- hook_lab: a text post's line 1, slide 1, subject lines
+    def test_headlines_are_read(self):
+        run = graders.load_run(self.run_dir([("coach", "go"), ("machine", EN_WEEK)]), self.root)
+        found = [(h["kind"], h["n"], h["text"]) for h in graders.hook_headlines(run)]
+        self.assertEqual(found, [("subject", 1, "How are you out of cash in your best year, and what do you do about it?"),
+                                 ("subject", 2, "Maybe the stairwell call"), ("subject", 3, "Record year, empty account"),
+                                 ("post", 1, "That's not research."),
+                                 ("slide", 1, "Your biggest client might be underwater. Here's how to check.")])   # the DM reply is no hook
+
+    def test_text_post_slide_and_subject_failures(self):
+        report = self.en(EN_WEEK)
+        check = self.inv(report, "hook_lab")
+        self.assertIs(check["pass"], False)
+        ev = check["evidence"]
+        self.assertTrue(any('flat claim in the text post line 1 (equation: "That\'s not research")' in e for e in ev), ev)
+        self.assertTrue(any('hedge "might" in the slide 1' in e for e in ev), ev)
+        self.assertTrue(any('hedge "Maybe" in the subject line 2' in e for e in ev), ev)
+        self.assertTrue(any("slide 1 is 61 characters, over 60" in e for e in ev), ev)
+        n1 = len("How are you out of cash in your best year, and what do you do about it?")
+        self.assertTrue(any(f"subject line 1 is {n1} characters, over 60" in e for e in ev), ev)
+        self.assertFalse(any("subject line 2 is" in e or "subject line 3 is" in e for e in ev))     # drafts 2, 3: hedges only
+        self.assertFalse(any("DM" in e or "Maybe the check" in e for e in ev))                        # a DM reply is not read
+        self.assertEqual({k: check["details"][k] for k in ("text_posts", "slides", "subjects")},
+                         {"text_posts": 1, "slides": 1, "subjects": 3})
+        names = [i["item"] for i in check["items"]]
+        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False], names)
+        self.assertIn("headline_max_chars", check["details"])
+
+    def test_the_review_rewrites_of_the_headlines_pass(self):
+        text = f'''{TAG}Week 1
+
+Tue, Oct 13 · Email to your list:
+```
+Subject lines:
+1. How are you out of cash in your best year?
+2. The stairwell call
+3. Record year, empty account
+```
+
+Wed, Oct 14 · LinkedIn post:
+```
+6 in the morning, from a hockey rink parking lot.
+```
+
+Thu, Oct 15 · LinkedIn PDF post (save the slides as a PDF):
+```
+Slide 1: Which client is losing you money? A 6-step check
+```
+
+NEXT → Say "next".'''
+        self.assertPasses(self.en(text), "hook_lab")
+        self.assertEqual(self.inv(self.en(text), "hook_lab")["status"], "pass")
+
+    def test_the_headline_cap_is_acceptance_and_the_vn_cap_is_70(self):
+        slide61 = "Your biggest client is underwater. Here's the 6-step way to check it."       # 69 characters
+        text = f'''{TAG}Week 1
+
+Thu, Oct 15 · LinkedIn PDF post (save the slides as a PDF):
+```
+Slide 1: {slide61}
+```
+
+NEXT → Say "next".'''
+        self.assertFails(self.en(text), "hook_lab", "slide 1 is 69 characters, over 60")
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nheadline_max_chars_en = 80\n")
+        self.assertPasses(self.en(text), "hook_lab")
+        vn70 = " ".join(["abcde"] * 11 + ["abcd"])
+        self.assertEqual(len(vn70), 70)
+        body = f"Thứ Hai, 12/10 · carousel LinkedIn\n```\nTrang 1: {vn70}\n```"
+        self.assertPasses(self.vn(body), "hook_lab")
+        self.assertFails(self.vn(body.replace("abcd\n", "abcde\n")), "hook_lab", "slide 1 is 71 characters, over 70")
+
+    def test_a_dm_or_zalo_first_line_is_never_read(self):
+        text = f"{TAG}Tuần 1\n\nTin Zalo · thứ Hai 12/10\n```\nCó lẽ chị đang bận, nhưng em nhờ chị một chút nha.\n```"
+        self.assertEqual(self.inv(self.grade([("coach", "tiếp"), ("machine", text)], persona="vn/nhi", edition="vn"),
+                                  "hook_lab")["status"], "n/a")
+
+    # ---- I23 and the kit's paste-steps box
+    def test_the_paste_steps_box_is_not_a_piece(self):
+        self.assertEqual(graders.paste_steps_marks(FT1_STRINGS), ("luc nao ranh 15 phut", "dan het vao day"))
+        self.assertEqual(graders.paste_steps_marks({"research.paste_steps": "15 minutes, any day: open {x}. Paste it all here."}),
+                         ("15 minutes any day", "paste it all here"))
+        self.assertEqual(graders.paste_steps_marks({}), ("", ""))
+        long = " ".join(["chị", "nói", "thật", "đó", "nha"] * 14)                       # 70 tiếng
+        steps = ("Lúc nào rảnh 15 phút:\n1 Mở TikTok, tìm \"đăng bài không ai hỏi giá\".\n2 Mở 3 video nhiều view nhất.\n"
+                 "3 Mỗi video chép 20 comment của người rõ là coach; bỏ người bán.\n"
+                 "4 Đầu đợt ghi [TikTok · 10/2026]; tên đổi thành chữ cái.\n5 Dán hết vào đây.")
+        under = ("Hạnh nói: lúc nào rảnh 15 phút, chị giúp em việc này:\n```\n1 Mở TikTok, tìm \"chủ spa ngại chào\".\n"
+                 "2 Mở 3 video nhiều view nhất.\n3 Mỗi video chép 20 comment của người rõ là chủ spa; bỏ người bán nha em nhé "
+                 "chị dặn kỹ chỗ này lắm.\n4 Đầu đợt ghi [TikTok · tháng 10]; tên đổi thành chữ cái, mỗi người một chữ.\n"
+                 "5 Dán hết vào đây.\n```")
+        for box in (steps, under):
+            with self.subTest(box=box[:30]):
+                text = f"{TAG}Tuần 1\n\nBài dài · thứ Năm 8/10 · Facebook\n```\n{long}\n```\n\nLưu lại, mình nhớ bạn.\n\n"
+                text += (f"```\n{box}\n```" if box is steps else box) + "\n\nTIẾP → Nhắn 'tiếp'."
+                run = graders.load_run(self.run_dir([("coach", "tiếp"), ("machine", text)], persona="vn/nhi", edition="vn"),
+                                       self.root)
+                [r] = run.replies
+                marks = graders.paste_steps_marks(run.strings)
+                with_box = graders._post_chunks(r)
+                without = graders._post_chunks(r, marks)
+                self.assertEqual(len(with_box) - len(without), 1)                       # exactly the paste steps left out
+                self.assertTrue(all("Dán hết vào đây" not in c for c in without))
+                self.assertEqual(graders.i23_voice(run)["details"]["pieces_60_words"], 1)
+        # without the string in the edition, nothing is left out
+        self.write("strings/vn.toml", toml_table("strings", {k: v for k, v in FT1_STRINGS.items() if k != "research.paste_steps"}))
+        run = graders.load_run(self.run_dir([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\nLưu lại.\n\n```\n{steps}\n```")],
+                                            persona="vn/nhi", edition="vn"), self.root)
+        self.assertEqual(len(graders._post_chunks(run.replies[0], graders.paste_steps_marks(run.strings))), 1)
+
+    # ---- research_log
+    EN_LOG = """## Research log
+Tools: WebSearch.
+
+### Queries (3)
+Reply 2 (after chunk 1):
+1. agency owner revenue is up but no money in the bank forum
+Q2 · after turn 3 · "which clients" agency owner
+
+### Pages opened (URL · place · month · role · result)
+1. https://www.capterra.com/p/169710/Productive/reviews/?page=3 · Capterra reviews of an agency tool · Nov 2020–Aug 2023 · owners · 3 kept
+2. https://www.capterra.com/p/75598/Harvest/reviews/?page=5 · Capterra reviews of a time tool · Jan 2018 · president of a design firm · 1 kept
+3. https://www.trustpilot.com/review/accountsbalance.com · Trustpilot reviews of a bookkeeping firm · Mar–Apr 2023 · 2 reviewers · 2 kept
+4. https://www.trustpilot.com/review/productive.io · Trustpilot reviews · Mar 2025–Apr 2026 · 1 reviewer · 1 kept
+5. https://21hats.substack.com/p/my-mistake · 21 Hats · May 2025 · media agency owner · 1 kept
+
+### Lines kept (6 lines)
+Capterra (page 1 unless noted):
+1. "…see which clients / projects are not profitable." · co-founder · Nov 2020
+2. "…understand the profitability across each client engagement." · founding partner · Apr 2022
+3. "total clarity over clients, projects and profibility" (sic) · CEO · May 2023
+4. "…visualise your margins and where your team is spending their time…" · president · Jan 2018 (page 2)
+Trustpilot:
+5. "…allowing us to make informed financial decisions" · agency owner · Apr 2023 (page 3)
+6. "…finally gives us real visibility on performance and profitability" · runs an agency · Apr 2026 (page 4)
+
+### Patterns
+- KEEP: owners want to see which clients make money (lines 1, 2, 3, 4, 5, 6: 6 people, 2 places: Capterra, Trustpilot).
+  Against it: none found.
+- WATCH: revenue grew, the bottom line didn't (1 person, 1 place).
+
+## Grade
+"""
+
+    def log_run(self, log, doc=None, name="CONTENT-STRATEGY.md", persona="en/test-coach", edition="en", turns=None):
+        d = self.run_dir(turns or [("coach", "go"), ("machine", f"{TAG}Film\nNEXT → Film it.")], persona=persona,
+                         edition=edition)
+        (d / "notes.md").write_text("# notes\n\n" + log, encoding="utf-8")
+        if doc is not None:
+            (d / name).write_text(doc, encoding="utf-8")
+        return d
+
+    def test_queries_are_read_from_every_log_format(self):
+        qs = graders.research_queries
+        en = qs(self.EN_LOG)
+        self.assertEqual([(q["n"], q["turn"]) for q in en], [(1, 2), (2, 3)])
+        self.assertEqual(en[1]["text"], "\"which clients\" agency owner")
+        hanh = qs("### Queries (2)\n- T3: Q1 \"chủ spa nhỏ ngại chào\" · Q2 \"mới mở spa khách không quay lại\"\n- T4: Q4 \"voz spa ế\"\n")
+        self.assertEqual([(q["n"], q["turn"], q["text"]) for q in hanh],
+                         [(1, 3, "chủ spa nhỏ ngại chào"), (2, 3, "mới mở spa khách không quay lại"), (4, 4, "voz spa ế")])
+        nhi = qs("### Queries\nPhase 1, buyer from the dump (turns 3–4): people who post a lot.\n1. đăng bài facebook\n"
+                 "2. làm personal brand\n\nPhase 2, after turn 8 (the buyer is a coach):\n17. làm coach mà không có khách\n")
+        self.assertEqual([(q["n"], q["turn"]) for q in nhi], [(1, 4), (2, 4), (17, 8)])
+        # a line's own turn beats its header's; a query with no turn anywhere has None
+        own = qs("### Queries\nReply 2:\nQ5 · after turn 4 · agency owners\nQ6 · turn 1 · cash forum\n7. no header above\n")
+        self.assertEqual([(q["n"], q["turn"]) for q in own], [(5, 4), (6, 1), (7, 2)])
+        self.assertEqual([q["turn"] for q in qs("### Queries\n1. agency owners\n")], [None])
+
+    def test_pages_are_normalised_and_a_product_page_is_one_place(self):
+        pages = graders.research_pages(self.EN_LOG)
+        self.assertEqual(pages[1]["host"], "capterra.com")
+        self.assertEqual(pages[1]["key"], "capterra.com/p/169710/Productive/reviews")        # ?page=3 left out
+        self.assertNotEqual(pages[1]["key"], pages[2]["key"])
+        same = graders.research_pages("### Pages opened\n1. https://voz.vn/t/a.1/ · Voz · 11/2020\n"
+                                      "2. https://voz.vn/t/a.1/page-2 · Voz · 11/2020\n3. https://voz.vn/t/b.2/ · Voz · 10/2022\n"
+                                      "4. https://news.ycombinator.com/item?id=1 · HN\n5. https://news.ycombinator.com/item?id=2 · HN\n")
+        self.assertEqual(same[1]["key"], same[2]["key"])
+        self.assertNotEqual(same[1]["key"], same[3]["key"])
+        self.assertNotEqual(same[4]["key"], same[5]["key"])                                  # the item id is part of the page
+        self.assertEqual(graders.research_pages("### Pages opened\n1. UNREAD https://x.com/a · X · UNREAD (404)\n")[1]["read"], False)
+        # one site under two hosts is one host
+        hosts = graders.research_pages("### Pages opened\n1. https://hn.algolia.com/api/v1/search?query=a · HN\n"
+                                       "2. https://news.ycombinator.com/item?id=9 · HN\n3. https://m.facebook.com/groups/x · FB\n"
+                                       "4. https://www.facebook.com/groups/y · FB\n")
+        self.assertEqual((hosts[1]["host"], hosts[2]["host"]), ("news.ycombinator.com", "news.ycombinator.com"))
+        self.assertEqual((hosts[3]["host"], hosts[4]["host"]), ("facebook.com", "facebook.com"))
+
+    def test_keep_lines_and_their_refs_in_the_forms_a_log_uses(self):
+        keeps = graders.research_keeps(
+            "- KEEP: owners want to see which clients (lines 1, 2, 3, 5-7: 6 people, 2 places).\n"
+            "Kept as a pattern: strangers do not trust yet (K1, K4, K8: 3 people, 2 places). The group is close.\n"
+            "- **KEEP** (3 people, 2 places): owners ask for margins (1, 2, 4)\n"
+            "GIỮ (3 người · 2 nơi): khách quen giới thiệu (dòng 2, 3)\n"
+            "- KEEP: pattern with no refs (3 people, 2 places)\n"
+            "- WATCH: one place only (K9)\n")
+        self.assertEqual([k["refs"] for k in keeps], [["1", "2", "3", "5", "6", "7"], ["K1", "K4", "K8"], ["1", "2", "4"],
+                                                      ["2", "3"], []])
+        self.assertEqual(keeps[0]["text"], "owners want to see which clients")
+        self.assertEqual(keeps[2]["text"], "owners ask for margins")
+
+    def test_a_keep_stretched_over_one_product_page_fails(self):
+        """EN retest: 6 lines cited, only 1-3 say 'which clients' and all three are on one Capterra product page."""
+        report = graders.grade(self.log_run(self.EN_LOG), self.root)
+        check = self.inv(report, "research_log")
+        self.assertIs(check["pass"], False)
+        self.assertEqual([i["pass"] for i in check["items"]], [True, False, False])
+        backing = check["items"][1]["evidence"][0]
+        self.assertIn('KEEP "owners want to see which clients make money" is backed by 1 page', backing)
+        self.assertIn("(capterra.com/p/169710/Productive/reviews) on 1 host (capterra.com), lines 1, 2, 3", backing)
+        self.assertIn("lines 4, 5, 6 do not say it in its own words", check["items"][2]["evidence"][0])
+        self.assertIn("research_log", report["failed"])
+        # lines of 2 products on 2 hosts that do say it hold
+        good = self.EN_LOG.replace('4. "…visualise your margins and where your team is spending their time…"',
+                                   '4. "…see which clients make money across the agency…"') \
+                          .replace('5. "…allowing us to make informed financial decisions"',
+                                   '5. "…which clients are worth keeping, now I know"') \
+                          .replace("lines 1, 2, 3, 4, 5, 6:", "lines 1, 2, 4, 5:")
+        ok = graders.grade(self.log_run(good), self.root)
+        self.assertPasses(ok, "research_log")
+        self.assertEqual(self.inv(ok, "research_log")["status"], "pass")
+
+    def test_a_keep_on_one_host_fails_even_with_two_threads(self):
+        """FT2 Nhi: 3 people in 2 Voz threads, 'K1, K4, K8': 2 pages, 1 host. The lines map to a page by place and month."""
+        log = """## Research log
+### Pages opened (place · month · role · kept)
+1. https://voz.vn/t/tuyen-hoc-vien.183934/ · Voz · 11/2020 · person who opened an English class · 7 kept
+2. https://voz.vn/t/lam-freelance.639209/ · Voz · 10/2022 · freelancers · 4 kept
+3. https://www.webtretho.com/f/ban-hang-nguoi-than-2540925 · Webtretho · 8/2017 · commenter who sold to relatives · 1 kept
+
+### Lines kept (verbatim · role · place · month)
+- K1 "nhưng đa số quen biết giới thiệu" · person who opened an English class · Voz · 11/2020 · KEEP
+- K4 "Khoảng đầu thật sự là không ai học vì học viên không tin tưởng" · person who opened their own class · Voz · 11/2020 · KEEP
+- K8 "Để làm freelance a cần 1 lượng khách quen" · freelancer · Voz · 10/2022 · KEEP
+- K17 "bán hàng cho người thân, chẳng được mấy còn mang tiếng ra" · commenter who sold to relatives · Webtretho · 8/2017
+
+Kept as a pattern: people who sell their own service get clients mostly through people they know (K1, K4, K8: 3 people, 2 places).
+"""
+        kept = graders.research_kept(log, graders.research_pages(log))
+        self.assertEqual([(k, kept[k]["page"]) for k in ("K1", "K4", "K8", "K17")], [("K1", 1), ("K4", 1), ("K8", 2), ("K17", 3)])
+        check = graders.check_research_log(graders.load_run(self.log_run(log, persona="vn/nhi", edition="vn"), self.root))
+        self.assertIs(check["pass"], False)
+        self.assertIn("is backed by 2 pages", check["items"][1]["evidence"][0])
+        self.assertIn("on 1 host (voz.vn), lines K1, K4, K8", check["items"][1]["evidence"][0])
+        self.assertTrue(check["items"][2]["pass"])                       # the pattern is in English, the lines in Vietnamese: not tested
+        # a line on a second host fixes it
+        better = log.replace("(K1, K4, K8:", "(K1, K4, K8, K17:")
+        self.assertPasses({"invariants": [], "checks": [graders.check_research_log(
+            graders.load_run(self.log_run(better, persona="vn/nhi", edition="vn"), self.root))]}, "research_log")
+
+    def test_the_keep_bar_is_acceptance(self):
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[research_log]\nkeep_min_pages = 1\nkeep_min_hosts = 1\n")
+        good = self.EN_LOG.replace("lines 1, 2, 3, 4, 5, 6:", "lines 1, 2, 3:")
+        self.assertPasses(graders.grade(self.log_run(good), self.root), "research_log")
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.assertFails(graders.grade(self.log_run(good), self.root), "research_log", "is backed by 1 page")
+
+    def test_a_keep_names_its_lines_and_a_two_part_pattern_needs_both_parts(self):
+        no_refs = self.EN_LOG.replace(" (lines 1, 2, 3, 4, 5, 6: 6 people, 2 places: Capterra, Trustpilot)", "")
+        check = self.inv(graders.grade(self.log_run(no_refs), self.root), "research_log")
+        self.assertIs(check["items"][0]["pass"], False)
+        self.assertIn("names no kept line", check["items"][0]["evidence"][0])
+        missing = self.EN_LOG.replace("lines 1, 2, 3, 4, 5, 6:", "lines 1, 2, 9:")
+        self.assertIn("not among the kept lines: 9", self.inv(graders.grade(self.log_run(missing), self.root),
+                                                              "research_log")["items"][0]["evidence"][0])
+        two = self.EN_LOG.replace("owners want to see which clients make money (lines 1, 2, 3, 4, 5, 6:",
+                                  "owners want to see which clients make money, and trust the numbers on the margins (lines 1, 2, 4, 5, 6:") \
+                         .replace('4. "…visualise your margins', '4. "…see which clients; visualise your margins')
+        check = self.inv(graders.grade(self.log_run(two), self.root), "research_log")
+        self.assertTrue(any("a two-part pattern needs both parts backed" in e for e in check["items"][2]["evidence"]), check)
+        # a log with no KEEP, and no log at all
+        none = self.EN_LOG.replace("- KEEP:", "- WATCH:")
+        self.assertPasses(graders.grade(self.log_run(none), self.root), "research_log")
+        self.assertEqual(self.inv(graders.grade(self.log_run(none), self.root), "research_log")["details"]["keeps"], 0)
+        bare = self.run_dir([("coach", "go"), ("machine", f"{TAG}Film\nNEXT → Film it.")])
+        self.assertEqual(self.inv(graders.grade(bare, self.root), "research_log")["status"], "n/a")
+
+    # ---- strategy_doc
+    NHI_DOC = """# Nhi · Chiến lược nội dung
+
+## 1. Bạn giúp ai, và vì sao là bạn
+
+Bạn giúp coach tài chính cá nhân.
+
+## 2. Khách cần nghe gì, ở từng chặng
+
+- Chặng 2: "Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết."
+- "nhưng đa số quen biết giới thiệu" (người tự mở lớp, Voz, 11/2020)
+- "Để làm freelance a cần 1 lượng khách quen" (người làm tự do, Voz, 10/2022)
+
+## 3. Ba ý lớn của bạn (content pillars)
+
+### Ý 1 · Người lạ chưa tin thì chưa nhắn
+- Hook: chữ "AI đâu có gọi khách cũ" · câu đầu "Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?" | chữ "27 trên 41 thẻ bỏ dở" · câu đầu "Năm 2018 spa chị cũng dọa khách đấy."
+
+## 4. Mỗi tuần làm gì
+
+## 5. 30 ngày đầu
+
+## 6. Chiến lược này dựa vào đâu
+
+- Đã GIỮ (2+ người ở 2+ nơi): chưa có.
+
+## 7. Dùng file này thế nào
+"""
+    NHI_LOG = """## Research log
+### Pages opened
+1. https://voz.vn/t/a.1/ · Voz · 11/2020 · person who opened a class
+2. https://voz.vn/t/b.2/ · Voz · 10/2022 · freelancers
+
+### Lines kept
+- K1 "nhưng đa số quen biết giới thiệu" · person who opened a class · Voz · 11/2020
+- K8 "Để làm freelance a cần 1 lượng khách quen" · freelancer · Voz · 10/2022
+"""
+
+    def doc_report(self, doc, log=NHI_LOG, persona="vn/nhi", edition="vn", name="CHIEN-LUOC-NOI-DUNG.md"):
+        d = self.log_run(log, doc, name=name, persona=persona, edition=edition)
+        return graders.grade(d, self.root)
+
+    def test_a_good_strategy_file_passes_and_the_checks_are_n_a_without_it(self):
+        report = self.doc_report(self.NHI_DOC)
+        check = self.inv(report, "strategy_doc")
+        self.assertIs(check["pass"], True, check)
+        self.assertEqual(check["details"]["parts"], 7)
+        self.assertEqual((check["details"]["hooks"], check["details"]["held_lines"]), (2, 2))
+        bare = self.run_dir([("coach", "go"), ("machine", f"{TAG}Film\nNEXT → Film it.")])
+        self.assertEqual(self.inv(graders.grade(bare, self.root), "strategy_doc")["status"], "n/a")
+
+    def test_the_headings_are_the_7_parts_in_the_coachs_pair(self):
+        # Hạnh's pair is chị: "Bạn giúp ai" and "Ba ý lớn của bạn" are the wrong one; Nhi's pair is bạn
+        self.write("evals/personas/vn/hanh/persona.toml", FT1_PERSONA.replace("bạn–mình", "chị–em"))
+        self.write("evals/personas/vn/hanh/expected.toml", FT1_EXPECTED)
+        self.write("evals/personas/vn/hanh/answers.md", "## Dump chunk 1\nx\n")
+        report = self.doc_report(self.NHI_DOC, persona="vn/hanh")
+        ev = self.inv(report, "strategy_doc")["items"][0]["evidence"]
+        self.assertEqual(len(ev), 2, ev)
+        self.assertIn('part 1 "Bạn giúp ai, và vì sao là bạn" says "Bạn"; with this coach the machine says "chị"', ev[0])
+        self.assertIn('part 3 "Ba ý lớn của bạn (content pillars)" says "bạn"', ev[1])
+        right = self.NHI_DOC.replace("Bạn giúp ai, và vì sao là bạn", "Chị giúp ai, và vì sao là chị") \
+                            .replace("Ba ý lớn của bạn", "Ba ý lớn của chị")
+        self.assertTrue(self.inv(self.doc_report(right, persona="vn/hanh"), "strategy_doc")["items"][0]["pass"])
+        # a part missing, and parts out of order
+        missing = self.NHI_DOC.replace("## 5. 30 ngày đầu\n", "")
+        self.assertIn("part 5 has 0 headings", self.inv(self.doc_report(missing), "strategy_doc")["items"][0]["evidence"][0])
+        swapped = self.NHI_DOC.replace("## 4. Mỗi tuần làm gì", "## 9. x").replace("## 7. Dùng file này thế nào", "## 4. Mỗi tuần làm gì")
+        self.assertFalse(self.inv(self.doc_report(swapped), "strategy_doc")["items"][0]["pass"])
+        renamed = self.NHI_DOC.replace("Mỗi tuần làm gì", "Lịch tuần")
+        self.assertIn("part 4 is headed", self.inv(self.doc_report(renamed), "strategy_doc")["items"][0]["evidence"][0])
+
+    def test_the_hooks_of_the_big_ideas_are_read_like_the_shorts(self):
+        bad = self.NHI_DOC.replace(
+            "- Hook: chữ \"AI đâu có gọi khách cũ\" · câu đầu \"Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?\" | "
+            "chữ \"27 trên 41 thẻ bỏ dở\" · câu đầu \"Năm 2018 spa chị cũng dọa khách đấy.\"",
+            "- Hook: chữ \"Nghiên cứu có hai lớp\" · câu đầu \"Nhiều người bảo đã nghiên cứu khách.\" | "
+            "chữ \"Câu đúng nằm ở khách cũ\" · câu đầu \"Câu người lạ cần đọc không nằm trong đầu bạn.\" | "
+            "chữ \"Không cần chiến dịch lớn\" · câu đầu \"Có khi chỉ cần gửi một email.\" | "
+            "chữ \"Người quen mua, người lạ lướt\" · câu đầu \"Em bán được cho người quen thôi, người lạ coi xong là lướt.\" | "
+            "chữ \"Người lạ chưa tin thì chưa nhắn\" · câu đầu \"Em hỏi chị một câu.\"")
+        ev = self.inv(self.doc_report(bad), "strategy_doc")["items"][1]["evidence"]
+        for fragment in ('"Nghiên cứu có hai lớp" (label', '"Câu đúng nằm ở khách cũ" (answer', '"Không cần chiến dịch lớn" (no_need',
+                         'on-screen "Người quen mua, người lạ lướt" says the first line again',
+                         'label on screen "Người lạ chưa tin thì chưa nhắn" (a Map topic\'s own name)'):
+            self.assertTrue(any(fragment in e for e in ev), (fragment, ev))
+        self.assertTrue(all(e.startswith("Ý 1 · Người lạ chưa tin thì chưa nhắn: ") for e in ev), ev)
+        # an English file: "The bank app isn't a forecast.", "That's a rearview mirror.", the topic's name "Fix it or fire it."
+        en = """# Erin · Content strategy
+
+## 1. Who you help, and why you
+## 2. Your buyer, step by step
+## 3. Your 3 big ideas (content pillars)
+### Big idea 2: Margin before more
+- Hooks: on screen "That's a rearview mirror." / first line "In the middle of March they find out what happened in January." · on screen "The bank app isn't a forecast." / first line "She checks it every morning."
+### Big idea 3: Fix it or fire it
+- Hooks: on screen "He repriced his biggest client." / first line "They said yes to a new scope." · on screen "Fix it or fire it." / first line "I've written a lot of those emails."
+## 4. How your week runs
+## 5. Your first 30 days
+## 6. What this is built on
+## 7. How to use this
+"""
+        ev = self.inv(self.doc_report(en, persona="en/test-coach", edition="en", name="CONTENT-STRATEGY.md"),
+                      "strategy_doc")["items"][1]["evidence"]
+        self.assertEqual(len(ev), 3, ev)
+        self.assertTrue(any('"That\'s a rearview mirror." (equation' in e for e in ev))
+        self.assertTrue(any('"The bank app isn\'t a forecast." (copula' in e for e in ev))
+        self.assertTrue(any('label on screen "Fix it or fire it." (a Map topic\'s own name)' in e and e.startswith("Big idea 3")
+                            for e in ev))
+
+    def test_every_line_quoted_from_buyers_online_is_verbatim_among_the_kept_lines(self):
+        stretched = self.NHI_DOC.replace('"nhưng đa số quen biết giới thiệu" (người tự mở lớp, Voz, 11/2020)',
+                                         '"đa số khách quen biết giới thiệu" (người tự mở lớp, Voz, 11/2020)')
+        ev = self.inv(self.doc_report(stretched), "strategy_doc")["items"][2]["evidence"]
+        self.assertEqual(len(ev), 1, ev)
+        self.assertIn('held line "đa số khách quen biết giới thiệu" is not verbatim among the kept lines', ev[0])
+        # a trim shown with "…" is fine, so is a different case; a coach's client line with no date is not a held line
+        trimmed = self.NHI_DOC.replace('"nhưng đa số quen biết giới thiệu"', '"…đa số quen biết giới thiệu…"') \
+                              .replace('"Để làm freelance a cần 1 lượng khách quen"', '"để làm freelance a cần … khách quen"')
+        self.assertTrue(self.inv(self.doc_report(trimmed), "strategy_doc")["items"][2]["pass"])
+        # no kept lines in the log: nothing to check them against
+        ev = self.inv(self.doc_report(self.NHI_DOC, log="## Research log\nKept lines: 0.\n"), "strategy_doc")["items"][2]["evidence"]
+        self.assertIn("the Research log keeps no line to check it against", ev[0])
+        # no notes.md: the item is not run
+        d = self.run_dir([("coach", "go"), ("machine", f"{TAG}Film\nNEXT → Film it.")], persona="vn/nhi", edition="vn")
+        (d / "CHIEN-LUOC-NOI-DUNG.md").write_text(self.NHI_DOC, encoding="utf-8")
+        self.assertTrue(self.inv(graders.grade(d, self.root), "strategy_doc")["items"][2]["pass"])
+
+    def test_what_the_file_calls_held_is_a_keep_the_log_backs(self):
+        log = self.NHI_LOG + "\nKept as a pattern: people who sell their own service get clients mostly through people they know (K1, K8: 2 people, 2 places).\n"
+        held = self.NHI_DOC.replace("- Đã GIỮ (2+ người ở 2+ nơi): chưa có.",
+                                    "- Đã GIỮ (2+ người ở 2+ nơi): người tự bán dịch vụ có khách chủ yếu qua người quen (2 người · 2 nơi).")
+        ev = self.inv(self.doc_report(held, log=log), "strategy_doc")["items"][3]["evidence"]
+        self.assertEqual(len(ev), 1, ev)
+        self.assertIn("holds; the Research log does not back it", ev[0])
+        self.assertIn("on 1 host (voz.vn)", ev[0])
+        ev = self.inv(self.doc_report(held), "strategy_doc")["items"][3]["evidence"]               # the log keeps nothing
+        self.assertIn("holds; the Research log keeps nothing", ev[0])
+        self.assertTrue(self.inv(self.doc_report(self.NHI_DOC, log=log), "strategy_doc")["items"][3]["pass"])    # "chưa có"
+        # the EN word, and an empty claim
+        en_held = "## 6. What this is built on\n\n- What holds: agency owners want to see which clients make money (6 people, 2 places).\n"
+        en_none = "## 6. What this is built on\n\n- What holds: nothing yet.\n"
+        for body, ok in ((en_held, False), (en_none, True)):
+            doc = ("# E\n\n## 1. Who you help, and why you\n## 2. Your buyer, step by step\n## 3. Your 3 big ideas (content pillars)\n"
+                   "## 4. How your week runs\n## 5. Your first 30 days\n" + body + "## 7. How to use this\n")
+            check = self.inv(self.doc_report(doc, log=self.EN_LOG, persona="en/test-coach", edition="en", name="CONTENT-STRATEGY.md"),
+                             "strategy_doc")
+            self.assertIs(check["items"][3]["pass"], ok, check["items"][3])
+
+    def test_the_deny_list_reads_the_file_with_the_pillars_exception(self):
+        ok = self.inv(self.doc_report(self.NHI_DOC), "strategy_doc")
+        self.assertTrue(ok["items"][4]["pass"], ok["items"][4])
+        bad = self.NHI_DOC.replace("(content pillars)", "(trụ cột)") + "\nMỗi pillar có 2 hook.\n"
+        ev = self.inv(self.doc_report(bad), "strategy_doc")["items"][4]["evidence"]
+        self.assertEqual(len(ev), 2, ev)
+
+    def test_the_new_checks_are_in_the_report(self):
+        report = self.grade(GOOD)
+        ids = [c["id"] for c in report["checks"]]
+        self.assertIn("strategy_doc", ids)
+        self.assertIn("research_log", ids)
+        self.assertEqual({self.inv(report, "strategy_doc")["status"], self.inv(report, "research_log")["status"]}, {"n/a"})
 
 
 class LoaderTests(TempRepo):

@@ -10,10 +10,11 @@ Cắt bù byte G1 6/10 (không bỏ luật): HUMANIZE 2 bỏ "không thêm từ 
 VG1 6/10 VK-7: NATURAL 4 "tin riêng gọi số ít, không "anh/chị", [Tên]" (+28 byte, trả bằng các cắt ở locale, setup, strings).
 Founder 7/10 (quyết định 3, sau buổi ngày 0 tự chạy: câu tiếng Anh lọt vào bài VN): NATURAL 1 thêm lời kể tiếng Anh → viết lại ý bằng tiếng Việt, bài không câu tiếng Anh (chỉ tên thương hiệu, nền tảng), cả câu đáng tiền; dòng TIẾNG VIỆT ở start-block nói lại gọn.
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 4, 7): NATURAL 1 lời coach thuật bằng tiếng Anh thì thuật lại, không ngoặc kép (cần nguyên văn: hỏi như §CM-DIG 3, LỜI KHÁCH); NATURAL 4 tiểu từ cuối câu đếm từng bài so với bài coach, kèm một câu đầu kết bằng tiểu từ. Tỉ lệ câu cửa miệng (≥ nửa bài từ 60 tiếng) nằm ở §CM-VOICE 7.
+Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 items 2, 5, 7): HUMANIZE 1 khách chỉ làm, nói, nghĩ điều coach kể. NATURAL 4: coach dày tiểu từ thì câu dặn, câu rủ kết bằng tiểu từ của họ ("…trống trơn em ạ"); vị trí thêm tiểu từ: câu kể, câu mời, câu đầu, câu cuối ("câu nói" bỏ, mơ hồ). NATURAL 7 thêm dòng calque "có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì" (cũng vào locales/vn/banned-tells.txt). NATURAL 8 bỏ ví dụ "Cô ấy chia sẻ rằng cô ấy rất lo." → "Chị ấy bảo: 'Em sợ lắm chị ạ.'" (dạy biến lời thuật thành câu trích, trái mục 2), "Vui lòng để lại SĐT" (xin số điện thoại là dừng cứng). Trả bằng: NATURAL 1 "(chỉ tên thương hiệu, nền tảng)" (dòng TIẾNG VIỆT của khối hướng dẫn nói đủ hơn), NATURAL 3 "chữ của họ (connectors)" → "connectors của họ".
 
-<!-- @section humanize.kit-pass src=e6b44709cf -->
+<!-- @section humanize.kit-pass src=7df722535e -->
 BÀI NÀO cũng qua lượt này; làm kỹ khi "{{t:cmd.voice}}", "nghe như máy", "sượng". Chỉ sửa chữ của coach.
-1 Chi tiết chỉ lấy từ chuyện họ kể. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
+1 Chi tiết chỉ lấy từ chuyện họ kể; khách chỉ làm, nói, nghĩ điều coach kể. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
 2 Viết như họ nói: §CM-VOICE 7, 9, §CM-NATURAL.
 3 Cắt: rào chồng, rào trước điều họ biết chắc (có lẽ, hình như, mình nghĩ là) · từ đệm máy tự thêm (kiểu như, thực ra thì) · tự hạ (em xin phép chia sẻ) · đuôi "đúng không ạ?" · mở vòng vo (Hello cả nhà…) · chữ sáo (hành trình, nâng tầm, bứt phá) · "không chỉ… mà còn" · liệt kê ba cho đủ · chữ dịch, văn viết, gạch ngang (§CM-NATURAL 7) · never_say. Giữ: điều kiện, khoảng số, do_say, một "mình thấy" trước câu gắt, câu của họ trên card (cả "nói chung là", "đúng không ạ" trong đó).
 4 Một câu nói rõ họ tin gì. Kết bằng một bước hay câu của họ, không tóm tắt.
@@ -28,10 +29,10 @@ CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài
 
 <!-- @section humanize.kit-natural src=8f70548bea -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
-1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: lấy ý, viết lại như họ nói tiếng Việt, thuật lại, không ngoặc kép (cần nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào (chỉ tên thương hiệu, nền tảng), cả câu đáng tiền.
+1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: lấy ý, viết lại như họ nói tiếng Việt, thuật lại, không ngoặc kép (cần nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
-3 Nối bằng chữ nói, chữ của họ (connectors) trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
-4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): đếm từng bài, thưa hơn bài họ thì thêm, cả câu kể, câu mời, câu nói, câu đầu, câu cuối: "Đăng hoài mà không ai hỏi giá á." (coach hay "á"). Nhắn khách, người lớn hơn: "Dạ… ạ".
+3 Nối bằng chữ nói, connectors của họ trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
+4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): đếm từng bài, thưa hơn bài họ thì thêm vào câu kể, câu mời, câu đầu, câu cuối; coach dày tiểu từ thì câu dặn, câu rủ đều kết bằng tiểu từ của họ ("…trống trơn em ạ."). Nhắn khách, người lớn hơn: "Dạ… ạ".
 5 Kể: cảnh (giờ, chỗ, người, đồ vật) → chuyện xảy ra, lời người ta nguyên văn (bảo/nói/kêu: "…") → mình nhận ra, bằng một việc làm + "mới/hoá ra" → bạn thì sao: một việc nhỏ cho một người. Bài học là câu hai vế.
 6 Mời: một việc; từ khoá là chữ khách hay nói, kèm đường nhắn riêng cho người ngại; bài bán ghi giá. Hạn, suất thật thì nói thẳng, kèm lý do. Không rao.
 7 Không → viết:
@@ -40,6 +41,7 @@ Tuy nhiên / Bên cạnh đó / Do đó → Mà / Với lại / Nên
 việc + V, sự + …, một cách + tính từ → động từ thẳng
 được… bởi…; là rất + tính từ → chủ động; "… lắm"
 giúp bạn, mang lại cho bạn → đỡ…, khỏi…, là…
+có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì
 Dưới đây là / Đây là lý do → vào thẳng việc
 Bạn có biết…? / Hãy tưởng tượng → cảnh, câu khách nói
 Hãy… / Hãy cùng… → Thử… / Cứ… / Nhớ…
@@ -49,7 +51,6 @@ chúng tôi, chúng ta → bên mình, tụi/bọn em, chị em mình
 Chắc chắn rồi! / Câu hỏi hay! → trả lời luôn
 **, chữ đậm Unicode (vỡ dấu), emoji đầu dòng, —, chú thích (hook) → bỏ
 8 Ví dụ:
-"Cô ấy chia sẻ rằng cô ấy rất lo." → "Chị ấy bảo: 'Em sợ lắm chị ạ.'"
-"Cảm ơn bạn đã liên hệ! Vui lòng để lại SĐT." → "Dạ chị, lớp 8 buổi 1.200.000đ ạ. Bé mấy tuổi chị?"
+"Cảm ơn bạn đã liên hệ!" → "Dạ chị, lớp 8 buổi 1.200.000đ ạ. Bé mấy tuổi chị?"
 "Hãy comment GUIDE để nhận tài liệu!" → "Ai cần file mẫu thì comment chữ TĂNG CA, ngại thì nhắn riêng nhé."
 9 Đọc to: người Việt có nói câu này với khách không? Câu nào dịch từng chữ ra tiếng Anh vẫn trơn thì viết lại.
