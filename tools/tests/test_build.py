@@ -912,8 +912,9 @@ LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.
     "strategy": ("STRATEGY", ["STRATEGY", "SEASON", "WHAT-TO-SAY", "MONTH", "STRATEGY-REVIEW", "CHARACTER-DEEP",
                               "CHARACTER-SCENES", "IDEAS", "MOMENTS", "LIKED", "PACKAGING", "HOOKS", "TEXT-FORMATS",
                               "LONG", "LONG-INTRO", "LONG-CUTS"]),
+    "playbook": ("PLAYBOOK", ["STRATEGY-DOC"]),
 }
-PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy"]
+PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy", "cm-playbook"]
 PLUGIN_AGENTS = ["cm-listener", "cm-researcher", "cm-reviewer", "cm-writer"]
 FIXTURE_AREAS = ("research", "launch", "board")      # the areas make_levelup_repo builds (a subset of the real four)
 
@@ -1334,13 +1335,13 @@ class RealRepoLevelUps(unittest.TestCase):
                 art = self.manifest["artifacts"][f"maintainer/tasks/{ed}/{stem}.txt"]
                 self.assertEqual((art["task_id"], art["budgets"]["task_nudge"]["budget"]), (row["id"], 900))
 
-    def test_the_plugin_has_the_ten_skills_and_four_agents(self):
+    def test_the_plugin_has_the_twelve_skills_and_four_agents(self):
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             files = {n: zf.read(n) for n in zf.namelist()}
         skills = sorted({n.split("/")[2] for n in files if n.startswith("content-machine/skills/")})
         want = sorted([f"content-machine-{ed}" for ed in ("en", "vn")]
                       + [f"{s}-{ed}" for s in PLUGIN_SKILLS for ed in ("en", "vn")])
-        self.assertEqual(len(skills), 10)
+        self.assertEqual(len(skills), 12)
         self.assertEqual(skills, want)
         for ed, suffix in (("en", "EN"), ("vn", "VN")):
             for area, (file, anchors) in LEVELUP_AREAS.items():

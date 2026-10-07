@@ -20,4 +20,4 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 - VA, or "where is everything?": "{{t:levelup.offer_board}}" Then §CM-BOARD.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"
 - A launch, ad, deeper research, strategy, next month, a liked post or board, its file not loaded: "{{t:levelup.offer_grow}}" (which file: the instruction block). A liked post then: save its shape, offer once.
-- Week 3+, or generic output: "{{t:levelup.offer_character}}" Then §CM-CHARACTER-LITE, talk 1 of 3.
+- Week 3+, or generic output: "{{t:levelup.offer_character}}" Then §CM-CHARACTER-DEEP (STRATEGY-EN.md), talk 1 of 3.

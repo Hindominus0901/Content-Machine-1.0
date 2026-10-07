@@ -9,6 +9,7 @@ Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): HUMANIZE 2 tr
 Cắt bù byte G1 6/10 (không bỏ luật): HUMANIZE 2 bỏ "không thêm từ đệm họ không dùng" (mục 3 cắt "từ đệm máy tự thêm"; §CM-VOICE 9 cấm thêm chữ họ không dùng). §CM-NATURAL không đổi.
 VG1 6/10 VK-7: NATURAL 4 "tin riêng gọi số ít, không "anh/chị", [Tên]" (+28 byte, trả bằng các cắt ở locale, setup, strings).
 Founder 7/10 (quyết định 3, sau buổi ngày 0 tự chạy: câu tiếng Anh lọt vào bài VN): NATURAL 1 thêm lời kể tiếng Anh → viết lại ý bằng tiếng Việt, bài không câu tiếng Anh (chỉ tên thương hiệu, nền tảng), cả câu đáng tiền; dòng TIẾNG VIỆT ở start-block nói lại gọn.
+Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 4, 7): NATURAL 1 lời coach thuật bằng tiếng Anh thì thuật lại, không ngoặc kép (cần nguyên văn: hỏi như §CM-DIG 3, LỜI KHÁCH); NATURAL 4 tiểu từ cuối câu đếm từng bài so với bài coach, kèm một câu đầu kết bằng tiểu từ. Tỉ lệ câu cửa miệng (≥ nửa bài từ 60 tiếng) nằm ở §CM-VOICE 7.
 
 <!-- @section humanize.kit-pass src=e6b44709cf -->
 BÀI NÀO cũng qua lượt này; làm kỹ khi "{{t:cmd.voice}}", "nghe như máy", "sượng". Chỉ sửa chữ của coach.
@@ -27,10 +28,10 @@ CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài
 
 <!-- @section humanize.kit-natural src=8f70548bea -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
-1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: lấy ý, viết lại như họ nói tiếng Việt; bài không câu tiếng Anh nào (chỉ tên thương hiệu, nền tảng), cả câu đáng tiền.
+1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: lấy ý, viết lại như họ nói tiếng Việt, thuật lại, không ngoặc kép (cần nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào (chỉ tên thương hiệu, nền tảng), cả câu đáng tiền.
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
 3 Nối bằng chữ nói, chữ của họ (connectors) trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
-4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ theo bài coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ), dày như bài họ (đếm, mỗi bài), cả câu kể, câu mời, câu nói. Nhắn khách, người lớn hơn: "Dạ… ạ".
+4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): đếm từng bài, thưa hơn bài họ thì thêm, cả câu kể, câu mời, câu nói, câu đầu, câu cuối: "Đăng hoài mà không ai hỏi giá á." (coach hay "á"). Nhắn khách, người lớn hơn: "Dạ… ạ".
 5 Kể: cảnh (giờ, chỗ, người, đồ vật) → chuyện xảy ra, lời người ta nguyên văn (bảo/nói/kêu: "…") → mình nhận ra, bằng một việc làm + "mới/hoá ra" → bạn thì sao: một việc nhỏ cho một người. Bài học là câu hai vế.
 6 Mời: một việc; từ khoá là chữ khách hay nói, kèm đường nhắn riêng cho người ngại; bài bán ghi giá. Hạn, suất thật thì nói thẳng, kèm lý do. Không rao.
 7 Không → viết:

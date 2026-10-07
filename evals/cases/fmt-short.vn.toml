@@ -1492,3 +1492,123 @@ verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_questions = 1
 notes = """R3 and §CM-EDGE IN DƯỚI BÀI ('Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì'): a downgraded piece prints only its content; the downgrade shows on 'tại sao?' as verdict.ready_downgraded 'Sẵn sàng quay · viết thành {evidence}' (her own 9 giờ tối tháng 3 năm 2023 story, her process, or the first small group). Turn 1 prints the proof short with nothing under it (I3 grades it: a 'viết thành' line there fails). Turn 2 (assertions here; 'tại sao vậy?' is a close variant graders.py WHY_RE reads): the 'viết thành' line and the VÌ SAO line. verdict Ready-downgraded: evals/run.py wants a Ready line on a 'tại sao?' reply. Cold start (I8): no client result, never the friend's '3 tuần'."""
+
+# ---------------------------------------------------------------- hook lab (founder test 7 Oct; review retest-ft1 §3, fix 2)
+# Seeded from the retest's own failing hooks (qa/runs/retest-ft1/review.md §3): Nhi N3 and N4, Hạnh N1-N3. The D cases
+# lean on graders.py hook_lab (on-screen text that is the first spoken line again; a flat claim on screen or in caption
+# line 1; listed in `invariants`) and on regex for the founder's own flat lines. The P cases are scored on
+# qa/standards/hook-lab.md (all-or-nothing: every item 2, N/A removed). A short has no title, so HL9 is N/A: 8 items, 16.
+
+[[case]]
+id = "fmt-short.vn.052"
+kind = "D"
+persona = "copywriter-thin"
+lanes = ["S1", "floor"]
+title = "Hook lab, Nhi N3: a short on 'đọc vài bài rồi nhờ AI tìm từ khoá' keeps the on-screen text apart from the first line, no flat claim, no English report in quote marks"
+context = "Week 1, Saturday 10/10/2026, Claude Pro (Cowork, kit folder). Brand Card v1 present (persona default: pair bạn–mình; audience mình – bạn; TỪ KHOÁ KHÔNG AI NHẮN (mình đoán); ý lớn: nghe 3 khách cũ trước khi viết). Her Day-0 dump was dictated in English. About a coach she met she said, in English: 'I asked her what she had done for research. She read a few posts and asked an AI for keywords. That is not research.' The Vietnamese words of that coach were never given. The first Week-1 short already used the 'một chị coach than với mình' scene."
+input = """[turn 1] làm cho mình video về cái vụ đọc vài bài rồi nhờ AI tìm từ khoá mà gọi là nghiên cứu. Mình không nhớ nguyên văn chị ấy nói gì, kể lại bằng tiếng Việt cũng được"""
+regex = [
+  '''(?im)^\W*Chữ trên màn hình:''',
+  '''(?im)^\W*Câu đầu:''',
+  '''(?im)^\W*Câu cuối:''',
+]
+not_regex = [
+  '''(?im)^\W*Chữ trên màn hình:\s*(?:Đó|Vậy|Đây|Cái đó|Như vậy)\s+(?:không|chưa|chẳng)\s+phải''',
+  '''(?i)(?:mà|nhưng|,)\s+(?:đó|vậy|đây)\s+(?:không|chưa|chẳng)\s+phải\s+(?:là\s+)?(?:nghiên cứu|research)''',
+  '''(?i)(?:phải|cần|nên)\s+tin\s+(?:bạn|mình)\b''',
+  '''(?i)\bthat(?:'s| is) not research\b''',
+  '''(?i)["“][^"”\n]*\b(?:I|my|she|he|and|the|asked|read|keywords)\b[^"”\n]*["”]''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I9", "I15", "hook_lab"]
+max_questions = 1
+notes = """qa/standards/hook-lab.md HL7 + HL8 + HG1/HG2; review retest-ft1 §3 'Nhi N3'. The retest printed on-screen 'Vậy chưa phải nghiên cứu' over a first line that starts 'Em nghiên cứu rồi.' (the same claim twice, and the founder test's flat 'Đó không phải research.' in Vietnamese), a caption line 1 ending '…mà đó chưa phải nghiên cứu.', and her English report as a verbatim client line in quote marks ('Em nghiên cứu rồi.' = I9). Passing shape: the scene on screen adds what the first line does not ('AI đâu có gọi khách cũ' · khung chat AI gõ dở), the first line is a question or a scene, the idea is told without quote marks (she gave no Vietnamese words) and her 'nha/đâu' register fits. hook_lab fails the first two defects; I9 the third; the regex the founder's own flat lines. One question at most (dig.words may ask for her Vietnamese words; the input already says to retell)."""
+
+[[case]]
+id = "fmt-short.vn.053"
+kind = "P"
+persona = "copywriter-thin"
+lanes = ["S1", "floor"]
+title = "Hook lab, Nhi N3: the short on 'đọc vài bài rồi nhờ AI tìm từ khoá' passes the hook lab"
+context = "Week 1, Saturday 10/10/2026, Claude Pro (Cowork, kit folder). Brand Card v1 present (persona default: pair bạn–mình; audience mình – bạn; TỪ KHOÁ KHÔNG AI NHẮN (mình đoán)). Her Day-0 dump was dictated in English; about a coach she met she said, in English, that she read a few posts and asked an AI for keywords, and 'that is not research'. No Vietnamese words of that coach were given. Judge the short only: chữ trên màn hình, khung hình đầu, câu đầu, ý, câu cuối, caption line 1."
+input = """[turn 1] làm cho mình video về cái vụ đọc vài bài rồi nhờ AI tìm từ khoá mà gọi là nghiên cứu. Mình không nhớ nguyên văn chị ấy nói gì, kể lại bằng tiếng Việt cũng được"""
+standard = "hook-lab"
+critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7", "HL8"]
+min_score = 16
+invariants = ["I9", "I15", "hook_lab"]
+max_questions = 1
+notes = """scope: pieces. qa/standards/hook-lab.md, all-or-nothing (HL9 N/A: a short has no title): the review's rewrite scores 16 (on-screen 'AI đâu có gọi khách cũ' (6 tiếng), frame: AI chat gõ dở 'từ khoá cho coach tài chính', first line 'Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?', last line 'Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI không đoán được đâu.'). The retest's print failed HL7 (on-screen = the founder's flat line), HL8 and HG1/HG2 (an English report in quote marks)."""
+
+[[case]]
+id = "fmt-short.vn.054"
+kind = "D"
+persona = "copywriter-thin"
+lanes = ["S1", "floor"]
+title = "Hook lab, Nhi N4: a short on the one-email result has on-screen text that adds to the first line, numbers only from her facts"
+context = "Week 1, Tuesday 13/10/2026, Claude Pro (Cowork, kit folder). Brand Card v1 present (persona default: pair bạn–mình; audience mình – bạn; TỪ KHOÁ KHÔNG AI NHẮN (mình đoán)). Proof ready, said by her in the dump and OK'd by the client: tháng 8/2026, a financial coach sent one email to 180 people on her list after Nhi rewrote her intro page with the words of 3 old clients: 7 replied, 2 booked a 45-minute call, 1 bought; the numbers are from the coach's inbox; the coach lets Nhi tell it, no name; 'kết quả tuỳ người, không phải cam kết'."
+input = """[turn 1] làm cho mình video về chuyện một email gửi 180 người"""
+regex = [
+  '''(?im)^\W*Chữ trên màn hình:''',
+  '''(?im)^\W*Câu đầu:''',
+  '''(?i)không phải cam kết''',
+  '''\b180\b''',
+]
+not_regex = [
+  '''(?i)(?:tăng|gấp)\s*\d+(?:,\d+)?\s?(?:%|lần)''',
+  '''(?i)(?:đảm bảo|cam kết)\s+(?:có|ra|doanh thu|khách)''',
+  '''(?im)^\W*Chữ trên màn hình:\s*(?:Đó|Vậy|Đây)\s+(?:không|chưa)\s+phải''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I15", "hook_lab"]
+max_questions = 1
+notes = """qa/standards/hook-lab.md HL8; review retest-ft1 §3 'Nhi N4'. The retest printed on-screen 'Một email, 180 người' over the first line 'Một email gửi 180 người: 7 người trả lời, 1 người mua.' (all three on-screen words come back: nothing added). A passing short puts the result's tension or a scene on screen and the numbers in the first line or the beats (or the other way round), never both. Numbers (180, 7, 2, 45, 1) only as she gave them (I8); the disclaimer stays in the caption."""
+
+[[case]]
+id = "fmt-short.vn.055"
+kind = "P"
+persona = "copywriter-thin"
+lanes = ["S1", "floor"]
+title = "Hook lab, Nhi N4: the one-email short passes the hook lab"
+context = "Week 1, Tuesday 13/10/2026, Claude Pro (Cowork, kit folder). Brand Card v1 present (persona default: pair bạn–mình; audience mình – bạn; TỪ KHOÁ KHÔNG AI NHẮN (mình đoán)). Proof ready and OK'd by the client: one email to 180 people, 7 replies, 2 booked a 45-minute call, 1 bought; 'kết quả tuỳ người, không phải cam kết'; no name. Judge the short only."
+input = """[turn 1] làm cho mình video về chuyện một email gửi 180 người"""
+standard = "hook-lab"
+critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7", "HL8"]
+min_score = 16
+invariants = ["I8", "hook_lab"]
+max_questions = 1
+notes = """scope: pieces. The retest's N4 failed HL8 (on-screen = the first line). The pass needs the on-screen text to add a thing (a contrast, a question, her number in another shape), the first line to open a loop the last line pays off, and the result told with the coach's own numbers and its disclaimer (HG1)."""
+
+[[case]]
+id = "fmt-short.vn.056"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "Hook lab, Hạnh N1-N3: three Week-1 shorts, each with on-screen text that adds to its first line and no flat claim on screen"
+context = "Week 1, Monday 12/10/2026, ChatGPT Free on her Android phone. Brand Card v1 present (persona default: pair chị–em; audience chị – các em; Northern; TỪ KHOÁ NGẠI CHÀO; beat cards). The previous reply was the 4-line Bản đồ with QUAY HÔM NAY and map.ok; her 'tiep em oi' brings Tuần 1, three pieces a reply on Free. Ideas on her Map and facts she gave: a spa owner told her 'Khách khen tay em nhẹ mà cứ để chị về suy nghĩ rồi mất hút' and 'em sợ khách nghĩ mình chặt chém'; her 2022 ad story: 3 tháng hết 40 triệu, ra toàn khách săn 99k; the result 'cứ 10 khách mới thì khoảng 2 hẹn buổi sau, sau 6 tuần khoảng 5' is a client's (khóa 1, tháng 7/2026): she OK'd telling it (her first name allowed, never the spa's name, never in ads)."
+input = """tiep em oi"""
+regex = [
+  '''(?is)(?:chữ trên màn hình.*?){3}''',
+  '''(?i)câu (?:đầu|mở đầu)''',
+  '''(?i)câu cuối''',
+]
+not_regex = [
+  '''(?im)^\W*Chữ trên màn hình:\s*(?:Đó|Vậy|Đây|Cái đó|Như vậy)\s+(?:không|chưa|chẳng)\s+phải''',
+  '''(?i)(?:phải|cần|nên)\s+tin\s+(?:chị|em|bạn|mình)\b''',
+  '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|VÌ SAO RA KHÁCH)''',
+]
+invariants = ["I1", "I3", "I5", "I8", "I15", "hook_lab"]
+max_questions = 1
+notes = """qa/standards/hook-lab.md HL8, HL7; review retest-ft1 §3 'Hạnh N1-N3'. The retest printed all three with the on-screen text as the first line again ('Khen tay nhẹ rồi mất hút' / 'Sợ khách nghĩ mình chặt chém' / '40 triệu, toàn khách săn 99k'). Passing shapes (the review's N1 rewrite): chữ '10 khách, 2 người hẹn lại' · khung: chị lật cuốn sổ hẹn ở quầy · câu đầu her client's line word for word · câu cuối 'Chị không bán thẻ đâu các em, chị bán buổi hẹn sau.' hook_lab fails a repeat at 75% of the on-screen words or more. Nothing under a piece (wf15 §2; I3). 'tiep em oi' is not a Map change."""
+
+[[case]]
+id = "fmt-short.vn.057"
+kind = "P"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S1", "floor"]
+title = "Hook lab, Hạnh N1: the 'để chị về suy nghĩ' short passes the hook lab"
+context = "Week 1, Monday 12/10/2026, ChatGPT Free on her Android phone. Brand Card v1 present (persona default: pair chị–em; audience chị – các em; Northern; TỪ KHOÁ NGẠI CHÀO). A spa owner told her 'Khách khen tay em nhẹ mà cứ để chị về suy nghĩ rồi mất hút'; the client's result she may tell (her first name allowed, never the spa's name, never in ads): cứ 10 khách mới khoảng 2 hẹn buổi sau, sau 6 tuần khoảng 5. She asks for the short on that line; judge the short only."
+input = """làm cho chị cái video về câu 'để chị về suy nghĩ' đi em"""
+standard = "hook-lab"
+critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7", "HL8"]
+min_score = 16
+invariants = ["I8", "I15", "hook_lab"]
+max_questions = 1
+notes = """scope: pieces. The retest's N1 failed HL8 (on-screen = first line), HL3 (a last line that adds pain and no answer) and HL4 (pain only, no shift). The review's rewrite scores 16: chữ '10 khách, 2 người hẹn lại' · khung chị lật cuốn sổ hẹn ở quầy · câu đầu her client's line, word for word · câu cuối 'Chị không bán thẻ đâu các em, chị bán buổi hẹn sau.' (her phrase and her 'các em', with a particle) · caption keeps 'kết quả tuỳ người, không phải cam kết'; no spa name, no ads."""

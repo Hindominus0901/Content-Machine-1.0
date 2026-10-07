@@ -39,7 +39,9 @@ lint
 
 # Internal names with a coach-facing replacement
 # pillar -> "ý lớn" / "Buổi nói chuyện tuần"; keyword asset -> "quà"
-re:(?i)\bpillars?\b
+# Một ngoại lệ (founder 7/10): tiêu đề phần 3 của file chiến lược "Ba ý lớn của bạn (content pillars)" (bạn/chị/anh)
+# (modules/vn/strategy-doc.md); "pillar" ở chỗ khác vẫn trượt.
+re:(?i)(?<!ý lớn của \w{3} \(content )\bpillars?\b
 trụ cột
 re:\bTrụ\s+[1-9]\b
 keyword asset

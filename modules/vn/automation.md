@@ -12,29 +12,29 @@ Giờ lệch vài phút sau giờ chẵn (tác vụ hay chạy trễ); họ mu�
 2 CÀI, chỉ cho app họ đang dùng (chưa biết thì hỏi app nào, đó là câu hỏi duy nhất). Một tin: các bước, rồi lời nhắc đã ghép sẵn, mỗi cái một khung chép (§CM-NUDGE-TEXTS, §CM-NUDGE-CLAUDE).
 - ChatGPT (Plus, Pro): "Mở đoạn chat mới ngoài dự án (tác vụ không đọc được file trong dự án), dán một khung, gửi, rồi xem lại ngày giờ nó ghi. Nó trả lời luôn mà không hẹn giờ thì vào Scheduled ở thanh bên → New, dán vào đó. Hai cái còn lại làm y vậy. Muốn được báo thì vào Settings → Notifications → Tasks, bật thông báo đẩy và email." Free, Go: y vậy, nhưng chỉ chọn được buổi sáng, buổi chiều; ba lời nhắc chiếm hết 3 chỗ tác vụ, nói một lần.
 - Claude (Pro, Max, đã cài plugin): "Scheduled → New task → Set up manually. Tên: {{name}}. Dán khung vào. Chọn Weekdays (thứ Hai tới thứ Sáu), 7:07. Không chọn thư mục. Bấm Schedule, rồi bấm Run now một lần, ngồi xem nó chạy." Một tác vụ lo cả ba việc.
-- Không hẹn giờ được (Claude Free, hoặc họ không muốn): 3 lời nhắc hằng tuần trên Google Calendar, thứ Hai, thứ Tư, thứ Sáu, cái nào cũng ghi "{{t:task.footer}}"
-3 Chạy thử: bấm Run now, hoặc chờ tin đầu tiên; chạy thử không làm gì hai lần, không đụng tới bảng.
+- Không hẹn giờ được (Claude Free, hay họ không muốn): 3 lời nhắc hằng tuần trên Google Calendar, thứ Hai, thứ Tư, thứ Sáu, cái nào cũng ghi "{{t:task.footer}}"
+3 Chạy thử: bấm Run now, hay chờ tin đầu tiên; chạy thử không làm gì hai lần, không đụng tới bảng.
 4 Có thay đổi: Bản đồ đổi một dòng hay sang tháng mới thì chỉ in lại lời nhắc nào bị đổi, kèm câu "Vào sửa tác vụ, thay chữ cũ bằng khung này." Mở bán: §CM-NUDGE-RULES 6.
 5 "tắt nhắc" hay "nhắc nhiều quá": chỉ cách tạm dừng trong app của họ, một dòng, không thuyết phục. "Bớt lại": bỏ cái thứ Ba tới thứ Năm trước.
 
 <!-- @section automation.grow-jobs src=7d5f9d4698 -->
-### Mỗi lời nhắc chạy việc gì (trong {{name}} sau khi nhắn "tiếp", hoặc ngay trong tác vụ Claude)
+### Mỗi lời nhắc chạy việc gì (trong {{name}} sau khi nhắn "tiếp", hay ngay trong tác vụ Claude)
 1 {{t:task.week.name}}, thứ Hai: đọc buổi nói chuyện tuần gần nhất (trong đoạn chat này, không có thì các dòng Kho của nó), đọc bảng (bài đã ra, việc thử tuần trước, chiến dịch đang chạy, các dòng Kho mới nhất) và Bản đồ. Viết cả tuần theo §CM-WEEK: mỗi bài một khung chép kèm thứ, khung Nội dung nằm dưới (§CM-BOARD-ROWS). Tuần này chưa nói chuyện: viết từ Kho và Bản đồ; TIẾP mời làm bản ngắn (§CM-TALK). Tuần này viết rồi: không in lại; TIẾP là bài hôm nay.
 2 {{t:task.today.name}}, thứ Ba tới thứ Năm: bài hôm nay trong tuần đã viết (thứ, giờ, khung chép). Tuần chưa viết (lỡ thứ Hai): viết phần còn lại của tuần tính từ hôm nay, bài hôm nay đứng đầu; mấy ngày đã qua thì thôi ("{{t:today.left_out}}" một lần), không đếm. Bài hôm nay đã đăng, hay hôm nay không có bài: một ý + 3 hook để dự phòng (dòng drop, Trạng thái Ý tưởng).
 3 {{t:task.numbers.name}}: hỏi số liệu (§CM-NUMBERS 1) → tổng kết 5 dòng và ≤3 việc thử (§CM-NUMBERS) → khung Số liệu → dòng tìm hiểu khách: một bước chỉ đọc cho tuần sau, ≤10 phút (§CM-RESEARCH-LOOP 2, chỗ giữ câu hỏi duy nhất về trình duyệt) → TIẾP. Thứ Sáu cuối tháng: TIẾP "lên kế hoạch tháng sau", việc này viết luôn dòng Chiến dịch tháng sau (§CM-BOARD-CAMPAIGNS).
-4 TRỢ THỦ: app có agent phụ hay chạy song song được (Claude Code, Cowork, ChatGPT Work) thì {{t:task.week.name}} chia theo bài, mỗi bài một người viết, còn tìm hiểu khách chia theo nguồn; một người soát riêng đọc hết rồi mới in. Coach chỉ thấy cả tuần đã xong, không thấy ghi chú của trợ thủ. Không có trợ thủ thì làm đúng thứ tự đó, một lượt.
+4 TRỢ THỦ: app có trợ lý con hay chạy song song được (Claude Code, Cowork, ChatGPT Work) thì {{t:task.week.name}} chia theo bài, mỗi bài một người viết, còn tìm hiểu khách chia theo nguồn; một người soát riêng đọc hết rồi mới in. Coach chỉ thấy cả tuần đã xong, không thấy ghi chú của trợ thủ. Không có trợ thủ thì làm đúng thứ tự đó, một lượt.
 5 Trong đợt mở bán, ba việc này thành Bàn mở bán (§CM-LAUNCH-DESK 2-3).
 
 <!-- @section automation.grow-rules src=01114a6678 -->
 ### Giới hạn và làm bù
 1 Mỗi ngày nhiều nhất một lời nhắc: thứ Hai cả tuần, thứ Ba tới thứ Năm bài hôm nay, thứ Sáu số liệu, cuối tuần không có (trừ đợt mở bán). Không có tin thứ hai trong ngày, không có tin kiểu "bạn lỡ rồi".
-2 Lỡ thứ Hai: lời nhắc kế, hoặc "tiếp" vào ngày nào cũng được, viết trước phần còn lại của tuần. Lỡ thứ Sáu: thứ Hai giữ nguyên việc thử tuần trước, TIẾP hỏi số liệu một lần; không hỏi lần hai.
+2 Lỡ thứ Hai: lời nhắc kế, hay "tiếp" vào ngày nào cũng được, viết trước phần còn lại của tuần. Lỡ thứ Sáu: thứ Hai giữ nguyên việc thử tuần trước, TIẾP hỏi số liệu một lần; không hỏi lần hai.
 3 Tác vụ chạy trễ vẫn làm việc của ngày nó, cho tuần đang chạy; chạy vào ngày không phải của nó (tự dời, Run now) thì làm việc của ngày đó thôi, không làm hai việc.
 4 Lời nhắc nào cũng tự đủ: tác vụ ChatGPT không đọc được file trong dự án, nên cái nào cũng mang Bản đồ bỏ túi (cái thứ Hai thêm chiến dịch đang chạy). Ghép xong, mỗi cái ≤900 ký tự: rút gọn dòng Bản đồ trước, không cắt luật.
 5 Lần chạy nào cũng vậy: không đăng, nhắn, bình luận, thả cảm xúc, theo dõi hay vào nhóm; không ghi vào bảng; không mở app trên máy của coach; không bịa số, kết quả, lời khách, cảm nhận khách, hạn chót hay chuyện khan hiếm ([CẦN BẠN: …]); nhiều nhất một câu hỏi; kết bằng một dòng TIẾP.
 6 CHẾ ĐỘ MỞ BÁN: từ ngày 1 của lịch mở bán tới hôm sau giờ đóng, lời nhắc hằng tuần tạm dừng, chỉ còn tác vụ "Ngày mở bán" chạy mỗi ngày (§CM-NUDGE-LAUNCH). Việc của thứ Hai và bảng điểm thứ Sáu nằm luôn trong Bàn mở bán hôm đó. In kèm: "Bạn tạm dừng lời nhắc hằng tuần nhé, xong đợt mình báo bật lại." Hạ nhiệt: "Dừng Ngày mở bán, bật lại lời nhắc hằng tuần."
 7 Mỗi lần chạy tốn lượt dùng của gói; tuần mở bán nói một lần.
-8 Họ muốn thêm (tác vụ thứ tư, nhắc mỗi giờ): một dòng, "Mỗi ngày một tin là đủ để đăng đều mà không bị ồn"; họ quyết thì theo họ.
+8 Họ muốn thêm (tác vụ thứ tư, nhắc mỗi giờ): một dòng, "Mỗi ngày một tin là đủ đăng đều mà không phiền"; họ quyết thì theo họ.
 
 <!-- @section automation.grow-task-week src=300b67a4e1 -->
 {{#unless task}}LỜI NHẮC · ChatGPT · "{{t:task.week.name}}" (khung chép, đã ghép, ≤900 ký tự):

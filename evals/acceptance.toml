@@ -19,7 +19,15 @@ helper_path_max_minutes = 10
 early_win_max_minutes_after_dump_start = 4
 map_max_turns_en = 6                      # wf15: missing facts only (max 3, one a message), no 7-line check screen
 map_max_turns_vn = 7                      # VN adds the xưng hô turn
-map_max_minutes = 20
+dig_answers_max = 4                       # §CM-DIG (7 Oct night) asks ≤4 story-first questions before the Map, one a reply,
+                                          #   and each answer is a coach turn: day0_timing adds the dig questions the
+                                          #   run really asked (a reply that asks one of the dig.* strings, adapted to the
+                                          #   client in hand), up to this many, to map_max_turns_* and session_max_turns_*.
+                                          #   The two base numbers above stay the budget without a dig (a rich dump asks
+                                          #   none). Review retest-ft1 fix 10: the thin-dump run took 4 dump sends + 4 dig
+                                          #   answers and was graded against 7.
+map_max_minutes = 20                      # the real guard of the dig's extra turns; the Map and FILM TODAY come in one reply
+                                          #   (K2), so graders.py reads it as film_ready_max_minutes below (active minutes)
 map_lines = 4                             # KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE, then "OK, or change a line"
 film_ready_max_minutes = 20
 # The soft dump cut (DECISIONS "Long dumps…", "One more story stays open", "Long dictation and the Map reply"): past
@@ -45,6 +53,15 @@ running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <n
 shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes and the card top
                                           #   not counted (§CM-TODAY 1); EN, and any edition without its own key
 shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.md §CM-TODAY 1 "lời nói ≤120 tiếng")
+
+[hook_lab]                                # check hook_lab (graders.py; qa/standards/hook-lab.md HL7, HL8; review retest-ft1 fix 2)
+onscreen_repeat_share = 0.75              # a short's on-screen text fails when this share (or more) of its content words comes
+                                          #   back in the first spoken line: the same claim twice. The founder's test and its
+                                          #   retest sat at 100% (4 of 6 VN Week-1 shorts, e.g. "Một email, 180 người" over
+                                          #   "Một email gửi 180 người: 7 người trả lời, 1 người mua": 3 of 3); a hook that
+                                          #   brings a word or number of its own ("Record year. Still no cash." over "Best
+                                          #   year ever. I'm in a stairwell, asking the bank for payroll.": 1 of 3) stays under
+onscreen_min_words = 2                    # content words needed in the on-screen text to judge the repeat
 
 [memory]
 brand_card_saved_by_end_of_day1 = "5/6"

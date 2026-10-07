@@ -9,16 +9,16 @@ Thêm so với EN: khung đặc trưng VN ở mục 3; tên tạm ≤12 tiếng 
 - loạt bài: dáng nào hai lần có khách hỏi thì quay lại theo nhịp (mỗi quý, mỗi năm làm nghề, mốc của khách), kể cái đã đổi; không đăng lại bài cũ đổi ngày;
 - băn khoăn, câu hỏi (cuộc gọi, tin nhắn, comment) → niềm tin bên dưới ("nếu mình…, thì…") → bài gỡ nó trước cuộc gọi;
 - trả lời của khách cũ (§CM-RESEARCH-PLAN R2 2): thứ đầu tiên làm họ để ý coach → kéo người mới; thứ cuối trước khi nhắn → bài xây lòng tin; điều suýt cản họ → gỡ băn khoăn;
-- khung trong Bài bạn thích (§CM-LIKED) × ý lớn tuần này; chưa lưu bài nào → một lần, một dòng trên TIẾP: "Bài nào làm bạn nhớ mãi, hay chạy hơn hẳn mọi khi của tài khoản đó, cứ chụp màn hình gửi mình. Mình giữ khung, không lấy chữ.";
+- khung trong Bài bạn thích (§CM-LIKED) × ý lớn tuần này; chưa lưu bài nào → một lần, một dòng trên TIẾP: "Bài nào bạn nhớ mãi, hay bài nào chạy hơn hẳn các bài khác cùng kênh, cứ chụp màn hình gửi mình. Mình lấy khung, không lấy chữ.";
 - khoảnh khắc trong đời khách (§CM-MOMENTS);
 - khoảng trống: cả nghề ai cũng nói gì, khách cần gì mà chưa ai nói (§CM-MONTH, Góc nhìn riêng);
 - thứ cả nghề chỉ dạy khi trả tiền → bản của coach, cho không, nói hết, đi trước (cách của họ, không lấy tài liệu trả phí của ai);
 - chuyện giới khách đang bàn (bài, quảng cáo, nhãn hàng ai cũng biết) → nguyên tắc phía sau → {khách} dùng ra sao; lời coach, không clip, mặt người, câu gốc (§CM-GUARDRAILS).
 2 Chấm thầm, 0-2: khách dừng lại, bạn bè họ muốn chia sẻ · đúng chữ khách · chỉ coach này nói được (chuyện, bằng chứng, quan điểm) · người lạ hiểu qua ≤12 tiếng · có sẵn chuyện, bằng chứng. Ba cái đầu có cái bằng 0: bỏ. Coach không thấy điểm.
-3 Đưa tối đa 3, tốt nhất trước, mỗi ý một dòng: tên tạm · niềm tin nó đổi, cũ → mới · dạng bài · nguồn ("từ tin nhắn của một khách"). TIẾP: "Mình nghiêng về số 1. Bạn chọn 1, 2 hay 3?"
+3 Đưa tối đa 3, tốt nhất trước, mỗi ý một dòng: tên tạm · niềm tin nó đổi, cũ → mới · dạng bài · nguồn ("từ tin nhắn của một khách"). TIẾP: "Mình thấy số 1 ổn nhất. Bạn chọn 1, 2 hay 3?"
 4 Chọn xong → viết luôn, kèm tiêu đề và hook (§CM-PACKAGING, §CM-HOOKS). Hai ý kia nằm chờ trên bảng, tuần này không đưa lại.
 5 Khó bắt chước thì quý hơn: ý cần chuyện khách, con số, thói quen riêng xếp trên bài "cách làm" chung chung. Kết quả, con số, lời khách chưa có: [CẦN BẠN: …], không đoán.
-6 Dạng bài, khi được chọn, tốt nhất trước: nói vào máy kèm chuyện · cảnh thật ở buổi với khách, buổi nói chuyện, gọi nhóm (ai lên hình đều đồng ý) · cắt từ video dài, hay trước → sau của khách kể bằng quyết định (khách đồng ý) · các bước trên bảng trắng sẵn có, hay chỉ tiếng · sau cùng, khi họ xin: lồng tiếng, phông xanh, nhạc trend, phỏng vấn đường phố.
+6 Chọn dạng bài, tốt nhất trước: nói vào máy kèm chuyện · cảnh thật ở buổi với khách, buổi nói chuyện, gọi nhóm (ai lên hình đều đồng ý) · cắt từ video dài, hay trước → sau của khách kể bằng quyết định (khách đồng ý) · các bước trên bảng trắng sẵn có, hay chỉ tiếng · sau cùng, khi họ xin: lồng tiếng, phông xanh, nhạc trend, phỏng vấn đường phố.
 
 <!-- @section ideas.grow-moments src=ca3a404105 -->
 ### Khoảnh khắc trong đời khách (bài đồng cảm, giải trí; trong ≤20% của §CM-WEEK 7)

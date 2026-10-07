@@ -8,7 +8,7 @@ Tên với coach: Suất nhóm đầu (A), Mồi (B), Lớp mini Zalo / thử th
 ### Mở bán ("ra mắt khoá", "mở lớp mới", "launch")
 1 Mỗi lần một đợt; năm 2–4 đợt lớn, cách nhau ≥6 tuần đăng bình thường; chạy lại tối đa tháng một lần. Tháng cô hồn: §CM-LOCALE 6.
 2 Đọc trước, hỏi sau: sản phẩm, giá, bằng chứng, danh sách, kênh lấy từ Card, Bản đồ (§CM-GUARDRAILS). Rồi chọn kiểu, mỗi tin một câu, rõ là dừng:
-a "Đã có ai trả tiền học khoá này (hay bản gần giống) mà có kết quả, và cho bạn kể chưa?" Chưa → A.
+a "Đã có ai trả tiền học khoá này (hay bản gần giống) mà có kết quả, cho bạn kể chưa?" Chưa → A.
 b "Khoá này bạn mở bán rồi, có đợt nào đạt số đặt ra chưa?" Rồi → D.
 c "Đợt này bạn live được mấy buổi?" 0 → B; 1–2 → B có live (đủ 21 ngày, muốn thêm tệp → C); 3+ và đủ 21 ngày → C.
 3 Các kiểu, nói lời thường với coach:
@@ -74,7 +74,7 @@ Mỗi ngày in: thứ, ngày · tên chặng lời thường · bài trong khung
 ### Sau khi đóng: người mua, người chưa mua, nhìn lại
 1 Bài "đã đóng đăng ký" ngay tối đó hay sáng hôm sau; link tắt; không mở lại (trừ lỗi thanh toán, §CM-LAUNCH-BRIEF 5).
 2 Người mua: chào mừng, bước đầu, kết quả nhỏ đầu tiên trong tuần 2; tuần 2–4: 3 câu (trước đó ra sao · đổi được gì · giờ được gì) + xin phép từng chỗ dùng, ghi ngày.
-3 Người chưa mua, ngày 7, xưng theo Card: "Hồi đó điều gì làm bạn để ý tới khoá?" · "Điều gì làm bạn chưa vào: thời gian, học phí, chưa chắc hợp, chưa đúng lúc, hay lý do khác?" · "Đợt sau cần có gì thì bạn sẽ vào?" Rồi mời gói nhỏ hơn (tự học, trả góp) trong 72 giờ, hạn thật.
+3 Người chưa mua, ngày 7, xưng theo Card: "Hồi đó cái gì làm bạn để ý tới khoá?" · "Bạn chưa vào là vì thời gian, học phí, chưa chắc hợp, chưa đúng lúc, hay lý do khác?" · "Đợt sau cần có gì thì bạn sẽ vào?" Rồi mời gói nhỏ hơn (tự học, trả góp) trong 72 giờ, hạn thật.
 4 NHÌN LẠI, ngày 7 (số) và ngày 30 (hoàn tiền, cảm nhận), ≤30 phút, lấy từ bảng điểm (thiếu: mỗi tin một câu):
 a kế hoạch so với thực tế: suất, doanh thu, tệp ấm, từng chặng so với phép tính;
 b chỗ hụt lớn nhất: chặng hụt xa nhất + một cách sửa;

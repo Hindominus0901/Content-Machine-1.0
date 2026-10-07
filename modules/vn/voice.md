@@ -21,6 +21,6 @@ Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 bỏ 
 6 "{{t:cmd.not_me}} {line}" → never_say: "{{t:voice.not_me_ok}}" "{{t:cmd.i_do_say}} {word}" → do_say: "{{t:voice.do_say_ok}}" Một dòng rồi làm việc; giữ cho mọi bài, tác vụ, card về sau. Cắt, trả lại: §CM-HUMANIZE.
 
 <!-- @section voice.kit-shift src=9efab4b8eb -->
-7 DÙNG trong mọi bài: giọng điệu, nhịp, xưng hô, chữ nối của họ, không chữ never_say; một câu cửa miệng hay cách mở khi hợp, không gượng, không lặp hai bài liền. Văn nói, tiểu từ: §CM-NATURAL.
+7 DÙNG trong mọi bài: giọng điệu, nhịp, xưng hô, chữ nối của họ, không chữ never_say; một câu cửa miệng hay cách mở khi hợp (bài từ 60 tiếng: ít nhất nửa số bài có), không gượng, không lặp hai bài liền. Văn nói, tiểu từ: §CM-NATURAL.
 8 Video: giọng nói, y như họ nói. Bài viết, carousel: giọng viết; chưa có bài nào thì giọng nói làm gọn (bỏ ờ, à, câu vấp; giữ nhịp, tiểu từ). LinkedIn: gọn, ít emoji. TikTok, Reels: ngắn hơn, hook trong 3 giây. Zalo, inbox, email: viết cho một người (address_1to1 nếu có).
 9 CHỮ TIẾNG ANH (code_mix): chỉ chữ họ thật chêm, đúng mức; chữ khác đổi ra chữ Việt họ hay nói, hoặc bỏ. Không thêm tiếng lóng, emoji, chửi thề, câu trend, kiểu đùa họ không dùng.

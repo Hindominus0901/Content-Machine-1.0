@@ -2,7 +2,7 @@
 """Simulated runs: build run packets, then grade the transcripts (docs/PLAN.md "How simulated runs work";
 evals/README.md "Lanes and simulated runs").
 
-    python3 evals/run.py packet --suite day0 --edition en --lane S1 [--persona ID ...] [--repeat 3] [--tag p2]
+    python3 evals/run.py packet --suite day0 --edition en --lane S1 [--persona ID ...] [--repeat 3] [--tag p2] [--web] [--plugin]
     python3 evals/run.py packet --suite cases --edition en --lane S1 --module setup [--case setup.en.004 ...]
     python3 evals/run.py grade evals/runs/<run-id> [...]
     python3 evals/run.py summary evals/runs/<run-id> [...]
@@ -27,6 +27,21 @@ Lanes: S0 compact mode (instruction block only, no method file); S1 the Project 
 method file); floor S1 played by a smaller model (the weaker free-tier model); S3 the L3 skill with a fake
 hub (needs the skill build, P4).
 
+Lane options (flags of `packet`, kept in meta.json and shown as "S1+web" in the summary; review retest-ft1 fix 5):
+  --web     the machine side may use web search and page fetch for the background research pass (§CM-LISTEN).
+            Without it MACHINE.md says searching is not possible, as before. With it MACHINE.md names the pass,
+            the read-only rules (open a page before quoting it; roles, never names; never log in, post, react,
+            follow, DM or join; never the coach's computer) and asks for a "## Research log" in notes.md
+            (every query, every page opened, what was kept) for the reviewer to re-fetch. A link the coach sends is
+            still never opened here (I20). The run id gets "-web" (…-S1-web-r1). Stands in for the coach's own
+            browser or search tool (Claude in Chrome, ChatGPT Work); without it a run ends with 0 KEEP lines.
+  --plugin  the coach installed the plugin form: packet/kit/plugin/ holds the edition's skills (the main skill and
+            its companion skills, one per level-up area: SKILL.md) and the plugin's agents, read from
+            dist/content-machine-plugin.zip. The run id gets "-plugin".
+Every lane with a method file (S1, floor) also ships the edition's Level-ups/*.md in packet/kit/Level-ups/, as the
+coach's Project or Cowork folder holds them (the method file and the instructions point to them: RESEARCH-<ED>.md,
+STRATEGY-<ED>.md, LAUNCH-<ED>.md, BOARD-<ED>.md); S0 (instruction block only) ships none.
+
 `grade` runs graders.py (I1-I23 and the other checks) on each run. A cases-suite run also checks its
 case's D assertions (contains, regex, not_*, verdict, max_*, invariants) on the reply to the last coach
 turn, or on the scope named at the start of the case's notes ("scope: transcript | pieces | visible |
@@ -44,6 +59,7 @@ import shutil
 import sys
 import tomllib
 import unicodedata
+import zipfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -191,14 +207,46 @@ def build_kit(root: Path, edition: str) -> tuple[dict[str, Path], str]:
              "phone": out / "PHONE-STARTER.txt"}
     if not files["instructions"].exists():
         raise RunError(f"the {edition} build has no 1-INSTRUCTIONS.txt (core/{ed.lang}/start-block.md missing?)")
+    levelups = sorted((out / "Level-ups").glob("*.md")) if (out / "Level-ups").is_dir() else []
+    files["levelups"] = levelups                          # the folder the coach's Project or Cowork folder holds
+    files["plugin_zip"] = root / "dist" / PLUGIN_ZIP      # the plugin form, when built (both editions on disk)
     return files, str(manifest.get("build_sha256", ""))[:12]
 
 
+PLUGIN_ZIP = "content-machine-plugin.zip"
+PLUGIN_NAME = "content-machine"
+
+
+def plugin_files(zip_path: Path, edition: str) -> dict[str, bytes]:
+    """The plugin's files for one edition, as {path under kit/plugin/: bytes}: skills/<skill>/SKILL.md of the main skill
+    (content-machine-<ed>) and of each companion skill (cm-<area>-<ed>), and agents/*.md. The method file and the
+    level-up files are in the kit already (kit/ and kit/Level-ups/), so they are not repeated."""
+    if not Path(zip_path).exists():
+        raise RunError(f"{zip_path.name} not found: build both editions first (python3 tools/build.py --edition all)")
+    out = {}
+    with zipfile.ZipFile(zip_path) as zf:
+        for name in sorted(zf.namelist()):
+            parts = name.split("/")
+            if len(parts) == 4 and parts[0] == PLUGIN_NAME and parts[1] == "skills" and parts[2].endswith(f"-{edition}") \
+                    and parts[3] == "SKILL.md":
+                out[f"skills/{parts[2]}/SKILL.md"] = zf.read(name)
+            elif len(parts) == 3 and parts[0] == PLUGIN_NAME and parts[1] == "agents" and parts[2].endswith(".md"):
+                out[f"agents/{parts[2]}"] = zf.read(name)
+    if not out:
+        raise RunError(f"{zip_path.name} holds no {edition} skills")
+    return out
+
+
 def run_id(suite: str, edition: str, persona: str, lane: str, repeat: int, tag: str = "",
-           case: str = "") -> str:
+           case: str = "", web: bool = False, plugin: bool = False) -> str:
     parts = [tag] if tag else []
     parts += [case.replace(".", "_")] if case else [suite, edition, persona]
-    return "-".join(parts + [lane, f"r{repeat}"])
+    return "-".join(parts + [lane] + (["web"] if web else []) + (["plugin"] if plugin else []) + [f"r{repeat}"])
+
+
+def lane_label(meta: dict) -> str:
+    """"S1", "S1+web", "S1+web+plugin": the lane and its options, as the summary shows them."""
+    return str(meta.get("lane", "")) + ("+web" if meta.get("web") else "") + ("+plugin" if meta.get("plugin") else "")
 
 
 PROTOCOL = """# Run packet: {run_id}
@@ -247,11 +295,31 @@ MACHINE = """# Machine side ({lane})
 - **Your instructions:** `kit/1-INSTRUCTIONS.txt`, verbatim, as the project's instructions.
 {method_line}
 - Reply only from these files and the transcript so far. Never use a fact the coach has not said.
-- Searching the web is not possible in this run: where the kit says "search if you can", you can't.
-- A link the coach sends is never opened here (unopened = unread).
+{level_line}{plugin_line}{web_line}- A link the coach sends is never opened here (unopened = unread).
 - Today's date: {today}.
 - You know which app you run in; you do not know the coach's plan or device until they say it.
 """
+
+WEB_OFF = ("- Searching the web is not possible in this run: where the kit says \"search if you can\", you can't. The "
+           "background research pass has no tool: the Map comes first, then the exact paste steps.\n")
+WEB_ON = (
+    "- **Web search and page fetch are on in this run** (lane option `web`), for the background research pass only (Day 0, "
+    "§CM-LISTEN: the kit's own searches in the buyer's words). Use them as a session with its own search tool does, "
+    "read-only: open a page before you quote it (unopened = unread); a line you did not see on a page is \"(unverified)\" "
+    "and never goes in a piece; people by role, never by name or handle; never log in, post, react, follow, DM or join; "
+    "never touch the coach's computer or apps. A page that will not open is \"unread\" on the Map, not guessed. Keep "
+    "a log as you go and put it in notes.md under \"## Research log\": each query, each page opened (URL, place, "
+    "month, role) and the lines kept, so the reviewer can re-fetch them. Do not search before the kit says to.\n")
+LEVELUPS_LINE = (
+    "- **Level-ups:** {names} are project files in `kit/Level-ups/`, next to the method file, as in the coach's Project or "
+    "folder. Open one only when the instructions name it for the job (research and listening: RESEARCH; strategy, hooks, "
+    "titles and long video: STRATEGY; launch: LAUNCH; the board: BOARD), and read the §CM- part the job needs, never the "
+    "whole file.\n")
+PLUGIN_LINE = (
+    "- **Plugin form:** the coach installed the plugin. `kit/plugin/skills/` holds its skills (the main skill and one "
+    "companion skill per level-up area; each SKILL.md) and `kit/plugin/agents/` its agents; the method file and the "
+    "Level-ups are the kit's own (above). A companion skill carries its level-up file: when the job is theirs, read "
+    "that skill's SKILL.md and its level-up file, and never ask the coach to upload a Level-ups file.\n")
 
 COACH_DAY0 = """# Coach side: {persona} ({edition}), Day 0
 
@@ -310,26 +378,57 @@ Stop after the machine's reply to the last input turn. Never read the case file 
 """
 
 
+WEB_PROTOCOL = """
+## Web lane
+
+This run has the `web` option: the machine side may search and fetch pages for the background research pass
+(`MACHINE.md`). Add `## Research log` to `notes.md`: every query, every page opened (URL, place, month, role), the
+lines kept and the lines dropped, and what the research changed on the Map (line 1, the keyword, big idea 1: before →
+after), or "nothing". The reviewer re-fetches the kept lines. A line that was not seen on an opened page is never
+quoted in a piece.
+"""
+
+
 def write_packet(root: Path, out_root: Path, rid: str, meta: dict, kit: dict[str, Path], lane: str,
                  coach_md: str, today: str) -> Path:
+    """One packet folder. meta["web"] / meta["plugin"] are the lane options (module docstring): the machine side's
+    web line, and the plugin's skills in kit/plugin/. A lane with a method file also gets the edition's Level-ups."""
     run_dir = out_root / rid
     if run_dir.exists():
         raise RunError(f"{rel(run_dir, root)} exists; pass another --tag or remove it")
-    (run_dir / "packet" / "kit").mkdir(parents=True)
     spec = LANES[lane]
+    web, plugin = bool(meta.get("web")), bool(meta.get("plugin"))
+    if plugin and not spec["method"]:
+        raise RunError(f"--plugin needs a lane with the method file (S1 or floor), not {lane}")
+    plugin_kit = plugin_files(Path(kit.get("plugin_zip") or root / "dist" / PLUGIN_ZIP), meta["edition"]) if plugin else {}
+    (run_dir / "packet" / "kit").mkdir(parents=True)
     shutil.copy2(kit["instructions"], run_dir / "packet" / "kit" / kit["instructions"].name)
     method_line = "- **Method file:** none in this lane (compact mode)."
+    level_line = ""
     if spec["method"]:
         if not kit["method"].exists():
             raise RunError(f"lane {lane} needs {kit['method'].name}, which the build did not produce")
         shutil.copy2(kit["method"], run_dir / "packet" / "kit" / kit["method"].name)
         method_line = f"- **Method file:** `kit/{kit['method'].name}`, a project file."
+        levelups = [Path(f) for f in kit.get("levelups") or []]
+        if levelups:
+            (run_dir / "packet" / "kit" / "Level-ups").mkdir()
+            for f in levelups:
+                shutil.copy2(f, run_dir / "packet" / "kit" / "Level-ups" / f.name)
+            level_line = LEVELUPS_LINE.format(names=", ".join(f"`{f.name}`" for f in levelups))
+    for sub, data in plugin_kit.items():
+        out = run_dir / "packet" / "kit" / "plugin" / sub
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(data)
     ed = cmlib.load_edition(meta["edition"], root)
     app = APP_NAMES.get(meta.get("app", ""), "ChatGPT or Claude") + " (a Project)"
     files = {
-        "README.md": PROTOCOL.format(run_id=rid, run_dir=rel(run_dir, root)),
-        "MACHINE.md": MACHINE.format(lane=lane, about=spec["about"], model=spec["model"], edition=ed.id, app=app,
-                                     method_line=method_line, today=run_date(today)),
+        "README.md": PROTOCOL.format(run_id=rid, run_dir=rel(run_dir, root)) + (WEB_PROTOCOL if web else ""),
+        "MACHINE.md": MACHINE.format(lane=lane + ("+web" if web else "") + ("+plugin" if plugin else ""),
+                                     about=spec["about"], model=spec["model"], edition=ed.id, app=app,
+                                     method_line=method_line, level_line=level_line,
+                                     plugin_line=PLUGIN_LINE if plugin else "", web_line=WEB_ON if web else WEB_OFF,
+                                     today=run_date(today)),
         "COACH.md": coach_md,
     }
     for name, text in files.items():
@@ -341,9 +440,9 @@ def write_packet(root: Path, out_root: Path, rid: str, meta: dict, kit: dict[str
 def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: list[str], repeat: int = 1,
                  tag: str = "", module: str = "", case_ids: list[str] | None = None,
                  out_root: Path | None = None, today: str = "",
-                 kit: tuple[dict[str, Path], str] | None = None) -> list[Path]:
+                 kit: tuple[dict[str, Path], str] | None = None, web: bool = False, plugin: bool = False) -> list[Path]:
     """Write one packet per persona (day0) or per D case (cases), times `repeat`. `kit` is (files, sha) from
-    build_kit; tests pass prebuilt files."""
+    build_kit; tests pass prebuilt files. `web` and `plugin` are the lane options (module docstring)."""
     if suite not in SUITES:
         raise RunError(f"unknown suite '{suite}' ({', '.join(SUITES)})")
     if lane not in LANES:
@@ -371,9 +470,10 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
                                       max_turns=turns + 4,
                                       app=APP_NAMES.get(app, app or "the app"), plan=plan or "unknown plan")
             for n in range(1, repeat + 1):
-                rid = run_id(suite, edition, pid, lane, n, tag)
+                rid = run_id(suite, edition, pid, lane, n, tag, web=web, plugin=plugin)
                 meta = {"persona": f"{edition}/{pid}", "edition": edition, "lane": lane, "build_sha": sha,
-                        "suite": suite, "repeat": n, **({"app": app} if app else {})}
+                        "suite": suite, "repeat": n, **({"app": app} if app else {}),
+                        **({"web": True} if web else {}), **({"plugin": True} if plugin else {})}
                 made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, persona_day0(pdir) or today))
         return made
     if not module:
@@ -399,9 +499,10 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
                                   title=case.get("title", ""), context=case.get("context", "") or "none",
                                   inputs=inputs or "(none)")
         for n in range(1, repeat + 1):
-            rid = run_id(suite, edition, pid, lane, n, tag, case=case["id"])
+            rid = run_id(suite, edition, pid, lane, n, tag, case=case["id"], web=web, plugin=plugin)
             meta = {"persona": f"{edition}/{pid}" if pid else "", "edition": edition, "lane": lane,
-                    "build_sha": sha, "suite": suite, "repeat": n, "case": case["id"], **({"app": app} if app else {})}
+                    "build_sha": sha, "suite": suite, "repeat": n, "case": case["id"], **({"app": app} if app else {}),
+                    **({"web": True} if web else {}), **({"plugin": True} if plugin else {})}
             made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
     if not made:
         raise RunError(f"no D cases of {module}.{edition} run on lane {lane}")
@@ -527,7 +628,8 @@ def check_case(case: dict, run, report: dict | None = None) -> dict:
         skipped.append(f"verdict {case['verdict']}: {why}")
 
     if report is not None:
-        by_id = {i["id"]: i for i in report.get("invariants", [])}
+        # `invariants` also names a check of graders.py (hook_lab, day0_shape, vn_messages …) the case depends on
+        by_id = {i["id"]: i for i in report.get("checks", []) + report.get("invariants", [])}
         for iid in case.get("invariants", []):
             inv = by_id.get(iid)
             if inv is None:
@@ -808,8 +910,9 @@ def check_leaks(rows: list[dict], pdir: Path, kit_dir: Path | None, lang: str,
         said += " ".join(words) + " | "
 
     if kit_dir and kit_dir.is_dir():
-        for f in sorted(kit_dir.glob("*")):
-            learn(f.read_text(encoding="utf-8"))
+        for f in sorted(kit_dir.rglob("*")):                 # kit/, kit/Level-ups/, kit/plugin/: all the kit's wording
+            if f.is_file() and f.suffix.lower() in (".txt", ".md"):
+                learn(f.read_text(encoding="utf-8"))
     fails, warns = [], []
     for r in rows:
         if r.get("role") == "coach":
@@ -943,6 +1046,7 @@ def grade_run(run_dir: Path, root: Path) -> dict:
     out["protocol"] = protocol_checks(run_dir, root, meta) if meta.get("persona") else []
     edits = next((p for p in out["protocol"] if p["id"] == "edits"), None)
     out["edited"] = edits["edited"] if edits else 0
+    out["web"], out["plugin"] = bool(meta.get("web")), bool(meta.get("plugin"))      # the lane options (docstring)
     out["valid"] = all(p["pass"] for p in out["protocol"])
     out["pass"] = bool(report["pass"]) and out["valid"]
     if meta.get("case"):
@@ -985,7 +1089,8 @@ def summary_rows(results: list[dict]) -> str:
         if g.get("edited"):
             valid += f" (edited: {g['edited']})"
         rows.append("| {run} | {persona} | {lane} | {valid} | {ok} | {failed} | {turns} | {map} | {film} | {case} |".format(
-            run=g.get("run", ""), persona=g.get("persona", ""), lane=g.get("lane", ""), valid=valid,
+            run=g.get("run", ""), persona=g.get("persona", ""), valid=valid,
+            lane=lane_label({"lane": g.get("lane", ""), "web": g.get("web"), "plugin": g.get("plugin")}),
             ok="yes" if g.get("pass") else "no", failed=", ".join(g.get("failed", [])) or "–",
             turns=g.get("summary", {}).get("coach_turns", ""), map=d.get("map_coach_turns", "–"),
             film=film_cell(d), case=case_cell.replace("|", "/")))
@@ -1010,6 +1115,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out", type=Path, default=None, help="folder for the runs (default evals/runs)")
     p.add_argument("--today", default="", help="the date the machine side is told (YYYY-MM-DD; default: the day the "
                    "packet is made; a persona's day0 wins in a day0 suite)")
+    p.add_argument("--web", action="store_true", help="lane option: the machine side may use web search and page fetch "
+                   "for the background research pass (read-only; a Research log in notes.md); run ids get -web")
+    p.add_argument("--plugin", action="store_true", help="lane option: the plugin form; the edition's skills and the "
+                   "plugin's agents go in packet/kit/plugin/ (from dist/content-machine-plugin.zip); run ids get -plugin")
     g = sub.add_parser("grade", help="grade run folders; writes grades.json in each")
     g.add_argument("runs", nargs="+", type=Path)
     s = sub.add_parser("summary", help="a markdown table of graded runs (grades them first if needed)")
@@ -1025,7 +1134,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.repeat < 1:
                 raise RunError("--repeat must be at least 1")
             made = make_packets(root, args.suite, args.edition, args.lane, args.persona, args.repeat, args.tag,
-                                args.module, args.case, args.out, args.today)
+                                args.module, args.case, args.out, args.today, web=args.web, plugin=args.plugin)
             for d in made:
                 print(rel(d, root))
             return 0

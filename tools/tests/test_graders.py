@@ -188,7 +188,7 @@ class TempRepo(unittest.TestCase):
 FILM_REPLY = f'''
     {TAG}Film today
     FILM TODAY (under 30 s)
-    On-screen: 63 applications. 2 interviews.
+    On-screen: Coffee before resume
     First line: "63 applications. 2 interviews."
     Beat 1: 24 years at HQ, out at 48.
     Last line: Comment CHAPTER for the coffee script.
@@ -3026,7 +3026,7 @@ class VG4RoundGraderTests(TempRepo):
         base = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok")]
         self.assertIs(self.item(self.grade(base + [("machine", FILM_REPLY)], suite="day0"), "day0_shape",
                                 name)["pass"], True)
-        onscreen = FILM_REPLY.replace("On-screen: 63 applications. 2 interviews.", "On-screen: Your next chapter.") \
+        onscreen = FILM_REPLY.replace("On-screen: Coffee before resume", "On-screen: Your next chapter.") \
             .replace("Your next chapter starts with a coffee.", "It starts with a coffee.")
         report = self.grade(base + [("machine", onscreen)], suite="day0")
         self.assertIs(self.item(report, "day0_shape", "FILM TODAY carries YOUR WORD")["pass"], True)
@@ -3468,6 +3468,408 @@ class VG6G7RoundGraderTests(TempRepo):
         for text in ("CHAPTER", "(không dấu: TUYEN HOAI)", "(your clients' word: \"without the badge\")",
                      "(Lorraine's \"one more chapter\")", "(she guessed it)", "(khách nói)"):
             self.assertFalse(graders.GUESS_TAG_RE.search(text), text)
+
+
+# The FT1 retest (qa/runs/retest-ft1/review.md §6, §7 fixes 2, 9, 10): the founder's own Day 0, VN edition. The kit's dig
+# questions, the paste header with its slots, the Card's one-to-one address and the show-the-research command.
+FT1_STRINGS = dict(VG4_STRINGS, **{
+    "dig.story": "Bạn nghĩ tới một khách bạn giúp được nhiều nhất nhé. Tuần đầu tìm tới bạn, họ đang kẹt chuyện gì?",
+    "dig.words": "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.",
+    "dig.offer": "Khách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?",
+    "dig.proof": "Làm với bạn xong, khách đó khác đi thế nào, và họ có chịu cho bạn kể lại không?",
+    "dig.stance": "Trong nghề của bạn, người ta hay khuyên khách điều gì mà bạn thấy sai?",
+    "dig.buyer": "Được nhân bản một khách thì bạn chọn ai, và lúc tìm tới bạn họ đang thế nào?",
+    "cmd.show_research": "xem nghiên cứu",
+    "research.paste_steps": "Lúc nào rảnh 15 phút: mở 3 video {platform} nhiều view nhất khi tìm \"{phrase}\", mỗi video "
+                            "chép 20 comment của người rõ là {buyer}, bỏ người bán. Đầu đợt ghi [{place} · {month}], tên "
+                            "đổi thành chữ cái, cùng người cùng chữ. Rồi dán hết vào đây.",
+    "card.label.address_1to1": "Nhắn riêng thì gọi",
+})
+FT1_PERSONA = '''
+xung_ho = "bạn–mình"
+dialect = "Nam"
+allowed_numbers = ["180", "7", "1", "2", "30", "3", "45", "40", "8"]
+'''
+FT1_EXPECTED = '''
+[traps]
+compliance = ["cam kết"]
+[voice]
+audience_address = "mình – bạn"
+'''
+FT1_ACCEPT = """
+    [day0]
+    map_max_turns_en = 6
+    map_max_turns_vn = 7
+    dig_answers_max = 4
+    film_ready_max_minutes = 20
+    session_max_turns = 10
+    session_max_turns_vn = 11
+    map_lines = 4
+    """
+# What the machine printed in the retest: Nhi's N3 (a flat claim on screen, in caption line 1, and the on-screen text is
+# the first line again) and N4 (the on-screen text is the first line again), as the review quotes them.
+NHI_N3 = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: Vậy chưa phải nghiên cứu\n"
+          "Khung hình đầu: bạn cầm điện thoại, lướt nhanh qua mấy bài viết\n"
+          "Câu đầu: \"Em nghiên cứu rồi.\" Mình hỏi làm gì. \"Đọc vài bài, nhờ AI tìm từ khoá.\"\n"
+          "Ý 1: Nghiên cứu là ngồi nói chuyện với người ta, nghe chữ của chính họ.\n"
+          "Câu cuối: \"Hiểu tới mức họ thức dậy lo chuyện gì, bạn cũng thấy y vậy.\"\nCaption:\n"
+          "Đọc vài bài với nhờ AI tìm từ khoá thì nhanh thật, mà đó chưa phải nghiên cứu.\n"
+          "Comment KHÔNG AI NHẮN hay nhắn riêng, mình gửi 3 bước nghe khách cũ trước khi viết nha.\n```")
+NHI_N4 = ("N4 · thứ Ba 13/10 · 30 giây\n```\nChữ trên màn hình: Một email, 180 người\n"
+          "Khung hình đầu: màn hình laptop mở hộp thư\n"
+          "Câu đầu: \"Một email gửi 180 người: 7 người trả lời, 1 người mua.\"\n"
+          "Ý 1: Mình viết lại trang giới thiệu bằng câu của 3 khách cũ, chị gửi 1 email.\n"
+          "Câu cuối: \"Một email gửi đúng người cũng là tìm khách rồi.\"\nCaption:\n"
+          "Trước đó chị đăng gần như mỗi ngày mà không ai nhắn hỏi giá.\n"
+          "Comment KHÔNG AI NHẮN hay nhắn riêng, mình gửi 3 bước nghe khách cũ trước khi viết nha.\n```")
+# The review's rewrite of N3: the scene on screen adds what the first line does not, no flat claim, nothing in quotes.
+NHI_N3_FIXED = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: AI đâu có gọi khách cũ\n"
+                "Khung hình đầu: khung chat AI gõ dở \"từ khoá cho coach tài chính\"\n"
+                "Câu đầu: \"Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?\"\n"
+                "Câu cuối: \"Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI không đoán được đâu.\"\nCaption:\n"
+                "Chị coach tài chính đăng gần như mỗi ngày, tim nhiều, không ai nhắn.\n```")
+HANH_WEEK = ("N1 · thứ Hai 12/10 · 30 giây\n```\nChữ trên màn hình: Khen tay nhẹ rồi mất hút\n"
+             "Khung hình đầu: quầy, điện thoại\n"
+             "Câu đầu: \"Khách khen tay em nhẹ mà cứ để chị về suy nghĩ rồi mất hút.\"\n```\n\n"
+             "N2 · thứ Tư 14/10 · 30 giây\n```\nChữ trên màn hình: Sợ khách nghĩ mình chặt chém\nKhung hình đầu: cầm gương\n"
+             "Câu đầu: \"Em sợ khách nghĩ mình chặt chém.\"\n```\n\n"
+             "N3 · thứ Sáu 16/10 · 30 giây\n```\nChữ trên màn hình: 40 triệu, toàn khách săn 99k\nKhung hình đầu: cửa spa\n"
+             "Câu đầu: \"40 triệu tiền quảng cáo, chị ra toàn khách săn 99k.\"\n```")
+
+
+class FT1RoundGraderTests(TempRepo):
+    """Grader fixes from the FT1 retest (qa/runs/retest-ft1/review.md §6, §7 fixes 2, 9, 10): the two hook defects no
+    grader read, the false positives the review found (they must pass) and the real defects those checks still catch
+    (they must still fail)."""
+
+    CHUNK = "Mình viết thuê cho coach. Có chị coach tài chính đăng đều mà không ai nhắn hỏi giá."
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", FT1_STRINGS))
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.write("evals/personas/vn/nhi/persona.toml", FT1_PERSONA)
+        self.write("evals/personas/vn/nhi/expected.toml", FT1_EXPECTED)
+        self.write("evals/personas/vn/nhi/answers.md", f"## Dump chunk 1\n{self.CHUNK}\n")
+
+    def vn(self, *turns, **kw):
+        return self.grade(list(turns), persona="vn/nhi", edition="vn", **kw)
+
+    def load(self, *turns, **kw):
+        return graders.load_run(self.run_dir(list(turns), persona="vn/nhi", edition="vn", **kw), self.root)
+
+    def item(self, report: dict, check: str, name: str) -> dict:
+        return next(i for i in self.inv(report, check)["items"] if i["item"].startswith(name))
+
+    # ---- fix 2: on-screen text that is the first line again (HL8)
+    def test_onscreen_repeat_share(self):
+        for on, first in (("Một email, 180 người", "Một email gửi 180 người: 7 người trả lời, 1 người mua."),
+                          ("Khen tay nhẹ rồi mất hút", "Khách khen tay em nhẹ mà cứ để chị về suy nghĩ rồi mất hút."),
+                          ("Sợ khách nghĩ mình chặt chém", "Em sợ khách nghĩ mình chặt chém."),
+                          ("40 triệu, toàn khách săn 99k", "40 triệu tiền quảng cáo, chị ra toàn khách săn 99k."),
+                          ("Vậy chưa phải nghiên cứu", "Em nghiên cứu rồi. Mình hỏi làm gì."),
+                          ("63 applications. 2 interviews.", "I sent 63 applications and got 2 interviews.")):
+            with self.subTest(on=on):
+                share, kept = graders.onscreen_repeat(on, first, lang="en" if on.isascii() else "vn")
+                self.assertGreaterEqual(share, 0.75, (share, kept))
+        for on, first in (("Who picked your keywords?", "A few posts read, one AI prompt, and you call that knowing your buyer?"),
+                          ("Record year. Still no cash.", "Best year ever. I'm in a stairwell, asking the bank for payroll."),
+                          ("AI đâu có gọi khách cũ", "Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?"),
+                          ("Không ai nhắn? Hỏi vì sao", "Hỏi mình cách viết bài, mình hỏi lại: vì sao người ta mua của bạn?"),
+                          ("Một chị coach than với mình", "Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.")):
+            with self.subTest(on=on):
+                share, kept = graders.onscreen_repeat(on, first, lang="en" if on.isascii() else "vn")
+                self.assertLess(share, 0.75, (share, kept))
+        self.assertIsNone(graders.onscreen_repeat("Lỗ?", "Lỗ nặng."))               # one content word: nothing to judge
+        self.assertIsNone(graders.onscreen_repeat("Không phải", "Không phải vậy."))
+
+    def test_hook_shorts_read_the_labelled_lines(self):
+        run = self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{NHI_N3}\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."))
+        shorts = graders.hook_shorts(run)
+        self.assertEqual([s["on"] for s in shorts], ["Vậy chưa phải nghiên cứu", "Một email, 180 người"])
+        self.assertTrue(shorts[0]["first"].startswith("Em nghiên cứu rồi."))
+        self.assertTrue(shorts[0]["caption"].startswith("Đọc vài bài với nhờ AI"))      # caption line 1, inside the box
+        self.assertEqual(shorts[1]["caption"], "Trước đó chị đăng gần như mỗi ngày mà không ai nhắn hỏi giá.")
+        # a caption label with its text on the same line, and the EN labels
+        en = graders.load_run(self.run_dir([("coach", "go"), ("machine", f"{TAG}Film\nOn screen: Coffee first\n"
+                                            "First line: \"Talk to ten people.\"\nCaption: Ask for 20 minutes.\n"
+                                            "NEXT → Film it.")]), self.root)
+        [short] = graders.hook_shorts(en)
+        self.assertEqual((short["on"], short["first"], short["caption"]),
+                         ("Coffee first", "Talk to ten people.", "Ask for 20 minutes."))
+
+    def test_the_retest_shorts_fail_and_the_rewrite_passes(self):
+        week = f"{TAG}Tuần 1\n\n{NHI_N3}\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."
+        report = self.vn(("coach", "tiếp"), ("machine", week))
+        self.assertFails(report, "hook_lab", 'on-screen "Một email, 180 người" says the first line again')
+        self.assertFails(report, "hook_lab", 'on-screen "Vậy chưa phải nghiên cứu" says the first line again')
+        self.assertFails(report, "hook_lab", 'flat claim on screen "Vậy chưa phải nghiên cứu"')
+        self.assertFails(report, "hook_lab", 'flat claim in the caption line 1 (equation: "đó chưa phải nghiên")')
+        self.assertIn("hook_lab", report["failed"])
+        names = [i["item"] for i in self.inv(report, "hook_lab")["items"]]
+        self.assertEqual([self.item(report, "hook_lab", n)["pass"] for n in names], [False, False, False])
+        fixed = f"{TAG}Tuần 1\n\n{NHI_N3_FIXED}\n\nTIẾP → Nhắn 'tiếp'."
+        report = self.vn(("coach", "tiếp"), ("machine", fixed))
+        self.assertPasses(report, "hook_lab")
+        self.assertNotIn("hook_lab", report["failed"])
+        self.assertEqual(self.inv(report, "hook_lab")["details"]["shorts"], 1)
+
+    def test_hanhs_three_week_one_shorts_all_repeat_the_first_line(self):
+        report = self.vn(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{HANH_WEEK}\n\nTIẾP → Nhắn 'tiếp'."))
+        evidence = self.inv(report, "hook_lab")["evidence"]
+        for on in ("Khen tay nhẹ rồi mất hút", "Sợ khách nghĩ mình chặt chém", "40 triệu, toàn khách săn 99k"):
+            self.assertTrue(any(f'on-screen "{on}" says the first line again' in e for e in evidence), (on, evidence))
+        self.assertEqual(len(evidence), 3)               # no flat claim: these hooks fail on the repeat alone
+
+    def test_the_threshold_is_acceptance_hook_lab(self):
+        week = f"{TAG}Tuần 1\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."
+        self.assertFails(self.vn(("coach", "tiếp"), ("machine", week)), "hook_lab")
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nonscreen_repeat_share = 1.1\n")
+        self.assertPasses(self.vn(("coach", "tiếp"), ("machine", week)), "hook_lab")
+
+    def test_no_short_no_check(self):
+        report = self.vn(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\nChưa có bài.\nTIẾP → Nhắn 'tiếp'."))
+        check = self.inv(report, "hook_lab")
+        self.assertEqual((check["status"], check["pass"]), ("n/a", True))
+        self.assertNotIn("hook_lab", report["failed"])
+
+    def test_flat_claims_on_screen_and_in_caption_line_1(self):
+        flat = graders.flat_claims
+        for text in ("Đó không phải research.", "Vậy chưa phải nghiên cứu", "Đây không phải marketing",
+                     "Khách phải tin bạn.", "Họ cần tin bạn", "Niềm tin là chìa khoá", "Đua doanh thu là chết chậm"):
+            with self.subTest(text=text):
+                self.assertTrue(flat(text, "on", "vn"), text)
+        for text in ("Đọc vài bài với nhờ AI tìm từ khoá thì nhanh thật, mà đó chưa phải nghiên cứu.",
+                     "Muốn người ta thành khách, họ cần tin bạn.", "Khách phải tin bạn."):
+            with self.subTest(text=text):
+                self.assertTrue(flat(text, "caption", "vn"), text)
+        for text in ("Không ai nhắn? Hỏi vì sao", "Đó không phải research, mà là sự lười",
+                     "Không thiếu khách, chỉ thiếu người tin bạn", "AI đâu có gọi khách cũ", "Một email, 180 người",
+                     "Đăng bán mà không ai hỏi?", "41 thẻ, 27 thẻ bỏ dở"):
+            with self.subTest(text=text):
+                self.assertEqual(flat(text, "on", "vn"), [], text)
+        # a buyer's line in quotes is not the coach's claim (first line, caption)
+        self.assertEqual(flat('Chị nói: "đó không phải lỗi của em", mình ngồi nghe.', "caption", "vn"), [])
+        for text in ("That's not research.", "That is not research", "This isn't marketing.", "It's not your age",
+                     "Clients must trust you.", "Research is the most important part of marketing.",
+                     "The bank app isn't a forecast.", "Zero is the killer.", "It's a calendar problem."):
+            with self.subTest(text=text):
+                self.assertTrue(flat(text, "on", "en"), text)
+        for text in ("Who picked your keywords?", "Record year. Still no cash.", "Nobody messages me", "No badge. No answer.",
+                     "Coffee before resume", "It's not research, it's a guess.", "That's not research, but it's a start.",
+                     "I check the bank app like it's a heart monitor.", "63 applications. 2 interviews.",
+                     "Your P&L is 6 weeks late"):
+            with self.subTest(text=text):
+                self.assertEqual(flat(text, "on", "en"), [], text)
+        self.assertEqual(flat("Honestly, that's not research. It's a guess.", "caption", "en"), [])      # flipped
+
+    def test_flat_claim_runs_end_to_end_in_en(self):
+        base = [("coach", "go"), ("machine", f"{TAG}Film\nFILM TODAY\nOn-screen: The bank app isn't a forecast.\n"
+                                           "First line: \"I check the bank app like it's a heart monitor.\"\n"
+                                           "Caption: It's not a revenue problem. Pull the numbers.\nNEXT → Film it.")]
+        report = self.grade(base)
+        self.assertFails(report, "hook_lab", 'flat claim on screen "The bank app isn\'t a forecast."')
+        self.assertFails(report, "hook_lab", "flat claim in the caption line 1")
+        ok = [("coach", "go"), ("machine", f"{TAG}Film\nFILM TODAY\nOn-screen: Record year. Still no cash.\n"
+                                          "First line: \"Best year ever. I'm in a stairwell, asking the bank for payroll.\"\n"
+                                          "Caption: Marcus sent me his numbers.\nNEXT → Film it.")]
+        self.assertPasses(self.grade(ok), "hook_lab")
+
+    def test_a_hook_lab_case_lists_the_check_in_its_invariants(self):
+        """evals/run.py check_case: `invariants` also names a check of graders.py (hook_lab)."""
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("cm_run_ft1", REPO / "evals" / "run.py")
+        cm_run = importlib.util.module_from_spec(spec)
+        sys.modules["cm_run_ft1"] = cm_run
+        spec.loader.exec_module(cm_run)
+        week = f"{TAG}Tuần 1\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."
+        d = self.run_dir([("coach", "tiếp"), ("machine", week)], persona="vn/nhi", edition="vn")
+        report = graders.grade(d, self.root)
+        case = {"id": "x.vn.001", "kind": "D", "invariants": ["I1", "hook_lab"], "notes": ""}
+        res = cm_run.check_case(case, graders.load_run(d, self.root), report)
+        self.assertFalse(res["pass"])
+        self.assertTrue(any(f.startswith("hook_lab failed") for f in res["failures"]), res)
+
+    # ---- fix 9: grader false positives
+    def test_i15_a_third_person_chi_with_a_noun_or_dem_is_not_a_slip(self):
+        def say(line):
+            return self.vn(("coach", "Bắt đầu"), ("machine", f"{TAG}Hỏi thêm\n\nBạn kể tiếp nhé.\nTIẾP → Gõ một chữ."),
+                           ("coach", "ok"), ("machine", f"{TAG}Hỏi thêm\n\n{line}\nTIẾP → Gõ một chữ."))
+        for line in ("Lúc mới tìm tới bạn, chị coach đó nói gì? Nhớ được nguyên văn thì càng hay.",
+                     "Làm với bạn xong, chị coach tài chính đó khác đi thế nào, và chị có chịu cho bạn kể lại không?",
+                     "Gõ đúng câu chị ấy nói, tiếng Việt như chị nói.",
+                     "Một chị coach tài chính nói với bạn câu đó, tháng 8.",
+                     "Anh thợ nói gì khi thấy cái bếp? Rồi anh có quay lại không?",
+                     "Có một chị khách hỏi bạn giá, chị hỏi vậy là sao?"):
+            with self.subTest(line=line):
+                self.assertPasses(say(line), "I15")
+        for slip in ("Chị thấy đúng không?", "Kể tiếp đi, chị nghe nè.", "Mình gửi chị tờ giấy nha.",
+                     "Chị ơi, bạn nào nhắn thì trả lời liền nhé.", "Em hỏi chị một câu thôi."):
+            with self.subTest(slip=slip):
+                self.assertFails(say(slip), "I15", "outside the pair bạn–mình")
+        # the anaphora stays on its own line: a bare "chị" on the next line is read again
+        two = self.vn(("coach", "Bắt đầu"), ("machine", f"{TAG}Hỏi thêm\n\nBạn kể tiếp nhé.\nTIẾP → Gõ một chữ."),
+                      ("coach", "ok"), ("machine", f"{TAG}Hỏi thêm\n\nChị coach đó nói gì?\nChị có chịu không?\nTIẾP → Gõ."))
+        self.assertFails(two, "I15", 'pronoun "Chị" outside the pair')
+
+    def test_third_person_kin_helper(self):
+        self.assertEqual(graders.third_person_kin("chị coach đó khác đi, và chị có chịu không"), {"chị"})
+        self.assertEqual(graders.third_person_kin("anh thợ và chị ấy"), {"anh", "chị"})
+        self.assertEqual(graders.third_person_kin("chị nhắn em một dòng nha"), set())
+
+    DA = ("Dạ, chị có khách cũ rồi thì làm được liền nè. Em có gói 3 tuần: em gọi 3 khách cũ của chị, mỗi người 30 phút. "
+          "Chị kết bạn Zalo với em để em gửi lịch nha, chưa cần thì chị cứ nói em.")
+    CARD = (f"{TAG}Brand Card\nBrand Card v1 · 07/10/2026\nNÓI GÌ: Coach đăng đều thì tìm mình\n"
+            "Phần còn lại là cho máy, không cần đọc:\n```\nversion: 1\naddress_1to1: ADDR\n```\nTIẾP → Mai nhắn 'tiếp'.")
+
+    def message_run(self, body: str, card: str = "") -> dict:
+        title = "Tin trả lời inbox 2 · khi họ trả lời là có khách cũ rồi"
+        reply = f"{TAG}Tuần 1\n{title}\n```\n{body}\n```\nTIẾP → Nhắn 'tiếp'."
+        turns = [("coach", "tiếp"), ("machine", reply)]
+        if card:
+            turns += [("coach", "ok"), ("machine", card)]
+        return self.vn(*turns)
+
+    def test_vn_messages_da_reads_address_1to1(self):
+        # no address_1to1 anywhere: the old reading stands, a "Dạ" with chị … nói em is a slip
+        self.assertFails(self.message_run(self.DA), "vn_messages", '"Dạ" from the coach to an em')
+        # the Card says the coach is the em: "Dạ" to a chị is right (the retest's false positive)
+        report = self.message_run(self.DA, self.CARD.replace("ADDR", "em – chị"))
+        self.assertPasses(report, "vn_messages")
+        self.assertIs(self.item(report, "vn_messages", 'no "Dạ"')["pass"], True)
+        run = self.load(("coach", "ok"), ("machine", self.CARD.replace("ADDR", "em – chị/anh")))
+        self.assertEqual(graders.address_1to1_self(run), ["em"])
+        # the coach is the chị: it is still a slip
+        report = self.message_run(self.DA, self.CARD.replace("ADDR", "chị – em"))
+        self.assertFails(report, "vn_messages", '"Dạ" from the coach to an em')
+        # the visible line of the card, and the persona's own expected.toml, are read too
+        visible = self.CARD.replace("Phần còn lại", "Nhắn riêng thì gọi: em – chị\nPhần còn lại").replace(
+            "address_1to1: ADDR\n", "")
+        self.assertPasses(self.message_run(self.DA, visible), "vn_messages")
+        self.write("evals/personas/vn/nhi/expected.toml", FT1_EXPECTED + 'address_1to1 = "em – chị"\n')
+        self.assertPasses(self.message_run(self.DA), "vn_messages")
+
+    def test_address_self_forms(self):
+        for value, want in (("em – chị", ["em"]), ("em–chị/anh", ["em"]), ("chị – em", ["chị"]), ("mình – bạn", ["mình"]),
+                            ("em/mình – chị", ["em", "mình"]), ("\"em\" – \"chị\" (Zalo)", ["em"])):
+            self.assertEqual(graders._address_self(value), want, value)
+
+    def test_a_filled_kit_bracket_is_not_a_placeholder(self):
+        run = self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\nĐầu đợt ghi [TikTok · 10/2026], tên đổi thành chữ cái.\n"
+                                           "```\n[TikTok · tháng 10]\nnhiều view\n```\nTIẾP → Gõ 'tiếp'."))
+        self.assertEqual(graders.unfilled_placeholders(run, run.replies[0]), [])
+        self.assertTrue(graders.filled_kit_bracket("[Facebook · tháng 10/2026]", graders.kit_bracket_fills(run.strings)))
+        # the slot names left in are still unfilled
+        for left in ("[place · month]", "[{place} · {month}]", "[nơi · tháng]"):
+            with self.subTest(left=left):
+                self.assertFalse(graders.filled_kit_bracket(left, graders.kit_bracket_fills(run.strings)), left)
+        raw = self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\nĐầu đợt ghi [place · month], tên đổi.\nTIẾP → Gõ 'tiếp'."))
+        self.assertEqual(graders.unfilled_placeholders(raw, raw.replies[0]), ["[place · month]"])
+        other = self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\nĐầu đợt ghi [động tác 1] nha.\nTIẾP → Gõ 'tiếp'."))
+        self.assertEqual(graders.unfilled_placeholders(other, other.replies[0]), ["[động tác 1]"])     # not a kit bracket
+
+    HEARD = ('\n    Mình đã nghe khách ở đâu:\n    · Trên mạng: 8 trang ở 4 nơi, từ 4/2021 tới 9/2026.\n'
+             '    Gõ "xem nghiên cứu" để xem hết.\n')
+
+    def heard_map(self) -> str:
+        return VG_MAP.replace('    4 GIỌNG: thẳng · thật · có số · với khách: "tôi – anh chị"\n',
+                              '    4 GIỌNG: thẳng · thật · có số · với khách: "tôi – anh chị"\n' + self.HEARD)
+
+    def test_show_the_research_is_a_command_never_the_keyword(self):
+        film_text = "\n".join(self.heard_map().splitlines())
+        run = self.load(("coach", "Bắt đầu"), ("machine", self.heard_map()))
+        self.assertIsNone(graders.cta_keyword(run, 'Gõ "xem nghiên cứu" để xem hết.'))             # cmd.show_research
+        self.assertEqual(graders.cta_keyword(run, film_text)[0], "TUYỂN HOÀI")
+        # without the string key the command reads as a keyword (the reason the kit adds cmd.show_research) …
+        without = {k: v for k, v in FT1_STRINGS.items() if k != "cmd.show_research"}
+        self.write("strings/vn.toml", toml_table("strings", without))
+        run = self.load(("coach", "Bắt đầu"), ("machine", self.heard_map()))
+        self.assertEqual(graders.cta_keyword(run, 'Gõ "xem nghiên cứu" để xem hết.')[0], "xem nghiên cứu")
+
+    def test_the_cta_is_film_todays_own(self):
+        """YOUR WORD is compared with the CTA of FILM TODAY's script and caption, not with a command line above it."""
+        name = "YOUR WORD is the CTA keyword"
+        for key in (True, False):
+            with self.subTest(show_research_key=key):
+                strings = FT1_STRINGS if key else {k: v for k, v in FT1_STRINGS.items() if k != "cmd.show_research"}
+                self.write("strings/vn.toml", toml_table("strings", strings))
+                turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", self.heard_map())]
+                report = self.grade(turns, persona="vn/nhi", edition="vn", suite="day0")
+                self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
+                self.assertFalse([e for e in self.inv(report, "day0_shape")["evidence"] if "the CTA asks for" in e])
+        # a real mismatch still fails: the caption asks for another word than YOUR WORD
+        wrong = self.heard_map().replace("comment TUYỂN HOÀI hay", "comment NGẠI CHÀO hay")
+        report = self.grade([("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", wrong)],
+                            persona="vn/nhi", edition="vn", suite="day0")
+        self.assertFails(report, "day0_shape", 'the CTA asks for "NGẠI CHÀO" but YOUR WORD is "tuyển hoài"')
+
+    # ---- fix 10: the dig's answers on top of the Map's turn budget
+    DIGS = (f"{TAG}Hỏi thêm\n\nBạn nghĩ tới một khách bạn giúp được nhiều nhất nhé. Tuần đầu tìm tới bạn, họ đang kẹt chuyện gì?\nTIẾP → Kể một chuyện thật.",
+            f"{TAG}Hỏi thêm\n\nLúc mới tìm tới bạn, chị coach đó nói gì? Nhớ được nguyên văn thì càng hay.\nTIẾP → Gõ đúng câu chị ấy nói.",
+            f"{TAG}Hỏi thêm\n\nKhách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?\nTIẾP → Nói một câu: nhận gì, giá bao nhiêu.",
+            f"{TAG}Hỏi thêm\n\nLàm với bạn xong, chị coach tài chính đó khác đi thế nào, và chị có chịu cho bạn kể lại không?\nTIẾP → Kể đúng chuyện sau khi xong.")
+    MORE = f"{TAG}Xả ý\n\nMình nghe nè.\nTIẾP → Cứ nói tiếp."
+
+    def dig_session(self, digs: int, filler: int, **kw):
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK)]
+        for text in list(self.DIGS[:digs]) + [self.MORE] * filler:
+            turns += [("machine", text), ("coach", "ok một chuyện")]
+        return self.grade(turns + [("machine", VG_MAP)], persona="vn/nhi", edition="vn", suite="day0", **kw)
+
+    def test_dig_questions_are_found_even_when_adapted(self):
+        turns = [("coach", "x")]
+        for text in list(self.DIGS) + [self.MORE]:
+            turns += [("machine", text), ("coach", "ok một chuyện")]
+        run = self.load(*turns)
+        self.assertEqual(len(graders.dig_questions(run, len(run.turns) + 1)), 4)
+        for text in (self.MORE, f"{TAG}Bản đồ\nBạn nói gì với khách? Rồi sao?\nTIẾP → ok"):
+            other = self.load(("coach", "x"), ("machine", text))
+            self.assertEqual(graders.dig_questions(other, 99), [], text)
+
+    def test_the_maps_turn_budget_grows_with_the_dig_answers_asked(self):
+        # 8 coach turns before the Map: over 7 without a dig, inside 7 + 4 with four dig answers
+        none = self.dig_session(0, 6)
+        self.assertFails(none, "day0_timing", "Map after 8 coach turns (max 7)")
+        self.assertNotIn("map_dig_answers", self.inv(none, "day0_timing")["details"])
+        four = self.dig_session(4, 2)
+        self.assertEqual(self.inv(four, "day0_timing")["details"]["map_dig_answers"], 4)
+        self.assertFalse([e for e in self.inv(four, "day0_timing")["evidence"] if e.startswith("Map after")])
+        # dig_answers_max caps what counts
+        self.write("evals/acceptance.toml", FT1_ACCEPT.replace("dig_answers_max = 4", "dig_answers_max = 0"))
+        self.assertFails(self.dig_session(4, 2), "day0_timing", "Map after 8 coach turns (max 7)")
+        self.write("evals/acceptance.toml", FT1_ACCEPT.replace("dig_answers_max = 4", "dig_answers_max = 2"))
+        two = self.dig_session(4, 4)                                  # 10 coach turns before the Map: over 7 + 2
+        self.assertEqual(self.inv(two, "day0_timing")["details"]["map_dig_answers"], 2)
+        self.assertFails(two, "day0_timing", "Map after 10 coach turns (max 7 + 2 dig answers)")
+
+    def test_too_many_turns_still_fail_with_the_dig(self):
+        report = self.dig_session(4, 6)                   # 12 coach turns before the Map: over 7 + 4
+        self.assertFails(report, "day0_timing", "Map after 12 coach turns (max 7 + 4 dig answers)")
+
+    def test_the_session_budget_grows_with_the_dig_answers_too(self):
+        # 14 coach turns in all: over 11 without a dig, inside 11 + 4 with four
+        self.assertFails(self.dig_session(0, 10), "day0_timing", "coach turns in the session (max 11)")
+        four = self.dig_session(4, 6)
+        self.assertFalse([e for e in self.inv(four, "day0_timing")["evidence"] if "turns in the session" in e])
+        self.assertFails(self.dig_session(4, 10), "day0_timing", "coach turns in the session (max 11 + 4 dig answers)")
+
+    # ---- fix 11: the hook-lab rubric does not fail an email's three subject lines (the kit prints 3 by design)
+    def test_the_hook_lab_standard_exempts_email_subjects(self):
+        text = (REPO / "qa" / "standards" / "hook-lab.md").read_text(encoding="utf-8")
+        hg3 = text[text.index("**HG3 Reply discipline.**"):text.index("## Build pass rule")]
+        self.assertIn("**Exempt, by the kit's own design:**", hg3)
+        for fragment in ('"3 subject lines"', '"3 tiêu đề"', "Three subjects or three titles is never an HG3 fail", "HL9"):
+            self.assertIn(fragment, hg3)
+        self.assertIn("**Not exempt:** a short's on-screen text, first line or first frame", hg3)   # one winner each there
+        # the rest of HG3 still holds
+        for fragment in ("Only the winner prints", '"hook khác" gives exactly 2', "one question at most"):
+            self.assertIn(fragment, hg3.replace('"another hook" / "hook khác"', '"hook khác"'))
+
+    def test_the_film_ready_cap_stays_twenty_minutes(self):
+        """The dig adds turns, never minutes: film-ready is still graded against film_ready_max_minutes."""
+        slow = self.dig_session(4, 6)                      # the Map and FILM TODAY arrive at minute 26 of the transcript
+        self.assertFails(slow, "day0_timing", "film-ready at active minute")
+        self.assertEqual(self.inv(slow, "day0_timing")["details"]["map_dig_answers"], 4)
 
 
 class LoaderTests(TempRepo):

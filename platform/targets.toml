@@ -515,6 +515,14 @@ vn = 36864
 limit = ""
 note = "36 KB since 7 Oct 2026 (was 30,720 B): §CM-MONTH and §CM-LIKED moved here from the method file (founder, 7 Oct night: the method file's room went to the Day-0 dig, the listening pass and the hook lab). Each anchor block still stays within method_section."
 
+[budgets.levelup_playbook]
+artifact = "Level-ups/PLAYBOOK-{EN,VN}.md"
+unit = "bytes"
+en = 30720
+vn = 30720
+limit = ""
+note = "The content strategy document (§CM-STRATEGY-DOC), 7 Oct 2026: its own file because STRATEGY is full. Each anchor block still stays within method_section."
+
 [budgets.brand_card]
 artifact = "Brand Card (whole)"
 unit = "chars_nfc"

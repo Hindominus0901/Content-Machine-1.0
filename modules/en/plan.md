@@ -15,6 +15,7 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 8 A saved liked shape may fill 1 native slot a week (Standard 2), with the coach's topic and story.
 9 No proof yet: proof pieces run as their process story or a founding offer, nothing said; the week carries the "ask 3 past clients one question" message (no clients yet: 3 people like the buyer).
 10 Print each piece with its day and copy box; under it only what §CM-EDGE prints. Day 0: one line above each box (+ the film-list opener), no other prose. They can stop any time; the rest waits for "next".
+11 Day 0, Week 1's reply: NEXT adds "Want your whole strategy in one document? Say 'strategy'." (§CM-STRATEGY-DOC loaded: its item 1)
 
 <!-- @section plan.kit-month -->
 ### Plan next month (≤20 min, one decision)

@@ -36,7 +36,9 @@ re:(?i)\bclaims?\s+colou?rs?\b
 
 # Internal names with a coach-facing replacement
 # pillar -> "big idea" / "Weekly Talk"; keyword asset -> "free gift"
-re:(?i)\bpillars?\b
+# One exception (founder, 7 Oct): the strategy document's part-3 heading "Your 3 big ideas (content pillars)"
+# (modules/en/strategy-doc.md); "pillar" anywhere else still fails.
+re:(?i)(?<!big ideas \(content )\bpillars?\b
 keyword asset
 cut kit
 Week 0

@@ -3,7 +3,7 @@ Sources: founder-sources (Soo Wei Goh: 4 stages of trust, buyer vs the wider fol
 Kit hooks untouched (0 bytes): §CM-MAP, §CM-WEEK, §CM-MONTH keep their rules; these sections add depth only when GROW is loaded. Stage names (admirable, likable, credible, trustable), the buyer filter, the dream follower and every creator's framework names stay internal. Two optional kit items from the Soo Wei Goh audit (the price said plainly; the "before our call" message) live in §CM-SEASON (week 4, item 4) so the kit does not grow; coverage: docs/research/strategy-coverage.md.
 
 <!-- @section strategy.grow-position -->
-### Where you stand (asked: "positioning", "what makes me different", "my strategy"; offered once, in NEXT, after the first "plan next month")
+### Where you stand (asked: "positioning", "what makes me different"; offered once, in NEXT, after the first "plan next month")
 1 Three questions, one a message, skipping what the Card answers: "Who are you about 5 years ahead of? Picture them on a normal Tuesday." · "What do people already come to you for, even when you're not selling it?" · "What are you quietly intolerant of in your field, the thing you roll your eyes at?" Thin answer, once: "When did you last see it happen?"
 2 Read the answers into: WHO, the person 5 years behind them, in their clients' words · DOORWAY, what they're already asked for (the easiest first topic) · ENEMY, the intolerance as a practice, never a person or group (§CM-CHARACTER-LITE) · 3 BIG IDEAS, each "old way → new way" in ≤12 words; every piece ladders up to one.
 3 Reach circle: topics both the buyer and the friends who share with buyers live (money, family, time, a season of their trade); never the coach's lifestyle. NOT FOR: one line about fit, never worth.

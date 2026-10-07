@@ -1306,3 +1306,61 @@ verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
 notes = """R3 and §CM-EDGE WHAT PRINTS ('Ready (also downgraded): nothing'): a downgraded piece prints only its content; the downgrade shows on 'why?' as verdict.ready_downgraded 'Ready to {verb} · written as {evidence}' (here his own story or process: no pull-up at 35, sets of 8 by 37, the garage). Turn 1 prints the proof short with nothing under it (I3 grades it: a 'written as' line there fails). Turn 2 (assertions here): the 'written as' line and the WHY line. verdict Ready-downgraded: evals/run.py wants a Ready line on a 'why?' reply. Cold start (I8): no client result, no brother."""
+
+# ---------------------------------------------------------------- hook lab (founder test 7 Oct; review retest-ft1 §3, fix 2, fix 11)
+# Seeded from the retest's EN consultant run (qa/runs/retest-ft1/review.md §3): the short with a flat on-screen claim, the
+# Wednesday post whose line 1 is a maxim, the Monday Number email whose subject is a series label. D = graders.py
+# hook_lab (listed in `invariants`) plus regex; P = qa/standards/hook-lab.md, all-or-nothing (every item 2, N/A removed).
+
+[[case]]
+id = "fmt-short.en.049"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Hook lab, EN short on the heart-monitor line: the on-screen text adds to the first line and is no flat claim"
+context = "Week 1, Thursday 8 October 2026, Claude Free on her Windows laptop. Brand Card v1 present (persona default: audience 'you'; YOUR WORD RECORD YEAR; word-for-word delivery). Her Day-0 dump: Dee, who owns a design studio with her husband, 12 people, told her on their first call 'I check the bank app like it's a heart monitor.' every morning before she gets out of bed; Dee OK'd her first name only and no dollar amounts. Today's plan slot is a short on that line."
+input = """[turn 1] write me a short on the heart monitor line"""
+regex = [
+  '''(?im)^\W*On-?screen(?: text)?:''',
+  '''(?im)^\W*First line:''',
+  '''(?i)heart monitor''',
+]
+not_regex = [
+  '''(?im)^\W*On-?screen(?: text)?:\s*(?:That|This|It)(?:'s|’s| is| isn't| isn’t| was)\b''',
+  '''(?im)^\W*On-?screen(?: text)?:\s*The bank app (?:is|isn't|isn’t|is not)\b''',
+  '''(?i)\$\s?85(?:,000|k)\b''',
+  '''(?im)^\W*(?:Ready to|✓ Checked:|WHY THIS GETS CLIENTS)''',
+]
+invariants = ["I1", "I3", "I5", "I8", "hook_lab"]
+max_questions = 1
+notes = """qa/standards/hook-lab.md HL7, HL8; review retest-ft1 §3 (EN: 'The bank app isn't a forecast.' on screen, over a first line about the bank app, is a bare 'X isn't Y' that states the ending). Passing shape: on-screen words that add a thing the first line does not say (a scene, a number of hers, a question); the first line is Dee's line or a scene; a last line that pays off. hook_lab fails a repeat at 75% of the on-screen words or more and the flat-claim families (that/this/it is not …, a generic subject with 'must', 'X is the key', a bare 'X is Y'). No dollar amount for Dee (her OK). Nothing under the piece (I3)."""
+
+[[case]]
+id = "fmt-short.en.050"
+kind = "P"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Hook lab, EN Wednesday post: line 1 is a scene, a buyer's line or her number, never an 'If X, Y' maxim"
+context = "Week 2, Wednesday, Claude Free on her Windows laptop. Brand Card v1 present (persona default: LinkedIn, long text post; YOUR WORD RECORD YEAR). In her dump she said agency owners tell her 'record year and I can't sleep' and 'record year and I put payroll on my personal card', 'all of them say some version of it', and that she hears it a lot. Judge the post's first line (and its last) only."
+input = """[turn 1] write my Wednesday LinkedIn post: why growing an agency with broken margins just digs the hole deeper"""
+standard = "hook-lab"
+critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7"]
+min_score = 14
+invariants = ["I1", "I3", "I8", "I17"]
+max_questions = 1
+notes = """scope: pieces. qa/standards/hook-lab.md (HL8 and HL9 are N/A: not a short, no title; 7 items, all 2). The retest printed line 1 'If your margin's broken, growing just makes the hole bigger, faster.': no scene (HL1), 'margin's broken' is her term, not a buyer's (HL2), nothing paid off (HL3), a maxim that states the ending (HL7). The review's rewrite scores 14: line 1 '\"Record year, and I put payroll on my personal card.\"' (a line she reports many saying; the post says it is one she hears every month), last line 'Before you add a client, find the one you're paying to keep.' A question as the hook is fine when the last line answers it."""
+
+[[case]]
+id = "fmt-short.en.051"
+kind = "P"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Hook lab, EN email: three subject lines print by design (not an HG3 fail); the first is a reader's result, not a series label"
+context = "Week 1, Monday, Claude Free on her Windows laptop. Brand Card v1 present (persona default: audience 'you'; her list is the Monday Number, 380 subscribers; YOUR WORD RECORD YEAR). Marcus (first name OK'd) had his biggest client, about a third of his revenue, at minus 6 percent once the real hours went in, and repriced them. She asks for this week's email on that story. Judge the three subject lines and the preview or first line."
+input = """[turn 1] write this week's Monday Number email, Marcus's story, the client who was at minus 6 percent"""
+standard = "hook-lab"
+critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7", "HL9"]
+min_score = 16
+invariants = ["I1", "I3", "I5", "I8"]
+max_questions = 1
+notes = """scope: pieces. qa/standards/hook-lab.md; HL8 N/A (not a short); HG3 EXEMPTS the email's 3 subject lines (the kit prints 3 by design, §CM-MESSAGES 'Email'; review retest-ft1 §3 and fix 11), so 3 subjects is never the fail here. The retest's first subject 'The Monday Number: minus 6' is a series label with no result for the reader (HL9) and a bare figure with no scene. Scored: the first subject on HL1-HL7 and HL9 (a title shape in plain words, the reader's result, ≤60 characters), the other two as drafts of it (free of hype, hedge, bait: HL6); the preview opens a loop the email closes."""

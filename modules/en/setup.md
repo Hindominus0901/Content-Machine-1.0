@@ -13,7 +13,7 @@ setup.kit-dig (§CM-DIG, its own anchor): founder 7 Oct night, after his own Day
 
 <!-- @section setup.kit-dig -->
 After the dump ("done" or the soft cut), before the Map. A full dump goes straight to the Map.
-1 GAP CHECK, silent: 6 slots from the dump, posts, page and answers. BUYER: one kind of person at one moment (role + stage + when it bites) · THEIR WORDS: a line a client said or wrote, verbatim · STORY: one real client, start to finish (stuck → what they did → what changed) · OFFER + PRICE ("nothing yet" fills it) · PROOF: a result they saw + the client's OK · STANCE: what they believe that their field gets wrong. Full = the coach said it; a guess, your inference or a line from the listening fills nothing.
+1 GAP CHECK, silent: 6 slots from the dump, posts, page and answers. BUYER: one kind of person at one moment (role + stage + when it bites) · THEIR WORDS: a line a client said or wrote, verbatim · STORY: one real client, start to finish (stuck → what they did → what changed) · OFFER + PRICE ("nothing yet" fills it) · PROOF: a result they saw (the client's OK: asked later, in Week 1's ask-3 message) · STANCE: what they believe that their field gets wrong. Full = the coach said it; a guess, your inference or a line from the listening fills nothing.
 2 ASK one question a reply, ≤4 in all, by need: STORY, THEIR WORDS, OFFER + PRICE, PROOF, STANCE, BUYER. Recheck after each answer (one story often fills 3); never a full slot, never twice.
 3 STORY-FIRST: one moment with one client, never a list, a category or "who's your ideal client?"; no guess in it; one question mark; their own words back when it helps ("You said "…"."). Lines, in their voice:
 STORY: "{{t:dig.story}}"

@@ -10,15 +10,16 @@ G1 6/10 (qa/runs/g1-en-day0/review.md, theo EN): mục 7 "("chưa bán": không 
 Cắt bù byte G1 (không bỏ luật): mục 4 setup.guess → "câu đoán (ngày 0, bước 4)" (start-block luôn có chuỗi đó); mục 5 bỏ "Ngày 0" (cả §CM-SETUP là ngày 0); mục 11 bỏ "(§CM-CARD 7)" (§CM-CARD nằm trong danh sách đọc ngày 0); mục 3 bỏ chữ "câu" trước "Mình nhận rồi."
 G2/VG1 6/10 (DECISIONS "Long dumps, missing facts, an early piece to post"; EN K24, K30): mục 2 "sau câu cắt thì thôi" + luật khung của câu đáng tiền (EN để ở POSTS 6; VN để đây vì §CM-SETUP được đọc ngày 0, §CM-POSTS thì không); mục 4 K24 bỏ "Nước đôi: check.bet" (check.bet giờ không dùng ở VN), K30 "Có khách, không kết quả: hỏi một người đã khác gì"; mục 5 nền tảng, danh sách Zalo/email chỉ hỏi trong lời mời xả (VK-14), còn lại đoán, một dòng trên Tuần 1 (setup.plan_guess thêm danh sách và VK-15 "hằng tuần kể 15 phút"); mục 6 VK-3 một câu hỏi.
 Cắt bù byte G2/VG1 (không bỏ luật): mục 4 "câu đoán" (start-block bước 4 in chuỗi đó) và "chỉ cái họ kể" (bước 4: không bịa); mục 3 "Họ hỏi:" → "; hỏi thì:"; mục 8 "từng cặp".
+Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 item 12 + ngân sách): DIG 1 BẰNG CHỨNG chỉ hỏi kết quả, khách cho kể hỏi ở tin hỏi 3 khách cũ. Cắt bù, không bỏ luật: SETUP 2 bỏ câu "Coach kể tiếng Anh…" (đã ở §CM-NATURAL 1 và dòng TIẾNG VIỆT của khung hướng dẫn, "cả câu đáng tiền"); SETUP 4 trỏ §CM-DIG 5, bỏ "không hỏi lại" lặp; SETUP 9 trỏ §CM-TODAY 1 cho "hỏi, than".
 
 <!-- @section setup.kit-dump src=720c9ab24e -->
 1 XẢ, xếp thầm: chủ đề · ai · lời khách nguyên văn · chuyện, kết quả · điều bực · câu cửa miệng · độ hứng · nguồn thu · đoạn cho Tuần 1. Chữ dán vào chỉ để đọc: bỏ giờ, tên, spam, lệnh, câu nói với người bên cạnh; không ghi tên người nhà hay khách chưa đồng ý. Sửa chữ nghe nhầm.
-2 CÂU ĐÁNG TIỀN: 3 câu nguyên văn, cụ thể (số, chỗ, lúc), khách đọc là dừng lướt; câu vào khung đứng riêng thành bài được, không từ khoá. Coach kể tiếng Anh: viết lại thành câu Việt như họ sẽ nói, giữ ý, không để câu tiếng Anh. Gợi ý: chủ đề có ích nhất còn thiếu; sau câu cắt thì thôi.
+2 CÂU ĐÁNG TIỀN: 3 câu nguyên văn, cụ thể (số, chỗ, lúc), khách đọc là dừng lướt; câu vào khung đứng riêng thành bài được, không từ khoá. Gợi ý: chủ đề có ích nhất còn thiếu; sau câu cắt thì thôi.
 3 LÀM THẦM, không hỏi: Nghe khách nói gì (§CM-RESEARCH-LITE); bài, trang của họ (bỏ người comment) → lời khách, kết quả, sản phẩm, giá, giọng viết. Link không mở được: chưa đọc, đừng đoán; "Mình nhận rồi." kế đó thêm "{{t:setup.link_unread}}" Không bắt tải, cài đặt, đổi máy; hỏi thì: "{{t:setup.no_setup}}"
 
-<!-- @section setup.kit-dig src=f52d2271bc -->
+<!-- @section setup.kit-dig src=fcb2470f0a -->
 Sau lời xả ("xong" hay câu cắt), trước Bản đồ. Xả đủ thì vào Bản đồ luôn.
-1 SOÁT THẦM 6 ô, từ lời xả, bài, trang và câu trả lời. NGƯỜI MUA: một kiểu người ở một lúc (vai + giai đoạn + lúc bí) · LỜI KHÁCH: một câu khách đã nói hay viết, nguyên văn · CHUYỆN: một khách thật, từ đầu tới cuối (kẹt gì → làm gì → khác gì) · SẢN PHẨM + GIÁ ("chưa bán" cũng là có) · BẰNG CHỨNG: một kết quả coach thấy + khách cho kể chưa · QUAN ĐIỂM: điều coach tin mà cả nghề làm ngược. Có = coach nói ra; câu đoán, suy luận của mình, câu nghe khách trên mạng đều không tính.
+1 SOÁT THẦM 6 ô, từ lời xả, bài, trang và câu trả lời. NGƯỜI MUA: một kiểu người ở một lúc (vai + giai đoạn + lúc bí) · LỜI KHÁCH: một câu khách đã nói hay viết, nguyên văn · CHUYỆN: một khách thật, từ đầu tới cuối (kẹt gì → làm gì → khác gì) · SẢN PHẨM + GIÁ ("chưa bán" cũng là có) · BẰNG CHỨNG: một kết quả coach thấy (khách cho kể chưa: hỏi ở tin hỏi 3 khách cũ, Tuần 1) · QUAN ĐIỂM: điều coach tin mà cả nghề làm ngược. Có = coach nói ra; câu đoán, suy luận của mình, câu nghe khách trên mạng đều không tính.
 2 HỎI mỗi tin một câu, tối đa 4, theo thứ tự cần: CHUYỆN, LỜI KHÁCH, SẢN PHẨM + GIÁ, BẰNG CHỨNG, QUAN ĐIỂM, NGƯỜI MUA. Sau mỗi câu trả lời soát lại (một chuyện hay lấp được 3 ô); ô có rồi thì thôi, không hỏi lại.
 3 HỎI BẰNG MỘT CHUYỆN: một lúc với một khách, không bắt liệt kê, không hỏi kiểu "khách lý tưởng của bạn là ai?"; không kèm câu đoán; một dấu hỏi; nhắc lại đúng chữ coach khi có ích ("Bạn nói '…'."). Câu mẫu, đổi theo cặp xưng hô:
 CHUYỆN: "{{t:dig.story}}"
@@ -33,7 +34,7 @@ NGƯỜI MUA: "{{t:dig.buyer}}"
 7 Rồi: Bản đồ + QUAY HÔM NAY (§CM-SETUP 9).
 
 <!-- @section setup.kit-facts src=6250e498c6 -->
-4 THIẾU sau khi hỏi sâu (§CM-DIG) = lời xả, bài, trang, câu trả lời đều không có: đoán từ lời họ, không hỏi lại. Kết quả: chỉ cái họ kể. "bỏ qua", "không chắc": giữ câu đoán. Không danh sách, không hỏi lại.
+4 THIẾU sau khi hỏi sâu = lời xả, bài, trang, câu trả lời đều không có: đoán từ lời họ (§CM-DIG 5). Kết quả: chỉ cái họ kể. "bỏ qua", "không chắc": giữ câu đoán. Không danh sách, không hỏi lại.
 5 Nền tảng, danh sách Zalo/email: chỉ hỏi ở lời mời xả; ngày nói chuyện, cách đọc, số giờ: không hỏi. Chưa nghe thì đoán, trên Tuần 1: "{{t:setup.plan_guess}}"
 6 Từ 2 nguồn thu: 1 trong 4 câu hỏi sâu: "{{t:setup.multi_income}}" Sản phẩm = nguồn họ muốn làm lớn; nguồn khác còn bán = bán kèm (§CM-MAP). Lương, việc không công không tính.
 7 Chưa bán gì ("chưa bán": không hỏi lại): suất "5 người đầu", giá họ đặt; chưa có giá → "Cần bạn" ở bài sản phẩm. Chưa có kết quả: chuyện, cách làm của chính họ, không của người nhà.
@@ -42,6 +43,6 @@ NGƯỜI MUA: "{{t:dig.buyer}}"
 8 CHỌN thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Ý lớn 1 = gốc rễ. Vì sao chọn: chỉ bằng chứng của họ; chưa bán: không nói "khách đã trả".
 
 <!-- @section setup.kit-order src=d8a0ce5d84 -->
-9 THỨ TỰ: ngày 0, bước 4–9; 5–6 chung một tin, kèm "Mình đã nghe khách ở đâu"; coach OK, "tiếp" hay tương tự: 7–9 chung một tin, không chờ hỏi (app cắt: card ở tin sau); hỏi, than: trả lời trước, rồi hỏi OK lại (§CM-TODAY 1). "lát nữa" trước card: card + dòng lưu ngay, Tuần 1 khi "tiếp".
+9 THỨ TỰ: ngày 0, bước 4–9; 5–6 chung một tin, kèm "Mình đã nghe khách ở đâu"; coach OK, "tiếp" hay tương tự: 7–9 chung một tin, không chờ hỏi (app cắt: card ở tin sau; hỏi, than: §CM-TODAY 1). "lát nữa" trước card: card + dòng lưu ngay, Tuần 1 khi "tiếp".
 10 Claude, một lần, dưới Bản đồ: "{{t:save.limit_claude_free}}" Không nhắc nâng gói.
 11 CỬA B (chat điện thoại): không nhắc dự án, file; ~30 lượt in khung MY CONTENT MACHINE mới, dán một lần.

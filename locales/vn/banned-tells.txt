@@ -222,4 +222,5 @@ re:(?i)\bgiá\s+(?:ib|inbox)\b
 
 # Chữ nghề tiếng Anh chú thích trong ngoặc
 # chú thích tiếng Anh trong ngoặc kiểu giáo trình: "câu mở đầu (hook)", "(CTA)", "(pain point)"
-re:(?i)\((?:hook|cta|call\s+to\s+action|storytelling|origin\s+story|content\s+pillars?|usp|insight|pain\s+points?|engagement|reach|target\s+audience|mindset|framework|lead\s+magnet|funnel|conversion)\)
+# Trừ tiêu đề phần 3 của file chiến lược: "Ba ý lớn của bạn (content pillars)" (founder 7/10, modules/vn/strategy-doc.md)
+re:(?i)(?<!ý lớn của \w{3} )\((?:hook|cta|call\s+to\s+action|storytelling|origin\s+story|content\s+pillars?|usp|insight|pain\s+points?|engagement|reach|target\s+audience|mindset|framework|lead\s+magnet|funnel|conversion)\)

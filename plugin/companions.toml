@@ -78,7 +78,7 @@ BOARD FILES: Board/ next to this file holds the five header-row files (Campaigns
 description = "Content Machine strategy: positioning, what to post about, ideas, titles, hooks, carousels, a long video. Use for \"positioning\", \"what should I post about?\", \"ideas\", \"title\", \"long video\"."
 part = "strategy"
 jobs = """\
-- "positioning", "what makes me different", "my strategy": §CM-STRATEGY (it shapes every week through §CM-SEASON)
+- "positioning", "what makes me different": §CM-STRATEGY (it shapes every week through §CM-SEASON) · "strategy", "content pillars", the whole strategy in one document: §CM-STRATEGY-DOC (cm-playbook)
 - "what should I post about?", "I'm stuck", "no ideas", "what now?": §CM-WHAT-TO-SAY · "plan next month": §CM-MONTH, then §CM-STRATEGY-REVIEW
 - "make it more me", "who am I online": §CM-CHARACTER-DEEP, then §CM-CHARACTER-SCENES ("stance", "spicier")
 - "ideas", "give me ideas": §CM-IDEAS · "make it funny", "trend", "viral": §CM-MOMENTS · a post they like, "make my version": §CM-LIKED
@@ -86,9 +86,17 @@ jobs = """\
 - "long video", "YouTube", "podcast": §CM-LONG with §CM-LONG-INTRO · after filming, "cut it": §CM-LONG-CUTS"""
 extra = ""
 
+[area.playbook.en]
+description = "Content Machine playbook: the whole content strategy in one file (3 big ideas, the week, the first 30 days). Use for \"strategy\", \"my strategy\", \"content pillars\", \"content system\"."
+part = "playbook"
+jobs = """\
+- "strategy", "my strategy", "content strategy", "content pillars", "content system", and on Day 0 with Week 1: §CM-STRATEGY-DOC (saved as CONTENT-STRATEGY.md when you can create files, else printed whole)
+- positioning alone ("positioning", "what makes me different"): §CM-STRATEGY (cm-strategy) · the 2 hooks per big idea: §CM-HOOKS (cm-strategy)"""
+extra = ""
+
 [readme.en]
 body = """\
-**Also inside:** four companion skills, one per level-up (research, launch and ads, board and nudges, strategy), and four helper agents for Claude Code and Cowork. Nothing to upload: they load when the job needs them."""
+**Also inside:** five companion skills, one per level-up (research, launch and ads, board and nudges, strategy, the playbook), and four helper agents for Claude Code and Cowork. Nothing to upload: they load when the job needs them."""
 
 # ------------------------------------------------------------------ Tiếng Việt
 [common.vn]
@@ -154,7 +162,7 @@ FILE BẢNG: thư mục Board/ cạnh file này có năm file chỉ có dòng ti
 description = "Content Machine chiến lược: định vị, đăng gì bây giờ, ý tưởng, tiêu đề, hook, carousel, video dài. Dùng khi nghe \"định vị\", \"đăng gì bây giờ?\", \"cho mình ý tưởng\", \"đặt tiêu đề\", \"video dài\"."
 part = "chiến lược"
 jobs = """\
-- "định vị", "mình khác người ta chỗ nào", "chiến lược": §CM-STRATEGY (rồi §CM-SEASON định hình từng tuần)
+- "định vị", "mình khác người ta chỗ nào": §CM-STRATEGY (rồi §CM-SEASON định hình từng tuần) · "chiến lược", "content pillars", cả chiến lược trong một file: §CM-STRATEGY-DOC (cm-playbook)
 - "đăng gì bây giờ?", "bí ý", "hết ý tưởng", "giờ làm gì?": §CM-WHAT-TO-SAY · "lên kế hoạch tháng sau": §CM-MONTH, rồi §CM-STRATEGY-REVIEW
 - "giống mình hơn nữa", "trên mạng mình là ai": §CM-CHARACTER-DEEP, rồi §CM-CHARACTER-SCENES ("gắt hơn")
 - "cho mình ý tưởng", "gợi ý bài": §CM-IDEAS · "làm cho vui", "bắt trend", "viral": §CM-MOMENTS · bài coach thích, "làm bản của mình": §CM-LIKED
@@ -162,6 +170,14 @@ jobs = """\
 - "video dài", "YouTube", "podcast": §CM-LONG cùng §CM-LONG-INTRO · quay xong, "cắt ra": §CM-LONG-CUTS"""
 extra = ""
 
+[area.playbook.vn]
+description = "Content Machine file chiến lược: 3 ý lớn, mỗi tuần làm gì, 30 ngày đầu, gom trong một file. Dùng khi nghe \"chiến lược\", \"chiến lược nội dung\", \"content pillars\", \"hệ thống nội dung\"."
+part = "file chiến lược"
+jobs = """\
+- "chiến lược", "chiến lược nội dung", "content pillars", "trụ cột nội dung", "hệ thống nội dung", và ngày 0 cùng Tuần 1: §CM-STRATEGY-DOC (tạo được file thì lưu CHIEN-LUOC-NOI-DUNG.md, không thì in trọn)
+- chỉ hỏi định vị ("định vị", "mình khác người ta chỗ nào"): §CM-STRATEGY (cm-strategy) · 2 hook cho mỗi ý lớn: §CM-HOOKS (cm-strategy)"""
+extra = ""
+
 [readme.vn]
 body = """\
-**Có sẵn thêm:** bốn skill đồng hành, mỗi nâng cấp một skill (nghiên cứu, mở bán và quảng cáo, bảng nội dung và lời nhắc, chiến lược), và bốn agent phụ cho Claude Code và Cowork. Không cần tải gì thêm: cần việc nào thì skill đó tự mở."""
+**Có sẵn thêm:** năm skill đồng hành, mỗi nâng cấp một skill (nghiên cứu, mở bán và quảng cáo, bảng nội dung và lời nhắc, chiến lược, file chiến lược), và bốn agent phụ cho Claude Code và Cowork. Không cần tải gì thêm: cần việc nào thì skill đó tự mở."""

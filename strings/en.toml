@@ -64,6 +64,7 @@
 "levelup.launch.title"  = "{{name}} · Launch"
 "levelup.board.title"   = "{{name}} · Board and nudges"
 "levelup.strategy.title" = "{{name}} · Strategy"
+"levelup.playbook.title" = "{{name}} · Playbook"
 "anchor.setup"          = "Day 0 details"
 "anchor.dig"            = "Day 0: digging before the Map"
 "anchor.card"           = "The Brand Card"
@@ -125,6 +126,7 @@
 "anchor.long"           = "The filmed long video"
 "anchor.long-intro"     = "The first 45 seconds of a long video"
 "anchor.long-cuts"      = "Cutting the long video into the week"
+"anchor.strategy-doc"   = "Your content strategy document"
 
 # START-HERE.html (built until guides/ takes over in P6)
 "starthere.title" = "Start here: {{name}}"
@@ -303,7 +305,7 @@
 "dig.story"                    = "Think of one client you really helped. What was going on for them the week they first got in touch?"
 "dig.words"                    = "What did they say or write to you that first time, word for word if you can?"
 "dig.offer"                    = "When someone says yes to you, what exactly do they get, and what do they pay?"
-"dig.proof"                    = "What changed for that client, and would they be OK with you saying so?"
+"dig.proof"                    = "What changed for that client after working with you?"
 "dig.stance"                   = "What does everyone in your field tell people that you think is wrong?"
 "dig.buyer"                    = "If you could clone one client, who would it be, and what was going on when they found you?"
 "setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it)."

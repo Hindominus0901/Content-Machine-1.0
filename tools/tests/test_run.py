@@ -5,6 +5,7 @@ import importlib.util
 import json
 import sys
 import unittest
+import zipfile
 from pathlib import Path
 from unittest import mock
 
@@ -248,6 +249,170 @@ class RunPackets(TempRepo):
         self.assertEqual(meta["case"], "message.en.001")
         with self.assertRaisesRegex(run.RunError, "not found"):
             self.packets(suite="cases", module="message", case_ids=["message.en.999"])
+
+
+class FT1Packets(TempRepo):
+    """Retest FT1 (qa/runs/retest-ft1/review.md §7 fix 5): the packet ships the edition's Level-ups and, with --plugin,
+    the plugin's companion skills; --web lets the machine side search for the background research pass. The packet
+    tells which, and meta.json, the run id and the summary say so."""
+
+    def setUp(self):
+        super().setUp()
+        kitdir = self.root / "kit"
+        (kitdir / "Level-ups").mkdir(parents=True)
+        (kitdir / "1-INSTRUCTIONS.txt").write_text("instructions", encoding="utf-8")
+        (kitdir / "CONTENT-MACHINE-EN.md").write_text("method", encoding="utf-8")
+        for name in ("RESEARCH-EN.md", "STRATEGY-EN.md", "LAUNCH-EN.md", "BOARD-EN.md"):
+            (kitdir / "Level-ups" / name).write_text(f"# {name}\n§CM-LISTEN steps", encoding="utf-8")
+        (kitdir / "Level-ups" / "Board").mkdir()
+        (kitdir / "Level-ups" / "Board" / "Bank.csv").write_text("a,b\n", encoding="utf-8")
+        zpath = self.root / "plugin.zip"
+        with zipfile.ZipFile(zpath, "w") as zf:
+            for name in ("skills/content-machine-en/SKILL.md", "skills/cm-research-en/SKILL.md",
+                         "skills/cm-strategy-en/SKILL.md", "skills/cm-research-vn/SKILL.md",
+                         "skills/content-machine-vn/SKILL.md", "agents/cm-listener.md"):
+                zf.writestr(f"content-machine/{name}", f"body of {name}")
+            zf.writestr("content-machine/skills/cm-research-en/RESEARCH-EN.md", "the level-up, in the kit already")
+            zf.writestr("content-machine/README.md", "readme")
+        self.kit = ({"instructions": kitdir / "1-INSTRUCTIONS.txt", "method": kitdir / "CONTENT-MACHINE-EN.md",
+                     "phone": kitdir / "PHONE-STARTER.txt",
+                     "levelups": sorted((kitdir / "Level-ups").glob("*.md")), "plugin_zip": zpath}, "abc123")
+        self.out = self.root / "out"
+
+    def packets(self, **kw):
+        args = dict(suite="day0", edition="en", lane="S1", persona_ids=[], out_root=self.out, kit=self.kit,
+                    today="2026-10-06")
+        args.update(kw)
+        return run.make_packets(self.root, **args)
+
+    def tree(self, packet: Path) -> list[str]:
+        base = packet / "packet" / "kit"
+        return sorted(p.relative_to(base).as_posix() for p in base.rglob("*") if p.is_file())
+
+    def machine(self, packet: Path) -> str:
+        return (packet / "packet" / "MACHINE.md").read_text(encoding="utf-8")
+
+    def test_the_project_kit_ships_the_level_ups(self):
+        [packet] = self.packets()
+        self.assertEqual(self.tree(packet), ["1-INSTRUCTIONS.txt", "CONTENT-MACHINE-EN.md", "Level-ups/BOARD-EN.md",
+                                             "Level-ups/LAUNCH-EN.md", "Level-ups/RESEARCH-EN.md",
+                                             "Level-ups/STRATEGY-EN.md"])           # the .md files, not the board's csv
+        text = self.machine(packet)
+        self.assertIn("**Level-ups:** `BOARD-EN.md`, `LAUNCH-EN.md`, `RESEARCH-EN.md`, `STRATEGY-EN.md` are project files in "
+                      "`kit/Level-ups/`", text)
+        self.assertIn("read the §CM- part the job needs, never the whole file", text)
+        self.assertEqual(self.tree(self.packets(lane="floor", tag="f")[0])[-1], "Level-ups/STRATEGY-EN.md")
+
+    def test_compact_mode_has_no_level_ups(self):
+        [packet] = self.packets(lane="S0")
+        self.assertEqual(self.tree(packet), ["1-INSTRUCTIONS.txt"])
+        self.assertNotIn("Level-ups", self.machine(packet))
+
+    def test_a_kit_without_level_ups_is_unchanged(self):
+        kit = ({k: v for k, v in self.kit[0].items() if k not in ("levelups", "plugin_zip")}, "abc123")
+        [packet] = self.packets(kit=kit)
+        self.assertEqual(self.tree(packet), ["1-INSTRUCTIONS.txt", "CONTENT-MACHINE-EN.md"])
+        self.assertNotIn("Level-ups", self.machine(packet))
+
+    def test_the_web_line_is_lane_aware(self):
+        [off] = self.packets()
+        text = self.machine(off)
+        self.assertIn("- Searching the web is not possible in this run: where the kit says \"search if you can\", you "
+                      "can't.", text)
+        self.assertNotIn("Web search and page fetch are on", text)
+        self.assertNotIn("web", json.loads((off / "meta.json").read_text(encoding="utf-8")))
+        [on] = self.packets(web=True, tag="w")
+        self.assertEqual(on.name, "w-day0-en-test-coach-S1-web-r1")
+        text = self.machine(on)
+        self.assertNotIn("Searching the web is not possible", text)
+        self.assertIn("**Web search and page fetch are on in this run** (lane option `web`)", text)
+        self.assertIn("for the background research pass only (Day 0, §CM-LISTEN", text)
+        for rule in ("open a page before you quote it (unopened = unread)", "people by role, never by name or handle",
+                     "never log in, post, react, follow, DM or join", "never touch the coach's computer or apps",
+                     "\"## Research log\""):
+            self.assertIn(rule, text)
+        self.assertIn("# Machine side (S1+web)", text)
+        self.assertIn("- A link the coach sends is never opened here (unopened = unread).", text)       # I20 still holds
+        self.assertEqual(json.loads((on / "meta.json").read_text(encoding="utf-8"))["web"], True)
+        readme = (on / "packet" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("## Web lane", readme)
+        self.assertIn("Add `## Research log` to `notes.md`", readme)
+        self.assertNotIn("## Web lane", (off / "packet" / "README.md").read_text(encoding="utf-8"))
+
+    def test_the_plugin_form_ships_the_companion_skills(self):
+        [packet] = self.packets(plugin=True, tag="p")
+        self.assertEqual(packet.name, "p-day0-en-test-coach-S1-plugin-r1")
+        files = self.tree(packet)
+        self.assertIn("plugin/skills/content-machine-en/SKILL.md", files)
+        self.assertIn("plugin/skills/cm-research-en/SKILL.md", files)
+        self.assertIn("plugin/skills/cm-strategy-en/SKILL.md", files)
+        self.assertIn("plugin/agents/cm-listener.md", files)
+        self.assertFalse([f for f in files if "-vn" in f or f.endswith("README.md") and "plugin" in f])   # one edition only
+        self.assertNotIn("plugin/skills/cm-research-en/RESEARCH-EN.md", files)                  # the kit's Level-ups hold it
+        self.assertIn("Level-ups/RESEARCH-EN.md", files)
+        self.assertEqual((packet / "packet" / "kit" / "plugin" / "skills" / "cm-research-en" / "SKILL.md").read_text(
+            encoding="utf-8"), "body of skills/cm-research-en/SKILL.md")
+        text = self.machine(packet)
+        self.assertIn("**Plugin form:** the coach installed the plugin.", text)
+        self.assertIn("never ask the coach to upload a Level-ups file", text)
+        self.assertIn("# Machine side (S1+plugin)", text)
+        self.assertEqual(json.loads((packet / "meta.json").read_text(encoding="utf-8"))["plugin"], True)
+        both = self.packets(plugin=True, web=True, tag="b")[0]
+        self.assertEqual(both.name, "b-day0-en-test-coach-S1-web-plugin-r1")
+        self.assertEqual(run.lane_label(json.loads((both / "meta.json").read_text(encoding="utf-8"))), "S1+web+plugin")
+
+    def test_the_plugin_needs_a_method_lane_and_a_built_zip(self):
+        with self.assertRaisesRegex(run.RunError, "--plugin needs a lane with the method file"):
+            self.packets(lane="S0", plugin=True)
+        self.assertFalse((self.out / "day0-en-test-coach-S0-plugin-r1").exists())            # nothing half-written
+        kit = (dict(self.kit[0], plugin_zip=self.root / "missing.zip"), "abc123")
+        with self.assertRaisesRegex(run.RunError, "missing.zip not found"):
+            self.packets(plugin=True, kit=kit)
+        self.assertFalse(self.out.exists() and any(self.out.iterdir()))
+        empty = self.root / "empty.zip"
+        with zipfile.ZipFile(empty, "w") as zf:
+            zf.writestr("content-machine/skills/cm-research-vn/SKILL.md", "x")
+        with self.assertRaisesRegex(run.RunError, "holds no en skills"):
+            self.packets(plugin=True, kit=(dict(self.kit[0], plugin_zip=empty), "abc123"))
+
+    def test_the_cli_flags(self):
+        with mock.patch.object(run, "make_packets", return_value=[]) as made:
+            self.assertEqual(run.main(["--root", str(self.root), "packet", "--suite", "day0", "--edition", "en",
+                                       "--lane", "S1", "--web", "--plugin"]), 0)
+        self.assertEqual((made.call_args.kwargs["web"], made.call_args.kwargs["plugin"]), (True, True))
+        with mock.patch.object(run, "make_packets", return_value=[]) as made:
+            run.main(["--root", str(self.root), "packet", "--suite", "day0", "--edition", "en", "--lane", "S1"])
+        self.assertEqual((made.call_args.kwargs["web"], made.call_args.kwargs["plugin"]), (False, False))
+
+    def test_the_summary_names_the_lane_options(self):
+        row = run.summary_rows([{"run": "r1", "persona": "en/x", "lane": "S1", "web": True, "pass": True, "failed": [],
+                                 "protocol": [], "summary": {"coach_turns": 5}, "checks": []}])
+        self.assertIn("| S1+web |", row)
+        self.assertIn("| S1 |", run.summary_rows([{"run": "r2", "persona": "en/x", "lane": "S1", "pass": True,
+                                                   "failed": [], "protocol": [], "summary": {}, "checks": []}]))
+
+    def test_a_run_graded_with_the_options_says_so(self):
+        d = self.run_dir([("coach", "Tuesday."), ("machine", MAP_REPLY)], web=True, plugin=True)
+        g = run.grade_run(d, self.root)
+        self.assertEqual((g["web"], g["plugin"]), (True, True))
+
+    def test_the_leak_check_reads_the_kits_subfolders(self):
+        """A kit/Level-ups/ folder made check_leaks read a directory as a file; its wording is the kit's, never a leak."""
+        self.write("evals/personas/en/test-coach/voice-samples.md",
+                   "## Phrases\n1. Tells the story first, then the step, every single time\n")
+        pdir = self.root / "evals" / "personas" / "en" / "test-coach"
+        kit = self.root / "packet-kit"
+        (kit / "Level-ups").mkdir(parents=True)
+        (kit / "plugin" / "skills" / "cm-research-en").mkdir(parents=True)
+        (kit / "1-INSTRUCTIONS.txt").write_text("x", encoding="utf-8")
+        (kit / "Level-ups" / "STRATEGY-EN.md").write_text("Tells the story first, then the step, every single time.",
+                                                          encoding="utf-8")
+        (kit / "plugin" / "skills" / "cm-research-en" / "SKILL.md").write_text("skill", encoding="utf-8")
+        rows = [{"turn": 1, "role": "coach", "text": "hi", "t_min": None},
+                {"turn": 1, "role": "machine", "text": "rhythm: tells the story first, then the step, every single time",
+                 "t_min": None}]
+        self.assertEqual(run.check_leaks(rows, pdir, kit, "en")["status"], "pass")
+        self.assertFalse(run.check_leaks(rows, pdir, None, "en")["pass"])          # without the kit's wording it leaks
 
 
 class CaseAssertions(TempRepo):

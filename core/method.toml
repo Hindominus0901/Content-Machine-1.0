@@ -13,8 +13,8 @@
 
 [method]
 title_key = "method.title"
-# Convention: sections named <module>.kit-<name> ship in this file (except plan.kit-month* and liked.kit-*, in the
-# STRATEGY level-up since the founder's own Day 0, 7 Oct); other sections are for the L3 skill references (P4) or the level-up files (P5). Selectors ending in * are prefix matches.
+# Convention: sections named <module>.kit-<name> ship in this file (except plan.kit-month*, liked.kit-* and
+# character.kit-talks, in the STRATEGY level-up since the founder's own Day 0, 7 Oct); other sections are for the L3 skill references (P4) or the level-up files (P5). Selectors ending in * are prefix matches.
 # Until a module is written its anchor is empty and build skips it (lint --release errors).
 
 [[method.anchor]]
@@ -67,7 +67,7 @@ sections = ["convert.kit-*"]
 
 [[method.anchor]]
 id = "CHARACTER-LITE"
-sections = ["character.kit-*"]
+sections = ["character.kit-core"]     # the 3 talks (character.kit-talks) live in STRATEGY §CM-CHARACTER-DEEP since 7 Oct
 
 [[method.anchor]]
 id = "RESEARCH-LITE"
@@ -262,7 +262,7 @@ sections = ["strategy.grow-review"]
 
 [[levelup.strategy.anchor]]
 id = "CHARACTER-DEEP"
-sections = ["character.grow-dig"]
+sections = ["character.kit-talks", "character.grow-dig"]   # talks moved from the method file, 7 Oct (VN method budget)
 
 [[levelup.strategy.anchor]]
 id = "CHARACTER-SCENES"
@@ -303,6 +303,17 @@ sections = ["packaging.grow-intro"]
 [[levelup.strategy.anchor]]
 id = "LONG-CUTS"
 sections = ["fmt-long.grow-cuts"]
+
+# --- Level-ups/PLAYBOOK-<SUFFIX>.md: the content strategy document (founder, 7 Oct); its own file, STRATEGY is full
+[levelup.playbook]
+file = "PLAYBOOK"
+skill = "cm-playbook"
+title_key = "levelup.playbook.title"
+budget = "levelup_playbook"
+
+[[levelup.playbook.anchor]]
+id = "STRATEGY-DOC"
+sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
 
 # ---------------------------------------------------------------- L3 Autopilot skill references
 # One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by

@@ -3,30 +3,30 @@ Nguồn: như EN (founder-sources: Soo Wei Goh, Matt Gray, Hormozi, Nik Setting;
 Thêm so với EN: mốc trong đời khách VN (mùng 10, khai giảng, Tết, cuối quý); tháng cô hồn theo §CM-LOCALE; mời theo đường comment → nhắn riêng (§CM-CTA-KIT). Ý lớn ≤20 tiếng (EN ≤12 words).
 Câu nói với coach viết theo cặp mình–bạn; coach đã chọn cặp khác thì đổi theo (start-block, XƯNG HÔ). Tên các bậc tin tưởng, "bộ lọc người mua", tên khung của người khác: chỉ ở bên trong. Không đụng phần kit (0 byte): hai mục kit tuỳ chọn trong bản soát Soo Wei Goh (giá nói thẳng; tin "trước buổi gọi") nằm ở §CM-SEASON (tuần 4, mục 4). Bảng đối chiếu: docs/research/strategy-coverage.md.
 
-<!-- @section strategy.grow-position src=5bbf4385d2 -->
-### Bạn đứng ở đâu ("định vị", "mình khác người ta chỗ nào", "chiến lược"; mời một lần ở TIẾP, sau lần lên kế hoạch tháng đầu)
+<!-- @section strategy.grow-position src=850c48524b -->
+### Bạn đứng ở đâu ("định vị", "mình khác người ta chỗ nào"; mời một lần ở TIẾP, sau lần lên kế hoạch tháng đầu)
 1 Ba câu, mỗi tin một câu, card có rồi thì bỏ: "Bạn đi trước ai khoảng 5 năm? Một ngày thường của họ thế nào?" · "Người ta hay tìm bạn để hỏi gì, kể cả lúc bạn không bán?" · "Trong nghề, cái gì làm bạn ngứa mắt mà ít khi nói ra?" Chung chung thì hỏi thêm một lần: "Lần gần nhất bạn thấy chuyện đó là khi nào?"
-2 Rút ra: AI, người đi sau họ 5 năm, bằng chữ khách · CỬA VÀO, thứ người ta vốn hay hỏi (chủ đề dễ mở nhất) · CÁCH CŨ HỌ CHỐNG, cái ngứa mắt thành một cách làm, không nhắm người hay nhóm người (§CM-CHARACTER-LITE) · 3 Ý LỚN, mỗi ý "cách cũ → cách mới" ≤20 tiếng; bài nào cũng quy về một ý.
+2 Rút ra: AI, người đi sau họ 5 năm, bằng chữ khách · CỬA VÀO, thứ người ta hay hỏi (chủ đề dễ mở nhất) · CÁCH CŨ HỌ CHỐNG, cái ngứa mắt thành một cách làm, không nhắm người hay nhóm người (§CM-CHARACTER-LITE) · 3 Ý LỚN, mỗi ý "cách cũ → cách mới" ≤20 tiếng; bài nào cũng quy về một ý.
 3 Vòng kéo người mới: chuyện cả khách lẫn người hay gửi bài cho khách đều gặp (tiền, gia đình, thời gian, mùa vụ của nghề); không lấy đời riêng của coach. KHÔNG DÀNH CHO: một dòng nói ai chưa hợp, không chê ai.
-4 Một màn hình, 5 dòng: "Bạn đi trước 5 năm: …" · "Người ta tìm bạn để: …" · "Bạn không chịu được: …" · "3 ý của bạn: … → …" (×3) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
-5 OK: lưu vào who, enemy, old_way, idea_shifts; Bản đồ đổi theo ở "lên kế hoạch tháng sau", không đổi giữa mùa (§CM-MAP). Trùng Bản đồ: "Y như Bản đồ của bạn, đúng hướng rồi." rồi thôi.
+4 Một màn hình, 5 dòng: "Người bạn đi trước 5 năm: …" · "Người ta tìm bạn để: …" · "Bạn không chịu được: …" · "3 ý của bạn: … → …" (×3) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
+5 OK: lưu vào who, enemy, old_way, idea_shifts; Bản đồ đổi theo ở "lên kế hoạch tháng sau", không đổi giữa mùa (§CM-MAP). Trùng Bản đồ: "Y như Bản đồ, đúng hướng rồi." rồi thôi.
 6 ĐẶT TÊN, tin sau, cũng "OK hay sửa một dòng?": 3-5 bước, một thói quen, 4-5 chặng khách đi qua, mỗi thứ một tên 2-5 tiếng từ chữ coach (vật + việc nó làm); không ™, "hệ thống", tên người khác; ngại nói ra thì tả thường. Một tên một nghĩa, lưu method trên Card từ "lên kế hoạch tháng sau" (§CM-MAP), dùng y vậy ở bài, quà, chương, email. Chặng dùng cho bài ("tới chặng này, việc của bạn là…") và câu hỏi phân loại ở tin inbox 1 (§CM-MESSAGES 5).
 
 <!-- @section strategy.grow-season src=6b1592b255 -->
 ### Mùa niềm tin (4 tuần; định hình §CM-WEEK, không thêm bài)
 1 Lòng tin có thứ tự; nhảy thẳng vào khoe kết quả là hụt. Mỗi tuần nghiêng về một bậc (tên bậc giữ bên trong; kế hoạch tháng ghi "tuần 3: cho thấy làm được thật"), chồng lên ý lớn n (§CM-WEEK 1):
 - Tuần 1, đáng nghe: quan điểm về cách cũ, chuẩn họ giữ, vấn đề thật và nguyên nhân, cái kết hợp chỉ họ có (nếu có: 3 lý do khách nể, §CM-CHARACTER-DEEP 2) kể qua một cảnh; hook rộng.
-- Tuần 2, dễ mến: cách của họ kể qua chuyện của họ, một thói quen, lần từng sai; khoảnh khắc trong đời khách.
+- Tuần 2, dễ mến: cách họ làm, kể qua chuyện của họ, một thói quen, lần họ sai; khoảnh khắc trong đời khách.
 - Tuần 3, đáng tin: cho thấy chứ không kể: mổ xẻ một quyết định của khách, quy trình, nói hết, kể cả chỗ chưa ổn.
 - Tuần 4, yên tâm mua: gỡ băn khoăn bằng đúng câu khách nói, kết quả kèm bối cảnh, sản phẩm, giá nói thẳng (không "chỉ… thôi ạ", không xin lỗi), một lời mời rõ.
 2 Chuỗi niềm tin viết ngược lúc "lên kế hoạch tháng sau": niềm tin làm rớt đơn (băn khoăn số 1, §CM-RESEARCH-PLAN R2 4) quyết định tuần 4; mỗi tuần trước "bạn nghĩ X → thật ra Y" làm tuần sau dễ nghe hơn. Mỗi bài một niềm tin.
 3 Tháng chia theo việc: dạy khoảng 1/2 · bán (bằng chứng, băn khoăn, sản phẩm) khoảng 1/3 · kéo người mới, đồng cảm, kể cả giải trí ≤20% (§CM-WEEK 7); 30% chỉ khi coach xin và 4 tuần qua giải trí kéo nhiều comment của khách hơn bài dạy. Bài kéo người mới: khách sẽ tag bạn bè, một bạn 19 tuổi bất kỳ thì lướt qua.
-4 Lời mời: phần lớn bài mời nhận quà qua từ khoá comment, quà đặt tên theo kết quả của chính bài; từ tuần 2, có bằng chứng, khoảng 1/5 bài mời nhắn riêng hay đặt lịch (§CM-WEEK 6); tuần 4 mời mua thẳng. Lời mời nối đúng chuyện bài vừa mở ra. Quà lọc khách tốt nhất, khi các bước có tên (§CM-STRATEGY 6): bài tự kiểm 10 phút, 5-10 câu có/không bằng chữ khách → "chỗ hổng đầu tiên của bạn: {bước}", kèm bài, cuộc gọi cho bước đó; chỗ hổng họ gửi lại trả lời luôn câu phân loại ở tin inbox 1; không hứa sửa xong được gì. Khách đặt lịch → tin "trước buổi gọi": gọi để làm gì, một quyết định của khách cũ (đã đồng ý) hay quy trình, một điều để nghĩ trước.
+4 Lời mời: phần lớn bài mời nhận quà qua từ khoá comment, quà đặt tên theo kết quả của chính bài; từ tuần 2, có bằng chứng, khoảng 1/5 bài mời nhắn riêng hay đặt lịch (§CM-WEEK 6); tuần 4 mời mua thẳng. Lời mời nối đúng chuyện bài vừa mở ra. Quà lọc khách tốt nhất, khi các bước có tên (§CM-STRATEGY 6): bài tự kiểm 10 phút, 5-10 câu có/không bằng chữ khách → "chỗ bạn hổng đầu tiên: {bước}", kèm bài, cuộc gọi cho bước đó; chỗ hổng họ gửi lại trả lời luôn câu phân loại ở tin inbox 1; không hứa sửa xong được gì. Khách đặt lịch → tin "trước buổi gọi": gọi để làm gì, một quyết định của khách cũ (đã đồng ý) hay quy trình, một điều để nghĩ trước.
 
 <!-- @section strategy.grow-what src=a4a48ed54a -->
 ### "Đăng gì bây giờ?" ("bí ý", "hết ý tưởng", "giờ làm gì?")
 Trả lời bằng một bài, không giảng: đi thầm theo thứ tự, gặp cái đúng đầu tiên thì viết luôn (3 lựa chọn chỉ khi họ xin, §CM-IDEAS 3):
-1 Tuần này có chuyện: cuộc gọi với khách, một tin nhắn, một câu hỏi, một lần được, một lần sai → kể chuyện đó, gắn ý lớn tuần này. Chưa biết → đi tiếp; TIẾP: "Tuần này có khách nào nói hay hỏi gì không? Kể mình nghe, mình viết bài đó."
+1 Tuần này có chuyện: cuộc gọi với khách, một tin nhắn, một câu hỏi, một lần được, một lần sai → kể chuyện đó, gắn ý lớn tuần này. Chưa biết → đi tiếp; TIẾP: "Tuần này có khách nào nói hay hỏi gì không? Kể mình nghe, mình viết luôn."
 2 Câu hỏi, băn khoăn nghe 2+ lần mà chưa trả lời → trả lời bằng đúng chữ khách.
 3 Bài cũ từng có khách hỏi → cùng ý, dạng, góc hay chuyện mới; không đăng lại y nguyên.
 4 Niềm tin của tuần (§CM-SEASON 2) chưa có bài → một bài dạy về nó.

@@ -1,4 +1,4 @@
-Maintainer: §CM-CHARACTER-LITE (character.kit-*): character from the dump, weekly character pieces, stances, heat, borrowed attractors, the 3 deep-character talks.
+Maintainer: §CM-CHARACTER-LITE (character.kit-core): character from the dump, weekly character pieces, stances, heat, borrowed attractors. The 3 deep-character talks (character.kit-talks) open §CM-CHARACTER-DEEP in the STRATEGY level-up since 7 Oct (the VN method file needed the room; offered from week 3, §CM-TODAY).
 Sources: wf6-character-design A1 (interviewer rules, 12 questions), A2, A4 (polarity, heat, 3D), §6 (flip it); arch-final-spec §5.2; wf11-ux-spec §3.3; DECISIONS. Acceptance: evals/cases/character.en.toml, router.en (014).
 Not repeated here: Card fields (§CM-CARD), stance scoring and flip-it (§CM-EDGE), hard stops (§CM-GUARDRAILS), voice fixes (§CM-HUMANIZE). 3D, heat and trust-rung names stay internal.
 
@@ -10,13 +10,14 @@ HEAT on ideas, methods, the old way. A group (an age, a generation, the buyers) 
 BORROWED (flip: §CM-EDGE): credentials → what the years made them unlearn, never a better title. A freebie post under {{micro_threshold}} words: theirs + a "why" version beside it, comment word untouched. "A study says" → out; their ritual stays.
 
 <!-- @section character.kit-talks -->
+### The 3 character talks ("make it more me", yes to the offer)
 "Make it more me", yes: "{{t:character.talk_start}}" One question a message, voice first ("{{t:character.voice_first}}"), scenes not adjectives, ≤2 probes; hedge → "{{t:character.bet}}"; each answer: one neutral line + the next question, no praise. "Can't say that publicly": noted, never drafted.
 Talk 1: why they started · a principle that cost them · what they refuse though it pays · what they can't stand. 2: what their field gets wrong · advice to ban · the trait called "a bit much" · rituals, spending. 3: years they got it wrong · answer "I've tried everything" aloud · clients in 10 years · why clients pick them (clients' words).
 Then the Card: 3 trait candidates with evidence, they pick one; values with no cost story: unproven; gaps listed; short version ≤150 words.
 
 <!-- @section character.grow-dig -->
-### Deep character ("make it more me", "who am I online"; after the 3 talks of §CM-CHARACTER-LITE, or instead)
-1 Goal: 6 Card lines a stranger could recognise them by. Talk rules: §CM-CHARACTER-LITE.
+### Deep character ("make it more me", "who am I online"; after the 3 talks above, or instead)
+1 Goal: 6 Card lines a stranger could recognise them by. Talk rules: the talks above.
 2 Ask only what the Card lacks, in this order:
 - TRAITS: "Give me 3 reasons clients admire you that nobody else in your field has together." → ONE extreme trait to lean into; its 10/10 version as a scene; who it puts off.
 - PRINCIPLES: "What do you always or never do, even when it costs you?" → 3-5 lines, "always/never … because …".
