@@ -60,11 +60,16 @@ SITE_TEMPLATE = "setup-page.tmpl"
 # Tags are filled per edition: {{name}} and {{file_suffix}} as in any string; {{cmd_start}} and {{cmd_next}} from
 # strings cmd.start and cmd.next (what the coach types); {{h_instructions}} and {{h_method}} from this table.
 #   description  the skill's description (SKILL.md): at most PLUGIN_DESCRIPTION_MAX characters, no '<' or '>'
-#   pointer      one line under the front matter that points SKILL.md to the method file next to it
+#   pointer      one line under the front matter: the full method file is inside this SKILL.md (see below)
 #   intro        the one-file kit's opening, then the headings h_instructions and h_method
 #   readme       this edition's half of the plugin's README.md: what to do in Claude and in ChatGPT, then what to type
 #   companions   one sentence added to the pointer when the plugin has companion skills (plugin/companions.toml);
 #                {{skills}} is filled with their names and plain part names
+#   check_from   the kit's setup-check phrase that names the method file ("Check for CONTENT-MACHINE-EN.md and the
+#   check_to     newest BRAND CARD"), and what the plugin and the one-file kit print instead: the same phrase saying
+#                the file is the METHOD section further down this text. Unlike save_from this swap is soft: if the kit
+#                stops printing check_from exactly once, nothing stops; the build leaves the phrase as it is and adds
+#                a note to the manifest (the pointer line already tells the model where the method is).
 #   save_from    the kit's own save line, exactly as core/<lang>/start-block.md prints it in 1-INSTRUCTIONS.txt. The
 #                outputs carry strings key portable.save instead (a chat is not a project, so "Save to project" and
 #                "Add text content" do not apply). If the kit stops printing save_from exactly once, the build
@@ -74,8 +79,12 @@ PORTABLE = {
     "en": {
         "description": 'Content Machine for coaches: from a voice dump to one message, a video to film today and a '
                        'week plan. Use when the user says "{{cmd_start}}", "{{cmd_next}}", or asks for content.',
-        "pointer": "The method file CONTENT-MACHINE-{{file_suffix}}.md sits next to this file. Each part starts with "
-                   "§CM-…: read that part before the job it covers.",
+        "pointer": "The full method file CONTENT-MACHINE-{{file_suffix}}.md is inside this skill, under {{h_method}} "
+                   "below: it is already here, so open no file, and it counts as the method file for the setup check. "
+                   "Each part starts with §CM-…: read that part before the job it covers.",
+        "check_from": "CONTENT-MACHINE-{{file_suffix}}.md and the newest BRAND CARD",
+        "check_to": "CONTENT-MACHINE-{{file_suffix}}.md (it is the {{h_method}} section below, already in this text) "
+                    "and the newest BRAND CARD",
         "save_from": "Save: ChatGPT: ⋯ under the card → Save to project. Claude: copy it, + by the project files → "
                      "Add text content. Backup: email it to yourself.",
         "companions": "Companion skills carry the level-ups: {{skills}}. When a job is theirs, use that skill, and never "
@@ -103,8 +112,12 @@ PORTABLE = {
     "vn": {
         "description": 'Content Machine cho coach: từ lời kể ra thông điệp, video quay hôm nay, kế hoạch tuần. '
                        'Dùng khi người dùng gõ "{{cmd_start}}", "{{cmd_next}}", hay nhờ làm content, video, bài đăng.',
-        "pointer": "File phương pháp CONTENT-MACHINE-{{file_suffix}}.md nằm cạnh file này. Mỗi phần bắt đầu bằng "
-                   "§CM-…: đọc đúng phần đó trước khi làm việc nó nói tới.",
+        "pointer": "File phương pháp CONTENT-MACHINE-{{file_suffix}}.md nằm trọn trong skill này, ở phần {{h_method}} "
+                   "bên dưới: nội dung có sẵn, không cần mở file nào, và khi kiểm tra cài đặt thì tính là đã có file "
+                   "phương pháp. Mỗi phần bắt đầu bằng §CM-…: đọc đúng phần đó trước khi làm việc nó nói tới.",
+        "check_from": "tìm CONTENT-MACHINE-{{file_suffix}}.md và BRAND CARD",
+        "check_to": "tìm CONTENT-MACHINE-{{file_suffix}}.md (chính là phần {{h_method}} bên dưới, đã có sẵn ở đây) "
+                    "và BRAND CARD",
         "save_from": "Lưu: ChatGPT: ⋯ dưới card → Lưu vào dự án. Claude: chép card, + cạnh file của project → "
                      'Add text content. Dự phòng: gửi vào Zalo "Cloud của tôi".',
         "companions": "Các skill đồng hành giữ phần nâng cấp: {{skills}}. Việc nào của skill đó thì dùng skill đó, "
@@ -132,6 +145,7 @@ PORTABLE = {
 }
 SAVE_KEY = "portable.save"
 PLUGIN_DESCRIPTION_MAX = 200     # claude.ai skill description limit (lint E102 holds the same line)
+PLUGIN_SKILL_MD_WARN = 120 * 1024   # a plugin SKILL.md holds its method / level-up file inline: warn (not stop) past this
 # The one plugin at dist/content-machine-plugin.zip. Claude takes it as is; OpenAI's plugin portal accepts a Claude
 # plugin archive and converts it, so one package serves both apps. Skills go in this order.
 PLUGIN_ZIP = "content-machine-plugin.zip"
@@ -678,7 +692,30 @@ class EditionBuild:
                                   f"the one-file kit, found {found}; update PORTABLE['{self.ed.lang}']['save_from'] "
                                   f"in tools/build.py to match core/{self.ed.lang}/start-block.md",
                           cmlib.rel(kit, self.root))
-        return text.replace(old, render_string("portable.save", self.ed, "kit"))
+        text = text.replace(old, render_string("portable.save", self.ed, "kit"))
+        return self.portable_check_swap(text)
+
+    def portable_check_swap(self, text: str) -> str:
+        """The kit's setup-check phrase made true where the method file is a section of the same text.
+
+        In the plugin a skill's bundled files are not readable without code execution (founder test v10: "✗ file
+        phương pháp"), and the one-file kit is a single file, so the method file is the METHOD section further down.
+        Soft on purpose: a kit edit that moves the phrase must not stop the build; the pointer line already says where
+        the method is, and the manifest gets a note so the phrase can be brought back (PORTABLE[..]["check_from"])."""
+        table = PORTABLE[self.ed.lang]
+
+        def fill(key: str) -> str:
+            return table[key].replace("{{file_suffix}}", self.ed.file_suffix).replace("{{h_method}}", table["h_method"])
+
+        old, new = fill("check_from"), fill("check_to")
+        if text.count(old) == 1:
+            return text.replace(old, new)
+        note = (f"portable: the kit's setup-check phrase '{old}' was not found exactly once, so the plugin and the "
+                f"one-file kit keep the kit's own wording; update PORTABLE['{self.ed.lang}']['check_from'] in "
+                "tools/build.py to match core/<lang>/start-block.md")
+        if not any(n["edition"] == self.id and n["note"] == note for n in self.report.notes):
+            self.report.note(self.id, note)
+        return text
 
     def portable_blocker(self) -> str | None:
         """Why the portable outputs cannot be built for this edition yet, or None."""
@@ -711,12 +748,18 @@ class EditionBuild:
         if skills:
             pointer += " " + self.portable_text("companions", skills=skills)
         heading = PORTABLE[self.ed.lang]
+        method_text = method.read_text(encoding="utf-8")
         one = (self.portable_text("intro") + f"\n\n## {heading['h_instructions']}\n\n" + instructions.rstrip()
-               + f"\n\n## {heading['h_method']}\n\n" + method.read_text(encoding="utf-8"))
+               + f"\n\n## {heading['h_method']}\n\n" + method_text)
+        # A skill must work from SKILL.md alone: claude.ai cannot read the files bundled next to it without code
+        # execution, so the whole method file sits inline (anchors untouched) under a heading that names it. The file
+        # next to SKILL.md stays for apps that can read it.
+        skill = (front + f"{pointer}\n\n{instructions.rstrip()}\n\n## {heading['h_method']} ({method.name})\n\n"
+                 + method_text)
         return {
             "name": name,
             "brand": self.ed.name,
-            "skill_md": cmlib.nfc(front + f"{pointer}\n\n{instructions}").encode("utf-8"),
+            "skill_md": cmlib.finish(skill).encode("utf-8"),
             "method_name": method.name,
             "method": method.read_bytes(),
             "one_file": cmlib.finish(one),
@@ -737,10 +780,13 @@ class EditionBuild:
         return None
 
     def companion_parts(self, companions: dict) -> list[dict]:
-        """One dict per companion skill: its folder name, part name, SKILL.md bytes and the files next to it."""
+        """One dict per companion skill: its folder name, part name, SKILL.md bytes and the files next to it.
+
+        SKILL.md holds the whole level-up file (and, for the board skill, the Board/*.csv header rows) inline, so the
+        skill works from SKILL.md alone; the files next to it stay for apps that can read them."""
         lang, where = self.ed.lang, cmlib.rel(self.root / COMPANIONS_FILE, self.root)
         common = (companions.get("common") or {}).get(lang) or {}
-        for key in ("body", "agents"):
+        for key in ("body", "agents", "file_heading", "assets_heading"):
             if not isinstance(common.get(key), str) or not common[key].strip():
                 raise CMError("E161", f"[common.{lang}] needs a {key} text", where)
         tables = cmlib.levelup_tables(self.method)
@@ -761,10 +807,14 @@ class EditionBuild:
                 raise CMError("E102", f"{name}: description is {cmlib.nfc_len(desc)} characters (max "
                                       f"{PLUGIN_DESCRIPTION_MAX}) and must not contain '<' or '>'", where)
             level_file = self.levelup_path(cfg)
+            assets = cfg.get("assets")
+            # "extra" comes before "assets" in this dict so that it may name the assets heading
             tags = {
                 "contract": render_string("contract.output", self.ed, "kit"),
                 "part": text["part"], "main": f"content-machine-{self.id}", "file": level_file.name,
                 "jobs": text["jobs"].rstrip("\n"), "extra": text["extra"],
+                "heading": common["file_heading"].replace("{{file}}", level_file.name),
+                "assets": common["assets_heading"].replace("{{folder}}", assets or ""),
                 "siblings": ", ".join(n for a, n in names.items() if a != area), "agents": common["agents"],
             }
             body = common["body"]
@@ -773,13 +823,17 @@ class EditionBuild:
             body = cmlib.render(body, self.ed, "kit", path=f"{where} [common.{lang}] for {name}")
             front = f"---\nname: {name}\ndescription: {json.dumps(desc, ensure_ascii=False)}\n---\n\n"
             files = {level_file.name: level_file.read_bytes()}
-            assets = cfg.get("assets")
+            inline = [f"{body.strip()}\n\n## {tags['heading']}\n\n{level_file.read_text(encoding='utf-8').rstrip()}"]
             if assets:
                 folder = self.out / "Level-ups" / assets
+                shown = []
                 for f in sorted(folder.glob("*")) if folder.is_dir() else []:
                     files[f"{assets}/{f.name}"] = f.read_bytes()
+                    shown.append(f"### {assets}/{f.name}\n\n```csv\n{f.read_text(encoding='utf-8').rstrip()}\n```")
+                if shown:
+                    inline.append(f"## {tags['assets']}\n\n" + "\n\n".join(shown))
             out.append({"name": name, "area": area, "part": text["part"],
-                        "skill_md": cmlib.nfc(front + body.strip() + "\n").encode("utf-8"), "files": files})
+                        "skill_md": cmlib.finish(front + "\n\n".join(inline)).encode("utf-8"), "files": files})
         return out
 
     def build_portable(self) -> None:
@@ -967,10 +1021,18 @@ def build_plugin(root: Path, report: Report, builds: dict[str, EditionBuild]) ->
                 files[f"{base}/{rel}"] = data
     if companions:
         files.update(plugin_agents(root))
+    sizes = {name.split("/")[2]: len(data) for name, data in sorted(files.items())
+             if name.startswith(f"{PLUGIN_NAME}/skills/") and name.endswith("/SKILL.md")}
+    for skill, size in sizes.items():
+        if size > PLUGIN_SKILL_MD_WARN:
+            text = (f"plugin skill {skill}: SKILL.md is {size} B, over the ~{PLUGIN_SKILL_MD_WARN // 1024} KB it should "
+                    "stay under now that it holds its method or level-up file inline")
+            report.note("all", text)
+            print(f"warning: {text}", file=sys.stderr)
     data = portable_zip(files, cmlib.rel(out, root))
     out.write_bytes(data)
     report.artifacts[PLUGIN_ZIP] = {"edition": "all", "target": "plugin", **text_stats(data),
-                                    "entries": sorted(files)}
+                                    "entries": sorted(files), "skill_md_bytes": sizes}
 
 
 # ---------------------------------------------------------------- whole build

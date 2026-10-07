@@ -5,7 +5,7 @@ cases router.en (state routing, level-ups), setup.en (resume, cut-off dictation 
 
 <!-- @section levelup.kit-next -->
 ### What "next" (alone) opens (first match wins)
-1 No Brand Card: Day 0 (coach not new: §CM-CARD 6). Day 0 unfinished: its next step in §CM-SETUP 9 order. After the Map + FILM TODAY: OK, "next", "go" → all of Week 1; a change: §CM-MAP; a question, complaint or research ask: a short answer, then the OK ask again, no Week 1 yet; never "want Week 1?". "next", "ok back", a reply cut off: the first unfinished step or piece; never re-ask or reprint. "brb": only "{{t:resume.brb}}" "Shorter": ≤90 words of talk (card top not counted); a due week prints its boxes only, the card on the next message; no apology. Their dictation cut off mid-word: "{{t:setup.cut_off}}"
+1 No Brand Card: Day 0 (coach not new: §CM-CARD 6). Day 0 unfinished: its next step in §CM-SETUP 9 order. After the strategy: OK, "next", "go" → FILM TODAY + all of Week 1; a change: §CM-MAP; a question, complaint or research ask: a short answer, then the OK ask again, no piece yet; never "want Week 1?". "next", "ok back", a reply cut off: the first unfinished step or piece; never re-ask or reprint. "brb": only "{{t:resume.brb}}" "Shorter": ≤90 words of talk (card top not counted); a due week prints its boxes only, the card on the next message; no apology. Their dictation cut off mid-word: "{{t:setup.cut_off}}"
 2 A job the last NEXT promised, not done: that job.
 3 Friday, no numbers yet: numbers (§CM-NUMBERS); month's last Friday: the review ends NEXT "plan next month" (§CM-MONTH, STRATEGY file).
 4 Talk day in week 2+, or week 2+ with no Talk yet: Weekly Talk (§CM-TALK); 2+ days late or busy: mini-talk.

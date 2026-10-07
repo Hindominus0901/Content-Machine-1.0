@@ -13,10 +13,10 @@ must_include = [
   "a jogger after chunk 1 for something not yet covered (chunk 1 has no paying clients yet: e.g. what clients ask most, or one client before -> after)",
   "no missing-fact question: her dump holds her clients' words, results and the offer, so the Map follows chunk 3 + 'done'",
   "LinkedIn + the ~900-person newsletter, Monday, about an hour a week and word-for-word are never asked: guessed from the dump, platform and talk day named once above Week 1 ('For … · talk day … (my guess; one word changes it).'), the rest in the card's machine block; she corrects a wrong guess in one word",
-  "the 4-line Map (KNOWN FOR, 3 TOPICS, YOUR WORD, YOUR VOICE) + 'We'll run this for 4 weeks. OK, or change a line.'; never 'lock' or '90 days'",
+  "the strategy in ONE reply and no piece (KNOWN FOR, CONTENT PILLARS 3-5 broad, CONTENT MIX attract / trust / convert adding to 100, YOUR SYSTEM, YOUR WORD, WHAT I FOUND with sources or labelled guesses) + 'We'll run this for 4 weeks. OK, or change a line.'; FILM TODAY and Week 1 only after the OK (strategy first, 7 Oct night); never 'lock' or '90 days'",
   "on 'why?', why this one cites her own evidence: 3 people paid, and all 3 came for the move out of corporate (not the life coaching)",
   "the life topics are off the Map; NOT NOW (machine block, 'why?') bridges them to 'who am I after corporate', and her pushback gets that bridge in one line",
-  "film-today piece, word-for-word, under 30 s, first and last line verbatim, built from her own story (the memo or the parking lot), nothing printed under it, ending 'Film it now, or post the caption as text.'",
+  "film-today piece, word-for-word, a script of 120-200 words (never seconds), first and last line verbatim, built from her own story (the memo or the parking lot), nothing printed under it, ending 'Film it now, or post the caption as text.'",
   "the CTA starts quiet ('reply' / 'send me a message') because her dump already refuses comment asks ('my old CEO reads my posts. I can't.'), and stays that way",
   "Week 1 in the reply after FILM TODAY, unasked, before the Brand Card",
   "Brand Card save on Claude with a picture-guided route and the 'email it to yourself' backup, at the end; never a gate",
@@ -130,7 +130,7 @@ must_not_pick = [
 [week1]
 platform_mix = "email-first"            # LinkedIn + newsletter, email_list 900 >= 300, so the lead piece is the email
 lead_piece = "Email to the 900 on Kitchen Table Notes with a 'reply to me' line, on big idea 1 ('you didn't lose a job, you lost your answer'), built from her memo story ('Linda, page three.') or the grocery-store parking lot, ending on one question (e.g. 'What do you say when people ask what you do now?'); the keyword phrase 'without the badge' once; quiet CTA (reply), quiet from Day 0 because her dump refuses comment asks."
-film_today = "Word-for-word piece under 30 s (first and last line verbatim, 3 beats, on-screen text of 6 words or fewer) from the memo story or the parking lot, ending 'Film it now, or post the caption as text.' She posts it as a LinkedIn text post. Nothing printed under it."
+film_today = "Word-for-word piece of 120-200 words (first and last line verbatim, 3 beats, on-screen text of 6 words or fewer) from the memo story or the parking lot, ending 'Film it now, or post the caption as text.' She posts it as a LinkedIn text post. Nothing printed under it."
 must_include = [
   "the email to the 900 is the lead piece and asks for replies ('reply to me'), not a link click or a comment",
   "2 LinkedIn text posts",

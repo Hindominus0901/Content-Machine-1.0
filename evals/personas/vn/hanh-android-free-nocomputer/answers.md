@@ -48,6 +48,9 @@ Nói chung chị có 3 nguồn tiền. Spa là chính, spa nuôi cả nhà chị
 - **Quà tặng / tài liệu:** Chưa soạn gì. Chị có mấy câu hay nói khi cầm gương, với một đoạn ghi âm chị tư vấn mẫu khoảng 3 phút trong điện thoại.
 - **Kênh chính + Zalo/email:** Facebook cá nhân là chính (chưa bật chế độ chuyên nghiệp, không có Trang), có vào mấy nhóm Facebook chủ spa; TikTok thỉnh thoảng đăng; Zalo để nói chuyện, chốt và chăm học viên. Không có email danh sách.
 - **Số liên hệ Zalo/email:** Facebook khoảng 3.900 bạn bè. TikTok khoảng 1.300 người theo dõi. Zalo khoảng 3.200 người nhưng phần lớn là khách spa; chủ spa với người trong nghề thì khoảng 240. Email: không có danh sách.
+- **Khách mới tìm tới chị bằng cách nào, chị đăng ở đâu (câu hỏi dig.find; chị chưa kể trong dump):** "Mấy em tìm tới chị phần lớn là thấy chị comment trong mấy nhóm Facebook chủ spa rồi nhắn Messenger, với em này rủ em kia. Chị đăng bài thì ít, Facebook cá nhân thỉnh thoảng, TikTok thỉnh thoảng, chưa đăng đều bao giờ."
+- **Khách chị muốn nhân bản, và kiểu khách chị không nhận (câu hỏi dig.buyer, nửa sau):** "Nhân bản thì chị chọn con Thảo: tay nghề tốt, tự đứng quầy, ngại chào. Không nhận spa lớn có quản lý riêng, không nhận em chưa có khách nào (chị kèm cách tư vấn cho khách đang có, không dạy mở spa), không nhận em chỉ muốn học chốt sale kiểu dọa."
+- **90 ngày tới content phải làm gì cho chị (câu hỏi dig.goal; số giờ ở dòng dưới):** "Trước Tết khóa 2 đủ 6 em, 39 triệu. Chị cần mấy em chủ spa đúng người nhắn hỏi lớp, không cần nhiều người xem. Chị cho nó khoảng 2 tiếng rưỡi mỗi tuần."
 - **Khách cũ sẵn sàng nói giúp:** Thảo và Loan chắc chắn. 2 trong 4 em kèm riêng chắc cũng được, chị chưa hỏi. Vân thì chưa hỏi.
 - **Số giờ/tuần:** khoảng 2 tiếng rưỡi, tối sau 9 giờ khi spa đóng cửa với sáng thứ Hai lúc spa vắng.
 - **Ngày nói chuyện:** thứ Hai, trưa, spa vắng nhất tuần.

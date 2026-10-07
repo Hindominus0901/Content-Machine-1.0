@@ -1,4 +1,4 @@
-Maintainer: GROW packaging (packaging.grow-*): titles and thumbnail words (§CM-PACKAGING), the hook lab (§CM-HOOKS), the first 45 seconds of a long video (§CM-LONG-INTRO), carousels, newsletters and LinkedIn (§CM-TEXT-FORMATS).
+Maintainer: GROW packaging (packaging.grow-*): titles and thumbnail words (§CM-PACKAGING), the hook lab (§CM-HOOKS), the opening of a long video, about 120 words (§CM-LONG-INTRO), carousels, newsletters and LinkedIn (§CM-TEXT-FORMATS).
 Sources: founder-sources (Matt Gray: title shapes, thumbnail words that add, the long-form open, the 5-line story, carousels, the contextual gift; Soo Wei Goh: three hooks per short, the funnel-shaped hook wide for the sharer and specific for the buyer, loops beyond the topic; Hormozi: proof, promise, plan; Nik Setting: numbers in hooks set who comes, outcome over method, show proof); wf8-mattgray-playbook §0-§5 (renamed in plain words; his framework names never used), §9 (what not to copy); DECISIONS (strategy references 7 Oct; scripts only).
 Hook lab (7 Oct, founder's own Day 0 run: "the headlines and hooks especially are not good"; defects: flat claims, on-screen text = spoken line, no loop, no buyer words, nothing concrete): §CM-HOOKS 1-4. The core of it ships in the kit (§CM-FORMATS 1, the Ship Check hook line); this section is the depth. Reviewer rubric: qa/standards/hook-lab.md. The shapes that work as both hooks and titles (starting over, mistakes, call-outs, before → after) live once, in §CM-HOOKS 2; §CM-PACKAGING 2 keeps the title-only shapes.
 EN examples here; VN examples are written natively in the VN file (same flat → strong pairs, VN platforms).
@@ -22,8 +22,8 @@ Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 1): HOOKS 1 the lab run
 6 Numbers in a hook are theirs and decide who comes: the stage just above the buyer, never past their proof. Outcome over method. Show the proof; never say "with proof".
 
 <!-- @section packaging.grow-intro -->
-### The first 45 seconds of a long video (YouTube, podcast, Facebook video, live; used by §CM-LONG)
-1 Proof, promise, plan; the first section starts by 0:45. Proof: one fact of theirs that earns the next minute. Promise: what the viewer can do by the end, in buyer words. Plan: the 3-5 steps by plain name, plus one loop paid off near the end ("at the end, the one question that tells you if a lead will buy").
+### The opening of a long video, about 120 words (YouTube, podcast, Facebook video, live; used by §CM-LONG)
+1 Proof, promise, plan, ≈120 words; the first section starts right after. Proof: one fact of theirs that earns the next minute. Promise: what the viewer can do by the end, in buyer words. Plan: the 3-5 steps by plain name, plus one loop paid off near the end ("at the end, the one question that tells you if a lead will buy").
 2 Pick the opening by what they have:
 - CONTRARIAN: "Most coaches don't have a lead problem. They have a trust problem." → proof → two things the viewer does today → plan.
 - STORY: the viewer's two habits → their own old self → "I stopped X and started Y" → proof → plan.

@@ -136,7 +136,7 @@
 "anchor.hooks"          = { text = "Nháp và chọn hook, tiêu đề", src = "e22bef751f" }
 "anchor.text-formats"   = { text = "Carousel, tin Zalo, bài dài", src = "ea8da2ceab" }
 "anchor.long"           = { text = "Video dài có quay", src = "acb5ba897a" }
-"anchor.long-intro"     = { text = "45 giây đầu video dài", src = "5ac6842b38" }
+"anchor.long-intro"     = { text = "Phần mở video dài (khoảng 120 chữ)", src = "f3f0efd5c3" }
 "anchor.long-cuts"      = { text = "Cắt video dài ra cả tuần", src = "a88b496f91" }
 "anchor.strategy-doc"   = { text = "File chiến lược nội dung", src = "2aa55199d6" }
 
@@ -152,16 +152,17 @@
 
 # Setup-check variants, Phone Starter, new method anchors (P2)
 "anchor.setup" = { text = "Chi tiết ngày 0", src = "744b6f620c" }
-"anchor.dig" = { text = "Ngày 0: hỏi sâu trước Bản đồ", src = "7029e0a8a1" }
+"anchor.dig" = { text = "Ngày 0: hỏi thêm trước khi lên chiến lược", src = "35079389b9" }
 "anchor.card" = { text = "Brand Card", src = "bef5186d8e" }
-"anchor.posts" = { text = "Bài viết và carousel", src = "f29c52a354" }
+"anchor.posts" = { text = "Bài viết, carousel và nội dung dài", src = "de093f6578" }
 "anchor.messages" = { text = "Email, tin nhắn Zalo và inbox", src = "72cd5a8ae5" }
-"anchor.map" = { text = "Giữ đúng Bản đồ", src = "78f7aee2ee" }
+"anchor.map" = { text = "Ngày 0: chiến lược, quyết định duy nhất", src = "aece368874" }
+"anchor.drift" = { text = "Chọn trọng tâm và giữ đúng hướng", src = "a9b71576ca" }
 "anchor.liked" = { text = "Bài coach thích", src = "00e43012d8" }
 "setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
 "setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
-"phone.opening" = { text = "Bạn chỉ cần bấm Gửi. Phần dưới là hướng dẫn cho máy, không cần đọc.", src = "b6a97fd51f" }
-"phone.save" = { text = "Lưu lại: cuối buổi, nhấn giữ đoạn chat này → Đổi tên → \"{{name}}\". Rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". Chat dài quá thì mình in khung mới: dán vào một đoạn chat mới tên {{name}}.", src = "f6e358cc8f" }
+"phone.opening" = { text = "Bạn chỉ cần bấm Gửi. Phần dưới là cho máy, khỏi cần đọc.", src = "b6a97fd51f" }
+"phone.save" = { text = "Lưu lại: cuối buổi, nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". Chat dài quá, mình in khung mới để dán vào chat mới tên {{name}}.", src = "f6e358cc8f" }
 
 # ---- Method anchors (P2 kit sections); same keys as strings/en.toml
 
@@ -173,7 +174,7 @@
 "check.pick"             = { text = "Mình chọn {option}, vì {reason}.", src = "d1e588aea6" }
 "save.limit_claude_free" = { text = "Hết lượt thì đợi có lượt lại, quay về đoạn chat này, nhắn 'tiếp'.", src = "e2843e8de7" }
 "resume.brb"             = { text = "Không vội đâu. Quay lại thì nhắn 'ok rồi' nhé.", src = "6cf6995cec" }
-"card.stop_lines"        = { text = "Hôm nay xong rồi. Có tấm card này mình mới nhớ được bạn. Lưu lại (30 giây): {route}. Rồi nhắn 'tiếp' là có kịch bản Tuần 1 (8 phút), hoặc nghỉ ở đây, kịch bản vẫn đợi bạn.", src = "0a65150e2a" }
+"card.stop_lines"        = { text = "Hôm nay xong rồi. Có tấm card này mình mới nhớ được bạn. Lưu lại: {route}. Rồi nhắn 'tiếp' là có kịch bản Tuần 1 (8 phút), hoặc nghỉ ở đây, kịch bản vẫn đợi bạn.", src = "2373f83b56" }
 "card.title"             = { text = "Brand Card v{n} · {date}", src = "27c96e5c42" }
 "card.label.week"        = { text = "nói chuyện {day} · quay {day} · số liệu thứ Sáu", src = "e8aaa06e3c" }
 "card.machine.heading"   = { text = "Phần còn lại là cho máy, không cần đọc:", src = "05b28e1925" }
@@ -270,6 +271,7 @@
 "character.voice_first"       = { text = "bấm micro, cứ nói tự nhiên 2–3 phút", src = "1414c9af7f" }
 "character.bet"               = { text = "Phải cược 1 triệu thì bạn trả lời sao?", src = "d86811d666" }
 "research.later"              = { text = "Để Tuần 1 làm, 10 phút thôi.", src = "0e68627662" }
+"research.no_tool"            = { text = "Ở đây mình không tra mạng được, nên mình dựa vào lời bạn kể và hiểu biết về {niche}, chỗ nào đoán thì ghi rõ.", src = "fb217fded2" }
 "research.ask3"               = { text = "Cho mình nhờ chút xíu: mình đang sửa lại phần giới thiệu, muốn dùng đúng lời bạn nói. {{t:ask3.question}}", src = "4a79ebae37" }
 "research.ask3_cold"          = { text = "Chuyện {problem}, giờ bạn thấy khó nhất chỗ nào?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, tên đổi thành chữ cái. Không có thì gõ 'không có'.", src = "34c9df6797" }
@@ -305,11 +307,15 @@
 # Simple surface + voice (wf15, wf14)
 "setup.dump_posts" = { text = "Có bài, tin nhắn bạn từng viết thì dán 2–3 cái, hoặc gửi link trang của bạn.", src = "fbfc38d52e" }
 "map.known" = { text = "ĐIỀU KHÁCH NHỚ:", src = "7057c1b511" }
-"map.topics" = { text = "3 CHỦ ĐỀ:", src = "0252b27a5e" }
+"map.topics" = { text = "TRỤ CỘT NỘI DUNG:", src = "389026b2b7" }
 "map.word" = { text = "TỪ KHOÁ:", src = "e8e772ff8d" }
 "map.voice" = { text = "GIỌNG:", src = "6760c37637" }
+"map.mix" = { text = "TỶ LỆ NỘI DUNG:", src = "14a0cdec51" }
+"map.system" = { text = "HỆ THỐNG NỘI DUNG:", src = "40d92e8a94" }
+"map.found" = { text = "NGHIÊN CỨU CHO THẤY:", src = "508d0cc8cf" }
+"research.now" = { text = "Trong lúc bạn kể, mình đang tìm hiểu {what} ({where}).", src = "9aa0d0226b" }
 "film.now_or_text" = { text = "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.", src = "5429a30c46" }
-"card.save_line" = { text = "Lưu lại để mình nhớ bạn (30 giây).", src = "82bb29ab38" }
+"card.save_line" = { text = "Lưu lại để mình nhớ bạn.", src = "b7248715a8" }
 "card.visible.what" = { text = "NÓI GÌ:", src = "3590ca99ac" }
 "card.visible.how" = { text = "NÓI THẾ NÀO:", src = "7a3df1f0ec" }
 
@@ -321,10 +327,12 @@
 # Hỏi sâu ngày 0 (§CM-DIG, founder 7/10): hỏi bằng một chuyện, mỗi câu một dấu hỏi, không kèm câu đoán; cặp xưng hô đổi theo coach chọn
 "dig.story"                    = { text = "Bạn nhớ lại người khách bạn giúp được nhiều nhất. Hồi mới tìm tới bạn, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
 "dig.words"                    = { text = "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.", src = "ec4e67239a" }
-"dig.offer"                    = { text = "Khách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?", src = "fb41fa4d52" }
-"dig.proof"                    = { text = "Làm với bạn xong, giờ khách đó ra sao rồi?", src = "d186151f3e" }
+"dig.offer"                    = { text = "Khách gật đầu làm với bạn thì họ nhận được gì, làm theo cách nào, trả bao nhiêu?", src = "a45563b39d" }
+"dig.proof"                    = { text = "Có kết quả thật nào của khách mà bạn sẵn lòng kể ra không?", src = "60c5654c2a" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
-"dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, lúc mới tìm tới bạn họ đang ra sao?", src = "4df4d2ad4e" }
+"dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, còn kiểu khách nào bạn không muốn nhận?", src = "890b2a58bb" }
+"dig.find"                     = { text = "Khách mới giờ tìm tới bạn bằng cách nào, bạn đang đăng bài ở đâu?", src = "78ce604a87" }
+"dig.goal"                     = { text = "90 ngày tới bạn muốn content làm được gì cho bạn, mỗi tuần dành cho nó được mấy tiếng?", src = "037c1b8675" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "df8c84d17e" }
 "map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }

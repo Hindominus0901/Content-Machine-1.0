@@ -19,7 +19,7 @@ Cắt bù byte G1 6/10: "1 video riêng" bỏ "(§CM-FORMATS)" (dòng trên đã
 - 1 video riêng.
 - 1 bài dài (chỉ khi làm video) · 1 tin Zalo hoặc email (§CM-WEEK 2).
 ≥60% về ý lớn tuần; mỗi bài theo §CM-WEEK; giọng: §CM-VOICE 8, cùng chữ họ nói; làm thầm §CM-VOICE 4.
-Kết (video): "{{t:talk.film}}" TIẾP: câu ở ngày 0, bước 9.
+Kết (video): "{{t:talk.film}}" TIẾP: câu ở ngày 0, bước 8.
 
 <!-- @section talk.kit-mini src=18ab0f8022 -->
 ### Bản ngắn (tuần bận, lỡ ngày nói chuyện)

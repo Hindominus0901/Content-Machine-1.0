@@ -56,6 +56,49 @@ must_not_park = [
 side_door = "Spa ở Cầu Giấy (nguồn nuôi nhà) không bị cất như mất: giữ cửa riêng qua khách quen giới thiệu và Zalo Nhật ký cho khách spa, tối đa 1 bài cửa phụ mỗi tuần có ghi rõ là cho khách spa, tính vào ngân sách ngoài bản đồ (1 trên 7). Spa còn là nơi dạy (ngày đứng quầy) và nguồn chuyện cho Trụ 2–3, nhưng chăm da không phải chủ đề. Mẫu trả lời inbox 1 có một câu hỏi lọc tách chủ spa với khách spa (kiểu 'em đang làm chủ spa hay em muốn đặt lịch chăm da?'); khách spa chuyển cho Linh đặt lịch. Mỹ phẩm bán ở quầy: không cửa phụ, không content."
 income_question_answer = "Chị đã nói trong dump: spa là chính, nuôi cả nhà, nhưng content để kéo các em chủ spa vào lớp kèm. Máy không cần hỏi nguồn nào nuôi chị; nếu hỏi thì đúng một câu và nhận 'spa', không đổi người mua."
 
+[interview]
+# Strategy first (founder, 7 Oct night). Her dump (chunks 1-3) already gives who she serves, the offer with its price and
+# delivery, the best result and what her field gets wrong; it does not give how clients find her, where she posts, her
+# 90-day goal or her hours (the answer bank does). graders.py day0_strategy reads dump_gives and dump_gaps.
+slots = ["who", "offer", "result", "find", "platforms", "goal", "hours", "stance"]
+dump_gives = ["who", "offer", "result", "stance"]
+dump_gaps = ["find", "platforms", "goal", "hours"]
+questions_expected = 2                    # find (+ where she posts) · goal (+ hours)
+questions_max = 6
+must_not = [
+  "hỏi lại khách là ai, gói và giá, kết quả, điều cả nghề làm sai (chị kể rồi)",
+  "hai câu hỏi trong một tin (chị bỏ ngang)",
+  "dựng chiến lược mà không hỏi cách khách tìm tới chị và mục tiêu 90 ngày (đoán rồi in như thật)",
+  "bài, video hay Tuần 1 trước lúc chị OK chiến lược",
+]
+
+[strategy]
+positioning = "ĐIỀU KHÁCH NHỚ ≤50 tiếng: chủ spa nhỏ \"ngại chào lắm\" → cầm gương nói thật, thay cho dọa da; có lời của họ."
+pillars = "3–5 cụm chủ đề RỘNG từ hiểu biết nghề + nghiên cứu (ví dụ: tư vấn và chào liệu trình · niềm tin với khách · làm chủ spa nhỏ · giữ khách và hẹn buổi sau); các ý lớn (ngại chào vì câu dọa, thẻ dài giữ tiền không giữ người) nằm trong trụ cột."
+pillars_broad_examples = [
+  "tư vấn và chào liệu trình",
+  "niềm tin với khách",
+  "làm chủ spa nhỏ",
+  "giữ khách và hẹn buổi sau",
+]
+pillars_too_narrow = [
+  "cầm gương",
+  "nhắn tin thoại sau 3 ngày",
+  "thẻ 30 buổi",
+  "đồng giá 99k",
+  "kịch bản chốt sale",
+  "trị nám",
+  "mỹ phẩm",
+  "giấy phép",
+  "phòng cháy",
+  "máy công nghệ cao",
+]
+mix = "THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, cộng 100; mặc định 40/40/20 (chị cần đủ 6 em trước Tết, đã có Facebook 3.900 và Zalo ~240 chủ spa: 40/40/20 hoặc 30/40/30 có lý do)."
+system = "nền tảng chính Facebook cá nhân (Messenger → Zalo), nơi đăng lại TikTok và Zalo; 2 tiếng rưỡi mỗi tuần: 3 video ngắn thẻ ý, 1 bài dài, 1 tin Zalo; thang lời mời comment/nhắn NGẠI CHÀO → 5 câu nói thật → Zalo → chuyển khoản."
+found = "2–4 dòng có nguồn (nhóm Facebook chủ spa, bình luận TikTok; tháng/năm) hoặc ghi '(mình đoán)'; chị dùng điện thoại Android, không máy tính: không có công cụ thì nói một lần và mọi dòng là '(mình đoán)'."
+week1_after_ok = "Chỉ sau khi chị OK: QUAY HÔM NAY + Tuần 1 một tin, rồi Brand Card; file CHIEN-LUOC-NOI-DUNG.md chỉ khi app tạo được file (ChatGPT miễn phí trên điện thoại: hỏi 'chiến lược' để nhận bản in một khung)."
+lengths = "video ngắn 120–200 chữ; bài dài ≈1.000 chữ; không tính giây."
+
 [keyword]
 # day0_heard: the Day-0 dump (chunks 1-2) quotes the buyer phrase AND the coach says many clients use it, or quotes it from 3+ NAMED clients (true: the Map prints it with no guess tag;
 # false: it prints "(my guess" / "(mình đoán"). A phrase only the coach uses, or one client once with no "many say it", stays a guess (DECISIONS 7 Oct).
@@ -321,11 +364,11 @@ must = [
   "câu đáp đáng tiền đầu tiên (3 câu đáng tiền chị vừa nói) đến trong 4 phút sau khi chị bắt đầu xả",
   "bỏ qua câu chị nói với nhân viên trong bản ghi ('Linh ơi…', chuyện khách đến), không đưa vào bản đồ hay bài",
   "khi chị quay lại sau khi bị gọi đi ('tiếp em ơi', 'chi quay lai roi'), máy tiếp đúng chỗ, không hỏi lại câu đã trả lời",
-  "sau 'xong' chỉ hỏi cái chưa nghe được (tối đa 3, mỗi tin một câu, kèm câu đoán 'Em đoán: …. Đúng không chị?'); chị trả lời câu đoán hay sửa một dòng Bản đồ bằng một chuyện kể thì máy nhận chuyện đó làm câu trả lời, không đòi chị gõ 'sửa dòng 3'",
-  "Bản đồ 4 dòng (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ, GIỌNG) trong ≤7 lượt của chị, rồi câu chạy thử 4 tuần, 'OK hay sửa một dòng?'; không có bảng kiểm 7 dòng, câu kiểm kê hay bản bỏ túi",
-  "QUAY HÔM NAY dạng thẻ ý để thuộc, dưới bài không in dòng nào, cuối là 'Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.'",
+  "sau 'xong' (hay câu cắt) máy hỏi về phía chị, mỗi tin MỘT câu, bỏ điều chị đã kể (khách, gói và giá, kết quả, điều cả nghề làm sai chị kể rồi): chỉ còn 'khách mới tìm tới thế nào, chị đăng ở đâu' và '90 ngày tới content làm gì cho chị, mấy tiếng mỗi tuần'; chị trả lời bằng chuyện thì máy nhận chuyện đó, không đòi chị gõ 'sửa dòng 3'; máy không hỏi lại điều chị đã nói, không hỏi quá 6 câu",
+  "chiến lược một tin, chưa có bài: ĐIỀU KHÁCH NHỚ, TRỤ CỘT NỘI DUNG (3–5, rộng), TỶ LỆ NỘI DUNG (THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, cộng 100), HỆ THỐNG NỘI DUNG, TỪ KHOÁ, NGHIÊN CỨU CHO THẤY (2–4 dòng có nguồn hay 'mình đoán'), rồi 'OK hay sửa một dòng?'; trong ≤7 lượt của chị cộng các câu hỏi thêm; không có bảng kiểm 7 dòng, câu kiểm kê hay bản bỏ túi",
+  "chỉ sau khi chị OK: QUAY HÔM NAY dạng thẻ ý để thuộc (độ dài đếm chữ, 120–200 chữ, không đếm giây), dưới bài không in dòng nào, cuối là 'Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.'",
   "gợi ý giữ Brand Card bằng cách gửi vào Zalo 'Cloud của tôi' hoặc nhờ Linh, con gái lưu; không bao giờ chặn bước tiếp",
-  "tuần 1 tới ở trả lời ngay sau QUAY HÔM NAY, không chờ hỏi, trước Brand Card; chưa lưu vẫn làm tiếp",
+  "tuần 1 tới cùng tin với QUAY HÔM NAY (2 THU HÚT, 2 NIỀM TIN, 1 CHUYỂN ĐỔI, mỗi bài ghi trụ cột và loại), không chờ hỏi, trước Brand Card; chưa lưu vẫn làm tiếp",
   "câu TIẾP cuối buổi không nhắc dự án nếu chị không có dự án; nói rõ hôm sau mở đâu và dán gì (tối đa 1 lần dán)",
   "mỗi tin vừa một màn hình điện thoại, toàn tiếng Việt, không §, không B1–B7, không mã",
   "số liệu thứ Sáu nhận bằng giọng nói",

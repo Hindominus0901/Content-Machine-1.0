@@ -36,10 +36,26 @@ EN_STRINGS = {
     "cta.platform_note": "Platform note (as of {date}): Facebook and Instagram may show 'comment if…' posts to fewer "
                          "people. Your call.",
     "map.known": "KNOWN FOR:",
-    "map.topics": "3 TOPICS:",
+    "map.topics": "CONTENT PILLARS:",
+    "map.mix": "CONTENT MIX:",
+    "map.system": "YOUR SYSTEM:",
     "map.word": "YOUR WORD:",
+    "map.found": "WHAT I FOUND:",
     "map.voice": "YOUR VOICE:",
     "map.ok": "We'll run this for 4 weeks. OK, or change a line.",
+    "research.now": "While you talk, I'm researching {what} ({where}).",
+    "research.no_tool": "I can't search the web here, so I'll use what you tell me and what I know about {niche}, and "
+                        "mark my guesses.",
+    "dig.story": "Think of one client you really helped. What was going on for them the week they first got in touch?",
+    "dig.words": "What did they say or write to you that first time, word for word if you can?",
+    "dig.offer": "When someone says yes to you, what exactly do they get, how is it delivered, and what do they pay?",
+    "dig.proof": "What's one real result a client got with you that you'd be happy to share?",
+    "dig.stance": "What does everyone in your field tell people that you think is wrong?",
+    "dig.buyer": "If you could clone one client, who would it be, and who would you rather not take on?",
+    "dig.find": "How do new clients find you today, and where do you post now?",
+    "dig.goal": "What should your content do for you in the next 90 days, and how many hours a week can you give it?",
+    "dump.keep_going": "Keep going, or say 'done'.",
+    "dump.post_it": "Post it as text today if you like.",
     "cmd.quiet": "quiet",
     "cta.default": "Comment {KEYWORD} and I'll send you {gift}.",
     "cta.quiet": "Message me {KEYWORD} and I'll send you {gift}.",
@@ -68,9 +84,15 @@ VN_STRINGS = {
     "verdict.needs": 'Cần bạn · {question} Mình không tự bịa phần này. (Hoặc nhắn "bỏ qua".)',
     "cmd.why": "tại sao?",
     "map.known": "ĐƯỢC BIẾT ĐẾN VÌ:",
-    "map.topics": "3 CHỦ ĐỀ:",
+    "map.topics": "TRỤ CỘT NỘI DUNG:",
+    "map.mix": "TỶ LỆ NỘI DUNG:",
+    "map.system": "HỆ THỐNG NỘI DUNG:",
     "map.word": "TỪ KHOÁ CỦA BẠN:",
+    "map.found": "NGHIÊN CỨU CHO THẤY:",
     "map.voice": "GIỌNG CỦA BẠN:",
+    "research.now": "Trong lúc bạn kể, mình đang tìm hiểu {what} ({where}).",
+    "research.no_tool": "Ở đây mình không tra mạng được, nên mình dựa vào lời bạn kể và hiểu biết về {niche}, chỗ nào đoán "
+                        "thì ghi rõ.",
 }
 
 PERSONA = '''
@@ -132,7 +154,8 @@ class TempRepo(unittest.TestCase):
             map_max_turns_vn = 7
             film_ready_max_minutes = 20
             session_max_turns = 10
-            map_lines = 4
+            session_max_minutes = 40
+            map_lines = 6
             [voice]
             i23_phrase_share_min = 0.5
             never_words = 0
@@ -187,7 +210,7 @@ class TempRepo(unittest.TestCase):
 # the piece that needs the coach carries a line.
 FILM_REPLY = f'''
     {TAG}Film today
-    FILM TODAY (under 30 s)
+    FILM TODAY · say it from memory
     On-screen: Coffee before resume
     First line: "63 applications. 2 interviews."
     Beat 1: 24 years at HQ, out at 48.
@@ -203,11 +226,13 @@ FILM_REPLY = f'''
     '''
 
 MAP_REPLY = f'''
-    {TAG}Map
+    {TAG}Strategy
     KNOWN FOR: I help women who were walked out with a box find the next job, coffee before resume, instead of feeding the portal.
-    3 TOPICS: the keepers list · coffee before resume · the test drive
+    CONTENT PILLARS: job search · confidence and identity · talking to people
+    CONTENT MIX: ATTRACT 40% (what a stranger would pass on) · TRUST 40% (how you think, proof) · CONVERT 20% (the offer, the ask)
+    YOUR SYSTEM: LinkedIn is the core, re-cut into an email. 3 short videos, 1 long post and 1 email a week. Ask: comment CHAPTER, then DM, then the gift.
     YOUR WORD: CHAPTER
-    YOUR VOICE: dry · plain · warm · short lines · "the best trade I ever made" · talks to them as "you"
+    WHAT I FOUND: women say they feel invisible after a layoff (Facebook group, Sept 2026) · "coffee before resume" is your own line (my guess)
     We'll run this for 4 weeks. OK, or change a line.
     NEXT → Say "ok" and I'll write today's video.
     '''
@@ -246,11 +271,11 @@ class GoodRunTests(TempRepo):
         self.assertIn("I23", report["not_run"])                 # no [voice], voice samples or banned tells
         day0 = self.inv(report, "day0_timing")
         self.assertEqual(day0["details"]["map_coach_turns"], 2)
-        self.assertEqual(day0["details"]["map_lines"], 4)
+        self.assertEqual(day0["details"]["map_lines"], 6)
         # FILM TODAY and N1 print nothing under them; N2 carries its one Needs you line
         run = graders.load_run(self.run_dir(GOOD), self.root)
         pieces = [(p.title, p.silent, p.kind) for r in run.replies for p in r.pieces]
-        self.assertEqual(pieces, [("FILM TODAY (under 30 s)", True, ""), ("N1 · Reel", True, ""),
+        self.assertEqual(pieces, [("FILM TODAY · say it from memory", True, ""), ("N1 · Reel", True, ""),
                                   ("N2 · Email", False, "needs")])
 
     def test_cli_exit_codes(self):
@@ -692,7 +717,7 @@ class BaselineFixTests(TempRepo):
 
 
 class SimpleSurfaceTests(TempRepo):
-    """wf15 (6 Oct 2026): pieces with nothing under them, the 4-line Map, the new Day-0 budgets."""
+    """wf15 (6 Oct 2026): pieces with nothing under them, the strategy proposal's labelled lines, the Day-0 budgets."""
 
     def test_pieces_without_a_status_line(self):
         reply = f"""
@@ -750,14 +775,14 @@ class SimpleSurfaceTests(TempRepo):
                                                           "[NEEDS: the month] and never looked back.\nNEXT → Say \"next\".")])
         self.assertFails(report, "I18", "open bracket in a piece with no Needs you line")
 
-    def test_day0_budgets_and_the_four_line_map(self):
+    def test_day0_budgets_and_the_six_line_strategy(self):
         slow = [("coach", "Start")] + [x for k in range(7) for x in (("machine", f"{TAG}Dump\nGot it.\nNEXT → go on"),
                                                                       ("coach", f"chunk {k}"))]
         report = self.grade(slow + [("machine", MAP_REPLY)])
         self.assertFails(report, "day0_timing", "Map after 8 coach turns (max 6)")
-        screen = MAP_REPLY.replace("3 TOPICS:", "TOPICS ->").replace("YOUR WORD:", "WORD ->")
+        screen = MAP_REPLY.replace("CONTENT PILLARS:", "TOPICS ->").replace("YOUR WORD:", "WORD ->")
         report = self.grade(GOOD[:3] + [("machine", screen)])
-        self.assertFails(report, "day0_timing", "the Map has 2 labelled lines (want 4)")
+        self.assertFails(report, "day0_timing", "the Map has 4 labelled lines (want 6; missing map.topics, map.word)")
         late = GOOD[:5] + [("machine", FILM_REPLY, {"t_min": 21.0})]
         self.assertFails(self.grade(late), "day0_timing", "film-ready at active minute 21 (max 20)")
         long_session = GOOD + [x for k in range(7) for x in (("coach", "ok"), ("machine", f"{TAG}More\nNEXT → ok"))]
@@ -766,11 +791,14 @@ class SimpleSurfaceTests(TempRepo):
     def test_vn_map_labels_follow_the_pronoun_and_spelling(self):
         self.write("evals/personas/vn/thu/persona.toml", 'xung_ho = "chị–em"\nallowed_numbers = ["3"]\n'
                                                         'seeded_names = ["Lương Khánh Vy"]\n')
-        vn_map = (f"{TAG}Bản đồ\nĐƯỢC BIẾT ĐẾN VÌ: dạy chị em chủ shop tính lãi thật.\n3 CHỦ ĐỀ: sổ · kho · giá\n"
-                  "TỪ KHÓA CỦA CHỊ: LÃI THẬT\nGIỌNG CỦA CHỊ: thẳng · ấm · câu ngắn\nChạy 4 tuần nhé chị. Ok, hay sửa dòng nào?\n"
+        vn_map = (f"{TAG}Bản đồ\nĐƯỢC BIẾT ĐẾN VÌ: dạy chị em chủ shop tính lãi thật.\nTRỤ CỘT NỘI DUNG: sổ · kho · giá\n"
+                  "TỶ LỆ NỘI DUNG: THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%\nHỆ THỐNG NỘI DUNG: Facebook, mỗi tuần 3 video "
+                  "ngắn, comment rồi nhắn riêng\nTỪ KHÓA CỦA CHỊ: LÃI THẬT\nNGHIÊN CỨU CHO THẤY: chủ shop than sổ rối (nhóm "
+                  "Facebook chủ shop, 9/2026)\nGIỌNG CỦA CHỊ: thẳng · ấm · câu ngắn\nChạy 4 tuần nhé chị. Ok, hay sửa dòng nào?\n"
                   "TIẾP → Gõ \"ok\".")
         report = self.grade([("coach", "Bắt đầu"), ("machine", vn_map)], persona="vn/thu", edition="vn")
-        self.assertEqual(self.inv(report, "day0_timing")["details"]["map_lines"], 4)
+        # the six labelled lines count, whatever the pronoun; YOUR VOICE left the proposal and is no seventh
+        self.assertEqual(self.inv(report, "day0_timing")["details"]["map_lines"], 6)
 
     def test_why_asks(self):
         for text, want in (("why?", True), ("Why this one?", True), ("tại sao?", True), ("vì sao chọn bài này", True),
@@ -2198,7 +2226,8 @@ class G2RoundGraderTests(TempRepo):
 
 
 VG_STRINGS = dict(VN_STRINGS, **{
-    "map.known": "ĐIỀU KHÁCH NHỚ:", "map.topics": "3 CHỦ ĐỀ:", "map.word": "TỪ KHOÁ:", "map.voice": "GIỌNG:",
+    "map.known": "ĐIỀU KHÁCH NHỚ:", "map.topics": "TRỤ CỘT NỘI DUNG:", "map.mix": "TỶ LỆ NỘI DUNG:",
+    "map.system": "HỆ THỐNG NỘI DUNG:", "map.word": "TỪ KHOÁ:", "map.found": "NGHIÊN CỨU CHO THẤY:", "map.voice": "GIỌNG:",
     "map.ok": "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?",
     "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.",
     "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.",
@@ -2231,9 +2260,11 @@ VG_MAP = f'''
     {TAG}Bản đồ
     BẢN ĐỒ
     1 ĐIỀU KHÁCH NHỚ: Chủ doanh nghiệp nào hay than "tôi tuyển hoài mà không giữ được ai" thì tìm tôi: phiếu việc, làm thử 2 tiếng.
-    2 3 CHỦ ĐỀ: Người mới quyết nghỉ sớm · Phiếu việc, làm thử · Giữ được người
-    3 TỪ KHOÁ: TUYỂN HOÀI (không dấu: TUYEN HOAI)
-    4 GIỌNG: thẳng · thật · có số · với khách: "tôi – anh chị"
+    2 TRỤ CỘT NỘI DUNG: Người mới quyết nghỉ sớm · Phiếu việc, làm thử · Giữ được người
+    3 TỶ LỆ NỘI DUNG: THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%
+    4 HỆ THỐNG NỘI DUNG: Facebook là kênh chính, đăng lại lên Zalo. Mỗi tuần 3 video ngắn, 1 bài dài, 1 tin Zalo. Lời mời: comment, rồi nhắn riêng, rồi quà.
+    5 TỪ KHOÁ: TUYỂN HOÀI (không dấu: TUYEN HOAI)
+    6 NGHIÊN CỨU CHO THẤY: chủ xưởng than khó giữ người mới (nhóm Facebook chủ xưởng, 9/2026) · giá để trên bảng ít ai nói (mình đoán)
 
     QUAY HÔM NAY · dưới 30 giây
     Chữ trên màn hình: Còn dư 40 bao lì xì
@@ -2289,7 +2320,7 @@ class VG1RoundGraderTests(TempRepo):
     # VG-8 numbered Map labels; VG-3 YOUR WORD with its no-diacritics note; VG-4 the CTA in the coach's own forms
     def test_vg3_vg4_vg8_map_and_cta(self):
         report = self.vn()
-        self.assertEqual(self.inv(report, "day0_timing")["details"]["map_lines"], 4)
+        self.assertEqual(self.inv(report, "day0_timing")["details"]["map_lines"], 6)
         self.assertIs(self.item(report, "day0_shape", "FILM TODAY")["pass"], True)
         self.assertIs(self.item(report, "day0_shape", "YOUR WORD")["pass"], True)
         for line in ("comment TUYỂN HOÀI hoặc nhắn riêng chị, chị gửi mẫu phiếu việc 1 trang.",
@@ -2631,7 +2662,7 @@ class VG3RoundGraderTests(TempRepo):
             map_max_turns_vn = 7
             film_ready_max_minutes = 20
             session_max_turns = 10
-            map_lines = 4
+            map_lines = 6
             shorter_max_words = 90
             shorter_max_words_vn = 120
             [voice]
@@ -2741,7 +2772,7 @@ class VG3RoundGraderTests(TempRepo):
             .replace("    Comment CHAPTER and I'll send you the coffee script.\n    ```\n",
                      "    Comment CHAPTER and I'll send you the coffee script.\n\n")
         report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", unboxed)], suite="day0")
-        self.assertFails(report, "day0_shape", 'FILM TODAY (under 30 s) carries YOUR WORD "chapter" only in the ask')
+        self.assertFails(report, "day0_shape", 'FILM TODAY · say it from memo… carries YOUR WORD "chapter" only in the ask')
         said = unboxed.replace("Coffee first.", "Your next chapter starts with a coffee.")
         report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", said)], suite="day0")
         self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
@@ -3154,7 +3185,7 @@ class VG5RoundGraderTests(TempRepo):
             film_ready_max_minutes = 20
             session_max_turns = 10
             session_max_turns_vn = 11
-            map_lines = 4
+            map_lines = 6
             """)
         self.write("evals/personas/vn/tuan/persona.toml", VG5_PERSONA)
         self.write("evals/personas/vn/tuan/expected.toml", VG5_EXPECTED)
@@ -3319,7 +3350,7 @@ class VG6G7RoundGraderTests(TempRepo):
             film_ready_max_minutes = 20
             session_max_turns = 10
             session_max_turns_vn = 11
-            map_lines = 4
+            map_lines = 6
             """)
         self.write("evals/personas/vn/tuan/persona.toml", VG5_PERSONA)
         self.write("evals/personas/vn/tuan/expected.toml", VG5_EXPECTED)
@@ -3504,7 +3535,7 @@ FT1_ACCEPT = """
     film_ready_max_minutes = 20
     session_max_turns = 10
     session_max_turns_vn = 11
-    map_lines = 4
+    map_lines = 6
     """
 # What the machine printed in the retest: Nhi's N3 (a flat claim on screen, in caption line 1, and the on-screen text is
 # the first line again) and N4 (the on-screen text is the first line again), as the review quotes them.
@@ -3952,8 +3983,9 @@ class FT2RoundGraderTests(TempRepo):
         self.write("evals/personas/vn/nhi/persona.toml", FT1_PERSONA)
         self.write("evals/personas/vn/nhi/expected.toml", FT1_EXPECTED)
         self.write("evals/personas/vn/nhi/answers.md", "## Dump chunk 1\nMình viết thuê cho coach.\n")
-        self.write("locales/vn/deny-list.txt", "# test\nre:(?i)(?<!ý lớn của \\w{3} \\(content )\\bpillars?\\b\ntrụ cột\n")
-        self.write("locales/en/deny-list.txt", "# test\nre:(?i)(?<!big ideas \\(content )\\bpillars?\\b\n")
+        # the kit's lists since 7 Oct night: "content pillar(s)" and "trụ cột nội dung" are allowed, "pillar" and "trụ cột" alone fail
+        self.write("locales/vn/deny-list.txt", "# test\nre:(?i)(?<!content )\\bpillars?\\b\nre:(?i)\\btrụ\\s+cột\\b(?!\\s+nội\\s+dung)\n")
+        self.write("locales/en/deny-list.txt", "# test\nre:(?i)(?<!content )\\bpillars?\\b\n")
 
     def vn(self, *bodies, **kw):
         text = f"{TAG}Tuần 1\n\n" + "\n\n".join(bodies) + "\n\nTIẾP → Nhắn 'tiếp'."
@@ -4356,18 +4388,25 @@ Kept as a pattern: people who sell their own service get clients mostly through 
 
 Bạn giúp coach tài chính cá nhân.
 
-## 2. Khách cần nghe gì, ở từng chặng
+## 2. Trụ cột nội dung của bạn
 
 - Chặng 2: "Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết."
 - "nhưng đa số quen biết giới thiệu" (người tự mở lớp, Voz, 11/2020)
 - "Để làm freelance a cần 1 lượng khách quen" (người làm tự do, Voz, 10/2022)
 
-## 3. Ba ý lớn của bạn (content pillars)
-
 ### Ý 1 · Người lạ chưa tin thì chưa nhắn
 - Hook: chữ "AI đâu có gọi khách cũ" · câu đầu "Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?" | chữ "27 trên 41 thẻ bỏ dở" · câu đầu "Năm 2018 spa chị cũng dọa khách đấy."
 
-## 4. Mỗi tuần làm gì
+### Ý 2 · Hỏi để làm gì trước khi hỏi làm thế nào
+### Ý 3 · Một email cũng là marketing
+
+## 3. Tỷ lệ nội dung: thu hút, niềm tin, chuyển đổi
+
+THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%
+
+## 4. Hệ thống nội dung của bạn
+
+Video ngắn 120–200 chữ · bài dài ≈1.000 chữ · video dài 1.000–1.500 chữ.
 
 ## 5. 30 ngày đầu
 
@@ -4407,18 +4446,21 @@ Bạn giúp coach tài chính cá nhân.
         self.write("evals/personas/vn/hanh/answers.md", "## Dump chunk 1\nx\n")
         report = self.doc_report(self.NHI_DOC, persona="vn/hanh")
         ev = self.inv(report, "strategy_doc")["items"][0]["evidence"]
-        self.assertEqual(len(ev), 2, ev)
+        self.assertEqual(len(ev), 3, ev)
         self.assertIn('part 1 "Bạn giúp ai, và vì sao là bạn" says "Bạn"; with this coach the machine says "chị"', ev[0])
-        self.assertIn('part 3 "Ba ý lớn của bạn (content pillars)" says "bạn"', ev[1])
+        self.assertIn('part 2 "Trụ cột nội dung của bạn" says "bạn"', ev[1])
+        self.assertIn('part 4 "Hệ thống nội dung của bạn" says "bạn"', ev[2])
         right = self.NHI_DOC.replace("Bạn giúp ai, và vì sao là bạn", "Chị giúp ai, và vì sao là chị") \
-                            .replace("Ba ý lớn của bạn", "Ba ý lớn của chị")
+                            .replace("Trụ cột nội dung của bạn", "Trụ cột nội dung của chị") \
+                            .replace("Hệ thống nội dung của bạn", "Hệ thống nội dung của chị")
         self.assertTrue(self.inv(self.doc_report(right, persona="vn/hanh"), "strategy_doc")["items"][0]["pass"])
         # a part missing, and parts out of order
         missing = self.NHI_DOC.replace("## 5. 30 ngày đầu\n", "")
         self.assertIn("part 5 has 0 headings", self.inv(self.doc_report(missing), "strategy_doc")["items"][0]["evidence"][0])
-        swapped = self.NHI_DOC.replace("## 4. Mỗi tuần làm gì", "## 9. x").replace("## 7. Dùng file này thế nào", "## 4. Mỗi tuần làm gì")
+        swapped = self.NHI_DOC.replace("## 4. Hệ thống nội dung của bạn", "## 9. x").replace("## 7. Dùng file này thế nào",
+                                                                                        "## 4. Hệ thống nội dung của bạn")
         self.assertFalse(self.inv(self.doc_report(swapped), "strategy_doc")["items"][0]["pass"])
-        renamed = self.NHI_DOC.replace("Mỗi tuần làm gì", "Lịch tuần")
+        renamed = self.NHI_DOC.replace("Hệ thống nội dung của bạn", "Lịch tuần")
         self.assertIn("part 4 is headed", self.inv(self.doc_report(renamed), "strategy_doc")["items"][0]["evidence"][0])
 
     def test_the_hooks_of_the_big_ideas_are_read_like_the_shorts(self):
@@ -4440,13 +4482,14 @@ Bạn giúp coach tài chính cá nhân.
         en = """# Erin · Content strategy
 
 ## 1. Who you help, and why you
-## 2. Your buyer, step by step
-## 3. Your 3 big ideas (content pillars)
+## 2. Your content pillars
+### Big idea 1: Client by client
 ### Big idea 2: Margin before more
 - Hooks: on screen "That's a rearview mirror." / first line "In the middle of March they find out what happened in January." · on screen "The bank app isn't a forecast." / first line "She checks it every morning."
 ### Big idea 3: Fix it or fire it
 - Hooks: on screen "He repriced his biggest client." / first line "They said yes to a new scope." · on screen "Fix it or fire it." / first line "I've written a lot of those emails."
-## 4. How your week runs
+## 3. Your content mix: attract, trust, convert
+## 4. Your content system
 ## 5. Your first 30 days
 ## 6. What this is built on
 ## 7. How to use this
@@ -4492,8 +4535,8 @@ Bạn giúp coach tài chính cá nhân.
         en_held = "## 6. What this is built on\n\n- What holds: agency owners want to see which clients make money (6 people, 2 places).\n"
         en_none = "## 6. What this is built on\n\n- What holds: nothing yet.\n"
         for body, ok in ((en_held, False), (en_none, True)):
-            doc = ("# E\n\n## 1. Who you help, and why you\n## 2. Your buyer, step by step\n## 3. Your 3 big ideas (content pillars)\n"
-                   "## 4. How your week runs\n## 5. Your first 30 days\n" + body + "## 7. How to use this\n")
+            doc = ("# E\n\n## 1. Who you help, and why you\n## 2. Your content pillars\n## 3. Your content mix\n"
+                   "## 4. Your content system\n## 5. Your first 30 days\n" + body + "## 7. How to use this\n")
             check = self.inv(self.doc_report(doc, log=self.EN_LOG, persona="en/test-coach", edition="en", name="CONTENT-STRATEGY.md"),
                              "strategy_doc")
             self.assertIs(check["items"][3]["pass"], ok, check["items"][3])
@@ -4501,7 +4544,9 @@ Bạn giúp coach tài chính cá nhân.
     def test_the_deny_list_reads_the_file_with_the_pillars_exception(self):
         ok = self.inv(self.doc_report(self.NHI_DOC), "strategy_doc")
         self.assertTrue(ok["items"][4]["pass"], ok["items"][4])
-        bad = self.NHI_DOC.replace("(content pillars)", "(trụ cột)") + "\nMỗi pillar có 2 hook.\n"
+        # "trụ cột nội dung" and "content pillars" are the founder's words; "trụ cột" or "pillar" alone fail
+        self.assertEqual(self.inv(self.doc_report(self.NHI_DOC + "\nMỗi content pillar có 2 hook.\n"), "strategy_doc")["items"][4]["evidence"], [])
+        bad = self.NHI_DOC.replace("Trụ cột nội dung của bạn", "Trụ cột của bạn") + "\nMỗi pillar có 2 hook.\n"
         ev = self.inv(self.doc_report(bad), "strategy_doc")["items"][4]["evidence"]
         self.assertEqual(len(ev), 2, ev)
 
@@ -4534,6 +4579,772 @@ class LoaderTests(TempRepo):
                          "needs")
         self.assertEqual(matcher.verdict_kind("Draft · waiting on one fact from you; I'll ask next"), "draft_queued")
         self.assertIsNone(matcher.verdict_kind("Ready when you are."))
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Strategy first (founder, 7 Oct 2026 night, after his v10 run; DECISIONS "Strategy first on Day 0"): xưng hô (VN), the
+# dump, the interview about the coach's side, ONE reply with the strategy and no piece, FILM TODAY and Week 1 only after
+# the OK, then the Brand Card. His words: "it has not asked me anything … so that it can propose STRATEGY FIRST, not
+# propose content right away", "it has not done any research", "the length has to be measured by words, not seconds",
+# "content pillars have to be something broad", "three types of content: TRUST, ATTRACT and CONVERT".
+# ---------------------------------------------------------------------------------------------------------------------
+
+S_PROMPT = (f"{TAG}Setup check\nGot posts or messages you've written? Paste 2–3 too, or send a link to your page.\n"
+            "NEXT → Talk for 2-3 minutes, then send.")
+S_EARLY = f'''
+    {TAG}Dump
+    Got it. 3 lines you just said that are worth money:
+    "I was at HQ 24 years."
+    "Lorraine told me it was the best trade I ever made."
+    "My clients ask me one thing: will this work?"
+    While you talk, I'm researching how laid-off women describe their first month (Facebook groups, Reddit).
+    Keep going, or say 'done'.
+    NEXT → Keep talking, or say 'done'.
+    '''
+S_Q_OFFER = (f"{TAG}Your side\nWhen someone says yes to you, what exactly do they get, how is it delivered, and what do "
+             "they pay?\nNEXT → A sentence or two is plenty.")
+S_Q_FIND = (f"{TAG}Your side\nHow do new clients find you today, and where do you post now?\n"
+            "NEXT → A sentence is plenty.")
+S_Q_GOAL = (f"{TAG}Your side\nWhat should your content do for you in the next 90 days, and how many hours a week can you "
+            "give it?\nNEXT → A sentence is plenty.")
+S_Q_STANCE = (f"{TAG}Your side\nWhat does everyone in your field tell people that you think is wrong?\n"
+              "NEXT → A sentence is plenty.")
+S_Q_BUYER = (f"{TAG}Your side\nIf you could clone one client, who would it be, and who would you rather not take on?\n"
+             "NEXT → A sentence is plenty.")
+S_Q_PROOF = (f"{TAG}Your side\nWhat's one real result a client got with you that you'd be happy to share?\n"
+             "NEXT → A sentence is plenty.")
+S_Q_STORY = (f"{TAG}Your side\nThink of one client you really helped. What was going on for them the week they first got in "
+             "touch?\nNEXT → A sentence is plenty.")
+S_Q_WORDS = (f"{TAG}Your side\nWhat did they say or write to you that first time, word for word if you can?\n"
+             "NEXT → A sentence is plenty.")
+S_OK = "ok"
+S_WEEK = f'''
+    {TAG}FILM TODAY and Week 1
+    FILM TODAY · say it from memory
+    On-screen: Coffee before resume
+    First line: "63 applications. 2 interviews."
+    Last line: Comment CHAPTER for the coffee script.
+    Caption:
+    ```
+    Your next chapter starts with a coffee.
+    Comment CHAPTER and I'll send you the coffee script.
+    ```
+    (quieter: say 'quiet')
+    Film it now, or post the caption as text.
+
+    N1 · Thu · Short video · job search · ATTRACT
+    ```
+    On-screen: The portal says no
+    First line: "63 applications. 2 interviews."
+    Last line: Coffee before resume.
+    Caption:
+    Your next chapter starts with a coffee. Comment CHAPTER.
+    ```
+
+    N2 · Fri · Short video · talking to people · TRUST
+    ```
+    On-screen: Coffee first
+    First line: "I was at HQ 24 years."
+    Last line: Ask for the coffee.
+    Caption:
+    Ask first. Comment CHAPTER.
+    ```
+
+    N3 · Sat · Short video · confidence and identity · ATTRACT
+    ```
+    On-screen: Who are you now
+    First line: "Lorraine told me it was the best trade I ever made."
+    Last line: Say that out loud.
+    Caption:
+    Say it out loud. Comment CHAPTER.
+    ```
+
+    N4 · Sun · Long post · job search · TRUST
+    ```
+    The best trade I ever made, Lorraine said. Then she told me what she gave up.
+    ```
+
+    N5 · Mon · Email · confidence and identity · CONVERT
+    ```
+    Subject: Coffee before resume
+    If a coffee is the next step, hit reply and tell me who.
+    ```
+    NEXT → Film today's video. Tomorrow: say 'next'.
+    '''
+
+
+class StrategyFirstBase(TempRepo):
+    """A strategy-first Day 0 in the test repo: the dump prompt, the early win, an interview, the strategy, the OK, FILM TODAY
+    and Week 1. `day0(...)` builds the transcript; each piece can be replaced."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/acceptance.toml", """
+            [day0]
+            map_max_turns_en = 6
+            map_max_turns_vn = 7
+            dig_answers_max = 6
+            interview_max_questions = 6
+            strategy_max_minutes = 25
+            film_ready_max_minutes = 35
+            session_max_turns = 10
+            session_max_minutes = 45
+            map_lines = 6
+            found_min_lines = 2
+            found_max_lines = 4
+            [lengths]
+            [voice]
+            i23_phrase_share_min = 0.5
+            never_words = 0
+            """)
+
+    def day0(self, early=S_EARLY, interview=(S_Q_OFFER, S_Q_FIND), answers=("Eight weeks, one to one, $2,400.",
+                                                                          "Mostly referrals, and Facebook."),
+             strategy=MAP_REPLY, ok=S_OK, week=S_WEEK, card=None, extra_coach=()):
+        turns = [("coach", "Start"), ("machine", S_PROMPT), ("coach", ANSWERS), ("machine", early), ("coach", "done")]
+        for q, a in zip(interview, answers):
+            turns += [("machine", q), ("coach", a)]
+        turns.append(("machine", strategy))
+        turns += list(extra_coach)
+        if ok is not None:
+            turns.append(("coach", ok))
+            turns.append(("machine", week))
+        if card is not None:
+            turns += [("coach", "next"), ("machine", card)]
+        return turns
+
+    @staticmethod
+    def numbered(turns: list) -> list:
+        """A coach turn and the machine reply to it share one turn number, as the simulators write them."""
+        out, n = [], 0
+        for role, text, *extra in turns:
+            n += role == "coach"
+            out.append((role, text, dict({"turn": max(n, 1)}, **(extra[0] if extra else {}))))
+        return out
+
+    def report(self, turns=None, **meta):
+        return self.grade(self.numbered(turns if turns is not None else self.day0()), suite="day0", **meta)
+
+    def strat(self, report, item_start: str) -> dict:
+        return next(i for i in self.inv(report, "day0_strategy")["items"] if i["item"].startswith(item_start))
+
+    def write_expected(self, extra: str) -> None:
+        self.write("evals/personas/en/test-coach/expected.toml", EXPECTED + extra)
+
+
+class StrategyFirstOrderTests(StrategyFirstBase):
+    def test_a_strategy_first_day0_passes_every_item(self):
+        report = self.report()
+        check = self.inv(report, "day0_strategy")
+        self.assertIs(check["pass"], True, check)
+        ran = {i["item"]: i["pass"] for i in check["items"]}
+        self.assertTrue(ran["no piece, FILM TODAY, copy box or Brand Card before the strategy's OK"])
+        self.assertTrue(ran["FILM TODAY and Week 1 come only after the coach's OK"])
+        self.assertTrue(ran["CONTENT MIX: ATTRACT, TRUST and CONVERT, each with a share, adding up to 100"])
+        self.assertEqual(check["details"]["pillars"], ["job search", "confidence and identity", "talking to people"])
+        self.assertEqual(check["details"]["mix"], {"attract": 40, "trust": 40, "convert": 20})
+        self.assertEqual(check["details"]["interview_questions"], 2)
+        self.assertEqual(check["details"]["week_types"], {"attract": 2, "trust": 2, "convert": 1})
+        timing = self.inv(report, "day0_timing")
+        self.assertIs(timing["pass"], True, timing)
+        self.assertEqual(timing["details"]["map_dig_answers"], 2)
+        self.assertEqual(timing["details"]["map_lines"], 6)
+
+    def test_a_piece_in_the_strategy_reply_is_the_old_k2_and_fails(self):
+        """K2 (the Map and FILM TODAY in one reply) is replaced: nothing to film or post before the OK."""
+        k2 = MAP_REPLY.replace("NEXT → Say \"ok\" and I'll write today's video.", FILM_REPLY.split("\n", 1)[1])
+        report = self.report(self.day0(strategy=k2, ok=None))
+        self.assertFails(report, "day0_strategy", "FILM TODAY · say it from memory printed with the strategy, before the coach's OK")
+
+    def test_a_copy_box_in_the_early_win_and_post_it_fail(self):
+        boxed = S_EARLY.replace('"I was at HQ 24 years."', "```\nI was at HQ 24 years.\n```\nPost it as text today if you like.")
+        report = self.report(self.day0(early=boxed))
+        self.assertFails(report, "day0_strategy", "a copy box printed before the strategy")
+        self.assertFails(report, "day0_strategy", '"post it" before the strategy')
+        # quoted lines only: fine
+        self.assertPasses(self.report(), "day0_strategy")
+
+    def test_week_one_after_something_that_is_not_an_ok_fails(self):
+        for said in ("why these pillars?", "change 2: add pricing", "hmm"):
+            with self.subTest(said=said):
+                self.assertFails(self.report(self.day0(ok=said)), "day0_strategy",
+                                 f'printed after the coach said "{said}", not an OK, "next" or "go"')
+        for said in ("ok", "OK, but change line 3", "next", "go", "Yes, that works", "được", "đồng ý"):
+            with self.subTest(said=said):
+                self.assertPasses(self.report(self.day0(ok=said)), "day0_strategy")
+
+    def test_a_question_then_the_ok_is_the_right_order(self):
+        """A question first: the machine answers and asks the OK again, no piece; then the OK brings the pieces."""
+        turns = self.day0(ok=None, extra_coach=[("coach", "why these three?"),
+                                                ("machine", f"{TAG}Strategy\nThey are the three areas a buyer follows for a year. {MAP_REPLY.splitlines()[-2]}\nNEXT → Say ok."),
+                                                ("coach", "ok"), ("machine", S_WEEK)])
+        self.assertIs(self.inv(self.report(turns), "day0_strategy")["pass"], True)
+
+    def test_the_brand_card_before_the_strategy_fails(self):
+        card = f"{TAG}Brand Card\nWHAT YOU SAY: coffee · CHAPTER\nHOW YOU SAY IT: dry\nThe rest is for the machine, no need to read:\n```\nversion: 1\n```"
+        turns = self.day0(interview=())
+        turns[5:5] = [("machine", card), ("coach", "later")]
+        self.assertFails(self.report(turns), "day0_strategy", "the Brand Card before the strategy")
+
+    def test_the_strategy_ends_on_one_decision(self):
+        no_ok = MAP_REPLY.replace("We'll run this for 4 weeks. OK, or change a line.\n", "")
+        self.assertFails(self.report(self.day0(strategy=no_ok)), "day0_strategy", "does not end on its one decision")
+
+    def test_a_strategy_reply_is_not_a_wall_of_text(self):
+        long = MAP_REPLY.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER\n" + "Because buyers read. " * 120)
+        report = self.report(self.day0(strategy=long))
+        self.assertFails(report, "day0_strategy", "of talk (max 400)")
+        # the strategy is what a coach reads the reply for: it is not "more than 300 words before anything usable"
+        self.assertPasses(self.report(self.day0(strategy=MAP_REPLY.replace("YOUR WORD: CHAPTER",
+                                                                           "YOUR WORD: CHAPTER\n" + "Because buyers read. " * 80))),
+                          "quit_triggers")
+
+    def test_not_now_and_why_this_one_stay_off_the_strategy(self):
+        report = self.report(self.day0(strategy=MAP_REPLY.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER\nNOT NOW: tax")))
+        self.assertFails(report, "day0_strategy", 'on the strategy (NOT NOW and "why this one" print on "why?")')
+
+    def test_a_pillar_that_reads_like_a_choice_is_no_decision(self):
+        """"decide", "choose" inside a pillar's bullet (the strategy's own lines) are plan words, not a prompt."""
+        bullets = MAP_REPLY.replace("CONTENT PILLARS: job search · confidence and identity · talking to people",
+                                    "CONTENT PILLARS:\n    - how buyers decide\n    - choosing an offer\n    - talking to people")
+        report = self.report(self.day0(strategy=bullets))
+        self.assertPasses(report, "I6")
+        self.assertEqual(self.inv(report, "day0_strategy")["details"]["pillars"], ["how buyers decide", "choosing an offer", "talking to people"])
+
+    def test_a_map_of_the_older_kit_still_reads_as_a_map(self):
+        """"3 TOPICS:" became "CONTENT PILLARS:": a run of the older kit keeps its label (its topics are never a decision)
+        and the run fails the new flow for what it is (the topics are not 3-5 broad pillars)."""
+        legacy = MAP_REPLY.replace("CONTENT PILLARS: job search · confidence and identity · talking to people",
+                                   "3 TOPICS: choose the first client to write for · confidence and identity · talking to people")
+        report = self.report(self.day0(strategy=legacy))
+        self.assertPasses(report, "I6")
+        self.assertEqual(self.inv(report, "day0_timing")["details"]["map_lines"], 6)
+        self.assertFails(report, "day0_strategy", "is 7 words (broad topic clusters run 1-4): too specific")
+
+    def test_an_interview_question_is_never_a_decision(self):
+        """I6: "who would you choose" / "chọn ai" in a dig question is no choice between options."""
+        report = self.report()
+        self.assertPasses(report, "I6")
+        vn = graders.Matcher(dict(VN_STRINGS, **{"dig.buyer": "Được nhân bản một khách thì bạn chọn ai, còn kiểu khách nào "
+                                                              "bạn không muốn nhận?"}), "vn")
+        line = "Nếu nhân bản được một khách, chị chọn ai, còn kiểu khách nào chị không muốn nhận?"
+        self.assertEqual(graders.reply_decisions(
+            graders.analyse_reply(graders.Turn(2, "machine", f"{TAG}Hỏi thêm\n{line}\nTIẾP → Chị kể một câu.", 1.0), 1, vn), vn), {})
+        # a real choice stays one
+        pick = graders.analyse_reply(graders.Turn(2, "machine", f"{TAG}Hỏi thêm\nChị chọn gói A hay gói B?\nTIẾP → Gõ A hay B.", 1.0), 1, vn)
+        self.assertTrue(graders.reply_decisions(pick, vn))
+
+
+class StrategyFirstResearchTests(StrategyFirstBase):
+    def test_the_research_line_is_said_once_after_the_first_send(self):
+        self.assertPasses(self.report(), "day0_strategy")
+        none = S_EARLY.replace("While you talk, I'm researching how laid-off women describe their first month (Facebook groups, Reddit).\n", "")
+        self.assertFails(self.report(self.day0(early=none)), "day0_strategy", "never said what it is researching")
+        again = S_Q_FIND.replace("How do new clients", "While you talk, I'm researching how laid-off women describe their first month (Reddit). How do new clients")
+        self.assertFails(self.report(self.day0(interview=(S_Q_OFFER, again))), "day0_strategy", "the research line came 2 times")
+
+    def test_the_research_line_before_the_first_send_fails(self):
+        turns = self.day0()
+        turns[1] = ("machine", S_PROMPT.replace("NEXT →", "While you talk, I'm researching how coaches talk (Facebook groups).\nNEXT →"))
+        turns[3] = ("machine", S_EARLY.replace("While you talk, I'm researching how laid-off women describe their first month (Facebook groups, Reddit).\n", ""))
+        self.assertFails(self.report(turns), "day0_strategy", "the research line came before the coach's first send")
+
+    def test_no_tool_says_so_once_and_the_found_lines_are_guesses(self):
+        early = S_EARLY.replace("While you talk, I'm researching how laid-off women describe their first month (Facebook groups, Reddit).",
+                                "I can't search the web here, so I'll use what you tell me and what I know about job search after a layoff, and mark my guesses.")
+        guesses = MAP_REPLY.replace("women say they feel invisible after a layoff (Facebook group, Sept 2026)",
+                                    "women feel invisible after a layoff (my guess)")
+        report = self.report(self.day0(early=early, strategy=guesses), web=False)
+        self.assertPasses(report, "day0_strategy")
+        # sources quoted in a run with no tool: unverified, label it a guess
+        self.assertFails(self.report(self.day0(early=early), web=False), "day0_strategy", "names a source in a run with no tool")
+        # it says it cannot search although the run had web tools
+        self.assertFails(self.report(self.day0(early=early), web=True), "day0_strategy", "said it cannot search the web, but the run had web tools")
+        # it says it researches although the run had none
+        self.assertFails(self.report(self.day0(), web=False), "day0_strategy", "says it is researching, but the run had no tool")
+
+    def test_what_i_found_has_2_to_4_lines_each_sourced_or_a_guess(self):
+        one = MAP_REPLY.replace(' · "coffee before resume" is your own line (my guess)', "")
+        self.assertFails(self.report(self.day0(strategy=one)), "day0_strategy", "WHAT I FOUND has 1 line (want 2-4)")
+        bare = MAP_REPLY.replace('"coffee before resume" is your own line (my guess)', "buyers want to be heard")
+        self.assertFails(self.report(self.day0(strategy=bare)), "day0_strategy",
+                         'WHAT I FOUND line with no source and no guess label: "buyers want to be heard"')
+        found_line = [l for l in MAP_REPLY.splitlines() if "WHAT I FOUND" in l][0]
+        five = MAP_REPLY.replace(found_line, "    WHAT I FOUND:\n    - a (my guess)\n    - b (my guess)\n    - c (my guess)\n    - d (my guess)\n    - e (my guess)")
+        self.assertFails(self.report(self.day0(strategy=five)), "day0_strategy", "WHAT I FOUND has 5 lines (want 2-4)")
+        bullets = MAP_REPLY.replace(found_line, '    WHAT I FOUND:\n    - women say they feel invisible after a layoff (Facebook group, Sept 2026)\n'
+                                                '    - "coffee before resume" is your own line (my guess)\n    - what you told me about the portal (your words)')
+        self.assertPasses(self.report(self.day0(strategy=bullets)), "day0_strategy")
+        # a web run needs one line with a real source
+        guesses = MAP_REPLY.replace("women say they feel invisible after a layoff (Facebook group, Sept 2026)", "women feel invisible (my guess)")
+        self.assertFails(self.report(self.day0(strategy=guesses), web=True), "day0_strategy", "no line with a real source, in a run with web tools")
+
+    def test_the_web_lane_log_starts_after_the_first_send_and_feeds_the_strategy(self):
+        def run(queries):
+            d = self.run_dir(self.numbered(self.day0()), suite="day0", web=True)
+            (d / "notes.md").write_text("## Research log\n### Queries\n" + queries + "\n### Pages opened\n1. https://reddit.com/r/x · Reddit · 9/2026 · a laid-off woman\n", encoding="utf-8")
+            return graders.grade(d, self.root)
+        self.assertPasses(run('Q1 · after turn 2 · "laid off woman first month"\nQ2 · after turn 3 · "feel invisible after layoff"'), "day0_strategy")
+        report = run('Q1 · after turn 1 · "laid off woman first month"')
+        self.assertFails(report, "day0_strategy", "ran after turn 1, before the coach's first send (turn 2)")
+        report = run('Q1 · after turn 6 · "laid off woman first month"')
+        self.assertFails(report, "day0_strategy", "every query ran after the strategy (turn 5)")
+        # no log, or no web run: the item is not run
+        self.assertIsNone(self.strat(self.report(), "the research log's queries")["pass"])
+
+
+class StrategyFirstInterviewTests(StrategyFirstBase):
+    def test_at_most_six_questions_one_a_reply(self):
+        qs = (S_Q_OFFER, S_Q_FIND, S_Q_GOAL, S_Q_STANCE, S_Q_BUYER, S_Q_PROOF, S_Q_STORY)
+        report = self.report(self.day0(interview=qs, answers=("a",) * 7))
+        self.assertFails(report, "day0_strategy", "the interview asked 7 questions before the strategy (max 6)")
+        self.assertPasses(self.report(self.day0(interview=qs[:6], answers=("a",) * 6)), "day0_strategy")
+        timing = self.inv(self.report(self.day0(interview=qs[:6], answers=("a",) * 6)), "day0_timing")
+        self.assertEqual((timing["details"]["map_dig_answers"], timing["details"]["map_coach_turns"]), (6, 9))
+        self.assertIs(timing["pass"], True, timing)
+
+    def test_nothing_the_dump_gave_is_asked_and_nothing_twice(self):
+        self.write_expected('\n[interview]\ndump_gives = ["offer", "stance"]\ndump_gaps = ["find", "goal"]\n')
+        report = self.report(self.day0(interview=(S_Q_OFFER, S_Q_FIND)))
+        self.assertFails(report, "day0_strategy", "asks about offer (dig.offer), but the dump already gave it")
+        self.assertPasses(self.report(self.day0(interview=(S_Q_FIND, S_Q_GOAL), answers=("a", "b"))), "day0_strategy")
+        twice = self.report(self.day0(interview=(S_Q_FIND, S_Q_FIND.replace("How do", "And how do")), answers=("a", "b")))
+        self.assertFails(twice, "day0_strategy", "turn 4: asks dig.find again (first at turn 3)")
+        # a question that fills two slots is a re-ask only when the dump gave both
+        self.write_expected('\n[interview]\ndump_gives = ["platforms"]\ndump_gaps = ["find"]\n')
+        self.assertPasses(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy")
+        self.write_expected('\n[interview]\ndump_gives = ["find", "platforms"]\ndump_gaps = ["goal"]\n')
+        self.assertFails(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy", "asks about find/platforms")
+
+    def test_a_dump_with_gaps_needs_a_question_unless_the_coach_says_enough(self):
+        self.write_expected('\n[interview]\ndump_gives = ["stance"]\ndump_gaps = ["offer", "find"]\n')
+        report = self.report(self.day0(interview=()))
+        self.assertFails(report, "day0_strategy", "the strategy came straight after the dump with no question, but the dump left gaps (offer, find)")
+        turns = self.day0(interview=())
+        turns[4] = ("coach", "done, that's enough, just make it")
+        self.assertPasses(self.report(turns), "day0_strategy")
+        # a full dump (no gaps) asks none and passes
+        self.write_expected('\n[interview]\ndump_gives = ["offer", "find"]\ndump_gaps = []\n')
+        self.assertPasses(self.report(self.day0(interview=())), "day0_strategy")
+        # no [interview] table: not read
+        self.write_expected("")
+        item = self.strat(self.report(self.day0(interview=())), "the interview asks when the dump left gaps")
+        self.assertIsNone(item["pass"])
+
+    def test_each_interview_reply_asks_one_question(self):
+        two = S_Q_FIND.replace("\nNEXT →", "\nAnd what do you charge?\nNEXT →")
+        report = self.report(self.day0(interview=(S_Q_OFFER, two)))
+        self.assertFails(report, "day0_strategy", "2 questions in one reply")
+        self.assertFails(report, "I5", "2 questions")
+        self.assertPasses(self.report(), "day0_strategy")
+
+    def test_questions_in_the_machines_own_words_still_count_as_interview_turns(self):
+        """The kit's dig.* lines are adapted to the client; whatever the wording, a question between the dump and the
+        strategy is an interview turn and its answer a coach turn the interview added (to the budgets, up to 6)."""
+        free = tuple(f"{TAG}Your side\nTell me about your {w}?\nNEXT → A sentence." for w in ("work", "clients", "prices", "week", "plan"))
+        report = self.report(self.day0(interview=free, answers=("a",) * 5))
+        timing = self.inv(report, "day0_timing")
+        self.assertEqual((timing["details"]["map_dig_answers"], timing["details"]["map_coach_turns"]), (5, 8))
+        self.assertIs(timing["pass"], True, timing)
+        self.assertEqual(self.inv(report, "day0_strategy")["details"]["interview_questions"], 5)
+
+    def test_enough_is_a_short_turn_not_a_complaint_inside_the_dump(self):
+        """A dump saying "I don't have enough leads" is the client's complaint: it does not stop the interview."""
+        self.write_expected('\n[interview]\ndump_gives = ["stance"]\ndump_gaps = ["offer"]\n')
+        turns = self.day0(interview=())
+        turns[2] = ("coach", ANSWERS + " My clients say they don't have enough leads, enough is enough.")
+        self.assertFails(self.report(turns), "day0_strategy", "the strategy came straight after the dump with no question")
+        turns[4] = ("coach", "enough, just make it")
+        self.assertPasses(self.report(turns), "day0_strategy")
+
+    def test_a_loose_copy_box_after_the_strategy_is_not_the_week_before_the_ok(self):
+        """A box in the answer to a question (the research lines pasted back) is not FILM TODAY or Week 1: only a piece is."""
+        answer = f"{TAG}Strategy\nHere is what I found, line by line.\n```\nline one\nline two\n```\nOK, or change a line.\nNEXT → Say ok."
+        turns = self.day0(ok=None, extra_coach=[("coach", "show me the research"), ("machine", answer), ("coach", "ok"), ("machine", S_WEEK)])
+        self.assertPasses(self.report(turns), "day0_strategy")
+
+    def test_the_interview_adds_turns_up_to_six_to_the_budgets(self):
+        qs = (S_Q_OFFER, S_Q_FIND, S_Q_GOAL, S_Q_STANCE)
+        turns = self.day0(interview=qs, answers=("a",) * 4)
+        timing = self.inv(self.report(turns), "day0_timing")
+        self.assertEqual(timing["details"]["map_coach_turns"], 7)           # Start, chunk, done, 4 answers: over the base 6 ...
+        self.assertEqual(timing["details"]["map_dig_answers"], 4)         # ... and inside 6 + the 4 answers
+        self.assertIs(timing["pass"], True, timing)
+        # with no interview in the reply the same 6 turns are over budget
+        padded = [("coach", "Start"), ("machine", S_PROMPT)] + [x for k in range(6) for x in (("coach", f"chunk {k}"), ("machine", f"{TAG}Dump\nGot it.\nNEXT → go on"))]
+        late = self.report(padded + [("machine", MAP_REPLY)])
+        self.assertFails(late, "day0_timing", "Map after 7 coach turns (max 6)")
+
+
+class StrategyFirstContentTests(StrategyFirstBase):
+    def test_pillars_are_3_to_5_broad_topic_clusters(self):
+        for pillars, want in (("job search · talking to people", "2 content pillars (want 3-5)"),
+                              ("a · b · c · d · e · f", "6 content pillars (want 3-5)"),
+                              ("job search · confidence and identity · how to write a resume that gets read by a portal",
+                               'is 11 words (broad topic clusters run 1-4): too specific'),
+                              ("job search · 5 resume fixes · talking to people", "holds a number")):
+            with self.subTest(pillars=pillars):
+                got = self.report(self.day0(strategy=MAP_REPLY.replace("job search · confidence and identity · talking to people", pillars)))
+                self.assertFails(got, "day0_strategy", want)
+        # the founder's own example, in a sentence list and on bullet lines, with a gloss
+        for block in ("direct response, human psychology and working with clients",
+                      "\n- direct response: how people decide to buy\n- human psychology\n- working with clients",
+                      "direct response (how people decide) · human psychology (why they act) · working with clients (the other side)"):
+            with self.subTest(block=block):
+                got = self.report(self.day0(strategy=MAP_REPLY.replace(
+                    "job search · confidence and identity · talking to people", block.replace("\n", "\n    "))))
+                self.assertEqual(self.inv(got, "day0_strategy")["details"]["pillars"],
+                                 ["direct response", "human psychology", "working with clients"])
+                self.assertIs(self.strat(got, "CONTENT PILLARS")["pass"], True)
+
+    def test_a_narrow_topic_from_the_persona_list_fails(self):
+        self.write_expected('\n[strategy]\npillars_too_narrow = ["headline formulas", "email subject lines"]\n')
+        narrow = MAP_REPLY.replace("job search · confidence and identity", "headline formulas · confidence and identity")
+        self.assertFails(self.report(self.day0(strategy=narrow)), "day0_strategy", 'pillar "headline formulas" is a narrow topic')
+        self.assertPasses(self.report(), "day0_strategy")
+
+    def test_the_mix_has_the_three_types_with_shares_adding_to_100(self):
+        mix = "CONTENT MIX: ATTRACT 40% (what a stranger would pass on) · TRUST 40% (how you think, proof) · CONVERT 20% (the offer, the ask)"
+        cases = (
+            ("CONTENT MIX: ATTRACT 40% · TRUST 40%", "is missing CONVERT"),
+            ("CONTENT MIX: ATTRACT and TRUST and CONVERT", "gives no share for each"),
+            ("CONTENT MIX: ATTRACT 40% · TRUST 40% · CONVERT 30%", "adds up to 110%, not 100"),
+            ("CONTENT MIX: ATTRACT 80% · TRUST 15% · CONVERT 5%", "gives ATTRACT 80% (a type runs 10-60%)"),
+            ("CONTENT MIX: ATTRACT 80% · TRUST 15% · CONVERT 5%", "gives CONVERT 5% (a type runs 10-60%)"),
+        )
+        for text, fragment in cases:
+            with self.subTest(text=text):
+                self.assertFails(self.report(self.day0(strategy=MAP_REPLY.replace(mix, text))), "day0_strategy", fragment)
+        for text in ("CONTENT MIX: 40% ATTRACT · 40% TRUST · 20% CONVERT", "CONTENT MIX: 50/35/15 (attract, trust, convert)",
+                     "CONTENT MIX:\n- ATTRACT: 30%, what strangers share\n- TRUST: 40%, proof\n- CONVERT: 30%, the ask",
+                     "CONTENT MIX: ATTRACT 50% (strangers) · TRUST 35% (how you think) · CONVERT 15% (the ask)"):
+            with self.subTest(text=text):
+                self.assertPasses(self.report(self.day0(strategy=MAP_REPLY.replace(mix, text))), "day0_strategy")
+
+    def test_the_mix_shares_are_the_plan_not_a_claim_for_i8(self):
+        """40/40/20 is what the machine proposes, never a result: I8 (numbers only from the coach) leaves the mix lines out,
+        in the strategy and in the card's machine block, and still reads a percent claim anywhere else."""
+        report = self.report()
+        self.assertPasses(report, "I8")
+        card = (f"{TAG}Brand Card\nBrand Card v1 · 07/10/2026\nWHAT YOU SAY: coffee · CHAPTER\nHOW YOU SAY IT: dry\n"
+                "The rest is for the machine, no need to read:\n```\nversion: 1\ncontent_mix: ATTRACT 40% · TRUST 40% · CONVERT 20%\n```\n"
+                "Save this so I remember you.\nNEXT → Tomorrow, say 'next'.")
+        self.assertPasses(self.report(self.day0(card=card)), "I8")
+        claim = MAP_REPLY.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER\nClients like yours cut their job search by 70% with this.")
+        self.assertFails(self.report(self.day0(strategy=claim)), "I8", '"70%" not in allowed_numbers')
+
+    def test_the_vn_mix_names_and_the_shares(self):
+        self.assertEqual(graders.mix_shares("vn", "THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%"),
+                         {"attract": 40, "trust": 40, "convert": 20})
+        self.assertEqual(graders.mix_shares("vn", "Thu hút: 50% · Niềm tin: 30% · Chuyển đổi: 20%"),
+                         {"attract": 50, "trust": 30, "convert": 20})
+        self.assertIsNone(graders.mix_shares("vn", "ATTRACT 40% · TRUST 40% · CONVERT 20%"))
+        self.assertIsNone(graders.mix_shares("en", "THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%"))
+
+    def test_the_content_system_names_a_platform_the_week_and_the_ask(self):
+        system = [l for l in MAP_REPLY.splitlines() if "YOUR SYSTEM" in l][0]
+        for text, fragment in (("    YOUR SYSTEM: a plan.", "YOUR SYSTEM leaves out a platform, pieces a week, the ask path"),
+                               ("    YOUR SYSTEM: Facebook is the core, re-cut into an email. Post when you can. Comment, then DM, then the gift.",
+                                "YOUR SYSTEM leaves out pieces a week"),
+                               (system.replace("3 short videos, 1 long post and 1 email a week.", "A 30 second video, 1 long post and 1 email a week."),
+                                "measures a length in seconds")):
+            with self.subTest(text=text):
+                self.assertFails(self.report(self.day0(strategy=MAP_REPLY.replace(system, text))), "day0_strategy", fragment)
+
+    def test_week_one_covers_the_three_types_and_names_the_pillars(self):
+        report = self.report()
+        self.assertEqual(self.inv(report, "day0_strategy")["details"]["week_pieces"], 5)
+        no_convert = S_WEEK.replace("CONVERT", "TRUST")
+        self.assertFails(self.report(self.day0(week=no_convert)), "day0_strategy", "Week 1 has no CONVERT piece")
+        no_pillar = S_WEEK.replace("N1 · Thu · Short video · job search · ATTRACT", "N1 · Thu · Short video · ATTRACT")
+        self.assertFails(self.report(self.day0(week=no_pillar)), "day0_strategy", "no content pillar named on: N1 · Thu · Short video")
+        skewed = S_WEEK.replace("talking to people · TRUST", "talking to people · ATTRACT").replace("job search · TRUST", "job search · ATTRACT")
+        self.assertFails(self.report(self.day0(week=skewed)), "day0_strategy", "Week 1 has no TRUST piece")
+        # 2/2/1 is the kit's split; another one that has all three types is a warning only
+        three = S_WEEK.replace("talking to people · TRUST", "talking to people · ATTRACT")
+        warned = self.inv(self.report(self.day0(week=three)), "day0_strategy")
+        self.assertIn("Week 1 splits ATTRACT 3 / TRUST 1 / CONVERT 1", " ".join(warned["warnings"]))
+        self.assertIsNot(warned["pass"], False)
+
+
+class StrategyFirstTimingTests(StrategyFirstBase):
+    def timed(self, strategy_min, film_min, **kw):
+        turns = self.day0(**kw)
+        rows = []
+        for role, text in turns:
+            rows.append((role, text))
+        d = self.run_dir(rows, suite="day0")
+        # rewrite the minutes: the strategy reply and the FILM TODAY reply
+        lines = [json.loads(l) for l in (d / "transcript.jsonl").read_text(encoding="utf-8").splitlines()]
+        for row in lines:
+            if row["role"] == "machine" and row["text"].lstrip().startswith(f"{TAG}Strategy"):
+                row["t_min"] = strategy_min
+            if row["role"] == "machine" and row["text"].lstrip().startswith(f"{TAG}FILM TODAY"):
+                row["t_min"] = film_min
+            elif row["role"] == "coach" and row["text"] == S_OK:
+                row["t_min"] = strategy_min + 0.5
+        (d / "transcript.jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in lines) + "\n", encoding="utf-8")
+        return graders.grade(d, self.root)
+
+    def test_the_strategy_has_its_own_budget_and_film_ready_a_longer_one(self):
+        ok = self.inv(self.timed(24.0, 34.0), "day0_timing")
+        self.assertIs(ok["pass"], True, ok)
+        self.assertEqual((ok["details"]["strategy_active_minutes"], ok["details"]["film_ready_active_minutes"]), (24.0, 34.0))
+        slow = self.timed(26.0, 34.0)
+        self.assertFails(slow, "day0_timing", "the strategy at active minute 26 (max 25)")
+        late = self.timed(20.0, 36.0)
+        self.assertFails(late, "day0_timing", "film-ready at active minute 36 (max 35)")
+        # the session: 45 minutes
+        self.assertFails(self.timed(20.0, 46.0), "day0_timing", "the session ran 46 active minutes (max 45)")
+
+    def test_a_budget_is_not_checked_without_its_key(self):
+        self.write("evals/acceptance.toml", "[day0]\nmap_max_turns_en = 6\nmap_lines = 6\nfilm_ready_max_minutes = 35\nsession_max_turns = 10\n")
+        report = self.timed(40.0, 41.0)
+        self.assertFalse([e for e in self.inv(report, "day0_timing")["evidence"] if "the strategy at" in e])
+
+    def test_a_long_dump_after_an_on_time_cut_is_a_warning_for_the_strategy_too(self):
+        """The strategy's minutes follow the rule film-ready already had: when the machine cut on time and the coach's own
+        talk (the send the cut answered ran long past the threshold) accounts for the overrun, it is a warning."""
+        cut = {"dump.enough": "That's plenty for today. If you have one more story, tell it now. If not: {your first question | say 'done'.}"}
+        self.write("strings/en.toml", toml_table("strings", dict(EN_STRINGS, **cut)))
+        chunk = " ".join(["word"] * 700)
+        question = (f"{TAG}Dump\nThat's plenty for today. If you have one more story, tell it now. If not: How do new clients find "
+                    "you today, and where do you post now?\nNEXT → A sentence.")
+
+        def turns(strategy_at: float):
+            return [("coach", "Start", {"t_min": 0.1}), ("machine", S_PROMPT, {"t_min": 0.4}), ("coach", chunk, {"t_min": 6.0}),
+                    ("machine", S_EARLY, {"t_min": 6.3}), ("coach", chunk, {"t_min": 14.0}), ("machine", question, {"t_min": 14.3}),
+                    ("coach", "Referrals.", {"t_min": 15.0}), ("machine", MAP_REPLY, {"t_min": strategy_at}),
+                    ("coach", "ok", {"t_min": strategy_at + 1}), ("machine", S_WEEK, {"t_min": strategy_at + 4})]
+        got = self.inv(self.report(turns(27.0)), "day0_timing")
+        self.assertTrue(any(w.startswith("the strategy at active minute 27 (max 25): the cut came on time; the coach's send it "
+                                         "answered (turn 3) ran 200 words past 1200") for w in got.get("warnings", [])), got)
+        self.assertNotIn("the strategy at active minute 27 (max 25)", " ".join(got["evidence"]))
+        slow = self.inv(self.report(turns(31.0)), "day0_timing")
+        self.assertIn("the strategy at active minute 31 (max 25)", slow["evidence"])
+
+
+class StrategyFirstLengthsTests(StrategyFirstBase):
+    """The founder, 7 Oct night: "the length has to be measured by words, not seconds, because people speak at different
+    speeds": a short video 120-200 words, a long post about 1,000, a long video 1,000-1,500 in parts."""
+
+    @staticmethod
+    def words(n: int, seed: str = "word") -> str:
+        return " ".join(f"{seed}{i % 17}" for i in range(n))
+
+    def short(self, n: int, title: str = "N1 · Thu · Short video · 150 words") -> str:
+        return (f"{title}\n```\nOn-screen: Coffee first\nFirst frame: a cup on a desk\nFirst line: {self.words(10, 'a')}\n"
+                f"Beat 1: {self.words(n // 2, 'b')}\nBeat 2: {self.words(n - 20 - n // 2, 'c')}\nLast line: {self.words(10, 'd')}\n"
+                "Caption:\nOne line. Comment CHAPTER and I'll send it.\n```")
+
+    def reply(self, *pieces: str) -> list:
+        return [("coach", "next"), ("machine", f"{TAG}Week 1\n\n" + "\n\n".join(pieces) + "\n\nNEXT → Say 'next'.")]
+
+    def length(self, report: dict, name: str) -> dict:
+        return next(i for i in self.inv(report, "lengths")["items"] if i["item"].startswith(name))
+
+    def test_a_short_video_is_120_to_200_words_with_a_little_slack(self):
+        for n, ok in ((150, True), (120, True), (200, True), (110, True), (218, True), (60, False), (260, False)):
+            with self.subTest(words=n):
+                report = self.grade(self.reply(self.short(n)))
+                item = self.length(report, "a short video's script")
+                self.assertIs(item["pass"], ok, item)
+        report = self.grade(self.reply(self.short(60)))
+        self.assertFails(report, "lengths", "says 60 words (a short video runs 120-200)")
+
+    def test_only_the_spoken_script_is_counted(self):
+        piece = self.short(150) + "\n\nExtra caption words here " + self.words(300, "x")
+        self.assertIs(self.length(self.grade(self.reply(piece)), "a short video's script")["pass"], True)
+        run = graders.load_run(self.run_dir(self.reply(self.short(150))), self.root)
+        self.assertEqual(graders.spoken_words(run, run.replies[0], run.replies[0].pieces[0]), 150)
+        # a caption in a copy box of its own under the script's box (no "Caption:" label), and the gift in a third: not spoken
+        script = self.short(150).split("Caption:")[0]                 # up to the last line, inside the script's box
+        boxes = script + "```\n\n```\n" + self.words(80, "cap") + "\n```\n\n```\n" + self.words(90, "gift") + "\n```"
+        self.assertIs(self.length(self.grade(self.reply(boxes)), "a short video's script")["pass"], True)
+
+    def test_vn_counts_tieng(self):
+        self.write("strings/vn.toml", toml_table("strings", VN_STRINGS))
+        self.write("evals/personas/vn/thu/persona.toml", 'xung_ho = "chị–em"\nallowed_numbers = ["3"]\nseeded_names = []\n')
+        piece = ("N1 · thứ Năm · Video ngắn · 150 chữ\n```\nChữ trên màn hình: Nghe khách trước\nCâu đầu: " + self.words(10, "mot")
+                 + "\nÝ 1: " + self.words(100, "hai") + "\nCâu cuối: " + self.words(40, "ba") + "\nCaption:\nMột dòng.\n```")
+        report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{piece}\n\nTIẾP → Nhắn 'tiếp'.")],
+                            persona="vn/thu", edition="vn")
+        self.assertIs(self.length(report, "a short video's script")["pass"], True, self.length(report, "a short video's script"))
+        short = piece.replace(self.words(100, "hai"), self.words(20, "hai"))
+        report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{short}\n\nTIẾP → Nhắn 'tiếp'.")],
+                            persona="vn/thu", edition="vn")
+        self.assertFails(report, "lengths", "says 70 tiếng (a short video runs 120-200)")
+
+    def test_a_long_post_is_about_1000_words(self):
+        for n, ok in ((1000, True), (850, True), (1150, True), (800, False), (1300, False)):
+            with self.subTest(words=n):
+                post = f"Long post · Sun · Facebook\n```\n{self.words(n)}\n```"
+                self.assertIs(self.length(self.grade(self.reply(post)), "a long post")["pass"], ok)
+        post = f"Long post · Sun · Facebook\n```\n{self.words(800)}\n```"
+        self.assertFails(self.grade(self.reply(post)), "lengths", "is 800 words (a long post is about 1000, 850-1150)")
+        vn = f"Bài dài · Chủ nhật · Facebook\n```\n{self.words(1000)}\n```"
+        self.assertIs(self.length(self.grade(self.reply(vn)), "a long post")["pass"], True)
+
+    def test_a_long_video_is_1000_to_1500_words_in_parts(self):
+        def video(n_words: int, parts: int = 3, hook: bool = True, ask: bool = True) -> str:
+            sections = ([f"Hook (about 120 words)\n{self.words(120, 'h')}"] if hook else []) + [f"Story\n{self.words(200, 's')}"]
+            body = n_words - 120 - 200 - 100 - 80
+            sections += [f"Part {k + 1}: the point\n{self.words(body // parts, 'p' + str(k))}" for k in range(parts)]
+            sections += [f"Payoff\n{self.words(100, 'y')}"] + ([f"Ask\n{self.words(80, 'z')}"] if ask else [])
+            return "Long video · Wed · YouTube\n```\n" + "\n\n".join(sections) + "\n```"
+        self.assertIs(self.length(self.grade(self.reply(video(1200))), "a long video")["pass"], True)
+        self.assertFails(self.grade(self.reply(video(700))), "lengths", "is ")
+        self.assertFails(self.grade(self.reply(video(1700))), "lengths", "(a long video runs 1000-1500)")
+        self.assertFails(self.grade(self.reply(video(1200, parts=2))), "lengths", "shows 2 numbered parts (want 3-4")
+        self.assertFails(self.grade(self.reply(video(1200, hook=False))), "lengths", "no labelled hook or ask")
+        self.assertFails(self.grade(self.reply(video(1200, ask=False))), "lengths", "no labelled hook or ask")
+
+    def test_a_length_in_seconds_on_a_piece_fails(self):
+        for title in ("FILM TODAY (under 30 s)", "N1 · thứ Năm 8/10 · 30 giây", "N2 · Thu · Short video · 45 seconds", "QUAY HÔM NAY · dưới 30 giây"):
+            with self.subTest(title=title):
+                report = self.grade(self.reply(self.short(150, title)))
+                self.assertFails(report, "lengths", "gives a length in seconds (words, never seconds)")
+        ok = self.grade(self.reply(self.short(150, "FILM TODAY · say it from memory")))
+        self.assertPasses(ok, "lengths")
+        # a talk of 15 minutes is no piece length
+        self.assertPasses(self.grade(self.reply("Weekly Talk · Mon · 15 minutes\n```\nTalk for 15 minutes.\n```")), "lengths")
+
+    def test_no_table_no_check_and_na_without_pieces(self):
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\n")
+        report = self.grade(self.reply(self.short(30, "FILM TODAY (under 30 s)")))
+        self.assertEqual(self.inv(report, "lengths")["status"], "n/a")
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\n[lengths]\n")
+        bare = self.grade([("coach", "go"), ("machine", f"{TAG}Film\nNEXT → Film it.")])
+        self.assertEqual(self.inv(bare, "lengths")["status"], "n/a")
+
+    def test_the_lengths_read_acceptance(self):
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\n[lengths]\nshort_words_min = 50\nshort_words_max = 80\ntolerance = 0\n")
+        self.assertIs(self.length(self.grade(self.reply(self.short(60))), "a short video's script")["pass"], True)
+        self.assertIs(self.length(self.grade(self.reply(self.short(150))), "a short video's script")["pass"], False)
+        self.assertIn("a short video's script is 50-80 words", self.length(self.grade(self.reply(self.short(60))), "a short")["item"])
+
+
+class StrategyDocStrategyFirstTests(StrategyFirstBase):
+    """CONTENT-STRATEGY.md is the long form of the strategy, same order (modules/en/strategy-doc.md)."""
+
+    DOC = """# Dana · Content strategy
+
+## 1. Who you help, and why you
+Women walked out with a box.
+## 2. Your content pillars
+### Content pillar 1: Job search
+### Content pillar 2: Confidence and identity
+### Content pillar 3: Talking to people
+### Not now
+- tax
+## 3. Your content mix: attract, trust, convert
+ATTRACT 40% · TRUST 40% · CONVERT 20%
+## 4. Your content system
+Short video 120-200 words · long post about 1,000 words · long video 1,000-1,500 words.
+## 5. Your first 30 days
+## 6. What this is built on
+## 7. How to use this
+"""
+
+    def doc(self, text: str, strategy=MAP_REPLY) -> dict:
+        d = self.run_dir(self.day0(strategy=strategy), suite="day0")
+        (d / "CONTENT-STRATEGY.md").write_text(text, encoding="utf-8")
+        return graders.grade(d, self.root)
+
+    def check(self, report: dict, start: str) -> dict:
+        return next(i for i in self.inv(report, "strategy_doc")["items"] if i["item"].startswith(start))
+
+    def test_the_new_doc_passes(self):
+        report = self.doc(self.DOC)
+        self.assertIs(self.inv(report, "strategy_doc")["pass"], True, self.inv(report, "strategy_doc"))
+
+    def test_the_seven_parts_have_the_new_headings(self):
+        old = self.DOC.replace("## 2. Your content pillars", "## 2. Your buyer, step by step")
+        self.assertIn("part 2 is headed", self.check(self.doc(old), "the 7 parts")["evidence"][0])
+
+    def test_part_2_has_3_to_5_pillars_the_ones_the_coach_okd(self):
+        two = self.DOC.replace("### Content pillar 3: Talking to people\n", "")
+        self.assertIn("part 2 has 2 content pillar sections (want 3-5)", self.check(self.doc(two), "part 2")["evidence"][0])
+        other = self.DOC.replace("Talking to people", "Pricing your time")
+        self.assertIn('part 2 pillar "Pricing your time" is not one of the strategy the coach OK\'d',
+                      self.check(self.doc(other), "part 2")["evidence"][0])
+
+    def test_part_3_mix_adds_to_100(self):
+        self.assertIn("adds up to 110%", self.check(self.doc(self.DOC.replace("CONVERT 20%", "CONVERT 30%")), "part 3")["evidence"][0])
+        self.assertIn("does not give ATTRACT, TRUST and CONVERT a share each",
+                      self.check(self.doc(self.DOC.replace("ATTRACT 40% · TRUST 40% · CONVERT 20%", "ATTRACT, TRUST, CONVERT")), "part 3")["evidence"][0])
+
+    def test_part_4_gives_lengths_in_words_never_seconds(self):
+        none = self.DOC.replace("Short video 120-200 words · long post about 1,000 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
+        self.assertEqual(len(self.check(self.doc(none), "part 4")["evidence"]), 3)
+        secs = self.DOC.replace("Short video 120-200 words", "Short video 120-200 words (30 seconds)")
+        self.assertIn("measures a length in seconds", self.check(self.doc(secs), "part 4")["evidence"][0])
+
+
+class StrategyFirstRealKitTests(unittest.TestCase):
+    """The graders read the repository's own strings, so a reworded kit line is read the same way (the founder's wording:
+    CONTENT PILLARS, the strategy proposal, the interview's questions, the research line)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.en, _ = graders.load_strings(REPO, "en")
+        cls.vn, _ = graders.load_strings(REPO, "vn")
+
+    def test_the_strategy_labels_are_the_kits(self):
+        for strings, labels in ((self.en, ("KNOWN FOR:", "CONTENT PILLARS:", "CONTENT MIX:", "YOUR SYSTEM:", "YOUR WORD:", "WHAT I FOUND:")),
+                                (self.vn, ("ĐIỀU KHÁCH NHỚ:", "TRỤ CỘT NỘI DUNG:", "TỶ LỆ NỘI DUNG:", "HỆ THỐNG NỘI DUNG:", "TỪ KHOÁ:", "NGHIÊN CỨU CHO THẤY:"))):
+            got = tuple(strings[k] for k in graders.STRATEGY_LABEL_KEYS)
+            self.assertEqual(got, labels)
+
+    def test_every_dig_question_is_matched_to_itself_and_the_research_line_is_read(self):
+        for strings in (self.en, self.vn):
+            for key in graders.DIG_SLOTS:
+                got, share = graders.dig_match(strings, graders.ck.plain_line(strings[key]))
+                self.assertEqual((got, share), (key, 1.0), key)
+            self.assertGreaterEqual(graders.string_share(strings, "research.now", strings["research.now"].replace("{what}", "buyers' words")
+                                                         .replace("{where}", "Facebook groups")), 0.99)
+            self.assertGreaterEqual(graders.string_share(strings, "research.no_tool", strings["research.no_tool"].replace("{niche}", "coaching")), 0.99)
+
+    def test_a_real_vn_interview_question_is_not_a_decision(self):
+        matcher = graders.Matcher(self.vn, "vn")
+        line = self.vn["dig.buyer"]                     # "…thì bạn chọn ai, còn kiểu khách nào bạn không muốn nhận?"
+        self.assertIn("chọn", line)
+        reply = graders.analyse_reply(graders.Turn(2, "machine", f"◆ Content Machine · Hỏi thêm\n{line}\nTIẾP → Bạn kể một câu.", 1.0), 1, matcher)
+        self.assertEqual(graders.reply_decisions(reply, matcher), {})
+
+    def test_the_acceptance_file_carries_the_new_budgets(self):
+        day0 = graders._toml(REPO / "evals" / "acceptance.toml")["day0"]
+        self.assertEqual((day0["map_lines"], day0["dig_answers_max"], day0["interview_max_questions"]), (6, 6, 6))
+        self.assertEqual((day0["strategy_max_minutes"], day0["film_ready_max_minutes"], day0["session_max_minutes"]), (25, 35, 45))
+        lengths = graders._toml(REPO / "evals" / "acceptance.toml")["lengths"]
+        self.assertEqual((lengths["short_words_min"], lengths["short_words_max"], lengths["long_post_words"],
+                          lengths["long_video_words_min"], lengths["long_video_words_max"]), (120, 200, 1000, 1000, 1500))
+
+
+class StrategyFirstPersonaTests(unittest.TestCase):
+    """The persona files carry the interview's answers and ground truth for the new flow."""
+
+    def test_copywriter_thin_answers_every_interview_question(self):
+        text = (REPO / "evals" / "personas" / "vn" / "copywriter-thin" / "answers.md").read_text(encoding="utf-8")
+        for key in ("dig.buyer", "dig.offer", "dig.find", "dig.goal", "dig.stance"):
+            self.assertIn(key, text, key)
+        for fragment in ("If I could clone one client", "I call the three old clients myself", "Mostly a coach I worked with sends the next one",
+                         "Next three months", "three hours a week"):
+            self.assertIn(fragment, text, fragment)
+        expected = graders._toml(REPO / "evals" / "personas" / "vn" / "copywriter-thin" / "expected.toml")
+        self.assertEqual(expected["interview"]["dump_gives"], ["stance"])
+        self.assertEqual(expected["interview"]["questions_max"], 6)
+        self.assertIn("công thức tiêu đề", expected["strategy"]["pillars_too_narrow"])
+
+    def test_the_named_personas_have_the_new_tables(self):
+        for ed, pid in (("en", "consultant"), ("vn", "hanh-android-free-nocomputer"), ("vn", "copywriter-thin")):
+            expected = graders._toml(REPO / "evals" / "personas" / ed / pid / "expected.toml")
+            self.assertTrue(set(expected["interview"]) >= {"dump_gives", "dump_gaps", "questions_max"}, pid)
+            self.assertTrue(len(expected["strategy"]["pillars_broad_examples"]) >= 3, pid)
+            self.assertTrue(expected["strategy"]["pillars_too_narrow"], pid)
+            slots = set(expected["interview"]["dump_gives"]) | set(expected["interview"]["dump_gaps"])
+            self.assertFalse(slots - set(expected["interview"]["slots"]), pid)
 
 
 if __name__ == "__main__":

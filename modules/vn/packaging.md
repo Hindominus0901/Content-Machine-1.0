@@ -1,4 +1,4 @@
-Bản VN của modules/en/packaging.md, cho phần đóng gói trong GROW (packaging.grow-*): tiêu đề và chữ trên ảnh bìa (§CM-PACKAGING), nháp và chọn hook (§CM-HOOKS), 45 giây đầu của video dài (§CM-LONG-INTRO), carousel, tin Zalo/email, bài dài Facebook và LinkedIn (§CM-TEXT-FORMATS). Viết thẳng bằng tiếng Việt, không dịch từng chữ.
+Bản VN của modules/en/packaging.md, cho phần đóng gói trong GROW (packaging.grow-*): tiêu đề và chữ trên ảnh bìa (§CM-PACKAGING), nháp và chọn hook (§CM-HOOKS), phần mở video dài, khoảng 120 chữ (§CM-LONG-INTRO), carousel, tin Zalo/email, bài dài Facebook và LinkedIn (§CM-TEXT-FORMATS). Viết thẳng bằng tiếng Việt, không dịch từng chữ.
 Nguồn: như EN (founder-sources: Matt Gray, Soo Wei Goh, Hormozi, Nik Setting; wf8-mattgray-playbook §0-§5, §9, đổi sang lời thường, không dùng tên khung của ông); thêm wf9-pov-vietnam §3 (khoe số, hứa quá đọc ra "nổ"; lời mời để ở caption); vn-language-guide §3.5 (câu mở theo nền tảng, câu mở cần tránh).
 Thêm so với EN: ví dụ cho YouTube, Facebook, TikTok, Zalo viết thẳng bằng tiếng Việt; tiêu đề ≤70 ký tự (EN ≤60); carousel TikTok dạng ảnh; tin Zalo thay bản tin email khi chưa có danh sách email; LinkedIn chỉ một dòng, cho coach B2B; dáng câu mở "Ai từng ___ sẽ hiểu" nằm ở §CM-MOMENTS. Từ khoá comment viết hoa không dấu (GIA).
 Nháp và chọn hook (7/10, buổi chạy thật của founder: "đặc biệt phần headline và hook là chưa ổn"; lỗi: câu khẳng định trơn, chữ trên màn hình = câu nói đầu, không hé gì, không chữ khách, câu tiếng Anh trong bài VN): §CM-HOOKS 1-4. Phần lõi nằm trong bộ khởi đầu (§CM-FORMATS 1, dòng hook của phần kiểm trước khi giao); ở đây là phần sâu. Rubric cho người duyệt: qa/standards/hook-lab.md. Hai cặp TRƠN → HAY lấy đúng chủ đề buổi chạy đó (nghiên cứu không phải đọc vài bài rồi hỏi AI; tin trước, mua sau). Coach đọc tiếng Anh thì hook viết lại thành ý tiếng Việt, không để câu tiếng Anh (quyết định 7/10; luật nằm ở bộ khởi đầu).
@@ -22,9 +22,9 @@ Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 1): HOOKS 1 lab chạy c�
 5 Bài xây lòng tin (tuần 3-4, §CM-SEASON) đi hình phễu: hook rộng → một câu vì sao nên nghe (năm làm nghề, số người đã giúp, nơi từng dạy, người có tiếng cho nêu tên; không khoe) → chữ khách, người không hợp tự lướt → đổi niềm tin → một lời mời.
 6 Số trong hook là số thật của coach, quyết định ai tới: mốc ngay trên chỗ khách đứng, không vượt bằng chứng. Kết quả trước, cách làm sau. Cho thấy bằng chứng, không nói "có bằng chứng".
 
-<!-- @section packaging.grow-intro src=7230a03701 -->
-### 45 giây đầu video dài (§CM-LONG dùng)
-1 Bằng chứng, lời hứa, lộ trình; phần 1 bắt đầu trước giây 45. Bằng chứng: một dữ kiện của họ đủ giữ người xem thêm một phút. Lời hứa: xem xong làm được gì, bằng chữ khách. Lộ trình: 3-5 bước gọi bằng lời thường, cộng một câu treo, cuối video mới trả lời ("cuối video: một câu hỏi là biết khách có mua không").
+<!-- @section packaging.grow-intro src=72cee16bd5 -->
+### Phần mở video dài, khoảng 120 chữ (§CM-LONG dùng)
+1 Bằng chứng, lời hứa, lộ trình, ≈120 chữ; xong là vào phần 1. Bằng chứng: một dữ kiện của họ đủ giữ người xem thêm một phút. Lời hứa: xem xong làm được gì, bằng chữ khách. Lộ trình: 3-5 bước gọi bằng lời thường, cộng một câu treo, cuối video mới trả lời ("cuối video: một câu hỏi là biết khách có mua không").
 2 Chọn cách mở theo thứ họ có:
 - NGƯỢC Ý: "Coach không thiếu người hỏi đâu. Cái thiếu là người tin." → bằng chứng → hai việc người xem đang làm → lộ trình.
 - CHUYỆN: hai thói quen của người xem → chính họ ngày trước → "mình bỏ X, chuyển qua Y" → bằng chứng → lộ trình.

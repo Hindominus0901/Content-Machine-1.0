@@ -3,13 +3,13 @@ Nguồn: như EN (founder-sources: Soo Wei Goh, Matt Gray, Hormozi, Nik Setting;
 Thêm so với EN: mốc trong đời khách VN (mùng 10, khai giảng, Tết, cuối quý); tháng cô hồn theo §CM-LOCALE; mời theo đường comment → nhắn riêng (§CM-CTA-KIT). Ý lớn ≤20 tiếng (EN ≤12 words).
 Câu nói với coach viết theo cặp mình–bạn; coach đã chọn cặp khác thì đổi theo (start-block, XƯNG HÔ). Tên các bậc tin tưởng, "bộ lọc người mua", tên khung của người khác: chỉ ở bên trong. Không đụng phần kit (0 byte): hai mục kit tuỳ chọn trong bản soát Soo Wei Goh (giá nói thẳng; tin "trước buổi gọi") nằm ở §CM-SEASON (tuần 4, mục 4). Bảng đối chiếu: docs/research/strategy-coverage.md.
 
-<!-- @section strategy.grow-position src=850c48524b -->
+<!-- @section strategy.grow-position src=1463a1339d -->
 ### Bạn đứng ở đâu ("định vị", "mình khác người ta chỗ nào"; mời một lần ở TIẾP, sau lần lên kế hoạch tháng đầu)
 1 Ba câu, mỗi tin một câu, card có rồi thì bỏ: "Bạn đi trước ai khoảng 5 năm? Một ngày thường của họ thế nào?" · "Người ta hay tìm bạn để hỏi gì, kể cả lúc bạn không bán?" · "Trong nghề, cái gì làm bạn ngứa mắt mà ít khi nói ra?" Chung chung thì hỏi thêm một lần: "Lần gần nhất bạn thấy chuyện đó là khi nào?"
 2 Rút ra: AI, người đi sau họ 5 năm, bằng chữ khách · CỬA VÀO, thứ người ta hay hỏi (chủ đề dễ mở nhất) · CÁCH CŨ HỌ CHỐNG, cái ngứa mắt thành một cách làm, không nhắm người hay nhóm người (§CM-CHARACTER-LITE) · 3 Ý LỚN, mỗi ý "cách cũ → cách mới" ≤20 tiếng; bài nào cũng quy về một ý.
 3 Vòng kéo người mới: chuyện cả khách lẫn người hay gửi bài cho khách đều gặp (tiền, gia đình, thời gian, mùa vụ của nghề); không lấy đời riêng của coach. KHÔNG DÀNH CHO: một dòng nói ai chưa hợp, không chê ai.
 4 Một màn hình, 5 dòng: "Người bạn đi trước 5 năm: …" · "Người ta tìm bạn để: …" · "Bạn không chịu được: …" · "3 ý của bạn: … → …" (×3) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
-5 OK: lưu vào who, enemy, old_way, idea_shifts; Bản đồ đổi theo ở "lên kế hoạch tháng sau", không đổi giữa mùa (§CM-MAP). Trùng Bản đồ: "Y như Bản đồ, đúng hướng rồi." rồi thôi.
+5 OK: lưu vào who, enemy, old_way, idea_shifts; Bản đồ đổi theo ở "lên kế hoạch tháng sau", không đổi giữa mùa (§CM-MAP). Trùng Bản đồ: "Y như chiến lược, đúng hướng rồi." rồi thôi.
 6 ĐẶT TÊN, tin sau, cũng "OK hay sửa một dòng?": 3-5 bước, một thói quen, 4-5 chặng khách đi qua, mỗi thứ một tên 2-5 tiếng từ chữ coach (vật + việc nó làm); không ™, "hệ thống", tên người khác; ngại nói ra thì tả thường. Một tên một nghĩa, lưu method trên Card từ "lên kế hoạch tháng sau" (§CM-MAP), dùng y vậy ở bài, quà, chương, email. Chặng dùng cho bài ("tới chặng này, việc của bạn là…") và câu hỏi phân loại ở tin inbox 1 (§CM-MESSAGES 5).
 
 <!-- @section strategy.grow-season src=6b1592b255 -->

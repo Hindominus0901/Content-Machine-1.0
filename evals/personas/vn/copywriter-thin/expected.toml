@@ -1,10 +1,13 @@
 # expected.toml · copywriter-thin (VN) · what a CORRECT run produces
 # Graders read this together with persona.toml (allowed_numbers, seeded_names, proof_items).
-# Born from the founder's Day 0 test of 7 Oct 2026 ("tạm", not excellent: extraction too thin, research very poor,
-# headline and hook especially weak). The DUMP is thin on purpose (answers.md chunks 1-4: abstract, English, no client,
-# no story, no offer, no price, no proof, no buyer phrase). A correct run digs (silent gap check, at most 4 story-first
-# questions, one per reply), researches in the background from the first send, writes hooks from real buyer words, and
-# writes every piece in Vietnamese. Not a cold start: 9 paying coaches, one consented result (P2).
+# Born from the founder's Day 0 tests of 7 Oct 2026 ("tạm", not excellent: extraction too thin, research very poor, headline
+# and hook especially weak) and his v10 run that night (no questions, no research, no strategy, "let's post it": the
+# decision "strategy first"). The DUMP is thin on purpose (answers.md chunks 1-4: abstract, English, no client, no story,
+# no offer, no price, no proof, no buyer phrase). A correct run researches in the background from the first send, then
+# INTERVIEWS her about her side (at most 6 questions, one a reply, skipping what the dump gave), proposes the STRATEGY in
+# one reply with no piece (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX attract / trust / convert · YOUR SYSTEM ·
+# YOUR WORD · WHAT I FOUND), and only after her OK prints FILM TODAY and Week 1 (written from real buyer words, in
+# Vietnamese, lengths in words). Not a cold start: 9 paying coaches, one consented result (P2).
 
 [map]
 buyer = "Coach và chuyên gia làm việc 1-1 người Việt (tài chính cá nhân, dinh dưỡng, nghề nghiệp…): đăng bài đều mà có người thả tim nhưng không ai nhắn hỏi giá; mới bán được cho người quen; mỗi tháng cần 1–2 khách mới chứ không cần 100. Tìm tới Nhi khi đã đăng đủ lâu mà inbox vẫn im, hoặc vừa học xong một khóa coach và chưa biết bắt đầu từ đâu."
@@ -20,8 +23,8 @@ enemy_old_way = "Nhảy vào đăng bài, dựng thương hiệu cá nhân, làm
 offer = "Gói 3 tuần 'nghe khách trước' · 9.500.000đ (giá công khai) · phỏng vấn 3 khách cũ của coach (30 phút mỗi người) + 1 trang giới thiệu + 3 email + 6 bài đăng · chuyển khoản 2 đợt, 4.750.000đ mỗi đợt · tối đa 2 gói mỗi tháng · đường mua: comment từ khóa → file '5 câu hỏi phỏng vấn khách cũ' (Nhi đã có sẵn) → trao đổi 1:1 qua Zalo → chuyển khoản"
 best_result = "P2: chị coach tài chính cá nhân, tháng 8 năm 2026: 1 email gửi 180 người, 7 người trả lời, 2 người đặt buổi trò chuyện 45 phút, 1 người mua. Dùng trong bài và case study, không nêu tên, không đưa vào quảng cáo, luôn kèm 'kết quả của một coach, không phải cam kết'. Không dùng chị coach dinh dưỡng (P4)."
 why_this_one = "Một dòng: Nhi là người hỏi khách của coach nói gì trước khi viết một chữ; 4 năm ngồi nghe khách ở khâu nghiên cứu, gần 2 năm chỉ viết cho coach 1-1, 9 coach đã trả tiền."
-pillars_shown = "3 trụ; trụ 3 (bằng chứng) dùng P2, có thể thêm P1; không dùng P3 (lời chị coach về Nhi, chưa xin phép), P4, P5"
-big_ideas_candidates = [
+pillars_shown = "3–5 trụ cột nội dung RỘNG (xem [strategy]); các ý lớn (cách cũ → cách mới) nằm TRONG trụ cột; bằng chứng dùng P2, có thể thêm P1; không dùng P3 (lời chị coach về Nhi, chưa xin phép), P4, P5"
+big_ideas_candidates = [   # nằm trong các trụ cột, mỗi ý lớn một lần "cách cũ → cách mới"; không phải trụ cột
   "Thả tim thì nhiều, hỏi giá thì không ai: chưa biết nói với ai và vì sao họ nên nghe",
   "Hỏi 'để làm gì' trước khi hỏi 'làm thế nào'",
   "Gửi một email cho một người cũng đã là marketing",
@@ -45,26 +48,62 @@ side_door = "Viết lại 1 trang bán (3.500.000đ) cho coach đã có khách: 
 income_question_answer = "Nhi nói trong bank: gói 3 tuần là nguồn chính; máy chỉ hỏi nếu chưa rõ sau câu hỏi giá, không hỏi riêng."
 
 [interview]
-# Founder decision 1, 7 Oct: a silent gap check over 6 slots; one story-first question per reply for the missing slots,
-# at most 4, before the Map; skippable; a rich dump stays fast (this dump is NOT rich).
-slots = ["buyer", "their_words", "client_story", "offer_and_price", "proof", "contrarian_view"]
-dump_gives = ["contrarian_view"]          # 'hỏi vì sao trước, làm thế nào sau'; 'đọc vài bài rồi nhờ AI tìm từ khóa không phải nghiên cứu'; 'một email cũng là marketing'
-dump_gaps = ["buyer", "their_words", "client_story", "offer_and_price", "proof"]
-questions_expected = 3                    # 1 story question fills buyer + their_words + client_story; then offer and price; then proof
-questions_max = 4
-first_question = "Story-first, về MỘT người thật: 'người cuối cùng trả tiền cho bạn là ai, và trước khi trả họ nói gì với bạn, nguyên văn?' Không hỏi 'khách lý tưởng của bạn là ai'."
-order = ["client_story (+ buyer + their_words)", "offer_and_price", "proof (một kết quả được phép kể)"]
-plan_facts = "Kênh đăng và danh sách (Facebook cá nhân, email 320, Zalo 410) không nằm trong dump: máy hỏi như một [CẦN BẠN] nội dòng, mỗi lượt một câu, sau khi các ô trên đã đủ hoặc Nhi bảo bỏ qua; không gộp hai câu hỏi trong một tin."
-skippable = "Nhi gõ 'skip' hoặc 'bỏ qua': máy đi tiếp, ô còn thiếu hiện trên Bản đồ với dấu '(mình đoán)', không in như sự thật."
-silent = "Máy không in chữ 'ô', 'gap check', số ô còn thiếu hay danh sách ô; hỏi như người nghe chuyện."
+# Founder decision, 7 Oct night (DECISIONS "Strategy first on Day 0"): after the dump the machine asks about the COACH'S side so
+# the strategy fits her business: who she serves and who not · the offer, its price and delivery · one result she'd share ·
+# how clients find her · the 90-day goal · hours a week · where she posts and her list · what her field gets wrong. At most 6
+# questions, one a reply, skipping what the dump gave; "enough" / "đủ rồi" stops it. Read by graders.py day0_strategy:
+# dump_gives = slots the dump fills (a question about them is a re-ask), dump_gaps = what is left (at least one question).
+slots = ["who", "offer", "result", "find", "platforms", "goal", "hours", "stance"]
+dump_gives = ["stance"]                   # 'hỏi vì sao trước, làm thế nào sau'; 'đọc vài bài rồi nhờ AI tìm từ khóa không phải nghiên cứu'; 'một email cũng là marketing'
+dump_gaps = ["who", "offer", "result", "find", "platforms", "goal", "hours"]
+questions_expected = 5                    # who (+ not) · offer (+ price, delivery) · result · find (+ where she posts, her list) · goal (+ hours)
+questions_max = 6
+first_question = "Về phía chị, mỗi tin MỘT câu: khách chị muốn nhân bản là ai và kiểu khách nào chị không nhận (dig.buyer), hay bắt đầu bằng người cuối cùng trả tiền (dig.story). Không hỏi 'khách lý tưởng của bạn là ai', không gửi form chân dung khách."
+order = ["who / who not (dig.buyer or dig.story)", "offer, price, delivery (dig.offer)", "one result she'd share (dig.proof)", "how clients find her + where she posts (dig.find)", "90-day goal + hours (dig.goal)"]
+answers_in = "answers.md ## Answer bank: mỗi câu hỏi có đúng một dòng trả lời; Nhi trả lời tiếng Anh vỡ, lời khách bằng tiếng Việt nguyên văn"
+skippable = "Nhi gõ 'skip' hoặc 'bỏ qua': máy đi tiếp, dòng chiến lược bị ảnh hưởng ghi '(mình đoán)'; không bao giờ đoán lời khách hay kết quả."
+stops = "Nhi gõ 'enough' / 'đủ rồi': máy dừng ngay và đề xuất chiến lược; phần còn lại đoán có ghi rõ."
+silent = "Máy không in chữ 'ô', 'gap check', số ô còn thiếu hay danh sách ô; hỏi như người nghe chuyện, mỗi tin một câu hỏi."
 must_not = [
-  "dựng Bản đồ ngay sau dump mà không hỏi gì (bài test: không hỏi khách cụ thể, chuyện, gói, giá, bằng chứng, ý ngược)",
+  "dựng chiến lược ngay sau dump mà không hỏi gì về phía Nhi (bài v10 của founder: 'it has not asked me anything')",
+  "in bài, video hay Tuần 1 trước lúc Nhi OK chiến lược (strategy first)",
   "đoán một ô còn thiếu rồi in như thật (bài test: 'Coach nào cũng hay than: Em đăng bài đều mà không có khách', 'Bán gì … (mình đoán)', 'Kênh: Facebook (mình đoán)')",
   "hỏi 2 câu trong một tin, hay gộp 'consumption nghĩa là gì' với 'gói tư vấn miễn phí hay trả phí' (bài test: hai 'Cần bạn' trong một tin)",
-  "hỏi quá 4 câu phỏng vấn trước Bản đồ",
-  "hỏi một lúc cả 6 ô, hay gửi một form chân dung khách",
+  "hỏi quá 6 câu trước chiến lược, hỏi cùng một ô hai lần",
   "hỏi lại điều Nhi đã nói trong dump (ý ngược, 'nghiên cứu không phải đọc vài bài')",
+  "hỏi một lúc cả danh sách ô, hay gửi một form chân dung khách",
 ]
+
+[strategy]
+# The strategy proposal (modules/vn/message.md §CM-MAP): one reply, no piece, then "Chạy thử 4 tuần nhé. OK hay sửa một dòng?".
+# Read by graders.py: pillars_too_narrow (a printed pillar that is, or holds, one of them fails; only its length is read otherwise).
+positioning = "ĐIỀU KHÁCH NHỚ ≤50 tiếng, lời khách thật (không phải lời máy đoán), cách làm của Nhi (nghe 3 khách cũ trước, rồi viết bằng chữ của họ) thay cho cách cũ (nhảy vào đăng bài, thương hiệu cá nhân, 'nghiên cứu' bằng AI)."
+pillars = "3–5 cụm chủ đề RỘNG, mỗi cụm 1–6 tiếng, từ hiểu biết nghề của máy cộng nghiên cứu, không chỉ từ những gì Nhi nói. Founder (v10): 'trụ cột nội dung phải rộng: copywriter thì direct response, tâm lý con người, làm việc với khách; không phải thứ quá cụ thể, nhỏ, ngách'."
+pillars_broad_examples = [
+  "viết để bán (direct response)",
+  "tâm lý người mua",
+  "làm việc với khách (coach)",
+  "lời đề nghị và quy trình bán",
+  "niềm tin và nghiên cứu khách",
+]
+pillars_too_narrow = [
+  "công thức tiêu đề",
+  "tiêu đề hay",
+  "viết hook",
+  "viết caption",
+  "viết email 3 dòng",
+  "từ khoá cho coach",
+  "phỏng vấn khách cũ 30 phút",
+  "nghe 3 khách cũ",
+  "gói 3 tuần",
+  "chủ đề nhỏ",
+]
+mix = "THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, mỗi loại một tỷ lệ, cộng đủ 100; mặc định 40/40/20 (muốn có người lạ thấy mình: 50/35/15; bán cho danh sách nóng: 30/40/30), nói một lý do. Mỗi loại một dòng việc nó làm."
+system = "nền tảng chính = Facebook cá nhân (nơi chị đăng, tối Chủ nhật); nơi đăng lại (Zalo, email 320 người); mỗi tuần mấy bài mỗi loại vừa 3 tiếng (lean: 3 video ngắn, 1 bài dài, 1 email hay tin Zalo); độ dài đếm chữ; thang lời mời comment từ khoá → inbox → quà → gọi → gói; bảng và 3 lời nhắc."
+found = "2–4 dòng, mỗi dòng có nguồn (nhóm Facebook coach, bình luận TikTok; tháng/năm) hoặc ghi '(mình đoán)'; không có công cụ thì nói một lần ('Ở đây mình không tra mạng được…') và mọi dòng là '(mình đoán)'."
+no_not_now = "Không in ĐỂ SAU, 'vì sao chọn cái này', điểm số, tên khung trên chiến lược; những thứ đó chỉ in khi Nhi hỏi 'tại sao?'."
+week1_after_ok = "Chỉ sau khi Nhi OK: QUAY HÔM NAY + Tuần 1 một tin (2 THU HÚT, 2 NIỀM TIN, 1 CHUYỂN ĐỔI; mỗi bài ghi trụ cột và loại; video ngắn 120–200 chữ, bài dài ≈1.000 chữ), file CHIEN-LUOC-NOI-DUNG.md nếu app tạo được file, rồi Brand Card."
+lengths = "video ngắn 120–200 chữ; bài dài ≈1.000 chữ (±15%); video dài 1.000–1.500 chữ chia phần; không bao giờ tính giây."
 
 [keyword]
 # day0_heard: the Day-0 dump (chunks 1-4) gives NO buyer phrase at all, so the Map prints the word with "(mình đoán" until
@@ -86,7 +125,7 @@ must_not_pick = ["KHÁCH", "khách", "khách hàng", "coach", "content", "market
 # Founder decision 2, 7 Oct: research runs IN THE BACKGROUND while the coach talks, as soon as the niche is known (after the
 # first send): subagents and the available browser or web tool listen where buyers talk. The Map's keyword and line 1 come
 # from real buyer lines, with sources. No browser: Map first, then precise paste steps (research-paste.md).
-starts = "ngay sau lượt gửi đầu tiên, khi đã biết ngách (copywriter viết cho coach 1-1); chạy nền trong lúc máy hỏi tiếp; không chờ tới Bản đồ"
+starts = "ngay sau lượt gửi đầu tiên, khi đã biết ngách (copywriter viết cho coach 1-1); chạy nền trong lúc máy hỏi tiếp; máy nói MỘT lần, bằng lời thường, nó đang tìm hiểu gì và ở đâu (chuỗi research.now; không có công cụ: research.no_tool); không chờ tới chiến lược"
 opens_research_file = true               # bài test: file RESEARCH không bao giờ được mở
 where_buyers_talk = [
   "nhóm Facebook của coach và chuyên gia 1-1 (công khai)",
@@ -108,9 +147,9 @@ generic_queries_must_not = [   # bài test: hai lượt tìm chung chung, hai tr
 subagents = "Dùng subagent của app khi có (Cowork): mỗi nơi nghe một subagent; chỉ đọc. Không có thì máy tự làm tuần tự, không nói quá."
 read_only = "Chỉ đọc nơi công khai. Không đăng, không nhắn, không đăng nhập thay Nhi, không điều khiển màn hình của Nhi."
 people_by_role = "Người trong nhóm ghi theo vai ('một chị coach tài chính', 'một bạn mới ra nghề'), không bao giờ tên hay tên nick."
-sources_in_map = "Dòng 1 và từ khóa của Bản đồ lấy từ lời người mua thật, có nguồn (nơi đăng, tháng). Dòng nào máy đoán thì ghi '(mình đoán)'."
-with_browser = "Bản đồ in khi nghiên cứu nền đã có ít nhất vài dòng thật với nguồn; nếu chưa xong, Bản đồ in kèm '(đang tìm, mình cập nhật)' ở dòng cần, không chặn Nhi."
-no_browser = "Bản đồ in trước, từ khóa và dòng 1 gắn '(mình đoán)'; rồi đúng MỘT bước dán rõ: vào đâu (nhóm Facebook coach công khai, bình luận TikTok), gõ từ nào, chọn 15–20 dòng, dán vào chat; bước này là CẦN BẠN duy nhất của tin đó. Không đưa nhiều bước một lúc."
+sources_in_map = "KNOWN FOR và từ khoá của chiến lược lấy từ lời người mua thật, có nguồn (nơi đăng, tháng); dòng NGHIÊN CỨU CHO THẤY (2–4 dòng) có nguồn hoặc ghi '(mình đoán)'. Dòng nào máy đoán thì ghi '(mình đoán)'."
+with_browser = "Chiến lược in khi nghiên cứu nền đã có ít nhất vài dòng thật với nguồn; nếu chưa xong, dòng cần ghi '(đang tìm, mình cập nhật)', không chặn Nhi."
+no_browser = "Máy nói một lần 'Ở đây mình không tra mạng được…'; chiến lược in với KNOWN FOR, từ khoá và mọi dòng NGHIÊN CỨU CHO THẤY gắn '(mình đoán)'; đúng MỘT bước dán rõ nằm ở Tuần 1 (research.paste_steps: vào đâu, gõ từ nào, chọn 15–20 dòng, dán vào chat), không chặn Nhi và không nhiều bước một lúc."
 when_asked_to_show = "Nhi hỏi 'show me the research / mọi bước đã làm': máy liệt kê đúng: nghe ở đâu, từ khóa nào, dòng nào dùng, dòng nào bỏ vì sao; tách hẳn 'của Nhi' với 'máy đoán'. Không nói đã nghiên cứu khi chưa đọc gì."
 # research-paste.md ground truth (the no-browser branch)
 own_quote = "hỏi làm thế nào thì ai cũng hỏi được, hỏi để làm gì mới khó"
@@ -179,7 +218,7 @@ must_not_include = [
   "câu khách do máy tự nghĩ ('Coach nào cũng hay than…') hay 'Mà hỏi tới thì chưa biết mình cần gì' như thể là của Nhi hay của khách",
   "từ khóa 'KHÁCH' hay bất kỳ từ khóa chung chung",
   "Kênh, ngày đăng, giọng, hay 'bán gì' do máy đoán mà in không có dấu '(mình đoán)'",
-  "Tuần 1 in ra trước khi Nhi xác nhận Bản đồ (bài test: Week 1 in trước khi Bản đồ được xác nhận)",
+  "QUAY HÔM NAY hay Tuần 1 in ra trước khi Nhi OK chiến lược (chiến lược trước: bài, video, chữ 'đăng luôn' chỉ sau OK; bài v10: 'let's post it' ngay sau dump)",
   "chủ đề trong ĐỂ SAU (podcast, thương hiệu cá nhân, hệ thống) làm câu mở hay ý chính",
 ]
 
@@ -191,7 +230,7 @@ dictation_language = "en"
 english_sentences_in_pieces_max = 0
 english_allowed = ["Facebook", "Zalo", "TikTok", "Claude", "ChatGPT", "Google", "email"]
 rewrite = "Lời xả bằng tiếng Anh được viết lại thành ý tiếng Việt tự nhiên, không dịch từng chữ; bài, chữ trên màn hình, chú thích, quà, email, tin Zalo và 'ba câu đáng tiền' ngày đầu đều là tiếng Việt."
-early_win = "'3 câu đáng tiền' ngày đầu: ba ý của Nhi viết lại bằng tiếng Việt, mỗi ý một câu ngắn, câu đầu trong khung chép được; không có câu tiếng Anh nào, kể cả để trích dẫn."
+early_win = "'3 câu đáng tiền' ngày đầu: ba ý của Nhi viết lại bằng tiếng Việt, mỗi ý một câu ngắn trong ngoặc kép (chỉ trích dẫn: không khung chép, không 'đăng luôn'); không có câu tiếng Anh nào, kể cả để trích dẫn."
 early_win_examples = [   # minh họa
   "Khách đến từ chuyện họ tin bạn, và họ chỉ tin sau khi đã coi bạn đủ lâu.",
   "Hỏi 'để làm gì' trước khi hỏi 'làm thế nào': không có cái 'để làm gì' thì cái 'làm thế nào' chỉ thêm tiếng ồn.",
@@ -226,11 +265,11 @@ soft_pushbacks = [   # không bỏ ngang, nhưng Nhi nói đúng câu này khi g
 
 [defects]
 # The five defects of the founder's test, as must-not items for a correct run.
-no_deep_interview = "KHÔNG được: hỏi 0 câu rồi dựng Bản đồ; đoán khách, chuyện, gói, giá, bằng chứng, ý ngược thay vì hỏi."
+no_deep_interview = "KHÔNG được: hỏi 0 câu rồi dựng chiến lược; đoán khách, chuyện, gói, giá, bằng chứng, kênh, mục tiêu thay vì hỏi phía Nhi (tối đa 6 câu, mỗi tin một câu)."
 generic_research = "KHÔNG được: tìm chung chung về lời than của coach; không có câu tìm bằng lời người mua; không nói nơi người mua nói chuyện; không hỏi có trình duyệt không; không dùng subagent; không mở file RESEARCH; dùng trang lạc đề; in câu khách do máy đoán trong bài công khai."
 flat_hooks = "KHÔNG được: câu mở phẳng; chữ trên màn hình = câu nói đầu; không có chữ của người mua; không cụ thể; không vòng hở; không đọc thư viện câu mở."
 english_in_pieces = "KHÔNG được: câu tiếng Anh trong bài tiếng Việt; 'ba câu đáng tiền' bằng tiếng Anh vỡ."
-house_rules = "KHÔNG được: hai 'Cần bạn' trong một tin; từ khóa chung 'KHÁCH'; Tuần 1 in trước khi Bản đồ được xác nhận."
+house_rules = "KHÔNG được: hai 'Cần bạn' trong một tin; từ khóa chung 'KHÁCH'; QUAY HÔM NAY hay Tuần 1 in trước khi Nhi OK chiến lược; độ dài tính bằng giây."
 
 [traps]
 fabrication = [

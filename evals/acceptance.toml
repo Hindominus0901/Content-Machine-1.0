@@ -4,7 +4,8 @@
 # [week] why_available_rate from wf15-simple-surface-spec.md §3 (founder, 6 Oct 2026); [voice] from
 # wf14-voice-language-spec.md §5; [vn_natural] from docs/research/vn-language-guide.md §9.3. wf14/wf15 win
 # over wf11/wf12 where they differ. Where they differ, the reconciliations in docs/PLAN.md apply (Ready = Edge >= 8;
-# release floor 7).
+# release floor 7). Strategy first (founder, 7 Oct 2026 night, after his v10 run): [day0] and [lengths] below are for the order
+# xưng hô, dump, interview, ONE reply with the strategy, FILM TODAY and Week 1 only after the OK; lengths are in words.
 
 [install]
 door_a_max_actions = 4
@@ -16,43 +17,78 @@ door_b_first_reply_seconds = 60
 helper_path_max_minutes = 10
 
 [day0]
-early_win_max_minutes_after_dump_start = 4
-map_max_turns_en = 6                      # wf15: missing facts only (max 3, one a message), no 7-line check screen
-map_max_turns_vn = 7                      # VN adds the xưng hô turn
-dig_answers_max = 4                       # §CM-DIG (7 Oct night) asks ≤4 story-first questions before the Map, one a reply,
-                                          #   and each answer is a coach turn: day0_timing adds the dig questions the
-                                          #   run really asked (a reply that asks one of the dig.* strings, adapted to the
-                                          #   client in hand), up to this many, to map_max_turns_* and session_max_turns_*.
-                                          #   The two base numbers above stay the budget without a dig (a rich dump asks
-                                          #   none). Review retest-ft1 fix 10: the thin-dump run took 4 dump sends + 4 dig
-                                          #   answers and was graded against 7.
-map_max_minutes = 20                      # the real guard of the dig's extra turns; the Map and FILM TODAY come in one reply
-                                          #   (K2), so graders.py reads it as film_ready_max_minutes below (active minutes)
-map_lines = 4                             # KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE, then "OK, or change a line"
-film_ready_max_minutes = 20
+# Strategy first (founder, 7 Oct 2026 night, after his v10 run; DECISIONS "Strategy first on Day 0"): xưng hô (VN) -> the
+# dump -> the interview about the coach's side (§CM-DIG, at most 6 questions, one a reply) -> ONE reply with the strategy and
+# no piece (§CM-MAP; the one decision) -> only after the OK: FILM TODAY and Week 1 in one reply -> the Brand Card. It
+# replaces K2 (the Map and FILM TODAY in one reply). The budgets below are for that longer order: the founder accepts a
+# longer Day 0 (the kit says "about 35 min"). Read by graders.py (day0_timing, day0_shape, day0_strategy) and run.py.
+early_win_max_minutes_after_dump_start = 4   # the early win only QUOTES 3 lines now (no copy box, no "post it")
+strategy_max_minutes = 25                 # the strategy proposal, in active minutes (t_min minus away_min). The interview's
+                                          #   answers are coach turns that take minutes, so this is the real guard of the
+                                          #   interview (it replaces map_max_minutes = 20, which no check read)
+map_max_turns_en = 6                      # coach turns before the strategy: Start, the dump's sends, "done". The interview's
+map_max_turns_vn = 7                      #   answers come on top (dig_answers_max); VN adds the xưng hô turn
+dig_answers_max = 6                       # §CM-DIG (7 Oct night): at most 6 questions, one a reply, and each answer is a coach
+                                          #   turn: day0_timing adds the interview questions the run really asked (a reply that
+                                          #   asks one of the dig.* strings, adapted to the client in hand), up to this many, to
+                                          #   map_max_turns_* and session_max_turns_*. A rich dump asks none.
+interview_max_questions = 6               # day0_strategy: more questions than this before the strategy fails (a vague answer's
+                                          #   one follow-up counts in the 6)
+map_lines = 6                             # the strategy's labelled lines: KNOWN FOR · CONTENT PILLARS · CONTENT MIX · YOUR SYSTEM
+                                          #   · YOUR WORD · WHAT I FOUND (map.known, map.topics, map.mix, map.system, map.word,
+                                          #   map.found), then "OK, or change a line". YOUR VOICE left the proposal (it is in the card)
+strategy_max_words_en = 400               # the strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): a
+strategy_max_words_vn = 450               #   proposal, not a wall (VN in tiếng)
+pillars_min = 3                           # CONTENT PILLARS: 3-5 broad topic clusters (message.kit-map 2) ...
+pillars_max = 5
+pillar_max_words_en = 4                   # ... 1-4 words each ("direct response", "human psychology", "working with clients")
+pillar_max_words_vn = 6                   #   (VN in tiếng: "làm việc với khách" is 5)
+mix_min_share = 10                        # CONTENT MIX: ATTRACT / TRUST / CONVERT (VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI), each with a
+mix_max_share = 60                        #   share; the three add up to 100; default 40/40/20 (50/35/15 building an audience,
+                                          #   30/40/30 selling to a warm list); no type under 10 or over 60
+system_min_words_en = 12                  # YOUR SYSTEM: a platform, pieces a week, the ask path: at least this many words
+system_min_words_vn = 14
+found_min_lines = 2                       # WHAT I FOUND: 2-4 lines, each with its source (a place, a month) or labelled a guess
+found_max_lines = 4
+film_ready_max_minutes = 35               # FILM TODAY (after the OK), in active minutes. It was 20 with the Map and FILM TODAY in
+                                          #   one reply; the interview and the research now come first
+film_ready_max_minutes_from_email = 45    # with the install, from the setup email
 # The soft dump cut (DECISIONS "Long dumps…", "One more story stays open", "Long dictation and the Map reply"): past
-# this much dump talk (EN words, VN tiếng; pasted posts left out) the machine prints dump.enough. Film-ready over
-# its budget is a warning when the machine cut on time and the coach's own talk accounts for the overrun: they
-# chose to keep talking after the cut, or the send the cut answered ran long past this threshold. With no cut, a
-# late one, or minutes left over that the coach's talk does not cover (the machine's own turns), it stays a failure.
+# this much dump talk (EN words, VN tiếng; pasted posts left out) the machine prints dump.enough. A budget (the
+# strategy's or film-ready) over its limit is a warning when the machine cut on time and the coach's own talk accounts
+# for the overrun: they chose to keep talking after the cut, or the send the cut answered ran long past this threshold.
+# With no cut, a late one, or minutes left over that the coach's talk does not cover (the machine's own turns), it
+# stays a failure.
 dump_cut_words_en = 1200                  # ~1,200 words of talk; evals/run.py's COACH.md quotes both (P15)
 dump_cut_words_vn = 1200                  # ~1,200 tiếng, pasted posts left out (lowered from 1,500 after VG2)
-film_ready_max_minutes_from_email = 30
 # No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
-session_max_minutes = 40
-session_max_turns = 10                    # Week 1 arrives in the next reply, unasked
+session_max_minutes = 45                  # the whole Day 0 (was 40, with the strategy inside the first 20 minutes)
+session_max_turns = 10                    # the kit: "<= 10 coach turns + the interview"; the interview's answers are added (above)
 session_max_turns_vn = 11                 # VN adds the xưng hô turn, as map_max_turns_vn does (the VN block: "coach
-                                          #   nhắn ≤11 lượt"; review retest-vg5-g6 G43)
+                                          #   nhắn <= 11 lượt (chưa kể hỏi thêm)"; review retest-vg5-g6 G43)
 detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
 save_gates = 0                            # saving never gates anything; Week 1 arrives before the Brand Card (wf15 §1.6-§1.7)
 brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/brand-card.toml, targets [budgets.brand_card_visible]
                                           # (the whole card's budget is platform/targets.toml [budgets.brand_card])
-known_for_max_en = 35                     # the Map's KNOWN FOR, "one breath" (modules/en/message.md §CM-MAP)
+known_for_max_en = 35                     # the strategy's KNOWN FOR, "one breath" (modules/en/message.md §CM-MAP)
 known_for_max_vn = 50                     # ĐIỀU KHÁCH NHỚ in tiếng (modules/vn/message.md §CM-MAP)
 running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <name> · <step>" (graders running_tag)
 shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes and the card top
                                           #   not counted (§CM-TODAY 1); EN, and any edition without its own key
-shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.md §CM-TODAY 1 "lời nói ≤120 tiếng")
+shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.md §CM-TODAY 1 "lời nói <=120 tiếng")
+
+[lengths]                                 # check lengths (graders.py; founder, 7 Oct night: "the length has to be measured by words,
+                                          #   not seconds, because people speak at different speeds"). VN counts tiếng (whitespace
+                                          #   tokens: what a word counter shows, the founder's "chữ").
+tolerance = 0.10                          # a short video's bounds are read with this much slack (counting differs by a few words)
+short_words_min = 120                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
+short_words_max = 200                     #   first frame, the caption or the ask), 120-200 words (the founder left it open: default)
+long_post_words = 1000                    # long post: about 1,000 words ...
+long_post_tolerance = 0.15                #   +-15%
+long_video_words_min = 1000               # long video: 1,000-1,500 words, in parts ...
+long_video_words_max = 1500
+long_video_parts_min = 3                  #   at least this many numbered parts (the kit: 3-4), with a hook and an ask around them
+seconds_budget_fails = true               # a length in seconds on a title or in talk ("FILM TODAY (under 30 s)", "30 giây") fails
 
 [hook_lab]                                # check hook_lab (graders.py; qa/standards/hook-lab.md HL7, HL8; review retest-ft1 fix 2)
 onscreen_repeat_share = 0.75              # a short's on-screen text fails when this share (or more) of its content words comes
@@ -177,7 +213,7 @@ regression_noise_pass_rate = 0.05
 
 [testers]                                 # gate G8 (humans)
 install_unaided = "3/3"
-median_minutes_to_film_ready_incl_install = 35
+median_minutes_to_film_ready_incl_install = 45   # strategy first (7 Oct night): the interview and the proposal come before today's video
 recall_next_day_min = "2/3"
 return_day3 = "6/6"
 score_install_min = 8

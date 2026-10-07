@@ -8,7 +8,7 @@
 # under that heading, so they use ### or deeper headings.
 
 # ---------------------------------------------------------------- Day-0 kit method file
-# CONTENT-MACHINE-<SUFFIX>.md (≤50 KB EN / ≤55 KB VN; each anchor ≤2 KB EN / 2.25 KB VN).
+# CONTENT-MACHINE-<SUFFIX>.md (≤56 KB EN / ≤64 KB VN since 7 Oct night; each anchor ≤2,800 B EN / 3,600 B VN).
 # The start-block router names every anchor below (lint E130). P2 fills the sections.
 
 [method]
@@ -19,10 +19,10 @@ title_key = "method.title"
 
 [[method.anchor]]
 id = "SETUP"
-sections = ["setup.kit-dump", "setup.kit-facts", "setup.kit-pick", "setup.kit-order"]
+sections = ["setup.kit-dump", "setup.kit-facts", "setup.kit-order"]
 
 [[method.anchor]]
-id = "DIG"                       # founder 7 Oct: the 6-slot gap check and ≤4 story-first questions before the Map
+id = "DIG"                       # founder 7 Oct night: the interview about the coach's side (≤6 questions) before the strategy
 sections = ["setup.kit-dig"]
 
 [[method.anchor]]
@@ -58,8 +58,12 @@ id = "NUMBERS"
 sections = ["review.kit-*"]
 
 [[method.anchor]]
-id = "MAP"
-sections = ["message.kit-*", "signature.kit-*"]
+id = "MAP"                       # founder 7 Oct night: the strategy proposal (Day 0's one decision) + the keyword
+sections = ["message.kit-map", "signature.kit-*"]
+
+[[method.anchor]]
+id = "DRIFT"                     # 7 Oct night: the hidden pick (from §CM-SETUP) + staying on the strategy (was §CM-MAP's second half)
+sections = ["setup.kit-pick", "message.kit-drift"]
 
 [[method.anchor]]
 id = "CTA-KIT"
@@ -313,7 +317,7 @@ budget = "levelup_playbook"
 
 [[levelup.playbook.anchor]]
 id = "STRATEGY-DOC"
-sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
+sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-pillars", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
 
 # ---------------------------------------------------------------- L3 Autopilot skill references
 # One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by

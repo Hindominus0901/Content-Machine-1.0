@@ -203,6 +203,27 @@ class RunPackets(TempRepo):
                       .split())
         self.assertIn("or after 15 coach turns.", vn)
 
+    def test_session_turn_cap_adds_the_interview(self):
+        """Strategy first (founder, 7 Oct night): the interview's answers (acceptance [day0] dig_answers_max, 6) come on top
+        of the session's coach turns, so the coach side stops after session_max_turns + 6 + 4 turns."""
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\ndig_answers_max = 6\n")
+        en = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        self.assertIn("or after 20 coach turns.", en)
+
+    def test_coach_script_follows_the_strategy_first_order(self):
+        """The coach side is told what the machine now does: it interviews (<= 6 questions, one a reply), proposes the
+        strategy in one reply with no piece, and prints FILM TODAY and Week 1 only after the coach's OK."""
+        coach = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
+        for fragment in ("Day 0 is strategy first", "INTERVIEWS you about your side", "at most 6 questions, one a reply",
+                         "proposes your STRATEGY in one reply and no piece", "Only after your OK does it print FILM TODAY and Week 1",
+                         "a piece that comes before your OK is a kit break to note", "note the re-ask in notes.md"):
+            self.assertIn(fragment, coach)
+        self.assertNotIn("Accept the Map", coach)
+        machine = (self.packets(web=True, tag="w")[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
+        self.assertIn("The pass starts after the coach's first send", machine)
+        off = (self.packets(tag="o")[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
+        self.assertIn("say so once after the first send", off)
+
     def test_protocol_states_the_soft_cut(self):
         """Retest VG4/G5 §8 P15: the round brief told the VN simulators "about 1,500 tiếng"; the packet now states the
         kit's cut from acceptance.toml [day0] (~1,200, pasted posts left out), so a simulator files no kit break over
@@ -644,9 +665,10 @@ class CaseAssertions(TempRepo):
         table = run.summary_rows([{"run": "r1", "persona": "en/x", "lane": "S1", "pass": False, "failed": ["I8"],
                                    "edited": 2, "protocol": [], "summary": {"coach_turns": 5},
                                    "checks": [{"id": "day0_timing", "details": {
-                                       "map_coach_turns": 4, "film_ready_minutes": 61.9,
+                                       "map_coach_turns": 4, "strategy_active_minutes": 11.2, "film_ready_minutes": 61.9,
                                        "film_ready_active_minutes": 16.9}}]}])
-        self.assertIn("| yes (edited: 2) | no | I8 | 5 | 4 | 16.9 (61.9) |", table)
+        self.assertIn("| yes (edited: 2) | no | I8 | 5 | 4 | 11.2 | 16.9 (61.9) |", table)
+        self.assertIn("Strategy min", table)
         d = self.run_dir([("coach", "Tuesday."), ("machine", MAP_REPLY)])
         here = Path.cwd()
         try:

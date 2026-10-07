@@ -16,6 +16,7 @@ import textwrap
 import time
 import tomllib
 import unittest
+import unittest.mock
 import zipfile
 from pathlib import Path
 
@@ -511,9 +512,15 @@ def make_portable_repo(root: Path) -> Path:
     return root
 
 
-def write_kit(root: Path, lang: str, save_line: str | None) -> None:
+CHECK_LINES = {"en": "Check for CONTENT-MACHINE-EN.md and the newest BRAND CARD (highest v). Print the check.",
+               "vn": "ĐẦU MỖI CHAT: tìm CONTENT-MACHINE-VN.md và BRAND CARD v cao nhất. In dòng kiểm tra."}
+
+
+def write_kit(root: Path, lang: str, save_line: str | None, check_line: str | None = None) -> None:
     lines = ["Preamble line that must not ship.", "<!-- @section start.block -->", "{{t:contract.output}}",
              "{{#if kit}}KIT ROUTER{{else}}PHONE ONLY{{/if}}"]
+    if check_line is not None:
+        lines.append(check_line)
     if save_line is not None:
         lines.append(save_line)
     lines.append("Price in {{currency}}.")
@@ -534,6 +541,16 @@ def front_matter(skill_md: str) -> tuple[dict, str]:
         key, _, value = line.partition(": ")
         fields[key] = json.loads(value) if value.startswith('"') else value
     return fields, body
+
+
+def anchor_headings(text: str) -> list[str]:
+    """The `## §CM-…` heading lines of a method or level-up file, in order."""
+    return [ln for ln in text.splitlines() if ln.startswith("## §CM-")]
+
+
+def count_line(text: str, line: str) -> int:
+    """How many times `line` appears in `text` as a whole line."""
+    return text.splitlines().count(line)
 
 
 class PortableTests(TempRepo):
@@ -608,10 +625,89 @@ class PortableTests(TempRepo):
                 pointer = f"CONTENT-MACHINE-{ed.upper()}.md"
                 self.assertTrue(body.split("\n", 1)[0].count(pointer), body[:100])   # one-line pointer to the method file
                 kit, old = p["kit"].read_text(encoding="utf-8"), build.PORTABLE[ed]["save_from"]
+                method = p["method"].read_text(encoding="utf-8")
                 self.assertIn(old, kit)                                # the kit itself keeps its own line
-                self.assertTrue(body.endswith(kit.replace(old, swapped(ed))), body[-200:])
+                self.assertIn(kit.replace(old, swapped(ed)).rstrip(), body)     # the instruction block, save line swapped
                 self.assertNotIn(old, body)
                 self.assertEqual(body.count(swapped(ed)), 1)
+                self.assertTrue(body.endswith(method), "the method file closes SKILL.md")      # ... and then the method
+
+    def test_skill_md_works_alone_it_holds_the_whole_method_file_inline(self):
+        """claude.ai cannot read the files bundled next to a SKILL.md without code execution (founder test v10: the
+        setup check printed "✗ method file"), so the method file is inside SKILL.md, anchors and all."""
+        make_portable_repo(self.root)
+        self.build_all()
+        files = self.unzip()
+        for ed, suffix, h_method in (("en", "EN", "METHOD"), ("vn", "VN", "PHƯƠNG PHÁP")):
+            with self.subTest(ed=ed):
+                skill = files[f"content-machine/skills/content-machine-{ed}/SKILL.md"].decode("utf-8")
+                method = self.paths(ed)["method"].read_text(encoding="utf-8")
+                heading = f"## {h_method} (CONTENT-MACHINE-{suffix}.md)"
+                self.assertEqual(count_line(skill, heading), 1)
+                self.assertIn(f"\n{heading}\n\n{method}", skill)               # the file, byte for byte, under it
+                anchors = anchor_headings(method)
+                self.assertTrue(anchors)
+                for anchor in anchors:                                         # every § anchor of the file, once
+                    self.assertEqual(count_line(skill, anchor), 1, anchor)
+                self.assertLess(skill.index("\nKIT ROUTER"), skill.index(f"\n{heading}\n"))   # kit first, then method
+                pointer = skill.split("---\n\n", 1)[1].split("\n", 1)[0]
+                self.assertIn(f"CONTENT-MACHINE-{suffix}.md", pointer)
+                self.assertIn(h_method, pointer)                               # "it is under METHOD below"
+                self.assertEqual(files[f"content-machine/skills/content-machine-{ed}/CONTENT-MACHINE-{suffix}.md"],
+                                 method.encode("utf-8"))                       # the file next to it stays
+
+    def test_the_setup_check_phrase_says_the_method_file_is_the_section_below(self):
+        make_portable_repo(self.root)
+        for ed in ("en", "vn"):
+            write_kit(self.root, ed, build.PORTABLE[ed]["save_from"], CHECK_LINES[ed])
+        manifest = self.build_all()
+        files = self.unzip()
+        want = {"en": "Check for CONTENT-MACHINE-EN.md (it is the METHOD section below, already in this text) and the "
+                      "newest BRAND CARD (highest v). Print the check.",
+                "vn": "ĐẦU MỖI CHAT: tìm CONTENT-MACHINE-VN.md (chính là phần PHƯƠNG PHÁP bên dưới, đã có sẵn ở đây) "
+                      "và BRAND CARD v cao nhất. In dòng kiểm tra."}
+        for ed in ("en", "vn"):
+            with self.subTest(ed=ed):
+                self.assertIn(CHECK_LINES[ed], self.paths(ed)["kit"].read_text(encoding="utf-8"))   # the kit is as is
+                skill = files[f"content-machine/skills/content-machine-{ed}/SKILL.md"].decode("utf-8")
+                one = self.paths(ed)["onefile"].read_text(encoding="utf-8")
+                for name, text in (("SKILL.md", skill), ("1-FILE", one)):
+                    self.assertNotIn(CHECK_LINES[ed], text, name)
+                    self.assertEqual(text.count(want[ed]), 1, name)
+        self.assertEqual([n for n in manifest["notes"] if "setup-check phrase" in n["note"]], [])
+
+    def test_a_kit_without_the_check_phrase_keeps_building_and_leaves_a_note(self):
+        make_portable_repo(self.root)                 # the fixture kit prints no setup-check phrase
+        manifest = self.build_all()
+        self.assertTrue(self.plugin.exists())
+        notes = [n for n in manifest["notes"] if "setup-check phrase" in n["note"]]
+        self.assertEqual(sorted(n["edition"] for n in notes), ["en", "vn"])    # once per edition, not once per output
+        for n in notes:
+            self.assertIn("check_from", n["note"])
+            self.assertIn("tools/build.py", n["note"])
+        pointer = self.unzip()["content-machine/skills/content-machine-en/SKILL.md"].decode("utf-8")
+        self.assertIn("is inside this skill, under METHOD below", pointer)    # the pointer line holds either way
+
+    def test_skill_md_sizes_are_in_the_manifest_and_a_huge_one_warns(self):
+        make_levelup_repo(self.root)
+        manifest = self.build_all()
+        entry = manifest["artifacts"]["content-machine-plugin.zip"]
+        files = self.unzip()
+        sizes = {n.split("/")[2]: len(d) for n, d in files.items() if n.endswith("/SKILL.md")}
+        self.assertEqual(entry["skill_md_bytes"], dict(sorted(sizes.items())))
+        self.assertEqual(len(sizes), 8)                                         # 2 main skills + 6 companions
+        self.assertFalse([n for n in manifest["notes"] if "SKILL.md is" in n["note"]])
+        with unittest.mock.patch.object(build, "PLUGIN_SKILL_MD_WARN", 2000), \
+                contextlib.redirect_stderr(io.StringIO()) as err:
+            warned = self.build_all()
+        over = sorted(k for k, v in sizes.items() if v > 2000)
+        self.assertTrue(over)
+        notes = [n["note"] for n in warned["notes"] if "SKILL.md is" in n["note"]]
+        self.assertEqual(len(notes), len(over))
+        for skill in over:
+            self.assertTrue(any(f"plugin skill {skill}:" in n for n in notes), skill)
+            self.assertIn(f"warning: plugin skill {skill}:", err.getvalue())
+        self.assertTrue(self.plugin.exists())                                   # a warning, never a stop
 
     def test_one_file_kit(self):
         make_portable_repo(self.root)
@@ -1098,6 +1194,37 @@ class LevelUpTests(TempRepo):
         self.assertEqual(manifest["keywords"], ["content", "coach", "vn", "en"])
         self.assertIn("Companions", manifest["description"])
 
+    def test_a_companion_skill_md_works_alone_it_holds_its_level_up_file_and_the_board_files_inline(self):
+        make_levelup_repo(self.root)
+        self.build_all()
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            files = {n: zf.read(n).decode("utf-8") for n in zf.namelist() if n.endswith((".md", ".csv"))}
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            for stem, file in (("cm-research", "RESEARCH"), ("cm-launch", "LAUNCH"), ("cm-board", "BOARD")):
+                with self.subTest(skill=f"{stem}-{ed}"):
+                    base = f"content-machine/skills/{stem}-{ed}"
+                    skill, level = files[f"{base}/SKILL.md"], files[f"{base}/{file}-{suffix}.md"]
+                    heading = f"## FILE ({file}-{suffix}.md)"
+                    self.assertEqual(count_line(skill, heading), 1)
+                    self.assertIn(f"\n{heading}\n\n{level.rstrip()}\n", skill)        # the file, whole, under it
+                    for anchor in anchor_headings(level):
+                        self.assertEqual(count_line(skill, anchor), 1, anchor)
+                    body = skill.split(f"\n{heading}\n", 1)[0]
+                    self.assertIn(f'under "FILE ({file}-{suffix}.md)" below' if ed == "en"
+                                  else f'ở phần "FILE ({file}-{suffix}.md)" bên dưới', body)
+                    self.assertNotIn("sits next to this file", body)
+                    self.assertNotIn("nằm cạnh file này", body)
+        board = {"en": ("Campaigns.csv", "Key,Campaign\n", "FILES IN Board/"),
+                 "vn": ("Chien-dich.csv", "Mã,Chiến dịch\n", "FILE TRONG Board/")}
+        for ed, (name, content, heading) in board.items():
+            skill = files[f"content-machine/skills/cm-board-{ed}/SKILL.md"]
+            self.assertEqual(count_line(skill, f"## {heading}"), 1)
+            self.assertIn(f"### Board/{name}\n\n```csv\n{content.rstrip()}\n```", skill)
+            self.assertTrue(skill.endswith("```\n"))                                   # the CSV rows close SKILL.md
+            self.assertIn(f'"{heading}"', skill.split(f"\n## {heading}\n", 1)[0])     # the BOARD FILES line names it
+            for other in ("research", "launch"):                                       # only the board has files
+                self.assertNotIn("```csv", files[f"content-machine/skills/cm-{other}-{ed}/SKILL.md"])
+
     def test_every_companion_body_carries_the_house_rules_and_the_harness(self):
         make_levelup_repo(self.root)
         self.build_all()
@@ -1366,6 +1493,66 @@ class RealRepoLevelUps(unittest.TestCase):
                          [f"content-machine/agents/{a}.md" for a in PLUGIN_AGENTS])
         entry = self.manifest["artifacts"]["content-machine-plugin.zip"]
         self.assertEqual(entry["entries"], sorted(files))
+
+    def test_every_plugin_skill_works_from_its_skill_md_alone(self):
+        """The founder's v10 run printed "✗ method file (compact mode)": in claude.ai the files next to a SKILL.md are
+        not readable without code execution. So each SKILL.md holds its file whole, with every § anchor."""
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            files = {n: zf.read(n).decode("utf-8") for n in zf.namelist() if n.endswith((".md", ".csv"))}
+        sizes = {}
+        for ed, suffix in (("en", "EN"), ("vn", "VN")):
+            h_method = "METHOD" if ed == "en" else "PHƯƠNG PHÁP"
+            jobs = [(f"content-machine-{ed}", f"CONTENT-MACHINE-{suffix}.md", f"{h_method} (CONTENT-MACHINE-{suffix}.md)")]
+            jobs += [(f"cm-{area}-{ed}", f"{file}-{suffix}.md", f"FILE ({file}-{suffix}.md)")
+                     for area, (file, _) in LEVELUP_AREAS.items()]
+            for skill, file, heading in jobs:
+                with self.subTest(skill=skill):
+                    base = f"content-machine/skills/{skill}"
+                    text, whole = files[f"{base}/SKILL.md"], files[f"{base}/{file}"]
+                    sizes[skill] = len(text.encode("utf-8"))
+                    self.assertEqual(count_line(text, f"## {heading}"), 1)
+                    self.assertIn(f"\n## {heading}\n\n{whole.rstrip()}\n", text)       # the file, whole
+                    anchors = anchor_headings(whole)
+                    self.assertTrue(anchors)
+                    for anchor in anchors:                                              # every § anchor of the file
+                        self.assertEqual(count_line(text, anchor), 1, anchor)
+                    if skill.startswith("content-machine-"):
+                        self.assertTrue(text.endswith(whole), "the method closes the main SKILL.md")
+        self.assertEqual(self.manifest["artifacts"]["content-machine-plugin.zip"]["skill_md_bytes"],
+                         dict(sorted(sizes.items())))                                   # sizes are reported
+        warned = {n["note"].split(":")[0] for n in self.manifest["notes"] if "SKILL.md is" in n["note"]}
+        self.assertEqual(warned, {f"plugin skill {k}" for k, v in sizes.items() if v > build.PLUGIN_SKILL_MD_WARN})
+        for ed, board in (("en", "Campaigns.csv"), ("vn", "Chien-dich.csv")):
+            skill = files[f"content-machine/skills/cm-board-{ed}/SKILL.md"]
+            for csv_path in sorted((self.root / "dist" / ed / "Level-ups" / "Board").glob("*.csv")):
+                row = csv_path.read_text(encoding="utf-8").rstrip()
+                self.assertIn(f"### Board/{csv_path.name}\n\n```csv\n{row}\n```", skill, csv_path.name)
+
+    def test_the_setup_check_is_true_in_skill_mode_and_the_one_file_kit_holds_the_method(self):
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            skills = {ed: zf.read(f"content-machine/skills/content-machine-{ed}/SKILL.md").decode("utf-8")
+                      for ed in ("en", "vn")}
+        for ed, suffix, h_method in (("en", "EN", "METHOD"), ("vn", "VN", "PHƯƠNG PHÁP")):
+            with self.subTest(ed=ed):
+                edition = cmlib.load_edition(ed, self.root)
+                line = render.render_string("setup.check", edition, "kit")
+                text = skills[ed]
+                pointer = text.split("---\n\n", 1)[1].split("\n", 1)[0]
+                self.assertIn(f"CONTENT-MACHINE-{suffix}.md", pointer)       # the pointer names the file and where it is
+                self.assertIn(h_method, pointer)
+                self.assertIn(line, text)                                      # the kit's own "✓ method file" check line
+                phrase = build.PORTABLE[ed]["check_to"].replace("{{file_suffix}}", suffix).replace("{{h_method}}", h_method)
+                swapped_in = phrase in text
+                noted = [n for n in self.manifest["notes"] if n["edition"] == ed and "setup-check phrase" in n["note"]]
+                self.assertTrue(swapped_in != bool(noted), (ed, "swapped or noted, never neither"))
+                # the one-file kit: the instruction block, then the whole method file
+                one = (self.root / "dist" / ed / f"CONTENT-MACHINE-{suffix}-1-FILE.md").read_text(encoding="utf-8")
+                method = (self.root / "dist" / ed / f"CONTENT-MACHINE-{suffix}.md").read_text(encoding="utf-8")
+                self.assertTrue(one.endswith(method))
+                self.assertEqual(count_line(one, f"## {h_method}"), 1)
+                self.assertEqual(phrase in one, swapped_in)
+                for anchor in anchor_headings(method):
+                    self.assertEqual(count_line(one, anchor), 1, anchor)
 
     def test_the_main_skill_pointer_names_the_four_companions(self):
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:

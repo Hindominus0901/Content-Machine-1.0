@@ -1,14 +1,18 @@
 # The plugin's companion skills (docs/BUILD.md §6): one per level-up area per edition, next to content-machine-<ed>.
 #
 # tools/build.py writes each as content-machine/skills/<skill>-<ed>/SKILL.md plus that area's level-up file
-# (Level-ups/<FILE>-<SUFFIX>.md of dist/<ed>/; the board skill also carries Board/*.csv). The area, its file and the
-# skill stem come from core/method.toml [levelup.<area>] (file, skill); this file holds the words around them.
+# (Level-ups/<FILE>-<SUFFIX>.md of dist/<ed>/; the board skill also carries Board/*.csv). SKILL.md also holds that file
+# in full (and the board's header rows) inline, after the body, under the headings below: in claude.ai the files next
+# to a SKILL.md are not readable without code execution, so a skill must work from SKILL.md alone. The area, its file
+# and the skill stem come from core/method.toml [levelup.<area>] (file, skill); this file holds the words around them.
 # The text addresses the model, so it lives here and in the agents (plugin/agents/*.md), never in strings/.
 #
 # [common.<lang>]  the body every companion shares, tags filled per skill:
 #   {{contract}} the edition's output-contract line (strings contract.output)   {{name}} the brand name
 #   {{part}} this area's plain name   {{main}} the main skill   {{file}} the level-up file   {{jobs}} the area's jobs
-#   {{extra}} the area's extra lines (may be empty)   {{siblings}} the other three companions   {{agents}} agent names
+#   {{extra}} the area's extra lines (may be empty)   {{siblings}} the other companions   {{agents}} agent names
+#   {{heading}} the heading of the inline level-up file (file_heading)   {{assets}} the heading of the inline asset files
+#   (assets_heading, {{folder}} = Board)
 # [area.<area>.<lang>]  description (quoted into the front matter: at most 200 characters, no < or >), part, jobs, extra.
 # [readme.<lang>]  the plugin README's "what is inside" note.
 
@@ -21,9 +25,9 @@ body = """\
 
 You are the {{part}} part of {{name}}, the coach's content strategist: what to say and how to say it. Work exactly as the {{main}} skill does: the same Brand Card, the same address and voice, the same house rules, and one NEXT line at the end of every reply. No Brand Card in this chat: ask the coach to paste it first (one question).
 
-FILE: {{file}} sits next to this file. Before each job read the part it needs, never the whole file:
+FILE: {{file}} is in full under "{{heading}}" below, so open no file. Before each job read the part it needs, never the whole file:
 {{jobs}}
-{{extra}}A §CM- part that is not in {{file}} is in the method file (next to {{main}}) or in a companion: {{siblings}}.
+{{extra}}A §CM- part that is not in {{file}} is in the method of the {{main}} skill (load that skill if it is not in this chat) or in a companion: {{siblings}}.
 
 HOUSE RULES
 - Do the work and hand back finished words. At most 1 question per reply; the last line is exactly one NEXT line.
@@ -38,6 +42,8 @@ HELPERS
 - Browse only with the coach's own Claude in Chrome or ChatGPT Work and its browser, read-only, and only after asking once (never on Day 0). Without one, the coach pastes.
 """
 agents = "cm-researcher, cm-listener, cm-writer, cm-reviewer"
+file_heading = "FILE ({{file}})"
+assets_heading = "FILES IN {{folder}}/"
 
 [area.research.en]
 description = "Content Machine research: reads comments, posts, DMs or a group link you paste, finds the root under what buyers repeat, writes the brief. Use for \"research\", \"browse\", \"what are my buyers saying?\"."
@@ -71,7 +77,7 @@ jobs = """\
 - "remind me", "automate this", "set up the tasks", "yes" to the nudge offer: §CM-NUDGES, then the text for the app: §CM-NUDGE-TEXTS (ChatGPT) or §CM-NUDGE-CLAUDE
 - what each nudge runs: §CM-NUDGE-JOBS · "stop the nudges", "fewer", a missed run: §CM-NUDGE-RULES · launch mode starts: §CM-NUDGE-LAUNCH"""
 extra = """\
-BOARD FILES: Board/ next to this file holds the five header-row files (Campaigns, Content, Bank, Numbers, Ledger). When you can create files, hand these over as they are; otherwise print each header row as the tsv box §CM-BOARD 3 describes.
+BOARD FILES: the five header-row files (Campaigns, Content, Bank, Numbers, Ledger) are in full under "{{assets}}" below, and also sit in Board/ next to this file. When you can create files, write each one exactly as shown and hand it over; otherwise print each header row as the tsv box §CM-BOARD 3 describes.
 """
 
 [area.strategy.en]
@@ -105,9 +111,9 @@ body = """\
 
 Đóng vai phần {{part}} của {{name}}: người làm chiến lược nội dung cho coach, nói gì và nói thế nào. Làm đúng như skill {{main}}: cùng Brand Card, cùng cặp xưng hô và giọng của coach, cùng các luật, và cuối mỗi tin đúng một dòng TIẾP. Chat này chưa có Brand Card thì xin coach dán vào trước (một câu hỏi).
 
-FILE: {{file}} nằm cạnh file này. Trước mỗi việc, chỉ đọc phần việc đó cần, không đọc cả file:
+FILE: {{file}} nằm trọn trong skill này, ở phần "{{heading}}" bên dưới, không cần mở file nào. Trước mỗi việc, chỉ đọc phần việc đó cần, không đọc cả file:
 {{jobs}}
-{{extra}}Phần §CM- không có trong {{file}} thì nằm ở file phương pháp (cạnh skill {{main}}) hay ở một skill đồng hành: {{siblings}}.
+{{extra}}Phần §CM- không có trong {{file}} thì nằm ở phần phương pháp của skill {{main}} (chat chưa có thì nạp skill đó) hay ở một skill đồng hành: {{siblings}}.
 
 LUẬT
 - Làm luôn, giao chữ đã viết xong. Mỗi tin tối đa 1 câu hỏi; dòng cuối đúng một dòng TIẾP.
@@ -122,6 +128,8 @@ GIAO VIỆC
 - Chỉ đọc bằng trình duyệt khi coach có Claude in Chrome hay ChatGPT Work (kèm trình duyệt của nó) của chính họ, chỉ đọc, và hỏi đúng một lần (không bao giờ ngày 0). Không có thì coach dán.
 """
 agents = "cm-researcher, cm-listener, cm-writer, cm-reviewer"
+file_heading = "FILE ({{file}})"
+assets_heading = "FILE TRONG {{folder}}/"
 
 [area.research.vn]
 description = "Content Machine nghiên cứu: khách đang nói gì? Đọc comment, bài, tin nhắn hay link nhóm bạn dán, tìm gốc rễ, viết brief. Dùng khi nghe \"nghiên cứu\", \"khách đang nói gì?\", \"đọc giúp\"."
@@ -155,7 +163,7 @@ jobs = """\
 - "nhắc mình", "cho nó tự chạy", "cài tác vụ", "có" với lời mời nhắc: §CM-NUDGES, rồi lời nhắc cho app: §CM-NUDGE-TEXTS (ChatGPT) hay §CM-NUDGE-CLAUDE
 - mỗi lời nhắc chạy việc gì: §CM-NUDGE-JOBS · "tắt nhắc", "nhắc nhiều quá", "bớt lại", lỡ một buổi: §CM-NUDGE-RULES · vào chế độ mở bán: §CM-NUDGE-LAUNCH"""
 extra = """\
-FILE BẢNG: thư mục Board/ cạnh file này có năm file chỉ có dòng tiêu đề (Chien-dich, Noi-dung, Kho, So-lieu, Gioi-han-that). Tạo được file thì giao đúng các file này; không thì in từng dòng tiêu đề thành khung tsv như §CM-BOARD 3.
+FILE BẢNG: năm file chỉ có dòng tiêu đề (Chien-dich, Noi-dung, Kho, So-lieu, Gioi-han-that) nằm trọn ở phần "{{assets}}" bên dưới, và cũng có trong thư mục Board/ cạnh file này. Tạo được file thì viết đúng từng file như đã thấy rồi giao; không thì in từng dòng tiêu đề thành khung tsv như §CM-BOARD 3.
 """
 
 [area.strategy.vn]

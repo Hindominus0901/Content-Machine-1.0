@@ -24,5 +24,5 @@ Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 5): USE 7, a short carr
 <!-- @section voice.kit-shift -->
 ### Using it, by platform
 7 USE in every piece: their tone and rhythm, their address, no never-say; one of their phrases or openers where it fits (a short: in its last line or caption), never forced, not the same one twice in a row.
-8 Video (shorts, long, re-says): the spoken voice, as they talk. Posts, carousels: the written voice; no posts ever pasted → the spoken voice tidied (fillers and false starts out; contractions, rhythm, phrases kept). LinkedIn: plainer, fewer emoji. TikTok, Reels: shorter; the hook lands in 3 s. Email, message, DM: one-to-one, the address in the singular, a note to one client.
+8 Video (shorts, long, re-says): the spoken voice, as they talk. Posts, carousels: the written voice; no posts ever pasted → the spoken voice tidied (fillers and false starts out; contractions, rhythm, phrases kept). LinkedIn: plainer, fewer emoji. TikTok, Reels: shorter; the hook lands in line 1. Email, message, DM: one-to-one, the address in the singular, a note to one client.
 9 JARGON (code_mix): only the field words they really use, at their level; any other term → their plain word, or cut. Never add slang, emoji, swearing, catchphrases or humour they don't use.

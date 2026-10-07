@@ -80,10 +80,16 @@ injections, I12 formats, I13 hub writes, I14 keyword CTAs, I15 pronouns and the
 audience address, I20 unopened links, I21 the angle card's evidence, I22 monitoring
 promises, I23 voice).
 Other checks: deny_list, quit_triggers (the generic triggers, against the persona's own quit list), running_tag (every
-reply opens with the running tag), day0_timing (Map and film-ready turn and active-minute budgets, a turn of pasted
-posts not counted toward the Map's; the session's minutes, the early win; film-ready over budget is a warning when the
-soft cut came on time and the coach's own talk accounts for the overrun: they chose to keep talking after it, or the
-send it answered ran long past the threshold), day0_shape (the Day-0 deliverables: FILM TODAY's caption box and quiet
+reply opens with the running tag), day0_timing (the strategy's and film-ready's turn and active-minute budgets, a turn of
+pasted posts not counted toward the strategy's; its six labelled lines; the session's minutes, the early win; a budget
+over its limit is a warning when the soft cut came on time and the coach's own talk accounts for the overrun: they chose
+to keep talking after it, or the send it answered ran long past the threshold), day0_strategy (Day 0 is STRATEGY FIRST
+since the founder's v10 run, 7 Oct 2026 night: the dump, the interview about the coach's side, ONE reply with the
+strategy and no piece, FILM TODAY and Week 1 only after the coach's OK; the early win only quotes 3 lines; the research
+said once; WHAT I FOUND with its sources; at most 6 interview questions, none for what the dump gave; 3-5 broad CONTENT
+PILLARS; the ATTRACT / TRUST / CONVERT mix adding to 100; YOUR SYSTEM; Week 1 on all three types and a pillar per piece),
+lengths (in WORDS, never seconds: a short video 120-200, a long post about 1,000, a long video 1,000-1,500 in parts),
+day0_shape (the Day-0 deliverables: FILM TODAY's caption box and quiet
 option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list (VN: a
 Zalo message for a Zalo list), the keyword once in the body of FILM TODAY, of its text version and of each Week-1
 piece, outside its ask, the card top ≤500 characters and outside the copy box, the whole card in budget, the save
@@ -109,9 +115,12 @@ log; what it calls held is a KEEP the log backs; the deny-list). research_log re
 KEEP names the lines behind it, from acceptance [research_log] keep_min_pages distinct pages on keep_min_hosts distinct
 hosts, each line sharing a content word with the pattern. n/a without the file or the log. I23 leaves the kit's own
 paste-steps box (strings research.paste_steps) out of the pieces.
-day0_timing adds the dig questions the run really asked (a reply that asks one of the strings dig.*, adapted to the
-client in hand) to the Map's and the session's turn budgets, up to [day0] dig_answers_max (4; review retest-ft1 fix
-10); film-ready stays at film_ready_max_minutes. The CTA read in day0_shape is FILM TODAY's own (its script and caption),
+day0_timing adds the interview questions the run really asked (a reply that asks one of the strings dig.*, adapted to the
+client in hand, a VN pronoun counted as one word) to the strategy's and the session's turn budgets, up to [day0]
+dig_answers_max (6 since the interview about the coach's side; review retest-ft1 fix 10); the strategy has
+strategy_max_minutes (25) and film-ready film_ready_max_minutes (35). A check applies only the acceptance keys it finds:
+no strategy_max_minutes, no strategy budget; no [lengths] table, lengths is n/a. expected.toml [interview] (dump_gives,
+dump_gaps) and [strategy] (pillars_too_narrow) are the persona's ground truth for day0_strategy. The CTA read in day0_shape is FILM TODAY's own (its script and caption),
 a command line above it ("Gõ 'xem nghiên cứu' …": strings cmd.*) is never the keyword; a kit bracket with its slots
 filled ("[TikTok · 10/2026]" for "[{place} · {month}]") is no placeholder; and I15 reads "chị coach đó", "chị ấy",
 "một chị khách" as a third person, not a slip. Every check reads its kit
@@ -329,6 +338,7 @@ EN_ALLOW = {"ok", "content", "machine", "brand", "card", "hook", "script", "laun
             "comment", "post", "video", "story", "live", "inbox", "link", "sale", "ads", "email", "zalo",
             "facebook", "tiktok", "instagram", "youtube", "notion", "chatgpt", "claude", "save", "to", "project"}
 MAP_STEP_RE = re.compile(r"\bmap\b|bản đồ|thông điệp", re.I)
+STRATEGY_STEP_RE = re.compile(r"\bstrateg(?:y|ies)\b|chiến lược", re.I)
 FILM_STEP_RE = re.compile(r"\bfilm\b|(?<!\w)quay(?!\w)", re.I)
 CARD_STEP_RE = re.compile(r"\bbrand card\b|\bcard\b|(?<!\w)thẻ(?!\w)", re.I)
 OVERLAP_N = 8
@@ -630,6 +640,7 @@ class Reply:
     after_check: bool = False      # the coach asked whether their own draft is ok to post
     kinds: dict[int, str] = field(default_factory=dict)    # status line index -> verdict kind
     machine_at: list[int] = field(default_factory=list)    # where each machine block sat (a line index)
+    strategy_at: int = -1          # the first labelled line of a strategy proposal (3+ of its labels), else -1
 
     def visible(self, blocks=("", "copy", "paste")) -> str:
         return "\n".join(ln.text for ln in self.lines if ln.block in blocks and not ln.fence)
@@ -788,6 +799,45 @@ def _silent_end(lines: list[Line], title: int, bound: int) -> int:
     return end
 
 
+# The labels the kit printed before the strategy-first order ("3 TOPICS:" became "CONTENT PILLARS:"): a run of an older kit still reads
+# as a Map (its topics are never a decision), and day0_strategy then fails it for what it is.
+LEGACY_LABELS = {"map.topics": ("3 TOPICS:", "3 CHỦ ĐỀ:")}
+
+
+def matcher_labels(matcher: Matcher) -> dict[str, re.Pattern]:
+    """The Map's label patterns (MAP_LABEL_KEYS, those the edition has, and the older kit's LEGACY_LABELS), cached on the
+    matcher."""
+    if "_map_label_res" not in matcher.__dict__:
+        out = {}
+        for k in MAP_LABEL_KEYS:
+            if not str(matcher.strings.get(k, "")).strip():
+                continue
+            pats = [_map_label_re(matcher.strings[k], matcher.lang)] + [
+                _map_label_re(x, matcher.lang) for x in LEGACY_LABELS.get(k, ()) if x != matcher.strings[k]]
+            out[k] = pats[0] if len(pats) == 1 else re.compile("|".join(f"(?:{q.pattern})" for q in pats), re.I)
+        matcher.__dict__["_map_label_res"] = out
+    return matcher.__dict__["_map_label_res"]
+
+
+def _label_key(matcher: Matcher, plain: str) -> str:
+    """The Map label key a line opens with (map.known, map.mix …), else ""."""
+    folded = ck.fold(plain)
+    return next((k for k, p in matcher_labels(matcher).items() if p.match(folded)), "")
+
+
+def _strategy_start(r: Reply, matcher: Matcher) -> int:
+    """The first labelled line of a strategy proposal (the Map's labels, three or more of the strategy's own), else -1:
+    from there the reply is the proposal the coach reads and decides on, the thing a coach reads the reply for."""
+    found = {}
+    for i, ln in enumerate(r.lines):
+        if ln.block or ln.fence or not ln.plain:
+            continue
+        key = _label_key(matcher, ln.plain)
+        if key in STRATEGY_LABEL_KEYS and key not in found:
+            found[key] = i
+    return min(found.values()) if len(found) >= 3 else -1
+
+
 def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
     at: list[int] = []
     lines, machine = split_blocks(turn.text, at)
@@ -847,6 +897,7 @@ def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
     special = set(r.verdicts) | set(r.nexts) | {r.tag_at}
     r.prose = [i for i, ln in enumerate(lines)
                if i not in in_piece and i not in special and not ln.block and not ln.fence and ln.plain]
+    r.strategy_at = _strategy_start(r, matcher)
     return r
 
 
@@ -1483,12 +1534,9 @@ def _decision_hits(text: str) -> list[re.Match]:
 
 
 def _map_label_line(matcher: Matcher, plain: str) -> bool:
-    """A line of the Map's four (map.known, map.topics, map.word, map.voice; numbered or not, any spelling)."""
-    if "_map_labels" not in matcher.__dict__:
-        matcher.__dict__["_map_labels"] = [_map_label_re(matcher.strings[k], matcher.lang) for k in MAP_LABEL_KEYS
-                                           if str(matcher.strings.get(k, "")).strip()]
-    folded = ck.fold(plain)
-    return any(p.match(folded) for p in matcher.__dict__["_map_labels"])
+    """A line of the Map's labels (MAP_LABEL_KEYS: map.known, map.topics, map.mix, map.system, map.word, map.found and
+    map.voice; numbered or not, any spelling)."""
+    return bool(_label_key(matcher, plain))
 
 
 def _topic_res(topics) -> list[re.Pattern]:
@@ -1502,15 +1550,21 @@ def _topic_res(topics) -> list[re.Pattern]:
 
 
 def map_topics(run: Run, upto: int | None = None) -> list[str]:
-    """The topics of every Map the run printed (before transcript position `upto`): the map.topics value split at
-    " · ", " / " or " | "."""
+    """The pillars of every strategy the run printed (before transcript position `upto`): the map.topics block (its line
+    and the lines under it) split by parse_pillars, each cut at its gloss."""
     out: list[str] = []
     for r in run.replies:
         if upto is not None and r.index > upto:
             break
-        value = map_lines(run, r).get("map.topics", "")
-        out += [t.strip(" .\"'") for t in re.split(r"\s+[·•|/]\s+", value) if t.strip(" .\"'")]
+        block = strategy_blocks(run, r).get("map.topics", [])
+        out += [t.strip(" .\"'") for t in parse_pillars(block) if t.strip(" .\"'")]
     return list(dict.fromkeys(out))
+
+
+def _dig_question(matcher: Matcher, plain: str) -> bool:
+    """A line that asks one of the interview's questions (§CM-DIG, strings dig.*; the machine adapts the wording: 60% of a
+    dig string's words and a question mark): a question about the coach's side, not a choice between options."""
+    return plain.rstrip(" \"'”’)*_").endswith("?") and dig_like(matcher.strings, plain, 0.6, matcher.lang)
 
 
 def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
@@ -1524,6 +1578,10 @@ def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
     Người mới quyết định nghỉ từ tuần đầu"; review retest-vg4-g5 G34): the topic's words are left out of the line, and
     the rest of it is still read."""
     idx = sorted(set(r.prose) | set(r.nexts))
+    spans: dict[str, list[int]] = {}
+    _strategy_blocks(r, matcher, spans)                  # the strategy's own lines, bullets under a label too: plan, no prompt
+    plan = {i for ix in spans.values() for i in ix if not r.lines[i].plain.rstrip(" \"'”’)*_").endswith("?")}
+    idx = [i for i in idx if i not in plan]                   # (a question under a label is still a question)
     confirm = [i for i in idx if any(matcher.says(k, r.lines[i].text) for k in GUESS_KEYS if k != "setup.plan_guess")]
     topic_res = _topic_res(topics)
     out: dict[str, str] = {}
@@ -1531,6 +1589,8 @@ def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
     for pos, i in enumerate(idx):
         line = r.lines[i].text
         if any(matcher.says(k, line) for k in NOT_DECISION_KEYS) or _map_label_line(matcher, r.lines[i].plain):
+            continue
+        if _dig_question(matcher, r.lines[i].plain):         # an interview question ("…who would you choose?"), no choice
             continue
         if confirm and (i in r.nexts or (pos and idx[pos - 1] in confirm and GUESS_TAIL_RE.match(ck.plain_line(line)))):
             continue                                       # the guess's "Or tell me which pays the bills" and its NEXT
@@ -1655,6 +1715,13 @@ def _page_label(line: str, n) -> bool:
     return bool(m) and m.start(1) == n.start
 
 
+def _mix_line(line: str, lang: str) -> bool:
+    """A line that names two or more of the content mix's types (ATTRACT, TRUST, CONVERT; VN THU HÚT, NIỀM TIN, CHUYỂN
+    ĐỔI): the mix's shares and the card's copy of them. The shares are the plan the machine proposes, never a result."""
+    folded = ck.fold(line)
+    return sum(1 for n in MIX_TYPES[lang] if re.search(r"(?<!\w)" + re.escape(ck.fold(n)) + r"(?!\w)", folded)) >= 2
+
+
 def i8_numbers(run: Run) -> dict:
     """Numbers come from allowed_numbers or from the coach's own words. Someone else's post is
     closed (wf13-inspiration-spec §4): its numbers never become allowed because the coach pasted
@@ -1696,6 +1763,8 @@ def i8_numbers(run: Run) -> dict:
 
         def check(text: str, claims_only: bool) -> None:
             for line in text.splitlines():
+                if _mix_line(line, run.lang):
+                    continue                             # the content mix's shares (40/40/20) are the plan, not a claim
                 claim_line = bool(ck.result_claims(line, run.lang))
                 for n in ck.numbers_in(line):
                     if n.structural or n.tagged or n.kind in ("date", "time") or _page_label(line, n):
@@ -1715,8 +1784,10 @@ def i8_numbers(run: Run) -> dict:
                         and not ck.needs_brackets(line) and any(not x.tagged for x in ck.numbers_in(line)):
                     ev.append(f'{_turn(r)}: result number for a cold-start persona: "{_short(line.strip())}"')
 
+        plan = {i for k, ix in strategy_spans(run, r).items() if k in ("map.mix", "map.system") for i in ix}
         check(r.publishable(), claims_only=False)
-        check(_without_refusals(r.prose_text(), r), claims_only=True)
+        talk = "\n".join(r.lines[i].text for i in sorted(set(r.prose) | set(r.nexts) | set(r.verdicts)) if i not in plan)
+        check(_without_refusals(talk, r), claims_only=True)
         # a before → after pair holds two numbers the coach said together (one sentence, one allowed_numbers entry or
         # one proof item); a pair of allowed numbers from two different facts is a false result
         unit_values = [_values(u) for u in [x for i in own if i < r.index for x in ck.sentences(own[i])] + proof_units]
@@ -3466,16 +3537,32 @@ def _quotes_coach(plain: str, said: str) -> bool:
     return k >= 3 and any(f" {' '.join(toks[i:i + k])} " in said for i in range(len(toks) - k + 1))
 
 
+QUOTED_LINE_RE = re.compile(r"^(?:\d{1,2}[.)]?|[-*•+])?\s*[\"“«][^\"”»\n]{8,}[\"”»]\W*$")
+
+
+def _quoted_line(plain: str) -> bool:
+    """A line that is one quote of 3+ words: the early win's lines since the strategy-first order (the kit quotes the 3
+    lines, no copy box). In VN a coach who dictates in English gets the lines in Vietnamese, so they need not share a run
+    of words with what the coach said."""
+    m = QUOTED_LINE_RE.match(ck.straight_quotes(plain))
+    return bool(m) and ck.count_words(plain) >= 3
+
+
 def usable_at(r: Reply, said: str = "") -> int | None:
     """The first copy-ready line of a reply, or None: a copy or paste box, a status line, a machine block (the card
-    to save), the title of a piece that holds a copy box, or the early win (2+ list lines quoting the coach). A
-    piece printed without its copy box (§CM-FORMATS 8: "Each piece: a copy box") is not copy-ready."""
+    to save), the title of a piece that holds a copy box, the early win (2+ lines that are each one quote: the kit
+    quotes the 3 lines since the strategy-first order, no copy box) or the strategy proposal's first labelled line (what
+    the coach reads that reply for). A piece printed without its copy box (§CM-FORMATS 8: "Each piece: a copy box")
+    is not copy-ready."""
     boxed = {p.start for p in r.pieces if any(r.lines[i].block == "copy" for i in range(p.start, p.verdict_at))}
     marks = set(r.verdicts) | boxed | set(r.machine_at)
     marks |= {i for i, ln in enumerate(r.lines) if ln.fence and ln.block in ("copy", "paste")}
-    quoted = [i for i, ln in enumerate(r.lines) if not ln.block and ln.plain and _quotes_coach(ln.plain, said)]
+    quoted = [i for i, ln in enumerate(r.lines) if not ln.block and ln.plain
+              and (_quotes_coach(ln.plain, said) or _quoted_line(ln.plain))]
     if len(quoted) >= 2:
         marks.add(quoted[0])
+    if r.strategy_at >= 0:                           # the strategy proposal: what the coach reads the reply for
+        marks.add(r.strategy_at)
     return min(marks) if marks else None
 
 
@@ -3575,14 +3662,18 @@ def check_quit_triggers(run: Run, inv: dict) -> dict:
 
 # ---------------------------------------------------------------- Day 0: steps, timing, running tag, shape
 
-MAP_LABEL_KEYS = ("map.known", "map.topics", "map.word", "map.voice")
+# The strategy proposal's six labelled lines (§CM-MAP since the founder's "strategy first", 7 Oct night; the Map's id and
+# map.* strings stay): KNOWN FOR · CONTENT PILLARS · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND. YOUR VOICE
+# (map.voice) left the proposal for the card, but a reply may still print it: it is a Map label, never a decision.
+STRATEGY_LABEL_KEYS = ("map.known", "map.topics", "map.mix", "map.system", "map.word", "map.found")
+MAP_LABEL_KEYS = STRATEGY_LABEL_KEYS + ("map.voice",)
 _FOLDED_PRONOUNS = {ck.fold(p) for p in PRONOUNS}
 
 
 def _map_label_re(label: str, lang: str) -> re.Pattern:
     """A Map label at the start of a line, compared without diacritics ("TỪ KHÓA" = "TỪ KHOÁ"); VN pronouns
-    match any pronoun ("TỪ KHOÁ CỦA CHỊ:" for "TỪ KHOÁ CỦA BẠN:"). The machine may number the 4 lines ("1 ĐIỀU
-    KHÁCH NHỚ:", "2. 3 TOPICS:", "3) YOUR WORD:"; review VG-8)."""
+    match any pronoun ("TỪ KHOÁ CỦA CHỊ:" for "TỪ KHOÁ CỦA BẠN:"). The machine may number the lines ("1 ĐIỀU
+    KHÁCH NHỚ:", "2. CONTENT PILLARS:", "3) YOUR WORD:"; review VG-8)."""
     parts = []
     for word in ck.fold(ck.plain_line(label)).split():
         bare = word.rstrip(":")
@@ -3590,11 +3681,16 @@ def _map_label_re(label: str, lang: str) -> re.Pattern:
             parts.append("(?:" + "|".join(sorted(_FOLDED_PRONOUNS)) + ")" + re.escape(word[len(bare):]))
         else:
             parts.append(re.escape(word))
-    return re.compile(r"^\W*(?:[1-4][.)]?\s+)?" + r"\s+".join(parts), re.I)
+    return re.compile(r"^\W*(?:[1-9][.)]?\s+)?" + r"\s+".join(parts), re.I)
 
 
 def _map_labels(run: Run) -> dict[str, re.Pattern]:
-    return {k: _map_label_re(run.strings[k], run.lang) for k in MAP_LABEL_KEYS if run.strings.get(k, "").strip()}
+    return matcher_labels(run.matcher or Matcher(run.strings, run.lang))
+
+
+def strategy_label_keys(run: Run) -> tuple[str, ...]:
+    """The strategy's own labels the edition has strings for (STRATEGY_LABEL_KEYS)."""
+    return tuple(k for k in STRATEGY_LABEL_KEYS if k in _map_labels(run))
 
 
 def map_lines(run: Run, r: Reply) -> dict[str, str]:
@@ -3611,11 +3707,177 @@ def map_lines(run: Run, r: Reply) -> dict[str, str]:
     return out
 
 
+# ---- the strategy proposal's lines, read whole (a label's value runs on over the lines under it)
+
+def strategy_spans(run: Run, r: Reply) -> dict[str, list[int]]:
+    """The line indexes of each strategy block (strategy_blocks' lines), by label key."""
+    out: dict[str, list[int]] = {}
+    _strategy_blocks(r, run.matcher or Matcher(run.strings, run.lang), out)
+    return out
+
+
+def strategy_blocks(run: Run, r: Reply) -> dict[str, list[str]]:
+    """The strategy proposal's blocks in a reply, {"map.topics": [the label line's value, the lines under it …], …}: the
+    first item is what follows the label on its own line ("" when nothing does). A block starts at a Map label
+    (MAP_LABEL_KEYS) and runs over the lines under it (bullets, one line per type of the mix) to the next label, the
+    map.ok line, the NEXT line, a heading, a copy box or a blank line (one blank line right under the label is skipped
+    when the label's own line holds nothing)."""
+    return _strategy_blocks(r, run.matcher or Matcher(run.strings, run.lang))
+
+
+def _strategy_blocks(r: Reply, matcher: Matcher, spans: dict | None = None) -> dict[str, list[str]]:
+    out: dict[str, list[str]] = {}
+    cur = None
+    for i, ln in enumerate(r.lines):
+        if ln.fence or ln.block:
+            cur = None
+            continue
+        plain = ln.plain
+        if not plain:
+            if cur is not None and not any(out[cur]):
+                continue                                  # a blank line right under an empty label
+            cur = None
+            continue
+        folded = ck.fold(plain)
+        key = next((k for k, p in matcher_labels(matcher).items() if p.match(folded)), "")
+        if key:
+            if key in out:                                # a label printed again (a reprint): the first one stands
+                cur = None
+                continue
+            m = matcher_labels(matcher)[key].match(folded)
+            out[key] = [plain[m.end():].strip(" :·-–—")]       # the label line's own value first (may be empty)
+            if spans is not None:
+                spans[key] = [i]
+            cur = key
+            continue
+        if i in r.nexts or i == r.tag_at or HEADING_RE.match(ln.text) or matcher.says("map.ok", plain):
+            cur = None
+            continue
+        if cur is not None:
+            out[cur].append(plain)
+            if spans is not None:
+                spans[cur].append(i)
+    return out
+
+
+_LIST_MARK_RE = re.compile(r"^\s*(?:[-*•+]|\d{1,2}[.)])\s*")
+_PILLAR_SEP = re.compile(r"\s+[·•|/]\s+|\s*;\s*|\s+\+\s+")
+
+
+def pillar_name(item: str) -> str:
+    """A pillar's name without its gloss: "Direct response (how people decide to buy)" and "Direct response: how people
+    decide" and "Direct response, how people decide" are "Direct response"."""
+    s = re.sub(r"[*_`]+", "", item).strip(" \t\"'“”‘’.")
+    s = re.split(r"\s+[—–-]\s+|:\s+|\s+\(", s, maxsplit=1)[0]
+    return s.strip(" \t\"'“”‘’.,")
+
+
+def _split_pillars(s: str) -> list[str]:
+    """One line of pillars as items: at " · ", " / ", " | ", ";" and " + ", else at commas ("direct response, human
+    psychology and working with clients"); a line with a gloss (":" or a dash) is one item."""
+    parts = _PILLAR_SEP.split(s)
+    if len(parts) == 1 and s.count(",") >= 1 and not re.search(r"\s[—–-]\s|:\s", s):
+        parts = [x for x in re.split(r",\s*(?:(?:and|và)\s+)?", s) if x.strip()]
+        if len(parts) > 1 and re.search(r"\s(?:and|và)\s", parts[-1]):
+            parts = parts[:-1] + re.split(r"\s+(?:and|và)\s+", parts[-1], maxsplit=1)
+    return parts
+
+
+def parse_pillars(lines: list[str]) -> list[str]:
+    """The pillar names in a CONTENT PILLARS block (strategy_blocks: the label line's value first, then the lines under
+    it): the label line's own list when it holds two or more items, else one item per line under it (bullets, numbers,
+    or a plain line; a long unmarked sentence is talk, not a pillar); each cut at its gloss (pillar_name)."""
+    head = lines[0].strip() if lines else ""
+    first = _split_pillars(_LIST_MARK_RE.sub("", head)) if head else []
+    items = list(first)
+    if len(first) < 2:
+        for raw in lines[1:]:
+            marked = bool(_LIST_MARK_RE.match(raw))
+            s = _LIST_MARK_RE.sub("", raw).strip()
+            if not s:
+                continue
+            if not marked and ck.count_words(s) > 8 and not re.search(r"[·•|:(]|\s[—–-]\s", s):
+                continue
+            items += _split_pillars(s)
+    return [n for n in (pillar_name(x) for x in items) if n]
+
+
+MIX_TYPES = {"en": ("attract", "trust", "convert"), "vn": ("thu hút", "niềm tin", "chuyển đổi")}
+_MIX_NUM_RE = re.compile(r"(?<![\w.,])(\d{1,3})(?:[.,]\d+)?\s*(?:%|phần trăm|percent)")
+
+
+def mix_shares(lang: str, text: str) -> dict[str, int] | None:
+    """The shares of the content mix in a block of text, {"attract": 40, "trust": 40, "convert": 20} (VN names map to the
+    English keys). A share is a number with "%" right next to a type's name (at most MIX_GAP characters between, no digit):
+    "ATTRACT 40% · TRUST 40% · CONVERT 20%" (the number after its type) or "40% ATTRACT · 40% TRUST · 20% CONVERT" (before
+    it), whichever the first such pair in the text shows; the types named earlier, in a heading, are skipped. A bare
+    "40/40/20" gives the shares in the kit's order. None when a type has no share."""
+    folded = ck.fold(text)
+    keys = MIX_TYPES["en"]
+    names = {k: ck.fold(n) for k, n in zip(keys, MIX_TYPES[lang])}
+    toks = sorted([(m.start(), m.end(), "type", k) for k, n in names.items()
+                   for m in re.finditer(r"(?<!\w)" + re.escape(n) + r"(?!\w)", folded)]
+                  + [(m.start(), m.end(), "num", int(m.group(1))) for m in _MIX_NUM_RE.finditer(folded)])
+
+    def adjacent(a, b) -> bool:
+        gap = folded[a[1]:b[0]]
+        return a[2] != b[2] and len(gap) <= MIX_GAP and not re.search(r"\d", gap)
+
+    pairs = [(a, b) for a, b in zip(toks, toks[1:]) if adjacent(a, b)]
+    if pairs:
+        type_first = pairs[0][0][2] == "type"
+        shares: dict[str, int] = {}
+        for a, b in pairs:
+            typ, num = (a, b) if type_first and a[2] == "type" else (b, a) if not type_first and b[2] == "type" else (None, None)
+            if typ is not None and typ[3] not in shares:
+                shares[typ[3]] = num[3]
+        if len(shares) == 3:
+            return shares
+    m = re.search(r"(?<![\w/.,])(\d{1,3})\s*/\s*(\d{1,3})\s*/\s*(\d{1,3})(?![\w/])", folded)
+    if m and all(re.search(r"(?<!\w)" + re.escape(n) + r"(?!\w)", folded) for n in names.values()):
+        return dict(zip(keys, (int(g) for g in m.groups())))
+    return None
+
+
+MIX_GAP = 12
+FOUND_SPLIT_RE = re.compile(r"\s+[·•|]\s+")
+SOURCE_RE = re.compile(
+    r"https?://|\bwww\.|\b[\w-]+\.(?:com|vn|net|org|io|co)\b|\b20\d\d\b|"
+    r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b|(?<!\w)tháng\s+\d|(?<!\w)\d{1,2}/20?\d\d(?!\w)|"
+    r"\b(?:reddit|facebook|tiktok|linkedin|youtube|instagram|zalo|quora|forum|forums|thread|threads|group|groups|"
+    r"comments?|reviews?|capterra|g2|trustpilot|podcast|survey|blog|blogs|article|articles|websites?|search)\b|"
+    r"(?<!\w)(?:nhóm|diễn đàn|bình luận|bài đăng|khảo sát|đánh giá|bài viết|trang web|tìm kiếm)(?!\w)|"
+    r"\bsources?\s*:|(?<!\w)nguồn\s*:", re.I)
+
+
+# A line that comes from the coach's own words ("(you said)", "(what you told me)", "(lời bạn kể)") is neither a web source nor a
+# guess: it is the coach's, and needs neither label.
+COACH_SOURCE_RE = re.compile(
+    r"\b(?:you|your)\s+(?:said|told|mentioned|dictated|wrote|own\s+words?|words?|dump|posts?|page|story|answer)\b|"
+    r"\bwhat\s+you\s+(?:said|told)\b|(?<!\w)(?:lời|theo)\s+(?:bạn|chị|anh|em)\s+(?:kể|nói)(?!\w)|"
+    r"(?<!\w)(?:bạn|chị|anh|em)\s+(?:đã\s+)?(?:kể|nói|viết)(?!\w)", re.I)
+
+
+def found_items(lines: list[str]) -> list[str]:
+    """The lines of WHAT I FOUND: one per line under the label (bullets stripped), a line holding several findings
+    split at " · "."""
+    items: list[str] = []
+    for raw in lines:
+        s = _LIST_MARK_RE.sub("", raw).strip()
+        if s:
+            items += [x.strip() for x in FOUND_SPLIT_RE.split(s) if x.strip()]
+    return items
+
+
 def _is_map_reply(run: Run, r: Reply) -> bool:
-    """The Map: the running tag names it, or (no tag naming it) 3+ labelled Map lines, or 2 with the map.ok line."""
+    """The strategy proposal (internally still "the Map"): the running tag names it ("Map", "Bản đồ"), or (no tag naming
+    it) 3+ labelled lines, or 2 with the map.ok line; a tag that says "Strategy" / "Chiến lược" counts with 2 labelled
+    lines (a Strategy level-up reply is not the Day-0 proposal)."""
     if r.step and MAP_STEP_RE.search(r.step):
         return True
     n = len(map_lines(run, r))
+    if r.step and STRATEGY_STEP_RE.search(r.step) and n >= 2:
+        return True
     matcher = run.matcher or Matcher(run.strings, run.lang)
     return n >= 3 or (n >= 2 and matcher.says("map.ok", r.visible(("",))))
 
@@ -3841,11 +4103,11 @@ DIG_REPLY_MAX_WORDS = 60         # a dig reply is a tag, a question and a NEXT l
 
 def dig_questions(run: Run, before: int) -> list[Reply]:
     """The machine replies before transcript index `before` that ask one of §CM-DIG's story-first questions (strings
-    dig.story, dig.words, dig.offer, dig.proof, dig.stance, dig.buyer). The machine adapts the line to the client in
-    hand ("Lúc mới tìm tới bạn, chị coach đó nói gì?" for "Lần đầu nhắn cho bạn, họ nói gì?"), so a reply counts when
+    dig.story, dig.words, dig.offer, dig.proof, dig.stance, dig.buyer, dig.find, dig.goal; since 7 Oct night the
+    interview about the coach's side). The machine adapts the line to the client in hand ("Lúc mới tìm tới bạn, chị coach đó nói gì?" for "Lần đầu nhắn cho bạn, họ nói gì?"), so a reply counts when
     it asks something and holds at least DIG_MATCH_MIN of a dig string's words, in a reply of at most
     DIG_REPLY_MAX_WORDS words of talk. Each is one coach turn the dig added before the Map (review retest-ft1 fix 10)."""
-    digs = [set(ck.copy_tokens(ck.plain_line(v))) for k, v in run.strings.items()
+    digs = [_string_words(str(v), run.lang) for k, v in run.strings.items()
             if k.startswith("dig.") and str(v).strip()]
     digs = [d for d in digs if d]
     found = []
@@ -3855,27 +4117,54 @@ def dig_questions(run: Run, before: int) -> list[Reply]:
         talk = " ".join(r.lines[i].plain for i in sorted(set(r.prose) | set(r.verdicts)))
         if ck.count_words(talk, run.lang) > DIG_REPLY_MAX_WORDS:
             continue
-        held = set(ck.copy_tokens(talk))
+        held = _norm_tokens(talk, run.lang)                   # a VN pronoun is one word: the coach's pair, not the kit's
         if any(len(d & held) / len(d) >= DIG_MATCH_MIN for d in digs):
             found.append(r)
     return found
 
 
+def _over_budget(run: Run, reply: Reply, active: float, limit: float, what: str) -> tuple[list[str], list[str]]:
+    """(failures, warnings) for a Day-0 time budget the reply `reply` (the strategy, film-ready) went over, `active`
+    minutes against `limit`. It is a warning, not a failure, when the machine cut the dump on time and the coach's own
+    talk accounts for the overrun (dump_cut): they chose to keep talking after the soft cut (their next turn was more
+    dump; DECISIONS "One more story stays open"), or, with no more talk after it, the send the cut answered ran past
+    the threshold, because the coach's chunks were long (its over_threshold minutes; founder after the VG3 retest,
+    DECISIONS "Long dictation and the Map reply"), or both. With no cut once the dump talk passed the threshold, a late
+    cut, or minutes left over that the coach's talk does not cover (the machine's own turns: extra questions, re-asks,
+    turns it caused), it stays a failure."""
+    cut = dump_cut(run, reply)
+    away = "" if active == reply.t_min else f", minute {reply.t_min:g} on the clock"
+    note = f"{what} at active minute {active:g} (max {limit:g}{away})"
+    extra = round(sum(k["minutes"] for k in cut.get("kept_talking", [])), 1)
+    over = cut.get("over_threshold")
+    unit = "tiếng" if run.lang == "vn" else "words"
+    if cut.get("kept_talking") and cut["on_time"] and active - extra <= limit:
+        return [], [f"{note}: coach chose to keep talking after the cut: +{extra:g} min"]
+    if over and cut["on_time"] and round(active - extra - over["minutes"], 1) <= limit:
+        why = [f"coach chose to keep talking after the cut: +{extra:g} min"] if cut.get("kept_talking") else []
+        why.append(f"the cut came on time; the coach's send it answered (turn {over['turn']}) ran "
+                   f"{over['words']} {unit} past {cut['threshold']}: +{over['minutes']:g} min")
+        return [], [f"{note}: " + "; ".join(why)]
+    if cut and not cut["on_time"]:
+        late = "came late" if cut["cut_turns"] else "never came"
+        return [f"{note}; the soft cut {late}: the dump talk passed {cut['threshold']} {unit} at turn "
+                f"{cut['crossed_turn']}"], []
+    return [note], []
+
+
 def check_day0(run: Run) -> dict:
-    """wf15 §3 budgets: the Map within map_max_turns coach turns, as 4 labelled lines (a coach turn that is mostly
-    their own pasted posts is not counted: posts_only_turns, G31); film-ready within film_ready_max_minutes of active
-    time (t_min minus away_min); at most session_max_turns coach turns (session_max_turns_<edition> when set: VN 11
-    with the xưng hô turn, G43) and session_max_minutes active minutes; the early win within
-    early_win_max_minutes_after_dump_start (early_win; in the reply to the coach's first send, a miss is a warning:
-    G32). A reply with no running tag is still read: the Map by its labels, FILM TODAY by film.now_or_text or its
-    title.
-    Film-ready over its budget is a warning, not a failure, when the machine cut on time and the coach's own talk
-    accounts for the overrun (dump_cut): they chose to keep talking after the soft cut (their next turn was more dump;
-    DECISIONS "One more story stays open"), or, with no more talk after it, the send the cut answered ran past the
-    threshold, because the coach's chunks were long (its over_threshold minutes; founder after the VG3 retest,
-    DECISIONS "Long dictation and the Map reply"), or both. With no cut once the dump talk passed the threshold, a
-    late cut, or minutes left over that the coach's talk does not cover (the machine's own turns: extra questions,
-    re-asks, turns it caused), it stays a failure."""
+    """wf15 §3 budgets, for the strategy-first order (founder, 7 Oct night: xưng hô, dump, interview, ONE reply with the
+    strategy, FILM TODAY and Week 1 only after its OK, the Brand Card): the strategy within map_max_turns coach turns
+    (plus the interview's answers, up to dig_answers_max), as its labelled lines (STRATEGY_LABEL_KEYS: map_lines; a coach
+    turn that is mostly their own pasted posts is not counted: posts_only_turns, G31) and within strategy_max_minutes of
+    active time (t_min minus away_min); film-ready (FILM TODAY, after the OK) within film_ready_max_minutes; at most
+    session_max_turns coach turns, the interview's answers added (session_max_turns_<edition> when set: VN 11 with the
+    xưng hô turn, G43), and session_max_minutes active minutes; the early win within early_win_max_minutes_after_dump_start
+    (early_win; in the reply to the coach's first send, a miss is a warning: G32). A reply with no running tag is still
+    read: the strategy by its labels, FILM TODAY by film.now_or_text or its title. Which reply is which, and whether
+    anything came before the OK, is day0_strategy's.
+    A time budget is a warning, not a failure, when the machine cut on time and the coach's own talk accounts for the
+    overrun (_over_budget)."""
     day0 = run.acceptance.get("day0", {})
     map_reply = next((r for r in run.replies if _is_map_reply(run, r)), None)
     film_reply = next((r for r in run.replies if _is_film_reply(run, r)), None)
@@ -3883,15 +4172,17 @@ def check_day0(run: Run) -> dict:
     if not is_day0:
         return {"id": "day0_timing", "pass": None, "status": "not_run",
                 "evidence": ["no Map step in the replies and meta.suite is not day0"]}
-    ev, details = [], {}
+    ev, details, warnings = [], {}, []
     if map_reply:
         posts_only = posts_only_turns(run, map_reply.index)           # not counted (G31, DECISIONS wf14 V3)
         turns = len(run.coach_before(map_reply.index)) - len(posts_only)
         limit = int(day0.get(f"map_max_turns_{run.meta['edition']}", day0.get("map_max_turns_en", 6)))
-        dig_extra = min(len(dig_questions(run, map_reply.index)), int(day0.get("dig_answers_max", 4)))
+        # the interview's answers: the questions that are the kit's own (dig.*) or any other the machine asked before the strategy
+        asked = {r.index for r in dig_questions(run, map_reply.index)} | {r.index for r in interview_replies(run, map_reply.index)}
+        dig_extra = min(len(asked), int(day0.get("dig_answers_max", 6)))
         details["map_coach_turns"] = turns
         if dig_extra:
-            details["map_dig_answers"] = dig_extra          # the dig's answers come on top of the base budget
+            details["map_dig_answers"] = dig_extra          # the interview's answers come on top of the base budget
         if posts_only:
             details["map_posts_only_turns"] = [run.turns[i].turn for i in posts_only]
         if map_reply.tag_at < 0:
@@ -3901,16 +4192,26 @@ def check_day0(run: Run) -> dict:
                         if posts_only else "")
             plus = f" + {dig_extra} dig answer{'s' if dig_extra > 1 else ''}" if dig_extra else ""
             ev.append(f"Map after {turns} coach turns (max {limit}{plus}{left_out})")
-        labels = _map_labels(run)
-        if labels:                                   # wf15 §1.4: the Map is 4 labelled lines, then "OK?"
-            want = int(day0.get("map_lines", len(labels)))
-            n = len(map_lines(run, map_reply))
-            details["map_lines"] = n
-            if n != want:
-                ev.append(f"the Map has {n} labelled lines (want {want})")
+        keys = strategy_label_keys(run)
+        if keys:                          # the strategy is its labelled lines, then "OK, or change a line"
+            want = min(int(day0.get("map_lines", len(keys))), len(keys))
+            found = [k for k in map_lines(run, map_reply) if k in keys]
+            details["map_lines"] = len(found)
+            if len(found) != want:
+                missing = [k for k in keys if k not in found]
+                ev.append(f"the Map has {len(found)} labelled lines (want {want}"
+                          + (f"; missing {', '.join(missing)}" if missing else "") + ")")
+        active = active_minutes(run, map_reply)
+        if active is not None:                          # the strategy's own budget: the interview and the research come first
+            details["strategy_minutes"] = map_reply.t_min
+            details["strategy_active_minutes"] = round(active, 1)
+            limit = float(day0.get("strategy_max_minutes", 0))          # no key, no budget (acceptance.toml sets 25)
+            if limit and active > limit:
+                fail, warn = _over_budget(run, map_reply, active, limit, "the strategy")
+                ev += fail
+                warnings += warn
     else:
         ev.append("no Map step reached")
-    warnings = []
     if film_reply:
         details["film_ready_coach_turns"] = len(run.coach_before(film_reply.index))
         details["film_ready_minutes"] = film_reply.t_min
@@ -3918,29 +4219,14 @@ def check_day0(run: Run) -> dict:
         details["film_ready_active_minutes"] = None if active is None else round(active, 1)
         if film_reply.tag_at < 0:
             details["film_found_by"] = "content (no running tag)"
-        limit = float(day0.get("film_ready_max_minutes", 20))
+        limit = float(day0.get("film_ready_max_minutes", 35))
         cut = dump_cut(run, film_reply)
         if cut:
             details["dump_cut"] = cut
         if active is not None and active > limit:
-            away = "" if active == film_reply.t_min else f", minute {film_reply.t_min:g} on the clock"
-            note = f"film-ready at active minute {active:g} (max {limit:g}{away})"
-            extra = round(sum(k["minutes"] for k in cut.get("kept_talking", [])), 1)
-            over = cut.get("over_threshold")
-            unit = "tiếng" if run.lang == "vn" else "words"
-            if cut.get("kept_talking") and cut["on_time"] and active - extra <= limit:
-                warnings.append(f"{note}: coach chose to keep talking after the cut: +{extra:g} min")
-            elif over and cut["on_time"] and round(active - extra - over["minutes"], 1) <= limit:
-                why = [f"coach chose to keep talking after the cut: +{extra:g} min"] if cut.get("kept_talking") else []
-                why.append(f"the cut came on time; the coach's send it answered (turn {over['turn']}) ran "
-                           f"{over['words']} {unit} past {cut['threshold']}: +{over['minutes']:g} min")
-                warnings.append(f"{note}: " + "; ".join(why))
-            elif cut and not cut["on_time"]:
-                late = "came late" if cut["cut_turns"] else "never came"
-                ev.append(f"{note}; the soft cut {late}: the dump talk passed {cut['threshold']} {unit} at turn "
-                          f"{cut['crossed_turn']}")
-            else:
-                ev.append(note)
+            fail, warn = _over_budget(run, film_reply, active, limit, "film-ready")
+            ev += fail
+            warnings += warn
     else:
         ev.append("no film-ready step reached")
     # the session's coach turns: a turn of only their own pasted posts is not counted here either (G31, wf14 V3)
@@ -3951,7 +4237,7 @@ def check_day0(run: Run) -> dict:
         details["session_posts_only_turns"] = [run.turns[i].turn for i in posts_only]
     # VN adds the xưng hô turn: session_max_turns_vn 11, as map_max_turns_vn (review retest-vg5-g6 G43)
     limit = int(day0.get(f"session_max_turns_{run.meta['edition']}", day0.get("session_max_turns", 10)))
-    dig_extra = details.get("map_dig_answers", 0)           # the same dig answers count in the session's budget
+    dig_extra = details.get("map_dig_answers", 0)           # the same interview answers count in the session's budget
     if total - len(posts_only) > limit + dig_extra:
         left_out = (f"; posts-only turn {', '.join(str(run.turns[i].turn) for i in posts_only)} not counted"
                     if posts_only else "")
@@ -3962,7 +4248,7 @@ def check_day0(run: Run) -> dict:
     session = active_minutes(run, last) if last is not None else None
     if session is not None:
         details["session_active_minutes"] = round(session, 1)
-        limit = float(day0.get("session_max_minutes", 40))
+        limit = float(day0.get("session_max_minutes", 45))
         if session > limit:
             ev.append(f"the session ran {session:g} active minutes (max {limit:g})")
     # the early win (review G15, VP-4): within early_win_max_minutes_after_dump_start of the dump prompt. The reply to
@@ -3989,6 +4275,619 @@ def check_day0(run: Run) -> dict:
         if not ev:
             out["status"] = "warn"
     return out
+
+
+# ---------------------------------------------------------------- Day 0, strategy first (founder, 7 Oct night)
+
+# The interview's questions (strings dig.*) and the slots each one fills. A question that holds DIG_MATCH_MIN of a dig
+# string's words is that question: the machine adapts the line to the client in hand.
+DIG_SLOTS = {"dig.buyer": ("who",), "dig.offer": ("offer",), "dig.proof": ("result",), "dig.find": ("find", "platforms"),
+             "dig.goal": ("goal", "hours"), "dig.stance": ("stance",), "dig.story": ("story",), "dig.words": ("words",)}
+# The coach stops the interview ("enough", "đủ rồi", "just make it"): the rest is guessed, never a client's words or result.
+ENOUGH_RE = re.compile(r"\benough\b|\bjust make it\b|\btoo many questions\b|\bstop asking\b|\bno more questions\b"
+                       r"|(?<!\w)đủ rồi(?!\w)|(?<!\w)khỏi hỏi(?!\w)|(?<!\w)hỏi nhiều quá(?!\w)|(?<!\w)làm luôn đi(?!\w)",
+                       re.I)
+ENOUGH_MAX_WORDS = 15
+# The coach approves the strategy: "OK" (with or without a change after it), "next", "go" (§CM-TODAY 1, §CM-MAP).
+APPROVE_RE = re.compile(
+    r"^\W*(?:ok(?:ay)?|okie|oke|yes|yep|yeah|yup|sure|go(?: ahead| on)?|next|good|fine|looks? (?:good|right|great|fine)"
+    r"|sounds? (?:good|right|great|fine)|approved?|do it|let'?s go|perfect|great|that works|alright|all good|agreed?"
+    r"|đồng ý|được|đc|ổn|tiếp|vâng|dạ|ừ|ừm|chốt|làm đi|tốt|hợp lý|duyệt|đúng rồi|hay đó)(?!\w)", re.I)
+POST_IT_RE = re.compile(r"\bpost (?:it|this|that|these)\b(?!\s+(?:later|after|tomorrow|once|when))"
+                        r"|(?<!\w)đăng (?:luôn|ngay|liền|hôm nay)(?!\w)", re.I)
+NOT_NOW_LINE_RE = re.compile(r"^\W*(?:not now|để sau|why this one|vì sao chọn (?:cái|ý|bài) này|runner-?up)\b", re.I)
+PLATFORM_RE = re.compile(r"\b(?:facebook|fb|instagram|ig|linkedin|tiktok|youtube|zalo|email|e-mail|newsletter|podcast|"
+                         r"threads|x|twitter|substack|messenger|reels?|shorts?)\b", re.I)
+CADENCE_RE = re.compile(r"\b(?:a|per|each|every)\s+week\b|\bweekly\b|/\s*week\b|(?<!\w)(?:mỗi|một|hằng|hàng)\s+tuần(?!\w)"
+                        r"|/\s*tuần(?!\w)", re.I)
+ASK_PATH_RE = re.compile(r"\b(?:comment|dm|inbox|message|reply|call|book(?:ing)?)\b|(?<!\w)(?:nhắn|bình luận|comment|inbox|"
+                         r"gọi|đặt lịch|trả lời)(?!\w)", re.I)
+SECONDS_RE = re.compile(r"(?<![\w.,/])\d{1,3}(?:\s*[-–]\s*\d{1,3})?\s*(?:s|secs?|seconds?|giây)(?![\w])"
+                        r"|(?<!\w)giây(?!\w)", re.I)
+
+
+VN_PRONOUN_TOKENS = {ck.fold(p) for p in PRONOUNS} | set(PRONOUNS)
+
+
+def _norm_tokens(text: str, lang: str) -> set[str]:
+    """The tokens of a line (copy_tokens); in VN every pronoun is one token, because the machine says the kit's line to
+    the coach in their pair ("bạn kể … mình" is "chị kể … em")."""
+    toks = ck.copy_tokens(text)
+    return {"§" if lang == "vn" and x in VN_PRONOUN_TOKENS else x for x in toks}
+
+
+def _string_words(text: str, lang: str = "en") -> set[str]:
+    """The tokens of a kit string without its {slots}."""
+    return _norm_tokens(re.sub(SLOT, " ", ck.plain_line(text)), lang)
+
+
+def string_share(strings: dict, key: str, text: str, lang: str = "en") -> float:
+    """The share of the string's own words (slots left out) that `text` holds: 1.0 for the line itself, about 0.5 for a
+    reworded one (VN pronouns count as one word). 0 when the edition has no such string."""
+    words = _string_words(str(strings.get(key, "")), lang)
+    if not words:
+        return 0.0
+    return len(words & _norm_tokens(text, lang)) / len(words)
+
+
+def dig_match(strings: dict, text: str, lang: str = "en") -> tuple[str, float]:
+    """(the dig.* key whose words `text` holds the largest share of, that share); ("", 0) without dig strings."""
+    best, share = "", 0.0
+    for key in DIG_SLOTS:
+        s = string_share(strings, key, text, lang)
+        if s > share:
+            best, share = key, s
+    return best, share
+
+
+def dig_like(strings: dict, text: str, share: float | None = None, lang: str = "en") -> bool:
+    """The line is one of the interview's questions: it holds `share` (default DIG_MATCH_MIN) of a dig string's words."""
+    return dig_match(strings, text, lang)[1] >= (DIG_MATCH_MIN if share is None else share)
+
+
+def dump_prompt(run: Run) -> Reply | None:
+    """The reply that invites the dump (setup.dump_posts), else the setup check's (setup.check, setup.check_compact)."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    return next((r for r in run.replies if matcher.says("setup.dump_posts", r.text)), None) or \
+        next((r for r in run.replies if any(matcher.says(k, r.text) for k in ("setup.check", "setup.check_compact"))),
+             None)
+
+
+def interview_replies(run: Run, before: int) -> list[Reply]:
+    """The machine replies between the dump prompt and transcript position `before` (the strategy) that ask the coach
+    something: the interview, whatever the wording. The coach's answer to each is a coach turn the interview added."""
+    prompt = dump_prompt(run)
+    if prompt is None:
+        return []
+    return [r for r in run.replies if prompt.index < r.index < before and reply_questions(r)]
+
+
+def _reply_talk(r: Reply) -> str:
+    """The machine's talk in a reply: prose, status lines and the NEXT line (copy boxes and the tag left out)."""
+    return " ".join(r.lines[i].plain for i in sorted(set(r.prose) | set(r.verdicts) | set(r.nexts)))
+
+
+def piece_marks(run: Run, r: Reply, boxes: bool = True) -> list[str]:
+    """What in a reply the coach could post or film: a piece with a copy box, an N<digit>-labelled or FILM TODAY piece,
+    a copy box outside any piece (the kit's paste-steps box is not one; `boxes` False leaves loose boxes out), and
+    film.now_or_text. A silent piece without a box (a "Short videos · 3 a week" line of the strategy that reads as a
+    title) is no piece to post."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    out = []
+    for p in r.pieces:
+        boxed = any(r.lines[i].block == "copy" for i in range(p.start, p.verdict_at))
+        film = bool(p.title and FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title)))
+        if boxed or film or (p.title and LABEL_RE.match(p.title)):
+            out.append(_short(p.title or "a piece", 40))
+    steps = paste_steps_marks(run.strings)
+    for piece, idx in _post_chunk_lines(r, steps) if boxes else ():
+        if piece is None and not _is_card_reply(run, r):
+            out.append("a copy box")
+            break
+    if not out and matcher.says("film.now_or_text", r.visible(("",))):
+        out.append("FILM TODAY")
+    return out
+
+
+def _first_send_index(run: Run, prompt: Reply | None) -> int | None:
+    """The transcript position of the coach's first send after the dump prompt."""
+    if prompt is None:
+        return None
+    return next((i for i, t in enumerate(run.turns) if i > prompt.index and t.role == "coach"), None)
+
+
+def week_pieces(run: Run, upto_card: bool = True) -> list[tuple[Reply, Piece]]:
+    """The pieces of the reply that follows the strategy's OK and of the replies after it, up to the Brand Card: the
+    ones that count toward the mix (a post, a video, an email or a Zalo message; not FILM TODAY, a DM reply, the
+    gift or "ask 3")."""
+    maps = [r for r in run.replies if _is_map_reply(run, r)]
+    if not maps:
+        return []
+    out = []
+    card = next((r for r in run.replies if _is_card_reply(run, r) and r.index > maps[0].index), None)
+    for r in run.replies:
+        if r.index <= maps[0].index or (upto_card and card is not None and r.index > card.index):
+            continue
+        card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, run.matcher, ln)), default=len(r.lines))
+        for p in r.pieces:
+            if not p.title or p.start > card_at or not p.body.strip():
+                continue
+            head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
+            if FILM_STEP_RE.match(head) or _bare_label(p.title) or REPLY_LABEL_RE.search(p.title) \
+                    or re.search(r"ask 3|hỏi (?:3|ba)|gifts?\b|(?<!\w)quà(?!\w)", p.title, re.I):
+                continue
+            out.append((r, p))
+    return out
+
+
+def _mix_names(lang: str) -> dict[str, re.Pattern]:
+    return {k: re.compile(r"(?<!\w)" + re.escape(ck.fold(n)) + r"(?!\w)") for k, n in zip(MIX_TYPES["en"], MIX_TYPES[lang])}
+
+
+def check_day0_strategy(run: Run) -> dict:
+    """Day 0 is strategy first (founder, 7 Oct 2026 night, after his v10 run: "it has not asked me anything … it should
+    have asked me questions regarding more on my side to understand, so that it can propose STRATEGY FIRST, not propose
+    content right away"; "it has not done any research"; DECISIONS "Strategy first on Day 0"). The order is xưng hô (VN),
+    the dump, the interview, ONE reply with the strategy and no piece, and only after the coach's OK FILM TODAY and Week 1,
+    then the Brand Card. This reads what a transcript shows of that, in four groups:
+    - the order: no piece, FILM TODAY, copy box or Brand Card before the strategy (the early win only quotes its 3 lines:
+      no copy box, no "post it"); the first reply that holds a piece after the strategy follows the coach's OK ("ok",
+      "next", "go"), not a question or a change; the strategy reply carries the one decision (map.ok);
+    - the research: said once, in plain words, after the coach's first send (research.now; research.no_tool when the app
+      has no tool), and the strategy's WHAT I FOUND (2-4 lines) gives each line its source or labels it a guess; a web
+      run (meta web) needs one real source and may not say it cannot search;
+    - the interview: at most interview_max_questions (6), one a reply, none for a slot the persona's expected.toml
+      [interview] dump_gives says the dump filled, none twice, at least one when the dump left gaps (dump_gaps) and the
+      coach did not stop it ("enough", "đủ rồi"); a dig question is never a decision (I6);
+    - the strategy: 3-5 broad CONTENT PILLARS (each a few words, no number, none of [strategy] pillars_too_narrow), a CONTENT
+      MIX of ATTRACT / TRUST / CONVERT (VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI) with shares that add up to 100, none under
+      mix_min_share or over mix_max_share, YOUR SYSTEM with a platform, pieces a week and an ask path, no NOT NOW or "why
+      this one" on it, talk within strategy_max_words; and Week 1 covers all three types and names a pillar on each piece
+      (2 ATTRACT, 2 TRUST, 1 CONVERT is the kit's: another split is a warning).
+    The strategy's labelled lines and its minutes are day0_timing's; KNOWN FOR's length and YOUR WORD are day0_shape's."""
+    if not run.is_day0:
+        return {"id": "day0_strategy", "pass": None, "status": "not_run", "items": [],
+                "evidence": ["not a Day-0 run"]}
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    day0 = run.acceptance.get("day0", {})
+    ed = run.meta["edition"]
+    items, warnings = [], []
+    details: dict = {}
+
+    def item(name: str, ev: list[str], ran: bool = True) -> None:
+        items.append({"item": name, "pass": (not ev) if ran else None, "evidence": ev})
+
+    S = next((r for r in run.replies if _is_map_reply(run, r)), None)
+    prompt = dump_prompt(run)
+    expected = run.expected.get("interview", {}) if isinstance(run.expected.get("interview"), dict) else {}
+    strategy_exp = run.expected.get("strategy", {}) if isinstance(run.expected.get("strategy"), dict) else {}
+    blocks = strategy_blocks(run, S) if S is not None else {}
+
+    # -- the order
+    ev = []
+    if S is not None:
+        for r in run.replies:
+            if r.index > S.index:
+                break
+            if r is not S and _is_card_reply(run, r):
+                ev.append(f"{_turn(r)}: the Brand Card before the strategy")
+                continue
+            for mark in piece_marks(run, r)[:1]:
+                where = "with the strategy" if r is S else "before the strategy"
+                ev.append(f"{_turn(r)}: {mark} printed {where}, before the coach's OK (strategy first: no piece, no FILM TODAY)")
+    item("no piece, FILM TODAY, copy box or Brand Card before the strategy's OK", ev, ran=S is not None)
+
+    ev = []
+    if S is not None and prompt is not None:
+        for r in run.replies:
+            if r.index <= prompt.index or r.index >= S.index:
+                continue
+            if matcher.says("dump.post_it", r.text) or POST_IT_RE.search(" ".join(
+                    r.lines[i].plain for i in sorted(set(r.prose) | set(r.nexts)))):
+                ev.append(f'{_turn(r)}: "post it" before the strategy (the early win only quotes the 3 lines)')
+    item('the early win only quotes the 3 lines (no "post it")', ev, ran=S is not None and prompt is not None)
+
+    after = next((r for r in run.replies if S is not None and r.index > S.index and piece_marks(run, r, boxes=False)), None)
+    ev = []
+    if S is not None and after is not None:
+        between = [t for t in run.turns[S.index + 1:after.index] if t.role == "coach"]
+        last = between[-1] if between else None
+        if last is None or not APPROVE_RE.match(last.text):
+            said = _short(last.text, 40) if last is not None else "nothing"
+            ev.append(f'{_turn(after)}: FILM TODAY / Week 1 printed after the coach said "{said}", not an OK, "next" or "go"')
+    item("FILM TODAY and Week 1 come only after the coach's OK", ev, ran=S is not None and after is not None)
+
+    ev = []
+    if S is not None and "map.ok" not in reply_decisions(S, matcher, map_topics(run, S.index)):
+        ev.append(f'{_turn(S)}: the strategy does not end on its one decision (map.ok: "{_short(run.strings.get("map.ok", ""), 50)}")')
+    item("the strategy ends on its one decision (OK, or change a line)", ev, ran=S is not None)
+
+    # -- the research
+    first = _first_send_index(run, prompt)
+    pre = [r for r in run.replies if S is not None and prompt is not None and r.index < S.index]
+    before = [r for r in pre if r.index > prompt.index]                      # the interview's window
+    said_now = [r for r in pre if any(string_share(run.strings, "research.now", ln.plain, run.lang) >= 0.7 for ln in r.lines
+                                      if not ln.block and ln.plain)]
+    said_none = [r for r in pre if any(string_share(run.strings, "research.no_tool", ln.plain, run.lang) >= 0.7 for ln in r.lines
+                                       if not ln.block and ln.plain)]
+    web = run.meta.get("web")
+    ev = []
+    if run.strings.get("research.now") and S is not None and prompt is not None:
+        said = said_now + [r for r in said_none if r not in said_now]
+        if not said:
+            ev.append("the machine never said what it is researching (research.now: \"%s\"; no tool: research.no_tool)"
+                      % _short(run.strings["research.now"], 60))
+        elif len(said) > 1:
+            ev.append("the research line came %d times (turns %s): once, after the first send"
+                      % (len(said), ", ".join(str(r.turn) for r in said)))
+        elif first is not None and said[0].index < first:
+            ev.append(f"{_turn(said[0])}: the research line came before the coach's first send (it starts after it)")
+        if web is True and said_none and not said_now:
+            ev.append(f"{_turn(said_none[0])}: said it cannot search the web, but the run had web tools")
+        elif web is False and said_now and not said_none:
+            ev.append(f"{_turn(said_now[0])}: says it is researching, but the run had no tool (research.no_tool)")
+    item("the research is started and said once, after the first send", ev,
+         ran=bool(run.strings.get("research.now")) and S is not None and prompt is not None)
+
+    # a web run logs its queries with the turn each ran after: the first one after the coach's first send, none after the strategy
+    ev = []
+    log = research_log_text(run.run_dir) if S is not None and first is not None else ""
+    queries = [q for q in research_queries(log) if q["turn"] is not None] if log.strip() else []
+    if queries:
+        first_no = run.turns[first].turn
+        early = min(q["turn"] for q in queries)
+        details["research_first_query_after_turn"] = early
+        if early < first_no:
+            ev.append(f"query Q{next(q['n'] for q in queries if q['turn'] == early)} ran after turn {early}, before the coach's "
+                      f"first send (turn {first_no}): the research starts after it")
+        late = [q for q in queries if q["turn"] > S.turn]
+        if late and len(late) == len(queries):
+            ev.append(f"every query ran after the strategy (turn {S.turn}); it starts after the first send and feeds the strategy")
+        elif early > first_no + 2:
+            warnings.append(f"the research started after turn {early}, the coach's first send was turn {first_no}: start it "
+                            "after the first send")
+    item("the research log's queries start after the first send and feed the strategy", ev, ran=bool(queries))
+
+    ev = []
+    found = found_items(blocks.get("map.found", []))
+    lo, hi = int(day0.get("found_min_lines", 2)), int(day0.get("found_max_lines", 4))
+    if "map.found" in blocks:
+        details["found_lines"] = len(found)
+        if not lo <= len(found) <= hi:
+            ev.append(f"{_turn(S)}: WHAT I FOUND has {len(found)} line{'s' if len(found) != 1 else ''} (want {lo}-{hi})")
+        sourced = 0
+        for line in found:
+            guess = bool(GUESS_TAG_RE.search(line))
+            clean = re.sub(r"\((?:my\s+)?guess\)|\((?:mình|em|anh|chị|tôi)\s+đoán\)", "", line, flags=re.I)
+            source = bool(SOURCE_RE.search(clean))
+            coach = bool(COACH_SOURCE_RE.search(clean))
+            if not guess and not source and not coach:
+                ev.append(f'{_turn(S)}: WHAT I FOUND line with no source and no guess label: "{_short(line, 60)}"')
+            elif source and not guess:
+                sourced += 1
+                if web is False:
+                    ev.append(f'{_turn(S)}: WHAT I FOUND names a source in a run with no tool (unverified: label it a guess): '
+                              f'"{_short(line, 60)}"')
+        if web is True and found and not sourced:
+            ev.append(f"{_turn(S)}: WHAT I FOUND has no line with a real source, in a run with web tools")
+    item("WHAT I FOUND has 2-4 lines, each with its source or labelled a guess", ev, ran="map.found" in blocks)
+
+    # -- the interview
+    asked = [r for r in before if reply_questions(r)]
+    ev = [f"{_turn(r)}: {len(reply_questions(r))} questions in one reply: " + " | ".join(_short(q, 40) for q in reply_questions(r))
+          for r in asked if len(reply_questions(r)) > 1]
+    item("the interview asks one question a reply", ev, ran=S is not None and prompt is not None and bool(asked))
+    details["interview_questions"] = len(asked)
+    max_q = int(day0.get("interview_max_questions", 6))
+    ev = []
+    if S is not None and prompt is not None and len(asked) > max_q:
+        ev.append(f"the interview asked {len(asked)} questions before the strategy (max {max_q}): turns "
+                  + ", ".join(str(r.turn) for r in asked))
+    item(f"the interview is at most {max_q} questions", ev, ran=S is not None and prompt is not None)
+
+    ev = []
+    slots_given = {str(x) for x in expected.get("dump_gives", [])} if isinstance(expected.get("dump_gives"), list) else set()
+    seen: dict[str, Reply] = {}
+    for r in asked:
+        key, share = dig_match(run.strings, _reply_talk(r), run.lang)
+        if share < DIG_MATCH_MIN:
+            continue
+        slots = DIG_SLOTS[key]
+        if slots_given and all(s in slots_given for s in slots):
+            ev.append(f"{_turn(r)}: asks about {'/'.join(slots)} ({key}), but the dump already gave it (expected.toml "
+                      "[interview] dump_gives)")
+        if key in seen:
+            ev.append(f"{_turn(r)}: asks {key} again (first at turn {seen[key].turn})")
+        seen.setdefault(key, r)
+    item("the interview skips what the dump gave and asks nothing twice", ev,
+         ran=S is not None and prompt is not None and bool(asked))
+
+    ev = []
+    gaps = expected.get("dump_gaps")
+    # a short turn, not the dump ("I don't have enough leads" is a client's complaint, not a stop)
+    stopped = any(t.role == "coach" and len(t.text.split()) <= ENOUGH_MAX_WORDS and ENOUGH_RE.search(t.text)
+                  for t in run.turns[:S.index]) if S is not None else False
+    if S is not None and prompt is not None and isinstance(gaps, list) and gaps and not asked and not stopped:
+        ev.append(f"{_turn(S)}: the strategy came straight after the dump with no question, but the dump left gaps "
+                  f"({', '.join(str(g) for g in gaps)}): ask about the coach's side first")
+    item("the interview asks when the dump left gaps (unless the coach said enough)", ev,
+         ran=S is not None and prompt is not None and isinstance(gaps, list) and bool(gaps))
+
+    # -- the strategy
+    pillars = parse_pillars(blocks.get("map.topics", []))
+    pmin, pmax = int(day0.get("pillars_min", 3)), int(day0.get("pillars_max", 5))
+    wmax = int(day0.get(f"pillar_max_words_{ed}", day0.get("pillar_max_words_en", 4)))
+    narrow = [ck.fold(str(x)) for x in strategy_exp.get("pillars_too_narrow", [])] \
+        if isinstance(strategy_exp.get("pillars_too_narrow"), list) else []
+    ev = []
+    if "map.topics" in blocks:
+        details["pillars"] = pillars
+        if not pmin <= len(pillars) <= pmax:
+            ev.append(f"{_turn(S)}: {len(pillars)} content pillars (want {pmin}-{pmax}): " + " · ".join(pillars))
+        for name in pillars:
+            n = ck.count_words(name, run.lang)
+            unit = "tiếng" if run.lang == "vn" else "words"
+            if n > wmax:
+                ev.append(f'{_turn(S)}: pillar "{_short(name, 40)}" is {n} {unit} (broad topic clusters run 1-{wmax}): too specific')
+            elif re.search(r"\d", name):
+                ev.append(f'{_turn(S)}: pillar "{_short(name, 40)}" holds a number: a pillar is a broad topic, not a result or a tip')
+            elif any(x and (x in ck.fold(name) or ck.fold(name) in x) for x in narrow):
+                ev.append(f'{_turn(S)}: pillar "{_short(name, 40)}" is a narrow topic, not a broad cluster')
+    item(f"CONTENT PILLARS: {pmin}-{pmax} broad topic clusters, a few words each", ev, ran="map.topics" in blocks)
+
+    ev = []
+    if "map.mix" in blocks:
+        text = " ".join(blocks["map.mix"])
+        names = _mix_names(run.lang)
+        folded = ck.fold(text)
+        absent = [k for k, p in names.items() if not p.search(folded)]
+        shares = mix_shares(run.lang, text)
+        details["mix"] = shares
+        if absent:
+            ev.append(f"{_turn(S)}: CONTENT MIX is missing {', '.join(k.upper() for k in absent)} (the three types: "
+                      f"{' / '.join(n.upper() for n in MIX_TYPES[run.lang])})")
+        elif shares is None:
+            ev.append(f"{_turn(S)}: CONTENT MIX names the three types but gives no share for each (40/40/20)")
+        else:
+            lo_s, hi_s = int(day0.get("mix_min_share", 10)), int(day0.get("mix_max_share", 60))
+            if sum(shares.values()) != 100:
+                ev.append(f"{_turn(S)}: CONTENT MIX adds up to {sum(shares.values())}%, not 100")
+            for k, v in shares.items():
+                if not lo_s <= v <= hi_s:
+                    ev.append(f"{_turn(S)}: CONTENT MIX gives {k.upper()} {v}% (a type runs {lo_s}-{hi_s}%)")
+    item("CONTENT MIX: ATTRACT, TRUST and CONVERT, each with a share, adding up to 100", ev, ran="map.mix" in blocks)
+
+    ev = []
+    if "map.system" in blocks:
+        text = " ".join(blocks["map.system"])
+        n = ck.count_words(text, run.lang)
+        need = int(day0.get(f"system_min_words_{ed}", day0.get("system_min_words_en", 12)))
+        missing = []
+        if not PLATFORM_RE.search(text):
+            missing.append("a platform")
+        if not CADENCE_RE.search(text):
+            missing.append("pieces a week")
+        if not ASK_PATH_RE.search(text):
+            missing.append("the ask path")
+        if n < need:
+            ev.append(f"{_turn(S)}: YOUR SYSTEM is {n} words (a content system runs {need}+)")
+        if missing:
+            ev.append(f"{_turn(S)}: YOUR SYSTEM leaves out {', '.join(missing)}")
+        if SECONDS_RE.search(text):
+            ev.append(f"{_turn(S)}: YOUR SYSTEM measures a length in seconds (words, never seconds)")
+    item("YOUR SYSTEM: a platform, pieces a week, the ask path", ev, ran="map.system" in blocks)
+
+    ev = []
+    if S is not None:
+        for i, ln in enumerate(S.lines):
+            if not ln.block and ln.plain and NOT_NOW_LINE_RE.match(ln.plain):
+                ev.append(f'{_turn(S)}: "{_short(ln.plain, 40)}" on the strategy (NOT NOW and "why this one" print on "why?")')
+        cap = int(day0.get(f"strategy_max_words_{ed}", day0.get("strategy_max_words_en", 400)))
+        words = sum(ck.count_words(ln.text, run.lang) for ln in S.lines if not ln.block and not ln.fence)   # copy boxes aside
+        details["strategy_talk_words"] = words
+        if words > cap:
+            ev.append(f"{_turn(S)}: the strategy reply is {words} {'tiếng' if run.lang == 'vn' else 'words'} of talk (max {cap})")
+    item("the strategy is short enough and carries no NOT NOW or 'why this one'", ev, ran=S is not None)
+
+    # -- Week 1 on the strategy
+    ev, wk_warn = [], []
+    wk = week_pieces(run)
+    details["week_pieces"] = len(wk)
+    if S is not None and len(wk) >= 3:
+        names = _mix_names(run.lang)
+        counts = {k: 0 for k in names}
+        no_type, no_pillar = [], []
+        pillar_res = [(n, re.compile(r"(?<!\w)" + re.escape(ck.fold(n)) + r"(?!\w)")) for n in pillars if len(n) >= 3]
+        for r, p in wk:
+            window = [r.lines[i].plain for i in range(max(0, p.start - 2), min(len(r.lines), p.start + 4))
+                      if not r.lines[i].block and r.lines[i].plain]
+            folded = ck.fold(" ".join(window))
+            hit = [k for k, pat in names.items() if pat.search(folded)]
+            for k in hit[:1]:
+                counts[k] += 1
+            if not hit:
+                no_type.append(_short(p.title, 30))
+            if pillar_res and not any(pat.search(folded) for _, pat in pillar_res):
+                no_pillar.append(_short(p.title, 30))
+        details["week_types"] = counts
+        missing = [k.upper() for k, v in counts.items() if v == 0]
+        if missing:
+            ev.append(f"Week 1 has no {' / '.join(missing)} piece (counts: " + ", ".join(f"{k.upper()} {v}" for k, v in
+                                                                                          counts.items()) + ")")
+        elif sorted(counts.values()) != [1, 2, 2] and len(wk) == 5:
+            wk_warn.append("Week 1 splits " + " / ".join(f"{k.upper()} {v}" for k, v in counts.items())
+                           + " (the kit's Week 1 is 2 ATTRACT, 2 TRUST, 1 CONVERT)")
+        if no_type and not missing:
+            wk_warn.append("no content type named on: " + "; ".join(no_type[:4]))
+        if no_pillar:
+            ev.append("no content pillar named on: " + "; ".join(no_pillar[:4]) + " (every piece names its pillar and type)")
+    item("Week 1 covers ATTRACT, TRUST and CONVERT and names a content pillar on each piece", ev,
+         ran=S is not None and len(wk) >= 3)
+    warnings += wk_warn
+
+    passed = all(i["pass"] is not False for i in items)
+    out = {"id": "day0_strategy", "pass": passed, "status": "pass" if passed else "fail", "items": items,
+           "evidence": [e for i in items if i["pass"] is False for e in i["evidence"]], "details": details,
+           "not_checked": ["whether a pillar is broad in meaning (only its length and expected.toml [strategy] "
+                           "pillars_too_narrow are read)", "whether a found line was really on the page it names "
+                           "(research_log reads the web lane's log)", "a question about a fact the coach already gave"]}
+    if warnings:
+        out["warnings"] = list(dict.fromkeys(warnings))
+        if passed:
+            out["status"] = "warn"
+    return out
+
+
+# ---------------------------------------------------------------- lengths in words (founder, 7 Oct night)
+
+LENGTH_DEFAULTS = {"tolerance": 0.10, "short_words_min": 120, "short_words_max": 200, "long_post_words": 1000,
+                   "long_post_tolerance": 0.15, "long_video_words_min": 1000, "long_video_words_max": 1500,
+                   "long_video_parts_min": 3, "seconds_budget_fails": True}
+LONG_VIDEO_TITLE_RE = re.compile(r"\blong(?:[- ]form)?\s+(?:video|film)\b|(?<!\w)video\s+dài(?!\w)|\byoutube\b|\bpodcast\b",
+                                 re.I)
+SHORT_TITLE_RE = re.compile(r"\bshort\s+video\b|\breels?\b|\bvideo\b|\bclip\b|\bfilm today\b|\bshorts?\b(?!\s+post)"
+                            r"|(?<!\w)video\s+ngắn(?!\w)|quay hôm nay", re.I)
+LONG_POST_TITLE_RE = re.compile(r"\blong(?:[- ]form)?\s+(?:post|article|essay)\b|(?<!\w)bài\s+dài(?!\w)", re.I)
+LABEL_STRIP_RE = re.compile(r"^[\s>*_-]*(?:\*\*|__)?\s*(?:first line|câu đầu|câu mở đầu|hook|beat\s*\d+|ý\s*\d+|last line|"
+                            r"câu cuối|câu chốt|script|kịch bản|line\s*\d+|dòng\s*\d+)\s*(?:\([^)\n]*\))?(?:\*\*|__)?\s*[:.)-]\s*",
+                            re.I)
+PART_LABEL_RE = re.compile(r"^[\s>#*_-]*(?:\*\*|__)?\s*(?:part|phần|chặng|point|ý chính)\s*(\d)\b", re.I | re.M)
+HOOK_PART_RE = re.compile(r"^[\s>#*_-]*(?:\*\*|__)?\s*(?:hook|opening|intro|mở đầu|mở|câu mở)\b", re.I | re.M)
+ASK_PART_RE = re.compile(r"^[\s>#*_-]*(?:\*\*|__)?\s*(?:ask|the ask|call to action|cta|lời mời|kêu gọi|kết)\b", re.I | re.M)
+
+
+def _length_cfg(run: Run) -> dict:
+    """acceptance.toml [lengths] over LENGTH_DEFAULTS; {} when the file has no such table (no budget, no check)."""
+    table = run.acceptance.get("lengths")
+    return dict(LENGTH_DEFAULTS, **table) if isinstance(table, dict) else {}
+
+
+def piece_kind(p: Piece) -> str:
+    """"long_video", "long_post" or "short" (a video script: it prints a first line or on-screen text), else ""."""
+    title = re.sub(r"^\s*#{1,6}\s*", "", p.title or "")
+    if LONG_VIDEO_TITLE_RE.search(title):
+        return "long_video"
+    if LONG_POST_TITLE_RE.search(title):
+        return "long_post"
+    if _bare_label(title) or re.search(r"ask 3|hỏi (?:3|ba)|gifts?\b|(?<!\w)quà(?!\w)|(?<!\w)(?:dm|inbox)\b", title, re.I):
+        return ""
+    lines = [ck.plain_line(x) for x in p.body.splitlines()]
+    if any(ON_SCREEN_RE.match(x) or FIRST_LINE_RE.match(x) for x in lines) or SHORT_TITLE_RE.search(title):
+        return "short"
+    return ""
+
+
+def spoken_words(run: Run, r: Reply, p: Piece) -> int:
+    """The words a short video's script says: its first line, beats and last line (labels, the on-screen text, the first
+    frame, hashtags, the caption and everything after it left out: the "Caption:" label, or a second copy box after the
+    script's own, which is the caption or the gift). VN counts tiếng."""
+    count, started, in_box, closed = 0, False, False, 0
+    for k in range(p.start, p.verdict_at):
+        ln = r.lines[k]
+        if k == p.start and p.title:
+            continue
+        if ln.fence:
+            if ln.block == "copy":
+                if not in_box and closed >= 1:
+                    break                                   # a second box: the caption or the gift
+                in_box = not in_box
+                closed += not in_box
+            continue
+        plain = ln.plain
+        if not plain:
+            continue
+        if CAPTION_LABEL_RE.match(plain):
+            break
+        if ON_SCREEN_RE.match(plain) or FRAME_RE.match(plain) or re.match(r"^\W*(?:hashtags?|thumbnail|tiêu đề)\b", plain, re.I):
+            continue
+        if run.matcher and any(run.matcher.says(key, plain) for key in ("film.list_open", "film.now_or_text",
+                                                                       "film.not_filming")):
+            continue
+        plain = LABEL_STRIP_RE.sub("", plain)
+        count += ck.count_words(plain, run.lang)
+        started = True
+    return count if started else 0
+
+
+def piece_words(run: Run, p: Piece) -> int:
+    """All the words a long post or a long video prints (its title and a trailing hashtag line left out)."""
+    n = 0
+    for k, raw in enumerate(p.body.splitlines()):
+        plain = ck.plain_line(raw)
+        if (k == 0 and p.title) or not plain or re.match(r"^(?:#\w+\s*)+$", plain):
+            continue
+        n += ck.count_words(plain, run.lang)
+    return n
+
+
+def check_lengths(run: Run) -> dict:
+    """Lengths are in words, never seconds (founder, 7 Oct 2026 night: "the length has to be measured by words, not
+    seconds, because people speak at different speeds"): a short video's spoken script 120-200 words (his default; the
+    bounds read with [lengths] tolerance), a long post about 1,000 words (±15%), a long video 1,000-1,500 words in parts
+    (a numbered part, 3 or more, with a hook and an ask), and no length in seconds on a piece's title ("FILM TODAY (under
+    30 s)", "N1 · thứ Năm 8/10 · 30 giây": [lengths] seconds_budget_fails). Pieces are told apart by their titles ("long
+    post", "bài dài", "long video", "video dài") and a short by its labelled first line or on-screen text; a piece of
+    another kind is not read. VN counts tiếng, what a word counter shows (the founder's "chữ"). n/a with none of them."""
+    cfg = _length_cfg(run)
+    if not cfg:
+        return {"id": "lengths", "pass": True, "status": "n/a", "items": [],
+                "evidence": ["no [lengths] table in acceptance.toml"], "details": {}}
+    tol = float(cfg["tolerance"])
+    items = []
+    seen = {"short": 0, "long_post": 0, "long_video": 0, "titles": 0}
+    ev_short, ev_post, ev_video, ev_sec = [], [], [], []
+    unit = "tiếng" if run.lang == "vn" else "words"
+    pieces = [(r, p) for r in run.replies for p in r.pieces if p.title and not r.after_why]
+    for r, p in pieces:
+        head = re.sub(r"^\s*#{1,6}\s*", "", p.title)
+        card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, run.matcher, ln)), default=len(r.lines))
+        if p.start > card_at:
+            continue
+        seen["titles"] += 1
+        if cfg.get("seconds_budget_fails", True) and SECONDS_RE.search(head):
+            ev_sec.append(f'{_turn(r)}: "{_short(head, 60)}" gives a length in seconds (words, never seconds)')
+        kind = piece_kind(p)
+        if kind == "short":
+            n = spoken_words(run, r, p)
+            seen["short"] += 1
+            lo, hi = int(cfg["short_words_min"]), int(cfg["short_words_max"])
+            if n and not (lo * (1 - tol) <= n <= hi * (1 + tol)):
+                ev_short.append(f'{_turn(r)}: {_short(head, 30)} says {n} {unit} (a short video runs {lo}-{hi})')
+        elif kind == "long_post":
+            n = piece_words(run, p)
+            seen["long_post"] += 1
+            target, lt = int(cfg["long_post_words"]), float(cfg["long_post_tolerance"])
+            if not target * (1 - lt) <= n <= target * (1 + lt):
+                ev_post.append(f'{_turn(r)}: {_short(head, 30)} is {n} {unit} (a long post is about {target}, '
+                               f'{round(target * (1 - lt))}-{round(target * (1 + lt))})')
+        elif kind == "long_video":
+            n = piece_words(run, p)
+            seen["long_video"] += 1
+            lo, hi = int(cfg["long_video_words_min"]), int(cfg["long_video_words_max"])
+            if not lo <= n <= hi:
+                ev_video.append(f'{_turn(r)}: {_short(head, 30)} is {n} {unit} (a long video runs {lo}-{hi})')
+            nums = {m.group(1) for m in PART_LABEL_RE.finditer(p.body)}
+            need = int(cfg["long_video_parts_min"])
+            if len(nums) < need:
+                ev_video.append(f'{_turn(r)}: {_short(head, 30)} shows {len(nums)} numbered parts (want {need}-4, each "Part n")')
+            elif not HOOK_PART_RE.search(p.body) or not ASK_PART_RE.search(p.body):
+                ev_video.append(f'{_turn(r)}: {_short(head, 30)} has its parts but no labelled hook or ask around them')
+    for name, ev, ran, n in (
+            (f"a short video's script is {cfg['short_words_min']}-{cfg['short_words_max']} {unit}", ev_short,
+             seen["short"] > 0, seen["short"]),
+            (f"a long post is about {cfg['long_post_words']} {unit} (±{round(float(cfg['long_post_tolerance']) * 100)}%)",
+             ev_post, seen["long_post"] > 0, seen["long_post"]),
+            (f"a long video is {cfg['long_video_words_min']}-{cfg['long_video_words_max']} {unit}, in parts",
+             ev_video, seen["long_video"] > 0, seen["long_video"]),
+            ("no length in seconds on a piece", ev_sec, seen["titles"] > 0, seen["titles"])):
+        items.append({"item": name, "pass": (not ev) if ran else None, "evidence": ev})
+    ran_any = any(i["pass"] is not None for i in items)
+    if not ran_any:
+        return {"id": "lengths", "pass": True, "status": "n/a", "items": items,
+                "evidence": ["no short video, long post or long video piece in the run"], "details": seen}
+    passed = all(i["pass"] is not False for i in items)
+    return {"id": "lengths", "pass": passed, "status": "pass" if passed else "fail", "items": items,
+            "evidence": [e for i in items if i["pass"] is False for e in i["evidence"]], "details": seen}
 
 
 def check_running_tag(run: Run) -> dict:
@@ -4509,7 +5408,8 @@ def check_day0_shape(run: Run) -> dict:
                     else:
                         named = True
     zalo_list = zalo_list and not named
-    week = [r for r in run.replies if film is not None and r.index > film.index
+    # Week 1 comes in FILM TODAY's own reply (strategy first: both after the OK) or in the replies after it
+    week = [r for r in run.replies if film is not None and r.index >= film.index
             and (card is None or r.index < card.index or (r is card and r.pieces))]
     ev = []
     if (named or zalo_list) and week:
@@ -4546,8 +5446,9 @@ def check_day0_shape(run: Run) -> dict:
     for r in week if word else []:
         card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, matcher, ln)), default=len(r.lines))
         for p in r.pieces:
-            if not _public_piece(p) or p.start > card_at or any(x and x in p.title.casefold() for x in own_ask):
-                continue                         # a side-door or off-map piece asks for its own thing
+            if not _public_piece(p) or p.start > card_at or any(x and x in p.title.casefold() for x in own_ask) \
+                    or FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title)):
+                continue                         # a side-door or off-map piece asks for its own thing; FILM TODAY has its own item
             checked += 1
             if not _keyword_outside_ask(p, word, run.lang):
                 where = "only in the ask" if ck.keyword_count(p.body, word) else "nowhere"
@@ -5502,10 +6403,14 @@ def check_research_log(run: Run) -> dict:
 
 # ---- strategy_doc
 
+# The 7 parts of the file (modules/{en,vn}/strategy-doc.md; strategy first, 7 Oct night: the long form of the Day-0
+# strategy, in the same order): who you help · your content pillars · your content mix · your content system · your
+# first 30 days · what it is built on · how to use it.
 STRATEGY_PARTS = {
-    "en": (r"who you help", r"buyer.*step by step", r"big ideas", r"week runs|your week", r"first 30 days", r"built on",
-           r"how to use"),
-    "vn": (r"giúp ai", r"khách cần nghe gì", r"ba ý lớn", r"mỗi tuần làm gì", r"30 ngày đầu", r"dựa vào đâu", r"dùng file này"),
+    "en": (r"who you help", r"content pillars", r"content mix|attract.*trust.*convert", r"content system",
+           r"first 30 days", r"built on", r"how to use"),
+    "vn": (r"giúp ai", r"trụ cột nội dung", r"tỷ lệ nội dung|thu hút.*niềm tin.*chuyển đổi", r"hệ thống nội dung",
+           r"30 ngày đầu", r"dựa vào đâu", r"dùng file này"),
 }
 STRATEGY_FILE_GLOBS = ("CONTENT-STRATEGY*.md", "CHIEN-LUOC-NOI-DUNG*.md")
 HOOK_LINE_RE = re.compile(r"^\W*hooks?\s*:\s*(\S.*)$", re.I)
@@ -5573,8 +6478,11 @@ def check_strategy_doc(run: Run) -> dict:
     strategy-doc.md; qa/standards/strategy-doc.md SD1, SD3, SD5, SD10; review retest-ft2 §4, §7 item 6):
     - the 7 parts, numbered and in order, under the edition's plain headings, and in VN every heading's pronoun is the
       one the machine uses with this coach (persona xung_ho: "chị" for Hạnh, "bạn" for Nhi), never the other;
-    - the hooks of its big ideas are no flat claim, label or maxim, repeat no line, hold no hedge (short_findings, the
-      hook_lab's own tests; an on-screen text that is just a Map topic's name is a label here too);
+    - part 2 has 3-5 content pillars (its "###" sections) that are the ones of the strategy the coach OK'd, part 3's mix
+      adds up to 100 (ATTRACT, TRUST, CONVERT with a share each), part 4 gives lengths in words (short video 120-200,
+      long post about 1,000, long video 1,000-1,500) and none in seconds;
+    - the hooks of its content pillars' big ideas are no flat claim, label or maxim, repeat no line, hold no hedge
+      (short_findings, the hook_lab's own tests; an on-screen text that is just a pillar's name is a label here too);
     - every line it quotes as heard online (a quote with a place and a month) is verbatim among the kept lines of the
       run's notes.md Research log (acceptance: trims shown with "…"), and what it calls held (GIỮ, "What holds") is a
       KEEP the log backs (research_log);
@@ -5605,9 +6513,45 @@ def check_strategy_doc(run: Run) -> dict:
                     ev_heads.append(f'part {n} "{title}" says "{m.group(1)}"; with this coach the machine says "{pair[0]}" '
                                     f"(the file's headings follow that pair)")
                     break
+    # the parts' own text, for the pillar, mix and length items
+    part_text: dict[int, str] = {}
+    for k, (n, _, at) in enumerate(heads):
+        part_text.setdefault(n, text[at:heads[k + 1][2] if k + 1 < len(heads) else len(text)])
     cfg = _hook_cfg(run)
     doc_topics = [m.group(1).strip() for m in re.finditer(r"^###\s*(?:big idea|ý)\s*\d\s*[:·.\-–]\s*(.+)$", text, re.I | re.M)]
-    topics = list(dict.fromkeys(map_topics(run) + doc_topics))
+    doc_pillars = [pillar_name(m.group(1)) for m in re.finditer(
+        r"^###\s*(?:(?:content\s+)?pillars?\s*\d?|big idea\s*\d?|ý\s*\d?|trụ cột(?: nội dung)?\s*\d?|\d)"
+        r"\s*[:·.\-–)]?\s*(.+)$",
+        part_text.get(2, ""), re.I | re.M)] or [pillar_name(m.group(1)) for m in re.finditer(r"^###\s+(.+)$",
+                                                                                        part_text.get(2, ""), re.M)]
+    doc_pillars = [x for x in doc_pillars if x and not re.match(r"^(?:not now|để sau)\b", x, re.I)]
+    topics = list(dict.fromkeys(map_topics(run) + doc_topics + doc_pillars))
+    pmin, pmax = (int(run.acceptance.get("day0", {}).get(k, v)) for k, v in (("pillars_min", 3), ("pillars_max", 5)))
+    ev_pillars, ev_mix, ev_len = [], [], []
+    if 2 in part_text and doc_pillars:
+        if not pmin <= len(doc_pillars) <= pmax:
+            ev_pillars.append(f"part 2 has {len(doc_pillars)} content pillar sections (want {pmin}-{pmax}): "
+                              + " · ".join(_short(x, 30) for x in doc_pillars))
+        chat = [ck.fold(x) for x in map_topics(run)]
+        for name in doc_pillars:
+            f = ck.fold(name)
+            if chat and not any(f and (f in c or c in f) for c in chat):
+                ev_pillars.append(f'part 2 pillar "{_short(name, 40)}" is not one of the strategy the coach OK\'d '
+                                  f'({" · ".join(_short(x, 25) for x in map_topics(run))})')
+    if 3 in part_text:
+        shares = mix_shares(lang, part_text[3])
+        if shares is None:
+            ev_mix.append("part 3 does not give ATTRACT, TRUST and CONVERT a share each")
+        elif sum(shares.values()) != 100:
+            ev_mix.append(f"part 3's mix adds up to {sum(shares.values())}%, not 100")
+    if 4 in part_text:
+        body4 = part_text[4]
+        for label, pat in (("short video 120-200", r"120\s*(?:-|–|đến|to)\s*200"), ("long post about 1,000", r"\b1[.,]?000\b"),
+                           ("long video 1,000-1,500", r"1[.,]?000\s*(?:-|–|đến|to)\s*1[.,]?500")):
+            if not re.search(pat, body4):
+                ev_len.append(f"part 4 gives no length for the {label} words")
+        if SECONDS_RE.search(body4):
+            ev_len.append("part 4 measures a length in seconds (words, never seconds)")
     hooks = strategy_hooks(text)
     ev_hooks, warns = [], []
     for h in hooks:
@@ -5646,6 +6590,9 @@ def check_strategy_doc(run: Run) -> dict:
          "evidence": ev_held},
         {"item": "what the file calls held is a KEEP the Research log backs", "pass": not ev_holds, "evidence": ev_holds},
         {"item": "no deny-list word", "pass": not ev_deny, "evidence": ev_deny},
+        {"item": "part 2: 3-5 content pillars, the ones the coach OK'd", "pass": not ev_pillars, "evidence": ev_pillars},
+        {"item": "part 3: the mix adds up to 100", "pass": not ev_mix, "evidence": ev_mix},
+        {"item": "part 4: lengths in words, never seconds", "pass": not ev_len, "evidence": ev_len},
     ]
     passed = all(i["pass"] for i in items)
     out = {"id": "strategy_doc", "pass": passed, "status": "pass" if passed else "fail", "items": items,
@@ -5668,8 +6615,8 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     invariants = [fn(run) for fn in INVARIANTS]
     by_id = {i["id"]: i for i in invariants}
     checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_day0(run),
-              check_day0_shape(run), check_vn_natural(run), check_vn_messages(run), check_hook_lab(run),
-              check_strategy_doc(run), check_research_log(run)]
+              check_day0_strategy(run), check_day0_shape(run), check_lengths(run), check_vn_natural(run),
+              check_vn_messages(run), check_hook_lab(run), check_strategy_doc(run), check_research_log(run)]
     everything = invariants + checks
     return {
         "run": run_dir.resolve().name,         # "." graded from inside the folder still names it (review G16)

@@ -26,11 +26,11 @@ VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) �
 9 Bài mời mua: nhận gì (hình thức, bao lâu, ngày bắt đầu) · giá công khai, trả mấy lần · dành cho ai · "Không hợp với ai đang…" · cam kết cách làm, có điều kiện, chưa có thì "{{t:verdict.needs}}" · suất, hạn chỉ khi thật, nói thẳng (tick: §CM-GUARDRAILS) · một việc. Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc (§CM-EDGE).
 Bài dạy, chuyện khách: §CM-POSTS; bằng chứng, gấp gáp, giảm giá: §CM-GUARDRAILS.
 
-<!-- @section convert.grow-ads src=c74c9fd20d -->
+<!-- @section convert.grow-ads src=26170fa6f4 -->
 ### Quảng cáo từ bài đã chạy tốt ("chạy quảng cáo", "boost bài này")
 1 Chỉ lấy bài đăng thường đã chạy tốt (nhiều tin nhắn, lượt lưu, lượt gửi; `hub:Leads`), không lấy ý chưa thử. Giữ hook; chỉ sửa chỗ luật quảng cáo không cho.
 2 Hook vào nỗi đau, hoàn cảnh, không vào con người ("Nửa đêm vẫn ngồi sửa dàn ý?"); số lẻ, cụ thể chỉ khi là số thật coach cho dùng; không kết quả thu nhập, cân nặng, cơ thể, ảnh trước/sau, ảnh chuyển khoản; không "comment X": nút Gửi tin nhắn hay Đăng ký; tiếng Việt rõ, không "c.m", "q.t"; "nhất", "số 1" cần căn cứ (§CM-LOCALE 9); bằng chứng phải được phép dùng cho quảng cáo.
-3 KỊCH BẢN VIDEO BÁN HÀNG, 2–5 phút, giọng nói coach: hook (nỗi đau, một câu) → nỗi đau bằng chữ khách → lối ra (cách làm, vì sao ra kết quả) → lời mời nhỏ ở khoảng 65% ("Thấy giống mình thì bấm Gửi tin nhắn, mình gửi {quà}.") → bằng chứng (được phép, có bối cảnh) → lời mời chính + giới hạn thật. QUẢNG CÁO NGẮN 25 giây: nhắc điều họ đã xem → một lợi ích + một bằng chứng → giới hạn thật → nút.
+3 KỊCH BẢN VIDEO BÁN HÀNG, 300–750 chữ, giọng nói coach: hook (nỗi đau, một câu) → nỗi đau bằng chữ khách → lối ra (cách làm, vì sao ra kết quả) → lời mời nhỏ ở khoảng 65% ("Thấy giống mình thì bấm Gửi tin nhắn, mình gửi {quà}.") → bằng chứng (được phép, có bối cảnh) → lời mời chính + giới hạn thật. QUẢNG CÁO NGẮN ≈60 chữ: nhắc điều họ đã xem → một lợi ích + một bằng chứng → giới hạn thật → nút.
 4 Chạy từ Trang Facebook hay tài khoản Instagram chuyên nghiệp (chỉ có trang cá nhân thì đăng song song bài lên Trang), gắn pixel ở trang đăng ký. Nhắm người quen mình trước: xem gần hết video, đã tương tác, đã nhắn, đã vào trang; luôn loại người đã mua.
 5 Thử ngân sách: số tiền mỗi ngày của coach (chưa có: [CẦN BẠN: mỗi ngày chi bao nhiêu?]); 3 hook, một tệp, 3–4 ngày, không sửa giữa chừng; giữ mẫu nào ra tin nhắn, lượt đăng ký rẻ nhất, rồi tăng tiền từ từ. Tệp nhỏ, một người thấy quá nhiều lần → đổi hook hay giảm tiền.
 6 Trong đợt: trước ngày mở, bài quà, bài niềm tin; ngày mở → bài mời + một cảm nhận được phép; tối hết quà → "tối nay hết quà"; ngày đóng → "đóng lúc {giờ}"; sau đợt → tắt.

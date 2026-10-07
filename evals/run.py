@@ -305,7 +305,9 @@ MACHINE = """# Machine side ({lane})
 """
 
 WEB_OFF = ("- Searching the web is not possible in this run: where the kit says \"search if you can\", you can't. The "
-           "background research pass has no tool: the Map comes first, then the exact paste steps.\n")
+           "background research pass has no tool: say so once after the first send (the kit's no-tool line), use what the "
+           "coach tells you and what you know, mark every guess, and let the strategy's WHAT I FOUND lines say which are "
+           "guesses; then the exact paste steps.\n")
 WEB_ON = (
     "- **Web search and page fetch are on in this run** (lane option `web`), for the background research pass only (Day 0, "
     "§CM-LISTEN: the kit's own searches in the buyer's words). Use them as a session with its own search tool does, "
@@ -313,7 +315,10 @@ WEB_ON = (
     "and never goes in a piece; people by role, never by name or handle; never log in, post, react, follow, DM or join; "
     "never touch the coach's computer or apps. A page that will not open is \"unread\" on the Map, not guessed. Keep "
     "a log as you go and put it in notes.md under \"## Research log\": each query, each page opened (URL, place, "
-    "month, role) and the lines kept, so the reviewer can re-fetch them. Do not search before the kit says to. "
+    "month, role) and the lines kept, so the reviewer can re-fetch them. Do not search before the coach's first send (the kit starts the research after it). "
+    "**The pass starts after the coach's first send** (Day 0 is strategy first: the dump, the interview, then the strategy; "
+    "the pass runs in the background from the first send and feeds the strategy's WHAT I FOUND lines, each with its place "
+    "and month). "
     "**Run the research pass as if by a separate agent that sees only the transcript so far** (the coach's turns and "
     "your replies up to the turn it runs after) and the kit, never the persona files, `answers.md`, `expected.toml` or "
     "anything about the coach that is not in the transcript at that turn: a query holds only words the coach has said by "
@@ -354,14 +359,22 @@ answer keys for the graders) and never let them shape a turn.
    talk, your pasted posts not counted (acceptance.toml [day0]). If the machine says the dump is enough, or asks
    you to wrap up, say done there and skip what is not yet dictated (the machine then asks only what it is
    missing).
-3. After the dump, answer only what the machine asks, one answer per question, from `## Answer bank`, in
-   the persona's style. Say "skip" when the answer bank has nothing and the behaviour fits.
+3. Day 0 is strategy first: after the dump the machine INTERVIEWS you about your side (who you serve and who not,
+   the offer with its price and delivery, one result you would share, how clients find you, your 90-day goal,
+   hours a week, where you post and your list, what your field gets wrong), at most 6 questions, one a reply.
+   Answer only what it asks, one answer per question, from `## Answer bank`, in the persona's style. Say "skip"
+   when the answer bank has nothing and the behaviour fits. If it asks what your dump already said, answer in one
+   short line and note the re-ask in notes.md. "enough" / "đủ rồi" stops the interview: say it only if
+   `## Behaviour` has you lose patience.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
    the moment a quit trigger in `persona.toml` or `## Behaviour` happens: write the quit line as the last
    coach turn with `"quit": true`, and stop.
-5. Accept the Map with a short OK unless something on it is wrong for this coach, then fix only that line.
-6. Stop when the machine has delivered Week 1 and the Brand Card with the save line and NEXT, or when the
-   coach quits, or after {max_turns} coach turns.
+5. The machine then proposes your STRATEGY in one reply and no piece (the positioning, 3-5 content pillars, the
+   attract / trust / convert mix, your content system, your word, what its research found). Accept it with a short
+   OK unless something on it is wrong for this coach, then fix only that line. Only after your OK does it print
+   FILM TODAY and Week 1; a piece that comes before your OK is a kit break to note.
+6. Stop when the machine has delivered FILM TODAY, Week 1 and the Brand Card with the save line and NEXT, or when
+   the coach quits, or after {max_turns} coach turns.
 
 Time: model `t_min` from dictation (about 130 words a minute), typing (about 30 words a minute on a phone,
 40 on a laptop), reading (about 200 words a minute) and the persona's time away (`away_min`). A pasted post
@@ -486,10 +499,11 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
             app, plan = persona_app(pdir)
             cut = int(accept.get(f"dump_cut_words_{edition}", graders.DUMP_CUT_WORDS))     # review retest-vg4-g5 P15
             turns = int(accept.get(f"session_max_turns_{edition}", accept.get("session_max_turns", 10)))   # vg5-g6 G43
+            interview = int(accept.get("dig_answers_max", 0))     # the interview's answers come on top (strategy first)
             coach = COACH_DAY0.format(persona=pid, edition=edition, pdir=rel(pdir, root),
                                       start=strings.get("cmd.start", "Start"),
                                       cut=f"{cut:,} {'tiếng' if edition == 'vn' else 'words'}",
-                                      max_turns=turns + 4,
+                                      max_turns=turns + interview + 4,
                                       app=APP_NAMES.get(app, app or "the app"), plan=plan or "unknown plan")
             for n in range(1, repeat + 1):
                 rid = run_id(suite, edition, pid, lane, n, tag, web=web, plugin=plugin)
@@ -1220,9 +1234,9 @@ def film_cell(d: dict) -> str:
 
 
 def summary_rows(results: list[dict]) -> str:
-    head = ("| Run | Persona | Lane | Valid | Pass | Failed | Coach turns | Map turns | Film-ready min (clock) | "
-            "Case |")
-    rows = [head, "|" + "---|" * 10]
+    head = ("| Run | Persona | Lane | Valid | Pass | Failed | Coach turns | Map turns | Strategy min | "
+            "Film-ready min (clock) | Case |")
+    rows = [head, "|" + "---|" * 11]
     for g in results:
         day0 = next((c for c in g.get("checks", []) if c["id"] == "day0_timing"), {})
         d = day0.get("details", {})
@@ -1235,12 +1249,13 @@ def summary_rows(results: list[dict]) -> str:
         valid = "no: " + ", ".join(bad) if bad else "yes"
         if g.get("edited"):
             valid += f" (edited: {g['edited']})"
-        rows.append("| {run} | {persona} | {lane} | {valid} | {ok} | {failed} | {turns} | {map} | {film} | {case} |".format(
-            run=g.get("run", ""), persona=g.get("persona", ""), valid=valid,
-            lane=lane_label({"lane": g.get("lane", ""), "web": g.get("web"), "plugin": g.get("plugin")}),
-            ok="yes" if g.get("pass") else "no", failed=", ".join(g.get("failed", [])) or "–",
-            turns=g.get("summary", {}).get("coach_turns", ""), map=d.get("map_coach_turns", "–"),
-            film=film_cell(d), case=case_cell.replace("|", "/")))
+        rows.append("| {run} | {persona} | {lane} | {valid} | {ok} | {failed} | {turns} | {map} | {strategy} | {film} | {case} |"
+                    .format(run=g.get("run", ""), persona=g.get("persona", ""), valid=valid,
+                            lane=lane_label({"lane": g.get("lane", ""), "web": g.get("web"), "plugin": g.get("plugin")}),
+                            ok="yes" if g.get("pass") else "no", failed=", ".join(g.get("failed", [])) or "–",
+                            turns=g.get("summary", {}).get("coach_turns", ""), map=d.get("map_coach_turns", "–"),
+                            strategy=d.get("strategy_active_minutes", "–"), film=film_cell(d),
+                            case=case_cell.replace("|", "/")))
     return "\n".join(rows)
 
 

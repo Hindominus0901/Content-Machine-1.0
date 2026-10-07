@@ -13,12 +13,12 @@ G2/VG1 6/10: FORMATS 5 K32 "nhớ ý rồi nói" (cùng chữ start-block bướ
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 1, 3, 12): FORMATS 1 nói như EN "chữ trên màn hình ≠ câu đầu", gọi tên phán suông ("Đó/Vậy không phải…", "…phải tin bạn", "Nếu X thì Y") trượt cả ở chữ trên màn hình lẫn dòng 1 caption, và nhận cặp TRƠN/HAY từ STRATEGY §CM-HOOKS 4; KIỂU VIỆT sang §CM-WEEK 7 (cùng byte, chỗ cho cặp ví dụ); POSTS 5 trang 1 dáng kết quả, không phải nhãn; MESSAGES 7 khách có kết quả kể ngày 0 nằm trong 3 người được hỏi (họ cho kể ở đó).
 Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 câu cuối trả lời thẳng câu đầu, không chỉ đặt tên cách làm ("Chị gọi là cầm gương nói thật"); chữ trên màn hình nói điều câu đầu và khung hình chưa nói, không nói lại bằng chữ khác; dòng 1 caption cũng qua lab; châm ngôn ("X để sau, Y có trước") trượt như phán suông. Trả bằng: bỏ ví dụ TRƠN "Đó không phải nghiên cứu." (luật mới và họ "Đó/Vậy không phải…" đã giữ; ví dụ chuyển sang §CM-HOOKS 4, file STRATEGY), "cả ở chữ trên màn hình lẫn dòng 1 caption" (dòng "Mọi hook, tiêu đề, dòng 1 caption" đã nói). POSTS 5 giữ ≤15 tiếng; "không rào" của trang 1 nằm ở ship.kit 3 và §CM-HOOKS 3 (file phương pháp hết chỗ).
 
-<!-- @section fmt-short.kit-video-short kind=script src=e663667e31 -->
+<!-- @section fmt-short.kit-video-short kind=script src=c7831cfacc -->
 1 Câu cuối viết trước, nguyên văn, trả lời thẳng câu đầu, không chỉ đặt tên cách làm. 3 hook, một ý, mỗi cái thêm một điều: chữ trên màn hình ≤6 tiếng (đếm), nói điều câu đầu và khung hình chưa nói (con số, đối lập, câu hỏi), không nói lại bằng chữ khác · khung hình đầu: một thứ quay được · câu đầu nguyên văn, ≤{{hook_max}} {{hook_unit}}. Mọi hook, tiêu đề, dòng 1 caption: nháp thầm ≥12 câu, ≥6 dáng (lật niềm tin · câu khách · cảnh có đồ vật · lỗi đắt giá · số của coach · gọi đúng hoàn cảnh · làm lại từ đầu · trước/sau); giữ câu cụ thể, đúng chữ khách, hé điều câu cuối trả lời, đổi niềm tin, người ngoài muốn chia sẻ mà khách thấy đúng mình, không mồi. Phán suông, châm ngôn ("Đó/Vậy không phải…", "…phải tin bạn", "Nếu X thì Y", "X để sau, Y có trước") trượt. HAY: chữ "AI đâu có gặp khách bạn" · khung đầu: chat AI gõ dở "từ khoá cho coach" · câu đầu: "Đọc vài bài, hỏi AI một câu, vậy mà gọi là hiểu khách?" · câu cuối: "Hiểu khách là nghe họ kể, tới lúc họ nói ra câu bạn không đoán được." Chỉ in câu thắng; "hook khác" → thêm 2 (§CM-HOOKS).
-2 Ý: 3 (QUAY HÔM NAY) đến 5, mỗi ý ≤18 tiếng, quay một lần, nối bằng "mà", "nên", "thế là", không xâu "rồi… rồi…".
-3 Độ dài: §CM-LOCALE 2.
+2 Ý: 3 (QUAY HÔM NAY) đến 5, mỗi ý 1–3 câu ngắn, quay một lần, nối bằng "mà", "nên", "thế là", không xâu "rồi… rồi…".
+3 Độ dài 120–200 chữ, không tính giây (§CM-LOCALE 2).
 4 Caption trong khung chép: dòng 1 nối câu đầu · dòng 2 một chi tiết thật · dòng 3 lời mời (§CM-WEEK 6).
-5 In: "N1 · {day} · {s} giây" (ngày 0: "QUAY HÔM NAY · dưới 30 giây, nhớ ý rồi nói"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: §CM-EDGE, vd "{{t:verdict.needs}}"
+5 In: "N1 · {day} · {loại} · {n} chữ" (ngày 0: "QUAY HÔM NAY · nhớ ý rồi nói"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: §CM-EDGE, vd "{{t:verdict.needs}}"
 6 Kết quả của khách: nguyên văn, kèm câu ở dòng LỜI HỨA; kiểm thầm khách đồng ý chưa ("{{t:tick.client_ok}}" chỉ hiện khi "{{t:cmd.why}}").
 7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (coach chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
 
@@ -29,12 +29,14 @@ Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 câu cuối
 - Video riêng: khoảnh khắc chỉ khách của họ từng trải, mang nét tính cách, cách cũ họ chống hay niềm tin; đáng gửi người cùng cảnh.
 - Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu họ không xin. Xin shot list: "{{t:film.words_only}}" Danh sách quay (Tuần 1, tuần nói chuyện; không phải QUAY HÔM NAY) mở bằng: "{{t:film.list_open}}"
 
-<!-- @section fmt-short.kit-post kind=script src=0430c0a744 -->
+<!-- @section fmt-short.kit-post kind=script src=c33f33bdba -->
 ### Bài "chia sẻ thật" (Facebook, LinkedIn, caption dài)
 1 Dòng 1 ≤18 tiếng, chọn như §CM-FORMATS 1, đứng riêng được; ý chính nằm trước "Xem thêm". Dòng 2 móc tiếp: cái giá, con số, hay câu hỏi bài sẽ trả lời.
 2 Rồi bằng chứng → 3 ý ngắn, hoặc kể: cảnh của họ → cái giá, lỗi của chính họ → họ thấy ra gì → cái gì đổi → lời mời. Một câu chốt rõ; một việc để làm.
 3 Đoạn theo bài coach, thường 2–4 câu, sau hook ≤40% đoạn một câu, không nhãn kiểu "Bài học:", nói với một người. Chỗ cái giá: cảnh, ngày, con số thật của họ.
-4 Không link trong bài (gửi inbox, để comment), một hashtag chiến dịch không dấu; không kết bằng "Bạn thấy sao?". Bài dài 250–450 tiếng.
+4 Không link trong bài (gửi inbox, để comment), một hashtag chiến dịch không dấu; không kết bằng "Bạn thấy sao?". Bài ngắn 250–450 tiếng.
+BÀI DÀI ≈1.000 chữ: câu mở (≤18 tiếng) + câu móc · câu chuyện ≈300 (lúc của họ → cái giá → bước ngoặt) · 3 bài học, mỗi bài ≈150–200 (ý → vì sao → ví dụ) · lời mời ≈80, một việc. Quá giới hạn nền tảng (LinkedIn): câu mở, chuyện, 1 bài học, lời mời.
+VIDEO DÀI 1.000–1.500 chữ (YouTube hay podcast là kênh chính; §CM-LONG): mở bằng lời hứa và một câu bỏ ngỏ ≈120 · bối cảnh hay câu chuyện ≈200 · 3–4 phần, mỗi phần ≈200–250: ý → vì sao → ví dụ → làm gì, cuối phần móc sang phần sau · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80.
 5 CAROUSEL (LinkedIn: file PDF): 10–12 dòng "Trang n: …". Trang 1 ≤15 tiếng, dáng kết quả (kết quả, con số hoặc ai), không phải nhãn ("Bắt đầu từ đây"); trang 2 giữ lời trang 1; rồi mỗi trang một quy tắc ≤40 tiếng (quy tắc · vì sao · ví dụ), không comment vẫn đáng lưu. Một trang tóm ý đáng gửi. Trang cuối: quà + từ khoá. Caption không thêm lời hứa.
 6 BÀI CHỮ TRÊN NỀN MÀU (Facebook): ≤{{bg_post_max_chars}} ký tự, chỉ chữ. "Câu 2 đăng luôn được không?" lúc đang xả: câu 2 thành bài ngắn, không từ khoá, không in gì dưới, rồi "{{t:dump.keep_going}}" NHẬT KÝ ZALO: 60–150 tiếng, một chuyện thật trong tuần + một việc nhẹ, không từ khoá.
 7 BÀI BÁN (bài mời mua: §CM-CTA-KIT). Dạy: nhận định bất ngờ → vì sao cách quen không ăn thua → cách của họ, 3 bước → một dòng bằng chứng đã xin phép → từ khoá nhận cách làm. Chuyện khách: từng quyết định → cái gì đổi → kết quả đúng số họ kể + câu ở dòng LỜI HỨA. Gỡ băn khoăn: câu khách nói, nguyên văn → nhìn lại → bằng chứng → cam kết cách làm → một lời mời; không ROI, "tự hoàn vốn".

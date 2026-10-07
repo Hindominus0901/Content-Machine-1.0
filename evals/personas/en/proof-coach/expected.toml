@@ -75,7 +75,7 @@ must_not_pick = [
 
 [week1]
 platform_mix = "short-video"        # Instagram-first, list of 140 < 300, so the lead piece is not the email
-lead_piece = "FILM TODAY Instagram Reel (under 30 s, bullets/beat card) on big idea 1, 'Is it too late for me?' -> 'not too old, too vague', built from her own story (24 years and a carrot cake, or 63 applications and 2 interviews), keyword CHAPTER once with the 'quiet' option."
+lead_piece = "FILM TODAY Instagram Reel (120-200 words, bullets/beat card) on big idea 1, 'Is it too late for me?' -> 'not too old, too vague', built from her own story (24 years and a carrot cake, or 63 applications and 2 interviews), keyword CHAPTER once with the 'quiet' option."
 must_include = [
   "3 Instagram Reels as bullet beat cards (no dancing, no trend audio), cross-posted to her Facebook profile",
   "1 long Facebook post (e.g. Teresa's 'different logo' coffee story)",

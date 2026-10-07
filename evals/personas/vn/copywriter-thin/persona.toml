@@ -7,6 +7,12 @@
 # human relationship), no concrete client, no story, no offer, no price, no proof, no buyer phrase.
 # Acceptance tester profile: VN, Claude (Cowork, kit folder, plugin not installed), laptop dictation in ENGLISH.
 
+# Strategy first (founder, 7 Oct 2026 night, his v10 run): the Answer bank in answers.md now answers the interview's questions (who she
+# would clone and who not, the offer's delivery, how clients find her, the 90-day goal and her hours, what she sees that the field misses,
+# one offer / one channel / one audience). They stay consistent with that run's dump: a copywriter for coaches and one-to-one experts whose
+# clients say they do not have enough leads and ask 'will this work eventually?', where the root is the offer and the way it is sold, not more
+# posts; she looks from the business side and the buyer's side at once, wants the best for the client and sometimes says: change the offer first.
+
 id = "copywriter-thin"
 edition = "vn"
 fictional = true
@@ -57,6 +63,7 @@ behaviour = [
   "quay video được nếu là gạch đầu dòng, không muốn quay mỗi ngày; thích viết",
   "ghét tiếng Anh lẫn trong bài tiếng Việt dù tự mình nói tiếng Anh khi xả ('bài của mình đăng cho coach Việt, đọc phải ra tiếng Việt')",
   "chỉ có 3 tiếng mỗi tuần; tối Chủ nhật; không muốn bị hỏi dài dòng khi chưa thấy gì dùng được",
+  "ngày 0 chạy chiến lược trước (7/10 tối): sẵn sàng trả lời tối đa 6 câu về phía mình, mỗi tin một câu; không chịu nổi bị hỏi lại điều đã nói trong dump; muốn thấy chiến lược (định vị, trụ cột nội dung rộng, tỷ lệ thu hút · niềm tin · chuyển đổi, hệ thống, nghiên cứu có nguồn) TRƯỚC khi có bài nào",
 ]
 
 # Every number Nhi can substantiate, as written in her files. Anything else that reads as a claim
