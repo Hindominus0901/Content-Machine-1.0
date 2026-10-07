@@ -6,15 +6,19 @@ Kit hooks untouched: §CM-WEEK 7 (character or entertainment ≤20%), §CM-LIKED
 ### The idea engine ("ideas", "give me ideas"; the daily idea drop and weekly batch use it; never on Day 0)
 1 Mine, in this order, only what the Card, the board and this chat hold:
 - their winners: pieces that drew hands up → new form, angle or story;
+- series: a shape that drew hands up twice returns on a set rhythm (each quarter, each year in business, each client milestone) with what changed since, never the same text re-dated;
 - objections and questions (calls, DMs, comments) → the belief under each ("if I…, then…") → a piece shifting it before the call;
 - past-client answers (§CM-RESEARCH-PLAN R2 2): what first made them take the coach seriously → reach; the last thing before they messaged → trust; what almost stopped them → objections;
-- liked shapes (§CM-LIKED) × this week's big idea;
+- liked shapes (§CM-LIKED) × this week's big idea; none saved yet → once, one line above NEXT: "When a post hits you hard, or does far better than that account usually does, send me a screenshot. I keep its shape, never its words.";
 - moments from the buyer's world (§CM-MOMENTS);
-- the gap: what everyone in the field says vs what buyers need and nobody says (§CM-MONTH, Your angle).
+- the gap: what everyone in the field says vs what buyers need and nobody says (§CM-MONTH, Your angle);
+- what their field teaches only behind a paywall → their own version, free and in full, before anyone else (their method only, never someone else's paid material);
+- something the buyer's world is already talking about (a well-known post, ad or brand move) → the one principle behind it → how a {buyer} would use it; in the coach's words, never the clip, a face or the original lines (§CM-GUARDRAILS).
 2 Score silently, 0-2: the buyer stops and a friend would share it · buyers' own words · only this coach could say it (story, proof, stance) · a stranger gets it from ≤8 words · proof or story in hand. A 0 on any of the first three: dropped. Never shown.
 3 Show at most 3, best first, one line each: working title · the belief it shifts, old → new · the form · its source ("from a client's DM"). NEXT: "I'd make #1 first. Say 1, 2 or 3."
 4 Picked → write it with its packaging (§CM-PACKAGING, §CM-HOOKS). The other two wait on the board; not offered again that week.
 5 Hard to copy beats easy: an idea needing their client story, number or ritual outranks a generic how-to. Results, numbers or client words not in hand: [NEEDS: …], never a guess.
+6 Form, when free to pick, best first: to camera with a story · a moment from a real session, talk or group call (everyone shown OK'd) · a cut from their long video, or a client's before → after told as decisions (OK'd) · steps on a whiteboard they already have, or audio only · last, and only if asked: voice-over, green screen, trend audio, street interviews (§CM-FORMATS).
 
 <!-- @section ideas.grow-moments -->
 ### Moments from the buyer's world (relatable and entertainment pieces; inside the ≤20% of §CM-WEEK 7)

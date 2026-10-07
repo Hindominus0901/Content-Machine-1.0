@@ -186,9 +186,10 @@ source = "wf10-chatgpt-computer-use: desktop app + browser extension (@Chrome). 
 [limits.chatgpt_agent_mode_available]
 value = false
 unit = "bool"
-evidence = "PRAC"
-verified_on = "2026-10-05"
-source = "wf10: ChatGPT agent mode, Operator and Atlas are gone (agent removed ~Jul–Aug 2026; Atlas stopped 9 Aug 2026)."
+evidence = "DATA"
+verified_on = "2026-10-07"
+source = "OpenAI help center: ChatGPT agent no longer available; use ChatGPT Work / cloud browser"
+note = "ChatGPT agent was removed in August 2026; ChatGPT Work (multi-step delegation, with its cloud browser) replaced it. The pack names ChatGPT Work and its browser wherever it named the agent. Operator and Atlas are gone too (wf10; Atlas stopped 9 Aug 2026)."
 
 # ---------------------------------------------------------------- Claude
 [limits.claude_free_projects]
@@ -487,30 +488,30 @@ note = "Retrieval reads files in chunks (ChatGPT file search: ~800-token chunks,
 [budgets.levelup_research]
 artifact = "Level-ups/RESEARCH-{EN,VN}.md"
 unit = "bytes"
-en = 24576
-vn = 24576
+en = 30720
+vn = 30720
 limit = ""
-note = "One level-up file per area (core/method.toml [levelup.<area>]), 24 KB each so a coach adds only the ones needed: the Project route has 5 files on Free (chatgpt_free_project_files), method + Brand Card + the level-ups wanted. Each anchor block also stays within method_section."
+note = "One level-up file per area (core/method.toml [levelup.<area>]), 30 KB each (24 KB until 2026-10-07; raised for the Soo Wei Goh and Matt Gray strategy depth, docs/research/strategy-coverage.md) so a coach adds only the ones needed: the Project route has 5 files on Free (chatgpt_free_project_files), method + Brand Card + the level-ups wanted. Each anchor block also stays within method_section."
 
 [budgets.levelup_launch]
 artifact = "Level-ups/LAUNCH-{EN,VN}.md"
 unit = "bytes"
-en = 24576
-vn = 24576
+en = 30720
+vn = 30720
 limit = ""
 
 [budgets.levelup_board]
 artifact = "Level-ups/BOARD-{EN,VN}.md"
 unit = "bytes"
-en = 24576
-vn = 24576
+en = 30720
+vn = 30720
 limit = ""
 
 [budgets.levelup_strategy]
 artifact = "Level-ups/STRATEGY-{EN,VN}.md"
 unit = "bytes"
-en = 24576
-vn = 24576
+en = 30720
+vn = 30720
 limit = ""
 
 [budgets.brand_card]

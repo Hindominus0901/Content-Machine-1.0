@@ -44,6 +44,7 @@ Conflicts already resolved are listed under "Reconciliations" in [`../PLAN.md`](
 | Character | `wf6-character-polarity.md`, `wf6-definitive-concise.md` |
 | Launch | `wf5-launch-frameworks.md`, `wf5-vietnam-launch.md` |
 | Matt Gray sweep | `wf8-mattgray-youtube.md`, `wf8-mattgray-linkedin-x.md`, `wf8-mattgray-newsletter-leadmagnets.md`, `wf8-mattgray-instagram.md` |
+| Strategy references | `strategy-coverage.md`: every Soo Wei Goh and Matt Gray idea and where it lives in the machine (7 Oct 2026) |
 | Entertainment scouts | `wf9-pov-global.md`, `wf9-pov-vietnam.md` |
 | Reference creators + VN market | `wf2-gadzhi-morgan.md`, `wf2-robthebank-niksetting.md`, `wf2-sooweigoh-luebben.md`, `wf2-suby-hormozi.md`, `wf2-houseofag-gentlerainman.md`, `wf2-vietnam-market.md` |
 | Hub + automations | `wf3-content-hub.md`, `wf3-scheduled-tasks.md` |

@@ -29,11 +29,11 @@ Runs on a research ask, "browse", pasted comments or a group link (R3), a new of
 
 <!-- @section research.grow-access -->
 ### R0 How we read (asked once: with the first research suggestion after Day 0, a research ask or "browse"; never unprompted on Day 0)
-1 Known, no question: a browser you can drive here (Claude in Chrome, ChatGPT's agent with Chrome) → BROWSE; phone only, free plan or "I'll paste" → PASTE.
-2 Else ONE question, once, in that reply: "Do you have Claude in Chrome, or ChatGPT's agent (the desktop app with Chrome), on a computer? (a) yes, Facebook groups and TikTok too (b) yes, public pages only (c) no or not sure: I'll paste". No answer: PASTE. Saved on the Card; asked again only on a new app, plan or computer, or after 2 failed browse runs on one place.
+1 Known, no question: a browser you can drive here (Claude in Chrome, ChatGPT Work with Chrome) → BROWSE; phone only, free plan or "I'll paste" → PASTE.
+2 Else ONE question, once, in that reply: "Do you have Claude in Chrome, or ChatGPT Work with its browser (the desktop app with Chrome), on a computer? (a) yes, Facebook groups and TikTok too (b) yes, public pages only (c) no or not sure: I'll paste". No answer: PASTE. Saved on the Card; asked again only on a new app, plan or computer, or after 2 failed browse runs on one place.
 3 MODE per place in the plan (R1):
 - BROWSE: Claude in Chrome (paid Claude, desktop Chrome) or the ChatGPT desktop app in the coach's own browser (type @, pick Chrome). Groups and TikTok on (a) only; other comments, reviews, the Ad Library on (a) or (b). LinkedIn: approve each step, ≤20 items, once: "LinkedIn's terms ban automated reading; the risk is your account's."
-- ChatGPT's own cloud browser (agent, Work): public pages only, never signed in.
+- ChatGPT Work's cloud browser: public pages only, never signed in.
 - SEARCH: public pages you can open (forums, competitor and course pages, articles). Reddit: ChatGPT search only; Claude → paste. Never browse reddit.com.
 - DEEP RESEARCH (Claude Research, ChatGPT deep research): R4 only; context, never buyer words.
 - PASTE: everything else, and every fallback.
@@ -52,7 +52,7 @@ RESEARCH HOUR: 0-10 plan, client messages out by minute 5 · 10-25 R2, R4 runnin
 <!-- @section research.grow-primary -->
 ### R2 Primary: the coach, then their clients
 1 COACH, ≤5 questions, one a message, word for word, skipping what the Card has: who bought fastest, right after what? · their first words on a call or DM? · what they'd tried, at what cost? · the objection losing most sales, verbatim? · the last two no's: said reason, real one? No clients: who buys first, why, after trying what? Tag: client said / coach believes / guess.
-2 After the kit's ask-3, 8 QUESTIONS (5-12 clients: the best + 1-2 who nearly didn't buy; form, voice note or message; never mid-sale). Open as the ask-3 message, then: "8 short questions, about 5 minutes, voice notes welcome. I'll only quote you without your name, and only with your OK." Where did you first come across me? · What first post or moment made you take me seriously? · The last thing you saw before you messaged? · What was going on that made you reach out then, and what had you tried? · Back then, how would you have told a friend the problem? · What almost stopped you? · Why me, and who else did you look at? · Me, to a friend, in one sentence? · "May I use your answers, without your name, in my content? Yes / No / Ask me first"
+2 After the kit's ask-3, 8 QUESTIONS (5-12 clients: the best + 1-2 who nearly didn't buy; form, voice note or message; never mid-sale). Open as the ask-3 message, then: "8 short questions, about 5 minutes, voice notes welcome. I'll only quote you without your name, and only with your OK." Where did you first come across me? · What first post or moment made you take me seriously? · The last thing you saw before you messaged, and how sure were you by then? · What was going on that made you reach out then, and what had you tried? · Back then, how would you have told a friend the problem? · What almost stopped you? · Why me, and who else did you look at? · Me, to a friend, in one sentence? · "May I use your answers, without your name, in my content? Yes / No / Ask me first"
 3 FIVE WHYS WITH A FAVORITE CLIENT (15-20 min, recorded only with permission). "This isn't a sales call. I want to understand what that time was really like, so I can help people where you were." A normal day before? · what made you decide, that week? · what had you tried? · what was the real problem, you thought? then "You said '…'. What's underneath that?" up to 5× · why me? · what nearly stopped you? · what's different now? Never pitch, defend, teach. Generic answer: stop; the one before is the root candidate.
 4 CALLS, DMS, FORMS pasted (names out, [call · client · month]): their lines first, verbatim · objections ranked by people · under each, the belief holding it ("if I…, then…") → one piece shifting it before the call ("content failed here") · their words for problem, result, coaches; 3+ people = keyword candidate · scenes · wants (gift ideas) · who OK'd quotes.
 
@@ -99,8 +99,9 @@ B Each (max 3; deep 5): main promise (exact, ≤{{quote_cap}} {{quote_unit}}, li
 C How aware is this buyer of the problem, the fixes, the offers? Real phrases people type, linked. Claims heard too often.
 D What they ALL promise · words they own · what NONE says · what they won't do.
 E Deep or pre-launch: each one's 3 longest-running Meta Ad Library ads (start date, hook, offer, CTA; never click) · its 1-2 star reviews: what failed, what was wanted.
+F Each one's top 3 pieces of the last 6 months at about 3× that account's usual views or comments, counts as shown, never guessed: hook or title shape, promise, form.
 Only pages you opened, each linked, read-only. Articles are context, never the buyer's voice. A grid + 5 lines, no essay. Mark guesses."
-USE: what all say → hooks avoid it · words they own → not borrowed · what none says → the coach's angle · what they won't do → a polarity line on the old way, never on a person.
+USE: what all say → hooks avoid it · words they own → not borrowed · what none says → the coach's angle · what they won't do → a polarity line on the old way, never on a person · standouts → title and hook shapes (§CM-PACKAGING), filled only with the coach's facts.
 
 <!-- @section research.grow-why -->
 ### R5 Why loop, down to the root
@@ -114,7 +115,7 @@ After each collection, on the strongest KEEP: "Why do {buyer} {pattern}?" Answer
 <!-- @section research.grow-brief -->
 ### R6 The research brief (starter after the hour · v1 when clients answer · v+1 after each re-forage)
 From kept lines only, conclusion first, one copy box saved next to the Card (board: a Brand Brain page).
-1 PARTS: How I read · Conclusion: demand, product, bridge, 3-5 plain sentences · 3 root insights (deep 3-5): the line the buyer would recognize, its chain, 2-3 of their lines, its big idea, hook, belief · 5-7 takeaways · their words, 10-20 lines by pattern · market: what all say, none says · objections by people, each with its "content failed here" piece · questions → answers or gaps · still unknown, who can answer · sources, months.
+1 PARTS: How I read · Conclusion: demand, product, bridge, 3-5 plain sentences · 3 root insights (deep 3-5): the line the buyer would recognize, its chain, 2-3 of their lines, its big idea, hook, belief · 5-7 takeaways · their words, 10-20 lines by pattern, split PAIN (what they see, hear and feel now) and AFTER (an ordinary day once it's fixed, only lines they wrote) · market: what all say, none says · objections by people, each with its "content failed here" piece · questions → answers or gaps · still unknown, who can answer · sources, months.
 2 No client answers yet: top line "{{t:research.no_client}}: these are guesses until your clients answer."
 3 SELF-CHECK, silent (by the reviewer when helpers run), every no fixed first: 10+ usable ideas, a hook per insight? · something only this coach can say? · sayable on camera tomorrow in the buyer's words? · all roots, chains written, KEEPs recounted? · nothing generic, unchecked, contradicted? · quotes exact, from clear buyers, linked? · every question answered or a named gap? · conclusion first, plain?
 4 SIGN-OFF: "Before you OK it, open these 3 links and check the words are really there: {3 links}. Anything in it you've never heard a client say?" A miss: drop the line, recount, re-check, reissue.

@@ -219,7 +219,7 @@ Content-Machine-{EN,VN}-v1.0.0.zip
                                  CHARACTER-LITE RESEARCH-LITE EDGE HUMANIZE GUARDRAILS LOCALE
   PHONE-STARTER.txt              ≤7,500 chars; no § signs, no English in VN
   Help/                          troubleshooting, helper-message, house-rules (noi-quy), standards (tieu-chuan), reminders/*.ics, examples/
-  Level-ups/                     {RESEARCH,LAUNCH,BOARD,STRATEGY}-{EN,VN}.md (≤24 KB each, replacing the one GROW file), Board/*.csv (5 header-row files),
+  Level-ups/                     {RESEARCH,LAUNCH,BOARD,STRATEGY}-{EN,VN}.md (≤30 KB each, replacing the one GROW file), Board/*.csv (5 header-row files),
                                  autopilot/content-machine(-vn).zip (≤300 KB, with scripts/ship_lint.py), Notion link
 site/{en,vn}/index.html          hosted setup page
 content-machine-plugin.zip        one plugin, both apps, both editions: 2 main + 8 companion skills (cm-<area>-<ed>) and 4 agents (next to the release zips)
@@ -382,7 +382,7 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
 - **Founder:** one live week on Claude Pro.
 
 ### P5 GROW: research, launch, packaging, ads, entertainment, deep character (EN, then VN)
-**Status (7 Oct 2026):** research R0–R8, the launch program with ads, and deep character are written, EN + VN, and ship as one level-up file per area (`Level-ups/RESEARCH`, `LAUNCH`, `BOARD`, `STRATEGY` `-{EN,VN}.md`, each ≤24,576 B, replacing `GROW-{EN,VN}.md`) and as companion skills in the plugin. Open: the golden launch runs, the `qa/standards` for research-brief, offer-post, ad-script and launch-assets, `launch-phrases`, the Browse smoke tests (`limits.browse_agents_read_comments`).
+**Status (7 Oct 2026):** research R0–R8, the launch program with ads, and deep character are written, EN + VN, and ship as one level-up file per area (`Level-ups/RESEARCH`, `LAUNCH`, `BOARD`, `STRATEGY` `-{EN,VN}.md`, each ≤30,720 B since 7 Oct 2026, was 24,576 B, replacing `GROW-{EN,VN}.md`) and as companion skills in the plugin. Open: the golden launch runs, the `qa/standards` for research-brief, offer-post, ad-script and launch-assets, `launch-phrases`, the Browse smoke tests (`limits.browse_agents_read_comments`).
 
 - **research, R0–R8:**
   - R0 access check;
@@ -413,7 +413,7 @@ From P2 on, every phase ends with its **native VN port**: written in Vietnamese,
   - Blocked: "fake 3 seats left", "guarantee 100tr in 30 days", an AI testimonial.
   - Founder-override test: "đủ 100 comment" and "chấm" are written as asked, with one note.
   - The persona's research brief passes G1–G13.
-  - Each level-up file is ≤24 KB (`budgets.levelup_*`).
+  - Each level-up file is ≤30 KB (`budgets.levelup_*`; 24 KB until 7 Oct 2026).
 
 ### P6 Guides, setup page and release
 - **Guides:**

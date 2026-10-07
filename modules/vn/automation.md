@@ -17,12 +17,12 @@ Giờ lệch vài phút sau giờ chẵn (tác vụ hay chạy trễ); họ mu�
 4 Có thay đổi: Bản đồ đổi một dòng hay sang tháng mới thì chỉ in lại lời nhắc nào bị đổi, kèm câu "Vào sửa tác vụ, thay chữ cũ bằng khung này." Mở bán: §CM-NUDGE-RULES 6.
 5 "tắt nhắc" hay "nhắc nhiều quá": chỉ cách tạm dừng trong app của họ, một dòng, không thuyết phục. "Bớt lại": bỏ cái thứ Ba tới thứ Năm trước.
 
-<!-- @section automation.grow-jobs src=24986fbcd4 -->
+<!-- @section automation.grow-jobs src=7d5f9d4698 -->
 ### Mỗi lời nhắc chạy việc gì (trong {{name}} sau khi nhắn "tiếp", hoặc ngay trong tác vụ Claude)
 1 {{t:task.week.name}}, thứ Hai: đọc buổi nói chuyện tuần gần nhất (trong đoạn chat này, không có thì các dòng Kho của nó), đọc bảng (bài đã ra, việc thử tuần trước, chiến dịch đang chạy, các dòng Kho mới nhất) và Bản đồ. Viết cả tuần theo §CM-WEEK: mỗi bài một khung chép kèm thứ, khung Nội dung nằm dưới (§CM-BOARD-ROWS). Tuần này chưa nói chuyện: viết từ Kho và Bản đồ; TIẾP mời làm bản ngắn (§CM-TALK). Tuần này viết rồi: không in lại; TIẾP là bài hôm nay.
 2 {{t:task.today.name}}, thứ Ba tới thứ Năm: bài hôm nay trong tuần đã viết (thứ, giờ, khung chép). Tuần chưa viết (lỡ thứ Hai): viết phần còn lại của tuần tính từ hôm nay, bài hôm nay đứng đầu; mấy ngày đã qua thì thôi ("{{t:today.left_out}}" một lần), không đếm. Bài hôm nay đã đăng, hay hôm nay không có bài: một ý + 3 hook để dự phòng (dòng drop, Trạng thái Ý tưởng).
 3 {{t:task.numbers.name}}: hỏi số liệu (§CM-NUMBERS 1) → tổng kết 5 dòng và ≤3 việc thử (§CM-NUMBERS) → khung Số liệu → dòng tìm hiểu khách: một bước chỉ đọc cho tuần sau, ≤10 phút (§CM-RESEARCH-LOOP 2, chỗ giữ câu hỏi duy nhất về trình duyệt) → TIẾP. Thứ Sáu cuối tháng: TIẾP "lên kế hoạch tháng sau", việc này viết luôn dòng Chiến dịch tháng sau (§CM-BOARD-CAMPAIGNS).
-4 TRỢ THỦ: app có agent phụ hay chạy song song được (Claude Code, Cowork, ChatGPT agent) thì {{t:task.week.name}} chia theo bài, mỗi bài một người viết, còn tìm hiểu khách chia theo nguồn; một người soát riêng đọc hết rồi mới in. Coach chỉ thấy cả tuần đã xong, không thấy ghi chú của trợ thủ. Không có trợ thủ thì làm đúng thứ tự đó, một lượt.
+4 TRỢ THỦ: app có agent phụ hay chạy song song được (Claude Code, Cowork, ChatGPT Work) thì {{t:task.week.name}} chia theo bài, mỗi bài một người viết, còn tìm hiểu khách chia theo nguồn; một người soát riêng đọc hết rồi mới in. Coach chỉ thấy cả tuần đã xong, không thấy ghi chú của trợ thủ. Không có trợ thủ thì làm đúng thứ tự đó, một lượt.
 5 Trong đợt mở bán, ba việc này thành Bàn mở bán (§CM-LAUNCH-DESK 2-3).
 
 <!-- @section automation.grow-rules src=01114a6678 -->

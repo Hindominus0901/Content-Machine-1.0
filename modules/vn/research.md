@@ -3,7 +3,7 @@ Nguồn: wf7-research-module-spec §2.0, §2.1 bước 4c, §2.3 (khác biệt V
 wf11-message-focus §1.6; wf11-ux-spec §2, §3.1; DECISIONS (không tên, không nick trong dữ liệu nghiên cứu; chỉ đọc, không đăng, không vào nhóm; không bao giờ điều khiển máy).
 Nghiệm thu: evals/cases/research.vn.toml, router.vn.toml. Đọc sâu và nghiên cứu kỹ nằm ở GROW. Không bao giờ nói "social listening", "VoC" với coach; lời khách kể kết quả và tên: §CM-GUARDRAILS.
 Thêm so với EN: Dán là mặc định, nhóm Zalo không bao giờ đọc hộ (chỉ nhóm của coach, ghi ý), tên → vai, không giữ số điện thoại hay Zalo, tin riêng về sức khoẻ không thành bài, nhãn GIỮ / THEO DÕI, đếm phần bỏ ra theo lý do.
-GROW (research.grow-*): toàn bộ quy trình R0-R8, viết thẳng bằng tiếng Việt. Khác EN: DÁN là mặc định (R0 1); câu Tuần 1 chỉ thêm "đọc giúp" khi biết chắc đọc được; nơi đọc theo thói quen VN (nhóm Facebook, TikTok, YouTube, VnExpress, Voz, Otofun, Webtretho, Shopee/Tiki/Fahasa); hỏi sâu đổi cách hỏi, không dồn "vì sao" (spec §5c); tin gửi khách theo cặp xưng hô 1:1 trên Card. Mỗi phần GROW ≤3.600 byte, cả vùng ≤24 KB.
+GROW (research.grow-*): toàn bộ quy trình R0-R8, viết thẳng bằng tiếng Việt. Khác EN: DÁN là mặc định (R0 1); câu Tuần 1 chỉ thêm "đọc giúp" khi biết chắc đọc được; nơi đọc theo thói quen VN (nhóm Facebook, TikTok, YouTube, VnExpress, Voz, Otofun, Webtretho, Shopee/Tiki/Fahasa); hỏi sâu đổi cách hỏi, không dồn "vì sao" (spec §5c); tin gửi khách theo cặp xưng hô 1:1 trên Card. Mỗi phần GROW ≤3.600 byte, cả file ≤30 KB.
 "[chưa chắc]" thay "[to confirm]" vì thẻ [CẦN …] là thẻ thiếu thông tin của ship lint. Ngân sách VN: anchor RESEARCH-LITE ≤3.600 byte sau khi render.
 
 <!-- @section research.kit-quick src=f99156864f -->
@@ -29,13 +29,13 @@ Chạy khi coach nhờ nghiên cứu, gõ "đọc giúp", dán comment hay link 
 8 Chỉ đọc: không đăng, comment, thả cảm xúc, theo dõi, vào nhóm, nhắn tin, bấm quảng cáo, điền form, đăng nhập, đồng ý điều khoản; không điều khiển máy hay app của coach. Zalo, app chat: chỉ nhóm của coach, coach tự chép ý.
 9 Bị chặn thì không lách: trình duyệt → tìm → dán → nói rõ chỗ thiếu. CAPTCHA, trang đăng nhập, "tham gia nhóm để xem", khoá kiểm tra tài khoản, bị từ chối: bỏ nơi đó, ghi lại; hai lần → dán.
 
-<!-- @section research.grow-access src=4d74392313 -->
+<!-- @section research.grow-access src=ecf966d5f1 -->
 ### R0 Đọc bằng cách nào (hỏi một lần: lần đề xuất đầu sau ngày 0, hay khi coach nhờ nghiên cứu, gõ "đọc giúp"; ngày 0 không tự hỏi)
-1 Biết rồi thì khỏi hỏi: ở đây bạn tự điều khiển được trình duyệt (Claude in Chrome, agent của ChatGPT với Chrome) → ĐỌC; chỉ dùng điện thoại, gói miễn phí, hay "để mình dán" → DÁN. Bản VN mặc định DÁN.
-2 Chưa biết thì hỏi ĐÚNG MỘT câu, một lần, ngay trong tin đó: "Bạn có Claude in Chrome, hay agent của ChatGPT (app trên máy tính, dùng với Chrome) không? (a) có, đọc cả nhóm Facebook, TikTok (b) có, chỉ trang công khai (c) không hoặc chưa rõ: mình tự dán". Không trả lời: DÁN. Lưu lên Card; chỉ hỏi lại khi đổi app, gói, máy, hoặc đọc một nơi hỏng 2 lần.
+1 Biết rồi thì khỏi hỏi: ở đây bạn tự điều khiển được trình duyệt (Claude in Chrome, ChatGPT Work với Chrome) → ĐỌC; chỉ dùng điện thoại, gói miễn phí, hay "để mình dán" → DÁN. Bản VN mặc định DÁN.
+2 Chưa biết thì hỏi ĐÚNG MỘT câu, một lần, ngay trong tin đó: "Bạn có Claude in Chrome, hay ChatGPT Work kèm trình duyệt (app trên máy tính, dùng với Chrome) không? (a) có, đọc cả nhóm Facebook, TikTok (b) có, chỉ trang công khai (c) không hoặc chưa rõ: mình tự dán". Không trả lời: DÁN. Lưu lên Card; chỉ hỏi lại khi đổi app, gói, máy, hoặc đọc một nơi hỏng 2 lần.
 3 CÁCH ĐỌC từng nơi trong kế hoạch (R1):
 - ĐỌC: Claude in Chrome (Claude trả phí, Chrome trên máy tính) hoặc app ChatGPT trên máy tính (gõ @ rồi chọn Chrome), chạy trong trình duyệt của chính coach. Nhóm Facebook, TikTok: chỉ khi chọn (a); comment khác, đánh giá, Thư viện quảng cáo Meta: (a) hoặc (b). LinkedIn: duyệt từng bước, ≤20 mục, nói một lần: "Điều khoản LinkedIn cấm đọc tự động; tài khoản bạn tự chịu rủi ro."
-- Trình duyệt đám mây của ChatGPT (agent, Work): chỉ trang công khai, không đăng nhập.
+- Trình duyệt đám mây của ChatGPT Work: chỉ trang công khai, không đăng nhập.
 - TÌM: trang công khai mở được (Voz, Tinhte, Otofun, Webtretho, trang đối thủ, bài báo). Reddit: chỉ ChatGPT search; Claude → dán. Không mở reddit.com.
 - NGHIÊN CỨU SÂU (Research của Claude, deep research của ChatGPT): chỉ cho R4; là bối cảnh, không phải lời khách.
 - DÁN: mọi chỗ còn lại, và khi cách khác hỏng.
@@ -51,10 +51,10 @@ Rồi một dòng, cũng đặt đầu brief: "Mình tự đọc {nơi}; bạn c
 5 Một màn hình: khách · câu hỏi · giả thuyết · nơi, cách đọc · nguồn trực tiếp: ghi chú và tin nhắn, khách cũ, hay chưa có. "Có gì sai hay thiếu không?"
 GIỜ NGHIÊN CỨU: phút 0-10 kế hoạch, tin gửi khách đi trước phút 5 · 10-25 R2, R4 chạy song song · 25-45 R3 · 45-52 một vòng R5 · 52-60 brief đầu. Ngày 3-7: khách trả lời xong, brief v1.
 
-<!-- @section research.grow-primary src=e38f78edeb -->
+<!-- @section research.grow-primary src=d1180446b0 -->
 ### R2 Nguồn trực tiếp: coach trước, rồi khách của coach
 1 COACH, ≤5 câu, mỗi tin một câu, ghi nguyên lời, bỏ câu Card đã có: ai mua nhanh nhất, ngay sau chuyện gì? · câu đầu tiên họ nói khi gọi hay nhắn? · họ đã thử gì, tốn bao nhiêu? · lời từ chối làm mất nhiều đơn nhất, nguyên văn? · hai lần bị từ chối gần nhất: lý do họ nói, lý do thật? Chưa có khách: ai sẽ mua trước, vì sao, đã thử gì? Nhãn: khách nói / coach tin / đoán.
-2 Sau tin hỏi 3 khách, 8 CÂU HỎI (5-12 khách: người tốt nhất + 1-2 người suýt không mua; form, tin thoại hay Zalo; không gửi lúc đang chốt đơn). Xưng hô theo cặp 1:1 trên Card, tiểu từ theo giọng coach. Mở như tin hỏi 3 khách, rồi: "8 câu ngắn thôi ạ, chừng 5 phút, gửi tin nhắn thoại cũng được. Mình chỉ trích không kèm tên, và chỉ khi [anh/chị] đồng ý." Lần đầu biết mình là ở đâu? · Bài nào hay lúc nào làm [anh/chị] bắt đầu để ý tới mình? · Thứ cuối cùng xem trước khi nhắn mình? · Hồi đó có chuyện gì mà nhắn đúng lúc ấy, trước đó đã thử những gì? · Hồi đó kể với bạn bè thì nói vấn đề ra sao? · Điều gì suýt làm [anh/chị] thôi không đăng ký? · Sao lại chọn mình, có xem thêm ai không? · Giới thiệu mình với bạn bè bằng một câu thì nói sao? · "Mình dùng câu trả lời (không kèm tên) để làm nội dung được không? Được / Không / Hỏi mình trước"
+2 Sau tin hỏi 3 khách, 8 CÂU HỎI (5-12 khách: người tốt nhất + 1-2 người suýt không mua; form, tin thoại hay Zalo; không gửi lúc đang chốt đơn). Xưng hô theo cặp 1:1 trên Card, tiểu từ theo giọng coach. Mở như tin hỏi 3 khách, rồi: "8 câu ngắn thôi ạ, chừng 5 phút, gửi tin nhắn thoại cũng được. Mình chỉ trích không kèm tên, và chỉ khi [anh/chị] đồng ý." Lần đầu biết mình là ở đâu? · Bài nào hay lúc nào làm [anh/chị] bắt đầu để ý tới mình? · Thứ cuối cùng xem trước khi nhắn mình, lúc đó [anh/chị] chắc được mấy phần rồi? · Hồi đó có chuyện gì mà nhắn đúng lúc ấy, trước đó đã thử những gì? · Hồi đó kể với bạn bè thì nói vấn đề ra sao? · Điều gì suýt làm [anh/chị] thôi không đăng ký? · Sao lại chọn mình, có xem thêm ai không? · Giới thiệu mình với bạn bè bằng một câu thì nói sao? · "Mình dùng câu trả lời (không kèm tên) để làm nội dung được không? Được / Không / Hỏi mình trước"
 3 HỎI SÂU VỚI MỘT KHÁCH THÂN (15-20 phút, chỉ ghi âm khi được phép). "Đây không phải buổi tư vấn bán hàng đâu ạ. Mình chỉ muốn hiểu thật kỹ giai đoạn đó, để giúp những người đang đứng đúng chỗ [anh/chị] từng đứng." Một ngày bình thường hồi đó? · tuần đó có chuyện gì mà quyết định? · đã thử những gì? · hồi đó nghĩ vấn đề thật nằm ở đâu? rồi "[Anh/chị] vừa nói '…'. Theo [anh/chị] thì do đâu ạ?" tối đa 5 lần, đổi cách hỏi ("điều gì khiến…?", "nói sâu thêm chút thì…?"), không hỏi "vì sao" dồn dập · sao chọn mình? · điều gì suýt cản lại? · giờ có gì khác? Không bán, không cãi, không dạy. Câu trả lời thành chung chung: dừng; câu ngay trước là ứng viên gốc rễ.
 4 CUỘC GỌI, TIN NHẮN, FORM coach dán (bỏ tên, ghi [cuộc gọi · khách · tháng]): lời khách trước, nguyên văn · lời từ chối xếp theo số người · dưới mỗi lời, niềm tin đang giữ nó ("nếu mình…, thì…") → một bài gỡ nó trước cuộc gọi ("chỗ content chưa làm tới") · chữ họ gọi vấn đề, kết quả, người như coach; 3+ người = ứng viên từ khoá · cảnh cụ thể · điều họ muốn (ý quà tặng) · ai đã đồng ý cho trích.
 
@@ -92,7 +92,7 @@ CUỐI: đã đọc, đã giữ, đã bỏ theo lý do · chữ lặp lại (m�
 2 Thẻ chép, khung chép: "Mỗi nơi 15 phút. 1 Mở [nơi], tìm [cụm]; YouTube: xem bình luận hàng đầu; nhóm: dùng ô tìm trong nhóm. 2 Chép 10-20 bài hay comment mà người viết rõ là khách của bạn; bỏ người bán, coach, 'ib/chấm', câu khen y nhau. 3 Đầu mỗi đợt ghi [nơi · tháng]. 4 Tên đổi thành chữ cái, cùng người cùng chữ; xoá nick, số điện thoại, Zalo, email, tên cửa hàng. 5 Ảnh chụp: che tên và ảnh đại diện trước. 6 Nhóm kín: chỉ nhóm bạn đang ở; mình chỉ ghi ý, không trích. 7 Nhóm Zalo: bạn tự chép ý, mình không đọc hộ. 8 Dán hết vào đây."
 3 Có bản dán: chạy R3 ngay, ra báo cáo R3. Lỡ có tên hay nick: không nhắc lại; giữ vai.
 
-<!-- @section research.grow-context src=6ebdec2ddb -->
+<!-- @section research.grow-context src=99555e0e8b -->
 ### R4 Quét bối cảnh (việc của AI trong lúc coach làm R2)
 Gói có nghiên cứu sâu thì dùng (giới hạn vào trang đã chọn nếu được), không thì 3 lần tìm. Khung chép:
 "QUÉT BỐI CẢNH. Khách: [một dòng] · sản phẩm: [một dòng] · nước, ngôn ngữ: [..].
@@ -101,8 +101,9 @@ B Mỗi cái (tối đa 3; làm sâu 5): lời hứa chính (nguyên văn, ≤{{
 C Khách này biết tới đâu: vấn đề, các cách giải, các sản phẩm? Cụm người ta gõ tìm thật, kèm link. Lời hứa nghe nhàm rồi.
 D Điều TẤT CẢ đều hứa · chữ riêng của từng người · điều KHÔNG AI nói · điều họ không chịu làm.
 E Làm sâu hay trước mở bán: mỗi đối thủ 3 quảng cáo chạy lâu nhất trên Thư viện quảng cáo Meta (ngày bắt đầu, hook, ưu đãi, lời mời; không bấm) · đánh giá 1-2 sao: hỏng chỗ nào, người ta muốn gì.
+F Mỗi đối thủ 3 bài trong 6 tháng qua chạy cỡ gấp 3 mức xem hay comment quen của tài khoản đó, số đúng như trên trang, không đoán: dáng hook hay tiêu đề, lời hứa, dạng bài.
 Chỉ trang đã mở, kèm link, chỉ đọc. Bài báo là bối cảnh, không phải lời khách. Một bảng + 5 dòng, không viết văn. Ghi rõ chỗ nào là đoán."
-DÙNG: điều ai cũng nói → hook tránh ra · chữ riêng của người khác → không mượn · điều không ai nói → góc của coach · điều họ không chịu làm → một câu phân cực nhắm vào cách cũ, không nhắm vào người.
+DÙNG: điều ai cũng nói → hook tránh ra · chữ riêng của người khác → không mượn · điều không ai nói → góc của coach · điều họ không chịu làm → một câu phân cực nhắm vào cách cũ, không nhắm vào người · bài nổi bật → dáng tiêu đề, hook (§CM-PACKAGING), chỉ điền bằng dữ kiện của coach.
 
 <!-- @section research.grow-why src=51b29dc06a -->
 ### R5 Vòng vì sao, đào tới gốc rễ
@@ -113,10 +114,10 @@ Sau mỗi đợt thu, lấy mẫu GIỮ mạnh nhất: "Vì sao {khách} {mẫu}
 4 Câu chung chung không phải gốc rễ: thêm tiền, khách, thời gian, tự do · thiếu tự tin, thiếu kỷ luật · sợ thất bại · không biết làm · bận quá. Làm cho cụ thể bằng cảnh của họ và nguyên nhân, hoặc đào thêm một tầng.
 5 Chỉ từ một GỐC RỄ, mỗi phần một dòng: NHU CẦU (điều họ vốn đã muốn, đã đi tìm, bằng chữ của họ) → SẢN PHẨM (đáp đúng điều đó ra sao: các bước, cách làm của coach) → CẦU NỐI (gốc rễ thành một câu khách nghe là nhận ra mà chưa từng nói, khiến sản phẩm thành bước kế hiển nhiên). Cầu nối thành một ý lớn, niềm tin "bạn tưởng X → thật ra Y" và một hook bằng chữ của khách. Chuỗi còn mở thì vẫn là đoán trên Card.
 
-<!-- @section research.grow-brief src=f9b0f660df -->
+<!-- @section research.grow-brief src=41b47985cd -->
 ### R6 Brief nghiên cứu (bản đầu sau giờ nghiên cứu · v1 khi khách trả lời · v+1 sau mỗi lần đọc lại)
 Chỉ từ câu đã giữ, phần chốt đặt trước, một khung chép lưu cạnh Card (có bảng: một trang Brand Brain).
-1 CÁC PHẦN: Đọc bằng cách nào · Chốt lại: nhu cầu, sản phẩm, cầu nối, 3-5 câu dễ hiểu · 3 phát hiện gốc rễ (làm sâu 3-5): câu khách nghe là nhận ra, chuỗi vì sao, 2-3 câu của khách, ý lớn, hook, niềm tin · 5-7 điểm chính · chữ của khách, 10-20 câu theo mẫu · thị trường: điều ai cũng nói, không ai nói · lời từ chối theo số người, mỗi cái kèm bài gỡ ("chỗ content chưa làm tới") · câu hỏi → trả lời hay chỗ thiếu · còn chưa biết, ai trả lời được · nguồn, tháng.
+1 CÁC PHẦN: Đọc bằng cách nào · Chốt lại: nhu cầu, sản phẩm, cầu nối, 3-5 câu dễ hiểu · 3 phát hiện gốc rễ (làm sâu 3-5): câu khách nghe là nhận ra, chuỗi vì sao, 2-3 câu của khách, ý lớn, hook, niềm tin · 5-7 điểm chính · chữ của khách, 10-20 câu theo mẫu, chia NỖI KHỔ (giờ họ thấy gì, nghe gì, trong lòng ra sao) và SAU ĐÓ (một ngày bình thường khi đã ổn, chỉ câu chính họ viết) · thị trường: điều ai cũng nói, không ai nói · lời từ chối theo số người, mỗi cái kèm bài gỡ ("chỗ content chưa làm tới") · câu hỏi → trả lời hay chỗ thiếu · còn chưa biết, ai trả lời được · nguồn, tháng.
 2 Chưa có khách trả lời: dòng đầu "{{t:research.no_client}}: tới lúc đó, tất cả vẫn là đoán."
 3 TỰ SOÁT, làm thầm (có trợ lý thì trợ lý soát), chỗ nào "không" sửa trước: 10+ ý dùng được, mỗi phát hiện một hook? · có điều chỉ coach này nói được? · mai nói trước máy quay được, bằng chữ của khách? · đều là gốc rễ, có chuỗi, GIỮ đã đếm lại? · không câu chung chung, chưa kiểm, bị nói ngược? · trích đúng, từ người rõ là khách, có link? · câu hỏi nào cũng có trả lời hay chỗ thiếu có tên?
 4 DUYỆT: "Trước khi OK, bạn mở giúp mình 3 link này xem chữ có thật ở đó không: {3 link}. Có câu nào bạn chưa từng nghe khách nói không?" Sai một chỗ: bỏ câu đó, đếm lại, soát lại, in lại.

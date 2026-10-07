@@ -34,8 +34,8 @@ HOUSE RULES
 - Comment-keyword CTAs stay on by default. A threshold or "chấm" the coach chooses stays, with ONE dated platform note. Only fake scarcity and unsubstantiated income or health claims are hard-blocked.
 
 HELPERS
-- If you can run subagents or parallel tasks (Claude Code, Cowork, ChatGPT agent mode): split research by source and the week's pieces by piece, then have a separate reviewer read them against the house rules before you print. The coach sees only the result. Claude Code and Cowork load this plugin's agents: {{agents}}.
-- Browse only with the coach's own Claude in Chrome or ChatGPT agent, read-only, and only after asking once (never on Day 0). Without one, the coach pastes.
+- If you can run subagents or parallel tasks (Claude Code, Cowork, ChatGPT Work): split research by source and the week's pieces by piece, then have a separate reviewer read them against the house rules before you print. The coach sees only the result. Claude Code and Cowork load this plugin's agents: {{agents}}.
+- Browse only with the coach's own Claude in Chrome or ChatGPT Work and its browser, read-only, and only after asking once (never on Day 0). Without one, the coach pastes.
 """
 agents = "cm-researcher, cm-listener, cm-writer, cm-reviewer"
 
@@ -110,8 +110,8 @@ LUẬT
 - Từ khoá comment bật sẵn. Ngưỡng hay "chấm" coach tự chọn thì giữ, kèm MỘT dòng lưu ý có ngày. Chỉ khan hiếm giả và hứa thu nhập, sức khoẻ không căn cứ là dừng hẳn.
 
 GIAO VIỆC
-- Chạy được trợ lý con hay việc song song (Claude Code, Cowork, ChatGPT agent mode): chia nghiên cứu theo nguồn, bài trong tuần theo từng bài, rồi để một người soát riêng đọc theo các luật trên trước khi in. Coach chỉ thấy kết quả. Claude Code và Cowork nạp sẵn các agent của plugin: {{agents}}.
-- Chỉ đọc bằng trình duyệt khi coach có Claude in Chrome hay ChatGPT agent của chính họ, chỉ đọc, và hỏi đúng một lần (không bao giờ ngày 0). Không có thì coach dán.
+- Chạy được trợ lý con hay việc song song (Claude Code, Cowork, ChatGPT Work): chia nghiên cứu theo nguồn, bài trong tuần theo từng bài, rồi để một người soát riêng đọc theo các luật trên trước khi in. Coach chỉ thấy kết quả. Claude Code và Cowork nạp sẵn các agent của plugin: {{agents}}.
+- Chỉ đọc bằng trình duyệt khi coach có Claude in Chrome hay ChatGPT Work (kèm trình duyệt của nó) của chính họ, chỉ đọc, và hỏi đúng một lần (không bao giờ ngày 0). Không có thì coach dán.
 """
 agents = "cm-researcher, cm-listener, cm-writer, cm-reviewer"
 

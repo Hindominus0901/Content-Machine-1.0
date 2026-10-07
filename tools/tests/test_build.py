@@ -1102,10 +1102,10 @@ class LevelUpTests(TempRepo):
         self.build_all()
         rules = {"en": ("one NEXT line", "[NEEDS: …]", "never post, react, follow, DM or join",
                         "subagents or parallel tasks", "separate reviewer", "sees only the result",
-                        "Claude in Chrome or ChatGPT agent", "asking once", "never on Day 0", "fake scarcity"),
+                        "Claude in Chrome or ChatGPT Work", "asking once", "never on Day 0", "fake scarcity"),
                  "vn": ("một dòng TIẾP", "[CẦN BẠN: …]", "không đăng, thả cảm xúc, theo dõi, nhắn tin hay vào nhóm",
                         "trợ lý con hay việc song song", "người soát riêng", "Coach chỉ thấy kết quả",
-                        "Claude in Chrome hay ChatGPT agent", "hỏi đúng một lần", "không bao giờ ngày 0",
+                        "Claude in Chrome hay ChatGPT Work", "hỏi đúng một lần", "không bao giờ ngày 0",
                         "khan hiếm giả")}
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             for ed, phrases in rules.items():
@@ -1289,7 +1289,7 @@ class RealRepoLevelUps(unittest.TestCase):
                     self.assertNotIn("@section", text)
                     self.assertNotIn("{{", text)
                     budget = self.targets["budgets"][f"levelup_{area}"][ed]
-                    self.assertEqual(budget, 24576)
+                    self.assertEqual(budget, 30720)
                     self.assertLessEqual(len(text.encode("utf-8")), budget, f"{path.name}: {len(text.encode('utf-8'))} B")
                     entry = self.manifest["artifacts"][f"{ed}/Level-ups/{file}-{suffix}.md"]
                     self.assertEqual(entry["budgets"][f"levelup_{area}"]["budget"], budget)
