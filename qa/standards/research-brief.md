@@ -1,7 +1,7 @@
 # Research Brief standard (`research-brief`)
 
 Build-only rubric (wf12-qa-spec §3.1). Never shipped. It is the G3 judge rubric for the Research Brief and the source of `standard = "research-brief"` eval cases.
-Sources, in order: wf12-qa-spec §2.1, §3.1 (final, wins) · wf12-qa-critique #52 (non-blocking re-open) · wf12-qa-standards §1 (draft) · wf7 §4 Steps 5–7, §7.1 (gates G1–G13), §7.2 (privacy) · wf13 F4 (names in the alternatives grid) · PLAN reconciliation 10 (RESEARCH-LITE).
+Sources, in order: wf12-qa-spec §2.1, §3.1 (final, wins) · wf12-qa-critique #52 (non-blocking re-open) · wf12-qa-standards §1 (draft) · wf7 §4 Steps 5–7, §7.1 (gates G1–G13), §7.2 (privacy) · wf13 F4 (names in the alternatives grid) · PLAN reconciliation 10 (RESEARCH-LITE) · founder 7 Oct 2026 (his own Day 0 judged "research very poor"; decision 2: a background listening pass from the first send, the Map's line 1 and keyword from real buyer lines with sources; decision 3: VN pieces always in Vietnamese). The Day-0 block (LN1–LN7) is new from that test and the founder's decisions; module text: RESEARCH §CM-LISTEN (R3).
 
 ## Purpose
 
@@ -11,7 +11,7 @@ What good means: the conclusion comes first (demand in their words → product �
 
 ## Scope
 
-- **Artifact:** Research Brief vN (wf7 R6): the Starter brief (end of the Research Hour, before client answers), Brief v1 (once survey or client answers land), and each re-forage v+1 (only changed sections are re-scored). Quick or Deep mode. The Day-0 RESEARCH-LITE summary is scored at the Starter bar.
+- **Artifact:** Research Brief vN (wf7 R6): the Starter brief (end of the Research Hour, before client answers), Brief v1 (once survey or client answers land), and each re-forage v+1 (only changed sections are re-scored). Quick or Deep mode. The Day-0 listening pass (its notes as printed on "show the research", the Map's line 1 and keyword, the "Where I listened" block, the paste steps) is scored on LN1–LN7 below; once a brief is written from it, RB1–RB10 apply at the Starter bar.
 - **Output class:** Structured artifact (spec §2.1). The brief runs wf7's gates G1–G13 as written before it is shown.
 - **Not here:** the Research Bank rows (inputs the judge re-opens), the keyword pick (`signature-keyword.md`), the Message Map (`message-map.md`).
 
@@ -41,6 +41,22 @@ What good means: the conclusion comes first (demand in their words → product �
 - **Starter brief and RESEARCH-LITE:** RB1 and RB9 score 2, and the total is ≥14/20. RB3 and RB4 may score 1 only if every insight is labelled HYPOTHESIS or OPEN and names the gap and who can fill it; a Starter insight labelled ROOT is held to the full RB4. A Starter pass scripts Week 1 only: no Trustable or converting claim rests on its insights, and Brief v1 must pass in full before Weeks 2–4 lock.
 - The judge recounts every pattern from the bank and re-opens every quoted line it can reach. A line it cannot match is a miss.
 - Honesty over targets: "2 places found, the third blocked", with the gap named, scores RB2 = 1. A shortfall dressed up (a stretched count, a squinted backer) scores that item 0 and RB9 0.
+
+## Day-0 listening pass (LN1–LN7)
+
+Scored from the run transcript (searches, pages opened, helper results), the notes printed on "show the research" / "xem nghiên cứu", and the Map reply. Each LN item re-checks at source what the notes claim.
+
+| ID | Item | 0 | 1 | 2 | Critical |
+|---|---|---|---|---|---|
+| LN1 | Buyer-language queries | Under 6 queries; or most are the coach's jargon, method or offer name, or the coach's own complaint about clients ("coaches can't get clients", "khách không biết mình cần gì") | 6–9 queries, or ≥10 but one kind only (all pain, all "how to"), or written in a language the buyers don't use | ≥10 queries in the buyers' language (VN edition: Vietnamese, even when the coach dictates in English), what the buyer types before they ever heard of the coach; ≥4 kinds (scene, symptom, failed fix, money, fear, question, result); 2+ tied to a place; none in the coach's jargon or complaint | yes |
+| LN2 | Depth and places | Under 4 pages opened, or 1 place; or a page that never opened counted as read | 4–7 pages, or 2 places, or under 12 lines, with every unread place listed | ≥8 pages opened in ≥3 places; ≥20 verbatim lines aimed for and the real count printed (fewer is honest, not a fail, if the blocked places are named); every line carries place, link, month and the role as stated; unread pages listed as unread | no |
+| LN3 | KEEP / WATCH correct | A KEEP below 2 people × 2 places (comments under one post are one place); a seller, a competitor's title, a search suggestion or the coach counted as a person | Counts right, but a KEEP lacks its lines against, or "their words" counts one person twice | Every KEEP recounts to ≥2 people in ≥2 independent places from the printed lines; WATCH for the rest; their words = phrases 2+ people use; discards counted by reason; lines against printed or "none found" | yes |
+| LN4 | Nothing invented | A quote not on any opened page or paste; a snippet used as a line; a guessed client line ("every coach says …") in a public piece; a name, handle or profile link | Every quote verifies, but one unverified lead is untagged in the notes | Every quote is on a page that was opened (re-fetch) or in the coach's paste; snippets, unread pages and memory sit under leads, tagged "(unverified)" / "(chưa kiểm)"; no unverified line in the Map or any public piece; roles only | yes |
+| LN5 | It changed the Map | Map line 1's buyer words or the keyword come from nowhere the notes show, or from an unverified line; or a generic keyword (a category word like "CLIENTS" / "KHÁCH") with lines available | The Map uses KEEP words, but the notes don't say what changed (before → after), or the keyword's people/places count is missing | Line 1's buyer words and the keyword trace to verified KEEP lines (the keyword: ≤4 words, 3+ people in 2+ places), or say honestly where they came from (the coach's quoted client words; "(my guess)") and the paste steps follow; the notes print before → after | yes |
+| LN6 | "Where I listened" and "show the research" | No block though pages were read; or a link, name, handle or channel name in it; or "show the research" prints less than the notes | Block present but over 4 lines, or its counts don't match the notes | 2–4 lines under the Map: lines, places, months, a count per place; line 1's source by role; unread places named; the closing "show the research" line; counts match the notes; the full notes print on request (KEEP with all lines, WATCH, their words, every query, places read / blocked / unread, unverified leads, what changed, still unknown) | no |
+| LN7 | Silent, on time, safe | Search talk, links or an apology before the Map; a question about research or tools on Day 0; the Map delayed for research; any sign-in, post, join, DM or desktop control | Started late (after "done"), or no tool and the paste steps are vague ("paste some comments") | Started after the first send, once the niche was known; nothing said about it before the Map; read-only, public pages only; helpers one place each when the app has them; no tool or places unread → the Map first, then with Week 1 the exact steps (platform, the buyer phrase, which items, how many, [place · month], names → letters) | no |
+
+**Pass:** LN1, LN3, LN4 and LN5 score 2, and the total is ≥12/14. A Day-0 run with nothing to search with scores LN1, LN2 and LN6 N/A (removed from the max) and passes on LN3–LN5 and LN7 at 2 (the Map from the dump, honestly marked, then the exact paste steps). The hard gates below apply as written.
 
 ## Hard gates
 
@@ -83,9 +99,14 @@ checks_vn = [
 - Zalo counts only as primary research, and only from the coach's own groups. Names become letters before pasting.
 - Surveys carry the PDP Law 91/2025 purpose and consent line.
 - Headings are in VN; IDs and status codes stay in English. "Giá ib" in the market is logged as a trust gap.
+- Day-0 queries are Vietnamese buyer phrases (no-accent forms too when buyers type that way), even when the coach dictates in English. Places: comments under the niche's top TikTok and YouTube videos, public Facebook groups and pages, Voz, Webtretho, Tinhte, Otofun, Google Maps reviews of competitors, Shopee and Lazada reviews (products), competitors' most-viewed titles, Google suggestions and "Mọi người cũng hỏi". TikTok, Facebook, Maps and Shopee often won't load without a browser: unread, never guessed, and they become the paste steps.
 
 ## Calibration (fictional coaches)
 
 **PASS (Starter).** EN, a bookkeeping coach for solo plumbers. "NO CLIENT INPUT" on top. 12 exact lines from 3 places (a trades forum, comments under a plumbing-business channel, Reddit via ChatGPT search); 4 software resellers discarded and counted; the coach's own line excluded. Two insights, both HYPOTHESIS, each naming its gap and "ask 3 past clients one question". RB1 2 · RB2 2 · RB3 1 · RB4 1 · RB5 1 · RB6 2 · RB7 1 · RB8 1 · RB9 2 · RB10 2 = 15/20. **Result: PASS** (Starter bar; Week 1 only).
 
 **FAIL.** VN, a coach for small flower-shop owners, Brief v1. Insight 2 reads "ROOT: khách mua hoa một lần rồi thôi vì tiệm không nhắc ngày kỷ niệm", backed by 3 comments under one Facebook post: 3 people, 1 place. RB4 = 0. **Result: FAIL** (RB4: "ROOT: khách mua hoa một lần rồi thôi vì tiệm không nhắc ngày kỷ niệm").
+
+**PASS (Day-0 pass).** EN, a fictional sleep coach for night-shift nurses, Cowork with helpers. 12 queries ("can't sleep after night shift", "melatonin stopped working", "night shift sleep reddit", …), 4 helpers, 11 pages opened in 4 places (Reddit via search, comments under 2 YouTube videos, a nurses' forum, Amazon reviews of blackout masks), 23 lines, a Facebook group blocked and named. KEEP: "wired but exhausted at 9am" (5 people, 3 places) → Map line 1 and the keyword "WIRED"; block: 3 lines with counts per place; the notes print "keyword: SLEEP → WIRED". LN1 2 · LN2 2 · LN3 2 · LN4 2 · LN5 2 · LN6 2 · LN7 2 = 14/14. **Result: PASS.**
+
+**FAIL (Day-0 pass).** VN, a fictional coach for small online-shop owners, Cowork, web tool on. 2 searches in the coach's own complaint ("coach đăng bài không có khách"), 2 off-topic pages opened, nothing kept; the long post carries the guessed line "Shop nào cũng than: 'Đăng hoài không ai mua.'"; keyword "KHÁCH". LN1 0 · LN4 0 · LN5 0. **Result: FAIL** (LN4: "Shop nào cũng than: 'Đăng hoài không ai mua.'").

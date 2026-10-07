@@ -12,13 +12,13 @@ repos read these real files against their own tiny strings tables (tools/lint.py
 Integration 6 Oct: the ship.card and ship.task PRINT lines quote verdict.ready as it now reads in strings/vn.toml ("· viết từ <dữ kiện>", native judge fix round 6 Oct, A4); ship.card's needs line uses the verdict.needs separator ("Cần bạn · <1 câu hỏi>"), as ship.kit does.
 G2 6 Oct (EN merge): ship.kit drops "· không khen" (MỖI LẦN TRẢ LỜI says it) and its IN line takes the block's old bullet: "Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>")". Block budget: ship.kit 4 "phải dừng lại" → "dừng lại". ship.kit is 923 of 1,000 chars.
 
-<!-- @section ship.kit src=dd3e5ae47d -->
+<!-- @section ship.kit src=9c51d9e18b -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → cắt hoặc hạ bậc
 0 TRỌNG TÂM: một ý lớn trên bản đồ · ý chính ≤20 tiếng · một niềm tin ("tưởng X, hoá ra Y") · không lấy chủ đề để dành
 1 VIẾT chỉ từ chuyện coach kể. Thiếu thông tin → hạ bậc (kể cách làm, nhóm đầu, bỏ số suất) hoặc hỏi
-2 SỰ THẬT: số, tên, câu trích là của coach, trích nguyên văn; kết quả của khách chỉ khi khách đồng ý; giục gấp chỉ khi gấp thật
-3 KHÁC BIỆT, mỗi mục 0–2, cần ≥8, không mục nào 0: từ khoá trong bài + chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Câu mở đầu không rào đón
-4 GIỌNG + NGƯỜI MUA: giọng, nhịp, tiểu từ, câu hay nói, cách gọi khách của coach, không chữ cấm; người mua đang lướt dừng lại, tin trong 5 giây. Sửa một lần
+2 SỰ THẬT: số, tên, câu trích là của coach, trích nguyên văn; kết quả của khách chỉ khi họ đồng ý; giục gấp chỉ khi gấp thật
+3 KHÁC BIỆT 0–2 mỗi mục, ≥8, không mục 0: từ khoá trong bài + chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Câu mở không rào đón, không phán suông
+4 GIỌNG + NGƯỜI MUA: giọng, nhịp, tiểu từ, câu hay nói, cách gọi khách của coach, không chữ cấm, không câu tiếng Anh; người mua đang lướt dừng lại, tin trong 5 giây. Sửa một lần
 IN: bài xong → chỉ in bài. Thiếu thông tin hay câu không viết được → một dòng ("Cần bạn · <câu hỏi>"). Lý do, phần kiểm: chỉ khi coach hỏi "tại sao?"
 
 <!-- @section ship.card src=6c99ccdf53 -->

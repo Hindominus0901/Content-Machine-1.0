@@ -28,7 +28,7 @@ Each file is used three ways:
 
 ## Index
 
-All 18 standards in spec §3.1, each written as `<id>.md` in this folder (≤150 lines, with a 3–5 line runtime check in EN and VN).
+All 18 standards in spec §3.1, plus `strategy-doc` (founder request, 7 Oct), each written as `<id>.md` in this folder (≤150 lines, with a 3–5 line runtime check in EN and VN).
 
 | id | Artifact | Critical items (must score 2) | Build pass |
 |---|---|---|---|
@@ -50,6 +50,7 @@ All 18 standards in spec §3.1, each written as `<id>.md` in this folder (≤150
 | `ad-script` | Ad | AD1 proof gate, AD2 pain not person, AD6 compliance, AD7 message match | ≥15/18, second read at build |
 | `launch-assets` | Launch assets P0–P9 | LA1 Ledger, LA2 proof and claims, LA4 keyword CTAs written as asked, LA6 consent and capture | ≥16/20, every asset passes its format, second read on the Ledger and P5–P8 |
 | `weekly-review` | Weekly review | WR1 traced, WR2 blank is not zero, WR4 honest calls | ≥15/18 |
+| `strategy-doc` | Content strategy document (CONTENT-STRATEGY.md / CHIEN-LUOC-NOI-DUNG.md) | SD1 complete, SD2 the coach's own words, SD3 nothing invented, SD4 big ideas distinct and on-Map, SD7 a system they can run, SD10 plain, natural, deliverable | ≥16/20 |
 
 ## Changing a standard
 

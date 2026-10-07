@@ -10,7 +10,7 @@ không bao giờ là pronouns (cặp máy – coach, hỏi ở trả lời 1); a
 connectors = chữ nối họ hay dùng khi kể; dialect = vùng + tiểu từ của họ; code_mix = chỉ chữ tiếng Anh họ thật sự chêm.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 bỏ "code_mix · humour" và chú thích connectors (enum ở §CM-CARD 3, code_mix ở mục 9); mục 3 bỏ "Giữ y cả tuần" (start-block XƯNG HÔ: giữ y mọi bài).
 
-<!-- @section voice.kit-build src=ec919aee3c -->
+<!-- @section voice.kit-build src=a8ac51f765 -->
 1 DỰNG thầm ngày 0 (§CM-CARD 3): lời xả = giọng nói; bài, tin họ dán, trang mở được = giọng viết. tone 3 chữ thường · rhythm ngắn, xen hay dài, có câu cụt, câu hỏi? · phrases, openers_closers, connectors: nguyên văn · audience_address, address_1to1: mục 3 · dialect: vùng, tiểu từ · written_vs_spoken chỉ khi có bài. Không hỏi gì về giọng; không chắc thì đoán giản dị.
 2 DÒNG TRÊN BẢN ĐỒ: giọng điệu bằng chữ họ tự nhận (thẳng · ấm · tưng tửng), không khen · nhịp ≤5 tiếng · câu họ lặp nhiều nhất, nguyên văn · xưng hô y như họ nói với khách. "sửa dòng 4": §CM-MAP.
 3 XƯNG HÔ VỚI KHÁCH = coach tự xưng + gọi khách, như đã nghe ("mình – các chị em"); chưa rõ: "mình – bạn". Nhắn riêng mà đổi cặp ("em – chị") → address_1to1. Không lẫn với pronouns.

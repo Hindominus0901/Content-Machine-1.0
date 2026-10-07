@@ -909,9 +909,9 @@ LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.
                           "LAUNCH-MESSAGES", "LAUNCH-LIVE", "LAUNCH-DEBRIEF", "ADS"]),
     "board": ("BOARD", ["BOARD", "BOARD-COLUMNS", "BOARD-ROWS", "BOARD-CAMPAIGNS", "NUDGES", "NUDGE-JOBS",
                         "NUDGE-RULES", "NUDGE-TEXTS", "NUDGE-CLAUDE", "NUDGE-LAUNCH"]),
-    "strategy": ("STRATEGY", ["STRATEGY", "SEASON", "WHAT-TO-SAY", "STRATEGY-REVIEW", "CHARACTER-DEEP",
-                              "CHARACTER-SCENES", "IDEAS", "MOMENTS", "PACKAGING", "HOOKS", "TEXT-FORMATS", "LONG",
-                              "LONG-INTRO", "LONG-CUTS"]),
+    "strategy": ("STRATEGY", ["STRATEGY", "SEASON", "WHAT-TO-SAY", "MONTH", "STRATEGY-REVIEW", "CHARACTER-DEEP",
+                              "CHARACTER-SCENES", "IDEAS", "MOMENTS", "LIKED", "PACKAGING", "HOOKS", "TEXT-FORMATS",
+                              "LONG", "LONG-INTRO", "LONG-CUTS"]),
 }
 PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy"]
 PLUGIN_AGENTS = ["cm-listener", "cm-researcher", "cm-reviewer", "cm-writer"]
@@ -1289,7 +1289,7 @@ class RealRepoLevelUps(unittest.TestCase):
                     self.assertNotIn("@section", text)
                     self.assertNotIn("{{", text)
                     budget = self.targets["budgets"][f"levelup_{area}"][ed]
-                    self.assertEqual(budget, 30720)
+                    self.assertEqual(budget, 36864 if area == "strategy" else 30720)   # STRATEGY: +MONTH, LIKED (7 Oct)
                     self.assertLessEqual(len(text.encode("utf-8")), budget, f"{path.name}: {len(text.encode('utf-8'))} B")
                     entry = self.manifest["artifacts"][f"{ed}/Level-ups/{file}-{suffix}.md"]
                     self.assertEqual(entry["budgets"][f"levelup_{area}"]["budget"], budget)

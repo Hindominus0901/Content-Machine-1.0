@@ -13,13 +13,17 @@
 
 [method]
 title_key = "method.title"
-# Convention: sections named <module>.kit-<name> ship in this file; other sections are
-# for the L3 skill references (P4) or the level-up files (P5). Selectors ending in * are prefix matches.
+# Convention: sections named <module>.kit-<name> ship in this file (except plan.kit-month* and liked.kit-*, in the
+# STRATEGY level-up since the founder's own Day 0, 7 Oct); other sections are for the L3 skill references (P4) or the level-up files (P5). Selectors ending in * are prefix matches.
 # Until a module is written its anchor is empty and build skips it (lint --release errors).
 
 [[method.anchor]]
 id = "SETUP"
-sections = ["setup.kit-*"]
+sections = ["setup.kit-dump", "setup.kit-facts", "setup.kit-pick", "setup.kit-order"]
+
+[[method.anchor]]
+id = "DIG"                       # founder 7 Oct: the 6-slot gap check and ≤4 story-first questions before the Map
+sections = ["setup.kit-dig"]
 
 [[method.anchor]]
 id = "CARD"
@@ -52,10 +56,6 @@ sections = ["fmt-short.kit-message*"]
 [[method.anchor]]
 id = "NUMBERS"
 sections = ["review.kit-*"]
-
-[[method.anchor]]
-id = "MONTH"
-sections = ["plan.kit-month*"]
 
 [[method.anchor]]
 id = "MAP"
@@ -92,10 +92,6 @@ sections = ["humanize.kit-natural"]
 [[method.anchor]]
 id = "GUARDRAILS"
 sections = ["guardrails.kit-*"]
-
-[[method.anchor]]
-id = "LIKED"
-sections = ["liked.kit-*"]
 
 [[method.anchor]]
 id = "LOCALE"
@@ -235,7 +231,9 @@ sections = ["automation.grow-task-claude"]
 id = "NUDGE-LAUNCH"
 sections = ["automation.grow-task-launch"]
 
-# --- Level-ups/STRATEGY-<SUFFIX>.md: what to say and how to say it (positioning, season, ideas, packaging, hooks, long video)
+# --- Level-ups/STRATEGY-<SUFFIX>.md: what to say and how to say it (positioning, season, next month, ideas, liked posts,
+# packaging, hooks, long video). MONTH and LIKED moved here from the method file on 7 Oct (low-frequency; the
+# room went to the Day-0 dig, the listening pass and the hook lab); their sections keep their kit-* ids.
 [levelup.strategy]
 file = "STRATEGY"
 skill = "cm-strategy"
@@ -253,6 +251,10 @@ sections = ["strategy.grow-season"]
 [[levelup.strategy.anchor]]
 id = "WHAT-TO-SAY"
 sections = ["strategy.grow-what"]
+
+[[levelup.strategy.anchor]]
+id = "MONTH"
+sections = ["plan.kit-month*"]
 
 [[levelup.strategy.anchor]]
 id = "STRATEGY-REVIEW"
@@ -273,6 +275,10 @@ sections = ["ideas.grow-engine"]
 [[levelup.strategy.anchor]]
 id = "MOMENTS"
 sections = ["ideas.grow-moments"]
+
+[[levelup.strategy.anchor]]
+id = "LIKED"
+sections = ["liked.kit-*"]
 
 [[levelup.strategy.anchor]]
 id = "PACKAGING"

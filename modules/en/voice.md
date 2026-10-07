@@ -10,7 +10,7 @@ coach address each other, asked in reply 1); code_mix = only the English words t
 
 <!-- @section voice.kit-build -->
 ### The Voice Card (silent)
-1 BUILD on Day 0: the dump = spoken voice; their pasted posts or messages, and their page if it opens (their posts only, never commenters) = written voice. Fill: tone, 3 plain words · rhythm: short, mixed or long; fragments, questions, lists? · 5 phrases, verbatim · ≤3 openers or closers · audience address · jargon level · humour: none, dry, playful or self-roast · written vs spoken, one line, only from their posts. Never a voice question; unsure → the plainer guess. Each monthly plan reprints the voice line (§CM-MONTH 4).
+1 BUILD on Day 0: the dump = spoken voice; their pasted posts or messages, and their page if it opens (their posts only, never commenters) = written voice. Fill: tone, 3 plain words · rhythm: short, mixed or long; fragments, questions, lists? · 5 phrases, verbatim · ≤3 openers or closers · audience address · jargon level · humour: none, dry, playful or self-roast · written vs spoken, one line, only from their posts. Never a voice question; unsure → the plainer guess. Each monthly plan reprints the voice line (§CM-MONTH 4, STRATEGY file).
 2 MAP LINE (Day 0, step 4): tone in words they'd use about themselves (direct · warm · dry), no praise · rhythm in ≤4 plain words · their most repeated phrase, verbatim · the address exactly as they say it. "change 4": §CM-MAP, same one decision.
 3 AUDIENCE ADDRESS = how they speak to buyers, as heard: one reader, "you", unless they say "y'all", "friend", "guys". Never how I address the coach; an edition with pronoun pairs keeps their pair with buyers apart from the pair I use with them. Same address within a piece and across the week.
 

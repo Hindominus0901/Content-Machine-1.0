@@ -79,10 +79,10 @@ description = "Content Machine strategy: positioning, what to post about, ideas,
 part = "strategy"
 jobs = """\
 - "positioning", "what makes me different", "my strategy": §CM-STRATEGY (it shapes every week through §CM-SEASON)
-- "what should I post about?", "I'm stuck", "no ideas", "what now?": §CM-WHAT-TO-SAY · "plan next month": §CM-STRATEGY-REVIEW
+- "what should I post about?", "I'm stuck", "no ideas", "what now?": §CM-WHAT-TO-SAY · "plan next month": §CM-MONTH, then §CM-STRATEGY-REVIEW
 - "make it more me", "who am I online": §CM-CHARACTER-DEEP, then §CM-CHARACTER-SCENES ("stance", "spicier")
-- "ideas", "give me ideas": §CM-IDEAS · "make it funny", "trend", "viral": §CM-MOMENTS
-- "title", "packaging", "thumbnail": §CM-PACKAGING · a short video: §CM-HOOKS · "carousel", "newsletter", "LinkedIn post": §CM-TEXT-FORMATS
+- "ideas", "give me ideas": §CM-IDEAS · "make it funny", "trend", "viral": §CM-MOMENTS · a post they like, "make my version": §CM-LIKED
+- "title", "headline", "packaging", "thumbnail": §CM-PACKAGING · a short video, "hook", "another hook": §CM-HOOKS · "carousel", "newsletter", "LinkedIn post": §CM-TEXT-FORMATS
 - "long video", "YouTube", "podcast": §CM-LONG with §CM-LONG-INTRO · after filming, "cut it": §CM-LONG-CUTS"""
 extra = ""
 
@@ -155,10 +155,10 @@ description = "Content Machine chiến lược: định vị, đăng gì bây gi
 part = "chiến lược"
 jobs = """\
 - "định vị", "mình khác người ta chỗ nào", "chiến lược": §CM-STRATEGY (rồi §CM-SEASON định hình từng tuần)
-- "đăng gì bây giờ?", "bí ý", "hết ý tưởng", "giờ làm gì?": §CM-WHAT-TO-SAY · "lên kế hoạch tháng sau": §CM-STRATEGY-REVIEW
+- "đăng gì bây giờ?", "bí ý", "hết ý tưởng", "giờ làm gì?": §CM-WHAT-TO-SAY · "lên kế hoạch tháng sau": §CM-MONTH, rồi §CM-STRATEGY-REVIEW
 - "giống mình hơn nữa", "trên mạng mình là ai": §CM-CHARACTER-DEEP, rồi §CM-CHARACTER-SCENES ("gắt hơn")
-- "cho mình ý tưởng", "gợi ý bài": §CM-IDEAS · "làm cho vui", "bắt trend", "viral": §CM-MOMENTS
-- "đặt tiêu đề", "ảnh bìa", "thumbnail": §CM-PACKAGING · video ngắn: §CM-HOOKS · "carousel", "tin Zalo", "bài dài Facebook": §CM-TEXT-FORMATS
+- "cho mình ý tưởng", "gợi ý bài": §CM-IDEAS · "làm cho vui", "bắt trend", "viral": §CM-MOMENTS · bài coach thích, "làm bản của mình": §CM-LIKED
+- "đặt tiêu đề", "tiêu đề", "ảnh bìa", "thumbnail": §CM-PACKAGING · video ngắn, "hook khác": §CM-HOOKS · "carousel", "tin Zalo", "bài dài Facebook": §CM-TEXT-FORMATS
 - "video dài", "YouTube", "podcast": §CM-LONG cùng §CM-LONG-INTRO · quay xong, "cắt ra": §CM-LONG-CUTS"""
 extra = ""
 

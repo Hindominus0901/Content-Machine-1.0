@@ -11,8 +11,8 @@ G1 6/10 (theo EN): FORMATS 7 K11 trỏ §CM-CTA-KIT 5 (lời xả từ chối xi
 Cắt bù byte G1 (không bỏ luật): FORMATS 6 và POSTS 7 thay claims.individual bằng "câu ở dòng LỜI HỨA" (start-block LỜI HỨA: kết quả của khách … kèm câu đó; cách §CM-LOCALE 7 đã làm).
 G2/VG1 6/10: FORMATS 5 K32 "nhớ ý rồi nói" (cùng chữ start-block bước 6, VK-17); FORMATS 7 VK-19 "quà viết đủ chữ", VK-2 "coach chê xin comment"; MESSAGES 5 VK-8 "Tin 1 = đủ quà" (chị lớn không "Dạ" với em; §CM-NATURAL 4 giữ "Dạ… ạ" khi người đọc lớn hơn). POSTS 6 chỉ đổi src: luật khung của câu đáng tiền nằm ở §CM-SETUP 2 (đọc ngày 0).
 
-<!-- @section fmt-short.kit-video-short kind=script src=14ec9b75a8 -->
-1 Câu cuối viết trước, nguyên văn, đáp câu đầu. 3 hook, một ý: chữ trên màn hình ≤6 tiếng (đếm) · khung hình đầu: một thứ quay được · câu đầu nguyên văn, ≤{{hook_max}} {{hook_unit}}, hé điều chưa nói chứ không chỉ nêu chủ đề.
+<!-- @section fmt-short.kit-video-short kind=script src=c266b43446 -->
+1 Câu cuối viết trước, nguyên văn, đáp câu đầu. 3 hook, một ý, không lặp nhau: chữ trên màn hình ≤6 tiếng (đếm) · khung hình đầu: một thứ quay được · câu đầu nguyên văn, ≤{{hook_max}} {{hook_unit}}. Mọi hook, tiêu đề: nháp thầm ≥12 câu, ≥6 dáng (lật niềm tin · câu khách · cảnh có đồ vật · lỗi đắt giá · số của coach · gọi đúng hoàn cảnh · làm lại từ đầu · trước/sau); giữ câu cụ thể, đúng chữ khách, hé điều câu cuối trả lời, đổi niềm tin, người ngoài muốn chia sẻ mà khách thấy đúng mình, không mồi. Câu phán suông ("Khách phải tin bạn.") trượt. Chỉ in câu thắng; "hook khác" → thêm 2 (§CM-HOOKS).
 2 Ý: 3 (QUAY HÔM NAY) đến 5, mỗi ý ≤18 tiếng, quay một lần, nối bằng "mà", "nên", "thế là", không xâu "rồi… rồi…".
 3 Độ dài: §CM-LOCALE 2.
 4 Caption trong khung chép: dòng 1 nối câu đầu · dòng 2 một chi tiết thật · dòng 3 lời mời (§CM-WEEK 6).
@@ -20,7 +20,7 @@ G2/VG1 6/10: FORMATS 5 K32 "nhớ ý rồi nói" (cùng chữ start-block bướ
 6 Kết quả của khách: nguyên văn, kèm câu ở dòng LỜI HỨA; kiểm thầm khách đồng ý chưa ("{{t:tick.client_ok}}" chỉ hiện khi "{{t:cmd.why}}").
 7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (coach chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
 
-<!-- @section fmt-short.kit-video-delivery src=b013232748 -->
+<!-- @section fmt-short.kit-video-delivery src=d9f7d72a66 -->
 - Cách nói: thẻ ý (mặc định) · nguyên văn ("/" chỗ ngắt hơi) · 3 gạch đầu dòng · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".
 - "Ngắn thôi", "đọc như robot": thẻ ý, một màn hình. Xin chữ trên màn hình dài hơn: vẫn ≤6, câu đó lên dòng 1 caption ("{{t:film.onscreen_reason}}").
 - Sửa thì nói lại, không cắt từ bản ghi ("Cắt ra à?" "{{t:film.no_clips}}").
@@ -28,9 +28,9 @@ G2/VG1 6/10: FORMATS 5 K32 "nhớ ý rồi nói" (cùng chữ start-block bướ
 - KIỂU VIỆT: Phần 1/2/3 (≤3 phần, mỗi phần đứng riêng, không tự đặt ngưỡng comment) · Góc nhìn {nghề} · Hỏi nhanh đáp gọn · Sự thật về nghề.
 - Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu họ không xin. Xin shot list: "{{t:film.words_only}}" Danh sách quay (Tuần 1, tuần nói chuyện; không phải QUAY HÔM NAY) mở bằng: "{{t:film.list_open}}"
 
-<!-- @section fmt-short.kit-post kind=script src=e23501195e -->
+<!-- @section fmt-short.kit-post kind=script src=a90dddf817 -->
 ### Bài "chia sẻ thật" (Facebook, LinkedIn, caption dài)
-1 Dòng 1 ≤18 tiếng, đứng riêng được; ý chính nằm trước "Xem thêm". Dòng 2 móc tiếp: cái giá, con số, hay câu hỏi bài sẽ trả lời.
+1 Dòng 1 ≤18 tiếng, chọn như §CM-FORMATS 1, đứng riêng được; ý chính nằm trước "Xem thêm". Dòng 2 móc tiếp: cái giá, con số, hay câu hỏi bài sẽ trả lời.
 2 Rồi bằng chứng → 3 ý ngắn, hoặc kể: cảnh của họ → cái giá, lỗi của chính họ → họ thấy ra gì → cái gì đổi → lời mời. Một câu chốt rõ; một việc để làm.
 3 Đoạn theo bài coach, thường 2–4 câu, sau hook ≤40% đoạn một câu, không nhãn kiểu "Bài học:", nói với một người. Chỗ cái giá: cảnh, ngày, con số thật của họ.
 4 Không link trong bài (gửi inbox, để comment), một hashtag chiến dịch không dấu; không kết bằng "Bạn thấy sao?". Bài dài 250–450 tiếng.

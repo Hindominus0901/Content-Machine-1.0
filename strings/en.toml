@@ -65,6 +65,7 @@
 "levelup.board.title"   = "{{name}} · Board and nudges"
 "levelup.strategy.title" = "{{name}} · Strategy"
 "anchor.setup"          = "Day 0 details"
+"anchor.dig"            = "Day 0: digging before the Map"
 "anchor.card"           = "The Brand Card"
 "anchor.talk"           = "Weekly Talk"
 "anchor.week"           = "Writing the week"
@@ -119,7 +120,7 @@
 "anchor.ideas"          = "The idea engine"
 "anchor.moments"        = "Moments from the buyer's world"
 "anchor.packaging"      = "Titles and thumbnail words"
-"anchor.hooks"          = "Hooks that do three jobs"
+"anchor.hooks"          = "Hooks and headlines"
 "anchor.text-formats"   = "Carousels, newsletters, LinkedIn"
 "anchor.long"           = "The filmed long video"
 "anchor.long-intro"     = "The first 45 seconds of a long video"
@@ -146,9 +147,9 @@
 # Day 0 details and the Brand Card (§ SETUP, CARD; P2 method anchors)
 "setup.no_setup"         = "No, nothing today."
 # G2 (DECISIONS 6 Oct, long dumps): dump.enough is the soft cut and carries the first missing-fact guess in the same
-# message (one question mark in all); dump.post_it follows the early win's best line in its copy box.
+# message (one question mark in all; since 7 Oct the first dig question, §CM-DIG); dump.post_it follows the early win's best line in its copy box.
 "dump.keep_going"        = "Keep going, or say 'done'."
-"dump.enough"            = "That's plenty for today. If you have one more story, tell it now. If not: {your first guess | say 'done'.}"
+"dump.enough"            = "That's plenty for today. If you have one more story, tell it now. If not: {your first question | say 'done'.}"
 "dump.post_it"           = "Post it as text today if you like."
 "check.pick"             = "My pick: {option}, because {reason}."
 "save.limit_claude_free" = "Hit the limit? Come back when it resets, same chat, say 'next'."
@@ -253,7 +254,7 @@
 "research.ask3"               = "Quick favor: I'm rewriting how I describe my work and want your words, not mine. {{t:ask3.question}} {{t:ask3.consent}}"
 "research.ask3_cold"          = "What's the hardest part of {problem} right now?"
 "research.drip"               = "Paste this week's 3 best comments or DMs, names swapped for letters, or say 'none'."
-"research.paste_steps"        = "Copy 10-20 posts or comments from 3 places your buyers talk when nobody's selling. Start each batch with [place · month]. Swap each name for a letter, same person same letter. Skip sellers."
+"research.paste_steps"        = "15 minutes, any day: open the top 3 {platform} videos for \"{phrase}\", copy 20 comments from each by people who are clearly {buyer}; skip sellers. Start with [{place} · {month}], names swapped for letters, same person same letter. Paste it all here."
 "research.no_client"          = "No client answers yet"
 
 # Posts the coach likes (§ LIKED; wf13-inspiration-spec §2). liked.cant_open and liked.copy_note are read by evals/graders.py
@@ -298,6 +299,13 @@
 "setup.guess"                  = "My guess: {guess}. Right?"
 "setup.guess_no_result"        = "My guess: no client result yet, so I'll use your own story. Right?"
 "setup.multi_income"           = "You earn from {n} things. My guess: write for {buyer}, because {why}. Right?"
+# Day-0 dig (§CM-DIG, founder 7 Oct): story-first, one question mark each, no guess; buyer-mirror wording, never named
+"dig.story"                    = "Think of one client you really helped. What was going on for them the week they first got in touch?"
+"dig.words"                    = "What did they say or write to you that first time, word for word if you can?"
+"dig.offer"                    = "When someone says yes to you, what exactly do they get, and what do they pay?"
+"dig.proof"                    = "What changed for that client, and would they be OK with you saying so?"
+"dig.stance"                   = "What does everyone in your field tell people that you think is wrong?"
+"dig.buyer"                    = "If you could clone one client, who would it be, and what was going on when they found you?"
 "setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it)."
 "map.ok"                       = "We'll run this for 4 weeks. OK, or change a line."
 "card.visible.to_them"         = "to them:"

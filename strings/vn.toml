@@ -129,7 +129,7 @@
 "anchor.ideas"          = { text = "Máy ra ý tưởng", src = "63928cb7de" }
 "anchor.moments"        = { text = "Khoảnh khắc trong đời khách", src = "31f1dcab57" }
 "anchor.packaging"      = { text = "Tiêu đề và chữ ảnh bìa", src = "99ed9bff12" }
-"anchor.hooks"          = { text = "Hook làm ba việc", src = "a90c7b37af" }
+"anchor.hooks"          = { text = "Nháp và chọn hook, tiêu đề", src = "e22bef751f" }
 "anchor.text-formats"   = { text = "Carousel, tin Zalo, bài dài", src = "ea8da2ceab" }
 "anchor.long"           = { text = "Video dài có quay", src = "acb5ba897a" }
 "anchor.long-intro"     = { text = "45 giây đầu video dài", src = "5ac6842b38" }
@@ -147,6 +147,7 @@
 
 # Setup-check variants, Phone Starter, new method anchors (P2)
 "anchor.setup" = { text = "Chi tiết ngày 0", src = "744b6f620c" }
+"anchor.dig" = { text = "Ngày 0: hỏi sâu trước Bản đồ", src = "7029e0a8a1" }
 "anchor.card" = { text = "Brand Card", src = "bef5186d8e" }
 "anchor.posts" = { text = "Bài viết và carousel", src = "f29c52a354" }
 "anchor.messages" = { text = "Email, tin nhắn Zalo và inbox", src = "72cd5a8ae5" }
@@ -162,7 +163,7 @@
 # Day 0 details and the Brand Card (§ SETUP, CARD; P2 method anchors)
 "setup.no_setup"         = { text = "Không, hôm nay chưa cần gì cả.", src = "3e6ebde339" }
 "dump.keep_going"        = { text = "Cứ kể tiếp, hết thì gõ 'xong'.", src = "ce841a838d" }
-"dump.enough"            = { text = "Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán | gõ 'xong'.}", src = "db8fcfa8e4" }
+"dump.enough"            = { text = "Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu hỏi đầu | gõ 'xong'.}", src = "dee4d28a32" }
 "dump.post_it"           = { text = "Câu này hôm nay đăng luôn cũng được.", src = "684f57031c" }
 "check.pick"             = { text = "Mình chọn {option}, vì {reason}.", src = "d1e588aea6" }
 "save.limit_claude_free" = { text = "Hết lượt thì đợi có lượt lại, quay về đoạn chat này, nhắn 'tiếp'.", src = "e2843e8de7" }
@@ -267,7 +268,7 @@
 "research.ask3"               = { text = "Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn lấy đúng câu của bạn. {{t:ask3.question}}", src = "4a79ebae37" }
 "research.ask3_cold"          = { text = "Chuyện {problem}, giờ bạn thấy khó nhất chỗ nào?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, tên đổi thành chữ cái. Không có thì gõ 'không có'.", src = "34c9df6797" }
-"research.paste_steps"        = { text = "Chép 10–20 bài hoặc comment ở 3 chỗ khách bạn hay vào nói chuyện, chỗ không ai bán hàng. Đầu mỗi đợt ghi [nơi · tháng]. Tên đổi thành chữ cái, cùng người thì cùng chữ. Bỏ qua người bán.", src = "79be035ed1" }
+"research.paste_steps"        = { text = "Lúc nào rảnh 15 phút: mở 3 video {platform} nhiều view nhất khi tìm \"{phrase}\", mỗi video chép 20 comment của người rõ là {buyer}, bỏ người bán. Đầu đợt ghi [{place} · {month}], tên đổi thành chữ cái, cùng người cùng chữ. Rồi dán hết vào đây.", src = "b5dd208def" }
 "research.no_client"          = { text = "Chưa có khách nào trả lời", src = "418a8548c2" }
 
 # Posts the coach likes (§ LIKED; wf13-inspiration-spec §2). liked.cant_open and liked.copy_note are read by evals/graders.py
@@ -312,6 +313,13 @@
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
 "setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?", src = "dba7f66234" }
 "setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì {why}. Đúng không?", src = "c52dee2060" }
+# Hỏi sâu ngày 0 (§CM-DIG, founder 7/10): hỏi bằng một chuyện, mỗi câu một dấu hỏi, không kèm câu đoán; cặp xưng hô đổi theo coach chọn
+"dig.story"                    = { text = "Bạn nghĩ tới một khách bạn giúp được nhiều nhất nhé. Tuần đầu tìm tới bạn, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
+"dig.words"                    = { text = "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.", src = "ec4e67239a" }
+"dig.offer"                    = { text = "Khách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?", src = "fb41fa4d52" }
+"dig.proof"                    = { text = "Làm với bạn xong, khách đó khác đi thế nào, và họ có chịu cho bạn kể lại không?", src = "173dd23aa4" }
+"dig.stance"                   = { text = "Trong nghề của bạn, người ta hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
+"dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, và lúc tìm tới bạn họ đang thế nào?", src = "4df4d2ad4e" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "df8c84d17e" }
 "map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }
