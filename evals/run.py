@@ -35,6 +35,7 @@ each reply"). A run passes when graders.py passes and, for a case, every asserti
 from __future__ import annotations
 
 import argparse
+import datetime
 import importlib.util
 import json
 import os
@@ -118,6 +119,32 @@ def persona_day0(pdir: Path) -> str:
     """persona.toml day0 ("2026-10-11 20:45"): the persona's story is set on that date, so it wins over --today."""
     path = pdir / "persona.toml"
     return str(load_toml(path).get("day0", "")).strip() if path.exists() else ""
+
+
+WEEKDAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+MONTHS = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+          "November", "December")
+
+
+def run_date(value: str = "") -> str:
+    """The date MACHINE.md gives the machine side: "Tuesday 6 October 2026" from "2026-10-06" (a persona day0 time stays:
+    "2026-10-12 06:45" → "Monday 12 October 2026, 06:45"); no value is the day the packet is made. Always a real date,
+    never "the date in the transcript" (no transcript row carries one, so each simulator invented its own; review
+    retest-vg6-g7 P18). A value that is not YYYY-MM-DD[ HH:MM] is passed through as given."""
+    text = value.strip()
+    m = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{1,2}:\d{2}))?", text)
+    day = None
+    if not text:
+        day = datetime.date.today()
+    elif m:
+        try:
+            day = datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        except ValueError:
+            pass
+    if day is None:
+        return text
+    stamp = f"{WEEKDAYS[day.weekday()]} {day.day} {MONTHS[day.month - 1]} {day.year}"
+    return f"{stamp}, {m.group(4)}" if m and m.group(4) else stamp
 
 
 def personas(root: Path, edition: str) -> list[str]:
@@ -302,7 +329,7 @@ def write_packet(root: Path, out_root: Path, rid: str, meta: dict, kit: dict[str
     files = {
         "README.md": PROTOCOL.format(run_id=rid, run_dir=rel(run_dir, root)),
         "MACHINE.md": MACHINE.format(lane=lane, about=spec["about"], model=spec["model"], edition=ed.id, app=app,
-                                     method_line=method_line, today=today),
+                                     method_line=method_line, today=run_date(today)),
         "COACH.md": coach_md,
     }
     for name, text in files.items():
@@ -981,7 +1008,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--repeat", type=int, default=1, help="runs per persona or case (G2 uses 3)")
     p.add_argument("--tag", default="", help="prefix for the run ids (e.g. a round name)")
     p.add_argument("--out", type=Path, default=None, help="folder for the runs (default evals/runs)")
-    p.add_argument("--today", default="", help="the date the machine side is told (YYYY-MM-DD)")
+    p.add_argument("--today", default="", help="the date the machine side is told (YYYY-MM-DD; default: the day the "
+                   "packet is made; a persona's day0 wins in a day0 suite)")
     g = sub.add_parser("grade", help="grade run folders; writes grades.json in each")
     g.add_argument("runs", nargs="+", type=Path)
     s = sub.add_parser("summary", help="a markdown table of graded runs (grades them first if needed)")
@@ -997,7 +1025,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.repeat < 1:
                 raise RunError("--repeat must be at least 1")
             made = make_packets(root, args.suite, args.edition, args.lane, args.persona, args.repeat, args.tag,
-                                args.module, args.case, args.out, args.today or "the date in the transcript")
+                                args.module, args.case, args.out, args.today)
             for d in made:
                 print(rel(d, root))
             return 0

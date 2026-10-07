@@ -76,6 +76,10 @@ must_not = [
 ]
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# Courtney is the one named client who says "the crib is lava"; "every parent I have" is anonymous.
+day0_heard = false
 candidates = [
   { term = "crib is lava", origin = "Courtney's verbatim first-call words in dump chunk 1 ('He acts like the crib is lava.'); echoed by 5 different audience members in 7 paste-dump lines (one duplicate) and 3 distinct research lines (1, 13, 31; line 24 duplicates 1)", said_by_audience = true },
   { term = "human pacifier", origin = "a mom in the local Facebook group, quoted second-hand in dump chunk 2; 2 different paste-dump people (a comment and a DM); research line 4", said_by_audience = true },

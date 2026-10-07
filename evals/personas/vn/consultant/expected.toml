@@ -47,6 +47,10 @@ side_door = "Buổi đào tạo nội bộ nửa ngày 'phỏng vấn có cấu 
 income_question_answer = "Khoa đã nói trong dump: 'Tháng ni tiền chủ yếu từ gói 3 tháng'; máy không hỏi lại nguồn nào nuôi anh."
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# One identified client (the seafood-chain owner) plus 3 anonymous "chủ doanh nghiệp nào cũng nói" lines; the other candidate (nghỉ ngang) is one unnamed workshop owner.
+day0_heard = false
 candidates = [
   { term = "tuyển hoài", origin = "lời chủ chuỗi nhà hàng hải sản trong dump: 'Tôi tuyển hoài mà không giữ được ai'; Khoa nói 'chủ doanh nghiệp nào gặp tôi cũng nói kiểu đó'; lặp lại trong paste-dump và research-paste", said_by_audience = true },
   { term = "nghỉ ngang", origin = "lời chủ xưởng: 'có đứa nghỉ ngang không nói một tiếng'; có trong paste-dump và research-paste", said_by_audience = true },

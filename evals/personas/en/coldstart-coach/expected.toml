@@ -66,6 +66,10 @@ must_not = [
 ]
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# Dan has no clients yet: "keep up" comes from an unnamed 2015 gym client and an unnamed sideline dad.
+day0_heard = false
 candidates = [
   { term = "KEEP UP", origin = "audience: soccer dad 'Man, I just want to keep up with my kids'; 2015 gym member 'I just couldn't keep up with it, man'; 7 keyword comments and 6 more keep-up phrases in paste-dump; research lines 1, 21, 31", said_by_audience = true },
   { term = "NEVER ZERO", origin = "coach: 'Zero is the killer' and the minimum week", said_by_audience = false },

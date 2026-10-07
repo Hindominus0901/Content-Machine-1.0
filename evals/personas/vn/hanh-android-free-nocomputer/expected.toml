@@ -57,6 +57,10 @@ side_door = "Spa ở Cầu Giấy (nguồn nuôi nhà) không bị cất như m�
 income_question_answer = "Chị đã nói trong dump: spa là chính, nuôi cả nhà, nhưng content để kéo các em chủ spa vào lớp kèm. Máy không cần hỏi nguồn nào nuôi chị; nếu hỏi thì đúng một câu và nhận 'spa', không đổi người mua."
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# Thảo is the one named client who says "ngại chào"; "bao nhiêu em nói y hệt" is anonymous (Loan's quote is a different phrase).
+day0_heard = false
 candidates = [
   { term = "ngại chào", origin = "lời Thảo trong dump: 'Chị ơi em ngại chào lắm, cứ mở miệng chào thẻ là em thấy mình như đi lừa người ta'; chị Hạnh nói bao nhiêu em nói y hệt; lặp lại trong paste-dump và research-paste", said_by_audience = true },
   { term = "chặt chém", origin = "lời chủ spa: 'em sợ khách nghĩ mình chặt chém'; có trong paste-dump và research-paste", said_by_audience = true },

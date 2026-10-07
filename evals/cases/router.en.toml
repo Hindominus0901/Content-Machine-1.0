@@ -140,7 +140,7 @@ contains = []
 not_contains = []
 regex = [
   '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
-  '''(?i)\(my guess; one word changes it\)''',
+  '''(?i)\(my guess, where unheard; one word changes it\)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -2625,7 +2625,7 @@ input = '''ok. Bree can film it at the studio after pickup'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)\(my guess; one word changes it\)''',
+  '''(?i)\(my guess, where unheard; one word changes it\)''',
   '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
   '''(?i)\b(?:3|three) (?:past |former )?clients\b''',
   '''(?i)\bnothing room\b''',
@@ -2645,7 +2645,7 @@ invariants = ["I1", "I3", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → one reply: Map + FILM TODAY → any answer but a change (§CM-TODAY 1) → one reply: Week 1 → Brand Card + save line → NEXT'; §CM-TODAY 1 'After the Map + FILM TODAY any message but a Map change gets all of Week 1 … never "want Week 1?"' (K2, DECISIONS 6 Oct 2026). Her message is not a change, so it also settles the Map. setup.kit-facts 5: platform and email list are asked only in the dump prompt's list (no question mark), talk day, delivery and hours never (G2 K24); what the dump left unheard is guessed and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
+notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13): Week 1 arrives automatically in the next reply; setup.kit-order 9 'missing facts → one reply: Map + FILM TODAY → any answer but a change (§CM-TODAY 1) → one reply: Week 1 → Brand Card + save line → NEXT'; §CM-TODAY 1 'After the Map + FILM TODAY any message but a Map change gets all of Week 1 … never "want Week 1?"' (K2, DECISIONS 6 Oct 2026). Her message is not a change, so it also settles the Map. setup.kit-facts 5: platform and email list are asked only in the dump prompt's list (no question mark), talk day, delivery and hours never (G2 K24); what the dump left unheard is guessed and named once above Week 1 with setup.plan_guess ('For {platform} · talk day {day} (my guess, where unheard; one word changes it).'), a line only this step has. plan.kit-week 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece; start-block 6: the gift, DM replies and the 'ask 3 past clients one question' message. ChatGPT Plus: all of Week 1 in one reply. The Brand Card and save line may close this reply or come in the next (Day 0's last reply); no 'That's today done' stop point and no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file (§CM-SETUP 5), so the compact kit cannot print it; convert.en.001 covers Week 1 arriving unasked on S0."""
 
 [[case]]
 id = "router.en.095"
@@ -2666,7 +2666,7 @@ regex = [
   '''NEXT →[^\n]*['‘’"“]?next\b[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?i)\(my guess; one word changes it\)''',
+  '''(?i)\(my guess, where unheard; one word changes it\)''',
   '''(?i)\bDM reply (?:1|2)\b''',
   '''(?i)\b(?:3|three) (?:past |former )?clients\b''',
   '''(?i)that(?:'|’)s today done|or stop here|say ['‘’"“]?next['‘’"”]? for your week 1 scripts''',

@@ -49,6 +49,10 @@ side_door = "Nội thất cho chủ homestay, căn hộ cho thuê (chừng 20% d
 income_bridge_line_expected = true   # after the dump the machine says, in anh–em, that he earns from several things and asks which one pays the bills this month
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# chị Loan is the one named client who says "phát sinh"; "gần như ai gọi lần đầu" is anonymous.
+day0_heard = false
 candidates = [
   { term = "phát sinh", origin = "audience: chị Loan \"Em sợ nhất là đập ra rồi mới phát sinh\"; câu gọi lần đầu gần như ai cũng nói; comment và nhóm FB tự dùng (paste-dump, research-paste)", said_by_audience = true },
   { term = "đập ra mới biết", origin = "audience: research-paste (\"đập ra mới biết ống nước mục\") và paste-dump (\"đập ra rồi mới phát sinh\")", said_by_audience = true },

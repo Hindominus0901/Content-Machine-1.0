@@ -73,6 +73,10 @@ side_door = "Lớp rèn chữ cuối tuần (đang nuôi nhà, hơn 11 triệu m
 one_message_example = "Cô giúp mấy mẹ đi làm có con lớp 1–3 đang \"tối nào kèm con học cũng tăng xông\" cho con tự ngồi vô bàn, bằng cách Kèm Lùi, thay vì ngồi canh. (minh hoạ)"
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# mẹ bé Su is the one named client who says "tăng xông"; the other quotes are "một mẹ" and "mấy mẹ" (anonymous).
+day0_heard = false
 candidates = [
   { term = "tăng xông", origin = "audience: mẹ bé lớp 2 ở Bình Thủy buổi Zoom đầu \"Cô ơi, tối nào kèm con học em cũng tăng xông\"; cô nói \"chữ của mấy mẹ chớ hổng phải chữ của cô\"; 7 người khác nhau trong paste-dump, 3 dòng khác nhau trong research-paste", said_by_audience = true },
   { term = "ngồi canh", origin = "audience + coach: mẹ \"em phải ngồi canh nó từng chữ\"; cũng là tên cách cũ của cô; 2 người trong paste-dump, 2 dòng trong research-paste (dòng 15 là câu của chính cô, không tính)", said_by_audience = true },

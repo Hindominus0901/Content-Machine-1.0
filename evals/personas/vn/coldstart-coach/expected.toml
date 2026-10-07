@@ -43,6 +43,10 @@ must_not_park = [
 side_door = ""
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# No clients yet: "cứng đơ" comes from unnamed studio students ("bạn nào cũng nói").
+day0_heard = false
 candidates = [
   { term = "cứng đơ", origin = "lời học viên studio trong dump: 'ngồi tới 4 giờ chiều là lưng cứng đơ'; lặp lại nhiều lần trong paste-dump và research-paste", said_by_audience = true },
   { term = "4 giờ chiều", origin = "mốc giờ khách nói; Minh Anh tự gọi 'cái lưng 4 giờ chiều'", said_by_audience = true },

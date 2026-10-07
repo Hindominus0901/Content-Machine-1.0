@@ -1745,10 +1745,11 @@ class G1RoundGraderTests(TempRepo):
         report = self.day0(("coach", "next"), ("machine", WEEK_REPLY), ("coach", "ok"), ("machine", CARD_REPLY))
         shape = self.inv(report, "day0_shape")
         self.assertPasses(report, "day0_shape")
-        # FILM TODAY, YOUR WORD, KNOWN FOR, email (no list named), keyword outside the ask (Week 1, FILM TODAY, its
-        # text version), card top, whole card, save line, placeholders, "Shorter" (not asked)
+        # FILM TODAY, YOUR WORD, its guess tag (no [keyword] day0_heard: not run), KNOWN FOR, email (no list named),
+        # keyword outside the ask (Week 1, FILM TODAY, its text version), card top, whole card, save line, placeholders,
+        # "Shorter" (not asked)
         self.assertEqual([i["pass"] for i in shape["items"]],
-                         [True, True, True, None, True, True, True, True, True, True, True, None])
+                         [True, True, None, True, None, True, True, True, True, True, True, True, None])
 
     def test_g8_film_today_box_quiet_and_your_word(self):
         floor = FILM_REPLY.replace("```\n", "").replace("    ```", "").replace("(quieter: say 'quiet')", "")
@@ -1930,8 +1931,8 @@ class G1VerifierHoleTests(TempRepo):
                  "first, the reel or the post?\nNEXT → Tell me.")
         self.assertFails(self.grade([("coach", "go"), ("machine", guess), ("coach", "ok"), ("machine", MAP_REPLY)]),
                          "I6", "2 decision prompts")
-        plan = (f"{TAG}Week 1\nFor Instagram · talk day Monday (my guess; one word changes it).\nWhich one do you want "
-                "first, the reel or the post?\nNEXT → Say 'ok'.")
+        plan = (f"{TAG}Week 1\nFor Instagram · talk day Monday (my guess, where unheard; one word changes it).\n"
+                "Which one do you want first, the reel or the post?\nNEXT → Say 'ok'.")
         self.assertFails(self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", plan)]), "I6")
         for question in ("Should we choose the reel or the post?", "Can we decide on Tuesday or Thursday?"):
             with self.subTest(question=question):                   # a question is never the machine's declarative
@@ -3300,6 +3301,150 @@ class VG5RoundGraderTests(TempRepo):
         self.assertEqual((day0["session_max_turns"], day0["session_max_turns_vn"]), (10, 11))
         block = (REPO / "core" / "vn" / "start-block.md").read_text(encoding="utf-8")
         self.assertRegex(block, r"coach nhắn ≤11 lượt")
+
+
+class VG6G7RoundGraderTests(TempRepo):
+    """Grader fixes from the VG6 / G7 retest (qa/runs/retest-vg6-g7/review.md §4 and §8, G44-G46): every false
+    positive the review found must pass, every real defect the same check caught must still fail."""
+
+    CHUNK = VG5RoundGraderTests.CHUNK
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", VG4_STRINGS))
+        self.write("evals/acceptance.toml", """
+            [day0]
+            map_max_turns_en = 6
+            map_max_turns_vn = 7
+            film_ready_max_minutes = 20
+            session_max_turns = 10
+            session_max_turns_vn = 11
+            map_lines = 4
+            """)
+        self.write("evals/personas/vn/tuan/persona.toml", VG5_PERSONA)
+        self.write("evals/personas/vn/tuan/expected.toml", VG5_EXPECTED)
+        self.write("evals/personas/vn/tuan/answers.md", f"## Dump chunk 1\n{self.CHUNK}\n")
+        self.write("evals/personas/vn/tuan/written-posts.md", VG5_POSTS)
+
+    def vn(self, *extra, **kw):
+        turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", VG_MAP)] + list(extra)
+        return self.grade(turns, persona="vn/tuan", edition="vn", suite="day0", **kw)
+
+    def item(self, report: dict, check: str, name: str) -> dict:
+        return next(i for i in self.inv(report, check)["items"] if i["item"].startswith(name))
+
+    # -- G44: "chuyện chị …" is the client in the third person, not a pronoun slip to an anh coach
+    def test_g44_a_clients_story_is_not_a_pronoun_slip(self):
+        nxt = f"{TAG}Xả ý\nTIẾP → Kể tiếp chuyện chị trong toilet nhà mẫu."          # Tuấn's FP, in the NEXT line
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", nxt)), "I15")
+        prose = f"{TAG}Xả ý\nAnh kể tiếp chuyện chị dạy mầm non nha.\nTIẾP → Gõ một chữ."
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", prose)), "I15")
+        for slip in ("Chị thấy đúng không?", "Kể tiếp đi, chị nghe nè.", "Chuyện đó chị lo, tiếp nha."):
+            with self.subTest(slip=slip):
+                report = self.vn(("coach", "ok"), ("machine", f"{TAG}Xả ý\n{slip}\nTIẾP → Gõ một chữ."))
+                self.assertFails(report, "I15", "outside the pair anh–em")
+
+    # -- G45: the piece's title is the coach's label ("… đổi chị/anh cho đúng người"); the message under it is checked
+    TITLE = "Hỏi 3 khách cũ · thứ Năm, 08/10 · Zalo, gửi riêng từng nhà, đổi chị/anh cho đúng người"
+    MESSAGE = ("Nhờ chị một chút: em đang viết lại phần giới thiệu công việc, muốn lấy đúng câu của chị. Hồi mới tìm "
+               "đến em, chị đang loay hoay nhất chuyện gì?")
+
+    def messages(self, title: str, body: str) -> str:
+        return f"{TAG}Tuần 1\n{title}\n```\n{body}\n```\nTIẾP → Nhắn 'tiếp'."
+
+    def test_g45_the_title_is_not_the_message(self):
+        report = self.vn(("coach", "ok"), ("machine", self.messages(self.TITLE, self.MESSAGE)))
+        self.assertPasses(report, "vn_messages")                                      # Tuấn's FP
+        self.assertIs(self.item(report, "vn_messages", "no \"anh/chị\" slash")["pass"], True)
+        for body in ("Chào anh/chị, " + self.MESSAGE, self.MESSAGE.replace("chị đang", "anh/chị đang")):
+            with self.subTest(body=body[:30]):
+                report = self.vn(("coach", "ok"), ("machine", self.messages(self.TITLE, body)))
+                self.assertFails(report, "vn_messages", '"anh/chị" in a message')    # inside the box it still fails
+        # a message with no title line of its own (a box under a label) is checked whole
+        boxed = f"{TAG}Tuần 1\nTin Zalo gửi riêng\n```\nChào anh/chị, {self.MESSAGE}\n```\nTIẾP → ok"
+        self.assertFails(self.vn(("coach", "ok"), ("machine", boxed)), "vn_messages", '"anh/chị" in a message')
+        chunks = graders._audience_chunks(graders.load_run(self.run_dir(
+            [("coach", "ok"), ("machine", self.messages(self.TITLE, self.MESSAGE))], persona="vn/tuan", edition="vn"),
+            self.root).replies[0], body_only=True)
+        self.assertNotIn("đổi chị/anh", "\n".join(text for _, text in chunks))
+
+    # -- G46: YOUR WORD carries the guess tag exactly when the dump does not give it from 3+ named clients
+    GUESS = "YOUR WORD carries the guess tag"
+
+    def keyword(self, heard=None, persona: str = "en/test-coach") -> None:
+        extra = "" if heard is None else f"\n[keyword]\nday0_heard = {'true' if heard else 'false'}\n"
+        base = EXPECTED if persona.startswith("en/") else VG5_EXPECTED
+        self.write(f"evals/personas/{persona}/expected.toml", base + extra)
+
+    def test_g46_a_keyword_the_dump_does_not_give_is_tagged(self):
+        name = self.GUESS
+        self.keyword(False)
+        untagged = self.grade(GOOD)                                    # "YOUR WORD: CHAPTER": one client + "they all say it"
+        self.assertFails(untagged, "day0_shape", 'YOUR WORD "chapter" has no guess tag')
+        self.assertIs(self.item(untagged, "day0_shape", name)["pass"], False)
+        for tag in ("(my guess)", "(my guess, where unheard; one word changes it)", "[guess]",
+                    "(mình đoán, Tuần 1 kiểm lại)", "(em đoán, Tuần 1 kiểm lại)"):
+            with self.subTest(tag=tag):
+                tagged = [(r, t.replace("YOUR WORD: CHAPTER", f"YOUR WORD: CHAPTER {tag}")) for r, t in GOOD]
+                self.assertIs(self.item(self.grade(tagged), "day0_shape", name)["pass"], True)
+        # a note that is not the tag does not count
+        for note in ("(Lorraine's \"one more chapter\")", "(what clients keep saying to you)", "(she guessed it)"):
+            with self.subTest(note=note):
+                noted = [(r, t.replace("YOUR WORD: CHAPTER", f"YOUR WORD: CHAPTER {note}")) for r, t in GOOD]
+                self.assertIs(self.item(self.grade(noted), "day0_shape", name)["pass"], False)
+
+    def test_g46_a_heard_keyword_carries_no_tag(self):
+        name = self.GUESS
+        self.keyword(True)
+        self.assertIs(self.item(self.grade(GOOD), "day0_shape", name)["pass"], True)
+        tagged = [(r, t.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER (my guess)")) for r, t in GOOD]
+        self.assertFails(self.grade(tagged), "day0_shape", 'YOUR WORD "chapter" is tagged as a guess')
+
+    def test_g46_runs_only_with_the_key_and_a_printed_map(self):
+        name = self.GUESS
+        self.assertIsNone(self.item(self.grade(GOOD), "day0_shape", name)["pass"])      # no [keyword] day0_heard
+        self.keyword(None)
+        self.assertIsNone(self.item(self.grade(GOOD), "day0_shape", name)["pass"])
+        self.keyword(False)
+        no_map = self.grade(GOOD[:3], suite="day0")                                      # the dump, no Map yet
+        self.assertIsNone(self.item(no_map, "day0_shape", name)["pass"])
+        self.assertNotIn("day0_shape", no_map["failed"])
+        self.write("evals/personas/en/test-coach/expected.toml", EXPECTED + '\n[keyword]\nday0_heard = "no"\n')
+        self.assertIsNone(self.item(self.grade(GOOD), "day0_shape", name)["pass"])      # not a boolean: ignored
+
+    def test_g46_the_first_printed_map_decides(self):
+        """The machine's own pick is checked; a word the coach changes later is theirs and needs no tag."""
+        name = self.GUESS
+        self.keyword(False)
+        again = [("coach", "make my word COFFEE"), ("machine", MAP_REPLY.replace("CHAPTER", "COFFEE"))]
+        tagged_first = [(r, t.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER (my guess)")) for r, t in GOOD]
+        tagged_first = tagged_first[:6] + [GOOD[6]] + again + GOOD[7:]
+        self.assertIs(self.item(self.grade(tagged_first), "day0_shape", name)["pass"], True)
+        untagged_first = GOOD[:6] + [GOOD[6]] + [("coach", "tag it"), ("machine", MAP_REPLY.replace(
+            "CHAPTER", "CHAPTER (my guess)"))] + GOOD[7:]
+        self.assertIs(self.item(self.grade(untagged_first), "day0_shape", name)["pass"], False)
+
+    def test_g46_vn_map(self):
+        name = self.GUESS
+        self.keyword(False, "vn/tuan")
+        untagged = self.vn()                                           # "3 TỪ KHOÁ: TUYỂN HOÀI (không dấu: TUYEN HOAI)"
+        self.assertFails(untagged, "day0_shape", 'YOUR WORD "tuyển hoài" has no guess tag')
+        for tag in ("(mình đoán, Tuần 1 kiểm lại)", "(em đoán, Tuần 1 kiểm lại)", "· em đoán, Tuần 1 kiểm lại"):
+            with self.subTest(tag=tag):
+                text = VG_MAP.replace("(không dấu: TUYEN HOAI)", f"(không dấu: TUYEN HOAI) {tag}")
+                turns = [("coach", "Bắt đầu"), ("machine", VG_PROMPT), ("coach", self.CHUNK), ("machine", text)]
+                report = self.grade(turns, persona="vn/tuan", edition="vn", suite="day0")
+                self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
+        self.keyword(True, "vn/tuan")                                  # heard (3+ named clients): no tag wanted
+        self.assertIs(self.item(self.vn(), "day0_shape", name)["pass"], True)
+
+    def test_g46_the_tag_pattern(self):
+        for text in ("(my guess)", "(mình đoán, Tuần 1 kiểm lại)", "(em đoán)", "· mình đoán, Tuần 1 kiểm lại", "[guess]",
+                     "TOO LATE, from \"Is it too late for me?\" (my guess)"):
+            self.assertTrue(graders.GUESS_TAG_RE.search(text), text)
+        for text in ("CHAPTER", "(không dấu: TUYEN HOAI)", "(your clients' word: \"without the badge\")",
+                     "(Lorraine's \"one more chapter\")", "(she guessed it)", "(khách nói)"):
+            self.assertFalse(graders.GUESS_TAG_RE.search(text), text)
 
 
 class LoaderTests(TempRepo):

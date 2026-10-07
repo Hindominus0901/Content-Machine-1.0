@@ -609,7 +609,7 @@ regex = [
   '''(?ms)\A(?=.*We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.)(?=.*^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY)''',
   '''Film it now, or post the caption as text\.''',
   '''(?s)FILM TODAY(?:(?!We(?:'|’)ll run this).)*?```(?:(?!```).)*?```(?:(?!We(?:'|’)ll run this).)*?```(?:(?!```).){20,}?```''',
-  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:; one word changes it)?\)''',
+  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:, where unheard)?(?:; one word changes it)?\)''',
   '''(?i)ask (your )?(3|three) past clients''',
   '''WHAT YOU SAY:''',
   '''HOW YOU SAY IT:''',
@@ -700,7 +700,7 @@ contains = []
 not_contains = []
 regex = [
   '''Film it now, or post the caption as text\.''',
-  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:; one word changes it)?\)''',
+  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:, where unheard)?(?:; one word changes it)?\)''',
   '''(?i)\b(hit reply|reply to me|just reply|reply and tell me)\b''',
   '''(?i)\blist_size\b\W{0,3}(?:about\s*|~)?900\b''',
   '''for the machine, no need to read''',
@@ -1040,7 +1040,7 @@ contains = []
 not_contains = []
 regex = [
   '''(?i)\b(reel|short|video)\b''',
-  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:; one word changes it)?\)''',
+  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:, where unheard)?(?:; one word changes it)?\)''',
 ]
 not_regex = [
   '''(?i)\byour (email )?list\b''',
@@ -1212,7 +1212,7 @@ input = '''[turn 1] ok got it
 contains = []
 not_contains = []
 regex = [
-  '''(?i)\bFor [^\n]{2,60}· talk day (?!mon)\w+ · email list: [^\n()]{1,24} \(my guess; one word changes it\)\.''',
+  '''(?i)\bFor [^\n]{2,60}· talk day (?!mon)\w+ · email list: [^\n()]{1,24} \(my guess, where unheard; one word changes it\)\.''',
   '''(?i)\bfri(day)?\b''',
   '''(?i)\b(nudge|remind)''',
   '''NEXT →[^\n]*Film today(?:'|’)s video''',
@@ -1221,7 +1221,7 @@ regex = [
 not_regex = [
   '''(?i)\b(?:which|what) (?:day|talk day)\b[^\n?]{0,30}\byou\b[^\n]*\?''',
   '''(?i)\bwhen (?:do|can|will|should) you (?:talk|record)\b[^\n]*\?''',
-  '''(?s)\(my guess; one word changes it\).*\(my guess; one word changes it\)''',
+  '''(?s)\(my guess, where unheard; one word changes it\).*\(my guess, where unheard; one word changes it\)''',
   '''(?i)that(?:'|’)s today done''',
   '''(?i)outside (the|this) project''',
   '''(?i)\bnew chat\b[^\n]{0,30}\boutside\b''',
@@ -1233,7 +1233,7 @@ invariants = ["I1", "I5", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. R12, R13 and setup.kit-facts 5: the talk day is guessed from the dump (she is at her mom's on Mondays, so never Monday) and named once above Week 1 with setup.plan_guess 'For {platform} · talk day {day} · email list: {n | none} (my guess; one word changes it).', never asked. Day 0's last reply = Brand Card + save line + the reminder offer (levelup.offer_reminders 'Want a nudge on talk day and Friday? Say 'yes'.', the one level-up allowed on Day 0) + NEXT 'Film today's video. Tomorrow: open Content Machine, newest chat, say 'next'.' The old 3-line wrap-up is gone. S1 only: setup.plan_guess and the reminder offer live in the method file (K26 cut the block's reminder line; the compact kit names its guesses in its own words). Automations are not offered on Day 0 (after the Week-1 Friday). Friday numbers are spoken, never screenshots (quit point 14)."""
+notes = """scope: each reply. R12, R13 and setup.kit-facts 5: the talk day is guessed from the dump (she is at her mom's on Mondays, so never Monday) and named once above Week 1 with setup.plan_guess 'For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it).', never asked. Day 0's last reply = Brand Card + save line + the reminder offer (levelup.offer_reminders 'Want a nudge on talk day and Friday? Say 'yes'.', the one level-up allowed on Day 0) + NEXT 'Film today's video. Tomorrow: open Content Machine, newest chat, say 'next'.' The old 3-line wrap-up is gone. S1 only: setup.plan_guess and the reminder offer live in the method file (K26 cut the block's reminder line; the compact kit names its guesses in its own words). Automations are not offered on Day 0 (after the Week-1 Friday). Friday numbers are spoken, never screenshots (quit point 14)."""
 
 [[case]]
 id = "setup.en.036"
@@ -1277,7 +1277,7 @@ contains = []
 not_contains = []
 regex = [
   '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
-  '''(?i)\(my guess; one word changes it\)''',
+  '''(?i)\(my guess, where unheard; one word changes it\)''',
   '''(?i)record year''',
 ]
 not_regex = [
@@ -1311,7 +1311,7 @@ contains = []
 not_contains = []
 regex = [
   '''(?i)\b(reel|short|video)\b''',
-  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:; one word changes it)?\)''',
+  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:, where unheard)?(?:; one word changes it)?\)''',
 ]
 not_regex = [
   '''(?i)empty your head''',
@@ -1562,7 +1562,7 @@ contains = []
 not_contains = []
 regex = [
   '''\A(?:(?!(?m:^\W*N\d+ ·))[\s\S])*?(?i:\bsit(?:ting)?\b)''',
-  '''(?i)\bFor [^\n]{2,60}· talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess; one word changes it\)\.''',
+  '''(?i)\bFor [^\n]{2,60}· talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess, where unheard; one word changes it\)\.''',
   '''\A(?:(?!(?m:^\W*N\d+ ·))[\s\S])*?talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess''',
   '''(?m)^\W*N1 ·''',
 ]
@@ -1581,7 +1581,7 @@ invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1 (K2, DECISIONS 6 Oct 2026): after the Map + FILM TODAY any coach message but a Map change gets all of Week 1, never 'want Week 1?'; her question is not a change, so it also settles the Map; a question in the message is answered in one line first. No upper bound on pieces in this reply: wf11-ux-spec §2 and R13 split Week 1 into 2 replies of ≤3 pieces on Free, but the Day-0 kit says 'all of Week 1' in the next reply, so either form passes. Above Week 1, once: setup.plan_guess 'For {platform} · talk day {day} · email list: {n | none} (my guess; one word changes it).', the talk day guessed from her dump (never Monday, when she is at her mom's), never asked (setup.kit-facts 5, R12). Pieces print with nothing under them (wf15 §2). FILM TODAY is not reprinted."""
+notes = """wf15 §0 S4, §1.6 and §CM-TODAY 1 (K2, DECISIONS 6 Oct 2026): after the Map + FILM TODAY any coach message but a Map change gets all of Week 1, never 'want Week 1?'; her question is not a change, so it also settles the Map; a question in the message is answered in one line first. No upper bound on pieces in this reply: wf11-ux-spec §2 and R13 split Week 1 into 2 replies of ≤3 pieces on Free, but the Day-0 kit says 'all of Week 1' in the next reply, so either form passes. Above Week 1, once: setup.plan_guess 'For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it).', the talk day guessed from her dump (never Monday, when she is at her mom's), never asked (setup.kit-facts 5, R12). Pieces print with nothing under them (wf15 §2). FILM TODAY is not reprinted."""
 
 [[case]]
 id = "setup.en.047"
@@ -1604,7 +1604,7 @@ regex = [
   '''FILM TODAY''',
   '''(?ms)\A(?=.*We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.)(?=.*^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY)''',
   '''Film it now, or post the caption as text\.''',
-  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:; one word changes it)?\)''',
+  '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:, where unheard)?(?:; one word changes it)?\)''',
   '''(?i)\bBree\b''',
   '''for the machine, no need to read''',
   '''Save this so I remember you \(30 s\)''',
@@ -1811,14 +1811,14 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
-  '''(?i)\bFor [^\n]{2,60}· talk day \w+ · email list: [^\n()]{1,24} \(my guess; one word changes it\)\.''',
+  '''(?i)\bFor [^\n]{2,60}· talk day \w+ · email list: [^\n()]{1,24} \(my guess, where unheard; one word changes it\)\.''',
   '''(?im)^\s*list_size:\s*ask\b''',
   '''Save this so I remember you \(30 s\)''',
 ]
 not_regex = [
   '''(?im)^\s*list_size:\s*0\b''',
   '''(?i)\b(?:how (?:big|many)|do you have|is there)\b[^\n?]{0,40}\b(?:list|subscribers?|emails?)\b[^\n]*\?''',
-  '''(?s)\(my guess; one word changes it\).*\(my guess; one word changes it\)''',
+  '''(?s)\(my guess, where unheard; one word changes it\).*\(my guess, where unheard; one word changes it\)''',
   '''(?i)\b140\b''',
   '''\bPam\b''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
@@ -1828,7 +1828,7 @@ invariants = ["I1", "I3", "I5", "I8", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. DECISIONS 6 Oct (facts a cut can lose) and G2 K24: the dump prompt asks where they post and whether they have an email list (a hint, no question mark); what is still unheard is guessed and named once in one line above Week 1, changeable with one word: §CM-SETUP 5 'Platform, email list: asked only in the dump prompt; talk day, delivery, hours: never. Only unheard ones: guessed, named once above Week 1' with setup.plan_guess 'For {platform} · talk day {day} · email list: {n | none} (my guess; one word changes it).' The card stores list_size=ask until she names a number (schemas/brand-card.toml list_size ask|{n}; §CM-CARD 3), never 0 as fact (G2 proof S1 I8, '"0" not in allowed_numbers'), and the guess is visible, so quit point 12 (email list ignored) is one word away from fixed. 140 was never said in this run, so it must not appear (I8). §CM-WEEK 2: 'No list (said or guessed)' → no email piece. S1 and floor only: the exact plan line lives in the method file."""
+notes = """scope: each reply. DECISIONS 6 Oct (facts a cut can lose) and G2 K24: the dump prompt asks where they post and whether they have an email list (a hint, no question mark); what is still unheard is guessed and named once in one line above Week 1, changeable with one word: §CM-SETUP 5 'Platform, email list: asked only in the dump prompt; talk day, delivery, hours: never. Only unheard ones: guessed, named once above Week 1' with setup.plan_guess 'For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it).' The card stores list_size=ask until she names a number (schemas/brand-card.toml list_size ask|{n}; §CM-CARD 3), never 0 as fact (G2 proof S1 I8, '"0" not in allowed_numbers'), and the guess is visible, so quit point 12 (email list ignored) is one word away from fixed. 140 was never said in this run, so it must not appear (I8). §CM-WEEK 2: 'No list (said or guessed)' → no email piece. S1 and floor only: the exact plan line lives in the method file."""
 
 [[case]]
 id = "setup.en.054"

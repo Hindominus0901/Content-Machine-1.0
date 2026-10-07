@@ -60,6 +60,10 @@ cash_now = "Căn 2 phòng ngủ 2 tỷ 68 (hợp đồng môi giới tới 30/11
 income_question_answer = "Nếu máy hỏi: 'Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11.' Máy không hỏi lại lần hai; bản đồ phải trả lời được câu đó (căn nằm trong bản đồ)."
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# One client (the show-house toilet caller, no name) plus "khách nói hoài" and "bảy tám nhà" (anonymous); no 3 named clients for "gồng lãi" or "dí cọc".
+day0_heard = false
 candidates = [
   { term = "gồng lãi", origin = "lời cô giáo mầm non trong dump: 'Mua thì sợ gồng lãi không nổi, mà không mua thì ở trọ hoài.'; Tuấn nói 'mười nhà ngồi với tui thì chắc bảy tám nhà nói sợ gồng lãi'; lặp lại trong paste-dump (comment, inbox, Zalo khách cũ) và research-paste", said_by_audience = true },
   { term = "dí cọc", origin = "lời khách gọi từ toilet nhà mẫu: 'Bên sale dí cọc quá, em có nên cọc không anh?'; 'bị dí cọc muốn khóc'; có trong paste-dump và research-paste", said_by_audience = true },

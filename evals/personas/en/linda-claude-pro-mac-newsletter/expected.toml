@@ -93,6 +93,10 @@ must_not = [
 ]
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# Renée is the one named client who says "without the badge"; "people put it in the comments" is anonymous.
+day0_heard = false
 candidates = [
   { term = "without the badge", origin = "Renée's verbatim first words (dump chunk 2); Linda: 'I've heard the badge thing so many times since'; 6 distinct audience members mention the badge in paste-dump.md (9 items incl. 2 duplicates), 4 of them say 'without the badge'; research lines 4, 12 (duplicate 25) and 32", said_by_audience = true },
   { term = "enjoy the break", origin = "Joan's first words (dump chunk 2) and Tom's advice (chunk 1); one audience member in paste-dump.md (comment + email reply); research lines 1 and 31", said_by_audience = true },

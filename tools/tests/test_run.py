@@ -6,8 +6,9 @@ import json
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
-from test_graders import TAG, TempRepo
+from test_graders import PERSONA, TAG, TempRepo
 
 REPO = Path(__file__).resolve().parent.parent.parent
 _spec = importlib.util.spec_from_file_location("cm_run", REPO / "evals" / "run.py")
@@ -124,8 +125,37 @@ class RunPackets(TempRepo):
         self.assertIn("Never read `expected.toml`", coach)
         self.assertIn("evals/personas/en/test-coach", coach)
         machine = (made[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
-        self.assertIn("2026-10-06", machine)
+        self.assertIn("- Today's date: Tuesday 6 October 2026.", machine)
         self.assertNotIn("expected", machine)
+
+    def machine(self, **kw) -> str:
+        return (self.packets(**kw)[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
+
+    def test_p18_machine_gets_a_real_run_date(self):
+        """Retest VG6/G7 P18: "Today's date: the date in the transcript" gave the simulators nothing (no transcript row
+        has a date), so EN dated its card 12 Oct while VN used 6 Oct. The packet writes the run's date: --today, the
+        persona's day0 (its time kept), else the day the packet is made."""
+        self.assertIn("- Today's date: Tuesday 6 October 2026.", self.machine())
+        self.write("evals/personas/en/test-coach/persona.toml", 'day0 = "2026-10-12 06:45"\n' + PERSONA)
+        self.assertIn("- Today's date: Monday 12 October 2026, 06:45.", self.machine(tag="d0"))     # the persona wins
+        self.assertIn("- Today's date: Tuesday 6 October 2026.", self.machine(tag="cs", suite="cases", module="message"))
+        self.write("evals/personas/en/test-coach/persona.toml", PERSONA)
+        for today in ("", "2026-10-06"):
+            with self.subTest(today=today):
+                text = self.machine(tag=f"t{len(today)}", today=today)
+                self.assertNotIn("the date in the transcript", text)
+                self.assertRegex(text, r"- Today's date: (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) "
+                                       r"\d{1,2} [A-Z][a-z]+ \d{4}\.\n")
+        # the CLI passes no placeholder either: a bare run (no --today) is dated by run_date()
+        with mock.patch.object(run, "make_packets", return_value=[]) as made:
+            self.assertEqual(run.main(["--root", str(self.root), "packet", "--suite", "day0", "--edition", "en",
+                                       "--lane", "S1"]), 0)
+        self.assertEqual(made.call_args.args[-1], "")
+        self.assertEqual(run.run_date("2026-10-06"), "Tuesday 6 October 2026")
+        self.assertEqual(run.run_date("2026-10-11 20:45"), "Sunday 11 October 2026, 20:45")
+        self.assertEqual(run.run_date("6 Oct 2026"), "6 Oct 2026")            # not an ISO date: given as is
+        self.assertEqual(run.run_date("2026-13-40"), "2026-13-40")
+        self.assertRegex(run.run_date(""), r"^\w+day \d{1,2} \w+ \d{4}$")
 
     def test_protocol_timing_drafts_and_list_facts(self):
         """Retest G3/VG2 §8: one timing convention (P12), no grading or leak scan on a draft (P13), the persona's

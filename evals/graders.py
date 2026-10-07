@@ -23,7 +23,7 @@ Run folder (keep this format; evals/run.py and the simulator agents write it):
 
 Inputs: evals/personas/<persona>/persona.toml (allowed_numbers, excluded_numbers,
 trap_numbers, seeded_names, creator_terms, cold_start, xung_ho, audience_xung_ho,
-proof_items), expected.toml ([traps], [liked], [liked.angle] or [follow], [voice]) and
+proof_items), expected.toml ([traps], [liked], [liked.angle] or [follow], [voice], [keyword] day0_heard) and
 the persona's *.md files (liked-paste.md, follow-paste.md, voice-samples.md and
 written-posts.md among them); strings/<edition>.toml rendered through editions/<edition>.toml when present
 (verdict.*, next.prefix, why.prefix, checked.prefix, cmd.why, cmd.not_me, cmd.i_do_say,
@@ -2078,10 +2078,13 @@ def audience_forms(text: str) -> list[tuple[str, str]]:
     return [(f, c) for _, f, c in sorted(set(hits))]
 
 
-def _audience_chunks(r: Reply) -> list[tuple[str, str]]:
+def _audience_chunks(r: Reply, body_only: bool = False) -> list[tuple[str, str]]:
     """(label, text) for each piece and each copy box outside pieces; the label is the piece title or the
-    line just above the box, so one-to-one messages (Zalo, inbox, email) can be told apart."""
-    out = [(p.title or p.body.split("\n", 1)[0], p.body) for p in r.pieces if p.kind != "hardstop"]
+    line just above the box, so one-to-one messages (Zalo, inbox, email) can be told apart. `body_only` leaves the
+    piece's title line out of the text (a title is the coach-facing label: "… đổi chị/anh cho đúng người")."""
+    out = [(p.title or p.body.split("\n", 1)[0],
+            p.body.partition("\n")[2] if body_only and p.title else p.body)
+           for p in r.pieces if p.kind != "hardstop"]
     in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
     box, label = [], ""
     for i, ln in enumerate(r.lines):
@@ -2204,12 +2207,13 @@ def i15_vn_language(run: Run) -> dict:
                     if ok_line and word == "mình":
                         continue
                     after = line[m.end():m.end() + 6]
-                    before = line[max(0, m.start() - 6):m.start()].casefold()
+                    before = line[max(0, m.start() - 8):m.start()].casefold()
                     next_word = re.match(r"\s+([^\W\d_]+)", line[m.end():])
                     # a pronoun after "các", "của", "tiếng" … names someone else; after "nhà" it is a household, a
-                    # third person ("như nhà chị dạy mầm non với nhà anh khách gãy chân"; review retest-vg5-g6 G40)
+                    # third person ("như nhà chị dạy mầm non với nhà anh khách gãy chân"; review retest-vg5-g6 G40);
+                    # after "chuyện" it is the client's story ("Kể tiếp chuyện chị trong toilet nhà mẫu"; retest-vg6-g7 G44)
                     if word in pair or re.match(r"\s+(?:[" + ck.UPPER + r"]|ấy|ta\b|họ)", after) \
-                            or re.search(r"(?:các|những|mấy|của|tự|kết|tiếng|nước|nhà)\s+$", before) \
+                            or re.search(r"(?:các|những|mấy|của|tự|kết|tiếng|nước|nhà|chuyện)\s+$", before) \
                             or word in third \
                             or (next_word and next_word.group(1).casefold() in KIN_COMPOUNDS.get(word, ())) \
                             or (word == "mình" and _inclusive_minh(line, m.end(), pair[0])):
@@ -3277,11 +3281,13 @@ def check_vn_messages(run: Run) -> dict:
 
     slash, opt_out, da, boxes = [], [], [], 0
     for r in run.replies:
-        for label, text in _audience_chunks(r):
+        for (label, text), (_, body) in zip(_audience_chunks(r), _audience_chunks(r, body_only=True)):
             if not MESSAGE_TITLE_RE.search(label):
                 continue
             boxes += 1
-            m = SLASH_ADDRESS_RE.search(text)
+            # the piece's title is the coach's label ("… đổi chị/anh cho đúng người"); the message under it is the
+            # check (review retest-vg6-g7 G45)
+            m = SLASH_ADDRESS_RE.search(body)
             if m:
                 slash.append(f'{_turn(r)}: "{m.group(0)}" in a message ({_short(label, 40)})')
             if REPLY_LABEL_RE.search(label) and not SERIES_LABEL_RE.search(label):
@@ -3959,6 +3965,11 @@ def _norm_word(word: str) -> str:
 _WORD_HEAD_END = re.compile(r"\s*(?:[(\[,:;—–]|\s-\s|·|\bfrom\b|(?<!\w)(?:từ|không dấu|gõ không dấu)(?!\w))", re.I)
 
 
+# The guess tag on a Map keyword: "(my guess)", "(mình đoán, Tuần 1 kiểm lại)", "(em đoán, …)"; a tag the machine wrote
+# without its bracket ("· mình đoán, Tuần 1 kiểm lại") counts too.
+GUESS_TAG_RE = re.compile(r"(?<!\w)(?:guess|đoán)(?!\w)", re.I)
+
+
 def word_head(value: str) -> str:
     """The keyword at the head of a YOUR WORD value: quotes and a leading "the" dropped, cut where its note starts
     ('TOO LATE, from "Is it too late for me?" (my guess)' → "too late"; 'CỨNG ĐƠ · không dấu: CUNG DO' → "cứng đơ")."""
@@ -4190,6 +4201,9 @@ def check_day0_shape(run: Run) -> dict:
       (cmd.quiet); the NEXT line is never read for the CTA;
     - YOUR WORD (map.word) is the CTA's {KEYWORD} (cta.default / cta.quiet): the keyword at the head of its value
       (word_head: quotes, a leading "the" and a source or spelling note left out);
+    - YOUR WORD carries the guess tag ("(my guess", "(mình đoán", "(em đoán") exactly when the dump does not give the
+      phrase from 3+ named clients: expected.toml [keyword] day0_heard (true | false); only with that key and a Map
+      (retest-vg6-g7 G46);
     - KNOWN FOR (map.known) within [day0] known_for_max_<edition> words / tiếng;
     - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list (VN also
       by its size, "email thì có 250 người", or the card's "list_size: email 250 · …"; G38); in VN, a list_size that
@@ -4245,6 +4259,27 @@ def check_day0_shape(run: Run) -> dict:
     if word and cta and _norm_word(cta[0]) != word and ck.fold(_norm_word(cta[0])) != ck.fold(word):
         ev.append(f'{_turn(film)}: the CTA asks for "{cta[0]}" but YOUR WORD is "{word}"')
     item("YOUR WORD is the CTA keyword", ev, ran=bool(word and cta))
+
+    # YOUR WORD carries the guess tag exactly when the dump does not give the phrase from 3+ named clients: one client
+    # plus "they all say it" is a guess (Week 1 checks it), 3+ named clients is heard (docs/DECISIONS.md, 7 Oct "A client
+    # phrase the coach quotes counts as heard"; review retest-vg6-g7 G46). Ground truth: expected.toml
+    # [keyword] day0_heard; the item runs only with that key and a printed Map.
+    kw = run.expected.get("keyword", {}) if isinstance(run.expected.get("keyword"), dict) else {}
+    heard = kw.get("day0_heard")
+    first = next((r for r in maps if "map.word" in map_lines(run, r)), None)
+    ev = []
+    if isinstance(heard, bool) and first is not None:
+        value = map_lines(run, first)["map.word"]
+        shown = word_head(value) or _short(value, 30)
+        tagged = bool(GUESS_TAG_RE.search(value))
+        if heard and tagged:
+            ev.append(f'{_turn(first)}: YOUR WORD "{shown}" is tagged as a guess, but the dump gives it from 3+ named '
+                      "clients (heard: no tag)")
+        elif not heard and not tagged:
+            ev.append(f'{_turn(first)}: YOUR WORD "{shown}" has no guess tag, but the dump does not give it from 3+ '
+                      'named clients (one client + "they all say it" is "(my guess)", checked in Week 1)')
+    item("YOUR WORD carries the guess tag unless the dump quotes it from 3+ named clients", ev,
+         ran=isinstance(heard, bool) and first is not None)
 
     # KNOWN FOR in one breath (§CM-MAP: ≤35 words EN, ≤50 tiếng VN)
     known_max = int(day0.get(f"known_for_max_{run.meta['edition']}", {"vn": 50}.get(run.lang, 35)))

@@ -49,6 +49,10 @@ must_not = [
 ]
 
 [keyword]
+# day0_heard: the Day-0 dump quotes the buyer phrase from 3+ NAMED clients (true: the Map prints it with no guess tag;
+# false: it prints "(my guess" / "(mình đoán"). One client + "they all say it" and anonymous lines are false (DECISIONS 7 Oct).
+# Lorraine is the one named client who says "one more chapter"; "too late" is "every single one", none named.
+day0_heard = false
 candidates = [
   { term = "one more chapter", origin = "Lorraine's verbatim words in dump chunk 1; echoed by 4 different audience members (5 distinct comments/DMs, plus 1 duplicate) in paste-dump.md, a 5th writes 'my next chapter', and 1 research line (posted twice)", said_by_audience = true },
   { term = "too late", origin = "'Is it too late for me?', the first-call question from almost every client; audience comments", said_by_audience = true },
