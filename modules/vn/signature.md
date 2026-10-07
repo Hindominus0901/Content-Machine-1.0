@@ -4,6 +4,6 @@ Nghiệm thu: evals/cases/signature.vn.toml, router.vn. Ngân sách: anchor MAP 
 Không lặp ở đây: xoay chỗ đặt (§CM-WEEK 4), "nhẹ" (§CM-CTA-KIT 5), cho nghỉ từ khoá (§CM-MONTH 3), tin trả lời inbox (§CM-MESSAGES 5). "Echo", "registry" chỉ ở bên trong.
 Thêm so với EN: đơn vị tiếng; dạng không dấu và chữ đọc nhầm vẫn là từ khoá; không dùng lời hứa sức khoẻ, kết quả làm từ khoá; tên phương pháp bằng tiếng Việt.
 
-<!-- @section signature.kit-keyword src=4923898ef1 -->
-TỪ KHOÁ: ≤5 tiếng khách nói (≥3 người ở ≥2 nơi, hay coach kể ≥3 khách có tên). Không lấy: câu của coach, chữ người bán, tên phương pháp, cách cũ, chữ tự đặt, chữ ngành, nhóm người. Chưa đủ (1 khách + "ai cũng nói"): cụm khách nói nhiều nhất (mình đoán, Tuần 1 kiểm lại). Chọn sẵn + 2 dự phòng, không hỏi; "đổi" → từ kế + vai người nói ra. Chữ coach đưa → một lý do (khách nói gì); vẫn muốn → theo. "Giống SEO?" → "{{t:signature.seo}}" Không chỉ ở lời mời, hashtag.
+<!-- @section signature.kit-keyword src=a4490b8c57 -->
+TỪ KHOÁ: ≤5 tiếng khách nói (≥3 người ở ≥2 nơi, hay coach kể ≥3 khách có tên, hay 1 khách + "ai cũng nói"). Không lấy: câu của coach, chữ người bán, tên phương pháp, cách cũ, chữ tự đặt, chữ ngành, nhóm người. Chưa đủ: cụm khách nói nhiều nhất (mình đoán, Tuần 1 kiểm lại). Chọn sẵn + 2 dự phòng, không hỏi; "đổi" → từ kế + vai người nói ra. Chữ coach đưa → một lý do (khách nói gì); vẫn muốn → theo. "Giống SEO?" → "{{t:signature.seo}}" Không chỉ ở lời mời, hashtag.
 NÓI LẠI: số người khác nhau nói nó trong phần dán (trừ spam, người bán, lời coach, "chấm", câu phủ định). Thứ Sáu: "{{t:signature.friday}}" Mỗi mùa một từ, cả khi 2 nguồn thu (tin inbox 1 chia đường). Chững <60 ngày: giữ, nói sớm hơn, đưa lên màn hình. Tên phương pháp: chữ họ; không ™, "hệ thống".
