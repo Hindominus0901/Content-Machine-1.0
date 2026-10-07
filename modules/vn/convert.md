@@ -25,3 +25,13 @@ VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) �
 <!-- @section convert.kit-sell kind=script src=c5dd9da7f1 -->
 9 Bài mời mua: nhận gì (hình thức, bao lâu, ngày bắt đầu) · giá công khai, trả mấy lần · dành cho ai · "Không hợp với ai đang…" · cam kết cách làm, có điều kiện, chưa có thì "{{t:verdict.needs}}" · suất, hạn chỉ khi thật, nói thẳng (tick: §CM-GUARDRAILS) · một việc. Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc (§CM-EDGE).
 Bài dạy, chuyện khách: §CM-POSTS; bằng chứng, gấp gáp, giảm giá: §CM-GUARDRAILS.
+
+<!-- @section convert.grow-ads src=d87f405adc -->
+### Quảng cáo từ bài đã chạy tốt ("chạy quảng cáo", "boost bài này", "làm quảng cáo")
+1 Chỉ từ bài tự nhiên đã chạy tốt (nhiều tin nhắn, lượt lưu, lượt gửi; `hub:Leads`), không lấy ý chưa thử. Giữ hook; chỉ sửa chỗ luật quảng cáo bắt.
+2 Hook vào nỗi đau, hoàn cảnh, không vào con người ("Nửa đêm vẫn ngồi sửa dàn ý?", không "Bạn đang nghèo?"); số lẻ, cụ thể chỉ khi là số thật coach cho dùng; không kết quả thu nhập, cơ thể, ảnh trước/sau, ảnh chuyển khoản; không "comment X": nút Gửi tin nhắn hay Đăng ký; tiếng Việt rõ, không "c.m", "q.t"; "nhất", "số 1" cần căn cứ (§CM-LOCALE 9); bằng chứng phải được phép dùng cho quảng cáo.
+3 KỊCH BẢN VIDEO BÁN HÀNG, 2–5 phút, giọng nói coach: hook (nỗi đau, một câu) → nỗi đau bằng chữ khách → lối ra (cách làm, vì sao chạy) → lời mời nhỏ ở khoảng 65% ("Thấy giống mình thì bấm Gửi tin nhắn, mình gửi {quà}.") → bằng chứng (được phép, có bối cảnh) → lời mời đủ + giới hạn thật. QUẢNG CÁO NGẮN 25 giây: nhắc điều họ đã xem → một lợi ích + một bằng chứng → giới hạn thật → nút.
+4 Quảng cáo chạy từ Trang Facebook hay Instagram chuyên nghiệp (chỉ có trang cá nhân thì đăng song song bài lên Trang), gắn pixel ở trang đăng ký. Người ấm trước: xem gần hết video, tương tác, đã nhắn, đã vào trang; luôn loại người đã mua.
+5 Thử ngân sách: số tiền mỗi ngày của coach (chưa có: [CẦN BẠN: mỗi ngày chi bao nhiêu?]); 3 hook, một tệp, 3–4 ngày, không sửa giữa chừng; giữ cái rẻ nhất mỗi tin nhắn hay lượt đăng ký, rồi tăng từ từ. Tệp nhỏ thấy quá nhiều lần → đổi hook hay giảm tiền.
+6 Trong đợt: trước mở bán, bài quà, bài niềm tin; mở → bài mời + một cảm nhận được phép; tối hết quà → "tối nay hết quà"; ngày đóng → "đóng lúc 23h59"; sau đợt → tắt.
+7 Khoá về tiền, sức khoẻ, cơ thể: viết quy trình, dưới quảng cáo MỘT dòng: "Lưu ý nền tảng ({date}): quảng cáo hứa thu nhập, cân nặng, sức khoẻ hay có ảnh trước/sau thường bị từ chối." Bài tự nhiên vẫn theo coach (§CM-GUARDRAILS); kết quả bịa thì không đâu cả.

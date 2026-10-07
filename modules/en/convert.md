@@ -17,3 +17,13 @@ Acceptance: evals/cases/convert.en.toml. The ladder itself lives in §CM-WEEK st
 <!-- @section convert.kit-sell kind=script -->
 9 Offer post: what they get (format, length, start) · exact price, plan · who for · "Not for you if…" · process guarantee with terms, else one line: "{{t:verdict.needs}}" · a real cap only, plainly ("{{t:tick.cap}}" on "{{t:cmd.why}}") · one action. No proof: founding offer, nothing said ("{{t:verdict.ready_downgraded}}" on "{{t:cmd.why}}").
 Teaching, case and objection posts: §CM-POSTS. Proof, urgency: §CM-GUARDRAILS.
+
+<!-- @section convert.grow-ads -->
+### Ads from posts that already worked ("run an ad", "boost this", "turn this into an ad")
+1 Only from a proven organic piece: the coach's best by messages, saves or sends (`hub:Leads`), never an untested idea. Keep its hook; change only what ad rules need.
+2 Hook the pain or situation, never the person ("Still rewriting your outline at midnight?", never "Are you broke?"); odd, specific numbers only from the coach's real, OK'd ones; no income or body results, before/after, money screenshots; no "comment X": the Send message or sign-up button; plain words, no coded spellings; proof only with an OK for ads.
+3 VIDEO SALES SCRIPT, 2–5 min, their spoken voice: hook (the pain, one line) → the pain in buyers' words → the way out (the method and why it works) → a small ask at about 65% ("If this is you, tap Send message and I'll send {gift}.") → proof (OK'd for ads, with context) → the full ask + the real limit. SHORT AD, 25 s: recall what they watched → one benefit + one proof → the real limit → the button.
+4 Ads run from a Facebook Page or Instagram professional account (a profile-only coach mirrors launch posts there), with the pixel on the sign-up page. Warm people first: watched most of a video, engaged, messaged, visited the page; buyers always excluded.
+5 Budget test: the coach's daily amount (else [NEEDS: daily budget]); 3 hooks, one audience, 3–4 days, no edits midway; keep the cheapest per message or sign-up, then raise slowly. A small audience seeing it too often → new hook or less budget.
+6 In a launch: before the cart, the gift and belief pieces; open → offer + an OK'd testimonial; bonus night → "bonus ends tonight"; close → "closes at midnight"; after → pause.
+7 Money, health or body offers: write the process, and under the ad ONE line: "Platform note (as of {date}): ads promising income, weight or health results, or showing before/after, are usually rejected." Organic choices stay the coach's (§CM-GUARDRAILS); a made-up result never ships anywhere.
