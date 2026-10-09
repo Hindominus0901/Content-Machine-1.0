@@ -4600,6 +4600,22 @@ Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1
                              "strategy_doc")
             self.assertIs(check["items"][3]["pass"], ok, check["items"][3])
 
+    def test_the_held_claim_quoted_is_not_the_30_day_rule(self):
+        """Review retest-v132 gap 5: "Giữ hay cho nghỉ: sau 4 tập, …" (part 6's rule) is not what the file says holds."""
+        log = self.NHI_LOG + "\nKept as a pattern: people who sell their own service get clients mostly through people they know (K1, K8: 2 people, 2 places).\n"
+        held = self.NHI_DOC.replace(
+            "- Đã GIỮ (2+ người ở 2+ nơi): chưa có.",
+            "Giữ hay cho nghỉ: sau 4 tập, theo số của bạn ở buổi thứ Sáu.\n"
+            "- Đã GIỮ (2+ người ở 2+ nơi): người tự bán dịch vụ có khách chủ yếu qua người quen (2 người · 2 nơi).")
+        self.assertNotEqual(held, self.NHI_DOC)
+        ev = self.inv(self.doc_report(held, log=log), "strategy_doc")["items"][3]["evidence"]
+        self.assertEqual(len(ev), 1, ev)
+        self.assertIn('the file says "người tự bán dịch vụ', ev[0])
+        self.assertNotIn("sau 4 tập", ev[0])
+        # the rule alone says nothing holds: no claim to check
+        rule_only = self.NHI_DOC.replace("- Đã GIỮ (2+ người ở 2+ nơi): chưa có.", "Giữ hay cho nghỉ: sau 4 tập, theo số của bạn.")
+        self.assertTrue(self.inv(self.doc_report(rule_only, log=log), "strategy_doc")["items"][3]["pass"])
+
     def test_the_deny_list_reads_the_file_with_the_pillars_exception(self):
         ok = self.inv(self.doc_report(self.NHI_DOC), "strategy_doc")
         self.assertTrue(ok["items"][4]["pass"], ok["items"][4])
@@ -6013,6 +6029,127 @@ class V131FalseFailureTests(StrategyFirstBase):
         reply = "Chị trả lời rồi thì dán vào đây, mình sửa N3."
         self.assertFails(self.vn("Bạn kể tiếp nhé.", reply), "I15", 'pronoun "Chị" outside the pair bạn–mình')
         self.assertFails(self.vn("Bạn kể tiếp nhé.", "Tin xin phép, gửi chị qua Zalo:"), "I15", 'pronoun "chị" outside the pair')
+
+
+class V132FalseFailureTests(StrategyFirstBase):
+    """Grader fixes from the v13.2 founder-case retest (qa/runs/retest-v132/review.md §Grader gaps 1-5): each false failure has a
+    fixture that must pass and one that must still fail."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/vn/v132/persona.toml", 'xung_ho = "bạn–mình"\n')
+        self.write("evals/personas/vn/v132/expected.toml", "")
+
+    def vn(self, *replies):
+        turns = []
+        for body in replies:
+            turns += [("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n{body}\nTIẾP → Gõ \"tiếp\".")]
+        return graders.grade(self.run_dir(turns, persona="vn/v132", edition="vn"), self.root)
+
+    # -- gap 1: the early win without quote marks (usable_at, day0_timing, quit_triggers)
+    EARLY_VN = (f"{TAG}Ngày 0 · Kể chuyện nghề\n\nMình nhận rồi. 3 câu đáng tiền bạn vừa nói:\n"
+                "- Khách hỏi gì, bạn cũng hỏi lại đúng một câu: vì sao.\n"
+                "- Muốn người ta thành khách thì họ phải tin bạn, biết bạn ở đó.\n"
+                "- Người ta bị thuyết phục sau khi đã xem bạn đủ nhiều.\n\n"
+                "Cứ kể tiếp, hết thì gõ 'xong'.\nTIẾP → Kể chuyện tiếp theo.")
+    EARLY_EN_BARE = S_EARLY.replace('"I was at HQ 24 years."', "- I was at HQ 24 years and nobody calls back.") \
+        .replace('"Lorraine told me it was the best trade I ever made."', "- Lorraine told me it was the best trade I ever made.") \
+        .replace('"My clients ask me one thing: will this work?"', "- My clients ask me one thing: will this work?")
+
+    def usable(self, reply):
+        run = graders.load_run(self.run_dir([("coach", "kể"), ("machine", reply)], persona="vn/v132", edition="vn"), self.root)
+        return graders.usable_at(run.replies[0], "")
+
+    def test_the_early_wins_lead_and_two_unquoted_lines_are_the_early_win(self):
+        at = self.usable(self.EARLY_VN)
+        self.assertIsNotNone(at)
+        self.assertTrue(at > 0)
+        for lead in ("Mình nhận rồi. 3 câu đáng tiền bạn vừa nói:", "Got it. 3 lines you just said that are worth money:"):
+            self.assertTrue(graders.EARLY_WIN_LEAD_RE.search(lead), lead)
+        report = self.report(self.day0(early=self.EARLY_EN_BARE))
+        self.assertPasses(report, "day0_timing")
+        self.assertPasses(report, "quit_triggers")
+        self.assertIsNotNone(self.inv(report, "day0_timing")["details"]["early_win"].get("minutes"))
+
+    def test_a_lead_with_fewer_than_two_lines_or_no_lead_is_no_early_win(self):
+        one = self.EARLY_VN.replace("- Muốn người ta thành khách thì họ phải tin bạn, biết bạn ở đó.\n"
+                                    "- Người ta bị thuyết phục sau khi đã xem bạn đủ nhiều.\n", "")
+        self.assertIsNone(self.usable(one))
+        prose = self.EARLY_VN.replace("- Muốn", "Muốn").replace("- Người", "Người").replace("- Khách", "Khách")
+        self.assertIsNone(self.usable(prose))
+        self.assertIsNone(self.usable(f"{TAG}Ngày 0\n\nMình nhận rồi. Bạn kể tiếp đi.\n- Một dòng có ba chữ\n- Hai dòng có ba chữ\nTIẾP → Kể."))
+        # an early win that never comes: the first copy-ready output is minutes later
+        late = self.report(self.day0(early=self.EARLY_EN_BARE.replace("Got it. 3 lines you just said that are worth money:",
+                                                                        "Got it. Keep talking.")))
+        self.assertFails(late, "day0_timing", "active minutes after the dump started")
+
+    # -- gap 2: "điền form" in the kit's own list of what the machine must not do
+    SAFETY = ("Dán khung này vào Chrome, đọc xong dán lại đây:\n```\nAN TOÀN trên hết: chỉ đọc. Không đăng, comment, thả cảm xúc, "
+              "chia sẻ, theo dõi, vào nhóm, nhắn tin, bấm quảng cáo, điền form, đăng nhập, đồng ý điều khoản.\n```")
+
+    def test_i2_a_form_inside_a_list_of_things_not_to_do_is_no_ask(self):
+        self.assertPasses(self.vn(self.SAFETY), "I2")
+        self.assertPasses(self.vn("Không đăng, comment, điền form, đăng nhập."), "I2")
+        self.assertPasses(self.vn("Do not post, comment, fill out forms."), "I2")
+        self.assertPasses(self.vn(self.SAFETY), "quit_triggers")
+
+    def test_i2_a_real_form_ask_still_fails(self):
+        self.assertFails(self.vn("Bạn điền form này rồi gửi lại mình nhé."), "I2", "điền form")
+        self.assertFails(self.vn("Không biết thì bạn điền form này giúp mình, một lần thôi."), "I2", "điền form")
+        self.assertFails(self.vn("Không đăng, comment, điền form. Sau đó bạn điền form dưới đây."), "I2", "điền form")
+        self.assertFails(self.vn("Fill in the form below and send it back."), "I2")
+        self.assertFails(self.vn(self.SAFETY.replace("Không đăng", "Hãy đăng")), "I2", "điền form")
+
+    # -- gap 3: a forward pointer ("bước 3 chọn giờ") is no second decision
+    STEP2 = ("TUYẾN BÀI (cho khoảng 3 tiếng một tuần, mình đoán; bước 3 chọn giờ):\n"
+             "Nghe khách nói: Đọc vài bài, hỏi AI · THU HÚT | Hỏi khách cũ một câu · NIỀM TIN\n"
+             "Nhóm Facebook, TikTok mình chưa đọc được:\n"
+             "A) bạn có Claude in Chrome: mình gửi khung, bạn dán vào Chrome, 15 phút (máy khuyên): coach nói thật trong nhóm\n"
+             "B) bạn dán 20 comment, các bước gửi cùng Tuần 1\nC) để tới Tuần 1")
+
+    def test_i6_a_pointer_to_a_later_step_is_not_a_second_decision(self):
+        self.assertPasses(self.vn(self.STEP2), "I6")
+        for pointer in ("mình đoán; bước 3 chọn giờ", "bước sau bạn chọn giờ", "tin sau mình chọn kênh", "Bước 3, bạn chọn giờ."):
+            with self.subTest(pointer=pointer):
+                self.assertEqual(graders._decision_hits(f"TUYẾN BÀI ({pointer}):"), [], pointer)
+
+    def test_i6_a_choice_asked_now_next_to_the_abc_line_still_fails(self):
+        self.assertFails(self.vn(self.STEP2 + "\nBước này bạn chọn giờ luôn nhé."), "I6", "decision prompts")
+        for ask in ("Bước 3 bạn chọn giờ nào?", "Bước này bạn chọn giờ.", "Bạn chọn giờ giúp mình.", "Bước 1 chọn kênh giúp mình."):
+            with self.subTest(ask=ask):
+                self.assertTrue(graders._decision_hits(ask), ask)
+
+    # -- gap 4: hook_lab needs a real overlap, not two shared words used in two senses
+    HOOK_CFG = {"share": 0.75, "min_words": 2, "new_words_min": 1, "max_chars": 60, "min_shared": 3}
+
+    def findings(self, on, first, **extra):
+        return graders.short_findings({"turn": 17, "on": on, "first": first, "caption": "", **extra}, self.HOOK_CFG, "vn")
+
+    def test_hook_lab_two_words_shared_in_other_senses_are_no_repeat(self):
+        got = self.findings("AI đâu có gặp khách bạn",
+                            "Mình hỏi coach nghiên cứu khách thế nào, câu trả lời hay gặp nhất là vầy.")
+        self.assertEqual((got["repeat"], got["adds"]), ([], []), got)
+        self.assertEqual(self.findings("Never any buyer here", "I asked buyers what they never told me", ) ["repeat"], [])
+
+    def test_hook_lab_a_real_repeat_still_fails(self):
+        for on, first in (("Một email, 180 người", "Một email gửi 180 người: 7 người trả lời, 1 người mua."),
+                          ("Vậy chưa phải nghiên cứu", "Em nghiên cứu rồi. Mình hỏi làm gì."),     # two tiếng of one word
+                          ("Sợ khách nghĩ mình chặt chém", "Em sợ khách nghĩ mình chặt chém.")):
+            with self.subTest(on=on):
+                got = self.findings(on, first)
+                self.assertTrue(got["repeat"], got)
+        # the same two words with nothing to add (no negation, no new word) is still a paraphrase
+        got = self.findings("Gặp khách", "Mình hỏi coach nghiên cứu khách thế nào, câu trả lời hay gặp nhất là vầy.")
+        self.assertTrue(got["adds"], got)
+
+    # -- gap 5: "Giữ hay cho nghỉ" is the 30-day rule, not what the file says holds
+    def test_the_30_day_rule_giu_hay_cho_nghi_is_no_held_claim(self):
+        rule = graders.HELD_CLAIM_RE.match("Giữ hay cho nghỉ: sau 4 tập, theo số của bạn ở buổi thứ Sáu.")
+        self.assertIsNone(rule)
+        for line in ("- GIỮ: người lạ nghi coach toàn lý thuyết (4 câu, 3 người, 2 nơi).", "- Đã GIỮ (2+ người ở 2+ nơi): khách tin người quen.",
+                     "What holds: agency owners want to see margins."):
+            with self.subTest(line=line):
+                self.assertTrue(graders.HELD_CLAIM_RE.match(line), line)
 
 
 class V13LeaksTests(TempRepo):

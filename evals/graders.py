@@ -1389,6 +1389,25 @@ BACK_RE = re.compile(r"\b(?:send|paste|give|text|type|copy)\s+(?:it|this|them|th
                      r"|\bback (?:to me|here)\b|(?<!\w)(?:gửi lại|dán lại)(?!\w)", re.I)
 
 
+NEGATOR_RE = re.compile(r"^\W*(?:không|đừng|chớ|never|do not|don't|dont|no|not)\b[,:]?\s*", re.I)
+LIST_SPLIT_RE = re.compile(r"\s*(?:[,;·/]|\b(?:hay|hoặc|và|or|and|nor)\b)\s*", re.I)
+
+
+CLAUSE_WORD_RE = re.compile(r"(?<!\w)(?:thì|nếu|khi|bạn|mình|em|anh|chị|tôi|you|we|i|if|then|when)(?!\w)", re.I)   # a clause, not a list item
+
+
+def _in_negated_list(text: str, m: re.Match) -> bool:
+    """The template word sits in a list the sentence forbids ("Không đăng, comment, chia sẻ, điền form, đăng nhập."): the
+    sentence opens with a negation and everything between it and the match is short list items. The kit's own R3 Chrome
+    box says it (review retest-v132 gap 2); "Không biết thì bạn điền form này" is a sentence, not a list."""
+    start = max(text.rfind(c, 0, m.start()) for c in ".!?\n") + 1
+    neg = NEGATOR_RE.match(text[start:m.start()])
+    if not neg:
+        return False
+    items = [x for x in LIST_SPLIT_RE.split(text[start + neg.end():m.start()]) if x.strip()]
+    return all(ck.count_words(x) <= 4 and not CLAUSE_WORD_RE.search(x) for x in items)
+
+
 def i2_template(run: Run) -> dict:
     """A template-fill ask is talk to the coach, or a box the coach fills: text outside copy boxes, a paste block (the
     coach pastes it somewhere, so its blanks are theirs), and a copy box outside any piece when the reply asks for it
@@ -1403,7 +1422,7 @@ def i2_template(run: Run) -> dict:
             ln.block == "paste" or (ln.block == "copy" and back and i not in in_piece))]
         text = "\n".join([talk] + boxes)
         for p in TEMPLATE_RE:
-            m = p.search(text)
+            m = next((x for x in p.finditer(text) if not _in_negated_list(text, x)), None)
             if m:
                 ev.append(f'{_turn(r)}: "{m.group(0)}"')
     return result("I2", "No template-fill ask", ev)
@@ -1592,11 +1611,20 @@ CHON_RELATIVE_BEFORE_RE = re.compile(r"(?<!\w)(?:chỗ|cái|điều|thứ|chuy�
 CHON_RELATIVE_AFTER_RE = re.compile(r"^\s*(?:là|thì|sẽ|cũng)(?!\w)", re.I)
 
 
+# A pointer to a LATER step in a header or aside ("… mình đoán; bước 3 chọn giờ", "bước sau bạn chọn"): it names the next
+# decision, it does not ask for a second one now (review retest-v132 gap 3). Step 1 is never "later"; a question stays an ask.
+CHON_LATER_STEP_BEFORE_RE = re.compile(r"(?<!\w)(?:bước|tin|lượt|phần)\s+(?:[2-9]|sau|tiếp(?: theo)?|kế(?: tiếp)?|cuối)"
+                                       r"\s*[,:;]?\s+(?:(?:mình|bạn|anh|chị|em)\s+)?$", re.I)
+
+
 def _statement_chon(text: str, m: re.Match, question: bool) -> bool:
-    """The "chọn" is a noun ("lựa chọn của mình") or the verb of a relative clause in a statement ("chỗ bạn chọn là …")."""
+    """The "chọn" is a noun ("lựa chọn của mình"), the verb of a relative clause in a statement ("chỗ bạn chọn là …") or
+    the next step's decision named in passing ("bước 3 chọn giờ")."""
     if not re.fullmatch(r"chọn", m.group(0), re.I):
         return False
     before, after = text[:m.start()], text[m.end():]
+    if not question and CHON_LATER_STEP_BEFORE_RE.search(before):
+        return True
     if CHON_NOUN_BEFORE_RE.search(before) and CHON_NOUN_AFTER_RE.match(after):
         return True
     return not question and bool(CHON_RELATIVE_BEFORE_RE.search(before) and CHON_RELATIVE_AFTER_RE.match(after))
@@ -3775,10 +3803,38 @@ def _quoted_line(plain: str) -> bool:
     return bool(m) and ck.count_words(plain) >= 3
 
 
+# The early win's lead line (core/*/start-block.md step 2/3): "Mình nhận rồi. 3 câu đáng tiền bạn vừa nói:" / "Got it. 3 lines
+# you just said that are worth money:". Since v13.2 the VN lines under it carry no quote marks (they are renderings of
+# English dictation, §CM-NATURAL 1), so the lead plus 2+ list lines is the early win (review retest-v132 gap 1).
+EARLY_WIN_LEAD_RE = re.compile(r"\b\d+\s+(?:câu\s+đáng\s+tiền|lines?\b[^:\n]{0,40}\bworth\s+money)\b[^\n]{0,40}:\s*$", re.I)
+LIST_LINE_RE = re.compile(r"^(?:\d{1,2}[.)]?|[-*•+])\s+\S")
+
+
+def _early_win_lead(r: Reply) -> int | None:
+    """Index of the first line under the early win's lead when 2+ list lines of 3+ words follow the lead (blank lines
+    between are fine; the lead itself is talk before it, as the first quoted line's predecessor is), else None."""
+    for i, ln in enumerate(r.lines):
+        if ln.block or ln.fence or not EARLY_WIN_LEAD_RE.search(ck.straight_quotes(ln.plain).strip()):
+            continue
+        items = []
+        for k, nxt in enumerate(r.lines[i + 1:i + 8], start=i + 1):
+            if nxt.fence or nxt.block:
+                break
+            if not nxt.plain.strip():
+                continue
+            if not LIST_LINE_RE.match(nxt.text.strip()) or ck.count_words(nxt.plain) < 3:
+                break
+            items.append(k)
+        if len(items) >= 2:
+            return items[0]
+    return None
+
+
 def usable_at(r: Reply, said: str = "") -> int | None:
     """The first copy-ready line of a reply, or None: a copy or paste box, a status line, a machine block (the card
-    to save), the title of a piece that holds a copy box, the early win (2+ lines that are each one quote: the kit
-    quotes the 3 lines since the strategy-first order, no copy box) or the strategy proposal's first labelled line (what
+    to save), the title of a piece that holds a copy box, the early win (2+ lines that are each one quote, or the lead
+    "3 câu đáng tiền bạn vừa nói:" and 2+ list lines without quote marks: the kit prints the 3 lines since the
+    strategy-first order, no copy box) or the strategy proposal's first labelled line (what
     the coach reads that reply for). A piece printed without its copy box (§CM-FORMATS 8: "Each piece: a copy box")
     is not copy-ready."""
     boxed = {p.start for p in r.pieces if any(r.lines[i].block == "copy" for i in range(p.start, p.verdict_at))}
@@ -3788,6 +3844,9 @@ def usable_at(r: Reply, said: str = "") -> int | None:
               and (_quotes_coach(ln.plain, said) or _quoted_line(ln.plain))]
     if len(quoted) >= 2:
         marks.add(quoted[0])
+    lead = _early_win_lead(r)                        # "3 câu đáng tiền bạn vừa nói:" + 2 lines without quote marks (v13.2)
+    if lead is not None:
+        marks.add(lead)
     if r.strategy_at >= 0:                           # the strategy proposal: what the coach reads the reply for
         marks.add(r.strategy_at)
     return min(marks) if marks else None
@@ -6024,6 +6083,8 @@ ON_SCREEN_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:on[- ]screen(?:\s+(?:te
 HOOK_WINDOW = 16                 # lines after an on-screen label that still belong to the same short
 ONSCREEN_REPEAT_SHARE = 0.75     # acceptance [hook_lab] onscreen_repeat_share: this share of the on-screen words, or more
 ONSCREEN_MIN_WORDS = 2           # acceptance [hook_lab] onscreen_min_words: content words needed to judge the repeat
+ONSCREEN_REPEAT_MIN_SHARED = 3   # acceptance [hook_lab] onscreen_repeat_min_shared: words that must be shared with the first line
+                                 #   before a repeat is read (two shared words, "gặp" and "khách" used in two senses, are no repeat)
 ONSCREEN_NEW_WORDS_MIN = 1       # acceptance [hook_lab] onscreen_new_words_min: content words the on-screen text must hold that are
                                  #   in neither the first line nor the first frame (0 switches the check off)
 # Words that carry no idea, per language (the two never mix: "than" is an EN function word and the VN verb "to
@@ -6168,6 +6229,10 @@ def hook_shorts(run: Run) -> list[dict]:
     return out
 
 
+HOOK_NEGATIONS = {True: {"không", "chưa", "chẳng", "đâu", "đừng", "chớ"},          # VN: "đâu có" says no
+                  False: {"not", "never", "no", "don't", "doesn't", "can't", "won't", "isn't", "aren't", "nobody", "nothing"}}
+
+
 def onscreen_adds(on: str, first: str, frame: str = "", min_words: int = ONSCREEN_MIN_WORDS,
                   lang: str = "vn") -> tuple[list[str], list[str]] | None:
     """(the on-screen text's content words, the ones that are in neither the first spoken line nor the first frame):
@@ -6179,7 +6244,10 @@ def onscreen_adds(on: str, first: str, frame: str = "", min_words: int = ONSCREE
     if len(words) < min_words or not (first or frame):
         return None
     seen = set(_hook_all(first, lang)) | set(_hook_all(frame, lang))
-    return words, [w for w in words if w not in seen]
+    new = [w for w in words if w not in seen]
+    if not new:                       # a negation the first line lacks is the contrast the on-screen text adds ("AI đâu có gặp khách bạn")
+        new = [w for w in dict.fromkeys(_hook_all(on, lang)) if w in HOOK_NEGATIONS[lang == "vn"] and w not in seen]
+    return words, new
 
 
 def onscreen_repeat(on: str, first: str, min_words: int = ONSCREEN_MIN_WORDS,
@@ -6429,8 +6497,20 @@ def _hook_cfg(run: Run) -> dict:
     return {"share": float(cfg.get("onscreen_repeat_share", ONSCREEN_REPEAT_SHARE)),
             "min_words": int(cfg.get("onscreen_min_words", ONSCREEN_MIN_WORDS)),
             "new_words_min": int(cfg.get("onscreen_new_words_min", ONSCREEN_NEW_WORDS_MIN)),
+            "min_shared": int(cfg.get("onscreen_repeat_min_shared", ONSCREEN_REPEAT_MIN_SHARED)),
             "max_chars": int(cfg.get("headline_max_chars_vn" if run.lang == "vn" else "headline_max_chars_en",
                                      HEADLINE_MAX_CHARS[run.lang]))}
+
+
+def _real_overlap(shared: list[str], first: str, min_shared: int = ONSCREEN_REPEAT_MIN_SHARED) -> bool:
+    """The words an on-screen text shares with the first line are a repeat of it: `min_shared` or more, or fewer that stand
+    side by side in the first line (the two tiếng of "nghiên cứu"). Two words from different places in the line, used in
+    other senses ("gặp", "khách" in "câu trả lời hay gặp nhất" and "nghiên cứu khách thế nào"), are no repeat (review
+    retest-v132 gap 4)."""
+    if len(shared) >= min_shared:
+        return True
+    toks, n = _hook_tokens(first), len(shared)
+    return n > 0 and any(set(toks[i:i + n]) == set(shared) for i in range(len(toks) - n + 1))
 
 
 def short_findings(s: dict, cfg: dict, lang: str, topics=()) -> dict:
@@ -6442,7 +6522,7 @@ def short_findings(s: dict, cfg: dict, lang: str, topics=()) -> dict:
     out = {"repeat": [], "adds": [], "flat_on": [], "flat_line": [], "hedge": [], "warn": []}
     if s.get("first"):
         found = onscreen_repeat(s["on"], s["first"], cfg["min_words"], lang)
-        if found and found[0] >= cfg["share"]:
+        if found and found[0] >= cfg["share"] and _real_overlap(found[1], s["first"], cfg.get("min_shared", ONSCREEN_REPEAT_MIN_SHARED)):
             out["repeat"].append(f'{where}on-screen "{on}" says the first line again '
                                  f'({found[0]:.0%} of its words: {", ".join(found[1][:5])}); it should add what the first '
                                  "line does not (a number, a contrast, a question)")
@@ -6906,7 +6986,9 @@ _HOOK_ON_LABEL = re.compile(r"(?:on[- ]screen(?: text)?|text on screen|chữ tr�
 _HOOK_FIRST_LABEL = re.compile(r"(?:first line|câu đầu)\s*:?\s*", re.I)
 _HOOK_SPLIT_RE = re.compile(r"\s+\|\s+|\s+·\s+(?=(?:on[- ]screen|text on screen|chữ)\b)", re.I)
 HELD_QUOTE_RE = re.compile(r"\"([^\"\n]{4,})\"\s*[·(,|–-]\s*[^\"\n]{0,160}?(" + MONTH_DATE_RE.pattern + r")", re.I)
-HELD_CLAIM_RE = re.compile(r"^\W*(?:what\s+holds|đã\s*giữ|điều\s+đã\s+giữ|giữ)\b[^:\n]*:\s*(\S.*)$", re.I)
+# "Giữ hay cho nghỉ: sau 4 tập, theo số của bạn" is the 30-day plan's rule for a topic after four episodes, not a claim that something holds
+# (review retest-v132 gap 5): the claim is the Research part's "GIỮ: …" line.
+HELD_CLAIM_RE = re.compile(r"^\W*(?:what\s+holds|đã\s*giữ|điều\s+đã\s+giữ|giữ(?!\s+(?:hay|hoặc|or)(?!\w)))\b[^:\n]*:\s*(\S.*)$", re.I)
 _NOTHING_RE = re.compile(r"^\W*(?:none|nothing|chưa có|chưa|không có|n/a)(?!\w)", re.I)
 
 
