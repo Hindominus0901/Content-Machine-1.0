@@ -75,7 +75,7 @@
 "mic.phone"     = { text = "Điện thoại: bấm micro nhỏ trong ô chat, ĐỪNG bấm nút sóng âm.", src = "06257ff861" }
 "mic.mac"       = { text = "Mac: bấm phím fn (quả địa cầu) hai lần.", src = "e34d8f64c2" }
 "mic.windows"   = { text = "Windows: bấm Win+H.", src = "d7e0fdfd3f" }
-"mic.claude_vn" = { text = "Dùng micro trên bàn phím điện thoại, vì micro của Claude chưa nghe được tiếng Việt.", src = "0272e26c0b" }
+"mic.claude_vn" = { text = "dùng micro bàn phím điện thoại (micro của Claude chưa nghe được tiếng Việt)", src = "0272e26c0b" }
 
 # Method and level-up file titles; one title per §CM anchor (core/method.toml [method], [levelup.<area>])
 "method.title"          = { text = "{{name}} · Phương pháp", src = "f30ce5ef69" }

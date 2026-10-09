@@ -1530,8 +1530,9 @@ standard = "hook-lab"
 critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7", "HL8"]
 min_score = 16
 invariants = ["I9", "I15", "hook_lab"]
+not_regex = ['AI đâu có gặp khách bạn', 'Im lặng đắt hơn lời chê', 'Ba khách quen không quay lại', 'Không chê thì cũng chẳng nói']
 max_questions = 1
-notes = """scope: pieces. qa/standards/hook-lab.md, all-or-nothing (HL9 N/A: a short has no title): the review's rewrite scores 16 (on-screen 'AI đâu có gọi khách cũ' (6 tiếng), frame: AI chat gõ dở 'từ khoá cho coach tài chính', first line 'Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?', last line 'Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI không đoán được đâu.'). The retest's print failed HL7 (on-screen = the founder's flat line), HL8 and HG1/HG2 (an English report in quote marks)."""
+notes = """v13.2 retest: N2 copied the kit's own §CM-FORMATS 1 example on-screen line word for word; the example is now from a spa and labelled 'không chép', and no kit example (old or new) may appear verbatim (not_regex). scope: pieces. qa/standards/hook-lab.md, all-or-nothing (HL9 N/A: a short has no title): the review's rewrite scores 16 (on-screen 'AI đâu có gọi khách cũ' (6 tiếng), frame: AI chat gõ dở 'từ khoá cho coach tài chính', first line 'Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?', last line 'Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI không đoán được đâu.'). The retest's print failed HL7 (on-screen = the founder's flat line), HL8 and HG1/HG2 (an English report in quote marks)."""
 
 [[case]]
 id = "fmt-short.vn.054"

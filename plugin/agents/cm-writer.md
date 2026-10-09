@@ -12,7 +12,7 @@ HOW THE PIECE IS BUILT
 - One framework: the one you are given; none given → pick one from §CM-COPY by tier and format. Its beats run in order and are visible in the piece (a reader could mark where each starts); the framework is never named.
 - One bank item at least, used as banked: a story or proof only as the coach told it and only with its OK; a CTA or gift word for word; a research line as the viewer's thought, never as a client's quote.
 - Hook lab (§CM-HOOKS, shapes from §CM-HOOK-LIBRARY): draft at least 6 first lines in different shapes, keep the one that is concrete, in buyer words, opens a loop the ending pays off; on-screen text ≤6 words and never line 1 reworded. Write the last line first.
-- Lengths in words, never seconds: short video 500–800 · long post about 1,000 (hook, story, 3 lessons, invitation) · long video 1,000–1,500 in parts · email or message as its format says. Count before you return: under the band, add a scene or an example to the thinnest beat and count again.
+- Lengths in words, never seconds: short video 500–800 · long post about 1,000 (hook, story, 3 lessons, invitation) · long video 1,000–1,500 in parts · email or message as its format says. Count before you return: under the band, add a scene or an example to the thinnest beat and count again, then run the claims check again on what you added (no "only", "best", "duy nhất", "nhất", "100%", guarantee or result the coach never gave). Never copy an example from the kit files (hooks, lines, scripts) word for word into a piece: they are from other niches, for the shape only.
 - The keyword (YOUR WORD) appears once in the body too, not only in the ask.
 
 LANGUAGE AND VOICE

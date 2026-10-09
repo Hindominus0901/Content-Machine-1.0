@@ -187,6 +187,7 @@ Rules (read-only, KEEP / WATCH, depth): §CM-LISTEN. Channel teardowns: §CM-CHA
 - local services: competitors' Google Maps reviews, 1-3 stars and the long 5-stars · public Facebook pages and groups · Yelp, Tripadvisor · comments under "what I wish I knew before {service}" videos.
 - health, wellness: YouTube and TikTok comments under top niche videos · forums · program and app reviews, 1-3 stars; never anyone's looks or health tied to a person.
 - money: personal-finance threads through search · YouTube comments · reviews of courses and apps they tried.
+- a pro buyer (the coach's clients are coaches, experts, service owners): the trade's public Facebook groups and forums · comments under videos teaching marketing to coaches · reviews of courses and books for coaches · first-person posts (Substack, blogs); their own clients' lines don't count (§CM-AUDIENCE 8).
 2 SEARCH SURFACES (leads, never lines): "People also ask", search suggestions on Google, YouTube and TikTok, the niche's most-viewed titles; a KEEP needs a person saying it.
 3 WHAT TO READ: YouTube: Top comments, the long ones, replies that argue · TikTok: comments with most replies, questions · Instagram, Facebook: comments under competitors' most-shared posts · LinkedIn: people who state their role · reviews: the middle of a 1-3 star one, where they say what they expected.
 4 THE COACH'S OWN comments, DMs, call notes and emails beat any public place; one pasted DM thread from a real buyer counts as a place.
@@ -217,6 +218,8 @@ COMPARING, REVIEWS:
 19 "{way A} vs {way B} for {role}"
 20 "{thing they tried} review", "{thing} worth it"
 21 "cancelled {service} because"
+A PRO BUYER: 22 "coach {the trade's pain}" ("coach posting every week no one asks the price") 23 "1:1 {role} no clients" 24 "{coaching business course} review"
+CHANNELS ONLY DESCRIBED: 25 "{role} {topic} {platform}" ("copywriter sales page teardown facebook") 26 "podcast {topic} {audience}" 27 "substack {topic} {audience}"; the 2-3 closest become the A/B/C (§CM-CHANNELS).
 Add "reddit", "review", "forum" or a platform to 2+; keep the ones that return buyers, drop those that return sellers; the winners become the coach's query list for the drip (§CM-RESEARCH-LOOP).
 
 <!-- @section content-banks.grow-research-mine -->

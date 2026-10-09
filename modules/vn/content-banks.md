@@ -177,7 +177,7 @@ SẴN SÀNG
 30 Học thử (một buổi hay một tuần, chỉ khi gói thật sự có) · "Học thử một {buổi} rồi hẵng quyết" · trong buổi có gì · HOC THU · buổi thử kết bằng lời mời vào gói · như gói
 31 Bảng gói dịch vụ (từng gói, gồm gì, khi nào chọn gói nào) · "{Gói} nào hợp bạn, giá bao nhiêu" · "{câu hỏi giá}? Trả lời thẳng luôn." · BANG GIA · "Bạn đang nhắm gói nào?" · 45 phút
 
-<!-- @section content-banks.grow-research src=a3bdf3216e -->
+<!-- @section content-banks.grow-research src=42e4ebeb99 -->
 ### Ngân hàng nghiên cứu: khách nói ở đâu, theo ngành và nền tảng ("nghiên cứu ở đâu", "ngân hàng nghiên cứu")
 Luật (chỉ đọc, GIỮ / THEO DÕI, độ sâu): §CM-LISTEN. Mổ xẻ kênh: §CM-CHANNELS; người xem phản ứng ra sao: §CM-AUDIENCE; tổng quan ngách: §CM-NICHE. Phần này: tìm ở đâu, lưu gì.
 1 NƠI, tốt nhất trước, theo nhóm ngành:
@@ -186,13 +186,14 @@ Luật (chỉ đọc, GIỮ / THEO DÕI, độ sâu): §CM-LISTEN. Mổ xẻ kê
 - dịch vụ tại chỗ (spa, salon, phòng tập, studio): đánh giá Google Maps của đối thủ, 1-3 sao và 5 sao viết dài · trang, nhóm Facebook khu vực · comment dưới video TikTok review.
 - sức khoẻ, làm đẹp: comment dưới video TikTok, YouTube top · Webtretho · đánh giá Shopee, Lazada của sản phẩm, gói đã thử, 1-3 sao; không bao giờ ghi ngoại hình hay bệnh gắn với một người.
 - tiền bạc: Voz, F319, nhóm Facebook công khai · comment YouTube · đánh giá khoá học, app đã thử.
+- người mua làm nghề (khách của coach là coach, chuyên gia, chủ dịch vụ): nhóm Facebook công khai của nghề, Spiderum, Voz · comment dưới video dạy marketing cho coach · đánh giá khoá học, sách cho coach · bài tự kể (Substack, blog); câu khách của họ không tính (§CM-AUDIENCE 8).
 - nhóm Zalo, Zalo OA: chỉ qua bản coach dán (tên đổi thành chữ cái), không bao giờ tự vào.
 2 CHỖ GỢI Ý (manh mối, không phải câu khách): "Mọi người cũng hỏi", gợi ý tìm kiếm của Google, YouTube, TikTok, tiêu đề nhiều view nhất ngách; GIỮ phải có người thật nói ra.
 3 ĐỌC GÌ: YouTube: comment Hàng đầu, comment dài, chỗ người ta cãi nhau · TikTok: comment nhiều trả lời nhất, câu hỏi · Facebook: comment dưới bài được chia sẻ nhiều nhất của đối thủ · LinkedIn: người tự ghi vai · đánh giá: đoạn giữa bài 1-3 sao, chỗ họ kể đã mong gì.
 4 CỦA CHÍNH COACH: comment, tin nhắn, ghi chú cuộc gọi, Zalo của khách hơn hẳn mọi nơi công khai; một luồng tin khách thật coach dán vào tính là một nơi.
 5 Luôn chỉ đọc (§CM-LISTEN): nhóm kín chỉ nhóm của coach, ghi ý; không ghi tên hay nick người comment.
 
-<!-- @section content-banks.grow-research-queries src=6eb38a9da2 -->
+<!-- @section content-banks.grow-research-queries src=f82c49083b -->
 ### Cụm tìm bằng chữ của khách ("tìm bằng từ gì", "cụm tìm kiếm")
 Viết ≥10 cụm trước khi đọc (§CM-LISTEN 1): chữ khách gõ, không phải chữ nghề hay tên phương pháp của coach; cụm nào cũng có vai hay nơi để khỏi trôi sang người bán; thêm dạng không dấu nếu khách hay gõ vậy. Coach nói "phễu khách hàng"; khách gõ "từ hè tới giờ không có khách mới, sai ở đâu".
 TÌNH HUỐNG: 1 "{vai} {hoàn cảnh} phải làm sao" ("mới mở spa vắng khách phải làm sao") 2 "{khoảnh khắc} giờ làm gì" ("mất khách lớn nhất giờ làm gì") 3 "{tuổi, giai đoạn} rồi mà vẫn {vấn đề}" 4 "{vai} mới {làm gì} cần biết gì"
@@ -217,6 +218,8 @@ SO SÁNH, REVIEW:
 19 "{cách A} hay {cách B} cho {vai}"
 20 "review {thứ đã thử}", "{thứ} có tốt không"
 21 "{chủ đề} voz", "webtretho {tình trạng}", "hỏi thật {chủ đề}"
+NGƯỜI MUA LÀM NGHỀ: 22 "làm coach {nỗi khổ nghề}" ("làm coach đăng đều mà không ai hỏi giá") 23 "{vai} 1 kèm 1 không có khách" 24 "review khoá học {làm coach, bán khoá}"
+KÊNH COACH CHỈ TẢ: 25 "{vai} {chủ đề} {nền tảng}" ("copywriter mổ sale page facebook") 26 "podcast {chủ đề} {tệp khách}" 27 "substack {chủ đề} {tệp khách}"; 2–3 kênh khớp nhất thành A/B/C (§CM-CHANNELS).
 Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra khách thì giữ, ra người bán thì bỏ; cụm tốt thành danh sách tìm của coach cho lượt nghiên cứu hằng tuần (§CM-RESEARCH-LOOP).
 
 <!-- @section content-banks.grow-research-mine src=d3f44bdf5c -->

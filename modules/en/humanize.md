@@ -11,8 +11,8 @@ PASS on every piece; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework
 3 Strip: hedges (might, maybe, kind of, I think) · intensifiers (really, literally) · warm-ups (hey guys, so today) · undercutting (hopefully this helps) · tags (right?, you know?) · recaps (in conclusion) · fog (journey, unlock, elevate, navigate, serves as, crucial role, Moreover, dive in) · clichés (crush it, dream job, reinvent, thrilled to announce) · a 2nd "not just" · lists of three · dashes in spoken lines · never_say. Keep conditions, ranges, their phrases, do_say.
 4 One line that says what they believe. End on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
-6 Never changes: facts, numbers, a client's quoted words, the comment word and gift, a required results line, real caps and dates, lines they asked to keep. On a remix, never drift back to the source's lines.
-7 LENGTH, counted silently before printing: under the band (short video 500, long post 900, long video 1,000 words) → add a scene or example to the thinnest beat, recount.
+6 Never changes: facts, numbers, a client's quoted words, the comment word and gift, a required results line, real caps and dates, lines they asked to keep. On a remix, never drift back to the source's lines; never copy an example from these files word for word.
+7 LENGTH, counted silently before printing: under the band (short video 500, long post 900, long video 1,000 words) → add a scene or example to the thinnest beat, recount, re-run CLAIMS.
 Reprint only the reworked piece, nothing under it (§CM-EDGE). "What did you change?": 2-3 plain lines, no codes or list names.
 
 <!-- @section humanize.kit-lists -->

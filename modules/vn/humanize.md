@@ -12,15 +12,15 @@ Founder 7/10 (quyết định 3, sau buổi ngày 0 tự chạy: câu tiếng An
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 4, 7): NATURAL 1 lời coach thuật bằng tiếng Anh thì thuật lại, không ngoặc kép (cần nguyên văn: hỏi như §CM-DIG 3, LỜI KHÁCH); NATURAL 4 tiểu từ cuối câu đếm từng bài so với bài coach, kèm một câu đầu kết bằng tiểu từ. Tỉ lệ câu cửa miệng (≥ nửa bài từ 60 tiếng) nằm ở §CM-VOICE 7.
 Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 items 2, 5, 7): HUMANIZE 1 khách chỉ làm, nói, nghĩ điều coach kể. NATURAL 4: coach dày tiểu từ thì câu dặn, câu rủ kết bằng tiểu từ của họ ("…trống trơn em ạ"); vị trí thêm tiểu từ: câu kể, câu mời, câu đầu, câu cuối ("câu nói" bỏ, mơ hồ). NATURAL 7 thêm dòng calque "có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì" (cũng vào locales/vn/banned-tells.txt). NATURAL 8 bỏ ví dụ "Cô ấy chia sẻ rằng cô ấy rất lo." → "Chị ấy bảo: 'Em sợ lắm chị ạ.'" (dạy biến lời thuật thành câu trích, trái mục 2), "Vui lòng để lại SĐT" (xin số điện thoại là dừng cứng). Trả bằng: NATURAL 1 "(chỉ tên thương hiệu, nền tảng)" (dòng TIẾNG VIỆT của khối hướng dẫn nói đủ hơn), NATURAL 3 "chữ của họ (connectors)" → "connectors của họ".
 
-<!-- @section humanize.kit-pass src=f5598ece5f -->
+<!-- @section humanize.kit-pass src=2ab586836f -->
 BÀI NÀO cũng qua lượt này; làm kỹ khi "{{t:cmd.voice}}", "nghe như máy", "sượng". Chỉ sửa chữ của coach.
 1 Chi tiết chỉ lấy từ chuyện họ kể; khách chỉ làm, nói, nghĩ điều coach kể. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
 2 Viết như họ nói: §CM-VOICE 7, 9, §CM-NATURAL.
 3 Cắt: rào chồng, rào trước điều họ biết chắc (có lẽ, hình như, mình nghĩ là) · từ đệm máy tự thêm (kiểu như, thực ra thì) · tự hạ (em xin phép chia sẻ) · đuôi "đúng không ạ?" · mở vòng vo (Hello cả nhà…) · chữ sáo (hành trình, nâng tầm, bứt phá) · "không chỉ… mà còn" · liệt kê ba cho đủ · chữ dịch, văn viết, gạch ngang (§CM-NATURAL 7) · never_say. Giữ: điều kiện, khoảng số, do_say, một "mình thấy" trước câu gắt, câu của họ trên card (cả "nói chung là", "đúng không ạ" trong đó).
 4 Một câu nói rõ họ tin gì. Kết bằng một bước hay câu của họ, không tóm tắt.
 5 Đọc to: vấp thì tách. "Vấp dòng 2": chỉ làm lại dòng đó. Vẫn lệch: "{{t:voice.match}}"
-6 Giữ nguyên: sự thật, số, lời khách trích, từ khoá, quà, dòng kết quả bắt buộc, suất và hạn thật, câu họ dặn giữ. Làm từ bài khác: không quay về câu gốc.
-7 ĐỘ DÀI, đếm thầm trước khi in: dưới khung (video ngắn 500, bài dài 900, video dài 1.000 chữ) → thêm cảnh, ví dụ vào ý mỏng nhất, đếm lại.
+6 Giữ nguyên: sự thật, số, lời khách trích, từ khoá, quà, dòng kết quả bắt buộc, suất và hạn thật, câu họ dặn giữ. Làm từ bài khác, ví dụ trong file: không chép câu gốc.
+7 ĐỘ DÀI, đếm thầm trước khi in: dưới khung (video ngắn 500, bài dài 900, video dài 1.000 chữ) → thêm cảnh, ví dụ vào ý mỏng nhất, đếm lại, soát LỜI HỨA.
 Chỉ in lại bài đã sửa. "Sửa gì vậy?": 2-3 dòng lời thường, không mã, không tên danh sách.
 
 <!-- @section humanize.kit-lists src=52068ea89d -->
