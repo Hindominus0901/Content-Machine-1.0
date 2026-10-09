@@ -234,12 +234,12 @@
 "task.today.name"         = { text = "Một việc hôm nay", src = "f5d7626aca" }
 "task.numbers.name"       = { text = "Số liệu thứ Sáu", src = "8e23e8665b" }
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
-"levelup.offer_reminders" = { text = "Tiếp theo: 2 lời nhắc trên lịch, {day} và thứ Sáu. A) cài luôn (máy khuyên: {why}) B) để sau.", src = "62fe22666e" }
-"levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Tiếp theo: mình nhắn bạn thứ Hai, mỗi sáng, thứ Sáu. A) cài luôn (máy khuyên: {why}) B) chỉ thứ Sáu C) để sau.", src = "f3c06c4f2a" }
+"levelup.offer_reminders" = { text = "Tiếp theo: 2 lời nhắc trên lịch, {day} và thứ Sáu. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "8d1cb38751" }
+"levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Tiếp theo: mình nhắn bạn thứ Hai, mỗi sáng, thứ Sáu. A) cài luôn (máy khuyên): {why}. B) chỉ thứ Sáu C) để sau.", src = "821f4d0b5f" }
 "levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, mình dựng sẵn B) một Google Sheet C) để sau, chỉ HUB.md. Mình chọn {letter}: {why}. Gõ A, B hay C.", src = "629e4d8574" }
-"levelup.offer_autopilot" = { text = "Tiếp theo: tuần nào bài cũng tự vào Notion. A) cài luôn (máy khuyên: {why}) B) để sau.", src = "117e68fd42" }
+"levelup.offer_autopilot" = { text = "Tiếp theo: tuần nào bài cũng tự vào Notion. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "8688cc1974" }
 "levelup.offer_grow"      = { text = "Phần đó nằm trong {LAUNCH-VN.md} (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại mình.", src = "80d274bfc4" }
-"levelup.offer_character" = { text = "Tiếp theo: cho bài giống bạn hơn, 3 buổi trò chuyện 20 phút. A) làm buổi 1 luôn (máy khuyên: {why}) B) tuần sau.", src = "49c6ea5567" }
+"levelup.offer_character" = { text = "Tiếp theo: cho bài giống bạn hơn, 3 buổi trò chuyện 20 phút. A) làm buổi 1 luôn (máy khuyên): {why}. B) tuần sau.", src = "e5e0ef535a" }
 
 # Weekly Talk and mini-talk (§ TALK)
 "talk.open"      = { text = "Buổi nói chuyện tuần: 5 câu hỏi, khoảng 15 phút. Bấm micro nhỏ rồi cứ nói như kể cho người quen. Không cần camera, một máy là đủ.", src = "fcc4f4a188" }
@@ -366,11 +366,11 @@
 "setup.link_unread"            = { text = "Trang của bạn mình không mở được, nhưng bạn kể là đủ rồi.", src = "18d9ef7035" }
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
 "setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?", src = "dba7f66234" }
-"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu, mình sẽ viết cho một tệp khách. A) {buyer} (máy khuyên: {why}) B) {other}. Gõ A hay B.", src = "aa1ec95b91" }
+"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu, mình sẽ viết cho một tệp khách. A) {buyer} (máy khuyên): {why}. B) {other}. Gõ A hay B.", src = "df5f51ffd0" }
 # Hỏi sâu ngày 0 (§CM-DIG, founder 7/10): hỏi bằng một chuyện, mỗi câu một dấu hỏi, không kèm câu đoán; cặp xưng hô đổi theo coach chọn
 "dig.story"                    = { text = "Bạn nhớ lại người khách bạn giúp được nhiều nhất. Hồi mới tìm tới bạn, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
 "dig.words"                    = { text = "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.", src = "ec4e67239a" }
-"dig.offer"                    = { text = "Khách gật đầu làm với bạn thì họ nhận được gì, làm theo cách nào, trả bao nhiêu?", src = "a45563b39d" }
+"dig.offer"                    = { text = "Khách làm với bạn thì nhận được gì, trả bao nhiêu?", src = "a45563b39d" }
 "dig.proof"                    = { text = "Có kết quả thật nào của khách mà bạn sẵn lòng kể ra không?", src = "60c5654c2a" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
 "dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, còn kiểu khách nào bạn không muốn nhận?", src = "890b2a58bb" }

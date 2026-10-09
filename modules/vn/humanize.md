@@ -12,7 +12,7 @@ Founder 7/10 (quyết định 3, sau buổi ngày 0 tự chạy: câu tiếng An
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 4, 7): NATURAL 1 lời coach thuật bằng tiếng Anh thì thuật lại, không ngoặc kép (cần nguyên văn: hỏi như §CM-DIG 3, LỜI KHÁCH); NATURAL 4 tiểu từ cuối câu đếm từng bài so với bài coach, kèm một câu đầu kết bằng tiểu từ. Tỉ lệ câu cửa miệng (≥ nửa bài từ 60 tiếng) nằm ở §CM-VOICE 7.
 Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 items 2, 5, 7): HUMANIZE 1 khách chỉ làm, nói, nghĩ điều coach kể. NATURAL 4: coach dày tiểu từ thì câu dặn, câu rủ kết bằng tiểu từ của họ ("…trống trơn em ạ"); vị trí thêm tiểu từ: câu kể, câu mời, câu đầu, câu cuối ("câu nói" bỏ, mơ hồ). NATURAL 7 thêm dòng calque "có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì" (cũng vào locales/vn/banned-tells.txt). NATURAL 8 bỏ ví dụ "Cô ấy chia sẻ rằng cô ấy rất lo." → "Chị ấy bảo: 'Em sợ lắm chị ạ.'" (dạy biến lời thuật thành câu trích, trái mục 2), "Vui lòng để lại SĐT" (xin số điện thoại là dừng cứng). Trả bằng: NATURAL 1 "(chỉ tên thương hiệu, nền tảng)" (dòng TIẾNG VIỆT của khối hướng dẫn nói đủ hơn), NATURAL 3 "chữ của họ (connectors)" → "connectors của họ".
 
-<!-- @section humanize.kit-pass src=7df722535e -->
+<!-- @section humanize.kit-pass src=f5598ece5f -->
 BÀI NÀO cũng qua lượt này; làm kỹ khi "{{t:cmd.voice}}", "nghe như máy", "sượng". Chỉ sửa chữ của coach.
 1 Chi tiết chỉ lấy từ chuyện họ kể; khách chỉ làm, nói, nghĩ điều coach kể. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
 2 Viết như họ nói: §CM-VOICE 7, 9, §CM-NATURAL.
@@ -20,6 +20,7 @@ BÀI NÀO cũng qua lượt này; làm kỹ khi "{{t:cmd.voice}}", "nghe như m�
 4 Một câu nói rõ họ tin gì. Kết bằng một bước hay câu của họ, không tóm tắt.
 5 Đọc to: vấp thì tách. "Vấp dòng 2": chỉ làm lại dòng đó. Vẫn lệch: "{{t:voice.match}}"
 6 Giữ nguyên: sự thật, số, lời khách trích, từ khoá, quà, dòng kết quả bắt buộc, suất và hạn thật, câu họ dặn giữ. Làm từ bài khác: không quay về câu gốc.
+7 ĐỘ DÀI, đếm thầm trước khi in: dưới khung (video ngắn 500, bài dài 900, video dài 1.000 chữ) → thêm cảnh, ví dụ vào ý mỏng nhất, đếm lại.
 Chỉ in lại bài đã sửa. "Sửa gì vậy?": 2-3 dòng lời thường, không mã, không tên danh sách.
 
 <!-- @section humanize.kit-lists src=52068ea89d -->
@@ -27,9 +28,9 @@ Chỉ in lại bài đã sửa. "Sửa gì vậy?": 2-3 dòng lời thường, k
 "{{t:cmd.i_do_say}}": trả về chỗ cũ, không cắt nữa, kể cả chữ ở mục 3. Dừng cứng, giới hạn quan điểm (suất giả, cam kết, chửi) thì không mở: "{{t:voice.cant_allow}}" + bản thật, thay dòng xác nhận.
 CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài ≤2 lần liền; từ khoá không ở đúng chỗ bài trước.
 
-<!-- @section humanize.kit-natural src=8f70548bea -->
+<!-- @section humanize.kit-natural src=15afda8b25 -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
-1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: lấy ý, viết lại như họ nói tiếng Việt, thuật lại, không ngoặc kép (cần nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
+1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: thuật ý như họ nói tiếng Việt, không ngoặc kép (cần nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
 3 Nối bằng chữ nói, connectors của họ trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
 4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): đếm từng bài, thưa hơn bài họ thì thêm vào câu kể, câu mời, câu đầu, câu cuối; coach dày tiểu từ thì câu dặn, câu rủ đều kết bằng tiểu từ của họ ("…trống trơn em ạ."). Nhắn khách, người lớn hơn: "Dạ… ạ".
@@ -43,6 +44,7 @@ việc + V, sự + …, một cách + tính từ → động từ thẳng
 giúp bạn, mang lại cho bạn → đỡ…, khỏi…, là…
 có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì
 Dưới đây là / Đây là lý do → vào thẳng việc
+trụ cột (trơn), hook → trụ cột nội dung, câu mở
 Bạn có biết…? / Hãy tưởng tượng → cảnh, câu khách nói
 Hãy… / Hãy cùng… → Thử… / Cứ… / Nhớ…
 Tóm lại, / Hy vọng hữu ích → câu chốt, việc nhỏ

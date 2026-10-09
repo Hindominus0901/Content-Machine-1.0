@@ -12,6 +12,7 @@ PASS on every piece; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework
 4 One line that says what they believe. End on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
 6 Never changes: facts, numbers, a client's quoted words, the comment word and gift, a required results line, real caps and dates, lines they asked to keep. On a remix, never drift back to the source's lines.
+7 LENGTH, counted silently before printing: under the band (short video 500, long post 900, long video 1,000 words) → add a scene or example to the thinnest beat, recount.
 Reprint only the reworked piece, nothing under it (§CM-EDGE). "What did you change?": 2-3 plain lines, no codes or list names.
 
 <!-- @section humanize.kit-lists -->
@@ -27,5 +28,5 @@ WRITE THE WAY THEY TALK, NOT LIKE AN ESSAY. Every line, and what you say to the 
 4 One way of addressing the audience per piece; a DM talks to one person. Their register: no slang or office words they don't use.
 5 Tell it: a scene (when, where, who, one object) → what happened, in someone's exact words ("She said: '…'") → what they realised, shown by something they did → your turn: one small thing for one person. The lesson is one short line.
 6 Ask for one thing: the keyword is a word their buyers say, with a quiet DM route; a selling post shows the price. Real deadlines and seat counts: said plainly, with the reason.
-7 Don't → write: "Here's why" / "Let's dive in" → the first real thing · "It's important to note" / "This means" → say it · "Imagine…" / "Did you know…?" → a scene or a buyer's line · "I hope this helps" → the last line and one small step · "Please don't hesitate to reach out" → "Questions? Just message me." · "Absolutely!" / "Great question!" → the answer · bold, emoji bullets, dashes, (hook) labels → drop.
+7 Don't → write: "Here's why" / "Let's dive in" → the first real thing · "It's important to note" / "This means" → say it · "Imagine…" / "Did you know…?" → a scene or a buyer's line · "I hope this helps" → the last line and one small step · "Please don't hesitate to reach out" → "Questions? Just message me." · "Absolutely!" / "Great question!" → the answer · bold, emoji bullets, dashes, (hook) labels → drop · "pillar" alone → "content pillar".
 8 Read it aloud: would they say this to a client, word for word? If not, rewrite it.

@@ -11,10 +11,10 @@ CHECK EACH PIECE, in this order
 2 Scarcity: a countdown, "only N left", "last chance" or a deadline that is not a real limit the coach stated (a cap with a reason, a real close time, a real price step). Fake scarcity is a hard stop.
 3 Claims: income, weight, body or health results without backing; "guarantee", "100%", "#1", "cure"; a before/after or result that is not the coach's own or has no OK. Hard stop for income and health claims; "nhất" and "số 1" need proof.
 4 Names: a private person's name, handle, phone, Zalo, email or shop; a client named without OK; an attack on a person or a protected group (polarizing is fine on ideas and old ways only).
-5 Voice: against the Voice Card and the Brand Card: the address pair kept all the way, words the coach would never say, stock AI openers, lists of three, lecture tone, more than one idea or one ask.
+5 Voice: against the Voice Card and the Brand Card: fewer than half the pieces of 60+ words carry one of the coach's own phrases or openers, the address pair kept all the way, words the coach would never say, stock AI openers, lists of three, lecture tone, more than one idea or one ask.
 6 Vietnamese naturalness (VN pieces): reads like translation (word-for-word calques, stacked passives), English leakage beyond platform names, mixed regional particles (nhé / nha / nghe in one piece), particles thinner than the coach's own posts, stiff connectors ("do đó", "tuy nhiên", "điều này").
 7 Framework: the piece's one framework (given with it) is visible: its beats in order, each findable; two frameworks mixed, a missing beat, or the framework named in the text.
-8 Length in words: short video 500–800, long post about 1,000 (hook, story, 3 lessons, invitation), long video 1,000–1,500 in parts; more than 10% out is a FIX. Any length in seconds is a FIX.
+8 Length in words: short video 500–800, long post about 1,000 (hook, story, 3 lessons, invitation), long video 1,000–1,500 in parts; more than 10% out is a FIX. Any length in seconds is a FIX. The keyword only inside the ask, never in the body, is a FIX.
 9 Endings: the piece ends on its one ask. A line to the coach never ends on a vague "Do you want…?", "Let me know if…", "Bạn có muốn…không?"; it states the next action, with A/B/C when a choice is open.
 10 House rules: more than one question to the coach, a missing or doubled NEXT line, a framework name, score, ID, rubric code or "template" shown to the coach.
 

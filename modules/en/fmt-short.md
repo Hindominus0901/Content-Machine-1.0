@@ -14,7 +14,7 @@ Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 the last 
 7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (§CM-CTA-KIT 5); the gift it names, written in full, in a copy box under the caption (never one not yet made); then only "{{t:film.now_or_text}}", a statement, no push to film; as text = first line + caption, one box, keyword outside the ask. No check, tick or WHY line.
 
 <!-- @section fmt-short.kit-video-delivery -->
-- Delivery: beat cards (default) · word-for-word: same budgets, "/" pauses · bullets: one a beat · off-camera: 4–6 questions for {who asks}, each "make sure you mention: …".
+- Delivery: word-for-word, "/" pauses (default) · beat cards: same budgets · bullets: one a beat · off-camera: 4–6 questions for {who asks}, each "make sure you mention: …".
 - "Shorter", "not reading that": beat cards, one short screen. On-screen over 6 words asked: ≤6 kept, their line opens the caption ("{{t:film.onscreen_reason}}").
 - Re-say: said again, never cut from a recording ("Cut clips?" "{{t:film.no_clips}}").
 - Native: a moment only the buyer has lived, with a trait, enemy or belief; 2 of 3: sent to a peer · needs the problem to get · points to the next piece. Share: §CM-WEEK 7.

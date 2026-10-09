@@ -357,7 +357,7 @@ id = "TIERS"                     # ATTRACT / TRUST / CONVERT in depth
 sections = ["strategy-doc.grow-tiers", "strategy-doc.grow-tiers-convert"]
 
 [[levelup.playbook.anchor]]
-id = "CONTENT-LINES"             # 2-3 named recurring series per pillar
+id = "CONTENT-LINES"             # named recurring series per pillar, scaled to weekly hours
 sections = ["strategy-doc.grow-lines", "strategy-doc.grow-lines-example"]
 
 [[levelup.playbook.anchor]]

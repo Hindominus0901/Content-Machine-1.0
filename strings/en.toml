@@ -217,12 +217,12 @@
 "task.today.name"         = "Today's one thing"
 "task.numbers.name"       = "Numbers day"
 "task.footer"             = "Open {{name}}, newest chat, say 'next'."
-"levelup.offer_reminders" = "Next: 2 calendar reminders, {day} and Friday. A) set them (recommended: {why}) B) not now."
-"levelup.offer_nudges"    = "You did a full week. Next: my messages on Monday, each morning and Friday. A) set them (recommended: {why}) B) Friday only C) not now."
+"levelup.offer_reminders" = "Next: 2 calendar reminders, {day} and Friday. A) set them (recommended): {why}. B) not now."
+"levelup.offer_nudges"    = "You did a full week. Next: my messages on Monday, each morning and Friday. A) set them (recommended): {why}. B) Friday only C) not now."
 "levelup.offer_board"     = "One place to see everything: A) Notion, built for you B) a Google Sheet C) later, HUB.md only. I'd pick {letter}: {why}. Type A, B or C."
-"levelup.offer_autopilot" = "Next: each week written into Notion by itself. A) set it up (recommended: {why}) B) not now."
+"levelup.offer_autopilot" = "Next: each week written into Notion by itself. A) set it up (recommended): {why}. B) not now."
 "levelup.offer_grow"      = "That lives in {LAUNCH-EN.md} (Level-ups folder). Add it here (one upload), then ask again."
-"levelup.offer_character" = "Next: make it sound more like you, 3 talks of 20 minutes. A) talk 1 now (recommended: {why}) B) next week."
+"levelup.offer_character" = "Next: make it sound more like you, 3 talks of 20 minutes. A) talk 1 now (recommended): {why}. B) next week."
 
 # Weekly Talk and mini-talk (§ TALK)
 "talk.open"      = "Weekly Talk: 5 questions, about 15 min. Tap the small mic and answer out loud, like telling a friend. No camera, one device."
@@ -350,7 +350,7 @@
 "setup.link_unread"            = "Your page didn't open here; what you say is enough."
 "setup.guess"                  = "My guess: {guess}. Right?"
 "setup.guess_no_result"        = "My guess: no client result yet, so I'll use your own story. Right?"
-"setup.multi_income"           = "You earn from {n} things; I'll write for one buyer. A) {buyer} (recommended: {why}) B) {other}. Type A or B."
+"setup.multi_income"           = "You earn from {n} things; I'll write for one buyer. A) {buyer} (recommended): {why}. B) {other}. Type A or B."
 # Day-0 dig (§CM-DIG, founder 7 Oct): story-first, one question mark each, no guess; buyer-mirror wording, never named
 "dig.story"                    = "Think of one client you really helped. What was going on for them the week they first got in touch?"
 "dig.words"                    = "What did they say or write to you that first time, word for word if you can?"

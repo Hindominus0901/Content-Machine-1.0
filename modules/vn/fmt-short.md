@@ -22,8 +22,8 @@ Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 câu cuối
 6 Kết quả của khách: nguyên văn, kèm câu ở dòng LỜI HỨA; kiểm thầm khách đồng ý chưa ("{{t:tick.client_ok}}" chỉ hiện khi "{{t:cmd.why}}").
 7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
 
-<!-- @section fmt-short.kit-video-delivery src=adb16f08e9 -->
-- Cách nói: thẻ ý (mặc định) · nguyên văn ("/" chỗ ngắt hơi) · gạch đầu dòng mỗi ý · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".
+<!-- @section fmt-short.kit-video-delivery src=ce041f272e -->
+- Cách nói: nguyên văn, "/" chỗ ngắt hơi (mặc định) · thẻ ý · gạch đầu dòng mỗi ý · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".
 - "Ngắn thôi", "đọc như robot": thẻ ý, một màn hình. Xin chữ trên màn hình dài hơn: vẫn ≤6, câu đó lên dòng 1 caption ("{{t:film.onscreen_reason}}").
 - Sửa thì nói lại, không cắt từ bản ghi ("Cắt ra à?" "{{t:film.no_clips}}").
 - Video riêng: khoảnh khắc chỉ khách của họ từng trải, mang nét tính cách, cách cũ họ chống hay niềm tin; đáng gửi người cùng cảnh.

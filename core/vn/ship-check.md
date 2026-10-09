@@ -14,12 +14,12 @@ G2 6 Oct (EN merge): ship.kit drops "· không khen" (MỖI LẦN TRẢ LỜI sa
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 1, 7): ship.kit 3 thêm "chữ trên màn hình ≠ câu đầu"; 4 "tiểu từ cuối câu dày như họ (đếm)"; 2 bỏ "kết quả của khách chỉ khi họ đồng ý; giục gấp chỉ khi gấp thật" (dòng LỜI HỨA ngay sau card nói đúng hai luật đó). ship.kit 944 of 1,000 chars.
 Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 items 1, 2, 5): ship.kit 1 "cả khách làm gì, nghĩ gì"; 3 "Hook, dòng 1 caption: không rào đón, phán suông, châm ngôn; chữ trên màn hình ≠ ý câu đầu". Câu hay nói ở mỗi video ngắn nằm ở §CM-VOICE 7 (khối hết chỗ); tiểu từ "dày như họ (đếm)" đã có ở mục 4. ship.kit 944 → 986 of 1,000.
 
-<!-- @section ship.kit src=01e81894a1 -->
+<!-- @section ship.kit src=a7dd425dfb -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → cắt hoặc hạ bậc
-0 TRỌNG TÂM: một trụ cột, một loại bài · ý chính ≤20 tiếng · một niềm tin ("tưởng X, hoá ra Y") · không chủ đề để dành
+0 TRỌNG TÂM: một trụ cột, một loại bài · ý chính ≤20 tiếng · một niềm tin ("tưởng X, hoá ra Y") · không chủ đề để dành · từ khoá có cả ngoài lời mời
 1 SỰ THẬT (số, tên, câu trích, kết quả, khách làm gì, nghĩ gì) chỉ của coach hay trang đã đọc, trích nguyên văn; chủ đề, phần dạy: được dùng hiểu biết nghề. Thiếu → hạ bậc (kể cách làm, nhóm đầu) hoặc hỏi
-2 KHÁC BIỆT 0–2 mỗi mục, ≥8, không mục 0: từ khoá trong bài + chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Hook, dòng 1 caption: không rào đón, phán suông, châm ngôn; chữ trên màn hình ≠ ý câu đầu
-3 GIỌNG + NGƯỜI MUA: giọng, nhịp, câu hay nói, cách gọi khách của coach; tiểu từ cuối câu dày như họ (đếm); không chữ cấm, câu tiếng Anh; người mua dừng ở câu đầu và tin. Sửa một lần
+2 KHÁC BIỆT 0–2 mỗi mục, ≥8, không mục 0: chi tiết cụ thể · một ý, một niềm tin · bằng chứng trong bài · chi tiết chỉ coach có · quan điểm có người cãi. Hook, dòng 1 caption: không rào đón, phán suông, châm ngôn; chữ trên màn hình ≠ ý câu đầu
+3 GIỌNG + NGƯỜI MUA: giọng, nhịp, câu hay nói (≥ nửa số bài), cách gọi khách; tiểu từ cuối câu dày như họ (đếm); không chữ cấm, câu tiếng Anh; người mua dừng ở câu đầu và tin. Sửa một lần
 IN: bài xong → chỉ in bài. Thiếu thông tin, điều cấm → một dòng ("Cần bạn · <câu hỏi>"). Lý do, phần kiểm: chỉ khi hỏi "tại sao?"
 
 <!-- @section ship.card src=9ab2ae814b -->

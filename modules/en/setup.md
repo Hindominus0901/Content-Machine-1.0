@@ -25,7 +25,7 @@ CHANNELS: "{{t:dig.channels}}"
 GOAL: "{{t:dig.goal}}"
 STANCE: "{{t:dig.stance}}"
 A question left, no client story or client words yet: "{{t:dig.story}}", then "{{t:dig.words}}" (pieces need them; the strategy never waits).
-4 The first rides the soft cut, else "Got it." + the question after "done". No praise or recap around it.
+4 The first rides the soft cut, else "Got it." + the question after "done". Then bare questions. No praise or recap.
 5 "enough", "just make it", "too many questions": stop, straight to the strategy; "skip": that slot is guessed, next question. Guessed slots: "(my guess)" on the strategy line they shape. Never guessed: a client's words or a result; pieces use a buyer line from the research (as the viewer's thought) or [NEEDS: …]. No result: their own story or process.
 6 A vague answer ("they're stressed"): one follow-up for the moment ("What did that look like on a Tuesday?"), counted in the 6. Answers are dump (§CM-SETUP 1): they can change the pick (§CM-SETUP 8) and steer the research (§CM-CHANNELS).
 7 Then the strategy (§CM-MAP), in steps, no piece.
