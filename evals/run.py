@@ -873,13 +873,25 @@ def answer_paragraphs(pdir: Path) -> list[str]:
     return out
 
 
+# The bold label that opens an answer-bank line ("- **Người cuối cùng trả tiền cho Nhi, và nguyên văn lời họ:** "The last one
+# was a coach…""): the question the line answers, in the persona author's words. A coach who dictated the answer in English
+# is not leaking its Vietnamese label when the machine asks the same question in Vietnamese (review retest-v13, leaks).
+ANSWER_LABEL_RE = re.compile(r"^\s*(?:[-*•]|\d{1,2}[.)])?\s*\*\*[^*\n]+\*\*\s*")
+
+
 def undictated_corpus(rows: list[dict], pdir: Path, n: int) -> set[str]:
     """The n-grams (_content_words) of the answers.md paragraphs no coach turn covered: fewer than half their tokens in
     POST_RUN-token runs of the coach's turns (graders.is_pasted_post, the coverage test _split_pasted uses; review
     retest-vg5-g6 P17)."""
     said = graders.post_runs([r.get("text", "") for r in rows if r.get("role") == "coach"])
-    return set().union(*(_grams(_content_words(p), n) for p in answer_paragraphs(pdir)
-                         if not graders.is_pasted_post(p, said)), set())
+    paragraphs = answer_paragraphs(pdir)
+    bodies = [ANSWER_LABEL_RE.sub("", p) for p in paragraphs]
+    covered = [p for p, b in zip(paragraphs, bodies) if graders.is_pasted_post(b, said)]
+    # a run in a dictated line's own label ("Người cuối cùng trả tiền cho Nhi") is that topic's name: the machine writing
+    # it in Vietnamese when the coach dictated the answer in English is no lift, wherever else the persona notes repeat it
+    known = set().union(*(_grams(_content_words(p), n) for p in covered), set())
+    return set().union(*(_grams(_content_words(b), n) for b in bodies if not graders.is_pasted_post(b, said)),
+                       set()) - known
 
 
 def _spans(hit: list[int], n: int) -> list[tuple[int, int]]:

@@ -338,6 +338,8 @@ EN_ALLOW = {"ok", "content", "machine", "brand", "card", "hook", "script", "laun
             "comment", "post", "video", "story", "live", "inbox", "link", "sale", "ads", "email", "zalo",
             "facebook", "tiktok", "instagram", "youtube", "notion", "chatgpt", "claude", "save", "to", "project"}
 MAP_STEP_RE = re.compile(r"\bmap\b|bản đồ|thông điệp", re.I)
+# A strategy step's running tag counts its steps ("Bước 2/3 · …", "Step 2 of 3 · …"): v13's 3 pre-filled steps (§CM-MAP).
+STRATEGY_PART_STEP_RE = re.compile(r"(?<!\w)(?:bước|step)\s+\d+\s*(?:/|of|trên)\s*\d+(?!\w)", re.I)
 STRATEGY_STEP_RE = re.compile(r"\bstrateg(?:y|ies)\b|chiến lược", re.I)
 FILM_STEP_RE = re.compile(r"\bfilm\b|(?<!\w)quay(?!\w)", re.I)
 CARD_STEP_RE = re.compile(r"\bbrand card\b|\bcard\b|(?<!\w)thẻ(?!\w)", re.I)
@@ -1004,8 +1006,18 @@ def _unquoted(text: str) -> str:
     return re.sub(r'"[^"\n]*"', " ", ck.straight_quotes(text))
 
 
+# A link is no sentence: the "?" that opens its query string ("…/calendar/render?action=TEMPLATE&text=…") asks nothing.
+# (An address may wrap in <…> or sit in a markdown link; its tail runs to the next space or closing bracket.)
+URL_RE = re.compile(r"(?:https?://|www\.)[^\s<>\"')\]]+", re.I)
+
+
+def _blank_urls(text: str) -> str:
+    """The text with each link blanked to spaces of the same length (offsets stay valid)."""
+    return URL_RE.sub(lambda m: " " * len(m.group(0)), text)
+
+
 def _questions(text: str) -> list[str]:
-    return [q.strip() for q in re.findall(r"[^.!?\n]*\?+", _unquoted(text)) if q.strip(" ?")]
+    return [q.strip() for q in re.findall(r"[^.!?\n]*\?+", _unquoted(_blank_urls(text))) if q.strip(" ?")]
 
 
 def _is_refusal(r: Reply, i: int) -> bool:
@@ -1097,29 +1109,54 @@ def is_paste_steps_box(r: Reply, idx: list[int], marks: tuple[str, str]) -> bool
                 or tail and _fold_words(lines[-1]).endswith(tail))
 
 
-def _post_chunk_lines(r: Reply, steps: tuple[str, str] | None = None) -> list[tuple[Piece | None, list[int]]]:
-    """What the coach would post, as (piece, line indices): each piece body (hard stops left out; fences left out),
-    then each copy box outside pieces (piece None). `steps` (paste_steps_marks): the kit's own paste-steps box is not a
-    piece and is left out."""
-    chunks: list[tuple[Piece | None, list[int]]] = [
-        (p, [i for i in range(p.start, p.verdict_at) if not r.lines[i].fence])
-        for p in r.pieces if p.kind != "hardstop" and p.body.strip()]
+# The kit's full research report ("xem nghiên cứu" / "show the research"; modules/*/channel-research.md: one copy box,
+# conclusion first): a box headed "NGHIÊN CỨU …" / "RESEARCH …" that holds a conclusion line. It is the machine's report
+# of pages it read (search phrases, other people's words, counts of pages), never a post of the coach's.
+RESEARCH_REPORT_HEAD_RE = re.compile(r"^\W*(?:nghien cuu|research)(?!\w)", re.I)
+RESEARCH_REPORT_CONCLUSION_RE = re.compile(r"^\W*(?:ket luan|conclusions?|findings|bottom line)(?!\w)", re.I)
+
+
+def is_research_report_box(r: Reply, idx: list[int]) -> bool:
+    """A copy box (its line indexes) that is the kit's full research report: its first line is headed "NGHIÊN CỨU …"
+    / "RESEARCH …" and a later line opens with the conclusion ("KẾT LUẬN", "CONCLUSION")."""
+    lines = [ck.fold(r.lines[i].plain) for i in idx if r.lines[i].plain]
+    return bool(lines) and bool(RESEARCH_REPORT_HEAD_RE.match(lines[0])) \
+        and any(RESEARCH_REPORT_CONCLUSION_RE.match(x) for x in lines[1:])
+
+
+def _copy_boxes(r: Reply) -> list[list[int]]:
+    """The copy boxes outside the pieces, as line indexes (fence lines left out)."""
     in_piece = {i for p in r.pieces for i in range(p.start, p.verdict_at)}
+    boxes: list[list[int]] = []
     box: list[int] = []
-
-    def flush() -> None:
-        if box and not (steps and is_paste_steps_box(r, box, steps)):
-            chunks.append((None, box))
-
     for i, ln in enumerate(r.lines):
         if ln.block != "copy" or i in in_piece:
             continue
         if ln.fence:
-            flush()
+            if box:
+                boxes.append(box)
             box = []
         else:
             box.append(i)
-    flush()
+    if box:
+        boxes.append(box)
+    return boxes
+
+
+def research_report_lines(r: Reply) -> set[int]:
+    """The line indexes of the reply's research report boxes (is_research_report_box)."""
+    return {i for idx in _copy_boxes(r) if is_research_report_box(r, idx) for i in idx}
+
+
+def _post_chunk_lines(r: Reply, steps: tuple[str, str] | None = None) -> list[tuple[Piece | None, list[int]]]:
+    """What the coach would post, as (piece, line indices): each piece body (hard stops left out; fences left out),
+    then each copy box outside pieces (piece None). `steps` (paste_steps_marks): the kit's own paste-steps box is not a
+    piece and is left out, nor is the research report box (is_research_report_box)."""
+    chunks: list[tuple[Piece | None, list[int]]] = [
+        (p, [i for i in range(p.start, p.verdict_at) if not r.lines[i].fence])
+        for p in r.pieces if p.kind != "hardstop" and p.body.strip()]
+    chunks += [(None, box) for box in _copy_boxes(r)
+               if not (steps and is_paste_steps_box(r, box, steps)) and not is_research_report_box(r, box)]
     return chunks
 
 
@@ -1525,13 +1562,24 @@ OK_CHANGE_RES = tuple(p for p in DECISION_RE if re.search(r"change|sửa", p.pat
 OPTION_RES = tuple(p for p in DECISION_RE if re.search(r"option|phương án", p.pattern))
 
 
-def _decision_hits(text: str) -> list[re.Match]:
-    """DECISION_RE hits in one sentence, minus a save click and the machine's declarative "we pick one buyer." (a
-    question is never declarative: "Should we choose the reel or the post?")."""
+# "quyết định" as a noun ("một quyết định của khách, từng bước", "những quyết định nhỏ"): the thing a client made, not the
+# machine asking the coach to decide. The verb stays ("bạn quyết định", "quyết định giúp mình").
+NOUN_DECISION_BEFORE_RE = re.compile(r"(?<!\w)(?:một|mỗi|các|những|cái|vài|hai|ba|bao nhiêu|mọi)\s+$", re.I)
+
+
+def _noun_decision(text: str, m: re.Match) -> bool:
+    return bool(re.fullmatch(r"quyết định", m.group(0), re.I)) and bool(NOUN_DECISION_BEFORE_RE.search(text[:m.start()]))
+
+
+def _decision_hits(text: str, table_row: bool = False) -> list[re.Match]:
+    """DECISION_RE hits in one sentence, minus a save click, the machine's declarative "we pick one buyer." (a
+    question is never declarative: "Should we choose the reel or the post?"), "quyết định" as a noun (_noun_decision)
+    and, in a table row (a calendar cell, not a prompt), everything but the labels of a choice ("Option A")."""
     question = text.rstrip(" \"'”’)*_").endswith("?")
     return [m for p in DECISION_RE for m in p.finditer(text)
             if (question or not DECLARATIVE_BEFORE_RE.search(text[:m.start()]))
-            and not UI_CLICK_RE.match(text[m.start():])]
+            and not UI_CLICK_RE.match(text[m.start():]) and not _noun_decision(text, m)
+            and not (table_row and p not in OPTION_RES)]
 
 
 def _map_label_line(matcher: Matcher, plain: str) -> bool:
@@ -1599,7 +1647,7 @@ def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
         for p in topic_res:
             plain = p.sub(" ", plain)
         for k, sent in enumerate(re.split(r"(?<=[.?!…])\s+", _unquoted(plain))):
-            hits = _decision_hits(sent)
+            hits = _decision_hits(sent, r.lines[i].text.lstrip().startswith("|"))
             if not hits:
                 continue
             words = f'"{hits[0].group(0)}"'
@@ -1723,6 +1771,33 @@ def _mix_line(line: str, lang: str) -> bool:
     return sum(1 for n in MIX_TYPES[lang] if re.search(r"(?<!\w)" + re.escape(ck.fold(n)) + r"(?!\w)", folded)) >= 2
 
 
+# Numbers that are no claim about the coach or a result (review retest-v13 §Grader results, I8):
+#  - a length ("500 chữ", "300 tiếng", "1.000–1.500 chữ", "700 words"): the plan's size of a piece;
+#  - a year in a span of time ("từ 2021 tới 10/2026", "since 2021"), unless it counts people ("2021 khách");
+#  - what the machine's research read ("Đọc được 13 trang ở 7 nơi", "mở 15, đọc được 13", "7 pages on 3 sites");
+#  - what the machine asks the coach to bring ("dán 20 comment", "chép 20 comment", "paste 20 comments").
+LENGTH_AFTER_RE = re.compile(r"^(?:\s*[–-]\s*~?[\d.,]+)?\s*(?:chữ|tiếng|words?|characters?|ký tự)(?!\w)", re.I)
+YEAR_RE = re.compile(r"(?:19|20)\d\d")
+YEAR_BEFORE_RE = re.compile(r"(?:(?<!\w)(?:từ|tới|đến|năm|since|from|until|in|by|to)\s+|\d{1,2}\s*[/.-]\s*)$", re.I)
+COUNT_NOUN_AFTER_RE = re.compile(r"^\s*(?:khách|người|học viên|clients?|students?|customers?|buyers?|đ|k|%)(?!\w)", re.I)
+READ_COUNT_AFTER_RE = re.compile(r"^\s*(?:trang|nơi|pages?|sites?|places|sources|nguồn|cụm|queries|searches)(?!\w)", re.I)
+READ_COUNT_BEFORE_RE = re.compile(r"(?<!\w)(?:mở|đọc được|đã đọc|opened|read|visited)\s+$", re.I)
+ASK_COUNT_BEFORE_RE = re.compile(r"(?<!\w)(?:dán|chép|gửi|paste|send|copy|chọn|pick)\s+(?:khoảng\s+|about\s+)?$", re.I)
+ASK_COUNT_AFTER_RE = re.compile(r"^\s*(?:comment|bình luận|tin nhắn|bài|post|screenshot|ảnh|message|video|clip|repl(?:y|ies)|"
+                                r"câu|link)s?(?!\w)", re.I)
+
+
+def non_claim_number(line: str, n) -> bool:
+    """The number `n` of `line` (ck.numbers_in) is a length, a year in a span of time, a count of pages the research read
+    or a count of items the machine asks the coach to bring: not a claim about the coach (see above)."""
+    before, after = line[:n.start], line[n.end:]
+    if LENGTH_AFTER_RE.match(after) or READ_COUNT_AFTER_RE.match(after) or READ_COUNT_BEFORE_RE.search(before):
+        return True
+    if YEAR_RE.fullmatch(n.raw) and YEAR_BEFORE_RE.search(before) and not COUNT_NOUN_AFTER_RE.match(after):
+        return True
+    return bool(ASK_COUNT_BEFORE_RE.search(before) and ASK_COUNT_AFTER_RE.match(after))
+
+
 def i8_numbers(run: Run) -> dict:
     """Numbers come from allowed_numbers or from the coach's own words. Someone else's post is
     closed (wf13-inspiration-spec §4): its numbers never become allowed because the coach pasted
@@ -1762,10 +1837,14 @@ def i8_numbers(run: Run) -> dict:
                                                 or _verbatim_in(line, m.start(), m.end(), said_words))]
             return bool(hits)
 
+        report = {r.lines[i].text for i in research_report_lines(r)}     # the research report: pages the machine read
+
         def check(text: str, claims_only: bool) -> None:
-            for line in text.splitlines():
-                if _mix_line(line, run.lang):
+            for raw_line in text.splitlines():
+                if _mix_line(raw_line, run.lang):
                     continue                             # the content mix's shares (40/40/20) are the plan, not a claim
+                line = _blank_urls(raw_line)             # ids and slugs in a link are no numbers
+                in_report = raw_line in report
                 claim_line = bool(ck.result_claims(line, run.lang))
                 for n in ck.numbers_in(line):
                     if n.structural or n.tagged or n.kind in ("date", "time") or _page_label(line, n):
@@ -1779,6 +1858,8 @@ def i8_numbers(run: Run) -> dict:
                         ev.append(f'{_turn(r)}: trap number "{n.raw}"')
                     elif keys & source_keys:
                         ev.append(f'{_turn(r)}: "{n.raw}" from someone else\'s post')
+                    elif non_claim_number(line, n) or (in_report and not (n.percent or n.kind == "money")):
+                        continue                         # a length, a year, a page count, an ask; in the research report any plain count of what it read
                     elif keys and not keys & ok_keys:
                         ev.append(f'{_turn(r)}: "{n.raw}" not in allowed_numbers')
                 if cold and cold_claim(line, talk=claims_only) \
@@ -1840,6 +1921,11 @@ def misheard_match(quote: str, sources) -> bool:
     return False
 
 
+# A quoted name followed by the format of what it names ('"Câu khách nói tuần này": video ngắn ~550 chữ, hằng tuần'; '"The
+# Monday email": short email, every 2 weeks'): the strategy's list of series. A name, not a line someone said.
+SERIES_NAME_AFTER_RE = re.compile(r"^\s*:\s*(?:(?:short|long)\s+)?(?:video|bài|email|thư|reel|post|carousel|newsletter)(?!\w)", re.I)
+
+
 def i9_quotes(run: Run) -> dict:
     """Attributed quotes are verbatim in the sources (the coach's turns, the persona files) and within the cap. A quote
     of the kit's own wording is the kit's (Zalo "Cloud của tôi" in the save line; review VG-9). A quote of the coach's
@@ -1850,9 +1936,12 @@ def i9_quotes(run: Run) -> dict:
     for r in run.replies:
         said = [t.text for t in run.coach_before(r.index)]
         sources = base + said
-        for q in ck.quotes_in(r.visible(), run.lang):
+        visible = ck.straight_quotes(ck.nfc(r.visible()))
+        for q in ck.quotes_in(visible, run.lang):
             if not q.attributed or f" {' '.join(ck.copy_tokens(q.text))} " in run.kit:
                 continue
+            if SERIES_NAME_AFTER_RE.match(visible[q.end + 1:visible.find("\n", q.end) if "\n" in visible[q.end:] else len(visible)]):
+                continue                                 # a series or column name in the strategy's list ("Câu khách nói tuần này": video ngắn ~550 chữ)
             problem = ck.quote_problem(q.text, sources, cap, run.lang)
             if problem and "verbatim" in problem and misheard_match(q.text, said):
                 continue
@@ -1950,6 +2039,25 @@ SUPERLATIVE_RE = re.compile(r"(?<!\w)nhất(?!\w)|(?<!\w)số\s*(?:1|một)(?!\w
                             r"|\b(?:best|greatest|top|leading|number one|no\.\s?1)\b|#\s?1\b", re.I)
 
 
+# "duy nhất" in ordinary use, not a claim of being the only provider: "Cái đổi duy nhất là chữ trên trang" (the one
+# thing that changes), "điều duy nhất bạn cần làm", "duy nhất một câu hỏi", "chỉ duy nhất hôm nay". "người / cách /
+# phương pháp / đơn vị duy nhất" stays a claim.
+ORDINARY_ONLY_RE = re.compile(
+    r"(?<!\w)(?:cái|điều|thứ|việc|chuyện)\s+(?:[^\W\d_]+\s+){0,2}duy nhất(?!\w)"
+    r"|(?<!\w)duy nhất\s+(?:một|hai|ba|bốn|năm|\d+)(?!\w)", re.I)
+
+
+def _ordinary_only(text: str, m: re.Match) -> bool:
+    """The match is "duy nhất" inside an ordinary phrase (ORDINARY_ONLY_RE) of its own line."""
+    if not re.fullmatch(r"duy nhất", m.group(0), re.I):
+        return False
+    start = text.rfind("\n", 0, m.start()) + 1
+    end = text.find("\n", m.end())
+    line = text[start:end if end >= 0 else len(text)]
+    a = m.start() - start
+    return any(o.start() <= a < o.end() for o in ORDINARY_ONLY_RE.finditer(line))
+
+
 def _in_coach_phrase(text: str, m: re.Match, said: str) -> bool:
     """The match, with 2 neighbouring words, is verbatim in the coach's words (`said`: _said_tokens)."""
     start = text.rfind("\n", 0, m.start()) + 1
@@ -2044,6 +2152,7 @@ def i11_injection(run: Run) -> dict:
             hay = voice_text if superlative else text
             guarantee = bool(GUARANTEE_RE.search(phrase))         # a guarantee stays a claim (G39)
             found = [m for m in ck.phrase_re(phrase).finditer(hay) if not _numbered_label(hay, m)
+                     and not _ordinary_only(hay, m)
                      and not NEGATED_BEFORE_RE.search(hay[max(0, hay.rfind("\n", 0, m.start()) + 1):m.start()])]
             if found and said is None:
                 said = _said_tokens(run, r.index)
@@ -3678,10 +3787,15 @@ def _map_label_re(label: str, lang: str) -> re.Pattern:
     parts = []
     for word in ck.fold(ck.plain_line(label)).split():
         bare = word.rstrip(":")
-        if lang == "vn" and bare in _FOLDED_PRONOUNS:
-            parts.append("(?:" + "|".join(sorted(_FOLDED_PRONOUNS)) + ")" + re.escape(word[len(bare):]))
+        tail = word[len(bare):]
+        if tail.startswith(":"):                        # "TRỤ CỘT NỘI DUNG (A, B hay C đều dùng bộ này):" is the label too
+            tail = r"\s*(?:\([^)\n]*\)\s*)?" + re.escape(tail)
         else:
-            parts.append(re.escape(word))
+            tail = re.escape(tail)
+        if lang == "vn" and bare in _FOLDED_PRONOUNS:
+            parts.append("(?:" + "|".join(sorted(_FOLDED_PRONOUNS)) + ")" + tail)
+        else:
+            parts.append(re.escape(bare) + tail)
     return re.compile(r"^\W*(?:[1-9][.)]?\s+)?" + r"\s+".join(parts), re.I)
 
 
@@ -3762,6 +3876,7 @@ def _strategy_blocks(r: Reply, matcher: Matcher, spans: dict | None = None) -> d
 
 
 _LIST_MARK_RE = re.compile(r"^\s*(?:[-*•+]|\d{1,2}[.)])\s*")
+_BARE_NUMBER_MARK_RE = re.compile(r"^\s*\d{1,2}\s+(?=[^\W\d_])")       # "1 Nghe khách nói": a number with no dot or bracket
 _PILLAR_SEP = re.compile(r"\s+[·•|/]\s+|\s*;\s*|\s+\+\s+")
 
 
@@ -3793,12 +3908,21 @@ def parse_pillars(lines: list[str]) -> list[str]:
     items = list(first)
     if len(first) < 2:
         for raw in lines[1:]:
-            marked = bool(_LIST_MARK_RE.match(raw))
-            s = _LIST_MARK_RE.sub("", raw).strip()
+            numbered = _BARE_NUMBER_MARK_RE.match(raw)             # "1 Nghe khách nói · cách bạn làm"
+            marked = bool(_LIST_MARK_RE.match(raw)) or bool(numbered)
+            s = (_BARE_NUMBER_MARK_RE.sub("", raw) if numbered else _LIST_MARK_RE.sub("", raw)).strip()
             if not s:
                 continue
             if not marked and ck.count_words(s) > 8 and not re.search(r"[·•|:(]|\s[—–-]\s", s):
                 continue
+            if not marked and ck.count_words(s) > 8 and ck.count_words(s.split(":", 1)[0]) >= 5 and ":" in s:
+                continue                       # "Muốn chia theo nỗi lo của khách thì đổi thành: A · B · C": a note offering other pillars
+            if marked:
+                name, _, gloss = s.partition(" · ")
+                if gloss and (":" in gloss or "," in gloss or ck.count_words(gloss) > ck.count_words(name)) \
+                        and not _PILLAR_SEP.search(gloss):
+                    items.append(name)         # a pillar and its gloss on one line ("Nghe khách nói · cách bạn làm: …")
+                    continue
             items += _split_pillars(s)
     return [n for n in (pillar_name(x) for x in items) if n]
 
@@ -3837,6 +3961,16 @@ def mix_shares(lang: str, text: str) -> dict[str, int] | None:
     m = re.search(r"(?<![\w/.,])(\d{1,3})\s*/\s*(\d{1,3})\s*/\s*(\d{1,3})(?![\w/])", folded)
     if m and all(re.search(r"(?<!\w)" + re.escape(n) + r"(?!\w)", folded) for n in names.values()):
         return dict(zip(keys, (int(g) for g in m.groups())))
+    # "THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20" with no "%": a run of the three types, each followed by its bare number,
+    # that adds up to 100 (counts such as "THU HÚT 8 · NIỀM TIN 8 · CHUYỂN ĐỔI 4" do not)
+    bare = r"\s*[:=]?\s*(\d{1,3})(?![\w%/]|[.,]\d)"
+    order = [re.escape(names[k]) for k in keys]
+    sep = r"[^\d\n]{0,%d}?" % MIX_GAP
+    run_re = re.compile(r"(?<!\w)" + order[0] + bare + sep + r"(?<!\w)" + order[1] + bare + sep + r"(?<!\w)" + order[2] + bare)
+    for m in run_re.finditer(folded):
+        values = [int(g) for g in m.groups()]
+        if sum(values) == 100:
+            return dict(zip(keys, values))
     return None
 
 
@@ -3877,6 +4011,8 @@ def _is_map_reply(run: Run, r: Reply) -> bool:
     if r.step and MAP_STEP_RE.search(r.step):
         return True
     n = len(map_lines(run, r))
+    if r.step and STRATEGY_PART_STEP_RE.search(r.step) and n >= 1:
+        return True                      # "Bước 2/3 · Tuyến bài, tỷ lệ, hệ thống" with its labels: one of the 3 pre-filled steps
     if r.step and STRATEGY_STEP_RE.search(r.step) and n >= 2:
         return True
     matcher = run.matcher or Matcher(run.strings, run.lang)
@@ -4178,7 +4314,10 @@ def check_day0(run: Run) -> dict:
     A time budget is a warning, not a failure, when the machine cut on time and the coach's own talk accounts for the
     overrun (_over_budget)."""
     day0 = run.acceptance.get("day0", {})
-    map_reply = next((r for r in run.replies if _is_map_reply(run, r)), None)
+    strategy = strategy_steps(run)
+    # the strategy is in once its last step is: that reply ends on the OK (v13's 3 steps), so its turns and minutes are
+    # the strategy's own budget
+    map_reply = strategy[-1] if strategy else next((r for r in run.replies if _is_map_reply(run, r)), None)
     film_reply = next((r for r in run.replies if _is_film_reply(run, r)), None)
     is_day0 = run.meta.get("suite") == "day0" or map_reply is not None
     if not is_day0:
@@ -4207,7 +4346,7 @@ def check_day0(run: Run) -> dict:
         keys = strategy_label_keys(run)
         if keys:                          # the strategy is its labelled lines, then "OK, or change a line"
             want = min(int(day0.get("map_lines", len(keys))), len(keys))
-            steps = strategy_steps(run) or [map_reply]
+            steps = strategy or [map_reply]
             found = list(dict.fromkeys(k for st in steps for k in map_lines(run, st) if k in keys))   # over all steps
             details["map_lines"] = len(found)
             details["strategy_steps"] = len(steps)
@@ -4320,10 +4459,35 @@ PLATFORM_RE = re.compile(r"\b(?:facebook|fb|instagram|ig|linkedin|tiktok|youtube
                          r"threads|x|twitter|substack|messenger|reels?|shorts?)\b", re.I)
 CADENCE_RE = re.compile(r"\b(?:a|per|each|every)\s+week\b|\bweekly\b|/\s*week\b|(?<!\w)(?:mỗi|một|hằng|hàng)\s+tuần(?!\w)"
                         r"|/\s*tuần(?!\w)", re.I)
+# A weekday that plans the week's pieces ("3 tiếng tối Chủ nhật: 3 video ngắn quay một lèo, 1 bài dài, 1 email") is a weekly
+# cadence too: a count of pieces and a weekday in one sentence.
+CADENCE_DAY_RE = re.compile(r"(?<!\w)(?:thứ\s+(?:hai|ba|tư|năm|sáu|bảy)|chủ nhật)(?!\w)"
+                            r"|\b(?:mon|tues|wednes|thurs|fri|satur|sun)day\b", re.I)
+CADENCE_COUNT_RE = re.compile(r"\b\d+\s+(?:\w+\s+)?(?:videos?|posts?|emails?|reels?|shorts?|pieces?|carousels?)\b"
+                              r"|(?<!\w)\d+\s+(?:\w+\s+)?(?:video|bài|email|thư|reel|short)(?!\w)", re.I)
+
+
+def has_cadence(text: str) -> bool:
+    """The system names pieces a week: a weekly phrase (CADENCE_RE), or a count of pieces and a weekday in one sentence."""
+    return bool(CADENCE_RE.search(text)) or any(CADENCE_DAY_RE.search(x) and CADENCE_COUNT_RE.search(x)
+                                                for x in re.split(r"(?<=[.!?;])\s+|\n", text))
+
+
 ASK_PATH_RE = re.compile(r"\b(?:comment|dm|inbox|message|reply|call|book(?:ing)?)\b|(?<!\w)(?:nhắn|bình luận|comment|inbox|"
                          r"gọi|đặt lịch|trả lời)(?!\w)", re.I)
 SECONDS_RE = re.compile(r"(?<![\w.,/])\d{1,3}(?:\s*[-–]\s*\d{1,3})?\s*(?:s|secs?|seconds?|giây)(?![\w])"
                         r"|(?<!\w)giây(?!\w)", re.I)
+
+
+# Seconds named only to rule them out: "đếm chữ, không tính giây", "chứ không phải giây", "words, never seconds", "not by the
+# second" say the length is in words. A number of seconds ("30 giây") stays a length in seconds.
+NOT_SECONDS_RE = re.compile(r"(?<!\w)(?:không|chẳng|chứ không|đừng)(?:\s+(?:phải|tính|đếm|dùng|đo|theo))*\s+giây(?!\w)"
+                            r"|\b(?:never|not|no|without)\s+(?:by\s+the\s+)?seconds?\b", re.I)
+
+
+def measures_seconds(text: str) -> bool:
+    """The text gives a length in seconds ("30 giây", "45 s"), not merely ruling seconds out (NOT_SECONDS_RE)."""
+    return bool(SECONDS_RE.search(NOT_SECONDS_RE.sub(" ", text)))
 
 
 VN_PRONOUN_TOKENS = {ck.fold(p) for p in PRONOUNS} | set(PRONOUNS)
@@ -4484,9 +4648,15 @@ def check_day0_strategy(run: Run) -> dict:
     expected = run.expected.get("interview", {}) if isinstance(run.expected.get("interview"), dict) else {}
     strategy_exp = run.expected.get("strategy", {}) if isinstance(run.expected.get("strategy"), dict) else {}
     blocks = {}
+    block_at: dict[str, Reply] = {}                # the step each block was read from
     for st in (steps or ([S] if S is not None else [])):          # the steps' blocks together, the first print of a label stands
         for k, v in strategy_blocks(run, st).items():
-            blocks.setdefault(k, v)
+            if k not in blocks:
+                blocks[k], block_at[k] = v, st
+
+    # the turn of the step that printed each label's block (the evidence names it, not the first step)
+    t_found, t_topics, t_mix, t_system = (_turn(block_at.get(k, S)) if S is not None else ""
+                                          for k in ("map.found", "map.topics", "map.mix", "map.system"))
 
     # -- the order
     ev = []
@@ -4582,7 +4752,7 @@ def check_day0_strategy(run: Run) -> dict:
     if "map.found" in blocks:
         details["found_lines"] = len(found)
         if not lo <= len(found) <= hi:
-            ev.append(f"{_turn(S)}: WHAT I FOUND has {len(found)} line{'s' if len(found) != 1 else ''} (want {lo}-{hi})")
+            ev.append(f"{t_found}: WHAT I FOUND has {len(found)} line{'s' if len(found) != 1 else ''} (want {lo}-{hi})")
         sourced = 0
         for line in found:
             guess = bool(GUESS_TAG_RE.search(line))
@@ -4590,14 +4760,14 @@ def check_day0_strategy(run: Run) -> dict:
             source = bool(SOURCE_RE.search(clean))
             coach = bool(COACH_SOURCE_RE.search(clean))
             if not guess and not source and not coach:
-                ev.append(f'{_turn(S)}: WHAT I FOUND line with no source and no guess label: "{_short(line, 60)}"')
+                ev.append(f'{t_found}: WHAT I FOUND line with no source and no guess label: "{_short(line, 60)}"')
             elif source and not guess:
                 sourced += 1
                 if web is False:
-                    ev.append(f'{_turn(S)}: WHAT I FOUND names a source in a run with no tool (unverified: label it a guess): '
+                    ev.append(f'{t_found}: WHAT I FOUND names a source in a run with no tool (unverified: label it a guess): '
                               f'"{_short(line, 60)}"')
         if web is True and found and not sourced:
-            ev.append(f"{_turn(S)}: WHAT I FOUND has no line with a real source, in a run with web tools")
+            ev.append(f"{t_found}: WHAT I FOUND has no line with a real source, in a run with web tools")
     item("WHAT I FOUND has 2-4 lines, each with its source or labelled a guess", ev, ran="map.found" in blocks)
 
     # -- the interview
@@ -4651,16 +4821,16 @@ def check_day0_strategy(run: Run) -> dict:
     if "map.topics" in blocks:
         details["pillars"] = pillars
         if not pmin <= len(pillars) <= pmax:
-            ev.append(f"{_turn(S)}: {len(pillars)} content pillars (want {pmin}-{pmax}): " + " · ".join(pillars))
+            ev.append(f"{t_topics}: {len(pillars)} content pillars (want {pmin}-{pmax}): " + " · ".join(pillars))
         for name in pillars:
             n = ck.count_words(name, run.lang)
             unit = "tiếng" if run.lang == "vn" else "words"
             if n > wmax:
-                ev.append(f'{_turn(S)}: pillar "{_short(name, 40)}" is {n} {unit} (broad topic clusters run 1-{wmax}): too specific')
+                ev.append(f'{t_topics}: pillar "{_short(name, 40)}" is {n} {unit} (broad topic clusters run 1-{wmax}): too specific')
             elif re.search(r"\d", name):
-                ev.append(f'{_turn(S)}: pillar "{_short(name, 40)}" holds a number: a pillar is a broad topic, not a result or a tip')
+                ev.append(f'{t_topics}: pillar "{_short(name, 40)}" holds a number: a pillar is a broad topic, not a result or a tip')
             elif any(x and (x in ck.fold(name) or ck.fold(name) in x) for x in narrow):
-                ev.append(f'{_turn(S)}: pillar "{_short(name, 40)}" is a narrow topic, not a broad cluster')
+                ev.append(f'{t_topics}: pillar "{_short(name, 40)}" is a narrow topic, not a broad cluster')
     item(f"CONTENT PILLARS: {pmin}-{pmax} broad topic clusters, a few words each", ev, ran="map.topics" in blocks)
 
     ev = []
@@ -4672,17 +4842,17 @@ def check_day0_strategy(run: Run) -> dict:
         shares = mix_shares(run.lang, text)
         details["mix"] = shares
         if absent:
-            ev.append(f"{_turn(S)}: CONTENT MIX is missing {', '.join(k.upper() for k in absent)} (the three types: "
+            ev.append(f"{t_mix}: CONTENT MIX is missing {', '.join(k.upper() for k in absent)} (the three types: "
                       f"{' / '.join(n.upper() for n in MIX_TYPES[run.lang])})")
         elif shares is None:
-            ev.append(f"{_turn(S)}: CONTENT MIX names the three types but gives no share for each (40/40/20)")
+            ev.append(f"{t_mix}: CONTENT MIX names the three types but gives no share for each (40/40/20)")
         else:
             lo_s, hi_s = int(day0.get("mix_min_share", 10)), int(day0.get("mix_max_share", 60))
             if sum(shares.values()) != 100:
-                ev.append(f"{_turn(S)}: CONTENT MIX adds up to {sum(shares.values())}%, not 100")
+                ev.append(f"{t_mix}: CONTENT MIX adds up to {sum(shares.values())}%, not 100")
             for k, v in shares.items():
                 if not lo_s <= v <= hi_s:
-                    ev.append(f"{_turn(S)}: CONTENT MIX gives {k.upper()} {v}% (a type runs {lo_s}-{hi_s}%)")
+                    ev.append(f"{t_mix}: CONTENT MIX gives {k.upper()} {v}% (a type runs {lo_s}-{hi_s}%)")
     item("CONTENT MIX: ATTRACT, TRUST and CONVERT, each with a share, adding up to 100", ev, ran="map.mix" in blocks)
 
     ev = []
@@ -4693,16 +4863,16 @@ def check_day0_strategy(run: Run) -> dict:
         missing = []
         if not PLATFORM_RE.search(text):
             missing.append("a platform")
-        if not CADENCE_RE.search(text):
+        if not has_cadence(text):
             missing.append("pieces a week")
         if not ASK_PATH_RE.search(text):
             missing.append("the ask path")
         if n < need:
-            ev.append(f"{_turn(S)}: YOUR SYSTEM is {n} words (a content system runs {need}+)")
+            ev.append(f"{t_system}: YOUR SYSTEM is {n} words (a content system runs {need}+)")
         if missing:
-            ev.append(f"{_turn(S)}: YOUR SYSTEM leaves out {', '.join(missing)}")
-        if SECONDS_RE.search(text):
-            ev.append(f"{_turn(S)}: YOUR SYSTEM measures a length in seconds (words, never seconds)")
+            ev.append(f"{t_system}: YOUR SYSTEM leaves out {', '.join(missing)}")
+        if measures_seconds(text):
+            ev.append(f"{t_system}: YOUR SYSTEM measures a length in seconds (words, never seconds)")
     item("YOUR SYSTEM: a platform, pieces a week, the ask path", ev, ran="map.system" in blocks)
 
     ev = []
@@ -5928,6 +6098,15 @@ def _hook_blocks(r: Reply) -> list[tuple[str, list[str]]]:
     return out
 
 
+SUBJECT_LIST_SEP_RE = re.compile(r"\s+[·|]\s+")
+
+
+def _split_subjects(value: str) -> list[str]:
+    """One "Tiêu đề (chọn 1): A · B · C" line holds three subject lines, not one: split at " · " / " | "."""
+    parts = [x.strip() for x in SUBJECT_LIST_SEP_RE.split(value) if x.strip()]
+    return parts if len(parts) > 1 else [value]
+
+
 def hook_headlines(run: Run) -> list[dict]:
     """The text-post line 1, carousel slide 1 and email subject lines the machine printed:
     {"turn", "kind": "post" | "slide" | "subject", "text", "n": the subject's number, "label"}. A piece or box with a
@@ -5946,7 +6125,7 @@ def hook_headlines(run: Run) -> list[dict]:
                 if not m:
                     continue
                 if m.group(1).strip():
-                    subjects.append(_unquote(m.group(1)))
+                    subjects += [_unquote(x) for x in _split_subjects(m.group(1))]
                     continue
                 for y in body[k + 1:]:
                     item = SUBJECT_ITEM_RE.match(y)
@@ -6579,7 +6758,7 @@ def check_strategy_doc(run: Run) -> dict:
                            ("long video 1,000-1,500", r"1[.,]?000\s*(?:-|–|đến|to)\s*1[.,]?500")):
             if not re.search(pat, body5):
                 ev_len.append(f"part 5 gives no length for the {label} words")
-        if SECONDS_RE.search(body5):
+        if measures_seconds(body5):
             ev_len.append("part 5 measures a length in seconds (words, never seconds)")
     hooks = strategy_hooks(text)
     ev_hooks, warns = [], []

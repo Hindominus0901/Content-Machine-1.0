@@ -5411,5 +5411,242 @@ class StrategyFirstPersonaTests(unittest.TestCase):
             self.assertFalse(slots - set(expected["interview"]["slots"]), pid)
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Retest v13 (9 Oct 2026, qa/runs/retest-v13/review.md "Grader results" and "Grader gaps to hand the integrator"): the
+# grader false positives the review lists, each with a fixture the fix clears and one that must still fail.
+class V13FalsePositiveTests(TempRepo):
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/vn/v13/persona.toml", 'xung_ho = "bạn"\nallowed_numbers = ["320"]\n')
+        self.write("evals/personas/vn/v13/expected.toml", '[traps]\ncompliance = ["duy nhất"]\n')
+
+    def en(self, *replies):
+        turns = []
+        for body in replies:
+            turns += [("coach", "next"), ("machine", f"{TAG}Notes\n{body}")]
+        return self.grade(turns)
+
+    def vn(self, *replies):
+        turns = []
+        for body in replies:
+            turns += [("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n{body}\nTIẾP → Gõ \"tiếp\".")]
+        return self.grade(turns, persona="vn/v13", edition="vn")
+
+    # -- I5 / quit_triggers: the "?" that opens a link's query string is no question
+    def test_i5_a_link_query_mark_is_no_question(self):
+        links = ("Bấm từng link, lịch Google mở sẵn:\n"
+                 "https://calendar.google.com/calendar/render?action=TEMPLATE&text=a\n"
+                 "https://calendar.google.com/calendar/render?action=TEMPLATE&text=b\n"
+                 "TIẾP → Bấm từng link.")
+        report = self.vn(links.replace("\nTIẾP → Bấm từng link.", ""))
+        self.assertPasses(report, "I5")
+        self.assertEqual(graders._questions("Mở https://x.vn/a?b=1&c=2 giúp mình nhé."), [])
+        self.assertEqual(len(graders._questions("Bạn xong chưa? Mở https://x.vn/a?b=1 rồi nhắn mình, được không?")), 2)
+
+    def test_i5_two_real_questions_still_fail(self):
+        report = self.vn("Bạn đăng ở đâu? Và bạn muốn gì?")
+        self.assertFails(report, "I5", "2 questions")
+
+    # -- I6: "quyết định" as a noun in a calendar cell is no decision prompt
+    def test_i6_a_noun_in_a_calendar_cell_is_no_decision(self):
+        rows = ("| T6 23/10 | Facebook | Một ca, kể lại | bài dài | một quyết định của khách, từng bước | Ý tưởng |\n"
+                "| T3 3/11 | Facebook | Một ca, kể lại | bài dài | những quyết định nhỏ của khách | Ý tưởng |")
+        self.assertPasses(self.vn(rows), "I6")
+
+    def test_i6_two_asks_to_decide_still_fail(self):
+        report = self.vn("Bạn quyết định giúp mình: bài dài hay video?\nBạn quyết định luôn: gửi thư hay nhắn Zalo?")
+        self.assertFails(report, "I6", "2 decision prompts")
+        # even a table row keeps the labels of a choice
+        matcher = graders.Matcher(VN_STRINGS, "vn")
+        reply = graders.analyse_reply(graders.Turn(2, "machine", f"{TAG}Tuần 1\n| Option A | video |\nTIẾP → Gõ A.", 1.0), 1, matcher)
+        self.assertTrue(graders.reply_decisions(reply, matcher))
+
+    # -- I8: lengths, links, years, page counts and asks are no claim; the research report's plain counts neither
+    def test_i8_lengths_links_years_page_counts_and_asks_are_no_claim(self):
+        box = ("```\n"
+               "Reading list: https://example.com/p/4771261.html\n"
+               "Short video 500 words, long post 1,000–1,500 words.\n"
+               "Posts since 2021, read 13 pages on 7 sites.\n"
+               "Paste 20 comments here.\n"
+               "```\nNEXT → Say \"next\".")
+        self.assertPasses(self.en(box), "I8")
+
+    def test_i8_a_result_claim_still_fails_next_to_them(self):
+        box = ("```\n"
+               "Reading list: https://example.com/p/4771261.html\n"
+               "Short video 500 words. Dana coached 300 clients since 2021.\n"
+               "```\nNEXT → Say \"next\".")
+        report = self.en(box)
+        self.assertEqual(self.inv(report, "I8")["evidence"], ['turn 2: "300" not in allowed_numbers'])
+
+    def test_i8_the_research_report_counts_what_it_read_but_not_a_percent(self):
+        report_box = ("```\nRESEARCH DAY 0 · read 9 Oct 2026\n\nCONCLUSION\n"
+                      "- 4 people in 2 places say strangers doubt coaches.\n"
+                      "- 14 posts since 3/2026, about 3 a month, 15 likes on the top one.\n```\nNEXT → Say \"next\".")
+        self.assertPasses(self.en(report_box), "I8")
+        claim = report_box.replace("- 4 people", "- Clients grew 300% in a month.\n- 4 people")
+        self.assertFails(self.en(claim), "I8", '"300%" not in allowed_numbers')
+        not_a_report = report_box.replace("CONCLUSION\n", "")             # no conclusion line: an ordinary box
+        self.assertFails(self.en(not_a_report), "I8", "not in allowed_numbers")
+
+    # -- I9: a quoted series name in the strategy's list is no quote of someone
+    def test_i9_a_series_name_is_no_quote(self):
+        lines = ('What a client says · "The question she asked": short video ~550 words, weekly\n'
+                 'Writing · "The Monday email": email ~300 words, every 2 weeks')
+        self.assertPasses(self.en(lines), "I9")
+
+    def test_i9_a_quote_someone_said_still_needs_its_source(self):
+        report = self.en('A client says "I pay late": that is why.\nDana said "nobody asks the price" in August.')
+        self.assertFails(report, "I9", "not verbatim")
+
+    # -- I11: "duy nhất" in an ordinary phrase is no claim of being the only one
+    def test_i11_the_only_change_is_no_claim(self):
+        report = self.vn("Trang xong, chị gửi một email cho danh sách cũ.\nCái đổi duy nhất là chữ trên trang.")
+        self.assertPasses(report, "I11")
+        self.assertPasses(self.vn("Hôm nay chỉ cần duy nhất một câu hỏi."), "I11")
+
+    def test_i11_the_only_provider_is_still_a_claim(self):
+        self.assertFails(self.vn("Mình là đơn vị duy nhất làm được việc này."), "I11", 'banned claim "duy nhất"')
+        self.assertFails(self.vn("Đây là cách duy nhất để có khách."), "I11", 'banned claim "duy nhất"')
+
+    # -- I23 / vn_natural: the research report is the machine's, not a post of the coach's
+    def test_the_research_report_box_is_no_piece_of_the_coach(self):
+        matcher = graders.Matcher(EN_STRINGS, "en")
+        text = (f"{TAG}Research\n```\nRESEARCH DAY 0 · read 9 Oct 2026\nCONCLUSION\n- viral hooks, strangers doubt coaches\n```\n"
+                "NEXT → Say \"next\".")
+        reply = graders.analyse_reply(graders.Turn(2, "machine", text, 1.0), 1, matcher)
+        self.assertEqual(graders._post_chunks(reply), [])
+        self.assertEqual(graders.research_report_lines(reply), {i for i, ln in enumerate(reply.lines) if ln.block == "copy" and not ln.fence})
+        post = text.replace("CONCLUSION\n", "")                 # a box that only starts with the word is a post
+        reply = graders.analyse_reply(graders.Turn(2, "machine", post, 1.0), 1, matcher)
+        self.assertEqual(len(graders._post_chunks(reply)), 1)
+        self.assertEqual(graders.research_report_lines(reply), set())
+
+    # -- hook_lab: three subject lines on one line are three subjects
+    def test_hook_lab_a_dot_joined_subject_list_is_split(self):
+        box = ("Email\n```\nSubject lines (pick 1): One email to one person · No campaign needed · This is just an email\n"
+               "Body of the email.\n```\n")
+        run = graders.load_run(self.run_dir([("coach", "next"), ("machine", f"{TAG}Email\n{box}NEXT → Say \"next\".")]), self.root)
+        subjects = [h["text"] for h in graders.hook_headlines(run) if h["kind"] == "subject"]
+        self.assertEqual(subjects, ["One email to one person", "No campaign needed", "This is just an email"])
+        long_one = "Subject line: " + "a very long single subject line that runs past the limit " * 2
+        run = graders.load_run(self.run_dir([("coach", "next"), ("machine", f"{TAG}Email\nEmail\n```\n{long_one}\nBody.\n```\nNEXT → Say \"next\".")]), self.root)
+        self.assertEqual(len([h for h in graders.hook_headlines(run) if h["kind"] == "subject"]), 1)
+        self.assertFails(graders.grade(run.run_dir, self.root), "hook_lab", "over 60")
+
+    # -- strategy_doc: a bare mix, and "không tính giây"
+    def test_mix_shares_reads_bare_numbers_that_add_up_to_100(self):
+        self.assertEqual(graders.mix_shares("vn", "THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20. Vì sao: gói đang bán."),
+                         {"attract": 40, "trust": 40, "convert": 20})
+        self.assertEqual(graders.mix_shares("en", "ATTRACT 50 · TRUST 30 · CONVERT 20"), {"attract": 50, "trust": 30, "convert": 20})
+        self.assertIsNone(graders.mix_shares("vn", "THU HÚT 8 · NIỀM TIN 8 · CHUYỂN ĐỔI 3 bài"))     # counts of pieces
+        self.assertIsNone(graders.mix_shares("vn", "THU HÚT 50 · NIỀM TIN 30 · CHUYỂN ĐỔI 30"))      # not 100
+
+    def test_a_length_ruled_out_in_seconds_is_not_a_length_in_seconds(self):
+        self.assertFalse(graders.measures_seconds("Độ dài đếm chữ, không tính giây: video ngắn 500–800 chữ."))
+        self.assertFalse(graders.measures_seconds("Lengths are counted in words, never seconds."))
+        self.assertTrue(graders.measures_seconds("Video ngắn 30 giây, không quá dài."))
+        self.assertTrue(graders.measures_seconds("Short video, 30 seconds. Never longer."))
+
+
+class V13StrategyStepTests(StrategyFirstBase):
+    """The 3 pre-filled strategy steps of v13 ("Bước 2/3 · …", two labels each) are 3 steps, not 1."""
+
+    STEP1 = (f"{TAG}Step 1/3 · Who you are and your pillars\n"
+             "KNOWN FOR: I help women who were walked out with a box find the next job, coffee before resume.\n"
+             "CONTENT PILLARS (A, B or C all use this set): job search · confidence and identity · talking to people\n"
+             "NEXT → Say A, B or C, or \"ok\" for A.")
+    STEP2 = (f"{TAG}Step 2/3 · Lines, mix and system\n"
+             "CONTENT MIX: ATTRACT 40 · TRUST 40 · CONVERT 20\n"
+             "YOUR SYSTEM: LinkedIn is the core, re-cut into an email. Sunday evening, 3 short videos, 1 long post and 1 email. "
+             "Ask: comment CHAPTER, then DM, then the gift.\n"
+             "NEXT → Say \"ok\" for step 3.")
+    STEP3 = (f"{TAG}Step 3/3 · Word and research\n"
+             "YOUR WORD: CHAPTER\n"
+             "WHAT I FOUND: women say they feel invisible after a layoff (Facebook group, Sept 2026) · \"coffee before resume\" is your own line (my guess)\n"
+             "We'll run this for 4 weeks. OK, or change a line.\n"
+             "NEXT → Say \"ok\" and I'll write today's video.")
+
+    def steps(self, *steps):
+        extra = []
+        for st in steps[1:]:
+            extra += [("coach", "ok"), ("machine", st)]
+        return self.day0(strategy=steps[0], extra_coach=tuple(extra))
+
+    def test_three_steps_with_two_labels_each_are_three_steps(self):
+        report = self.report(self.steps(self.STEP1, self.STEP2, self.STEP3))
+        timing = self.inv(report, "day0_timing")
+        self.assertEqual((timing["details"]["strategy_steps"], timing["details"]["map_lines"]), (3, 6), timing)
+        self.assertNotIn("labelled lines", " ".join(timing["evidence"]))
+        strategy = self.inv(report, "day0_strategy")
+        self.assertIs(strategy["pass"], True, strategy)
+        self.assertEqual(strategy["details"]["mix"], {"attract": 40, "trust": 40, "convert": 20})
+        self.assertEqual(strategy["details"]["pillars"], ["job search", "confidence and identity", "talking to people"])
+
+    def test_two_labels_without_a_step_tag_are_still_no_strategy_step(self):
+        plain = lambda st, tag: st.replace(tag, f"{TAG}Plan")           # noqa: E731
+        report = self.report(self.steps(plain(self.STEP1, f"{TAG}Step 1/3 · Who you are and your pillars"),
+                                        plain(self.STEP2, f"{TAG}Step 2/3 · Lines, mix and system"), self.STEP3))
+        timing = self.inv(report, "day0_timing")
+        self.assertEqual(timing["details"]["strategy_steps"], 1, timing)
+        self.assertTrue(any("labelled lines" in e for e in timing["evidence"]), timing["evidence"])
+
+    def test_the_evidence_names_the_step_that_printed_the_line(self):
+        bad = self.STEP3.replace(" · \"coffee before resume\" is your own line (my guess)", "")
+        report = self.report(self.steps(self.STEP1, self.STEP2, bad))
+        evidence = self.strat(report, "WHAT I FOUND")["evidence"]
+        self.assertTrue(evidence and evidence[0].startswith("turn 7:"), evidence)      # step 3, not step 1 (turn 5)
+
+    def test_the_label_may_carry_a_parenthesis_before_its_colon(self):
+        pattern = graders._map_label_re("CONTENT PILLARS:", "en")
+        self.assertTrue(pattern.match(graders.ck.fold("CONTENT PILLARS (A, B or C all use this set): job search")))
+        self.assertTrue(pattern.match(graders.ck.fold("2. CONTENT PILLARS: job search")))
+        self.assertFalse(pattern.match(graders.ck.fold("CONTENT PILLARS (see below) are three")))     # no colon: talk
+
+    def test_a_weekday_with_a_count_of_pieces_is_a_weekly_cadence(self):
+        self.assertTrue(graders.has_cadence("3 tiếng tối Chủ nhật: 3 video ngắn quay một lèo, 1 bài dài, 1 email."))
+        self.assertTrue(graders.has_cadence("Sunday evening: 3 short videos, 1 long post, 1 email."))
+        self.assertTrue(graders.has_cadence("3 short videos a week."))
+        self.assertFalse(graders.has_cadence("Facebook is the core. We start on Sunday."))             # no pieces counted
+        self.assertFalse(graders.has_cadence("3 short videos, 1 long post, 1 email."))                # no week at all
+
+    def test_a_numbered_pillar_with_its_gloss_is_one_pillar(self):
+        lines = ["", "1 Nghe khách nói · cách bạn làm: lời khách thật, không đoán",
+                 "2 Tâm lý người mua · vì sao người quen nhắn, người lạ lướt",
+                 "3 Viết để bán · trang, email, bài kéo được tin nhắn",
+                 "Muốn chia theo nỗi lo của khách thì đổi thành: Đăng hoài không ai hỏi · Người lạ chưa tin · Chưa rõ bán gì."]
+        self.assertEqual(graders.parse_pillars(lines), ["Nghe khách nói", "Tâm lý người mua", "Viết để bán"])
+        self.assertEqual(graders.parse_pillars(["", "1. Pricing · positioning"]), ["Pricing", "positioning"])
+
+
+class V13LeaksTests(TempRepo):
+    """run.py `leaks`: the label of a dictated answer-bank line is the topic's name, not a lift."""
+
+    @classmethod
+    def setUpClass(cls):
+        spec = importlib.util.spec_from_file_location("cm_run_v13", REPO / "evals" / "run.py")
+        cls.cm_run = importlib.util.module_from_spec(spec)
+        sys.modules["cm_run_v13"] = cls.cm_run
+        spec.loader.exec_module(cls.cm_run)
+
+    def test_a_dictated_lines_label_is_not_an_undictated_lift(self):
+        self.write("evals/personas/vn/test-vn/answers.md",
+                   '## Answer bank\n'
+                   '- **Người cuối cùng trả tiền cho Nhi, và nguyên văn lời họ:** "The last one was a coach, she paid me in August. '
+                   'I asked her who is the last person who paid you."\n'
+                   '- **Điều Nhi âm thầm không chịu được:** "A post that starts with a big number nobody can prove."\n'
+                   '- **Khách mình muốn nhân bản:** "If I could clone one client." Chị coach chỉ nói hai câu ở dòng '
+                   '"Người cuối cùng trả tiền", không nói thêm.\n')
+        pdir = self.root / "evals" / "personas" / "vn" / "test-vn"
+        said = [{"role": "coach", "text": "The last one was a coach, she paid me in August. I asked her who is the last person "
+                                          "who paid you."}]
+        # the coach dictated that answer in English: its Vietnamese label, repeated in a note, is the topic's name, no lift
+        self.assertNotIn("người cuối cùng trả tiền", self.cm_run.undictated_corpus(said, pdir, 5))
+        # nobody dictated it: the note's words are the persona's and stay in the corpus
+        self.assertIn("người cuối cùng trả tiền", self.cm_run.undictated_corpus([], pdir, 5))
+        # a line nobody dictated keeps its words either way
+        self.assertTrue(any("big number nobody" in g for g in self.cm_run.undictated_corpus(said, pdir, 4)))
+
+
 if __name__ == "__main__":
     unittest.main()
