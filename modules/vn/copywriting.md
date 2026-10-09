@@ -36,7 +36,7 @@ BÀI DÀI (§CM-COPY-LONG): BÀI DÀI BỎ NGỎ "câu mở → chuyện → 3 b
 DANH SÁCH VÀ TIN NHẮN (§CM-COPY-LISTS): DANH SÁCH CÓ SỢI CHỈ "N ý, một sợi chỉ" · TIN NGẮN "một cảnh, một ý, một lời mời".
 2 Luật chung: mỗi bài một niềm tin; mỗi nhịp là một câu người thật sẽ nói, không bao giờ in nhãn ("Vấn đề:", "Bài học 1:"); nhịp nối bằng "mà", "nên"; nhịp cuối trả lời câu bỏ ngỏ của hook bằng chính câu trả lời; lời mời đi tiếp từ kết quả của bài (quà hay bước đặt tên theo kết quả đó, §CM-HOOK-CTA, §CM-CTA-KIT).
 3 Ví dụ trong các phần này là dựng ra để thấy dáng, mỗi nhịp một dòng; không đăng, không lấy làm dữ kiện. Trong bài thật, chỗ nào cũng là của coach: cảnh trong lời xả, con số của họ, kết quả khách đã đồng ý cho kể.
-4 Kiểm thầm sau khi viết: mỗi nhịp gọi tên được bằng một chữ không? Nhịp nào cũng cần nhịp trước nó không? Chỉ một niềm tin? Câu khẳng định nào cũng có bằng chứng hay trải nghiệm của chính coach? THU HÚT: bạn bè có chuyển cho nhau không? NIỀM TIN: khách có thấy coach nghĩ thế nào không? CHUYỂN ĐỔI: khách có biết bước tiếp theo không?
+4 Kiểm thầm sau khi viết: mỗi nhịp gọi tên được bằng một chữ không? Nhịp nào cũng cần nhịp trước nó không? Chỉ một niềm tin? Câu khẳng định nào cũng có bằng chứng hay chuyện thật của chính coach? THU HÚT: bạn bè có chuyển cho nhau không? NIỀM TIN: khách có thấy coach nghĩ thế nào không? CHUYỂN ĐỔI: khách có biết bước tiếp theo không?
 
 <!-- @section copywriting.grow-stories src=95f1562e9f -->
 ### Khung chuyện: chuyện năm dòng, chuyện một bài học, câu kéo câu (hợp lúc nào · nhịp và số chữ · ví dụ dựng ra · hỏng khi)
@@ -56,7 +56,7 @@ Hỏng khi: có câu bỏ đi mà chẳng ai thấy thiếu; câu móc hứa nhi
 <!-- @section copywriting.grow-beliefs src=243c76bc6e -->
 ### Khung niềm tin: lật niềm tin, gỡ lời khuyên quen, cách cũ – cách mới
 LẬT NIỀM TIN · NIỀM TIN (khung lõi), CHUYỂN ĐỔI khi một niềm tin chặn việc mua · video ngắn, carousel, bài học trong bài dài, một phần video dài. Niềm tin lấy từ kế hoạch (§CM-TIERS) hay băn khoăn coach nghe được.
-Nhịp (video ngắn ≈650): niềm tin cũ bằng chữ khách, nói cho công bằng: vì sao nó nghe hợp lý ≈100 · chỗ nứt: một cảnh, một dữ kiện cho thấy nó sai ≈150 · niềm tin mới một câu ≈30 · bằng chứng: trải nghiệm của coach, kết quả đã xin phép, lý do ai cũng kiểm được ≈200 · nghĩa là gì, một bước, lời mời ≈120. Hẹp dần: hook rộng → một câu vì sao nên nghe → chữ của khách để người không hợp tự đi → lật → một lời mời (§CM-HOOKS 5).
+Nhịp (video ngắn ≈650): niềm tin cũ bằng chữ khách, nói cho công bằng: vì sao nó nghe hợp lý ≈100 · chỗ nứt: một cảnh, một dữ kiện cho thấy nó sai ≈150 · niềm tin mới một câu ≈30 · bằng chứng: việc coach đã làm, kết quả đã xin phép, lý do ai cũng kiểm được ≈200 · nghĩa là gì, một bước, lời mời ≈120. Hẹp dần: hook rộng → một câu vì sao nên nghe → chữ của khách để người không hợp tự đi → lật → một lời mời (§CM-HOOKS 5).
 VD: "Đăng nhiều thì nhiều khách", nghe hợp lý: mua nhiều vé thì dễ trúng. · Rồi đăng mỗi ngày cả tháng, không ai nhắn. · Khách tới từ cái bài gọi đúng tên vấn đề của họ. · {N} người đặt lịch gần nhất của coach đều nhắc tới một bài. · Tuần này viết một bài bằng đúng chữ khách hay nói.
 Hỏng khi: vẽ niềm tin cũ cho ngớ ngẩn (khách từng tin nó); hai niềm tin; "bằng chứng" chỉ là thêm một câu khẳng định.
 GỠ LỜI KHUYÊN QUEN · THU HÚT · video ngắn, carousel, bài ngắn; lời khuyên khách nghe khắp nơi.
@@ -90,7 +90,7 @@ Nhịp (video ngắn ≈700; bài dài ≈1.000 thì mỗi nhịp nhân ≈1,4):
 VD: Lễ tân phòng khám nha: "Lịch kín mà khách bùng hoài chị ơi." · Đã nhắn nhắc lịch rồi. · Cả phòng khám tin là khách quên. · Quyết định: hỏi lý do ngay lúc đặt lịch. · Một câu hỏi, đặt cọc cho ca dài, gọi lại hôm trước. · Kết quả: [số thật của coach, khách đã đồng ý]. · Phòng khám khách phải chờ mới có lịch thì không cần cách này.
 Hỏng khi: khoe kết quả trước mà không có quyết định; "kết quả tuỳ người" thay cho hoàn cảnh; câu của khách mà coach chưa từng kể.
 GỠ BĂN KHOĂN · CHUYỂN ĐỔI · video ngắn, bài ngắn, email, Zalo, hỏi đáp. Lấy từ băn khoăn coach nghe được khi gọi, khi nhắn, dưới comment (§CM-OBJECTIONS).
-Nhịp (video ngắn ≈550): băn khoăn nguyên văn, nói lại cho tử tế ≈60 · vì sao lo vậy là phải ≈80 · sự thật, nhìn lại ≈150 · bằng chứng: trải nghiệm, kết quả đã xin phép ≈120 · lỡ không hợp thì sao, chỉ khi có thật (học thử, chính sách hoàn tiền đang áp dụng) ≈60 · một lời mời ≈40.
+Nhịp (video ngắn ≈550): băn khoăn nguyên văn, nói lại cho tử tế ≈60 · vì sao lo vậy là phải ≈80 · sự thật, nhìn lại ≈150 · bằng chứng: việc đã làm, kết quả đã xin phép ≈120 · lỡ không hợp thì sao, chỉ khi có thật (học thử, chính sách hoàn tiền đang áp dụng) ≈60 · một lời mời ≈40.
 VD: "Giờ chị chưa có tiền học đâu em." · Phải rồi: khoản đó chi ra là thấy liền. · Khoản không thấy: thêm sáu tháng tự mò. · Tháng đầu làm gì, từng bước. · Điều khoản hoàn tiền đúng như đang ghi, nếu có.
 Hỏng khi: cãi tay đôi với khách; "học xong tự hoàn vốn" hay bất kỳ con số lời lãi nào; cam kết không có thật.
 BÀI MỜI MUA · CHUYỂN ĐỔI · bài đăng, email, Zalo, cuối video dài; chỉ sản phẩm đang bán, giá thật, giới hạn thật (§CM-LAUNCH-BRIEF).
@@ -105,7 +105,7 @@ Nhịp: câu mở ≤18 tiếng, ý chính nằm trước "Xem thêm" · câu m�
 VD: Câu mở "Khách trả nhiều tiền nhất lại là người ít than nhất." · Chuyện: hai khách cùng tháng, một người mặc cả từng đồng, một người chuyển đủ ngay hôm đầu. · Bài học: giá lọc ra người nghiêm túc · tuần đầu định nhịp cho cả khoá · câu mình giờ đưa vào mọi báo giá. · Mời: comment BAOGIA để lấy câu đó.
 Hỏng khi: bài học chẳng dính gì tới chuyện; thêm bài học thứ tư; nối kiểu văn viết (Bên cạnh đó, Hơn nữa); câu bỏ ngỏ không bao giờ được trả.
 VIDEO DÀI THEO PHẦN, 1.000–1.500 chữ · NIỀM TIN, CHUYỂN ĐỔI · YouTube, video Facebook, podcast (§CM-LONG). Lời nói; mỗi phần là gạch đầu dòng; chỉ đoạn mở và câu cuối viết nguyên văn.
-Nhịp: mở ≈120: bằng chứng (một dữ kiện của họ), lời hứa (xem xong làm được gì), lộ trình (3–4 phần, gọi tên thường), một câu bỏ ngỏ trả lời gần cuối, một câu "kể cả khi bạn…" (§CM-LONG-INTRO) · bối cảnh hay chuyện ≈200 · 3–4 phần, mỗi phần ≈200–250: ý → vì sao → ví dụ → làm gì → câu móc bán phần sau hay mở lại câu bỏ ngỏ ("Phần 3 là chỗ phần lớn mọi người bỏ cuộc.") · giữa video, một lần, câu tự kiểm dạng khẳng định · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80: quà, sản phẩm chỉ khi có, video nên xem tiếp. Một phần có thể chạy khung riêng (lật niềm tin, mổ xẻ quyết định).
+Nhịp: mở ≈120: bằng chứng (một dữ kiện của họ), lời hứa (xem xong làm được gì), lộ trình (3–4 phần, gọi tên thường), một câu bỏ ngỏ trả lời gần cuối, một câu "kể cả khi bạn…" (§CM-LONG-INTRO) · bối cảnh hay chuyện ≈200 · 3–4 phần, mỗi phần ≈200–250: ý → vì sao → ví dụ → làm gì → câu móc gợi phần sau hay mở lại câu bỏ ngỏ ("Phần 3 là chỗ phần lớn mọi người bỏ cuộc.") · giữa video, một lần, câu tự kiểm dạng khẳng định · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80: quà, sản phẩm chỉ khi có, video nên xem tiếp. Một phần có thể chạy khung riêng (lật niềm tin, mổ xẻ quyết định).
 VD: "Nếu phải lấp kín lịch từ con số 0": bằng chứng (số năm, số khách của họ) · các phần: nói với ai, nói gì, nói ở đâu, mời thế nào · câu bỏ ngỏ: "câu hỏi cho biết khách này có mua hay không".
 Hỏng khi: câu móc chỉ là "xem hết video nhé"; các phần không theo thứ tự nào (không có sợi chỉ); độn chữ cho đủ 1.000.
 
@@ -144,8 +144,8 @@ Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy 
 2 Nói trước điều khách lo: trong bài CHUYỂN ĐỔI, nói ra băn khoăn lớn nhất trước khi khách kịp nghĩ ("Chắc có người đang nghĩ 'mình làm gì có thời gian'…") rồi trả lời bằng dữ kiện, không bằng lời hứa.
 3 Bằng chứng xếp lớp, cho thấy chứ không nói: con số của coach → thứ coach làm ra (bảng tính, tài liệu trước và sau) → một câu khách đã đồng ý cho kể → dấu hiệu từ bên ngoài (nơi từng dạy, khách có tiếng được phép nêu tên). Không "đã được kiểm chứng", "có bằng chứng hẳn hoi", "cam kết kết quả".
 4 Cụ thể: số lẻ thật thắng số tròn ({N} thật của họ, không làm tròn lên); một đồ vật có tên thắng một tính từ; chỉ lấy từ dữ kiện của coach.
-5 Cho trước: mỗi bài một thứ trọn vẹn, dùng được ngay (bước làm, câu nói, danh sách kiểm), không giấu lại để chờ lời mời; quà thêm vào, không phải để hoàn thành một bài cố tình bỏ dở.
-6 Lời khen của người khác chỉ khi có thật: câu khách đã đồng ý, con số coach có ghi lại. Không có → trải nghiệm của coach hay lý do, không "hàng trăm học viên".
+5 Cho trước: mỗi bài một thứ trọn vẹn, dùng được ngay (bước làm, câu nói, danh sách kiểm), không giấu lại để chờ lời mời; quà là phần thêm, không phải mảnh còn thiếu của một bài cố tình bỏ dở.
+6 Lời khen của người khác chỉ khi có thật: câu khách đã đồng ý, con số coach có ghi lại. Không có → chuyện của coach hay lý do, không "hàng trăm học viên".
 7 Đặt cạnh nhau: để thứ coach bán đứng cạnh phương án khác (cách cũ, tự làm, không làm gì) với cái giá nói thật; không cộng "giá trị" thổi phồng.
 8 Cái gật nhỏ trước: một từ khoá comment, một tin nhắn lại, một câu tự kiểm ("Viết một bài mà mất hơn một tiếng thì ý của bạn chưa rõ."). Mỗi bài một lời mời.
 9 Nhắm vào hoàn cảnh, không nhắm vào con người: "báo giá gửi một tuần chưa ai trả lời", không "Bạn quản lý tiền dở lắm phải không?". Một khách, một chặng; con số trong bài chỉ ngay trên chỗ khách đang đứng, không vượt bằng chứng của coach.

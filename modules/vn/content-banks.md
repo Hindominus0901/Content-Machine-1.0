@@ -31,12 +31,12 @@ Tên gọi bên trong (không cho coach thấy mã): THU HÚT / NIỀM TIN / CHU
 - Tin nhắn, comment, ghi chú cuộc gọi, ảnh chụp coach dán (tên đổi thành vai ngay): tự lưu, không chờ lệnh.
 - Comment dưới bài của coach, thứ Sáu: chữ lặp lại → chữ của khách; câu hỏi → ý tưởng, ý quà; nghi ngại → lăn tăn.
 - Cuộc gọi tư vấn: mỗi lăn tăn khách nêu = một bài chưa làm tròn việc → lăn tăn → bài NIỀM TIN hay CHUYỂN ĐỔI tuần sau.
-- Chốt được khách, coach hỏi khách mới 3 câu: biết mình lần đầu ở đâu · bài nào làm bạn bắt đầu tin mình · điều gì suýt làm bạn thôi → bối cảnh bằng chứng, lăn tăn, bài nào đang chốt được khách.
+- Chốt được khách, coach hỏi khách mới 3 câu: biết tới mình lần đầu ở đâu · bài nào làm bạn bắt đầu tin mình · điều gì suýt làm bạn thôi không đăng ký → bối cảnh bằng chứng, lăn tăn, bài nào đang chốt được khách.
 2 LẤY RA: viết bài tuần (§CM-WEEK) hay chạy lab hook đều đọc ngân hàng trước; bài nào cũng ghi dùng mục nào.
 - THU HÚT: một khoảnh khắc, chuyện hằng ngày hay một câu nỗi đau. NIỀM TIN: một chuyện + quan điểm nó chứng minh, hoặc trả lời một lăn tăn. CHUYỂN ĐỔI: một lăn tăn + bằng chứng coach được dùng + quà hay gói đang mở (§CM-TIERS).
 - Tuyến nội dung (§CM-CONTENT-LINES) lấy từ ngăn của mình trước (tuyến lăn tăn: lăn tăn kế tiếp chưa dùng).
 - Xoay vòng: mục ít dùng nhất 30 ngày qua lên trước (`hub:Uses`); một chuyện ≤ 1 lần mỗi 14 ngày trên một nền tảng; một câu khách ≤ 2 lần một tuần.
-- Kho trống: hỏi MỘT câu, hoặc A/B/C có một cái nên chọn (§CM-OPTIONS): một khoảnh khắc từ nghiên cứu · một chuyện trong tuần · một bài kể cách làm, không cần bằng chứng.
+- Kho trống: hỏi MỘT câu, hoặc A/B/C có một cái máy khuyên (§CM-OPTIONS): một khoảnh khắc từ nghiên cứu · một chuyện trong tuần · một bài kể cách làm, không cần bằng chứng.
 3 NẠP KHO THỨ SÁU (sau số liệu, §CM-NUMBERS): 3 mục mới, mục nào cũng có nguồn:
 - 1 từ comment hay tin nhắn tuần này (coach dán 10 cái, tên đổi thành chữ cái);
 - 1 chuyện, từ một câu gợi chuyện trả lời trong một tin;
@@ -50,14 +50,14 @@ Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. L�
 - THU HÚT: nhẹ hay từ khoá · NIỀM TIN: từ khoá, nhắn riêng hay link quà · CHUYỂN ĐỔI: nhắn riêng, gọi hay đăng ký, mời mua.
 - Cả tháng, áng chừng: 10 lời mời thì 6 trao quà (từ khoá hay link), 2 mở chuyện trong inbox, 2 chỉ vào gói hay cuộc gọi. Chưa mở bán thì không mời mua.
 2 LUẬT (cho mọi câu bên dưới):
-- Khép điều hook đã hé: quà hay câu trả lời đặt tên theo kết quả của CHÍNH bài đó ("3 câu giết chết trang báo giá" → "bảng soát trang báo giá").
+- Khép điều hook đã hé: quà hay câu trả lời đặt tên theo kết quả của CHÍNH bài đó ("3 câu làm hỏng trang báo giá" → "bảng soát trang báo giá").
 - Từ khoá: cụm chữ khách hay nói, ≥2 tiếng, viết HOA không dấu (BANG GIA, KHACH DAU); không GUIDE, FREE, INFO hay chữ comment thường cũng có; giống nhau trên màn hình, caption và trả lời tự động (nhận cả dạng có dấu). Từ khoá và quà của mùa là mặc định (§CM-CTA-KIT 1); tuyến có quà riêng thì có từ khoá riêng; ≤3 cái chạy cùng lúc.
 - Quà có sẵn trước khi đăng (§CM-CTA-KIT 2); câu mời mua có giá thật, ngày thật, giới hạn thật (§CM-CTA-KIT 9).
 - Coach tự chọn ("chấm", "comment nếu…", "đủ 100 comment mình làm phần 2", emoji): ghi y nguyên, không làm mềm, không chặn; dưới đó MỘT dòng, có ngày hôm nay: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 - Trả lời: tự động chỉ ở Trang Facebook và tài khoản Instagram chuyên nghiệp; chỗ khác gửi tay, nên chỉ xin comment ở nơi coach kịp trả lời trong ngày (§CM-CTA-KIT 7). YouTube không có tin nhắn: không xin từ khoá; quà để ở mô tả và bình luận ghim.
 - Không: "follow để xem thêm", "link ở bio" mà không nói link gì, "giá ib" cho gói có giá cố định, gấp gáp giả, hai lời mời trong một bài.
 3 CHỖ TRỐNG: {KEYWORD} từ khoá · {quà} tên gọi thẳng · {hoàn cảnh} khoảnh khắc của khách · {gói}, {giá}, {ngày}, {N} chỉ điền số thật, không thì [CẦN BẠN: …].
-4 DANH SÁCH LỜI MỜI: câu coach đã duyệt hay từng kéo người giơ tay: `lời mời · {bậc} · {nền tảng} · "{câu}" · {quà hay gói} · {tầng}`; dùng lại câu tốt nhất từng nền tảng trước khi viết mới.
+4 DANH SÁCH LỜI MỜI: câu coach đã duyệt hay từng kéo được người hỏi: `lời mời · {bậc} · {nền tảng} · "{câu}" · {quà hay gói} · {tầng}`; dùng lại câu tốt nhất từng nền tảng trước khi viết mới.
 Nhãn bên dưới: bậc · tầng (TH THU HÚT, NT NIỀM TIN, CĐ CHUYỂN ĐỔI).
 
 <!-- @section content-banks.grow-cta-video src=4f5c40bddf -->
@@ -78,7 +78,7 @@ REELS (FACEBOOK, INSTAGRAM)
 11 nhắn·NT trên story: "Trả lời story này chữ {KEYWORD}, mình gửi {quà}."
 12 gọi·CĐ "Nếu {hoàn cảnh} đang làm bạn mất {cái giá, bằng chữ khách}, link đặt lịch ở trang cá nhân: 20 phút, giúp được hay không mình nói thẳng."
 YOUTUBE, VIDEO DÀI
-13 link·NT khoảng 65% video: "Ai thấy đúng mình thì {quà} ở dòng đầu phần mô tả, nó làm giúp bạn bước {n}."
+13 link·NT khoảng 65% video: "Ai thấy mình trong video này thì {quà} ở dòng đầu phần mô tả, nó làm sẵn giúp bạn bước {n}."
 14 nhẹ·TH cuối video: "Xem tiếp video này: {tiêu đề}. Nó trả lời {câu người xem sẽ hỏi tiếp}."
 15 link·NT bình luận ghim: "{Quà}: {link}. Bắt đầu từ trang {n}, mất chừng {thời gian}."
 16 gọi·CĐ "Bạn đang {điều kiện} và muốn có người kèm làm việc này thì đơn đăng ký ở dòng thứ hai phần mô tả: 3 câu hỏi, đơn nào mình cũng đọc."
@@ -262,7 +262,7 @@ Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra kh�
 3 DÙNG: chỉ nói kết quả từ mục có đồng ý cho đúng việc đó VÀ đã kiểm chứng; quá hạn kiểm lại hay gói đã đổi → hỏi coach trước; không có gì dùng được → lặng lẽ viết bài kể cách làm, không bao giờ "bằng chứng sẽ có sau". CHUYỂN ĐỔI cần ≥1 bằng chứng dùng được hoặc bằng chứng cách làm; NIỀM TIN dùng cách làm hay con số đếm; THU HÚT hiếm khi cần.
 4 CÂU GỢI, mỗi tin một câu:
 - "Trong 6 tháng qua có khách nào có kết quả mà bạn ghi được con số và tháng không? Lúc đầu họ ở đâu?"
-- "Họ có nói ra bằng chữ không? Dán nguyên văn, tên đổi thành vai nhé."
+- "Họ có nhắn hay nói câu nào không? Dán nguyên văn, tên đổi thành vai nhé."
 - "Họ có đồng ý cho đưa lên bài không? Lên quảng cáo thì sao? Bạn hỏi họ rồi báo mình câu trả lời kèm ngày."
 - "Việc nào bạn cho xem được trước và sau, mà che hết thông tin của khách?"
 - "Bạn đã làm bao nhiêu {việc} rồi? Số thật là được, nhỏ cũng được."

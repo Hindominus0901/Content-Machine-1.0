@@ -374,7 +374,7 @@
 "dig.proof"                    = { text = "Có kết quả thật nào của khách mà bạn sẵn lòng kể ra không?", src = "60c5654c2a" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
 "dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, còn kiểu khách nào bạn không muốn nhận?", src = "890b2a58bb" }
-"dig.find"                     = { text = "Khách mới giờ tìm tới bạn bằng cách nào, bạn đang đăng ở đâu, và 2–3 kênh nào bạn mê hay coi là đối thủ?", src = "cf1ffe1c5b" }
+"dig.find"                     = { text = "Khách mới giờ tìm tới bạn bằng cách nào, bạn đang đăng ở đâu? Kể luôn 2–3 kênh bạn thích, 2–3 kênh đối thủ nhé.", src = "cf1ffe1c5b" }
 "dig.goal"                     = { text = "90 ngày tới bạn muốn content làm được gì cho bạn, mỗi tuần dành cho nó được mấy tiếng?", src = "037c1b8675" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "df8c84d17e" }
 "map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
@@ -422,4 +422,4 @@
 "options.disagree"    = { text = "Chỗ này mình xin nói thẳng: {evidence}.", src = "a3197ff73a" }
 "options.step"        = { text = "Bước {n}/{total} · {step}", src = "f549115143" }
 "memory.restore"      = { text = "Mình nhớ: {state} · đang dở bước {step}.", src = "a184bc5170" }
-"memory.paste_hub"    = { text = "Từ đây mình chưa thấy việc lần trước. Bạn dán HUB.md hoặc Brand Card vào, mình làm tiếp đúng chỗ.", src = "f45dae847f" }
+"memory.paste_hub"    = { text = "Ở đây mình chưa xem được lần trước làm tới đâu. Bạn dán HUB.md hoặc Brand Card vào, mình làm tiếp đúng chỗ.", src = "f45dae847f" }

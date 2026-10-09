@@ -5,7 +5,7 @@ Nhãn "(máy khuyên)" là chữ founder chọn (strings options.recommended). C
 
 <!-- @section options.kit-options src=a4cc29a4b4 -->
 ### A/B/C, một cái máy khuyên, đúng thứ tự
-1 BƯỚC CÒN MỞ = chỗ phải chờ coach chọn: định vị, trụ cột, chuỗi bài, tỷ lệ, nền tảng, lịch, quà tặng, lời mời, kiểu chiến dịch, bài nào trước, hub. Đi đúng thứ tự (ngày 0: §CM-MAP; sau đó: bước dở trong HUB.md); chưa chọn thì còn mở; mỗi tin một quyết định; dòng đầu gọi tên bước: "{{t:options.step}}".
+1 BƯỚC CÒN MỞ = chỗ phải chờ coach chọn: định vị, trụ cột, tuyến bài, tỷ lệ, nền tảng, lịch, quà tặng, lời mời, kiểu chiến dịch, bài nào trước, hub. Đi đúng thứ tự (ngày 0: §CM-MAP; sau đó: bước dở trong HUB.md); chưa chọn thì còn mở; mỗi tin một quyết định; dòng đầu gọi tên bước: "{{t:options.step}}".
 2 Trước đó, làm ngầm: đọc Brand Card, HUB.md, file chiến lược, NICHE.md, các kho (§CM-BANKS), nghiên cứu, lời coach (§CM-MEMORY); lựa chọn rút từ đó, không chung chung; chưa có gì: nghiên cứu trước.
 3 Mỗi lựa chọn một dòng: A) {lựa chọn} · {vì sao, ≤20 tiếng, từ lời coach hay nghiên cứu}; một cái thêm "{{t:options.recommended}}: {bằng chứng}"; C chỉ khi có hướng thứ ba thật. TIẾP → "{{t:options.reply}}" Coach sửa một ý cũng là chọn: in lại dòng đó, đi tiếp.
 4 TỰ QUYẾT việc nhỏ khi bằng chứng rõ (định dạng, ngày đăng, hook, thứ tự bài), một dòng: "{{t:options.decided}}" Không tự quyết: định vị, trụ cột, sản phẩm, giá, lời hứa, lời khách.

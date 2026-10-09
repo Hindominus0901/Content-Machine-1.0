@@ -51,7 +51,7 @@ NIỀM TIN
 <!-- @section strategy-doc.grow-tiers-convert src=89403d142e -->
 ### CHUYỂN ĐỔI, đi sâu, và những lỗi làm hỏng tỷ lệ
 CHUYỂN ĐỔI
-- Việc của nó: giúp người đã theo dõi, đã tin, mua một cách dễ dàng và yên tâm: sản phẩm với giá cụ thể, nói thẳng · gỡ băn khoăn bằng đúng chữ khách · quyết định mua của một khách, và điều suýt làm họ dừng · ai hợp, ai nên đợi · nói "có" rồi thì chuyện gì diễn ra. Một băn khoăn khách nêu trong cuộc gọi là một bài chưa được làm.
+- Việc của nó: giúp người đã theo dõi, đã tin, mua cho dễ, cho yên tâm: sản phẩm với giá cụ thể, nói thẳng · gỡ băn khoăn bằng đúng chữ khách · quyết định mua của một khách, và điều suýt làm họ dừng · ai hợp, ai nên đợi · gật đầu rồi thì mọi việc ra sao. Một băn khoăn khách nêu trong cuộc gọi là một bài chưa được làm.
 - Hợp với: video ngắn hay bài dài gỡ đúng một băn khoăn, bài giới thiệu sản phẩm, tin Zalo hay email, livestream hỏi đáp, tin "trước buổi gọi" (§CM-SEASON 4). Hook: nói thẳng băn khoăn ra (§CM-HOOK-CALLOUT), bóc một kết quả thật (§CM-HOOK-PROOF).
 - Lời mời: một thôi, chỉ nấc kế tiếp: nhắn một chữ, đặt lịch gọi, mua. Từ tuần 2, và chỉ khi có bằng chứng (kết quả đã được đồng ý, quy trình của họ, hay suất nhóm đầu).
 - Bài tốt: "'Giờ chưa đủ tiền thuê coach.' Nếu là em gái mình, mình sẽ nói thế này." + giá + ai nên đợi. Bài dở: "Inbox để được tư vấn!!" dưới mọi bài, "giá ib", hạn chót không có thật.
@@ -99,7 +99,7 @@ Trong kế hoạch thật, tuyến nào cũng là của coach: chữ của họ,
 ### Lịch 4 tuần: đầu vào và cách chia chỗ ("lịch content", "lịch đăng bài", "kế hoạch tháng")
 1 ĐẦU VÀO, lấy hết từ chiến lược và Card (thiếu thứ nào thì quay về bước đặt ra thứ đó, §CM-STRATEGY-ENGINE): số giờ mỗi tuần họ thật sự có · kênh chính và nơi đăng lại · tỷ lệ (bước 4) · trụ cột nội dung và tuyến (bước 3) · các mốc: ra mắt, mở bán, một dịp trong năm của khách (§CM-MOMENTS: Tết, 8/3, 20/10, 20/11…), tuần nghỉ · sản phẩm và giá · quà và từ khoá · danh sách Zalo hay email, bao nhiêu người.
 2 CHIA CHỖ THEO GIỜ. Giờ của họ gồm quay, sửa nhẹ, đăng và trả lời khách; viết thì mình lo hết. Mỗi bài: video ngắn ≈30 phút · bài dài ≈20 · carousel ≈30 · tin Zalo hay email ≈10 · video dài ≈3 tiếng (quay, dựng, đăng). Cố định: buổi nói chuyện hằng tuần 15 phút (§CM-TALK) và thứ Sáu 15 phút. Vậy:
-- Từ 1 tiếng trở xuống: 3 video ngắn quay một lèo, đăng kèm phụ đề tự động, 1 bài dài, 1 tin Zalo hay email (tuần lean, §CM-WEEK 2).
+- Từ 1 tiếng trở xuống: 3 video ngắn quay một lèo, đăng kèm phụ đề tự động, 1 bài dài, 1 tin Zalo hay email (tuần gọn, §CM-WEEK 2).
 - Khoảng 3 tiếng: 3 video ngắn, 1 bài dài, 1 tin Zalo hay email, có dựng, còn giờ trả lời comment và tin nhắn.
 - Khoảng 5 tiếng: 5 video ngắn, 2 bài dài (hoặc 1 bài dài + 1 carousel), 1 tin Zalo hay email.
 - Từ 8 tiếng: 1 video dài về trụ cột nội dung của tuần (1.000–1.500 chữ) → cắt ra 4 video ngắn, viết lại thành 1 bài dài và 1 carousel, 1 tin Zalo hay email dẫn về video.
