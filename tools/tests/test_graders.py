@@ -52,8 +52,9 @@ EN_STRINGS = {
     "dig.proof": "What's one real result a client got with you that you'd be happy to share?",
     "dig.stance": "What does everyone in your field tell people that you think is wrong?",
     "dig.buyer": "If you could clone one client, who would it be, and who would you rather not take on?",
-    "dig.find": "How do new clients find you today, and where do you post now?",
-    "dig.goal": "What should your content do for you in the next 90 days, and how many hours a week can you give it?",
+    "dig.find": "Where do new clients find you today?",
+    "dig.channels": "Which 2–3 channels in your field do you like or compete with?",
+    "dig.goal": "What should your content do for you in the next 90 days?",
     "dump.keep_going": "Keep going, or say 'done'.",
     "dump.post_it": "Post it as text today if you like.",
     "cmd.quiet": "quiet",
@@ -210,7 +211,7 @@ class TempRepo(unittest.TestCase):
 # the piece that needs the coach carries a line.
 FILM_REPLY = f'''
     {TAG}Film today
-    FILM TODAY · say it from memory
+    FILM TODAY · Short video · ATTRACT · 640 words
     On-screen: Coffee before resume
     First line: "63 applications. 2 interviews."
     Beat 1: 24 years at HQ, out at 48.
@@ -248,10 +249,10 @@ GOOD = [
     ("coach", "next"),
     ("machine", f'''
         {TAG}Week 1
-        N1 · Reel
+        N1 · Reel · TRUST · 180 words
         Coffee before resume. 11 clients took that route with me. Your next chapter starts there.
 
-        N2 · Email
+        N2 · Email · CONVERT · 220 words
         Lorraine's story, in her words. [NEEDS: the month she started]
         Needs you · Which month did Lorraine start? I won't make it up. (Or say "skip".)
         NEXT → Say "next" for N3.
@@ -275,8 +276,8 @@ class GoodRunTests(TempRepo):
         # FILM TODAY and N1 print nothing under them; N2 carries its one Needs you line
         run = graders.load_run(self.run_dir(GOOD), self.root)
         pieces = [(p.title, p.silent, p.kind) for r in run.replies for p in r.pieces]
-        self.assertEqual(pieces, [("FILM TODAY · say it from memory", True, ""), ("N1 · Reel", True, ""),
-                                  ("N2 · Email", False, "needs")])
+        self.assertEqual(pieces, [("FILM TODAY · Short video · ATTRACT · 640 words", True, ""), ("N1 · Reel · TRUST · 180 words", True, ""),
+                                  ("N2 · Email · CONVERT · 220 words", False, "needs")])
 
     def test_cli_exit_codes(self):
         good = self.run_dir(GOOD)
@@ -1656,10 +1657,15 @@ class G1RoundGraderTests(TempRepo):
                                         ("coach", "can we change 2?"), ("machine", pushback), ("coach", "ok"),
                                         ("machine", save)])
         self.assertPasses(report, "I6")
+        # v13.1 (9 Oct): the cap is one decision a REPLY, not a session. One choice in a reply, after the Map's OK: fine
+        one = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"),
+                                     ("machine", f"{TAG}Film today\nWhich one do you want, the reel or the post?\n"
+                                                 "NEXT → Pick one.")])
+        self.assertPasses(one, "I6")
         real = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"),
                                       ("machine", f"{TAG}Film today\nWhich one do you want, the reel or the post?\n"
-                                                  "NEXT → Pick one.")])
-        self.assertFails(real, "I6", "2 decision prompts in one session")
+                                                  "Also choose your talk day: Tuesday or Thursday.\nNEXT → Pick one.")])
+        self.assertFails(real, "I6", "2 decision prompts in one reply")
 
     # -- G3: I2 reads talk, not the buyer's copy box
     def test_g3_buyer_blanks_in_a_copy_box_are_not_a_template_ask(self):
@@ -1952,20 +1958,31 @@ class G1VerifierHoleTests(TempRepo):
         two = (f"{TAG}Week 1\nWhich one do you want first, the reel or the post?\nAlso choose your talk day: Tuesday "
                "or Thursday.\nNEXT → Tell me.")
         self.assertFails(self.grade([("coach", "go"), ("machine", two)]), "I6", "2 decision prompts")
+        # v13.1 (9 Oct): the Map's OK plus ONE choice in a reply is one decision (a strategy step: OK and one A/B/C line);
+        # the Map's OK and two choices, or a guess's follow-up and two choices, are two
         with_map = MAP_REPLY.replace("We'll run this for 4 weeks.", "Which one do you want to film first, the coffee "
                                                                     "story or the box story?\nWe'll run this for 4 weeks.")
-        self.assertFails(self.grade(GOOD[:3] + [("machine", with_map)]), "I6", "2 decision prompts")
+        self.assertPasses(self.grade(GOOD[:3] + [("machine", with_map)]), "I6")
+        with_map_two = with_map.replace("We'll run this for 4 weeks.", "Also, which one do you want, Tuesday or Thursday?\n"
+                                                                      "We'll run this for 4 weeks.")
+        self.assertFails(self.grade(GOOD[:3] + [("machine", with_map_two)]), "I6", "2 decision prompts")
         guess = (f"{TAG}One question\nMy guess: the woman leaving a long job. Right?\nWhich one do you want to film "
                  "first, the reel or the post?\nNEXT → Tell me.")
-        self.assertFails(self.grade([("coach", "go"), ("machine", guess), ("coach", "ok"), ("machine", MAP_REPLY)]),
+        self.assertPasses(self.grade([("coach", "go"), ("machine", guess), ("coach", "ok"), ("machine", MAP_REPLY)]), "I6")
+        guess_two = guess.replace("NEXT → Tell me.", "Also choose your talk day: Tuesday or Thursday.\nNEXT → Tell me.")
+        self.assertFails(self.grade([("coach", "go"), ("machine", guess_two), ("coach", "ok"), ("machine", MAP_REPLY)]),
                          "I6", "2 decision prompts")
         plan = (f"{TAG}Week 1\nFor Instagram · talk day Monday (my guess, where unheard; one word changes it).\n"
                 "Which one do you want first, the reel or the post?\nNEXT → Say 'ok'.")
-        self.assertFails(self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", plan)]), "I6")
+        self.assertPasses(self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", plan)]), "I6")
         for question in ("Should we choose the reel or the post?", "Can we decide on Tuesday or Thursday?"):
             with self.subTest(question=question):                   # a question is never the machine's declarative
-                asked = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"),
+                alone = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"),
                                                ("machine", f"{TAG}Film today\n{question}\nNEXT → Tell me.")])
+                self.assertPasses(alone, "I6")
+                asked = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"),
+                                               ("machine", f"{TAG}Film today\n{question}\nAlso pick a gift: the checklist or "
+                                                           "the audit.\nNEXT → Tell me.")])
                 self.assertFails(asked, "I6", "2 decision prompts")
         # one choice, said three ways (its options, the question, its NEXT), and a guess's own follow-up: one each
         options = (f"{TAG}Film today\nOption A: the reel.\nOption B: the post.\nWhich one do you want? Pick one.\n"
@@ -1976,6 +1993,30 @@ class G1VerifierHoleTests(TempRepo):
                        "NEXT → Type \"right\", or tell me which one pays the bills.")
         self.assertPasses(self.grade([("coach", "go"), ("machine", split_guess), ("coach", "right"),
                                       ("machine", MAP_REPLY)]), "I6")
+
+    # I6 (v13.1, 9 Oct): one decision a REPLY. A reply with one A/B/C choice passes; two open choices in a reply fail
+    def test_i6_one_abc_choice_in_a_reply_passes_and_two_open_choices_fail(self):
+        one = (f"{TAG}Step 1 of 3 · Channels\nChannels I read for you: A) the groups you named (recommended) B) the two forums "
+               "I found C) type others\nNEXT → Type A, B or C, change one, or 'OK' for A.")
+        self.assertPasses(self.grade([("coach", "go"), ("machine", one)]), "I6")
+        # the same choice said three ways (a sentence that asks to pick, the A/B/C lines under it, its NEXT) is still one
+        said = (f"{TAG}Step 1 of 3 · Channels\nPick one channel set to read.\nA) the groups you named (recommended)\n"
+                "B) the two forums I found\nC) type others\nNEXT → Pick one: A, B or C.")
+        self.assertPasses(self.grade([("coach", "go"), ("machine", said)]), "I6")
+        # a run of replies, each with its one choice: fine (it was one decision a session before v13.1)
+        self.assertPasses(self.grade([("coach", "go"), ("machine", one), ("coach", "ok"), ("machine", one)]), "I6")
+        # two A/B/C lines in one reply are two open choices
+        two_abc = one.replace("NEXT →", "I couldn't read r/layoffs: A) I read it now (recommended) B) you paste 20 comments C) leave "
+                                        "it for Week 1\nNEXT →")
+        self.assertFails(self.grade([("coach", "go"), ("machine", two_abc)]), "I6", "2 decision prompts in one reply")
+        # an A/B/C and a different open choice are two as well
+        abc_and_pick = one.replace("NEXT →", "Which one do you want to film first, the reel or the post?\nNEXT →")
+        self.assertFails(self.grade([("coach", "go"), ("machine", abc_and_pick)]), "I6", "2 decision prompts in one reply")
+        # "(A, B or C all use this set)", "(a) yes" and "Plan B" are no A/B/C markers
+        r = graders.analyse_reply(graders.Turn(2, "machine", f"{TAG}Pillars\nCONTENT PILLARS (A, B or C all use this set): x · y · z\n"
+                                                          "Do you have Claude in Chrome? (a) yes (b) no\nNEXT → Say 'ok'.", 1.0), 1,
+                                  graders.Matcher(EN_STRINGS, "en"))
+        self.assertEqual(graders.abc_choices(r), [])
 
     # I3 and own-draft checks
     def test_i3_long_ready_line_and_scheduling_questions(self):
@@ -2508,7 +2549,10 @@ class VG2RoundGraderTests(TempRepo):
         self.assertPasses(self.vn(map_reply=topics), "I6")
         ask = topics.replace("Mình chạy thử 4 tuần nghe anh.", "Anh quyết định giúp em nhé, quay hay viết bài chữ?\n"
                                                                "Mình chạy thử 4 tuần nghe anh.")
-        self.assertFails(self.vn(map_reply=ask), "I6", "2 decision prompts")
+        self.assertPasses(self.vn(map_reply=ask), "I6")          # the Map's OK and one choice: one decision (v13.1)
+        two = ask.replace("Mình chạy thử 4 tuần nghe anh.", "Anh chọn luôn ngày đăng, thứ Hai hay thứ Ba?\n"
+                                                             "Mình chạy thử 4 tuần nghe anh.")
+        self.assertFails(self.vn(map_reply=two), "I6", "2 decision prompts")
 
     # -- G22: one misheard word fixed in the coach's quote is still verbatim
     def test_g22_misheard_word_in_a_quote(self):
@@ -2772,7 +2816,7 @@ class VG3RoundGraderTests(TempRepo):
             .replace("    Comment CHAPTER and I'll send you the coffee script.\n    ```\n",
                      "    Comment CHAPTER and I'll send you the coffee script.\n\n")
         report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", unboxed)], suite="day0")
-        self.assertFails(report, "day0_shape", 'FILM TODAY · say it from memo… carries YOUR WORD "chapter" only in the ask')
+        self.assertFails(report, "day0_shape", 'FILM TODAY · Short video · AT… carries YOUR WORD "chapter" only in the ask')
         said = unboxed.replace("Coffee first.", "Your next chapter starts with a coffee.")
         report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", said)], suite="day0")
         self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
@@ -2988,9 +3032,13 @@ class VG4RoundGraderTests(TempRepo):
         self.assertPasses(self.vn(("coach", "ok"), ("machine", heading), map_reply=topics), "I6")
         ask = heading.replace("TUẦN 1 · 07/10 – 13/10 · Người mới quyết định nghỉ từ tuần đầu",
                               "Người mới quyết định nghỉ từ tuần đầu: anh chọn quay hay viết bài chữ?")
-        self.assertFails(self.vn(("coach", "ok"), ("machine", ask), map_reply=topics), "I6", "2 decision prompts")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", ask), map_reply=topics), "I6")      # one choice in a reply (v13.1)
+        both = ask.replace("viết bài chữ?", "viết bài chữ? Anh quyết định giúp em lịch đăng thứ Hai hay thứ Ba?")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", both), map_reply=topics), "I6", "2 decision prompts")
         other = heading.replace("Người mới quyết định nghỉ từ tuần đầu", "Anh quyết định giúp em lịch đăng")
-        self.assertFails(self.vn(("coach", "ok"), ("machine", other), map_reply=topics), "I6", "2 decision prompts")
+        self.assertPasses(self.vn(("coach", "ok"), ("machine", other), map_reply=topics), "I6")
+        other_two = other.replace("Anh quyết định giúp em lịch đăng", "Anh quyết định giúp em lịch đăng. Anh chọn quay hay viết?")
+        self.assertFails(self.vn(("coach", "ok"), ("machine", other_two), map_reply=topics), "I6", "2 decision prompts")
 
     # -- G35: a piece ends at its copy box; a bare label line or the card starts the next block
     WEEK_N3 = ("N3 · thứ Hai 12/10 · 20 giây\n```\nChữ trên màn hình: Anh hỏi tiền ngân hàng trước\n"
@@ -4615,10 +4663,12 @@ S_EARLY = f'''
     '''
 S_Q_OFFER = (f"{TAG}Your side\nWhen someone says yes to you, what exactly do they get, how is it delivered, and what do "
              "they pay?\nNEXT → A sentence or two is plenty.")
-S_Q_FIND = (f"{TAG}Your side\nHow do new clients find you today, and where do you post now?\n"
+S_Q_FIND = (f"{TAG}Your side\nWhere do new clients find you today?\n"
             "NEXT → A sentence is plenty.")
-S_Q_GOAL = (f"{TAG}Your side\nWhat should your content do for you in the next 90 days, and how many hours a week can you "
-            "give it?\nNEXT → A sentence is plenty.")
+S_Q_CHANNELS = (f"{TAG}Your side\nWhich 2–3 channels in your field do you like or compete with?\n"
+                "NEXT → A sentence is plenty.")
+S_Q_GOAL = (f"{TAG}Your side\nWhat should your content do for you in the next 90 days?\n"
+            "NEXT → A sentence is plenty.")
 S_Q_STANCE = (f"{TAG}Your side\nWhat does everyone in your field tell people that you think is wrong?\n"
               "NEXT → A sentence is plenty.")
 S_Q_BUYER = (f"{TAG}Your side\nIf you could clone one client, who would it be, and who would you rather not take on?\n"
@@ -4632,7 +4682,7 @@ S_Q_WORDS = (f"{TAG}Your side\nWhat did they say or write to you that first time
 S_OK = "ok"
 S_WEEK = f'''
     {TAG}FILM TODAY and Week 1
-    FILM TODAY · say it from memory
+    FILM TODAY · Short video · ATTRACT · 640 words
     On-screen: Coffee before resume
     First line: "63 applications. 2 interviews."
     Last line: Comment CHAPTER for the coffee script.
@@ -4644,7 +4694,7 @@ S_WEEK = f'''
     (quieter: say 'quiet')
     Film it now, or post the caption as text.
 
-    N1 · Thu · Short video · job search · ATTRACT
+    N1 · Thu · Short video · ATTRACT · 640 words
     ```
     On-screen: The portal says no
     First line: "63 applications. 2 interviews."
@@ -4653,7 +4703,7 @@ S_WEEK = f'''
     Your next chapter starts with a coffee. Comment CHAPTER.
     ```
 
-    N2 · Fri · Short video · talking to people · TRUST
+    N2 · Fri · Short video · TRUST · 620 words
     ```
     On-screen: Coffee first
     First line: "I was at HQ 24 years."
@@ -4662,7 +4712,7 @@ S_WEEK = f'''
     Ask first. Comment CHAPTER.
     ```
 
-    N3 · Sat · Short video · confidence and identity · ATTRACT
+    N3 · Sat · Short video · ATTRACT · 700 words
     ```
     On-screen: Who are you now
     First line: "Lorraine told me it was the best trade I ever made."
@@ -4671,16 +4721,24 @@ S_WEEK = f'''
     Say it out loud. Comment CHAPTER.
     ```
 
-    N4 · Sun · Long post · job search · TRUST
+    N4 · Sun · Long post · TRUST · 1000 words
     ```
     The best trade I ever made, Lorraine said. Then she told me what she gave up.
     ```
 
-    N5 · Mon · Email · confidence and identity · CONVERT
+    N5 · Mon · Email · CONVERT · 300 words
     ```
     Subject: Coffee before resume
     If a coffee is the next step, hit reply and tell me who.
     ```
+    Week 1 · the five pieces · belief: you think a resume gets the call, actually a coffee does
+    | Day | Platform | Content pillar | Line | Type | Format | Words |
+    |---|---|---|---|---|---|---|
+    | Thu | LinkedIn | job search | The portal says no | ATTRACT | Short video | 640 |
+    | Fri | LinkedIn | talking to people | Coffee first | TRUST | Short video | 620 |
+    | Sat | LinkedIn | confidence and identity | Who are you now | ATTRACT | Short video | 700 |
+    | Sun | LinkedIn | job search | The best trade | TRUST | Long post | 1000 |
+    | Mon | Email | confidence and identity | Coffee before resume | CONVERT | Email | 300 |
     NEXT → Film today's video. Tomorrow: say 'next'.
     '''
 
@@ -4767,7 +4825,7 @@ class StrategyFirstOrderTests(StrategyFirstBase):
         """K2 (the Map and FILM TODAY in one reply) is replaced: nothing to film or post before the OK."""
         k2 = MAP_REPLY.replace("NEXT → Say \"ok\" and I'll write today's video.", FILM_REPLY.split("\n", 1)[1])
         report = self.report(self.day0(strategy=k2, ok=None))
-        self.assertFails(report, "day0_strategy", "FILM TODAY · say it from memory printed with the strategy, before the coach's OK")
+        self.assertFails(report, "day0_strategy", "printed with the strategy, before the coach's OK")
 
     def test_a_copy_box_in_the_early_win_and_post_it_fail(self):
         boxed = S_EARLY.replace('"I was at HQ 24 years."', "```\nI was at HQ 24 years.\n```\nPost it as text today if you like.")
@@ -4853,7 +4911,7 @@ class StrategyFirstResearchTests(StrategyFirstBase):
         self.assertPasses(self.report(), "day0_strategy")
         none = S_EARLY.replace("While you talk, I'm researching how laid-off women describe their first month (Facebook groups, Reddit).\n", "")
         self.assertFails(self.report(self.day0(early=none)), "day0_strategy", "never said what it is researching")
-        again = S_Q_FIND.replace("How do new clients", "While you talk, I'm researching how laid-off women describe their first month (Reddit). How do new clients")
+        again = S_Q_FIND.replace("Where do new clients", "While you talk, I'm researching how laid-off women describe their first month (Reddit). Where do new clients")
         self.assertFails(self.report(self.day0(interview=(S_Q_OFFER, again))), "day0_strategy", "the research line came 2 times")
 
     def test_the_research_line_before_the_first_send_fails(self):
@@ -4921,15 +4979,36 @@ class StrategyFirstInterviewTests(StrategyFirstBase):
         report = self.report(self.day0(interview=(S_Q_OFFER, S_Q_FIND)))
         self.assertFails(report, "day0_strategy", "asks about offer (dig.offer), but the dump already gave it")
         self.assertPasses(self.report(self.day0(interview=(S_Q_FIND, S_Q_GOAL), answers=("a", "b"))), "day0_strategy")
-        twice = self.report(self.day0(interview=(S_Q_FIND, S_Q_FIND.replace("How do", "And how do")), answers=("a", "b")))
+        twice = self.report(self.day0(interview=(S_Q_FIND, S_Q_FIND.replace("Where do", "And where do")), answers=("a", "b")))
         self.assertFails(twice, "day0_strategy", "turn 4: asks dig.find again (first at turn 3)")
         # a question that fills two slots is a re-ask only when the dump gave both
         self.write_expected('\n[interview]\ndump_gives = ["platforms"]\ndump_gaps = ["find"]\n')
         self.assertPasses(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy")
         self.write_expected('\n[interview]\ndump_gives = ["find", "platforms"]\ndump_gaps = ["goal"]\n')
-        self.assertPasses(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy")    # channels still open (9 Oct)
-        self.write_expected('\n[interview]\ndump_gives = ["find", "platforms", "channels"]\ndump_gaps = ["goal"]\n')
-        self.assertFails(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy", "asks about find/platforms/channels")
+        self.assertFails(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy",
+                         "asks about find/platforms (dig.find)")
+
+    def test_v131_channels_are_their_own_question_and_goal_no_longer_asks_hours(self):
+        """v13.1 (9 Oct): dig.channels fills the slot "channels" alone; dig.find no longer does; dig.goal fills "goal" only
+        (the hours a week come as the strategy's A/B/C, no interview question reads the slot "hours")."""
+        self.assertEqual(graders.DIG_SLOTS["dig.channels"], ("channels",))
+        self.assertEqual(graders.DIG_SLOTS["dig.find"], ("find", "platforms"))
+        self.assertEqual(graders.DIG_SLOTS["dig.goal"], ("goal",))
+        self.assertNotIn("hours", [s for slots in graders.DIG_SLOTS.values() for s in slots])
+        # positive: the dump gave how clients find her, not her channels: the channels question is new
+        self.write_expected('\n[interview]\ndump_gives = ["find", "platforms"]\ndump_gaps = ["channels", "goal"]\n')
+        self.assertPasses(self.report(self.day0(interview=(S_Q_CHANNELS, S_Q_GOAL), answers=("a", "b"))), "day0_strategy")
+        # negative: the dump gave her channels, so asking them again fails; so does asking the channels question twice
+        self.write_expected('\n[interview]\ndump_gives = ["channels"]\ndump_gaps = ["goal"]\n')
+        self.assertFails(self.report(self.day0(interview=(S_Q_CHANNELS,), answers=("a",))), "day0_strategy",
+                         "asks about channels (dig.channels), but the dump already gave it")
+        self.write_expected("")
+        twice = self.report(self.day0(interview=(S_Q_CHANNELS, S_Q_CHANNELS.replace("Which", "And which")), answers=("a", "b")))
+        self.assertFails(twice, "day0_strategy", "asks dig.channels again (first at turn 3)")
+        # each question is matched to its own key, in both editions' real strings
+        for strings in (graders.load_strings(REPO, "en")[0], graders.load_strings(REPO, "vn")[0]):
+            for key in ("dig.find", "dig.channels", "dig.goal"):
+                self.assertEqual(graders.dig_match(strings, graders.ck.plain_line(strings[key]))[0], key, key)
 
     def test_a_dump_with_gaps_needs_a_question_unless_the_coach_says_enough(self):
         self.write_expected('\n[interview]\ndump_gives = ["stance"]\ndump_gaps = ["offer", "find"]\n')
@@ -5071,12 +5150,12 @@ class StrategyFirstContentTests(StrategyFirstBase):
         self.assertEqual(self.inv(report, "day0_strategy")["details"]["week_pieces"], 5)
         no_convert = S_WEEK.replace("CONVERT", "TRUST")
         self.assertFails(self.report(self.day0(week=no_convert)), "day0_strategy", "Week 1 has no CONVERT piece")
-        no_pillar = S_WEEK.replace("N1 · Thu · Short video · job search · ATTRACT", "N1 · Thu · Short video · ATTRACT")
+        no_pillar = S_WEEK.replace("| Thu | LinkedIn | job search |", "| Thu | LinkedIn | - |")
         self.assertFails(self.report(self.day0(week=no_pillar)), "day0_strategy", "no content pillar named on: N1 · Thu · Short video")
-        skewed = S_WEEK.replace("talking to people · TRUST", "talking to people · ATTRACT").replace("job search · TRUST", "job search · ATTRACT")
+        skewed = S_WEEK.replace("Short video · TRUST ·", "Short video · ATTRACT ·").replace("Long post · TRUST ·", "Long post · ATTRACT ·")
         self.assertFails(self.report(self.day0(week=skewed)), "day0_strategy", "Week 1 has no TRUST piece")
         # 2/2/1 is the kit's split; another one that has all three types is a warning only
-        three = S_WEEK.replace("talking to people · TRUST", "talking to people · ATTRACT")
+        three = S_WEEK.replace("N2 · Fri · Short video · TRUST ·", "N2 · Fri · Short video · ATTRACT ·")
         warned = self.inv(self.report(self.day0(week=three)), "day0_strategy")
         self.assertIn("Week 1 splits ATTRACT 3 / TRUST 1 / CONVERT 1", " ".join(warned["warnings"]))
         self.assertIsNot(warned["pass"], False)
@@ -5617,6 +5696,130 @@ class V13StrategyStepTests(StrategyFirstBase):
                  "Muốn chia theo nỗi lo của khách thì đổi thành: Đăng hoài không ai hỏi · Người lạ chưa tin · Chưa rõ bán gì."]
         self.assertEqual(graders.parse_pillars(lines), ["Nghe khách nói", "Tâm lý người mua", "Viết để bán"])
         self.assertEqual(graders.parse_pillars(["", "1. Pricing · positioning"]), ["Pricing", "positioning"])
+
+
+class V131GroupedStrategyTests(StrategyFirstBase):
+    """v13.1 (9 Oct): the Day-0 strategy is at most 3 grouped replies (each one OK, at most one A/B/C line, one option marked
+    recommended); the piece title names its type and its length in words; FILM TODAY comes before the calendar and Day 0
+    prints Week 1's table only."""
+
+    G1 = (f"{TAG}Step 1 of 3 · KNOWN FOR, pillars, channels\n"
+          "KNOWN FOR: I help women who were walked out with a box find the next job, coffee before resume.\n"
+          "CONTENT PILLARS: job search · confidence and identity · talking to people\n"
+          "Channels I read for you: A) the Facebook groups you named (recommended) B) two forums I found C) type others\n"
+          "NEXT → Type A, B or C, change one, or 'OK' for A.")
+    G2 = (f"{TAG}Step 2 of 3 · Series, mix, reading access\n"
+          "CONTENT MIX: ATTRACT 40 · TRUST 40 · CONVERT 20\n"
+          "YOUR SYSTEM: LinkedIn is the core, re-cut into an email. Sunday evening, 3 short videos, 1 long post and 1 email. "
+          "Ask: comment CHAPTER, then DM, then the gift.\n"
+          "I couldn't read r/layoffs: A) you have Claude in Chrome: I read it now (recommended) B) you paste 20 comments, "
+          "steps with Week 1 C) leave it for Week 1\n"
+          "NEXT → Type A, B or C, change one, or 'OK' for A.")
+    G3 = (f"{TAG}Step 3 of 3 · Word, findings\n"
+          "YOUR WORD: CHAPTER\n"
+          "WHAT I FOUND: women say they feel invisible after a layoff (Facebook group, Sept 2026) · \"coffee before resume\" is your own line (my guess)\n"
+          "We'll run this for 4 weeks. OK, or change a line.\n"
+          "NEXT → Say \"ok\" and I'll write today's video.")
+
+    def grouped(self, *steps, week=S_WEEK):
+        extra = []
+        for st in steps[1:]:
+            extra += [("coach", "ok"), ("machine", st)]
+        return self.report(self.day0(strategy=steps[0], extra_coach=tuple(extra), week=week))
+
+    # -- the grouped strategy
+    def test_three_grouped_replies_each_with_one_ok_and_one_recommended_abc_pass(self):
+        report = self.grouped(self.G1, self.G2, self.G3)
+        strategy = self.inv(report, "day0_strategy")
+        self.assertIs(strategy["pass"], True, strategy)
+        self.assertEqual(strategy["details"]["pillars"], ["job search", "confidence and identity", "talking to people"])
+        timing = self.inv(report, "day0_timing")
+        self.assertEqual((timing["details"]["strategy_steps"], timing["details"]["map_lines"]), (3, 6), timing)
+        self.assertIs(timing["pass"], True, timing)
+        # FILM TODAY is read after the strategy's last step: the step tag that names FILM TODAY is not the film reply
+        tagged = self.G3.replace("Step 3 of 3 · Word, findings", "Step 3 of 3 · Word, findings, FILM TODAY next")
+        tagged_timing = self.inv(self.grouped(self.G1, self.G2, tagged), "day0_timing")
+        self.assertEqual(tagged_timing["details"]["film_ready_coach_turns"], timing["details"]["film_ready_coach_turns"])
+        self.assertIs(tagged_timing["pass"], True, tagged_timing)
+
+    def test_two_abc_lines_in_one_strategy_reply_fail(self):
+        crowded = self.G1.replace("NEXT →", "I couldn't read r/layoffs: A) I read it now (recommended) B) you paste 20 comments "
+                                            "C) leave it for Week 1\nNEXT →")
+        report = self.grouped(crowded, self.G2, self.G3)
+        self.assertFails(report, "day0_strategy", "2 open choices in one strategy reply (max 1 A/B/C line)")
+
+    def test_an_abc_line_needs_exactly_one_option_marked_recommended(self):
+        none = self.G1.replace(" (recommended)", "")
+        self.assertFails(self.grouped(none, self.G2, self.G3), "day0_strategy", "has 0 options marked (recommended) (exactly one)")
+        both = self.G1.replace("B) two forums I found", "B) two forums I found (recommended)")
+        self.assertFails(self.grouped(both, self.G2, self.G3), "day0_strategy", "has 2 options marked (recommended) (exactly one)")
+
+    def test_a_strategy_reply_without_an_ok_fails(self):
+        no_ok = self.G1.replace("NEXT → Type A, B or C, change one, or 'OK' for A.", "NEXT → Type A, B or C.")
+        self.assertFails(self.grouped(no_ok, self.G2, self.G3), "day0_strategy", "does not ask for the coach's OK")
+
+    def test_a_fourth_strategy_reply_fails(self):
+        g4 = self.G3.replace("Step 3 of 3 · Word, findings", "Step 4 of 3 · Word").replace("YOUR WORD: CHAPTER\n", "")
+        g3 = self.G2.replace("Step 2 of 3", "Step 3 of 3")
+        report = self.grouped(self.G1, self.G2, g3.replace("CONTENT MIX", "CONTENT MIX "), g4)
+        timing = self.inv(report, "day0_timing")
+        self.assertTrue(any("steps (max 3" in e for e in timing["evidence"]), timing["evidence"])
+
+    # -- the piece title
+    def test_a_title_names_its_type_and_its_length_in_words(self):
+        self.assertIs(self.inv(self.report(), "day0_strategy")["pass"], True)
+        no_type = S_WEEK.replace("N1 · Thu · Short video · ATTRACT · 640 words", "N1 · Thu · Short video · 640 words")
+        self.assertFails(self.report(self.day0(week=no_type)), "day0_strategy", 'piece title "N1 · Thu · Short video · 640 words" lacks its type')
+        no_words = S_WEEK.replace("N2 · Fri · Short video · TRUST · 620 words", "N2 · Fri · Short video · TRUST")
+        self.assertFails(self.report(self.day0(week=no_words)), "day0_strategy", "lacks its length in words")
+        film = S_WEEK.replace("FILM TODAY · Short video · ATTRACT · 640 words", "FILM TODAY · under 30 s, say it from memory")
+        self.assertFails(self.report(self.day0(week=film)), "day0_strategy", "FILM TODAY piece title")
+        seconds = S_WEEK.replace("FILM TODAY · Short video · ATTRACT · 640 words", "FILM TODAY · Short video · ATTRACT · 30 seconds")
+        self.assertFails(self.report(self.day0(week=seconds)), "day0_strategy", "lacks its length in words")
+
+    def test_the_vietnamese_title_reads_chu_and_the_vn_types(self):
+        names = graders._mix_names("vn")
+        title = graders.ck.fold("N1 · T5 · Video ngắn · THU HÚT · 550 chữ")
+        self.assertTrue(names["attract"].search(title))
+        self.assertTrue(graders.TITLE_WORDS_RE.search("N1 · T5 · Video ngắn · THU HÚT · 550 chữ"))
+        self.assertTrue(graders.TITLE_WORDS_RE.search("N3 · T7 · Bài dài · NIỀM TIN · 1.000 tiếng"))
+        self.assertFalse(graders.TITLE_WORDS_RE.search("QUAY HÔM NAY · dưới 30 giây"))
+        self.assertTrue(graders.measures_seconds("QUAY HÔM NAY · dưới 30 giây"))
+        self.assertTrue(names["convert"].search(graders.ck.fold("N5 · T2 · Email · CHUYỂN ĐỔI · 300 chữ")))
+
+    # -- FILM TODAY before the calendar, Week 1's table only
+    TABLE = ("    | Day | Platform | Content pillar | Line | Type | Format | Words |\n    |---|---|---|---|---|---|---|\n"
+             "    | Thu | LinkedIn | job search | The portal says no | ATTRACT | Short video | 640 |\n")
+
+    def test_week_1s_table_after_film_today_is_the_only_table_and_passes(self):
+        report = self.report()
+        check = self.inv(report, "day0_strategy")
+        self.assertEqual(check["details"]["calendar_tables"], 1)
+        self.assertIs(self.strat(report, "FILM TODAY comes before the calendar")["pass"], True)
+        # a Day 0 that prints no table at all (it is in the file and the hub) passes as well
+        bare = "\n".join(ln for ln in S_WEEK.splitlines() if not ln.lstrip().startswith("|") and not ln.lstrip().startswith("Week 1 ·"))
+        none = self.inv(self.report(self.day0(week=bare)), "day0_strategy")
+        self.assertEqual(none["details"]["calendar_tables"], 0)
+        self.assertIsNot(self.strat(self.report(self.day0(week=bare)), "FILM TODAY comes before the calendar")["pass"], False)
+
+    def test_more_than_one_table_before_film_today_is_a_failure(self):
+        two = S_WEEK.replace(f"{TAG}FILM TODAY and Week 1\n", f"{TAG}FILM TODAY and Week 1\n" + self.TABLE + "\n"
+                             + self.TABLE.replace("Thu", "Fri").replace("640", "620") + "\n", 1)
+        report = self.report(self.day0(week=two))
+        self.assertFails(report, "day0_strategy", "2 calendar tables printed before FILM TODAY")
+        # four weeks of tables, in the strategy's last step, ahead of the OK and FILM TODAY, are the same failure
+        in_step = self.G3 + "\n" + self.TABLE + "\n" + self.TABLE.replace("Thu", "Mon") + "\n" + self.TABLE.replace("Thu", "Tue")
+        in_step = in_step.replace("NEXT → Say \"ok\" and I'll write today's video.", "") + "\nNEXT → Say \"ok\"."
+        self.assertFails(self.grouped(self.G1, self.G2, in_step), "day0_strategy", "calendar tables printed before FILM TODAY")
+
+    def test_one_table_before_film_today_and_more_tables_after_it_fail(self):
+        first = S_WEEK.replace(f"{TAG}FILM TODAY and Week 1\n", f"{TAG}FILM TODAY and Week 1\n" + self.TABLE + "\n", 1)
+        self.assertFails(self.report(self.day0(week=first)), "day0_strategy", "a calendar table printed before FILM TODAY")
+        later = S_WEEK.replace("    NEXT →", "\n" + self.TABLE.replace("Thu", "Mon").replace("640", "300") + "    NEXT →")
+        self.assertFails(self.report(self.day0(week=later)), "day0_strategy", "2 calendar tables in chat on Day 0")
+        # the same table printed again is still one table
+        again = S_WEEK.replace("    NEXT →", "\n" + "\n".join(ln for ln in S_WEEK.splitlines() if ln.lstrip().startswith("|")) + "\n    NEXT →")
+        self.assertEqual(self.inv(self.report(self.day0(week=again)), "day0_strategy")["details"]["calendar_tables"], 1)
 
 
 class V13LeaksTests(TempRepo):

@@ -1669,17 +1669,79 @@ def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
     return out
 
 
+# An A/B/C choice (v13.1: "Channels I read for you: A) {theirs} B) {found} C) type others", one marked "(recommended)"): a run
+# of "A)" "B)" ["C)"] markers, on one line or on the lines under each other. "(A)", "(a)" and "A," are no markers.
+ABC_MARK_RE = re.compile(r"(?<![\w/(])([A-C])\)")
+
+
+@dataclass
+class AbcChoice:
+    first: int             # the reply's line holding the "A)" marker
+    last: int              # the line holding the last marker
+    text: str              # from the "A)" marker to the end of the last marker's line
+    letters: str           # "AB" or "ABC"
+
+
+def abc_choices(r: Reply) -> list[AbcChoice]:
+    """The A/B/C choices the machine's talk (prose and NEXT line) asks in a reply: each "A)" followed by a "B)" before the
+    next "A)" is one choice, however many lines it spans. Copy boxes, pieces and the strategy's quoted labels are not read."""
+    marks: list[tuple[int, str, int]] = []
+    for i in sorted(set(r.prose) | set(r.nexts)):
+        for m in ABC_MARK_RE.finditer(r.lines[i].plain):
+            marks.append((i, m.group(1), m.start()))
+    groups: list[list[tuple[int, str, int]]] = []
+    for mark in marks:
+        if mark[1] == "A":
+            groups.append([mark])
+        elif groups and mark[1] not in "".join(x[1] for x in groups[-1]):
+            groups[-1].append(mark)
+    out = []
+    for g in groups:
+        letters = "".join(x[1] for x in g)
+        if not letters.startswith("AB"):
+            continue
+        first, last = g[0][0], g[-1][0]
+        text = " ".join([r.lines[first].plain[g[0][2]:]] + [r.lines[j].plain for j in range(first + 1, last + 1)
+                                                            if j in set(r.prose) | set(r.nexts)])
+        out.append(AbcChoice(first, last, text, letters))
+    return out
+
+
+def reply_choices(r: Reply, matcher: Matcher, topics=()) -> list[str]:
+    """The open choices one reply asks the coach for (v13.1, 9 Oct: at most one a reply): each A/B/C choice (abc_choices) and
+    each other choice sentence (reply_decisions) that is not the prompt of an A/B/C choice (on its lines or the two before
+    them). The Map's own OK (map.ok) is the reply's choice only when nothing else is: a strategy step is "OK, plus one
+    A/B/C line"."""
+    decisions = reply_decisions(r, matcher, topics)
+    groups = abc_choices(r)
+    out = [f'A/B/C "{_short(g.text, 40)}"' for g in groups]
+    for key, words in decisions.items():
+        if key == "map.ok":
+            continue
+        parts = key.split(".")
+        if len(parts) == 3 and parts[1].isdigit():
+            if any(g.first - 2 <= int(parts[1]) <= g.last for g in groups):
+                continue                                   # the sentence that introduces the A/B/C
+        elif groups:
+            continue                                       # "Option A: …" labels or a NEXT line beside the A/B/C
+        out.append(words)
+    if not out and "map.ok" in decisions:
+        out = [decisions["map.ok"]]
+    return out
+
+
 def i6_decisions(run: Run) -> dict:
-    """At most one real decision per session (the Map's OK). Counted once per decision: every reply that prints the
-    Map's OK line (map.ok), the Map and its reprint after a pushback, asks the same one; two choices in one reply
-    are two (reply_decisions). A Map topic reprinted in a heading or the card top is the Map's, not a prompt (G34)."""
+    """At most one real decision per reply (founder, 9 Oct 2026, v13.1: one choice at a time; it was one per session). A
+    reply's Map OK ("OK, or change a line") with one A/B/C line is one decision; two choice sentences, two A/B/C lines or
+    an A/B/C and another open choice are two (reply_choices). A Map topic reprinted in a heading or the card top is the
+    Map's, not a prompt (G34)."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
-    asks: dict[str, str] = {}
+    ev = []
     for r in run.replies:
-        for key, words in reply_decisions(r, matcher, map_topics(run, r.index)).items():
-            asks.setdefault(key, f"{_turn(r)}: {words}")
-    ev = [f"{len(asks)} decision prompts in one session: " + "; ".join(asks.values())] if len(asks) > 1 else []
-    return result("I6", "At most 1 real decision per session", ev, proxy=True)
+        asks = reply_choices(r, matcher, map_topics(run, r.index))
+        if len(asks) > 1:
+            ev.append(f"{_turn(r)}: {len(asks)} decision prompts in one reply: " + "; ".join(asks))
+    return result("I6", "At most 1 real decision per reply", ev, proxy=True)
 
 
 def i7_ids(run: Run) -> dict:
@@ -4251,7 +4313,7 @@ DIG_REPLY_MAX_WORDS = 60         # a dig reply is a tag, a question and a NEXT l
 
 def dig_questions(run: Run, before: int) -> list[Reply]:
     """The machine replies before transcript index `before` that ask one of §CM-DIG's story-first questions (strings
-    dig.story, dig.words, dig.offer, dig.proof, dig.stance, dig.buyer, dig.find, dig.goal; since 7 Oct night the
+    dig.story, dig.words, dig.offer, dig.proof, dig.stance, dig.buyer, dig.find, dig.channels, dig.goal; since 7 Oct night the
     interview about the coach's side). The machine adapts the line to the client in hand ("Lúc mới tìm tới bạn, chị coach đó nói gì?" for "Lần đầu nhắn cho bạn, họ nói gì?"), so a reply counts when
     it asks something and holds at least DIG_MATCH_MIN of a dig string's words, in a reply of at most
     DIG_REPLY_MAX_WORDS words of talk. Each is one coach turn the dig added before the Map (review retest-ft1 fix 10)."""
@@ -4318,7 +4380,11 @@ def check_day0(run: Run) -> dict:
     # the strategy is in once its last step is: that reply ends on the OK (v13's 3 steps), so its turns and minutes are
     # the strategy's own budget
     map_reply = strategy[-1] if strategy else next((r for r in run.replies if _is_map_reply(run, r)), None)
-    film_reply = next((r for r in run.replies if _is_film_reply(run, r)), None)
+    # FILM TODAY comes after the strategy's last step (a step's own tag or talk may say "film": "FILM TODAY after your OK")
+    # (the old K2 reply that prints the strategy and FILM TODAY together is both)
+    film_reply = next((r for r in run.replies if _is_film_reply(run, r)
+                       and (map_reply is None or r.index > map_reply.index
+                            or (r is map_reply and piece_marks(run, r, boxes=False)))), None)
     is_day0 = run.meta.get("suite") == "day0" or map_reply is not None
     if not is_day0:
         return {"id": "day0_timing", "pass": None, "status": "not_run",
@@ -4440,8 +4506,12 @@ def check_day0(run: Run) -> dict:
 
 # The interview's questions (strings dig.*) and the slots each one fills. A question that holds DIG_MATCH_MIN of a dig
 # string's words is that question: the machine adapts the line to the client in hand.
-DIG_SLOTS = {"dig.buyer": ("who",), "dig.offer": ("offer",), "dig.proof": ("result",), "dig.find": ("find", "platforms", "channels"),
-             "dig.goal": ("goal", "hours"), "dig.stance": ("stance",), "dig.story": ("story",), "dig.words": ("words",)}
+# v13.1 (9 Oct 2026, one ask per question): dig.find asks how clients find them (and where they post), dig.channels is its
+# own question (the 2-3 channels in their field), dig.goal asks the goal only; the hours a week are no interview question
+# any more, they come as the strategy's A/B/C (§CM-MAP 4).
+DIG_SLOTS = {"dig.buyer": ("who",), "dig.offer": ("offer",), "dig.proof": ("result",), "dig.find": ("find", "platforms"),
+             "dig.channels": ("channels",), "dig.goal": ("goal",), "dig.stance": ("stance",), "dig.story": ("story",),
+             "dig.words": ("words",)}
 # The coach stops the interview ("enough", "đủ rồi", "just make it"): the rest is guessed, never a client's words or result.
 ENOUGH_RE = re.compile(r"\benough\b|\bjust make it\b|\btoo many questions\b|\bstop asking\b|\bno more questions\b"
                        r"|(?<!\w)đủ rồi(?!\w)|(?<!\w)khỏi hỏi(?!\w)|(?<!\w)hỏi nhiều quá(?!\w)|(?<!\w)làm luôn đi(?!\w)",
@@ -4608,6 +4678,46 @@ def _mix_names(lang: str) -> dict[str, re.Pattern]:
     return {k: re.compile(r"(?<!\w)" + re.escape(ck.fold(n)) + r"(?!\w)") for k, n in zip(MIX_TYPES["en"], MIX_TYPES[lang])}
 
 
+# Day-0 calendar tables in chat (v13.1, 9 Oct 2026): FILM TODAY first, then Week 1 with ITS table only; weeks 2-4 go to the
+# strategy file and the hub. A table is 2+ consecutive "|" rows of a reply (the same table reprinted counts once).
+TITLE_WORDS_RE = re.compile(r"(?<!\w)\d[\d.,]*\s*(?:words?|chữ|tiếng)(?!\w)", re.I)
+OK_WORD_RE = re.compile(r"(?<!\w)ok(?!\w)", re.I)
+
+
+def _calendar_row(run: Run, r: Reply, p: Piece) -> list[str]:
+    """The cells (folded rows) of the Week-1 calendar table row for a piece: the table in the piece's reply or the next
+    reply, the row whose first cell is the piece's day (title "N1 · Thu · …") or that names its label ("N1")."""
+    parts = [x.strip() for x in re.split(r"\s*[·|]\s*", re.sub(r"\*\*|__|^\s*#{1,6}\s*", "", p.title))]
+    label = ck.fold(parts[0]) if parts else ""
+    day = ck.fold(parts[1]) if len(parts) > 1 else ""
+    out = []
+    for rr in (r, next((x for x in run.replies if x.index > r.index), None)):
+        if rr is None:
+            continue
+        for _start, _key, rows in reply_tables(rr):
+            for row in rows:
+                cells = [c.strip() for c in row.strip("| ").split("|")]
+                if (day and cells and (cells[0] == day or cells[0].startswith(day + " "))) \
+                        or (label and re.search(r"(?<!\w)" + re.escape(label) + r"(?!\w)", row)):
+                    out.append(row)
+    return out
+
+
+def reply_tables(r: Reply) -> list[tuple[int, str, list[str]]]:
+    """(first line, the table as one folded text, its folded rows) of each markdown table in a reply."""
+    out, rows, start = [], [], -1
+    for i, ln in enumerate(r.lines + [Line("", "")]):
+        if ln.text.lstrip().startswith("|") and not ln.fence:
+            if not rows:
+                start = i
+            rows.append(ck.fold(ln.plain))
+        else:
+            if len(rows) >= 2:
+                out.append((start, " / ".join(rows), rows))
+            rows = []
+    return out
+
+
 def check_day0_strategy(run: Run) -> dict:
     """Day 0 is strategy first (founder, 7 Oct 2026 night, after his v10 run: "it has not asked me anything … it should
     have asked me questions regarding more on my side to understand, so that it can propose STRATEGY FIRST, not propose
@@ -4627,7 +4737,10 @@ def check_day0_strategy(run: Run) -> dict:
       MIX of ATTRACT / TRUST / CONVERT (VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI) with shares that add up to 100, none under
       mix_min_share or over mix_max_share, YOUR SYSTEM with a platform, pieces a week and an ask path, no NOT NOW or "why
       this one" on it, talk within strategy_max_words; and Week 1 covers all three types and names a pillar on each piece
-      (2 ATTRACT, 2 TRUST, 1 CONVERT is the kit's: another split is a warning).
+      (2 ATTRACT, 2 TRUST, 1 CONVERT is the kit's: another split is a warning);
+    - v13.1 (9 Oct): the strategy is at most 3 grouped replies, each one OK with at most one A/B/C line and one option marked
+      recommended; each piece title names its type and its length in words (FILM TODAY's too, never seconds); FILM TODAY
+      comes before the calendar and Day 0 prints Week 1's table only (more than one table before FILM TODAY fails).
     The strategy's labelled lines and its minutes are day0_timing's; KNOWN FOR's length and YOUR WORD are day0_shape's."""
     if not run.is_day0:
         return {"id": "day0_strategy", "pass": None, "status": "not_run", "items": [],
@@ -4692,6 +4805,36 @@ def check_day0_strategy(run: Run) -> dict:
             ev.append(f'{_turn(after)}: FILM TODAY / Week 1 printed after the coach said "{said}", not an OK, "next" or "go"')
     item("FILM TODAY and Week 1 come only after the coach's OK", ev, ran=S is not None and after is not None)
 
+    # FILM TODAY before the calendar; Day 0 prints Week 1's table only (weeks 2-4: the strategy file and the hub)
+    ev = []
+    film_r = next((r for r in run.replies if L is not None and r.index > L.index and _is_film_reply(run, r)), None)
+    if S is not None:
+        card_r = next((r for r in run.replies if r.index > S.index and _is_card_reply(run, r)), None)
+        film_at = 0
+        if film_r is not None:
+            fp = _film_piece(film_r)
+            says = [i for i, ln in enumerate(film_r.lines) if not ln.block and matcher.says("film.now_or_text", ln.plain)]
+            film_at = fp[0].start if fp else (says[0] if says else 0)
+        tables_seen: dict[str, tuple[Reply, int]] = {}
+        for r in run.replies:
+            if r.index < S.index or (card_r is not None and r.index > card_r.index):
+                continue
+            for start, key, _rows in reply_tables(r):
+                tables_seen.setdefault(key, (r, start))
+        early = [(r, st) for r, st in tables_seen.values() if film_r is None
+                 or r.index < film_r.index or (r.index == film_r.index and st < film_at)]
+        if film_r is not None and len(early) > 1:
+            ev.append(f"{_turn(early[0][0])}: {len(early)} calendar tables printed before FILM TODAY (Day 0 prints FILM TODAY "
+                      "first, then Week 1 and its table; weeks 2-4 go to the strategy file and the hub)")
+        elif film_r is not None and early:
+            ev.append(f"{_turn(early[0][0])}: a calendar table printed before FILM TODAY (FILM TODAY first, then Week 1 and "
+                      "its table)")
+        if len(tables_seen) > 1 and not (film_r is not None and len(early) > 1):
+            ev.append(f"{_turn(list(tables_seen.values())[1][0])}: {len(tables_seen)} calendar tables in chat on Day 0 (Week 1's only; "
+                      "weeks 2-4 go to the strategy file and the hub)")
+        details["calendar_tables"] = len(tables_seen)
+    item("FILM TODAY comes before the calendar, and Day 0 prints Week 1's table only", ev, ran=S is not None)
+
     ev = []
     if L is not None and "map.ok" not in reply_decisions(L, matcher, map_topics(run, L.index)):
         ev.append(f'{_turn(L)}: the strategy does not end on its one decision (map.ok: "{_short(run.strings.get("map.ok", ""), 50)}")')
@@ -4699,6 +4842,26 @@ def check_day0_strategy(run: Run) -> dict:
     if len(steps) > steps_max:
         ev.append(f"{_turn(L)}: the strategy came in {len(steps)} steps (max {steps_max}, one a reply)")
     item("the strategy ends on its one decision (OK, or change a line), in at most 3 steps", ev, ran=S is not None)
+
+    # v13.1 (9 Oct): the Day-0 strategy is at most 3 grouped replies, each one OK, at most one A/B/C line, one marked recommended
+    ev = []
+    recs = [ck.fold(ck.plain_line(str(run.strings["options.recommended"])))] if run.strings.get("options.recommended") \
+        else ["(recommended)", "(may khuyen)"]
+    for st in (steps or ([S] if S is not None else [])):
+        talk = " ".join(st.lines[i].plain for i in sorted(set(st.prose) | set(st.nexts)))
+        if not OK_WORD_RE.search(talk):
+            ev.append(f"{_turn(st)}: the strategy reply does not ask for the coach's OK")
+        open_choices = reply_choices(st, matcher, map_topics(run, st.index))
+        if len(open_choices) > 1:
+            ev.append(f"{_turn(st)}: {len(open_choices)} open choices in one strategy reply (max 1 A/B/C line): "
+                      + " | ".join(open_choices))
+        for g in abc_choices(st):
+            n = sum(ck.fold(g.text).count(rec) for rec in recs)
+            if n != 1:
+                ev.append(f'{_turn(st)}: the A/B/C line "{_short(g.text, 40)}" has {n} options marked '
+                          f'{recs[0]} (exactly one)')
+    item("each strategy reply asks one OK, with at most one A/B/C line and one option marked recommended", ev,
+         ran=S is not None)
 
     # -- the research
     first = _first_send_index(run, prompt)
@@ -4901,12 +5064,14 @@ def check_day0_strategy(run: Run) -> dict:
             window = [r.lines[i].plain for i in range(max(0, p.start - 2), min(len(r.lines), p.start + 4))
                       if not r.lines[i].block and r.lines[i].plain]
             folded = ck.fold(" ".join(window))
+            # v13.1: the title no longer names the pillar; the Week-1 table's row for the piece's day does (Content pillar column)
+            folded_row = ck.fold(" ".join(_calendar_row(run, r, p)))
             hit = [k for k, pat in names.items() if pat.search(folded)]
             for k in hit[:1]:
                 counts[k] += 1
             if not hit:
                 no_type.append(_short(p.title, 30))
-            if pillar_res and not any(pat.search(folded) for _, pat in pillar_res):
+            if pillar_res and not any(pat.search(folded) or pat.search(folded_row) for _, pat in pillar_res):
                 no_pillar.append(_short(p.title, 30))
         details["week_types"] = counts
         missing = [k.upper() for k, v in counts.items() if v == 0]
@@ -4923,6 +5088,28 @@ def check_day0_strategy(run: Run) -> dict:
     item("Week 1 covers ATTRACT, TRUST and CONVERT and names a content pillar on each piece", ev,
          ran=S is not None and len(wk) >= 3)
     warnings += wk_warn
+
+    # v13.1: every piece sits under "N{n} · {day} · {format} · ATTRACT|TRUST|CONVERT · {n} words" (VN: THU HÚT|NIỀM TIN|CHUYỂN
+    # ĐỔI · {n} chữ); FILM TODAY's is "FILM TODAY · {format} · {type} · {n} words", no length in seconds
+    ev = []
+    names = _mix_names(run.lang)
+    titled = [(r, p, "") for r, p in wk]
+    film_after = next((r for r in run.replies if L is not None and r.index > L.index and _is_film_reply(run, r)), None)
+    film_found = _film_piece(film_after) if film_after is not None else None
+    if film_found is not None:
+        titled.insert(0, (film_after, film_found[0], "FILM TODAY "))
+    for r, p, who in titled:
+        t = ck.fold(re.sub(r"^\s*#{1,6}\s*|\*\*|__", "", p.title))
+        lacks = []
+        if not any(pat.search(t) for pat in names.values()):
+            lacks.append("its type (" + "|".join(n.upper() for n in MIX_TYPES[run.lang]) + ")")
+        if not TITLE_WORDS_RE.search(p.title):
+            lacks.append("its length in words")
+        if measures_seconds(p.title):
+            lacks.append("a length in words, not seconds")
+        if lacks:
+            ev.append(f'{_turn(r)}: {who}piece title "{_short(p.title, 50)}" lacks ' + " and ".join(lacks))
+    item("every piece title names its type and its length in words", ev, ran=bool(titled))
 
     passed = all(i["pass"] is not False for i in items)
     out = {"id": "day0_strategy", "pass": passed, "status": "pass" if passed else "fail", "items": items,
