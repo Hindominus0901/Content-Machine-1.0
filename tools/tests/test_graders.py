@@ -5822,6 +5822,199 @@ class V131GroupedStrategyTests(StrategyFirstBase):
         self.assertEqual(self.inv(self.report(self.day0(week=again)), "day0_strategy")["details"]["calendar_tables"], 1)
 
 
+class V131FalseFailureTests(StrategyFirstBase):
+    """Grader fixes from the v13.1 founder-case retest (qa/runs/retest-v131/review.md §Grader results, §Grader gaps): the false
+    failures (each has a fixture that must pass and one that must still fail) and the real failures they sit next to."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("evals/personas/vn/v131/persona.toml",
+                   'xung_ho = "bạn–mình"\nallowed_numbers = ["320", "9.500.000đ"]\n')
+        self.write("evals/personas/vn/v131/expected.toml", '[traps]\ncompliance = ["hàng đầu"]\n')
+
+    def vn(self, *replies, level_up=None):
+        turns = []
+        for body in replies:
+            turns += [("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n{body}\nTIẾP → Gõ \"tiếp\".")]
+        d = self.run_dir(turns, persona="vn/v131", edition="vn")
+        if level_up:
+            folder = d / "packet" / "kit" / "Level-ups"
+            folder.mkdir(parents=True)
+            (folder / "RESEARCH-VN.md").write_text(level_up, encoding="utf-8")
+        return graders.grade(d, self.root)
+
+    # -- I6: "chọn" inside a statement is no second decision
+    CHANNELS = ("Bước này chốt: bạn nói với ai. Mình điền sẵn lựa chọn của mình; chỗ bạn chọn là kênh mình đọc giúp.\n"
+                "KÊNH MÌNH ĐỌC GIÚP BẠN:\n"
+                "A) Một bản tin Substack dạy coach dựng nghề một người (máy khuyên: đúng người bạn bán cho)\n"
+                "B) Một bản tin Substack về thương hiệu cá nhân\n"
+                "C) Bạn gõ tên kênh bạn hay xem")
+
+    def test_i6_chon_in_a_statement_next_to_one_abc_line_is_one_decision(self):
+        self.assertPasses(self.vn(self.CHANNELS), "I6")
+        sentence = "Mình điền sẵn lựa chọn của mình; chỗ bạn chọn là kênh mình đọc giúp."
+        self.assertEqual(graders._decision_hits(sentence), [])
+        self.assertEqual(graders._decision_hits("Lựa chọn của mình là A."), [])
+
+    def test_i6_a_real_ask_to_choose_next_to_the_abc_line_still_fails(self):
+        self.assertFails(self.vn(self.CHANNELS + "\nBạn chọn giúp mình thêm một kênh khác nữa."), "I6", "2 decision prompts")
+        for ask in ("Bạn chọn A hay B?", "Chỗ bạn chọn là gì?", "Lựa chọn nào bạn thích?", "Bạn lựa chọn giúp mình một kênh."):
+            with self.subTest(ask=ask):
+                self.assertTrue(graders._decision_hits(ask), ask)
+
+    # -- I8: a date range and the kit's Level-up numbers are no claims
+    RESEARCH = ("```\nNGHIÊN CỨU NGÀY 0 · 09/10/2026 · chỉ đọc\n\nKẾT LUẬN\n"
+                "- Người lạ nghi coach chỉ nói lý thuyết. 5 câu, 2 nơi.\n\n"
+                "KÊNH ĐÃ ĐỌC\n"
+                "A Bản tin dạy coach dựng nghề: 12 bài 11/2024 → 8/2026, đều bài chữ dài.\n```")
+    CHROME = ("```\nĐỌC Ở ĐÂU: các nhóm Facebook về coach. 10 mục liền không có gì mới thì sang nơi khác. Đủ 60 câu hay 45 phút "
+              "thì dừng. Không mở reddit.com, Zalo.\n```")
+    LEVEL_UP = ("ĐỌC Ở ĐÂU, theo thứ tự: [các nơi trong kế hoạch]. 10 mục liền không có gì mới thì sang nơi khác. Đủ 60 câu hay "
+                "45 phút thì dừng. Không mở reddit.com, Zalo.\n")
+
+    def test_i8_a_month_year_range_and_the_level_ups_paste_box_pass(self):
+        self.assertEqual(graders.number_pairs("12 bài 11/2024 → 8/2026, đều bài chữ dài"), [])
+        self.assertEqual(graders.number_pairs("từ 3/2021 → 8/2026"), [])
+        self.assertPasses(self.vn(self.RESEARCH, level_up=self.LEVEL_UP), "I8")
+        self.assertPasses(self.vn(self.CHROME, level_up=self.LEVEL_UP), "I8")
+
+    def test_i8_a_before_after_claim_and_a_number_the_kit_never_printed_still_fail(self):
+        self.assertEqual(graders.number_pairs("khách tăng 38% → 51%")[0][1:], (38.0, 51.0))
+        self.assertEqual(graders.number_pairs("từ 2 lên 5 khách")[0][1:], (2.0, 5.0))
+        pair = self.vn("```\nKhách tăng 38% → 51% sau một tháng.\n```")
+        self.assertFails(pair, "I8", "pairs 38 with 51")
+        # the same Chrome box without the Level-up behind it, or with a number the Level-up does not hold
+        self.assertFails(self.vn(self.CHROME), "I8", "not in allowed_numbers")
+        self.assertFails(self.vn(self.CHROME.replace("Đủ 60 câu", "Đủ 75 câu"), level_up=self.LEVEL_UP), "I8", '"75" not in allowed_numbers')
+
+    # -- I11: "hàng đầu" inside "khách hàng đầu tiên"
+    def test_i11_hang_dau_inside_khach_hang_dau_tien_is_no_superlative(self):
+        self.assertPasses(self.vn('Tìm: "Làm sao để có khách hàng đầu tiên?" ở 2 bài. Mình tìm "coach 1 kèm 1 khách hàng đầu tiên".'), "I11")
+        m = graders.ck.phrase_re("hàng đầu").search("khách hàng đầu tiên")
+        self.assertTrue(graders._split_compound("khách hàng đầu tiên", m))
+
+    def test_i11_a_leading_claim_is_still_a_claim(self):
+        self.assertFails(self.vn("Bạn là chuyên gia hàng đầu về viết cho coach."), "I11", 'banned claim "hàng đầu"')
+        self.assertFails(self.vn("Khách hàng đầu tiên của bạn sẽ đến. Mình là đơn vị hàng đầu."), "I11", 'banned claim "hàng đầu"')
+
+    # -- day0_timing: the step OKs of a 3-step strategy are in the Map's turn budget
+    def three_steps(self, padding: int):
+        g = V131GroupedStrategyTests
+        turns = self.day0(strategy=g.G1, interview=(S_Q_OFFER, S_Q_FIND),
+                          extra_coach=(("coach", "ok"), ("machine", g.G2), ("coach", "ok"), ("machine", g.G3)))
+        at = next(i for i, (_, text, *rest) in enumerate(turns) if text == g.G1)
+        return turns[:at] + [("coach", f"one more thing {n}") for n in range(padding)] + turns[at:]
+
+    def test_the_maps_turn_budget_adds_the_two_step_oks(self):
+        # 3 + 2 dig answers + 3 turns before the last step + the 2 step OKs = 10 = 6 + 2 dig answers + 2 step OKs
+        timing = self.inv(self.report(self.three_steps(3)), "day0_timing")
+        self.assertEqual((timing["details"]["map_coach_turns"], timing["details"]["map_step_oks"]), (10, 2), timing)
+        self.assertFalse([e for e in timing["evidence"] if e.startswith("Map after")], timing["evidence"])
+
+    def test_the_maps_turn_budget_still_fails_past_it(self):
+        report = self.report(self.three_steps(4))
+        self.assertFails(report, "day0_timing", "Map after 11 coach turns (max 6 + 2 dig answers + 2 step OKs)")
+
+    # -- day0_strategy: the OK at the end of a line
+    def test_an_ok_that_closes_a_short_answer_is_the_ok(self):
+        for text in ("B. Three hours. Sunday night, eight thirty. ok", "A, ok", "ok", "OK, but make it 2 videos", "Chốt"):
+            with self.subTest(text=text):
+                self.assertTrue(graders.approves(text), text)
+        ok = self.report(self.day0(ok="B. Three hours. Sunday night, eight thirty. ok"))
+        self.assertIs(self.strat(ok, "FILM TODAY and Week 1 come only")["pass"], True)
+
+    def test_an_answer_without_the_ok_is_still_not_the_ok(self):
+        for text in ("B. Three hours. Sunday night, eight thirty.", "Is that ok?", "What does ok mean here? Explain more", "not ok"):
+            with self.subTest(text=text):
+                self.assertFalse(graders.approves(text), text)
+        late = self.report(self.day0(ok="B. Three hours. Sunday night, eight thirty."))
+        self.assertIs(self.strat(late, "FILM TODAY and Week 1 come only")["pass"], False)
+
+    # -- day0_strategy: pillars (numbered lines with a reason, a note that offers another split)
+    PILLARS_VN = ["",
+                  "1 Nghe khách nói: hỏi khách cũ, nghe chữ của họ, khác với đọc vài bài rồi hỏi AI (bạn kể).",
+                  "2 Vì sao người ta mua: tin, thấy bạn nhiều lần. Người lạ nghi coach chỉ nói lý thuyết (nghiên cứu, 2 nơi).",
+                  "3 Viết để bán: trang giới thiệu, email, bài đăng viết từ lời khách.",
+                  "4 Gói và cách bán: gốc là gói; gói chưa rõ thì hệ thống chỉ kéo thêm người tới thứ chưa ai cần (bạn nói).",
+                  'Muốn chia theo nỗi lo của coach (không ai hỏi giá · không biết viết gì · ngại bán) thì gõ "chia theo nỗi lo".']
+
+    def test_pillars_are_the_numbered_names_not_their_reasons_or_the_note(self):
+        self.assertEqual(graders.parse_pillars(self.PILLARS_VN),
+                         ["Nghe khách nói", "Vì sao người ta mua", "Viết để bán", "Gói và cách bán"])
+        self.assertEqual(graders.parse_pillars(["", "- Direct response: how people decide; Human psychology: why; Clients: what they say"]),
+                         ["Direct response", "Human psychology", "Clients"])
+        pillars = MAP_REPLY.replace("CONTENT PILLARS: job search · confidence and identity · talking to people",
+                                    "CONTENT PILLARS:\n    1 Job search: what the portal never says; why it feeds on volume\n"
+                                    "    2 Confidence and identity: who you are without the badge\n    3 Talking to people: coffee, not resumes\n"
+                                    "    Want it split by worry (no calls · no ideas · no time)? Type \"split by worry\".")
+        report = self.report(self.day0(strategy=pillars))
+        self.assertIs(self.strat(report, "CONTENT PILLARS")["pass"], True, self.strat(report, "CONTENT PILLARS"))
+        self.assertEqual(self.inv(report, "day0_strategy")["details"]["pillars"],
+                         ["Job search", "Confidence and identity", "Talking to people"])
+
+    def test_six_pillars_and_a_long_reason_as_a_pillar_still_fail(self):
+        six = MAP_REPLY.replace("CONTENT PILLARS: job search · confidence and identity · talking to people",
+                                "CONTENT PILLARS:\n" + "\n".join(f"    {n} Topic {n}: reason {n}" for n in range(1, 7)))
+        self.assertFails(self.report(self.day0(strategy=six)), "day0_strategy", "6 content pillars (want 3-5)")
+        long_reason = MAP_REPLY.replace("CONTENT PILLARS: job search · confidence and identity · talking to people",
+                                        "CONTENT PILLARS: job search · confidence and identity · talking to people and being "
+                                        "seen by the right buyers every single week of the year")
+        self.assertFails(self.report(self.day0(strategy=long_reason)), "day0_strategy", "too specific")
+
+    # -- day0_strategy: WHAT I FOUND is the kit's 3 lines, each with its " · " parts
+    FOUND_3 = ("WHAT I FOUND:\n    9 quotes, 3 places, 2021–3/2026: strangers doubt coaches (Voz, VnExpress) · 2 channels teach niche and price\n"
+               "    Where the client words come from: you told me (no coach quote at 2 places) · YOUR WORD: you told me\n"
+               "    Could not read: the Facebook groups (through your Chrome) · say \"show research\" to see each quote")
+
+    def test_what_i_found_counts_the_kits_three_lines_not_their_parts(self):
+        self.assertEqual(len(graders.found_items(["", "a · b", "c · d", "e · f"])), 3)
+        self.assertEqual(len(graders.found_items(["a · b · c"])), 3)               # one line holding several findings
+        found = [l for l in MAP_REPLY.splitlines() if "WHAT I FOUND" in l][0]
+        report = self.report(self.day0(strategy=MAP_REPLY.replace(found, "    " + self.FOUND_3)))
+        self.assertIs(self.strat(report, "WHAT I FOUND")["pass"], True, self.strat(report, "WHAT I FOUND"))
+        self.assertEqual(self.inv(report, "day0_strategy")["details"]["found_lines"], 3)
+
+    def test_what_i_found_still_fails_with_five_lines_or_a_line_with_no_source(self):
+        found = [l for l in MAP_REPLY.splitlines() if "WHAT I FOUND" in l][0]
+        five = "WHAT I FOUND:\n" + "\n".join(f"    line {n} (my guess) · more (my guess)" for n in range(5))
+        self.assertFails(self.report(self.day0(strategy=MAP_REPLY.replace(found, "    " + five))), "day0_strategy",
+                         "WHAT I FOUND has 5 lines (want 2-4)")
+        bare = self.FOUND_3.replace("Could not read: the Facebook groups (through your Chrome) · say \"show research\" to see each quote",
+                                    "buyers want to be heard")
+        self.assertFails(self.report(self.day0(strategy=MAP_REPLY.replace(found, "    " + bare))), "day0_strategy",
+                         'no source and no guess label: "buyers want to be heard"')
+
+    # -- day0_strategy: the mix is the recommended one, not the alternative the coach may type
+    def test_the_mix_is_read_from_the_recommended_line_not_the_alternative(self):
+        text = ('THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20. Mình chọn vậy vì NIỀM TIN phải ngang. '
+                'Muốn nghiêng về kéo người mới thì gõ "50/35/15".')
+        self.assertEqual(graders.mix_shares("vn", text), {"attract": 40, "trust": 40, "convert": 20})
+        self.assertEqual(graders.mix_shares("vn", "THU HÚT, NIỀM TIN, CHUYỂN ĐỔI: 40/40/20. Hoặc gõ 50/35/15."),
+                         {"attract": 40, "trust": 40, "convert": 20})
+        mix = MAP_REPLY.replace("CONTENT MIX: ATTRACT 40% (what a stranger would pass on) · TRUST 40% (how you think, proof) · "
+                                "CONVERT 20% (the offer, the ask)",
+                                'CONTENT MIX: ATTRACT 40 · TRUST 40 · CONVERT 20. To lean to new people type "50/35/15".')
+        report = self.report(self.day0(strategy=mix))
+        self.assertEqual(self.inv(report, "day0_strategy")["details"]["mix"], {"attract": 40, "trust": 40, "convert": 20})
+
+    def test_a_mix_that_does_not_add_up_or_has_no_shares_still_fails(self):
+        self.assertIsNone(graders.mix_shares("vn", "THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 30"))
+        self.assertIsNone(graders.mix_shares("vn", "THU HÚT 8 · NIỀM TIN 8 · CHUYỂN ĐỔI 3 bài"))
+        wrong = MAP_REPLY.replace("CONVERT 20%", "CONVERT 30%")
+        self.assertFails(self.report(self.day0(strategy=wrong)), "day0_strategy", "CONTENT MIX")
+
+    # -- I15: "chị ấy" and an em–chị draft in a copy box are no slip; a bare "chị" for her is
+    def test_i15_chi_ay_and_the_zalo_draft_are_no_slip(self):
+        reply = ('Câu "Em là người đầu tiên hỏi chị khách nói gì" mình chưa đưa vào bài: chị ấy chưa nói cho dùng công khai.\n'
+                 "Tin xin phép:\n```\nChị ơi, em là Nhi nè. Em muốn để câu đó trong bài, không ghi tên chị. Chị cho em dùng nha?\n```")
+        self.assertPasses(self.vn("Bạn kể tiếp nhé.", reply), "I15")
+
+    def test_i15_a_bare_chi_for_the_third_person_is_still_a_slip(self):
+        reply = "Chị trả lời rồi thì dán vào đây, mình sửa N3."
+        self.assertFails(self.vn("Bạn kể tiếp nhé.", reply), "I15", 'pronoun "Chị" outside the pair bạn–mình')
+        self.assertFails(self.vn("Bạn kể tiếp nhé.", "Tin xin phép, gửi chị qua Zalo:"), "I15", 'pronoun "chị" outside the pair')
+
+
 class V13LeaksTests(TempRepo):
     """run.py `leaks`: the label of a dictated answer-bank line is the topic's name, not a lift."""
 

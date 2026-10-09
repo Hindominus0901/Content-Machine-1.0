@@ -28,12 +28,13 @@ max_coach_turns_session = 10              # plus the interview's answers
 
 [interview]
 # Her dump (chunks 1-3) gives who, the offer with price and delivery, the Marcus result, LinkedIn and the 380-person list, her 2
-# hours a week and what her field gets wrong. It does not give how clients find her (it says how they buy) or her 90-day goal.
+# hours a week and what her field gets wrong. It does not give how clients find her (it says how they buy), the 2-3 channels in her
+# field she likes or competes with (dig.channels; v13.1) or her 90-day goal. The hours a week are the strategy's A/B/C, no slot.
 # graders.py day0_strategy reads dump_gives and dump_gaps.
-slots = ["who", "offer", "result", "find", "platforms", "goal", "hours", "stance"]
-dump_gives = ["who", "offer", "result", "platforms", "hours", "stance"]
-dump_gaps = ["find", "goal"]
-questions_expected = 3                    # find · goal · the income-streams guess (4 streams: setup.multi_income)
+slots = ["who", "offer", "result", "find", "platforms", "channels", "goal", "stance"]
+dump_gives = ["who", "offer", "result", "platforms", "stance"]
+dump_gaps = ["find", "channels", "goal"]
+questions_expected = 4                    # find · channels · goal · the income-streams guess (4 streams: setup.multi_income)
 questions_max = 6
 
 [strategy]

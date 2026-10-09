@@ -59,11 +59,12 @@ income_question_answer = "Chị đã nói trong dump: spa là chính, nuôi cả
 [interview]
 # Strategy first (founder, 7 Oct night). Her dump (chunks 1-3) already gives who she serves, the offer with its price and
 # delivery, the best result and what her field gets wrong; it does not give how clients find her, where she posts, her
-# 90-day goal or her hours (the answer bank does). graders.py day0_strategy reads dump_gives and dump_gaps.
-slots = ["who", "offer", "result", "find", "platforms", "goal", "hours", "stance"]
+# channels she likes, or her 90-day goal (the answer bank has find, platforms and the goal, no line for dig.channels yet; hours a week
+# are the strategy's A/B/C since v13.1). graders.py day0_strategy reads dump_gives and dump_gaps.
+slots = ["who", "offer", "result", "find", "platforms", "channels", "goal", "stance"]
 dump_gives = ["who", "offer", "result", "stance"]
-dump_gaps = ["find", "platforms", "goal", "hours"]
-questions_expected = 2                    # find (+ where she posts) · goal (+ hours)
+dump_gaps = ["find", "platforms", "channels", "goal"]
+questions_expected = 3                    # find (+ where she posts) · channels · goal
 questions_max = 6
 must_not = [
   "hỏi lại khách là ai, gói và giá, kết quả, điều cả nghề làm sai (chị kể rồi)",

@@ -50,16 +50,16 @@ income_question_answer = "Nhi nói trong bank: gói 3 tuần là nguồn chính;
 [interview]
 # Founder decision, 7 Oct night (DECISIONS "Strategy first on Day 0"): after the dump the machine asks about the COACH'S side so
 # the strategy fits her business: who she serves and who not · the offer, its price and delivery · one result she'd share ·
-# how clients find her · the 90-day goal · hours a week · where she posts and her list · what her field gets wrong. At most 6
+# how clients find her · the channels in her field she likes or competes with · the 90-day goal · where she posts and her list · what her field gets wrong (hours a week are the strategy's A/B/C since v13.1). At most 6
 # questions, one a reply, skipping what the dump gave; "enough" / "đủ rồi" stops it. Read by graders.py day0_strategy:
 # dump_gives = slots the dump fills (a question about them is a re-ask), dump_gaps = what is left (at least one question).
-slots = ["who", "offer", "result", "find", "platforms", "goal", "hours", "stance"]
+slots = ["who", "offer", "result", "find", "platforms", "channels", "goal", "stance"]
 dump_gives = ["stance"]                   # 'hỏi vì sao trước, làm thế nào sau'; 'đọc vài bài rồi nhờ AI tìm từ khóa không phải nghiên cứu'; 'một email cũng là marketing'
-dump_gaps = ["who", "offer", "result", "find", "platforms", "goal", "hours"]
-questions_expected = 5                    # who (+ not) · offer (+ price, delivery) · result · find (+ where she posts, her list) · goal (+ hours)
+dump_gaps = ["who", "offer", "result", "find", "platforms", "channels", "goal"]
+questions_expected = 6                    # who (+ not) · offer (+ price, delivery) · result · find (+ where she posts, her list) · channels · goal
 questions_max = 6
 first_question = "Về phía chị, mỗi tin MỘT câu: khách chị muốn nhân bản là ai và kiểu khách nào chị không nhận (dig.buyer), hay bắt đầu bằng người cuối cùng trả tiền (dig.story). Không hỏi 'khách lý tưởng của bạn là ai', không gửi form chân dung khách."
-order = ["who / who not (dig.buyer or dig.story)", "offer, price, delivery (dig.offer)", "one result she'd share (dig.proof)", "how clients find her + where she posts (dig.find)", "90-day goal + hours (dig.goal)"]
+order = ["who / who not (dig.buyer or dig.story)", "offer, price, delivery (dig.offer)", "one result she'd share (dig.proof)", "how clients find her + where she posts (dig.find)", "channels she likes or competes with (dig.channels)", "90-day goal (dig.goal)"]
 answers_in = "answers.md ## Answer bank: mỗi câu hỏi có đúng một dòng trả lời; Nhi trả lời tiếng Anh vỡ, lời khách bằng tiếng Việt nguyên văn"
 skippable = "Nhi gõ 'skip' hoặc 'bỏ qua': máy đi tiếp, dòng chiến lược bị ảnh hưởng ghi '(mình đoán)'; không bao giờ đoán lời khách hay kết quả."
 stops = "Nhi gõ 'enough' / 'đủ rồi': máy dừng ngay và đề xuất chiến lược; phần còn lại đoán có ghi rõ."

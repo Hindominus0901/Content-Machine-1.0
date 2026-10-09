@@ -980,6 +980,17 @@ def kit_tokens(run_dir: Path, strings: dict) -> str:
     return " " + " ␞ ".join(" ".join(ck.copy_tokens(p)) for p in parts) + " "      # ␞: no window spans two parts
 
 
+def level_up_tokens(run_dir: Path) -> str:
+    """The wording of the Level-ups the machine ran with (packet/kit/Level-ups/*.md), as kit_tokens' " token token … "
+    string. A paste box those files tell the machine to print (RESEARCH-VN.md's Chrome box: "10 mục liền không có gì mới",
+    "Đủ 60 câu hay 45 phút thì dừng") carries the kit's numbers, not the machine's claims (I8; review retest-v13.1)."""
+    parts = []
+    folder = Path(run_dir) / "packet" / "kit" / "Level-ups"
+    if folder.is_dir():
+        parts = [f.read_text(encoding="utf-8") for f in sorted(folder.glob("*.md"))]
+    return " " + " ␞ ".join(" ".join(ck.copy_tokens(p)) for p in parts) + " " if parts else ""
+
+
 def is_why_ask(text: str, strings: dict | None = None) -> bool:
     """The coach's turn asks "why?" about the last piece (cmd.why, or a short why-question)."""
     text = ck.straight_quotes(ck.nfc(text)).strip()
@@ -1571,6 +1582,26 @@ def _noun_decision(text: str, m: re.Match) -> bool:
     return bool(re.fullmatch(r"quyết định", m.group(0), re.I)) and bool(NOUN_DECISION_BEFORE_RE.search(text[:m.start()]))
 
 
+# "chọn" inside a statement, not an ask (review retest-v13.1, I6): "lựa chọn của mình" / "lựa chọn đã chốt" (the noun: the choice
+# made or on offer) and "chỗ bạn chọn là kênh mình đọc giúp" (a relative clause: the place you pick is the channel I read). A
+# question stays an ask ("Cái bạn chọn là gì?"; _decision_hits).
+CHON_NOUN_BEFORE_RE = re.compile(r"(?<!\w)lựa\s+$", re.I)
+CHON_NOUN_AFTER_RE = re.compile(r"^\s*(?:của|này|đó|ấy|đã|sẵn|ban đầu|mặc định|khác|thứ)(?!\w)", re.I)
+CHON_RELATIVE_BEFORE_RE = re.compile(r"(?<!\w)(?:chỗ|cái|điều|thứ|chuyện|phần|món|cách|kênh|gói)\s+(?:mà\s+)?"
+                                     r"(?:bạn|anh|chị|em|mình|tôi|coach)\s+$", re.I)
+CHON_RELATIVE_AFTER_RE = re.compile(r"^\s*(?:là|thì|sẽ|cũng)(?!\w)", re.I)
+
+
+def _statement_chon(text: str, m: re.Match, question: bool) -> bool:
+    """The "chọn" is a noun ("lựa chọn của mình") or the verb of a relative clause in a statement ("chỗ bạn chọn là …")."""
+    if not re.fullmatch(r"chọn", m.group(0), re.I):
+        return False
+    before, after = text[:m.start()], text[m.end():]
+    if CHON_NOUN_BEFORE_RE.search(before) and CHON_NOUN_AFTER_RE.match(after):
+        return True
+    return not question and bool(CHON_RELATIVE_BEFORE_RE.search(before) and CHON_RELATIVE_AFTER_RE.match(after))
+
+
 def _decision_hits(text: str, table_row: bool = False) -> list[re.Match]:
     """DECISION_RE hits in one sentence, minus a save click, the machine's declarative "we pick one buyer." (a
     question is never declarative: "Should we choose the reel or the post?"), "quyết định" as a noun (_noun_decision)
@@ -1579,6 +1610,7 @@ def _decision_hits(text: str, table_row: bool = False) -> list[re.Match]:
     return [m for p in DECISION_RE for m in p.finditer(text)
             if (question or not DECLARATIVE_BEFORE_RE.search(text[:m.start()]))
             and not UI_CLICK_RE.match(text[m.start():]) and not _noun_decision(text, m)
+            and not _statement_chon(text, m, question)
             and not (table_row and p not in OPTION_RES)]
 
 
@@ -1803,12 +1835,20 @@ def _values(text: str) -> set[float]:
     return {round(n.value, 4) for n in ck.numbers_in(text) if n.value is not None and not n.structural}
 
 
+def _date_part(line: str, m: re.Match) -> bool:
+    """A "pair" whose numbers are the ends of a month/year range: "11/2024 → 8/2026" (the match "2024 → 8" pairs the year
+    with the month of the other end). A number with a "/" right before the first or right after the second is part of a date."""
+    return bool(re.search(r"\d\s*/\s*$", line[:m.start(1)]) or re.match(r"\s*/\s*\d", line[m.end(2):]))
+
+
 def number_pairs(text: str) -> list[tuple[str, float, float]]:
     """(the claim as written, before value, after value) of each before → after pair in a text."""
     out = []
     for line in text.splitlines():
         for pat in PAIR_RES:
             for m in pat.finditer(line):
+                if _date_part(line, m):
+                    continue
                 a, b = _values(m.group(1)), _values(m.group(2))
                 if len(a) == 1 and len(b) == 1 and a != b:
                     out.append((m.group(0).strip(), a.pop(), b.pop()))
@@ -1874,6 +1914,7 @@ def i8_numbers(run: Run) -> dict:
     string's own words is the kit's ("thứ Hai hằng tuần kể 15 phút cho tuần sau": setup.plan_guess; review VG2 G20)."""
     title = "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]"
     kit_strings = " " + " ␞ ".join(" ".join(ck.copy_tokens(str(v))) for v in run.strings.values()) + " "
+    level_ups = level_up_tokens(run.run_dir)
     allowed = ck.allowed_number_keys(run.persona.get("allowed_numbers", []))
     trap_keys, trap_phrases = _trap_matchers(run.persona.get("excluded_numbers", [])
                                              + run.persona.get("trap_numbers", []))
@@ -1913,8 +1954,8 @@ def i8_numbers(run: Run) -> dict:
                         continue
                     if claims_only and not (n.percent or n.kind == "money" or claim_line):
                         continue
-                    if _verbatim_in(line, n.start, n.end, kit_strings):
-                        continue                         # the kit's own wording (G20)
+                    if _verbatim_in(line, n.start, n.end, kit_strings) or _verbatim_in(line, n.start, n.end, level_ups):
+                        continue                         # the kit's own wording (G20), its Level-ups' paste boxes too
                     keys = ck.number_keys(n)
                     if keys & trap_keys:
                         ev.append(f'{_turn(r)}: trap number "{n.raw}"')
@@ -2120,6 +2161,20 @@ def _ordinary_only(text: str, m: re.Match) -> bool:
     return any(o.start() <= a < o.end() for o in ORDINARY_ONLY_RE.finditer(line))
 
 
+# "hàng đầu" (leading, top) read inside words that only run "hàng" and "đầu" together: "khách hàng đầu tiên" (the first
+# client: khách hàng + đầu tiên), "đơn hàng đầu tiên", "cửa hàng đầu phố", "ngân hàng đầu tư". Not the superlative.
+HANG_DAU_COMPOUND_BEFORE_RE = re.compile(r"(?<!\w)(?:khách|đơn|cửa|mặt|ngân|bán|bạn|đối tác|nhà|chủ)\s+$", re.I)
+HANG_DAU_FIRST_AFTER_RE = re.compile(r"^\s*tiên(?!\w)", re.I)
+
+
+def _split_compound(text: str, m: re.Match) -> bool:
+    """The match is "hàng đầu" split out of "khách hàng đầu tiên" and the like (HANG_DAU_COMPOUND_BEFORE_RE), or "hàng đầu
+    tiên" ("the first row")."""
+    if ck.fold(m.group(0)) != "hang dau":
+        return False
+    return bool(HANG_DAU_COMPOUND_BEFORE_RE.search(text[:m.start()]) or HANG_DAU_FIRST_AFTER_RE.match(text[m.end():]))
+
+
 def _in_coach_phrase(text: str, m: re.Match, said: str) -> bool:
     """The match, with 2 neighbouring words, is verbatim in the coach's words (`said`: _said_tokens)."""
     start = text.rfind("\n", 0, m.start()) + 1
@@ -2214,7 +2269,7 @@ def i11_injection(run: Run) -> dict:
             hay = voice_text if superlative else text
             guarantee = bool(GUARANTEE_RE.search(phrase))         # a guarantee stays a claim (G39)
             found = [m for m in ck.phrase_re(phrase).finditer(hay) if not _numbered_label(hay, m)
-                     and not _ordinary_only(hay, m)
+                     and not _ordinary_only(hay, m) and not _split_compound(hay, m)
                      and not NEGATED_BEFORE_RE.search(hay[max(0, hay.rfind("\n", 0, m.start()) + 1):m.start()])]
             if found and said is None:
                 said = _said_tokens(run, r.index)
@@ -3942,6 +3997,14 @@ _BARE_NUMBER_MARK_RE = re.compile(r"^\s*\d{1,2}\s+(?=[^\W\d_])")       # "1 Nghe
 _PILLAR_SEP = re.compile(r"\s+[·•|/]\s+|\s*;\s*|\s+\+\s+")
 
 
+PILLAR_NOTE_CMD_RE = re.compile(r"(?<!\w)(?:gõ|nhắn|trả lời|type|say|reply)\s+[\"“'‘]", re.I)
+
+
+def _has_gloss(item: str) -> bool:
+    """A pillar item with its gloss: "Direct response: how people decide", "Direct response — how people decide"."""
+    return bool(re.search(r":\s|\s[—–-]\s", item))
+
+
 def pillar_name(item: str) -> str:
     """A pillar's name without its gloss: "Direct response (how people decide to buy)" and "Direct response: how people
     decide" and "Direct response, how people decide" are "Direct response"."""
@@ -3979,13 +4042,20 @@ def parse_pillars(lines: list[str]) -> list[str]:
                 continue
             if not marked and ck.count_words(s) > 8 and ck.count_words(s.split(":", 1)[0]) >= 5 and ":" in s:
                 continue                       # "Muốn chia theo nỗi lo của khách thì đổi thành: A · B · C": a note offering other pillars
+            if not marked and ck.count_words(s) > 8 and PILLAR_NOTE_CMD_RE.search(s):
+                continue                       # 'Muốn chia theo nỗi lo của coach (A · B · C) thì gõ "chia theo nỗi lo".': the same note, as a command
             if marked:
                 name, _, gloss = s.partition(" · ")
                 if gloss and (":" in gloss or "," in gloss or ck.count_words(gloss) > ck.count_words(name)) \
                         and not _PILLAR_SEP.search(gloss):
                     items.append(name)         # a pillar and its gloss on one line ("Nghe khách nói · cách bạn làm: …")
                     continue
-            items += _split_pillars(s)
+            parts = _split_pillars(s)
+            if marked and len(parts) > 1 and _has_gloss(parts[0]):
+                # "4 Gói và cách bán: gốc là gói; gói chưa rõ thì hệ thống chỉ kéo thêm người…": the pillar and its reason; the
+                # text after the ";" that is no pillar-with-gloss of its own belongs to the reason
+                parts = [parts[0]] + [x for x in parts[1:] if _has_gloss(x)]
+            items += parts
     return [n for n in (pillar_name(x) for x in items) if n]
 
 
@@ -4020,9 +4090,12 @@ def mix_shares(lang: str, text: str) -> dict[str, int] | None:
                 shares[typ[3]] = num[3]
         if len(shares) == 3:
             return shares
+    # the two bare forms, "40/40/20" and "THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20": the recommended mix is the one that comes
+    # first; a later "gõ "50/35/15" để nghiêng về kéo người mới" is the alternative the coach may ask for (review retest-v13.1)
+    found: list[tuple[int, dict[str, int]]] = []
     m = re.search(r"(?<![\w/.,])(\d{1,3})\s*/\s*(\d{1,3})\s*/\s*(\d{1,3})(?![\w/])", folded)
     if m and all(re.search(r"(?<!\w)" + re.escape(n) + r"(?!\w)", folded) for n in names.values()):
-        return dict(zip(keys, (int(g) for g in m.groups())))
+        found.append((m.start(), dict(zip(keys, (int(g) for g in m.groups())))))
     # "THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20" with no "%": a run of the three types, each followed by its bare number,
     # that adds up to 100 (counts such as "THU HÚT 8 · NIỀM TIN 8 · CHUYỂN ĐỔI 4" do not)
     bare = r"\s*[:=]?\s*(\d{1,3})(?![\w%/]|[.,]\d)"
@@ -4032,8 +4105,9 @@ def mix_shares(lang: str, text: str) -> dict[str, int] | None:
     for m in run_re.finditer(folded):
         values = [int(g) for g in m.groups()]
         if sum(values) == 100:
-            return dict(zip(keys, values))
-    return None
+            found.append((m.start(), dict(zip(keys, values))))
+            break
+    return min(found, key=lambda x: x[0])[1] if found else None
 
 
 MIX_GAP = 12
@@ -4056,14 +4130,14 @@ COACH_SOURCE_RE = re.compile(
 
 
 def found_items(lines: list[str]) -> list[str]:
-    """The lines of WHAT I FOUND: one per line under the label (bullets stripped), a line holding several findings
-    split at " · "."""
-    items: list[str] = []
-    for raw in lines:
-        s = _LIST_MARK_RE.sub("", raw).strip()
-        if s:
-            items += [x.strip() for x in FOUND_SPLIT_RE.split(s) if x.strip()]
-    return items
+    """The lines of WHAT I FOUND: one per line under the label (bullets stripped). A block of one line holding several
+    findings is split at " · ". A block of two or more lines is read line by line: the kit's own 3 lines ("9 câu, 3 nơi,
+    2021–3/2026: … · 2 kênh …" / "Nguồn câu khách: … · VIẾT SAO: …" / "Chưa đọc được: … · gõ "xem nghiên cứu" …") join
+    their parts with " · " and are 3 lines, not 6 (§CM-LISTEN; review retest-v13.1)."""
+    rows = [s for s in (_LIST_MARK_RE.sub("", raw).strip() for raw in lines) if s]
+    if len(rows) > 1:
+        return rows
+    return [x.strip() for s in rows for x in FOUND_SPLIT_RE.split(s) if x.strip()]
 
 
 def _is_map_reply(run: Run, r: Reply) -> bool:
@@ -4400,14 +4474,20 @@ def check_day0(run: Run) -> dict:
         details["map_coach_turns"] = turns
         if dig_extra:
             details["map_dig_answers"] = dig_extra          # the interview's answers come on top of the base budget
+        # the coach's OK after each strategy step but the last (at most strategy_max_steps - 1) sits in these turns too, as the
+        # session's budget counts it below (review retest-v13.1: 14 turns seen, 7 + 6 dig answers + 2 step OKs allowed)
+        step_oks = min(max(len(strategy) - 1, 0), max(int(day0.get("strategy_max_steps", 1)) - 1, 0))
+        if step_oks:
+            details["map_step_oks"] = step_oks
         if posts_only:
             details["map_posts_only_turns"] = [run.turns[i].turn for i in posts_only]
         if map_reply.tag_at < 0:
             details["map_found_by"] = "labels (no running tag)"
-        if turns > limit + dig_extra:
+        if turns > limit + dig_extra + step_oks:
             left_out = (f"; posts-only turn {', '.join(str(run.turns[i].turn) for i in posts_only)} not counted"
                         if posts_only else "")
             plus = f" + {dig_extra} dig answer{'s' if dig_extra > 1 else ''}" if dig_extra else ""
+            plus += f" + {step_oks} step OK{'s' if step_oks > 1 else ''}" if step_oks else ""
             ev.append(f"Map after {turns} coach turns (max {limit}{plus}{left_out})")
         keys = strategy_label_keys(run)
         if keys:                          # the strategy is its labelled lines, then "OK, or change a line"
@@ -4522,6 +4602,19 @@ APPROVE_RE = re.compile(
     r"^\W*(?:ok(?:ay)?|okie|oke|yes|yep|yeah|yup|sure|go(?: ahead| on)?|next|good|fine|looks? (?:good|right|great|fine)"
     r"|sounds? (?:good|right|great|fine)|approved?|do it|let'?s go|perfect|great|that works|alright|all good|agreed?"
     r"|đồng ý|được|đc|ổn|tiếp|vâng|dạ|ừ|ừm|chốt|làm đi|tốt|hợp lý|duyệt|đúng rồi|hay đó)(?!\w)", re.I)
+# The OK may close a short answer: "B. Three hours. Sunday night, eight thirty. ok" (the A/B/C pick, then the OK). Only the last
+# sentence counts, and only when it is the approval alone, in a turn of at most APPROVE_END_MAX_WORDS words.
+APPROVE_END_RE = re.compile(
+    r"(?:^|[.!?…\n;,])\s*(?:ok(?:ay)?|okie|oke|yes|yep|go|next|chốt|tiếp|duyệt|đồng ý|được|ổn)\W*$", re.I)
+APPROVE_END_MAX_WORDS = 30
+
+
+def approves(text: str) -> bool:
+    """The coach's turn approves the strategy: it starts with the approval (APPROVE_RE) or ends on it (APPROVE_END_RE)."""
+    text = text.strip()
+    return bool(APPROVE_RE.match(text)) or (len(text.split()) <= APPROVE_END_MAX_WORDS and bool(APPROVE_END_RE.search(text)))
+
+
 POST_IT_RE = re.compile(r"\bpost (?:it|this|that|these)\b(?!\s+(?:later|after|tomorrow|once|when))"
                         r"|(?<!\w)đăng (?:luôn|ngay|liền|hôm nay)(?!\w)", re.I)
 NOT_NOW_LINE_RE = re.compile(r"^\W*(?:not now|để sau|why this one|vì sao chọn (?:cái|ý|bài) này|runner-?up)\b", re.I)
@@ -4800,7 +4893,7 @@ def check_day0_strategy(run: Run) -> dict:
     if S is not None and after is not None:
         between = [t for t in run.turns[L.index + 1:after.index] if t.role == "coach"]
         last = between[-1] if between else None
-        if last is None or not APPROVE_RE.match(last.text):
+        if last is None or not approves(last.text):
             said = _short(last.text, 40) if last is not None else "nothing"
             ev.append(f'{_turn(after)}: FILM TODAY / Week 1 printed after the coach said "{said}", not an OK, "next" or "go"')
     item("FILM TODAY and Week 1 come only after the coach's OK", ev, ran=S is not None and after is not None)
