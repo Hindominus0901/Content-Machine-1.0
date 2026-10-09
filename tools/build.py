@@ -15,7 +15,7 @@ Per edition:
     START-HERE.html                    help   strings starthere.title / starthere.body
     Help/<name>.html                   help   guides/<name>.tmpl
     dist/site/<edition>/index.html     site   guides/setup-page.tmpl
-    dist/content-machine-plugin.zip    plugin both editions' kit + method file + 7 level-up companions each, 4 agents;
+    dist/content-machine-plugin.zip    plugin both editions' kit + method file + 9 level-up companions each, 4 agents;
                                               one plugin for Claude and ChatGPT
     dist/maintainer/tasks/<edition>/   task   automation/*.tmpl (samples for lint budgets; task-nudge* at task_nudge)
 

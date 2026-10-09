@@ -1204,7 +1204,7 @@ id = "setup.en.035"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1"]
-title = "Talk day guessed from the dump and named once above Week 1; Day 0's last reply offers reminders and says where to come back"
+title = "Talk day guessed from the dump and named once above Week 1; Day 0's last reply offers the hub (A Notion, B Sheet, C HUB.md) and says where to come back"
 context = "Whole run from the FILM TODAY reply to Day 0's last reply, ChatGPT Free. Dana's dump never named a talk day; it said Mondays she is at her mom's. There is no 3-line wrap-up any more."
 input = '''[turn 1] ok got it
 [turn 2] next
@@ -1214,7 +1214,7 @@ not_contains = []
 regex = [
   '''(?i)\bFor [^\n]{2,60}· talk day (?!mon)\w+ · email list: [^\n()]{1,24} \(my guess, where unheard; one word changes it\)\.''',
   '''(?i)\bfri(day)?\b''',
-  '''(?i)\b(nudge|remind)''',
+  '''(?i)\bA\)[^\n]*Notion[^\n]*B\)[^\n]*(?:Google )?Sheet[^\n]*C\)[^\n]*HUB\.md''',
   '''NEXT →[^\n]*Film today(?:'|’)s video''',
   '''NEXT →[^\n]*(?i:open Content Machine, newest chat)''',
 ]
@@ -1225,7 +1225,8 @@ not_regex = [
   '''(?i)that(?:'|’)s today done''',
   '''(?i)outside (the|this) project''',
   '''(?i)\bnew chat\b[^\n]{0,30}\boutside\b''',
-  '''(?i)\b(upload|Notion|automation)\b''',
+  '''(?i)\b(upload|automation)\b''',
+  '''(?i)\b(nudge|remind)''',
   '''(?i)screenshot[^\n]{0,40}\b(insights|analytics|stats|numbers)\b''',
 ]
 verdict = ""

@@ -46,15 +46,19 @@ file_heading = "FILE ({{file}})"
 assets_heading = "FILES IN {{folder}}/"
 
 [area.research.en]
-description = "Content Machine research: reads comments, posts, DMs or a group link you paste, finds the root under what buyers repeat, writes the brief. Use for \"research\", \"browse\", \"what are my buyers saying?\"."
+description = "Content Machine research: buyers' words, liked and rival channels and their viewers, your niche notes, the brief. Use for \"research\", \"competitors\", \"my niche\"."
 part = "research"
 jobs = """\
 - "research", "what are my buyers saying?", "dig into …", "browse": §CM-RESEARCH (the rules and how we read), then §CM-RESEARCH-PLAN
 - the coach pastes call notes, DMs or form answers: §CM-RESEARCH-PLAN (their clients' words)
 - the coach pastes comments, posts, a screenshot or a group link, with no request: §CM-LISTEN (it runs by itself)
 - after the reading, the why-loop and the brief: §CM-RESEARCH-ROOT
-- end of Day 0 with Week 1, every Friday review, "plan next month", before a launch: §CM-RESEARCH-LOOP"""
-extra = ""
+- end of Day 0 with Week 1, every Friday review, "plan next month", before a launch: §CM-RESEARCH-LOOP
+- "channel research", "competitors", "channels I like", "what works in my niche", a channel link; Day 0 once the niche is known (background, before the strategy); a new channel; the monthly review: §CM-CHANNELS (pick, read, the teardown), then §CM-AUDIENCE (their viewers' comments, the angle card, the 5 lines)
+- "my niche", "niche notes", a strategy, pillar, line or hook question with no research yet: §CM-NICHE (the primer, NICHE.md: read it first, refresh at 30+ days)"""
+extra = """\
+Channel research runs one cm-researcher per channel (jobs TEARDOWN, COMMENTS) and NICHE runs per source; cm-listener counts the themes; a separate reviewer re-opens quotes and counts before anything prints.
+"""
 
 [area.launch.en]
 description = "Content Machine launch and ads: plan a launch, the calendar, the daily desk, posts, messages, the live, the debrief, and ads from posts that worked. Use for \"launch\", \"open the doors\", \"run an ad\"."
@@ -70,15 +74,18 @@ jobs = """\
 extra = ""
 
 [area.board.en]
-description = "Content Machine board and nudges: one Google Sheet for every piece, rows to paste, and three scheduled nudges. Use for \"where is everything?\", \"set up my board\", \"remind me\", \"automate this\"."
-part = "board and nudges"
+description = "Content Machine hub and scheduled tasks: a Notion workspace I build and keep, HUB.md in your project, a Google Sheet fallback, tasks that run the week. Use for \"hub\", \"Notion\", \"schedule\", \"HUB.md\"."
+part = "hub and scheduled tasks"
 jobs = """\
-- "where is everything?", "set up my board", a VA joins, "yes" to the board offer: §CM-BOARD
-- rows to paste ("rows", "no rows", "board rows for this week"): §CM-BOARD-ROWS · the column order: §CM-BOARD-COLUMNS · campaigns, reading the board back: §CM-BOARD-CAMPAIGNS
-- "remind me", "automate this", "set up the tasks", "yes" to the nudge offer: §CM-NUDGES, then the text for the app: §CM-NUDGE-TEXTS (ChatGPT) or §CM-NUDGE-CLAUDE
-- what each nudge runs: §CM-NUDGE-JOBS · "stop the nudges", "fewer", a missed run: §CM-NUDGE-RULES · launch mode starts: §CM-NUDGE-LAUNCH"""
+- "hub", "Notion", "where is everything?", "yes" to the board offer, a VA or a new client joins: §CM-HUB-NOTION (the A/B/C choice is item 4; build 5-6; keeping it 7; copies 9)
+- HUB.md, "save the hub", "what's open?", the end of any job: §CM-HUB-MD
+- "Google Sheet", "no Notion", option B: §CM-BOARD · rows to paste ("rows", "no rows", "board rows for this week"): §CM-BOARD-ROWS · column order: §CM-BOARD-COLUMNS · campaigns, reading the board back: §CM-BOARD-CAMPAIGNS
+- "schedule", "automate this", "remind me", "set up the tasks", "yes" to the nudge offer: §CM-NUDGES, what each task reads and writes: §CM-HUB-TASKS, then the text for the app: §CM-NUDGE-TEXTS (ChatGPT), §CM-NUDGE-CLAUDE, the Monthly text in §CM-HUB-TASKS
+- what each task runs: §CM-NUDGE-JOBS · "stop the nudges", "fewer", a missed run: §CM-NUDGE-RULES · launch mode: §CM-NUDGE-LAUNCH"""
 extra = """\
 BOARD FILES: the five header-row files (Campaigns, Content, Bank, Numbers, Ledger) are in full under "{{assets}}" below, and also sit in Board/ next to this file. When you can create files, write each one exactly as shown and hand it over; otherwise print each header row as the tsv box §CM-BOARD 3 describes.
+
+NOTION: build only inside the page 'Content Machine — {name}' (§CM-HUB-NOTION 8).
 """
 
 [area.strategy.en]
@@ -95,11 +102,14 @@ jobs = """\
 extra = ""
 
 [area.playbook.en]
-description = "Content Machine playbook: the whole content strategy in one file (3 big ideas, the week, the first 30 days). Use for \"strategy\", \"my strategy\", \"content pillars\", \"content system\"."
+description = "Content Machine playbook: strategy built step by step, content lines, attract/trust/convert, a 4-week calendar, one strategy file. Use for \"content strategy\", \"content calendar\", \"content lines\"."
 part = "playbook"
 jobs = """\
-- "strategy", "my strategy", "content strategy", "content pillars", "content system", and on Day 0 with Week 1: §CM-STRATEGY-DOC (saved as CONTENT-STRATEGY.md when you can create files, else printed whole)
-- positioning alone ("positioning", "what makes me different"): §CM-STRATEGY (cm-strategy) · the 2 hooks per big idea: §CM-HOOKS (cm-strategy)"""
+- "build my strategy", "content strategy", and on Day 0 after the interview when this file is loaded: §CM-STRATEGY-ENGINE (8 steps, one a reply, A/B/C with one pick; "ok all"; resume at the open step)
+- "content calendar", "posting schedule", a calendar after "plan next month": §CM-CALENDAR (hours → pieces, the weekly table, rules, launches, a missed week)
+- "content lines", "series ideas", "recurring content": §CM-CONTENT-LINES · "content types", "attract trust convert": §CM-TIERS
+- "strategy", "my strategy", "content pillars", "content system": §CM-STRATEGY-DOC (saved as CONTENT-STRATEGY.md when you can create files, else printed whole)
+- positioning alone ("positioning", "what makes me different"): §CM-STRATEGY (cm-strategy) · hooks: §CM-HOOK-LIBRARY (cm-hooks) · gifts and asks: §CM-MAGNET-BANK, §CM-CTA-BANK · copy shapes: §CM-COPY"""
 extra = ""
 
 [area.hooks.en]
@@ -128,9 +138,34 @@ extra = """\
 The type picker, the math and the real limits (§CM-LAUNCH, §CM-LAUNCH-BRIEF, §CM-LAUNCH-DAYS) are in cm-launch: read them before the campaign. The hook shapes are in cm-hooks.
 """
 
+[area.banks.en]
+description = "Content Machine banks: your client words, stories, proof, asks and free gifts, kept and reused so every piece starts from something real. Use for \"bank\", \"CTA\", \"lead magnet\"."
+part = "banks"
+jobs = """\
+- "bank", "what's in my bank", "add to the bank", a pasted DM, comment or call note, Friday's top-up: §CM-BANKS
+- the ask at the end of a piece, "CTA", "call to action": §CM-CTA-BANK (the hook-side lines: §CM-HOOK-CTA in cm-hooks)
+- "lead magnet", "gift", "freebie", "what should I give away": §CM-MAGNET-BANK
+- "where do I research", "mine comments", query lists: §CM-RESEARCH-BANK (the listening pass itself: §CM-LISTEN in cm-research)
+- "I have no stories", a story to tell: §CM-STORY-BANK · "proof", "testimonials", "what can I show": §CM-PROOF-BANK"""
+extra = """\
+The CTA kit (§CM-CTA-KIT) is in the method file; hook shapes are in cm-hooks; the listening protocol is in cm-research.
+"""
+
+[area.copy.en]
+description = "Content Machine copywriting: one writing framework per piece, storytelling, persuasion that stays honest, lengths in words. Use for \"write a post\", \"copywriting\", \"storytelling\", \"persuade\"."
+part = "copywriting"
+jobs = """\
+- "write a post", "copywriting", "framework", and before any post, script, email or message: §CM-COPY (pick ONE framework by tier, format and goal; lengths in words), then the framework's own part
+- the frameworks by group: §CM-COPY-FRAMEWORKS · stories §CM-COPY-STORIES · beliefs §CM-COPY-BELIEFS · problem, before and after §CM-COPY-PROBLEM · client decision, objection, offer §CM-COPY-PROOF · long post, long video §CM-COPY-LONG · lists, email, Zalo §CM-COPY-LISTS
+- "storytelling", "tell a story", finding the story in the dump: §CM-STORYTELLING
+- "persuade", "convince", urgency, guarantees, proof: §CM-PERSUASION · sounding natural, not like an ad: §CM-COPY-VOICE"""
+extra = """\
+The hook comes from the hook lab (§CM-FORMATS 1 in the method, §CM-HOOKS in cm-strategy) after the framework is picked; the format rules stay in the method (§CM-FORMATS, §CM-POSTS, §CM-MESSAGES). Framework names never reach the coach: on "why?" only the plain label.
+"""
+
 [readme.en]
 body = """\
-**Also inside:** seven companion skills, one per level-up (research, launch and ads, launch campaigns, board and nudges, strategy, hooks, the playbook), and four helper agents for Claude Code and Cowork. Nothing to upload: they load when the job needs them."""
+**Also inside:** nine companion skills, one per level-up (research, launch and ads, launch campaigns, hub and scheduled tasks, strategy, hooks, the playbook, banks, copywriting), and four helper agents for Claude Code and Cowork. Nothing to upload: they load when the job needs them."""
 
 # ------------------------------------------------------------------ Tiếng Việt
 [common.vn]
@@ -160,15 +195,19 @@ file_heading = "FILE ({{file}})"
 assets_heading = "FILE TRONG {{folder}}/"
 
 [area.research.vn]
-description = "Content Machine nghiên cứu: khách đang nói gì? Đọc comment, bài, tin nhắn hay link nhóm bạn dán, tìm gốc rễ, viết brief. Dùng khi nghe \"nghiên cứu\", \"khách đang nói gì?\", \"đọc giúp\"."
+description = "Content Machine nghiên cứu: lời khách, kênh bạn thích, kênh đối thủ và người xem, ghi chú về ngách, brief. Dùng khi nghe \"nghiên cứu\", \"đối thủ\", \"lĩnh vực\"."
 part = "nghiên cứu"
 jobs = """\
 - "nghiên cứu", "khách đang nói gì?", "tìm hiểu …", "đọc giúp": §CM-RESEARCH (luật và cách đọc), rồi §CM-RESEARCH-PLAN
 - coach dán ghi chú cuộc gọi, tin nhắn, form: §CM-RESEARCH-PLAN (lời khách của coach)
 - coach dán comment, bài, ảnh chụp hay gửi link nhóm, không cần nhờ: §CM-LISTEN (tự chạy)
 - đọc xong, vòng vì sao và brief: §CM-RESEARCH-ROOT
-- cuối ngày 0 cùng Tuần 1, mỗi lần tổng kết thứ Sáu, "lên kế hoạch tháng sau", trước mở bán: §CM-RESEARCH-LOOP"""
-extra = ""
+- cuối ngày 0 cùng Tuần 1, mỗi lần tổng kết thứ Sáu, "lên kế hoạch tháng sau", trước mở bán: §CM-RESEARCH-LOOP
+- "nghiên cứu kênh", "kênh đối thủ", "đối thủ", "kênh mình thích", "ngách mình cái gì đang chạy", link một kênh; ngày 0 khi đã rõ nghề (chạy ngầm, trước chiến lược); coach thêm kênh; buổi nhìn lại tháng: §CM-CHANNELS (chọn kênh, đọc, mổ xẻ), rồi §CM-AUDIENCE (comment của người xem, thẻ góc nhìn riêng, 5 dòng cho coach)
+- "ngách của mình", "lĩnh vực", "ghi chú về ngách", câu hỏi chiến lược, trụ cột nội dung, tuyến bài, hook mà chưa nghiên cứu: §CM-NICHE (nghiên cứu lĩnh vực, NICHE.md: đọc trước, quá 30 ngày thì làm mới)"""
+extra = """\
+Nghiên cứu kênh chạy mỗi kênh một cm-researcher (việc TEARDOWN, COMMENTS), NICHE mỗi nguồn một lượt; cm-listener đếm chủ đề; một trợ lý soát riêng mở lại câu trích và số đếm rồi mới in.
+"""
 
 [area.launch.vn]
 description = "Content Machine mở bán và quảng cáo: kế hoạch mở bán, lịch, Bàn mở bán, bài, tin Zalo, live, nhìn lại; quảng cáo từ bài chạy tốt. Dùng khi nghe \"mở bán\", \"ra mắt khoá\", \"chạy quảng cáo\"."
@@ -184,15 +223,18 @@ jobs = """\
 extra = ""
 
 [area.board.vn]
-description = "Content Machine bảng nội dung và lời nhắc: một Google Sheet cho mọi bài, dòng để dán, ba lời nhắc tự chạy. Dùng khi nghe \"mọi thứ nằm đâu?\", \"làm bảng cho mình\", \"nhắc mình\", \"cho nó tự chạy\"."
-part = "bảng nội dung và lời nhắc"
+description = "Content Machine hub và tác vụ hẹn giờ: trang Notion mình dựng và giữ, HUB.md trong dự án, Google Sheet dự phòng, tác vụ tự chạy. Dùng khi nghe \"hub\", \"Notion\", \"bảng\", \"lịch tự động\", \"HUB.md\"."
+part = "hub và tác vụ hẹn giờ"
 jobs = """\
-- "mọi thứ nằm đâu?", "làm bảng cho mình", có trợ lý, hay "có" với lời mời làm bảng: §CM-BOARD
-- dòng để dán ("in dòng", "thôi in dòng", "in dòng tuần này", "tự thêm luôn"): §CM-BOARD-ROWS · thứ tự cột: §CM-BOARD-COLUMNS · chiến dịch, đọc bảng ngược lại: §CM-BOARD-CAMPAIGNS
-- "nhắc mình", "cho nó tự chạy", "cài tác vụ", "có" với lời mời nhắc: §CM-NUDGES, rồi lời nhắc cho app: §CM-NUDGE-TEXTS (ChatGPT) hay §CM-NUDGE-CLAUDE
-- mỗi lời nhắc chạy việc gì: §CM-NUDGE-JOBS · "tắt nhắc", "nhắc nhiều quá", "bớt lại", lỡ một buổi: §CM-NUDGE-RULES · vào chế độ mở bán: §CM-NUDGE-LAUNCH"""
+- "hub", "Notion", "mọi thứ nằm đâu?", "có" với lời mời làm bảng, có trợ lý hay khách mới vào: §CM-HUB-NOTION (câu A/B/C ở mục 4; dựng ở 5-6; giữ cho mới ở 7; nhân bản ở 9)
+- HUB.md, "lưu hub", "đang chờ gì?", cuối mỗi việc: §CM-HUB-MD
+- "Google Sheet", "không dùng Notion", lựa chọn B: §CM-BOARD · dòng để dán ("in dòng", "thôi in dòng", "in dòng tuần này", "tự thêm luôn"): §CM-BOARD-ROWS · thứ tự cột: §CM-BOARD-COLUMNS · chiến dịch, đọc bảng ngược lại: §CM-BOARD-CAMPAIGNS
+- "lịch tự động", "hẹn giờ", "nhắc mình", "cho nó tự chạy", "cài tác vụ", "có" với lời mời nhắc: §CM-NUDGES, tác vụ đọc gì ghi gì: §CM-HUB-TASKS, rồi lời nhắc cho app: §CM-NUDGE-TEXTS (ChatGPT), §CM-NUDGE-CLAUDE, lời nhắc hằng tháng ở §CM-HUB-TASKS
+- mỗi tác vụ chạy việc gì: §CM-NUDGE-JOBS · "tắt nhắc", "nhắc nhiều quá", "bớt lại", lỡ một buổi: §CM-NUDGE-RULES · vào chế độ mở bán: §CM-NUDGE-LAUNCH"""
 extra = """\
 FILE BẢNG: năm file chỉ có dòng tiêu đề (Chien-dich, Noi-dung, Kho, So-lieu, Gioi-han-that) nằm trọn ở phần "{{assets}}" bên dưới, và cũng có trong thư mục Board/ cạnh file này. Tạo được file thì viết đúng từng file như đã thấy rồi giao; không thì in từng dòng tiêu đề thành khung tsv như §CM-BOARD 3.
+
+NOTION: chỉ dựng và ghi bên trong trang 'Content Machine — {tên}' (§CM-HUB-NOTION 8).
 """
 
 [area.strategy.vn]
@@ -209,11 +251,14 @@ jobs = """\
 extra = ""
 
 [area.playbook.vn]
-description = "Content Machine file chiến lược: 3 ý lớn, mỗi tuần làm gì, 30 ngày đầu, gom trong một file. Dùng khi nghe \"chiến lược\", \"chiến lược nội dung\", \"content pillars\", \"hệ thống nội dung\"."
+description = "Content Machine file chiến lược: dựng chiến lược từng bước, tuyến nội dung, ba loại nội dung, lịch 4 tuần, một file. Dùng khi nghe \"chiến lược nội dung\", \"lịch content\", \"tuyến nội dung\"."
 part = "file chiến lược"
 jobs = """\
-- "chiến lược", "chiến lược nội dung", "content pillars", "trụ cột nội dung", "hệ thống nội dung", và ngày 0 cùng Tuần 1: §CM-STRATEGY-DOC (tạo được file thì lưu CHIEN-LUOC-NOI-DUNG.md, không thì in trọn)
-- chỉ hỏi định vị ("định vị", "mình khác người ta chỗ nào"): §CM-STRATEGY (cm-strategy) · 2 hook cho mỗi ý lớn: §CM-HOOKS (cm-strategy)"""
+- "làm chiến lược", "chiến lược nội dung", và ngày 0 sau phần phỏng vấn khi có file này: §CM-STRATEGY-ENGINE (8 bước, mỗi tin một bước, A/B/C kèm một lựa chọn; "ok hết"; lần sau làm tiếp đúng bước đang dở)
+- "lịch content", "lịch đăng bài", lịch sau buổi "lên kế hoạch tháng sau": §CM-CALENDAR (giờ → số bài, bảng từng tuần, luật, mùa ra mắt, khi lỡ một tuần)
+- "tuyến nội dung", "ý tưởng series", "loạt bài": §CM-CONTENT-LINES · "loại nội dung", "thu hút niềm tin chuyển đổi": §CM-TIERS
+- "chiến lược", "content pillars", "trụ cột nội dung", "hệ thống nội dung": §CM-STRATEGY-DOC (tạo được file thì lưu CHIEN-LUOC-NOI-DUNG.md, không thì in trọn)
+- chỉ hỏi định vị ("định vị", "mình khác người ta chỗ nào"): §CM-STRATEGY (cm-strategy) · hook: §CM-HOOK-LIBRARY (cm-hooks) · quà và lời mời: §CM-MAGNET-BANK, §CM-CTA-BANK · cách viết: §CM-COPY"""
 extra = ""
 
 [area.hooks.vn]
@@ -242,6 +287,31 @@ extra = """\
 Bộ chọn loại, phép tính và giới hạn thật (§CM-LAUNCH, §CM-LAUNCH-BRIEF, §CM-LAUNCH-DAYS) nằm ở skill cm-launch: đọc trước khi vào chiến dịch. Các dáng hook ở skill cm-hooks.
 """
 
+[area.banks.vn]
+description = "Content Machine ngân hàng nội dung: chữ khách, chuyện, bằng chứng, lời mời, quà tặng, lưu và dùng lại để bài nào cũng có gốc thật. Dùng khi nghe \"ngân hàng\", \"kho\", \"CTA\", \"lead magnet\"."
+part = "ngân hàng nội dung"
+jobs = """\
+- "ngân hàng", "kho", "thêm vào kho", tin nhắn, comment hay ghi chú cuộc gọi coach dán, nạp kho thứ Sáu: §CM-BANKS
+- lời mời cuối bài, "CTA", "lời kêu gọi": §CM-CTA-BANK (câu mời phía hook: §CM-HOOK-CTA ở skill cm-hooks)
+- "lead magnet", "quà", "quà tặng", "nên tặng gì": §CM-MAGNET-BANK
+- "nghiên cứu ở đâu", "đào comment", cụm tìm kiếm: §CM-RESEARCH-BANK (lượt nghe khách: §CM-LISTEN ở skill cm-research)
+- "mình chẳng có chuyện gì để kể", cần một chuyện: §CM-STORY-BANK · "bằng chứng", "feedback khách", "có gì để khoe": §CM-PROOF-BANK"""
+extra = """\
+Bộ lời mời (§CM-CTA-KIT) nằm trong file phương pháp; các dáng hook ở skill cm-hooks; cách nghe khách ở skill cm-research.
+"""
+
+[area.copy.vn]
+description = "Content Machine viết bài: mỗi bài một khung, kể chuyện, thuyết phục mà vẫn thật, độ dài tính bằng chữ. Dùng khi nghe \"viết bài\", \"copywriting\", \"kể chuyện\", \"thuyết phục\"."
+part = "viết bài"
+jobs = """\
+- "viết bài", "copywriting", "framework", và trước mọi bài đăng, kịch bản, email, tin nhắn: §CM-COPY (chọn MỘT khung theo tầng, dạng bài, mục tiêu; độ dài tính bằng chữ), rồi phần riêng của khung đó
+- các khung theo nhóm: §CM-COPY-FRAMEWORKS · chuyện §CM-COPY-STORIES · niềm tin §CM-COPY-BELIEFS · vấn đề, trước và sau §CM-COPY-PROBLEM · quyết định của khách, băn khoăn, bài mời mua §CM-COPY-PROOF · bài dài, video dài §CM-COPY-LONG · danh sách, email, Zalo §CM-COPY-LISTS
+- "kể chuyện", "storytelling", tìm chuyện trong lời xả: §CM-STORYTELLING
+- "thuyết phục", hối thúc, cam kết, bằng chứng: §CM-PERSUASION · cho tự nhiên, không giọng quảng cáo: §CM-COPY-VOICE"""
+extra = """\
+Hook lấy từ lab hook (§CM-FORMATS 1 trong phần phương pháp, §CM-HOOKS ở skill cm-strategy) sau khi đã chọn khung; luật từng dạng bài vẫn ở phần phương pháp (§CM-FORMATS, §CM-POSTS, §CM-MESSAGES). Tên khung không bao giờ tới tai coach: gõ "tại sao?" chỉ thấy nhãn thường.
+"""
+
 [readme.vn]
 body = """\
-**Có sẵn thêm:** bảy skill đồng hành, mỗi nâng cấp một skill (nghiên cứu, mở bán và quảng cáo, chiến dịch mở bán, bảng nội dung và lời nhắc, chiến lược, thư viện hook, file chiến lược), và bốn agent phụ cho Claude Code và Cowork. Không cần tải gì thêm: cần việc nào thì skill đó tự mở."""
+**Có sẵn thêm:** chín skill đồng hành, mỗi nâng cấp một skill (nghiên cứu, mở bán và quảng cáo, chiến dịch mở bán, hub và tác vụ hẹn giờ, chiến lược, thư viện hook, file chiến lược, ngân hàng nội dung, viết bài), và bốn agent phụ cho Claude Code và Cowork. Không cần tải gì thêm: cần việc nào thì skill đó tự mở."""

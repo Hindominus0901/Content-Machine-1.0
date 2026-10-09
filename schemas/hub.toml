@@ -33,8 +33,8 @@ schema_version = 1
 
 [hub]
 introduced_at = "L2"
-default = "campaign_board"                # [campaign_board]: one Google Sheet, five tabs
-alternative = "notion"                   # optional; Sheets Lite ([sheets]) mirrors it in English
+default = "notion_workspace"             # v13 (founder, 9 Oct): the Notion hub the machine builds, spec in templates/notion/workspace.toml, plus HUB.md in the project
+alternative = "campaign_board"           # [campaign_board]: one Google Sheet, five tabs (the fallback); Sheets Lite ([sheets]) mirrors it in English
 root_page = "root"
 
 # ================================================================ rules
@@ -1132,8 +1132,9 @@ name = "Winner"
 formula = '=IF(G{row}="","",IF(TODAY()-C{row}<2,"",IF(G{row}>=2,"2x","")))'
 note = "2× the median or more, once the post is 48 hours old"
 
-# ================================================================ Campaign board (the default board)
-# Founder, 7 Oct 2026: a campaign-type Google Sheet is the default board; Notion stays optional.
+# ================================================================ Campaign board (the Google Sheet fallback)
+# Founder, 7 Oct 2026: a campaign-type Google Sheet is the board; since 9 Oct it is the fallback (option B of §CM-HUB-NOTION)
+# behind the Notion hub (templates/notion/workspace.toml) and HUB.md.
 # ONE Google Sheet, five tabs, no code and no connector needed: the coach imports five CSVs once
 # (templates/sheets/<lang>/), and from then on the machine prints a "row to paste" box whenever
 # it writes pieces, a campaign, a Friday review or a launch. Prose: modules/<lang>/hub.md

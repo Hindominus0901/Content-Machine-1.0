@@ -50,7 +50,7 @@
 #   and the "cho máy" block included), case-sensitive unless the pattern starts with (?i) or uses (?i:...).
 # - Strings are asserted as strings/vn.toml has them now, in the coach's pronoun pair (strings ship mình–bạn; the
 #   machine swaps in the Card's pair, I15): liked.saved "Đã lưu vào Bài bạn thích: {shape}. Lên kế hoạch {thứ Hai}
-#   mình lấy ra dùng." with the TIẾP clause liked.make_offer "Muốn có bản của bạn luôn thì nhắn "làm bản của mình"."
+#   mình lấy ra dùng." with the TIẾP clause liked.make_offer "A) làm bản của bạn luôn (máy khuyên) B) để dành khung."
 #   (chị–em: "Bài chị thích", "em lấy ra dùng", "bản của chị"); liked.mine "Rõ rồi, bài này của bạn." and
 #   liked.mine_clause "(Bài của bạn thì nhắn 'của mình'.)"; liked.cant_open "Mình không mở được {what} ở đây, nên
 #   không đoán. TIẾP → Chụp màn hình thấy cả chữ, hoặc kể mình nghe 2 câu."; liked.day0 "(Bài đó mình giữ lại cho
@@ -311,7 +311,7 @@ input = '''<<screenshot: TikTok · @tudo.cungyoga (Tự Do Cùng Yoga · Ly) · 
 coi nè, ước gì mình cũng được vậy'''
 regex = [
   '''Đã lưu vào Bài bạn thích: [^\n]+?\. Lên kế hoạch [^\n]{1,30}? mình lấy ra dùng''',
-  '''TIẾP →[^\n]*làm bản của mình[^\n]*\s*\Z''',
+  '''TIẾP →[^\n]*A\) làm bản của (?:bạn|chị|anh|em|cô|chú|mình) luôn \(máy khuyên\) B\) để dành khung[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?im)^(?![^\n]*(?:không viết|không bịa|không dùng|không lấy|của họ|không phải của))[^\n]*(?:\$\s?10\s?k|(?<!\w)10\s?k(?!\w)|10\.000 đô|250 triệu|30 ngày|932)''',

@@ -28,7 +28,7 @@ Each file is used three ways:
 
 ## Index
 
-All 18 standards in spec §3.1, plus `strategy-doc`, `hook-library` and `launch-campaign` (founder requests, 7 Oct), each written as `<id>.md` in this folder (≤150 lines, with a 3–5 line runtime check in EN and VN).
+All 18 standards in spec §3.1, plus `strategy-doc`, `hook-library` and `launch-campaign` (founder requests, 7 Oct) and, from the v13 build (founder, 9 Oct), `calendar`, `banks`, `copy-frameworks`, `channel-teardown` and `hub`, each written as `<id>.md` in this folder (≤150 lines, with a 3–5 line runtime check in EN and VN).
 
 | id | Artifact | Critical items (must score 2) | Build pass |
 |---|---|---|---|
@@ -50,9 +50,14 @@ All 18 standards in spec §3.1, plus `strategy-doc`, `hook-library` and `launch-
 | `ad-script` | Ad | AD1 proof gate, AD2 pain not person, AD6 compliance, AD7 message match | ≥15/18, second read at build |
 | `launch-assets` | Launch assets P0–P9 | LA1 Ledger, LA2 proof and claims, LA4 keyword CTAs written as asked, LA6 consent and capture | ≥16/20, every asset passes its format, second read on the Ledger and P5–P8 |
 | `weekly-review` | Weekly review | WR1 traced, WR2 blank is not zero, WR4 honest calls | ≥15/18 |
-| `strategy-doc` | Content strategy document (CONTENT-STRATEGY.md / CHIEN-LUOC-NOI-DUNG.md) | SD1 complete, SD2 the coach's own words, SD3 nothing invented, SD4 big ideas distinct and on-Map, SD7 a system they can run, SD10 plain, natural, deliverable | ≥16/20 |
+| `strategy-doc` | Content strategy document (CONTENT-STRATEGY.md / CHIEN-LUOC-NOI-DUNG.md) | SD1 complete (9 parts), SD2 the coach's own words, SD3 nothing invented, SD4 pillars distinct and on-Map, SD7 a system they can run, SD10 plain, natural, deliverable | ≥20/24 (9 parts, v13) |
 | `hook-library` | Hook library entries (`HOOKS-EN/VN.md`) and the machine's use of it | HB1 fill-in shape, HB3 surfaces fit, HB4 passes the lab, HB5 example truth (+ HB6 VN native); per file HB9-HB12 and gates HG1-HG3; transcript HU1-HU3 | Per entry: the critical items at 2, HB2, HB7, HB8 ≥1; per file all yes and gates clear; build sample of 20 entries per edition |
 | `launch-campaign` | One campaign plan (types 1-6) and the shared parts printed with it (`CAMPAIGNS-EN/VN.md`) | LC1 fit, LC2 math in their numbers, LC6 real limits, LC8 consent and mechanics, LC9 proof, LC10 the coach's own CTAs (+ LC12 VN native) | EN ≥18/22, VN ≥20/24; second read on the math, every checkpoint and every cart message |
+| `calendar` | The 4-week content calendar (§CM-CALENDAR, `PLAYBOOK-EN/VN.md`) | CL1 complete, CL2 lines per pillar, CL3 steps with a recommendation, CL4 tier balance, CL5 word lengths, CL6 fits their hours, CL10 nothing invented, plain and natural | ≥16/20 |
+| `banks` | Items in the banks and the machine's use of them (`BANKS-EN/VN.md`) | BK2 verbatim and private, BK3 heard vs guess, BK4 KEEP honesty, BK5 proof complete, BK6 story honest, BK7 gift real (keyword a buyer phrase of ≥2 words), BK8 ask line right; transcript BU1 drawn from, BU2 filed unasked, BU3 empty bank, BU5 gift pick, BU7 nothing internal; per file BL1-BL5, gates BG1-BG4 | Shared rule; per file BL1-BL5 yes, BG1-BG4 clear; sampled at build |
+| `copy-frameworks` | One writing framework per piece and the file's 16 frameworks (`COPY-EN/VN.md`) | CF1 framework visible in the beats, CF2 one belief per piece, CF4 word lengths, CF8 invisible machinery (+ CF5 for a story frame); per file CF9-CF12, gates CG1-CG3 | Shared rule; CF3, CF6, CF7 ≥1; every example passes CG1-CG3 |
+| `channel-teardown` | Channel research: teardown, viewers' comments, angle card, NICHE.md (§CM-CHANNELS, §CM-AUDIENCE, §CM-NICHE) | CT2 posts read, CT5 themes and counts, CT6 card traced to evidence, CT9 privacy, read-only, distance | ≥15/18, hard gates clear |
+| `hub` | The hub: Notion workspace, HUB.md, the scheduled tasks that read and write them | HQ1 one choice A/B/C, HQ2 the fence, HQ4 upsert never delete, HQ5 coach-word statuses, HQ6 truth in cells, HQ9 HUB.md shape, HQ11 task reads then writes, HQ13 task text budget | ≥23/28 |
 
 ## Changing a standard
 

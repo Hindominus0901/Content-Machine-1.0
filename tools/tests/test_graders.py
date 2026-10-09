@@ -4400,21 +4400,25 @@ Bạn giúp coach tài chính cá nhân.
 ### Ý 2 · Hỏi để làm gì trước khi hỏi làm thế nào
 ### Ý 3 · Một email cũng là marketing
 
-## 3. Tỷ lệ nội dung: thu hút, niềm tin, chuyển đổi
+## 3. Tuyến nội dung của bạn
+
+## 4. Tỷ lệ nội dung: thu hút, niềm tin, chuyển đổi
 
 THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%
 
-## 4. Hệ thống nội dung của bạn
+## 5. Hệ thống nội dung của bạn
 
 Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1.500 chữ.
 
-## 5. 30 ngày đầu
+## 6. 30 ngày đầu
 
-## 6. Chiến lược này dựa vào đâu
+## 7. Quà tặng và lời mời của bạn
+
+## 8. Chiến lược này dựa vào đâu
 
 - Đã GIỮ (2+ người ở 2+ nơi): chưa có.
 
-## 7. Dùng file này thế nào
+## 9. Dùng file này thế nào
 """
     NHI_LOG = """## Research log
 ### Pages opened
@@ -4434,34 +4438,38 @@ Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1
         report = self.doc_report(self.NHI_DOC)
         check = self.inv(report, "strategy_doc")
         self.assertIs(check["pass"], True, check)
-        self.assertEqual(check["details"]["parts"], 7)
+        self.assertEqual(check["details"]["parts"], 9)
         self.assertEqual((check["details"]["hooks"], check["details"]["held_lines"]), (2, 2))
         bare = self.run_dir([("coach", "go"), ("machine", f"{TAG}Film\nNEXT → Film it.")])
         self.assertEqual(self.inv(graders.grade(bare, self.root), "strategy_doc")["status"], "n/a")
 
-    def test_the_headings_are_the_7_parts_in_the_coachs_pair(self):
+    def test_the_headings_are_the_9_parts_in_the_coachs_pair(self):
         # Hạnh's pair is chị: "Bạn giúp ai" and "Ba ý lớn của bạn" are the wrong one; Nhi's pair is bạn
         self.write("evals/personas/vn/hanh/persona.toml", FT1_PERSONA.replace("bạn–mình", "chị–em"))
         self.write("evals/personas/vn/hanh/expected.toml", FT1_EXPECTED)
         self.write("evals/personas/vn/hanh/answers.md", "## Dump chunk 1\nx\n")
         report = self.doc_report(self.NHI_DOC, persona="vn/hanh")
         ev = self.inv(report, "strategy_doc")["items"][0]["evidence"]
-        self.assertEqual(len(ev), 3, ev)
+        self.assertEqual(len(ev), 5, ev)
         self.assertIn('part 1 "Bạn giúp ai, và vì sao là bạn" says "Bạn"; with this coach the machine says "chị"', ev[0])
         self.assertIn('part 2 "Trụ cột nội dung của bạn" says "bạn"', ev[1])
-        self.assertIn('part 4 "Hệ thống nội dung của bạn" says "bạn"', ev[2])
+        self.assertIn('part 3 "Tuyến nội dung của bạn" says "bạn"', ev[2])
+        self.assertIn('part 5 "Hệ thống nội dung của bạn" says "bạn"', ev[3])
+        self.assertIn('part 7 "Quà tặng và lời mời của bạn" says "bạn"', ev[4])
         right = self.NHI_DOC.replace("Bạn giúp ai, và vì sao là bạn", "Chị giúp ai, và vì sao là chị") \
                             .replace("Trụ cột nội dung của bạn", "Trụ cột nội dung của chị") \
-                            .replace("Hệ thống nội dung của bạn", "Hệ thống nội dung của chị")
+                            .replace("Tuyến nội dung của bạn", "Tuyến nội dung của chị") \
+                            .replace("Hệ thống nội dung của bạn", "Hệ thống nội dung của chị") \
+                            .replace("Quà tặng và lời mời của bạn", "Quà tặng và lời mời của chị")
         self.assertTrue(self.inv(self.doc_report(right, persona="vn/hanh"), "strategy_doc")["items"][0]["pass"])
         # a part missing, and parts out of order
-        missing = self.NHI_DOC.replace("## 5. 30 ngày đầu\n", "")
-        self.assertIn("part 5 has 0 headings", self.inv(self.doc_report(missing), "strategy_doc")["items"][0]["evidence"][0])
-        swapped = self.NHI_DOC.replace("## 4. Hệ thống nội dung của bạn", "## 9. x").replace("## 7. Dùng file này thế nào",
-                                                                                        "## 4. Hệ thống nội dung của bạn")
+        missing = self.NHI_DOC.replace("## 6. 30 ngày đầu\n", "")
+        self.assertIn("part 6 has 0 headings", self.inv(self.doc_report(missing), "strategy_doc")["items"][0]["evidence"][0])
+        swapped = self.NHI_DOC.replace("## 5. Hệ thống nội dung của bạn", "## 9. x").replace("## 9. Dùng file này thế nào",
+                                                                                        "## 5. Hệ thống nội dung của bạn")
         self.assertFalse(self.inv(self.doc_report(swapped), "strategy_doc")["items"][0]["pass"])
         renamed = self.NHI_DOC.replace("Hệ thống nội dung của bạn", "Lịch tuần")
-        self.assertIn("part 4 is headed", self.inv(self.doc_report(renamed), "strategy_doc")["items"][0]["evidence"][0])
+        self.assertIn("part 5 is headed", self.inv(self.doc_report(renamed), "strategy_doc")["items"][0]["evidence"][0])
 
     def test_the_hooks_of_the_big_ideas_are_read_like_the_shorts(self):
         bad = self.NHI_DOC.replace(
@@ -4488,11 +4496,13 @@ Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1
 - Hooks: on screen "That's a rearview mirror." / first line "In the middle of March they find out what happened in January." · on screen "The bank app isn't a forecast." / first line "She checks it every morning."
 ### Big idea 3: Fix it or fire it
 - Hooks: on screen "He repriced his biggest client." / first line "They said yes to a new scope." · on screen "Fix it or fire it." / first line "I've written a lot of those emails."
-## 3. Your content mix: attract, trust, convert
-## 4. Your content system
-## 5. Your first 30 days
-## 6. What this is built on
-## 7. How to use this
+## 3. Your content lines
+## 4. Your content mix: attract, trust, convert
+## 5. Your content system
+## 6. Your first 30 days
+## 7. Your gift and your asks
+## 8. What this is built on
+## 9. How to use this
 """
         ev = self.inv(self.doc_report(en, persona="en/test-coach", edition="en", name="CONTENT-STRATEGY.md"),
                       "strategy_doc")["items"][1]["evidence"]
@@ -4532,11 +4542,12 @@ Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1
         self.assertIn("holds; the Research log keeps nothing", ev[0])
         self.assertTrue(self.inv(self.doc_report(self.NHI_DOC, log=log), "strategy_doc")["items"][3]["pass"])    # "chưa có"
         # the EN word, and an empty claim
-        en_held = "## 6. What this is built on\n\n- What holds: agency owners want to see which clients make money (6 people, 2 places).\n"
-        en_none = "## 6. What this is built on\n\n- What holds: nothing yet.\n"
+        en_held = "## 8. What this is built on\n\n- What holds: agency owners want to see which clients make money (6 people, 2 places).\n"
+        en_none = "## 8. What this is built on\n\n- What holds: nothing yet.\n"
         for body, ok in ((en_held, False), (en_none, True)):
-            doc = ("# E\n\n## 1. Who you help, and why you\n## 2. Your content pillars\n## 3. Your content mix\n"
-                   "## 4. Your content system\n## 5. Your first 30 days\n" + body + "## 7. How to use this\n")
+            doc = ("# E\n\n## 1. Who you help, and why you\n## 2. Your content pillars\n## 3. Your content lines\n"
+                   "## 4. Your content mix\n## 5. Your content system\n## 6. Your first 30 days\n"
+                   "## 7. Your gift and your asks\n" + body + "## 9. How to use this\n")
             check = self.inv(self.doc_report(doc, log=self.EN_LOG, persona="en/test-coach", edition="en", name="CONTENT-STRATEGY.md"),
                              "strategy_doc")
             self.assertIs(check["items"][3]["pass"], ok, check["items"][3])
@@ -4691,6 +4702,7 @@ class StrategyFirstBase(TempRepo):
             session_max_turns = 10
             session_max_minutes = 45
             map_lines = 6
+            strategy_max_steps = 3
             found_min_lines = 2
             found_max_lines = 4
             [lengths]
@@ -4915,7 +4927,9 @@ class StrategyFirstInterviewTests(StrategyFirstBase):
         self.write_expected('\n[interview]\ndump_gives = ["platforms"]\ndump_gaps = ["find"]\n')
         self.assertPasses(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy")
         self.write_expected('\n[interview]\ndump_gives = ["find", "platforms"]\ndump_gaps = ["goal"]\n')
-        self.assertFails(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy", "asks about find/platforms")
+        self.assertPasses(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy")    # channels still open (9 Oct)
+        self.write_expected('\n[interview]\ndump_gives = ["find", "platforms", "channels"]\ndump_gaps = ["goal"]\n')
+        self.assertFails(self.report(self.day0(interview=(S_Q_FIND,), answers=("a",))), "day0_strategy", "asks about find/platforms/channels")
 
     def test_a_dump_with_gaps_needs_a_question_unless_the_coach_says_enough(self):
         self.write_expected('\n[interview]\ndump_gives = ["stance"]\ndump_gaps = ["offer", "find"]\n')
@@ -5225,6 +5239,54 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
         self.assertIn("a short video's script is 50-80 words", self.length(self.grade(self.reply(self.short(60))), "a short")["item"])
 
 
+class StrategyStepsTests(StrategyFirstBase):
+    """v13 (founder, 9 Oct: choices one step at a time): the strategy may come in up to 3 pre-filled steps, the coach's OK
+    after each; the last one ends on the one decision (map.ok). The labelled lines count over all steps."""
+
+    STEP1 = (f"{TAG}Strategy · step 1 of 3\n"
+             "KNOWN FOR: I help women who were walked out with a box find the next job, coffee before resume, instead of feeding the portal.\n"
+             "CONTENT PILLARS: job search · confidence and identity · talking to people\n"
+             "NEXT → Say \"ok\" for step 2.")
+    STEP2 = (f"{TAG}Strategy · step 2 of 3\n"
+             "CONTENT MIX: ATTRACT 40% (what a stranger would pass on) · TRUST 40% (how you think, proof) · CONVERT 20% (the offer, the ask)\n"
+             "YOUR SYSTEM: LinkedIn is the core, re-cut into an email. 3 short videos, 1 long post and 1 email a week. Ask: comment CHAPTER, then DM, then the gift.\n"
+             "NEXT → Say \"ok\" for step 3.")
+    STEP3 = (f"{TAG}Strategy · step 3 of 3\n"
+             "YOUR WORD: CHAPTER\n"
+             "WHAT I FOUND: women say they feel invisible after a layoff (Facebook group, Sept 2026) · \"coffee before resume\" is your own line (my guess)\n"
+             "We'll run this for 4 weeks. OK, or change a line.\n"
+             "NEXT → Say \"ok\" and I'll write today's video.")
+
+    def steps(self, *steps):
+        extra = []
+        for st in steps[1:]:
+            extra += [("coach", "ok"), ("machine", st)]
+        return self.day0(strategy=steps[0], extra_coach=tuple(extra))
+
+    def test_three_steps_pass_with_the_lines_counted_over_all_of_them(self):
+        report = self.report(self.steps(self.STEP1, self.STEP2, self.STEP3))
+        check = self.inv(report, "day0_timing")
+        self.assertEqual((check["details"]["strategy_steps"], check["details"]["map_lines"]), (3, 6), check)
+        self.assertEqual(check["details"]["strategy_step_oks"], 2)
+        self.assertEqual(self.strat(report, "the strategy ends on its one decision")["evidence"], [])
+        self.assertIs(self.inv(report, "day0_strategy")["pass"], True, self.inv(report, "day0_strategy"))
+
+    def test_the_last_step_must_end_on_the_one_decision(self):
+        no_ok = self.STEP3.replace("We'll run this for 4 weeks. OK, or change a line.\n", "")
+        report = self.report(self.steps(self.STEP1, self.STEP2, no_ok))
+        self.assertIn("does not end on its one decision", self.strat(report, "the strategy ends on its one decision")["evidence"][0])
+
+    def test_more_steps_than_acceptance_allows_fail(self):
+        self.write("evals/acceptance.toml", (self.root / "evals/acceptance.toml").read_text(encoding="utf-8")
+                   .replace("strategy_max_steps = 3", "strategy_max_steps = 2"))
+        report = self.report(self.steps(self.STEP1, self.STEP2, self.STEP3))
+        self.assertIn("the strategy came in 3 steps (max 2", self.strat(report, "the strategy ends on its one decision")["evidence"][0])
+
+    def test_a_piece_after_step_1_means_the_strategy_never_reached_its_decision(self):
+        report = self.report(self.steps(self.STEP1, S_WEEK, self.STEP3))
+        self.assertIn("does not end on its one decision", self.strat(report, "the strategy ends on its one decision")["evidence"][0])
+
+
 class StrategyDocStrategyFirstTests(StrategyFirstBase):
     """CONTENT-STRATEGY.md is the long form of the strategy, same order (modules/en/strategy-doc.md)."""
 
@@ -5238,13 +5300,15 @@ Women walked out with a box.
 ### Content pillar 3: Talking to people
 ### Not now
 - tax
-## 3. Your content mix: attract, trust, convert
+## 3. Your content lines
+## 4. Your content mix: attract, trust, convert
 ATTRACT 40% · TRUST 40% · CONVERT 20%
-## 4. Your content system
+## 5. Your content system
 Short video 500-800 words · long post about 1,000 words · long video 1,000-1,500 words.
-## 5. Your first 30 days
-## 6. What this is built on
-## 7. How to use this
+## 6. Your first 30 days
+## 7. Your gift and your asks
+## 8. What this is built on
+## 9. How to use this
 """
 
     def doc(self, text: str, strategy=MAP_REPLY) -> dict:
@@ -5259,9 +5323,9 @@ Short video 500-800 words · long post about 1,000 words · long video 1,000-1,5
         report = self.doc(self.DOC)
         self.assertIs(self.inv(report, "strategy_doc")["pass"], True, self.inv(report, "strategy_doc"))
 
-    def test_the_seven_parts_have_the_new_headings(self):
+    def test_the_nine_parts_have_the_new_headings(self):
         old = self.DOC.replace("## 2. Your content pillars", "## 2. Your buyer, step by step")
-        self.assertIn("part 2 is headed", self.check(self.doc(old), "the 7 parts")["evidence"][0])
+        self.assertIn("part 2 is headed", self.check(self.doc(old), "the 9 parts")["evidence"][0])
 
     def test_part_2_has_3_to_5_pillars_the_ones_the_coach_okd(self):
         two = self.DOC.replace("### Content pillar 3: Talking to people\n", "")
@@ -5270,16 +5334,16 @@ Short video 500-800 words · long post about 1,000 words · long video 1,000-1,5
         self.assertIn('part 2 pillar "Pricing your time" is not one of the strategy the coach OK\'d',
                       self.check(self.doc(other), "part 2")["evidence"][0])
 
-    def test_part_3_mix_adds_to_100(self):
-        self.assertIn("adds up to 110%", self.check(self.doc(self.DOC.replace("CONVERT 20%", "CONVERT 30%")), "part 3")["evidence"][0])
+    def test_part_4_mix_adds_to_100(self):
+        self.assertIn("adds up to 110%", self.check(self.doc(self.DOC.replace("CONVERT 20%", "CONVERT 30%")), "part 4")["evidence"][0])
         self.assertIn("does not give ATTRACT, TRUST and CONVERT a share each",
-                      self.check(self.doc(self.DOC.replace("ATTRACT 40% · TRUST 40% · CONVERT 20%", "ATTRACT, TRUST, CONVERT")), "part 3")["evidence"][0])
+                      self.check(self.doc(self.DOC.replace("ATTRACT 40% · TRUST 40% · CONVERT 20%", "ATTRACT, TRUST, CONVERT")), "part 4")["evidence"][0])
 
-    def test_part_4_gives_lengths_in_words_never_seconds(self):
+    def test_part_5_gives_lengths_in_words_never_seconds(self):
         none = self.DOC.replace("Short video 500-800 words · long post about 1,000 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
-        self.assertEqual(len(self.check(self.doc(none), "part 4")["evidence"]), 3)
+        self.assertEqual(len(self.check(self.doc(none), "part 5")["evidence"]), 3)
         secs = self.DOC.replace("Short video 500-800 words", "Short video 500-800 words (30 seconds)")
-        self.assertIn("measures a length in seconds", self.check(self.doc(secs), "part 4")["evidence"][0])
+        self.assertIn("measures a length in seconds", self.check(self.doc(secs), "part 5")["evidence"][0])
 
 
 class StrategyFirstRealKitTests(unittest.TestCase):

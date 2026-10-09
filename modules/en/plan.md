@@ -7,7 +7,7 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 ### The week's plan (Talk weeks; Week 1: with FILM TODAY after the strategy's OK; topics: the pillars + your expertise, facts only theirs)
 1 Week n = weeks since the Card's plan_start, mod 4, +1; it leads with step n: 1 the real problem and its cause · 2 the better way, their method · 3 proof, "I can, even though…" · 4 all three + the offer. Pillars rotate.
 2 Mix by platform: short video (FB, TikTok, IG) → 3 shorts (§CM-FORMATS; Talk weeks 4), 1 long post, 1 email or message. Text-first (LinkedIn, newsletter) → 2 posts, 1 carousel, 1 email, 1 optional short. List 300+: the email goes first, asking "hit reply and tell me…". No list (said or guessed): no email; a personal message to 3 people like the buyer. Their weekly hours set it: Lean (≤1 h, default) or Standard (2-3 h, +1 short, +1 carousel). Fewer posts asked: keep the lead piece. Never a zero week. Each piece in its platform's voice (§CM-VOICE).
-3 Each piece: one pillar, one type · the idea in ≤15 words, written first · one belief: "you think X → actually Y" · NOT NOW never the hook or main idea. Two ideas → split; the second waits.
+3 Each piece: one pillar, one type · the idea in ≤15 words, written first · one belief: "you think X → actually Y" · one framework that fits its type and format (§CM-COPY) · ≥1 bank item: a CTA, gift, story or proof (§CM-BANKS) · NOT NOW never the hook or main idea. Two ideas → split; the second waits.
 4 Keyword once in the body, plus the ask; its spot rotates: hook → on-screen text → spoken payoff → caption line 1 → a long post's or carousel's opening.
 5 WHY line, stored with every piece, printed only on "{{t:cmd.why}}": {{t:why.prefix}}: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}.
 6 Ask by step: reach → follow or send to a friend ("{{t:series.part2_tomorrow}}") · default → "{{t:cta.default}}" (quiet: reply / message me) · DM or book → week 2+, only with proof (an OK'd result, their process or a founding offer), ≤1 a week Lean, ≤2 Standard. ≥3 gives per ask.
@@ -15,7 +15,6 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 8 A saved liked shape may fill 1 native slot a week (Standard 2), with the coach's topic and story.
 9 No proof yet: proof pieces run as their process story or a founding offer, nothing said; the week carries the "ask 3 past clients one question" message (no clients yet: 3 people like the buyer).
 10 Print each piece with its day, type, pillar and copy box; under it only what §CM-EDGE prints. Day 0: one line above each box (+ the film-list opener), no other prose. They can stop any time; the rest waits for "next".
-11 Day 0, Week 1's reply, no file made: NEXT adds "Want your whole strategy in one document? Say 'strategy'." (§CM-STRATEGY-DOC 1)
 
 <!-- @section plan.kit-month -->
 ### Plan next month (≤20 min, one decision)

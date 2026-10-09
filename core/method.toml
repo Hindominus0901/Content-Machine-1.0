@@ -18,6 +18,14 @@ title_key = "method.title"
 # Until a module is written its anchor is empty and build skips it (lint --release errors).
 
 [[method.anchor]]
+id = "OPTIONS"                   # v13 founder 9 Oct: A/B/C + one recommended at every open step, in order, no vague endings
+sections = ["options.kit-options"]
+
+[[method.anchor]]
+id = "MEMORY"                    # v13 founder 9 Oct: chat start restores state from memory, past chats, HUB.md, NICHE.md
+sections = ["options.kit-memory"]
+
+[[method.anchor]]
 id = "SETUP"
 sections = ["setup.kit-dump", "setup.kit-facts", "setup.kit-order"]
 
@@ -139,6 +147,18 @@ sections = ["research.grow-context", "research.grow-why", "research.grow-brief"]
 id = "RESEARCH-LOOP"
 sections = ["research.grow-drip", "research.grow-reforage"]
 
+[[levelup.research.anchor]]
+id = "CHANNELS"                  # v13 founder 9 Oct: read the channels the coach likes and the competitors before answering
+sections = ["channel-research.grow-channels", "channel-research.grow-teardown"]
+
+[[levelup.research.anchor]]
+id = "AUDIENCE"                  # how their viewers react: comment themes, the angle card
+sections = ["channel-research.grow-audience", "channel-research.grow-card"]
+
+[[levelup.research.anchor]]
+id = "NICHE"                     # the niche primer, saved as NICHE.md
+sections = ["channel-research.grow-niche", "channel-research.grow-niche-file"]
+
 # --- Level-ups/LAUNCH-<SUFFIX>.md: the launch program (type, math, brief, steps, calendars, desk, scripts, debrief) and ads
 [levelup.launch]
 file = "LAUNCH"
@@ -186,7 +206,7 @@ sections = ["launch-plan.grow-debrief"]
 id = "ADS"
 sections = ["convert.grow-ads"]
 
-# --- Level-ups/BOARD-<SUFFIX>.md: the campaign board (one Google Sheet) and the three nudges
+# --- Level-ups/BOARD-<SUFFIX>.md: the hub (a Notion workspace + HUB.md in the project; the Google Sheet is the fallback) and the scheduled tasks that read and write it
 [levelup.board]
 file = "BOARD"
 skill = "cm-board"
@@ -194,6 +214,14 @@ title_key = "levelup.board.title"
 budget = "levelup_board"
 assets = "Board"                         # Level-ups/Board/: the five header-row CSVs that §CM-BOARD 2 imports ...
 assets_from = "templates/sheets/{lang}"  # ... copied from here (the plugin's board skill carries them too)
+
+[[levelup.board.anchor]]
+id = "HUB-NOTION"                # v13 founder 9 Oct: the Notion hub the machine builds through the connector
+sections = ["hub.grow-notion", "hub.grow-notion-build"]
+
+[[levelup.board.anchor]]
+id = "HUB-MD"
+sections = ["hub.grow-hubmd"]
 
 [[levelup.board.anchor]]
 id = "BOARD"
@@ -214,6 +242,10 @@ sections = ["hub.grow-campaign"]
 [[levelup.board.anchor]]
 id = "NUDGES"
 sections = ["automation.grow-setup"]
+
+[[levelup.board.anchor]]
+id = "HUB-TASKS"                 # what each scheduled task reads and writes in the hub + the monthly task
+sections = ["automation.grow-hubtasks", "automation.grow-task-monthly"]
 
 [[levelup.board.anchor]]
 id = "NUDGE-JOBS"
@@ -308,7 +340,8 @@ sections = ["packaging.grow-intro"]
 id = "LONG-CUTS"
 sections = ["fmt-long.grow-cuts"]
 
-# --- Level-ups/PLAYBOOK-<SUFFIX>.md: the content strategy document (founder, 7 Oct); its own file, STRATEGY is full
+# --- Level-ups/PLAYBOOK-<SUFFIX>.md: the strategy engine (8 steps, A/B/C), the three content types in depth, content lines, the 4-week calendar and
+# the content strategy document (founder, 7 and 9 Oct); its own file, STRATEGY is full
 [levelup.playbook]
 file = "PLAYBOOK"
 skill = "cm-playbook"
@@ -316,8 +349,24 @@ title_key = "levelup.playbook.title"
 budget = "levelup_playbook"
 
 [[levelup.playbook.anchor]]
+id = "STRATEGY-ENGINE"           # v13 (founder 9 Oct): the strategy in 8 steps, one a reply, A/B/C + one pick
+sections = ["strategy-doc.grow-engine", "strategy-doc.grow-engine-save", "strategy-doc.grow-engine-first", "strategy-doc.grow-engine-last"]
+
+[[levelup.playbook.anchor]]
+id = "TIERS"                     # ATTRACT / TRUST / CONVERT in depth
+sections = ["strategy-doc.grow-tiers", "strategy-doc.grow-tiers-convert"]
+
+[[levelup.playbook.anchor]]
+id = "CONTENT-LINES"             # 2-3 named recurring series per pillar
+sections = ["strategy-doc.grow-lines", "strategy-doc.grow-lines-example"]
+
+[[levelup.playbook.anchor]]
+id = "CALENDAR"                  # the 4-week calendar generator
+sections = ["strategy-doc.grow-calendar", "strategy-doc.grow-calendar-table", "strategy-doc.grow-calendar-rules"]
+
+[[levelup.playbook.anchor]]
 id = "STRATEGY-DOC"
-sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-pillars", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
+sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-who", "strategy-doc.grow-doc-pillars", "strategy-doc.grow-doc-mix", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
 
 # --- Level-ups/HOOKS-<SUFFIX>.md: the hook library (100+ hook shapes in 20 mechanisms, by surface: shorts, titles, slide 1, subjects, ads, the ask).
 # §CM-HOOKS (STRATEGY) stays the lab that picks and checks; HOOK-LIBRARY is how it draws from the shapes.
@@ -442,6 +491,91 @@ sections = ["launch-campaigns.grow-timing"]
 [[levelup.campaigns.anchor]]
 id = "LAUNCH-AFTER"
 sections = ["launch-campaigns.grow-after"]
+
+# --- Level-ups/BANKS-<SUFFIX>.md: the banks (founder, 9 Oct: "Ngân hàng hook, cta, lead magnet, research … input tốt thì output sẽ oke"):
+# what the banks hold and how they fill, asks by rung × platform, gifts by buyer stage, where buyers talk, stories, proof.
+[levelup.banks]
+file = "BANKS"
+skill = "cm-banks"
+title_key = "levelup.banks.title"
+budget = "levelup_banks"
+
+[[levelup.banks.anchor]]
+id = "BANKS"
+sections = ["content-banks.grow-banks", "content-banks.grow-fill"]
+
+[[levelup.banks.anchor]]
+id = "CTA-BANK"
+sections = ["content-banks.grow-cta", "content-banks.grow-cta-video", "content-banks.grow-cta-text"]
+
+[[levelup.banks.anchor]]
+id = "MAGNET-BANK"
+sections = ["content-banks.grow-magnet", "content-banks.grow-magnet-early", "content-banks.grow-magnet-mid", "content-banks.grow-magnet-late"]
+
+[[levelup.banks.anchor]]
+id = "RESEARCH-BANK"
+sections = ["content-banks.grow-research", "content-banks.grow-research-queries", "content-banks.grow-research-mine"]
+
+[[levelup.banks.anchor]]
+id = "STORY-BANK"
+sections = ["content-banks.grow-story"]
+
+[[levelup.banks.anchor]]
+id = "PROOF-BANK"
+sections = ["content-banks.grow-proof"]
+
+# --- Level-ups/COPY-<SUFFIX>.md: writing frameworks, storytelling, persuasion (founder, 9 Oct: "làm kĩ các framework viết bài
+# rồi là storytelling và persuasion"). §CM-COPY picks ONE framework per piece by tier × format × goal; the kit writers and the
+# hook lab use it silently. Framework names stay internal; the coach sees a plain label only on "why?".
+[levelup.copy]
+file = "COPY"
+skill = "cm-copy"
+title_key = "levelup.copy.title"
+budget = "levelup_copy"
+
+[[levelup.copy.anchor]]
+id = "COPY"
+sections = ["copywriting.grow-pick", "copywriting.grow-length"]
+
+[[levelup.copy.anchor]]
+id = "COPY-FRAMEWORKS"
+sections = ["copywriting.grow-frames"]
+
+[[levelup.copy.anchor]]
+id = "COPY-STORIES"
+sections = ["copywriting.grow-stories"]
+
+[[levelup.copy.anchor]]
+id = "COPY-BELIEFS"
+sections = ["copywriting.grow-beliefs"]
+
+[[levelup.copy.anchor]]
+id = "COPY-PROBLEM"
+sections = ["copywriting.grow-problem"]
+
+[[levelup.copy.anchor]]
+id = "COPY-PROOF"
+sections = ["copywriting.grow-proof"]
+
+[[levelup.copy.anchor]]
+id = "COPY-LONG"
+sections = ["copywriting.grow-long"]
+
+[[levelup.copy.anchor]]
+id = "COPY-LISTS"
+sections = ["copywriting.grow-lists"]
+
+[[levelup.copy.anchor]]
+id = "STORYTELLING"
+sections = ["copywriting.grow-story", "copywriting.grow-story-craft"]
+
+[[levelup.copy.anchor]]
+id = "PERSUASION"
+sections = ["copywriting.grow-persuade", "copywriting.grow-ethics"]
+
+[[levelup.copy.anchor]]
+id = "COPY-VOICE"
+sections = ["copywriting.grow-voice"]
 
 # ---------------------------------------------------------------- L3 Autopilot skill references
 # One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by

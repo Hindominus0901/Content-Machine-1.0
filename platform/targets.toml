@@ -450,6 +450,27 @@ evidence = "VERIFY"
 verified_on = ""
 source = "wf13-platform-facts §10 check 14: Claude in Chrome (Pro) and the ChatGPT extension (Plus) list a creator's last 12-20 posts with date and count, read-only. Gates opt-in Browse in GROW (L4)."
 
+[limits.chatgpt_task_monthly_recurrence]
+value = ""
+unit = "recurrence"
+evidence = "VERIFY"
+verified_on = ""
+source = "v13 hub (9 Oct 2026): the Monthly task runs the first Wednesday of the month (automation.grow-task-monthly, §CM-HUB-TASKS). Check that a ChatGPT Plus/Pro scheduled task takes 'first Wednesday of the month' (Free/Go has no monthly task: it comes as the month's last Friday NEXT)."
+
+[limits.claude_scheduled_task_writes_notion]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "v13 hub (9 Oct 2026): scheduled tasks write the Notion hub, upserts only, inside the root page (§CM-HUB-TASKS). Check that a Claude scheduled task can write Notion unattended under limits.claude_scheduled_task_approval_modes."
+
+[limits.chatgpt_notion_app_writes_in_project_chat]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "v13 hub (9 Oct 2026): §CM-HUB-NOTION builds and keeps the workspace through the Notion connector. Check that the ChatGPT Notion app offers write actions (create pages, databases, rows) in a project chat."
+
 # ================================================================ Budgets
 # limit = the targets entry the budget protects ("" when the budget is our own design rule).
 # Character counts are taken after NFC normalisation.
@@ -488,10 +509,10 @@ note = "Retrieval reads files in chunks (ChatGPT file search: ~800-token chunks,
 [budgets.levelup_research]
 artifact = "Level-ups/RESEARCH-{EN,VN}.md"
 unit = "bytes"
-en = 30720
-vn = 30720
+en = 41984
+vn = 54272
 limit = ""
-note = "One level-up file per area (core/method.toml [levelup.<area>]), 30 KB each (24 KB until 2026-10-07; raised for the Soo Wei Goh and Matt Gray strategy depth, docs/research/strategy-coverage.md) so a coach adds only the ones needed: the Project route has 5 files on Free (chatgpt_free_project_files), method + Brand Card + the level-ups wanted. Each anchor block also stays within method_section."
+note = "41 KB EN / 53 KB VN since 9 Oct 2026: §CM-CHANNELS, §CM-AUDIENCE and §CM-NICHE were added (founder 9 Oct: research the channels the coach likes, the competitors, how their viewers react, and the niche, before answering). Measured about 36.2 KB EN / 47.2 KB VN plus ~15% headroom. Was 30 KB each: one level-up file per area (core/method.toml [levelup.<area>]) so a coach adds only the ones needed: the Project route has 5 files on Free (chatgpt_free_project_files), method + Brand Card + the level-ups wanted. Each anchor block also stays within method_section."
 
 [budgets.levelup_launch]
 artifact = "Level-ups/LAUNCH-{EN,VN}.md"
@@ -503,9 +524,10 @@ limit = ""
 [budgets.levelup_board]
 artifact = "Level-ups/BOARD-{EN,VN}.md"
 unit = "bytes"
-en = 30720
-vn = 30720
+en = 35840
+vn = 47104
 limit = ""
+note = "35 KB EN / 46 KB VN since 9 Oct 2026: the hub (a Notion workspace the machine builds, HUB.md in the project, the Google Sheet as the fallback) and the scheduled tasks that read and write it (founder 9 Oct). Measured about 30.6 KB EN / 40.2 KB VN plus ~15% headroom. Each anchor block still stays within method_section."
 
 [budgets.levelup_strategy]
 artifact = "Level-ups/STRATEGY-{EN,VN}.md"
@@ -518,10 +540,10 @@ note = "36 KB since 7 Oct 2026 (was 30,720 B): §CM-MONTH and §CM-LIKED moved h
 [budgets.levelup_playbook]
 artifact = "Level-ups/PLAYBOOK-{EN,VN}.md"
 unit = "bytes"
-en = 30720
-vn = 30720
+en = 34816
+vn = 45056
 limit = ""
-note = "The content strategy document (§CM-STRATEGY-DOC), 7 Oct 2026: its own file because STRATEGY is full. Each anchor block still stays within method_section."
+note = "v13 (founder 9 Oct, 'a content department in a box'): the strategy engine (8 steps with A/B/C options), the three content types in depth, content lines and the 4-week calendar joined the strategy document. Sized to the measured file (28.9 KB EN / 38.4 KB VN) plus about 17-20% headroom. Each anchor block still stays within method_section."
 
 [budgets.levelup_hooks]
 artifact = "Level-ups/HOOKS-{EN,VN}.md"
@@ -538,6 +560,22 @@ en = 53248
 vn = 72704
 limit = ""
 note = "The launch campaign library: six campaigns with day cards and checkpoints, then the checklist, objections, FAQ, sales page, sequences, the live, live selling, timing and after. Its own file because LAUNCH holds the picker and the math; sized to the measured file plus about 15% headroom (52 KB EN / 71 KB VN). Each anchor block still stays within method_section."
+
+[budgets.levelup_banks]
+artifact = "Level-ups/BANKS-{EN,VN}.md"
+unit = "bytes"
+en = 32768
+vn = 40960
+limit = ""
+note = "The banks (founder, 9 Oct: 'Ngân hàng hook, cta, lead magnet, research … input tốt thì output sẽ oke'): what the banks hold, how they fill and are drawn from, asks by rung × platform, gifts by buyer stage, where buyers talk, stories, proof. Measured about 30.7 KB EN / 38.9 KB VN; ~7% headroom. Each anchor block still stays within method_section."
+
+[budgets.levelup_copy]
+artifact = "Level-ups/COPY-{EN,VN}.md"
+unit = "bytes"
+en = 40960
+vn = 53248
+limit = ""
+note = "Writing frameworks, storytelling and persuasion (founder, 9 Oct: 'làm kĩ các framework viết bài rồi là storytelling và persuasion'): 16 frameworks with beats in words, the pick table, storytelling, persuasion and its ethics lines, the voice part. Its own file; measured about 29.7 KB EN / 39.4 KB VN, headroom for examples. Each anchor block still stays within method_section."
 
 [budgets.brand_card]
 artifact = "Brand Card (whole)"
@@ -655,9 +693,9 @@ vn = 1
 limit = "chatgpt_free_uploads_per_day"
 
 [budgets.lifetime_sources]
-artifact = "project sources the kit ever needs on Free (method, Brand Card, up to 3 of the 7 level-up files)"
+artifact = "project sources the kit ever needs on Free (method, Brand Card, up to 3 of the 9 level-up files)"
 unit = "files"
 en = 5
 vn = 5
 limit = "chatgpt_free_project_files"
-note = "Was 3 (method, Brand Card, one GROW file). The level-ups are now seven files (RESEARCH, LAUNCH, CAMPAIGNS, BOARD, STRATEGY, HOOKS, PLAYBOOK); a coach adds the ones needed, and the Claude plugin loads them as companion skills with no upload."
+note = "Was 3 (method, Brand Card, one GROW file). The level-ups are now nine files (RESEARCH, LAUNCH, CAMPAIGNS, BOARD, STRATEGY, HOOKS, PLAYBOOK, BANKS, COPY); a coach adds the ones needed, and the Claude plugin loads them as companion skills with no upload."

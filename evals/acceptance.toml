@@ -5,7 +5,7 @@
 # wf14-voice-language-spec.md §5; [vn_natural] from docs/research/vn-language-guide.md §9.3. wf14/wf15 win
 # over wf11/wf12 where they differ. Where they differ, the reconciliations in docs/PLAN.md apply (Ready = Edge >= 8;
 # release floor 7). Strategy first (founder, 7 Oct 2026 night, after his v10 run): [day0] and [lengths] below are for the order
-# xưng hô, dump, interview, ONE reply with the strategy, FILM TODAY and Week 1 only after the OK; lengths are in words.
+# xưng hô, dump, interview, the strategy (one reply, or up to 3 steps since 9 Oct), FILM TODAY and Week 1 only after the OK; lengths are in words.
 
 [install]
 door_a_max_actions = 4
@@ -37,6 +37,10 @@ interview_max_questions = 6               # day0_strategy: more questions than t
 map_lines = 6                             # the strategy's labelled lines: KNOWN FOR · CONTENT PILLARS · CONTENT MIX · YOUR SYSTEM
                                           #   · YOUR WORD · WHAT I FOUND (map.known, map.topics, map.mix, map.system, map.word,
                                           #   map.found), then "OK, or change a line". YOUR VOICE left the proposal (it is in the card)
+strategy_max_steps = 3                    # v13 (founder, 9 Oct: choices one step at a time): the strategy may come in up to 3 pre-filled
+                                          #   steps (§CM-MAP; with PLAYBOOK loaded §CM-STRATEGY-ENGINE), one a reply, the coach's OK after
+                                          #   each; the LAST one ends on map.ok ("the one decision"). day0_timing adds one coach turn per
+                                          #   step but the last to the session's turns. 1 = the old one-reply strategy.
 strategy_max_words_en = 400               # the strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): a
 strategy_max_words_vn = 450               #   proposal, not a wall (VN in tiếng)
 pillars_min = 3                           # CONTENT PILLARS: 3-5 broad topic clusters (message.kit-map 2) ...

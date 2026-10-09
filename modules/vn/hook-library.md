@@ -228,12 +228,12 @@ Bẫy: mười bước mà ba bước đã làm hết việc. TRƠN: "Mẹo phá
 7 Đổi tiêu đề một lần, theo §CM-PACKAGING 5: tiêu đề mới HOẶC chữ ảnh bìa mới, không đổi cả hai.
 TRƠN → HAY: "Chia sẻ về chuyện định giá" → "Tăng giá mà không mất khách quen" · "Buổi hỏi đáp" → "Mang tin nhắn bị seen vào đây: sửa trực tiếp 45 phút".
 
-<!-- @section hook-library.grow-slides src=0d5e503684 -->
+<!-- @section hook-library.grow-slides src=7444396011 -->
 ### Slide 1 của carousel, dòng 1 bài dài
 CAROUSEL (§CM-TEXT-FORMATS 1; Facebook, TikTok dạng ảnh)
 1 Slide 1 là lời hứa cả bộ phải giữ: kết quả bằng chữ khách, ≤70 ký tự, hai dòng chữ to. Có số chỉ khi đúng số slide hay số bước. Không nhãn ("Bắt đầu từ đây", "Mẹo cho coach"), không rào đón, không lấy tên thương hiệu làm hook, không để dấu "→" gánh việc.
 2 Dáng hợp slide 1: danh sách, các bước, lỗi, dấu hiệu, các chặng, cách cũ cách mới, người ta bảo / thực tế, "lấy luôn…", điều không ai nói, câu khách hay hỏi.
-3 Slide 2 giữ người đọc lại: vì sao nên nghe (một dữ kiện của họ) hoặc cái được mất. Slide cuối trả lời điều đã hé, rồi tới quà của chính bộ đó + một từ khoá (§CM-HOOK-CTA).
+3 Slide 2 giữ người đọc lại: vì sao nên nghe (một dữ kiện của họ) hoặc cái được mất. Slide cuối trả lời điều đã hé, rồi tới quà của chính bộ đó + từ khoá của nó (§CM-HOOK-CTA).
 4 Bìa đứng một mình vẫn hiểu, khi lướt feed hay khi được chia sẻ vào nhóm, không cần caption.
 5 TRƠN → HAY: "Mẹo định giá cho freelancer" → "5 câu nói trước khi báo giá để khách thấy giá hợp lý" · "Chiến lược nội dung cơ bản" → "Chưa ai mua thì đăng gì?" · "Thói quen buổi sáng của mình" → "{N} phút quyết định cả ngày làm việc với khách".
 BÀI DÀI FACEBOOK (§CM-POSTS 1)
@@ -267,15 +267,15 @@ ZALO (tin riêng, tin nhóm, tin OA)
 7 TRƠN → HAY: "Khoá coaching tốt nhất cho freelancer!" → "Inbox đầy câu 'giá sao em?' mà chẳng ai chốt." · "Giảm cân cấp tốc!" → không bao giờ; thay bằng "Tan làm mệt quá, không đi tập nổi? Lịch tập gói gọn trong 20 phút bạn còn rảnh." (cách làm, không kết quả) · "Ưu đãi có hạn!" → hạn thật: "Đóng đăng ký 8 giờ tối thứ Sáu; lớp sau phải qua Tết mới mở."
 8 Sản phẩm về tiền, sức khoẻ, cơ thể: hook nói cách làm; dưới quảng cáo MỘT dòng lưu ý nền tảng như §CM-ADS 7.
 
-<!-- @section hook-library.grow-cta src=043f45eed8 -->
+<!-- @section hook-library.grow-cta src=c575695079 -->
 ### Lời mời theo bậc (lời mời khép lại điều hook đã hé)
 1 Bậc (§CM-WEEK 6): lan rộng → từ khoá comment → nhắn riêng → đường link → lời mời mua. Mỗi bài một lời mời. Quà đặt tên theo kết quả của CHÍNH bài đó và có sẵn trước khi đăng (§CM-CTA-KIT 2).
 2 Lan rộng: "Gửi cái này cho đứa bạn đang {hoàn cảnh}." · "Mai lên phần 2: {điều còn bỏ ngỏ}."
-3 Từ khoá comment (bật mặc định): "{{t:cta.default}}" Ví dụ: "Comment GIA hay nhắn riêng, mình gửi bảng tính giá trong video này nhé." Coach chọn kiểu nhẹ (§CM-CTA-KIT 5): "{{t:cta.quiet}}" Từ khoá là chữ khách hay nói, 1-2 chữ, viết hoa không dấu; không GUIDE, FREE do máy tự chọn.
+3 Từ khoá comment (bật mặc định): "{{t:cta.default}}" Ví dụ: "Comment BANG GIA hay nhắn riêng, mình gửi bảng tính giá trong video này nhé." Coach chọn kiểu nhẹ (§CM-CTA-KIT 5): "{{t:cta.quiet}}" Từ khoá là cụm chữ khách hay nói, từ 2 tiếng trở lên (BANG GIA, KHACH DAU), viết hoa không dấu; không GUIDE, FREE do máy tự chọn.
 4 Nhắn riêng (từ tuần 2, khi có bằng chứng): "Ai đang kẹt đúng chỗ này cứ nhắn riêng mình, kể mình nghe đang vướng ở đâu; mình tự trả lời từng người."
 5 Link: để ở comment, bio hay phần mô tả, không để trong thân bài chữ: "Checklist mình để ở comment đầu tiên nha." · "Link đăng ký ở phần mô tả; workshop tối thứ Năm, {giờ}."
 6 Lời mời mua: được gì, giá chính xác, cho ai, giới hạn thật kèm lý do, một việc: "Học phí {giá}, {N} buổi. Lớp nhận {N} bạn vì bài ai mình cũng mở ra sửa. Nhắn mình chữ LOP, mình gửi lịch." Chỉ số thật.
 7 Coach tự chọn ("chấm", "comment nếu…", "đủ 100 comment mình làm phần 2", emoji): ghi y nguyên, không làm mềm; dưới đó MỘT dòng: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 8 Lời mời hợp với từng dáng: số của coach → tờ bảng đằng sau con số · lỗi → checklist · băn khoăn → nhắn riêng nói chuyện · câu khách hỏi → câu trả lời đầy đủ làm quà · thử thách → vào nhóm (ngày bắt đầu thật) · ngày sau khi hết vấn đề, mổ xẻ kết quả → lời mời mua.
 9 Không: gấp gáp giả ("chỉ còn 3 suất" khi không phải), "Đừng bỏ lỡ", "Nhanh tay", "giá ib" cho món có giá cố định, quà chưa viết, hai lời mời trong một bài.
-TRƠN → HAY: "Follow để xem thêm nhiều mẹo hay!" → "Mai lên phần 2: câu mình sẽ thêm vào bảng giá của bạn." · "Link ở bio" → "Comment GIA hay nhắn riêng, mình gửi bảng tính giá mình đang dùng nhé."
+TRƠN → HAY: "Follow để xem thêm nhiều mẹo hay!" → "Mai lên phần 2: câu mình sẽ thêm vào bảng giá của bạn." · "Link ở bio" → "Comment BANG GIA hay nhắn riêng, mình gửi bảng tính giá mình đang dùng nhé."

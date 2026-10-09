@@ -231,7 +231,7 @@ Flat → strong: "My thoughts on pricing" → "how to raise your prices (without
 CAROUSEL (§CM-TEXT-FORMATS 1)
 1 Slide 1 is a promise the slides keep: the result in buyer words, ≤60 characters, two lines of big type. A number only if it is the real count of slides or steps. Never a label ("Start here", "Tips for coaches"), a hedge, the brand name or a "→" doing the work.
 2 Mechanisms that suit slide 1: list or steps, mistakes, signs, stages, old vs new, myth vs truth, "steal my…", things nobody tells you, the question they ask.
-3 Slide 2 keeps them reading: why listen (one fact of theirs) or the stake. The last slide answers the loop, then this carousel's gift + one word (§CM-HOOK-CTA).
+3 Slide 2 keeps them reading: why listen (one fact of theirs) or the stake. The last slide answers the loop, then this carousel's gift + its keyword (§CM-HOOK-CTA).
 4 The cover reads alone in a feed or shared into a group: it makes sense with no caption.
 5 Flat → strong: "Pricing tips for freelancers" → "5 lines that make a price feel fair (before you say it)" · "Content strategy 101" → "What to post when nobody's buying yet" · "My morning routine" → "The {N} minutes that decide my whole client day".
 LINE 1 OF A LONG POST (§CM-POSTS 1)
@@ -269,11 +269,11 @@ CHAT OPENER (Zalo, WhatsApp, a DM)
 ### CTA lines by rung (the ask closes the loop the hook opened)
 1 Rungs (§CM-WEEK 6): reach → comment word → message → link → offer. One ask per piece. The gift is named after THIS piece's result; it exists before the post goes out (§CM-CTA-KIT 2).
 2 Reach: "Send this to the friend who {situation}." · "Part 2 tomorrow: {the open question}."
-3 Comment word (on by default): "{{t:cta.default}}" e.g. "Comment PRICE and I'll send the one-page price sheet from this video." On the quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}" The word is the buyer's own, 1-2 words, never a machine-picked GUIDE or FREE.
+3 Comment word (on by default): "{{t:cta.default}}" e.g. "Comment PRICE CHECK and I'll send the one-page price sheet from this video." On the quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}" The keyword is a phrase the buyer says, 2+ words (PRICE CHECK, FIRST CLIENT), never a machine-picked GUIDE or FREE.
 4 Message (week 2+, with proof): "If this is you, message me 'stuck' and tell me where you are; I'll reply myself."
 5 Link: in a comment, the bio or the description, never in the body of a text post: "The checklist is in the first comment." · "The sign-up page is in the description; the workshop is Thursday, {time}."
 6 Offer: what they get, the exact price, who it's for, a real cap with its reason, one action: "{N} seats, because I review every page myself. Message me SEAT." Only real numbers.
 7 The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 8 Each mechanism's natural ask: their number → the sheet behind it · mistake → the checklist · objection → a message to talk it through · question → the full answer as the gift · challenge → join (real start) · after-state, result taken apart → the offer.
 9 Never: fake urgency ("only 3 left" when it isn't), "Don't miss out", "DM for price" on a fixed-price offer, a gift not yet written, two asks in one piece.
-Flat → strong: "Follow for more tips!" → "Part 2 tomorrow: the one line I'd add to your price page." · "Link in bio" → "Comment PRICE and I'll send the price sheet I use."
+Flat → strong: "Follow for more tips!" → "Part 2 tomorrow: the one line I'd add to your price page." · "Link in bio" → "Comment PRICE CHECK and I'll send the price sheet I use."

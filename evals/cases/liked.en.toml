@@ -57,8 +57,8 @@
 #   (?:'|’) and quotes as ["“”].
 # - The liked.* and angle.* lines are asserted with the strings/en.toml liked.* text (wf13 §2). {slots}
 #   become wildcards: liked.saved "Saved to Posts you like: {shape in plain words}. I'll use it when we
-#   plan {Monday}." with the NEXT clause liked.make_offer "Want your version now? Say "make my
-#   version"."; liked.evidence "Ready to film · I'd post it: their shape, your {bank_fact}; nothing
+#   plan {Monday}." with the NEXT clause liked.make_offer "A) your version now (recommended) B) keep the
+#   shape for later."; liked.evidence "Ready to film · I'd post it: their shape, your {bank_fact}; nothing
 #   copied." (on "why?" only); liked.slot "NEXT → This replaces {Thursday's video}. Film it today, 2
 #   takes. Say 'skip' to keep the old one."; liked.cant_open "I can't
 #   open {TikTok} links here, so I won't guess. NEXT → Send a screenshot with the words showing, or tell
@@ -127,7 +127,7 @@ input = '''<<paste: evals/personas/en/proof-coach/liked-paste.md, the "## L2" bl
 regex = [
   '''Saved to Posts you like: [^\n]+?\. I(?:'|’)ll use it when we plan [^\n]+?\.''',
   '''Saved to Posts you like:[^\n]*(?i:\bquestions?\b|\bquote\b|\breframe\b)''',
-  '''NEXT →[^\n]*Want your version now\? Say ["“]make my version["”]''',
+  '''NEXT →[^\n]*A\) your version now \(recommended\) B\) keep the shape for later''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -162,7 +162,7 @@ input = '''<<paste: evals/personas/en/service-biz/liked-paste.md, the "## L2" bl
 regex = [
   '''Saved to Posts you like: [^\n]+?\. I(?:'|’)ll use it when we plan [^\n]+?\.''',
   '''Saved to Posts you like:[^\n]*(?i:\bquestions?\b)''',
-  '''NEXT →[^\n]*Want your version now\? Say ["“]make my version["”]''',
+  '''NEXT →[^\n]*A\) your version now \(recommended\) B\) keep the shape for later''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -187,7 +187,7 @@ context = "Week 4, Wednesday 11 Nov 2026, MacBook Air, Claude Pro. Brand Card v1
 input = '''<<paste: evals/personas/en/linda-claude-pro-mac-newsletter/liked-paste.md, the "## L10" block: everything below its HTML comment, verbatim>>'''
 regex = [
   '''Saved to Posts you like: [^\n]+?\. I(?:'|’)ll use it when we plan [^\n]+?\.''',
-  '''NEXT →[^\n]*Want your version now\? Say ["“]make my version["”]''',
+  '''NEXT →[^\n]*A\) your version now \(recommended\) B\) keep the shape for later''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [

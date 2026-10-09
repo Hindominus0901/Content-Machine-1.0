@@ -1000,30 +1000,40 @@ class IcsTests(TempRepo):
 
 REPO = TOOLS.parent
 LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.<area>] lists them (P3-P5 proposals)
-    "research": ("RESEARCH", ["RESEARCH", "RESEARCH-PLAN", "LISTEN", "RESEARCH-ROOT", "RESEARCH-LOOP"]),
+    "research": ("RESEARCH", ["RESEARCH", "RESEARCH-PLAN", "LISTEN", "RESEARCH-ROOT", "RESEARCH-LOOP", "CHANNELS",
+                              "AUDIENCE", "NICHE"]),
     "launch": ("LAUNCH", ["LAUNCH", "LAUNCH-BRIEF", "LAUNCH-STEPS", "LAUNCH-DAYS", "LAUNCH-DESK", "LAUNCH-POSTS",
                           "LAUNCH-MESSAGES", "LAUNCH-LIVE", "LAUNCH-DEBRIEF", "ADS"]),
-    "board": ("BOARD", ["BOARD", "BOARD-COLUMNS", "BOARD-ROWS", "BOARD-CAMPAIGNS", "NUDGES", "NUDGE-JOBS",
-                        "NUDGE-RULES", "NUDGE-TEXTS", "NUDGE-CLAUDE", "NUDGE-LAUNCH"]),
+    "board": ("BOARD", ["HUB-NOTION", "HUB-MD", "BOARD", "BOARD-COLUMNS", "BOARD-ROWS", "BOARD-CAMPAIGNS", "NUDGES",
+                        "HUB-TASKS", "NUDGE-JOBS", "NUDGE-RULES", "NUDGE-TEXTS", "NUDGE-CLAUDE", "NUDGE-LAUNCH"]),
     "strategy": ("STRATEGY", ["STRATEGY", "SEASON", "WHAT-TO-SAY", "MONTH", "STRATEGY-REVIEW", "CHARACTER-DEEP",
                               "CHARACTER-SCENES", "IDEAS", "MOMENTS", "LIKED", "PACKAGING", "HOOKS", "TEXT-FORMATS",
                               "LONG", "LONG-INTRO", "LONG-CUTS"]),
-    "playbook": ("PLAYBOOK", ["STRATEGY-DOC"]),
+    "playbook": ("PLAYBOOK", ["STRATEGY-ENGINE", "TIERS", "CONTENT-LINES", "CALENDAR", "STRATEGY-DOC"]),
     "hooks": ("HOOKS", ["HOOK-LIBRARY", "HOOK-FLIP", "HOOK-PROOF", "HOOK-SCENE", "HOOK-CALLOUT", "HOOK-MISTAKE",
                         "HOOK-SHORT", "HOOK-TITLES", "HOOK-TEXT", "HOOK-ADS", "HOOK-CTA"]),
     "campaigns": ("CAMPAIGNS", ["CAMPAIGNS", "CAMPAIGN-FOUNDING", "CAMPAIGN-GIFT", "CAMPAIGN-CLASS", "CAMPAIGN-EVENT",
                                 "CAMPAIGN-APPLY", "CAMPAIGN-RELAUNCH", "LAUNCH-PREP", "OBJECTIONS", "LAUNCH-FAQ",
                                 "SALES-PAGE", "LAUNCH-SEQUENCES", "RUN-OF-SHOW", "LIVE-SELLING", "LAUNCH-TIMING",
                                 "LAUNCH-AFTER"]),
+    "banks": ("BANKS", ["BANKS", "CTA-BANK", "MAGNET-BANK", "RESEARCH-BANK", "STORY-BANK", "PROOF-BANK"]),
+    "copy": ("COPY", ["COPY", "COPY-FRAMEWORKS", "COPY-STORIES", "COPY-BELIEFS", "COPY-PROBLEM", "COPY-PROOF",
+                      "COPY-LONG", "COPY-LISTS", "STORYTELLING", "PERSUASION", "COPY-VOICE"]),
 }
 LEVELUP_BUDGETS = {   # bytes (en, vn) where an area is not the 30,720 B default
     "strategy": (36864, 36864),      # +MONTH, LIKED (7 Oct)
     "hooks": (45056, 58368),         # the hook library, built size + ~15% (7 Oct)
     "campaigns": (53248, 72704),     # the launch campaign library, built size + ~15% (7 Oct)
+    "research": (41984, 54272),      # +CHANNELS, AUDIENCE, NICHE (9 Oct)
+    "board": (35840, 47104),         # the hub and the tasks that read and write it (9 Oct)
+    "playbook": (34816, 45056),      # the strategy engine, tiers, lines, calendar (9 Oct)
+    "banks": (32768, 40960),         # the banks (9 Oct)
+    "copy": (40960, 53248),          # the writing frameworks, storytelling, persuasion (9 Oct)
 }
-PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy", "cm-playbook", "cm-hooks", "cm-campaigns"]
+PLUGIN_SKILLS = ["cm-board", "cm-launch", "cm-research", "cm-strategy", "cm-playbook", "cm-hooks", "cm-campaigns",
+                 "cm-banks", "cm-copy"]
 PLUGIN_AGENTS = ["cm-listener", "cm-researcher", "cm-reviewer", "cm-writer"]
-FIXTURE_AREAS = ("research", "launch", "board")      # the areas make_levelup_repo builds (a subset of the real seven)
+FIXTURE_AREAS = ("research", "launch", "board")      # the areas make_levelup_repo builds (a subset of the real nine)
 
 LEVELUP_METHOD = '''
 [levelup.research]
@@ -1287,8 +1297,8 @@ class LevelUpTests(TempRepo):
         make_levelup_repo(self.root)
         path = self.root / "plugin/companions.toml"
         text = path.read_text(encoding="utf-8")
-        path.write_text(text.replace("Content Machine board and nudges:",
-                                     "Content Machine board and nudges: " + "x" * 120, 1), encoding="utf-8")
+        path.write_text(text.replace("Content Machine hub and scheduled tasks:",
+                                     "Content Machine hub and scheduled tasks: " + "x" * 120, 1), encoding="utf-8")
         code, _, err = self.quiet(build.main, "--edition", "all", "--root", str(self.root))
         self.assertEqual(code, 1)
         self.assertTrue(err.startswith("E102 plugin/companions.toml: cm-board-en: description is"), err)
@@ -1381,8 +1391,8 @@ class TaskTargetTests(TempRepo):
 
 
 class RealRepoLevelUps(unittest.TestCase):
-    """The real source tree, built once into a temp folder: the seven level-up files, the Board CSVs, the nudge
-    texts and the plugin with its 16 skills and 4 agents."""
+    """The real source tree, built once into a temp folder: the nine level-up files, the Board CSVs, the nudge
+    texts and the plugin with its 20 skills and 4 agents."""
 
     @classmethod
     def setUpClass(cls):
@@ -1402,7 +1412,7 @@ class RealRepoLevelUps(unittest.TestCase):
     def tearDownClass(cls):
         cls._tmp.cleanup()
 
-    def test_the_seven_level_up_tables_hold_the_proposed_anchors_in_order(self):
+    def test_the_nine_level_up_tables_hold_the_proposed_anchors_in_order(self):
         tables = {a: cfg for a, cfg in cmlib.levelup_tables(self.method)}
         self.assertEqual(list(tables), list(LEVELUP_AREAS))
         for area, (file, anchors) in LEVELUP_AREAS.items():
@@ -1473,13 +1483,13 @@ class RealRepoLevelUps(unittest.TestCase):
                 art = self.manifest["artifacts"][f"maintainer/tasks/{ed}/{stem}.txt"]
                 self.assertEqual((art["task_id"], art["budgets"]["task_nudge"]["budget"]), (row["id"], 900))
 
-    def test_the_plugin_has_the_sixteen_skills_and_four_agents(self):
+    def test_the_plugin_has_the_twenty_skills_and_four_agents(self):
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             files = {n: zf.read(n) for n in zf.namelist()}
         skills = sorted({n.split("/")[2] for n in files if n.startswith("content-machine/skills/")})
         want = sorted([f"content-machine-{ed}" for ed in ("en", "vn")]
                       + [f"{s}-{ed}" for s in PLUGIN_SKILLS for ed in ("en", "vn")])
-        self.assertEqual(len(skills), 16)
+        self.assertEqual(len(skills), 20)
         self.assertEqual(skills, want)
         for ed, suffix in (("en", "EN"), ("vn", "VN")):
             for area, (file, anchors) in LEVELUP_AREAS.items():
@@ -1565,7 +1575,7 @@ class RealRepoLevelUps(unittest.TestCase):
                 for anchor in anchor_headings(method):
                     self.assertEqual(count_line(one, anchor), 1, anchor)
 
-    def test_the_main_skill_pointer_names_the_seven_companions(self):
+    def test_the_main_skill_pointer_names_the_nine_companions(self):
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             for ed, suffix in (("en", "EN"), ("vn", "VN")):
                 text = zf.read(f"content-machine/skills/content-machine-{ed}/SKILL.md").decode("utf-8")

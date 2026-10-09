@@ -7,9 +7,9 @@ G1 6/10 (theo EN): mục 1 K3 "Ngắn thôi": lời nói ≤120 tiếng, card ha
 Cắt bù byte G1 (không bỏ luật): tiêu đề Nâng cấp bỏ "đúng lúc, ≤1 mỗi lần" (start-block NÂNG CẤP: "chỉ mời một cái, đúng lúc"). levelup.offer_grow gọn hơn ("Tải file lên đây một lần rồi hỏi lại mình.").
 G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sau (trả bằng các cắt ghi ở setup, convert, strings).
 
-<!-- @section levelup.kit-next src=e81283e134 -->
+<!-- @section levelup.kit-next src=d38eb61977 -->
 ### "tiếp" mở gì (khớp điều nào trước thì làm; "tiep", "tiếp em" cũng tính)
-1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Ngày 0 còn dở: bước kế (§CM-SETUP 9). Sau chiến lược: OK, "tiếp", "được", "chốt" thì ra QUAY HÔM NAY + đủ Tuần 1; sửa: §CM-MAP; hỏi, than, đòi nghiên cứu: đáp gọn, rồi hỏi OK lại, chưa ra bài; không hỏi "làm Tuần 1 không?". "tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại, không in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng (trừ card), tuần đến hạn chỉ in khung, card ở tin sau. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
+1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Ngày 0 còn dở: bước đang mở (thứ tự §CM-SETUP 9); hỏi, than, đòi nghiên cứu: đáp gọn, rồi đưa lại bước đó, chưa ra bài; sửa: §CM-MAP; OK bước cuối của chiến lược, "tiếp", "được", "chốt" → QUAY HÔM NAY + đủ Tuần 1. "tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại, không in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng (trừ card), tuần đến hạn chỉ in khung, card ở tin sau. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
 2 TIẾP trước hứa việc chưa làm: làm việc đó.
 3 Thứ Sáu chưa có số: số liệu (§CM-NUMBERS); thứ Sáu cuối tháng: "lên kế hoạch tháng sau" (§CM-MONTH, file STRATEGY).
 4 Từ tuần 2: ngày nói chuyện, hoặc chưa có buổi nào: Buổi nói chuyện tuần (§CM-TALK); trễ 2+ ngày, bận: bản ngắn.
@@ -17,11 +17,11 @@ G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sa
 6 Sau mấy ngày bỏ trống: bài hôm nay, rồi "{{t:today.left_out}}" Không nói "trễ", không đếm bài lỡ. Chỉ xin lỗi: một câu ấm, không kèm bài; TIẾP "Nhắn 'tiếp' nhé."
 Đoạn chat: "{{name}}, đoạn chat mới nhất." Chỉ TIẾP trước ngày nói chuyện mới nói "{{t:chat.new_week}}"
 
-<!-- @section levelup.kit-offers src=92d997864b -->
-### Nâng cấp: 1 dòng trên TIẾP; không giữa buổi nói chuyện hay ngày 0 (trừ tin cuối)
-- Cuối ngày 0, hoặc khi họ hỏi: "{{t:levelup.offer_reminders}}" Rồi 2 link Google Calendar hằng tuần.
-- Tổng kết thứ Sáu Tuần 1: "{{t:levelup.offer_nudges}}" ChatGPT: 3 tác vụ (hoặc khung chép), ≤900 ký tự, có Bản đồ: thứ Hai "{{t:task.week.name}}", thứ Ba–Năm "{{t:task.today.name}}", thứ Sáu "{{t:task.numbers.name}}", đều kết bằng "{{t:task.footer}}" Claude: 1 tác vụ (§CM-NUDGES).
-- Có trợ lý, hoặc "mọi thứ nằm đâu?": "{{t:levelup.offer_board}}" Rồi §CM-BOARD.
+<!-- @section levelup.kit-offers src=bb5d54ffb9 -->
+### Nâng cấp: 1 dòng A/B/C trên TIẾP, đúng lúc, tối đa 1 mỗi tin; không giữa buổi nói chuyện, ngày 0 (trừ tin cuối)
+- Tin cuối ngày 0 (card + dòng lưu), có trợ lý, hoặc "mọi thứ nằm đâu?": hub, "{{t:levelup.offer_board}}" A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- Hôm sau ngày 0 ("tiếp"), hoặc khi họ hỏi: "{{t:levelup.offer_reminders}}" Rồi 2 link lịch hằng tuần.
+- Tổng kết thứ Sáu Tuần 1: "{{t:levelup.offer_nudges}}" Rồi §CM-NUDGES.
 - Claude Pro, từ tuần 3: "{{t:levelup.offer_autopilot}}"
-- Mở bán, quảng cáo, nghiên cứu, chiến lược, hook, tiêu đề, tháng sau, bài coach thích, bảng, thiếu file: "{{t:levelup.offer_grow}}" (file nào: xem NÂNG CẤP). Bài coach thích thì lưu khung, mời một lần.
-- Từ tuần 3, hoặc bài nghe chung chung: "{{t:levelup.offer_character}}" Rồi §CM-CHARACTER-DEEP (STRATEGY-VN.md), buổi 1/3.
+- Việc cần file nâng cấp chưa tải (NÂNG CẤP): "{{t:levelup.offer_grow}}" Bài coach thích thì lưu khung, mời một lần.
+- Từ tuần 3, hoặc bài nghe chung chung: "{{t:levelup.offer_character}}" Rồi §CM-CHARACTER-DEEP, buổi 1/3.

@@ -81,11 +81,13 @@
 "method.title"          = { text = "{{name}} · Phương pháp", src = "f30ce5ef69" }
 "levelup.research.title" = { text = "{{name}} · Nghiên cứu", src = "758346b3b4" }
 "levelup.launch.title"  = { text = "{{name}} · Mở bán", src = "6e6ded3622" }
-"levelup.board.title"   = { text = "{{name}} · Bảng nội dung và lời nhắc", src = "a775a59ccf" }
+"levelup.board.title" = { text = "{{name}} · Hub và tác vụ hẹn giờ", src = "51992e9156" }
 "levelup.strategy.title" = { text = "{{name}} · Chiến lược", src = "6f72338d42" }
 "levelup.playbook.title" = { text = "{{name}} · File chiến lược", src = "a04d571b9b" }
 "levelup.hooks.title" = { text = "{{name}} · Thư viện hook", src = "0de79ff1cb" }
 "levelup.campaigns.title" = { text = "{{name}} · Chiến dịch", src = "90441237b7" }
+"levelup.banks.title" = { text = "{{name}} · Ngân hàng nội dung", src = "78b018c285" }
+"levelup.copy.title" = { text = "{{name}} · Viết bài", src = "c31a015b0e" }
 "anchor.talk"           = { text = "Buổi nói chuyện tuần", src = "9d5e232fb4" }
 "anchor.week"           = { text = "Viết bài cả tuần", src = "7a7c4293bc" }
 "anchor.today"          = { text = "Bài hôm nay", src = "dfc1723246" }
@@ -106,6 +108,9 @@
 "anchor.listen"         = { text = "Nghe khách nói, chỉ đọc", src = "5b118efa41" }
 "anchor.research-root"  = { text = "Bối cảnh, gốc rễ và brief", src = "1040f1383b" }
 "anchor.research-loop"  = { text = "Mỗi tuần, mỗi tháng", src = "431f61031c" }
+"anchor.channels" = { text = "Kênh coach thích và kênh đối thủ, chỉ đọc", src = "15a333cd89" }
+"anchor.audience" = { text = "Người xem phản ứng ra sao", src = "cd5fb2b25f" }
+"anchor.niche" = { text = "Lĩnh vực và ngách, lưu thành NICHE.md", src = "c3ef11fb15" }
 "anchor.launch"         = { text = "Chọn kiểu, tính số", src = "8752f88d52" }
 "anchor.launch-brief"   = { text = "Hồ sơ và giới hạn thật", src = "39490eed05" }
 "anchor.launch-steps"   = { text = "Mười chặng", src = "d8ff248ebb" }
@@ -116,12 +121,15 @@
 "anchor.launch-live"    = { text = "Buổi live, lớp Zalo và bài mời", src = "9ddaa6edfe" }
 "anchor.launch-debrief" = { text = "Sau khi đóng đăng ký", src = "49616f6992" }
 "anchor.ads"            = { text = "Quảng cáo từ bài đã chạy tốt", src = "12fa347f37" }
-"anchor.board"          = { text = "Bảng nội dung: một Google Sheet", src = "69044226f2" }
+"anchor.hub-notion" = { text = "Hub trên Notion", src = "eb187ca10d" }
+"anchor.hub-md" = { text = "HUB.md, trang nằm trong dự án", src = "3fd5896fe0" }
+"anchor.board" = { text = "Bảng Google Sheet (dự phòng)", src = "2da47f298c" }
 "anchor.board-columns"  = { text = "Cột của bảng", src = "b0a43b06a7" }
 "anchor.board-rows"     = { text = "Dòng để dán", src = "6128dea6f4" }
 "anchor.board-campaigns" = { text = "Chiến dịch", src = "30e9a08939" }
-"anchor.nudges"         = { text = "Ba lời nhắc", src = "b961114d9c" }
-"anchor.nudge-jobs"     = { text = "Mỗi lời nhắc chạy việc gì", src = "ad6de1f566" }
+"anchor.nudges" = { text = "Tác vụ hẹn giờ", src = "21c4a0a31b" }
+"anchor.hub-tasks" = { text = "Tác vụ và hub", src = "c70aa138e1" }
+"anchor.nudge-jobs" = { text = "Mỗi tác vụ chạy việc gì", src = "f4c1dbebc9" }
 "anchor.nudge-rules"    = { text = "Giới hạn và làm bù", src = "337f914aab" }
 "anchor.nudge-texts"    = { text = "Lời nhắc cho ChatGPT", src = "9c8ea0fa36" }
 "anchor.nudge-claude"   = { text = "Lời nhắc cho Claude", src = "46162914d3" }
@@ -140,6 +148,10 @@
 "anchor.long"           = { text = "Video dài có quay", src = "acb5ba897a" }
 "anchor.long-intro"     = { text = "Phần mở video dài (khoảng 120 chữ)", src = "f3f0efd5c3" }
 "anchor.long-cuts"      = { text = "Cắt video dài ra cả tuần", src = "a88b496f91" }
+"anchor.strategy-engine" = { text = "Chiến lược, đi từng bước", src = "97363e9347" }
+"anchor.tiers" = { text = "Thu hút, niềm tin, chuyển đổi: đi sâu", src = "7fc54a9761" }
+"anchor.content-lines" = { text = "Tuyến nội dung: những loạt bài quay lại đều", src = "79bb9aba38" }
+"anchor.calendar" = { text = "Lịch content 4 tuần", src = "ffaa1c24e4" }
 "anchor.strategy-doc"   = { text = "File chiến lược nội dung", src = "2aa55199d6" }
 "anchor.hook-library" = { text = "Thư viện hook: dùng thế nào", src = "99b81a0381" }
 "anchor.hook-flip" = { text = "Lật niềm tin, lời khuyên quen, cách cũ cách mới", src = "886fffedf1" }
@@ -180,12 +192,14 @@
 "ics.friday.description" = { text = "Mở {{name}}, vào đoạn chat mới nhất, gõ \"số liệu tuần này\". 5 phút.", src = "9c876b3e13" }
 
 # Setup-check variants, Phone Starter, new method anchors (P2)
+"anchor.options" = { text = "Lựa chọn, từng bước một", src = "ff68c621af" }
+"anchor.memory" = { text = "Làm tiếp đúng chỗ đang dở", src = "676903ed1b" }
 "anchor.setup" = { text = "Chi tiết ngày 0", src = "744b6f620c" }
 "anchor.dig" = { text = "Ngày 0: hỏi thêm trước khi lên chiến lược", src = "35079389b9" }
 "anchor.card" = { text = "Brand Card", src = "bef5186d8e" }
 "anchor.posts" = { text = "Bài viết, carousel và nội dung dài", src = "de093f6578" }
 "anchor.messages" = { text = "Email, tin nhắn Zalo và inbox", src = "72cd5a8ae5" }
-"anchor.map" = { text = "Ngày 0: chiến lược, quyết định duy nhất", src = "aece368874" }
+"anchor.map" = { text = "Ngày 0: chiến lược, từng bước", src = "0841ac89fc" }
 "anchor.drift" = { text = "Chọn trọng tâm và giữ đúng hướng", src = "a9b71576ca" }
 "anchor.liked" = { text = "Bài coach thích", src = "00e43012d8" }
 "setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
@@ -220,12 +234,12 @@
 "task.today.name"         = { text = "Một việc hôm nay", src = "f5d7626aca" }
 "task.numbers.name"       = { text = "Số liệu thứ Sáu", src = "8e23e8665b" }
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
-"levelup.offer_reminders" = { text = "Muốn mình nhắc vào {day} và thứ Sáu không? Nhắn 'có'.", src = "ea737acbbf" }
-"levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Muốn mình nhắn vào thứ Hai, mỗi sáng và thứ Sáu không? Nhắn 'có'.", src = "4894256bfd" }
-"levelup.offer_board"     = { text = "Muốn gom mọi bài vào một chỗ không? Google Sheets hay Notion. Nhắn 'có'.", src = "a757a80284" }
-"levelup.offer_autopilot" = { text = "Muốn tuần nào bài cũng tự có sẵn trong Notion không? Nhắn 'có'.", src = "11eb7f42ec" }
+"levelup.offer_reminders" = { text = "Tiếp theo: 2 lời nhắc trên lịch, {day} và thứ Sáu. A) cài luôn (máy khuyên: {why}) B) để sau.", src = "62fe22666e" }
+"levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Tiếp theo: mình nhắn bạn thứ Hai, mỗi sáng, thứ Sáu. A) cài luôn (máy khuyên: {why}) B) chỉ thứ Sáu C) để sau.", src = "f3c06c4f2a" }
+"levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, mình dựng sẵn B) một Google Sheet C) chỉ file HUB.md ở đây. Mình chọn {letter}: {why}. Gõ A, B hay C.", src = "2fbcbc036b" }
+"levelup.offer_autopilot" = { text = "Tiếp theo: tuần nào bài cũng tự vào Notion. A) cài luôn (máy khuyên: {why}) B) để sau.", src = "117e68fd42" }
 "levelup.offer_grow"      = { text = "Phần đó nằm trong {LAUNCH-VN.md} (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại mình.", src = "80d274bfc4" }
-"levelup.offer_character" = { text = "Muốn bài giống bạn hơn không? 3 buổi, mỗi buổi 20 phút. Nhắn 'có'.", src = "212af05855" }
+"levelup.offer_character" = { text = "Tiếp theo: cho bài giống bạn hơn, 3 buổi trò chuyện 20 phút. A) làm buổi 1 luôn (máy khuyên: {why}) B) tuần sau.", src = "49c6ea5567" }
 
 # Weekly Talk and mini-talk (§ TALK)
 "talk.open"      = { text = "Buổi nói chuyện tuần: 5 câu hỏi, khoảng 15 phút. Bấm micro nhỏ rồi cứ nói như kể cho người quen. Không cần camera, một máy là đủ.", src = "fcc4f4a188" }
@@ -281,7 +295,7 @@
 
 # Staying on the Map, the keyword, character, Quick Listen (§ MAP, CHARACTER-LITE, RESEARCH-LITE)
 "message.drift.bridge"        = { text = "Xoay về chủ đề {n} là hợp bản đồ: '{angle}'. Mình viết bản đó, giữ bản gốc thì nhắn 'giữ nguyên'.", src = "d0b73cbe8d" }
-"message.drift.park"          = { text = "Để dành: {lý do}. Chờ {trigger} rồi mình viết. Vẫn muốn viết không? Bài đó tính ngoài bản đồ, 10 bài được 1.", src = "4972b93122" }
+"message.drift.park"          = { text = "Để dành: {lý do}. Chờ {trigger} rồi mình viết. A) cứ để dành (máy khuyên) B) viết luôn, tính là bài ngoài bản đồ, 10 bài được 1.", src = "f18dc19448" }
 "message.save.on_map"         = { text = "Đúng bản đồ: chủ đề {n}.", src = "17d0779fd5" }
 "message.save.parked"         = { text = "Để dành: {lý do}.", src = "0bcdd7c347" }
 "message.label.off_map"       = { text = "Ngoài bản đồ", src = "f6f4582230" }
@@ -312,7 +326,7 @@
 "liked.mine_clause" = { text = "(Bài của bạn thì nhắn 'của mình'.)", src = "70b980a5bd" }
 "liked.cant_open"   = { text = "Mình không mở được {what} ở đây, nên không đoán. {{t:next.prefix}} Chụp màn hình thấy cả chữ, hoặc kể mình nghe 2 câu.", src = "85e7a5b06c" }
 "liked.saved"       = { text = "Đã lưu vào Bài bạn thích: {shape}. Lên kế hoạch {thứ Hai} mình lấy ra dùng.", src = "da895e40dc" }
-"liked.make_offer"  = { text = "Muốn có bản của bạn luôn thì nhắn \"làm bản của mình\".", src = "dc0f61e4b0" }
+"liked.make_offer"  = { text = "A) làm bản của bạn luôn (máy khuyên) B) để dành khung.", src = "2508c2784c" }
 "liked.day0"        = { text = "(Bài đó mình giữ lại cho {when}, giờ làm video hôm nay trước đã.)", src = "736b88dcd7" }
 "liked.grid_ratio"  = { text = "khoảng {N}× mức thường của họ", src = "5db6960151" }
 "liked.grid_none"   = { text = "Không có số nên mình không xếp hạng.", src = "fa3055d1eb" }
@@ -352,7 +366,7 @@
 "setup.link_unread"            = { text = "Trang của bạn mình không mở được, nhưng bạn kể là đủ rồi.", src = "18d9ef7035" }
 "setup.guess"                  = { text = "Mình đoán: {guess}. Đúng không?", src = "e08f17123a" }
 "setup.guess_no_result"        = { text = "Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?", src = "dba7f66234" }
-"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu. Mình đoán nên viết cho {buyer}, vì {why}. Đúng không?", src = "c52dee2060" }
+"setup.multi_income"           = { text = "Bạn đang có {n} nguồn thu, mình sẽ viết cho một tệp khách. A) {buyer} (máy khuyên: {why}) B) {other}. Gõ A hay B.", src = "aa1ec95b91" }
 # Hỏi sâu ngày 0 (§CM-DIG, founder 7/10): hỏi bằng một chuyện, mỗi câu một dấu hỏi, không kèm câu đoán; cặp xưng hô đổi theo coach chọn
 "dig.story"                    = { text = "Bạn nhớ lại người khách bạn giúp được nhiều nhất. Hồi mới tìm tới bạn, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
 "dig.words"                    = { text = "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.", src = "ec4e67239a" }
@@ -360,13 +374,30 @@
 "dig.proof"                    = { text = "Có kết quả thật nào của khách mà bạn sẵn lòng kể ra không?", src = "60c5654c2a" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
 "dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, còn kiểu khách nào bạn không muốn nhận?", src = "890b2a58bb" }
-"dig.find"                     = { text = "Khách mới giờ tìm tới bạn bằng cách nào, bạn đang đăng bài ở đâu?", src = "78ce604a87" }
+"dig.find"                     = { text = "Khách mới giờ tìm tới bạn bằng cách nào, bạn đang đăng ở đâu, và 2–3 kênh nào bạn mê hay coi là đối thủ?", src = "cf1ffe1c5b" }
 "dig.goal"                     = { text = "90 ngày tới bạn muốn content làm được gì cho bạn, mỗi tuần dành cho nó được mấy tiếng?", src = "037c1b8675" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "df8c84d17e" }
 "map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }
 "card.visible.never"           = { text = "không bao giờ:", src = "3e2cc57c54" }
 "anchor.voice"                 = { text = "Giọng của bạn", src = "dc50b5a834" }
+"anchor.banks" = { text = "Ngân hàng", src = "c7fd4996f6" }
+"anchor.cta-bank" = { text = "Lời mời theo bậc và nơi đăng", src = "62fa39cbc7" }
+"anchor.magnet-bank" = { text = "Quà tặng", src = "67a025d8b0" }
+"anchor.research-bank" = { text = "Khách nói ở đâu", src = "4637d18da8" }
+"anchor.story-bank" = { text = "Chuyện", src = "6d09cf5748" }
+"anchor.proof-bank" = { text = "Bằng chứng", src = "7fbb3ccf96" }
+"anchor.copy" = { text = "Mỗi bài một khung, độ dài tính bằng chữ", src = "530c541812" }
+"anchor.copy-frameworks" = { text = "Các khung viết bài", src = "de3ca6d612" }
+"anchor.copy-stories" = { text = "Khung chuyện: năm dòng, một bài học, câu kéo câu", src = "f8d913cece" }
+"anchor.copy-beliefs" = { text = "Khung niềm tin: lật niềm tin, lời khuyên quen, cũ và mới", src = "cde5419cdb" }
+"anchor.copy-problem" = { text = "Khung vấn đề: hệ quả, trước và sau, dừng tới làm", src = "3a7ccad048" }
+"anchor.copy-proof" = { text = "Khung bằng chứng: quyết định của khách, băn khoăn, bài mời mua", src = "3c5e6baeac" }
+"anchor.copy-long" = { text = "Bài dài và video dài", src = "2c7829405f" }
+"anchor.copy-lists" = { text = "Danh sách và tin ngắn", src = "fa217b2e7a" }
+"anchor.storytelling" = { text = "Kể chuyện", src = "5d4710cc7b" }
+"anchor.persuasion" = { text = "Thuyết phục và những lằn ranh", src = "0a7adca681" }
+"anchor.copy-voice" = { text = "Thuyết phục mà vẫn nói như người Việt", src = "502f9902e9" }
 "voice.not_me_ok"              = { text = "Rồi, từ giờ mình không dùng \"{line}\" nữa.", src = "7e5f0bc551" }
 "voice.do_say_ok"              = { text = "Rồi, \"{word}\" mình giữ lại.", src = "581bb8047e" }
 "card.label.voice_line"        = { text = "Giọng của bạn", src = "dc50b5a834" }
@@ -383,3 +414,12 @@
 
 # Portable kits (docs/BUILD.md §6): same key as strings/en.toml, whose note says what it does.
 "portable.save" = { text = "Lưu: chép card, gửi vào Zalo \"Cloud của tôi\". Hôm sau: nhắn \"{{t:cmd.next}}\" ngay trong đoạn chat này; mở chat mới thì dán card vào trước.", src = "66b4458871" }
+
+# v13 kit: same keys as strings/en.toml, whose note says what they do.
+"options.recommended" = { text = "(máy khuyên)", src = "1185133b5b" }
+"options.reply"       = { text = "Gõ A, B hay C, sửa một ý, hoặc 'OK' để lấy {letter}.", src = "258c45b33f" }
+"options.decided"     = { text = "Mình chọn {option} vì {reason}; muốn khác thì gõ {other}.", src = "7f9f477824" }
+"options.disagree"    = { text = "Chỗ này mình xin nói thẳng: {evidence}.", src = "a3197ff73a" }
+"options.step"        = { text = "Bước {n}/{total} · {step}", src = "f549115143" }
+"memory.restore"      = { text = "Mình nhớ: {state} · đang dở bước {step}.", src = "a184bc5170" }
+"memory.paste_hub"    = { text = "Từ đây mình chưa thấy việc lần trước. Bạn dán HUB.md hoặc Brand Card vào, mình làm tiếp đúng chỗ.", src = "f45dae847f" }

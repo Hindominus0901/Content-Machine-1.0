@@ -814,24 +814,24 @@ id = "setup.vn.037"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "Day 0's last reply: Brand Card, the save line, the reminder offer and the exact closing TIẾP line"
+title = "Day 0's last reply: Brand Card, the save line, the hub offer (A/B/C) and the exact closing TIẾP line"
 context = "Door A, ChatGPT Plus, pair chị–em. Week 1 came in the reply to her answer to the Map + QUAY HÔM NAY reply; it ran long, so it ended 'TIẾP → Nhắn 'tiếp' là em gửi Brand Card để chị lưu.' (setup.kit-order 9: app cắt, card ở tin sau). The talk day guessed above Week 1 (setup.plan_guess) was thứ Ba and she let it stand."
 input = """tiếp em"""
-contains = ["NÓI GÌ:", "NÓI THẾ NÀO:", "Lưu lại để em nhớ chị (30 giây)", "thứ Sáu", "đoạn chat mới nhất"]
+contains = ["NÓI GÌ:", "NÓI THẾ NÀO:", "Lưu lại để em nhớ chị (30 giây)", "đoạn chat mới nhất"]
 regex = [
   '''(?m)^TIẾP →[^\n]*[Qq]uay video hôm nay[^\n]*\. Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]\.?\s*\Z''',
-  '''[Mm]uốn em nhắc (?:chị )?vào thứ Ba (?:và|với) thứ Sáu không(?: chị)?\?[^\n]{0,8}[Nn]hắn ['"“‘]có['"”’]''',
+  '''A\) Notion[^\n]*B\) (?:một )?Google Sheet[^\n]*C\) [^\n]*HUB\.md[^\n]*Gõ A, B hay C''',
 ]
 not_regex = [
   '(?i)(ngoài|bên ngoài)\s+dự án',
-  '(?i)Notion',
+  '(?i)nhắc vào thứ',
   '''(?i)Mai: mở Content Machine, đoạn chat mới nhất, gõ''',
   '''(?i)Hôm nay xong rồi''',
   '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox)''',
 ]
 invariants = ["I1", "I5", "I15"]
 max_questions = 1
-notes = "start-block steps 8-9 and §CM-TODAY offers (levelup.kit-offers: 'Cuối ngày 0 … levelup.offer_reminders'): Day 0's last reply = Brand Card + card.save_line + the reminder offer 'Muốn mình nhắc vào {day} và thứ Sáu không? Nhắn 'có'.' in chị–em, + TIẾP 'Quay video hôm nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' The old 3-line wrap-up and its NEXT line ('Mai: mở Content Machine, đoạn chat mới nhất, gõ …') are gone (R13). No Week-1 piece after the card. Quit point 8 'new chat outside the project'. Reminders are offered, not pushed; the offer's '?' is the reply's only question."
+notes = "start-block steps 8-9 and §CM-TODAY offers (levelup.kit-offers, 9 Oct: Day 0's last reply offers the hub, levelup.offer_board 'A) Notion … B) một Google Sheet C) chỉ file HUB.md ở đây … Gõ A, B hay C'; the reminder offer moved to Day 1) in chị–em, + TIẾP 'Quay video hôm nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' The old 3-line wrap-up and its NEXT line ('Mai: mở Content Machine, đoạn chat mới nhất, gõ …') are gone (R13). No Week-1 piece after the card. Quit point 8 'new chat outside the project'. Reminders are offered, not pushed; the offer's '?' is the reply's only question."
 
 [[case]]
 id = "setup.vn.038"
@@ -839,8 +839,8 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "Reminders on Android: Google Calendar links for talk day and Friday, nothing to install"
-context = "Door B, pair chị–em. Day 0's last reply offered reminders ('Muốn em nhắc vào thứ Hai và thứ Sáu không? Nhắn 'có'.'); talk day thứ Hai was guessed above Week 1 (setup.plan_guess) and she let it stand. Time zone Asia/Ho_Chi_Minh."
-input = """có"""
+context = "Door B, pair chị–em. Day 1's reply (she said 'tiếp') offered reminders (levelup.offer_reminders: 'Tiếp theo: 2 lời nhắc trên lịch, thứ Hai và thứ Sáu. A) cài luôn (máy khuyên: …) B) để sau.'); talk day thứ Hai was guessed above Week 1 (setup.plan_guess) and she let it stand. Time zone Asia/Ho_Chi_Minh."
+input = """A"""
 contains = ["calendar.google.com"]
 regex = ['(?i)thứ Hai', '(?i)thứ Sáu']
 not_contains = ["Notion", "dự án"]

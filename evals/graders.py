@@ -109,7 +109,7 @@ chiến dịch lớn", "Câu đúng nằm ở khách cũ", "That's a rearview mi
 ("Viết sao thì để sau, tại sao phải có trước."); a caption in a copy box of its own with no "Caption:" label; and the other
 hooks of a week: a text post's line 1, a slide 1 and an email's subject lines (hedges, flat claims; slide 1 and the first
 subject within headline_max_chars_en / _vn, 60 / 70). strategy_doc reads the saved CONTENT-STRATEGY.md /
-CHIEN-LUOC-NOI-DUNG.md in the run folder (the 7 parts and, in VN, their headings' pronoun pair; the hooks of its big ideas
+CHIEN-LUOC-NOI-DUNG.md in the run folder (the 9 parts and, in VN, their headings' pronoun pair; the hooks of its big ideas
 by the hook_lab's own tests; every line quoted from buyers online verbatim among the kept lines of notes.md's Research
 log; what it calls held is a KEEP the log backs; the deny-list). research_log reads that "## Research log" itself: each
 KEEP names the lines behind it, from acceptance [research_log] keep_min_pages distinct pages on keep_min_hosts distinct
@@ -1505,7 +1505,8 @@ def i5_questions(run: Run) -> dict:
 
 # Lines that carry a choice but are no decision: a guess the coach confirms ("My guess: …. Right? Or tell me which
 # pays the bills"), the machine's own pick, a save route's click ("choose Add text content").
-GUESS_KEYS = ("setup.guess", "setup.guess_no_result", "setup.multi_income", "setup.plan_guess")
+# (setup.multi_income left this list on 9 Oct: it is an A/B choice now, §CM-OPTIONS)
+GUESS_KEYS = ("setup.guess", "setup.guess_no_result", "setup.plan_guess")
 NOT_DECISION_KEYS = GUESS_KEYS + ("check.pick", "save.claude_plain", "save.limit_claude_free", "card.fix_missing",
                                   "phone.save", "card.stop_lines", "message.pushback.who")
 # "we pick one buyer", "I'll choose": the machine saying what it does, not asking the coach to choose.
@@ -3882,6 +3883,17 @@ def _is_map_reply(run: Run, r: Reply) -> bool:
     return n >= 3 or (n >= 2 and matcher.says("map.ok", r.visible(("",))))
 
 
+def strategy_steps(run: Run) -> list[Reply]:
+    """The strategy's replies (v13, 9 Oct: §CM-MAP runs in at most 3 pre-filled steps, the coach's OK after each; with
+    PLAYBOOK loaded §CM-STRATEGY-ENGINE runs it): every Map reply from the first one up to the first reply that holds a
+    piece (FILM TODAY, Week 1). One reply is the old one-reply strategy."""
+    maps = [r for r in run.replies if _is_map_reply(run, r)]
+    if not maps:
+        return []
+    piece = next((r for r in run.replies if r.index > maps[0].index and piece_marks(run, r, boxes=False)), None)
+    return [r for r in maps if piece is None or r.index < piece.index]
+
+
 def _is_film_reply(run: Run, r: Reply) -> bool:
     """FILM TODAY: the running tag names it, or the reply prints film.now_or_text or a piece titled for filming
     ("FILM TODAY · under 30 s"); a Map reply that also prints FILM TODAY (K2) counts as both."""
@@ -4195,12 +4207,19 @@ def check_day0(run: Run) -> dict:
         keys = strategy_label_keys(run)
         if keys:                          # the strategy is its labelled lines, then "OK, or change a line"
             want = min(int(day0.get("map_lines", len(keys))), len(keys))
-            found = [k for k in map_lines(run, map_reply) if k in keys]
+            steps = strategy_steps(run) or [map_reply]
+            found = list(dict.fromkeys(k for st in steps for k in map_lines(run, st) if k in keys))   # over all steps
             details["map_lines"] = len(found)
+            details["strategy_steps"] = len(steps)
+            if len(steps) > 1:
+                details["strategy_step_oks"] = len(steps) - 1       # the OK after each step but the last: added to the session's turns
             if len(found) != want:
                 missing = [k for k in keys if k not in found]
                 ev.append(f"the Map has {len(found)} labelled lines (want {want}"
                           + (f"; missing {', '.join(missing)}" if missing else "") + ")")
+            steps_max = int(day0.get("strategy_max_steps", 1))
+            if len(steps) > steps_max:
+                ev.append(f"the strategy came in {len(steps)} steps (max {steps_max}, one a reply, the coach's OK after each)")
         active = active_minutes(run, map_reply)
         if active is not None:                          # the strategy's own budget: the interview and the research come first
             details["strategy_minutes"] = map_reply.t_min
@@ -4238,6 +4257,7 @@ def check_day0(run: Run) -> dict:
     # VN adds the xưng hô turn: session_max_turns_vn 11, as map_max_turns_vn (review retest-vg5-g6 G43)
     limit = int(day0.get(f"session_max_turns_{run.meta['edition']}", day0.get("session_max_turns", 10)))
     dig_extra = details.get("map_dig_answers", 0)           # the same interview answers count in the session's budget
+    dig_extra += details.get("strategy_step_oks", 0)        # and the OK after each strategy step but the last (v13, 9 Oct)
     if total - len(posts_only) > limit + dig_extra:
         left_out = (f"; posts-only turn {', '.join(str(run.turns[i].turn) for i in posts_only)} not counted"
                     if posts_only else "")
@@ -4281,7 +4301,7 @@ def check_day0(run: Run) -> dict:
 
 # The interview's questions (strings dig.*) and the slots each one fills. A question that holds DIG_MATCH_MIN of a dig
 # string's words is that question: the machine adapts the line to the client in hand.
-DIG_SLOTS = {"dig.buyer": ("who",), "dig.offer": ("offer",), "dig.proof": ("result",), "dig.find": ("find", "platforms"),
+DIG_SLOTS = {"dig.buyer": ("who",), "dig.offer": ("offer",), "dig.proof": ("result",), "dig.find": ("find", "platforms", "channels"),
              "dig.goal": ("goal", "hours"), "dig.stance": ("stance",), "dig.story": ("story",), "dig.words": ("words",)}
 # The coach stops the interview ("enough", "đủ rồi", "just make it"): the rest is guessed, never a client's words or result.
 ENOUGH_RE = re.compile(r"\benough\b|\bjust make it\b|\btoo many questions\b|\bstop asking\b|\bno more questions\b"
@@ -4457,23 +4477,28 @@ def check_day0_strategy(run: Run) -> dict:
     def item(name: str, ev: list[str], ran: bool = True) -> None:
         items.append({"item": name, "pass": (not ev) if ran else None, "evidence": ev})
 
-    S = next((r for r in run.replies if _is_map_reply(run, r)), None)
+    steps = strategy_steps(run)
+    S = steps[0] if steps else next((r for r in run.replies if _is_map_reply(run, r)), None)
+    L = steps[-1] if steps else S                  # the last strategy step: the one that ends on the OK
     prompt = dump_prompt(run)
     expected = run.expected.get("interview", {}) if isinstance(run.expected.get("interview"), dict) else {}
     strategy_exp = run.expected.get("strategy", {}) if isinstance(run.expected.get("strategy"), dict) else {}
-    blocks = strategy_blocks(run, S) if S is not None else {}
+    blocks = {}
+    for st in (steps or ([S] if S is not None else [])):          # the steps' blocks together, the first print of a label stands
+        for k, v in strategy_blocks(run, st).items():
+            blocks.setdefault(k, v)
 
     # -- the order
     ev = []
     if S is not None:
         for r in run.replies:
-            if r.index > S.index:
+            if r.index > L.index:
                 break
-            if r is not S and _is_card_reply(run, r):
+            if r not in (steps or [S]) and _is_card_reply(run, r):
                 ev.append(f"{_turn(r)}: the Brand Card before the strategy")
                 continue
             for mark in piece_marks(run, r)[:1]:
-                where = "with the strategy" if r is S else "before the strategy"
+                where = "with the strategy" if r in (steps or [S]) else "before the strategy"
                 ev.append(f"{_turn(r)}: {mark} printed {where}, before the coach's OK (strategy first: no piece, no FILM TODAY)")
     item("no piece, FILM TODAY, copy box or Brand Card before the strategy's OK", ev, ran=S is not None)
 
@@ -4487,10 +4512,10 @@ def check_day0_strategy(run: Run) -> dict:
                 ev.append(f'{_turn(r)}: "post it" before the strategy (the early win only quotes the 3 lines)')
     item('the early win only quotes the 3 lines (no "post it")', ev, ran=S is not None and prompt is not None)
 
-    after = next((r for r in run.replies if S is not None and r.index > S.index and piece_marks(run, r, boxes=False)), None)
+    after = next((r for r in run.replies if L is not None and r.index > L.index and piece_marks(run, r, boxes=False)), None)
     ev = []
     if S is not None and after is not None:
-        between = [t for t in run.turns[S.index + 1:after.index] if t.role == "coach"]
+        between = [t for t in run.turns[L.index + 1:after.index] if t.role == "coach"]
         last = between[-1] if between else None
         if last is None or not APPROVE_RE.match(last.text):
             said = _short(last.text, 40) if last is not None else "nothing"
@@ -4498,9 +4523,12 @@ def check_day0_strategy(run: Run) -> dict:
     item("FILM TODAY and Week 1 come only after the coach's OK", ev, ran=S is not None and after is not None)
 
     ev = []
-    if S is not None and "map.ok" not in reply_decisions(S, matcher, map_topics(run, S.index)):
-        ev.append(f'{_turn(S)}: the strategy does not end on its one decision (map.ok: "{_short(run.strings.get("map.ok", ""), 50)}")')
-    item("the strategy ends on its one decision (OK, or change a line)", ev, ran=S is not None)
+    if L is not None and "map.ok" not in reply_decisions(L, matcher, map_topics(run, L.index)):
+        ev.append(f'{_turn(L)}: the strategy does not end on its one decision (map.ok: "{_short(run.strings.get("map.ok", ""), 50)}")')
+    steps_max = int(day0.get("strategy_max_steps", 1))
+    if len(steps) > steps_max:
+        ev.append(f"{_turn(L)}: the strategy came in {len(steps)} steps (max {steps_max}, one a reply)")
+    item("the strategy ends on its one decision (OK, or change a line), in at most 3 steps", ev, ran=S is not None)
 
     # -- the research
     first = _first_send_index(run, prompt)
@@ -4679,14 +4707,15 @@ def check_day0_strategy(run: Run) -> dict:
 
     ev = []
     if S is not None:
-        for i, ln in enumerate(S.lines):
-            if not ln.block and ln.plain and NOT_NOW_LINE_RE.match(ln.plain):
-                ev.append(f'{_turn(S)}: "{_short(ln.plain, 40)}" on the strategy (NOT NOW and "why this one" print on "why?")')
         cap = int(day0.get(f"strategy_max_words_{ed}", day0.get("strategy_max_words_en", 400)))
-        words = sum(ck.count_words(ln.text, run.lang) for ln in S.lines if not ln.block and not ln.fence)   # copy boxes aside
-        details["strategy_talk_words"] = words
-        if words > cap:
-            ev.append(f"{_turn(S)}: the strategy reply is {words} {'tiếng' if run.lang == 'vn' else 'words'} of talk (max {cap})")
+        for st in (steps or [S]):
+            for i, ln in enumerate(st.lines):
+                if not ln.block and ln.plain and NOT_NOW_LINE_RE.match(ln.plain):
+                    ev.append(f'{_turn(st)}: "{_short(ln.plain, 40)}" on the strategy (NOT NOW and "why this one" print on "why?")')
+            words = sum(ck.count_words(ln.text, run.lang) for ln in st.lines if not ln.block and not ln.fence)   # copy boxes aside
+            details["strategy_talk_words"] = max(words, details.get("strategy_talk_words", 0))
+            if words > cap:
+                ev.append(f"{_turn(st)}: the strategy reply is {words} {'tiếng' if run.lang == 'vn' else 'words'} of talk (max {cap})")
     item("the strategy is short enough and carries no NOT NOW or 'why this one'", ev, ran=S is not None)
 
     # -- Week 1 on the strategy
@@ -6403,14 +6432,14 @@ def check_research_log(run: Run) -> dict:
 
 # ---- strategy_doc
 
-# The 7 parts of the file (modules/{en,vn}/strategy-doc.md; strategy first, 7 Oct night: the long form of the Day-0
-# strategy, in the same order): who you help · your content pillars · your content mix · your content system · your
-# first 30 days · what it is built on · how to use it.
+# The 9 parts of the file (modules/{en,vn}/strategy-doc.md; 7 on 7 Oct night, 9 since v13, 9 Oct: the content lines and the
+# gift and asks joined): who you help · your content pillars · your content lines · your content mix · your content
+# system · your first 30 days (the 4-week calendar) · your gift and your asks · what it is built on · how to use it.
 STRATEGY_PARTS = {
-    "en": (r"who you help", r"content pillars", r"content mix|attract.*trust.*convert", r"content system",
-           r"first 30 days", r"built on", r"how to use"),
-    "vn": (r"giúp ai", r"trụ cột nội dung", r"tỷ lệ nội dung|thu hút.*niềm tin.*chuyển đổi", r"hệ thống nội dung",
-           r"30 ngày đầu", r"dựa vào đâu", r"dùng file này"),
+    "en": (r"who you help", r"content pillars", r"content lines", r"content mix|attract.*trust.*convert", r"content system",
+           r"first 30 days", r"gift|asks", r"built on", r"how to use"),
+    "vn": (r"giúp ai", r"trụ cột nội dung", r"tuyến nội dung", r"tỷ lệ nội dung|thu hút.*niềm tin.*chuyển đổi",
+           r"hệ thống nội dung", r"30 ngày đầu", r"quà tặng|lời mời", r"dựa vào đâu", r"dùng file này"),
 }
 STRATEGY_FILE_GLOBS = ("CONTENT-STRATEGY*.md", "CHIEN-LUOC-NOI-DUNG*.md")
 HOOK_LINE_RE = re.compile(r"^\W*hooks?\s*:\s*(\S.*)$", re.I)
@@ -6476,17 +6505,17 @@ def verbatim_in_kept(quote: str, kept: dict[str, dict]) -> bool:
 def check_strategy_doc(run: Run) -> dict:
     """The saved content strategy file (CONTENT-STRATEGY.md, CHIEN-LUOC-NOI-DUNG.md in the run folder; modules/{en,vn}/
     strategy-doc.md; qa/standards/strategy-doc.md SD1, SD3, SD5, SD10; review retest-ft2 §4, §7 item 6):
-    - the 7 parts, numbered and in order, under the edition's plain headings, and in VN every heading's pronoun is the
+    - the 9 parts, numbered and in order, under the edition's plain headings, and in VN every heading's pronoun is the
       one the machine uses with this coach (persona xung_ho: "chị" for Hạnh, "bạn" for Nhi), never the other;
-    - part 2 has 3-5 content pillars (its "###" sections) that are the ones of the strategy the coach OK'd, part 3's mix
-      adds up to 100 (ATTRACT, TRUST, CONVERT with a share each), part 4 gives lengths in words (short video 500-800,
+    - part 2 has 3-5 content pillars (its "###" sections) that are the ones of the strategy the coach OK'd, part 4's mix
+      adds up to 100 (ATTRACT, TRUST, CONVERT with a share each), part 5 gives lengths in words (short video 500-800,
       long post about 1,000, long video 1,000-1,500) and none in seconds;
     - the hooks of its content pillars' big ideas are no flat claim, label or maxim, repeat no line, hold no hedge
       (short_findings, the hook_lab's own tests; an on-screen text that is just a pillar's name is a label here too);
     - every line it quotes as heard online (a quote with a place and a month) is verbatim among the kept lines of the
       run's notes.md Research log (acceptance: trims shown with "…"), and what it calls held (GIỮ, "What holds") is a
       KEEP the log backs (research_log);
-    - no deny-list word (locales/<lang>/deny-list.txt; "(content pillars)" in part 3's heading is the one exception).
+    - no deny-list word (locales/<lang>/deny-list.txt; "(content pillars)" in part 4's heading is the one exception).
     n/a without the file."""
     path = strategy_doc_path(run.run_dir)
     if path is None:
@@ -6538,20 +6567,20 @@ def check_strategy_doc(run: Run) -> dict:
             if chat and not any(f and (f in c or c in f) for c in chat):
                 ev_pillars.append(f'part 2 pillar "{_short(name, 40)}" is not one of the strategy the coach OK\'d '
                                   f'({" · ".join(_short(x, 25) for x in map_topics(run))})')
-    if 3 in part_text:
-        shares = mix_shares(lang, part_text[3])
-        if shares is None:
-            ev_mix.append("part 3 does not give ATTRACT, TRUST and CONVERT a share each")
-        elif sum(shares.values()) != 100:
-            ev_mix.append(f"part 3's mix adds up to {sum(shares.values())}%, not 100")
     if 4 in part_text:
-        body4 = part_text[4]
+        shares = mix_shares(lang, part_text[4])
+        if shares is None:
+            ev_mix.append("part 4 does not give ATTRACT, TRUST and CONVERT a share each")
+        elif sum(shares.values()) != 100:
+            ev_mix.append(f"part 4's mix adds up to {sum(shares.values())}%, not 100")
+    if 5 in part_text:
+        body5 = part_text[5]
         for label, pat in (("short video 500-800", r"500\s*(?:-|–|đến|to)\s*800"), ("long post about 1,000", r"\b1[.,]?000\b"),
                            ("long video 1,000-1,500", r"1[.,]?000\s*(?:-|–|đến|to)\s*1[.,]?500")):
-            if not re.search(pat, body4):
-                ev_len.append(f"part 4 gives no length for the {label} words")
-        if SECONDS_RE.search(body4):
-            ev_len.append("part 4 measures a length in seconds (words, never seconds)")
+            if not re.search(pat, body5):
+                ev_len.append(f"part 5 gives no length for the {label} words")
+        if SECONDS_RE.search(body5):
+            ev_len.append("part 5 measures a length in seconds (words, never seconds)")
     hooks = strategy_hooks(text)
     ev_hooks, warns = [], []
     for h in hooks:
@@ -6582,7 +6611,7 @@ def check_strategy_doc(run: Run) -> dict:
     terms = load_term_list(run.root / "locales" / lang / "deny-list.txt")
     ev_deny = [f'"{m.group(0)}" ({label})' for label, pattern in terms for m in [pattern.search(text)] if m]
     items = [
-        {"item": "the 7 parts, in order, under the edition's headings (VN: the coach's pronoun pair)",
+        {"item": "the 9 parts, in order, under the edition's headings (VN: the coach's pronoun pair)",
          "pass": not ev_heads, "evidence": ev_heads},
         {"item": "no flat claim, label, maxim, repeat or hedge on its hooks", "pass": not ev_hooks,
          "evidence": list(dict.fromkeys(ev_hooks))},
@@ -6591,8 +6620,8 @@ def check_strategy_doc(run: Run) -> dict:
         {"item": "what the file calls held is a KEEP the Research log backs", "pass": not ev_holds, "evidence": ev_holds},
         {"item": "no deny-list word", "pass": not ev_deny, "evidence": ev_deny},
         {"item": "part 2: 3-5 content pillars, the ones the coach OK'd", "pass": not ev_pillars, "evidence": ev_pillars},
-        {"item": "part 3: the mix adds up to 100", "pass": not ev_mix, "evidence": ev_mix},
-        {"item": "part 4: lengths in words, never seconds", "pass": not ev_len, "evidence": ev_len},
+        {"item": "part 4: the mix adds up to 100", "pass": not ev_mix, "evidence": ev_mix},
+        {"item": "part 5: lengths in words, never seconds", "pass": not ev_len, "evidence": ev_len},
     ]
     passed = all(i["pass"] for i in items)
     out = {"id": "strategy_doc", "pass": passed, "status": "pass" if passed else "fail", "items": items,

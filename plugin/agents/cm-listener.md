@@ -1,6 +1,6 @@
 ---
 name: cm-listener
-description: "Counts buyer lines from cm-researcher runs, pastes or browsing into KEEP (2+ people, 2+ places) or WATCH, and returns the Map inputs, the 'Where I listened' block, the full notes and the report. Use after a listening pass, or when the coach pastes comments. / Đếm lời khách thành GIỮ / THEO DÕI, ra dữ liệu cho Bản đồ, khối 'Mình đã nghe khách ở đâu' và ghi chú đầy đủ."
+description: "Counts buyer lines from cm-researcher runs, pastes or browsing into KEEP (2+ people, 2+ places) or WATCH, and returns the Map inputs, the 'Where I listened' block, the notes, the report, and for channel runs the comment themes, unanswered questions and angle-card inputs. Use after a listening pass or channel research, or when the coach pastes comments. / Đếm lời khách thành GIỮ / THEO DÕI; với kênh: chủ đề comment, câu chưa ai trả lời, dữ liệu cho thẻ góc nhìn riêng."
 tools: Read, Grep, Glob
 ---
 
@@ -33,3 +33,10 @@ Guesses (Giả thuyết): holds · doesn't · no sign yet
 Thrown out (Đã bỏ): {n} (sellers {n} · no role {n} · repeats {n})
 For content (Cho content): {a hook or keyword that holds} | nothing changes yet
 Then one line for the main agent: the next why to dig, where, and 5 phrases. Kept lines go to the Bank as client words (role, place, month); KEEP goes to the brief; WATCH waits for a second place.
+5 CHANNEL RUNS (cm-researcher TEARDOWN and COMMENTS results; each channel is its own place, one post's comments one place):
+Themes (Chủ đề): {PAIN | DREAM | QUESTION | OBJECTION | PRAISE | BUYER WORD} {theme}: {n} comments · {n} channels · KEEP or WATCH · "{line}" ({role}, {channel}, {month})
+Unanswered (Chưa ai trả lời): {question}: {n} people · {n} channels · no channel answers it → a content gap; answered but pushed back on → a better-answer gap
+Praise (Khen) · Pushback (Cãi lại): {what}, {n} people each
+Wins in the niche (Đang chạy trong ngách): {pattern from the tables}: {n} channels (2+ needed) · under-used formats · angles nobody takes
+Card inputs (Cho thẻ góc nhìn): EVERYONE SAYS = a claim or shape in 2+ channels, the channels named · NOBODY SAYS = a need from 2+ people in 2+ places that no channel answers, else "my hunch" · YOU CAN SAY = left for the main agent, it needs the coach's own story, proof or belief ([NEEDS: …] if none). Each line with its trace (posts, lines, counts).
+Commenters by role only, never listed or named; public channel names are fine in these notes.

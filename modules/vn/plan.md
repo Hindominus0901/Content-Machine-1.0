@@ -9,11 +9,11 @@ G1 6/10 (theo EN): WEEK 2 K10 "lean (mặc định)", "standard, chỉ khi xin";
 Cắt bù byte G1 (không bỏ luật): WEEK 3 trỏ mục 0 TRỌNG TÂM của KIỂM TRA TRƯỚC KHI GIAO (luôn trong khối hướng dẫn: một ý lớn, ý chính ≤20 tiếng, một niềm tin, không lấy chủ đề để dành), giữ "ý chính viết trước", "ĐỂ SAU không làm hook", tách hai ý; MONTH 3 điều kiện ĐỂ SAU vào lại trỏ §CM-MAP (Quay lại khi); MONTH 4 tháng cô hồn trỏ §CM-LOCALE 6; month.check bỏ dòng cuối "Trả lời 'không có gì thay đổi' là đủ." (TIẾP month.check_next nói y vậy trong cùng tin).
 G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS đã ghi danh sách quay "(Tuần 1, …) mở bằng" film.list_open, và WEEK 10 không có vế "không thêm lời" để vướng.
 
-<!-- @section plan.kit-week src=9cfe605cc9 -->
+<!-- @section plan.kit-week src=e7fb652b56 -->
 ### Tuần nói chuyện (Tuần 1: cùng QUAY HÔM NAY sau khi chiến lược được OK; chủ đề: trụ cột + hiểu biết nghề, sự thật chỉ của coach)
 1 Tuần n = (số tuần từ plan_start mod 4) + 1, đi đầu là bước n: 1 vấn đề thật, nguyên nhân · 2 cách tốt hơn, cách của họ · 3 bằng chứng, "mình cũng làm được, dù…" · 4 cả ba + sản phẩm. Trụ cột xoay vòng.
 2 Video ngắn (FB, TikTok, IG): 3 video (tuần nói chuyện: 4), 1 bài dài, 1 tin Zalo. Kênh chữ (LinkedIn, bản tin): 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn. Danh sách 300+: tin gửi trước, xin trả lời; chưa có (nói hay đoán): tin riêng (§CM-MESSAGES 4). Số giờ mỗi tuần quyết định: lean (≤1 tiếng, mặc định) hay standard (2–3 tiếng, thêm 1 video, 1 carousel). Xin bớt bài: giữ bài chính; không tuần nào trống.
-3 Mỗi bài một trụ cột, một loại, qua mục 0 TRỌNG TÂM (KIỂM TRA TRƯỚC KHI GIAO); ý chính viết trước; ĐỂ SAU không làm hook. Hai ý thì tách, ý sau để dành.
+3 Mỗi bài một trụ cột, một loại, qua mục 0 TRỌNG TÂM (KIỂM TRA TRƯỚC KHI GIAO); ý chính viết trước; một khung viết hợp loại bài, định dạng (§CM-COPY); ≥1 món trong kho: lời mời, quà, chuyện hay bằng chứng (§CM-BANKS); ĐỂ SAU không làm hook. Hai ý thì tách, ý sau để dành.
 4 Từ khoá 1 lần trong bài + lời mời; xoay vòng: hook → chữ trên màn hình → câu chốt → dòng 1 caption → mở đầu bài dài, carousel.
 5 Dòng VÌ SAO lưu kèm mỗi bài, chỉ in khi hỏi "{{t:cmd.why}}": {{t:why.prefix}}: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}.
 6 Lời mời theo chặng: kéo người mới → theo dõi, gửi bạn bè ("{{t:series.part2_tomorrow}}") · mặc định → từ khoá (§CM-CTA-KIT 1; nhẹ: trả lời, nhắn mình) · nhắn tin, đặt lịch → từ tuần 2, khi có bằng chứng (kết quả khách cho dùng, quy trình, suất nhóm đầu), lean ≤1/tuần, standard ≤2. Cho ≥3 lần mới xin 1 lần.
@@ -21,7 +21,6 @@ G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS 
 8 Khung trong Bài bạn thích: ≤1 video riêng/tuần (standard 2), chủ đề, chuyện của coach.
 9 Chưa có bằng chứng: bài bằng chứng thành chuyện quy trình hoặc suất nhóm đầu, không giải thích; tuần đó có tin hỏi 3 khách cũ (§CM-MESSAGES 7).
 10 In từng bài kèm thứ đăng, loại, trụ cột, khung chép; ngày 0 chỉ một dòng trên mỗi khung. Họ dừng lúc nào cũng được; phần còn lại chờ "tiếp".
-11 Ngày 0, tin Tuần 1, chưa tạo file: TIẾP thêm "Muốn có cả chiến lược trong một file thì gõ 'chiến lược'." (§CM-STRATEGY-DOC 1)
 
 <!-- @section plan.kit-month src=dbbcea74ec -->
 ### Một quyết định, ≤20 phút
