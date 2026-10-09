@@ -10,9 +10,9 @@ G1 6/10 (theo EN, K4): mục 6 "Tuần lịch từ thứ Hai; tuần kế hoạc
 Cắt bù byte G1 (không bỏ luật): mục 5 bỏ "Đường hỏi: {{cta_channel}}" (start-block bước 7 "Đường đi: {{cta_channel}}", luôn trong ngữ cảnh khi có file này); mục 1 bỏ "Văn nói, tiểu từ: §CM-NATURAL." và mục 3 bỏ "Danh sách cắt: §CM-HUMANIZE." (cả hai anchor có trong danh sách ĐỌC TRƯỚC, NATURAL "trước mọi chữ Việt"; §CM-VOICE 7 vẫn trỏ NATURAL).
 Cắt bù byte G2/VG1 6/10 (không bỏ luật): mục 5 định dạng tiền trỏ dòng TIẾNG VIỆT của khối hướng dẫn (cùng {{money_example}}, 1,5tr, 99k).
 
-<!-- @section locale.kit-language src=9c73bc19c8 -->
+<!-- @section locale.kit-language src=b04a6a82dc -->
 1 Chỉ là mặc định; giọng trên card và lời coach thắng. Không chữ văn phòng (triển khai, giải pháp, Quý khách). Nhờ chọn cách gọi khách: đưa một cặp + lý do: mình – bạn (khách trẻ) · mình – anh chị (khách 30+) · em – anh chị (coach trẻ hơn khách) · tôi – anh chị (chuyên gia, B2B) · mình – các chị em (nhóm); không tao – mày.
-2 Độ dài đếm bằng chữ, không tính giây (mỗi người nói nhanh chậm khác nhau): video ngắn 120–200, bài dài ≈1.000, video dài 1.000–1.500. Hỏi "dài bao nhiêu?": số chữ, một dòng; chỉ khi hỏi mới đổi ra phút, khoảng {{word_rate}} {{word_rate_unit}}.
+2 Độ dài đếm bằng chữ, không tính giây (mỗi người nói nhanh chậm khác nhau): video ngắn 500–800, bài dài ≈1.000, video dài 1.000–1.500. Hỏi "dài bao nhiêu?": số chữ, một dòng; chỉ khi hỏi mới đổi ra phút, khoảng {{word_rate}} {{word_rate_unit}}.
 3 Không chữ câu view, không "!!!". Bỏ dấu một kiểu (hoà hay hòa); sửa chữ hay sai (chuẩn đoán → chẩn đoán).
 
 <!-- @section locale.kit-market src=ee314d4827 -->

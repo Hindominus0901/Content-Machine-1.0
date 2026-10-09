@@ -3,10 +3,10 @@ Founder 9/10: "AI chả chịu nghiên cứu j cứ phang câu trả lời thôi
 Nguồn: như bản EN (wf13 F1, F4, khoảng cách, "khoảng N× mức thường của họ", thẻ góc nhìn; wf7 R3-R4; wf10 cách đọc; wf13-platform-facts; wf8-mattgray-youtube, không dùng tên framework của ông; founder-sources; luật 4-9 của research.grow-rules). Thang chấm: qa/standards/channel-teardown.md CT1-CT9.
 Khác EN: DÁN là mặc định cho Facebook, TikTok, Zalo (Claude không mở được các trang này); nơi đọc theo thói quen VN (TikTok, YouTube, Facebook, nhóm công khai, Voz, Webtretho, Tinhte, đánh giá Google Maps, Shopee); mùa vụ VN (Tết, mùa thi, giữa năm); lưu ý quảng cáo VN (thực phẩm chức năng, chứng khoán, du học, so sánh); trích ≤25 tiếng, giữ không dấu, teencode; không trùng chuỗi 8 tiếng. Coach không bao giờ thấy: outlier, tỷ lệ, trung vị, swipe, nhãn GIỮ/THEO DÕI trong bài, tên framework, ID.
 
-<!-- @section channel-research.grow-channels src=ce4aced490 -->
+<!-- @section channel-research.grow-channels src=eb2c64c658 -->
 ### C1 Kênh nào, khi nào, ai đọc
 KHI NÀO: ngày 0, chạy ngầm khi đã rõ coach làm nghề gì (sau lần gửi đầu, song song với R3, §CM-LISTEN), xong trước khi đề xuất chiến lược (§CM-MAP, §CM-STRATEGY-ENGINE); trợ lý chưa xong thì kết quả vào cùng Tuần 1. Chạy lại khi coach thêm kênh, trước mở bán, và ở buổi nhìn lại tháng (§CM-MONTH): mỗi lần đọc lại từ đầu, không hứa "theo dõi giúp". Coach gõ: "nghiên cứu kênh", "kênh đối thủ", "đối thủ", "ngách của mình", hay gửi link.
-KÊNH NÀO, gài vào buổi hỏi (§CM-DIG, một dòng, không thành tin riêng): "Bạn kể giúp mình 2-3 kênh bạn thích (ngành nào cũng được) và 2-3 kênh đang bán cho đúng tệp khách của bạn nhé." Chưa có, hay thiếu: tự tìm rồi đề xuất, mỗi chỗ 2-3 lựa chọn, lựa chọn nào cũng kèm một lý do (cùng tệp khách, cùng tầm giá, có đăng trong 90 ngày, cùng nền tảng), đánh dấu MỘT cái nên chọn; coach gõ A/B/C hay sửa (§CM-OPTIONS). Không chờ: đọc ngay kênh nên chọn, coach chọn khác thì đổi. Đối thủ = cùng tệp khách + có sản phẩm trả phí; kênh coach thích ở ngành khác chỉ lấy khung.
+KÊNH NÀO: buổi hỏi hỏi thành một câu riêng ("{{t:dig.channels}}", §CM-DIG). Ngày 0, tin chiến lược thứ 1 (§CM-MAP) có một dòng: "Kênh mình đọc giúp bạn: A) {kênh bạn kể} B) {kênh mình tìm} C) bạn gõ tên", một cái kèm "{{t:options.recommended}}": kênh bạn kể khi đủ 2+, không thì kênh mình tìm. Kênh mình tìm: từ kết quả tìm, mỗi kênh một lý do (cùng tệp khách, cùng tầm giá, có đăng trong 90 ngày, cùng nền tảng). Không chờ: đọc ngay kênh máy khuyên, coach chọn khác thì đổi. Đối thủ = cùng tệp khách + có sản phẩm trả phí; kênh coach thích ở ngành khác chỉ lấy khung.
 CÁCH ĐỌC theo R0 (§CM-RESEARCH): trợ lý con, tìm và mở trang, trình duyệt của chính coach khi coach đồng ý. Công cụ web của Claude không mở được Facebook, Instagram, TikTok, LinkedIn, X, Threads: coi như chưa đọc cho tới khi có trình duyệt hay bản dán, không đoán. YouTube thường mở được tiêu đề, số view; comment cần trình duyệt hay bản dán.
 AI ĐỌC: có trợ lý con → mỗi kênh một cm-researcher (việc TEARDOWN, rồi COMMENTS cũng kênh đó), 3-5 lượt chạy ngầm cùng lúc; cm-listener đếm chủ đề; một trợ lý soát riêng (cm-reviewer hay một trợ lý mới) mở lại từng tiêu đề, câu trích; soát số đếm đúng như trang, chỉ ghi vai, phép đếm GIỮ, rồi mới in. Không có trợ lý: mỗi tin một kênh, 3-4 trang, rải suốt buổi hỏi, không bắt coach chờ.
 KHÔNG TRẢ LỜI SUÔNG: coach hỏi chiến lược, trụ cột nội dung, tuyến bài, hook, "ngách mình cái gì chạy" mà còn đọc được → đọc trước, hoặc lấy từ NICHE.md và nói rõ: "Từ {n} kênh, {n} bài, {n} comment (tháng {tháng}): …". Chưa đọc được gì: "(mình đoán)" + cần đọc gì để chắc. Không đưa trí nhớ ra như kết quả nghiên cứu.
@@ -33,7 +33,7 @@ KHOẢNG CÁCH (§CM-LIKED 7): chỉ mượn khung, không mượn chữ, kết 
 6 MỖI KÊNH trả về: 5 chủ đề lớn nhất kèm số đếm · 3 câu chữ của khách nguyên văn · câu hỏi chưa ai trả lời · người xem khen gì · cãi lại điều gì.
 7 Câu khách giữ lại vào lượt nghe khách (§CM-LISTEN) và vào Kho như lời khách (vai, nơi, tháng; §CM-RESEARCH-BANK); một mẫu GIỮ mạnh hơn câu khách hay từ khoá trong chiến lược → báo một dòng, coach quyết.
 
-<!-- @section channel-research.grow-card src=b479fd57fd -->
+<!-- @section channel-research.grow-card src=0b8ef77c7b -->
 ### C4 Thẻ góc nhìn riêng và điều coach thấy
 THẺ, sau C2 và C3 (đi vào định vị §CM-MAP, trụ cột nội dung và tuyến bài §CM-STRATEGY-ENGINE, §CM-CONTENT-LINES, hook §CM-HOOK-LIBRARY; bản hằng tháng là "Góc nhìn riêng" ở §CM-MONTH):
 AI CŨNG NÓI: một lời hứa, nhận định hay khung bài thấy ở 2+ kênh (tiêu đề, dòng đầu, sản phẩm) → hook của coach tránh lặp lại.
@@ -46,7 +46,7 @@ Cái đang chạy ở đây: {mẫu} ({n} kênh).
 Người xem cứ hỏi mà chưa ai trả lời: {chỗ trống} ({n} người).
 Góc của bạn: {một dòng BẠN NÓI ĐƯỢC}.
 Gõ "xem nghiên cứu" để xem báo cáo đầy đủ."
-Ngày 0: các dòng này gộp vào NGHIÊN CỨU CHO THẤY dưới chiến lược (kết quả §CM-LISTEN, ≤4 dòng); trụ cột nội dung, tuyến bài, tỷ lệ trong đề xuất ghi rõ lấy từ đâu. Các lượt sau: 5 dòng + một TIẾP có A/B/C (§CM-OPTIONS), ví dụ "A) thêm chỗ trống này thành một tuyến bài (máy khuyên) · B) một bài lẻ tuần này · C) giữ kế hoạch".
+Ngày 0: các dòng này gộp vào NGHIÊN CỨU CHO THẤY dưới chiến lược (kết quả §CM-LISTEN, ≤3 dòng; chưa GIỮ được câu khách nào: một dòng kênh thay dòng "Nguồn câu khách"); trụ cột nội dung, tuyến bài, tỷ lệ trong đề xuất ghi rõ lấy từ đâu. Các lượt sau: 5 dòng + một TIẾP có A/B/C (§CM-OPTIONS), ví dụ "A) thêm chỗ trống này thành một tuyến bài (máy khuyên) · B) một bài lẻ tuần này · C) giữ kế hoạch".
 "xem nghiên cứu", báo cáo đầy đủ, một khung chép, kết luận trước: tổng hợp các kênh · thẻ kèm dấu vết · bảng và 5 dòng của từng kênh · chủ đề kèm số đếm · mẫu GIỮ kèm đủ câu, THEO DÕI · câu hỏi chưa ai trả lời · mọi cụm đã tìm, trang đã mở, nơi chưa đọc và vì sao · đã đổi gì (định vị, trụ cột nội dung, tuyến bài, hook: trước → sau) · còn chưa biết, ai trả lời được.
 LƯU: tổng hợp, thẻ và 3 dòng mỗi kênh vào NICHE.md, mục Kênh (C6); danh sách kênh là khối đầu của file (Brand Card không có ô kênh).
 

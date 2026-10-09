@@ -746,7 +746,6 @@ contains = []
 not_contains = []
 regex = [
   '''FILM TODAY''',
-  '''(?i)under 30\s?s''',
   '''(?i)on-screen''',
   '''(?i)first line''',
   '''(?i)last line''',

@@ -17,7 +17,7 @@ schema_version = 1
 
 [root]
 title = "Content Machine — {coach}"
-title_vn = "Content Machine — {coach}"
+title_vn = "Content Machine · {coach}"
 fence = "the machine writes only inside this page and its children; never edits, moves, renames or deletes anything outside it"
 max_calls_per_build = 30
 
@@ -52,12 +52,12 @@ properties = [
   { name = "Status", name_vn = "Trạng thái", type = "status", options = ["Idea", "Scripted", "Filmed", "Posted", "Reviewed"], options_vn = ["Ý tưởng", "Đã viết", "Đã quay", "Đã đăng", "Đã tổng kết"], machine_sets = ["Idea", "Scripted", "Reviewed"], coach_word = ["Filmed", "Posted"] },
   { name = "Date", name_vn = "Ngày đăng", type = "date" },
   { name = "Platform", name_vn = "Nền tảng", type = "select" },
-  { name = "Pillar", name_vn = "Trụ cột", type = "select" },
+  { name = "Content pillar", name_vn = "Trụ cột nội dung", type = "select" },
   { name = "Line", name_vn = "Tuyến", type = "relation", relation_to = "lines" },
-  { name = "Tier", name_vn = "Tầng", type = "select", options = ["Attract", "Trust", "Convert"], options_vn = ["Thu hút", "Tạo niềm tin", "Chuyển đổi"] },
+  { name = "Tier", name_vn = "Loại", type = "select", options = ["Attract", "Trust", "Convert"], options_vn = ["Thu hút", "Tạo niềm tin", "Chuyển đổi"] },
   { name = "Format", name_vn = "Dạng", type = "select" },
   { name = "Words", name_vn = "Số chữ", type = "number" },
-  { name = "Hook mechanism", name_vn = "Kiểu hook", type = "rich_text", note = "the lever in plain words, never a method name" },
+  { name = "Hook mechanism", name_vn = "Kiểu câu mở", type = "rich_text", note = "the lever in plain words, never a method name" },
   { name = "Framework", name_vn = "Mạch bài", type = "rich_text", note = "the shape in plain words ('story → 3 lessons → invite'), never a method name" },
   { name = "CTA", name_vn = "Lời kêu gọi", type = "rich_text" },
   { name = "Keyword", name_vn = "Từ khoá", type = "rich_text" },
@@ -93,8 +93,8 @@ row = "one recurring content line (§CM-CONTENT-LINES)"
 key = "Name"
 properties = [
   { name = "Name", name_vn = "Tên", type = "title" },
-  { name = "Pillar", name_vn = "Trụ cột", type = "select" },
-  { name = "Tier", name_vn = "Tầng", type = "select", options = ["Attract", "Trust", "Convert"], options_vn = ["Thu hút", "Tạo niềm tin", "Chuyển đổi"] },
+  { name = "Content pillar", name_vn = "Trụ cột nội dung", type = "select" },
+  { name = "Tier", name_vn = "Loại", type = "select", options = ["Attract", "Trust", "Convert"], options_vn = ["Thu hút", "Tạo niềm tin", "Chuyển đổi"] },
   { name = "Cadence", name_vn = "Nhịp đăng", type = "rich_text" },
   { name = "Format", name_vn = "Dạng", type = "select" },
   { name = "Status", name_vn = "Trạng thái", type = "select", options = ["Testing", "Running", "Paused"], options_vn = ["Đang thử", "Đang chạy", "Tạm nghỉ"] },
@@ -108,7 +108,7 @@ row = "one item (§CM-BANKS)"
 key = "Item"
 properties = [
   { name = "Item", name_vn = "Mục", type = "title" },
-  { name = "Type", name_vn = "Loại", type = "select", options = ["Hook", "CTA", "Magnet", "Story", "Proof", "Research", "Buyer words"], options_vn = ["Hook", "Lời kêu gọi", "Quà tặng", "Chuyện", "Bằng chứng", "Tìm hiểu", "Chữ của khách"] },
+  { name = "Type", name_vn = "Loại", type = "select", options = ["Hook", "CTA", "Magnet", "Story", "Proof", "Research", "Buyer words"], options_vn = ["Câu mở", "Lời kêu gọi", "Quà tặng", "Chuyện", "Bằng chứng", "Tìm hiểu", "Chữ của khách"] },
   { name = "Source", name_vn = "Nguồn", type = "rich_text", note = "role · platform · month; never a private person's name or handle" },
   { name = "Date", name_vn = "Ngày", type = "date" },
   { name = "Heard or guess", name_vn = "Nghe thật hay đoán", type = "select", options = ["Heard", "Guess"], options_vn = ["Nghe thật", "Đoán"] },
@@ -181,7 +181,7 @@ group_by = "Line"
 [[views]]
 database = "content"
 name = "By tier"
-name_vn = "Theo tầng"
+name_vn = "Theo loại"
 layout = "table"
 group_by = "Tier"
 

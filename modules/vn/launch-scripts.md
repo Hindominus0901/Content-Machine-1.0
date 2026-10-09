@@ -4,11 +4,11 @@ Dáng câu mở ở grow-posts 1 chỉ để máy dựa vào, không in nguyên:
 Thêm so với EN: Zalo là đường chăm chính, email khi có danh sách; lớp mini Zalo là mặc định (nhóm thường ≤200 là giới hạn thật); giá công khai, tiền theo §CM-LOCALE 5; không nhắn hàng loạt từ tài khoản cá nhân. "#QC" cho người giới thiệu, "nhất", "số 1": để §CM-LOCALE 9 lo (luôn trong file phương pháp).
 Soát song ngữ 7/10: viết lại các câu đọc như dịch (cửa sổ 24 giờ, thắng nhanh, bức tường, 45 phút vẫn là của bạn, nha + nhé trong một câu).
 
-<!-- @section launch-scripts.grow-posts kind=script src=ff57360e23 -->
+<!-- @section launch-scripts.grow-posts kind=script src=06131dc1f6 -->
 ### Bài và video mở bán
 Mỗi bài: giọng, kênh của coach (§CM-VOICE), một cặp xưng hô suốt đợt, một ý, một lời mời; số liệu từ hồ sơ, bằng chứng được phép, thiếu thì [CẦN BẠN: …] trong câu; khung chép; dưới khung: §CM-EDGE, vd "{{t:verdict.needs}}".
 1 Dáng câu mở, viết lại bằng chữ coach: P0 "Mình đang làm một thứ cho {ai}. Hỏi thật: cái gì đang cản bạn {kết quả} nhất?" · P1 "Tặng, không bán: {quà}, {thời gian} là xong {bước}." · P2 "Mình từng tin {niềm tin cũ}. Cho tới hôm {chuyện}." · P5 "Mở đăng ký {khoá} cho {ai}. {N} suất, đóng {giờ, thứ}." · P7 "Cập nhật {giờ}: còn {n}/{N} suất." Suất, số, ngày giờ chỉ từ giới hạn thật.
-2 VIDEO NGẮN 120–200 chữ: chữ hook trên màn hình + câu đầu → cảnh "trước" thật (≈30 chữ) → cách làm ra kết quả (≈80) → "đây mới là bước 1 trong 3" → lời mời. P2, P3: niềm tin hay bước ở giữa.
+2 VIDEO NGẮN 500–800 chữ: chữ hook trên màn hình + câu đầu → cảnh "trước" thật (≈150 chữ) → cách làm ra kết quả (≈300) → "đây mới là bước 1 trong 3" → lời mời. P2, P3: niềm tin hay bước ở giữa.
 3 BÀI CHỮ NỀN MÀU (Facebook): ≤130 ký tự, không link: kết quả · công sức hay thời gian · "tặng, không bán" · suất chỉ từ giới hạn thật, kèm lý do · lời mời; 👇 cuối nếu coach hay dùng. P5, P7, P8: khoá, suất, giờ đóng.
 4 BÀI KỂ CHUYỆN (P2): niềm tin cũ → nó làm mình mất gì → lúc đổi (người thật, hôm nào, câu nói nguyên văn, đã xin phép) → niềm tin mới → bằng chứng có bối cảnh → bạn thì sao → "mai kể tiếp: …".
 5 SERIES CHUYỆN KHÁCH (P4): 5 kỳ có ngày giờ: lúc đầu · chỗ kẹt · cách làm · kết quả · bài học + lời mời. Số tiền, kết quả nào cũng kèm bối cảnh trong bài (tệp, mấy năm, tiền quảng cáo, giá, người mua, hoàn tiền, đội), "kết quả cá nhân, không phải cam kết" và mức thường gặp; thiếu bối cảnh → kể quy trình, không nêu số.

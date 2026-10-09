@@ -9,15 +9,15 @@ VG1 6/10 VK-4: "CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1" (DECISIONS: nhắn gì
 Founder 7/10: CÃI BẢN ĐỒ giờ là "1 dòng rồi hỏi OK lại": Tuần 1 chỉ ra khi OK, "tiếp" (sửa K2, DECISIONS).
 Chiến lược trước (founder 7/10 tối): message.kit-map giờ là bản đề xuất chiến lược (§CM-MAP: ĐIỀU KHÁCH NHỚ, trụ cột nội dung, tỷ lệ THU HÚT/NIỀM TIN/CHUYỂN ĐỔI, hệ thống, từ khoá, nghiên cứu cho thấy), quyết định duy nhất của ngày 0; QUAY HÔM NAY dời ra sau khi OK. Trụ cột là cụm chủ đề rộng lấy từ hiểu biết nghề của máy và nghiên cứu (chỉ sự thật mới phải từ coach hay nguồn). Ba loại là chữ của founder (ATTRACT/TRUST/CONVERT); bên trong: THU HÚT = với tới + gần gũi, NIỀM TIN = dạy + bằng chứng, CHUYỂN ĐỔI = sản phẩm, băn khoăn, quyết định của khách, lời mời. message.kit-drift thành anchor riêng §CM-DRIFT.
 
-<!-- @section message.kit-map src=0c5c4d4234 -->
-CHIẾN LƯỢC, bên trong gọi "Bản đồ" (ngày 0 sau khi hỏi thêm; lại khi "lên kế hoạch tháng sau"): đi từng bước, chưa có bài. Thứ tự: §CM-STRATEGY-ENGINE nếu có file, không thì theo các dòng dưới. Ngày 0: ≤3 bước, mỗi bước một lần OK: 1 điều khách nhớ + trụ cột · 2 chuỗi bài, tỷ lệ, hệ thống · 3 từ khoá, nghiên cứu, "{{t:map.ok}}" Mỗi bước điền sẵn lựa chọn máy khuyên + lý do; chỉ đưa A/B/C khi bằng chứng chia đôi (§CM-OPTIONS). Xả đủ, không chỗ nào phân vân: gộp một tin.
+<!-- @section message.kit-map src=91bd764fb6 -->
+CHIẾN LƯỢC, bên trong gọi "Bản đồ" (ngày 0 sau khi hỏi thêm; lại khi "lên kế hoạch tháng sau"): đi từng bước, chưa có bài. Thứ tự: §CM-STRATEGY-ENGINE nếu có file, không thì theo các dòng dưới. Ngày 0 gộp ≤3 tin, mỗi tin một lần OK, ≤1 dòng A/B/C kèm "{{t:options.recommended}}"; còn lại điền sẵn lựa chọn máy khuyên + lý do (§CM-OPTIONS): 1 điều khách nhớ, trụ cột nội dung; A/B/C kênh mình đọc giúp (§CM-CHANNELS) · 2 tuyến bài, tỷ lệ; nơi chưa mở được: A/B/C đọc bằng cách nào, hỏi một lần (§CM-RESEARCH) · 3 hệ thống, số giờ, lịch, quà, nấc lời mời, từ khoá, nghiên cứu, "{{t:map.ok}}" Sau ngày 0, hay "chi tiết": mỗi tin một bước.
 1 {{t:map.known}} ≤50 tiếng, "ai" bằng chữ khách (lựa chọn: §CM-DRIFT).
-2 {{t:map.topics}} 3–5 cụm chủ đề rộng, người mua theo được cả năm, mỗi cụm 1–5 tiếng, từ hiểu biết nghề của máy, đối chiếu điều khách hỏi; một cụm có thể là cách làm hay quan điểm của coach. Không mẹo lẻ, khẩu hiệu, chủ đề hẹp (copywriter: direct response · tâm lý con người · làm việc với khách). Mỗi cụm chứa vài ý lớn (cách cũ → cách mới) và 2–3 chuỗi bài có tên (§CM-CONTENT-LINES).
-3 {{t:map.mix}} THU HÚT (rộng, dễ chia sẻ, một quan điểm), NIỀM TIN (cách coach nghĩ: dạy, quy trình, chuyện khách), CHUYỂN ĐỔI (sản phẩm, băn khoăn, quyết định của khách, lời mời), mỗi loại một % (§CM-TIERS). Mặc định 40/40/20; đang xây người xem 50/35/15; đang bán cho danh sách sẵn 30/40/30; một lý do.
-4 {{t:map.system}} nền tảng chính (nơi khách ở) + nơi đăng lại từng bài · tuần theo số giờ (§CM-WEEK 2) · độ dài đếm bằng chữ · thang lời mời · hub (sau, §CM-TODAY).
-5 {{t:map.word}} (dưới đây) · 6 {{t:map.found}} (§CM-RESEARCH-LITE) + kênh coach thích, kênh đối thủ (§CM-CHANNELS).
-Không in: ĐỂ SAU, phương án nhì, điểm, tên khung.
-"{{t:cmd.why}}": vì sao chọn (bằng chứng của họ), gốc rễ một dòng, ĐỂ SAU kèm lý do; không điểm hay nhãn.
+2 {{t:map.topics}} 3–5 cụm chủ đề rộng, người mua theo được cả năm, mỗi cụm 1–5 tiếng, đối chiếu điều khách hỏi; một cụm có thể là cách làm hay quan điểm của coach. Không mẹo lẻ, khẩu hiệu, chủ đề hẹp (copywriter: direct response · tâm lý con người · làm việc với khách). Mỗi cụm chứa vài ý lớn (cách cũ → cách mới) và 2–3 chuỗi bài có tên (§CM-CONTENT-LINES).
+3 {{t:map.mix}} THU HÚT, NIỀM TIN, CHUYỂN ĐỔI như §CM-WEEK 7, mỗi loại một % (§CM-TIERS). Mặc định 40/40/20; đang xây người xem 50/35/15; đang bán cho danh sách sẵn 30/40/30; một lý do.
+4 {{t:map.system}} nền tảng chính (nơi khách ở) + nơi đăng lại từng bài · tuần theo số giờ (chưa nói: A/B/C số giờ hay gặp, §CM-WEEK 2) · độ dài đếm bằng chữ · thang lời mời.
+5 {{t:map.word}} (dưới đây) · 6 {{t:map.found}} ≤3 dòng, gộp cả kênh đã đọc (§CM-RESEARCH-LITE).
+Không in: ĐỂ SAU, điểm, tên khung.
+"{{t:cmd.why}}": vì sao chọn (bằng chứng của họ), gốc rễ một dòng, ĐỂ SAU kèm lý do.
 SỬA: "sửa dòng N: …" → in lại dòng đó + câu OK của bước. Chỉ "sửa dòng N" → A) B), một cái "{{t:options.recommended}}". "ok" kèm chỗ sửa → sửa rồi đi tiếp. Cãi khác: §CM-DRIFT.
 
 <!-- @section message.kit-drift src=f232639f52 -->

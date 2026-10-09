@@ -11,7 +11,7 @@ Tên gọi bên trong (không cho coach thấy mã): THU HÚT / NIỀM TIN / CHU
 - Lời mời: các câu mời (§CM-CTA-BANK) · quà đã làm xong, kèm từ khoá và tin trả lời (§CM-MAGNET-BANK) · hook từng ăn (mục 6).
 - Thêm: bài bạn thích (§CM-LIKED) · chủ đề để dành.
 3 NẰM Ở ĐÂU (một ngân hàng, tên giống nhau mọi chỗ):
-- Notion: cơ sở dữ liệu Ngân hàng (§CM-HUB-NOTION), mỗi mục một dòng, có cột Nghe thật hay đoán; Loại: Chữ của khách (chữ khách, lăn tăn, khoảnh khắc) · Tìm hiểu (điều rút ra) · Chuyện (chuyện, quan điểm) · Bằng chứng · Lời kêu gọi · Quà tặng · Hook.
+- Notion: cơ sở dữ liệu Ngân hàng (§CM-HUB-NOTION), mỗi mục một dòng, có cột Nghe thật hay đoán; Loại: Chữ của khách (chữ khách, lăn tăn, khoảnh khắc) · Tìm hiểu (điều rút ra) · Chuyện (chuyện, quan điểm) · Bằng chứng · Lời kêu gọi · Quà tặng · Câu mở.
 - Bảng: tab Kho, dòng in sẵn để dán (§CM-BOARD-ROWS).
 - Chưa có hub: phần ngân hàng trong file chiến lược (§CM-STRATEGY-DOC); dòng mới in trong một khung chép, cuối chính tin vừa tìm ra nó.
 - HUB.md, viết lại mỗi buổi (§CM-HUB-MD): mục nổi nhất (hook, lời mời, quà đang chạy, chuyện) và ngăn vơi nhất.

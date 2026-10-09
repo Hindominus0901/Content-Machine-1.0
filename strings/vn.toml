@@ -236,7 +236,7 @@
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
 "levelup.offer_reminders" = { text = "Tiếp theo: 2 lời nhắc trên lịch, {day} và thứ Sáu. A) cài luôn (máy khuyên: {why}) B) để sau.", src = "62fe22666e" }
 "levelup.offer_nudges"    = { text = "Bạn theo đủ một tuần rồi đó. Tiếp theo: mình nhắn bạn thứ Hai, mỗi sáng, thứ Sáu. A) cài luôn (máy khuyên: {why}) B) chỉ thứ Sáu C) để sau.", src = "f3c06c4f2a" }
-"levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, mình dựng sẵn B) một Google Sheet C) chỉ file HUB.md ở đây. Mình chọn {letter}: {why}. Gõ A, B hay C.", src = "2fbcbc036b" }
+"levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, mình dựng sẵn B) một Google Sheet C) để sau, chỉ HUB.md. Mình chọn {letter}: {why}. Gõ A, B hay C.", src = "629e4d8574" }
 "levelup.offer_autopilot" = { text = "Tiếp theo: tuần nào bài cũng tự vào Notion. A) cài luôn (máy khuyên: {why}) B) để sau.", src = "117e68fd42" }
 "levelup.offer_grow"      = { text = "Phần đó nằm trong {LAUNCH-VN.md} (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại mình.", src = "80d274bfc4" }
 "levelup.offer_character" = { text = "Tiếp theo: cho bài giống bạn hơn, 3 buổi trò chuyện 20 phút. A) làm buổi 1 luôn (máy khuyên: {why}) B) tuần sau.", src = "49c6ea5567" }
@@ -374,8 +374,9 @@
 "dig.proof"                    = { text = "Có kết quả thật nào của khách mà bạn sẵn lòng kể ra không?", src = "60c5654c2a" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà bạn thấy sai?", src = "4d6081d2f9" }
 "dig.buyer"                    = { text = "Được nhân bản một khách thì bạn chọn ai, còn kiểu khách nào bạn không muốn nhận?", src = "890b2a58bb" }
-"dig.find"                     = { text = "Khách mới giờ tìm tới bạn bằng cách nào, bạn đang đăng ở đâu? Kể luôn 2–3 kênh bạn thích, 2–3 kênh đối thủ nhé.", src = "cf1ffe1c5b" }
-"dig.goal"                     = { text = "90 ngày tới bạn muốn content làm được gì cho bạn, mỗi tuần dành cho nó được mấy tiếng?", src = "037c1b8675" }
+"dig.find"                     = { text = "Giờ khách mới tìm tới bạn từ đâu?", src = "bc74eafb1b" }
+"dig.channels"                 = { text = "Trong nghề có 2–3 kênh nào bạn hay xem, kênh bạn thích hay kênh đối thủ đều được?", src = "ff1ae05112" }
+"dig.goal"                     = { text = "Trong 90 ngày tới, đăng bài phải mang lại cho bạn điều gì?", src = "287ee7d652" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).", src = "df8c84d17e" }
 "map.ok"                       = { text = "Chạy thử 4 tuần nhé. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }

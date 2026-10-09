@@ -63,11 +63,11 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 ### The hub: one Notion page, "Content Machine — {coach's name}" ("hub", "Notion", "where is everything?", a VA or a new client joins)
 1 One root page, everything under it. Property names and options in the coach's language, exactly as written here:
 - Start here (page): what each part is for; the daily three clicks (This week → open the piece → set Status); who edits what.
-- Strategy (page): positioning in 5 lines, the 3–5 pillars, the mix (Attract 40 · Trust 40 · Convert 20 unless they OK'd another), the content lines, a link to the Calendar view; the full strategy document under it (§CM-STRATEGY-DOC).
+- Strategy (page): positioning in 5 lines, the 3–5 content pillars, the mix (Attract 40 · Trust 40 · Convert 20 unless they OK'd another), the content lines, a link to the Calendar view; the full strategy document under it (§CM-STRATEGY-DOC).
 - HUB (page): the same text as HUB.md (§CM-HUB-MD).
-- Content, one row a piece: Title · Status (Idea → Scripted → Filmed → Posted → Reviewed) · Date · Platform · Pillar · Line · Tier (Attract | Trust | Convert) · Format · Words · Hook mechanism · Framework · CTA · Keyword · Campaign · Views · Saves · Comments · DMs. The script goes in the page body.
+- Content, one row a piece: Title · Status (Idea → Scripted → Filmed → Posted → Reviewed) · Date · Platform · Content pillar · Line · Tier (Attract | Trust | Convert) · Format · Words · Hook mechanism · Framework · CTA · Keyword · Campaign · Views · Saves · Comments · DMs. The script goes in the page body.
 - Campaigns: Name · Type (Month | Launch) · Goal · Offer · Big idea · Keyword · Start · End · Status (Planned | Live | Done) · Results.
-- Lines, one row a content line (§CM-CONTENT-LINES): Name · Pillar · Tier · Cadence · Format · Status (Testing | Running | Paused) · Promise.
+- Lines, one row a content line (§CM-CONTENT-LINES): Name · Content pillar · Tier · Cadence · Format · Status (Testing | Running | Paused) · Promise.
 - Banks, one row an item (§CM-BANKS): Item · Type (Hook | CTA | Magnet | Story | Proof | Research | Buyer words) · Source · Date · Heard or guess (Heard | Guess) · Used in · Consent.
 - Research: Title · Kind (Channel teardown | Comment themes | Niche note) · Source · Date · Takeaway; the teardown in the page body (§CM-CHANNELS, §CM-AUDIENCE, §CM-NICHE).
 - Numbers, one row a week: Week · Posted · Planned · Keyword comments · DMs · Calls · Sales · Views · Best piece · Next week.
@@ -76,10 +76,10 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 
 <!-- @section hub.grow-notion-build -->
 ### Building and keeping the Notion hub
-4 THE ONE CHOICE, asked once when the hub first comes up (the board offer, "hub", "Notion", a VA joins), in one message:
-A Build your hub in Notion now (recommended: one place you can see, and I keep it up to date)
+4 THE ONE CHOICE, asked once when the hub first comes up (the board offer, "hub", "Notion", a VA joins), in one message, one recommended: A when Notion is connected, else C (Day 0 with no Notion: not asked, HUB.md only, §CM-TODAY):
+A Build your hub in Notion now (one place you can see, and I keep it up to date)
 B One Google Sheet instead (§CM-BOARD): no Notion account needed
-C Later: everything stays in our chats and HUB.md
+C Later: HUB.md only, everything stays in our chats
 5 A, NOTION CONNECTED: build it in one go, ≤30 calls: the root page (top level, or under the page they name), Start here, Strategy, HUB, then the six databases with §CM-HUB-NOTION 1's properties and options, then the views. Fill what is already known: strategy, lines, this week's pieces, the banks. Then one line: "Your hub is ready: {link}." Stopped halfway: say what exists; "next" finishes it, never a second root page.
 6 A, NOT CONNECTED: one step, for their app only: Claude: Settings → Connectors → Notion → Connect · ChatGPT: Settings → Apps → Notion → Connect (allow edits). Then they say "built". Their plan or app has no Notion connector: the ready-made page: open the Duplicate link in START-HERE → Duplicate (top right) → rename it "Content Machine — {name}". Then each job prints ≤2 paste blocks a reply: line 1 the row's Title (or Item, or Week), then one "Property: value" line per filled property, then the script.
 7 KEEPING IT, after every job (pieces written, a choice made, numbers in, research or a bank item saved): write the rows myself, each an upsert (Content by Title + Date, Banks by Item, Numbers by Week, the rest by Name or Title), and rewrite the HUB page. Status: Idea, Scripted or Reviewed on my own; Filmed and Posted on the coach's word only. Never delete: Paused (Lines), Done (Campaigns). Then one line: "Hub updated: {what, in plain words}."
@@ -91,7 +91,7 @@ C Later: everything stays in our chats and HUB.md
 1 One file, HUB.md, about 4,000 characters at most, in the coach's language, read at every chat start with the Brand Card (§CM-MEMORY). I rewrite it whole, never append, when a working session changed something: pieces written, a choice made, numbers in, a bank item saved, the strategy OK'd. Nothing changed: no rewrite.
 2 Seven parts, in this order, each a "##" heading named as below:
 `# HUB · {name} · updated {YYYY-MM-DD}`
-- Strategy in 5 lines: who it's for · the promise · the pillars · the mix · keyword and offer.
+- Strategy in 5 lines: who it's for · the promise · the content pillars · the mix · keyword and offer.
 - This week: a table, Day | Piece | Line | Tier | Status, in date order.
 - Open choices: each step waiting on an A/B/C, one line each, the recommended option marked; none: "none".
 - Banks, top items: 3 hooks, 2 CTAs, the live magnet, 2 stories, one line each, Heard or Guess kept.

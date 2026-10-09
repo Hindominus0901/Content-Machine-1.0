@@ -126,12 +126,11 @@ id = "fmt-short.vn.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "QUAY HÔM NAY under the Bản đồ has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3 ý, câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
+title = "QUAY HÔM NAY under the Bản đồ has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3–5 ý (kịch bản đủ câu 500–800 chữ, retest v13), câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
 context = "Day 0, about minute 18, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: past ~1.200 tiếng the soft cut came after chunk 2 and, with nothing missing (her buyers' words 'bán thì đắt mà cuối tháng không thấy tiền đâu', Ngân's consented result, the offer), ended '… Còn chuyện nào thì kể luôn, không thì gõ 'xong'.'; she told one more story (chunk 3) and now types 'xong'. That brings ONE reply: the 4-line Bản đồ (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang; offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ), QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Delivery: gạch đầu dòng (chunk 3: 'em cho chị mấy gạch đầu dòng')."
 input = """xong rồi em. Tối nay chị quay luôn, em đưa chị cái video đi"""
 regex = [
   '''QUAY HÔM NAY''',
-  '''(?i)dưới 30\s?(?:giây|s)''',
   '''(?i)chữ trên màn hình''',
   '''(?i)câu (?:đầu|mở đầu)''',
   '''(?im)(?:(?:3|ba) ý|^\W*ý\s*1\b)''',
@@ -150,7 +149,6 @@ regex = [
 not_regex = [
   '''(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
   '''(?im)^\W*câu (?:đầu|mở đầu)[^:\n]{0,40}:[^\S\n]*(?:\S+[^\S\n]+){18}\S+''',
-  '''(?im)^\W*ý[^\S\n]*[1-3][^\S\n]*[:.)—–-][^\S\n]*(?:\S+[^\S\n]+){18}\S+''',
   '''(?im)(?:nhẹ nhàng hơn|ngại xin comment|gõ\s+['"“‘]nhẹ['"”’]?|quay luôn bây giờ|chưa (?:kịp )?quay)[^.!\n]*\?''',
   '''(?i)\b(?:title hook|visual hook|verbal hook|lock-?in|link-?forward|delivery mode|mode [ABC]|buyer filter)\b''',
   '''\b[VOSBPRKICAWX]-\d+\b''',
@@ -197,7 +195,6 @@ not_regex = [
   '''(?i)(?:tải|đính kèm|upload|thêm|gắn)\s+(?:lại\s+)?(?:file|tệp)''',
   '''(?i)(?:trang cài đặt|trang hướng dẫn|tải app)''',
   '''(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
-  '''(?im)^\W*ý[^\S\n]*[1-3][^\S\n]*[:.)—–-][^\S\n]*(?:\S+[^\S\n]+){18}\S+''',
   '''(?im)(?:nhẹ nhàng hơn|ngại xin comment|gõ\s+['"“‘]nhẹ['"”’]?|quay luôn bây giờ|chưa (?:kịp )?quay)[^.!\n]*\?''',
   '''(?i)(?:3 tuần|4 viên|chữa khỏi|trị dứt điểm|chuyên gia)''',
   '''(?i)(?:học viên|khách)\s+(?:của mình\s+)?(?:đã|đều)\s+(?:hết|khỏi|đỡ)''',
@@ -334,7 +331,6 @@ not_regex = [
   '''(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)''',
   '''(?i)(?:đọc|nhìn)[^.\n]{0,30}(?:màn hình|điện thoại|kịch bản)[^.\n]{0,30}(?:trong lúc|khi|lúc)\s+(?:đang\s+)?quay''',
   '''(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
-  '''(?im)^\W*ý[^\S\n]*[1-3][^\S\n]*[:.)—–-][^\S\n]*(?:\S+[^\S\n]+){18}\S+''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)(?:muốn|làm|in|viết|gửi)[^\n?]{0,25}tuần 1[^\n?]{0,25}\?''',
 ]
@@ -931,7 +927,6 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?im)^\W*ý[^\S\n]*[1-3][^\S\n]*[:.)—–-][^\S\n]*(?:\S+[^\S\n]+){18}\S+''',
   '''(?i)(?:đọc nguyên văn|học thuộc cả bài)[^.\n]{0,30}(?:tốt hơn|hay hơn|nên)''',
   '''(?<!\w)[Cc]hị(?!\w)''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',

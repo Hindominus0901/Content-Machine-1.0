@@ -45,7 +45,7 @@ Giờ lệch vài phút sau giờ chẵn (tác vụ hay chạy trễ); họ mu�
 Mình là coach; viết tiếng Việt, giọng mình, cho khách trên {nền tảng}, giá bằng đ. Mình: {mình được biết tới vì}. Chủ đề: {chủ đề 1} · {chủ đề 2} · {chủ đề 3}. Từ khoá: {KEYWORD}. Giọng: {dòng giọng}.
 Tháng này: {mục tiêu · sản phẩm · niềm tin cũ → mới · từ ngày tới ngày}. Tuần n = (số tuần từ {ngày bắt đầu}) chia 4 lấy dư + 1, đi đầu là chủ đề n (tuần 4: cả ba + sản phẩm).
 Viết ý tuần n trong một dòng, rồi 3 hook cho tuần này, mỗi hook ≤16 tiếng, một hook có từ khoá.
-Hub: mở được Notion "Content Machine — {tên mình}" thì đọc trang HUB trước, rồi thêm bài tuần này vào Nội dung (Ý tưởng: tên, ngày, hook); ngoài ra không sửa, không xoá.
+Hub: mở được Notion "Content Machine · {tên mình}" thì đọc trang HUB trước, rồi thêm bài tuần này vào Nội dung (Ý tưởng: tên, ngày, hook); ngoài ra không sửa, không xoá.
 Không bịa số, kết quả, lời khách, hạn chót: ghi [CẦN BẠN: …]. Không hỏi lại. Không đăng, không nhắn cho ai.
 Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 
@@ -54,7 +54,7 @@ Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 {{/unless}}Thứ Ba, thứ Tư, thứ Năm hằng tuần lúc 6:37: "{{t:task.today.name}}".
 Mình là coach; viết tiếng Việt, giọng mình, cho khách. Mình: {mình được biết tới vì}. Chủ đề: {chủ đề 1} · {chủ đề 2} · {chủ đề 3}. Từ khoá: {KEYWORD}. Giọng: {dòng giọng}.
 Gửi một tin ngắn: "Bài hôm nay có sẵn trong {{name}} rồi." Rồi một hook dự phòng về một chủ đề của mình, ≤16 tiếng. Rồi: "Tuần này chưa có bài thì nhắn 'tiếp' là có phần còn lại."
-Hub: mở được Notion "Content Machine — {tên mình}" thì gọi tên bài hôm nay theo view Tuần này, lấy hook dự phòng trong Ngân hàng (Loại Hook, chưa dùng); không sửa gì ở đó.
+Hub: mở được Notion "Content Machine · {tên mình}" thì gọi tên bài hôm nay theo view Tuần này, lấy hook dự phòng trong Ngân hàng (Loại Hook, chưa dùng); không sửa gì ở đó.
 Không bịa số, kết quả, lời khách, hạn chót: ghi [CẦN BẠN: …]. Không hỏi lại. Không đăng, không nhắn cho ai.
 Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 
@@ -64,7 +64,7 @@ Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 Mình là coach. Viết tiếng Việt, gọi mình là {chị/anh/bạn}, tự xưng {em/mình}. Chủ đề: {chủ đề 1} · {chủ đề 2} · {chủ đề 3}. Từ khoá: {KEYWORD}.
 Hỏi mình một lần, thật ngắn, số tuần này: comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · khách biết mình từ đâu · bài tốt nhất, vì sao.
 Mình trả lời thì viết 5 dòng (Đã đăng · Khách hỏi · Thông điệp · Bài tốt nhất · Tuần sau), ≤3 việc thử, mỗi việc gắn một số của mình; tuần sau: A/B/C, đánh dấu cái nên chọn; rồi một bước tìm hiểu khách, chỉ đọc, ≤10 phút.
-Hub: mở được Notion "Content Machine — {tên mình}" thì ghi vào dòng Số liệu tuần này, chỉ vậy.
+Hub: mở được Notion "Content Machine · {tên mình}" thì ghi vào dòng Số liệu tuần này, chỉ vậy.
 Chỉ dùng số của mình: thiếu thì để trống, không ghi 0, không trung bình, không số người khác. Không đăng, nhắn, thả cảm xúc, theo dõi hay vào nhóm nào.
 Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 
@@ -72,7 +72,7 @@ Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 {{#unless task}}LỜI NHẮC · Claude · một tác vụ, thứ Hai tới thứ Sáu (khung chép, đã ghép, ≤900 ký tự):
 {{/unless}}{{name}} · Weekdays 7:07 · không chọn thư mục. Dùng skill {{skill_name}}.
 Mình: {mình được biết tới vì}. Chủ đề: {chủ đề 1} · {chủ đề 2} · {chủ đề 3}. Từ khoá: {KEYWORD}. Giọng: {dòng giọng}.
-Hub: trang Notion "Content Machine — {tên mình}". Đọc trang HUB trước; chỉ ghi bên trong nó, không xoá gì; xong thì viết lại HUB. Không có Notion: Google Sheet "{{name}}", chỉ đọc.
+Hub: trang Notion "Content Machine · {tên mình}". Đọc trang HUB trước; chỉ ghi bên trong nó, không xoá gì; xong thì viết lại HUB. Không có Notion: Google Sheet "{{name}}", chỉ đọc.
 Việc theo ngày: T2 {{t:task.week.name}} · T3–T5 {{t:task.today.name}} (tuần chưa có bài thì viết bù trước) · T6 {{t:task.numbers.name}} · thứ Tư đầu tháng: Làm mới hằng tháng thay vào.
 Có trợ thủ: mỗi bài một người viết, một người soát riêng đọc hết mới in.
 Không đăng, nhắn, thả cảm xúc, theo dõi, vào nhóm hay mở app trên máy mình. Không bịa số, kết quả, lời khách, hạn chót: [CẦN BẠN: …]. Hỏi tối đa một câu.
@@ -106,6 +106,6 @@ Rồi tác vụ nào cũng viết lại HUB.
 Mình là coach cho {khách của mình}. Chủ đề: {chủ đề 1} · {chủ đề 2} · {chủ đề 3}. Kênh mình hay xem: {2–3 kênh}.
 Chỉ đọc, ≤15 phút: tháng này {ngách của mình} và mấy kênh đó có gì mới (dạng bài, bài nào nhiều bình luận, người xem hỏi gì). Người chỉ ghi theo vai.
 Viết 3 điều thấy được, mỗi điều kèm nguồn và ngày; mấy dòng ghi chú ngách cần sửa; rồi trọng tâm tháng sau thành A/B/C, mỗi cái một dòng kèm lý do, đánh dấu một cái nên chọn.
-Hub: mở được Notion "Content Machine — {tên mình}" thì thêm mấy điều đó vào Tìm hiểu, cập nhật trang HUB; không sửa gì khác.
+Hub: mở được Notion "Content Machine · {tên mình}" thì thêm mấy điều đó vào Tìm hiểu, cập nhật trang HUB; không sửa gì khác.
 Không đăng, bình luận, thả cảm xúc, theo dõi, vào nhóm hay nhắn ai. Không bịa số: [CẦN BẠN: …]. Không hỏi lại.
 Kết bằng: {{t:next.prefix}} {{t:task.footer}}

@@ -27,7 +27,7 @@ plan_start = hôm sau ngày 0, tuần n = mỗi 7 ngày từ đó; trial_ends = 
 
 <!-- @section brain.kit-fix src=dd0e7e84d5 -->
 5 Claude, cách lưu: "{{t:save.claude_plain}}"
-6 ĐOẠN CHAT MỚI: v cao nhất thắng; bản cũ, bản thừa: "{{t:card.remove_old}}" Không hỏi. Bỏ qua trí nhớ tài khoản. Không có card, coach không mới: "{{t:card.fix_missing}}" Không chạy lại ngày 0. Dán nhầm hướng dẫn vào chat: vẫn làm + "{{t:card.fix_pasted_block}}" "Bắt đầu" kèm card, khung: in lại, làm tiếp.
+6 ĐOẠN CHAT MỚI: v cao nhất thắng; bản cũ, bản thừa: "{{t:card.remove_old}}" Không hỏi. Card ở chat cũ: dùng luôn. Không có card, coach không mới: "{{t:card.fix_missing}}" Không chạy lại ngày 0. Dán nhầm hướng dẫn vào chat: vẫn làm + "{{t:card.fix_pasted_block}}" "Bắt đầu" kèm card, khung: in lại, làm tiếp.
 
 <!-- @section brain.kit-box src=cb6dcdffbe -->
 7 Khung điện thoại "MY CONTENT MACHINE" = dòng "Luôn…", MỖI LẦN TRẢ LỜI, LỜI HỨA + card.

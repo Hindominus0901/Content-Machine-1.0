@@ -15,7 +15,7 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 
 <!-- @section levelup.kit-offers -->
 ### Level-ups: one A/B/C line above NEXT (§CM-OPTIONS), at its trigger, ≤1 a reply; none mid-Talk or on Day 0 (its last reply aside)
-- Day 0's last reply (card + save line), a VA, "where is everything?": the hub, "{{t:levelup.offer_board}}" A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- Day 0's last reply (card + save line), a VA, "where is everything?": the hub, "{{t:levelup.offer_board}}" (Notion connected: A recommended, else C; Day 0 with no Notion: no question, HUB.md) A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
 - Day 1 ("next"), or asked: "{{t:levelup.offer_reminders}}" Then 2 weekly calendar links.
 - Week-1 Friday review: "{{t:levelup.offer_nudges}}" Then §CM-NUDGES.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"

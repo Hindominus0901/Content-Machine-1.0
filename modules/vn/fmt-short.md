@@ -13,21 +13,21 @@ G2/VG1 6/10: FORMATS 5 K32 "nhớ ý rồi nói" (cùng chữ start-block bướ
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 1, 3, 12): FORMATS 1 nói như EN "chữ trên màn hình ≠ câu đầu", gọi tên phán suông ("Đó/Vậy không phải…", "…phải tin bạn", "Nếu X thì Y") trượt cả ở chữ trên màn hình lẫn dòng 1 caption, và nhận cặp TRƠN/HAY từ STRATEGY §CM-HOOKS 4; KIỂU VIỆT sang §CM-WEEK 7 (cùng byte, chỗ cho cặp ví dụ); POSTS 5 trang 1 dáng kết quả, không phải nhãn; MESSAGES 7 khách có kết quả kể ngày 0 nằm trong 3 người được hỏi (họ cho kể ở đó).
 Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 câu cuối trả lời thẳng câu đầu, không chỉ đặt tên cách làm ("Chị gọi là cầm gương nói thật"); chữ trên màn hình nói điều câu đầu và khung hình chưa nói, không nói lại bằng chữ khác; dòng 1 caption cũng qua lab; châm ngôn ("X để sau, Y có trước") trượt như phán suông. Trả bằng: bỏ ví dụ TRƠN "Đó không phải nghiên cứu." (luật mới và họ "Đó/Vậy không phải…" đã giữ; ví dụ chuyển sang §CM-HOOKS 4, file STRATEGY), "cả ở chữ trên màn hình lẫn dòng 1 caption" (dòng "Mọi hook, tiêu đề, dòng 1 caption" đã nói). POSTS 5 giữ ≤15 tiếng; "không rào" của trang 1 nằm ở ship.kit 3 và §CM-HOOKS 3 (file phương pháp hết chỗ).
 
-<!-- @section fmt-short.kit-video-short kind=script src=00c643e3bb -->
+<!-- @section fmt-short.kit-video-short kind=script src=27bee5ebd0 -->
 1 Câu cuối viết trước, nguyên văn, trả lời thẳng câu đầu, không chỉ đặt tên cách làm. 3 hook, một ý, mỗi cái thêm một điều: chữ trên màn hình ≤6 tiếng (đếm), nói điều câu đầu và khung hình chưa nói (con số, đối lập, câu hỏi), không nói lại · khung hình đầu: một thứ quay được · câu đầu nguyên văn, ≤{{hook_max}} {{hook_unit}}. Mọi hook, tiêu đề, dòng 1 caption: nháp thầm ≥12 câu, ≥6 dáng (lật niềm tin · câu khách · cảnh có đồ vật · lỗi đắt giá · số của coach · gọi đúng hoàn cảnh · làm lại từ đầu · trước/sau); giữ câu cụ thể, đúng chữ khách, hé điều câu cuối trả lời, đổi niềm tin, người ngoài muốn chia sẻ mà khách thấy đúng mình, không mồi. Phán suông, châm ngôn ("Đó/Vậy không phải…", "…phải tin bạn", "Nếu X thì Y", "X để sau, Y có trước") trượt. HAY: chữ "AI đâu có gặp khách bạn" · khung đầu: chat AI gõ dở "từ khoá cho coach" · câu đầu: "Đọc vài bài, hỏi AI một câu, vậy mà gọi là hiểu khách?" · câu cuối: "Hiểu khách là nghe họ kể, tới lúc họ nói ra câu bạn không đoán được." Chỉ in câu thắng; "hook khác" → thêm 2 (§CM-HOOKS).
-2 Ý: 3 (QUAY HÔM NAY) đến 5, mỗi ý một lần quay: ý → ví dụ → việc làm; nối bằng "mà", "nên", "thế là", không "rồi… rồi…".
-3 500–800 chữ, không tính giây (§CM-LOCALE 2): hook, chuyện, ý, mời.
-4 Caption trong khung chép: dòng 1 nối câu đầu · dòng 2 một chi tiết thật · dòng 3 lời mời (§CM-WEEK 6).
-5 In: "N1 · {day} · {loại} · {n} chữ" (ngày 0: "QUAY HÔM NAY · nhớ ý rồi nói"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: §CM-EDGE, vd "{{t:verdict.needs}}"
+2 Ý: 3–5, mỗi ý một lần quay: ý → ví dụ → việc làm; nối bằng "mà", "nên", "thế là", không "rồi… rồi…".
+3 500–800 chữ, cả QUAY HÔM NAY: kịch bản nói đủ câu; không tính giây (§CM-LOCALE 2): hook, chuyện, ý, mời.
+4 Caption, khung chép: dòng 1 nối câu đầu · dòng 2 một chi tiết thật · dòng 3 lời mời (§CM-WEEK 6).
+5 In: dòng tên (§CM-WEEK 10; ngày 0: "QUAY HÔM NAY" thay "N1 · {day}"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: §CM-EDGE, vd "{{t:verdict.needs}}"
 6 Kết quả của khách: nguyên văn, kèm câu ở dòng LỜI HỨA; kiểm thầm khách đồng ý chưa ("{{t:tick.client_ok}}" chỉ hiện khi "{{t:cmd.why}}").
-7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (coach chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
+7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà viết đủ chữ (chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
 
-<!-- @section fmt-short.kit-video-delivery src=bcdc840f21 -->
-- Cách nói: thẻ ý (mặc định) · nguyên văn ("/" chỗ ngắt hơi) · 3 gạch đầu dòng · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".
+<!-- @section fmt-short.kit-video-delivery src=adb16f08e9 -->
+- Cách nói: thẻ ý (mặc định) · nguyên văn ("/" chỗ ngắt hơi) · gạch đầu dòng mỗi ý · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".
 - "Ngắn thôi", "đọc như robot": thẻ ý, một màn hình. Xin chữ trên màn hình dài hơn: vẫn ≤6, câu đó lên dòng 1 caption ("{{t:film.onscreen_reason}}").
 - Sửa thì nói lại, không cắt từ bản ghi ("Cắt ra à?" "{{t:film.no_clips}}").
 - Video riêng: khoảnh khắc chỉ khách của họ từng trải, mang nét tính cách, cách cũ họ chống hay niềm tin; đáng gửi người cùng cảnh.
-- Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu họ không xin. Xin shot list: "{{t:film.words_only}}" Danh sách quay (Tuần 1, tuần nói chuyện; không phải QUAY HÔM NAY) mở bằng: "{{t:film.list_open}}"
+- Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu không xin. Xin shot list: "{{t:film.words_only}}" Danh sách quay (Tuần 1, tuần nói chuyện; không phải QUAY HÔM NAY) mở bằng: "{{t:film.list_open}}"
 
 <!-- @section fmt-short.kit-post kind=script src=c33f33bdba -->
 ### Bài "chia sẻ thật" (Facebook, LinkedIn, caption dài)
