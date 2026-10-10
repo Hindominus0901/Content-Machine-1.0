@@ -1,0 +1,590 @@
+# Which prose sections go into which shipped file (docs/BUILD.md §3).
+# Selectors are exact section IDs ("talk.core") or a whole module ("talk.*").
+# tools/build.py skips an anchor with no sections and notes it in
+# dist/maintainer/manifest.json; `lint --release` turns every skip into an error.
+#
+# Anchor order is file order. Each anchor renders as "## §CM-<ID> · <title>", the
+# title coming from strings key "anchor.<id in lower case>". Section bodies sit
+# under that heading, so they use ### or deeper headings.
+
+# ---------------------------------------------------------------- Day-0 kit method file
+# CONTENT-MACHINE-<SUFFIX>.md (≤56 KB EN / ≤64 KB VN since 7 Oct night; each anchor ≤2,800 B EN / 3,600 B VN).
+# The start-block router names every anchor below (lint E130). P2 fills the sections.
+
+[method]
+title_key = "method.title"
+# Convention: sections named <module>.kit-<name> ship in this file (except plan.kit-month*, liked.kit-* and
+# character.kit-talks, in the STRATEGY level-up since the founder's own Day 0, 7 Oct); other sections are for the L3 skill references (P4) or the level-up files (P5). Selectors ending in * are prefix matches.
+# Until a module is written its anchor is empty and build skips it (lint --release errors).
+
+[[method.anchor]]
+id = "OPTIONS"                   # v13 founder 9 Oct: A/B/C + one recommended at every open step, in order, no vague endings
+sections = ["options.kit-options"]
+
+[[method.anchor]]
+id = "MEMORY"                    # v13 founder 9 Oct: chat start restores state from memory, past chats, HUB.md, NICHE.md
+sections = ["options.kit-memory"]
+
+[[method.anchor]]
+id = "SETUP"
+sections = ["setup.kit-dump", "setup.kit-facts", "setup.kit-order"]
+
+[[method.anchor]]
+id = "DIG"                       # founder 7 Oct night: the interview about the coach's side (≤6 questions) before the strategy
+sections = ["setup.kit-dig"]
+
+[[method.anchor]]
+id = "CARD"
+sections = ["brain.kit-*"]
+
+[[method.anchor]]
+id = "TODAY"
+sections = ["levelup.kit-*"]
+
+[[method.anchor]]
+id = "TALK"
+sections = ["talk.kit-*"]
+
+[[method.anchor]]
+id = "WEEK"
+sections = ["plan.kit-week*"]
+
+[[method.anchor]]
+id = "FORMATS"
+sections = ["fmt-short.kit-video*"]
+
+[[method.anchor]]
+id = "POSTS"
+sections = ["fmt-short.kit-post*"]
+
+[[method.anchor]]
+id = "MESSAGES"
+sections = ["fmt-short.kit-message*"]
+
+[[method.anchor]]
+id = "NUMBERS"
+sections = ["review.kit-*"]
+
+[[method.anchor]]
+id = "MAP"                       # founder 7 Oct night: the strategy proposal (Day 0's one decision) + the keyword
+sections = ["message.kit-map", "signature.kit-*"]
+
+[[method.anchor]]
+id = "DRIFT"                     # 7 Oct night: the hidden pick (from §CM-SETUP) + staying on the strategy (was §CM-MAP's second half)
+sections = ["setup.kit-pick", "message.kit-drift"]
+
+[[method.anchor]]
+id = "CTA-KIT"
+sections = ["convert.kit-*"]
+
+[[method.anchor]]
+id = "CHARACTER-LITE"
+sections = ["character.kit-core"]     # the 3 talks (character.kit-talks) live in STRATEGY §CM-CHARACTER-DEEP since 7 Oct
+
+[[method.anchor]]
+id = "RESEARCH-LITE"
+sections = ["research.kit-*"]
+
+[[method.anchor]]
+id = "EDGE"
+sections = ["edge-rubric.kit-*"]
+
+[[method.anchor]]
+id = "VOICE"                     # wf14-voice-language-spec §6: the Voice Card, platform shifts, address
+sections = ["voice.kit-*"]
+
+[[method.anchor]]
+id = "HUMANIZE"
+sections = ["humanize.kit-pass", "humanize.kit-lists"]
+
+[[method.anchor]]
+id = "NATURAL"                   # VN language guide (6 Oct): talk, link and tell stories like a person
+sections = ["humanize.kit-natural"]
+
+[[method.anchor]]
+id = "GUARDRAILS"
+sections = ["guardrails.kit-*"]
+
+[[method.anchor]]
+id = "LOCALE"
+sections = ["locale.kit-*"]
+
+# ---------------------------------------------------------------- Level-up files (P5)
+# One file per area under Level-ups/, built like the method file: Level-ups/<FILE>-<SUFFIX>.md, each
+# with a title line, the output contract line top and bottom, and one "## §CM-<ID> · <title>" block per
+# anchor (title from strings key "anchor.<id in lower case>"). Each file has its own byte budget
+# (platform/targets.toml, `budget` below, E101) and its own companion skill in the plugin (`skill`).
+# Anchor ids are unique across the method file and all level-up files: prose points at "§CM-<ID>" and
+# the model finds the id in whichever file holds it (the project route loads the files the coach added;
+# the plugin route loads the companion skill that owns the file).
+#   [levelup.<area>]                     file = "<FILE>"  skill = "<skill name stem>"  budget = "<budgets key>"
+#   [[levelup.<area>.anchor]]            id = "..."  sections = ["module.section", ...]
+
+# --- Level-ups/RESEARCH-<SUFFIX>.md: the research plan, read-only listening, the root and the brief
+[levelup.research]
+file = "RESEARCH"
+skill = "cm-research"
+title_key = "levelup.research.title"
+budget = "levelup_research"
+
+[[levelup.research.anchor]]
+id = "RESEARCH"
+sections = ["research.grow-rules", "research.grow-access"]
+
+[[levelup.research.anchor]]
+id = "RESEARCH-PLAN"
+sections = ["research.grow-plan", "research.grow-primary"]
+
+[[levelup.research.anchor]]
+id = "LISTEN"
+sections = ["research.grow-listen", "research.grow-boxes", "research.grow-paste"]
+
+[[levelup.research.anchor]]
+id = "RESEARCH-ROOT"
+sections = ["research.grow-context", "research.grow-why", "research.grow-brief"]
+
+[[levelup.research.anchor]]
+id = "RESEARCH-LOOP"
+sections = ["research.grow-drip", "research.grow-reforage"]
+
+[[levelup.research.anchor]]
+id = "CHANNELS"                  # v13 founder 9 Oct: read the channels the coach likes and the competitors before answering
+sections = ["channel-research.grow-channels", "channel-research.grow-teardown"]
+
+[[levelup.research.anchor]]
+id = "AUDIENCE"                  # how their viewers react: comment themes, the angle card
+sections = ["channel-research.grow-audience", "channel-research.grow-card"]
+
+[[levelup.research.anchor]]
+id = "NICHE"                     # the niche primer, saved as NICHE.md
+sections = ["channel-research.grow-niche", "channel-research.grow-niche-file"]
+
+# --- Level-ups/LAUNCH-<SUFFIX>.md: the launch program (type, math, brief, steps, calendars, desk, scripts, debrief) and ads
+[levelup.launch]
+file = "LAUNCH"
+skill = "cm-launch"
+title_key = "levelup.launch.title"
+budget = "levelup_launch"
+
+[[levelup.launch.anchor]]
+id = "LAUNCH"
+sections = ["launch-plan.grow-start"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-BRIEF"
+sections = ["launch-plan.grow-brief"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-STEPS"
+sections = ["launch-plan.grow-steps"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-DAYS"
+sections = ["launch-plan.grow-days"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-DESK"
+sections = ["launch-plan.grow-desk"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-POSTS"
+sections = ["launch-scripts.grow-posts"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-MESSAGES"
+sections = ["launch-scripts.grow-messages"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-LIVE"
+sections = ["launch-scripts.grow-live"]
+
+[[levelup.launch.anchor]]
+id = "LAUNCH-DEBRIEF"
+sections = ["launch-plan.grow-debrief"]
+
+[[levelup.launch.anchor]]
+id = "ADS"
+sections = ["convert.grow-ads"]
+
+# --- Level-ups/BOARD-<SUFFIX>.md: the hub (a Notion workspace + HUB.md in the project; the Google Sheet is the fallback) and the scheduled tasks that read and write it
+[levelup.board]
+file = "BOARD"
+skill = "cm-board"
+title_key = "levelup.board.title"
+budget = "levelup_board"
+assets = "Board"                         # Level-ups/Board/: the five header-row CSVs that §CM-BOARD 2 imports ...
+assets_from = "templates/sheets/{lang}"  # ... copied from here (the plugin's board skill carries them too)
+
+[[levelup.board.anchor]]
+id = "HUB-NOTION"                # v13 founder 9 Oct: the Notion hub the machine builds through the connector
+sections = ["hub.grow-notion", "hub.grow-notion-build"]
+
+[[levelup.board.anchor]]
+id = "HUB-MD"
+sections = ["hub.grow-hubmd"]
+
+[[levelup.board.anchor]]
+id = "BOARD"
+sections = ["hub.grow-board"]
+
+[[levelup.board.anchor]]
+id = "BOARD-COLUMNS"
+sections = ["hub.grow-columns"]
+
+[[levelup.board.anchor]]
+id = "BOARD-ROWS"
+sections = ["hub.grow-rows"]
+
+[[levelup.board.anchor]]
+id = "BOARD-CAMPAIGNS"
+sections = ["hub.grow-campaign"]
+
+[[levelup.board.anchor]]
+id = "NUDGES"
+sections = ["automation.grow-setup"]
+
+[[levelup.board.anchor]]
+id = "HUB-TASKS"                 # what each scheduled task reads and writes in the hub + the monthly task
+sections = ["automation.grow-hubtasks", "automation.grow-task-monthly"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-JOBS"
+sections = ["automation.grow-jobs"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-RULES"
+sections = ["automation.grow-rules"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-TEXTS"
+sections = ["automation.grow-task-week", "automation.grow-task-today", "automation.grow-task-numbers"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-CLAUDE"
+sections = ["automation.grow-task-claude"]
+
+[[levelup.board.anchor]]
+id = "NUDGE-LAUNCH"
+sections = ["automation.grow-task-launch"]
+
+# --- Level-ups/STRATEGY-<SUFFIX>.md: what to say and how to say it (positioning, season, next month, ideas, liked posts,
+# packaging, hooks, long video). MONTH and LIKED moved here from the method file on 7 Oct (low-frequency; the
+# room went to the Day-0 dig, the listening pass and the hook lab); their sections keep their kit-* ids.
+[levelup.strategy]
+file = "STRATEGY"
+skill = "cm-strategy"
+title_key = "levelup.strategy.title"
+budget = "levelup_strategy"
+
+[[levelup.strategy.anchor]]
+id = "STRATEGY"
+sections = ["strategy.grow-position"]
+
+[[levelup.strategy.anchor]]
+id = "SEASON"
+sections = ["strategy.grow-season"]
+
+[[levelup.strategy.anchor]]
+id = "WHAT-TO-SAY"
+sections = ["strategy.grow-what"]
+
+[[levelup.strategy.anchor]]
+id = "MONTH"
+sections = ["plan.kit-month*"]
+
+[[levelup.strategy.anchor]]
+id = "STRATEGY-REVIEW"
+sections = ["strategy.grow-review"]
+
+[[levelup.strategy.anchor]]
+id = "CHARACTER-DEEP"
+sections = ["character.kit-talks", "character.grow-dig"]   # talks moved from the method file, 7 Oct (VN method budget)
+
+[[levelup.strategy.anchor]]
+id = "CHARACTER-SCENES"
+sections = ["character.grow-scenes"]
+
+[[levelup.strategy.anchor]]
+id = "IDEAS"
+sections = ["ideas.grow-engine"]
+
+[[levelup.strategy.anchor]]
+id = "MOMENTS"
+sections = ["ideas.grow-moments"]
+
+[[levelup.strategy.anchor]]
+id = "LIKED"
+sections = ["liked.kit-*"]
+
+[[levelup.strategy.anchor]]
+id = "PACKAGING"
+sections = ["packaging.grow-titles"]
+
+[[levelup.strategy.anchor]]
+id = "HOOKS"
+sections = ["packaging.grow-hooks"]
+
+[[levelup.strategy.anchor]]
+id = "TEXT-FORMATS"
+sections = ["packaging.grow-text"]
+
+[[levelup.strategy.anchor]]
+id = "LONG"
+sections = ["fmt-long.grow-outline"]
+
+[[levelup.strategy.anchor]]
+id = "LONG-INTRO"
+sections = ["packaging.grow-intro"]
+
+[[levelup.strategy.anchor]]
+id = "LONG-CUTS"
+sections = ["fmt-long.grow-cuts"]
+
+# --- Level-ups/PLAYBOOK-<SUFFIX>.md: the strategy engine (8 steps, A/B/C), the three content types in depth, content lines, the 4-week calendar and
+# the content strategy document (founder, 7 and 9 Oct); its own file, STRATEGY is full
+[levelup.playbook]
+file = "PLAYBOOK"
+skill = "cm-playbook"
+title_key = "levelup.playbook.title"
+budget = "levelup_playbook"
+
+[[levelup.playbook.anchor]]
+id = "STRATEGY-ENGINE"           # v13 (founder 9 Oct): the strategy in 8 steps, one a reply, A/B/C + one pick
+sections = ["strategy-doc.grow-engine", "strategy-doc.grow-engine-save", "strategy-doc.grow-engine-first", "strategy-doc.grow-engine-last"]
+
+[[levelup.playbook.anchor]]
+id = "TIERS"                     # ATTRACT / TRUST / CONVERT in depth
+sections = ["strategy-doc.grow-tiers", "strategy-doc.grow-tiers-convert", "review.grow-why"]   # "why isn't it working?" moved from §CM-NUMBERS (v13 kit fix, VN method budget)
+
+[[levelup.playbook.anchor]]
+id = "CONTENT-LINES"             # named recurring series per pillar, scaled to weekly hours
+sections = ["strategy-doc.grow-lines", "strategy-doc.grow-lines-example"]
+
+[[levelup.playbook.anchor]]
+id = "CALENDAR"                  # the 4-week calendar generator
+sections = ["strategy-doc.grow-calendar", "strategy-doc.grow-calendar-table", "strategy-doc.grow-calendar-rules"]
+
+[[levelup.playbook.anchor]]
+id = "STRATEGY-DOC"
+sections = ["strategy-doc.grow-doc", "strategy-doc.grow-doc-who", "strategy-doc.grow-doc-pillars", "strategy-doc.grow-doc-mix", "strategy-doc.grow-doc-system", "strategy-doc.grow-doc-plan"]
+
+# --- Level-ups/HOOKS-<SUFFIX>.md: the hook library (100+ hook shapes in 20 mechanisms, by surface: shorts, titles, slide 1, subjects, ads, the ask).
+# §CM-HOOKS (STRATEGY) stays the lab that picks and checks; HOOK-LIBRARY is how it draws from the shapes.
+[levelup.hooks]
+file = "HOOKS"
+skill = "cm-hooks"
+title_key = "levelup.hooks.title"
+budget = "levelup_hooks"
+
+[[levelup.hooks.anchor]]
+id = "HOOK-LIBRARY"
+sections = ["hook-library.grow-use", "hook-library.grow-pick"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-FLIP"
+sections = ["hook-library.grow-flip", "hook-library.grow-compare"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-PROOF"
+sections = ["hook-library.grow-proof", "hook-library.grow-change"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-SCENE"
+sections = ["hook-library.grow-scene", "hook-library.grow-day"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-CALLOUT"
+sections = ["hook-library.grow-callout", "hook-library.grow-objection"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-MISTAKE"
+sections = ["hook-library.grow-mistake", "hook-library.grow-restart"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-SHORT"
+sections = ["hook-library.grow-short"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-TITLES"
+sections = ["hook-library.grow-titles"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-TEXT"
+sections = ["hook-library.grow-slides", "hook-library.grow-subject"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-ADS"
+sections = ["hook-library.grow-ads"]
+
+[[levelup.hooks.anchor]]
+id = "HOOK-CTA"
+sections = ["hook-library.grow-cta"]
+
+# --- Level-ups/CAMPAIGNS-<SUFFIX>.md: the launch campaign library (six campaigns with day cards and checkpoints, then the checklist,
+# objections, FAQ, sales page, sequences, the live, live selling, timing, after). §CM-LAUNCH (LAUNCH) still picks the type and does the math.
+[levelup.campaigns]
+file = "CAMPAIGNS"
+skill = "cm-campaigns"
+title_key = "levelup.campaigns.title"
+budget = "levelup_campaigns"
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGNS"
+sections = ["launch-campaigns.grow-library", "launch-campaigns.grow-beats"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-FOUNDING"
+sections = ["launch-campaigns.grow-founding"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-GIFT"
+sections = ["launch-campaigns.grow-gift", "launch-campaigns.grow-gift-cart"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-CLASS"
+sections = ["launch-campaigns.grow-class", "launch-campaigns.grow-class-cart"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-EVENT"
+sections = ["launch-campaigns.grow-event"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-APPLY"
+sections = ["launch-campaigns.grow-apply"]
+
+[[levelup.campaigns.anchor]]
+id = "CAMPAIGN-RELAUNCH"
+sections = ["launch-campaigns.grow-relaunch"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-PREP"
+sections = ["launch-campaigns.grow-prep"]
+
+[[levelup.campaigns.anchor]]
+id = "OBJECTIONS"
+sections = ["launch-campaigns.grow-objections-a", "launch-campaigns.grow-objections-b"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-FAQ"
+sections = ["launch-campaigns.grow-faq"]
+
+[[levelup.campaigns.anchor]]
+id = "SALES-PAGE"
+sections = ["launch-campaigns.grow-page"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-SEQUENCES"
+sections = ["launch-campaigns.grow-seq-open", "launch-campaigns.grow-seq-close", "launch-campaigns.grow-inbox"]
+
+[[levelup.campaigns.anchor]]
+id = "RUN-OF-SHOW"
+sections = ["launch-campaigns.grow-runshow"]
+
+[[levelup.campaigns.anchor]]
+id = "LIVE-SELLING"
+sections = ["launch-campaigns.grow-live-selling"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-TIMING"
+sections = ["launch-campaigns.grow-timing"]
+
+[[levelup.campaigns.anchor]]
+id = "LAUNCH-AFTER"
+sections = ["launch-campaigns.grow-after"]
+
+# --- Level-ups/BANKS-<SUFFIX>.md: the banks (founder, 9 Oct: "Ngân hàng hook, cta, lead magnet, research … input tốt thì output sẽ oke"):
+# what the banks hold and how they fill, asks by rung × platform, gifts by buyer stage, where buyers talk, stories, proof.
+[levelup.banks]
+file = "BANKS"
+skill = "cm-banks"
+title_key = "levelup.banks.title"
+budget = "levelup_banks"
+
+[[levelup.banks.anchor]]
+id = "BANKS"
+sections = ["content-banks.grow-banks", "content-banks.grow-fill"]
+
+[[levelup.banks.anchor]]
+id = "CTA-BANK"
+sections = ["content-banks.grow-cta", "content-banks.grow-cta-video", "content-banks.grow-cta-text"]
+
+[[levelup.banks.anchor]]
+id = "MAGNET-BANK"
+sections = ["content-banks.grow-magnet", "content-banks.grow-magnet-early", "content-banks.grow-magnet-mid", "content-banks.grow-magnet-late"]
+
+[[levelup.banks.anchor]]
+id = "RESEARCH-BANK"
+sections = ["content-banks.grow-research", "content-banks.grow-research-queries", "content-banks.grow-research-mine"]
+
+[[levelup.banks.anchor]]
+id = "STORY-BANK"
+sections = ["content-banks.grow-story"]
+
+[[levelup.banks.anchor]]
+id = "PROOF-BANK"
+sections = ["content-banks.grow-proof"]
+
+# --- Level-ups/COPY-<SUFFIX>.md: writing frameworks, storytelling, persuasion (founder, 9 Oct: "làm kĩ các framework viết bài
+# rồi là storytelling và persuasion"). §CM-COPY picks ONE framework per piece by tier × format × goal; the kit writers and the
+# hook lab use it silently. Framework names stay internal; the coach sees a plain label only on "why?".
+[levelup.copy]
+file = "COPY"
+skill = "cm-copy"
+title_key = "levelup.copy.title"
+budget = "levelup_copy"
+
+[[levelup.copy.anchor]]
+id = "COPY"
+sections = ["copywriting.grow-pick", "copywriting.grow-length"]
+
+[[levelup.copy.anchor]]
+id = "COPY-FRAMEWORKS"
+sections = ["copywriting.grow-frames"]
+
+[[levelup.copy.anchor]]
+id = "COPY-STORIES"
+sections = ["copywriting.grow-stories"]
+
+[[levelup.copy.anchor]]
+id = "COPY-BELIEFS"
+sections = ["copywriting.grow-beliefs"]
+
+[[levelup.copy.anchor]]
+id = "COPY-PROBLEM"
+sections = ["copywriting.grow-problem"]
+
+[[levelup.copy.anchor]]
+id = "COPY-PROOF"
+sections = ["copywriting.grow-proof"]
+
+[[levelup.copy.anchor]]
+id = "COPY-LONG"
+sections = ["copywriting.grow-long"]
+
+[[levelup.copy.anchor]]
+id = "COPY-LISTS"
+sections = ["copywriting.grow-lists"]
+
+[[levelup.copy.anchor]]
+id = "STORYTELLING"
+sections = ["copywriting.grow-story", "copywriting.grow-story-craft"]
+
+[[levelup.copy.anchor]]
+id = "PERSUASION"
+sections = ["copywriting.grow-persuade", "copywriting.grow-ethics"]
+
+[[levelup.copy.anchor]]
+id = "COPY-VOICE"
+sections = ["copywriting.grow-voice"]
+
+# ---------------------------------------------------------------- L3 Autopilot skill references
+# One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by
+# tools/render.py with the router row's WHEN TO USE / RULES and the formats' CHECK BEFORE
+# ANSWERING footer (P4):
+#   [[skill.reference]]
+#   file = "setup.md"
+#   sections = ["setup.*", "message.*"]
+#   module = "setup"              # router row (core/router.toml) for the header
+#   formats = ["native-short"]    # core/format-checks.toml entries for the footer
+
+[skill]

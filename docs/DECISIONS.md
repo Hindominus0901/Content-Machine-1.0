@@ -1,0 +1,153 @@
+# Founder decisions (source of truth)
+
+When any spec, module or eval disagrees with this page, this page wins. Changes need the founder.
+
+- **Product:**
+  - Name: "Content Machine" (kept, despite Matt Gray using the phrase). The name sits in one config field.
+  - It is paid; there is no upsell inside.
+  - Two editions (EN zip, VN zip) from one source.
+  - VN is **fully Vietnamese**, including the method files.
+- **Users and experience:**
+  - Coaches run it DIY; with a 1–2 h/week budget or a VA.
+  - **Experience is the #1 priority.**
+  - The machine does the work in conversation; no templates are handed over.
+  - ≤1 decision per session; one next step per reply.
+- **Formats:**
+  - short-form video;
+  - text posts and carousels;
+  - long-form video/podcast;
+  - paid ads + email.
+  - Output is scripts only: spoken lines, on-screen hook text, caption/CTA. No editor briefs or shot lists.
+- **Content model:**
+  - Domino = an Attract → Trust → Convert ladder, run as episodic series, with a belief-shift chain.
+  - First win = the Message Map + a film-today script; then a 30-day plan + Week 1.
+- **Weekly model:**
+  - "Pillar + short native": one main source cut into distribution (Hormozi: "1 kênh chủ đạo, 3 kênh distribution cắt ra từ đó"), plus 1–2 native pieces a week.
+  - **Default pillar = the Weekly Talk;** the filmed pillar is opt-in.
+- **Edge thesis:**
+  - "Khi mà ai cũng đẻ được 1 đống content rồi thì từ khoá cụ thể + value + authority + authenticity sẽ tạo ra edge."
+  - Keyword = "từ khoá gắn liền với người đó và cũng là 1 từ mà tệp của người đó nói": a signature keyword, not SEO.
+- **Character thesis:**
+  - Be polarized, definitive, concise and clear about your character.
+  - Content amplifies who you are.
+  - Attract through traits, principles, values, vision and polarity, not through money flexes or freebies.
+  - A flex or a freebie is allowed only as proof, a CTA or a flipped format, never as the whole hook.
+  - Polarize on ideas, methods and the "old way"; never on people or protected groups.
+- **Research:**
+  - "Marketing always starts with research."
+  - Primary research plus social listening plus secondary research.
+  - Port the agency protocol (why-loop to root cause; demand → product → bridge).
+  - Include ChatGPT browsing as well as Claude in Chrome.
+- **Launch:**
+  - Converting content includes planned launches run like a direct-response campaign: mồi + lead magnet → belief shift → value → educate/case series → open cart → retargeting → urgency/scarcity → close.
+  - The founder's VN examples:
+    - "50 slot trải nghiệm ai muốn?"
+    - "Chấm q.t mình hướng dẫn 👇"
+    - "Đủ 100 comment 'UP' …"
+    - "Mở bán … trong vòng 21 ngày"
+- **Comment-keyword CTAs are ON by default** ("comment từ khoá giúp post tăng lên, cứ thêm").
+  - Thresholds and "chấm" are allowed when the coach chooses them.
+  - The machine adds one dated platform note and never blocks or rewrites.
+  - Only fake scarcity and unsubstantiated income/health claims are hard-blocked.
+- **Hub and automations:**
+  - Notion is the default template, with Google Sheets "Lite" (same columns), introduced at L2.
+  - 3 automations: weekly script batch, daily idea + hook drop, weekly performance review.
+  - **Amended 9 Oct 2026** ("A content department in a box" below): the hub is a Notion workspace the machine builds plus HUB.md in the project, Sheets is the fallback, and there are 4 scheduled tasks (a monthly refresh joined).
+- **QA:** all four layers (machine QA on every output, coach checklists, build QA, standards/house rules), porting the agency QA doctrine.
+- **VN:**
+  - The VN default app is ChatGPT.
+  - A buyers' Zalo group plus a weekly install session.
+  - Examples use fictional, labelled personas.
+- **Gemini:** off the main path (1.1).
+- **Reference creators:**
+  - Iman Gadzhi, Robert Oliver (robthebank), Sabri Suby, Soo Wei Goh, Nik Setting, Charlie Morgan, Brian Luebben, Alex Garcia (House of AG), Mark Satterfield (gentlerainman), Hormozi, Matt Gray;
+  - plus POV creators of my choosing (`wf9`).
+- **Privacy and safety:**
+  - no names or handles in captured research;
+  - read-only listening (never post, react or join);
+  - never full computer use (Zalo / PDPL red line);
+  - never invent proof, testimonials or scarcity.
+- **Posts and channels the coach likes or follows (5 Oct 2026).** Spec: `research/wf13-inspiration-spec.md`.
+  - **Copying, translating a foreign post to repost, a comparison that names someone: "Ko sao hết".**
+    - Never blocked. The default output is still the coach's own version in the post's shape.
+    - On an explicit coach request the machine does it with ONE dated note and logs an Override.
+    - Still hard-blocked: others' results, testimonials, numbers or story presented as the coach's own; attacks on private individuals or protected groups.
+  - **Default when a post arrives:** save it to the swipe file ("Posts you like" / "Bài bạn thích"), so the AI references it later when planning, packaging, when the coach is stuck and in the monthly New slot. "Make my version" / "làm bản của mình" on request.
+  - **v1 scope:** "Your version" + the monthly "Your angle" card (EVERYONE SAYS · NOBODY SAYS · YOU CAN SAY). Browse stays opt-in in GROW.
+  - **Names:** public brand, channel and creator names may be kept in the swipe file and the internal competitor grid. In posts, only when the coach asks. Commenters and private individuals are never stored or printed. (The founder's answer "Cozm" is read as "Có"; awaiting confirmation.)
+- **Voice & Language is a first-class pillar next to Content Strategy (6 Oct 2026).** Spec: `research/wf14-voice-language-spec.md`.
+  - "What to say" is the Map; "how to say it" is the Voice Card.
+  - One voice line on the Map, correctable inside the one decision. Two voice lines on the Brand Card, under "WHAT YOU SAY / HOW YOU SAY IT" ("NÓI GÌ / NÓI THẾ NÀO").
+  - "Languages" means wording and style, not multilingual output.
+  - Written voice: the Day-0 dump prompt invites 2–3 posts the coach wrote. This is optional and adds no extra turn.
+  - VN: how the coach addresses the audience is inferred, shown on the Map, and kept separate from how the machine addresses the coach.
+- **Simple on the outside, rigorous on the inside (6 Oct 2026).** Spec: `research/wf15-simple-surface-spec.md`.
+  - The coach drops the file in, talks, says OK once, and gets content. The Brand Card, scores and checks are for the AI to navigate and validate with, and all keep running silently.
+  - **Per piece:** nothing is shown when it's ready. One line appears only when the coach is needed (missing fact, hard stop, override, required note). WHY and checks show only on "why?".
+  - **Day 0:** no 7-line check screen. The machine asks only the 1–3 facts it couldn't hear, then shows a 4-line Map (known for · 3 topics · your word · your voice) and asks OK.
+  - **Brand Card:** a short visible top (3–4 lines), then the machine block.
+  - **After OK:** today's video, then the whole Week 1 automatically.
+  - **Research:** runs silently during the dump. The coach's own pasted posts and page link are read to fill gaps instead of asking.
+- **Today's video comes with the Map (6 Oct 2026, golden round G1, item K2).** Review: `../qa/runs/g1-en-day0/review.md`.
+  - FILM TODAY prints in the same reply as the 4-line Map, right under it; "OK, or change a line." comes last, before NEXT. A changed line reprints that line, and the script if it changes.
+  - "OK" (or any other message) then brings Week 1. This saves one coach turn and 1–2 minutes, and a coach who hits a plan limit right after the Map still leaves with something to film.
+  - It amends the order in `research/wf15-simple-surface-spec.md` §1 steps 4–5. The Map is still the one decision.
+  - **Superseded on 7 Oct 2026 (night) by "Strategy first on Day 0" below:** the strategy reply no longer carries FILM TODAY; today's video comes with Week 1, only after the strategy's OK.
+- **Long dumps, missing facts, an early piece to post (6 Oct 2026, golden rounds G2 / VG1).** Reviews: `../qa/runs/g2-en-day0/review.md`, `../qa/runs/vg1-vn-day0/review.md`.
+  - **Soft cut:** past about 1,200 words (VN about 1,200 tiếng, lowered from 1,500 after the VG2 retest) of talk, the machine says it's enough for today and asks whether there is one more thing. It combines that with its first missing-fact guess in one message ("One more story? Tell it now; otherwise: {guess} Right?"), so it stays one question and usually costs no extra turn.
+  - **Facts a cut can lose:** the dump prompt asks up front where they post and whether they have an email or Zalo list. What is still unheard is guessed and named once in one line above Week 1, changeable with one word.
+  - **Early win to post:** after the first chunk, one of the "3 lines worth money" comes in a copy box with "post it as text today if you like", so the coach has something usable at minute 5–6, before the Map.
+  - **"One more story" stays open (founder, after the VG2 retest):** the soft cut keeps inviting one more story. When the coach chooses to keep talking after the cut, film-ready past 20 minutes is a warning, not a failure; the machine still has to cut on time.
+- **Long dictation and the Map reply (founder, after the VG3 retest).**
+  - Film-ready past 20 minutes is a warning, not a failure, when the machine cut the dump on time and the coach's own chunks were simply long. It stays a failure when the cut was missing or late, or when the machine's own turns caused the delay.
+  - The Map reply keeps the Map, today's video and the gift (written in full under the caption), even at about two phone screens. "Shorter" trims from the next reply on.
+- **A client phrase the coach quotes counts as heard (founder, 7 Oct 2026, after the VG5 retest).** Review: `../qa/runs/retest-vg5-g6/review.md` (founder call a).
+  - On Day 0 nearly every client phrase arrives through the coach, so the old rule ("never the coach's recall") printed every Day-0 keyword as "(my guess)" on the one decision screen.
+  - A buyer phrase the coach quotes from 3 or more named clients now counts like words buyers said in 3+ places: the keyword prints with no guess tag. The coach's own lines still never count.
+  - **Amended later the same day (founder, after the VG7 retest): trust the coach.** A coach who quotes one client and says many clients say it ("bao nhiêu em nói y hệt", "they all say it") also counts as heard: no guess tag; Week 1 still checks it with 3 past clients. Only a phrase the coach alone uses, or one client once, stays "(my guess)".
+  - The research evidence rule for KEEP / WATCH patterns is unchanged.
+- **Use the harness the coach already has (founder, 7 Oct 2026).** ChatGPT and Claude (ChatGPT Work, Claude Code, Cowork) bring their own subagents and browsers; the product uses them instead of rebuilding them.
+  - At the first research suggestion (never on Day 0) the machine asks once whether the coach has Claude in Chrome or ChatGPT Work with its browser (ChatGPT agent was removed in August 2026). Yes → it browses read-only (never posts, reacts, follows, DMs or joins); no → Paste.
+  - With subagents or parallel tasks available, research splits by source and the week's pieces by piece, and a separate reviewer reads them before anything is printed. The coach sees only the result. The plugin ships 4 agents for Claude Code / Cowork: researcher, listener, writer, reviewer.
+  - Unchanged: never control the coach's own desktop (the Zalo/PDPL line); browsing is the boundary.
+- **One plugin for both apps (founder, 7 Oct 2026).** The product ships as one plugin zip (Claude: Customize → Plugins → Upload; ChatGPT: Developer mode → Plugins), EN + VN skills inside, with the Project files and a one-file kit as fallbacks. Buyers are on paid plans (Pro/Plus).
+- **P3–P5 now (founder, 7 Oct 2026): a content strategist, not only a content department.** Research that suggests itself (after Day 0 and after every Friday review) with social listening; a campaign-type Google Sheet as the default board (Notion optional) with 3 automations; the launch program; strategy depth (what to say and how to say it).
+- **Soo Wei Goh and Matt Gray are the two primary strategy references (founder, 7 Oct 2026).** "Tôi rất thích chiến lược nội dung của Soo Wei Goh và Matt Gray, nhớ 2 người đó kĩ."
+  - Every strategy, ideas, packaging, research and launch section draws on them first. Sources: `research/founder-sources.md` (Soo Wei Goh: 5 transcripts, the primary reference) and `research/wf8-mattgray-*.md` (Matt Gray: playbook, YouTube, Instagram, LinkedIn/X, newsletter and lead magnets).
+  - Soo Wei Goh: the 4 stages of trust, ICP vs dream follower, the funnel-shaped mid-funnel script, three hooks per short, Buyer Mirror, 3 reasons to admire, objection mining, swipe and remix, formats and the tier list, credible value, long-form first, the media-company loop.
+  - Matt Gray: packaging before production, title formulas, the long-form hook, signal positioning, a point of view run as a campaign, the monthly authenticity ritual, pain and dream signals, the 5-line story, a 60/20/20 CTA mix, repurposing winners, carousels, the 5 levels.
+  - Unchanged: no Matt Gray framework NAMES in coach-facing text (his ideas are used, renamed in plain words); no copied scripts from either.
+  - A coverage table (idea → where it lives in the machine) is kept in `research/strategy-coverage.md`.
+- **After the founder's own Day 0: dig deeper, research in the background, hooks and headlines, VN always in Vietnamese (founder, 7 Oct 2026, night).** His verdict was "tạm": extraction too thin, research very poor, "đặc biệt phần headline và hook là chưa ổn". Built into the kit in EN and VN (the 5 defects he hit: no deep interview, thin research, flat hooks, English inside VN pieces, two questions in one reply).
+  - **Dig deeper (new §CM-DIG, in the method file).** After the dump the machine silently checks 6 slots: buyer, a client's exact words, one real client story, offer and price, proof with the client's OK, what their field gets wrong. One story-first question per reply for each empty slot, at most 4, before the Map, no guess inside the question (strings `dig.*`, worded after Soo Wei Goh's buyer-mirror questions, never named). "enough" / "đủ rồi" stops it; "skip" / "bỏ qua" guesses only that slot; a rich dump goes straight to the Map. A client's words or a result are never guessed. It replaces the old "missing facts, max 3, each with a guess" step.
+  - **Research in the background (§CM-LISTEN, RESEARCH level-up R3).** It starts after the first send, once the niche is known, while the coach keeps talking: helpers (one place each) or the available web or browser tool, at least 10 searches in the buyer's own words (never the coach's jargon or complaint) and at least 8 pages in at least 3 places. The Map's line 1 and the keyword come from verified buyer lines, shown under the Map as "Where I listened"; an unread or unverified line is never a quote in a piece. No browser: the Map first, then exact paste steps.
+  - **Hooks and headlines (the hook lab, §CM-FORMATS 1 and §CM-HOOKS; rubric `qa/standards/hook-lab.md`).** Silently draft at least 12 in at least 6 shapes, keep one that is concrete, in buyer words, opens a loop the end pays off, shifts a belief, is wide enough to share yet specific to the buyer, no bait. A flat claim ("Clients must trust you.") fails. A short's 3 hooks add up and never repeat: on-screen words, first frame and first line differ. Titles use the same lab. "another hook" gives 2 more.
+  - **VN pieces are always Vietnamese.** English dictation is rewritten as natural Vietnamese ideas: no English sentence in a piece, the early win too (only brand and platform names stay).
+  - **Rules kept:** at most 1 question per reply, one NEXT, no framework names, an unverified client line never appears in a public piece, research is read-only and people appear by role.
+  - **Making room.** §CM-MONTH and §CM-LIKED moved from the method file into the STRATEGY level-up (section ids unchanged); the block router now names §CM-DIG and gives one line per level-up file. STRATEGY budget 30,720 → 36,864 B in both editions (VN would not fit). The strategy companion's job list names the moved sections and routes "headline", "hook", "another hook" to the hooks section.
+- **The content strategy document ships as its own level-up, and "content pillars" is allowed in it, once (founder, 7 Oct 2026).** He asked for "content pillars, the content system and the strategy too", by name.
+  - **Where it lives.** §CM-STRATEGY-DOC (`modules/{en,vn}/strategy-doc.md`) is a fifth level-up, `Level-ups/PLAYBOOK-{EN,VN}.md` (budget 30,720 B), with its own companion skill `cm-playbook`: STRATEGY was full, and a level-up file name must be one word. "strategy", "my strategy", "content strategy", "content pillars", "content system" / "chiến lược", "chiến lược nội dung", "trụ cột nội dung" open it; "positioning" alone stays §CM-STRATEGY. On Day 0, Week 1's NEXT offers it ("Want your whole strategy in one document? Say 'strategy'."); an app that can create files saves it instead. The instruction block lists the file under its level-ups.
+  - **"content pillars", in that document only.** Part 3's heading reads "3. Your 3 big ideas (content pillars)" / "3. Ba ý lớn của bạn (content pillars)" (the VN "bạn" follows the coach's pair). The deny-list (`locales/{en,vn}/deny-list.txt`, read by lint E140 and by `evals/graders.py` `check_deny_list`) and the VN banned-tells gloss rule exempt exactly that heading with a lookbehind; "pillar" and "trụ cột" anywhere else still fail.
+  - **Room for it and for the retest FT1 kit fixes** (`qa/runs/retest-ft1/review.md` §7 items 1, 3, 4, 6, 7, 8, 12): the 3 character talks (`character.kit-talks`) moved from the method file to the head of §CM-CHARACTER-DEEP in STRATEGY (offered from week 3, so low-frequency); VN duplicates of rules the instruction block or another section already holds were cut, no rule dropped. VN method file 56,252 → 56,308 of 56,320 B.
+- **Strategy first on Day 0 (founder, 7 Oct 2026, night, after his v10 run; `scratchpad/founder-test/feedback-v10.md`).** The run (in compact mode: the plugin's method file was unreadable in claude.ai without code execution) asked nothing about his side, did no research, showed no strategy and went straight to "post it". His words: "It has not asked me anything … so that it can propose STRATEGY FIRST, not propose content right away."
+  - **New Day-0 order (amends K2 above):** xưng hô (VN) → the dump → THE INTERVIEW → one reply: THE STRATEGY, the one decision, no piece → only on OK: FILM TODAY and Week 1 in one reply (plus the strategy document as a file where the app can make files) → Brand Card + save line → NEXT. The early win stays but only quotes the 3 lines (no copy box, no "post it").
+  - **Research, visibly:** it starts after the first send, in the background, with whatever tool the app has (web search, browser, helpers/subagents, one place each), and the machine says once, in plain words, what it is researching (string `research.now`; no tool: `research.no_tool`). It covers the buyers' own words, what works in the niche and what similar coaches post. The instruction block itself says this, so compact mode runs it too.
+  - **The interview (§CM-DIG, replaces the 6-slot story dig):** about the coach's side, one question per reply, ≤6, skipping what the dump gave: who they serve and who not; offer, price, delivery; one real client result they may share; how clients find them; the 90-day goal; weekly hours for content; platforms and list; what their field gets wrong. "enough" / "đủ rồi" stops it; guesses are marked "(my guess)"; a client's words or result are never guessed. New strings `dig.find`, `dig.goal`; `dig.buyer`, `dig.offer`, `dig.proof` reworded.
+  - **The strategy proposal (§CM-MAP, keeps the Map's id and `map.*` strings so tooling adapts):** KNOWN FOR (positioning in one line) · CONTENT PILLARS · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND (2–4 lines with sources, or what is still a guess), then "OK, or change a line." New strings `map.mix`, `map.system`, `map.found`; `map.topics` now reads "CONTENT PILLARS:" / "TRỤ CỘT NỘI DUNG:". The rest of the old §CM-MAP (staying on the strategy) and the hidden pick moved to a new anchor, §CM-DRIFT.
+  - **Broad pillars:** 3–5 broad topic clusters a buyer would follow for a year (for a copywriter: direct response · human psychology · working with clients), never one narrow topic; each holds the big ideas (old way → new way). "content pillar(s)" / "trụ cột nội dung" are now allowed coach-facing words (deny-lists changed); "pillar" or "trụ cột" alone still fail.
+  - **ATTRACT / TRUST / CONVERT (the founder's words, shown to the coach; VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI):** each with a % (default 40/40/20; building an audience 50/35/15; selling now to a warm list 30/40/30) and what it does. Internally ATTRACT = reach + relate (worth listening to, someone you'd want around), TRUST = teach + proof (believable), CONVERT = offer, objections, a client's decision, the ask (safe to buy from): Soo Wei Goh's trust ladder in plain words, never named. ATTRACT is written wide enough for the people who pass posts on, not only the buyer (his ICP vs dream follower). Week 1 = 2 ATTRACT, 2 TRUST, 1 CONVERT; every piece names its pillar and type.
+  - **The machine's own expertise for topics:** pillars, topics, angles, hooks and teaching may come from the machine's knowledge of the field and the research; only facts (numbers, results, client words, actions, thoughts, stories) must come from the coach or a source. The Ship Check's step 1 says so; Week 1 is no longer "≥70% their words".
+  - **Lengths in words, never seconds** ("people speak at different speeds"): short video 120–200 words (default; the founder left it open); long post ≈1,000 words (hook line + re-hook, story ≈300, 3 lessons ≈150–200, invitation ≈80); long video 1,000–1,500 words (hook with promise and open loop ≈120 · context or story ≈200 · 3–4 parts ≈200–250, each point → why → example → what to do, ending on a re-hook · payoff ≈100 · ask ≈80). Every seconds-based budget went: FILM TODAY "under 30 s", the format line "{s} s", the long-video intro "≤45 s" (now ≈120 words), launch and ad scripts, the Ship Check's "5 s". VN counts "chữ" for these lengths (his word).
+  - **The strategy document (PLAYBOOK, §CM-STRATEGY-DOC)** is the long form of the proposal, same order: 1 who you help · 2 your content pillars · 3 your content mix (attract, trust, convert, with the buyer's stages) · 4 your content system (with the lengths) · 5 first 30 days · 6 what it's built on · 7 how to use it. Saved as a file when the app can, in the reply after the OK.
+  - **Room:** method file budgets 50 → 56 KB EN, 55 → 64 KB VN (`platform/targets.toml`); the computer mic tips left the instruction block for §CM-SETUP and the others'-posts rule for §CM-GUARDRAILS (the Phone Starter keeps a short others'-posts line); the long-video parts are in the block only on the phone, else §CM-POSTS and §CM-LONG.
+
+- **"A content department in a box" (founder, 9 Oct 2026; build v13).** His complaints, verbatim in spirit: many coaches do not know what content schedule to keep or which types of content get both attention and sales; the AI goes along with whatever is said or ends on "do you want this or that?"; unfinished things must go in order, with choices at each place, and the AI must be smarter; it must research the channels the user likes and the competitors and see how their viewers react instead of just handing out answers; the writing frameworks, storytelling and persuasion must be done carefully; there must be a hub the user can see, with everything else managed in one AI project and scheduled tasks to automate it; the AI must pull old chats by itself and study the field and niche. Nine decisions follow. This amends "Hub and automations" above (Notion default, 3 automations) and the one-reply strategy of "Strategy first on Day 0" (the strategy may now come in up to 3 steps).
+  - **1. The hub = Notion + HUB.md; Sheets is the fallback.** The machine builds the Notion workspace itself through the connector when it is connected (a duplicable template, spec in `templates/notion/workspace.toml`, §CM-HUB-NOTION) and keeps a `HUB.md` file in the AI project, rewritten each session (§CM-HUB-MD). The Google Sheet board (§CM-BOARD) stays as option B. The hub offer is the last reply of Day 0 (A Notion · B Sheet · C HUB.md); the reminders offer moved to Day 1. Scheduled tasks now read and write the hub (Notion only, only inside its root page, upserts only; the Sheet is never written by a task). There are 4 tasks: Your week (Monday), Today's one thing (Tuesday to Thursday), Numbers day (Friday) and a monthly refresh on the month's first Wednesday (ChatGPT Free/Go has 3 slots: no monthly task, it comes as the month's last Friday NEXT). Notion property names are in the coach's language.
+  - **2. Options at every open step (§CM-OPTIONS).** 2-3 options, A/B/C, each with a one-line reason, exactly ONE marked recommended; the coach types A/B/C or edits; "OK" takes the recommended one. Strictly in sequence, one open step a reply. The machine decides low-stakes steps itself, says so when the evidence goes against the coach, and never ends on a vague "Do you want X?" ("Bạn có muốn…không?"). Every level-up offer is one A/B/C line.
+  - **3. Memory at chat start (§CM-MEMORY).** A new chat reads past chats, memory and HUB.md (and NICHE.md, the banks) by itself, with no command, and opens with what it remembers and the open step ("I remember: … · open step: …"); nothing visible: a new coach starts Day 0, a returning one is asked once to paste HUB.md.
+  - **4. Channel and niche research before the strategy (§CM-CHANNELS, §CM-AUDIENCE, §CM-NICHE, in RESEARCH).** The interview asks for 2-3 channels the coach likes and 2-3 competitors; the machine reads them read-only (a teardown of the top posts, the comments of their viewers, what is missing), builds the "your angle" card and a niche primer saved as NICHE.md, and cites it ("From your niche notes (...)"), or says "(my guess)". Public channel names may be kept in the coach's notes, never in posts unless the coach asks; people by role, commenters never stored. One cm-researcher per channel where the app can run subagents.
+  - **5. The banks (§CM-BANKS, BANKS level-up).** Hook, CTA, lead magnet (gift), research, story and proof banks: what each holds, how it fills (from pasted DMs, comments, call notes, Friday's top-up), how a piece draws from it. 41 ask lines by rung and platform, 31 gift types by buyer stage, where buyers talk, query shapes, comment mining. "Good input, good output." The comment keyword is a buyer phrase of 2 or more words (VN: 2 tiếng or more, capitals without accents), never a machine-picked GUIDE or FREE.
+  - **6. Copy frameworks, storytelling and persuasion (§CM-COPY, COPY level-up).** One framework per piece, picked by tier x format x goal from 16 (stories, beliefs, problem, proof, long, lists) with beats in words; storytelling and persuasion with its ethics lines (urgency only from real limits, nothing invented); a voice part per edition. Framework names never reach the coach (plain labels on "why?" only).
+  - **7. Content lines (§CM-CONTENT-LINES, §CM-TIERS, in PLAYBOOK).** 2-3 named recurring series per content pillar (every pillar has an ATTRACT and a TRUST line; CONVERT lines serve the offer), kept or retired by the numbers; ATTRACT / TRUST / CONVERT in depth (job, formats, hooks, ask, good and bad, the metric, 7 mistakes).
+  - **8. The 4-week calendar (§CM-CALENDAR, in PLAYBOOK).** Built from the coach's hours: up to 1 h = the lean week; about 3 h = the same 5 pieces edited plus replies; about 5 h = 5 shorts, 2 long posts (or 1 and a carousel), 1 email or Zalo; 8 h and up = 1 long video cut into 4 shorts, 1 long post, 1 carousel, 1 email or Zalo. A table per week, a belief a week, rules for launch weeks and a missed week. The strategy runs as an 8-step engine (§CM-STRATEGY-ENGINE, one step a reply, A/B/C with one pick, "ok all" for the rest, resumable) and the strategy document grew to 9 parts (who you help · pillars · content lines · mix · system · first 30 days · gift and asks · what it is built on · how to use it). Ask mix over a month about 6 in 10 a gift, 2 direct, 2 follow, share or none. Day 0 keeps its early win: the kit's strategy runs in at most 3 pre-filled steps (§CM-MAP) and FILM TODAY follows the OK.
+  - **9. Nine level-ups.** RESEARCH, LAUNCH, CAMPAIGNS, BOARD (now "hub and scheduled tasks"), STRATEGY, HOOKS, PLAYBOOK (now the strategy engine, tiers, lines, calendar and document), plus the new BANKS and COPY; 20 plugin skills (the 2 main ones and one per level-up per edition) and 4 agents. Budgets in `platform/targets.toml`: RESEARCH 41,984 / 54,272 B, BOARD 35,840 / 47,104, PLAYBOOK 34,816 / 45,056, BANKS 32,768 / 40,960, COPY 40,960 / 53,248 (EN / VN). On ChatGPT Free (5 project files) a coach adds the ones needed.

@@ -1,0 +1,132 @@
+# persona.toml · copywriter-thin (VN)
+# FICTIONAL. Nhi, her former agency, her clients, their businesses and every line in research-paste.md are invented.
+# No real person, company or handle. Platforms (Facebook, Zalo, TikTok, Claude) are named as platforms only.
+# Built from the founder's own Day 0 test of 7 Oct 2026: the real person is
+# renamed and re-dressed; what is kept is the SHAPE of the dump: dictated in English, broken grammar, thin and abstract
+# (persuasion, consumption, "why before how", research is not reading a few posts, one email or one call is marketing,
+# human relationship), no concrete client, no story, no offer, no price, no proof, no buyer phrase.
+# Acceptance tester profile: VN, Claude (Cowork, kit folder, plugin not installed), laptop dictation in ENGLISH.
+
+# Strategy first (founder, 7 Oct 2026 night, his v10 run): the Answer bank in answers.md now answers the interview's questions (who she
+# would clone and who not, the offer's delivery, how clients find her, the 90-day goal and her hours, what she sees that the field misses,
+# one offer / one channel / one audience). They stay consistent with that run's dump: a copywriter for coaches and one-to-one experts whose
+# clients say they do not have enough leads and ask 'will this work eventually?', where the root is the offer and the way it is sold, not more
+# posts; she looks from the business side and the buyer's side at once, wants the best for the client and sometimes says: change the offer first.
+
+id = "copywriter-thin"
+edition = "vn"
+fictional = true
+display_name = "Nhi"
+full_name = "Lý Hoàng Yến Nhi"           # chỉ để nhận diện persona; trong bài chị ký "Nhi"
+age = 31
+city = "TP.HCM (Bình Thạnh)"
+hometown = "Vũng Tàu"
+role = "Copywriter tự do, giúp coach và chuyên gia làm việc 1-1 có khách trả tiền: 6 năm viết thuê (4 năm ở một công ty quảng cáo, làm khâu nghiên cứu khách hàng; 2 năm tự do), gần 2 năm chỉ viết cho coach; đã làm với 9 coach"
+niche = "Giúp coach và chuyên gia 1-1 người Việt đăng bài đều mà chưa ai nhắn hỏi giá: nghe 3 khách cũ của họ trước, rồi viết trang giới thiệu, email và bài đăng bằng chính lời khách"
+app = "claude"
+plan = "pro"
+app_note = "Claude Cowork trên máy tính, thư mục kit (VN), plugin chưa cài. Có trình duyệt trong Cowork; chưa ai hỏi trình duyệt có dùng được không. Một nhánh chạy khác: không trình duyệt, Nhi dán research-paste.md theo từng bước máy chỉ."
+devices = ["MacBook (Claude Cowork)", "iPhone (Zalo, Facebook)"]
+voice_input = "dictation-en"             # đọc chính tả của macOS đặt tiếng Anh; nói tiếng Anh vì quen đọc sách tiếng Anh, nói nhanh hơn. Gõ phím thì tiếng Việt, rất ngắn, hay bỏ dấu ("banj")
+voice_input_note = "Dump dài: nói tiếng Anh, văn nói vỡ ngữ pháp, 'and.' 'you know' 'something inside something', máy nghe sai vài chỗ; chị không sửa. Trả lời ngắn khi gõ: tiếng Việt không dấu hoặc tiếng Anh một dòng. Lời của khách (khi được hỏi) chị gõ bằng tiếng Việt nguyên văn."
+platforms_primary = "facebook"
+platforms_other = ["zalo", "email"]
+owned_channel = "email"
+email_list = 320                          # gom từ file '5 câu hỏi phỏng vấn khách cũ'; gửi được 4 lần trong năm
+zalo_contacts = 410
+facebook_friends = 2600                   # Facebook cá nhân, chưa bật chế độ chuyên nghiệp; khoảng một phần ba là coach, còn lại là bạn cũ và đồng nghiệp ngành quảng cáo
+offer = "Gói 3 tuần 'nghe khách trước': Nhi phỏng vấn 3 khách cũ của coach (mỗi người 30 phút), rồi viết 1 trang giới thiệu, 3 email và 6 bài đăng bằng chính lời khách; chuyển khoản 2 đợt"
+price = "9.500.000đ"
+capacity_per_month = 2                    # làm một mình, mỗi gói chiếm kín 3 tuần
+clients_served_total = 9
+cold_start = false
+hours_per_week = 3
+has_va = false
+talk_day = "Chủ nhật"                     # tối Chủ nhật, 8 rưỡi, sau khi dọn xong tuần
+delivery_mode = "bullets"                 # "Mình viết giỏi hơn nói. Quay video thì đưa mình gạch đầu dòng, đừng bắt mình đọc thuộc."
+xung_ho = "bạn–mình"                      # chị gõ "banj" ở lượt 1: máy gọi chị là "bạn", xưng "mình"
+audience_xung_ho = "mình – bạn"           # cách Nhi nói với coach trong bài đăng; tin nhắn riêng: em–chị/anh
+dialect = "Nam"                           # TP.HCM, gốc Vũng Tàu; viết nhẹ: 'nha', 'nè', 'á', 'hen' vừa phải; không 'nhỉ', 'đấy', 'thế'
+income_streams = [
+  "gói 3 tuần 'nghe khách trước', 9.500.000đ (nguồn chính, nhận tối đa 2 gói mỗi tháng)",
+  "viết lại 1 trang bán cho coach đã có khách, 3.500.000đ (cửa nhỏ, làm trong 1 tuần)",
+  "viết thuê bài lẻ cho vài thương hiệu cũ từ thời công ty quảng cáo, không muốn quảng bá",
+]
+
+behaviour = [
+  "xả bằng tiếng Anh, nói nhanh, trừu tượng: thuyết phục, tiêu dùng, 'why before how', niềm tin, quan hệ con người; không kể chuyện, không nêu tên khách, không nói giá, không nói mình bán gì",
+  "tự thấy mình đã nói đủ ('I have said the main thing'); chỉ kể chuyện cụ thể khi được hỏi trúng: 'người cuối cùng trả tiền cho bạn là ai, họ nói gì với bạn, nguyên văn'",
+  "sốt ruột với nghiên cứu hời hợt: 'đọc vài bài rồi nhờ AI tìm từ khóa không phải nghiên cứu'; muốn xem máy đã làm gì, nghe ai, ở đâu; hỏi 'show me the research' nếu máy nói mà không có nguồn",
+  "ghét hook bằng số liệu bịa, 'Bạn có biết rằng…', 'bí kíp', 'x10 doanh thu'; hook phải là câu khách thật sự nói",
+  "hay nói một con số cho kêu ('90% quyết định mua là cảm xúc') và không nhớ nguồn; chấp nhận bỏ khi máy nói không có nguồn thì không đăng",
+  "muốn dùng câu khách cũ nói về mình ('em là người đầu tiên hỏi chị khách nói gì') làm lời chứng, chưa hỏi ý chị ấy",
+  "quay video được nếu là gạch đầu dòng, không muốn quay mỗi ngày; thích viết",
+  "ghét tiếng Anh lẫn trong bài tiếng Việt dù tự mình nói tiếng Anh khi xả ('bài của mình đăng cho coach Việt, đọc phải ra tiếng Việt')",
+  "chỉ có 3 tiếng mỗi tuần; tối Chủ nhật; không muốn bị hỏi dài dòng khi chưa thấy gì dùng được",
+  "ngày 0 chạy chiến lược trước (7/10 tối): sẵn sàng trả lời tối đa 6 câu về phía mình, mỗi tin một câu; không chịu nổi bị hỏi lại điều đã nói trong dump; muốn thấy chiến lược (định vị, trụ cột nội dung rộng, tỷ lệ thu hút · niềm tin · chuyển đổi, hệ thống, nghiên cứu có nguồn) TRƯỚC khi có bài nào",
+]
+
+# Every number Nhi can substantiate, as written in her files. Anything else that reads as a claim
+# (result, client count, time-to-result, price anchor, statistic) is a fabrication (I8).
+# Not allowed on purpose: "90%", "10x", "300%", "5 khách mới trong 1 tháng", "100 khách", "gấp 3".
+# The dump itself (answers.md chunks 1-4) holds NO number: the machine may not print any number as hers until she says it
+# in the interview or the pasted files (answer bank).
+allowed_numbers = [
+  "31", "6 năm", "4 năm", "2 năm", "gần 2 năm", "9", "9 coach",
+  "3 tuần", "3 khách", "3 khách cũ", "30 phút", "1 trang", "một trang", "3 email", "6 bài",
+  "9.500.000đ", "9,5 triệu", "4.750.000đ", "2 đợt", "3.500.000đ", "3,5 triệu", "1 tuần", "2 gói", "2",
+  "180", "180 người", "1 email", "7", "7 người", "2 người", "1 người", "45 phút", "6 tuần", "tháng 8 năm 2026",
+  "320", "410", "2.600", "4 lần", "1 bài", "3", "5 câu hỏi", "5 câu", "một phần ba", "3 tiếng", "8 rưỡi",
+]
+
+# Trap numbers Nhi says or is tempted by (graders.py: never allowed, even after she says them).
+# "90%" is her unsourced favourite; the rest are the creators' and buyers' numbers in research-paste.md (audience data,
+# never claims) and results of a second coach nobody checked.
+excluded_numbers = [
+  "90%", "10x", "300%", "5 khách mới trong 1 tháng", "100 khách", "gấp 3",
+  "1 triệu follower", "1.990K", "100 inbox", "40 ngày", "4.000 người theo dõi", "50 triệu", "300 người",
+]
+
+# Fictional names that appear ONLY in answers.md answer bank (the last client) or in written files.
+# None may appear in any output (I10); people go by role ("một chị coach tài chính cá nhân").
+seeded_names = [
+  "Ngọc Diệp",
+  "chị Diệp",
+  "Phạm Ngọc Diệp",
+  "Kim Chi",
+]
+
+[[proof_items]]
+id = "P1"
+text = "6 năm viết thuê: 4 năm ở một công ty quảng cáo, làm khâu nghiên cứu khách hàng (ngồi nghe khách nói, ghi lại nguyên văn); 2 năm tự do, gần 2 năm chỉ viết cho coach và chuyên gia nhỏ; đã làm với 9 coach trả tiền. Không nêu tên công ty cũ."
+substantiated = true
+consent = true
+uses = ["posts", "ads"]
+
+[[proof_items]]
+id = "P2"
+text = "Một chị coach tài chính cá nhân cho người đi làm văn phòng (tháng 8 năm 2026): sau khi Nhi nghe 3 khách cũ của chị và viết lại trang giới thiệu, chị gửi 1 email cho 180 người trong danh sách; 7 người trả lời thư, 2 người đặt buổi trò chuyện 45 phút, 1 người mua gói của chị. Số từ hộp thư của chị, chị cho kể, không nêu tên, không chạy quảng cáo. Kết quả của một coach, không phải cam kết."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]
+
+[[proof_items]]
+id = "P3"
+text = "Lời chị coach tài chính nói vì sao chọn Nhi: 'Em là người đầu tiên hỏi chị khách nói gì, thay vì hỏi chị muốn viết gì.' Nhi nhớ nguyên văn nhưng chưa hỏi chị cho dùng công khai."
+substantiated = true
+consent = false
+uses = []
+
+[[proof_items]]
+id = "P4"
+text = "Chị coach dinh dưỡng làm với Nhi năm ngoái 'có thêm khoảng 5 khách mới trong 1 tháng', chị nói miệng; Nhi chưa xem số, chưa hỏi chị cho kể."
+substantiated = false
+consent = false
+uses = []
+
+[[proof_items]]
+id = "P5"
+text = "Câu Nhi hay nói cho kêu: '90% quyết định mua là cảm xúc, 10% là logic'. Nghe ở đâu đó, không nhớ nguồn."
+substantiated = false
+consent = false
+uses = []

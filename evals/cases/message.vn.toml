@@ -1,0 +1,1560 @@
+# evals/cases/message.vn.toml · Message Focus Engine, VN edition: the Day-0 dump prompt and early win, what follows
+# the dump (no inventory, no check screen: at most 3 câu đoán, one a message), the multi-income guess, the 4-line Bản
+# đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ · GIỌNG) with QUAY HÔM NAY under it and the one OK, "sửa dòng N", pushbacks
+# (one line, then Tuần 1), "tại sao?" on the Map (vì sao chọn, gốc rễ, ĐỂ SAU), drift, the off-map budget and the
+# side door. Written by the QA role; producers never edit this file. Rewritten 6 Oct 2026 for the simple surface
+# (wf15) and Voice & Language (wf14); message.en.toml is the model.
+#
+# Sources: docs/research/wf15-simple-surface-spec.md §0 S1-S2, §1.2-§1.6, §2-§3 (amended: QUAY HÔM NAY comes in the
+# Map reply, K2) and wf14-voice-language-spec.md §2, §4.1 (win where they differ); docs/DECISIONS.md (K2; "Long dumps,
+# missing facts, an early piece to post": the soft cut at about 1,200 tiếng carries the first câu đoán, facts asked
+# up front and guessed above Tuần 1, the early win's best line in a copy box, "one more story" stays open);
+# docs/research/wf15-case-impact.md (R1-R18, the message.vn table); wf11-message-focus.md §1-§5 (picking, the
+# one-message tests, NOT NOW reasons and return triggers, drift, anti-dilution rules); core/vn/start-block.md NGÀY 0
+# 1-9 (render: python3 tools/render.py --edition vn --target kit core/vn/start-block.md); modules/vn/message.md
+# (§CM-MAP), setup.md (§CM-SETUP), voice.md (§CM-VOICE), levelup.md (§CM-TODAY 1), humanize.md (§CM-NATURAL);
+# strings/vn.toml (map.known "ĐIỀU KHÁCH NHỚ:", map.topics "3 CHỦ ĐỀ:", map.word "TỪ KHOÁ:", map.voice "GIỌNG:",
+# map.ok, dump.*, setup.guess*, setup.multi_income, setup.plan_guess, setup.cut_off, check.pick, film.now_or_text,
+# message.*, verdict.*, why.prefix, checked.prefix, resume.brb).
+#
+# Coach-facing names (locales/vn/deny-list.txt): "chủ đề n" on the Map ("ý lớn n" still accepted in later chats),
+# never "Trụ n"; no Bank IDs (X-9) or reason codes (DIFF-BUYER…), only the plain message.reason.* words; "Chạy thử 4
+# tuần", never "khoá 90 ngày". Scores (TIỀN, LỜI, BẰNG CHỨNG, KHÁC, HẸP, HỨNG), the runner-up and candidate tables
+# stay hidden, "tại sao?" included.
+#
+# Conventions (read with evals/README.md "Case files"):
+# - `input` holds the coach turn(s); lines starting "[turn n]" split several turns (evals/run.py). `context` is
+#   self-contained: the state when `input` starts, including what the machine already said. Assertions run on the
+#   reply to the last coach turn, unless `notes` opens with "scope: transcript" (all machine replies of the case
+#   joined: contains / regex somewhere, not_* nowhere), "scope: each reply" (a whole run: regex in at least one
+#   reply, not_* and max_* in every one) or "scope: pieces".
+# - "<<paste: FILE …>>" = the simulator inlines that persona file (or the named section) verbatim; persona files are
+#   <persona-id>/<file> under evals/personas/vn/, dist files "the rendered VN <file>".
+# - contains: case-insensitive substring after NFC. regex / not_regex: Python re on the full reply (copy boxes
+#   included), case-sensitive unless the pattern starts with (?i). A per-line guard such as
+#   (?im)^(?!.*không viết).*cam kết reads "any line holding the phrase must be a refusal line".
+# - Pronoun-dependent strings are asserted in the pair the coach chose (default mình–bạn; chị → em–chị, so
+#   "Mình nhận rồi." prints "Em nhận rồi.", map.ok "Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?"), with the
+#   regional particle adapted (nhé · nha · nghe): map.ok is matched as "[Cc]hạy thử 4 tuần … OK hay sửa một dòng?".
+#   Map labels are matched at a line start, optionally numbered ("1 ĐIỀU KHÁCH NHỚ:"), TỪ KHOÁ in either accent
+#   placement (graders.py map_lines).
+# - Day 0 (start-block NGÀY 0, K2): reply 1 asks the xưng hô → the dump prompt (it asks where they post and whether
+#   they have a Zalo / email list, and invites 2-3 of their own posts or a page link) → after chunk 1 the early win
+#   (dump.post_it: the best line in a copy box, the other 2 in quotes) → past about 1,200 tiếng of talk the soft cut
+#   (dump.enough), carrying the first câu đoán in the same message (one "?") → only the missing facts, at most 3, one
+#   a message ("Mình đoán: … Đúng không?", setup.multi_income for 2+ income streams) → ONE reply: the 4-line Map,
+#   QUAY HÔM NAY under it (beat card, caption and gift in copy boxes, film.now_or_text), then map.ok last → any answer
+#   but a Map change brings all of Tuần 1 (setup.plan_guess named once above it; a pushback or question gets one line
+#   first) → Brand Card + card.save_line + TIẾP. "sửa dòng N: …" reprints that line (and the script only if it
+#   changes); "sửa dòng N" alone gets A) B) + check.pick. No check screen, no inventory ("6 tháng content", "không bỏ
+#   gì"), no stop point. Vì sao chọn, the root cause and ĐỂ SAU print only on "tại sao?". Budgets (acceptance.toml
+#   [day0]): the Map within 7 coach turns (the xưng hô turn counts), film-ready ≤20 min, ≤10 coach turns. Word caps
+#   on a Map reply would count QUAY HÔM NAY too (about 400-500 tiếng with its boxes), so Map cases set max_words 0.
+# - Day-0 contexts that send dump chunks 1-3 follow the cut: every VN persona passes ~1,200 tiếng with chunk 2, so the
+#   reply to chunk 2 is the soft cut, and chunk 3 is the "one more story" (it ends "xong").
+# - Status lines (wf15 §2): a Ready piece prints only its content. At most one line under a piece, and only for
+#   "Cần bạn · …" (one a reply), a hard stop, "cứ đăng" (Override) or a required dated note. Piece cases find the
+#   piece by a copy box (or an N<digit> · label) and forbid Sẵn sàng / ✓ Đã kiểm / Bản nháp / VÌ SAO RA KHÁCH lines.
+# - "tại sao?" follow-ups: `input` is "[turn 1] <the turn that prints the Map or the piece>" and "[turn 2] tại sao…?";
+#   assertions run on the "tại sao?" reply (Map: vì sao chọn from their evidence, the root cause, ĐỂ SAU with plain
+#   reasons and return triggers; piece: the VÌ SAO RA KHÁCH line, verdict.ready "Sẵn sàng … · viết từ …", ✓ Đã kiểm).
+#   I3 also grades the turn-1 reply. Dedicated "tại sao?" cases here: 023, 041-045.
+# - `invariants` lists I1-I23 only. graders.py also runs day0_timing, deny_list, quit_triggers and vn_natural on every
+#   transcript; `notes` names them where a case depends on them.
+
+[meta]
+module = "message"
+edition = "vn"
+written_by = "qa-role"
+
+# ---------------------------------------------------------------- dump prompt, early win, later chunks
+
+[[case]]
+id = "message.vn.001"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Dump prompt in em–chị: topic hints, where she posts and her Zalo/email list, her own posts invited, 'gõ xong'"
+context = """Day 0, Door A, ChatGPT Plus on the Windows laptop. Reply 1 (the 3-step promise, the mic tips, 'Cho mình hỏi trước: gọi bạn là anh, chị hay bạn? (gõ 1 chữ là được)') delivered. Nothing dumped yet. Thu types one word."""
+input = '''chị'''
+contains = ["câu khách hỏi đi hỏi lại", "ngứa mắt", "sóng âm"]
+not_contains = []
+regex = [
+  '''(?i)gõ\s+['"“‘]xong''',
+  '''(?i)đang bán gì[^\n]{0,30}chưa bán cũng được''',
+  '''(?i)đăng ở đâu[^\n]{0,40}Zalo''',
+  '''(?i)dán 2[–-]3''',
+  '''(?i)link trang của chị''',
+  '''TIẾP →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(điền|trả lời)\s+(lần lượt|từng câu)''',
+  '''(?m)^\s*[1-9][.)]\s[^\n]*\?\s*$''',
+  '''(?i)(phải trả giá|chuyện trả giá)''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """start-block NGÀY 0 step 2: 'Dạ, em chào chị.' then the dump prompt in the chosen pair ('Chị cứ xả hết ra … Gợi ý: chị hay gỡ cho khách chuyện gì · câu khách hỏi đi hỏi lại · 2–3 khách đổi khác ra sao · điều ngứa mắt trong nghề · đang bán gì (chưa bán cũng được) · đăng ở đâu, có danh sách Zalo, email chưa.' + setup.dump_posts '… dán 2–3 cái, hoặc gửi link trang của chị.' + 'Nói xong gõ xong'). DECISIONS 6 Oct: where they post and the Zalo/email list are asked up front, as a hint with no question mark, so a cut cannot lose them. The old hint about 'chuyện mình từng trả giá' left the prompt. A numbered questionnaire is a template-fill ask (I2). 'bạn' after she chose 'chị' is a quit trigger (persona Behaviour)."""
+
+[[case]]
+id = "message.vn.002"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "Early win after chunk 1: '3 câu đáng tiền anh vừa nói', the best line in a copy box, the other 2 in quotes"
+context = """Day 0, Door A, ChatGPT Plus; he dictates from the iPhone app. Reply 2 (the dump prompt in anh–em) delivered. His chunk 1 is about 770 tiếng, below the ~1,200-tiếng soft cut."""
+input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 1' section verbatim>>'''
+contains = ["3 câu đáng tiền anh vừa nói", "đăng luôn cũng được"]
+not_contains = []
+regex = [
+  '''(?s)3 câu đáng tiền anh vừa nói:\s*```[^\n]*\n(?:(?!```).){10,400}```\s*Câu này hôm nay (?:(?:chị|anh|bạn) )?đăng luôn cũng được(?:[^\S\n]+\w+){0,2}[.!]''',
+  '''(?ms)^[ \t]*["“][^\n]{8,}["”][ \t]*$.*?^[ \t]*["“][^\n]{8,}["”][ \t]*$''',
+  '''(?i)gõ\s+['"“‘]xong''',
+]
+not_regex = [
+  '''(?i)câu\s*[1-3]\s+đăng được luôn''',
+  '''(?i)(tuyệt vời|xuất sắc|rất hay|hay quá|câu chuyện cảm động)''',
+  '''(?i)(?<!\w)tôi(?!\w)''',
+  '''(?i)vậy là đủ rồi''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I9", "I10", "I15", "I17"]
+max_words = 160
+max_chars = 0
+max_questions = 1
+notes = """start-block NGÀY 0 step 3 (R18; DECISIONS 'an early piece to post'): 'Mình nhận rồi. 3 câu đáng tiền bạn vừa nói:' in the pair ('Em nhận rồi. 3 câu đáng tiền anh vừa nói:'), the best line in a copy box + dump.post_it 'Câu này hôm nay đăng luôn cũng được.', the 2 others in quotes, dump.keep_going 'Cứ kể tiếp, hết thì gõ xong'. The old early win ('Câu 2 đăng được luôn', 'Anh chưa kể …') is gone: no jogger after chunk 1. No soft cut yet (about 770 tiếng). Tuấn quits if nothing usable comes by minute 8-10 (persona Behaviour); acceptance [day0] early_win_max_minutes_after_dump_start = 4. I9: each line is a verbatim substring of chunk 1, ≤25 tiếng. vg2-day0-vn-tuan-multihat-plus turn 3 is a passing reply."""
+
+[[case]]
+id = "message.vn.003"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "Early win from a noisy Quảng-accent dictation: clean lines quoted, speech-to-text slips never echoed"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on his old Samsung; keyboard mic in the workshop. Reply 2 (the dump prompt in anh–em) delivered. Chunk 1 is about 730 tiếng."""
+input = '''<<paste: service-biz/answers.md, the '## Dump chunk 1' section verbatim>>'''
+contains = ["3 câu đáng tiền anh vừa nói", "đăng luôn cũng được"]
+not_contains = ["báo da", "chống thắm", "tới chờ"]
+regex = ['''(?s)3 câu đáng tiền anh vừa nói:\s*```[^\n]*\n(?:(?!```).){10,400}```''']
+not_regex = ['''(?i)(chữ|từ)\s+["“]?báo da''']
+verdict = ""
+invariants = ["I1", "I5", "I9", "I15"]
+max_words = 160
+max_chars = 0
+max_questions = 1
+notes = """wf11-message-focus §1.1 rule 6 and setup.kit-dump 1 'Sửa chữ nghe nhầm': fix obvious speech-to-text errors silently. The 3 quoted lines come from clean passages (I9 verbatim); 'báo da' (báo giá), 'chống thắm' (chống thấm), 'chờ' (chừ) are obvious and are neither quoted nor asked about. Early-win shape as message.vn.002."""
+
+[[case]]
+id = "message.vn.004"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Chunk 2 ends with staff talk and she leaves: a short wait, no names echoed, no pressure; a cut keeps one more story open"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunk 1 got the early win. Chunk 2 takes her talk past ~1,200 tiếng; it ends with her talking to the receptionist ('Linh ơi, chị Duyên đến à? … lên tầng 2') and leaving ('chi ra tiep khach ti, de do chi noi tiep dc ko em')."""
+input = '''<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 2' section verbatim>>'''
+contains = ["chị"]
+not_contains = ["Duyên", "Linh ơi", "tầng 2"]
+regex = ['''(?i)(không vội|quay lại thì nhắn|nhận rồi|vậy là đủ rồi)''']
+not_regex = [
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(nhanh lên|chị trả lời|chị gõ)\s+(ngay|luôn)''',
+  '''(?i)vậy là đủ rồi(?![\s\S]{0,120}kể luôn)''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I10", "I15"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """§CM-TODAY 1 ('chờ chút': resume.brb 'Không vội đâu. Quay lại thì nhắn ok rồi nhé.'); start-block step 3: past ~1,200 tiếng the soft cut (dump.enough 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì …'), which may carry a câu đoán; DECISIONS 'One more story stays open': a cut here must still invite her story (the third not_regex). Either form passes. expected.toml [ux]: the words she says to staff are not part of the dump (setup.kit-dump 1 'câu nói với người bên cạnh'), and a client's name never enters the reply (I10). She is away 15-40 minutes; nothing presses her to answer now."""
+
+[[case]]
+id = "message.vn.005"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Dictation cut off mid-word: setup.cut_off 'Đoạn đó bị đứt. Chị nói lại thành 2 đoạn ngắn nhé.'"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunk 1 and its early win done. This chunk stops mid-word (the voice recording hit its limit)."""
+input = '''Ờ chị kể tiếp nhé, cái chuyện em Thảo ấy, hôm đầu tiên chị gọi video zalo cho Thảo thì spa em ấy giường trống trơn, em ấy ngồi ở quầy, sau lưng là cái kệ toàn hộp serum chưa bóc, rồi Thảo bảo chị là khách khen tay em nhẹ mà cứ để chị về suy'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)đoạn đó bị đứt''',
+  '''(?i)nói lại thành (2|hai) đoạn ngắn''',
+]
+not_regex = [
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)nói lại\s+(từ đầu|toàn bộ|hết)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I15"]
+max_words = 90
+max_chars = 0
+max_questions = 1
+notes = """§CM-TODAY 1 'Lời đọc bị đứt giữa chữ: setup.cut_off' ('Đoạn đó bị đứt. Bạn nói lại thành 2 đoạn ngắn nhé.' in em–chị). Losing a long story is Hạnh's first quit risk (persona Behaviour 'mất trắng một đoạn kể 9 phút'). Asking for the whole dump again fails."""
+
+# ---------------------------------------------------------------- after the dump: no inventory, no check screen
+
+[[case]]
+id = "message.vn.006"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "After her last chunk: no inventory, no check screen, at most one câu đoán; nothing the dump said is asked again"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-2 sent; chunk 2 took her talk past ~1,200 tiếng and she left for a client, so the reply waited for her and closed with the soft cut ending 'không thì gõ xong' (nothing to guess yet). She came back with 'tiep em oi' and now sends chunk 3, her one more story, ending 'xong rồi đấy em'. Chunk 3 names her 3 income streams (the spa, the coaching class, a few cosmetics at the counter) and says content is to bring spa owners into the class; chunk 2 already gave her clients' words and Thảo's consented result."""
+input = '''<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = []
+not_contains = ["Chị biết nhiều thật", "6 tháng content", "không bỏ gì"]
+regex = ['''(Đúng không(?: \w+)?\?|ĐIỀU KHÁCH NHỚ:)''']
+not_regex = [
+  '''(?i)(quá nhiều|lan man|loãng)''',
+  '''(?i)chị\s+(đang\s+)?bán\s+(gì|những gì)[^\n]*\?''',
+  '''(?i)(khách|các em)[^\n?]{0,30}hay (nói|than) (gì|câu gì)[^\n]*\?''',
+  '''(?i)(ngày nào|thứ mấy|mấy giờ|mấy tiếng)[^\n]*\?''',
+  '''(?i)(gạch đầu dòng|đọc nguyên văn)[^\n]*\?''',
+  '''(?i)nguồn nào nuôi''',
+  '''(?im)^[^\w\n]*[1-7][.)]?\s+(?:Ai|Lời của họ|Cách cũ|Kết quả tốt nhất|Cách của (?:chị|bạn|mình)|Cách làm việc)\s*:''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I4", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R10: no inventory line (the old 'Chị biết nhiều thật … 6 tháng content … không bỏ gì') and no 7-line check. setup.kit-facts 4-6: only what the dump, posts and page do not hold, at most 3, one a message, each 'Mình đoán: … Đúng không?'; 2+ income streams → setup.multi_income ('Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa, vì … Đúng không?'), never 'nguồn nào nuôi chị' (expected.toml income_question_answer: one question at most, and spa owners stay the buyer). If the machine finds nothing missing, the Map with QUAY HÔM NAY comes instead (as in vg2-day0-vn-hanh turn 6); either passes. Platform, list, talk day, delivery and hours are never asked (setup.kit-facts 5: guessed above Tuần 1). message.vn.007 grades the result traps on the same reply."""
+
+[[case]]
+id = "message.vn.007"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Same reply: no check screen or '?' placeholders; any result it leans on is Thảo's counts, never cô Hoa's 70% or Vân's 'gấp đôi'"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-2 sent; chunk 2 took her talk past ~1,200 tiếng and she left for a client, so the reply waited for her and closed with the soft cut ending 'không thì gõ xong'. She came back with 'tiep em oi' and now sends chunk 3, her one more story, ending 'xong rồi đấy em'. Chunk 2 gave Thảo's consented result (about 2 in 10 new clients booking again → about 5 in 10 after 6 weeks); chunk 3 adds cô Hoa (a spa client, 'mờ phải đến 70%', never asked) and Vân ('doanh thu gấp đôi', hearsay), and the dictation slip 'liệu chình'."""
+input = '''<<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = []
+not_contains = ["doanh thu gấp đôi", "liệu chình"]
+regex = ['''(Đúng không(?: \w+)?\?|ĐIỀU KHÁCH NHỚ:)''']
+not_regex = [
+  '''(?m):\s*\?\s*$''',
+  '''(?i)70\s?%''',
+  '''(?im)^(?!.*(không|chưa)).*(tốt nhất|duy nhất|cam kết)''',
+  '''(?i)(điền vào|theo mẫu)''',
+  '''(?i)gõ\s+['"“‘]ok['"”’][^\n]{0,30}(xác nhận|chốt|duyệt)''',
+  '''(?i)(hết nám|mờ nám|trị dứt điểm)''',
+  '''(?im)^[^\w\n]*(?:Lời của họ|Cách cũ|Kết quả tốt nhất)\s*:''',
+  '''(?i)(gấp đôi|gấp 2,5|150\s?%)''',
+]
+verdict = ""
+invariants = ["I2", "I4", "I8", "I9", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R10 re-aim (the subject, the check screen's 'Kết quả tốt nhất' line, is gone): after the dump the machine shows no screen of pre-filled lines with '?' placeholders and asks no 'gõ ok' to confirm one. Whatever the reply leans on as a result (a câu đoán or, if nothing is missing, the Map's ĐIỀU KHÁCH NHỚ) is Thảo's, as counts with context, never cô Hoa's 70% (a spa client, a skin claim, no consent: persona.toml P7) or Vân's 'gấp đôi' (hearsay: P6), never a rounded rate (expected.toml [traps]). start-block LỜI HỨA: no superlatives or guarantees; only a refusal line may hold the word. 'liệu chình' is written 'liệu trình' (setup.kit-dump 1)."""
+
+[[case]]
+id = "message.vn.008"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "A story instead of 'đúng' or 'sửa': taken as the answer to the câu đoán; the Map follows with her correction in ĐIỀU KHÁCH NHỚ"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'). The one câu đoán was the multi-income line with the buyer guessed a little off: 'Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa mới mở, vì lớp kèm là cái chị muốn làm lớn. Đúng không?'. As her Behaviour says, she does not type 'đúng' or 'sửa'; she tells a story with the correction in it. Nothing else is missing."""
+input = '''Ơ không phải các em mới mở đâu em. Có em mở ba bốn năm rồi vẫn ngại chào đấy. Như em Loan ở Hưng Yên ấy, mở spa lâu rồi, đi học chốt sale về dạy nhân viên nói theo, xong nhân viên nói câu nào khách cũng sợ, thế là Loan lại phải tự đứng quầy. Các em ấy là thợ lên làm chủ, tay nghề tốt, chỉ có mỗi cái là ngại chào thôi.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(thợ lên làm chủ|ngại chào)''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*mới mở''',
+  '''(?i)gõ\s+['"“‘]?sửa''',
+  '''(?i)(dòng (số )?mấy|sửa dòng nào)''',
+  '''(?i)(chị|em) (có )?(muốn|định) (nói|sửa) (gì|là gì)[^\n]*\?''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R10 re-aim: persona Behaviour 'Máy đoán sai một thông tin … chị không gõ sửa dòng 3, chị kể một chuyện có ý sửa ở trong'. setup.kit-facts 4: a story is the answer; nothing is re-asked and no line number is demanded. It was the last missing fact, so the reply is the Map with QUAY HÔM NAY under it and map.ok last (K2), and ĐIỀU KHÁCH NHỚ uses her correction: thợ lên làm chủ who are ngại chào, whether the spa is new or 3-4 years old (expected.toml [map] buyer). Coach turn 7 (Phone Starter, xưng hô, chunk 1, chunk 2, 'tiep em oi', chunk 3, this story): exactly map_max_turns_vn. Graded with graders.py checks day0_timing (map_lines = 4) and deny_list as well as the invariants listed."""
+
+# ---------------------------------------------------------------- multi-income
+
+[[case]]
+id = "message.vn.009"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "3 income streams: the soft cut carries the multi-income câu đoán in one message, one '?', no stream dropped"
+context = """Day 0, Door A, ChatGPT Plus; he dictates from the iPhone app. Chunk 1 (insurance since 2019, apartment broking, sales training) got the early win. Chunk 2 takes his talk past ~1,200 tiếng."""
+input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 2' section verbatim>>'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)hôm nay vậy là đủ rồi''',
+  '''(?i)còn chuyện nào thì[^\n]{0,20}kể luôn''',
+  '''(?i)anh đang có 3 nguồn thu''',
+  '''(?i)đoán nên viết cho[^\n]{0,90}(vợ chồng|gia đình|mua căn|mua nhà)''',
+  '''Đúng không(?: \w+)?\?''',
+]
+not_regex = [
+  '''(?i)nguồn nào nuôi''',
+  '''(?i)(chọn|bỏ)\s+(một|1)\s+(nghề|việc|nguồn)''',
+  '''(?i)(?<!\w)tôi(?!\w)''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:''',
+  '''(?i)(dạy sale|đội sale)[^\n]{0,40}(viết cho|nên viết)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I15", "I17"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """DECISIONS 'Long dumps': past about 1,200 tiếng the machine says it is enough for today and combines that with its first câu đoán in one message (dump.enough 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán}'), one '?' in all. setup.multi_income (VK-3, one question): 'Anh đang có 3 nguồn thu. Em đoán nên viết cho {buyer}, vì {why}. Đúng không?'; the old two-question line ('… Hoặc anh nói luôn: tháng này nguồn nào nuôi anh?') is gone. The bridge buyer is young couples buying a first apartment (expected.toml bridge_rule: 6 of his 9 apartment buyers also hold his insurance); sales training is never the guessed buyer, and no stream is dropped (quit point 6). vg2-day0-vn-tuan-multihat-plus turn 5 is a passing reply."""
+
+[[case]]
+id = "message.vn.010"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "The dump already said which stream pays and what he sells: neither is asked again, nor any plan fact"
+context = """Day 0, Door A, Claude Pro on the Windows laptop (keyboard mic, mic.claude_vn), anh–em. Chunks 1-2 sent; the reply to chunk 2 was the soft cut carrying the first câu đoán, what he sells ('Em đoán: anh đang bán gói tư vấn dựng quy trình tuyển cho từng doanh nghiệp. Đúng không?'). He answers with chunk 3, his one more story: the 45.000.000đ 3-month package ('Cái này là nguồn chính', 'Tháng ni tiền chủ yếu từ gói 3 tháng'), the half-day training, the headhunting he does not like, LinkedIn, Facebook, Zalo about 380, an email list of 250, Sunday mornings free; it ends 'xong'."""
+input = '''<<paste: consultant/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = []
+not_contains = ["nguồn nào nuôi anh", "Anh biết nhiều thật", "6 tháng content"]
+regex = ['''(Đúng không(?: \w+)?\?|ĐIỀU KHÁCH NHỚ:)''']
+not_regex = [
+  '''(?i)tháng (này|ni)\s+(tiền|nguồn)''',
+  '''(?i)anh\s+(đang\s+)?bán\s+(gì|những gì|gói gì)[^\n]*\?''',
+  '''(?i)(email|Zalo|LinkedIn)[^\n?]{0,40}(bao nhiêu|mấy)[^\n]*\?''',
+  '''(?i)(ngày nào|thứ mấy|mấy giờ|mấy tiếng)[^\n]*\?''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
+  '''(?i)(?<!\w)coach(?!\w)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """setup.kit-facts 4 'THIẾU = lời xả, bài, trang đều không có … Không danh sách, không hỏi lại'; 5: platform and list only in the dump prompt, talk day, delivery and hours never asked; 6: a 2+-stream coach gets the one setup.multi_income guess ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ doanh nghiệp 20–100 người tự tuyển, vì … Đúng không?'), never 'nguồn nào nuôi anh'. expected.toml [map] income_question_answer. If the machine finds nothing missing, the Map comes instead; either passes. Re-asking what the dump said is a Khoa / Tuấn quit trigger; he also refuses to be called 'coach' (voice-samples never-list)."""
+
+# ---------------------------------------------------------------- hedges, skips, one line, refusal to narrow
+
+[[case]]
+id = "message.vn.011"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'sửa dòng 2' alone: A) B) from her dump and 'Em chọn …, vì …', still the one decision"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong', nothing being missing) and chunk 3 ended 'xong rồi đấy em'. Her dump held her clients' words, Ngân's consented result and her offer, so that reply showed the 4-line Map (3 CHỦ ĐỀ: 'Lãi ảo, không phải bán ít · Nhìn lãi từng đơn, đừng nhìn doanh thu · Cắt mã lỗ trước, chạy quảng cáo sau') with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?'. She wants line 2 different but doesn't say how."""
+input = '''sửa dòng 2 em ạ'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)A\)[\s\S]*B\)''',
+  '''(?i)(em|mình) chọn [^\n]{1,80}?, vì ''',
+]
+not_regex = [
+  '''_{3,}''',
+  '''(?i)\[(điền|thêm|nhập)''',
+  '''(?s)C\)[\s\S]*D\)''',
+  '''(?m)^[^\w\n]*QUAY HÔM NAY\b''',
+  '''(?i)(em|mình) chọn:?[^\n]{0,60}(livestream|lai stream|Quảng Châu|thuế|TikTok Shop)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5", "I6", "I15"]
+max_words = 160
+max_chars = 0
+max_questions = 1
+notes = """R10 re-aim ('từng câu' presumed the check screen; missing facts already come one a message). §CM-MAP SỬA: 'Chỉ "sửa dòng N" → A) B) từ lời xả + check.pick' ('Mình chọn {option}, vì {reason}.' in em–chị: 'Em chọn …, vì …'); it stays inside the day's one decision (I6), and QUAY HÔM NAY, already under the Map, is not reprinted (start-block step 5: only a change that alters the script reprints it). Options come from her dump; the pick is never a parked topic (expected.toml not_now_must_include). Quit trigger 'chọn A, B hay C khi chưa hiểu': a default is always named."""
+
+[[case]]
+id = "message.vn.012"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "A hedge on who it is for, right after the Map: one line (no bet, no 'nhóm nào?'), then Tuần 1; dân văn phòng stays"
+context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result), she typed 'ừa'; the last câu đoán (what she sells) got 'chưa có gì hết á…'. That reply showed the 4-line Map (ĐIỀU KHÁCH NHỚ names dân văn phòng; TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nha. OK hay sửa một dòng?'. Pregnant women, older people with knee pain and others are on none of its lines. She hedges."""
+input = '''chắc là dân văn phòng đó, mà mấy chị bầu cũng hỏi mình hoài, rồi mấy cô chú lớn tuổi đau gối nữa… mình cũng hông biết nữa, nhóm nào cũng được hết á'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(Ai đọc cũng được, bài chỉ nói với đúng một kiểu khách|thử 4 tuần)''',
+  '''(?s)\A(?:(?!```).){0,700}?(?i:ai đọc cũng được|thử 4 tuần)''',
+  '''(?i)văn phòng''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+]
+not_regex = [
+  '''(?i)cược''',
+  '''(?i)(chọn|nhóm) nào[^\n]*\?''',
+  '''(?i)(phải|bắt buộc)\s+chọn''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(bầu|lớn tuổi|cô chú|đau gối)''',
+  '''(?i)(?<!\w)em\s+(đoán|nghĩ|chọn)(?!\w)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Re-aimed: the bet line is gone from Day 0 (G2/VG1: check.bet unused in VN; setup.kit-facts 4 'bỏ qua, không chắc: giữ câu đoán'). After the Map + QUAY HÔM NAY any message but a change gets all of Tuần 1, a pushback one line first (§CM-MAP 'CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1', VK-4): 'muốn khách khác → message.pushback.who' ('Ai đọc cũng được, bài chỉ nói với đúng một kiểu khách.'), 'lưỡng lự → câu thử 4 tuần'. The line opens the reply, before any copy box; Tuần 1 follows (ChatGPT Free may split it, so at least 2 boxes here). Anti-dilution rule 1: one buyer a season. 'em đoán / em chọn' would be the wrong pair for mình–bạn."""
+
+[[case]]
+id = "message.vn.013"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'bỏ qua' on the last câu đoán: the guess stands, marked '(mình đoán)', and the Map follows with nothing parked shown"
+context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?') and she typed 'ừa'. The last câu đoán was what she sells: 'Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'. She skips it."""
+input = '''bỏ qua'''
+contains = ["(mình đoán)"]
+not_contains = []
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+]
+not_regex = [
+  '''ĐỂ SAU''',
+  '''(?i)vì sao chọn''',
+  '''(?i)(?<!\w)em\s+(đoán|nghĩ)(?!\w)''',
+  '''\b[VSPXK]-\d+\b''',
+  '''(?i)\d[\d.,]*\s*(đ|k|nghìn|ngàn|tr|triệu)(?!\w)''',
+  '''(?i)(bạn|mình)\s+(đang\s+)?bán\s+gì[^\n]*\?''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I8", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """start-block MỖI LẦN TRẢ LỜI 'Coach gõ bỏ qua: tự chọn cách hợp lý, ghi (mình đoán)'; setup.kit-facts 4 'bỏ qua: giữ câu đoán … không hỏi lại'; 7 'Chưa bán gì: suất 5 người đầu, giá họ đặt; chưa có giá → Cần bạn ở bài sản phẩm', so no price is invented here (I8). The guess is marked in this reply, wherever it lands (a Map line, the QUAY HÔM NAY CTA or the founding framing). R11: ĐỂ SAU is never on the Map; it prints on 'tại sao?'. Coach turn 6 (Start, xưng hô, chunk 1, chunk 2, 'ừa', 'bỏ qua')."""
+
+[[case]]
+id = "message.vn.014"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'Thôi em đừng bắt chị chọn mỗi một cái': one plain line, no lecture, no forced choice, then the OK ask again"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong') and chunk 3 ended 'xong rồi đấy em'; nothing was missing, so the strategy followed (ĐIỀU KHÁCH NHỚ, TRỤ CỘT NỘI DUNG, TỪ KHOÁ: LÃI ẢO, …), its last message ending 'Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?'. QUAY HÔM NAY waits for her OK. Ads, livestream, Shopee, Quảng Châu, tax and TikTok Shop are on none of its lines. She objects."""
+input = '''Thôi em đừng bắt chị chọn mỗi một cái, chị biết nhiều thế mà chỉ nói một chuyện à?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)\A(?:(?!```).){0,700}?(?i:ai đọc cũng được|thử 4 tuần|lồng|ghép|chủ đề [1-3]|ý lớn [1-3]|trụ cột)''',
+  '''(?i)OK hay sửa một dòng''',
+]
+not_regex = [
+  '''(?i)(phải|bắt buộc)\s+chọn''',
+  '''(?i)(sai|nhầm) rồi''',
+  '''(?i)(chị (có )?chắc (chưa|không)|xác nhận)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?m)^\W*QUAY HÔM NAY''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Her verbatim objection (persona Behaviour). STRATEGY PUSHBACK (modules message.md, Founder 7 Oct, amends K2 'any other message brings Week 1'; v13.5 start-block step 6): one line (a loved topic folded into a trụ cột, message.pushback.who, or the 4-week try), never a lecture or a forced choice, then the OK ask again (map.ok); QUAY HÔM NAY and Tuần 1 wait for her OK. The line opens the reply, before any copy box. Persona: 'máy giảng luật quá 3 dòng là chị bực'."""
+
+# ---------------------------------------------------------------- the 4-line Map (with QUAY HÔM NAY under it)
+
+[[case]]
+id = "message.vn.015"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "The Map: 4 lines (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ, GIỌNG), QUAY HÔM NAY under it, map.ok last; nothing else on it"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (chunk 2 passed ~1,200 tiếng and she left for a client; the soft cut ended 'không thì gõ xong'; she came back with 'tiep em oi' and chunk 3 ended 'xong rồi đấy em'). The one câu đoán was the multi-income line ('Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa, vì … Đúng không?'). She answers it; this reply shows the Map with QUAY HÔM NAY under it."""
+input = '''Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.'''
+contains = ["QUAY HÔM NAY", "quay luôn bây giờ, hoặc đăng phần chữ làm bài viết"]
+not_contains = ["liệu chình", "90 ngày", "Big Domino", "chụp màn hình"]
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*["“][^"”\n]{3,}["”]''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*ngại chào''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?chị\s*[–-]\s*các em''',
+  '''(?i)gõ\s*['"“‘]nhẹ''',
+  '''TIẾP →[^\n]*\s*\Z''',
+]
+not_regex = [
+  '''ĐỂ SAU''',
+  '''(?i)vì sao chọn''',
+  '''(?i)không có gì (chị|anh|bạn) biết bị bỏ phí''',
+  '''(?m)^[^\w\n]*(?:MỘT THÔNG ĐIỆP|3 Ý LỚN|ĐƯỢC BIẾT ĐẾN VÌ|TỪ KH(?:OÁ|ÓA) CỦA|GIỌNG CỦA|SẢN PHẨM|LỜI HỨA|CÁCH CŨ)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG):[^\n]*(6\.500\.000|6,5 ?tr|triệu)''',
+  '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''\b[VSPXK]-\d+\b''',
+  '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
+  '''(?i)(?<!\w)kh(óa|oá)\s+(thông điệp|bản đồ)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(mờ nám|70\s?%|doanh thu gấp đôi)''',
+  '''(?i)nhẹ nhàng hơn\s*\?''',
+  '''(?i)đăng caption (dạng|thành) bài chữ''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R11, R12 (the trigger is her last missing-fact answer, as in setup.vn.012; talk day, hours and delivery are never asked). wf15 S2 and start-block NGÀY 0 steps 5-6 (K2): the Map is 4 labelled lines (map.known, map.topics, map.word with the unaccented form, map.voice ending 'với khách: "{address}"'), QUAY HÔM NAY right under it (its caption and gift in copy boxes, the quiet option 'gõ nhẹ' as a statement, film.now_or_text), then map.ok last, the day's one decision. Never on it: MỘT THÔNG ĐIỆP, 3 Ý LỚN, the offer and price (card machine block), vì sao chọn, ĐỂ SAU, the pocket version ('chụp màn hình'), 'không có gì … bị bỏ phí'. Her audience address 'chị – các em' (expected.toml [voice]) is not the machine's em–chị (wf14 §4.1). QUAY HÔM NAY is a Ready piece: nothing under it (I3). Coach turn 7: exactly map_max_turns_vn. Graded with graders.py checks day0_timing (map_lines = 4), day0_shape and deny_list as well as the invariants listed. vg2-day0-vn-hanh turn 6 shows the shape (it came one turn earlier there)."""
+
+[[case]]
+id = "message.vn.016"
+kind = "P"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Hạnh's Map passes the message-map standard"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'); the one câu đoán was the multi-income line. She answers it; this reply shows the 4-line Map with QUAY HÔM NAY under it. Judge the Map reply against expected.toml [map] together with its hidden layer, as the standard asks: the reply to 'tại sao?' on it (as in message.vn.041: vì sao chọn, the root cause, ĐỂ SAU) and the Day-0 card's map fields."""
+input = '''Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = ["I8", "I9", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """QA §3.1 message-map ≥16/20. The 6 tests (wf11-message-focus §2.2) on ĐIỀU KHÁCH NHỚ: one breath ≤50 tiếng; the problem in her buyers' words ('ngại chào lắm'); narrow (thợ lên làm chủ, 2-5 kỹ thuật viên); swap test (method or old-way name, e.g. 'cầm gương nói thật' / 'dọa da'); ends at the class; claims-safe (no nhất / duy nhất / cam kết; 'tùy mỗi spa'). MM6 is checked on the hidden key belief (card key_belief); MM7 on the 3 CHỦ ĐỀ, with ĐỂ SAU ≥3 topics with reasons on 'tại sao?'. The coach-facing Map is 4 lines (wf15 S2): a judge must not mark it down for hiding ĐỂ SAU, the offer or vì sao chọn."""
+
+[[case]]
+id = "message.vn.017"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "Bridge-buyer Map: young couples buying a first apartment, GỒNG LÃI, no listing hype, sales training off the Map"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunk 1 got the early win; chunk 2 passed ~1,200 tiếng, so its reply was the soft cut carrying the multi-income câu đoán ('Anh đang có 3 nguồn thu. Em đoán nên viết cho vợ chồng trẻ mua căn đầu tiên, vì nhà mua căn đầu cũng cần bảo hiểm che người đứng tên vay. Đúng không?'). He tells chunk 3 as his one more story: the 22 sales recruits, the 2 tỷ 68 apartment he must close by 30/11 ('em đừng có bỏ bất động sản ra nha'), the 'view sông' idea, his cousin's 'lời gấp đôi', his channels, 6 of his 9 apartment buyers also insured with him; it ends 'Thôi, xong.'. That story answers the guess and nothing else is missing, so this reply shows the Map with QUAY HÔM NAY under it."""
+input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = ["gồng lãi", "QUAY HÔM NAY"]
+not_contains = []
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(vợ chồng|gia đình|nhà)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(?i:g[ồo]ng l[ãa]i)''',
+]
+not_regex = [
+  '''ĐỂ SAU''',
+  '''(?i)vì sao chọn''',
+  '''(?im)^(?!.*(không|chưa|đừng|hổng)).*view sông''',
+  '''(?i)(giá tốt|bán gấp|căn cuối|cơ hội vàng|siêu phẩm)''',
+  '''(?im)^(?!.*(không|chưa|đừng|hổng)).*(lời gấp đôi|sinh lời|lãi suất đảm bảo|chưa khách nào bị từ chối)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ):[^\n]*(dạy sale|đội sale|huấn luyện bán hàng)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)):[^\n]*(đầu tư|cho thuê|tài chính)''',
+  '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''\b[VSPXK]-\d+\b''',
+  '''(?i)(?<!\w)kh(óa|oá)(?!\w)[^.\n]{0,20}90''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I10", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §5 items 5 and 17 (bridge buyer; side door ≤1 labelled piece a week); expected.toml [map] bridge_rule, cash_now, side_door, wrong_maps. A story that answers a câu đoán is the answer (setup.kit-facts 4). R11: ĐỂ SAU and the side door print on 'tại sao?' (message.vn.042), not on the Map; the 2 tỷ 68 apartment stays in through the buyer and a weekly 'tính thử căn này' piece in Tuần 1 (his pushback, message.vn.050). No 'view sông' (the pool view is what is true), no listing hype, no cousin's 'lời gấp đôi' (expected.toml [traps]); a refusal line may name them. Coach turn 5 (Start, 'anh', chunks 1-3). vg2-day0-vn-tuan-multihat-plus turn 6 is a passing reply. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed."""
+
+[[case]]
+id = "message.vn.018"
+kind = "P"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "Tuấn's Map: one bridge buyer, insurance and apartment both on it, claims-safe promise"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the multi-income câu đoán; chunk 3, his one more story, answers it and ends 'Thôi, xong.'; this reply shows the 4-line Map with QUAY HÔM NAY under it. Judge the Map reply against expected.toml [map] with its hidden layer: the reply to 'tại sao?' on it (message.vn.042) and the Day-0 card's map fields."""
+input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = ["I8", "I10", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """QA §3.1 message-map ≥16/20; expected.toml [map] (buyer; promise as a process with conditions; the method named in Vietnamese without 'đầu tư / tài chính / an cư'; old way 'cọc trước tính sau'; not_now_must_include and must_not_park, read on 'tại sao?' and in the card). Wrong maps listed in expected.toml score MM1 = 0. The coach-facing Map is 4 lines (wf15 S2)."""
+
+[[case]]
+id = "message.vn.019"
+kind = "D"
+persona = "coldstart-coach"
+lanes = ["S1", "S0", "floor"]
+title = "Cold-start Map: CỨNG ĐƠ, no price, no paid-client claims, no health promise; QUAY HÔM NAY under it"
+context = """Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), she typed 'ừa'; the last câu đoán was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answers it; this reply shows the Map with QUAY HÔM NAY under it. Her dump also named her friend's '3 tuần hết đau' (not a client, not measured, no consent)."""
+input = '''chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi'''
+contains = ["cứng đơ", "QUAY HÔM NAY"]
+not_contains = []
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*cứng đơ''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?mình\s*[–-]\s*(mấy )?bạn''',
+]
+not_regex = [
+  '''(?i)\d[\d.,]*\s*(đ|k|nghìn|ngàn|tr|triệu)(?!\w)''',
+  '''(?i)(đã trả tiền|học viên đã (trả|mua|hết|khỏi|đỡ)|khách đã (hết|khỏi|đỡ|mua|trả)|đã giúp\s+\d)''',
+  '''(?im)^(?!.*(không hứa|không phải|hổng phải|đi khám)).*hết đau''',
+  '''(?im)^(?!.*(không|hông|đi khám)).*(chữa khỏi|thoát vị)''',
+  '''(?i)(nhỏ bạn|con bạn)[^\n]{0,40}(hết đau|3 tuần)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ):[^\n]*(bầu|giảm mỡ|thiền|nấu ăn|đau gối)''',
+  '''ĐỂ SAU''',
+  '''(?i)vì sao chọn''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """K2 trigger kept (as signature.vn.023: her last missing fact was what she sells). setup.kit-facts 7: no offer yet → a founding first group at her own price, none named → no price anywhere (I8); the offer is a card field (offer_status founding|none, brain.vn.022), not a Map line, so the old '(mình đoán)' and founding-framing asserts left this reply. expected.toml [map] why_this_one_must_not_claim: no paying clients; no health outcome (LỜI HỨA: 'chữa khỏi', results only when real and consented); the friend's story is not a result. Coach turn 6. vg2-day0-vn-coldstart-coach turn 7 shows the shape."""
+
+[[case]]
+id = "message.vn.020"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "Claims-safe Map for a kitchen renovation shop: 'phát sinh' in his buyers' words, never 'không phát sinh' without its condition"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on his Android phone, anh–em. Chunks 1-2 told (results with consent: chị Loan, anh Hưng chị Yến; the soft cut after chunk 2 ended 'không thì gõ xong'); chunk 3, his one more story, named kitchens about 70%, homestay interiors about 20%, subcontract cabinets about 10%, the phong thủy questions he won't answer, and ended 'xong rồi đó em' plus his typed corrections. The one câu đoán was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ nhà phố, căn hộ muốn sửa bếp, vì … Đúng không?'). He answers it; this reply shows the Map with QUAY HÔM NAY under it."""
+input = '''uh đúng rồi em, bếp là chính nghe. Homestay với thầu phụ thì khách tự tìm tới.'''
+contains = ["phát sinh", "QUAY HÔM NAY"]
+not_contains = []
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*phát sinh''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:[^\n]*anh chị''',
+]
+not_regex = [
+  '''(?im)^(?!.*không phải cam kết).*(cam kết|tốt nhất|duy nhất|rẻ nhất|số 1|hàng đầu|100\s?%)''',
+  '''(?im)^(?!.*(trừ khi|ngoài|chỉ thêm|đổi ý|phụ lục|hư hỏng|duyệt|không viết)).*không\s+(bao giờ\s+)?(có\s+)?phát sinh(?!\w)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ):[^\n]*(phong th(ủ|u)y|xem ngày|hướng bếp|homestay|thầu phụ)''',
+  '''(?i)(đẳng cấp|sang trọng|kiến tạo|tổ ấm|bảo hành trọn đời)''',
+  '''(?i)(dì Năm|anh Quân)''',
+  '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''ĐỂ SAU''',
+  '''(?i)vì sao chọn''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R12 (the old trigger answered the talk-day line). wf11-message-focus §2.2 test 6: the promise inside ĐIỀU KHÁCH NHỚ is a range or a condition ('cái chi có trong bản vẽ là giá chốt; đổi ý thì ký phụ lục'), never 'không phát sinh' as a guarantee (expected.toml must_not_pick; two of his jobs did have extra costs). Homestay and subcontract work stay off the Map lines; phong thủy is never a topic (risky, his own 'nói bậy mang tội'); both print on 'tại sao?' (message.vn.043). His banned showroom words (expected.toml [voice] banned) stay out of the whole reply; particles in his voice are graded by I23 and vn_natural (banned_particles_in_his_content), not here. Coach turn 6."""
+
+[[case]]
+id = "message.vn.021"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "B2B Map: ĐIỀU KHÁCH NHỚ speaks tôi–anh chị, the machine speaks em–anh; no rounded rate, no marketing jargon"
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the first câu đoán (what he sells); chunk 3, his one more story, answered it (the 45.000.000đ 3-month package, the half-day training, headhunting he does not like, LinkedIn 2,400, Zalo about 380, email 250) and ended 'xong'. The last câu đoán was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ doanh nghiệp 20–100 người tự tuyển, vì gói tư vấn 3 tháng là cái anh bán chính. Đúng không?'). He answers it; this reply shows the Map with QUAY HÔM NAY under it."""
+input = '''Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày thì khách quen hỏi mới làm, còn tìm người hộ thì đừng quảng bá, tôi làm vì nể thôi.'''
+contains = ["tuyển hoài", "QUAY HÔM NAY"]
+not_contains = ["giá ib", "ib giá", "inbox giá"]
+regex = [
+  '''(?ms)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):.*^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:.*QUAY HÔM NAY''',
+  '''QUAY HÔM NAY[\s\S]*[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*(tìm|gặp)\s+(tôi|Khoa|anh Khoa)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?tôi\s*[–-]\s*anh chị''',
+]
+not_regex = [
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
+  '''(?i)\b(lead magnet|funnel|CTA|pillar|onboarding|scorecard|KOL)\b''',
+  '''(?i)(?<!\w)coach(?!\w)''',
+  '''(?im)^(?!.*không phải cam kết).*(hàng đầu|tốt nhất|duy nhất|số 1|100\s?%|cam kết|đảm bảo)''',
+  '''(?i)(70|80)\s?%''',
+  '''(?i)200 triệu''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ):[^\n]*(luật lao động|lương thưởng|OKR|Gen Z|phần mềm|sinh viên|tìm người hộ|headhunt)''',
+  '''ĐỂ SAU''',
+  '''(?i)vì sao chọn''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I9", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R11, R12 (the old trigger fixed line 4 of the check screen). VN xưng hô for B2B: Khoa writes tôi–anh chị in every piece and on the Map's message line (start-block step 5 '{coach tự xưng}'; expected.toml [voice] audience_address), while the machine addresses him em–anh (wf14 §4.1: the two pairs stay apart). wf2 §6 public prices build trust ('giá ib' annoys). His result stays as counts (19 of 31 → 4 of 17), never a rounded rate (expected.toml [traps]: 70%, 80%, the homestay friend's 200 triệu); 'tại sao?' cites it (message.vn.044). Labour law, salaries, HR careers and headhunting are never Map topics. Coach turn 6 (Start, 'anh', chunks 1-3, this answer). vg2-day0-vn-consultant turn 6 shows the shape."""
+
+[[case]]
+id = "message.vn.022"
+kind = "P"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Khoa's Map: one buyer (owners of 20–100-person firms who hire themselves), a plain Vietnamese method name"
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-3 told (the soft cut after chunk 2 carried the offer guess; chunk 3 answered it and ended 'xong'); the last câu đoán was the multi-income line. He answers it; this reply shows the 4-line Map with QUAY HÔM NAY under it. Judge it against expected.toml [map] with its hidden layer: the reply to 'tại sao?' on it (message.vn.044) and the Day-0 card's map fields."""
+input = '''Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày thì khách quen hỏi mới làm, còn tìm người hộ thì đừng quảng bá, tôi làm vì nể thôi.'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = ["I8", "I9", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "message-map"
+critical = ["MM1", "MM2", "MM6", "MM7", "MM10"]
+min_score = 16
+notes = """QA §3.1 message-map ≥16/20; expected.toml [map] (method name without 'onboarding / scorecard / JD'; HR-career advice parked as a different buyer; side door = the half-day training, not a second offer on the Map). The coach-facing Map is 4 lines (wf15 S2)."""
+
+[[case]]
+id = "message.vn.023"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'tại sao?' on Thu's Map: vì sao chọn from her evidence, ĐỂ SAU for a knows-too-much coach (ads, live, Quảng Châu, tax) with plain reasons and return triggers"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-2 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong', nothing being missing). Turn 1 is chunk 3, ending 'xong rồi đấy em'; nothing is missing, so it gets the 4-line Map (TỪ KHOÁ: LÃI ẢO) with QUAY HÔM NAY under it. Her dump also covered Facebook ads (since 2016), livestream, Shopee, Quảng Châu sourcing, inbox scripts, bom hàng, collaborators, the 2026 tax change and TikTok Shop. Turn 2 asks why; assertions run on the reply to it."""
+input = '''[turn 1] <<paste: proof-coach/answers.md, the '## Dump chunk 3' section verbatim>>
+[turn 2] tại sao vậy em?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(60 học viên|Ngân|lãi ảo)''',
+  '''(?i)quảng cáo''',
+  '''(?i)(live|livestream)''',
+  '''(?i)Quảng Châu''',
+  '''(?i)thuế''',
+  '''(?i)(khác tệp khách|khác vấn đề|chưa có gì bán|chỉ là công cụ|ai nói cũng được|dễ thành hứa quá lời|để sau mới hợp)''',
+  '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
+]
+not_regex = [
+  '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
+  '''\b[VSPXK]-\d+\b''',
+  '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
+  '''(?<!\w)(TIỀN|BẰNG CHỨNG|HẸP|HỨNG)(?!\w)''',
+  '''(?i)(phương án nhì|hạng nhì|ứng viên)''',
+  '''(?i)để sau[^\n]*\n(?:[ \t]*(?:[·•*\-–]|\d+[.)])[^\n]*\n){8}''',
+  '''(?<!\w)(bạn Trang|anh Khải)(?!\w)''',
+  '''(?im)^(?!.*(không|chưa)).*(gấp 3|x3|1 tỷ một tháng|50 triệu)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I8", "I10", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R11 (ĐỂ SAU moved off the Map): §CM-MAP '"tại sao?" trên Bản đồ: vì sao chọn (bằng chứng của họ), gốc rễ, ĐỂ SAU kèm lý do; không điểm hay nhãn.' Vì sao chọn cites her evidence (expected.toml why_this_one_must_cite: 60 paying học viên, her clients' 'lãi ảo', Ngân's story). ĐỂ SAU uses the message.reason.* words (khác tệp khách · khác vấn đề · chưa có gì bán cho chủ đề này · chỉ là công cụ, chưa phải ý chính · ai nói cũng được · dễ thành hứa quá lời · đúng khách, mà để sau mới hợp), each with a 'Quay lại khi' trigger (khách hỏi 3+ lần/tháng · đổi sản phẩm · mở bán · mùa sau · rủi ro: không bao giờ); ≤7 listed (expected.toml not_now_must_include, not_now_reason_hints). Pick scores and the runner-up never print. Trang's 50 triệu, Khải's 'gấp 3' and the 1-tỷ rumour stay out (expected.toml [traps]). The Map reply (turn 1) carries none of this (I3 grades it). deny_list is not run after 'tại sao?'."""
+
+[[case]]
+id = "message.vn.024"
+kind = "P"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "TỪ KHOÁ pre-picked from buyer words with 2 hidden alternates; the coach is never asked to vote"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-2 (her posts W1-W3 after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong'). Chunk 3 ends 'xong rồi đấy em'; nothing is missing, so this reply shows the 4-line Map with QUAY HÔM NAY under it. Judge the keyword on the TỪ KHOÁ line, the QUAY HÔM NAY CTA and the card's keyword_alternates."""
+input = '''<<paste: proof-coach/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = []
+not_contains = []
+regex = []
+not_regex = []
+verdict = ""
+invariants = ["I9", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+standard = "signature-keyword"
+critical = ["SK2", "SK6"]
+min_score = 13
+notes = """QA §3.1 signature-keyword ≥13/16; §CM-MAP TỪ KHOÁ 'Chọn sẵn + 2 dự phòng, không hỏi': the alternates live in the card (keyword_alternates), never on the Map. Expected pick 'lãi ảo' (or 'lãi thật'); never 'Sổ 3 Cột' (method name), 'chấm', 'ib', 'x3 doanh thu' (expected.toml [keyword]). SK1 is not critical on this dump-only Day-0 pick: the standard scores an honestly marked provisional term SK1 = 1 until the first listening paste; SK1 = 0 (presented as proven) still fails via 'no item scores 0' (same decision as signature.vn.025). R12: the old trigger answered the talk-day line."""
+
+[[case]]
+id = "message.vn.025"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "TỪ KHOÁ line shows the form without diacritics: GỒNG LÃI / GONG LAI; never a product word"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the multi-income câu đoán. He tells chunk 3 as his one more story (it answers the guess) and it ends 'Thôi, xong.'; this reply shows the 4-line Map with QUAY HÔM NAY under it."""
+input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = ["gồng lãi", "gong lai"]
+not_contains = []
+regex = ['''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*g[ồo]ng l[ãa]i[^\n]*gong lai''']
+not_regex = ['''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(bảo hiểm|căn hộ|mua nhà|an cư|đầu tư)''']
+verdict = ""
+invariants = ["I1", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """start-block NGÀY 0 step 5: 'TỪ KHOÁ: {KEYWORD}, từ lời khách, kèm dạng không dấu'; the Từ khoá line ('nhận cả cách viết không dấu'); expected.toml [keyword] comment_forms_to_accept and must_not_pick. Comments typed without diacritics count as the same keyword. The alternates ('dí cọc', 'cọc trước tính sau') are not on the Map any more (signature.kit-keyword 'Chọn sẵn + 2 dự phòng, không hỏi'), so the old alternates assert left. vg2 printed 'TỪ KHOÁ: GỒNG LÃI (không dấu: GONG LAI)'."""
+
+# ---------------------------------------------------------------- the one decision: changing a line
+
+[[case]]
+id = "message.vn.026"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "Swapping the keyword is the one decision: TỪ KHOÁ reprinted, QUAY HÔM NAY reprinted with the new CTA word, map.ok again"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. The 4-line Map is on screen (TỪ KHOÁ: GỒNG LÃI) with QUAY HÔM NAY under it (its caption ends 'Comment GỒNG LÃI hay nhắn riêng, mình gửi bạn …') and 'Chạy thử 4 tuần nha anh. OK hay sửa một dòng?'."""
+input = '''đổi từ khóa thành dí cọc đi em, khách nói câu đó nhiều hơn'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(?i:d[íi] c[ọo]c)''',
+  '''QUAY HÔM NAY[\s\S]*(?i:d[íi] c[ọo]c)''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):[^\n]*(?i:g[ồo]ng l[ãa]i)''',
+  '''QUAY HÔM NAY[\s\S]*(?i:comment\s+["“]?g[ồo]ng l[ãa]i)''',
+  '''(?i)nhẹ nhàng hơn\s*\?''',
+  '''(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?''',
+  '''(?i)(duyệt|xác nhận|đồng ý)\s+lại''',
+  '''(?i)gõ\s+['"“‘]ok['"”’][^.\n]{0,20}(để|thì)\s+(em\s+)?(viết|làm)''',
+  '''(?i)gõ một chữ là đổi''',
+]
+verdict = ""
+invariants = ["I1", "I6", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-MAP SỬA: 'sửa dòng N: … → in lại dòng đó (cả kịch bản nếu đổi) + câu hỏi OK'; signature.kit-keyword "đổi" → the next word (a buyer word: 'dí cọc' is said by the audience, expected.toml [keyword]). The script changes because its CTA keyword does, so QUAY HÔM NAY is reprinted with the new word; then map.ok, the same one decision, never a second approval round (I6). It is a change, so Tuần 1 does not start (no setup.plan_guess line). The old not_regex 'gõ ok … để em viết' is kept."""
+
+[[case]]
+id = "message.vn.027"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "'sửa dòng 1' on the old way: ĐIỀU KHÁCH NHỚ reprinted with her name for it, map.ok again, Tuần 1 not started"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. The 4-line Map is on screen with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?'. Its ĐIỀU KHÁCH NHỚ line ends '… thì tìm chị Thu: Sổ 3 Cột, tính lãi thật từng đơn chứ không chạy theo doanh thu.'"""
+input = '''sửa dòng 1 nhé em, chỗ chạy theo doanh thu ấy, chị hay gọi là đua doanh thu cơ'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*đua doanh thu''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:[^\n]*chạy theo doanh thu''',
+  '''(?i)(duyệt|xác nhận|đồng ý)\s+lại''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)nhẹ nhàng hơn\s*\?''',
+  '''(?i)gõ một chữ là đổi''',
+  '''(?m)^[^\w\n]*N\d+\s*·''',
+]
+verdict = ""
+invariants = ["I1", "I6", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Re-aimed: line 3 is TỪ KHOÁ now, and the old way sits at the end of ĐIỀU KHÁCH NHỚ (start-block step 5 '… chứ không {cách cũ}'). §CM-MAP SỬA: the changed line is reprinted with her own name for the enemy (expected.toml enemy_old_way 'Đua doanh thu') + map.ok; QUAY HÔM NAY is reprinted only if its script used the old words. A change is not 'any answer', so Tuần 1 (its plan-guess line, N-labelled pieces) does not start."""
+
+[[case]]
+id = "message.vn.028"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "'Xài tới cuối năm luôn hả?': one line, a 4-week try that checks what buyers say, never 'khóa'; Tuần 1 follows"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. The 4-line Map is on screen with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nha anh. OK hay sửa một dòng?'. He hesitates."""
+input = '''cái bản đồ này xài tới cuối năm luôn hả em? lỡ sai thì sao'''
+contains = []
+not_contains = ["90 ngày"]
+regex = [
+  '''(?s)\A(?:(?!```).){0,600}?(?i:4 tuần)''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+]
+not_regex = [
+  '''(?i)(?<!\w)kh(óa|oá)(?!\w)[^.\n]{0,20}90''',
+  '''(?i)(?<!\w)kh(óa|oá)\s+(thông điệp|bản đồ|lại)''',
+  '''(?i)(?<!\w)lock''',
+  '''(?i)(cả năm|tới cuối năm|12 tháng)[^\n]{0,30}(giữ|xài|dùng)\s+(y|nguyên)''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §5 item 17 ('thử 4 tuần' replaces locked 90 days); §CM-MAP CÃI BẢN ĐỒ 'lưỡng lự → câu thử 4 tuần', one line, then Tuần 1 in the same reply (VK-4), so max_words is 0 and the 4-week line opens the reply, before any copy box. The monthly KEEP default stays hidden (quit point 7: Tuấn spends his only change if he hears 'khóa 90 ngày'). Graded with graders.py checks deny_list as well as the invariants listed."""
+
+# ---------------------------------------------------------------- pushbacks and requests at the Map
+
+[[case]]
+id = "message.vn.029"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'Spa nuôi cả nhà chị': one line (the spa keeps its own door, the buyer stays spa owners), then Tuần 1"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. The 4-line Map is on screen with QUAY HÔM NAY under it; care for her spa customers is on none of its lines. She pushes back."""
+input = '''Thế còn cái spa của chị thì sao? Spa nuôi cả nhà chị đấy, em bảo chị để sau là thế nào?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)\A(?:(?!```).){0,700}?(?i:bán kèm|cửa riêng|cửa phụ|khách spa|khách quen)''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|chưa)).*(đổi|chuyển)\s+(người mua|bản đồ|thông điệp)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?im)^(?!.*(không|chẳng|đâu)).*(bỏ|dẹp)\s+(spa|cái spa)''',
+  '''(?i)(chị|em) phải (chọn|bỏ)''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Her verbatim objection (answers.md); expected.toml [map] side_door (the spa keeps its door through regulars and Zalo; ≤1 labelled 'Bán kèm' piece a week for spa clients if she wants it, counted against 1 in 7). §CM-MAP CÃI BẢN ĐỒ: one plain line, then all of Tuần 1 in the same reply (VK-4), so the line opens the reply before any copy box. The Map's one buyer does not change mid-session. Persona 'Chịu nghe khi: … spa không bị bỏ, spa có cửa riêng'."""
+
+[[case]]
+id = "message.vn.030"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'Sao để máy móc với mỹ phẩm sang một bên?': a plain reason and the seasoning option in one line, then Tuần 1"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. The 4-line Map is on screen with QUAY HÔM NAY under it; skin technique, machines, cosmetics, ads, staff turnover, licences and decor are on none of its lines. She pushes back."""
+input = '''Ơ em ơi, sao lại để máy móc với mỹ phẩm sang một bên? Chị làm spa mười mấy năm, cái đấy chị biết nhiều nhất mà.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)\A(?:(?!```).){0,700}?(?i:khác tệp khách|kỹ thuật viên|dễ thành hứa quá lời|luật quảng cáo|chỉ là công cụ|dễ dính)''',
+  '''(?i)(gia vị|một dòng|một câu|lồng|ghép)''',
+  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|chưa)).*(đổi|chuyển)\s+(người mua|bản đồ)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(sai|nhầm) rồi''',
+  '''DIFF-BUYER|\bRISKY\b|\bTOOL\b''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """Her verbatim objection; wf11-message-focus §2.4 (message.reason.tool 'chỉ là công cụ, chưa phải ý chính', diff_buyer 'khác tệp khách', risky 'dễ thành hứa quá lời') and §CM-MAP 'Chủ đề để sau: ≤1 dòng trong bài đúng bản đồ, không làm hook'. One line, then Tuần 1 (VK-4); polarity on ideas, never on her. Persona: 'máy giảng luật quá 3 dòng là chị bực'."""
+
+[[case]]
+id = "message.vn.031"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'Ảnh trước sau của cô Hoa đẹp thế…': not usable (a spa client, never asked, a skin claim); Thảo's consented case instead"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. The 4-line Map is on screen with QUAY HÔM NAY under it; ĐIỀU KHÁCH NHỚ and QUAY HÔM NAY lean on her own 2018 story and Thảo (2 → 5 of 10, consented, never in ads)."""
+input = '''Ảnh trước sau của cô Hoa đẹp thế, sao lại không đăng được?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)\A(?:(?!```).){0,700}?(?i:khách spa|chưa hỏi|đồng ý|chuyện da|kết quả da)''',
+  '''(?i)Thảo''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|chưa)).*70\s?%''',
+  '''(?i)(hết nám|trị dứt điểm|mờ nám)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """persona.toml P7 (unsubstantiated, no consent, spa client = a different buyer, a skin claim) vs P3 (Thảo, consented for posts and case study, never ads, never as a percentage). The answer opens the reply in one short reason with the true alternative (persona 'Chịu nghe khi'); a hard-stop line (verdict.hardstop) may print. Tuần 1 may follow in the same reply (§CM-TODAY 1: a question gets one line first), so max_words is 0. I8: 70% may appear only on the line that refuses it."""
+
+[[case]]
+id = "message.vn.032"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "'Chuyên gia nhân sự hàng đầu miền Trung': the superlative refused, his true facts offered (14 năm, 14 doanh nghiệp)"
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. The 4-line Map is on screen with QUAY HÔM NAY under it. He wants a bigger title for how he is introduced (the card's bio line)."""
+input = '''Gọi tôi là chuyên gia nhân sự hàng đầu miền Trung được không, cho có uy.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)14\s+(doanh nghiệp|năm)''',
+  '''(?s)\A(?:(?!```).){0,700}?(?i:(?:em|mình|tôi)\s+không\s+(?:viết|ghi|dùng))''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không viết|không ghi|không dùng|thay vì|thay cho)).*(hàng đầu|số 1|tốt nhất)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
+  '''(?i)(?<!\w)coach(?!\w)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf2 §7 Advertising Law art. 8 (nhất / duy nhất / tốt nhất / số một without lawful proof); start-block LỜI HỨA. verdict.hardstop in the pair ('Câu "…" em không viết: {defect}. Anh cho {fact} thật là em viết ngay.'), with his real facts: 14 businesses, 14 years in HR. The refusal opens the reply; Tuần 1 may follow (any message but a Map change), so max_words is 0."""
+
+[[case]]
+id = "message.vn.033"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "'Ghi 70% cho dễ nhớ': the counts stay as counts, with the one-business context"
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. The 4-line Map is on screen with QUAY HÔM NAY under it; ĐIỀU KHÁCH NHỚ ends with the seafood chain's counts (from 19 of 31 new hires leaving in the first 60 days to 4 of 17)."""
+input = '''Ghi 70% cho dễ nhớ, chứ 19 trên 31 với 4 trên 17 ai mà nhớ.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)\A(?:(?!```).){0,700}?19\s*(?:trên|/)\s*31''',
+  '''4\s*(trên|/)\s*17''',
+  '''(?i)không phải (là\s+)?cam kết''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|thay vì)).*(70|80)\s?%''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I8", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """QA §1.7 honesty over targets (a rounded rate fails); expected.toml [traps] fabrication '70%'; strings claims.individual ('kết quả tuỳ người, không phải cam kết'), here 'kết quả của một doanh nghiệp, không phải cam kết'. The answer opens the reply; a line change (ĐIỀU KHÁCH NHỚ reprinted with the counts + map.ok) or one line then Tuần 1 both pass, so max_words is 0."""
+
+# ---------------------------------------------------------------- drift handling, off-map budget, side door (later weeks)
+
+[[case]]
+id = "message.vn.034"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Bridgeable drift: ads angled to a chủ đề, written at once with nothing under it, 'giữ nguyên' offered"
+context = """Week 2, Wednesday, new chat in the project; Brand Card v1 saved (keyword 'lãi ảo'; Facebook ads parked as a tool). She asks between Talk days."""
+input = '''tuần này viết cho chị một bài về chạy quảng cáo đi em, khách hỏi chị về quảng cáo nhiều nhất'''
+contains = ["giữ nguyên"]
+not_contains = ["VÌ SAO RA KHÁCH"]
+regex = [
+  '''(?i)(?:ý lớn|chủ đề) [1-3]''',
+  '''(?i)bản đồ''',
+  '''(?m)^\s*(?:```|~~~)|^[^\w\n]*N\d+\s*·''',
+]
+not_regex = [
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+  '''(?<!\w)[Tt]rụ\s+[1-9]''',
+  '''\b[VSPXK]-\d+\b''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(không được phép|sai bản đồ|lạc đề)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I15", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R1: the VÌ SAO RA KHÁCH line left the reply; it is stored with the piece and prints on 'tại sao?' (message.vn.045). wf11-message-focus §2.5 outcome 2, strings message.drift.bridge ('Xoay về chủ đề {n} là hợp bản đồ: …. Mình viết bản đó; giữ bản gốc thì nhắn giữ nguyên.' in em–chị): a prose line above the piece, not a status line. The piece is found by its copy box (or an N-label) and prints with nothing under it (wf15 §2). The coach is never lectured."""
+
+[[case]]
+id = "message.vn.035"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "Not bridgeable: 'Để dành' with a plain reason; written when he insists, labelled 'Ngoài bản đồ', counted 1 in 10"
+context = """Week 2, Claude Pro, new chat in the project; Brand Card v1 saved. No off-map piece yet in the last 10. Turn 1 asks for a career-advice piece for new HR graduates (a different buyer); turn 2 insists. Assertions run on both replies joined."""
+input = '''[turn 1] viết giùm tôi một bài lời khuyên cho sinh viên mới ra trường đi phỏng vấn, bài kiểu đó trên LinkedIn nhiều like lắm
+[turn 2] cứ viết đi em'''
+contains = ["ngoài bản đồ"]
+not_contains = []
+regex = [
+  '''(?i)để dành''',
+  '''(?i)(khác tệp khách|khác vấn đề)''',
+  '''(?i)10\s+bài[^\n]{0,15}(được\s+)?(1|một)|((1|một)\s+(bài\s+)?|duy nhất\s+)(trong|trên)\s+10''',
+  '''(?m)^\s*(?:```|~~~)|^[^\w\n]*N\d+\s*·''',
+]
+not_regex = [
+  '''\b[VSPXK]-\d+\b''',
+  '''(?<!\w)[Tt]rụ\s+[1-9]''',
+  '''(?i)(em|tôi)\s+không\s+viết''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: transcript. wf11-message-focus §2.5 outcome 3; strings message.drift.park ('Để dành: {lý do}. Chờ {trigger} rồi mình viết. Vẫn muốn viết không? Bài đó tính ngoài bản đồ, 10 bài được 1.'), message.reason.diff_buyer 'khác tệp khách', message.label.off_map 'Ngoài bản đồ'. Written on insistence, labelled and counted (≤1 in 10); the label is a title tag, not a status line. Refusing an off-map piece is wrong: only hard stops are refused."""
+
+[[case]]
+id = "message.vn.036"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "Off-map budget already used: one line saying so, with the bridge or 'Để dành' offered, never a ban"
+context = """Week 3, new chat in the project; Brand Card v1 saved. One off-map piece (Shopee flash-sale tips, at her request) is already among the last 10. Quảng Châu sourcing is parked as a different problem."""
+input = '''viết thêm cho chị bài nhập hàng Quảng Châu đi em'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)ngoài bản đồ''',
+  '''(?i)10\s+bài[^\n]{0,15}(được\s+)?(1|một)|((1|một)\s+(bài\s+)?|duy nhất\s+)(trong|trên)\s+10''',
+  '''(?i)(để dành|để sau|ý lớn [1-3]|chủ đề [1-3])''',
+]
+not_regex = [
+  '''\b[VSPXK]-\d+\b''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(không được phép|cấm)''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I15"]
+max_words = 110
+max_chars = 0
+max_questions = 1
+notes = """wf11-message-focus §4 rule 5 (off-map only when the coach asks, ≤1 in 10); message.drift.park ('… Bài đó tính ngoài bản đồ, 10 bài được 1.'). The machine only states the count and the choice; she can still say 'cứ đăng' (Override)."""
+
+[[case]]
+id = "message.vn.037"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "floor"]
+title = "Side-door piece for the sales-training income: labelled 'Bán kèm', Facebook only, nothing under it"
+context = """Week 2 Thursday, new chat in the project. Brand Card v1 has side_door = sales training (he said yes on Day 0). This week's plan holds 1 side-door slot today."""
+input = '''tiếp'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)bán kèm''',
+  '''(?i)facebook''',
+  '''(?i)(quản lý sàn|chủ đội sale|đội sale)''',
+  '''(?m)^\s*(?:```|~~~)|^[^\w\n]*N\d+\s*·''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|đừng)).*tiktok''',
+  '''\b[VSPXK]-\d+\b''',
+  '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I15", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """UX §5 item 17 (≤1 labelled side-door piece a week, off-map budget 1 in 7 for multi-income coaches); §CM-MAP BÁN KÈM, strings message.label.side_door 'Bán kèm' (a title tag, not a status line); expected.toml [map] side_door (Facebook personal, not TikTok, to sales-floor managers). The piece prints with nothing under it (wf15 §2)."""
+
+[[case]]
+id = "message.vn.038"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "floor"]
+title = "Side-door piece never carries the Map keyword"
+context = """Week 2 Thursday, new chat in the project. Brand Card v1 has side_door = sales training and keyword 'gồng lãi'. This week's plan holds 1 side-door slot today."""
+input = '''tiếp'''
+contains = []
+not_contains = []
+regex = ['''(?i)(quản lý sàn|chủ đội sale|đội sale|dạy sale)''']
+not_regex = ['''(?i)g[ồo]ng\s+l[ãa]i''']
+verdict = ""
+invariants = ["I3", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: pieces. expected.toml [map] side_door 'không có từ khóa GỒNG LÃI trong bài cửa phụ'; the keyword belongs to the one buyer."""
+
+# ---------------------------------------------------------------- whole run to the Map (acceptance [day0])
+
+[[case]]
+id = "message.vn.039"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "Whole run to the Map: early win, an interruption, story answers, the 4-line Map with QUAY HÔM NAY by coach turn 7; no check screen"
+context = """Whole run, Day 0, Door B (Phone Starter), ChatGPT Free on Android, persona default (answers.md order; t_min on every turn): she answers with stories and leaves mid-dump for a client. The coach turns are scripted below; the machine replies come from the kit. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."""
+input = '''[turn 1] <<paste: the rendered VN PHONE-STARTER.txt, whole>>
+[turn 2] Gọi chị là chị thôi em, chị bốn lăm tuổi rồi.
+[turn 3] <<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 1' section verbatim>>
+[turn 4] <<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 2' section verbatim>>
+[turn 5] tiep em oi
+[turn 6] <<paste: hanh-android-free-nocomputer/answers.md, the '## Dump chunk 3' section verbatim>>
+[turn 7] Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)3 câu đáng tiền chị vừa nói''',
+  '''Câu này hôm nay (?:(?:chị|anh|bạn) )?đăng luôn cũng được(?:[^\S\n]+\w+){0,2}[.!]''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?3 CHỦ ĐỀ:''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?TỪ KH(?:OÁ|ÓA):''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:''',
+  '''(?m)^[^\w\n]*QUAY HÔM NAY''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*[1-7][.)]?\s+(?:Ai|Lời của họ|Cách cũ|Kết quả tốt nhất|Cách của (?:chị|bạn|mình))\s*:''',
+  '''(?i)(Chị biết nhiều thật|6 tháng content|không bỏ gì)''',
+  '''(?i)\bsửa\s+[1-7]\b''',
+  '''(?i)(ngày nào|thứ mấy)[^\n]*\?''',
+  '''(?i)(gạch đầu dòng|đọc nguyên văn)[^\n]*\?''',
+  '''(?i)mấy (tiếng|giờ) (một|mỗi) tuần[^\n]*\?''',
+  '''(?i)(danh sách|Zalo|email)[^\n?]{0,30}(bao nhiêu|mấy)[^\n]*\?''',
+  '''(?m)^[^\w\n]*(?:MỘT THÔNG ĐIỆP|3 Ý LỚN|ĐỂ SAU)''',
+  '''(?i)(tải|đính kèm)\s+(file|tệp)''',
+  '''(?i)(nâng cấp|bản Plus|trả phí)''',
+  '''(?i)(dự án|máy tính)''',
+]
+verdict = ""
+invariants = ["I1", "I2", "I5", "I10", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """scope: each reply. wf15 §1.2-§1.5 (K2), acceptance.toml [day0]: map_max_turns_vn = 7 (the xưng hô turn and 'tiep em oi' count), map_lines = 4, film-ready ≤20 min (QUAY HÔM NAY is in the Map reply). The early win comes after chunk 1; chunk 2 passes ~1,200 tiếng (the soft cut, or the wait while she is with a client); the one câu đoán after chunk 3 is answered at turn 7, so the Map lands on the budget. If the machine finds nothing missing after chunk 3, the Map comes at turn 6 and turn 7 brings Tuần 1; both pass. Never on Day 0: the 7-line check and its numbered lines, the inventory, 'sửa N', questions about talk day, hours, delivery or list size (setup.kit-facts 5), a download or upload (her quit point 'thôi để mai'), and on Door B any project, file or computer (phone kit 'Không nhắc tới dự án, file hay máy tính'). Graded with graders.py checks day0_timing, deny_list and quit_triggers as well as the invariants listed."""
+
+[[case]]
+id = "message.vn.040"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "'xong' right after the early win: no push for more, no inventory; the first câu đoán is the multi-income line"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunk 1 (about 770 tiếng; it names insurance, apartment broking and sales training) got the early win at about minute 8. He is impatient and types 'xong'."""
+input = '''xong'''
+contains = ["3 nguồn thu"]
+not_contains = ["6 tháng content", "Anh biết nhiều thật"]
+regex = [
+  '''(?i)đoán nên viết cho''',
+  '''Đúng không(?: \w+)?\?''',
+]
+not_regex = [
+  '''(?i)(kể|nói)\s+(thêm|tiếp)\s+(đi|nữa|nha)''',
+  '''(?i)(còn|vẫn)\s+thiếu\s+nhiều''',
+  '''(?i)nguồn nào nuôi''',
+  '''(?i)vậy là đủ rồi''',
+  '''(?i)(?<!\w)tôi(?!\w)''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """R10: no inventory. setup.kit-facts 4-6: after 'xong' only the missing facts, one a message with a guess; for 3 income streams the first is setup.multi_income ('Anh đang có 3 nguồn thu. Em đoán nên viết cho …, vì {why}. Đúng không?'). He said 'xong', so no soft cut and no push for more talk (persona: quits on 'giống mấy cái form'). Gaps are filled by guesses, not by more dumping."""
+
+# ---------------------------------------------------------------- "tại sao?" on the Map (vì sao chọn, gốc rễ, ĐỂ SAU)
+
+[[case]]
+id = "message.vn.041"
+kind = "D"
+persona = "hanh-android-free-nocomputer"
+lanes = ["S0", "S1", "floor"]
+title = "'tại sao?' on Hạnh's Map: vì sao chọn from her evidence; machines and cosmetics parked with plain reasons; the spa kept by its own door"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'); the one câu đoán was the multi-income line. Turn 1 answers it and gets the 4-line Map with QUAY HÔM NAY under it. Her dump also named skin technique and machines, cosmetics, ads, staff who leave to open their own shop, licences and fire checks, decor, cô Hoa's 70% and Vân's 'gấp đôi'. Turn 2 asks why; assertions run on the reply to it."""
+input = '''[turn 1] Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.
+[turn 2] tại sao thế em?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(9 (chủ spa|em|học viên)|Thảo|Loan|2018|dọa da)''',
+  '''(?i)(máy móc|mỹ phẩm)''',
+  '''(?i)(khác tệp khách|chỉ là công cụ|dễ thành hứa quá lời|kỹ thuật viên|luật quảng cáo)''',
+  '''(?i)(spa|khách spa)[^\n]{0,80}(bán kèm|khách quen|Zalo|cửa riêng|cửa phụ)''',
+  '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
+]
+not_regex = [
+  '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
+  '''\b[VSPXK]-\d+\b''',
+  '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
+  '''(?<!\w)(TIỀN|BẰNG CHỨNG|HẸP|HỨNG)(?!\w)''',
+  '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''(?i)để sau[^\n]*\n(?:[ \t]*(?:[·•*\-–]|\d+[.)])[^\n]*\n){8}''',
+  '''(?im)^(?!.*(không|chưa)).*(70\s?%|doanh thu gấp đôi)''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I8", "I10", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-MAP 'tại sao? trên Bản đồ: vì sao chọn (bằng chứng của họ), gốc rễ, ĐỂ SAU kèm lý do; không điểm hay nhãn'. expected.toml [map] why_this_one (9 paying spa owners, Thảo's and Loan's words, the rainy night in 2018, how she lights up about 'dọa da'), not_now_must_include with its reasons (machines and technique: khác tệp khách, dễ dính claim sai; cosmetics: luật quảng cáo; ads: khác vấn đề; skin treatments: không bao giờ), side_door (the spa through regulars and Zalo). Return triggers from §CM-MAP 'Quay lại khi'. Cô Hoa and Vân are never results (a refusal line may name them). The turn-1 Map carries none of this (I3, message.vn.015)."""
+
+[[case]]
+id = "message.vn.042"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "'tại sao?' on Tuấn's Map: the bridge buyer from his 6 in 9; apartment and insurance both kept; sales training a labelled side door, never the apartment parked"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the multi-income câu đoán. Turn 1 is chunk 3 (his one more story, answering the guess, ending 'Thôi, xong.'), which gets the 4-line Map with QUAY HÔM NAY under it. Turn 2 asks why; assertions run on the reply to it."""
+input = '''[turn 1] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>
+[turn 2] tại sao vậy em?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)6\s*(trên|/|trong)\s*9|6 nhà''',
+  '''(?i)(căn hộ|môi giới|mua căn)''',
+  '''(?i)bảo hiểm''',
+  '''(?i)(dạy sale|đội sale|lớp sale)''',
+  '''(?i)(bán kèm|khác tệp khách|cửa phụ)''',
+  '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
+]
+not_regex = [
+  '''(?i)(2 tỷ 68|2,68 tỷ)[^\n]{0,60}(để sau|để dành|khác tệp)''',
+  '''(?i)(để sau|để dành)\W{0,3}(bất động sản|BĐS|môi giới)''',
+  '''(?im)^(?!.*(không|chưa|đừng|hổng)).*(lời gấp đôi|view sông|lãi suất đảm bảo|sinh lời chắc)''',
+  '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
+  '''\b[VSPXK]-\d+\b''',
+  '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
+  '''(?<!\w)(TIỀN|BẰNG CHỨNG|HẸP|HỨNG)(?!\w)''',
+  '''(?i)để sau[^\n]*\n(?:[ \t]*(?:[·•*\-–]|\d+[.)])[^\n]*\n){8}''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I8", "I10", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """expected.toml [map] bridge_rule (6 of 9 apartment buyers also insured with him), why_this_one, must_not_park (the 2 tỷ 68 apartment, the protection policy, the 3 steps), side_door (sales training: ĐỂ SAU with a labelled side door on Facebook, ≤1 a week if he agrees), not_now_must_include (savings and investment insurance, apartment investing, rate and price forecasts, parents' health insurance, paperwork as seasoning). His objection 'Tháng này anh cần chốt căn hộ, sao bỏ BĐS?' must have nothing to point at. §CM-MAP 'tại sao?': no scores or labels."""
+
+[[case]]
+id = "message.vn.043"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "'tại sao?' on Đức's Map: why kitchens (his consented jobs), phong thủy never a topic, homestay and subcontract work kept apart"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, anh–em. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đó em'); the one câu đoán was the multi-income line. Turn 1 answers it and gets the 4-line Map with QUAY HÔM NAY under it. His dump also named phong thủy and lucky days, appliance brands, wood, hiring builders, homestay interiors (about 20%), subcontract cabinets (about 10%), dì Năm's '70 mà trả 130' and anh Quân's photos. Turn 2 asks why; assertions run on the reply to it."""
+input = '''[turn 1] uh đúng rồi em, bếp là chính nghe. Homestay với thầu phụ thì khách tự tìm tới.
+[turn 2] tại sao em?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?i)(Loan|Hưng|Yến|96 triệu|112|116,5|40 công trình|báo giá chốt|70\s?%)''',
+  '''(?i)(phong th(ủ|u)y|xem ngày|hướng bếp)''',
+  '''(?i)(dễ thành hứa quá lời|không bao giờ|ngoài chuyên môn|nói bậy)''',
+  '''(?i)homestay''',
+  '''(?i)(khác tệp khách|bán kèm|cửa riêng|cửa phụ|khách tự tìm)''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|chưa)).*(anh Quân|dì Năm)''',
+  '''(?im)^(?!.*(không|chưa)).*gần như không (có cái nào )?phát sinh''',
+  '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
+  '''\b[VSPXK]-\d+\b''',
+  '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
+  '''(?<!\w)(TIỀN|BẰNG CHỨNG|HẸP|HỨNG)(?!\w)''',
+  '''(?i)để sau[^\n]*\n(?:[ \t]*(?:[·•*\-–]|\d+[.)])[^\n]*\n){8}''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I8", "I10", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-MAP 'tại sao?' and ĐỂ SAU reasons: phong thủy is risky and never returns (message.reason.risky 'dễ thành hứa quá lời'; 'rủi ro: không bao giờ'), his own words 'nói bậy mang tội'; homestay interiors are a different buyer (khác tệp khách), kept through clients who find him; subcontract cabinets he wants less of. Vì sao chọn cites his own evidence (kitchens about 70% of income, chị Loan's and anh Hưng chị Yến's consented jobs, the báo giá chốt). What he cannot use stays out except on a refusal line: anh Quân's photos (no consent), dì Năm's story (hearsay), 'gần như không phát sinh' (he has not checked the book; two jobs had extra costs). Asked 'tại sao em?' (graders.py WHY_RE reads 'tại sao' + 'em')."""
+
+[[case]]
+id = "message.vn.044"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "'tại sao?' on Khoa's Map: why from his counts (19/31 → 4/17); labour law, salaries and HR-career advice parked with plain reasons; training kept aside"
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-3 told (the soft cut after chunk 2 carried the offer guess; chunk 3 answered it and ended 'xong'); the last câu đoán was the multi-income line. Turn 1 answers it and gets the 4-line Map with QUAY HÔM NAY under it. His dump also named salaries and KPIs, labour law ('tôi không phải luật sư'), OKR and culture, Gen Z, HR software, students asking career advice on LinkedIn, the homestay friend's '200 triệu', '80% nghỉ vì quản lý' and '70% cho dễ nhớ'. Turn 2 asks why; assertions run on the reply to it."""
+input = '''[turn 1] Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày thì khách quen hỏi mới làm, còn tìm người hộ thì đừng quảng bá, tôi làm vì nể thôi.
+[turn 2] tại sao vậy em?'''
+contains = []
+not_contains = []
+regex = [
+  '''19\s*(trên|/)\s*31''',
+  '''4\s*(trên|/)\s*17''',
+  '''(?i)(14 doanh nghiệp|tuyển hoài|quán hải sản|phòng khám|cổng xưởng)''',
+  '''(?i)luật lao động''',
+  '''(?i)sinh viên''',
+  '''(?i)(khác tệp khách|chỉ là công cụ|dễ thành hứa quá lời|ai nói cũng được|khác vấn đề)''',
+  '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|thay vì|chưa)).*(70|80)\s?%''',
+  '''(?im)^(?!.*(không|chưa)).*200 triệu''',
+  '''(?im)^(?!.*(không|chưa)).*(chị bên du lịch|đi nghỉ phép mà không ai gọi)''',
+  '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
+  '''\b[VSPXK]-\d+\b''',
+  '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
+  '''(?<!\w)(TIỀN|BẰNG CHỨNG|HẸP|HỨNG)(?!\w)''',
+  '''(?i)để sau[^\n]*\n(?:[ \t]*(?:[·•*\-–]|\d+[.)])[^\n]*\n){8}''',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+(sinh viên|bè))''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I15"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-MAP 'tại sao?'. Vì sao chọn cites his evidence as counts (expected.toml [traps]: never a rounded rate); ĐỂ SAU with the message.reason.* words: labour law risky and outside his trade ('không phải luật sư'), salaries a different problem, OKR/culture and HR software tools, HR-career advice a different buyer (khác tệp khách), Gen Z ai nói cũng được; the half-day training kept for regulars (bán kèm via inbox), headhunting not promoted (his answer). The travel company's line has no consent (he asked, she said no)."""
+
+[[case]]
+id = "message.vn.045"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "floor"]
+title = "'tại sao?' after the bridged piece: the VÌ SAO RA KHÁCH line (old belief → new belief, dẫn tới) and how it is built from her Bank; no check record"
+context = """Week 2, Wednesday, new chat in the project; Brand Card v1 saved (keyword 'lãi ảo'; big ideas 'Lãi ảo, không phải bán ít' / 'Nhìn lãi từng đơn, đừng nhìn doanh thu' / 'Cắt mã lỗ trước, chạy quảng cáo sau'; Facebook ads parked as a tool). Turn 1 asks for an ads piece; the machine bridges it to a chủ đề and prints the piece with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."""
+input = '''[turn 1] tuần này viết cho chị một bài về chạy quảng cáo đi em, khách hỏi chị về quảng cáo nhiều nhất
+[turn 2] tại sao thế em?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?m)^[^\w\n]*VÌ SAO RA KHÁCH:?[^\n]*→''',
+  '''(?im)^[^\w\n]*VÌ SAO RA KHÁCH[^\n]*dẫn tới''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
+  '''(?i)(Ngân|Phượng|Tết|tầng ba|vở ô li|sổ|lãi ảo|60 học viên|theo lãi|mã lỗ)''',
+]
+not_regex = [
+  '''(?m)^\s*(?:```|~~~)''',
+  '''(?<!\w)(bạn Trang|anh Khải)(?!\w)''',
+  '''(?im)^(?!.*(không|chưa)).*(gấp 3|x3|1 tỷ)''',
+  '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: 'why?' prints, for the last piece, the WHY line, the checks it passed, what it was written from. §CM-WEEK 5 (plan.kit-week): 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}', stored with every piece; §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready "Sẵn sàng {verb} · viết từ {evidence}" (or verdict.ready_downgraded) · checked.prefix "✓ Đã kiểm:" mục đã qua'). The evidence is her phrase, scene or client. The piece is not reprinted. The turn-1 reply carries no Sẵn sàng, ✓ Đã kiểm or VÌ SAO RA KHÁCH line (I3), as message.vn.034 asserts."""
+
+# ---------------------------------------------------------------- the voice line (GIỌNG) and changing it
+
+[[case]]
+id = "message.vn.046"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0", "floor"]
+title = "GIỌNG in plain words: her tone, her rhythm, one phrase of hers verbatim, and how she talks to buyers ('mình – các chị em'), never the machine's em–chị"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-2 (her posts W1-W3 pasted after chunk 1: public posts 'mình – các chị em', the Zalo message 'chị – em'; the soft cut after chunk 2 ended 'không thì gõ xong'). Chunk 3 ends 'xong rồi đấy em'; nothing is missing, so this reply shows the 4-line Map with QUAY HÔM NAY under it. Her dump is the spoken voice; her pasted posts are the written voice."""
+input = '''<<paste: proof-coach/answers.md, the '## Dump chunk 3' section verbatim>>'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*·[^\n]*·''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(thẳng|gần gũi|khiêm tốn|mộc|thật)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*["“][^"”\n]*(lãi mới là để tiêu|chưa chắc đã có tiền|tính cho đúng|nói chuyện bằng con số|y như thế đấy|mã lỗ nhất|chưa phải tiền của mình|to tát)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?mình\s*[–-]\s*các chị em''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?(em\s*[–-]\s*chị|chị\s*[–-]\s*em)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(truyền cảm hứng|cuốn hút|chuyên nghiệp|tuyệt vời|duyên dáng|lôi cuốn|ấn tượng)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(audience_address|address_1to1|code_mix|openers_closers|written_vs_spoken|tone|rhythm|brand voice)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(nâng tầm|bứt phá|hành trình|(?<!\w)nha(?!\w)|(?<!\w)nè(?!\w))''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:(?:[^\S\n]+\S+){46,}''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I15", "I17", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf14 V1, §2, §4.1; start-block step 5 'GIỌNG: {3 chữ} · {nhịp câu} · hay nói "{câu}" · với khách: "{xưng hô với khách}"'; §CM-VOICE 2-3: tone in words she would use about herself, no praise · rhythm ≤5 tiếng · her most repeated phrase, verbatim · the address exactly as she uses it with buyers in public posts ('mình – các chị em'); the one-to-one 'chị – em' goes to the card's address_1to1, and the machine–coach pair (em–chị) never stands in for it. expected.toml [voice] tone 'thẳng · gần gũi · khiêm tốn', rhythm, openers_closers; voice-samples phrases. Field names and craft jargon never print; ≤45 tiếng. The line can be changed inside the same one decision (message.vn.048)."""
+
+[[case]]
+id = "message.vn.047"
+kind = "D"
+persona = "consultant"
+lanes = ["S1", "floor"]
+title = "GIỌNG for a B2B coach: steady and plain, a phrase of his verbatim, 'tôi – anh chị' with buyers while the machine stays em–anh"
+context = """Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-3 told (his posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 carried the offer guess; chunk 3 answered it and ended 'xong'); the last câu đoán was the multi-income line. He answers it; this reply shows the 4-line Map with QUAY HÔM NAY under it."""
+input = '''Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày thì khách quen hỏi mới làm, còn tìm người hộ thì đừng quảng bá, tôi làm vì nể thôi.'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*·[^\n]*·''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(chắc|chậm|thẳng|mộc|điềm|rõ)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*["“][^"”\n]*(Nói thật nghe anh chị|ở 15 ngày|làm thử 2 tiếng|viết thử một trang|không có lỗi gì hết|với một vị trí)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?tôi\s*[–-]\s*anh chị''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*với khách:\s*["“]?em\s*[–-]\s*anh''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(truyền cảm hứng|cuốn hút|chuyên nghiệp|tuyệt vời|lôi cuốn|ấn tượng)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(audience_address|code_mix|openers_closers|written_vs_spoken|tone|rhythm)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*(coach|KOL|onboarding|employer branding|bứt phá|nâng tầm)''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:(?:[^\S\n]+\S+){46,}''',
+]
+verdict = ""
+invariants = ["I1", "I4", "I5", "I15", "I17", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """wf14 §2, §4.1; §CM-VOICE 2-3 for a coach whose written voice is formal-plain: expected.toml [voice] tone 'chắc · chậm · thẳng', audience_address 'tôi – anh chị' (in every piece, mail and message), banned 'coach', 'KOL', 'onboarding'. The machine–coach pair (em–anh) never stands in for the audience address. ≤45 tiếng, plain words only."""
+
+[[case]]
+id = "message.vn.048"
+kind = "D"
+persona = "proof-coach"
+lanes = ["S1", "S0"]
+title = "'sửa dòng 4: …' edits GIỌNG inside the one decision: line 4 reprinted with her words, map.ok again, no voice quiz, QUAY HÔM NAY not reprinted"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-2 (her posts W1-W3 after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong'). Turn 1 is chunk 3, ending 'xong rồi đấy em'; nothing is missing, so it gets the 4-line Map with QUAY HÔM NAY under it. In turn 2 she changes the voice line in her own words. Assertions run on the reply to turn 2."""
+input = '''[turn 1] <<paste: proof-coach/answers.md, the '## Dump chunk 3' section verbatim>>
+[turn 2] sửa dòng 4: thẳng thôi em, đừng ghi ấm áp gì cả. thêm câu "Doanh thu là để khoe, lãi mới là để tiêu" vào, câu đấy của chị'''
+contains = []
+not_contains = []
+regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*thẳng''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*lãi mới là để tiêu''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
+]
+not_regex = [
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?GIỌNG:[^\n]*ấm áp''',
+  '''(?m)^[^\w\n]*QUAY HÔM NAY\b''',
+  '''(?i)(chị (muốn|thích) (giọng|tả)|tả giọng|chọn giọng|giọng nào)[^\n]*\?''',
+  '''(?i)(audience_address|code_mix|openers_closers|written_vs_spoken|never_say|do_say)''',
+  '''(?s)A\)[\s\S]*B\)''',
+  '''(?i)gõ một chữ là đổi''',
+]
+verdict = ""
+invariants = ["I1", "I5", "I6", "I15", "I17"]
+max_words = 180
+max_chars = 0
+max_questions = 1
+notes = """wf14 V1 'correctable inside the one decision'; §CM-MAP SỬA ('sửa dòng N: … → in lại dòng đó … Cả dòng giọng'); §CM-VOICE 2 '"sửa dòng 4": §CM-MAP'. Her words go in as given: tone 'thẳng', her phrase verbatim (voice-samples 1). No second decision round, no questions about her voice, no A) B) (that is for 'sửa dòng N' alone), no Tuần 1 yet, and QUAY HÔM NAY, printed under the Map in turn 1, is not reprinted: a voice-line change in her own words leaves the script, already cut from her words, as it is (start-block step 5 'cả kịch bản nếu đổi'). The card carries the change (brain.vn.031)."""
+
+[[case]]
+id = "message.vn.049"
+kind = "D"
+persona = "service-biz"
+lanes = ["S0", "S1", "floor"]
+title = "'ok' with a voice change: the change is applied and the day goes on to Tuần 1, no reprint, no second OK"
+context = """Day 0, Door B (Phone Starter), ChatGPT Free on Android, anh–em. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đó em'); the one câu đoán was the multi-income line. Turn 1 answers it and gets the 4-line Map, whose GIỌNG line ends 'với khách: "Đức – anh chị"', with QUAY HÔM NAY under it. In turn 2 he says OK and adds how he speaks on the workshop page. Assertions run on the reply to turn 2."""
+input = '''[turn 1] uh đúng rồi em, bếp là chính nghe. Homestay với thầu phụ thì khách tự tìm tới.
+[turn 2] ok em. mà trên trang của xưởng thì anh xưng tụi em với khách nghe'''
+contains = []
+not_contains = []
+regex = ['''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){3}''']
+not_regex = [
+  '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng''',
+  '''(?m)^[^\w\n]*QUAY HÔM NAY\b''',
+  '''(?im)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)):''',
+  '''(?i)tụi em[^\n]*\?''',
+  '''(?i)(anh (có )?chắc (chưa|không)|xác nhận lại)''',
+  '''(?i)(muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I6", "I15", "I17", "I23"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """§CM-MAP SỬA ('"ok" kèm chỗ sửa → sửa rồi đi tiếp. Cả dòng giọng.'): the OK is the one decision; the change (expected.toml [voice] audience_address 'Đức (tụi em) – anh chị') is stored for page posts and the card, and, QUAY HÔM NAY already sitting under the Map (K2), the reply moves on to Tuần 1 (start-block step 7; ChatGPT Free may split it, so at least 3 copy boxes here), never asking 'muốn làm Tuần 1 không?' (§CM-TODAY 1). No reprinted Map or QUAY HÔM NAY, no second OK, no question about it. One-to-one Zalo messages keep 'Dạ … em' (voice.kit-shift 8)."""
+
+[[case]]
+id = "message.vn.050"
+kind = "D"
+persona = "tuan-multihat-plus"
+lanes = ["S1", "S0", "floor"]
+title = "'Tháng này anh cần chốt căn hộ, sao bỏ BĐS?': one line (the apartment is on the Map through the buyer), then the OK ask again"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the multi-income câu đoán. Turn 1 is chunk 3 (his one more story: the 2 tỷ 68 apartment with a broker contract to 30/11, the 'view sông' idea, his cousin's 'lời gấp đôi'; it ends 'Thôi, xong.'), which gets the strategy, its last message ending 'Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?'. In turn 2 he pushes back with his verbatim objection. Assertions run on the reply to turn 2."""
+input = '''[turn 1] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>
+[turn 2] Tháng này anh cần chốt căn hộ, sao bỏ BĐS?'''
+contains = []
+not_contains = []
+regex = [
+  '''(?s)\A(?:(?!```).){0,700}?(?i:căn|bất động sản|BĐS|môi giới)''',
+  '''(?i)OK hay sửa một dòng''',
+]
+not_regex = [
+  '''(?im)^(?!.*(không|chưa|đừng|hổng)).*view sông''',
+  '''(?i)(giá tốt|bán gấp|căn cuối|cơ hội vàng|siêu phẩm)''',
+  '''(?im)^(?!.*(không|chưa|đừng|hổng)).*(lời gấp đôi|sinh lời)''',
+  '''(?im)^(?!.*(không|đâu|chẳng|hổng)).*(bỏ|để sau|để dành)\s+(BĐS|bất động sản|căn hộ)''',
+  '''(?m)^\W*QUAY HÔM NAY''',
+  '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
+]
+verdict = ""
+invariants = ["I1", "I3", "I5", "I8", "I15", "I17"]
+max_words = 0
+max_chars = 0
+max_questions = 1
+notes = """His verbatim objection (persona Behaviour). STRATEGY PUSHBACK (Founder 7 Oct, amends K2; v13.5 start-block step 6): one line, then the OK ask again (map.ok); QUAY HÔM NAY and Tuần 1 wait for his OK. expected.toml [map] cash_now: the 2 tỷ 68 apartment is IN the Map through the bridge buyer, as a weekly 'tính thử căn này' piece (the reverse calculation: what a couple's salaries can carry, the 6-month fund, who signs the loan), with the keyword, never written as a listing: 'nhìn ra hồ bơi nội khu', never 'view sông', no 'giá tốt' or 'bán gấp'. A refusal line may name 'view sông' or the cousin's 'lời gấp đôi' (expected.toml [traps])."""

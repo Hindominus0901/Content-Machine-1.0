@@ -1,0 +1,77 @@
+# Coach-visible jargon (lint E140). The coach never sees these words.
+# Sources: docs/research/wf11-ux-spec.md §4 "Never sees", wf11-walkthrough-3.md,
+# wf12-qa-spec.md invariant I4.
+# Scanned over strings/en.toml values, guides/* and locales/en/examples.md.
+#
+# One entry per line; lines starting with "#" are comments.
+# A plain entry matches as a whole word or phrase, any letter case.
+# "re:" starts a Python regular expression; it is case-sensitive unless it
+# begins with (?i). Capitalised regexes below spare ordinary words
+# ("a credible offer", "a buying signal").
+# To allow one line, end it with <!-- lint-ok:E140 -->; for a recurring value,
+# add it to tools/lint_allow.toml [E140].
+
+# Trust rungs and framework names
+re:\b(Admirable|Likable|Likeable|Credible|Trustable)\b
+re:\bB[1-7]\b
+Big Domino
+SPCL
+4-3-2-1
+re:\bSignal\b
+3D test
+Buyer Filter
+Belief Bomb
+Buyer Mirror
+RMBC
+Dream Follower
+
+# Scores, checks and the QA machinery
+re:(?i)\bedge\s+(score|scores|sub-?scores?|check)\b
+Focus Score
+candidate table
+Ship Check
+rubric
+lint
+re:(?i)\bclaims?\s+colou?rs?\b
+
+# Internal names with a coach-facing replacement
+# pillar -> "big idea" / "Weekly Talk"; keyword asset -> "free gift"
+# "content pillar(s)" is allowed (founder, 7 Oct night: the strategy proposal's "CONTENT PILLARS:" line and the
+# strategy document use his term); "pillar" on its own still fails.
+re:(?i)(?<!content )\bpillars?\b
+keyword asset
+cut kit
+Week 0
+re:\bM[12]\b
+# the 90-day Map lock is "try 4 weeks" for the coach
+re:(?i)\block(ed|s)?\b[^.\n]{0,20}\b90\b
+re:(?i)\b90[- ]day\s+lock
+re:(?i)\b(lock(ed)?\s+(the\s+|your\s+)?map|map\s+lock)\b
+
+# Tools named only when the coach asks
+Pancake
+ManyChat
+
+# Research and analytics words around posts the coach likes (wf13-inspiration-spec §1, §6).
+# The coach says "Posts you like"; "swipe file" stays a docs-only word, never coach-visible.
+swipe
+swipe file
+outlier
+re:(?i)\b(outlier|views?)\s+ratios?\b
+re:(?i)\bmedian\s+views?\b
+re:(?i)\bproven\s+shapes?\b
+re:(?i)\bsame[\s-]feed\s+test\b
+white space
+social listening
+VoC
+# the machine block's section name, as a printed tag or heading
+re:\bLIKED\b
+
+# Bank IDs, slot and run keys, method anchors, the router
+# Every Bank prefix (banks.toml [ids]). Real-world look-alikes ("W-2 job", "K-12",
+# "I-9") need a lint-ok:E140 waiver or a tools/lint_allow.toml [E140] entry.
+re:\b[VOSBPRKICAWX]-\d+\b
+re:(?i)\bslot\s+keys?\b
+re:(?i)\brun\s+keys?\b
+re:§\s?CM
+router

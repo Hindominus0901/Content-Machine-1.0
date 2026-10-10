@@ -1,0 +1,217 @@
+# The Notion hub, as data (founder, 9 Oct 2026: hub = a Notion workspace the machine builds and keeps + HUB.md in the
+# AI project; Google Sheet is the fallback). Prose the machine reads: modules/{en,vn}/hub.md (hub.grow-notion lists every
+# database, property and option in the coach's language; hub.grow-notion-build holds the build, upsert and fence rules).
+#
+# Used three ways:
+# - the maintainer builds the master "ready-made page" once from this file (with the Notion connector), turns on
+#   Share → Publish → "Allow duplicate as template", and puts its Duplicate link in START-HERE (per edition);
+# - the machine builds the same structure in the coach's workspace via the connector (hub.grow-notion-build 5);
+# - lint/tests may check that every name here appears verbatim in hub.grow-notion of its edition.
+#
+# Names: `name` is the EN edition's property/option/view name, `name_vn` the VN edition's. Property names are in the
+# coach's language (unlike schemas/hub.toml's older autopilot databases, which keep neutral English names).
+# Types are Notion property types. `key` marks the upsert key (a "+" joins two). Status options are written by the
+# machine only where `machine_sets` says so; Filmed/Posted come from the coach's word.
+
+schema_version = 1
+
+[root]
+title = "Content Machine — {coach}"
+title_vn = "Content Machine · {coach}"
+fence = "the machine writes only inside this page and its children; never edits, moves, renames or deletes anything outside it"
+max_calls_per_build = 30
+
+[[pages]]
+id = "start_here"
+name = "Start here"
+name_vn = "Bắt đầu ở đây"
+body = "what each part is for; the daily three clicks (This week → open the piece → set Status); who edits what"
+
+[[pages]]
+id = "strategy"
+name = "Strategy"
+name_vn = "Chiến lược"
+body = "positioning in 5 lines; 3-5 pillars; the mix (Attract 40 · Trust 40 · Convert 20 by default); the content lines; a link to the Calendar view; the full strategy document as a child page (§CM-STRATEGY-DOC)"
+
+[[pages]]
+id = "hub"
+name = "HUB"
+name_vn = "HUB"
+body = "the same text as HUB.md (hub.grow-hubmd); rewritten whole after every job; read at chat start when Notion is connected"
+
+# ---------------------------------------------------------------- databases
+
+[databases.content]
+name = "Content"
+name_vn = "Nội dung"
+row = "one piece"
+key = "Title+Date"
+body = "the script"
+properties = [
+  { name = "Title", name_vn = "Tên bài", type = "title" },
+  { name = "Status", name_vn = "Trạng thái", type = "status", options = ["Idea", "Scripted", "Filmed", "Posted", "Reviewed"], options_vn = ["Ý tưởng", "Đã viết", "Đã quay", "Đã đăng", "Đã tổng kết"], machine_sets = ["Idea", "Scripted", "Reviewed"], coach_word = ["Filmed", "Posted"] },
+  { name = "Date", name_vn = "Ngày đăng", type = "date" },
+  { name = "Platform", name_vn = "Nền tảng", type = "select" },
+  { name = "Content pillar", name_vn = "Trụ cột nội dung", type = "select" },
+  { name = "Line", name_vn = "Tuyến", type = "relation", relation_to = "lines" },
+  { name = "Tier", name_vn = "Loại", type = "select", options = ["Attract", "Trust", "Convert"], options_vn = ["Thu hút", "Niềm tin", "Chuyển đổi"] },
+  { name = "Format", name_vn = "Dạng", type = "select" },
+  { name = "Words", name_vn = "Số chữ", type = "number" },
+  { name = "Hook mechanism", name_vn = "Kiểu câu mở", type = "rich_text", note = "the lever in plain words, never a method name" },
+  { name = "Framework", name_vn = "Mạch bài", type = "rich_text", note = "the shape in plain words ('story → 3 lessons → invite'), never a method name" },
+  { name = "CTA", name_vn = "Lời kêu gọi", type = "rich_text" },
+  { name = "Keyword", name_vn = "Từ khoá", type = "rich_text" },
+  { name = "Campaign", name_vn = "Chiến dịch", type = "relation", relation_to = "campaigns" },
+  { name = "Views", name_vn = "Lượt xem", type = "number", coach_word = true },
+  { name = "Saves", name_vn = "Lượt lưu", type = "number", coach_word = true },
+  { name = "Comments", name_vn = "Bình luận", type = "number", coach_word = true },
+  { name = "Keyword comments", name_vn = "Comment từ khoá", type = "number", coach_word = true },
+  { name = "DMs", name_vn = "Tin nhắn", type = "number", coach_word = true },
+]
+
+[databases.campaigns]
+name = "Campaigns"
+name_vn = "Chiến dịch"
+row = "one month or one launch"
+key = "Name"
+properties = [
+  { name = "Name", name_vn = "Tên", type = "title" },
+  { name = "Type", name_vn = "Loại", type = "select", options = ["Month", "Launch"], options_vn = ["Tháng thường", "Mở bán"] },
+  { name = "Goal", name_vn = "Mục tiêu", type = "select" },
+  { name = "Offer", name_vn = "Sản phẩm", type = "rich_text" },
+  { name = "Big idea", name_vn = "Ý lớn", type = "rich_text" },
+  { name = "Keyword", name_vn = "Từ khoá", type = "rich_text" },
+  { name = "Start", name_vn = "Bắt đầu", type = "date" },
+  { name = "End", name_vn = "Kết thúc", type = "date" },
+  { name = "Status", name_vn = "Trạng thái", type = "select", options = ["Planned", "Live", "Done"], options_vn = ["Sắp chạy", "Đang chạy", "Xong"] },
+  { name = "Results", name_vn = "Kết quả", type = "rich_text" },
+]
+
+[databases.lines]
+name = "Lines"
+name_vn = "Tuyến nội dung"
+row = "one recurring content line (§CM-CONTENT-LINES)"
+key = "Name"
+properties = [
+  { name = "Name", name_vn = "Tên", type = "title" },
+  { name = "Content pillar", name_vn = "Trụ cột nội dung", type = "select" },
+  { name = "Tier", name_vn = "Loại", type = "select", options = ["Attract", "Trust", "Convert"], options_vn = ["Thu hút", "Niềm tin", "Chuyển đổi"] },
+  { name = "Cadence", name_vn = "Nhịp đăng", type = "rich_text" },
+  { name = "Format", name_vn = "Dạng", type = "select" },
+  { name = "Status", name_vn = "Trạng thái", type = "select", options = ["Testing", "Running", "Paused"], options_vn = ["Đang thử", "Đang chạy", "Tạm nghỉ"] },
+  { name = "Promise", name_vn = "Lời hứa", type = "rich_text" },
+]
+
+[databases.banks]
+name = "Banks"
+name_vn = "Ngân hàng"
+row = "one item (§CM-BANKS)"
+key = "Item"
+properties = [
+  { name = "Item", name_vn = "Mục", type = "title" },
+  { name = "Type", name_vn = "Loại", type = "select", options = ["Hook", "CTA", "Magnet", "Story", "Proof", "Research", "Buyer words"], options_vn = ["Câu mở", "Lời kêu gọi", "Quà tặng", "Chuyện", "Bằng chứng", "Tìm hiểu", "Chữ của khách"] },
+  { name = "Source", name_vn = "Nguồn", type = "rich_text", note = "role · platform · month; never a private person's name or handle" },
+  { name = "Date", name_vn = "Ngày", type = "date" },
+  { name = "Heard or guess", name_vn = "Nghe thật hay đoán", type = "select", options = ["Heard", "Guess"], options_vn = ["Nghe thật", "Đoán"] },
+  { name = "Used in", name_vn = "Dùng ở", type = "relation", relation_to = "content" },
+  { name = "Consent", name_vn = "Đồng ý", type = "select", note = "proof only; exactly as the coach gave it" },
+]
+
+[databases.research]
+name = "Research"
+name_vn = "Tìm hiểu"
+row = "one teardown, comment-theme pass or niche note; the full text in the page body"
+key = "Title"
+properties = [
+  { name = "Title", name_vn = "Tên", type = "title" },
+  { name = "Kind", name_vn = "Loại", type = "select", options = ["Channel teardown", "Comment themes", "Niche note"], options_vn = ["Mổ xẻ kênh", "Chủ đề bình luận", "Ghi chú ngách"] },
+  { name = "Source", name_vn = "Nguồn", type = "rich_text" },
+  { name = "Date", name_vn = "Ngày", type = "date" },
+  { name = "Takeaway", name_vn = "Rút ra", type = "rich_text" },
+]
+
+[databases.numbers]
+name = "Numbers"
+name_vn = "Số liệu"
+row = "one week; blanks stay blank, never 0"
+key = "Week"
+properties = [
+  { name = "Week", name_vn = "Tuần", type = "title" },
+  { name = "Posted", name_vn = "Đã đăng", type = "number" },
+  { name = "Planned", name_vn = "Dự kiến", type = "number" },
+  { name = "Keyword comments", name_vn = "Comment từ khoá", type = "number" },
+  { name = "DMs", name_vn = "Tin nhắn", type = "number" },
+  { name = "Calls", name_vn = "Cuộc gọi", type = "number" },
+  { name = "Sales", name_vn = "Đơn", type = "number" },
+  { name = "Views", name_vn = "Lượt xem", type = "number" },
+  { name = "Best piece", name_vn = "Bài tốt nhất", type = "rich_text" },
+  { name = "Next week", name_vn = "Tuần sau", type = "rich_text" },
+]
+
+# ---------------------------------------------------------------- views
+
+[[views]]
+database = "content"
+name = "Calendar"
+name_vn = "Lịch"
+layout = "calendar"
+by = "Date"
+
+[[views]]
+database = "content"
+name = "Board"
+name_vn = "Bảng"
+layout = "board"
+group_by = "Status"
+
+[[views]]
+database = "content"
+name = "This week"
+name_vn = "Tuần này"
+layout = "table"
+filter = "Date is within this week"
+sort = "Date ascending"
+
+[[views]]
+database = "content"
+name = "By line"
+name_vn = "Theo tuyến"
+layout = "table"
+group_by = "Line"
+
+[[views]]
+database = "content"
+name = "By tier"
+name_vn = "Theo loại"
+layout = "table"
+group_by = "Tier"
+
+[[views]]
+database = "banks"
+name = "By type"
+name_vn = "Theo loại"
+layout = "table"
+group_by = "Type"
+
+[[views]]
+database = "research"
+name = "Newest"
+name_vn = "Mới nhất"
+layout = "table"
+sort = "Date descending"
+
+[[views]]
+database = "numbers"
+name = "Newest"
+name_vn = "Mới nhất"
+layout = "table"
+sort = "Week descending"
+
+# ---------------------------------------------------------------- copies (hub.grow-notion-build 9)
+[copy]
+steps = ["duplicate the ready-made page (or 'copy my hub' with Notion connected: a fresh empty build)",
+         "rename to 'Content Machine — <client>'",
+         "Share → the VA as 'Can edit'",
+         "in that client's own AI project: connect Notion, say 'built'"]
+minutes = 5
+rule = "one workspace per coach; two coaches' rows never mix"

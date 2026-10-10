@@ -1,0 +1,90 @@
+# leak-terms.toml · distinctive facts of each persona fixture (v13.8, COMPARE v13.7 new defect 1)
+#
+# The kit's own examples must never be built from a test persona's facts: when they are, a demo run cannot tell
+# whether the machine thought or copied (v13.7: "Một spa từ 14 lên 33 lịch hẹn mỗi tháng…" was the kit's example).
+# tools/lint.py E148 fails when any term below appears in a kit source that ships: every module and core section
+# body (both editions), every strings/*.toml value, and every file under plugin/. Matching is case-insensitive, on
+# NFC text, on word edges ("112 tin" does not match "1120 tin"); a line ending in <!-- lint-ok: E148 --> is exempt.
+# tools/tests/test_lint_leak_terms.py also checks that every term still occurs in its fixture folder, so the list
+# stays honest when a persona is rewritten; "echoes" are the same facts in the other edition's words (checked by
+# lint, not required in the folder).
+#
+# What goes here: names (clients, the coach, the business), offer and gift names, coined phrases, signature lines,
+# and the numbers that only make sense as that persona's story ("14 lên 33", "112 tin"). Not here: generic words a
+# kit needs anyway ("seen", "phát sinh", "hỏi giá", "record year"), or bare numbers.
+# The founder-approved hook examples built from sales-coach (docs/research/hooks-cta/PRINCIPLES.md) stay in docs only.
+
+[sales-coach]
+fixture = "evals/personas/vn/sales-coach"
+terms = [
+  "chị Quyên", "chị Trâm", "anh Tài", "bác sĩ Long", "anh Phong",
+  "Chốt Khách Không Ép",
+  "112 tin", "98 tin", "14 lịch", "33 lịch", "14 lịch hẹn", "33 lịch hẹn",
+  "10 năm làm sale", "để chị suy nghĩ", "để anh về bàn với vợ",
+  "hỏi trước, báo giá sau", "khách hỏi giá rồi seen", "41 bé", "38 nghìn",
+]
+# The same facts as a kit example carried them (v13.7 kit, founder-approved list) and in EN words; these are derived
+# from the folder, not quoted in it, so lint checks them but the fixture test does not.
+echoes = [
+  "14 lên 33", "14 → 33", "14→33", "10 năm → 10 phút", "x2 lịch hẹn", "không phải tại giá", "bỏ kịch bản đi",
+  "trước cả bảng giá",
+  "14 to 33", "112 inquiries", "112 messages", "14 bookings", "Tram's spa", "10 years in sales",
+  "10 years → 10 min", "10 years in 10 minutes", "2x bookings", "drop the script", "not the price.",
+  "Comment THINK ABOUT IT",
+]
+
+[hanh-android-free-nocomputer]
+fixture = "evals/personas/vn/hanh-android-free-nocomputer"
+terms = ["chị Hạnh", "cầm gương", "ngại chào", "dọa da", "chặt chém"]
+
+[proof-coach-vn]
+fixture = "evals/personas/vn/proof-coach"
+terms = ["Shop Nhỏ Lãi Thật", "Sổ 3 Cột", "lãi ảo", "em Ngân", "chị Phượng", "chăn ga Thái Bình"]
+
+[service-biz-vn]
+fixture = "evals/personas/vn/service-biz"
+terms = ["anh Đức", "đập ra mới biết", "báo giá câu khách", "anh Hưng chị Yến", "cô Sáu"]
+
+[tuan-multihat-plus]
+fixture = "evals/personas/vn/tuan-multihat-plus"
+terms = ["gồng lãi", "dí cọc", "cọc trước tính sau", "tính trước khi cọc"]
+
+[consultant-vn]
+fixture = "evals/personas/vn/consultant"
+terms = ["tuyển hoài", "tuyển lấp chỗ", "phiếu việc"]
+
+[coldstart-coach-vn]
+fixture = "evals/personas/vn/coldstart-coach"
+terms = ["gỡ lưng", "lưng cứng đơ"]
+
+[copywriter-thin]
+fixture = "evals/personas/vn/copywriter-thin"
+terms = ["inbox im ru", "nghe khách trước"]
+
+[vn-heldout-1]
+fixture = "evals/personas/heldout/vn-heldout-1"
+terms = ["Cô Trân", "Kèm Con Không La", "tăng xông", "kèm lùi", "ngồi canh con"]
+
+[coldstart-coach-en]
+fixture = "evals/personas/en/coldstart-coach"
+terms = ["Dan Whitlock", "you're booked", "NEVER ZERO"]
+
+[consultant-en]
+fixture = "evals/personas/en/consultant"
+terms = ["Erin Castellano", "Margin Sprint", "busy and broke", "margin before more", "top-line theater"]
+
+[linda-claude-pro-mac-newsletter]
+fixture = "evals/personas/en/linda-claude-pro-mac-newsletter"
+terms = ["Linda Garvey", "without the badge", "write the Tuesday", "the garage phase"]
+
+[proof-coach-en]
+fixture = "evals/personas/en/proof-coach"
+terms = ["Dana Lindqvist", "coffee before resume", "feeding the portal"]
+
+[service-biz-en]
+fixture = "evals/personas/en/service-biz"
+terms = ["Corinne Abernathy", "Wren & Lintel", "Room Reset", "nothing room", "Tuesday night test", "buying the sofa first"]
+
+[en-heldout-1]
+fixture = "evals/personas/heldout/en-heldout-1"
+terms = ["Ren Haugland", "Two-Week Sleep Plan", "crib is lava", "human pacifier", "trick of the week", "feed then read"]

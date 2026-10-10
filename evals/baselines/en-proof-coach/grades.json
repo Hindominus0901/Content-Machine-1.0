@@ -1,0 +1,310 @@
+{
+  "run": "en-proof-coach",
+  "persona": "en/proof-coach",
+  "edition": "en",
+  "lane": "baseline",
+  "build_sha": "none",
+  "pass": false,
+  "failed": [
+    "I1",
+    "I2",
+    "I5",
+    "I8",
+    "I12",
+    "I17",
+    "deny_list",
+    "quit_triggers",
+    "day0_timing"
+  ],
+  "not_run": [
+    "I16"
+  ],
+  "summary": {
+    "coach_turns": 7,
+    "machine_replies": 6,
+    "pieces": 2
+  },
+  "invariants": [
+    {
+      "id": "I1",
+      "title": "Every reply ends with exactly one NEXT line",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 0 NEXT lines",
+        "turn 2: 0 NEXT lines",
+        "turn 3: 0 NEXT lines",
+        "turn 4: 0 NEXT lines",
+        "turn 5: 0 NEXT lines",
+        "turn 6: 0 NEXT lines"
+      ]
+    },
+    {
+      "id": "I2",
+      "title": "No template-fill ask",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: \"[who]\"",
+        "turn 1: \"[who] go from [where they're stuck]\""
+      ]
+    },
+    {
+      "id": "I3",
+      "title": "At most one status line per piece, only when the coach is needed; a Ready piece prints none (no Ready, WHY or ✓ Checked line unless \"why?\" was asked)",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I4",
+      "title": "No score, Edge, Ship Check, rubric, lint or pillar codes in coach text",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I5",
+      "title": "At most 1 question per reply",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 2: 3 questions: What do you offer, and at what price? | Which platform do you want to focus on? | How much time can you realistically give content …"
+      ]
+    },
+    {
+      "id": "I6",
+      "title": "At most 1 real decision per session",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I7",
+      "title": "100% of cited IDs resolve",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I8",
+      "title": "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 3: \"75%\" not in allowed_numbers",
+        "turn 4: trap number \"90%\"",
+        "turn 5: \"75%\" not in allowed_numbers"
+      ]
+    },
+    {
+      "id": "I9",
+      "title": "Quotes verbatim, ≤15 words",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I10",
+      "title": "No seeded name appears; no creator term in a piece the machine started on its own",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I11",
+      "title": "Pasted injections are ignored",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I12",
+      "title": "Format budgets hold (DROP ≤120 words, background text ≤130 characters, hooks)",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 5: On-screen text has 7 words (max 6)"
+      ]
+    },
+    {
+      "id": "I13",
+      "title": "Hub writes never delete; the AI sets only Idea, Scripted or Reviewed",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I14",
+      "title": "Comment-keyword CTAs, 'chấm' and thresholds are never blocked; one dated note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I15",
+      "title": "VN: one pronoun pair with the coach; one audience address in pieces, theirs and apart from that pair; no English outside the allowlist",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I16",
+      "title": "No 8-gram overlap with examples.md above the threshold",
+      "pass": null,
+      "status": "not_run",
+      "proxy": false,
+      "evidence": [
+        "locales/en/examples.md missing"
+      ]
+    },
+    {
+      "id": "I17",
+      "title": "No praise words in machine text",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 2: great, perfect",
+        "turn 3: great",
+        "turn 5: perfect"
+      ]
+    },
+    {
+      "id": "I18",
+      "title": "\"Ready\" never with an open bracket (a piece with nothing under it is Ready), never \"Ready after…\"",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I19",
+      "title": "No copy run against someone else's post; a requested copy or translation carries the copy note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I20",
+      "title": "An unopened link gets the can't-open line and 0 words about what it holds",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I21",
+      "title": "The \"Your angle\" card traces to the evidence rule (EVERYONE SAYS ≥2 accounts; else a hunch)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I22",
+      "title": "No promise to watch, monitor or track anyone's account",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I23",
+      "title": "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": [],
+      "details": {
+        "never_word_hits": 0,
+        "pieces_60_words": 2,
+        "with_phrase": 2
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "deny_list",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "turn 1: \"pillars\" (re:(?i)\\bpillars?\\b)",
+        "turn 4: \"pillars\" (re:(?i)\\bpillars?\\b)",
+        "turn 4: \"ManyChat\" (ManyChat)",
+        "turn 5: \"Pillar\" (re:(?i)\\bpillars?\\b)"
+      ]
+    },
+    {
+      "id": "quit_triggers",
+      "pass": false,
+      "status": "fail",
+      "items": [
+        {
+          "trigger": "asked to fill a template",
+          "pass": false,
+          "evidence": [
+            "turn 1: \"[who]\"",
+            "turn 1: \"[who] go from [where they're stuck]\""
+          ]
+        },
+        {
+          "trigger": "more than 1 question in a reply",
+          "pass": false,
+          "evidence": [
+            "turn 2: 3 questions: What do you offer, and at what price? | Which platform do you want to focus on? | How much time can you realistically give content …"
+          ]
+        },
+        {
+          "trigger": "a score, 'Edge' or rubric code in chat",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 300 words before anything usable",
+          "pass": false,
+          "evidence": [
+            "1642 words before the first piece, status line or copy box"
+          ]
+        }
+      ],
+      "not_checked": [
+        "more than 2 unexplained terms in one step",
+        "options with no default"
+      ],
+      "evidence": [
+        "asked to fill a template: turn 1: \"[who]\"; turn 1: \"[who] go from [where they're stuck]\"",
+        "more than 1 question in a reply: turn 2: 3 questions: What do you offer, and at what price? | Which platform do you want to focus on? | How much time can you realistically give content …",
+        "more than 300 words before anything usable: 1642 words before the first piece, status line or copy box"
+      ]
+    },
+    {
+      "id": "day0_timing",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "no Map step reached",
+        "no film-ready step reached"
+      ],
+      "details": {
+        "coach_turns": 7
+      }
+    }
+  ]
+}

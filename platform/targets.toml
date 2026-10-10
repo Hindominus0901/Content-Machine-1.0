@@ -1,0 +1,701 @@
+# Platform limits and behaviours the pack depends on, plus the budgets derived from them.
+#
+# evidence:
+#   "DATA"   official help page or release note
+#   "PRAC"   third-party or community source
+#   "VERIFY" needs a hands-on test on a real account; verified_on stays "" until done
+#
+# Release rule (tools/lint.py, gate G0/G1):
+#   - any limit referenced by a budget, or marked release_blocking, must not be VERIFY
+#   - verified_on must be <= meta.max_age_days old on release day
+# Only locales/*/platform-notes.md may repeat these facts in shipped text, and only with a date.
+# Every fact below was checked on or before 2026-10-05 (docs/research/wf11-ux-facts.md, wf3-*, wf10-*, wf1-packaging.md,
+# wf13-platform-facts.md).
+
+[meta]
+schema = 1
+max_age_days = 90
+last_review = "2026-10-05"
+
+# ---------------------------------------------------------------- ChatGPT
+[limits.chatgpt_project_instructions_chars]
+value = 8000
+unit = "chars"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf11-ux-facts §1 (practitioner figure); measure in Phase 0"
+release_blocking = true
+note = "Instruction block budgets sit 6% under the measured value."
+
+[limits.chatgpt_free_project_files]
+value = 5
+unit = "files"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "OpenAI Projects help (snippets, May 2026)"
+
+[limits.chatgpt_plus_project_files]
+value = 25
+unit = "files"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "OpenAI Projects help (snippets, May 2026)"
+
+[limits.chatgpt_free_uploads_per_day]
+value = 3
+unit = "uploads"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf11-ux-facts §1"
+
+[limits.chatgpt_free_context_tokens]
+value = 27000
+unit = "tokens"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf11-ux-facts §1 (Free on GPT-5.6 Luna since 7 Aug 2026)"
+note = "Drives the method-file size and the fresh-box trigger in Door B."
+
+[limits.chatgpt_global_custom_instructions_chars]
+value = 1500
+unit = "chars"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf11-ux-facts §1"
+
+[limits.chatgpt_tasks_free_go]
+value = 3
+unit = "active tasks"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf3-scheduled-tasks (ai-toolbox, everydayaitech citing the 25 Aug 2026 release notes, notis.ai)"
+note = "At most once a day, in a morning/afternoon/night window, no exact time."
+
+[limits.chatgpt_tasks_plus]
+value = 5
+unit = "active tasks"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf3-scheduled-tasks"
+note = "Exact times, as often as hourly."
+
+[limits.chatgpt_tasks_pro]
+value = 15
+unit = "active tasks"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf3-scheduled-tasks"
+
+[limits.chatgpt_tasks_read_project_files]
+value = false
+unit = "bool"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf3-scheduled-tasks: 'Tasks created in a project cannot access files uploaded to or stored in that project.'"
+note = "Every ChatGPT task text must be self-contained (pocket Map + Season dates)."
+
+[limits.chatgpt_task_prompt_chars]
+value = ""
+unit = "chars"
+evidence = "VERIFY"
+verified_on = ""
+source = "Not documented. Phase 0: binary-search the longest task text that saves intact."
+release_blocking = true
+
+[limits.chatgpt_task_create_from_project_chat]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "UX spec §5.13: can the model create a task when asked inside a project chat?"
+release_blocking = true
+
+[limits.chatgpt_free_weekday_schedule]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Can Free schedule weekdays-only or a weekly day? Decides 3 tasks vs 1 Daily Machine."
+release_blocking = true
+
+[limits.chatgpt_save_to_project_free_mobile]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "'Save to project' from a reply on Free and on phones; does it count toward the 5-file cap?"
+release_blocking = true
+
+[limits.chatgpt_add_text_source]
+value = true
+unit = "bool"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "Release-note mirrors, 25 Feb 2026 (Sources → Add → Text). Free/mobile availability: see chatgpt_add_text_source_free_mobile."
+
+[limits.chatgpt_add_text_source_free_mobile]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Does Sources → Add → Text work on Free and on phones?"
+release_blocking = true
+
+[limits.chatgpt_project_create_on_phone]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Help docs (older) say web/Windows only. Decides whether phone visitors see Door A first."
+
+[limits.chatgpt_mac_app_project_setup]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Help docs (older): Mac app can view/chat but not create/edit projects. Setup page says 'Mac: use the browser'."
+
+[limits.chatgpt_free_message_cap]
+value = ""
+unit = "messages / fallback model"
+evidence = "VERIFY"
+verified_on = ""
+source = "QA spec §6 Phase 0. Free text chat reported unlimited since 7 Aug 2026 (PRAC); confirm and record the fallback model."
+
+[limits.chatgpt_vn_dictation_max_seconds]
+value = ""
+unit = "seconds"
+evidence = "VERIFY"
+verified_on = ""
+source = "How long one dictation can run before it cuts off (VN). Sets the '2–3 minutes per chunk' line."
+
+[limits.chatgpt_custom_gpts_retire]
+value = "2026-12-11"
+unit = "date"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf1-packaging: Custom GPTs retire 11 Dec 2026; personal accounts cannot create new ones."
+
+[limits.chatgpt_browser_extension_plans]
+value = "Plus, Pro, Business"
+unit = "plans"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf10-chatgpt-computer-use: desktop app + browser extension (@Chrome). Free/Go and Vietnam availability unverified."
+
+[limits.chatgpt_agent_mode_available]
+value = false
+unit = "bool"
+evidence = "DATA"
+verified_on = "2026-10-07"
+source = "OpenAI help center: ChatGPT agent no longer available; use ChatGPT Work / cloud browser"
+note = "ChatGPT agent was removed in August 2026; ChatGPT Work (multi-step delegation, with its cloud browser) replaced it. The pack names ChatGPT Work and its browser wherever it named the agent. Operator and Atlas are gone too (wf10; Atlas stopped 9 Aug 2026)."
+
+# ---------------------------------------------------------------- Claude
+[limits.claude_free_projects]
+value = 5
+unit = "projects"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "support.claude.com 'What are projects'"
+
+[limits.claude_skill_name_max]
+value = 64
+unit = "chars [a-z0-9-], must match the folder, no 'claude'/'anthropic'"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf1-packaging; Agent Skills spec"
+
+[limits.claude_skill_description_max]
+value = 200
+unit = "chars"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf1-packaging (claude.ai upload limit)"
+
+[limits.claude_skill_md_lines]
+value = 500
+unit = "lines"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "Agent Skills best practices"
+
+[limits.claude_code_execution_default_on]
+value = true
+unit = "bool"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "Help page dated 6 Aug 2026: 'Code execution and file creation' is ON by default for Free/Pro/Max."
+
+[limits.claude_free_messages_per_5h]
+value = "15-40"
+unit = "messages"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf11-ux-facts §1 (varies with load)."
+
+[limits.claude_free_turns_with_kit]
+value = ""
+unit = "turns per 5 h with the Day-0 kit loaded"
+evidence = "VERIFY"
+verified_on = ""
+source = "UX spec §5.6: if <12, ship a <=25 KB 'Claude Free light' method file."
+release_blocking = true
+
+[limits.claude_vn_dictation]
+value = false
+unit = "bool"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "Claude dictation help, 23 Jul 2026: 12 languages, Vietnamese not included. Use the keyboard mic."
+
+[limits.claude_add_text_content]
+value = ""
+unit = "bool + exact label"
+evidence = "VERIFY"
+verified_on = ""
+source = "Project knowledge → + → paste text: exact label on Free/Pro."
+release_blocking = true
+
+[limits.claude_artifact_add_to_project]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Artifact ⋯ → Add to project on Free/Pro (the Brand Card save route)."
+release_blocking = true
+
+[limits.claude_project_create_on_phone]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Older sources say the app cannot create projects."
+
+[limits.claude_skills_on_free]
+value = true
+unit = "bool"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "support.claude.com 'Use skills in Claude'"
+
+[limits.claude_notion_connector_free]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "wf3: Notion connector reported on all plans; confirm read+write on Free."
+
+[limits.claude_skill_reupload_replaces]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Does uploading a skill with the same name replace it? Decides the quarterly-update steps."
+
+[limits.claude_scheduled_tasks_plans]
+value = "Pro, Max, Team, Enterprise"
+unit = "plans"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf3-scheduled-tasks: Sidebar → Scheduled → New task; Free has none; cloud runs from 6 Oct 2026."
+
+[limits.claude_scheduled_task_approval_modes]
+value = ""
+unit = "behaviour"
+evidence = "VERIFY"
+verified_on = ""
+source = "What each approval mode does on an unattended Notion write (wf3 §2.7)."
+
+[limits.claude_in_chrome]
+value = "Pro and above; desktop Chrome only; GA 26 Aug 2026; Reddit blocked"
+unit = "availability"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf10-claude-computer-use"
+
+[limits.claude_project_instructions_chars]
+value = ""
+unit = "chars"
+evidence = "VERIFY"
+verified_on = ""
+source = "Not published. The Day-0 kit uses the same block as ChatGPT (<=7,500); measure that it saves intact."
+release_blocking = true
+
+# ---------------------------------------------------------------- Browser agents (research Browse mode)
+[limits.browse_agents_read_comments]
+value = ""
+unit = "per platform: facebook_groups, tiktok, instagram"
+evidence = "VERIFY"
+verified_on = ""
+source = "wf10: comment reading via Claude in Chrome and the ChatGPT extension is untested. Smoke-test before Browse is offered."
+
+# ---------------------------------------------------------------- Notion / Sheets
+[limits.notion_free_upload_mb]
+value = 5
+unit = "MB per file"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "arch-final-spec §3.3"
+
+[limits.notion_rich_text_chars]
+value = 2000
+unit = "chars per rich-text item (API)"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "Notion API docs; scripts go in page bodies, never in properties."
+
+# ---------------------------------------------------------------- Meta / platforms (mirrored with dates in platform-notes)
+[limits.meta_private_reply]
+value = "1 message per comment, within 7 days"
+unit = "rule"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf5-launch-design: Meta private replies"
+
+[limits.meta_promo_dm_window_hours]
+value = 24
+unit = "hours"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf5-launch-design: promotional DMs only inside the 24 h window; cart-open goes via email/Zalo + a fresh keyword post"
+
+[limits.meta_dm_automation_personal_profile]
+value = false
+unit = "bool"
+evidence = "PRAC"
+verified_on = "2026-10-05"
+source = "wf5: DM automation works on Pages and IG professional accounts, not personal FB profiles."
+
+# ---------------------------------------------------------------- Posts the coach likes (wf13)
+# wf13-inspiration-spec §7 (P1 patch) and Phase-0 section D; facts in docs/research/wf13-platform-facts.md.
+[limits.claude_social_links_blocked]
+value = "Instagram, Facebook, Threads, X, TikTok, LinkedIn"
+unit = "domains whose robots.txt blocks Claude-User"
+evidence = "DATA"
+verified_on = "2026-10-05"
+source = "wf13-platform-facts §1, §2.2: Claude respects robots.txt (support.claude.com article 8896518, updated 7 Apr 2026); robots.txt files downloaded 5 Oct 2026 disallow Claude-User or every non-whitelisted agent on these domains."
+note = "Unopened means unread: on Claude a pasted social link gets liked.cant_open, never a guess (I20)."
+
+[limits.chatgpt_social_link_read]
+value = ""
+unit = "per platform: refused / caption only / full text / counts"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D1; wf13-platform-facts §10 check 1: what ChatGPT returns for pasted Instagram, TikTok, Facebook, LinkedIn, Threads, X, YouTube and Substack links (Free and Plus, phone and web)."
+
+[limits.youtube_link_transcript_in_chat]
+value = ""
+unit = "bool per app"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D1; wf13-platform-facts §10 checks 1 and 11: does a pasted YouTube link bring back the transcript in a ChatGPT or Claude chat? robots.txt disallows the transcript endpoints."
+
+[limits.chatgpt_free_image_counts_as_upload]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D2; wf13-platform-facts §10 check 2: do screenshots count toward ChatGPT Free's daily file uploads (chatgpt_free_uploads_per_day)? Decides whether 'send a screenshot' is the default."
+release_blocking = true
+
+[limits.vn_screenshot_ocr_ok]
+value = ""
+unit = "exact-transcription rate per app"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D3; wf13-platform-facts §10 check 4: five VN caption or carousel screenshots (diacritics, stylised fonts, text over images) on ChatGPT Free/Plus and Claude Free/Pro."
+release_blocking = true
+
+[limits.grid_counts_legible_phone]
+value = ""
+unit = "bool per platform"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D3: are view counts legible in a phone screenshot of a profile grid (TikTok, YouTube, IG Reels)? 'About N× their usual' needs 6 or more legible counts."
+
+[limits.vn_count_format_parse]
+value = ""
+unit = "bool per app"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D3: are VN-locale counts on screenshots (1,2 N; 3,4 Tr; dot thousands) read as the right number?"
+
+[limits.share_sheet_new_chat]
+value = ""
+unit = "per app: link / preview / nothing; project chat or new chat"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D4; wf13-platform-facts §10 check 6: sharing a post from the IG, TikTok, FB or YouTube phone app into ChatGPT or Claude. Does it land in a new chat outside the project?"
+
+[limits.comment_name_echo_chatgpt]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D7: does ChatGPT repeat commenter names it reads from a screenshot (I10)?"
+
+[limits.copy_run_baseline]
+value = ""
+unit = "longest shared run, words EN / tiếng VN"
+evidence = "VERIFY"
+verified_on = ""
+source = "Phase-0 D6: overlap baseline, 20 sources × 3 runs on the default path. Calibrates evals/acceptance.toml [copy] en_words and vn_tieng (I19)."
+release_blocking = true
+
+[limits.browse_profile_listing]
+value = ""
+unit = "accuracy per platform"
+evidence = "VERIFY"
+verified_on = ""
+source = "wf13-platform-facts §10 check 14: Claude in Chrome (Pro) and the ChatGPT extension (Plus) list a creator's last 12-20 posts with date and count, read-only. Gates opt-in Browse in GROW (L4)."
+
+[limits.chatgpt_task_monthly_recurrence]
+value = ""
+unit = "recurrence"
+evidence = "VERIFY"
+verified_on = ""
+source = "v13 hub (9 Oct 2026): the Monthly task runs the first Wednesday of the month (automation.grow-task-monthly, §CM-HUB-TASKS). Check that a ChatGPT Plus/Pro scheduled task takes 'first Wednesday of the month' (Free/Go has no monthly task: it comes as the month's last Friday NEXT)."
+
+[limits.claude_scheduled_task_writes_notion]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "v13 hub (9 Oct 2026): scheduled tasks write the Notion hub, upserts only, inside the root page (§CM-HUB-TASKS). Check that a Claude scheduled task can write Notion unattended under limits.claude_scheduled_task_approval_modes."
+
+[limits.chatgpt_notion_app_writes_in_project_chat]
+value = ""
+unit = "bool"
+evidence = "VERIFY"
+verified_on = ""
+source = "v13 hub (9 Oct 2026): §CM-HUB-NOTION builds and keeps the workspace through the Notion connector. Check that the ChatGPT Notion app offers write actions (create pages, databases, rows) in a project chat."
+
+# ================================================================ Budgets
+# limit = the targets entry the budget protects ("" when the budget is our own design rule).
+# Character counts are taken after NFC normalisation.
+
+[budgets.instructions_block]
+artifact = "1-INSTRUCTIONS.txt"
+unit = "chars_nfc"
+en = 6500
+vn = 7500
+limit = "chatgpt_project_instructions_chars"
+hard_cap_rule = "measured limit - 6%"
+
+[budgets.phone_starter]
+artifact = "PHONE-STARTER.txt"
+unit = "chars_nfc"
+en = 7500
+vn = 7500
+limit = "chatgpt_project_instructions_chars"
+
+[budgets.method_file]
+artifact = "CONTENT-MACHINE-{EN,VN}.md"
+unit = "bytes"
+en = 57344
+vn = 65536
+limit = "chatgpt_free_context_tokens"
+note = "56 KB / 64 KB since 7 Oct 2026 night (founder strategy-first, 7 Oct: the Day-0 interview, the strategy proposal with broad pillars, the ATTRACT/TRUST/CONVERT mix and the system, the research said once, lengths in words; was 50 KB / 55 KB). At 3.7 bytes per o200k token the VN file is about 17.7k tokens, still inside chatgpt_free_context_tokens with room for the conversation. Before: 50 KB / 55 KB. A <=25 KB 'Claude Free light' variant ships if claude_free_turns_with_kit < 12. Measured 2026-10-06 (o200k tokens): EN 46,066 B = 12.3k tokens, VN 56,261 B = 15.3k tokens; VN costs about the same bytes per token as EN (3.7), so a bigger VN byte cap only takes room from the conversation. Keep VN at 55 KB: a VN addition is paid for by a VN cut."
+
+[budgets.method_section]
+artifact = "each §CM section of the method file"
+unit = "bytes"
+en = 2800
+vn = 3600
+limit = ""
+note = "Retrieval reads files in chunks (ChatGPT file search: ~800-token chunks, about 3,200 EN characters). Raised from 2,048 / 2,304 on 2026-10-06: 2,800 B EN stays inside one chunk; VN needs ~1.3x the bytes for the same content (diacritics are 2-3 bytes in UTF-8). The whole file stays within method_file."
+
+[budgets.levelup_research]
+artifact = "Level-ups/RESEARCH-{EN,VN}.md"
+unit = "bytes"
+en = 41984
+vn = 54272
+limit = ""
+note = "41 KB EN / 53 KB VN since 9 Oct 2026: §CM-CHANNELS, §CM-AUDIENCE and §CM-NICHE were added (founder 9 Oct: research the channels the coach likes, the competitors, how their viewers react, and the niche, before answering). Measured about 36.2 KB EN / 47.2 KB VN plus ~15% headroom. Was 30 KB each: one level-up file per area (core/method.toml [levelup.<area>]) so a coach adds only the ones needed: the Project route has 5 files on Free (chatgpt_free_project_files), method + Brand Card + the level-ups wanted. Each anchor block also stays within method_section."
+
+[budgets.levelup_launch]
+artifact = "Level-ups/LAUNCH-{EN,VN}.md"
+unit = "bytes"
+en = 30720
+vn = 30720
+limit = ""
+
+[budgets.levelup_board]
+artifact = "Level-ups/BOARD-{EN,VN}.md"
+unit = "bytes"
+en = 35840
+vn = 47104
+limit = ""
+note = "35 KB EN / 46 KB VN since 9 Oct 2026: the hub (a Notion workspace the machine builds, HUB.md in the project, the Google Sheet as the fallback) and the scheduled tasks that read and write it (founder 9 Oct). Measured about 30.6 KB EN / 40.2 KB VN plus ~15% headroom. Each anchor block still stays within method_section."
+
+[budgets.levelup_strategy]
+artifact = "Level-ups/STRATEGY-{EN,VN}.md"
+unit = "bytes"
+en = 36864
+vn = 36864
+limit = ""
+note = "36 KB since 7 Oct 2026 (was 30,720 B): §CM-MONTH and §CM-LIKED moved here from the method file (founder, 7 Oct night: the method file's room went to the Day-0 dig, the listening pass and the hook lab). Each anchor block still stays within method_section."
+
+[budgets.levelup_playbook]
+artifact = "Level-ups/PLAYBOOK-{EN,VN}.md"
+unit = "bytes"
+en = 34816
+vn = 45056
+limit = ""
+note = "v13 (founder 9 Oct, 'a content department in a box'): the strategy engine (8 steps with A/B/C options), the three content types in depth, content lines and the 4-week calendar joined the strategy document. Sized to the measured file (28.9 KB EN / 38.4 KB VN) plus about 17-20% headroom. Each anchor block still stays within method_section."
+
+[budgets.levelup_hooks]
+artifact = "Level-ups/HOOKS-{EN,VN}.md"
+unit = "bytes"
+en = 45056
+vn = 58368
+limit = ""
+note = "The hook library (founder, 7 Oct: 'the hook library and the launch campaigns need to be set up thoroughly'): over 100 hook shapes in 20 mechanisms plus the surface rules. Its own file because STRATEGY is full; sized to the measured file plus about 15% headroom (44 KB EN / 57 KB VN). Each anchor block still stays within method_section."
+
+[budgets.levelup_campaigns]
+artifact = "Level-ups/CAMPAIGNS-{EN,VN}.md"
+unit = "bytes"
+en = 53248
+vn = 72704
+limit = ""
+note = "The launch campaign library: six campaigns with day cards and checkpoints, then the checklist, objections, FAQ, sales page, sequences, the live, live selling, timing and after. Its own file because LAUNCH holds the picker and the math; sized to the measured file plus about 15% headroom (52 KB EN / 71 KB VN). Each anchor block still stays within method_section."
+
+[budgets.levelup_banks]
+artifact = "Level-ups/BANKS-{EN,VN}.md"
+unit = "bytes"
+en = 32768
+vn = 40960
+limit = ""
+note = "The banks (founder, 9 Oct: 'Ngân hàng hook, cta, lead magnet, research … input tốt thì output sẽ oke'): what the banks hold, how they fill and are drawn from, asks by rung × platform, gifts by buyer stage, where buyers talk, stories, proof. Measured about 30.7 KB EN / 38.9 KB VN; ~7% headroom. Each anchor block still stays within method_section."
+
+[budgets.levelup_copy]
+artifact = "Level-ups/COPY-{EN,VN}.md"
+unit = "bytes"
+en = 40960
+vn = 53248
+limit = ""
+note = "Writing frameworks, storytelling and persuasion (founder, 9 Oct: 'làm kĩ các framework viết bài rồi là storytelling và persuasion'): 16 frameworks with beats in words, the pick table, storytelling, persuasion and its ethics lines, the voice part. Its own file; measured about 29.7 KB EN / 39.4 KB VN, headroom for examples. Each anchor block still stays within method_section."
+
+[budgets.brand_card]
+artifact = "Brand Card (whole)"
+unit = "chars_nfc"
+en = 5700
+vn = 6600
+limit = ""
+note = "wf13-inspiration-spec §4: +700 EN / +800 VN for the machine block's liked line; the visible part gains 0."
+
+[budgets.brand_card_visible]
+artifact = "Brand Card visible top (3 lines: title, what you say, how you say it)"
+unit = "chars_nfc"
+en = 500
+vn = 500
+limit = ""
+note = "wf15-simple-surface-spec §0 S3, §4: a short top of 3 lines, ≤500 (was one 900-character screen). schemas/brand-card.toml [budgets] visible_chars must agree."
+
+[budgets.task_nudge]
+artifact = "automation/task-nudge.tmpl rendered"
+unit = "chars_nfc"
+en = 900
+vn = 900
+limit = "chatgpt_task_prompt_chars"
+
+[budgets.task_standalone]
+artifact = "automation/task-standalone.tmpl rendered (VA tier)"
+unit = "chars_nfc"
+en = 5000
+vn = 5800
+limit = "chatgpt_task_prompt_chars"
+hard_cap_rule = "measured limit - 15%"
+
+[budgets.task_connected]
+artifact = "automation/task-connected.tmpl rendered (L3)"
+unit = "chars_nfc"
+en = 600
+vn = 700
+limit = ""
+
+[budgets.ship_check_card]
+artifact = "core/{en,vn}/ship-check.md (card)"
+unit = "chars_nfc"
+en = 900
+vn = 1000
+limit = ""
+
+[budgets.ship_check_task]
+artifact = "core/{en,vn}/ship-check-task.md"
+unit = "chars_nfc"
+en = 800
+vn = 1000
+limit = ""
+
+[budgets.skill_description]
+artifact = "SKILL.md description"
+unit = "chars_nfc"
+en = 190
+vn = 190
+limit = "claude_skill_description_max"
+
+[budgets.skill_md_lines]
+artifact = "SKILL.md"
+unit = "lines"
+en = 300
+vn = 300
+limit = "claude_skill_md_lines"
+
+[budgets.skill_md_bytes]
+artifact = "SKILL.md"
+unit = "bytes"
+en = 18432
+vn = 18432
+limit = ""
+
+[budgets.reference_lines]
+artifact = "each skill reference file"
+unit = "lines"
+en = 150
+vn = 150
+limit = ""
+
+[budgets.reference_bytes]
+artifact = "each skill reference file"
+unit = "bytes"
+en = 9216
+vn = 9216
+limit = ""
+
+[budgets.references_total_bytes]
+artifact = "all skill references"
+unit = "bytes"
+en = 204800
+vn = 204800
+limit = ""
+
+[budgets.references_per_job]
+artifact = "router: files loaded per job (plus SKILL.md)"
+unit = "files"
+en = 4
+vn = 4
+limit = ""
+
+[budgets.skill_zip]
+artifact = "Level-ups/autopilot/content-machine(-vn).zip"
+unit = "bytes"
+en = 307200
+vn = 307200
+limit = ""
+
+[budgets.day0_uploads]
+artifact = "files the coach uploads on Day 0"
+unit = "files"
+en = 1
+vn = 1
+limit = "chatgpt_free_uploads_per_day"
+
+[budgets.lifetime_sources]
+artifact = "project sources the kit ever needs on Free (method, Brand Card, up to 3 of the 9 level-up files)"
+unit = "files"
+en = 5
+vn = 5
+limit = "chatgpt_free_project_files"
+note = "Was 3 (method, Brand Card, one GROW file). The level-ups are now nine files (RESEARCH, LAUNCH, CAMPAIGNS, BOARD, STRATEGY, HOOKS, PLAYBOOK, BANKS, COPY); a coach adds the ones needed, and the Claude plugin loads them as companion skills with no upload."

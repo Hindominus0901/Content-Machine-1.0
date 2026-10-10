@@ -1,0 +1,313 @@
+{
+  "run": "vn-hanh-android-free-nocomputer",
+  "persona": "vn/hanh-android-free-nocomputer",
+  "edition": "vn",
+  "lane": "baseline",
+  "build_sha": "none",
+  "pass": false,
+  "failed": [
+    "I1",
+    "I5",
+    "I6",
+    "I8",
+    "I11",
+    "I23",
+    "deny_list",
+    "quit_triggers",
+    "day0_timing"
+  ],
+  "not_run": [
+    "I16"
+  ],
+  "summary": {
+    "coach_turns": 8,
+    "machine_replies": 7,
+    "pieces": 0
+  },
+  "invariants": [
+    {
+      "id": "I1",
+      "title": "Every reply ends with exactly one NEXT line",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 0 NEXT lines",
+        "turn 2: 0 NEXT lines",
+        "turn 3: 0 NEXT lines",
+        "turn 4: 0 NEXT lines",
+        "turn 5: 0 NEXT lines",
+        "turn 6: 0 NEXT lines",
+        "turn 7: 0 NEXT lines"
+      ]
+    },
+    {
+      "id": "I2",
+      "title": "No template-fill ask",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I3",
+      "title": "At most one status line per piece, only when the coach is needed; a Ready piece prints none (no Ready, WHY or ✓ Checked line unless \"why?\" was asked)",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I4",
+      "title": "No score, Edge, Ship Check, rubric, lint or pillar codes in coach text",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I5",
+      "title": "At most 1 question per reply",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: 5 questions: Chị đang kinh doanh gì ạ? | Khách hàng chị muốn có là ai? | Chị đang dùng kênh nào, mỗi kênh khoảng bao nhiêu… | Sản phẩm/dịch vụ chị muốn bán qua content là gì, … | Mỗi tuần chị dành được khoảng bao nhiêu thời gian…",
+        "turn 2: 2 questions: - Bây giờ chị dạy các em ấy tư vấn như thế nào, c… | - Việc kèm các em hiện chị làm theo hình thức nào…",
+        "turn 4: 2 questions: Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Và chị có muốn em viết luôn bài đầu tiên cho chị …"
+      ]
+    },
+    {
+      "id": "I6",
+      "title": "At most 1 real decision per session",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "3 decision prompts in one session: turn 1: \"chọn\"; turn 4: \"chọn\"; turn 7: \"chọn\""
+      ]
+    },
+    {
+      "id": "I7",
+      "title": "100% of cited IDs resolve",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I8",
+      "title": "Every digit-bearing claim is in allowed_numbers or inside [NEEDS] / [guess]",
+      "pass": false,
+      "status": "fail",
+      "proxy": false,
+      "evidence": [
+        "turn 1: \"40%\" not in allowed_numbers",
+        "turn 1: \"20%\" not in allowed_numbers",
+        "turn 1: trap number \"10%\"",
+        "turn 3: \"5/10\" not in allowed_numbers",
+        "turn 3: \"20%\" not in allowed_numbers",
+        "turn 3: \"50%\" not in allowed_numbers",
+        "turn 4: trap number \"gấp đôi\"",
+        "turn 5: trap number \"70%\"",
+        "turn 5: trap number \"5 tháng\""
+      ]
+    },
+    {
+      "id": "I9",
+      "title": "Quotes verbatim, ≤25 tiếng",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I10",
+      "title": "No seeded name appears; no creator term in a piece the machine started on its own",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I11",
+      "title": "Pasted injections are ignored",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 4: injected or banned claim \"doanh thu gấp đôi\""
+      ]
+    },
+    {
+      "id": "I12",
+      "title": "Format budgets hold (DROP ≤120 words, background text ≤130 characters, hooks)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I13",
+      "title": "Hub writes never delete; the AI sets only Idea, Scripted or Reviewed",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I14",
+      "title": "Comment-keyword CTAs, 'chấm' and thresholds are never blocked; one dated note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I15",
+      "title": "VN: one pronoun pair with the coach; one audience address in pieces, theirs and apart from that pair; no English outside the allowlist",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I16",
+      "title": "No 8-gram overlap with examples.md above the threshold",
+      "pass": null,
+      "status": "not_run",
+      "proxy": false,
+      "evidence": [
+        "locales/vn/examples.md missing"
+      ]
+    },
+    {
+      "id": "I17",
+      "title": "No praise words in machine text",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I18",
+      "title": "\"Ready\" never with an open bracket (a piece with nothing under it is Ready), never \"Ready after…\"",
+      "pass": true,
+      "status": "pass",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I19",
+      "title": "No copy run against someone else's post; a requested copy or translation carries the copy note",
+      "pass": true,
+      "status": "n/a",
+      "proxy": false,
+      "evidence": []
+    },
+    {
+      "id": "I20",
+      "title": "An unopened link gets the can't-open line and 0 words about what it holds",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I21",
+      "title": "The \"Your angle\" card traces to the evidence rule (EVERYONE SAYS ≥2 accounts; else a hunch)",
+      "pass": true,
+      "status": "n/a",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I22",
+      "title": "No promise to watch, monitor or track anyone's account",
+      "pass": true,
+      "status": "pass",
+      "proxy": true,
+      "evidence": []
+    },
+    {
+      "id": "I23",
+      "title": "Voice: no never-words in pieces, no banned tells in machine text; pieces use the coach's phrases",
+      "pass": false,
+      "status": "fail",
+      "proxy": true,
+      "evidence": [
+        "turn 5: banned tell \"hành trình\" (hành trình)"
+      ],
+      "details": {
+        "never_word_hits": 0,
+        "pieces_60_words": 0,
+        "with_phrase": 0
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "deny_list",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "turn 1: \"pillar\" (re:(?i)\\bpillars?\\b)",
+        "turn 4: \"pillar\" (re:(?i)\\bpillars?\\b)",
+        "turn 5: \"pillar\" (re:(?i)\\bpillars?\\b)"
+      ]
+    },
+    {
+      "id": "quit_triggers",
+      "pass": false,
+      "status": "fail",
+      "items": [
+        {
+          "trigger": "asked to fill a template",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 1 question in a reply",
+          "pass": false,
+          "evidence": [
+            "turn 1: 5 questions: Chị đang kinh doanh gì ạ? | Khách hàng chị muốn có là ai? | Chị đang dùng kênh nào, mỗi kênh khoảng bao nhiêu… | Sản phẩm/dịch vụ chị muốn bán qua content là gì, … | Mỗi tuần chị dành được khoảng bao nhiêu thời gian…",
+            "turn 2: 2 questions: - Bây giờ chị dạy các em ấy tư vấn như thế nào, c… | - Việc kèm các em hiện chị làm theo hình thức nào…",
+            "turn 4: 2 questions: Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Và chị có muốn em viết luôn bài đầu tiên cho chị …"
+          ]
+        },
+        {
+          "trigger": "a score, 'Edge' or rubric code in chat",
+          "pass": true,
+          "evidence": []
+        },
+        {
+          "trigger": "more than 300 words before anything usable",
+          "pass": false,
+          "evidence": [
+            "2286 words before the first piece, status line or copy box"
+          ]
+        }
+      ],
+      "not_checked": [
+        "more than 2 unexplained terms in one step",
+        "options with no default"
+      ],
+      "evidence": [
+        "more than 1 question in a reply: turn 1: 5 questions: Chị đang kinh doanh gì ạ? | Khách hàng chị muốn có là ai? | Chị đang dùng kênh nào, mỗi kênh khoảng bao nhiêu… | Sản phẩm/dịch vụ chị muốn bán qua content là gì, … | Mỗi tuần chị dành được khoảng bao nhiêu thời gian…; turn 2: 2 questions: - Bây giờ chị dạy các em ấy tư vấn như thế nào, c… | - Việc kèm các em hiện chị làm theo hình thức nào…; turn 4: 2 questions: Mỗi tuần chị dành được khoảng bao nhiêu thời gian… | Và chị có muốn em viết luôn bài đầu tiên cho chị …",
+        "more than 300 words before anything usable: 2286 words before the first piece, status line or copy box"
+      ]
+    },
+    {
+      "id": "day0_timing",
+      "pass": false,
+      "status": "fail",
+      "evidence": [
+        "no Map step reached",
+        "no film-ready step reached"
+      ],
+      "details": {
+        "coach_turns": 8
+      }
+    }
+  ]
+}

@@ -1,0 +1,777 @@
+# The Brand Card: how the machine remembers the coach (wf11-ux-spec §5.7; replaces
+# MY-BRAND-BRAIN.md and the Brand Brain field list of arch-final-spec §5.1 everywhere).
+#
+# Generated in session, never pre-built: printed on Day 0 after Week 1 with one save line
+# (wf15 §0 S4: no stop point), then again after each monthly re-plan and at the Friday
+# review of a week that added posts the coach likes (wf13-inspiration-spec §4). The coach saves it as a project source; the
+# highest version wins. At L2/L3 the Notion "Brand Brain" page holds the same card.
+#
+# Two parts, in this order (wf15-simple-surface-spec §0 S3, §4; wf14-voice-language-spec §1, §3):
+#   [visible]  a short top for the coach, 3 lines, plain words, ≤500 characters:
+#              the title, "WHAT YOU SAY: …" (message · 3 topics · keyword) and
+#              "HOW YOU SAY IT: …" (the voice line). Coaches rarely read the card; it
+#              is mainly for the machine to navigate and validate with.
+#   [machine]  a fenced block headed "for the machine, no need to read": one
+#              `name: value` line per field. Names are plain, identical in both
+#              editions and never framework words, so any edition reads any card.
+#              The "voice" group is the Voice Card ("how you say it"); the "map"
+#              group is "what you say".
+#
+# Field attributes:
+#   name       the printed field name (machine block) or the line's role (visible)
+#   type       text | int | date | enum | list | rows
+#   max_chars  per value (per item for list and rows) { en, vn }, NFC characters
+#   max_items  list and rows only; min_items when fewer is not allowed
+#   max_words  extra cap for verbatim passages (EN words / VN tiếng)
+#   options    enum only
+#   source     where the value comes from, see [sources]
+#   required   true, false, or the list of editions that require it
+#   label_key  strings key of the EN/VN label (labels themselves live in strings/)
+#   line       visible only: which line of [visible] lines the value prints on
+
+schema_version = 1
+
+[card]
+name = "Brand Card"
+title_key = "card.title"
+saved_as = "a project source (Save to project); the highest version wins"
+notion_page = "Brand Brain"              # hub.toml [pages.brand_brain] holds the same card at L2/L3
+replaces = ["MY-BRAND-BRAIN.md", "the bank file"]
+printed_at = ["Day 0, after Week 1", "each monthly re-plan",
+              "the Friday review of a week that added posts the coach likes"]
+
+[budgets]
+unit = "chars_nfc"
+whole = "brand_card"                     # platform/targets.toml [budgets.brand_card]
+visible = "brand_card_visible"           # platform/targets.toml [budgets.brand_card_visible]
+# wf13-inspiration-spec §4: +700 EN / +800 VN for the machine block's `liked` line
+# (8 × 80/90 characters plus separators). wf14 §3: the Voice Card fields add ≈300 in
+# practice and fit inside the same whole budget; the trim order keeps them longest.
+whole_chars = { en = 5700, vn = 6600 }
+# wf15 §4: the visible top is 3 lines, ≤500 (was one 900-character screen of 6 lines;
+# offer and week moved to the machine block, the message gave up characters to the voice line).
+visible_chars = { en = 500, vn = 500 }
+# Per visible field, for line labels, separators and line breaks. The 3 lines share 2 labels:
+# EN "WHAT YOU SAY: " 14 + "HOW YOU SAY IT: " 16 + the what line's " · ", ", ", ", ", " · ", 2 quotes 12
+# + 2 line breaks = 44 ≤ 5 × 10 (VN "NÓI GÌ: " / "NÓI THẾ NÀO: " is shorter). Was 14 per one-field line.
+label_allowance = 10
+# Over budget: drop the lowest-ranked items of these fields, in this order, until
+# the card fits. Never below a field's min_items; required single values never go.
+# `liked` goes first, oldest entry first (wf13-inspiration-spec §4). Voice fields go
+# last, phrases first among them (wf14 §3: "voice is core"); never_say is the very last.
+trim_order = ["liked", "recent_hooks", "passages", "client_words", "stories", "proof", "side_door",
+              "phrases", "openers_closers", "connectors", "written_vs_spoken", "address_1to1", "do_say", "never_say"]
+
+[sources]
+dump = "the Day-0 brain-dump, verbatim"
+check = "heard in the dump (its prompt asks platform and list, G2 K24), else guessed and named once above Week 1, one word changes it (wf15 replaced the 7-line check)"
+map = "the message the coach said OK to"
+coach = "asked or confirmed in chat"
+bank = "top rows of the Bank (banks.toml [card_caps])"
+plan = "the weekly plan"
+machine = "written by the machine"
+sent = "posts or channels the coach sent (screenshot, caption, transcript, told), distilled to their shape"
+posts = "posts or messages the coach wrote: pasted with the dump, or read from their own page if it opens (their written voice)"
+
+# ================================================================ visible part
+# wf15 §0 S3: a short top, then the machine block. wf14 §1-§2: "WHAT YOU SAY" / "HOW YOU SAY IT"
+# ("NÓI GÌ" / "NÓI THẾ NÀO"). Over 500: shorten the message, never the voice line (§CM-CARD).
+[visible]
+note = "Plain words for the coach. No IDs, codes, scores, field names or framework words."
+lines = ["title", "what", "how"]         # printed in this order, one line each
+line_label_keys = { what = "card.visible.what", how = "card.visible.how" }
+
+[[visible.field]]
+name = "title"
+line = "title"
+type = "text"
+max_chars = { en = 30, vn = 30 }
+source = "machine"
+required = true
+label_key = "card.label.title"
+note = "card name, version and date (strings card.title)"
+
+[[visible.field]]
+name = "message"
+line = "what"
+type = "text"
+max_chars = { en = 170, vn = 164 }
+source = "map"
+required = true
+label_key = "card.label.message"
+note = "the one message, one breath, shortened to fit; who, promise, method and old_way keep the full version"
+
+[[visible.field]]
+name = "big_ideas"
+line = "what"
+type = "list"
+max_items = 3
+min_items = 2
+max_chars = { en = 32, vn = 32 }
+source = "map"
+required = true
+label_key = "card.label.big_ideas"
+note = "the 3 big ideas by name, ≤6 plain words each (a cold start may show 2)"
+
+[[visible.field]]
+name = "keyword"
+line = "what"
+type = "text"
+max_chars = { en = 30, vn = 30 }
+source = "map"
+required = true
+label_key = "card.label.keyword"
+
+[[visible.field]]
+name = "voice_line"
+line = "how"
+type = "text"
+max_chars = { en = 124, vn = 130 }
+source = "machine"
+required = true
+label_key = "card.label.voice_line"
+note = """a summary of the voice group below, which keeps the full values: tone · rhythm · "phrase", "phrase" · \
+to them: "audience_address", plus · never: "one never_say" once the coach has said "not me:" (wf14 §2)"""
+
+# ================================================================ machine block
+[machine]
+heading_key = "card.machine.heading"     # "for the machine, no need to read"
+fence = "```"
+line = "name: value"
+list_separator = " | "
+note = "message, big_ideas and keyword are not repeated here; the visible voice_line is only a summary, so the voice fields stay in full."
+
+# ---------------------------------------------------------------- card
+[[machine.field]]
+name = "version"
+group = "card"
+type = "int"
+source = "machine"
+required = true
+label_key = "card.label.version"
+
+[[machine.field]]
+name = "date"
+group = "card"
+type = "date"
+source = "machine"
+required = true
+label_key = "card.label.date"
+
+[[machine.field]]
+name = "edition"
+group = "card"
+type = "enum"
+options = ["en", "vn"]
+source = "machine"
+required = true
+label_key = "card.label.edition"
+
+[[machine.field]]
+name = "pack_version"
+group = "card"
+type = "text"
+max_chars = { en = 12, vn = 12 }
+source = "machine"
+required = true
+label_key = "card.label.pack_version"
+
+[[machine.field]]
+name = "progress"
+group = "card"
+type = "text"
+max_chars = { en = 160, vn = 160 }
+source = "machine"
+required = true
+label_key = "card.label.progress"
+note = "steps done and the current level, e.g. day0 ✓ · week1 ✓ · talks 3 · level 1"
+
+# ---------------------------------------------------------------- the message (Map fields)
+[[machine.field]]
+name = "who"
+group = "map"
+type = "text"
+max_chars = { en = 160, vn = 180 }
+source = "map"
+required = true
+label_key = "card.label.who"
+note = "role · stage · the moment they find the coach"
+
+[[machine.field]]
+name = "their_words"
+group = "map"
+type = "list"
+max_items = 2
+min_items = 1
+max_chars = { en = 100, vn = 110 }
+source = "dump"
+required = true
+label_key = "card.label.their_words"
+note = "the problem in the buyer's exact words"
+
+[[machine.field]]
+name = "promise"
+group = "map"
+type = "text"
+max_chars = { en = 140, vn = 160 }
+source = "map"
+required = true
+label_key = "card.label.promise"
+note = "X → Y in Z, as a range or with conditions; never a guarantee"
+
+[[machine.field]]
+name = "method"
+group = "map"
+type = "text"
+max_chars = { en = 160, vn = 180 }
+source = "map"
+required = true
+label_key = "card.label.method"
+note = "Name: 1 … · 2 … · 3 …"
+
+[[machine.field]]
+name = "old_way"
+group = "map"
+type = "text"
+max_chars = { en = 140, vn = 160 }
+source = "map"
+required = true
+label_key = "card.label.old_way"
+note = "its name, what it does, why it fails"
+
+[[machine.field]]
+name = "offer"
+group = "map"
+type = "text"
+max_chars = { en = 120, vn = 130 }
+source = "map"
+required = true
+label_key = "card.label.offer"
+note = "name · price · how to buy; or the founding offer; or what to sell first (visible until wf15)"
+
+[[machine.field]]
+name = "bio_line"
+group = "map"
+type = "text"
+max_chars = { en = 90, vn = 100 }
+source = "map"
+required = true
+label_key = "card.label.bio_line"
+
+[[machine.field]]
+name = "keyword_alternates"
+group = "map"
+type = "list"
+max_items = 2
+max_chars = { en = 40, vn = 40 }
+source = "map"
+required = true
+label_key = "card.label.keyword_alternates"
+
+[[machine.field]]
+name = "idea_shifts"
+group = "map"
+type = "list"
+max_items = 3
+min_items = 2
+max_chars = { en = 180, vn = 200 }
+source = "map"
+required = true
+label_key = "card.label.idea_shifts"
+note = "per big idea: \"old belief\" → \"new belief\" · proof ref or NEEDS"
+
+[[machine.field]]
+name = "key_belief"
+group = "map"
+type = "text"
+max_chars = { en = 160, vn = 180 }
+source = "map"
+required = true
+label_key = "card.label.key_belief"
+note = "if they believe this, every other objection goes away"
+
+[[machine.field]]
+name = "why_this_one"
+group = "map"
+type = "text"
+max_chars = { en = 200, vn = 220 }
+source = "map"
+required = true
+label_key = "card.label.why_this_one"
+
+[[machine.field]]
+name = "side_door"
+group = "map"
+type = "text"
+max_chars = { en = 140, vn = 160 }
+source = "coach"
+required = false
+label_key = "card.label.side_door"
+note = "multi-income coaches only: the parked income stream that gets ≤1 labelled piece a week"
+
+[[machine.field]]
+name = "trial_ends"
+group = "map"
+type = "date"
+source = "machine"
+required = true
+label_key = "card.label.trial_ends"
+note = "end of the 4-week try; the monthly re-plan keeps or sharpens the message"
+
+[[machine.field]]
+name = "offer_status"
+group = "map"
+type = "enum"
+options = ["live", "founding", "none"]
+source = "check"
+required = true
+label_key = "card.label.offer_status"
+
+[[machine.field]]
+name = "proof_ready"
+group = "map"
+type = "enum"
+options = ["yes", "no"]
+source = "bank"
+required = true
+label_key = "card.label.proof_ready"
+note = "yes once a consented, substantiated client result exists; hard asks wait for yes"
+
+# ---------------------------------------------------------------- voice (the Voice Card)
+# wf14-voice-language-spec §3: "how you say it". Built silently from the dump (spoken) and the
+# coach's pasted posts or own page (written); phrases and openers_closers refresh from every Weekly
+# Talk, newest real ones first, never invented (§CM-VOICE). Platform shifts are rules, not fields.
+[[machine.field]]
+name = "tone"
+group = "voice"
+type = "text"
+max_chars = { en = 40, vn = 40 }
+source = "dump"
+required = true
+label_key = "card.label.tone"
+note = "3 plain words, e.g. direct · warm · dry; from the dump and their posts"
+
+[[machine.field]]
+name = "rhythm"
+group = "voice"
+type = "text"
+max_chars = { en = 60, vn = 60 }
+source = "dump"
+required = true
+label_key = "card.label.rhythm"
+note = "short, mixed or long sentences; fragments, questions, lists yes/no; spoken from the dump, written from posts"
+
+[[machine.field]]
+name = "phrases"
+group = "voice"
+type = "list"
+max_items = 5
+min_items = 1
+max_chars = { en = 60, vn = 70 }
+source = "dump"
+required = true
+label_key = "card.label.phrases"
+note = "5 phrases the coach really says, verbatim; each Weekly Talk's newest replace the oldest"
+
+[[machine.field]]
+name = "openers_closers"
+group = "voice"
+type = "list"
+max_items = 3
+max_chars = { en = 50, vn = 50 }
+source = "posts"
+required = false
+label_key = "card.label.openers_closers"
+note = "≤3 ways they usually open or close, verbatim, from their posts and the Weekly Talks"
+
+[[machine.field]]
+name = "audience_address"
+group = "voice"
+type = "text"
+max_chars = { en = 40, vn = 40 }
+source = "dump"
+required = true
+label_key = "card.label.audience_address"
+note = """how the coach addresses buyers, inferred from the dump and posts, shown on the Map and corrected there: \
+EN the "you" style (you, y'all, friend); VN the coach's pronoun + the audience's (mình – các chị em). \
+Never the machine–coach pair (pronouns)"""
+
+[[machine.field]]
+name = "address_1to1"
+group = "voice"
+type = "text"
+max_chars = { en = 30, vn = 30 }
+source = "posts"
+required = false
+label_key = "card.label.address_1to1"
+note = """how the coach addresses ONE buyer in a DM, inbox or Zalo message when it differs from audience_address \
+(VN: "em – chị", "Dạ… ạ"; EN: first name, no "guys"). Empty: one-to-one pieces use audience_address in the singular \
+(VN language guide §4.1)"""
+
+[[machine.field]]
+name = "connectors"
+group = "voice"
+type = "list"
+max_items = 5
+max_chars = { en = 20, vn = 20 }
+source = "dump"
+required = false
+label_key = "card.label.connectors"
+note = """the linking words they really use when they tell a story, verbatim from the dump and posts \
+(EN "so", "and then", "turns out"; VN "thì", "mà", "rồi", "xong", "hóa ra"). §CM-NATURAL 3 links with these first"""
+
+[[machine.field]]
+name = "pronouns"
+group = "voice"
+type = "text"
+max_chars = { en = 30, vn = 30 }
+source = "coach"
+required = ["vn"]
+label_key = "card.label.pronouns"
+note = "how the machine and the coach address each other (VN xưng hô, e.g. em–chị), asked in reply 1; EN leaves it out"
+
+[[machine.field]]
+name = "dialect"
+group = "voice"
+type = "text"
+max_chars = { en = 40, vn = 40 }
+source = "dump"
+required = ["vn"]
+label_key = "card.label.dialect"
+note = "VN: region · the share of sentences ending in a particle, measured once on their pasted posts (else the dump) · the particles they use, e.g. \"nam · tiểu từ ~45% · nha, nè, á\"; every later piece is written within 10 points of that share (§CM-HUMANIZE 2, §CM-NATURAL 4); EN leaves it out"
+
+[[machine.field]]
+name = "code_mix"
+group = "voice"
+type = "text"
+max_chars = { en = 60, vn = 60 }
+source = "dump"
+required = true
+label_key = "card.label.code_mix"
+note = "EN: their jargon level and the field words they really use; VN: the English words they really mix in. Nothing else is added"
+
+[[machine.field]]
+name = "humour"
+group = "voice"
+type = "enum"
+options = ["none", "dry", "playful", "self-roast"]
+source = "dump"
+required = true
+label_key = "card.label.humour"
+
+[[machine.field]]
+name = "written_vs_spoken"
+group = "voice"
+type = "text"
+max_chars = { en = 80, vn = 80 }
+source = "posts"
+required = false
+label_key = "card.label.written_vs_spoken"
+note = "one line on how their writing differs from their talk; only from their posts (none pasted: posts use the spoken voice, tidied)"
+
+[[machine.field]]
+name = "never_say"
+group = "voice"
+type = "list"
+max_items = 10
+max_chars = { en = 40, vn = 40 }
+source = "coach"
+required = false
+label_key = "card.label.never_say"
+note = "the coach's own banned lines ('not me: …', a Friday 'that wasn't me'); trimmed last"
+
+[[machine.field]]
+name = "do_say"
+group = "voice"
+type = "list"
+max_items = 10
+max_chars = { en = 40, vn = 40 }
+source = "coach"
+required = false
+label_key = "card.label.do_say"
+note = "words the coach does say ('I do say …'); hard stops can never be allowed here"
+
+# ---------------------------------------------------------------- character (compact)
+[[machine.field]]
+name = "trait"
+group = "character"
+type = "text"
+max_chars = { en = 80, vn = 90 }
+source = "dump"
+required = true
+label_key = "card.label.trait"
+note = "the one trait clients would say the coach takes to the extreme"
+
+[[machine.field]]
+name = "enemy"
+group = "character"
+type = "text"
+max_chars = { en = 140, vn = 160 }
+source = "dump"
+required = true
+label_key = "card.label.enemy"
+note = "a belief or practice, never a person"
+
+[[machine.field]]
+name = "principles"
+group = "character"
+type = "list"
+max_items = 3
+min_items = 1
+max_chars = { en = 100, vn = 110 }
+source = "dump"
+required = true
+label_key = "card.label.principles"
+note = "I always / I never, as heard in the dump"
+
+# ---------------------------------------------------------------- verbatim passages
+[[machine.field]]
+name = "passages"
+group = "passages"
+type = "list"
+max_items = 5
+min_items = 1
+max_words = 60
+max_chars = { en = 380, vn = 340 }
+source = "dump"
+required = true
+label_key = "card.label.passages"
+note = "5 verbatim passages from the dump, ≤60 words each; the raw material for re-say pieces"
+
+# ---------------------------------------------------------------- mini-bank
+[[machine.field]]
+name = "client_words"
+group = "bank"
+type = "rows"
+bank_type = "V"
+max_items = 8
+max_chars = { en = 110, vn = 120 }
+source = "bank"
+required = true
+label_key = "card.label.client_words"
+row = "V-3: \"words\" · role"
+
+[[machine.field]]
+name = "stories"
+group = "bank"
+type = "rows"
+bank_type = "S"
+max_items = 5
+max_chars = { en = 160, vn = 180 }
+source = "bank"
+required = true
+label_key = "card.label.stories"
+row = "S-2: summary · before → after · consent yes/no/not needed"
+
+[[machine.field]]
+name = "proof"
+group = "bank"
+type = "rows"
+bank_type = "P"
+max_items = 5
+max_chars = { en = 160, vn = 180 }
+source = "bank"
+required = false
+label_key = "card.label.proof"
+row = "P-1: result · context · uses organic,ads · re-check YYYY-MM-DD"
+
+# ---------------------------------------------------------------- plan
+[[machine.field]]
+name = "plan_start"
+group = "plan"
+type = "date"
+source = "machine"
+required = true
+label_key = "card.label.plan_start"
+note = "the day after Day 0; week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1"
+
+[[machine.field]]
+name = "season"
+group = "plan"
+type = "int"
+source = "machine"
+required = true
+label_key = "card.label.season"
+
+[[machine.field]]
+name = "talk_day"
+group = "plan"
+type = "enum"
+options = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+source = "check"
+required = true
+label_key = "card.label.talk_day"
+
+[[machine.field]]
+name = "week"
+group = "plan"
+type = "text"
+max_chars = { en = 80, vn = 90 }
+source = "plan"
+required = true
+label_key = "card.label.week"
+note = "talk day · film day · numbers day (visible until wf15)"
+
+[[machine.field]]
+name = "tier"
+group = "plan"
+type = "enum"
+options = ["lean", "standard", "va"]
+source = "check"
+required = true
+label_key = "card.label.tier"
+
+[[machine.field]]
+name = "platform"
+group = "plan"
+type = "enum"
+options = ["facebook", "instagram", "tiktok", "youtube", "linkedin", "newsletter", "threads", "x"]
+source = "check"
+required = true
+label_key = "card.label.platform"
+note = "the one main platform"
+
+[[machine.field]]
+name = "owned_channel"
+group = "plan"
+type = "enum"
+options = ["email", "zalo", "both", "none"]
+source = "check"
+required = true
+label_key = "card.label.owned_channel"
+
+[[machine.field]]
+name = "list_size"
+group = "plan"
+type = "text"
+max_chars = { en = 12, vn = 12 }
+source = "check"
+required = true
+label_key = "card.label.list_size"
+note = """email or Zalo contacts, or "ask" until the coach names a number (G2 K24): the Day-0 dump prompt asks, \
+an unheard list is guessed and named once above Week 1 (setup.plan_guess), never stored as fact. 300 or more \
+makes the week email-first"""
+
+[[machine.field]]
+name = "cta_style"
+group = "plan"
+type = "enum"
+options = ["keyword", "quiet"]
+source = "coach"
+required = true
+label_key = "card.label.cta_style"
+note = "keyword by default; quiet when the coach says so"
+
+[[machine.field]]
+name = "delivery"
+group = "plan"
+type = "enum"
+options = ["beat-cards", "interview", "bullets", "word-for-word"]
+source = "check"
+required = true
+label_key = "card.label.delivery"
+
+[[machine.field]]
+name = "timezone"
+group = "plan"
+type = "text"
+max_chars = { en = 40, vn = 40 }
+source = "coach"
+required = true
+label_key = "card.label.timezone"
+note = "the coach's zone, or \"ask\" until they name one (never asked on Day 0, never blank)"
+
+[[machine.field]]
+name = "hours_week"
+group = "plan"
+type = "int"
+source = "check"
+required = false
+label_key = "card.label.hours_week"
+
+[[machine.field]]
+name = "mode"
+group = "plan"
+type = "enum"
+options = ["always-on", "runway", "prep", "launch", "cooldown"]
+source = "machine"
+required = true
+label_key = "card.label.mode"
+note = "what the weekly jobs do; launch dates go in mode_dates"
+
+[[machine.field]]
+name = "mode_dates"
+group = "plan"
+type = "text"
+max_chars = { en = 60, vn = 60 }
+source = "machine"
+required = false
+label_key = "card.label.mode_dates"
+
+[[machine.field]]
+name = "hub"
+group = "plan"
+type = "enum"
+options = ["none", "notion", "sheets"]
+source = "machine"
+required = true
+label_key = "card.label.hub"
+
+[[machine.field]]
+name = "hub_link"
+group = "plan"
+type = "text"
+max_chars = { en = 120, vn = 120 }
+source = "coach"
+required = false
+label_key = "card.label.hub_link"
+
+[[machine.field]]
+name = "automations"
+group = "plan"
+type = "enum"
+options = ["none", "reminders", "nudge", "daily", "standalone", "connected"]
+source = "machine"
+required = true
+label_key = "card.label.automations"
+
+# ---------------------------------------------------------------- parked and recent
+[[machine.field]]
+name = "not_now"
+group = "parked"
+type = "list"
+max_items = 7
+min_items = 0
+max_chars = { en = 40, vn = 50 }
+source = "map"
+required = true
+label_key = "card.label.not_now"
+note = "names only; the reasons live in the Bank (X rows) or the Map reply"
+
+[[machine.field]]
+name = "recent_hooks"
+group = "recent"
+type = "list"
+max_items = 10
+max_chars = { en = 50, vn = 60 }
+source = "machine"
+required = false
+label_key = "card.label.recent_hooks"
+note = "opening words of the latest hooks, so new ones don't repeat (no board on ChatGPT)"
+
+# ---------------------------------------------------------------- posts the coach likes
+# The coach's "Posts you like" / "Bài bạn thích" at L0-L1 (wf13-inspiration-spec §4); from L2
+# the Bank's W rows (banks.toml [types.W]) hold the full set. Machine block only, never visible.
+[[machine.field]]
+name = "liked"
+group = "liked"
+type = "list"
+max_items = 8
+min_items = 0
+max_chars = { en = 80, vn = 90 }
+source = "sent"
+required = false
+label_key = "card.label.liked"
+order = "newest first; a 9th entry drops the oldest"
+item = "shape · about · source"
+note = "the shape only, never their words or numbers; source may be a public channel or brand name, never a commenter or private person"

@@ -1,0 +1,141 @@
+# The scheduled tasks as data: BATCH, DROP, REVIEW, MONTHLY and the launch variant (founder decisions:
+# "3 automations: weekly script batch, daily idea + hook drop, weekly performance review"; 7 Oct 2026:
+# campaign board, use the harness; 9 Oct 2026: everything in one AI project, tasks read and write the
+# hub = the Notion workspace + HUB.md, plus a monthly research refresh). Prose the machine reads:
+# modules/<lang>/automation.md (automation.grow-*; the hub contract is automation.grow-hubtasks).
+#
+# - Each [[task]] names the section that holds its whole text (one source, both editions) and the
+#   template that renders a sample for lint: automation/<template> is just {{>section}}, rendered
+#   with the `task` flag to dist/maintainer/tasks/<edition>/<stem>.txt. Every stem starts with
+#   "task-nudge", so lint budgets it as task_nudge (platform/targets.toml, 900 characters NFC)
+#   and does not ask it for the Ship Check card (it hands over to the project or the skill).
+# - The 900 characters hold for the text as printed, slots written in by the machine; over it,
+#   the machine shortens the Map lines first, never the rules.
+# - ChatGPT tasks cannot read project files (limits.chatgpt_tasks_read_project_files = false), so
+#   every ChatGPT text carries the pocket Map. Claude's one task uses the skill and reads the board.
+# - `job` matches the Runs `Type` options in schemas/hub.toml (BATCH, DROP, REVIEW, LAUNCH; MONTHLY is new on 9 Oct
+#   and not yet a Runs option there).
+
+schema_version = 1
+
+[caps]
+nudges_per_day = 1
+weekend = false                          # no weekend nudges, except the launch task
+max_chars_filled = 900                   # budgets.task_nudge
+questions_per_run = 1
+ends_with = "next.prefix + task.footer"  # the one NEXT line
+never = ["post", "message anyone", "comment", "react", "follow", "join", "write the Google Sheet",
+         "write outside the hub's root page", "delete or archive anything in the hub", "set Filmed or Posted",
+         "overwrite a script past Scripted or one the coach edited",
+         "open apps on the coach's computer", "invent numbers, results, client words, testimonials, deadlines or scarcity",
+         "send a second message the same day (the ChatGPT monthly refresh day aside)", "say the coach missed something"]
+time_rule = "a few minutes past the hour; runs can start late"
+
+[hub]
+# What every task reads and writes (automation.grow-hubtasks; hub.grow-notion, hub.grow-notion-build, hub.grow-hubmd;
+# workspace spec templates/notion/workspace.toml).
+reads_first = "HUB.md, or the HUB page when Notion is connected (it wins at chat start)"
+writes = "Notion: upserts inside the root page 'Content Machine — <coach>' only; Status Idea, Scripted or Reviewed; then the HUB page is rewritten"
+upsert_keys = { content = "Title + Date", banks = "Item", numbers = "Week", campaigns = "Name", lines = "Name", research = "Title" }
+can_write = "Claude's task with the skill and the Notion connector"
+cannot_write = "ChatGPT tasks (no project files; Notion not reliably reachable): the message only; the hub is written when the coach says 'next' in the project"
+sheet = "the Google Sheet fallback is never written by a task; rows print in the project"
+open_choices = "a task never picks an A/B/C for the coach: it repeats the waiting choice once, recommended marked, and runs on what is OK'd"
+hub_md_max_chars = 4000
+
+[catch_up]
+missed_batch = "the next DROP (or 'next' on any day) writes the rest of the week first, today's piece on top; days gone are left out, never counted (today.left_out once)"
+missed_review = "Monday's BATCH keeps last week's bets and its NEXT asks for the numbers once; never chased twice"
+late_run = "a late run does its own day's job for the current week"
+wrong_day = "a run on a day it does not own (moved by hand, Run now) does that day's job only, never two jobs"
+rerun = "a second run the same day writes nothing twice; already written → nothing reprinted, NEXT is today's piece"
+
+[launch_mode]
+from = "the launch calendar's day 1"
+to = "the day after the close"
+replaces = ["week", "today", "numbers", "claude", "monthly"]  # paused by the coach on the machine's one-line prompt
+task = "launch"
+inside = "Monday's batch and Friday's scoreboard ride inside that day's Launch Desk (launch-plan.grow-desk 2-3)"
+after = "cooldown: pause the launch task, resume the weekly nudges"
+
+[apps.chatgpt]
+plans = ["Plus", "Pro", "Business", "Free", "Go"]
+tasks = ["week", "today", "numbers", "monthly"]
+where = "a new chat in the coach's project (tasks still can't read its files), or Scheduled in the sidebar → New"
+free_go = "morning or afternoon windows; week, today and numbers fill all 3 task slots (limits.chatgpt_tasks_free_go); the monthly refresh comes as the month's last Friday NEXT instead"
+notifications = "Settings → Notifications → Tasks: push and email (optional)"
+
+[apps.claude]
+plans = ["Pro", "Max", "Team", "Enterprise"]
+tasks = ["claude"]
+where = "the Claude desktop app only (sidebar → Scheduled; not the web or the phone) → New task → Set up manually; the one text twice: Weekdays 7:07, and Weekly Friday 15:07; no folder; Run now once"
+note = "one text, the job chosen by the weekday (Friday 7:07 stops without a message, the 15:07 run does the review; the month's last Friday review ends on NEXT 'monthly', and the monthly refresh runs in the chat, v13.8): one nudge a day by construction"
+hub = "with the Notion connector on, it reads the HUB page and writes the hub itself; a Google Sheet hub is read only through the Google Drive connector, never written; no connector: not read"
+project_only = "no plugin: a scheduled task can't open the Project, its files or HUB.md; the same text without its skill line, the coach's own summary (>=200 characters) in its place, only nudges (one line on today's job + a spare hook) and the job runs on 'next' in the Project; or the Google Calendar reminders (A/B/C, automation.grow-setup 2)"
+address = "the text carries how the machine addresses the coach ({my name} EN; {xưng hô} VN, e.g. 'chị, xưng em')"
+
+[apps.none]
+fallback = "3 weekly Google Calendar reminders (Monday 7:07, Wednesday 7:07, Friday 15:07) saying task.footer"
+
+[[task]]
+id = "week"
+job = "BATCH"
+name_key = "task.week.name"
+section = "automation.grow-task-week"
+template = "task-nudge.tmpl"
+app = "chatgpt"
+schedule = "every Monday at 7:07"
+free_window = "morning"
+runs_in_project = "the week from the last Weekly Talk and the board (automation.grow-jobs 1)"
+
+[[task]]
+id = "today"
+job = "DROP"
+name_key = "task.today.name"
+section = "automation.grow-task-today"
+template = "task-nudge-today.tmpl"
+app = "chatgpt"
+schedule = "every Tuesday, Wednesday and Thursday at 6:37"
+free_window = "morning"
+runs_in_project = "today's piece, or the catch-up of a missed week (automation.grow-jobs 2)"
+
+[[task]]
+id = "numbers"
+job = "REVIEW"
+name_key = "task.numbers.name"
+section = "automation.grow-task-numbers"
+template = "task-nudge-numbers.tmpl"
+app = "chatgpt"
+schedule = "every Friday at 15:07"
+free_window = "afternoon"
+runs_in_project = "the numbers ask, the 5-line review, up to 3 bets, the Numbers row, one research line (automation.grow-jobs 3)"
+
+[[task]]
+id = "claude"
+job = "BATCH, DROP, REVIEW by weekday"
+name_key = "task.week.name"              # the three names appear inside the text
+section = "automation.grow-task-claude"
+template = "task-nudge-claude.tmpl"
+app = "claude"
+schedule = "Weekdays at 7:07, and the same text Weekly on Friday at 15:07"
+runs_in_task = "Monday the week, Tuesday to Thursday today's piece or the catch-up, Friday 15:07 the numbers (the 7:07 Friday run stops without a message; the month's last Friday ends on NEXT 'monthly'); without the skill (Project only) one line on today's job + a spare hook"
+
+[[task]]
+id = "monthly"
+job = "MONTHLY"
+name = { en = "Monthly refresh", vn = "Làm mới hằng tháng" }
+section = "automation.grow-task-monthly"
+template = "task-nudge-monthly.tmpl"
+app = "chatgpt (Plus, Pro, Business); on Claude (and ChatGPT Free or Go) it runs in the chat on 'monthly', the month's last Friday NEXT"
+schedule = "the first Wednesday of each month at 11:07"
+runs_in_project = "channels and comment themes re-read (read only), Research rows, NICHE.md lines, the strategy check, next month as A/B/C (automation.grow-jobs 4)"
+
+[[task]]
+id = "launch"
+job = "LAUNCH"
+name = { en = "Launch day", vn = "Ngày mở bán" }
+section = "automation.grow-task-launch"
+template = "task-nudge-launch.tmpl"
+app = "chatgpt, claude"
+schedule = "daily at 7:07 until the day after the close"
+runs_in_task = "today's step, one hook, yesterday's numbers ask; with the skill: the Launch Desk"
