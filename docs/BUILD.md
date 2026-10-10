@@ -238,6 +238,8 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 | E144 | Possible PII (email, phone number, @handle) in shipped text |
 | E145 | A date or "currently" outside `locales/<lang>/platform-notes.md` |
 | E146 | A template with no verdict line (a script template missing `{{t:verdict.` usage) |
+| E147 | A bare "bạn" in a VN coach-facing line (strings values and instruction-block / Ship Check lines; use `{xưng hô}`), or a printed marker that leaked to coaches ("[CẦN BẠN: …]", a raw "[anh/chị]" slot, "Bài bạn thích") in VN prose, strings, plugin agents, companions or automation prompts |
+| E148 | A test persona's fact (`evals/personas/leak-terms.toml`: names, offer and gift names, coined phrases, story numbers, echoes) in a kit source (module or core section body, `strings/*.toml` value, file under `plugin/`); `<!-- lint-ok: E148 -->` waives a line |
 | E150 | Non-ASCII file name in dist |
 | E151 | Dotfile, `__MACOSX` or `.DS_Store` in a zip |
 | E152 | Non-deterministic zip (rebuilding gives a different sha256) |

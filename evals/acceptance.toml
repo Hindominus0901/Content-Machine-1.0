@@ -95,7 +95,7 @@ long_video_parts_min = 3                  #   at least this many numbered parts 
 seconds_budget_fails = true               # a length in seconds on a title or in talk ("FILM TODAY (under 30 s)", "30 giây") fails
 
 [hook_lab]                                # check hook_lab (graders.py; qa/standards/hook-lab.md HL7, HL8; review retest-ft1 fix 2)
-onscreen_repeat_share = 0.75              # a short's on-screen text fails when this share (or more) of its content words comes
+onscreen_repeat_share = 0.6               # (v13.8, §CM-HOOKS 4: was 0.75; a thumbnail's text against its title too) a short's on-screen text fails when this share (or more) of its content words comes
                                           #   back in the first spoken line: the same claim twice. The founder's test and its
                                           #   retest sat at 100% (4 of 6 VN Week-1 shorts, e.g. "Một email, 180 người" over
                                           #   "Một email gửi 180 người: 7 người trả lời, 1 người mua": 3 of 3); a hook that

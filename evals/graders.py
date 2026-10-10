@@ -1974,6 +1974,9 @@ COUNT_NOUN_AFTER_RE = re.compile(r"^\s*(?:khách|người|học viên|clients?|s
 READ_COUNT_AFTER_RE = re.compile(r"^\s*(?:trang|nơi|pages?|sites?|places|sources|nguồn|cụm|queries|searches)(?!\w)", re.I)
 READ_COUNT_BEFORE_RE = re.compile(r"(?<!\w)(?:mở|đọc được|đã đọc|opened|read|visited)\s+$", re.I)
 ASK_COUNT_BEFORE_RE = re.compile(r"(?<!\w)(?:dán|chép|gửi|paste|send|copy|chọn|pick)\s+(?:khoảng\s+|about\s+)?$", re.I)
+# The Brand Card's particle share ("dialect: nam · tiểu từ ~50% · nha, hen, nè"; schemas/brand-card.toml dialect, which the
+# kit requires): the coach's measured style, not a claim (COMPARE v13.7 grader bugs).
+PARTICLE_SHARE_BEFORE_RE = re.compile(r"(?<!\w)(?:tiểu từ|particles?(?:\s+(?:share|rate))?)\s*[:=]?\s*~?\s*$", re.I)
 ASK_COUNT_AFTER_RE = re.compile(r"^\s*(?:comment|bình luận|tin nhắn|bài|post|screenshot|ảnh|message|video|clip|repl(?:y|ies)|"
                                 r"câu|link)s?(?!\w)", re.I)
 
@@ -1982,6 +1985,8 @@ def non_claim_number(line: str, n) -> bool:
     """The number `n` of `line` (ck.numbers_in) is a length, a year in a span of time, a count of pages the research read
     or a count of items the machine asks the coach to bring: not a claim about the coach (see above)."""
     before, after = line[:n.start], line[n.end:]
+    if n.percent and PARTICLE_SHARE_BEFORE_RE.search(before):
+        return True
     if LENGTH_AFTER_RE.match(after) or READ_COUNT_AFTER_RE.match(after) or READ_COUNT_BEFORE_RE.search(before):
         return True
     if YEAR_RE.fullmatch(n.raw) and YEAR_BEFORE_RE.search(before) and not COUNT_NOUN_AFTER_RE.match(after):
@@ -2115,7 +2120,9 @@ def misheard_match(quote: str, sources) -> bool:
 
 # A quoted name followed by the format of what it names ('"Câu khách nói tuần này": video ngắn ~550 chữ, hằng tuần'; '"The
 # Monday email": short email, every 2 weeks'): the strategy's list of series. A name, not a line someone said.
-SERIES_NAME_AFTER_RE = re.compile(r"^\s*:\s*(?:(?:short|long)\s+)?(?:video|bài|email|thư|reel|post|carousel|newsletter)(?!\w)", re.I)
+# A quoted series or content-line name followed by its format, after a colon or a " · " ("Tin nhắn đầu tiên · "Sửa
+# tin nhắn thật" · video ngắn · NIỀM TIN"; COMPARE v13.7 grader bugs).
+SERIES_NAME_AFTER_RE = re.compile(r"^\s*[:·|]\s*(?:(?:short|long)\s+)?(?:video|bài|email|thư|reel|post|carousel|newsletter)(?!\w)", re.I)
 
 
 def i9_quotes(run: Run) -> dict:
@@ -2201,7 +2208,10 @@ def _ngrams(text: str, n: int) -> set:
     return {tuple(words[i:i + n]) for i in range(len(words) - n + 1)}
 
 
-LABEL_WORDS = ck.STRUCTURE_WORDS | {"video", "clip", "post", "module", "lesson", "mục", "buổi", "slide"}
+# "điều số 1" / "cách số 1" / "lỗi số 1" number a list in the piece ("đọc lại điều số 1"), no "number one" claim
+# (COMPARE v13.7 grader bugs); "thing #1", "tip #1" likewise.
+LABEL_WORDS = ck.STRUCTURE_WORDS | {"video", "clip", "post", "module", "lesson", "mục", "buổi", "slide", "điều", "cách",
+                                    "lỗi", "chiêu", "mẹo", "thing", "mistake", "rule", "item"}
 
 
 def _numbered_label(text: str, m: re.Match) -> bool:
@@ -3250,6 +3260,16 @@ def _particle_hit(word: str, text: str) -> re.Match | None:
     return None
 
 
+# "giá inbox" is the tell of a seller who hides the price ("Giá: inbox", "giá ib nha"). After "hỏi" it is a buyer asking the
+# price in the inbox, what research found ("người đi mua bực khi hỏi giá inbox rồi bị bỏ lơ"; COMPARE v13.7 grader bugs).
+DESCRIBED_TELL_BEFORE_RE = re.compile(r"(?<!\w)hỏi\s+$", re.I)
+
+
+def _described_tell(text: str, m: re.Match) -> bool:
+    """The banned tell `m` is the price-in-inbox phrase after "hỏi": a buyer's action described, not the tell."""
+    return ck.fold(m.group(0)).startswith("gia ") and bool(DESCRIBED_TELL_BEFORE_RE.search(text[max(0, m.start() - 12):m.start()]))
+
+
 def i23_voice(run: Run) -> dict:
     """wf14 §5. The text the machine writes in the coach's voice (pieces and copy boxes) holds 0 of the persona's
     never-words (expected.toml [voice] banned / never_say, else the voice-samples.md "never" list; plus the
@@ -3298,7 +3318,7 @@ def i23_voice(run: Run) -> dict:
                 never_ev.append(f'{_turn(r)}: "{m.group(0).strip()}" in a piece is not their voice ({p})')
         text = prose + "\n" + voiced
         for label, pattern in tells:
-            m = pattern.search(text)
+            m = next((m for m in pattern.finditer(text) if not _described_tell(text, m)), None)
             if m:
                 tell_ev.append(f'{_turn(r)}: banned tell "{m.group(0)}" ({label})')
         for chunk in pieces:
@@ -6216,7 +6236,8 @@ def check_day0_shape(run: Run) -> dict:
 ON_SCREEN_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:on[- ]screen(?:\s+(?:text|words))?|text on screen"
                           r"|chữ trên màn hình|chữ màn hình)\s*(?:\([^)\n]*\))?(?:\*\*|__)?\s*:\s*(\S.*)$", re.I)
 HOOK_WINDOW = 16                 # lines after an on-screen label that still belong to the same short
-ONSCREEN_REPEAT_SHARE = 0.75     # acceptance [hook_lab] onscreen_repeat_share: this share of the on-screen words, or more
+ONSCREEN_REPEAT_SHARE = 0.6      # acceptance [hook_lab] onscreen_repeat_share: this share of the on-screen words, or more
+                                 #   (v13.8 §CM-HOOKS 4: 0.75 → 0.6; on-screen and thumbnail text never repeat line 1)
 ONSCREEN_MIN_WORDS = 2           # acceptance [hook_lab] onscreen_min_words: content words needed to judge the repeat
 ONSCREEN_REPEAT_MIN_SHARED = 3   # acceptance [hook_lab] onscreen_repeat_min_shared: words that must be shared with the first line
                                  #   before a repeat is read (two shared words, "gặp" and "khách" used in two senses, are no repeat)
@@ -6266,7 +6287,14 @@ def _hook_content(text: str, lang: str) -> list[str]:
     onscreen_repeat loses (left as it was: changing it would turn vg1-day0-vn-coldstart-coach's hook_lab from pass to
     fail at exactly the 75% line)."""
     stop = HOOK_STOP_VN_RAW if lang == "vn" else HOOK_STOP_EN
-    return [w for w in _hook_all(text, lang) if w not in stop]
+    toks = _hook_all(text, lang)
+    return [w for i, w in enumerate(toks) if w not in stop
+            or (lang == "vn" and i and w in HOOK_STOP_KEPT_AFTER and toks[i - 1] in HOOK_STOP_KEPT_AFTER[w])]
+
+
+# A VN stop word that carries the idea after these words: "nói thật" (tell the truth), "sự thật" (the truth) are no
+# intensifier "thật" ("khách đang nói thật đó." says what "khách cứ nói 'để chị suy nghĩ'" does not; COMPARE v13.7).
+HOOK_STOP_KEPT_AFTER = {"thật": {"nói", "sự", "sống", "chuyện", "thành"}}
 
 
 def _unquote(text: str) -> str:
@@ -6723,7 +6751,8 @@ OPINION_ASK = {"vn": re.compile(r"(?<!\w)(?:bạn|các bạn|anh chị|mọi ng�
 HOOK_FRAMES = {
     "vn": [("cho mình N phút", re.compile(r"(?<!\w)cho (?:mình|tôi|em) (?:\S+ ){0,3}?(?:phút|giờ|tiếng)(?!\w)"
                                           r"|\d+ năm[^.?!]* trong \d+ phút", re.I)),
-           ("xem cái này", re.compile(r"(?<!\w)(?:xem|nghe|đọc|lưu)(?: hết)? (?:cái|video|bài|clip|đoạn)(?: \S+)? (?:này|nè)(?!\w)", re.I)),
+           # "coi" is the Southern "xem" ("anh chị coi cái này nha"; COMPARE v13.7 grader bugs), "xem thử" its softer ask
+           ("xem cái này", re.compile(r"(?<!\w)(?:xem|coi|nghe|đọc|lưu)(?: hết| thử)? (?:cái|video|bài|clip|đoạn)(?: \S+)? (?:này|nè)(?!\w)", re.I)),
            ("khó cho tới khi", re.compile(r"khó,?\s+(?:cho\s+)?(?:tới|đến|tận)\s+khi", re.I)),
            ("làm lại từ đầu", re.compile(r"(?<!\w)nếu(?!\w)[^.?!]*(?:từ đầu|từ số 0|làm lại|bắt đầu lại|năm 20\d\d|năm nay"
                                          r"|mới vào nghề|mới bắt đầu)", re.I)),
@@ -6749,10 +6778,79 @@ HOOK_FRAMES = {
            ("asked me how", re.compile(r"\basked me (?:how|what|why)\b", re.I)),
            ("call-out question", re.compile(r"^[^.?!]{8,}\?\s+\S"))],
 }
+# v13.8 (§CM-HOOKS 4 pairs: "tăng giá combo.", "nộp trước ngày 20." state the method): an on-screen or thumbnail text
+# that opens on an imperative and names what to do it to (a price, a message, a deadline: ONSCREEN_IMPERATIVE) states
+# the method too. A dare in the negative ("đừng giảm giá.", "don't discount.") hides it and stays allowed.
+_VN_DO = (r"tăng|giảm|gửi|nhắn|hỏi|nộp|đăng|gọi|báo|đổi|thêm|chia|ghép|đặt|viết|dùng|tặng|chốt|ra giá|hẹn")
+_VN_WHAT = (r"giá|combo|gói|tin|tin nhắn|câu hỏi|lịch|lịch hẹn|hạn|mốc|email|form|link|quà|voucher|ưu đãi|phí|thuế|"
+            r"hồ sơ|kịch bản|bảng giá")
+_EN_DO = r"raise|cut|send|ask|text|file|post|call|add|change|use|offer|quote|charge|book|price|lower|bundle"
+_EN_WHAT = (r"prices?|rates?|combos?|bundles?|messages?|dms?|questions?|emails?|links?|deadlines?|fees?|forms?|"
+            r"taxes|returns?|offers?|quotes?|price list")
+ONSCREEN_IMPERATIVE = {
+    "vn": re.compile(r"^(?:" + _VN_DO + r")\s+(?:[^\s.?!]+\s+){0,2}?(?:" + _VN_WHAT + r")(?!\w)"
+                     r"|^(?:" + _VN_DO + r")\s+(?:\S+\s+)?trước\s+(?:ngày|giờ|hạn|\d)", re.I),
+    "en": re.compile(r"^(?:" + _EN_DO + r")\s+(?:[^\s.?!]+\s+){0,2}?(?:" + _EN_WHAT + r")\b"
+                     r"|^(?:" + _EN_DO + r")\s+(?:\S+\s+)?(?:before|by)\s+(?:the\s+)?(?:day|\d|monday|friday|deadline)", re.I),
+}
+IMPERATIVE_NOT_RE = {"vn": re.compile(r"\?|(?<!\w)(?:là|thì)(?!\w)", re.I), "en": re.compile(r"\?|\b(?:is|are|was)\b", re.I)}
 ONSCREEN_METHOD = {
     "vn": re.compile(r"^(?!pov\b)[^:]{2,30}:\s*\S|(?<!\w)(?:trước khi|thay vì|rồi mới|bằng cách|hãy|bước \d)(?!\w)", re.I),
     "en": re.compile(r"^(?!pov\b)[^:]{2,30}:\s*\S|\b(?:before you|instead of|by (?:asking|sending|saying)|then)\b", re.I),
 }
+
+
+# A thumbnail's words under a long video's title ("1. Khách nói … rồi im: nhắn gì?" then "   Chữ ảnh bìa: …"; EN
+# "Thumbnail:", "Thumbnail words:"). §CM-HOOKS 4 / §CM-PACKAGING 4 (v13.8): they add one thing the title doesn't say,
+# never repeat it, never state the method: the same checks as a short's on-screen text, the title standing for line 1.
+THUMB_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:chữ (?:trên )?ảnh bìa|thumbnail(?:\s+(?:text|words))?)\s*(?:\([^)\n]*\))?"
+                      r"(?:\*\*|__)?\s*:\s*(\S.*)$", re.I)
+_TITLE_LEAD_RE = re.compile(r"^[\s>*_`-]*(?:\d+\s*[.)]?\s+)?(?:(?:tiêu đề|title)\s*(?:\d+\s*)?:\s*)?", re.I)
+
+
+def hook_thumbs(run: Run) -> list[dict]:
+    """Every thumbnail text the machine printed with its title: {"turn", "on", "first"} (the title is the nearest line
+    above, within 3 lines, list number and "Tiêu đề:" / "Title:" label dropped). A thumbnail with no title above is
+    left out."""
+    out = []
+    for r in run.replies:
+        for i, ln in enumerate(r.lines):
+            m = None if ln.fence else THUMB_RE.match(ln.plain)
+            if not m:
+                continue
+            title = ""
+            for j in range(i - 1, max(-1, i - 4), -1):
+                prev = r.lines[j]
+                if prev.fence or not prev.plain.strip():
+                    continue
+                if not (THUMB_RE.match(prev.plain) or ON_SCREEN_RE.match(prev.plain)):
+                    title = _unquote(_TITLE_LEAD_RE.sub("", prev.plain, count=1))
+                break
+            if title:
+                out.append({"turn": r.turn, "on": _unquote(m.group(1)), "first": title})
+    return out
+
+
+def thumb_findings(t: dict, cfg: dict, lang: str, frames_on: bool = True) -> tuple[list[str], list[str]]:
+    """(repeat, method) messages for one thumbnail (hook_thumbs): it repeats its title (cfg["share"] of its content
+    words, a real overlap) or adds no word of its own, or it states the method (onscreen_method)."""
+    where = f'turn {t["turn"]}: ' if t.get("turn") is not None else ""
+    on, title = _short(t["on"], 50), _short(t["first"], 60)
+    repeat, method = [], []
+    found = onscreen_repeat(t["on"], t["first"], cfg["min_words"], lang)
+    if found and found[0] >= cfg["share"] and _real_overlap(found[1], t["first"], cfg.get("min_shared", ONSCREEN_REPEAT_MIN_SHARED)):
+        repeat.append(f'{where}thumbnail "{on}" says its title again ({found[0]:.0%} of its words: '
+                      f'{", ".join(found[1][:5])}): "{title}"; it should add what the title does not')
+    else:
+        got = onscreen_adds(t["on"], t["first"], "", cfg["min_words"], lang)
+        if got and len(got[1]) < cfg["new_words_min"]:
+            repeat.append(f'{where}thumbnail "{on}" has no word that is not already in its title '
+                          f'({", ".join(got[0][:5])}): "{title}"')
+    hit = onscreen_method(t["on"], lang) if frames_on else ""
+    if hit:
+        method.append(f'{where}thumbnail text states the method ("{hit}"): a big number, the result, or a verdict or '
+                      f'dare that hides it: "{on}"')
+    return repeat, method
 
 
 def hook_frame(text: str, lang: str) -> str:
@@ -6768,6 +6866,8 @@ def onscreen_method(text: str, lang: str) -> str:
     """The words where an on-screen text states the method ("tin đầu: đừng gửi giá."), '' when it doesn't."""
     body = ck.straight_quotes(ck.nfc(text or "")).strip().strip('"').strip()
     m = ONSCREEN_METHOD[lang].search(body)
+    if not m and not IMPERATIVE_NOT_RE[lang].search(body):     # "Gửi giá liền, sao khách im?", "Báo giá rẻ là còn thiếu":
+        m = ONSCREEN_IMPERATIVE[lang].search(body)             #   a question or an "X là Y" verdict, the verb a noun
     return m.group(0).strip() if m else ""
 
 
@@ -6832,11 +6932,14 @@ def check_hook_lab(run: Run) -> dict:
     - v13.7 (the founder's screenshots as mandatory frames): a short's first line and a text post's line 1 fill one of
       the hook frames (HOOK_FRAMES; a scene or a lesson fills none), and a short's on-screen text never states the
       method (ONSCREEN_METHOD: a label + the lesson, "tin đầu: đừng gửi giá."); acceptance [hook_lab] frame_check.
+    - v13.8 (§CM-HOOKS 4): the repeat share is 0.6, an imperative + what to do it to ("tăng giá combo.", "nộp trước
+      ngày 20.": ONSCREEN_IMPERATIVE) states the method, and a long video's thumbnail text (hook_thumbs) is held to the
+      same repeat, paraphrase and method checks against its title.
     A warning (the check still passes) when a short's last line names the method instead of landing the answer.
     A proxy: the rubric's other items (HL1-HL5, HG1-HG3) need a reader. n/a when the run printed none of these."""
     cfg = _hook_cfg(run)
-    shorts, heads = hook_shorts(run), hook_headlines(run)
-    if not shorts and not heads:
+    shorts, heads, thumbs = hook_shorts(run), hook_headlines(run), hook_thumbs(run)
+    if not shorts and not heads and not thumbs:
         return {"id": "hook_lab", "pass": True, "status": "n/a", "items": [],
                 "evidence": ["no short with an on-screen line, text post, slide or subject line was printed"],
                 "details": {"shorts": 0}}
@@ -6875,6 +6978,10 @@ def check_hook_lab(run: Run) -> dict:
             m = OPINION_ASK[lang].search(s.get(key, "") or "")
             if m and m.group(0).strip():
                 opinion.append(f'{where}the ask is an opinion question ("{m.group(0).strip()}"); give a choice ("A hay B?")')
+    for t in thumbs:
+        got_repeat, got_method = thumb_findings(t, cfg, lang, frames_on)
+        repeat += got_repeat
+        method += got_method
     names = {"post": "text post line 1", "slide": "slide 1", "subject": "subject line"}
     for h in heads:
         where = f"turn {h['turn']}: "
@@ -6898,7 +7005,7 @@ def check_hook_lab(run: Run) -> dict:
                 and len(h["text"]) > cfg["max_chars"]:
             long.append(f'{where}{what} is {len(h["text"])} characters, over {cfg["max_chars"]}: "{_short(h["text"], 70)}"')
     items = [
-        {"item": "on-screen text adds to the first spoken line (never repeats it)", "pass": not repeat,
+        {"item": "on-screen text adds to the first spoken line (never repeats it)", "pass": not repeat,     # thumbnails vs titles too
          "evidence": list(dict.fromkeys(repeat))},
         {"item": "no flat claim on screen", "pass": not flat_on, "evidence": list(dict.fromkeys(flat_on))},
         {"item": "no flat claim in the first line or the caption's line 1", "pass": not flat_line,
@@ -6926,6 +7033,7 @@ def check_hook_lab(run: Run) -> dict:
                        "text_posts": sum(1 for h in heads if h["kind"] == "post"),
                        "slides": sum(1 for h in heads if h["kind"] == "slide"),
                        "subjects": sum(1 for h in heads if h["kind"] == "subject"),
+                       "thumbnails": len(thumbs),
                        "onscreen_repeat_share": cfg["share"], "headline_max_chars": cfg["max_chars"]}}
     if warn:
         out["warnings"] = list(dict.fromkeys(warn))

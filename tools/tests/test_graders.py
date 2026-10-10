@@ -4035,7 +4035,9 @@ NHI_N3_LABEL = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hìn
                 "Câu đầu: Nhiều người bảo đã nghiên cứu khách: đọc vài bài, hỏi AI ít từ khoá.\n"
                 "Câu cuối: Hiểu khách là ngồi nghe họ kể.\n```")
 # Hạnh's N2: the last line names the method instead of landing the answer.
-HANH_N2 = ("N2 · thứ Hai 12/10 · 24 giây\n```\nChữ trên màn hình: Chào liệu trình bằng cái gương\n"
+# v13.8: the on-screen text was "Chào liệu trình bằng cái gương" (3 of 5 words from the first line, 60%, and "bằng"
+# names the method); this test is about the last line, so the on-screen text now adds a verdict of its own.
+HANH_N2 = ("N2 · thứ Hai 12/10 · 24 giây\n```\nChữ trên màn hình: khách tự hỏi giá luôn\n"
            "Khung hình đầu: chị cầm cái gương đưa về phía máy\n"
            "Câu đầu: Nếu bạn ngại chào liệu trình vì sợ dọa da khách, xem cái này.\n"
            "Câu cuối: Chị gọi là cầm gương nói thật, đơn giản lắm.\n```\n"
@@ -6435,6 +6437,114 @@ class HookFrameGraderTests(TempRepo):
         items = {i["item"]: i for i in self.inv(self.vn(scene), "hook_lab")["items"]}
         self.assertTrue(items["the first line fills one of the hook frames (never a scene)"]["pass"])
         self.assertTrue(items["the on-screen text never states the method"]["pass"])
+
+
+class V138GraderFixTests(TempRepo):
+    """v13.8 (COMPARE v13.7 grader bugs; §CM-HOOKS 4): the Southern "coi" fills the call-out frame; on-screen and
+    thumbnail text that repeats line 1 (≥60% of its content words) or states the method fails; the I8, I9, I11 and I23
+    false alarms of the v13.7 demo are read as what they are."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", FT1_STRINGS))
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.write("evals/personas/vn/quyen/persona.toml", 'xung_ho = "chị–em"\ndialect = "Nam"\n'
+                   'allowed_numbers = ["10", "12"]\n')
+        self.write("evals/personas/vn/quyen/answers.md", "## Dump chunk 1\nChị làm sale 10 năm.\n")
+
+    vn = HookPrinciplesGraderTests.vn
+    CFG = {"share": graders.ONSCREEN_REPEAT_SHARE, "min_words": 2, "new_words_min": 1, "max_chars": 70, "min_shared": 3}
+    COI = 'Nếu khách cứ nói "để chị suy nghĩ" rồi mất luôn, anh chị coi cái này nha.'
+
+    def test_coi_and_xem_thu_fill_the_call_out_frame(self):
+        for text in (self.COI, "Chủ tiệm nail mà cuối tháng vẫn hụt tiền, xem thử video này nè.",
+                     "Sáng nào cũng chạy mà gối vẫn đau? Coi thử cái này."):
+            with self.subTest(text=text):
+                self.assertEqual(graders.hook_frame(text, "vn"), "xem cái này")
+        for text in ("Mình coi lại cả năm sổ sách, khách vẫn đi.", "Coi chừng mất khách vì một tin nhắn."):
+            with self.subTest(text=text):
+                self.assertEqual(graders.hook_frame(text, "vn"), "", text)
+
+    def test_onscreen_repeat_at_60_percent(self):
+        self.assertEqual(graders.ONSCREEN_REPEAT_SHARE, 0.6)
+        got = graders.short_findings({"turn": 3, "on": "Chạy bộ sáng, gối đau, giày mới",
+                                      "first": "Chạy bộ buổi sáng mà gối vẫn đau, đổi mấy đôi rồi. Xem cái này."},
+                                     self.CFG, "vn")
+        self.assertTrue(got["repeat"], got)                  # 4 of 6 content words come back (67%): passed at 0.75
+        got = graders.short_findings({"turn": 3, "on": "Chào liệu trình bằng cái gương",
+                                      "first": "Nếu bạn ngại chào liệu trình vì sợ dọa da khách, xem cái này."},
+                                     self.CFG, "vn")
+        self.assertTrue(got["repeat"], got)                  # 3 of 5 (60%): passed at 0.75, fails at 0.6
+        # "nói thật" (the truth) is no intensifier: the on-screen text says what line 1 does not (COMPARE v13.7)
+        got = graders.short_findings({"turn": 3, "on": "khách đang nói thật đó.", "first": self.COI}, self.CFG, "vn")
+        self.assertEqual((got["repeat"], got["adds"]), ([], []), got)
+        got = graders.short_findings({"turn": 3, "on": "khách nói thật mà", "first": "Khách nói thật mà mình không tin."},
+                                     self.CFG, "vn")
+        self.assertTrue(got["repeat"] or got["adds"], got)   # with "thật" in line 1 too it is still a paraphrase
+
+    def test_an_imperative_and_what_to_do_it_to_states_the_method(self):
+        for text in ("tăng giá combo.", "nộp trước ngày 20.", "gửi tin nhắn thứ hai.", "hỏi câu hỏi này trước khi báo giá"):
+            with self.subTest(text=text):
+                self.assertTrue(graders.onscreen_method(text, "vn"), text)
+        for text in ("raise the combo price.", "file before the 20th."):
+            with self.subTest(text=text):
+                self.assertTrue(graders.onscreen_method(text, "en"), text)
+        for text in ("không tại thợ.", "năm nay khỏi phạt.", "không tại giày.", "đừng giảm giá.", "hỏi xíu thôi mà",
+                     "Gửi giá liền, sao khách im?", "Báo giá rẻ là còn thiếu"):
+            with self.subTest(text=text):
+                self.assertEqual(graders.onscreen_method(text, "vn"), "", text)
+        for text in ("no fine this year.", "not your shoes.", "don't discount."):
+            with self.subTest(text=text):
+                self.assertEqual(graders.onscreen_method(text, "en"), "", text)
+
+    THUMBS = ("Em đặt 3 tiêu đề cho video dài:\n```\n1. Sáng nào cũng chạy mà gối vẫn đau? Xem cái này.\n"
+              "   Chữ ảnh bìa: {a}\n2. Tiệm nail kín lịch mà cuối tháng vẫn hụt tiền? Cho mình 8 phút.\n"
+              "   Chữ ảnh bìa: {b}\n```")
+
+    def test_thumbnail_text_is_held_to_its_title(self):
+        bad = self.THUMBS.format(a="gối đau?", b="tăng giá combo.")
+        self.assertEqual([(t["on"], t["first"][:8]) for t in graders.hook_thumbs(graders.load_run(
+            self.run_dir([("coach", "tiếp"), ("machine", f"{TAG}{bad}\n\nTIẾP → Nhắn 'tiếp'.")], persona="vn/quyen",
+                         edition="vn"), self.root))], [("gối đau?", "Sáng nào"), ("tăng giá combo.", "Tiệm nai")])
+        report = self.vn(bad)
+        self.assertFails(report, "hook_lab", 'thumbnail "gối đau?" has no word that is not already in its title')
+        self.assertFails(report, "hook_lab", 'thumbnail text states the method ("tăng giá")')
+        good = self.THUMBS.format(a="không tại giày.", b="không tại thợ.")
+        report = self.vn(good)
+        self.assertPasses(report, "hook_lab")
+        self.assertEqual(self.inv(report, "hook_lab")["details"]["thumbnails"], 2)
+
+    def test_i8_the_cards_particle_share_is_no_claim(self):
+        line = "dialect=nam·tiểu từ ~50%·nha, hen, nè code_mix=inbox, seen"
+        [n] = [n for n in graders.ck.numbers_in(line) if n.percent]
+        self.assertTrue(graders.non_claim_number(line, n))
+        for line in ("50% khách quay lại sau tin thứ hai.", "Tỉ lệ chốt ~50% sau khóa học."):
+            with self.subTest(line=line):
+                [n] = [n for n in graders.ck.numbers_in(line) if n.percent]
+                self.assertFalse(graders.non_claim_number(line, n), line)
+
+    def test_i9_a_content_line_name_before_its_format(self):
+        self.assertTrue(graders.SERIES_NAME_AFTER_RE.match(" · video ngắn · NIỀM TIN"))
+        self.assertTrue(graders.SERIES_NAME_AFTER_RE.match(": video ngắn ~550 chữ"))
+        self.assertIsNone(graders.SERIES_NAME_AFTER_RE.match(" · khách nói vậy đó"))
+        self.assertIsNone(graders.SERIES_NAME_AFTER_RE.match(", rồi mình gửi video"))
+
+    def test_i11_a_list_number_is_no_number_one_claim(self):
+        rx = graders.ck.phrase_re("số 1")
+        for text in ("lần tới mở inbox thì đọc lại điều số 1.", "Cách số 1 là hỏi lại khách."):
+            with self.subTest(text=text):
+                self.assertTrue(graders._numbered_label(text, rx.search(text)), text)
+        for text in ("Trung tâm đào tạo sale số 1 Việt Nam.", "Mình là coach số 1 về chốt sale."):
+            with self.subTest(text=text):
+                self.assertFalse(graders._numbered_label(text, rx.search(text)), text)
+
+    def test_i23_a_buyer_asking_the_price_in_the_inbox_is_no_tell(self):
+        rx = graders.re.compile(r"(?i)\bgiá\s+(?:ib|inbox)\b")
+        text = "người đi mua bực khi hỏi giá inbox rồi bị bỏ lơ (diễn đàn)"
+        self.assertTrue(graders._described_tell(text, rx.search(text)))
+        for text in ("Liệu trình mới, giá inbox nha.", "Giá ib, số lượng có hạn."):
+            with self.subTest(text=text):
+                self.assertFalse(graders._described_tell(text, rx.search(text)), text)
 
 if __name__ == "__main__":
     unittest.main()
