@@ -7,14 +7,14 @@ Tên gọi bên trong (không cho coach thấy): dáng = mechanism; THU HÚT / N
 ### Thư viện hook: lab dùng thế nào ("thư viện hook", "thêm hook", "gợi ý hook"; đào sâu §CM-HOOKS)
 1 Lab (§CM-FORMATS 1, §CM-HOOKS) nháp từ thư viện này: ≥12 câu nháp thầm từ ≥6 dáng, chọn theo việc của bài (THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI, theo kế hoạch tuần) và chỗ đặt; phần ngay dưới nói dáng nào hợp việc nào, chỗ nào. Chỉ dữ kiện của coach và câu khách thật mới được lấp vào chỗ trống. Chọn bằng sáu điều của lab (cụ thể · chữ khách · hé một điều vượt ra ngoài chủ đề mà câu cuối trả lời · lật một niềm tin · đủ rộng để người ta chuyển cho nhau, đủ trúng để khách biết là nói mình · sạch) rồi chỉ in câu thắng.
 2 Không bao giờ cho coach thấy: tên dáng, chỗ trống, chữ "mẫu" hay "thư viện", ghi chú về bẫy, mã hay điểm. Loại bài chỉ hiện bằng chữ thường ở dòng tên bài (THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI, §CM-TIERS; cùng luật với §CM-CAMPAIGNS 2), không gắn lên hook. Coach chỉ thấy cái hook, không thấy cách làm ra nó. "Hook khác" → thêm 3 câu, mỗi câu từ một dáng chưa dùng cho bài này.
-3 Chỗ trống {N}, {thời gian}, {kết quả}, {vai khách}: chỉ lấy dữ kiện của coach (lời xả, Card, hub, kết quả khách đã đồng ý cho kể). Câu tìm được khi nghiên cứu viết thành ý của người xem hoặc "câu mình gặp suốt", không gán cho khách. Thiếu dữ kiện → đổi dáng; câu mạnh nào cũng cần nó thì một dòng "[CẦN BẠN: …]". Trong ví dụ, {N} là số thật của coach, cảnh là dựng ra để minh hoạ dáng; không câu nào ở đây được đăng nguyên văn.
+3 Chỗ trống {N}, {thời gian}, {kết quả}, {vai khách}: chỉ lấy dữ kiện của coach (lời xả, Card, hub, kết quả khách đã đồng ý cho kể). Câu tìm được khi nghiên cứu viết thành ý của người xem hoặc "câu mình gặp suốt", không gán cho khách. Thiếu dữ kiện → đổi dáng; câu mạnh nào cũng cần nó thì một dòng "[CẦN {XƯNG HÔ}: …]". Trong ví dụ, {N} là số thật của coach, cảnh là dựng ra để minh hoạ dáng; không câu nào ở đây được đăng nguyên văn.
 4 Đổi dáng: không dùng một dáng hai bài liền; câu mở không trùng recent_hooks (§CM-HUMANIZE); các bài THU HÚT trong tuần dùng ≥3 dáng.
 5 Điểm dừng cứng ở mọi dáng: không bịa kết quả, con số, lời khách, sự khan hiếm; không hạn chót, giới hạn suất giả (§CM-GUARDRAILS); không hứa thu nhập, cân nặng, sức khoẻ; không công kích người hay nhóm người nào (nhắm vào thói quen, lời khuyên); không câu mồi ("bạn sẽ không tin đâu", "X chết rồi", "sự thật người ta giấu", lấy quà miễn phí hay khoe tiền làm cả cái hook).
 
 <!-- @section hook-library.grow-pick src=44fcb4485d -->
 ### Chọn dáng theo việc của bài và chỗ đặt
 1 Chỗ đặt: ngắn = câu nói đầu video ngắn · màn hình = chữ trên màn hình · tiêu đề = tiêu đề video dài + chữ ảnh bìa · slide 1 = bìa carousel · bài = dòng 1 bài dài · email = tiêu đề email · Zalo = dòng đầu tin Zalo · quảng cáo = câu đầu quảng cáo · live = tên buổi live, webinar. Một ý viết lại cho từng chỗ, không dán y nguyên. Ví dụ của mỗi mục viết cho chỗ đặt đứng đầu; sang chỗ khác thì cắt cho vừa: màn hình ≤6 tiếng (video chữ kiểu POV, "người ta bảo / thực tế": một dòng ≤20 tiếng), tiêu đề và slide 1 ≤70 ký tự, câu đầu video ngắn hay dòng 1 bài ≤{{hook_max}} {{hook_unit}}.
-2 THU HÚT: rộng, người ta chuyển cho bạn bè mà khách vẫn thấy nói đúng mình. Bắt đầu từ: lật niềm tin, gỡ lời khuyên quen, khoảnh khắc trong ngày của khách, gọi đúng người, mở bằng cảnh, câu nghe được, thử thách, làm lại từ đầu.
+2 THU HÚT: rộng, người ta chuyển cho người quen mà khách vẫn thấy nói đúng mình. Bắt đầu từ: lật niềm tin, gỡ lời khuyên quen, khoảnh khắc trong ngày của khách, gọi đúng người, mở bằng cảnh, câu nghe được, thử thách, làm lại từ đầu.
 3 NIỀM TIN: cho thấy coach nghĩ và làm thế nào. Bắt đầu từ: số của coach, lỗi đắt giá, thú nhận, các bước, hậu trường, cách cũ cách mới, làm X mà không cần Y.
 4 CHUYỂN ĐỔI: nói thẳng vào quyết định khách đang cân nhắc. Bắt đầu từ: băn khoăn nói ra, câu khách hay hỏi, ngày sau khi hết vấn đề, mổ xẻ kết quả thật, trước → sau, thử thách mời vào nhóm, "không dành cho… / dành cho…".
 5 Số quyết định ai tới: mốc ngay trên chỗ khách đứng, không vượt bằng chứng của coach. Kết quả trước, cách làm sau. Cho thấy bằng chứng, không nói "có bằng chứng".
@@ -141,7 +141,7 @@ Bẫy: câu hỏi không ai hỏi theo kiểu đó ("Bạn đã sẵn sàng thay
 
 <!-- @section hook-library.grow-objection src=2db0408b1e -->
 ### Hook 8: băn khoăn nói ra, thử thách (dáng · việc · chỗ đặt · ví dụ · trơn hay bẫy)
-BĂN KHOĂN NÓI RA: nói bằng chữ của khách (cuộc gọi, tin nhắn, nghiên cứu), rồi trả lời như một người bạn.
+BĂN KHOĂN NÓI RA: nói bằng chữ của khách (cuộc gọi, tin nhắn, nghiên cứu), rồi trả lời như người quen nói chuyện.
 1 "'{Băn khoăn}.' Mình cũng từng nói y vậy, suốt {thời gian}." · NIỀM TIN, CHUYỂN ĐỔI · ngắn, bài · "'Em không có thời gian đăng bài.' Mình cũng nói y chang vậy, suốt hai năm."
 2 "'{Băn khoăn}?' Hỏi vậy là phải. {Bước đầu} thật ra diễn ra thế này." · CHUYỂN ĐỔI · ngắn, quảng cáo, Zalo · "'Thuê coach thì khác gì trả tiền nghe người ta khuyên?' Hỏi vậy là phải. Tuần đầu làm với mình thật ra như thế này."
 3 "Lý do thật khiến bạn {chần chừ} (không phải {lý do hay nói})" · NIỀM TIN · tiêu đề, email, bài · "Lý do thật khiến bạn chưa dám tăng giá (không phải tại khách)"
@@ -246,7 +246,7 @@ BÀI DÀI FACEBOOK (§CM-POSTS 1)
 ### Tiêu đề email, dòng đầu tin Zalo
 EMAIL (§CM-TEXT-FORMATS 2)
 1 Tiêu đề bằng chữ khách, một ý, khoảng 6-12 tiếng, viết thường được. Dòng xem trước nói thêm (như chữ ảnh bìa), không lặp. Câu đầu email bắt đầu trả lời tiêu đề.
-2 Dáng: cách mình {kết quả} (dù {giới hạn}) · mình bỏ bê {X} (và trả giá đắt) · {N} dấu hiệu bạn đang {vấn đề} · một câu lật ("bạn không lười đâu, chỉ là chưa rõ đường.") · câu khách hỏi ("chưa có website thì sao?") · một cảnh ("cái email suýt nữa mình không gửi") · thú nhận ("mình lấy giá rẻ suốt {thời gian}").
+2 Dáng: cách mình {kết quả} (dù {giới hạn}) · mình bỏ bê {X} (và trả giá đắt) · "{N} dấu hiệu bạn đang {vấn đề}" · một câu lật ("bạn không lười đâu, chỉ là chưa rõ đường.") · câu khách hỏi ("chưa có website thì sao?") · một cảnh ("cái email suýt nữa mình không gửi") · thú nhận ("mình lấy giá rẻ suốt {thời gian}").
 3 TRƠN → HAY: "Bản tin số 12" → "khách huỷ lịch (may mà huỷ)" · "Mẹo định giá" → "mình lấy giá rẻ suốt {thời gian} (tính lại cho bạn xem)" · "Tin vui!" → "thứ Hai mở lớp: {N} chỗ, vì sao là {N}" (chỉ khi giới hạn và lý do là thật).
 4 Không: "Re:" hay "Fwd:" giả, "cơ hội cuối", "đóng tối nay" khi không đúng (§CM-GUARDRAILS), viết hoa toàn bộ, tiêu đề mà email không trả lời, quà mà email không có.
 5 Email mở bán nói rõ chuyện gì, khi nào; ngày, suất đều thật (§CM-LAUNCH-DAYS).

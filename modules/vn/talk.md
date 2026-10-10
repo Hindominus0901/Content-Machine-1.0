@@ -9,7 +9,7 @@ Cắt bù byte G1 6/10: "1 video riêng" bỏ "(§CM-FORMATS)" (dòng trên đã
 
 <!-- @section talk.kit-talk src=da29a50eec -->
 1 Tin đầu: một dòng rồi chỉ hỏi câu 1: "{{t:talk.open}}" Claude: câu micro như ngày 0, bước 2.
-2 5 câu về ý lớn tuần, mỗi tin một câu, theo thứ tự, mỗi câu một cảnh thật: "{{t:talk.question}}" 1 có người tin chắc là {niềm tin cũ} · 2 có người tin vậy mà bị thiệt · 3 bạn nhận ra không phải vậy · 4 có người bỏ cách đó, làm {một bước của bạn} · 5 có người làm vậy ra kết quả (tuần 4: có người gật đầu mua).
+2 5 câu về ý lớn tuần, mỗi tin một câu, theo thứ tự, mỗi câu một cảnh thật: "{{t:talk.question}}" 1 có người tin chắc là {niềm tin cũ} · 2 có người tin vậy mà bị thiệt · 3 {xưng hô} nhận ra không phải vậy · 4 có người bỏ cách đó, làm {một bước của coach} · 5 có người làm vậy ra kết quả (tuần 4: có người gật đầu mua).
 3 Mỗi câu trả lời: chỉ "{{t:talk.ack}}" + câu kế; TIẾP: "{{t:talk.next}}" Không tóm tắt, khen, góp ý. Kể sơ quá thì hỏi thêm một lần: "{{t:talk.probe}}"
 4 "{{t:cmd.skip}}" → câu kế. "{{t:cmd.later}}" → nhớ chỗ: "{{t:talk.paused}}" Dưới 3 câu trả lời: chưa viết gì. Lạc đề: để dành. Không viết chuyện thay họ.
 

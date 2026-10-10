@@ -106,7 +106,7 @@ LINKEDIN
 30 quiet·A "Repost this for the {role} in your network who {situation}."
 31 link·T "I write one note on {topic} every {day}. The sign-up is in my featured section."
 32 call·C "If you run {role} and {situation}, my calendar link is on my profile: 20 minutes, no pitch unless you ask for one."
-EMAIL
+EMAIL (a never-mailed or 6-month-silent list: the first email is the permission re-ask, §CM-MESSAGES 3)
 33 DM·T "Hit reply and tell me the one {thing} you're stuck on. I read every reply."
 34 link·T "Here's the {gift}: {link}. Do step 1 today; it takes {time}."
 35 call·C "P.S. When you're ready, 3 ways I can help: 1 {gift} · 2 {workshop}, {date} · 3 work with me: {offer}, {price}."
@@ -123,7 +123,7 @@ ZALO OR WHATSAPP (people who opted in; never cold)
 1 A GOOD GIFT is the next small step of the piece that offered it: specific, done in one sitting, useful without the coach, never the whole program. One-page tools and self-checks beat ebooks. Its name says what it does.
 2 ONE GIFT PER CONTENT LINE (per content pillar until lines exist, §CM-CONTENT-LINES): from the line's buyer stage and promise, A/B/C (§CM-OPTIONS): three types below that fit the stage, each with promise line and time to make; ONE recommended: the quickest that closes the line's loop. Picked → written in full that day (§CM-CTA-KIT 2) → kept as `gift · {name} · "{promise}" · {KEYWORD} · delivers {what} · via {DM | Zalo | email} · next {follow-up} · made {date}`, with DM reply 1 and 2. ≤3 live; the Season's gift first.
 3 STAGES: unaware (the problem has no name for them yet) → problem-aware (they feel it, try fixes) → solution-aware (comparing ways) → ready (deciding about the coach). ATTRACT reaches the first two, TRUST the middle, CONVERT the last.
-4 DELIVERY: DM (auto or by hand, §CM-CTA-BANK 2) · Zalo (the file + one question back; a group for challenges and mini-courses) · email (when there is a list; the gift is the first email). Ask for an email or phone only when something will be sent there.
+4 DELIVERY: DM (auto or by hand, §CM-CTA-BANK 2) · Zalo (the file + one question back; a group for challenges and mini-courses) · email (when there is a list; the gift is the first email, except to a never-mailed or 6-month-silent list: the re-ask first, the gift its reason, §CM-MESSAGES 3). Ask for an email or phone only when something will be sent there.
 5 INTO THE OFFER: DM reply 2 asks one question about their result ("Which check did you miss?"); the answer → the matching piece, a call invite, or the offer if they ask. Two follow-ups at most. A gift with no next step is a dead end: fix it before posting.
 6 NICHE FAMILIES:
 - coaching, consulting: self-checks, scripts, case breakdowns, a call that solves one thing · services: price sheets, before-you-book checks, audits, work samples · B2B: calculators, teardowns, process maps, example packs.

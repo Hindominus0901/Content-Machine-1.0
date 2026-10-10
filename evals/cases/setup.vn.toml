@@ -565,33 +565,31 @@ id = "setup.vn.025"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "No stop point: after QUAY HÔM NAY Week 1 comes first, then the Brand Card, the save line and TIẾP; saving never required"
-context = "Door A, ChatGPT Plus on the laptop, pair chị–em. Day 0, about minute 19: the 4-line Map (TỪ KHOÁ: LÃI ẢO) is on screen with QUAY HÔM NAY under it, ending '… OK hay sửa một dòng?'. She will film tonight. Her answer brings Week 1; the Brand Card + save line + TIẾP come in the same reply or, when it runs long, in the next one (setup.kit-order 9)."
-input = """[turn 1] ok em, tối chị quay
-[turn 2] <<simulator: only if the Brand Card has not printed yet, send 'tiếp'; otherwise stop>>"""
+title = "No stop point (v13.5): QUAY HÔM NAY stands alone; 'tiếp' brings the Brand Card, the save line and the Tuần 1 table; one Cần line at most; saving never required"
+context = "Door A, ChatGPT Plus on the laptop, pair chị–em. Day 0, about minute 21: the strategy was OK'd and the last reply was QUAY HÔM NAY alone (script box, caption box, the machine's gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', one line 'Cần chị · chị có sẵn quà chưa? …', TIẾP 'quay xong nhắn tiếp'). She answers without pasting a gift (setup.kit-order 9, start-block steps 6-8)."
+input = """[turn 1] chưa có quà em ơi, tiếp"""
 regex = [
-  '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)''',
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
   '''Brand Card v1\b[\s\S]{0,900}?Phần còn lại là cho máy, không cần đọc:''',
-  '''Lưu lại để em nhớ chị \(30 giây\)''',
+  '''Lưu lại để em nhớ chị''',
   '''Lưu vào dự án''',
-  '''TIẾP →[^\n]*[Qq]uay video hôm nay[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
+  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]''',
 ]
 not_regex = [
   '''(?i)Hôm nay xong rồi''',
-  '''(?i)Có tấm card này mình mới nhớ được''',
-  '''(?i)nghỉ ở đây|kịch bản (?:vẫn )?đợi|kịch bản Tuần 1 \(8 phút\)''',
-  '''(?i)(?:nhắn|gõ) ['"“‘]tiếp['"”’] là có (?:kịch bản )?Tuần 1''',
+  '''(?i)nhớ được bạn|đợi bạn|Cần bạn ·''',
+  '''\[CẦN BẠN|\[anh/chị\]''',
+  '''(?ims)^\W*Cần (?:chị|anh|bạn) ·.*^\W*Cần (?:chị|anh|bạn) ·''',
   '''(?i)(?:làm|viết|gửi|có) (?:luôn )?Tuần 1 (?:luôn )?(?:không|chưa)\s*\?''',
-  '''Phần còn lại là cho máy, không cần đọc:[\s\S]*(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox))''',
   '(?i)(lưu|save)[^.\n]{0,40}(rồi mới|xong mới|mới\s+(làm|viết|được|tiếp))',
   '(?i)(phải|cần)\s+lưu\s+(trước|xong)',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17", "I18"]
 max_questions = 1
-notes = "scope: each reply. wf15 §0 S4, §1.6-§1.8 and start-block steps 7-9 (R13): no stop point. 'ok em, tối chị quay' is not a Map change, so all of Week 1 arrives, never 'làm Tuần 1 không?' or 'nhắn tiếp là có kịch bản Tuần 1'; then the Brand Card (top ≤500 characters: 'Brand Card v1 · {date}', NÓI GÌ:, NÓI THẾ NÀO:; then 'Phần còn lại là cho máy, không cần đọc:' and the machine block) + card.save_line in chị–em 'Lưu lại để em nhớ chị (30 giây).' + the ChatGPT route '⋯ dưới card → Lưu vào dự án' + TIẾP 'Quay video hôm nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' Gone: 'Hôm nay xong rồi. Có tấm card này mình mới nhớ được bạn … hoặc nghỉ ở đây, kịch bản vẫn đợi bạn.' (card.stop_lines, now unused). No Week-1 piece after the card. Saving never gates anything (acceptance [day0] save_gates = 0)."
+notes = "scope: each reply. v13.5 (plan 10 Oct, fixes 3 and 5; setup.kit-order 9, start-block steps 6-8): the reply after QUAY HÔM NAY prints the Brand Card (top ≤500 characters: 'Brand Card v1 · {date}', NÓI GÌ:, NÓI THẾ NÀO:; then 'Phần còn lại là cho máy, không cần đọc:' and the machine block, dialect 'vùng · tiểu từ ~n% · …') + card.save_line in chị–em 'Lưu lại để em nhớ chị.' + the ChatGPT route + the Tuần 1 table (4 columns: Ngày · Dạng · Hook · Lời mời; the full table goes to the file and the hub) + TIẾP 'Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' The other Tuần 1 pieces come one per 'tiếp' or on their day, so no piece box is required here. At most one 'Cần' line; anything else waits in HUB.md 'Đang chờ'. No bare 'bạn' or [CẦN BẠN] to a chị coach. Saving never gates anything (acceptance [day0] save_gates = 0)."
 
 [[case]]
 id = "setup.vn.026"

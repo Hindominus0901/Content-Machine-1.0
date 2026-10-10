@@ -10,10 +10,10 @@ Kit hooks used, unchanged: levelup.kit-offers (the nudges offer, task.* names, t
 - Tuesday to Thursday 6:37, "{{t:task.today.name}}", the drop: today's piece is waiting, plus a hook from the bank.
 - Friday 15:07, "{{t:task.numbers.name}}", the review: the numbers ask; then the review, the hub's numbers and banks, next week as A/B/C.
 - The month's first Wednesday 11:07, "Monthly refresh": channels and niche re-read, a strategy check. On Claude it replaces that day's drop; on ChatGPT it is the month's one two-message day.
-Times sit a few minutes past the hour (runs can start late); they move if asked.
+Times sit just past the hour; they move if asked.
 2 SETUP, for their app only (unknown: ask which app, the one question). One message: the steps, then the texts filled, one copy box each (§CM-NUDGE-TEXTS, §CM-NUDGE-CLAUDE, the monthly text in §CM-HUB-TASKS).
-- ChatGPT (Plus or Pro): "In your {{name}} project, open a new chat, paste one box, send, and check the day and time it shows. If it answers instead of scheduling: Scheduled (sidebar) → New, paste it there. Same for the others. Optional: Settings → Notifications → Tasks: push and email." Tasks can't read project files, so each text carries the Map. Free or Go: 3 task slots, morning or afternoon windows: the batch, the drop, the review; the monthly refresh comes as the month's last Friday NEXT instead, said once.
-- Claude (Pro or Max): Scheduled lives in the Claude desktop app on a computer (sidebar), not the web or phone. "Scheduled → New task → Set up manually. Name: {{name}}. Paste the box (§CM-NUDGE-CLAUDE). Weekdays, 7:07. No folder. Schedule, then Run now once while you watch. Then the same box again, named {{name}} · Friday: Weekly, Friday, 15:07." One text, every job by the day; the review runs Friday afternoon. Hub in Notion: leave the Notion connector on. A Sheet hub is read only via the Google Drive connector when on; else unseen, said once.
+- ChatGPT (Plus or Pro): "In your {{name}} project, open a new chat, paste one box, send, and check the day and time it shows. If it answers instead of scheduling: Scheduled (sidebar) → New, paste it there. Same for the others. Alerts: Settings → Notifications → Tasks." Tasks can't read project files, so each text carries the Map. Free or Go: 3 task slots, morning or afternoon windows: the batch, the drop, the review; the monthly refresh comes as the month's last Friday NEXT instead, said once.
+- Claude (Pro or Max): Scheduled lives in the Claude desktop app on a computer (sidebar), not the web or phone. "Scheduled → New task → Set up manually. Name: {{name}}. Paste the box (§CM-NUDGE-CLAUDE). Weekdays, 7:07. No folder. Schedule, then Run now once while you watch (Friday evening or weekend: skip it, the first run is Monday's). Then the same box again, named {{name}} · Friday: Weekly, Friday, 15:07." One text, every job by the day; the review runs Friday afternoon. Hub in Notion: leave the Notion connector on. A Sheet hub is read only via the Google Drive connector when on; else unseen, said once.
 - Claude, Project only (no plugin): a scheduled task can't open the Project, its files or HUB.md. One A/B/C: "A) the same two tasks: each only nudges, with its own summary; the writing happens when you say 'next' in the project {{t:options.recommended}} B) 3 Google Calendar reminders C) none for now".
 - No scheduler (Claude Free, or they'd rather not): 3 weekly Google Calendar reminders, Monday 7:07, Wednesday 7:07, Friday 15:07, each saying "{{t:task.footer}}"
 
@@ -30,7 +30,7 @@ Times sit a few minutes past the hour (runs can start late); they move if asked.
 ### Caps, catch-up, test and changes
 1 At most one nudge a day: Monday the week, Tuesday to Thursday the drop (the month's first Wednesday: the monthly refresh, instead of the drop on Claude, next to it on ChatGPT), Friday the numbers, weekends none (a launch aside). Never a second message the same day (that monthly one aside), never a "you missed" message.
 2 Monday missed: the next drop, or "next" on any day, writes the rest of the week first. Friday missed: Monday's week runs last week's bets unchanged and its NEXT asks for the numbers once; never chased twice.
-3 A run that fires late does its own day's job for the current week; a run on a day it doesn't own (moved, Run now) does that day's job only, never two jobs.
+3 A run that fires late does its own day's job for the current week; a run on a day it doesn't own (moved, Run now) does that day's job only, never two jobs; a job already done today (Friday's review run in chat) stops, never redone.
 4 Each text stands alone: ChatGPT tasks can't read project files, so each carries the pocket Map (Monday's adds the live campaign). Filled, each stays ≤900 characters: shorten the Map lines first, never the rules.
 5 Every run: never posts, messages, comments, reacts, follows or joins; never writes the Google Sheet; in Notion only upserts inside the hub's own page (§CM-HUB-TASKS 3); never opens apps on the coach's computer; never invents numbers, results, client words, testimonials, deadlines or scarcity ([NEEDS: …]); at most one question; one NEXT line at the end.
 6 LAUNCH MODE: from the launch calendar's day 1 to the day after the close, the weekly nudges are paused and one "Launch day" task runs daily (§CM-NUDGE-LAUNCH), the only nudge. Monday's batch and Friday's scoreboard ride inside that day's desk. Print with it: "Pause your weekly nudges; I'll tell you when to switch them back." Cooldown: "Pause Launch day, resume your weekly nudges."
@@ -71,12 +71,11 @@ End with: {{t:next.prefix}} {{t:task.footer}}
 
 <!-- @section automation.grow-task-claude -->
 {{#unless task}}TEXT · Claude · one text, two schedules (copy box, slots filled, ≤900 characters):
-{{/unless}}{{name}} · Weekdays 7:07 + Fridays 15:07.
+{{/unless}}{{name}} · Mon–Fri 7:07 + Fri 15:07.
 Me: {what I'm known for}. Call me {my name}. Topics: {topic 1} · {topic 2} · {topic 3}. My word: {KEYWORD}. Voice: {voice line}.
-With the {{skill_name}} skill: read the HUB page in my Notion "Content Machine — {my name}" first; write only inside it, never delete, rewrite HUB last. No Notion: my Sheet "{{name}}" via the Google Drive connector, read only.
-No skill (project only): one line on today's job + a spare hook.
-Mon {{t:task.week.name}} · Tue–Thu {{t:task.today.name}} (no week yet: its rest first) · Fri 15:07 {{t:task.numbers.name}}; Fri 7:07: stop, no message · month's first Wed: Monthly refresh instead.
-Never post, message, react, follow, join or open apps on my computer. Invent no numbers, results, client words or deadlines: [NEEDS: …]. One question at most.
+With the {{skill_name}} skill: read my hub first (Notion "Content Machine — {my name}": write only inside it, never delete; or Sheet "{{name}}" via Google Drive: read only). No skill: one line on today's job + a hook.
+Mon {{t:task.week.name}} · Tue–Thu {{t:task.today.name}} (no week yet: its rest) · Fri 15:07 {{t:task.numbers.name}} · Fri 7:07 or job done today: stop · month's first Wed: Monthly refresh.
+Never post, message, react, follow, join or open apps on my computer. Invent no numbers, client words or deadlines: [NEEDS: …]. ≤1 question.
 End with: {{t:next.prefix}} {{t:task.footer}}
 
 <!-- @section automation.grow-task-launch -->

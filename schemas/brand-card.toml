@@ -438,7 +438,7 @@ max_chars = { en = 40, vn = 40 }
 source = "dump"
 required = ["vn"]
 label_key = "card.label.dialect"
-note = "VN: north, central or south + the particles they use (nha, nè, á, ạ, nhé…); EN leaves it out"
+note = "VN: region · the share of sentences ending in a particle, measured once on their pasted posts (else the dump) · the particles they use, e.g. \"nam · tiểu từ ~45% · nha, nè, á\"; every later piece is written within 10 points of that share (§CM-HUMANIZE 2, §CM-NATURAL 4); EN leaves it out"
 
 [[machine.field]]
 name = "code_mix"

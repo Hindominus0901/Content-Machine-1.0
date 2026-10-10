@@ -4,11 +4,11 @@ Thêm so với EN: mốc trong đời khách VN (mùng 10, khai giảng, Tết, 
 Câu nói với coach viết theo cặp mình–bạn; coach đã chọn cặp khác thì đổi theo (start-block, XƯNG HÔ). Tên các bậc tin tưởng, "bộ lọc người mua", tên khung của người khác: chỉ ở bên trong. Không đụng phần kit (0 byte): hai mục kit tuỳ chọn trong bản soát Soo Wei Goh (giá nói thẳng; tin "trước buổi gọi") nằm ở §CM-SEASON (tuần 4, mục 4). Bảng đối chiếu: docs/research/strategy-coverage.md.
 
 <!-- @section strategy.grow-position src=1463a1339d -->
-### Bạn đứng ở đâu ("định vị", "mình khác người ta chỗ nào"; mời một lần ở TIẾP, sau lần lên kế hoạch tháng đầu)
-1 Ba câu, mỗi tin một câu, card có rồi thì bỏ: "Bạn đi trước ai khoảng 5 năm? Một ngày thường của họ thế nào?" · "Người ta hay tìm bạn để hỏi gì, kể cả lúc bạn không bán?" · "Trong nghề, cái gì làm bạn ngứa mắt mà ít khi nói ra?" Chung chung thì hỏi thêm một lần: "Lần gần nhất bạn thấy chuyện đó là khi nào?"
+### Chỗ đứng ("định vị", "mình khác người ta chỗ nào"; mời một lần ở TIẾP, sau lần lên kế hoạch tháng đầu)
+1 Ba câu, mỗi tin một câu, card có rồi thì bỏ: "{Xưng hô} đi trước ai khoảng 5 năm? Một ngày thường của họ thế nào?" · "Người ta hay tìm {xưng hô} để hỏi gì, kể cả lúc không bán?" · "Trong nghề, cái gì làm {xưng hô} ngứa mắt mà ít khi nói ra?" Chung chung thì hỏi thêm một lần: "Lần gần nhất thấy chuyện đó là khi nào?"
 2 Rút ra: AI, người đi sau họ 5 năm, bằng chữ khách · CỬA VÀO, thứ người ta hay hỏi (chủ đề dễ mở nhất) · CÁCH CŨ HỌ CHỐNG, cái ngứa mắt thành một cách làm, không nhắm người hay nhóm người (§CM-CHARACTER-LITE) · 3 Ý LỚN, mỗi ý "cách cũ → cách mới" ≤20 tiếng; bài nào cũng quy về một ý.
 3 Vòng kéo người mới: chuyện cả khách lẫn người hay gửi bài cho khách đều gặp (tiền, gia đình, thời gian, mùa vụ của nghề); không lấy đời riêng của coach. KHÔNG DÀNH CHO: một dòng nói ai chưa hợp, không chê ai.
-4 Một màn hình, 5 dòng: "Người bạn đi trước 5 năm: …" · "Người ta tìm bạn để: …" · "Bạn không chịu được: …" · "3 ý của bạn: … → …" (×3) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
+4 Một màn hình, 5 dòng: "Người {xưng hô} đi trước 5 năm: …" · "Người ta tìm {xưng hô} để: …" · "{Xưng hô} không chịu được: …" · "3 ý lớn: … → …" (×3) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
 5 OK: lưu vào who, enemy, old_way, idea_shifts; Bản đồ đổi theo ở "lên kế hoạch tháng sau", không đổi giữa mùa (§CM-MAP). Trùng Bản đồ: "Y như chiến lược, đúng hướng rồi." rồi thôi.
 6 ĐẶT TÊN, tin sau, cũng "OK hay sửa một dòng?": 3-5 bước, một thói quen, 4-5 chặng khách đi qua, mỗi thứ một tên 2-5 tiếng từ chữ coach (vật + việc nó làm); không ™, "hệ thống", tên người khác; ngại nói ra thì tả thường. Một tên một nghĩa, lưu method trên Card từ "lên kế hoạch tháng sau" (§CM-MAP), dùng y vậy ở bài, quà, chương, email. Chặng dùng cho bài ("tới chặng này, việc của bạn là…") và câu hỏi phân loại ở tin inbox 1 (§CM-MESSAGES 5).
 
@@ -30,7 +30,7 @@ Trả lời bằng một bài, không giảng: đi thầm theo thứ tự, gặp
 2 Câu hỏi, băn khoăn nghe 2+ lần mà chưa trả lời → trả lời bằng đúng chữ khách.
 3 Bài cũ từng có khách hỏi → cùng ý, dạng, góc hay chuyện mới; không đăng lại y nguyên.
 4 Niềm tin của tuần (§CM-SEASON 2) chưa có bài → một bài dạy về nó.
-5 Khung trong Bài bạn thích chưa dùng tháng này → bản của họ theo khung đó, về ý lớn (§CM-LIKED).
+5 Khung trong Bài {xưng hô} thích chưa dùng tháng này → bản của họ theo khung đó, về ý lớn (§CM-LIKED).
 6 Mốc trong đời khách (mùng 10 nhận lương, khai giảng, Tết, cuối quý) → một khoảnh khắc gắn ý lớn (§CM-MOMENTS).
 7 Không có gì → một quan điểm về cách cũ, đúng độ nóng quen của họ (§CM-CHARACTER-LITE).
 Chủ đề ngoài Bản đồ: §CM-MAP. Không bao giờ đáp "Bạn muốn đăng chủ đề gì?". Hỏi "tại sao?" mới nói lý do.

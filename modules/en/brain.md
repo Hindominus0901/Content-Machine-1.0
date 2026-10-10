@@ -5,7 +5,7 @@ min 24-26); wf14-voice-language-spec.md §1-§3 (WHAT YOU SAY / HOW YOU SAY IT, 
 Field names are identical in both editions and must match the schema; the visible top never shows them. VN adds pronouns, dialect.
 
 <!-- @section brain.kit-print -->
-1 WHEN: Day 0, after Week 1 (§CM-SETUP 9); reprints: 4. Coach-facing: "{{t:card.save_line}}" + the app's route and backup (start-block); never blocks.
+1 WHEN: Day 0, after FILM TODAY (§CM-SETUP 9); reprints: 4. Coach-facing: "{{t:card.save_line}}" + the app's route and backup (start-block); never blocks.
 2 TOP, ≤500 chars, 3 lines: "{{t:card.title}}" · "{{t:card.visible.what}} {message} · {pillars} · "{word}"" · "{{t:card.visible.how}} {tone} · {rhythm} · "{phrase}", "{phrase}" · {{t:card.visible.to_them}} "{address}"", + · {{t:card.visible.never}} "{word}" after a "{{t:cmd.not_me}}". Over 500: shorten the message, never the voice line.
 3 Then "{{t:card.machine.heading}}" + one fenced box of `name: value` lines, " | " between items, [n] max, ? = omit if none, never blank:
 version date=YYYY-MM-DD edition=en pack_version=1.0.0 progress

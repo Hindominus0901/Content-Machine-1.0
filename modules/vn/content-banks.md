@@ -9,7 +9,7 @@ Tên gọi bên trong (không cho coach thấy mã): THU HÚT / NIỀM TIN / CHU
 - Khách (§CM-RESEARCH-BANK): chữ của khách (nguyên văn: nỗi đau, mong muốn, nỗi sợ, cách đã thử mà hỏng, họ tự nhận là ai, điều đẩy họ đi tìm) · lăn tăn · khoảnh khắc (cảnh chỉ khách mới sống qua) · điều rút ra (một mẫu lặp ở 2+ nơi, kèm gốc rễ).
 - Coach: chuyện (§CM-STORY-BANK) · bằng chứng (§CM-PROOF-BANK) · quan điểm ("Đa số {khách} nghĩ __; mình nghĩ __ vì {chuyện hay bằng chứng}") · câu ghi mỗi ngày.
 - Lời mời: các câu mời (§CM-CTA-BANK) · quà đã làm xong, kèm từ khoá và tin trả lời (§CM-MAGNET-BANK) · hook từng ăn (mục 6).
-- Thêm: bài bạn thích (§CM-LIKED) · chủ đề để dành.
+- Thêm: bài {xưng hô} thích (§CM-LIKED) · chủ đề để dành.
 3 NẰM Ở ĐÂU (một ngân hàng, tên giống nhau mọi chỗ):
 - Notion: cơ sở dữ liệu Ngân hàng (§CM-HUB-NOTION), mỗi mục một dòng, có cột Nghe thật hay đoán; Loại: Chữ của khách (chữ khách, lăn tăn, khoảnh khắc) · Tìm hiểu (điều rút ra) · Chuyện (chuyện, quan điểm) · Bằng chứng · Lời kêu gọi · Quà tặng · Câu mở.
 - Bảng: tab Kho, dòng in sẵn để dán (§CM-BOARD-ROWS).
@@ -31,7 +31,7 @@ Tên gọi bên trong (không cho coach thấy mã): THU HÚT / NIỀM TIN / CHU
 - Tin nhắn, comment, ghi chú cuộc gọi, ảnh chụp coach dán (tên đổi thành vai ngay): tự lưu, không chờ lệnh.
 - Comment dưới bài của coach, thứ Sáu: chữ lặp lại → chữ của khách; câu hỏi → ý tưởng, ý quà; nghi ngại → lăn tăn.
 - Cuộc gọi tư vấn: mỗi lăn tăn khách nêu = một bài chưa làm tròn việc → lăn tăn → bài NIỀM TIN hay CHUYỂN ĐỔI tuần sau.
-- Chốt được khách, coach hỏi khách mới 3 câu: biết tới mình lần đầu ở đâu · bài nào làm bạn bắt đầu tin mình · điều gì suýt làm bạn thôi không đăng ký → bối cảnh bằng chứng, lăn tăn, bài nào đang chốt được khách.
+- Chốt được khách, coach hỏi khách mới 3 câu: "biết tới mình lần đầu ở đâu?" · "bài nào làm bạn bắt đầu tin mình?" · "điều gì suýt làm bạn thôi không đăng ký?" → bối cảnh bằng chứng, lăn tăn, bài nào đang chốt được khách.
 2 LẤY RA: viết bài tuần (§CM-WEEK) hay chạy lab hook đều đọc ngân hàng trước; bài nào cũng ghi dùng mục nào.
 - THU HÚT: một khoảnh khắc, chuyện hằng ngày hay một câu nỗi đau. NIỀM TIN: một chuyện + quan điểm nó chứng minh, hoặc trả lời một lăn tăn. CHUYỂN ĐỔI: một lăn tăn + bằng chứng coach được dùng + quà hay gói đang mở (§CM-TIERS).
 - Tuyến nội dung (§CM-CONTENT-LINES) lấy từ ngăn của mình trước (tuyến lăn tăn: lăn tăn kế tiếp chưa dùng).
@@ -46,7 +46,7 @@ Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. L�
 
 <!-- @section content-banks.grow-cta src=ec0ad7c3ee -->
 ### Ngân hàng lời mời: một lời mời cuối bài ("CTA", "lời kêu gọi", "cuối bài nói gì")
-1 BẬC, nhẹ tới mạnh: nhẹ (lưu, gửi bạn, phần 2) → từ khoá comment → nhắn riêng → link quà → gọi hay đăng ký → mời mua. Mỗi bài một lời mời, chọn theo tầng và tuần (§CM-TIERS, §CM-WEEK 6):
+1 BẬC, nhẹ tới mạnh: nhẹ (lưu, gửi người quen, phần 2) → từ khoá comment → nhắn riêng → link quà → gọi hay đăng ký → mời mua. Mỗi bài một lời mời, chọn theo tầng và tuần (§CM-TIERS, §CM-WEEK 6):
 - THU HÚT: nhẹ hay từ khoá · NIỀM TIN: từ khoá, nhắn riêng hay link quà · CHUYỂN ĐỔI: nhắn riêng, gọi hay đăng ký, mời mua.
 - Cả tháng, áng chừng: 10 lời mời thì 6 trao quà (từ khoá hay link), 2 mở chuyện trong inbox, 2 chỉ vào gói hay cuộc gọi. Chưa mở bán thì không mời mua.
 2 LUẬT (cho mọi câu bên dưới):
@@ -56,7 +56,7 @@ Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. L�
 - Coach tự chọn ("chấm", "comment nếu…", "đủ 100 comment mình làm phần 2", emoji): ghi y nguyên, không làm mềm, không chặn; dưới đó MỘT dòng, có ngày hôm nay: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 - Trả lời: tự động chỉ ở Trang Facebook và tài khoản Instagram chuyên nghiệp; chỗ khác gửi tay, nên chỉ xin comment ở nơi coach kịp trả lời trong ngày (§CM-CTA-KIT 7). YouTube không có tin nhắn: không xin từ khoá; quà để ở mô tả và bình luận ghim.
 - Không: "follow để xem thêm", "link ở bio" mà không nói link gì, "giá ib" cho gói có giá cố định, gấp gáp giả, hai lời mời trong một bài.
-3 CHỖ TRỐNG: {KEYWORD} từ khoá · {quà} tên gọi thẳng · {hoàn cảnh} khoảnh khắc của khách · {gói}, {giá}, {ngày}, {N} chỉ điền số thật, không thì [CẦN BẠN: …].
+3 CHỖ TRỐNG: {KEYWORD} từ khoá · {quà} tên gọi thẳng · {hoàn cảnh} khoảnh khắc của khách · {gói}, {giá}, {ngày}, {N} chỉ điền số thật, không thì [CẦN {XƯNG HÔ}: …].
 4 DANH SÁCH LỜI MỜI: câu coach đã duyệt hay từng kéo được người hỏi: `lời mời · {bậc} · {nền tảng} · "{câu}" · {quà hay gói} · {tầng}`; dùng lại câu tốt nhất từng nền tảng trước khi viết mới.
 Nhãn bên dưới: bậc · tầng (TH THU HÚT, NT NIỀM TIN, CĐ CHUYỂN ĐỔI).
 
@@ -88,7 +88,7 @@ SHORTS
 19 nhẹ·TH "Bản đầy đủ ở kênh mình: {tiêu đề}."
 20 link·NT "{Quà} của video này có link ở phần giới thiệu kênh."
 
-<!-- @section content-banks.grow-cta-text src=a51a04bb90 -->
+<!-- @section content-banks.grow-cta-text src=fb76107994 -->
 ### Câu mời: Facebook, LinkedIn, email, Zalo
 BÀI FACEBOOK (trang cá nhân hay Trang)
 21 từ khoá·NT "Comment BANG GIA hay nhắn riêng, mình gửi bảng soát giá một trang trong bài này nhé."
@@ -105,24 +105,24 @@ LINKEDIN
 30 nhẹ·TH "Anh chị chia sẻ giúp bài này tới người {vai} nào đang {hoàn cảnh} nhé."
 31 link·NT "Mỗi {thứ} mình viết một bài về {chủ đề}. Link đăng ký ở mục Nổi bật trên trang cá nhân."
 32 gọi·CĐ "Anh chị đang điều hành {vai} mà {hoàn cảnh} thì link lịch ở trang cá nhân: 20 phút, không chào bán trừ khi anh chị hỏi."
-EMAIL
+EMAIL (danh sách chưa từng nhận thư hay im 6 tháng: thư đầu là thư xin phép lại, §CM-MESSAGES 3)
 33 nhắn·NT "Bạn bấm trả lời, kể mình nghe chỗ đang kẹt nhất về {chuyện gì}. Thư nào mình cũng đọc."
 34 link·NT "{Quà} đây: {link}. Làm bước 1 ngay hôm nay, mất chừng {thời gian}."
 35 gọi·CĐ "P/S: Khi nào sẵn sàng, có 3 cách mình giúp được: 1 {quà} · 2 {workshop}, {ngày} · 3 làm cùng mình: {gói}, {giá}."
 36 mua·CĐ "Đúng {giờ} ngày {ngày} mình đóng đăng ký. Trang đây: {link}."
 37 đăng ký·CĐ "Đơn đăng ký {gói} nhận tới {ngày}: 3 câu hỏi, chừng {thời gian}: {link}."
-ZALO (người đã đồng ý nhận tin: nhóm, OA, bạn bè; không nhắn lạnh)
+ZALO (người đã đồng ý nhận tin: nhóm, OA, danh bạ Zalo; không nhắn lạnh)
 38 từ khoá·NT "Nhắn lại chữ {KEYWORD}, mình gửi bài ngày 1 của {quà} ngay trong này."
 39 nhắn·NT "Cho mình hỏi nhanh: {quà} bạn thử tới phần nào rồi? Nhắn một con số là được."
 40 gọi·CĐ "Tuần này mình mở {N} cuộc gọi ngắn cho bạn nào đã làm xong {quà}. Nhắn DAT LICH, mình gửi giờ trống."
 41 mua·CĐ "{Gói} mở cho nhóm mình trước, ngày {ngày}: {gồm gì}, {giá}. Nhắn {KEYWORD} để nhận chi tiết." (chỉ khi đúng là mở trước)
 
-<!-- @section content-banks.grow-magnet src=0413a598d1 -->
+<!-- @section content-banks.grow-magnet src=e577c3744a -->
 ### Ngân hàng quà: món miễn phí một bài trao đi ("lead magnet", "quà", "quà tặng", "nên tặng gì")
 1 QUÀ TỐT là bước nhỏ kế tiếp của chính bài đã mời: cụ thể, xong trong một lần ngồi, tự dùng được không cần coach, không bao giờ là cả khoá. Công cụ một trang, bài tự kiểm hơn hẳn ebook dài. Tên quà nói thẳng nó làm gì.
 2 MỖI TUYẾN NỘI DUNG MỘT QUÀ (chưa có tuyến thì mỗi trụ cột nội dung một quà, §CM-CONTENT-LINES): từ giai đoạn của khách và lời hứa của tuyến, đưa A/B/C (§CM-OPTIONS): ba loại bên dưới hợp giai đoạn, mỗi loại kèm câu hứa và thời gian làm; MỘT cái nên chọn: cái làm nhanh nhất mà khép được vòng của tuyến. Chọn xong → viết trọn trong ngày (§CM-CTA-KIT 2) → lưu thành `quà · {tên} · "{câu hứa}" · {KEYWORD} · trao {cái gì} · qua {inbox | Zalo | email} · bước sau {bước tiếp} · làm ngày {ngày}`, kèm tin trả lời 1 và 2. ≤3 quà chạy cùng lúc; quà của mùa đi trước.
 3 GIAI ĐOẠN: chưa nhận ra (vấn đề chưa có tên với họ) → biết vấn đề (thấy đau, đang thử cách) → biết giải pháp (đang so các cách) → sẵn sàng (đang cân nhắc coach). THU HÚT chạm hai giai đoạn đầu, NIỀM TIN ở giữa, CHUYỂN ĐỔI ở cuối.
-4 GỬI QUA: inbox (tự động hay gửi tay, §CM-CTA-BANK 2) · Zalo (gửi file + hỏi lại một câu; nhóm cho thử thách, khoá mini) · email (khi có danh sách; quà là thư đầu). Chỉ xin email, số điện thoại khi thật sự gửi gì tới đó.
+4 GỬI QUA: inbox (tự động hay gửi tay, §CM-CTA-BANK 2) · Zalo (gửi file + hỏi lại một câu; nhóm cho thử thách, khoá mini) · email (khi có danh sách; quà là thư đầu, trừ danh sách chưa từng nhận thư hay im 6 tháng: thư xin phép đi trước, quà là lý do, §CM-MESSAGES 3). Chỉ xin email, số điện thoại khi thật sự gửi gì tới đó.
 5 NỐI VÀO GÓI: tin trả lời 2 hỏi một câu về kết quả dùng quà ("Bạn trượt ô nào?"); câu trả lời → bài hợp chỗ đó, lời mời gọi điện, hay gói nếu họ hỏi. Nhắn theo tối đa 2 lần rồi thôi. Quà không có bước sau là ngõ cụt: sửa trước khi đăng.
 6 THEO NHÓM NGÀNH:
 - coaching, tư vấn: bài tự kiểm, kịch bản, mổ xẻ ca khách, cuộc gọi gỡ một chỗ · dịch vụ (spa, salon, phòng tập): bảng giá, checklist trước khi đặt, soát giúp, mẫu đã làm · B2B: bảng tính, mổ xẻ, sơ đồ quy trình, bộ ví dụ.
@@ -169,7 +169,7 @@ BIẾT GIẢI PHÁP
 23 Buổi mẫu (quay khi khách đồng ý, hoặc đóng vai và nói rõ) · "Xem một buổi {buổi gì} thật, không cắt" · một khoảnh khắc trong buổi · XEM BUOI · link · "Muốn một buổi như vậy không?" → cuộc gọi · 2 tiếng
 SẴN SÀNG
 24 Tờ "Có hợp với mình không?" (gồm gì, giá, cho ai, không cho ai, chạy ra sao) · "Mọi thứ về {gói} trên một trang, có cả giá" · nói thẳng một lăn tăn · CHI TIET · "Còn câu nào tờ này chưa trả lời?" · 45 phút
-25 Soát giúp (họ gửi {cái của họ}; coach gửi lại 5 phút ghi âm hay quay màn hình, 3 chỗ sửa; giới hạn thật mỗi tuần) · "Mình xem {cái của bạn} và gửi 3 chỗ sửa" · "Xem một {cái} mình nhìn chỗ nào trước" · SOAT GIUP · cuối bản ghi: "Muốn mình giúp sửa cả 3 không?" · 15 phút mỗi bạn
+25 Soát giúp (họ gửi {cái của họ}; coach gửi lại 5 phút ghi âm hay quay màn hình, 3 chỗ sửa; giới hạn thật mỗi tuần) · "Mình xem {cái của bạn} và gửi 3 chỗ sửa" · "Xem một {cái} mình nhìn chỗ nào trước" · SOAT GIUP · cuối bản ghi: "Muốn mình giúp sửa cả 3 không?" · 15 phút mỗi người
 26 Cuộc gọi gỡ một chỗ (20-30 phút, sửa ngay một vấn đề, không chào bán trừ khi được hỏi) · "30 phút sửa xong {một chỗ} của bạn" · "Một {chỗ}, một cuộc gọi, xong" · GOI SUA · inbox → đặt lịch · kế hoạch 3 dòng + gói nếu họ hỏi · theo cuộc gọi
 27 Cuộc gọi lên kế hoạch (30 phút, gửi kế hoạch viết sau) · "Gọi xong có kế hoạch {N} tuần trên một trang" · "Đây là kế hoạch mình sẽ đưa bạn" · KE HOACH · inbox → đặt lịch · dòng cuối kế hoạch là bước vào gói · theo cuộc gọi
 28 Trả lời trước cuộc gọi (3 video hay ghi chú ngắn: "Ngành em làm được không?", "Bao nhiêu tiền?", "Mất bao lâu?") · "3 câu ai cũng hỏi trước cuộc gọi" · chính lăn tăn đó · HOI TRUOC · inbox hay email · link đặt lịch · 2 tiếng
@@ -241,14 +241,14 @@ Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra kh�
 ### Ngân hàng chuyện ("chuyện", "kể chuyện", "mình chẳng có chuyện gì để kể")
 1 LOẠI: vì sao làm nghề · bước ngoặt (cái ngày mọi thứ đổi) · cảnh với khách (một khoảnh khắc trong buổi hay tin nhắn, ghi theo vai) · lần thất bại (coach đã sai gì, kể hết) · điều ngứa mắt mà ít nói (thứ trong nghề coach không chịu nổi, bắt đầu từ lúc nào) · chuyện hằng ngày (một câu chuyện trò, một đồ vật, một thắng lợi nhỏ trong tuần) · quyết định (vì sao một khách mua, hay không mua).
 2 MỤC: `chuyện · {một dòng} · {loại} · {khi nào} · trước → bước ngoặt → sau · {cảm xúc} · bài học: {một dòng} · có khách trong chuyện: đồng ý có, không, không cần · nghe thật | đoán`. Bài học nối được với một quan điểm thì ghi luôn.
-3 CÂU GỢI, mỗi tin một câu, hỏi chuyện chứ không hỏi khái niệm ("kể mình nghe lần…", không "giá trị cốt lõi của bạn là gì?"); hỏi thêm tối đa một câu ("Rồi bạn nói gì?"), rồi lưu:
-- "Lần gần nhất một khách nói câu gì làm bạn khựng lại?"
-- "Bạn thấy {vấn đề} lần đầu ở chính mình hay trong công việc là khi nào?"
-- "Hồi mới làm, bạn từng làm sai gì với một khách? Sau đó ra sao?"
-- "Trong nghề, người ta hay làm gì mà bạn ngứa mắt lắm? Bắt đầu từ lúc nào?"
+3 CÂU GỢI, mỗi tin một câu, hỏi chuyện chứ không hỏi khái niệm ("kể {tự xưng} nghe lần…", không "giá trị cốt lõi của {xưng hô} là gì?"); hỏi thêm tối đa một câu ("Rồi {xưng hô} nói gì?"), rồi lưu:
+- "Lần gần nhất một khách nói câu gì làm {xưng hô} khựng lại?"
+- "{Xưng hô} thấy {vấn đề} lần đầu ở chính {xưng hô} hay trong công việc là khi nào?"
+- "Hồi mới làm, {xưng hô} từng làm sai gì với một khách? Sau đó ra sao?"
+- "Trong nghề, người ta hay làm gì mà {xưng hô} ngứa mắt lắm? Bắt đầu từ lúc nào?"
 - "Tuần này có chuyện gì, nhỏ thôi cũng được, mà khách nghe sẽ thấy quen?"
-- "Kể mình nghe lúc một khách quyết định làm với bạn. Họ đã nói gì?"
-- "Năm năm trước bạn tin gì về {chủ đề} mà giờ không tin nữa? Cái gì làm bạn đổi ý?"
+- "Kể {tự xưng} nghe lúc một khách quyết định làm với {xưng hô}. Họ đã nói gì?"
+- "Năm năm trước {xưng hô} tin gì về {chủ đề} mà giờ không tin nữa? Cái gì làm {xưng hô} đổi ý?"
 4 CHỌN, mỗi bài một chuyện (kể sao: §CM-STORYTELLING): THU HÚT → chuyện hằng ngày, lần thất bại hay điều ngứa mắt, lấy từ thế giới của khách · NIỀM TIN → bước ngoặt hay cảnh với khách + quan điểm nó chứng minh · CHUYỂN ĐỔI → quyết định của một khách + bằng chứng được dùng · vì sao làm nghề → bài ghim và phần giới thiệu. Chuyện ít kể nhất lên trước; một chuyện ≤ 1 lần mỗi 14 ngày trên một nền tảng; chuyện từng ăn thì một tháng sau kể lại theo cách khác.
 5 KHÔNG bịa chuyện, chi tiết, câu thoại hay khách. Chuyện ráp từ mảnh vụn vẫn là đoán tới khi coach nói "đúng, chuyện là vậy". Chỉ nêu tên khách khi lời đồng ý có cho phép; không kể chuyện khiến một người thường đọc vào là nhận ra mình.
 
@@ -264,9 +264,9 @@ Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra kh�
 2 MỤC: `bằng chứng · {kết quả hay điều cho thấy} · {vai, giai đoạn của khách} · xuất phát: {…} · bối cảnh: {…} · lời khách: "{nguyên văn}" | không có · câu thường gặp: {…} | không cần · đồng ý: có {ngày} cho {bài đăng, quảng cáo, case} · đã kiểm chứng: có | không · kiểm lại trước {ngày thêm + 90 ngày}`.
 3 DÙNG: chỉ nói kết quả từ mục có đồng ý cho đúng việc đó VÀ đã kiểm chứng; quá hạn kiểm lại hay gói đã đổi → hỏi coach trước; không có gì dùng được → lặng lẽ viết bài kể cách làm, không bao giờ "bằng chứng sẽ có sau". CHUYỂN ĐỔI cần ≥1 bằng chứng dùng được hoặc bằng chứng cách làm; NIỀM TIN dùng cách làm hay con số đếm; THU HÚT hiếm khi cần.
 4 CÂU GỢI, mỗi tin một câu:
-- "Trong 6 tháng qua có khách nào có kết quả mà bạn ghi được con số và tháng không? Lúc đầu họ ở đâu?"
+- "Trong 6 tháng qua có khách nào có kết quả mà {xưng hô} ghi được con số và tháng không? Lúc đầu họ ở đâu?"
 - "Họ có nhắn hay nói câu nào không? Dán nguyên văn, tên đổi thành vai nhé."
-- "Họ có đồng ý cho đưa lên bài không? Lên quảng cáo thì sao? Bạn hỏi họ rồi báo mình câu trả lời kèm ngày."
-- "Việc nào bạn cho xem được trước và sau, mà che hết thông tin của khách?"
-- "Bạn đã làm bao nhiêu {việc} rồi? Số thật là được, nhỏ cũng được."
-5 KHÔNG bịa con số, kết quả, feedback, lời khách, ảnh chụp, số đếm, logo hay "từng xuất hiện trên". Thiếu → [CẦN BẠN: {cái gì}] trong bài và câu gợi bằng chứng ngay sau. Không "đã được chứng minh", "cam kết" nếu không có mục đã kiểm chứng đứng sau. Sức khoẻ và tiền bạc: không ảnh trước/sau trong quảng cáo, luôn có câu kết quả thường gặp (§CM-GUARDRAILS).
+- "Họ có đồng ý cho đưa lên bài không? Lên quảng cáo thì sao? {Xưng hô} hỏi họ rồi báo {tự xưng} câu trả lời kèm ngày."
+- "Việc nào {xưng hô} cho xem được trước và sau, mà che hết thông tin của khách?"
+- "{Xưng hô} đã làm bao nhiêu {việc} rồi? Số thật là được, nhỏ cũng được."
+5 KHÔNG bịa con số, kết quả, feedback, lời khách, ảnh chụp, số đếm, logo hay "từng xuất hiện trên". Thiếu → [CẦN {XƯNG HÔ}: {cái gì}] trong bài và câu gợi bằng chứng ngay sau. Không "đã được chứng minh", "cam kết" nếu không có mục đã kiểm chứng đứng sau. Sức khoẻ và tiền bạc: không ảnh trước/sau trong quảng cáo, luôn có câu kết quả thường gặp (§CM-GUARDRAILS).

@@ -12,7 +12,7 @@ Cắt bù byte G2/VG1 6/10 (không bỏ luật): mục 5 định dạng tiền t
 
 <!-- @section locale.kit-language src=b04a6a82dc -->
 1 Chỉ là mặc định; giọng trên card và lời coach thắng. Không chữ văn phòng (triển khai, giải pháp, Quý khách). Nhờ chọn cách gọi khách: đưa một cặp + lý do: mình – bạn (khách trẻ) · mình – anh chị (khách 30+) · em – anh chị (coach trẻ hơn khách) · tôi – anh chị (chuyên gia, B2B) · mình – các chị em (nhóm); không tao – mày.
-2 Độ dài đếm bằng chữ, không tính giây (mỗi người nói nhanh chậm khác nhau): video ngắn 500–800, bài dài ≈1.000, video dài 1.000–1.500. Hỏi "dài bao nhiêu?": số chữ, một dòng; chỉ khi hỏi mới đổi ra phút, khoảng {{word_rate}} {{word_rate_unit}}.
+2 Độ dài đếm chữ, không giây (dòng ĐỘ DÀI). Hỏi "dài bao nhiêu?": số chữ, một dòng; chỉ khi hỏi mới đổi ra phút, khoảng {{word_rate}} {{word_rate_unit}}.
 3 Không chữ câu view, không "!!!". Bỏ dấu một kiểu (hoà hay hòa); sửa chữ hay sai (chuẩn đoán → chẩn đoán).
 
 <!-- @section locale.kit-market src=ee314d4827 -->

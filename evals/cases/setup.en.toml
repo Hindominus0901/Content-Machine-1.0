@@ -898,35 +898,29 @@ id = "setup.en.025"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "No stop point: after FILM TODAY Week 1 arrives first, then the Brand Card, the save line and NEXT; saving never required"
-context = "Whole run from the FILM TODAY reply (Day 0, about minute 20, ChatGPT Free on the laptop) to Day 0's last reply. Dana will film tomorrow. On Free, Week 1 comes in 2 replies of at most 3 pieces; the Brand Card + save line + NEXT come in the last Week-1 reply or in the reply after it."
-input = '''[turn 1] ok I'll film it tomorrow morning when my hair looks decent
-[turn 2] next
-[turn 3] ok'''
+title = "No stop point (v13.5): FILM TODAY stands alone; 'next' brings the Brand Card, the save line and the Week 1 table; one Needs-you line at most; saving never required"
+context = "Day 0, about minute 21, ChatGPT Free on the laptop. The strategy was OK'd and the last reply was FILM TODAY alone (script box, caption box, my gift pick in a box, 'Film it now, or post the caption as text.', one line 'Needs you · have your own gift? …', NEXT 'filmed, say next'). Dana will film tomorrow (setup.kit-order 9, start-block steps 5-7)."
+input = '''[turn 1] no gift yet. I'll film it tomorrow morning when my hair looks decent. next'''
 contains = []
 not_contains = []
 regex = [
-  '''(?m)^\W*(?:N\d+ ·|DM reply|Email\b|Reel\b)''',
-  '''(?i)ask (your )?(3|three) past clients''',
   '''WHAT YOU SAY:''',
   '''HOW YOU SAY IT:''',
   '''Brand Card v1\b[\s\S]{0,800}?for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)''',
+  '''Save this so I remember you''',
+  '''(?im)^\W*\|?\s*Day\s*\|\s*Format\s*\|\s*Hook\s*\|\s*Ask''',
   '''NEXT →[^\n]*(?i:open Content Machine, newest chat)''',
 ]
 not_regex = [
   '''(?i)that(?:'|’)s today done''',
   '''(?i)this card is how I remember you''',
   '''(?i)\bstop here\b''',
-  '''(?i)\b(?:they|it)(?:'|’)ll wait\b|\bthey will wait\b''',
-  '''(?i)say ["“'‘]?next["”'’]?,? (?:for|to get) (?:your )?week''',
+  '''(?ims)^\W*Needs you ·.*^\W*Needs you ·''',
   '''(?i)\b(?:want|ready for|shall I (?:write|send|do))\b[^\n]{0,12}\bweek ?(?:1|one)\b''',
-  '''for the machine, no need to read[\s\S]*(?m:^\W*N\d+ ·)''',
   '''(?i)\bsave (it|this|the card)\b[^\n]{0,20}\b(first|before)\b''',
   '''(?i)\b(once|after|when) you(?:'|’)ve saved\b''',
   '''(?i)\b(can(?:'|’)t|won(?:'|’)t|cannot)\b[^\n]{0,30}\b(until|unless)\b[^\n]{0,30}\bsav''',
   '''\A(?:(?!for the machine)[\s\S])*?\b[VSPX]-\d+\b''',
-  '''\A(?:(?!for the machine)[\s\S])*?(?i:\bpillars?\b|big domino|\bB[1-7]\b)''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''\bPam\b''',
@@ -936,7 +930,7 @@ invariants = ["I1", "I2", "I3", "I4", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. wf15 §0 S4, §1.6-§1.8 and §CM-SETUP 9 (R13): no stop point. After FILM TODAY any message gets Week 1, never 'want Week 1?' or 'say next for your Week 1'; then the Brand Card (top ≤500 characters: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the machine block) + 'Save this so I remember you (30 s).' + the app's route (+ the reminder offer in S1, asserted in setup.en.035; K26 cut it from the block) + NEXT 'Film today's video. Tomorrow: open Content Machine, newest chat, say 'next'.' Gone: 'That's today done', 'This card is how I remember you', 'stop here; they'll wait' (card.stop_lines, now unused). No Week-1 piece after the card. Saving never gates anything (acceptance [day0] save_gates = 0). Quit point 5: no brand wall, no framework codes in the visible part. Graded with graders.py checks deny_list as well as the invariants listed."""
+notes = """scope: each reply. v13.5 (plan 10 Oct, fixes 3 and 5; setup.kit-order 9, start-block steps 5-7): the reply after FILM TODAY prints the Brand Card (top ≤500 characters: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the machine block) + card.save_line 'Save this so I remember you.' + the app's route + the Week 1 table (4 columns: Day · Format · Hook · Ask; the full table goes to the file and the hub) + NEXT 'Tomorrow: open Content Machine, newest chat, say 'next'.' The other Week-1 pieces come one per 'next' or on their day, so no piece box is required here. At most one 'Needs you' line; other waits go to HUB.md 'Waiting on you'. Saving never gates anything (acceptance [day0] save_gates = 0). Graded with graders.py checks deny_list as well as the invariants listed."""
 
 [[case]]
 id = "setup.en.026"

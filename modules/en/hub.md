@@ -8,8 +8,8 @@ Kit hooks used, unchanged: levelup.kit-offers (the board offer), plan.kit-week, 
 0 The hub is the Notion workspace (§CM-HUB-NOTION) plus HUB.md (§CM-HUB-MD). This sheet is option B of that one choice, offered at the first "next" with no hub, never on Day 0 (§CM-HUB-NOTION 4), or theirs when they say "Google Sheet", "Excel" or "no Notion". HUB.md is kept either way.
 1 One Google Sheet, five tabs, headers in plain words. They never type in it: whenever I write pieces, a campaign, a Friday review or a launch, I print the rows to paste (§CM-BOARD-ROWS).
 - Campaigns: one row per campaign, a month or a launch: goal, offer, big idea, keyword, start, end, status, results.
-- Content: one row per piece, tied to its campaign: date, platform, format, hook, status (Idea → Scripted → Filmed → Posted), link, views, comments, keyword comments, DMs, saves.
-- Bank: stories, proof (who said yes, and to what), client words, objections, posts they liked.
+- Content: one row per piece, tied to its campaign: date, platform, format, title, hook, status (Idea → Scripted → Filmed → Posted → Reviewed), link, views, comments, keyword comments, DMs, saves.
+- Bank: stories, proof (who said yes, and to what), client words, objections, posts they liked, hooks that worked.
 - Numbers: one row a week, the totals Friday's review reads.
 - Ledger: a launch's real limits (seats, bonus, close, price step), each kept or not.
 2 SETUP, 3 steps, about 5 minutes, no code, all in one message; the 5 files are in the download's Level-ups/Board folder:
@@ -25,23 +25,23 @@ c Optional: Share it with your VA as Editor. Or paste me the link: when your app
 <!-- @section hub.grow-columns -->
 ### Column order (the paste order; headers exactly as written)
 Campaigns: Key · Campaign · Type (Season | Launch) · Goal (Reach | Trust | Sell) · Offer · Big idea · Keyword · Start · End · Status (Planned | Live | Done) · Results · Lesson
-Content: Key · Campaign · Date · Platform · Format (Short video | Text post | Carousel | Long video | Email | Message | Live | Ad) · Hook · Status (Idea | Scripted | Filmed | Posted) · Link · Views · Comments · Keyword comments · DMs/leads · Saves
-Bank: Key · Type (Story | Proof | Client words | Objection | Liked post) · What · From · Consent (Yes | No | Not needed) · Consent date · OK for (Posts, Ads, Case series) · Backed (Yes | No) · Added
+Content: Key · Campaign · Date · Platform · Format (Short video | Text post | Carousel | Long video | Email | Message | Live | Ad) · Title · Hook · Status (Idea | Scripted | Filmed | Posted | Reviewed) · Link · Views · Comments · Keyword comments · DMs/leads · Saves
+Bank: Key · Type (Story | Proof | Client words | Objection | Liked post | Hook that worked) · What · From · Consent (Yes | No | Not needed) · Consent date · OK for (Posts, Ads, Case series) · Backed (Yes | No) · Added
 Numbers: Week · Campaign · Posted · Planned · Keyword comments · DMs · Calls · Sales · Views · Said back · Best post · Next week · Bets
 Ledger: Key · Campaign · Limit (Seats | Bonus | Close | Price step) · Real reason · Number · Deadline · Public updates · After · Enforced (Yes | No) · Left now · Updated
 KEYS, column A, never explained: Campaigns SEA-YYYY-MM for a month, LCH-{launch id} for a launch · Content the piece's own key (YYYY-Www-{slot}, LCH-{id}-D{nn}-{FMT}, DROP-YYYY-MM-DD) · Bank its ref · Numbers YYYY-Www · Ledger {campaign key}-SEATS, -BONUS, -CLOSE or -PRICE (a second one adds 2).
-CELLS: dates YYYY-MM-DD; deadlines YYYY-MM-DD HH:MM + time zone; a Campaign cell holds the campaign's Key; a list joins with ", "; Hook is the first line as written; Platform is the platform's own name; no line breaks or tabs inside a cell; unknown numbers stay blank.
+CELLS: dates YYYY-MM-DD; deadlines YYYY-MM-DD HH:MM + time zone; a Campaign cell holds the campaign's Key; a list joins with ", "; Title is the piece's working title, or the coach's own for a piece they wrote; Hook is the first line as written; a Hook that worked row's What: the line · its kind (flip, scene…) · what it drew; Platform is the platform's own name; no line breaks or tabs inside a cell; unknown numbers stay blank.
 Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUNCH-BRIEF 4); a No keeps that limit out of every piece.
 
 <!-- @section hub.grow-rows -->
 ### Rows to paste
-1 WHEN, only once the board exists; ≤3 boxes a reply (more wait for the next), under the pieces, above NEXT:
+1 WHEN, only once the board exists; one reply per tab (all its boxes together, never "the rest next message"; other tabs ride along or wait for "next"), under the pieces, above NEXT:
 - pieces written (Week 1, Monday's week, a catch-up, a launch's days): Content rows, Status Scripted; planned but unwritten: Idea;
 - a month or a launch planned, a campaign going live or ending: its Campaigns row;
-- Friday's review: the Numbers row; numbers per piece given → those Content rows too, pasted over;
+- Friday's review: the Numbers row; numbers per piece given → those Content rows too, pasted over, Status Reviewed;
 - real limits OK'd: Ledger rows; each seat count the coach gives: that row again, pasted over;
-- a story, proof with its yes, client words, an objection or a liked post saved: Bank rows, at the end of that reply.
-2 THE BOX: ≤6 columns, so it reads on a phone; a wider row splits into side-by-side blocks over the same rows, one box each. Label line: "Row to paste · {tab} tab · {first} → {last column} · first empty row: click column A, paste" (a later block: "click column {letter} of that same first row"; updates: "· paste over {those rows in plain words, e.g. this week's 5, Mon 12 to Fri 16 Oct}"), then one fenced block marked tsv: cells split by real tab characters, the tab's column order, no header row, one row a line. Content: new pieces → Key → Hook (A-F), then Status alone (G); numbers → Status → DMs/leads (G-L) over those rows; Saves (M) only when given. Other tabs: blocks of ≤6 from column A; a block with every cell blank is left out.
+- a story, proof with its yes, client words, an objection, a liked post or a hook that drew hands up saved: Bank rows, at the end of that reply.
+2 THE BOX: ≤6 columns, so it reads on a phone; a wider row splits into side-by-side blocks over the same rows, one box each. Label line: "Row to paste · {tab} tab · {first} → {last column} · first empty row: click column A, paste" (a later block: "click column {letter} of that same first row"; updates: "· paste over {those rows in plain words, e.g. this week's 5, Mon 12 to Fri 16 Oct}"), then one fenced block marked tsv: cells split by real tab characters, the tab's column order, no header row, one row a line. Content: new pieces → Key → Title (A-F), then Hook and Status (G-H); numbers → Status → DMs/leads (H-M) over those rows; Saves (N) only when given. Other tabs: blocks of ≤6 from column A; a block with every cell blank is left out.
 3 Same Key, same row. A week's Content rows always print in date order, so Friday's box pastes straight over Monday's. Status moves (filmed, posted) ride with the next box, never a box of their own.
 4 Values: only what was said or written here. Unknown numbers blank, never 0 or a guess. Filmed and Posted only on the coach's word. Proof: Consent, OK for and Backed exactly as the coach gave them; a no keeps it out of every piece (§CM-GUARDRAILS). From: role · platform · month, never a private person's name or handle (a liked post keeps its public account); commenters by role only.
 5 Help, one line, only when they say it went wrong: all in one cell → "Select column A → Data → Split text to columns." The same Key twice → "Keep the lower row, delete the upper one."

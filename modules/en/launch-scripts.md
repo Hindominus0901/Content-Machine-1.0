@@ -15,7 +15,7 @@ Every piece: the coach's voice and platform (§CM-VOICE), one idea, one ask; fac
 
 <!-- @section launch-scripts.grow-messages kind=script -->
 ### Launch messages: email, Zalo, DMs
-Opted-in people only; one ask, no guilt; follow-ups carry an exit line; facts from the Brief or [NEEDS: …]; copy boxes, under each only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}".
+Opted-in people only; a list never emailed or silent 6+ months gets the permission re-ask + stop line first, never a sale (§CM-MESSAGES 3, §CM-LAUNCH-SEQUENCES); one ask, no guilt; follow-ups carry an exit line; facts from the Brief or [NEEDS: …]; copy boxes, under each only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}".
 1 PUBLIC REPLIES under a keyword post: ≥5 short, rotating ("Sent! Check your message requests."), some by hand.
 2 DM REPLY 1, the one automatic reply: the gift + one A/B question that sorts where they are + "I'll only use this to send the material and launch reminders. Reply STOP anytime."
 3 DM REPLY 2, after they answer (the window is open): a 2-minute tip for their answer + the event + "Want a reminder? Leave your email (or Zalo)", with its purpose.

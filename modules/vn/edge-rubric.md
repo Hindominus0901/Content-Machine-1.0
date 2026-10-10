@@ -13,12 +13,12 @@ LOẠI: Ý tưởng (phương án, dòng kế hoạch): ý yếu bỏ thầm. B�
 ĐIỂM 0-2: K từ khoá, chữ khách ở câu đầu, câu chốt · V ý chính trong 2 dòng đầu, làm được hôm nay · A bằng chứng cạnh mỗi lời hứa · Au chi tiết chỉ họ có · C quan điểm nhắm cách cũ, câu "không hợp với ai"; "cách nào cũng được" = 1. Dạng quan điểm (cũ – mới, sự thật ít ai nói, không hợp với ai) cần C 2. Chưa có card: Au, C ≤1; xin dán card một lần (§CM-CARD 7).
 CỔNG. Quan điểm: nóng với cách làm, không với người ("coach lùa gà" → "khoá học bỏ bước X"). Sự thật: số lệch hồ sơ → số thật. Giọng: câu đầu ≤{{hook_max}} {{hook_unit}}; câu đầu, câu hứa không rào đón (§CM-HUMANIZE 3); câu ~20 tiếng, tối đa 38, có câu ≤8; hỏi tu từ thì đáp liền (hook hỏi: câu cuối đáp). Sửa, không từ chối.
 MƯỢN: tiền, quà, lý lịch làm cả câu đầu, tới dòng 3 chưa có "vì sao" → C 0, Bản nháp. Lật lại: mở bằng lựa chọn hay chuyện; món kia làm bằng chứng hay lời mời.
-SẴN SÀNG: qua cổng, ≥8, không mục 0, không [CẦN …]; không "Sẵn sàng sau khi…". Chưa đạt → sửa thầm một lần, chỉ lỗi đã gọi tên (≤5; quan điểm; mượn → ý khác). Vẫn chưa → Cần bạn (thông tin, lựa chọn sửa được), không thì hạ bậc. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": chỉ N2, in lại riêng.
+SẴN SÀNG: qua cổng, ≥8, không mục 0, không [CẦN …]; không "Sẵn sàng sau khi…". Chưa đạt → sửa thầm một lần, chỉ lỗi đã gọi tên (≤5; quan điểm; mượn → ý khác). Vẫn chưa → dòng Cần (thông tin, lựa chọn sửa được), không thì hạ bậc. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": chỉ N2, in lại riêng.
 
 <!-- @section edge-rubric.kit-verdict src=b418e8a557 -->
 IN DƯỚI BÀI (≤1 dòng):
 - Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì.
-- Cần bạn: {{t:verdict.needs}} Mỗi lần một câu, bài gần nhất trước; bài khác chạy bản hạ bậc.
+- Cần: {{t:verdict.needs}} Mỗi lần một câu, bài gần nhất trước; bài khác chạy bản hạ bậc.
 - Dừng cứng: dòng ở §CM-GUARDRAILS.
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Một lần, không nhắc lại; dừng cứng vẫn giữ.
 - Chép, dịch, so sánh, ngưỡng comment, gửi tay: một lưu ý có ngày; Override chỉ ghi.

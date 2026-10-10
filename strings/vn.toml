@@ -37,7 +37,7 @@
 "next.prefix"     = { text = "TIẾP →", src = "4c813654ab" }
 "why.prefix"      = { text = "VÌ SAO RA KHÁCH", src = "f91b568b43" }
 "checked.prefix"  = { text = "✓ Đã kiểm:", src = "781a6a9609" }
-"needs.tag"       = { text = "[CẦN BẠN: {question}]", src = "c37b3488a8" }
+"needs.tag"       = { text = "[CẦN {XƯNG HÔ}: {question}]", src = "c37b3488a8" }
 
 # The one-line verdict per piece, at most 20 words (QA spec §2.4). Slots: {verb} is a verb.* word;
 # {evidence} names a Bank item (or, downgraded, what the piece was written as); {question} is one fact
@@ -134,7 +134,7 @@
 "anchor.nudge-texts"    = { text = "Lời nhắc cho ChatGPT", src = "9c8ea0fa36" }
 "anchor.nudge-claude"   = { text = "Lời nhắc cho Claude", src = "46162914d3" }
 "anchor.nudge-launch"   = { text = "Lời nhắc ngày mở bán", src = "3f1d9ba480" }
-"anchor.strategy"       = { text = "Bạn đứng ở đâu", src = "1d7d7f2d3f" }
+"anchor.strategy"       = { text = "Chỗ đứng", src = "1d7d7f2d3f" }
 "anchor.season"         = { text = "Mùa niềm tin", src = "2d155b0cd9" }
 "anchor.what-to-say"    = { text = "Đăng gì bây giờ?", src = "ac83e813a9" }
 "anchor.strategy-review" = { text = "Soát chiến lược cuối tháng", src = "a261502df4" }
@@ -204,7 +204,7 @@
 "anchor.liked" = { text = "Bài coach thích", src = "00e43012d8" }
 "setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
 "setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
-"phone.opening" = { text = "Bạn chỉ cần bấm Gửi. Phần dưới là cho máy, khỏi cần đọc.", src = "b6a97fd51f" }
+"phone.opening" = { text = "Chỉ cần bấm Gửi. Phần dưới là cho máy, khỏi cần đọc.", src = "b6a97fd51f" }
 "phone.save" = { text = "Lưu lại: cuối buổi, nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". Chat dài quá thì in khung mới, dán vào chat mới cùng tên.", src = "f6e358cc8f" }
 
 # ---- Method anchors (P2 kit sections); same keys as strings/en.toml
@@ -217,7 +217,7 @@
 "check.pick"             = { text = "{tự xưng} chọn {option}, vì {reason}.", src = "d1e588aea6" }
 "save.limit_claude_free" = { text = "Hết lượt thì đợi có lượt lại, quay về đoạn chat này, nhắn 'tiếp'.", src = "e2843e8de7" }
 "resume.brb"             = { text = "Không vội đâu. Quay lại thì nhắn 'ok rồi'.", src = "6cf6995cec" }
-"card.stop_lines"        = { text = "Hôm nay xong rồi. Có tấm card này mình mới nhớ được bạn. Lưu lại: {route}. Rồi nhắn 'tiếp' là có kịch bản Tuần 1 (8 phút), hoặc nghỉ ở đây, kịch bản vẫn đợi bạn.", src = "2373f83b56" }
+"card.stop_lines"        = { text = "Hôm nay xong rồi. Có tấm card này {tự xưng} mới nhớ được {xưng hô}. Lưu lại: {route}. Rồi nhắn 'tiếp' là có kịch bản Tuần 1 (8 phút), hoặc nghỉ ở đây, kịch bản vẫn đợi {xưng hô}.", src = "2373f83b56" }
 "card.title"             = { text = "Brand Card v{n} · {date}", src = "27c96e5c42" }
 "card.label.week"        = { text = "nói chuyện {day} · quay {day} · số liệu thứ Sáu", src = "e8aaa06e3c" }
 "card.machine.heading"   = { text = "Phần còn lại là cho máy, không cần đọc:", src = "05b28e1925" }
@@ -252,13 +252,13 @@
 "talk.mini_open" = { text = "Tuần bận thì 3 câu hỏi nhanh thôi, 5 phút, cứ nói là được.", src = "b7a36f9fc4" }
 
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)
-"month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Có gì đổi: khách, sản phẩm, giá hay lịch.\n2 Có gì mới: kết quả của khách, hay khách vừa cho đăng.\n3 Có gì không còn đúng: điều từng nói công khai, hay điều giờ bạn không tin nữa.", src = "fe38499570" }
+"month.check"      = { text = "Kiểm tra tháng, 2 phút:\n1 Có gì đổi: khách, sản phẩm, giá hay lịch.\n2 Có gì mới: kết quả của khách, hay khách vừa cho đăng.\n3 Có gì không còn đúng: điều từng nói công khai, hay điều giờ {xưng hô} không tin nữa.", src = "fe38499570" }
 "month.check_next" = { text = "Nhắn 'không có gì thay đổi', hoặc kể đổi gì.", src = "1ba0ba69ac" }
 "month.decide"     = { text = "Nhắn 'giữ' hoặc 'chỉnh lại'.", src = "6ed6468a53" }
 "month.save_card"  = { text = "Lưu bản này rồi xoá v{n-1} khỏi dự án.", src = "3ac6c30207" }
 "angle.offer"      = { text = "Gửi 2–3 ảnh chụp mấy kênh {xưng hô} đang theo dõi, 5 phút là ra góc nhìn riêng.", src = "0b7edcb14b" }
 "angle.tag"        = { text = "Góc nhìn riêng", src = "22ee1fc8b2" }
-"angle.labels"     = { text = "AI CŨNG NÓI · CHƯA AI NÓI · BẠN NÓI ĐƯỢC", src = "a4d31bb2d4" }
+"angle.labels"     = { text = "AI CŨNG NÓI · CHƯA AI NÓI · {XƯNG HÔ} NÓI ĐƯỢC", src = "a4d31bb2d4" }
 "angle.hunch"      = { text = "mình đoán vậy", src = "d7a04cc448" }
 
 # Short videos, posts, messages, calls to action (§ FORMATS, POSTS, MESSAGES, CTA-KIT)
@@ -382,7 +382,7 @@
 "map.ok"                       = { text = "Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }
 "card.visible.never"           = { text = "không bao giờ:", src = "3e2cc57c54" }
-"anchor.voice"                 = { text = "Giọng của bạn", src = "dc50b5a834" }
+"anchor.voice"                 = { text = "Giọng riêng", src = "dc50b5a834" }
 "anchor.banks" = { text = "Ngân hàng", src = "c7fd4996f6" }
 "anchor.cta-bank" = { text = "Lời mời theo bậc và nơi đăng", src = "62fa39cbc7" }
 "anchor.magnet-bank" = { text = "Quà tặng", src = "67a025d8b0" }
@@ -402,12 +402,12 @@
 "anchor.copy-voice" = { text = "Thuyết phục mà vẫn nói như người Việt", src = "502f9902e9" }
 "voice.not_me_ok"              = { text = "Rồi, từ giờ không dùng \"{line}\" nữa.", src = "7e5f0bc551" }
 "voice.do_say_ok"              = { text = "Rồi, \"{word}\" giữ lại.", src = "581bb8047e" }
-"card.label.voice_line"        = { text = "Giọng của bạn", src = "dc50b5a834" }
+"card.label.voice_line"        = { text = "Giọng", src = "dc50b5a834" }
 "card.label.tone"              = { text = "Giọng điệu", src = "c2c8b72e30" }
 "card.label.rhythm"            = { text = "Nhịp câu", src = "5a165344e5" }
-"card.label.openers_closers"   = { text = "Cách bạn mở và kết", src = "bb6497ce63" }
-"card.label.audience_address"  = { text = "Cách bạn xưng hô với khách", src = "a165bef07d" }
-"card.label.code_mix"          = { text = "Chữ tiếng Anh bạn hay chêm", src = "357f0ef710" }
+"card.label.openers_closers"   = { text = "Cách mở và kết", src = "bb6497ce63" }
+"card.label.audience_address"  = { text = "Cách xưng hô với khách", src = "a165bef07d" }
+"card.label.code_mix"          = { text = "Chữ tiếng Anh hay chêm", src = "357f0ef710" }
 "card.label.humour"            = { text = "Kiểu hài hước", src = "8a590611f4" }
 "card.label.written_vs_spoken" = { text = "Lúc viết khác lúc nói", src = "ab8050b33a" }
 "setup.cut_off"                = { text = "Đoạn đó bị đứt. {xưng hô} nói lại thành 2 đoạn ngắn.", src = "0ef31c83a9" }

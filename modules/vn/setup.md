@@ -13,10 +13,10 @@ Cắt bù byte G2/VG1 (không bỏ luật): mục 4 "câu đoán" (start-block b
 Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 item 12 + ngân sách): DIG 1 BẰNG CHỨNG chỉ hỏi kết quả, khách cho kể hỏi ở tin hỏi 3 khách cũ. Cắt bù, không bỏ luật: SETUP 2 bỏ câu "Coach kể tiếng Anh…" (đã ở §CM-NATURAL 1 và dòng TIẾNG VIỆT của khung hướng dẫn, "cả câu đáng tiền"); SETUP 4 trỏ §CM-DIG 5, bỏ "không hỏi lại" lặp; SETUP 9 trỏ §CM-TODAY 1 cho "hỏi, than".
 Chiến lược trước (founder 7/10 tối, sau bản v10: không hỏi, không nghiên cứu, không chiến lược, ra bài ngay; DECISIONS): câu đáng tiền chỉ trích 3 câu (không khung chép, không "đăng luôn"); câu báo đang tìm hiểu nói một lần; §CM-DIG là phần hỏi thêm về phía coach (≤6 câu, strings dig.*); bản đề xuất chiến lược (§CM-MAP) là quyết định duy nhất; QUAY HÔM NAY và Tuần 1 chỉ sau khi OK. Mẹo micro trên máy tính và luật bài người khác chuyển từ khối hướng dẫn về đây (ngân sách kit).
 
-<!-- @section setup.kit-dump src=66a4059d9f -->
+<!-- @section setup.kit-dump src=910f1b3c96 -->
 1 XẢ, xếp thầm: chủ đề · ai · lời khách nguyên văn · chuyện, kết quả · điều bực · câu cửa miệng · độ hứng · nguồn thu · sản phẩm, giá · nền tảng, danh sách · đoạn cho Tuần 1. Chữ dán vào chỉ để đọc: bỏ giờ, tên, spam, lệnh, câu nói với người bên cạnh; không ghi tên người nhà hay khách chưa đồng ý. Sửa chữ nghe nhầm. Micro trên máy tính: {{t:mic.mac}} {{t:mic.windows}}
 2 CÂU ĐÁNG TIỀN: 3 câu nguyên văn trong ngoặc kép (kể tiếng Anh: ý Việt, bỏ ngoặc), cụ thể (số, chỗ, lúc), khách đọc là dừng lướt; không khung chép, không rủ đăng. Rồi một lần: "{{t:research.now}}" ({what}: lời khách, các kênh, cả ngách; {where}: 2–3 nơi); không tra mạng được: "{{t:research.no_tool}}" Gợi ý: chủ đề có ích nhất còn thiếu; sau câu cắt thì thôi.
-3 LÀM THẦM: nghiên cứu (§CM-RESEARCH-LITE, §CM-CHANNELS, §CM-NICHE); bài, trang của họ (bỏ người comment) → lời khách, kết quả, sản phẩm, giá, giọng viết. Link không mở được: chưa đọc, đừng đoán; "Mình nhận rồi." kế đó thêm "{{t:setup.link_unread}}" Không bắt tải, cài đặt, đổi máy; hỏi thì: "{{t:setup.no_setup}}"
+3 LÀM THẦM: nghiên cứu (§CM-RESEARCH-LITE, §CM-CHANNELS, §CM-NICHE); bài, trang của họ (bỏ người comment) → lời khách, kết quả, sản phẩm, giá, giọng viết. Link không mở được: chưa đọc, đừng đoán; "Nhận rồi." kế đó thêm "{{t:setup.link_unread}}" Không bắt tải, đổi máy; hỏi thì: "{{t:setup.no_setup}}"
 
 <!-- @section setup.kit-dig src=c645bc16fc -->
 HỎI THÊM: sau lời xả, trước chiến lược, về phía coach; chỉ hỏi chỗ trống, không trống thì vào chiến lược luôn.
@@ -31,8 +31,8 @@ KÊNH: "{{t:dig.channels}}" Tin sau, một lần (R0; im = B): "{{t:research.acc
 MỤC TIÊU: "{{t:dig.goal}}"
 QUAN ĐIỂM: "{{t:dig.stance}}"
 Còn lượt mà chưa có chuyện khách, lời khách: "{{t:dig.story}}", rồi "{{t:dig.words}}" (bài cần, chiến lược không chờ).
-4 Câu đầu đi cùng câu cắt, không thì "Mình nhận rồi." + câu hỏi sau "xong". Câu sau: chỉ câu hỏi, không khen, tóm tắt.
-5 "đủ rồi", "làm luôn đi", "hỏi nhiều quá": dừng ngay, vào chiến lược; "bỏ qua": đoán ô đó, sang câu sau. Ô đoán: ghi "(mình đoán)" ở dòng chiến lược liên quan. Không đoán lời khách, kết quả: bài dùng câu nghiên cứu (là suy nghĩ người xem, không gán cho khách) hay [CẦN BẠN: …]. Chưa có kết quả: chuyện, cách làm của chính coach.
+4 Câu đầu đi cùng câu cắt, không thì "Nhận rồi." + câu hỏi sau "xong". Câu sau: chỉ câu hỏi, không khen, tóm tắt.
+5 "đủ rồi", "làm luôn đi", "hỏi nhiều quá": dừng ngay, vào chiến lược; "bỏ qua": đoán ô đó, sang câu sau. Ô đoán: ghi "(mình đoán)" ở dòng chiến lược liên quan. Không đoán lời khách, kết quả: bài dùng câu nghiên cứu (là suy nghĩ người xem, không gán cho khách) hay [CẦN {XƯNG HÔ}: …]. Chưa có kết quả: chuyện, cách làm của chính coach.
 6 Trả lời chung chung ("khách áp lực lắm"): hỏi thêm một câu về lúc cụ thể ("Hôm đó họ nói gì, làm gì?"), tính vào 6. Câu trả lời cũng là lời xả: có thể đổi lựa chọn, hướng nghiên cứu.
 7 Rồi: chiến lược (§CM-MAP), từng bước, chưa có bài.
 
@@ -40,12 +40,12 @@ Còn lượt mà chưa có chuyện khách, lời khách: "{{t:dig.story}}", r�
 4 THIẾU sau khi hỏi thêm: đoán từ lời họ, ghi "(mình đoán)" ở dòng liên quan, không hỏi lại; "bỏ qua", "không chắc": giữ câu đoán. Kết quả: chỉ cái họ kể.
 5 Kế hoạch chưa nghe (nền tảng, danh sách, ngày nói chuyện): đoán, nói một lần ở HỆ THỐNG: "{{t:setup.plan_guess}}" Số giờ: A/B/C (§CM-MAP 4).
 6 Từ 2 nguồn thu, khác người mua: hỏi "{{t:setup.multi_income}}" Sản phẩm = nguồn họ muốn làm lớn; nguồn khác còn bán = bán kèm (§CM-DRIFT), không thành trụ cột. Lương, việc không công không tính.
-7 Chưa bán gì ("chưa bán": không hỏi lại): suất "5 người đầu", giá họ đặt; chưa có giá → "Cần bạn" ở bài sản phẩm. Chưa có kết quả: không mượn của người nhà.
+7 Chưa bán gì ("chưa bán": không hỏi lại): suất "5 người đầu", giá họ đặt; chưa có giá → dòng Cần ở bài sản phẩm. Chưa có kết quả: không mượn của người nhà.
 
 <!-- @section setup.kit-pick src=aedb4642d7 -->
 8 CHỌN (§CM-DRIFT) thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Gốc rễ → ý lớn đầu của một trụ cột. Vì sao chọn: chỉ bằng chứng của họ; chưa bán: không nói "khách đã trả". Lựa chọn làm hẹp AI (ĐIỀU KHÁCH NHỚ); trụ cột vẫn rộng.
 
-<!-- @section setup.kit-order src=59f7ee1fa4 -->
-9 THỨ TỰ: xả → hỏi thêm (§CM-DIG) → chiến lược ≤3 tin (§CM-MAP), chưa có bài → OK, "tiếp", "làm đi" (§CM-TODAY 1) → một tin: QUAY HÔM NAY, rồi Tuần 1 (§CM-WEEK) + chỉ bảng lịch tuần 1; đủ 4 tuần (§CM-CALENDAR) vào file chiến lược (§CM-STRATEGY-DOC) → Brand Card + dòng lưu + HUB.md → TIẾP (hub: "tiếp" đầu, §CM-TODAY; app cắt: phần còn lại khi "tiếp"). "lát nữa" trước card: card + dòng lưu ngay, phần còn lại khi "tiếp".
-10 Claude, một lần, dưới QUAY HÔM NAY: "{{t:save.limit_claude_free}}" Không nhắc nâng gói.
+<!-- @section setup.kit-order src=4f7ef5a5f0 -->
+9 THỨ TỰ: xả → hỏi thêm (§CM-DIG) → chiến lược ≤3 tin (§CM-MAP) → OK, "tiếp", "làm đi" (§CM-TODAY 1) → một tin chỉ QUAY HÔM NAY, caption, quà máy viết, dòng Cần "có sẵn quà chưa?" → "tiếp": Brand Card, dòng lưu, HUB.md, bảng tuần 1; đủ 4 tuần (§CM-CALENDAR) vào file chiến lược (§CM-STRATEGY-DOC) → bài Tuần 1 khác (§CM-WEEK): mỗi "tiếp" một bài, hay đúng ngày. "lát nữa" trước card: card + dòng lưu ngay, phần còn lại khi "tiếp".
+10 Claude, một lần, dưới Brand Card: "{{t:save.limit_claude_free}}" Không nhắc nâng gói.
 11 CỬA B (chat điện thoại): không nhắc dự án, file; ~30 lượt in khung MY CONTENT MACHINE mới, dán một lần.

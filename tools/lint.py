@@ -124,6 +124,31 @@ HUB_REF_RE = re.compile(r"`hub:([^`\n]+)`")
 CM_HEADING_RE = re.compile(r"^#{1,6}\s.*§CM-([A-Za-z0-9][A-Za-z0-9-]*)", re.M)
 CM_REF_RE = re.compile(r"§CM-([A-Z0-9][A-Z0-9]*(?:-[A-Z0-9]+)*)")
 
+# E147: a bare "bạn" in a VN coach-facing line. The coach picks a pair in reply 1 (anh/chị/bạn); fixed lines carry
+# {xưng hô}/{tự xưng} slots, filled at run time. Scope: every strings/vn.toml value (minus buyer-facing keys, below)
+# and every line of the instruction block and Ship Check (core/vn/*.md sections), quoted text, {…} slots and the
+# pair notation ("mình–bạn", "bạn →") set aside; plus, anywhere in VN prose, the printed markers that leaked to
+# coaches in the v13.4 demo: "[CẦN BẠN: …]", a raw "[anh/chị]" slot and the label "Bài bạn thích".
+# "bạn bè", "kết bạn" are the word "friend", never flagged; "Bạn là {{name}}" speaks to the model.
+VN_ADDRESS_LANG = "vn"
+VN_BUYER_KEYS = ("ask3.", "research.ask3", "cta.", "dm.", "series.", "talk.question")   # lines the coach sends to buyers
+BARE_BAN_RE = re.compile(r"(?<!\w)bạn(?!\w)(?!\s*bè)", re.IGNORECASE)
+BAN_PAIR_RE = re.compile(r"(?:mình|em|tôi|tớ)\s*[–—-]\s*bạn|bạn\s*[–—-]\s*(?:mình|em)|bạn\s*→|kết\s+bạn"
+                         r"|bạn\s+là\s+\{\{\s*name\s*\}\}", re.IGNORECASE)
+QUOTED_RE = re.compile(r'"[^"\n]*"|“[^”\n]*”|«[^»\n]*»|\{\{.*?\}\}|\{[^{}\n]*\}')
+VN_LEAK_MARKERS = (
+    ("needs tag", re.compile(r"\[\s*CẦN\s+BẠN\b", re.IGNORECASE)),
+    ("raw slot", re.compile(r"\[(?:anh|chị)\s*/\s*(?:anh|chị|em|bạn)(?:\s*/\s*\w+)?\]", re.IGNORECASE)),
+    ("label", re.compile(r"Bài\s+bạn\s+thích", re.IGNORECASE)),
+)
+
+
+def bare_ban(line: str) -> list[str]:
+    """Bare "bạn" left in a VN coach-facing line once quotes, slots and pair notation are set aside."""
+    body = QUOTED_RE.sub(" ", BAN_PAIR_RE.sub(" ", nfc(line)))
+    return [m.group(0) for m in BARE_BAN_RE.finditer(body)]
+
+
 PII_RULES = (
     ("email", re.compile(r"(?<![\w.%+-])[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}\b")),
     ("phone number", re.compile(r"(?<![\w+])(?:\+|00)84[\s.-]?\(?\d\)?(?:[\s.-]?\d){7,9}(?!\d)")),
@@ -563,7 +588,7 @@ class Linter:
             self.load_allowlist, self.load_toml_files, self.load_editions, self.load_strings,
             self.load_terms, self.check_strings, self.check_sections, self.check_pending,
             self.check_targets, self.check_schemas, self.check_router, self.check_templates, self.check_hub_refs,
-            self.check_source_text, self.check_cards, self.check_tasks_data, self.check_levelup_sections,
+            self.check_source_text, self.check_vn_address, self.check_cards, self.check_tasks_data, self.check_levelup_sections,
             self.check_dist, self.check_unused,
         ]
         for step in steps:
@@ -1312,6 +1337,36 @@ class Linter:
             if top == "guides" or (top == "locales" and path.name == "examples.md"):
                 self.scan("E140", relp, text, self.terms_for("deny", lang), first=first)
                 self.scan("E141", relp, text, self.terms_for("tells", lang), first=first)
+
+    # -- VN address (E147)
+
+    def check_vn_address(self) -> None:
+        texts = self.strings.get(VN_ADDRESS_LANG, ({}, {}))[0]
+        for key, text in sorted(texts.items()):
+            if key.startswith(VN_BUYER_KEYS):
+                continue
+            for line in nfc(text).splitlines():
+                if waived(line, "E147"):
+                    continue
+                for hit in bare_ban(WAIVER_RE.sub("", line)):
+                    self.add("E147", f"strings/{VN_ADDRESS_LANG}.toml",
+                             f"key '{key}': bare '{hit}' in a coach-facing line (use {{xưng hô}})")
+        for sid, sec in sorted(self.sections.get(VN_ADDRESS_LANG, {}).items()):
+            where = self.section_where.get((VN_ADDRESS_LANG, sid), sec.file)
+            relp, _, start = where.rpartition(":")
+            first = int(start) + 1 if start.isdigit() else 1
+            coach_facing = relp.startswith(f"core/{VN_ADDRESS_LANG}/")
+            for lineno, line in enumerate(nfc(sec.body).splitlines(), first):
+                if waived(line, "E147"):
+                    continue
+                body = WAIVER_RE.sub("", line)
+                for label, rx in VN_LEAK_MARKERS:
+                    for m in rx.finditer(body):
+                        self.add("E147", f"{relp}:{lineno}", f"{label} '{m.group(0)}' prints to the coach "
+                                 f"(use {{XƯNG HÔ}} / {{xưng hô}})")
+                if coach_facing:
+                    for hit in bare_ban(body):
+                        self.add("E147", f"{relp}:{lineno}", f"bare '{hit}' in a coach-facing line (use {{xưng hô}})")
 
     # -- Ship Check card budgets (E101)
 

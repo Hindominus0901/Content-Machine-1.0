@@ -1,4 +1,4 @@
-Bản VN của modules/en/launch-scripts.md, cho GROW kịch bản mở bán (launch-scripts.grow-*): bài và video theo chặng (§CM-LAUNCH-POSTS), tin Zalo, inbox, email (§CM-LAUNCH-MESSAGES), buổi live, lớp mini Zalo, bài mời (§CM-LAUNCH-LIVE). Máy viết xong bằng giọng coach; số liệu từ hồ sơ mở bán (§CM-LAUNCH-BRIEF) hoặc [CẦN BẠN].
+Bản VN của modules/en/launch-scripts.md, cho GROW kịch bản mở bán (launch-scripts.grow-*): bài và video theo chặng (§CM-LAUNCH-POSTS), tin Zalo, inbox, email (§CM-LAUNCH-MESSAGES), buổi live, lớp mini Zalo, bài mời (§CM-LAUNCH-LIVE). Máy viết xong bằng giọng coach; số liệu từ hồ sơ mở bán (§CM-LAUNCH-BRIEF) hoặc [CẦN {XƯNG HÔ}].
 Nguồn: wf5-launch-design §4.0-§4.10, §6.2-§6.3; wf5-vietnam-launch F4 (tin inbox 1: quà + câu hỏi A/B + xin phép), F5 (series chuyện khách có bối cảnh), F8, F10 (xưng hô, dấu hiệu giọng: dòng đầu đứng riêng, câu ngắn, emoji thưa, một hashtag), thư viện mẫu P1-P8; DECISIONS (câu mồi của founder là lựa chọn của coach, §CM-CTA-KIT 6).
 Dáng câu mở ở grow-posts 1 chỉ để máy dựa vào, không in nguyên: viết lại bằng chữ, cặp xưng hô của coach (mặc định mình – bạn).
 Thêm so với EN: Zalo là đường chăm chính, email khi có danh sách; lớp mini Zalo là mặc định (nhóm thường ≤200 là giới hạn thật); giá công khai, tiền theo §CM-LOCALE 5; không nhắn hàng loạt từ tài khoản cá nhân. "#QC" cho người giới thiệu, "nhất", "số 1": để §CM-LOCALE 9 lo (luôn trong file phương pháp).
@@ -6,18 +6,18 @@ Soát song ngữ 7/10: viết lại các câu đọc như dịch (cửa sổ 24 
 
 <!-- @section launch-scripts.grow-posts kind=script src=06131dc1f6 -->
 ### Bài và video mở bán
-Mỗi bài: giọng, kênh của coach (§CM-VOICE), một cặp xưng hô suốt đợt, một ý, một lời mời; số liệu từ hồ sơ, bằng chứng được phép, thiếu thì [CẦN BẠN: …] trong câu; khung chép; dưới khung: §CM-EDGE, vd "{{t:verdict.needs}}".
+Mỗi bài: giọng, kênh của coach (§CM-VOICE), một cặp xưng hô suốt đợt, một ý, một lời mời; số liệu từ hồ sơ, bằng chứng được phép, thiếu thì [CẦN {XƯNG HÔ}: …] trong câu; khung chép; dưới khung: §CM-EDGE, vd "{{t:verdict.needs}}".
 1 Dáng câu mở, viết lại bằng chữ coach: P0 "Mình đang làm một thứ cho {ai}. Hỏi thật: cái gì đang cản bạn {kết quả} nhất?" · P1 "Tặng, không bán: {quà}, {thời gian} là xong {bước}." · P2 "Mình từng tin {niềm tin cũ}. Cho tới hôm {chuyện}." · P5 "Mở đăng ký {khoá} cho {ai}. {N} suất, đóng {giờ, thứ}." · P7 "Cập nhật {giờ}: còn {n}/{N} suất." Suất, số, ngày giờ chỉ từ giới hạn thật.
 2 VIDEO NGẮN 500–800 chữ: chữ hook trên màn hình + câu đầu → cảnh "trước" thật (≈150 chữ) → cách làm ra kết quả (≈300) → "đây mới là bước 1 trong 3" → lời mời. P2, P3: niềm tin hay bước ở giữa.
 3 BÀI CHỮ NỀN MÀU (Facebook): ≤130 ký tự, không link: kết quả · công sức hay thời gian · "tặng, không bán" · suất chỉ từ giới hạn thật, kèm lý do · lời mời; 👇 cuối nếu coach hay dùng. P5, P7, P8: khoá, suất, giờ đóng.
-4 BÀI KỂ CHUYỆN (P2): niềm tin cũ → nó làm mình mất gì → lúc đổi (người thật, hôm nào, câu nói nguyên văn, đã xin phép) → niềm tin mới → bằng chứng có bối cảnh → bạn thì sao → "mai kể tiếp: …".
+4 BÀI KỂ CHUYỆN (P2): niềm tin cũ → nó làm mình mất gì → lúc đổi (người thật, hôm nào, câu nói nguyên văn, đã xin phép) → niềm tin mới → bằng chứng có bối cảnh → "còn bạn thì sao?" → "mai kể tiếp: …".
 5 SERIES CHUYỆN KHÁCH (P4): 5 kỳ có ngày giờ: lúc đầu · chỗ kẹt · cách làm · kết quả · bài học + lời mời. Số tiền, kết quả nào cũng kèm bối cảnh trong bài (tệp, mấy năm, tiền quảng cáo, giá, người mua, hoàn tiền, đội), "kết quả cá nhân, không phải cam kết" và mức thường gặp; thiếu bối cảnh → kể quy trình, không nêu số.
 6 CAROUSEL NGỘ NHẬN (P2), 6 trang: mỗi niềm tin cũ một trang: lầm tưởng · sự thật · làm ngay hôm nay · cái thật sự làm đa số kẹt lại · lưu lại + lời mời.
 7 NGÀY ĐÓNG: 3 bài (sáng "ngày cuối", trưa hỏi đáp, tối "còn 2 tiếng") + story: đếm ngược · suất · bằng chứng được phép · không hợp với ai · hộp câu hỏi · giờ cuối · đã đóng + danh sách chờ. Bài mời: §CM-LAUNCH-LIVE 3. Câu mồi coach tự chọn: §CM-LAUNCH-BRIEF 7.
 
-<!-- @section launch-scripts.grow-messages kind=script src=4d87ae8387 -->
+<!-- @section launch-scripts.grow-messages kind=script src=ee7ebd933e -->
 ### Tin mở bán: Zalo, inbox, email
-Chỉ gửi người đã đồng ý; mỗi tin một lời mời, không làm khách áy náy; tin nhắc có lối ra (như mục 5); số liệu từ hồ sơ hay [CẦN BẠN: …]; tin 1:1 xưng số ít theo Card, tiểu từ theo giọng coach; khung chép; dưới khung: §CM-EDGE, vd "{{t:verdict.ready}}".
+Chỉ gửi người đã đồng ý; danh sách chưa từng nhận email hay im 6 tháng: email đầu là thư xin phép lại kèm dòng dừng, không bán (§CM-MESSAGES 3, §CM-LAUNCH-SEQUENCES); mỗi tin một lời mời, không làm khách áy náy; tin nhắc có lối ra (như mục 5); số liệu từ hồ sơ hay [CẦN {XƯNG HÔ}: …]; tin 1:1 xưng số ít theo Card, tiểu từ theo giọng coach; khung chép; dưới khung: §CM-EDGE, vd "{{t:verdict.ready}}".
 1 TRẢ LỜI DƯỚI BÀI có từ khoá: ≥5 câu ngắn xoay vòng, xưng theo người comment, vài câu gõ tay.
 2 TIN INBOX 1, tin tự động duy nhất: quà + một câu hỏi A/B để biết khách kẹt ở bước nào + "Mình chỉ nhắn để gửi tài liệu và nhắc lịch thôi. Không muốn nhận nữa thì nhắn DỪNG."
 3 TIN INBOX 2, khi khách đã trả lời (còn trong 24 giờ): mẹo 2 phút đúng lựa chọn của họ + buổi live hay lớp Zalo + "Bạn muốn mình nhắc lịch qua Zalo không? Muốn thì để lại số Zalo, mình chỉ dùng để gửi lịch với tài liệu đợt này."

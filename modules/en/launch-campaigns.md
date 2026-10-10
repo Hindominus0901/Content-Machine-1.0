@@ -183,7 +183,7 @@ LIMITS: real limits OK'd (§CM-LAUNCH-BRIEF 3–4) · who updates counts, at whi
 PROOF: each client story OK'd for each use (post, ad, page, live), with the date; no OK → left out.
 TEAM: who answers comments and messages, in which hours · saved replies · who posts · who changes the seat count (the coach gives the number) · a second reader for the offer, the page and the last-48-hour pieces.
 TECH: auto-replies on a Page or an Instagram professional account, else by hand (§CM-CTA-KIT 7) · email list or Zalo group ready, a test message sent · reminders scheduled · the live room tested (sound, screen share, recording) · where the replay sits and when it comes down.
-CALENDAR: every piece in copy boxes, videos recorded, posting times set, open and close days blocked (60–120 coach minutes).
+CALENDAR: days 1–3 in copy boxes and recorded, later days on each morning's Desk (§CM-LAUNCH-DAYS), posting times set, open and close days blocked (60–120 coach minutes).
 GO when OFFER, PAYMENT and LIMITS are complete, said in one line. Otherwise the open date waits; if it was announced, say plainly what moved and why.
 
 <!-- @section launch-campaigns.grow-objections-a kind=script -->
@@ -245,14 +245,14 @@ Checks: one price, one close time and one guarantee everywhere; no countdown wit
 
 <!-- @section launch-campaigns.grow-seq-open kind=script -->
 ### Email and Zalo, part 1: before the cart and the open (extends §CM-LAUNCH-MESSAGES 6–7)
-Opted-in people only; a list never emailed, or silent 6+ months: the first email asks permission again, never sells ("You signed up for {what} a while back. Want {the gift, then news of the next round}? Reply YES; no reply, no more emails."), and only YES moves on; one ask a message; email gets 3 subject lines, Zalo a first line that works as one; facts from the Brief or [NEEDS: …], e.g. "{{t:verdict.needs}}"; the Card's pair; campaign 1: their demo wherever a case is listed. Each: when · beats · ask.
+Opted-in people only; a list never emailed, or silent 6+ months: the first email asks permission again with a stop line, never sells (§CM-MESSAGES 3: "You signed up for {what} a while back. Want {the gift, then news of the next round}? Reply YES; no reply, no more emails."), and only YES moves on; one ask a message; email gets 3 subject lines, Zalo a first line that works as one; facts from the Brief or [NEEDS: …], e.g. "{{t:verdict.needs}}"; the Card's pair; campaign 1: their demo wherever a case is listed. Each: when · beats · ask.
 AFTER THE GIFT (gift takers): same day: the gift + who I am + "A or B: which one are you?" · +1 day: the backstory, a scene where they were stuck · +2: the moment it changed, the new belief · +3: what else it changes + the event or class invite · +4: waitlist + "reply YES for the early link".
 EVENT (registrants): at once: date, time, zone, link, add to calendar, purpose + stop line · −24 h: what they'll leave with, one question to bring · −1 h: the link again · at start: "we're live" + link · after: the replay and its real end time.
 WAITLIST (campaigns 1 and 6): T−7 why this round, what's new · T−3 a case or a peek inside · T−1 "early link tomorrow; reply YES".
 APPLICATION (campaign 5): on reply: the 3 questions · on a fit: 2–3 slots, purpose + stop line · day before the call: time, what to bring, 3 short answers · after the call, within 24 hours: the plan, the price, the decision date, an exit line.
 OPEN CART:
 Within the hour: what it is · for whom · price, next price · the real bonus · guarantee · close time · link · replay if any · ask: join.
-4–6 hours later, to YES replies and attendees: what's on the page + the top question answered · ask: join, or reply with a question.
+4–6 hours later (in quiet hours: 7:30 next morning), to YES replies and attendees: what's on the page + the top question answered · ask: join, or reply with a question.
 Next day: a case (OK'd) or a member's first win · ask: reply with your question.
 Never to buyers; at most 2 messages a day before the last 48 hours; each follow-up keeps an exit line ("If it's not the right time, no worries.").
 
@@ -272,7 +272,7 @@ Afternoon: the last 3 questions people asked, answered · ask: join or reply.
 3 hours left: short; who it's for, the time, the link.
 Last hour: 2–3 lines: "After {time} the link goes off. Next round: {date}." No date: "The waitlist hears first."
 AFTER: "doors closed, thank you" to everyone who got a cart message; buyers: welcome + first step; non-buyers: nothing until day 7 (§CM-LAUNCH-AFTER).
-Rules: numbers and times match the real limits row for row (§CM-LAUNCH-BRIEF 3–4); seat counts only as the coach gives them; no "today only" that isn't; a payment failure gets one public extension of stated hours (§CM-LAUNCH-BRIEF 5). Close day: 3–4 messages at most on one channel; "stop" or "not now" ends the messages for that person.
+Rules: numbers and times match the real limits row for row (§CM-LAUNCH-BRIEF 3–4); seat counts only as the coach gives them; no "today only" that isn't; a payment failure gets one public extension of stated hours (§CM-LAUNCH-BRIEF 5). Close day: 3–4 messages at most on one channel; "stop" or "not now" ends the messages for that person. Every send time here (−48 h, 3 hours left, last hour) checked against quiet hours (§CM-LAUNCH-TIMING 6): inside 22:00–7:00 → 7:30 next morning, or merged into the message before; a close after 22:00: the last two merge, sent by 21:30.
 
 <!-- @section launch-campaigns.grow-inbox kind=script -->
 ### Inbox and comments during the cart (messages are where most people buy)
@@ -300,7 +300,7 @@ LIVE (coach says · helper does):
 33–37 "no time, no tech": the real hours, the tools · 37–41 a live demo of one step.
 41–43 recap of the 3 steps · 43–45 "the fastest way, with help" · 45–49 each part and why it's there · 49–51 price, plan, real next price · 51–52 guarantee · 52–53 seats and reason; bonus deadline · 53–55 how to join; the close date twice · helper pins the link or "message me JOIN", answers "how do I pay" in DMs.
 55–60 Q&A from logged objections (§CM-OBJECTIONS) and the chat; the close date again; thank you.
-NO HELPER (the coach alone): the pinned comment and the offer link set before going live; questions read out at 29 and 55 only; no live DMs: one line, "Comment JOIN and I'll message you after"; replies within an hour of the end.
+NO HELPER (the coach alone): the pinned comment and the offer link set before going live; questions read out at 29 and 55 only; no live DMs: one line, "Type JOIN in the chat and I'll message you after" (Zoom, Meet: the chat; a public livestream: "comment JOIN"); replies within an hour of the end.
 AFTER: within 1 hour the offer post pinned and the replay sent with its real end time · within 24 hours every chat question answered by DM or in the FAQ · Desk row: registrations, attendees, peak viewers, YES replies, sales.
 ABOUT 45 MINUTES (campaign 1): drop 15–25 and 29–33; their demo is the proof; the offer is the founding terms.
 PUBLIC LIVESTREAM: no registration, so minutes 0–5 are a hook and a reason to stay; hot seats from comments carry the middle; no planted comments; price and how to pay said plainly; platform rules on links and QR codes as one dated line (§CM-LIVE-SELLING 1).
@@ -320,7 +320,7 @@ PUBLIC LIVESTREAM: no registration, so minutes 0–5 are a hook and a reason to 
 3 SEASONS (English-speaking markets; their buyers' calendar wins): January and September, fresh-start months, suit learning offers · Black Friday week is loud with discounts: join only with a real price change, or open after it · late December, summer weeks and long weekends are quiet: runway or a gift, not a close · quarter ends for business buyers with budgets.
 4 SELLING TO VIETNAM (the VN edition has the full calendar): no close in the 2 weeks before Tết; the weeks after it are a fresh start · the 7th lunar month (the ghost month): many buyers put off big purchases, so never propose a launch then; the coach's call · 8/3 and 20/10 for offers to women · 20/11 for students' thanks, with OK.
 5 One campaign at a time; ≥6 normal weeks between big ones (§CM-LAUNCH 1); never in the coach's own busy season or their buyers' (exams, tax time, the peak of their trade).
-6 QUIET HOURS: no timed message (email, Zalo, DM, reminder, a Desk send) 22:00–7:00 in the buyer's time. A close after 22:00: the last message goes by 21:30; the post and the page carry the rest.
+6 QUIET HOURS: no timed message (email, Zalo, DM, reminder, a Desk send) 22:00–7:00 in the buyer's time. A close after 22:00: the last message goes by 21:30; the post and the page carry the rest. Every sequence message (§CM-LAUNCH-SEQUENCES) is checked, not only the close.
 
 <!-- @section launch-campaigns.grow-after -->
 ### After the campaign: nurture and debrief (adds to §CM-LAUNCH-DEBRIEF)

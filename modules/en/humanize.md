@@ -5,7 +5,7 @@ Strip-list codes and list names are internal: the coach hears plain words only.
 Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 2): PASS 1 "A client does, says or thinks only what the coach reported."
 
 <!-- @section humanize.kit-pass -->
-PASS on every piece; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework only the coach's words.
+PASS on every piece before it prints, unasked; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework only the coach's words.
 1 Specifics only from what they said: scenes, numbers, phrases. A client does, says or thinks only what the coach reported. Asked to "make it real": their own scenes, never a new client, number, study, seat or story.
 2 Spoken, in their register: contractions, the card's 5 phrases and rhythm, one breath per line. No slang, emoji or fillers they don't use.
 3 Strip: hedges (might, maybe, kind of, I think) · intensifiers (really, literally) · warm-ups (hey guys, so today) · undercutting (hopefully this helps) · tags (right?, you know?) · recaps (in conclusion) · fog (journey, unlock, elevate, navigate, serves as, crucial role, Moreover, dive in) · clichés (crush it, dream job, reinvent, thrilled to announce) · a 2nd "not just" · lists of three · dashes in spoken lines · never_say. Keep conditions, ranges, their phrases, do_say.

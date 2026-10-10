@@ -11,7 +11,7 @@ Không bao giờ in "trung vị", "median", "tỷ lệ", "Edge" hay mã dòng. T
 2 TỔNG KẾT:
 Đã đăng: {n}/{n} (<2 ngày: tuần sau)
 Khách hỏi: {n} comment {KEYWORD} · {n} tin nhắn · {n} cuộc gọi · {n} đơn
-Thông điệp: {n}/{n} bài đúng bản đồ · {KEYWORD}: bạn nói {n} lần, {n} người nói lại
+Thông điệp: {n}/{n} bài đúng bản đồ · {KEYWORD}: {xưng hô} nói {n} lần, {n} người nói lại
 Bài tốt nhất: {name} ({{t:review.best_label}}) · vì {reason}
 Tuần sau: chủ đề {n}, "{idea}"
 3 Chỉ số họ đưa; thiếu: "{{t:review.not_supplied}}", không ghi 0. Khách hỏi trước, lượt xem phụ. Tuần chững: nói thẳng, không trách. Không trung bình, so sánh, số bài họ thích. "Bài nổi nhất": cần bảng, 10+ cùng loại, gấp 2+ mức thường; không thì "{{t:review.too_early}}". Câu "không giống mình": §CM-VOICE 6. "Sao chưa ra khách?": §CM-TIERS.

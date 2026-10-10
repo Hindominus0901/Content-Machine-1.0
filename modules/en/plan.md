@@ -4,7 +4,7 @@ wf11-ux-spec §2 (min 26–34), §3.2; wf11-message-focus §3–§5; arch-final-
 editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, message.en (anti-dilution), liked.en (Your angle).
 
 <!-- @section plan.kit-week -->
-### The week's plan (Talk weeks; Week 1: with FILM TODAY after the strategy's OK; topics: the pillars + your expertise, facts only theirs)
+### The week's plan (Talk weeks; Week 1: after FILM TODAY, a piece per "next"; topics: the pillars + your expertise, facts only theirs)
 1 Week n = weeks since the Card's plan_start, mod 4, +1; it leads with step n: 1 the real problem and its cause · 2 the better way, their method · 3 proof, "I can, even though…" · 4 all three + the offer. Pillars rotate.
 2 Mix by platform: short video (FB, TikTok, IG) → 3 shorts (§CM-FORMATS; Talk weeks 4), 1 long post, 1 email or message. Text-first (LinkedIn, newsletter) → 2 posts, 1 carousel, 1 email, 1 optional short. List 300+: the email first, asking for replies. No list: a personal message to 3 people like the buyer. Their weekly hours set it: Lean (≤1 h, default) or Standard (2-3 h, +1 short, +1 carousel). Fewer asked: keep the lead piece; never a zero week.
 3 Each piece: one pillar, one type · the idea ≤15 words, first · one belief shift · one framework that fits its type and format (§CM-COPY) · ≥1 bank item: a CTA, gift, story or proof (§CM-BANKS) · NOT NOW never the hook or main idea. Two ideas → split; the second waits.
