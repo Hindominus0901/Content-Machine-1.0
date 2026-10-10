@@ -147,7 +147,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I14", "I17", "I18"]
 max_questions = 1
-notes = "K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the keyword-in-words pattern is anchored after the FILM TODAY title because the Map lines hold the keyword too. wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {gift}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
+notes = "K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the keyword-in-words pattern is anchored after the FILM TODAY title because the Map lines hold the keyword too. wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {payoff}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
 
 [[case]]
 id = "signature.en.007"

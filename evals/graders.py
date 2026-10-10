@@ -6696,6 +6696,62 @@ NAME_CLOSE_VN = re.compile(r"(?<!\w)(?:gọi là|tên là|tên gọi là|đặt 
 NAME_CLOSE_EN = re.compile(r"\b(?:i|we)\s+call\s+(?:it|this|that)\b|\b(?:it|this|that)(?:'s|’s|\s+is)\s+called\b", re.I)
 
 
+# The founder-approved check (docs/research/hooks-cta/PRINCIPLES.md, 10 Oct 2026) replaced the older six lab checks. Two
+# of its six items read deterministically from the printed lines, added to hook_lab on top of the flat-claim proxy:
+#   one spoken sentence, medium length: a first line (or a text post's line 1 / slide 1) of more than FIRST_MAX_SENTENCES
+#           sentences is a paragraph ("nhiều câu"), and fewer than FIRST_MIN_WORDS words is a riddle ("Vì sao?");
+#   the coach says I / mình: in a VN piece, the coach never calls themself by the word the machine uses for them in chat
+#           ("chị gửi …", "chị đã …" when the persona's chat pair is chị–em and their own posts say mình; founder v4:
+#           "sao lại là chị?"). Skipped when the coach's own audience pair puts chị/anh on their side (Hạnh: chị–các em).
+# And one item of its CTA rules: a comment ask is a choice, never an opinion question ("bạn nghĩ sao?", "thoughts?").
+FIRST_MAX_SENTENCES = 2          # acceptance [hook_lab] first_line_max_sentences
+FIRST_MIN_WORDS = {"en": 4, "vn": 5}   # acceptance [hook_lab] first_line_min_words_en / _vn (words; VN: tiếng)
+_SENTENCE_END = re.compile(r"[.!?…]+(?=\s+\S|$)")
+VN_SELF_CHAT = re.compile(r"(?<!\w)(?<!anh )(?<!các )(?<!mấy )(?<!cho )(?<!với )(chị|anh)\s+(?:đã|từng|gửi|tặng|làm|mất|sửa|chỉ|kể|dạy|"
+                          r"bắt đầu|bỏ|mới|vẫn|cũng|giữ|đếm|ngồi|học|thử|nói thật|nghe|đọc|viết|quay)(?!\w)", re.I)
+OPINION_ASK = {"vn": re.compile(r"(?<!\w)(?:bạn|các bạn|anh chị|mọi người|cả nhà)?\s*(?:nghĩ|thấy)\s+(?:sao|thế nào)\s*\??", re.I),
+               "en": re.compile(r"\bwhat do you think\b|\bthoughts\s*\?|\bagree\s*\?\s*$|\blet me know (?:what )?you think\b", re.I)}
+
+
+def hook_sentences(text: str) -> int:
+    """Sentences in a hook line, quoted words (a buyer's line) counted as part of their sentence."""
+    body = _QUOTED.sub("Q", ck.straight_quotes(ck.nfc(text))).strip()
+    return len([s for s in _SENTENCE_END.split(body) if s.strip()]) if body else 0
+
+
+def hook_length_issue(text: str, lang: str, max_sentences: int = FIRST_MAX_SENTENCES,
+                      min_words: int | None = None) -> str:
+    """'' when a first line is one spoken sentence of medium length, else why not ("3 sentences", "3 words")."""
+    n = hook_sentences(text)
+    if n > max_sentences:
+        return f"{n} sentences"
+    words = len(re.findall(r"[^\W_]+(?:['’][^\W_]+)*", ck.nfc(text)))
+    floor = FIRST_MIN_WORDS[lang] if min_words is None else min_words
+    return f"{words} words" if 0 < words < floor else ""
+
+
+def coach_self_words(run: Run) -> set[str]:
+    """The words a VN coach must not call themself in a piece: the persona's chat word (xung_ho "chị–em" → "chị"),
+    unless their own audience pair puts that word on their side (audience_xung_ho "chị–các em")."""
+    if run.lang != "vn":
+        return set()
+    chat = [p.strip().casefold() for p in re.split(r"[–—-]", str(run.persona.get("xung_ho", ""))) if p.strip()]
+    word = chat[0] if chat and chat[0] in ("chị", "anh") else ""
+    if not word:
+        return set()
+    own = " ".join(re.split(r"\s*[–—]\s*|\s+-\s+", p, maxsplit=1)[0] for p in audience_expected(run)[0]).casefold()
+    own += " " + str(run.persona.get("content_pronouns", "")).casefold().split("gọi")[0]
+    return set() if re.search(r"(?<!\w)" + word + r"(?!\w)", own) else {word}
+
+
+def public_self_hits(text: str, words: set[str]) -> list[str]:
+    """The places a piece's line has the coach call themself chị/anh (VN_SELF_CHAT), quoted words left out."""
+    if not words or not text:
+        return []
+    body = _QUOTED.sub(" ", ck.straight_quotes(ck.nfc(text)))
+    return [m.group(0) for m in VN_SELF_CHAT.finditer(body) if m.group(1).casefold() in words]
+
+
 def check_hook_lab(run: Run) -> dict:
     """The defects of the founder's Day 0 that no grader read (qa/standards/hook-lab.md HL6-HL9; reviews retest-ft1
     fix 2, retest-ft2 §7 and §8 fix 8), on every hook the machine printed:
@@ -6710,6 +6766,11 @@ def check_hook_lab(run: Run) -> dict:
     - no hedge in any of them, nor in an email's subject lines (hook_hedges);
     - slide 1 and the subject lines read within HEADLINE_MAX_CHARS characters (EN 60, VN 70; acceptance [hook_lab]
       headline_max_chars_en / _vn; HL9: a subject line's 2nd and 3rd drafts are held to hedges only).
+    - from the founder-approved check (PRINCIPLES.md, 10 Oct 2026): a first line (and a text post's line 1) is one
+      spoken sentence of medium length, never more than FIRST_MAX_SENTENCES sentences or fewer than FIRST_MIN_WORDS
+      words (acceptance [hook_lab] first_line_max_sentences, first_line_min_words_en / _vn); in a VN piece the coach
+      never calls themself chị/anh, the machine's word for them in chat (coach_self_words); a comment ask on a short
+      is a choice, never an opinion question (OPINION_ASK).
     A warning (the check still passes) when a short's last line names the method instead of landing the answer.
     A proxy: the rubric's other items (HL1-HL5, HG1-HG3) need a reader. n/a when the run printed none of these."""
     cfg = _hook_cfg(run)
@@ -6727,6 +6788,24 @@ def check_hook_lab(run: Run) -> dict:
         flat_line += f["flat_line"]
         hedge += f["hedge"]
         warn += f["warn"]
+    acc = run.acceptance.get("hook_lab", {})
+    max_sent = int(acc.get("first_line_max_sentences", FIRST_MAX_SENTENCES))
+    min_words = int(acc.get(f"first_line_min_words_{lang}", FIRST_MIN_WORDS[lang]))
+    self_words = coach_self_words(run)
+    shape, voice, opinion = [], [], []
+    for s in shorts:
+        where = f"turn {s['turn']}: " if s.get("turn") is not None else ""
+        why = hook_length_issue(s.get("first", ""), lang, max_sent, min_words) if s.get("first") else ""
+        if why:
+            shape.append(f'{where}first line is {why}, not one spoken sentence of medium length: "{_short(s["first"], 70)}"')
+        for key in ("on", "first", "caption", "last"):
+            for hit in public_self_hits(s.get(key, ""), self_words):
+                voice.append(f'{where}the coach calls themself "{hit.split()[0]}" in the piece ("{hit}"): in public they say '
+                             f'mình/tôi, as in their own posts')
+        for key in ("caption", "last"):
+            m = OPINION_ASK[lang].search(s.get(key, "") or "")
+            if m and m.group(0).strip():
+                opinion.append(f'{where}the ask is an opinion question ("{m.group(0).strip()}"); give a choice ("A hay B?")')
     names = {"post": "text post line 1", "slide": "slide 1", "subject": "subject line"}
     for h in heads:
         where = f"turn {h['turn']}: "
@@ -6736,6 +6815,14 @@ def check_hook_lab(run: Run) -> dict:
                 flat_line.append(f'{where}flat claim in the {what} ({fam}: "{words}"): "{_short(h["text"], 60)}"')
         for word in hook_hedges(h["text"], "headline", lang):
             hedge.append(f'{where}hedge "{word}" in the {what}: "{_short(h["text"], 60)}"')
+        if h["kind"] == "post":
+            why = hook_length_issue(h["text"], lang, max_sent, min_words)
+            if why:
+                shape.append(f'{where}{what} is {why}, not one spoken sentence of medium length: "{_short(h["text"], 70)}"')
+        if h["kind"] in ("post", "slide"):
+            for hit in public_self_hits(h["text"], self_words):
+                voice.append(f'{where}the coach calls themself "{hit.split()[0]}" in the {what} ("{hit}"): in public they '
+                             f'say mình/tôi, as in their own posts')
         if h["kind"] in ("slide", "subject") and not (h["kind"] == "subject" and h["n"] > 1) \
                 and len(h["text"]) > cfg["max_chars"]:
             long.append(f'{where}{what} is {len(h["text"])} characters, over {cfg["max_chars"]}: "{_short(h["text"], 70)}"')
@@ -6748,6 +6835,12 @@ def check_hook_lab(run: Run) -> dict:
         {"item": "no hedge in a hook", "pass": not hedge, "evidence": list(dict.fromkeys(hedge))},
         {"item": f"slide 1 and the first subject line within {cfg['max_chars']} characters", "pass": not long,
          "evidence": list(dict.fromkeys(long))},
+        {"item": "the first line is one spoken sentence of medium length (never a paragraph or a riddle)", "pass": not shape,
+         "evidence": list(dict.fromkeys(shape))},
+        {"item": "the coach speaks as mình/tôi in the piece, never the chat word chị/anh", "pass": not voice,
+         "evidence": list(dict.fromkeys(voice))},
+        {"item": "a comment ask is a choice, never an opinion question", "pass": not opinion,
+         "evidence": list(dict.fromkeys(opinion))},
     ]
     passed = all(i["pass"] for i in items)
     out = {"id": "hook_lab", "pass": passed, "status": "pass" if passed else "fail", "items": items,

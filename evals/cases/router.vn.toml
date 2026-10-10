@@ -2408,7 +2408,7 @@ invariants = ["I1", "I3", "I5", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: convert (trigger set). UX §4 universal word 'nhẹ' (cmd.quiet); §CM-CTA-KIT 5: '"nhẹ" (gõ riêng) … → cta_style quiet luôn, không cãi: bài sau mời cta.quiet "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.", bài chưa đăng in lại lời mời; cụm từ khoá vẫn trong lời.' Minh Anh fears looking like 'lùa gà' and takes 'nhẹ' when offered (persona behaviour); once switched, no second pitch, no 'không phải bán hàng đâu' (cta.not_pushy answers only 'Nghe như spam?'). K2 and §CM-TODAY 1: 'nhẹ' is no Map change, so this reply may carry the CTA swap followed by Tuần 1 (ChatGPT Free: ≤3 pieces a reply); every piece then uses the quiet ask, so 'Comment CỨNG ĐƠ' appears nowhere, and nothing prints under a piece (R9)."""
+notes = """route: convert (trigger set). UX §4 universal word 'nhẹ' (cmd.quiet); §CM-CTA-KIT 5: '"nhẹ" (gõ riêng) … → cta_style quiet luôn, không cãi: bài sau mời cta.quiet "Nhắn mình chữ {KEYWORD}, mình gửi {payoff}.", bài chưa đăng in lại lời mời; cụm từ khoá vẫn trong lời.' Minh Anh fears looking like 'lùa gà' and takes 'nhẹ' when offered (persona behaviour); once switched, no second pitch, no 'không phải bán hàng đâu' (cta.not_pushy answers only 'Nghe như spam?'). K2 and §CM-TODAY 1: 'nhẹ' is no Map change, so this reply may carry the CTA swap followed by Tuần 1 (ChatGPT Free: ≤3 pieces a reply); every piece then uses the quiet ask, so 'Comment CỨNG ĐƠ' appears nowhere, and nothing prints under a piece (R9)."""
 
 [[case]]
 id = "router.vn.072"

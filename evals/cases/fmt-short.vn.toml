@@ -85,7 +85,7 @@
 # - QUAY HÔM NAY (start-block step 6, fmt-short.kit-video-short 1-7): "QUAY HÔM NAY · dưới 30 giây, nhớ ý
 #   rồi nói"; chữ trên màn hình ≤6 tiếng (ck.ON_SCREEN_MAX_WORDS); khung hình đầu; câu đầu nguyên văn
 #   ≤{{hook_max}} = 18 tiếng; 3 ý ≤18 tiếng each; câu cuối nguyên văn; the caption in a copy box; the ask
-#   cta.default "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}." in the coach's audience address,
+#   cta.default "Comment {KEYWORD} hay nhắn riêng, mình gửi {payoff}." in the coach's audience address,
 #   with "(ngại xin comment thì gõ 'nhẹ')"; the quà itself (one inbox message long, written in full) in
 #   its own copy box under the caption; then film.now_or_text "Quay luôn bây giờ, hoặc đăng phần chữ làm
 #   bài viết." The keyword sits once in the words, plus the ask (§CM-WEEK 4 "Từ khoá 1 lần trong bài + lời

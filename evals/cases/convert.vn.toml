@@ -323,7 +323,7 @@ not_regex = [
 invariants = ["I1", "I5", "I14", "I15", "I17"]
 max_words = 180
 max_questions = 1
-notes = """strings cmd.quiet ('nhẹ', typed alone) and cta.quiet ('Nhắn mình chữ {KEYWORD}, mình gửi {gift}.') in his audience voice: 'Nhắn tôi chữ TUYỂN HOÀI, tôi gửi phiếu việc 1 trang.' convert.kit-keyword 5: cta_style quiet from now on, and the unposted post's ask is printed again; the keyword phrase may stay in the words of the post, only the comment ask changes. The Brand Card stores cta_style = quiet from here; convert.vn.010 checks it on a later piece. Nothing prints under the reprinted ending (wf15 §2)."""
+notes = """strings cmd.quiet ('nhẹ', typed alone) and cta.quiet ('Nhắn mình chữ {KEYWORD}, mình gửi {payoff}.') in his audience voice: 'Nhắn tôi chữ TUYỂN HOÀI, tôi gửi phiếu việc 1 trang.' convert.kit-keyword 5: cta_style quiet from now on, and the unposted post's ask is printed again; the keyword phrase may stay in the words of the post, only the comment ask changes. The Brand Card stores cta_style = quiet from here; convert.vn.010 checks it on a later piece. Nothing prints under the reprinted ending (wf15 §2)."""
 
 [[case]]
 id = "convert.vn.010"

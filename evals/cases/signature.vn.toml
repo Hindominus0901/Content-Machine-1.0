@@ -292,7 +292,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I11", "I15"]
 max_questions = 1
-notes = "convert.kit 5: 'nhẹ' (typed alone) → cta_style quiet for good, no argument: later pieces ask cta.quiet 'Nhắn mình chữ {KEYWORD}, mình gửi {gift}.' (in his audience voice: 'anh chị nhắn Đức chữ PHÁT SINH, …'), the unposted caption is reprinted with it, and the keyword stays in the words once in another placement (hook, on-screen text, spoken payoff, caption line 1 or pinned comment: banks.toml K placements). 'nhẹ' is not a Map change, so Week 1 follows in this reply, quiet throughout (§CM-TODAY 1). The old line 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\", em đổi thành \"nhắn em nhé\".' is gone (start-block step 6: '(ngại xin comment thì gõ 'nhẹ')')."
+notes = "convert.kit 5: 'nhẹ' (typed alone) → cta_style quiet for good, no argument: later pieces ask cta.quiet 'Nhắn mình chữ {KEYWORD}, mình gửi {payoff}.' (in his audience voice: 'anh chị nhắn Đức chữ PHÁT SINH, …'), the unposted caption is reprinted with it, and the keyword stays in the words once in another placement (hook, on-screen text, spoken payoff, caption line 1 or pinned comment: banks.toml K placements). 'nhẹ' is not a Map change, so Week 1 follows in this reply, quiet throughout (§CM-TODAY 1). The old line 'Muốn nhẹ nhàng hơn? Gõ \"nhẹ\", em đổi thành \"nhắn em nhé\".' is gone (start-block step 6: '(ngại xin comment thì gõ 'nhẹ')')."
 
 [[case]]
 id = "signature.vn.013"

@@ -109,6 +109,12 @@ onscreen_new_words_min = 1                # the on-screen text must also hold th
 headline_max_chars_en = 60                # slide 1 and the first email subject line, in characters (qa/standards/hook-lab.md HL9;
 headline_max_chars_vn = 70                #   packaging.md "≤60 characters"; VN "≤70"). Retest-ft2: "Your biggest client might be underwater.
                                           #   Here's how to check." is 61. A subject line's 2nd and 3rd drafts are held to hedges only.
+first_line_max_sentences = 2              # the founder-approved check (docs/research/hooks-cta/PRINCIPLES.md, 10 Oct 2026, item 6: "one
+                                          #   spoken sentence, two short ones at most"; founder v1 "too many sentences"): a short's first line
+                                          #   or a text post's line 1 with more sentences is a paragraph
+first_line_min_words_en = 4               # ... and with fewer words a riddle ("Why?", "That's not research."; "not a three-word riddle";
+                                          #   "63 applications. 2 interviews." is 4 and passes)
+first_line_min_words_vn = 5               #   VN in tiếng ("Vì sao?", "Đắt quá hả?" fail)
 
 [research_log]                            # check research_log (graders.py; the web lane's Research log in notes.md; review retest-ft2 fix 8)
 keep_min_pages = 2                        # a KEEP is backed by lines from this many distinct pages ...

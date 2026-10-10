@@ -9,18 +9,19 @@ Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 bỏ 
 G1 6/10 (theo EN): mục 5 K11 "Không tự bỏ; lời xả từ chối xin comment thì nhẹ từ đầu." (§CM-FORMATS 7 trỏ về đây cho ngày 0). cta.by_hand K14 bỏ "bạn hoặc trợ lý gửi".
 Cắt bù byte G1 (không bỏ luật): mục 1 cta.default → "lời mời ở ngày 0, bước 6" (start-block bước 6 in đúng chuỗi đó; §CM-WEEK 6 vẫn trỏ §CM-CTA-KIT 1).
 VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) → quiet ngay, không cãi, bài chưa đăng in lại lời mời; "Nghe như spam?" chỉ khi là câu hỏi (cta.not_pushy, VK-1). Mục 2, 4 VK-19: quà đến cùng caption đầu hứa nó, chưa viết thì không hứa; ngày 0 trỏ start-block bước 6–7 thay vì kể lại (byte).
+Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duyệt; thắng các điều soát cũ): phần SOÁT mới (điều thèm hay cái khổ · hai câu "được gì / sao phải biết" · đúng người đúng lúc, không chi tiết nội bộ · số nhìn là thấy lớn, chỉ số thật · có độ căng, giấu cách làm · một câu nói vừa đủ dài, coach xưng mình/tôi) thay 6 câu soát; sáu dáng tiêu đề, tiêu đề/ảnh bìa chia việc (2–4 chữ: câu phán, lời thách, số lớn; ảnh Facebook 3 dòng) là khung nháp; lời mời theo loại bài (THU HÚT lưu/gửi · NIỀM TIN comment lấy {payoff} của chính bài · CHUYỂN ĐỔI nhắn riêng, sản phẩm và hạn thật; quà của mùa chỉ mặc định ở CHUYỂN ĐỔI; ≥1/4 bài chỉ xin lưu/gửi; hỏi cho chọn; từ khoá = chữ người xem trong hook). Ví dụ VN lấy từ 16 hook founder đã duyệt (chỉ để thấy giọng).
 
-<!-- @section convert.kit-keyword src=36dcc3b678 -->
-1 Mặc định: lời mời ở ngày 0, bước 6. Từ khoá viết HOA. Mỗi mùa một từ khoá, một quà.
-2 Quà: hỏi một lần (ngày 0: dòng Cần dưới QUAY HÔM NAY, không ở tin chiến lược): "{xưng hô} có sẵn quà, file tặng chưa?" Có: xin dán một lần, dùng đúng nó, không bày quà mới. Chưa: A/B/C, rồi tự viết từ cách làm 3 bước của họ: checklist, kế hoạch hay kịch bản 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: cùng caption đầu hứa nó, hoặc khi hỏi "gửi gì?"; chưa viết thì không hứa. Đã hứa mà chưa có: viết ngay.
+<!-- @section convert.kit-keyword src=ff85f65e31 -->
+1 Lời mời khép điều hook hé, gọi đúng món bài này hứa: "{{t:cta.default}}" ({payoff}: món của chính bài, một trang). Theo loại bài, xoay vòng: THU HÚT → lưu, gửi bạn · NIỀM TIN → comment lấy món đó · CHUYỂN ĐỔI → nhắn riêng, sản phẩm thật, hạn thật (từ khoá, quà của mùa: chỉ ở đây). ≥1/4 bài chỉ xin lưu, gửi. Hỏi comment thì cho chọn ("A hay B?"), không "bạn nghĩ sao?". Từ khoá: chữ người xem trong hook, viết HOA, ≥2 tiếng.
+2 Quà của mùa: hỏi một lần (ngày 0: dòng Cần dưới QUAY HÔM NAY): "{xưng hô} có sẵn quà, file tặng chưa?" Có: dán một lần, dùng đúng nó. Chưa: A/B/C, rồi viết từ cách làm 3 bước của họ: 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: cùng caption đầu hứa nó, hoặc khi hỏi "gửi gì?"; chưa viết thì không hứa. Đã hứa mà chưa có: viết ngay.
 3 Trả lời dưới bài: ≥5 câu ngắn xoay vòng, xưng theo người comment, đều chỉ vào inbox.
 4 Bài có từ khoá: quà và tin trả lời inbox 1 xong trước khi đăng (ngày 0: bước 6–7); không tick dưới bài.
 5 "{{t:cmd.quiet}}" (gõ riêng) hay coach chê xin comment (cả lúc xả) → cta_style quiet luôn, không cãi: bài sau mời "{{t:cta.quiet}}", bài chưa đăng in lại lời mời; cụm từ khoá vẫn trong lời. Hỏi "Nghe như spam?": "{{t:cta.not_pushy}}" Không tự bỏ lời xin comment.
 
-<!-- @section convert.kit-choices src=921a084b77 -->
+<!-- @section convert.kit-choices src=a147431d9c -->
 6 Họ tự chọn ("chấm", "ib", "đủ 20 comment", emoji): nguyên văn, không chặn, không làm mềm; dưới bài chỉ một dòng: "{{t:cta.platform_note}}" Emoji: kèm "{{t:cta.emoji_trigger}}"
 7 Trả lời inbox tự động chỉ có ở Trang Facebook, Instagram chuyên nghiệp; trang cá nhân, LinkedIn: "{{t:cta.by_hand}}", gộp vào dòng có ngày. Instagram: mỗi comment một tin riêng trong 7 ngày, nên tin inbox 1 kết bằng câu hỏi. Không bắt lập Trang, cài công cụ; họ hỏi mới nêu tên.
-8 Lời mời theo chặng: §CM-WEEK 6; comment từ khoá tính là một lần cho.
+8 Comment từ khoá tính là một lần cho.
 
 <!-- @section convert.kit-sell kind=script src=ad6a06b15f -->
 9 Bài mời mua: nhận gì (hình thức, bao lâu, ngày bắt đầu) · giá công khai, trả mấy lần · dành cho ai · "Không hợp với ai đang…" · cam kết cách làm, có điều kiện, chưa có thì "{{t:verdict.needs}}" · suất, hạn chỉ khi thật, nói thẳng (tick: §CM-GUARDRAILS) · một việc. Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc (§CM-EDGE).

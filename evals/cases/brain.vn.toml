@@ -749,7 +749,7 @@ invariants = ["I1", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. UX §5 item 16 'cta_style = keyword | quiet is stored in the Brand Card'; strings cmd.quiet 'nhẹ', cta.quiet ('Nhắn mình chữ {KEYWORD}, mình gửi {gift}.' in her voice 'Nhắn chị chữ NGẠI CHÀO …'). After 'nhẹ' no piece asks for a comment (the swapped caption and all of Tuần 1)."""
+notes = """scope: transcript. UX §5 item 16 'cta_style = keyword | quiet is stored in the Brand Card'; strings cmd.quiet 'nhẹ', cta.quiet ('Nhắn mình chữ {KEYWORD}, mình gửi {payoff}.' in her voice 'Nhắn chị chữ NGẠI CHÀO …'). After 'nhẹ' no piece asks for a comment (the swapped caption and all of Tuần 1)."""
 
 # ---------------------------------------------------------------- saving on Claude, shared accounts
 

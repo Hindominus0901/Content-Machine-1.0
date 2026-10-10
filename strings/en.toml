@@ -240,8 +240,8 @@
 "angle.hunch"      = "my hunch"
 
 # Short videos, posts, messages, calls to action (§ FORMATS, POSTS, MESSAGES, CTA-KIT)
-"cta.default"           = "Comment {KEYWORD} and I'll send you {gift}."
-"cta.quiet"             = "Message me {KEYWORD} and I'll send you {gift}."
+"cta.default"           = "Comment {KEYWORD} and I'll send you {payoff}."
+"cta.quiet"             = "Message me {KEYWORD} and I'll send you {payoff}."
 "cta.not_pushy"         = "A comment word gets people something real, so it isn't pushy. For a quieter ending, say '{{t:cmd.quiet}}'."
 "cta.platform_note"     = "Platform note (as of {date}): Facebook and Instagram may show 'comment if…' posts to fewer people. Your call."
 "cta.by_hand"           = "Replies go by hand."

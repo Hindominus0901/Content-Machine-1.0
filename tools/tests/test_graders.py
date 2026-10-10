@@ -4232,7 +4232,8 @@ class FT2RoundGraderTests(TempRepo):
         self.assertEqual({k: check["details"][k] for k in ("text_posts", "slides", "subjects")},
                          {"text_posts": 1, "slides": 1, "subjects": 3})
         names = [i["item"] for i in check["items"]]
-        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False], names)
+        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False, False, True, True], names)
+        self.assertTrue(any('text post line 1 is 3 words, not one spoken sentence' in e for e in ev), ev)   # a riddle, too short
         self.assertIn("headline_max_chars", check["details"])
 
     def test_the_review_rewrites_of_the_headlines_pass(self):
@@ -6298,6 +6299,65 @@ class V134StringTests(unittest.TestCase):
         en = graders.Matcher(EN_STRINGS, "en")
         self.assertTrue(en.says("map.ok", "We'll run this for 4 weeks. OK, or change a line."))
         self.assertFalse(en.says("map.ok", "I'll run this for 4 weeks. OK, or change a line."))
+
+
+QUYEN_SHORT = ("N1 · thứ Hai 12/10 · NIỀM TIN · 520 chữ\n```\nChữ trên màn hình: không phải tại giá.\n"
+               "Khung hình đầu: điện thoại mở khung chat khách hỏi giá\n"
+               "Câu đầu: \"Khách hỏi giá rồi seen? 10 năm làm sale, {who} chỉ sửa đúng một chỗ.\"\n"
+               "Câu cuối: \"Hỏi khách một câu trước khi báo giá, rồi mới gửi số.\"\nCaption:\n"
+               "Seen sau báo giá là chuyện ai bán hàng cũng gặp. {ask}\n```")
+
+
+class HookPrinciplesGraderTests(TempRepo):
+    """The founder-approved hook check (docs/research/hooks-cta/PRINCIPLES.md, 10 Oct 2026) in hook_lab: one spoken
+    sentence of medium length, the coach says mình/tôi in public (never the machine's chat word chị/anh), and a comment
+    ask that is a choice, never an opinion question."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", FT1_STRINGS))
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.write("evals/personas/vn/quyen/persona.toml", 'xung_ho = "chị–em"\ndialect = "Nam"\n'
+                   'allowed_numbers = ["10", "12"]\n')
+        self.write("evals/personas/vn/quyen/answers.md", "## Dump chunk 1\nChị làm sale 10 năm.\n")
+
+    def vn(self, body, persona="vn/quyen"):
+        return self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{body}\n\nTIẾP → Nhắn 'tiếp'.")],
+                          persona=persona, edition="vn")
+
+    def test_length_shape(self):
+        issue = graders.hook_length_issue
+        self.assertEqual(issue("Khách hỏi giá rồi seen? 10 năm làm sale, mình chỉ sửa đúng một chỗ.", "vn"), "")
+        self.assertEqual(issue("Vì sao?", "vn"), "2 words")
+        self.assertEqual(issue("That's not research.", "en"), "3 words")
+        self.assertEqual(issue("63 applications. 2 interviews.", "en"), "")
+        self.assertEqual(issue("Khách hỏi giá. Mình gửi. Khách im. Mình nhắn lại.", "vn"), "4 sentences")
+        self.assertEqual(issue('She said "Wait. No. Not yet." and left the call.', "en"), "")   # a quoted line is one
+
+    def test_the_coach_calls_themself_chi_in_a_piece(self):
+        bad = QUYEN_SHORT.format(who="chị", ask="Comment SEEN SAU BÁO GIÁ, chị gửi 3 tin nhắn trong video này.")
+        report = self.vn(bad)
+        self.assertFails(report, "hook_lab", 'the coach calls themself "chị" in the piece ("chị chỉ")')
+        self.assertFails(report, "hook_lab", '("chị gửi")')
+        good = QUYEN_SHORT.format(who="mình", ask="Comment SEEN SAU BÁO GIÁ, mình gửi 3 tin nhắn trong video này.")
+        self.assertPasses(self.vn(good), "hook_lab")
+
+    def test_an_audience_word_is_no_self_word(self):
+        ok = QUYEN_SHORT.format(who="mình", ask="Anh chị gửi video này cho người đang trực page nha.")
+        self.assertPasses(self.vn(ok), "hook_lab")                      # "anh chị gửi": the viewers, not the coach
+        self.write("evals/personas/vn/hanh/persona.toml", 'xung_ho = "chị–em"\naudience_xung_ho = "chị–các em"\n'
+                   'allowed_numbers = ["10"]\n')
+        self.write("evals/personas/vn/hanh/answers.md", "## Dump chunk 1\nChị làm 10 năm.\n")
+        hers = QUYEN_SHORT.format(who="chị", ask="Lưu lại, lần sau khách seen thì mở ra nha các em.")
+        report = self.vn(hers, persona="vn/hanh")
+        items = {i["item"]: i for i in self.inv(report, "hook_lab")["items"]}
+        self.assertTrue(items["the coach speaks as mình/tôi in the piece, never the chat word chị/anh"]["pass"])
+
+    def test_an_opinion_question_is_no_ask(self):
+        report = self.vn(QUYEN_SHORT.format(who="mình", ask="Bạn nghĩ sao? Comment bên dưới nha."))
+        self.assertFails(report, "hook_lab", "the ask is an opinion question")
+        report = self.vn(QUYEN_SHORT.format(who="mình", ask="Bạn báo giá liền hay hỏi trước? Ghi A hay B thôi."))
+        self.assertPasses(report, "hook_lab")
 
 
 if __name__ == "__main__":

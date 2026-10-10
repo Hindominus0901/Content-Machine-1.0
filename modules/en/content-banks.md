@@ -2,6 +2,7 @@ Maintainer: GROW banks (content-banks.grow-*), level-up file Level-ups/BANKS-<SU
 What it holds: what the banks are, where they live (the Bank database, the board's Bank tab, the strategy file, HUB.md), how each is filled, kept and drawn from, the Friday top-up and the coach's own winning hooks; 41 ask lines by rung × platform; 31 gift types by buyer stage with the pick rule; where to listen by niche × platform, 22 buyer-language query shapes and the comment-mining tags; the story and proof banks with their prompts. Hook shapes stay in HOOKS (§CM-HOOK-LIBRARY), the CTA kit in the method file (§CM-CTA-KIT), the listening protocol in RESEARCH (§CM-LISTEN), channel teardowns in §CM-CHANNELS / §CM-AUDIENCE.
 Names follow schemas/banks.toml (Client words, Objection, Moment, Insight, Story, Proof, Belief, Capture, Gift, Keyword, Liked post, Parked); refs and types never reach the coach.
 Sources: founder-sources (Matt Gray: one contextual gift per piece, the ask closes the loop the story opened, ask mix ≈60% gifts / 20% offers / 20% DM words; Nik Setting: comment-word posts, the profile as a landing page, show don't say; Soo Wei Goh: questions after a sale, objection mining from calls, hard-to-copy proof); wf8-mattgray-newsletter-leadmagnets §1C, P3-P5, P7, §3 (self-checks over ebooks; no inflated value maths, no fake seat counters); DECISIONS (comment-keyword asks on by default; "chấm" and thresholds when the coach chooses, one dated note; only fake scarcity and unbacked income or health claims blocked); research.grow-listen / grow-boxes (KEEP / WATCH). Rubric: qa/standards/banks.md.
+Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approved; it outranks the older hook-lab checks): THE CHECK (desire or daily pain · the two questions "what do I get / why should I care" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, method hidden · one spoken medium sentence, the coach says I/mình) replaces the 6 checks; the six title shapes and the title/thumbnail split (2–4 words: verdict, dare, big number) are the drafting frame; CTAs by tier (ATTRACT save/send · TRUST comment for this piece's {payoff} · CONVERT DM, real offer and deadline; the Season gift is the CONVERT default only; ≥1 in 4 save/send only; choice questions; keyword = the viewer's words from the hook). Notes: scratchpad v13/hooks-wire-notes.md.
 
 <!-- @section content-banks.grow-banks -->
 ### Banks: what every piece is made from ("bank", "banks", "what's in my bank", "save this")
@@ -47,58 +48,57 @@ Then the hooks that worked (§CM-BANKS 6) and one line: the bank that runs low n
 
 <!-- @section content-banks.grow-cta -->
 ### Ask bank: the one ask that ends a piece ("CTA", "call to action", "what do I say at the end")
-1 RUNGS, softest first: quiet (save, send, part 2) → comment word → DM → gift link → call or apply → offer. One ask per piece, picked by its tier and week (§CM-TIERS, §CM-WEEK 6):
-- ATTRACT: quiet or comment word · TRUST: comment word, DM or gift link · CONVERT: DM, call or apply, offer.
-- Month mix, roughly: 6 asks in 10 hand out a gift (comment word or link), 2 open a DM talk, 2 point at the offer or a call. No offer open: no offer asks.
+1 TIERS, rotated (§CM-CTA-KIT 1): ATTRACT → save, send, part 2 or a choice question · TRUST → a comment word for THIS piece's payoff, a DM or a gift link · CONVERT → DM, call or apply, the offer with a real deadline. One ask per piece, never the same ask twice running; ≥1 in 4 pieces ends on a save or send only. No offer open: no offer asks.
 2 RULES (for every line below):
-- Close the loop the hook opened: the gift or answer is named after THIS piece's result ("the 3 lines that kill a price page" → "the price-page check").
-- Comment word: a buyer phrase of ≥2 words, in capitals (PRICE CHECK, FIRST CLIENT); never GUIDE, FREE, INFO or a word an ordinary comment contains; the same spelling on screen, caption and auto-reply. The Season's word and gift are the default (§CM-CTA-KIT 1); a content line may carry its own once its gift exists; ≤3 live at once.
+- Close the loop the hook opened: the payoff is named after THIS piece's result ("the 3 lines that kill a price page" → "the price-page check").
+- Comment word: the viewer's own words from the hook, ≥2 words, in capitals (PRICE CHECK, THINK ABOUT IT); never GUIDE, FREE, INFO or a word an ordinary comment contains; the same spelling on screen, caption and auto-reply. The Season's word and gift are the CONVERT default (§CM-CTA-KIT 1); ≤3 words live at once.
 - The gift exists before the post goes out (§CM-CTA-KIT 2); an offer line carries the real price, date and cap (§CM-CTA-KIT 9).
 - The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened or blocked; under it ONE line, today's date in it: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 - Replies: automatic only on Facebook Pages and Instagram professional accounts; elsewhere by hand, so a comment word runs only where the coach can answer within a day (§CM-CTA-KIT 7). YouTube has no messages: no comment word; the gift goes in the description and pinned comment.
-- Never: "follow for more", "link in bio" without saying what is there, "DM for price" on a fixed price, fake urgency, two asks.
-3 SLOTS: {KEYWORD} the comment word · {gift} its plain name · {situation} the buyer's moment · {offer}, {price}, {date}, {N} real values only, else [NEEDS: …].
+- A question for comments is a choice ("first or second?", "A or B?"), never "thoughts?".
+- Never: "follow for more", "link in bio" without saying what is there, "DM for price" on a fixed price, fake urgency, two asks, one generic comment ask on every piece.
+3 SLOTS: {KEYWORD} the comment word · {payoff} what this piece promised, plainly named · {gift} the Season gift · {situation} the buyer's moment · {offer}, {price}, {date}, {N} real values only, else [NEEDS: …].
 4 ASK LIST: lines the coach approved or that drew hands up: `ask · {rung} · {platform} · "{line}" · {gift or offer} · {tier}`; reuse the best per platform before writing new.
 Labels below: rung · tier (A ATTRACT, T TRUST, C CONVERT).
 
 <!-- @section content-banks.grow-cta-video -->
 ### Ask lines: TikTok, Reels, YouTube
-Spoken as the last line; the caption repeats it once. The default comment ask is "{{t:cta.default}}"
+Spoken as the last line; the caption repeats it once. A TRUST piece's comment ask is "{{t:cta.default}}"
 TIKTOK
 1 quiet·A "Send this to the friend who {situation}."
 2 quiet·A "Part 2 is {the open question}. It's up tomorrow."
-3 word·A "Comment {KEYWORD} and I'll send you the {N}-line {gift} from this video."
+3 quiet·A "Save this for the next time {moment}; line {n} is the one you'll need."
 4 word·T "Comment {KEYWORD}: I'll send the exact words I just read, so you can say them {when}."
 5 DM·T "If you're the {role} who {situation}, message me {KEYWORD} and tell me where it breaks. I answer myself."
-6 link·T "The {gift} is the link on my profile, the one called {name}."
+6 link·T "The {payoff} is the link on my profile, the one called {name}."
 7 offer·C "{offer} starts {date}: {N} places, because {real reason}. Comment {KEYWORD} and I'll send the details."
 REELS AND INSTAGRAM
-8 word·T "Comment {KEYWORD} and the {gift} lands in your messages." (auto-reply set up first)
+8 word·T "Comment {KEYWORD} and the {payoff} from this reel lands in your messages." (auto-reply set up first)
 9 word·T last carousel slide: "Want slides 3-7 on one page? Comment {KEYWORD}."
 10 quiet·A "Save this for the next time {moment}."
-11 DM·T on a story: "Reply {KEYWORD} to this story and I'll send you {gift}."
+11 DM·T on a story: "Reply {KEYWORD} to this story and I'll send you {payoff}."
 12 call·C "If {situation} is costing you {cost in their words}, the call link is on my profile: 20 minutes, and I'll tell you straight if I can help."
 YOUTUBE, LONG VIDEOS
-13 link·T at about 65%: "If this is you, the {gift} is first in the description; it does step {n} for you."
+13 link·T at about 65%: "If this is you, the {payoff} is first in the description; it does step {n} for you."
 14 quiet·A at the end: "Watch this next: {title}. It answers {the question they'll have now}."
-15 link·T pinned comment: "{gift}: {link}. Start with page {n}; it takes {time}."
+15 link·T pinned comment: "{payoff}: {link}. Start with page {n}; it takes {time}."
 16 call·C "If you're {qualifier} and want help doing this, the application is second in the description: 3 questions, I read each one."
 17 offer·C "{offer}: {what}, {price}, next group {date}. Details second in the description."
 18 Description order: this video's gift → work with me → the email or Zalo list → what the video covers.
 SHORTS
 19 quiet·A "The full breakdown is on my channel: {title}."
-20 link·T "The {gift} from this Short is linked in my channel description."
+20 link·T "The {payoff} from this Short is linked in my channel description."
 
 <!-- @section content-banks.grow-cta-text -->
 ### Ask lines: Facebook, LinkedIn, email, Zalo
 FACEBOOK POST (profile or Page)
 21 word·T "Comment PRICE CHECK and I'll send you the one-page price check from this post."
-22 quiet·A "Which one are you, the first or the second? Tell me below."
+22 quiet·A "Which one are you, the first or the second? Just type 1 or 2."
 23 link·T "The checklist is in the first comment."
 24 DM·T "If you want me to look at yours, message me {KEYWORD}. I'll reply myself this week."
 25 offer·C "{offer}: {what}, {price}, starts {date}. For {who}; not for you if {not a fit}. Message me {KEYWORD}."
 FACEBOOK GROUP (the coach's own; in others', no ask unless the rules allow)
-26 word·T "Reply {KEYWORD} under this post and I'll send the file to your inbox today."
+26 word·T "Reply {KEYWORD} under this post and I'll send the {payoff} to your inbox today."
 27 quiet·A "Every part of this series is in the pinned post."
 28 call·C "Thursday {time} I'll fix {N} members' {thing} live here. Comment {KEYWORD} to be one of them."
 LINKEDIN
@@ -108,7 +108,7 @@ LINKEDIN
 32 call·C "If you run {role} and {situation}, my calendar link is on my profile: 20 minutes, no pitch unless you ask for one."
 EMAIL (a never-mailed or 6-month-silent list: the first email is the permission re-ask, §CM-MESSAGES 3)
 33 DM·T "Hit reply and tell me the one {thing} you're stuck on. I read every reply."
-34 link·T "Here's the {gift}: {link}. Do step 1 today; it takes {time}."
+34 link·T "Here's the {payoff}: {link}. Do step 1 today; it takes {time}."
 35 call·C "P.S. When you're ready, 3 ways I can help: 1 {gift} · 2 {workshop}, {date} · 3 work with me: {offer}, {price}."
 36 offer·C "Doors close {date} at {time}. The page: {link}."
 37 apply·C "Applications for {offer} are open until {date}: 3 questions, {time} to answer: {link}."

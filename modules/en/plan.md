@@ -2,6 +2,7 @@ Maintainer: §CM-WEEK (plan.kit-week*) and §CM-MONTH (plan.kit-month*), the wee
 Sources: wf15-simple-surface-spec §1 step 6, §2, §3 (Week 1 unasked after FILM TODAY; WHY stored per piece, printed on "why?"); wf14-voice-language-spec §3-§4 (platform shifts and the monthly voice line live in §CM-VOICE);
 wf11-ux-spec §2 (min 26–34), §3.2; wf11-message-focus §3–§5; arch-final-spec §5.5; wf13-inspiration-spec §3–§4;
 editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, message.en (anti-dilution), liked.en (Your angle).
+Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approved; it outranks the older hook-lab checks): THE CHECK (desire or daily pain · the two questions "what do I get / why should I care" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, method hidden · one spoken medium sentence, the coach says I/mình) replaces the 6 checks; the six title shapes and the title/thumbnail split (2–4 words: verdict, dare, big number) are the drafting frame; CTAs by tier (ATTRACT save/send · TRUST comment for this piece's {payoff} · CONVERT DM, real offer and deadline; the Season gift is the CONVERT default only; ≥1 in 4 save/send only; choice questions; keyword = the viewer's words from the hook). Notes: scratchpad v13/hooks-wire-notes.md.
 
 <!-- @section plan.kit-week -->
 ### The week's plan (Talk weeks; Week 1: after FILM TODAY, a piece per "next"; topics: the pillars + your expertise, facts only theirs)
@@ -10,7 +11,7 @@ editions/en.toml [platform_mix]; qa/standards/season-plan.md; cases router.en, m
 3 Each piece: one pillar, one type · the idea ≤15 words, first · one belief shift · one framework that fits its type and format (§CM-COPY) · ≥1 bank item: a CTA, gift, story or proof (§CM-BANKS) · NOT NOW never the hook or main idea. Two ideas → split; the second waits.
 4 Keyword once in every body, a share ask's too, plus the ask; its spot rotates: hook → on-screen → payoff → caption line 1 → a long post's opening.
 5 WHY line, stored with every piece, printed only on "{{t:cmd.why}}": {{t:why.prefix}}: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}.
-6 Ask by step: reach → follow or send to a friend ("{{t:series.part2_tomorrow}}") · default → "{{t:cta.default}}" (quiet: reply / message me) · DM or book → week 2+, only with proof (an OK'd result, their process or a founding offer), ≤1 a week Lean, ≤2 Standard. ≥3 gives per ask.
+6 Ask by tier (§CM-CTA-KIT 1): ATTRACT → save, send ("{{t:series.part2_tomorrow}}") · TRUST → "{{t:cta.default}}" (quiet: message me) · CONVERT → DM or book, week 2+, only with proof (an OK'd result, their process or a founding offer), ≤1 a week Lean, ≤2 Standard. ≥3 gives per ask.
 7 The mix (default 40/40/20): ATTRACT = reach + relate (wide, shareable), TRUST = teach + proof, CONVERT = the offer, an objection, a client's decision, the ask. Character or entertainment ≤20%, from the buyer's world, carrying a trait, the enemy or a belief. ≥3 formats; no format 3 in a row; no repeated hook openings.
 8 A saved liked shape may fill 1 native slot a week (Standard 2), with the coach's topic and story.
 9 No proof yet: proof pieces run as their process story or a founding offer, nothing said; the week carries the "ask 3 past clients one question" message (§CM-MESSAGES).

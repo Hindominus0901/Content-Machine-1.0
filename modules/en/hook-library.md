@@ -3,10 +3,11 @@ What it holds: 107 hook patterns in 20 mechanisms (10 sections, two mechanisms e
 Sources: founder-sources (Soo Wei Goh: three hooks per short, a hook wide for the sharer and specific for the buyer, loops past the topic; Nik Setting: numbers decide who comes, outcome over method, show don't say; Hormozi: proof, promise, plan); wf8-mattgray-playbook §1-§4 with the youtube, instagram, linkedin-x and newsletter sweeps (title, slide-1, subject and hook shapes, renamed in plain words; his framework names never used, §9 respected: no inflated value math, no fake scarcity); wf9-entertainment-catalog (moments); strategy-coverage; modules packaging (§CM-HOOKS, §CM-PACKAGING), convert (§CM-CTA-KIT, §CM-ADS). Reviewer rubrics: qa/standards/hook-lab.md (the winner), qa/standards/hook-library.md (the entries).
 House rules in every example: {N} and other slots are the coach's real facts; scenes are made up only to show the shape; no invented result, testimonial, number or scarcity; comment-word asks on; the coach's own "chấm" and thresholds kept word for word with one dated note; fake urgency and income or health promises blocked; no attack on a person or group. No years or "currently" in prose (E145).
 Budgets: each section ≤2,800 B; the file ≤45 KB (a HOOKS level-up needs its own budget, see the notes). Triggers: "hook library", "more hooks", "hook ideas" (VN "thư viện hook", "thêm hook").
+Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approved; it outranks the older hook-lab checks): THE CHECK (desire or daily pain · the two questions "what do I get / why should I care" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, method hidden · one spoken medium sentence, the coach says I/mình) replaces the 6 checks; the six title shapes and the title/thumbnail split (2–4 words: verdict, dare, big number) are the drafting frame; CTAs by tier (ATTRACT save/send · TRUST comment for this piece's {payoff} · CONVERT DM, real offer and deadline; the Season gift is the CONVERT default only; ≥1 in 4 save/send only; choice questions; keyword = the viewer's words from the hook). Notes: scratchpad v13/hooks-wire-notes.md.
 
 <!-- @section hook-library.grow-use -->
 ### The hook library: how the lab uses it ("hook library", "more hooks", "hook ideas"; deepens §CM-HOOKS)
-1 The lab (§CM-FORMATS 1, §CM-HOOKS) drafts from this library: ≥12 silent drafts from ≥6 mechanisms, chosen by the piece's purpose (ATTRACT, TRUST or CONVERT, as the week's plan says) and its surface; the next part says which mechanisms suit which. Only the coach's facts and real buyer lines fill the slots. It picks by the lab's six checks (concrete · buyer words · a loop past the topic that the last line pays off · a belief shift · wide enough to pass on, specific enough that the buyer feels named · clean) and prints only the winner.
+1 The lab (§CM-FORMATS 1, §CM-HOOKS) drafts from this library: ≥12 silent drafts in the six shapes (§CM-PACKAGING 2), with these mechanisms as raw material, chosen by the piece's purpose (ATTRACT, TRUST or CONVERT, as the week's plan says) and its surface; the next part says which suit which. Only the coach's facts and real buyer lines fill the slots. Every draft passes THE CHECK (§CM-HOOKS 2: desire or daily pain first · makes them ask "what do I get?" and "why now?" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, result promised, method hidden · one spoken sentence, medium length, the coach says I or we) or is dropped. An entry's example that would fail is a shape to rework, never a line to post. Only the winner prints.
 2 Never shown to the coach: mechanism names, slots, the words "pattern" or "library", trap notes, codes or scores. The piece's type shows only as its plain word in the piece's title line (ATTRACT, TRUST or CONVERT, §CM-TIERS; the same rule as §CM-CAMPAIGNS 2), never on a hook. They see a hook, never how it was made. "Another hook" → 3 more, each from a mechanism not yet used for this piece.
 3 Slots: {N}, {time}, {result}, {client role} take only their facts (dump, Card, hub, OK'd results). A research line becomes the viewer's own thought or "a line I keep seeing", never a client quote. No fact for a slot → another mechanism; if every strong draft needs it, one "[NEEDS: …]". In the examples, {N} is the coach's real number and the scenes are made up to show the shape; nothing here is posted as written.
 4 Variety: no mechanism two pieces running; an opening not in recent_hooks (§CM-HUMANIZE); a week's ATTRACT pieces use ≥3 mechanisms.
@@ -18,19 +19,19 @@ Budgets: each section ≤2,800 B; the file ≤45 KB (a HOOKS level-up needs its 
 2 ATTRACT hooks are wide: a friend passes it on and the buyer feels named. Start from: belief flip, myth-bust, a moment from the buyer's day, call-out, cold open, overheard line, dare, starting over.
 3 TRUST hooks show how the coach thinks. Start from: their number, costly mistake, confession, steps, behind the scenes, old vs new, how to X without Y.
 4 CONVERT hooks speak to the decision the buyer is weighing. Start from: the objection said out loud, the question buyers ask, the after-state, a result taken apart, before → after, a challenge to join, "not for… / for…".
-5 Numbers decide who comes: the stage just above the buyer, never past the coach's proof. Outcome before method. Show proof; never say "with proof".
+5 THE BAR (style only; these numbers belong to an example coach, the coach's own go in): "Clients ask your price, then go quiet? 10 years in sales, I fixed one thing." + "it's not the price." · "How to answer 'I'll think about it' so clients come back on their own (no chasing)." + "don't say 'sure'." · "From 14 to 33 bookings a month without a discount: here's what I did." + "2x bookings" · "Give me 10 minutes and I'll give you 10 years of closing in DMs." + "10 years → 10 min" · "Closing is hard until you ask this one question before the price." + "ask first." · "Post every day and nobody asks to buy? It's not your content." + "stop posting more." · "One challenge, 300 people, 100+ buyers: here's how I wrote it." + "100 buyers." · "If I started coaching from zero this year, I'd do exactly 3 things." + "no content yet." The shape: their pain or desire as a question or a condition, then a promise or a turn; 2-4 thumbnail words after. Numbers decide who comes: the stage just above the buyer, never past the coach's proof.
 6 "Hook library" or "more hooks" for a topic: ≤10 hooks for the next piece or the topic named, filled with their facts, grouped by surface, one line each, the one to post first on top. No names, no open slots. Then one question: which one to write.
 7 A liked post the coach pasted (§CM-LIKED) maps to its nearest mechanism; the shape is borrowed, never the words.
 
 <!-- @section hook-library.grow-flip -->
 ### Hooks 1: belief flip, myth-bust (shape · purpose · where · example · flat or trap)
 BELIEF FLIP: the viewer believed A; the hook says B; the piece proves B.
-1 "You don't need {usual fix}. You need {their answer}." · ATTRACT, TRUST · short, post, slide 1 · "You don't need more followers. You need ten who'd miss your posts." · Trap: a flip nobody believed ("you don't need to be rude").
-2 "{Buyers} don't have a {named problem} problem. They have a {real cause} problem." · ATTRACT · short, title, subject · "Most freelancers don't have a pricing problem. They have a proof problem." · Flat: "Pricing is about value."
-3 "The {thing they do to fix it} is why {problem} stays." · TRUST · short, post · "Posting more is the reason nobody messages you." · Trap: blaming the buyer; the habit is the target.
-4 "Stop {common advice}. {Their move} instead." · ATTRACT · screen, short, ad · "Stop sending your price list first. Send one question instead." · Flat: "Pricing tips for freelancers."
-5 "{A strength they're proud of} is the problem." · TRUST · post, subject · "Answering clients at 11 pm is why they don't respect your hours."
-6 "Most {buyers} think {A} sells. It's {B}." · ATTRACT, CONVERT · post, title, live · "Most tutors think the trial lesson sells the course. The message after it does."
+1 "You don't need {usual fix}. You need {their answer}." · ATTRACT, TRUST · short, post, slide 1 · "You don't need more followers. You need these ten people." · Trap: a flip nobody believed ("you don't need to be rude").
+2 "{Buyers} don't have a {named problem} problem. They have a {real cause} problem." · ATTRACT · short, title, subject · "Most freelancers don't have a pricing problem. They have this one." · Flat: "Pricing is about value."
+3 "The {thing they do to fix it} is why {problem} stays." · TRUST · short, post · "Posting more and still nobody messages you? It's not the algorithm." · Trap: blaming the buyer; the habit is the target.
+4 "Stop {common advice}. {Their move} instead." · ATTRACT · screen, short, ad · "Stop sending your price list first. Send this instead." · Flat: "Pricing tips for freelancers."
+5 "{A strength they're proud of} is the problem." · TRUST · post, subject · "Answering clients at 11 pm and they still don't respect your hours? It's the thing you're proud of."
+6 "Most {buyers} think {A} sells. It's {B}." · ATTRACT, CONVERT · post, title, live · "Most tutors think the trial lesson sells the course. Parents decide somewhere else."
 7 "Not {usual fix}. Not {usual fix}. It was {their answer}." · TRUST · short, post, slide 1 · "Not the logo. Not more posts. It was one line on my price page." · Only fixes they saw tried; habits, never a rival's method.
 MYTH-BUST: the advice they keep hearing, then what the coach sees.
 8 "Everyone says '{advice}'. Here's what it skips." · ATTRACT · short, slide 1 · "Everyone says 'just niche down.' Here's the step it skips."
@@ -42,7 +43,7 @@ MYTH-BUST: the advice they keep hearing, then what the coach sees.
 ### Hooks 2: old way vs new way, how to X without Y (shape · purpose · where · example · flat or trap)
 OLD VS NEW: two ways, one wins. The old way is a habit or a piece of advice, never a person or a group.
 1 "Old way: {habit}. New way: {their way}." · TRUST · screen, slide 1, post, ad · "Old way: a 40-minute sales call. New way: three questions before the call."
-2 "Most {buyers} {old move}. The ones who {result} {new move}." · ATTRACT · post, short · "Most new photographers send a price list. The ones who stay booked send a question first."
+2 "Most {buyers} {old move}. The ones who {result} {new move}." · ATTRACT · post, short · "Most new photographers send a price list. The ones who stay booked send this first."
 3 "{Copied option} vs {their way}: what each costs you by {time}." · CONVERT · post, slide 1, subject · "A template vs your own words: what each costs by month three."
 4 "Two {buyers}, same {situation}. One {did A}. One {did B}." · ATTRACT · short, post · "Two shop owners, same slow month. One cut prices. One called five old customers." · A made-up pair is said as one ("picture two shop owners"), never as a true story.
 5 "Alone vs with {a plan}: both work. One costs {honest cost}." · CONVERT · post, live, chat · "Fixing your website alone vs with a checklist: both work. One takes your whole weekend." · Trap: making the buyer's way look stupid; the honest trade-off is the hook.
@@ -50,8 +51,8 @@ HOW TO X WITHOUT Y: the result, and the bracket removes a fear that is real.
 6 "How to {result} (without {what they fear})" · TRUST · title, slide 1, subject · "how to raise your prices (without losing your regulars)" · Flat: "Pricing strategies for small businesses."
 7 "{Result}, even if you {constraint}." · ATTRACT · short, post, live · "Lead meetings in English, even if you still translate in your head."
 8 "{Result} without {what they think it takes}: {N} things I'd keep" · TRUST · slide 1, post · "A full calendar without daily posts: the 3 things I'd keep" · {N} is the real count in the piece.
-9 "The lazy way to {result}: {small surprising move}." · ATTRACT · short, screen · "The lazy way to get referrals: ask the day they say thanks."
-10 "No {feared cost}. No {second cost}. Just {their way}." · CONVERT · ad, live · "No cold messages. No daily posting. One question in every follow-up." · Trap: "without effort", "without ads" when it isn't true; the bracket removes a real fear, never the work.
+9 "The lazy way to {result}: {small surprising move}." · ATTRACT · short, screen · "The lazy way to get referrals (it takes one message)."
+10 "No {feared cost}. No {second cost}. Just {their way}." · CONVERT · ad, live · "No cold messages. No daily posting. Just one line in every follow-up." · Trap: "without effort", "without ads" when it isn't true; the bracket removes a real fear, never the work.
 11 "{Task} is hard until you {do X} like this" · TRUST · title, slide 1 · "Pricing is hard until you write it like this"
 
 <!-- @section hook-library.grow-proof -->
@@ -88,16 +89,16 @@ Flat: "Imagine your dream business." · Strong: entry 7.
 
 <!-- @section hook-library.grow-scene -->
 ### Hooks 5: cold open, the overheard line (shape · purpose · where · example · flat or trap)
-COLD OPEN: one scene, a time, one object, no setup; line 2 must cost something.
-1 "{Time}. {Object or action}." · ATTRACT, TRUST · short, post · "11:40 pm. Her laptop still open on the price page she'd rewritten four times."
-2 "Last {day}, {who} {small act}." · TRUST · post, chat · "Last Tuesday a client sent me a screenshot of her empty inbox. One word: 'again'." · A client's words only if the coach reported them.
+COLD OPEN: one scene the viewer has lived, said so they see themselves (never an insider's detail), no setup; line 2 must cost something.
+1 "{Time}. {Object or action}." · ATTRACT, TRUST · short, post · "Rewriting your price page for the fourth time at midnight? Stop at this line."
+2 "Last {day}, {who} {small act}." · TRUST · post, chat · "Last week a client sent me her empty inbox. If yours looks the same, watch this." · A client's words only if the coach reported them.
 3 "{Object} on {place}: '{what it says}'." · ATTRACT · screen, short (as the first frame) · "A sticky note on her screen: 'don't say sorry.'"
-4 "The {object} I still keep from {moment}" · TRUST · post, short · "I still keep the first invoice I ever sent. There's an apology in the email under it."
+4 "The {object} I still keep from {moment}" · TRUST · post, short · "Still opening invoices with 'sorry'? I kept my first one; it says it twice."
 5 "I was {mid-action} when {someone} said '{line}'." · TRUST, CONVERT · short, live · "I was mid-pitch when he cut in: 'What do I actually get?'" · Trap: a scene with no tension (a coffee, a sunrise).
 OVERHEARD LINE: a line the buyer says or hears, framed honestly: reported by the coach, or "a line I keep seeing".
 6 "'{Exact buyer line}.' {Where it's heard}." · TRUST · short, post · "'I'll start posting when my website's done.' A line I keep seeing in freelancer groups."
 7 "Someone in {buyer place} wrote: '{line}'. {Turn}." · ATTRACT · post, slide 1 · "Someone in a freelancer group wrote: 'I'm busy but broke.' Both can be true for one reason."
-8 "'{What they say}' means '{what they mean}'." · ATTRACT · screen, slide 1 · "'Just send me the price' means 'I don't see why you cost more.'"
+8 "'{What they say}' means '{what they mean}'." · ATTRACT · screen, slide 1 · "'Just send me the price' never means what you think."
 9 "The sentence I hear right before {outcome}" · TRUST · short, post · "The sentence I hear right before someone quits running? 'I'm just not built for it.'"
 10 "My {relative} said '{line}'. {Half right}." · ATTRACT · short, post · "My mum said, 'Who'd pay for that?' She was half right."
 Trap for both: a line put in a client's mouth the coach never reported; a research line stays "a line I keep seeing", never "my client said".
@@ -125,14 +126,14 @@ Trap: a laptop by the pool; show the work, not the life.
 ### Hooks 7: the buyer's situation called out, the question they ask (shape · purpose · where · example · flat or trap)
 CALL-OUT: their stage or situation, never their worth.
 1 "If you're {stage or situation}, watch this." · ATTRACT · short, title · "If you've posted six months and nobody's asked your price, watch this."
-2 "{Buyers} with {specific situation}: {one-line diagnosis}." · ATTRACT · screen, post · "Tutors with full weeks and empty accounts: it's the schedule, not the rate."
+2 "{Buyers} with {specific situation}: {one-line diagnosis}." · ATTRACT · screen, post · "Tutors with full weeks and empty accounts: it's not your rate."
 3 "For the {buyer} who {small private habit}." · ATTRACT · short, post, chat · "For the coach who writes a caption, then deletes it at midnight."
 4 "{Buyers} at {stage}: your next step isn't {usual step}." · TRUST · title, slide 1 · "First-year photographers: your next step isn't new gear."
 5 "Still {doing X} at {time}?" · ATTRACT · ad, screen · "Still answering client messages at 11 pm?"
 6 "Not for {wrong buyer}. For {right buyer}." · CONVERT · post, live, ad · "Not for people chasing followers. For tutors who want a few students who stay all year."
 Trap: a call-out by worth or flaw ("lazy", "broke", "failing"); the stage, never the person.
 THE QUESTION BUYERS ASK: their exact words (DMs, calls, comments, research), answered by the piece.
-7 "'{Their exact question}?' {Short answer}." · CONVERT, TRUST · short, post, chat, ad · "'Do I need a website first?' No. You need one page and one question."
+7 "'{Their exact question}?' {Short answer}." · CONVERT, TRUST · short, post, chat, ad · "'Do I need a website first?' No. You need this first."
 8 "The question {buyers} ask me most (and the answer they don't like)" · TRUST · title, subject · "What new coaches ask me most (the answer they won't like)"
 9 "You asked: {question}. The {N}-{part} answer." · TRUST · post, slide 1 · "You asked: how do I follow up without being annoying? The 3-message answer."
 10 "What should {buyer} charge for {X}? The honest math." · CONVERT · title, post, live · "What should a beginner charge for a logo? The honest math."
@@ -145,7 +146,7 @@ OBJECTION: said in the buyer's words (calls, DMs, research), then answered like 
 1 "'{Objection}.' I said that too, for {time}." · TRUST, CONVERT · short, post · "'I don't have time to post.' I said that too, for two years."
 2 "'{Objection}?' Fair. Here's what actually happens in {first step}." · CONVERT · short, ad, chat · "'Isn't coaching just expensive advice?' Fair. Here's what actually happens in week one."
 3 "The real reason you {hesitate} (it's not {stated reason})" · TRUST · title, subject, post · "The real reason you undercharge (it's not your clients)"
-4 "You're not {label they fear}. You're {reframe}." · ATTRACT, TRUST · short, screen, subject · "You're not bad at sales. You're unclear about what you sell."
+4 "You're not {label they fear}. You're {reframe}." · ATTRACT, TRUST · short, screen, subject · "You're not bad at sales. You're missing one thing."
 5 "'{Objection}' is a good reason to wait, if {condition}." · CONVERT · post, chat, live · "'Now's not the right time.' A good reason to wait, if you know what changes by then."
 Trap: mocking the objection or the person who has it. Flat: "Common objections and how to handle them."
 CHALLENGE: one small action the viewer can try today, or one the coach tried first; never a body, money or health result.
@@ -162,7 +163,7 @@ COSTLY MISTAKE: common, fixable, named in the buyer's words; the viewer is never
 1 "{N} mistakes {buyers} make with {X}" · TRUST · title, slide 1, subject · "3 mistakes new tutors make with their first price" · {N} is the piece's real count.
 2 "The small mistake that makes {buyers} {cost in their words}" · ATTRACT · short, post · "The small mistake that makes good clients go quiet after the quote"
 3 "Don't {common move} until you {check}." · ATTRACT, TRUST · title, short · "Don't post a price until you've written the line above it."
-4 "If your {effort} gets {what they see now} but no {what they want}, {fix}." · TRUST · title, post · "If your posts get likes but no DMs, check your last line."
+4 "If your {effort} gets {what they see now} but no {what they want}, {fix}." · TRUST · title, post · "If your posts get likes but no DMs, check this first."
 5 "Your most expensive habit: {habit}." · ATTRACT · screen, subject · "Your most expensive habit: saying 'no worries' when a client pays late."
 6 "I watched {client role} lose {what, in their words} to one {small mistake}." · TRUST · post, short · "I watched a client lose a whole weekend to one vague email." · Only what they saw happen.
 Trap: "stupid mistakes", shaming. Flat: "Avoid these mistakes."
@@ -177,8 +178,8 @@ Trap: a humble brag ("my flaw is caring too much"); the confession must cost som
 <!-- @section hook-library.grow-restart -->
 ### Hooks 10: if I started over, the list or steps (shape · purpose · where · example · flat or trap)
 IF I STARTED OVER: what they'd do from zero, with what the viewer has.
-1 "If I had to {get result} from zero, I'd {first move}." · TRUST · short, title, slide 1 · "If I had to find clients from zero, I'd text my contacts."
-2 "If I started {work} today, I'd skip {common thing}." · ATTRACT · short, post · "If I started tutoring today, I'd skip the website for six months."
+1 "If I had to {get result} from zero, I'd {first move}." · TRUST · short, title, slide 1 · "If I had to find clients from zero this month, I'd do exactly this."
+2 "If I started {work} today, I'd skip {common thing}." · ATTRACT · short, post · "If I started tutoring today, I'd skip the one thing everyone builds first."
 3 "What I'd tell myself on day one of {work}" · ATTRACT · post, slide 1, subject · "What I'd tell myself the day I quit my job to coach"
 4 "{N} years in, the first thing I'd build again: {thing}" · TRUST, CONVERT · title, live · "{N} years in, the first thing I'd rebuild: my follow-up list"
 Trap: starting over with what the viewer doesn't have (a team, an audience, a budget).
@@ -196,29 +197,29 @@ Trap: ten steps where three do the work. Flat: "Tips for growing your business."
 1 On-screen words (≤6, read with the sound off) name the tension or ask the question. The first frame shows one filmable thing that makes it real. The first spoken line (≤{{hook_max}} {{hook_unit}}) opens the loop in the buyer's words. None repeats another: on-screen is never line 1 reworded, never the frame captioned.
 2 Last line first: write the payoff word for word (the answer, never its name), then the three hooks that point at it.
 3 By mechanism (on-screen · first frame · first line):
-- belief flip: "Posting more won't fix it" · scrolling the coach's own quiet posts · "Nobody buys from your sales post. They buy from the posts before it."
+- call-out: "posting more?" · scrolling the coach's own quiet posts · "Post every day and still nobody asks to buy? It's not the post."
 - their number: "{N} intake forms later" · a stack of printed forms · "One question on these tells me who'll buy."
-- cold open: "11:40 pm, draft 4" · a laptop open on a price page · "She'd rewritten that line four times. The problem was the line above it."
+- start over: "no website yet." · a blank notebook · "If I had to find 5 clients from zero this month, I'd do exactly this."
 - buyer's moment: "POV: 'quick question 🙂'" · a phone lighting up on the dinner table · "It's never one question."
-- objection: "Too expensive?" · a notebook with two columns · "Let's count what the cheap way cost you last month."
-- confession: "My worst sales call" · the coach's old notebook · "I talked for forty minutes. She bought nothing. Here's the line I'd cut."
-- costly mistake: "Don't answer this yet" · an inbox: "what's your rate?" · "The fastest way to lose this client is to send the number."
-4 Flat: on-screen "Clients must trust you." + first line "For people to buy, they need to trust you." (one claim twice, no frame). Strong: on-screen "Sold by the old posts" · frame: scrolling back to a post from months ago · line "Nobody buys from your sales post. They buy from the posts they read before it." · last line "The sales post is only the invitation. They decided weeks ago."
+- objection: "keep the price." · a notebook with two columns · "Clients say you're too expensive and you drop the price? That's why they still leave."
+- give me N minutes: "10 years → 10 min" · a DM thread open on the phone · "Give me 10 minutes and I'll give you 10 years of closing in DMs."
+- costly mistake: "Don't answer this yet" · an inbox: "what's your rate?" · "Answer this the usual way and the client's gone."
+4 Flat: on-screen "Clients must trust you." + first line "For people to buy, they need to trust you." (one claim twice, no frame, the lesson said). Strong: on-screen "not the sales post." · frame: scrolling back to a post from months ago · line "Your sales post gets likes but no buyers? Look further back." · last line "They decided weeks ago, on the posts before it; the sales post is only the invitation."
 5 Funnel shape for TRUST shorts (§CM-HOOKS 5): the three hooks stay wide; the buyer's own words come in the next 2-3 lines so the wrong crowd scrolls on.
 6 Caption line 1 continues the hook from a fourth angle (a fact, a stake), never a copy; the ask stays in the caption (§CM-HOOK-CTA).
 
 <!-- @section hook-library.grow-titles -->
 ### Title + thumbnail words, live and webinar titles
-1 Package first (§CM-PACKAGING): about 20 title drafts from ≥6 mechanisms, then the lab's checks. The title is the viewer's result or question, ≤60 characters, casual case fine, no hedge. The thumbnail adds 2-4 words the title doesn't say: the feeling, the twist or their proof number; one idea in the picture.
-2 Pairs (title + thumbnail words):
-- belief flip: "you don't need more leads (you need people who trust you)" + "the posts before the pitch"
-- costly mistake: "the first-year mistake that makes tutors quit" + "it's not the students."
+1 Package first (§CM-PACKAGING): about 20 title drafts in the six shapes, then THE CHECK (§CM-HOOKS 2). The title says who + what they get, ≤60 characters, casual case fine, no hedge. The thumbnail adds 2-4 words the title doesn't say: a verdict, a dare or a big number; one idea in the picture.
+2 Pairs (title + thumbnail words; their numbers only):
+- call-out: "post every day and nobody asks to buy? watch this" + "stop posting more."
+- start over: "if I started coaching from zero this year, I'd do exactly this" + "no content yet."
+- hard until: "selling is hard until you ask this before the price" + "ask first."
+- give me N minutes: "give me 12 minutes, I'll fix why your posts don't sell" + "the leak's here."
+- receipt: "I listened to {N} sales calls. One sentence decided them." + "say it first."
+- so X that Y: "selling so calm clients ask if you have a slot" + "no pushing."
 - without: "how to raise your prices (without losing regulars)" + "skip the apology."
-- their number: "I listened to {N} sales calls. One sentence decided them." + "say it first."
-- start over: "if I had to find 5 clients from zero" + "no website."
-- call-out: "if your posts get likes but no messages, watch this" + "check the last line."
 - result taken apart: "how a bakery owner went from {before} to {after}" + "{before} → {after}" (OK'd)
-- stages: "the 4 stages of a coaching business" + "stage 2 is a trap."
 - question asked: "do I need a website before I start?" + "not yet."
 3 Never: thumbnail words that repeat a title word, a shocked face, money or income as the hook, a number that isn't theirs, a promise the video doesn't keep in its first minute.
 4 Live or webinar title: the result + who it's for + what they bring or leave with; the intro then runs proof, promise, plan (§CM-LONG-INTRO). "Fix your price page live: 45 minutes for tutors (bring yours)" · "The 3 messages that turn a quote into a yes (live, Thursday 8 pm)". The time, the place and any replay promise are real; "seats" only if there's a real cap.
@@ -235,8 +236,8 @@ CAROUSEL (§CM-TEXT-FORMATS 1)
 4 The cover reads alone in a feed or shared into a group: it makes sense with no caption.
 5 Flat → strong: "Pricing tips for freelancers" → "5 lines that make a price feel fair (before you say it)" · "Content strategy 101" → "What to post when nobody's buying yet" · "My morning routine" → "The {N} minutes that decide my whole client day".
 LINE 1 OF A LONG POST (§CM-POSTS 1)
-6 Line 1 ≤12 words, standing alone: a scene, a buyer's line, their number or a flip; never an "If X, Y" maxim. Line 2 raises the stake or asks what the post answers. Both land before "See more".
-7 Strong: "Last March a client cried on our call. / Not because of the price." · "'Just send me your rates.' / I used to. Then I counted who replied." Flat: "Today I want to talk about pricing." · "Pricing is one of the hardest parts of business."
+6 Line 1 ≤12 words, standing alone: the buyer's desire or pain for the right person at the right moment, their number or a flip; the method stays hidden; never an "If X, Y" maxim or a stated lesson. Line 2 raises the stake or turns it. Both land before "See more".
+7 Strong: "Posting every day and nobody asks your price? / It's not the posts." · "'Just send me your rates.' / I used to. Then I counted who replied." Flat: "Today I want to talk about pricing." · "Pricing is one of the hardest parts of business."
 8 LinkedIn: line 1 may end in ":" for a list ("7 quiet signals a client will actually buy:"); one-sentence paragraphs, no hashtags, ≤1 emoji.
 9 Facebook long post: line 1 is the scene or the buyer's line, never a greeting; line 2 is the turn ("Not because of the price."), so the cut-off reads like a cliffhanger.
 
@@ -266,14 +267,13 @@ CHAT OPENER (Zalo, WhatsApp, a DM)
 8 Money, health or body offers: the hook names the process, and under the ad ONE line, the platform note in §CM-ADS 7.
 
 <!-- @section hook-library.grow-cta -->
-### CTA lines by rung (the ask closes the loop the hook opened)
-1 Rungs (§CM-WEEK 6): reach → comment word → message → link → offer. One ask per piece. The gift is named after THIS piece's result; it exists before the post goes out (§CM-CTA-KIT 2).
-2 Reach: "Send this to the friend who {situation}." · "Part 2 tomorrow: {the open question}."
-3 Comment word (on by default): "{{t:cta.default}}" e.g. "Comment PRICE CHECK and I'll send the one-page price sheet from this video." On the quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}" The keyword is a phrase the buyer says, 2+ words (PRICE CHECK, FIRST CLIENT), never a machine-picked GUIDE or FREE.
-4 Message (week 2+, with proof): "If this is you, message me 'stuck' and tell me where you are; I'll reply myself."
-5 Link: in a comment, the bio or the description, never in the body of a text post: "The checklist is in the first comment." · "The sign-up page is in the description; the workshop is Thursday, {time}."
-6 Offer: what they get, the exact price, who it's for, a real cap with its reason, one action: "{N} seats, because I review every page myself. Message me SEAT." Only real numbers.
-7 The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
-8 Each mechanism's natural ask: their number → the sheet behind it · mistake → the checklist · objection → a message to talk it through · question → the full answer as the gift · challenge → join (real start) · after-state, result taken apart → the offer.
-9 Never: fake urgency ("only 3 left" when it isn't), "Don't miss out", "DM for price" on a fixed-price offer, a gift not yet written, two asks in one piece.
-Flat → strong: "Follow for more tips!" → "Part 2 tomorrow: the one line I'd add to your price page." · "Link in bio" → "Comment PRICE CHECK and I'll send the price sheet I use."
+### CTA lines by tier (the ask closes the loop the hook opened)
+1 Tiers, rotated (§CM-CTA-KIT 1): ATTRACT → save or send · TRUST → comment for THIS piece's payoff · CONVERT → DM with the real offer and a real deadline. One ask per piece, never the same ask twice running; ≥1 in 4 pieces asks only for a save or send. The payoff exists before the post goes out (§CM-CTA-KIT 2).
+2 ATTRACT: "Save this for the next time a client says 'I'll think about it'." · "Send this to the friend who {situation}." · "Part 2 tomorrow: {the open question}." · a choice: "Do you quote first or ask first? Just type A or B." Never "thoughts?".
+3 TRUST: "{{t:cta.default}}", {payoff} = what this piece promised: "Comment THINK ABOUT IT and I'll send you the 3 replies from this video." The keyword is the viewer's own words from the hook, 2+ words, never a machine-picked GUIDE or FREE. Quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
+4 CONVERT (week 2+, with proof): what they get, the exact price, who it's for, the real deadline or cap with its reason, one action: "{N} seats, because I review every page myself; sign-ups close Friday. Message me SEAT." · "If this is you, message me 'stuck' and say where you are; I'll reply myself." The Season keyword and gift live here by default. Only real numbers.
+5 Link: in a comment, the bio or the description, never in a text post's body: "The checklist is in the first comment."
+6 The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
+7 Each mechanism's natural payoff: their number → the sheet behind it · mistake → the checklist · objection → a message to talk it through · question → the full answer · challenge → join (real start) · after-state, result taken apart → the offer.
+8 Never: fake urgency ("only 3 left" when it isn't), "Don't miss out", "DM for price" on a fixed-price offer, a payoff not yet written, two asks in one piece, one generic "comment X" on every piece.
+Flat → strong: "Follow for more tips!" → "Part 2 tomorrow: the one line I'd add to your price page." · "Comment GUIDE for my free guide" → "Comment PRICE CHECK and I'll send the price sheet from this video." · "Thoughts?" → "Do you quote in the first message or the third? Type 1 or 3."

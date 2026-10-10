@@ -566,7 +566,7 @@ invariants = ["I1", "I3", "I5", "I15", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """§CM-VOICE 8 ('LinkedIn: gọn, ít emoji'); wf14 §3 platform shifts; fmt-short.kit-post 1-4 ('Không link trong bài …, một hashtag chiến dịch không dấu; không kết bằng "Bạn thấy sao?"', 'nói với một người'). His written LinkedIn voice is W2: numbered steps, 'JD' allowed with HR readers (code_mix), signed 'Khoa', no emoji. His lines stay ('Nói thật nghe anh chị, tuyển 15 phút thì người ta ở 15 ngày.', 'Cái quan trọng không nằm ở chỗ đăng tin.', 'Mười lăm phút.' in W1). It is his own post ('của tôi'): no liked.copy_note ('… bài này bám sát bài của họ …') and no liked.mine_clause. His never-words ('onboarding', 'coach', 'KOL', 'bứt phá', 'nâng tầm') and 'các bạn' stay out even for HR readers: his audience pair is 'tôi – anh chị' in every piece (expected.toml)."""
+notes = """§CM-VOICE 8 ('LinkedIn: gọn, ít emoji'); wf14 §3 platform shifts; fmt-short.kit-post 1-4 ('Không link trong bài …, một hashtag chiến dịch không dấu; no opinion question as the ask: §CM-CTA-KIT 1', 'nói với một người'). His written LinkedIn voice is W2: numbered steps, 'JD' allowed with HR readers (code_mix), signed 'Khoa', no emoji. His lines stay ('Nói thật nghe anh chị, tuyển 15 phút thì người ta ở 15 ngày.', 'Cái quan trọng không nằm ở chỗ đăng tin.', 'Mười lăm phút.' in W1). It is his own post ('của tôi'): no liked.copy_note ('… bài này bám sát bài của họ …') and no liked.mine_clause. His never-words ('onboarding', 'coach', 'KOL', 'bứt phá', 'nâng tầm') and 'các bạn' stay out even for HR readers: his audience pair is 'tôi – anh chị' in every piece (expected.toml)."""
 
 [[case]]
 id = "voice.vn.015"

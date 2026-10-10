@@ -1032,7 +1032,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I14", "I15", "I17", "I19", "I23"]
 max_questions = 1
-notes = """wf13 §7 P0 trap 'a comment GUIDE CTA' (expected.toml [liked] comment_guide_item L8, keyword_stays LÃI ẢO): the comment-for-a-file mechanism is shape only; liked.kit-make 7 ('từ khoá, quà, nền tảng: của coach'), so GUIDE never enters a piece and the CTA is hers (cta.default 'Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.' in her audience address, §CM-CTA-KIT 1). A default keyword CTA carries no platform note (cta.platform_note is for a CTA the coach chose herself, 'chấm' or a threshold, §CM-CTA-KIT 6) and is never blocked (I14). wf15 §2 and R8: nothing under the version; liked.evidence waits for 'tại sao?'. The creator's file overlaps her gift, so DISTANCE matters: the not_regex lists the caption's own runs of 8+ tiếng (graders: I19)."""
+notes = """wf13 §7 P0 trap 'a comment GUIDE CTA' (expected.toml [liked] comment_guide_item L8, keyword_stays LÃI ẢO): the comment-for-a-file mechanism is shape only; liked.kit-make 7 ('từ khoá, quà, nền tảng: của coach'), so GUIDE never enters a piece and the CTA is hers (cta.default 'Comment {KEYWORD} hay nhắn riêng, mình gửi {payoff}.' in her audience address, §CM-CTA-KIT 1). A default keyword CTA carries no platform note (cta.platform_note is for a CTA the coach chose herself, 'chấm' or a threshold, §CM-CTA-KIT 6) and is never blocked (I14). wf15 §2 and R8: nothing under the version; liked.evidence waits for 'tại sao?'. The creator's file overlaps her gift, so DISTANCE matters: the not_regex lists the caption's own runs of 8+ tiếng (graders: I19)."""
 
 [[case]]
 id = "liked.vn.032"

@@ -438,7 +438,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I14", "I15"]
 max_questions = 1
-notes = "convert.kit 5 since VG1 VK-2: a coach who knocks comment asks in words (even mid-dump) gets cta_style quiet at once, no argument: later pieces ask cta.quiet ('Nhắn mình chữ {KEYWORD}, mình gửi {gift}.', in his audience voice), the unposted caption is reprinted with the quiet ask, and the keyword phrase stays in the words (the box still holds GỒNG LÃI). cta.not_pushy is only for a question ('Nghe như spam?', setup.vn.058), so it must not answer a complaint. 'ok' plus his complaint is not a Map change, so all of Week 1 follows in the same reply, quiet (§CM-TODAY 1; no word cap). Quit point 11 'keyword CTA with no quiet option' (persona behaviour line, verbatim)."
+notes = "convert.kit 5 since VG1 VK-2: a coach who knocks comment asks in words (even mid-dump) gets cta_style quiet at once, no argument: later pieces ask cta.quiet ('Nhắn mình chữ {KEYWORD}, mình gửi {payoff}.', in his audience voice), the unposted caption is reprinted with the quiet ask, and the keyword phrase stays in the words (the box still holds GỒNG LÃI). cta.not_pushy is only for a question ('Nghe như spam?', setup.vn.058), so it must not answer a complaint. 'ok' plus his complaint is not a Map change, so all of Week 1 follows in the same reply, quiet (§CM-TODAY 1; no word cap). Quit point 11 'keyword CTA with no quiet option' (persona behaviour line, verbatim)."
 
 [[case]]
 id = "setup.vn.018"
@@ -458,7 +458,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I14", "I15"]
 max_questions = 1
-notes = "strings cmd.quiet 'nhẹ' (convert.kit 5: typed alone it is the command); cta.quiet 'Nhắn mình chữ {KEYWORD}, mình gửi {gift}.' in her audience voice ('các em nhắn chị chữ NGẠI CHÀO, chị gửi …'); the reprinted caption and every Week-1 piece use it. 'nhẹ' is not a Map change, so Week 1 follows in this reply (§CM-TODAY 1); no word cap. The Brand Card later stores cta_style = quiet (brain.vn.026). 'bạn' as an instruction to her would be a pronoun slip; 'bạn' inside a piece (her friend, 'bạn ấy') is not, so only the instruction form is forbidden."
+notes = "strings cmd.quiet 'nhẹ' (convert.kit 5: typed alone it is the command); cta.quiet 'Nhắn mình chữ {KEYWORD}, mình gửi {payoff}.' in her audience voice ('các em nhắn chị chữ NGẠI CHÀO, chị gửi …'); the reprinted caption and every Week-1 piece use it. 'nhẹ' is not a Map change, so Week 1 follows in this reply (§CM-TODAY 1); no word cap. The Brand Card later stores cta_style = quiet (brain.vn.026). 'bạn' as an instruction to her would be a pronoun slip; 'bạn' inside a piece (her friend, 'bạn ấy') is not, so only the instruction form is forbidden."
 
 [[case]]
 id = "setup.vn.019"
