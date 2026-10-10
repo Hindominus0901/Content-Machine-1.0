@@ -59,3 +59,22 @@ The hook raises both; the piece answers them. A hook that answers them itself ("
 3. Comment questions give a choice ("A hay B?"), never "bạn nghĩ sao?".
 4. The comment keyword is the viewer's own words from the hook.
 5. At least 1 in 4 pieces asks only for a save/send.
+
+## Founder-approved examples (10 Oct 2026, "ok dc r") — the bar for every hook
+Title / hook → thumbnail (2–4 words). Coach speaks as "mình".
+- Khách hỏi giá rồi seen? 10 năm làm sale, mình chỉ sửa đúng một chỗ. → `không phải tại giá.`
+- Cách trả lời "để chị suy nghĩ" khiến khách tự quay lại, không cần năn nỉ. → `đừng nói "dạ vâng".`
+- Từ 14 lên 33 lịch hẹn mỗi tháng mà không giảm giá: mình làm vậy nè. → `x2 lịch hẹn`
+- Nếu nhân viên tiệm anh chị trả lời inbox kiểu này, anh chị đang mất khách mỗi ngày. → `sửa trong 5 phút.`
+- Cho mình 10 phút, mình cho anh chị 10 năm kinh nghiệm chốt khách qua tin nhắn. → `10 năm → 10 phút`
+- Chốt sale khó, cho tới khi anh chị biết hỏi câu này trước khi báo giá. → `hỏi trước.`
+- Khách chê đắt mà anh chị giảm giá liền? Đó là lý do khách vẫn đi. → `giữ giá.`
+- Nếu mở spa lại từ đầu, đây là điều đầu tiên mình dạy lễ tân. → `trước cả bảng giá.`
+- Chốt khách nhẹ tới mức khách tự hỏi "còn lịch trống không em?" → `không ép ai.`
+- Nhân viên học hoài kịch bản mà vẫn không chốt được? Xem cái này. → `bỏ kịch bản đi.`
+- Đăng bài mỗi ngày mà không ai hỏi mua? Lỗi không nằm ở content. → `ngừng đăng thêm.`
+- Một thử thách 300 người, hơn 100 người mua: đây là cách mình viết nó. → `100 khách.`
+- Coach thiếu khách hiếm khi vì thiếu lead. Xem cái này trước khi chạy thêm quảng cáo. → `sửa offer trước.`
+- Cho mình 15 phút, mình chỉ ra vì sao phễu của bạn không ra tiền. → `lỗi ở đây.`
+- Nếu là coach mới bắt đầu năm 2026, mình sẽ làm đúng 3 việc này. → `chưa cần content.`
+- Viết để bán khó, cho tới khi bạn hiểu khách mua vì "vì sao", không phải "làm thế nào". → `why > how`
