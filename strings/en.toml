@@ -28,11 +28,6 @@
 "verdict.override"         = "Posted on your call · my concern: {defect} · logged."
 "verdict.second_read"      = "Heads-up on {n}: {defect}. Say \"fix {n}\" before posting."
 
-# Verdict verbs (QA spec §2.4)
-"verb.film" = "film"
-"verb.post" = "post"
-"verb.send" = "send"
-
 # Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
 "cmd.start"         = "Start"
 "cmd.next"          = "next"

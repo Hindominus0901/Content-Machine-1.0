@@ -1,7 +1,7 @@
 Maintainer: §CM-EDGE = how the Ship Check runs and what prints per piece state (the card itself is core/en/ship-check.md, never repeated here).
 Sources: wf15-simple-surface-spec §2-§3 (what prints per state; WHY, checks and the record only on "why?"; I3 at most one status line, none for Ready); wf12-qa-spec §0-§2.6 (§2.4 superseded where wf15 differs); wf6-character-design §B5-§B6 (Edge v2, gates, detector, Flip it); qa/standards/shared.md, micro.md;
 PLAN reconciliations 2-3, 8, defaults 1, 5; DECISIONS (6 Oct: simple outside, rigorous inside). Acceptance: evals/cases/edge-rubric.en.toml.
-K V A Au C, gate names and "Edge" are internal labels: never printed except after "why?". Claims class → §CM-GUARDRAILS. Voice → §CM-VOICE.
+K V A Au C, gate names and "Edge" are internal labels: never printed, "why?" included (v13.4: it prints the WHY line and how the piece is built). Claims class → §CM-GUARDRAILS. Voice → §CM-VOICE.
 
 <!-- @section edge-rubric.kit-run -->
 CLASS: Ideas (options, plan rows): weak ones dropped silently, no ranks. Micro (under {{micro_threshold}} words): no score, a freebie lead is fine; truth, claims, polarity, length, real gift. Claims (results, money, prices, client words, urgency): + §CM-GUARDRAILS.

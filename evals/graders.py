@@ -483,15 +483,60 @@ VN_STRING_WORD_RE = re.compile(r"(?P<particle>\s+(?:" + "|".join(STRING_PARTICLE
                                r"|(?<!\w)(?:" + "|".join(PRONOUNS) + r")(?!\w)", re.I)
 
 
+# The VN address slots (strings/vn.toml header, v13.4): {xưng hô} is the word for the coach, {tự xưng} the machine's
+# word for itself, both filled from the pair on the Brand Card. Vietnamese drops the pronoun as often as it says it
+# ("Cần chị · …" or "Cần · …"; "Em không bịa đâu." or "Không bịa đâu."), so an address slot is a wildcard that may be
+# empty, its space with it.
+ADDRESS_SLOT_RE = re.compile(r"\{(?:xưng hô|tự xưng)\}")
+# A VN string written without a pronoun (v13.4: "Ghi lại rồi. Câu tiếp:", "Chạy thử 4 tuần theo bản này.") is said with
+# one as often ("Em ghi lại rồi."): each of its sentences may open with one pronoun (\x01 marks where, in _lit).
+_SENTENCE_START_RE = re.compile(r"(?:^|(?<=[.?!…:]\s))(?=[^\W\d_])")
+_OPT_PRONOUN = r"(?:(?:" + "|".join(PRONOUNS) + r")\s+)?"
+# v13.4 (§CM-NATURAL 4) took "nhé" out of the VN strings: the machine adds end particles at the coach's own rate, fixed
+# lines included ("Chạy thử 4 tuần theo bản này nha chị."). A sentence end of a VN string with no particle takes one or
+# none (PARTICLE_ANY; \x02 marks where, in _lit).
+_SENTENCE_END_RE = re.compile(r"(?<=[^\W\d_])(?=[.?!…](?:\s|$))")
+
+
 def _slot_pattern(text: str, lang: str, prefix_only: bool = False, anchored: bool = True) -> re.Pattern:
     """A rendered string as a regex: {slots} are wildcards; VN pronouns match any pronoun, and a VN particle at a
-    clause end matches any particle or none (PARTICLE_ANY).
+    clause end matches any particle or none (PARTICLE_ANY). VN only: an address slot ({xưng hô}, {tự xưng}) may be
+    left empty (ADDRESS_SLOT_RE), and a sentence of the string that opens without a pronoun may open with one
+    (_OPT_PRONOUN).
 
     anchored=False finds the string anywhere in a text (a line inside a longer reply)."""
     s = ck.plain_line(text)
     parts = re.split("(" + SLOT + ")", s)
+    optional: dict[int, str] = {}
+    for i, part in enumerate(parts):
+        if lang != "vn" or not ADDRESS_SLOT_RE.fullmatch(part):
+            continue
+        before, after = (parts[i - 1] if i else ""), (parts[i + 1] if i + 1 < len(parts) else "")
+        if after[:1].isspace() or (not before.strip() and after):    # "Cần {xưng hô} · …", "{tự xưng} chọn …"
+            parts[i + 1] = after.lstrip()
+            optional[i] = r"(?:.+?\s+)?"
+        elif before[-1:].isspace():                                   # "… tuỳ {xưng hô}."
+            parts[i - 1] = before.rstrip()
+            optional[i] = r"(?:\s+.+?)?"
+        else:
+            optional[i] = r"(?:.+?)?"
+    if lang == "vn":
+        for i, part in enumerate(parts):
+            if i in optional or re.fullmatch(SLOT, part):
+                continue
+            starts = [(m.start(), "\x01") for m in _SENTENCE_START_RE.finditer(part)
+                      if (m.start() > 0 or i == 0)
+                      and not re.match(r"(?:" + "|".join(PRONOUNS) + r")(?!\w)", part[m.start():], re.I)]
+            ends = [(m.start(), "\x02") for m in _SENTENCE_END_RE.finditer(part)
+                    if not re.search(r"(?<!\w)(?:" + "|".join(STRING_PARTICLES) + r")$", part[:m.start()], re.I)]
+            for k, mark in sorted(starts + ends, reverse=True):
+                part = part[:k] + mark + part[k:]
+            parts[i] = part
     out = []
     for i, part in enumerate(parts):
+        if i in optional:
+            out.append(optional[i])
+            continue
         if re.fullmatch(SLOT, part):
             out.append(".+?")
             continue
@@ -521,6 +566,10 @@ def _lit(text: str) -> str:
                 out.append(r"\s+")
         elif ch == "·":
             out.append("[·•|–—-]")
+        elif ch == "\x01":                    # a VN sentence start with no pronoun (_slot_pattern)
+            out.append(_OPT_PRONOUN)
+        elif ch == "\x02":                    # a VN sentence end with no particle (_slot_pattern)
+            out.append(PARTICLE_ANY)
         else:
             out.append(re.escape(ch))
     return "".join(out)
@@ -1097,9 +1146,9 @@ def _fold_words(text: str) -> str:
 
 
 def paste_steps_marks(strings: dict) -> tuple[str, str]:
-    """(head, tail), folded, of the kit's research.paste_steps string: its opening up to the first ":" or slot ("Lúc nào
-    rảnh 15 phút", "15 minutes, any day") and its last 4 words ("dán hết vào đây", "paste it all here"); "" for one that
-    is under 3 words or when the edition has no such string. The machine prints the steps as numbered lines in a copy
+    """(head, tail), folded, of the kit's research.paste_steps string: its opening up to the first ":" or slot ("Chừng
+    một phút", "About a minute": the one-minute paste since v13.4) and its last 4 words ("rồi gửi vào đây", "and send
+    them here"); "" for one that is under 3 words or when the edition has no such string. The machine prints the steps as numbered lines in a copy
     box (retest-ft2: Nhi's TikTok box, Hạnh's), which is no post of the coach's."""
     text = ck.plain_line(str(strings.get("research.paste_steps", "")))
     head = _fold_words(re.split(r"[:{]", text, maxsplit=1)[0])
@@ -1453,7 +1502,8 @@ def i3_status_lines(run: Run) -> dict:
     The word cap (verdict_max_words) counts what the machine writes on the line: the line minus its string's
     fixed tail (the text after the last {slot}: "I won't make it up. (Or say "skip".)", "and I'll write it."),
     which is the same in every line of that kind and is the strings' budget, not the machine's. A "why?"
-    reply prints the evidence and the record, so the cap does not apply there."""
+    reply prints the WHY line and how the piece is built, so the cap does not apply there; since v13.4 (§CM-EDGE) it
+    never prints the check record: a ✓ Checked line on "why?" fails too (their own draft checked still takes one)."""
     title = ("At most one status line per piece, only when the coach is needed; a Ready piece prints none "
              "(no Ready, WHY or ✓ Checked line unless \"why?\" was asked)")
     if not any(k.startswith("verdict.") for k in run.strings):
@@ -1480,6 +1530,9 @@ def i3_status_lines(run: Run) -> dict:
                 ev.append(f'{_turn(r)}: WHY line{where} without "why?": "{_short(plain)}"')
             elif kind in STATUS_READY | STATUS_DRAFT and not (r.after_why or r.after_check):
                 ev.append(f'{_turn(r)}: {STATUS_LABELS[kind]}{where} without "why?": "{_short(plain)}"')
+            elif kind == "checked" and r.after_why and not r.after_check:
+                ev.append(f'{_turn(r)}: {STATUS_LABELS[kind]}{where} on "why?" (the WHY line and how it is built, never '
+                          f'the check record): "{_short(plain)}"')
             if kind == "needs":
                 needs += 1
             if kind not in ("why", "note") and not r.after_why:
@@ -1490,7 +1543,7 @@ def i3_status_lines(run: Run) -> dict:
         if needs > 1:
             ev.append(f"{_turn(r)}: {needs} Needs you lines in one reply (max 1)")
         if r.after_why:
-            continue                                 # "why?" prints the WHY line, the checks and the record
+            continue                                 # "why?" prints the WHY line and how the piece is built
         for p in r.pieces:
             mine = [i for i, k in kinds.items() if owner.get(i) is p and k not in ("why",)]
             if len(mine) > 1:
@@ -1504,10 +1557,11 @@ def i3_status_lines(run: Run) -> dict:
 
 
 def i4_codes(run: Run) -> dict:
+    """No score, Edge, Ship Check, rubric, lint or pillar code in what the coach reads, a "why?" reply included: since
+    v13.4 (§CM-EDGE) "why?" is the WHY line and how the piece is built in plain words, never scores, letters, gates,
+    ticks or a check record."""
     ev = []
     for r in run.replies:
-        if r.after_why:
-            continue
         text = r.visible(("", "copy"))
         hits = [m.group(0) for p in CODE_RE for m in p.finditer(text)]
         if run.lang == "en":
@@ -2564,8 +2618,9 @@ def _coach_self_line(run: Run, matcher: Matcher, plain: str) -> bool:
 
 
 def _map_ok_line(run: Run, matcher: Matcher, plain: str) -> bool:
-    """The Map's OK line (map.ok, "Mình chạy thử 4 tuần nhé chị. OK hay sửa một dòng?"): its "mình" is the kit's
-    inclusive "we" (review VG-2); any other pronoun on it is still read ("…nhé bạn" to a chị is a slip)."""
+    """The Map's OK line (map.ok, "Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?" since v13.4, no pronoun): said
+    with one ("Mình chạy thử 4 tuần theo bản này nha chị.", _slot_pattern), its "mình" is the kit's inclusive "we"
+    (review VG-2); any other pronoun on it is still read ("…nha bạn" to a chị is a slip)."""
     ok = ck.plain_line(run.strings.get("map.ok", "")).split()
     return matcher.says("map.ok", plain) or (len(ok) >= 4 and ck.fold(plain).startswith(ck.fold(" ".join(ok[:3]))))
 
@@ -3975,6 +4030,28 @@ def _map_label_re(label: str, lang: str) -> re.Pattern:
     return re.compile(r"^\W*(?:[1-9][.)]?\s+)?" + r"\s+".join(parts), re.I)
 
 
+_CUT_LABEL_RE = re.compile(r"^\W*(?:[1-9][.)]?\s+)?([^\W\d_][^:\n]{0,38}?)\s*:")
+
+
+def cut_strategy_label(matcher: Matcher, plain: str) -> str:
+    """The whole strategy label (STRATEGY_LABEL_KEYS) a line opens with a cut form of, in capitals ("MIX:" for "CONTENT
+    MIX:", "TỶ LỆ:" for "TỶ LỆ NỘI DUNG:", "HỆ THỐNG:" for "HỆ THỐNG NỘI DUNG:": some of its words in a row, not all);
+    "" for a whole label or any other line."""
+    labels = matcher_labels(matcher)
+    if any(labels[k].match(plain) for k in STRATEGY_LABEL_KEYS if k in labels):
+        return ""
+    m = _CUT_LABEL_RE.match(plain)
+    if not m or m.group(1) != m.group(1).upper() or len(m.group(1)) < 2:
+        return ""
+    said = ck.fold(m.group(1)).split()
+    for k in STRATEGY_LABEL_KEYS:
+        text = ck.plain_line(str(matcher.strings.get(k, ""))).rstrip(":").strip()
+        words = ck.fold(text).split()
+        if len(said) < len(words) and any(words[i:i + len(said)] == said for i in range(len(words) - len(said) + 1)):
+            return text + ":"
+    return ""
+
+
 def _map_labels(run: Run) -> dict[str, re.Pattern]:
     return matcher_labels(run.matcher or Matcher(run.strings, run.lang))
 
@@ -5190,6 +5267,18 @@ def check_day0_strategy(run: Run) -> dict:
             ev.append(f"{t_system}: YOUR SYSTEM measures a length in seconds (words, never seconds)")
     item("YOUR SYSTEM: a platform, pieces a week, the ask path", ev, ran="map.system" in blocks)
 
+    # v13.4 (§CM-MAP "Labels whole, at line start"): a strategy label prints whole ("CONTENT MIX:", "TỶ LỆ NỘI DUNG:",
+    # "HỆ THỐNG NỘI DUNG:"), never cut ("MIX:", "TỶ LỆ:", "HỆ THỐNG:"); a cut label also hides its line from the items above
+    ev = []
+    for st in (steps or ([S] if S is not None else [])):
+        for ln in st.lines:
+            if ln.block or ln.fence or not ln.plain:
+                continue
+            whole = cut_strategy_label(matcher, ln.plain)
+            if whole:
+                ev.append(f'{_turn(st)}: "{_short(ln.plain, 40)}" cuts the label "{whole}" (labels print whole, at line start)')
+    item("the strategy's labels print whole", ev, ran=S is not None)
+
     ev = []
     if S is not None:
         cap = int(day0.get(f"strategy_max_words_{ed}", day0.get("strategy_max_words_en", 400)))
@@ -5242,7 +5331,8 @@ def check_day0_strategy(run: Run) -> dict:
     warnings += wk_warn
 
     # v13.1: every piece sits under "N{n} · {day} · {format} · ATTRACT|TRUST|CONVERT · {n} words" (VN: THU HÚT|NIỀM TIN|CHUYỂN
-    # ĐỔI · {n} chữ); FILM TODAY's is "FILM TODAY · {format} · {type} · {n} words", no length in seconds
+    # ĐỔI · {n} chữ); FILM TODAY's names its type too, in any order (v13.4 kit: "FILM TODAY · {type} · {format} · {n} words",
+    # "QUAY HÔM NAY · {THU HÚT|NIỀM TIN|CHUYỂN ĐỔI} · {dạng} · {n} chữ"), no length in seconds
     ev = []
     names = _mix_names(run.lang)
     titled = [(r, p, "") for r, p in wk]
@@ -5593,12 +5683,19 @@ QUOTE_FIELDS = ("their_words", "client_words", "passages")
 KIT_BRACKET_RE = re.compile(r"\[[^\[\]\n]*\{[^{}\n]+\}[^\[\]\n]*\]")
 
 
+# Kit brackets with slots that live in the method prose, not in strings: the header of the bigger research paste
+# (§CM-RESEARCH R3 4, "Start with [{place} · {month}]" / "Đầu đợt ghi [{nơi} · {tháng}]"). research.paste_steps held it
+# until v13.4 made that string the one-minute screenshot paste.
+PROSE_KIT_BRACKETS = ("[{place} · {month}]", "[{nơi} · {tháng}]")
+
+
 def kit_bracket_fills(strings: dict) -> list[tuple[re.Pattern, list[str]]]:
     """The kit's own brackets with slots, read as patterns: "[{place} · {month}]" (the header of a research paste,
-    strings research.paste_steps) is filled as "[TikTok · 10/2026]" (review retest-ft1 §6). Each is (a pattern whose
-    slots capture, the slot names); a hit that fills every slot with something other than its name is the kit's header."""
+    §CM-RESEARCH R3 4: PROSE_KIT_BRACKETS, and any string that holds one) is filled as "[TikTok · 10/2026]" (review
+    retest-ft1 §6). Each is (a pattern whose slots capture, the slot names); a hit that fills every slot with something
+    other than its name is the kit's header."""
     out = []
-    for v in strings.values():
+    for v in list(strings.values()) + list(PROSE_KIT_BRACKETS):
         for m in KIT_BRACKET_RE.finditer(str(v)):
             parts = re.split("(" + SLOT + ")", m.group(0)[1:-1])
             names = [x[1:-1].split("|")[0].strip().casefold() for x in parts if re.fullmatch(SLOT, x)]

@@ -44,7 +44,8 @@ Lane options (flags of `packet`, kept in meta.json and shown as "S1+web" in the 
             dist/content-machine-plugin.zip. The run id gets "-plugin".
 Every lane with a method file (S1, floor) also ships the edition's Level-ups/*.md in packet/kit/Level-ups/, as the
 coach's Project or Cowork folder holds them (the method file and the instructions point to them: RESEARCH-<ED>.md,
-STRATEGY-<ED>.md, LAUNCH-<ED>.md, BOARD-<ED>.md); S0 (instruction block only) ships none.
+STRATEGY-<ED>.md, LAUNCH-<ED>.md, BOARD-<ED>.md), and the board's header-row files in packet/kit/Level-ups/Board/
+(§CM-BOARD 2 sends the coach to that folder); S0 (instruction block only) ships none.
 
 `grade` runs graders.py (I1-I23 and the other checks) on each run. A cases-suite run also checks its
 case's D assertions (contains, regex, not_*, verdict, max_*, invariants) on the reply to the last coach
@@ -213,6 +214,8 @@ def build_kit(root: Path, edition: str) -> tuple[dict[str, Path], str]:
         raise RunError(f"the {edition} build has no 1-INSTRUCTIONS.txt (core/{ed.lang}/start-block.md missing?)")
     levelups = sorted((out / "Level-ups").glob("*.md")) if (out / "Level-ups").is_dir() else []
     files["levelups"] = levelups                          # the folder the coach's Project or Cowork folder holds
+    board = out / "Level-ups" / "Board"                   # the board's header-row files (§CM-BOARD 2: the download's
+    files["board"] = board if board.is_dir() else None    # Level-ups/Board folder), shipped with the level-ups
     files["plugin_zip"] = root / "dist" / PLUGIN_ZIP      # the plugin form, when built (both editions on disk)
     return files, str(manifest.get("build_sha256", ""))[:12]
 
@@ -331,7 +334,10 @@ LEVELUPS_LINE = (
     "- **Level-ups:** {names} are project files in `kit/Level-ups/`, next to the method file, as in the coach's Project or "
     "folder. Open one only when the instructions name it for the job (research and listening: RESEARCH; strategy, hooks, "
     "titles and long video: STRATEGY; launch: LAUNCH; the board: BOARD), and read the §CM- part the job needs, never the "
-    "whole file.\n")
+    "whole file.{board}\n")
+BOARD_LINE = (
+    " `kit/Level-ups/Board/` holds the board's files ({names}), the download's Level-ups/Board folder §CM-BOARD 2 "
+    "points the coach to.")
 PLUGIN_LINE = (
     "- **Plugin form:** the coach installed the plugin. `kit/plugin/skills/` holds its skills (the main skill and one "
     "companion skill per level-up area; each SKILL.md) and `kit/plugin/agents/` its agents; the method file and the "
@@ -450,7 +456,13 @@ def write_packet(root: Path, out_root: Path, rid: str, meta: dict, kit: dict[str
             (run_dir / "packet" / "kit" / "Level-ups").mkdir()
             for f in levelups:
                 shutil.copy2(f, run_dir / "packet" / "kit" / "Level-ups" / f.name)
-            level_line = LEVELUPS_LINE.format(names=", ".join(f"`{f.name}`" for f in levelups))
+            board = kit.get("board")
+            board_names = ""
+            if board and Path(board).is_dir():
+                shutil.copytree(board, run_dir / "packet" / "kit" / "Level-ups" / "Board")
+                csvs = sorted(f.name for f in Path(board).iterdir() if f.is_file())
+                board_names = BOARD_LINE.format(names=", ".join(f"`{n}`" for n in csvs))
+            level_line = LEVELUPS_LINE.format(names=", ".join(f"`{f.name}`" for f in levelups), board=board_names)
     for sub, data in plugin_kit.items():
         out = run_dir / "packet" / "kit" / "plugin" / sub
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -583,9 +595,14 @@ def check_verdict(run, want: str) -> tuple[bool | None, str]:
     r = run.replies[-1]
     kinds = _status_kinds(run, r)
     if w in ("ready", "ready-downgraded"):
-        if r.after_check or r.after_why:
+        if r.after_check:
             ok = bool(kinds & graders.STATUS_READY)
             return ok, "" if ok else f"no Ready line after the coach's check (found {sorted(kinds) or 'none'})"
+        if r.after_why:                     # v13.4 §CM-EDGE: the WHY line and how it is built, never the check record
+            if "checked" in kinds:
+                return False, "a check record (✓ line) on \"why?\""
+            ok = bool(kinds & ({"why"} | graders.STATUS_READY))
+            return ok, "" if ok else f"no WHY line on \"why?\" (found {sorted(kinds) or 'none'})"
         bad = kinds & (graders.STATUS_READY | graders.STATUS_DRAFT | {"why"})
         return not bad, "" if not bad else f"a Ready piece printed {sorted(bad)}"
     if w == "override":

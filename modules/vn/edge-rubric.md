@@ -1,8 +1,8 @@
 Bản VN của modules/en/edge-rubric.md, cho §CM-EDGE (edge-rubric.kit-*): kiểm tra trước khi giao chạy thế nào và mỗi trạng thái bài in ra gì (thẻ kiểm tra nằm ở core/vn/ship-check.md, không lặp lại ở đây).
 Nguồn: wf15-simple-surface-spec §2-§3 (Sẵn sàng không in gì; lý do, phần kiểm, hồ sơ chỉ khi hỏi "tại sao?"); wf12-qa-spec §0-§2.6; wf6-character-design §B5-§B6 (cổng, mượn, lật lại; câu đầu khoảng 18 tiếng; VN strip list V1-V9), ghi chú VN 1-13;
 PLAN reconciliations 2-3, 8; DECISIONS (6/10: ngoài đơn giản, trong chặt). Nghiệm thu: evals/cases/edge-rubric.vn.toml, router.vn.
-K V A Au C, tên cổng, "edge" là nhãn nội bộ: chỉ hiện sau "tại sao?". Lời hứa → §CM-GUARDRAILS. Giọng → §CM-VOICE.
-Đơn vị VN là tiếng (âm tiết): EN 15 chữ ≈ 20-24 tiếng, 25 chữ ≈ 38-40 tiếng, 5 chữ ≈ 8 tiếng. Hồ sơ "tại sao?" dùng nhãn Việt (Kết quả: ĐẠT|CHƯA ĐẠT; kiểm lỗi: thủ công).
+K V A Au C, tên cổng, "edge" là nhãn nội bộ: không bao giờ in ra, kể cả khi hỏi "tại sao?" (v13.4: chỉ in dòng VÌ SAO và bài dựng thế nào). Lời hứa → §CM-GUARDRAILS. Giọng → §CM-VOICE.
+Đơn vị VN là tiếng (âm tiết): EN 15 chữ ≈ 20-24 tiếng, 25 chữ ≈ 38-40 tiếng, 5 chữ ≈ 8 tiếng.
 Trỏ sang chỗ khác (6/10): dòng in đổi theo cặp xưng hô = start-block XƯNG HÔ ("Cần chị"); khung MY CONTENT MACHINE = §CM-CARD 7.
 Thêm so với EN: dòng in theo cặp xưng hô đã chọn (nay nằm ở start-block); rào đón VN trỏ về §CM-HUMANIZE 3; khung MY CONTENT MACHINE trong Zalo "Cloud của tôi" khi chat chưa có card.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): dòng Dừng cứng (verdict.hardstop) chỉ in ở §CM-GUARDRAILS; dòng Cần bạn bỏ "(thông tin, lựa chọn chỉ họ có)" vì SẴN SÀNG đã nói.

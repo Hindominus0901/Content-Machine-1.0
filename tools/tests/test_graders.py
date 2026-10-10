@@ -82,7 +82,7 @@ VN_STRINGS = {
     "next.prefix": "TIẾP →",
     "checked.prefix": "✓ Đã kiểm:",
     "verdict.ready": "Sẵn sàng {verb} · Mình sẽ đăng: {evidence}",
-    "verdict.needs": 'Cần bạn · {question} Mình không tự bịa phần này. (Hoặc nhắn "bỏ qua".)',
+    "verdict.needs": 'Cần {xưng hô} · {question} {tự xưng} không bịa đâu. (Hoặc gõ "bỏ qua".)',   # v13.4 address slots
     "cmd.why": "tại sao?",
     "map.known": "ĐƯỢC BIẾT ĐẾN VÌ:",
     "map.topics": "TRỤ CỘT NỘI DUNG:",
@@ -91,8 +91,8 @@ VN_STRINGS = {
     "map.word": "TỪ KHOÁ CỦA BẠN:",
     "map.found": "NGHIÊN CỨU CHO THẤY:",
     "map.voice": "GIỌNG CỦA BẠN:",
-    "research.now": "Trong lúc bạn kể, mình đang tìm hiểu {what} ({where}).",
-    "research.no_tool": "Ở đây mình không tra mạng được, nên mình dựa vào lời bạn kể và hiểu biết về {niche}, chỗ nào đoán "
+    "research.now": "Trong lúc {xưng hô} kể, {tự xưng} đang tìm hiểu {what} ({where}).",
+    "research.no_tool": "Ở đây không tra mạng được, nên dựa vào lời {xưng hô} kể và hiểu biết về {niche}, chỗ nào đoán "
                         "thì ghi rõ.",
 }
 
@@ -341,7 +341,6 @@ class InvariantTests(TempRepo):
             {TAG}Why
             WHY THIS GETS CLIENTS: they think it's their age; it's the portal. Next: the coffee ask.
             Ready to film · I'd post it: your 63 applications.
-            ✓ Checked: one idea · sounds like you · keyword once
             NEXT → Film it.
             '''
         for ask in ("why?", "Why this one?", "why"):
@@ -354,6 +353,27 @@ class InvariantTests(TempRepo):
         unasked = self.grade(GOOD + [("coach", "next"), ("machine", why_reply)])
         self.assertFails(unasked, "I3", "WHY line without")
         self.assertFails(unasked, "I3", "Ready line without")
+
+    def test_i3_why_prints_no_check_record(self):
+        """v13.4 §CM-EDGE: "why?" is the WHY line and how the piece is built, never ticks or a check record."""
+        plain = (f"{TAG}Why\nWHY THIS GETS CLIENTS: they think it's their age; it's the portal. Built as a client story, "
+                 "then the lesson.\nNEXT → Film it.")
+        self.assertPasses(self.grade(GOOD + [("coach", "why?"), ("machine", plain)]), "I3")
+        record = plain.replace("\nNEXT", "\n✓ Checked: one idea · sounds like you · keyword once\nNEXT")
+        self.assertFails(self.grade(GOOD + [("coach", "why?"), ("machine", record)]), "I3",
+                         '✓ Checked line on "why?"')
+        own = self.grade([("coach", "Here's my draft: coffee before resume. ok to post?"),
+                          ("machine", f"{TAG}Check\n✓ Checked: one idea · keyword once\nNEXT → Post it.")])
+        self.assertPasses(own, "I3")                     # their own draft checked still takes its one line
+
+    def test_i4_why_prints_no_score(self):
+        plain = (f"{TAG}Why\nWHY THIS GETS CLIENTS: they think it's their age; it's the portal. Built as a client story, "
+                 "then the lesson.\nNEXT → Film it.")
+        self.assertPasses(self.grade(GOOD + [("coach", "why?"), ("machine", plain)]), "I4")
+        for line in ("K2 V2 A1 Au2 C1", "It scored 9/10.", "Edge check: passed."):
+            with self.subTest(line=line):
+                scored = plain.replace("\nNEXT", f"\n{line}\nNEXT")
+                self.assertFails(self.grade(GOOD + [("coach", "why?"), ("machine", scored)]), "I4", "turn")
 
     def test_i3_one_status_line_only_when_the_coach_is_needed(self):
         report = self.grade([("coach", "post anyway"), ("machine", f'''
@@ -2269,7 +2289,7 @@ class G2RoundGraderTests(TempRepo):
 VG_STRINGS = dict(VN_STRINGS, **{
     "map.known": "ĐIỀU KHÁCH NHỚ:", "map.topics": "TRỤ CỘT NỘI DUNG:", "map.mix": "TỶ LỆ NỘI DUNG:",
     "map.system": "HỆ THỐNG NỘI DUNG:", "map.word": "TỪ KHOÁ:", "map.found": "NGHIÊN CỨU CHO THẤY:", "map.voice": "GIỌNG:",
-    "map.ok": "Mình chạy thử 4 tuần nhé. OK hay sửa một dòng?",
+    "map.ok": "Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?",          # v13.4: no pronoun, no "nhé"
     "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.",
     "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.",
     "cta.not_pushy": "Người xem comment là nhận được thứ có ích thật, đâu có ép ai. Muốn kết nhẹ hơn thì gõ 'nhẹ'.",
@@ -2277,8 +2297,10 @@ VG_STRINGS = dict(VN_STRINGS, **{
     "film.now_or_text": "Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.",
     "card.title": "Brand Card v{n} · {date}", "card.visible.what": "NÓI GÌ:", "card.visible.how": "NÓI THẾ NÀO:",
     "card.visible.never": "không bao giờ:", "card.machine.heading": "Phần còn lại là cho máy, không cần đọc:",
-    "card.save_line": "Lưu lại để mình nhớ bạn (30 giây).",
-    "setup.dump_posts": "Có bài đăng, tin nhắn bạn từng viết thì dán 2–3 cái luôn, hoặc gửi link trang của bạn.",
+    "card.save_line": "Lưu lại để {tự xưng} nhớ {xưng hô}.",
+    "setup.dump_posts": "Có bài, tin nhắn {xưng hô} từng viết thì dán 2–3 cái, hoặc gửi link trang của {xưng hô}.",
+    # not the kit's text: a string that holds a bracket ("[nơi · tháng]"), for the unfilled-blank test (VG-7);
+    # FT1_STRINGS carries the kit's one-minute paste
     "research.paste_steps": "Đầu mỗi đợt ghi [nơi · tháng]. Tên đổi thành chữ cái.",
     "message.pushback.who": "Ai cũng xem được hết, mình chỉ chọn viết cho ai thôi.",
 })
@@ -2295,7 +2317,7 @@ compliance = ["cam kết", "tốt nhất", "số 1"]
 audience_address = "tôi – anh chị"
 banned = ["giảm sốc"]
 '''
-VG_PROMPT = (f"{TAG}Bắt đầu\nCó bài đăng, tin nhắn anh từng viết thì dán 2–3 cái luôn, hoặc gửi link trang của anh.\n"
+VG_PROMPT = (f"{TAG}Bắt đầu\nCó bài, tin nhắn anh từng viết thì dán 2–3 cái, hoặc gửi link trang của anh.\n"
              "TIẾP → Nói xong gõ 'xong'.")
 VG_MAP = f'''
     {TAG}Bản đồ
@@ -2486,7 +2508,7 @@ class VG1RoundGraderTests(TempRepo):
 
 VG2_STRINGS = dict(VG_STRINGS, **{
     "setup.plan_guess": "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: "
-                        "{n người | chưa có} (mình đoán, gõ một chữ là đổi).",
+                        "{n người | chưa có} (chưa nghe thì {tự xưng} đoán, gõ một chữ là đổi).",
     "message.label.side_door": "Bán kèm",
     "dump.enough": "Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu đoán | gõ 'xong'.}",
 })
@@ -2893,9 +2915,10 @@ class VG3RoundGraderTests(TempRepo):
 
 
 VG4_STRINGS = dict(VG2_STRINGS, **{
-    # the kit after review retest-vg4-g5 (6e61e51): VK-33 ends both asks with "nhé"; the text post is offered in a line
-    "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift} nhé.",
-    "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift} nhé.",
+    # the kit after review retest-vg4-g5 (6e61e51): VK-33 ended both asks with "nhé", which v13.4 took out again (the
+    # machine adds end particles at the coach's rate, _slot_pattern); the text post is offered in a line
+    "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.",
+    "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.",
     "film.now_or_text": "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.",
     "film.not_filming": "Hôm nay không quay thì đăng caption thành bài chữ.",
     "cta.by_hand": "Tin trả lời phải gửi bằng tay.",
@@ -3552,16 +3575,15 @@ class VG6G7RoundGraderTests(TempRepo):
 # The FT1 retest (qa/runs/retest-ft1/review.md §6, §7 fixes 2, 9, 10): the founder's own Day 0, VN edition. The kit's dig
 # questions, the paste header with its slots, the Card's one-to-one address and the show-the-research command.
 FT1_STRINGS = dict(VG4_STRINGS, **{
-    "dig.story": "Bạn nghĩ tới một khách bạn giúp được nhiều nhất nhé. Tuần đầu tìm tới bạn, họ đang kẹt chuyện gì?",
-    "dig.words": "Lần đầu nhắn cho bạn, họ nói gì? Nhớ được nguyên văn thì càng hay.",
-    "dig.offer": "Khách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?",
-    "dig.proof": "Làm với bạn xong, khách đó khác đi thế nào, và họ có chịu cho bạn kể lại không?",
-    "dig.stance": "Trong nghề của bạn, người ta hay khuyên khách điều gì mà bạn thấy sai?",
-    "dig.buyer": "Được nhân bản một khách thì bạn chọn ai, và lúc tìm tới bạn họ đang thế nào?",
+    "dig.story": "Nhớ lại người khách {xưng hô} giúp được nhiều nhất. Hồi mới tìm tới, họ đang kẹt chuyện gì?",
+    "dig.words": "Lần đầu nhắn tới, họ nói gì? Nhớ được nguyên văn thì càng hay.",
+    "dig.offer": "Khách làm cùng thì nhận được gì, trả bao nhiêu?",
+    "dig.proof": "Có kết quả thật nào của khách mà {xưng hô} sẵn lòng kể ra không?",
+    "dig.stance": "Người trong nghề hay khuyên khách điều gì mà {xưng hô} thấy sai?",
+    "dig.buyer": "Được nhân bản một khách thì chọn ai, còn kiểu khách nào không muốn nhận?",
     "cmd.show_research": "xem nghiên cứu",
-    "research.paste_steps": "Lúc nào rảnh 15 phút: mở 3 video {platform} nhiều view nhất khi tìm \"{phrase}\", mỗi video "
-                            "chép 20 comment của người rõ là {buyer}, bỏ người bán. Đầu đợt ghi [{place} · {month}], tên "
-                            "đổi thành chữ cái, cùng người cùng chữ. Rồi dán hết vào đây.",
+    "research.paste_steps": "Chừng một phút: mở {link | video {platform} đầu tiên khi tìm \"{phrase}\"}, bấm vào bình luận, "
+                            "chụp 3 màn hình (máy tính: bôi đen 20 bình luận đầu, chép) rồi gửi vào đây.",
     "card.label.address_1to1": "Nhắn riêng thì gọi",
 })
 FT1_PERSONA = '''
@@ -3883,10 +3905,11 @@ class FT1RoundGraderTests(TempRepo):
         self.assertFails(report, "day0_shape", 'the CTA asks for "NGẠI CHÀO" but YOUR WORD is "tuyển hoài"')
 
     # ---- fix 10: the dig's answers on top of the Map's turn budget
-    DIGS = (f"{TAG}Hỏi thêm\n\nBạn nghĩ tới một khách bạn giúp được nhiều nhất nhé. Tuần đầu tìm tới bạn, họ đang kẹt chuyện gì?\nTIẾP → Kể một chuyện thật.",
+    # the v13.4 dig strings (FT1_STRINGS), adapted to the client in hand and said with the pair (bạn–mình) and a particle
+    DIGS = (f"{TAG}Hỏi thêm\n\nBạn nhớ lại người khách bạn giúp được nhiều nhất nha. Hồi mới tìm tới bạn, họ đang kẹt chuyện gì?\nTIẾP → Kể một chuyện thật.",
             f"{TAG}Hỏi thêm\n\nLúc mới tìm tới bạn, chị coach đó nói gì? Nhớ được nguyên văn thì càng hay.\nTIẾP → Gõ đúng câu chị ấy nói.",
-            f"{TAG}Hỏi thêm\n\nKhách gật đầu làm với bạn thì họ nhận được gì, trả bao nhiêu?\nTIẾP → Nói một câu: nhận gì, giá bao nhiêu.",
-            f"{TAG}Hỏi thêm\n\nLàm với bạn xong, chị coach tài chính đó khác đi thế nào, và chị có chịu cho bạn kể lại không?\nTIẾP → Kể đúng chuyện sau khi xong.")
+            f"{TAG}Hỏi thêm\n\nKhách làm cùng bạn thì họ nhận được gì, trả bao nhiêu?\nTIẾP → Nói một câu: nhận gì, giá bao nhiêu.",
+            f"{TAG}Hỏi thêm\n\nChị coach tài chính đó có kết quả thật nào mà bạn sẵn lòng kể ra không?\nTIẾP → Kể đúng chuyện sau khi xong.")
     MORE = f"{TAG}Xả ý\n\nMình nghe nè.\nTIẾP → Cứ nói tiếp."
 
     def dig_session(self, digs: int, filler: int, **kw):
@@ -4232,18 +4255,18 @@ NEXT → Say "next".'''
 
     # ---- I23 and the kit's paste-steps box
     def test_the_paste_steps_box_is_not_a_piece(self):
-        self.assertEqual(graders.paste_steps_marks(FT1_STRINGS), ("luc nao ranh 15 phut", "dan het vao day"))
-        self.assertEqual(graders.paste_steps_marks({"research.paste_steps": "15 minutes, any day: open {x}. Paste it all here."}),
-                         ("15 minutes any day", "paste it all here"))
+        self.assertEqual(graders.paste_steps_marks(FT1_STRINGS), ("chung mot phut", "roi gui vao day"))
+        en = ("About a minute: open {link | the top {platform} video for \"{phrase}\"}, tap the comments, screenshot 3 "
+              "screens (computer: select the first 20 comments, copy) and send them here.")
+        self.assertEqual(graders.paste_steps_marks({"research.paste_steps": en}), ("about a minute", "and send them here"))
         self.assertEqual(graders.paste_steps_marks({}), ("", ""))
         long = " ".join(["chị", "nói", "thật", "đó", "nha"] * 14)                       # 70 tiếng
-        steps = ("Lúc nào rảnh 15 phút:\n1 Mở TikTok, tìm \"đăng bài không ai hỏi giá\".\n2 Mở 3 video nhiều view nhất.\n"
-                 "3 Mỗi video chép 20 comment của người rõ là coach; bỏ người bán.\n"
-                 "4 Đầu đợt ghi [TikTok · 10/2026]; tên đổi thành chữ cái.\n5 Dán hết vào đây.")
-        under = ("Hạnh nói: lúc nào rảnh 15 phút, chị giúp em việc này:\n```\n1 Mở TikTok, tìm \"chủ spa ngại chào\".\n"
-                 "2 Mở 3 video nhiều view nhất.\n3 Mỗi video chép 20 comment của người rõ là chủ spa; bỏ người bán nha em nhé "
-                 "chị dặn kỹ chỗ này lắm.\n4 Đầu đợt ghi [TikTok · tháng 10]; tên đổi thành chữ cái, mỗi người một chữ.\n"
-                 "5 Dán hết vào đây.\n```")
+        steps = ("Chừng một phút:\n1 Mở TikTok, tìm \"đăng bài không ai hỏi giá\", video đầu tiên.\n2 Bấm vào bình luận.\n"
+                 "3 Điện thoại: chụp 3 màn hình bình luận. Máy tính: bôi đen 20 bình luận đầu, chép.\n"
+                 "4 Rồi gửi vào đây.")
+        under = ("Hạnh nói: chừng một phút thôi, chị giúp em việc này:\n```\n1 Mở TikTok, tìm \"chủ spa ngại chào\", video "
+                 "đầu tiên.\n2 Bấm vào bình luận.\n3 Chụp 3 màn hình bình luận nha em, nhớ chụp thấy rõ chữ, chị dặn kỹ chỗ "
+                 "này lắm.\n4 Rồi gửi vào đây.\n```")
         for box in (steps, under):
             with self.subTest(box=box[:30]):
                 text = f"{TAG}Tuần 1\n\nBài dài · thứ Năm 8/10 · Facebook\n```\n{long}\n```\n\nLưu lại, mình nhớ bạn.\n\n"
@@ -4255,7 +4278,7 @@ NEXT → Say "next".'''
                 with_box = graders._post_chunks(r)
                 without = graders._post_chunks(r, marks)
                 self.assertEqual(len(with_box) - len(without), 1)                       # exactly the paste steps left out
-                self.assertTrue(all("Dán hết vào đây" not in c for c in without))
+                self.assertTrue(all("gửi vào đây" not in c for c in without))
                 self.assertEqual(graders.i23_voice(run)["details"]["pieces_60_words"], 1)
         # without the string in the edition, nothing is left out
         self.write("strings/vn.toml", toml_table("strings", {k: v for k, v in FT1_STRINGS.items() if k != "research.paste_steps"}))
@@ -5151,6 +5174,22 @@ class StrategyFirstContentTests(StrategyFirstBase):
         self.assertIsNone(graders.mix_shares("vn", "ATTRACT 40% · TRUST 40% · CONVERT 20%"))
         self.assertIsNone(graders.mix_shares("en", "THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%"))
 
+    def test_the_strategy_labels_print_whole(self):
+        """v13.4 §CM-MAP: labels whole, at line start ("TỶ LỆ NỘI DUNG:", never "TỶ LỆ:")."""
+        self.assertIs(self.strat(self.report(), "the strategy's labels print whole")["pass"], True)
+        for whole, cut in (("CONTENT MIX:", "MIX:"), ("YOUR SYSTEM:", "SYSTEM:")):
+            with self.subTest(cut=cut):
+                report = self.report(self.day0(strategy=MAP_REPLY.replace(whole, cut)))
+                self.assertFails(report, "day0_strategy", f'cuts the label "{whole}"')
+        vn = graders.Matcher({"map.known": "ĐIỀU KHÁCH NHỚ:", "map.topics": "TRỤ CỘT NỘI DUNG:", "map.mix": "TỶ LỆ NỘI DUNG:",
+                              "map.system": "HỆ THỐNG NỘI DUNG:", "map.word": "TỪ KHOÁ:", "map.found": "NGHIÊN CỨU CHO THẤY:"}, "vn")
+        self.assertEqual(graders.cut_strategy_label(vn, "TỶ LỆ: THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%"), "TỶ LỆ NỘI DUNG:")
+        self.assertEqual(graders.cut_strategy_label(vn, "HỆ THỐNG: TikTok là chính"), "HỆ THỐNG NỘI DUNG:")
+        for line in ("TỶ LỆ NỘI DUNG: THU HÚT 40%", "2. HỆ THỐNG NỘI DUNG: TikTok", "TỪ KHOÁ: GIÁ", "THU HÚT: 40%",
+                     "Tỷ lệ: 40/40/20"):
+            with self.subTest(line=line):
+                self.assertEqual(graders.cut_strategy_label(vn, line), "")
+
     def test_the_content_system_names_a_platform_the_week_and_the_ask(self):
         system = [l for l in MAP_REPLY.splitlines() if "YOUR SYSTEM" in l][0]
         for text, fragment in (("    YOUR SYSTEM: a plan.", "YOUR SYSTEM leaves out a platform, pieces a week, the ask path"),
@@ -5802,6 +5841,19 @@ class V131GroupedStrategyTests(StrategyFirstBase):
         self.assertFalse(graders.TITLE_WORDS_RE.search("QUAY HÔM NAY · dưới 30 giây"))
         self.assertTrue(graders.measures_seconds("QUAY HÔM NAY · dưới 30 giây"))
         self.assertTrue(names["convert"].search(graders.ck.fold("N5 · T2 · Email · CHUYỂN ĐỔI · 300 chữ")))
+        # v13.4: FILM TODAY's title carries the type right after it ("QUAY HÔM NAY · THU HÚT · …")
+        film = "QUAY HÔM NAY · THU HÚT · Video ngắn · 550 chữ"
+        self.assertTrue(graders.FILM_STEP_RE.match(film))
+        self.assertTrue(names["attract"].search(graders.ck.fold(film)) and graders.TITLE_WORDS_RE.search(film))
+        untyped = graders.ck.fold("QUAY HÔM NAY · Video ngắn · 550 chữ")
+        self.assertFalse(any(p.search(untyped) for p in names.values()))
+
+    def test_film_today_titled_type_first_passes_and_untyped_fails(self):
+        first = S_WEEK.replace("FILM TODAY · Short video · ATTRACT · 640 words", "FILM TODAY · ATTRACT · Short video · 640 words")
+        self.assertIs(self.strat(self.report(self.day0(week=first)), "every piece title names its type")["pass"], True)
+        untyped = S_WEEK.replace("FILM TODAY · Short video · ATTRACT · 640 words", "FILM TODAY · Short video · 640 words")
+        self.assertFails(self.report(self.day0(week=untyped)), "day0_strategy",
+                         'FILM TODAY piece title "FILM TODAY · Short video · 640 words" lacks its type')
 
     # -- FILM TODAY before the calendar, Week 1's table only
     TABLE = ("    | Day | Platform | Content pillar | Line | Type | Format | Words |\n    |---|---|---|---|---|---|---|\n"
@@ -6179,6 +6231,42 @@ class V13LeaksTests(TempRepo):
         self.assertIn("người cuối cùng trả tiền", self.cm_run.undictated_corpus([], pdir, 5))
         # a line nobody dictated keeps its words either way
         self.assertTrue(any("big number nobody" in g for g in self.cm_run.undictated_corpus(said, pdir, 4)))
+
+
+class V134StringTests(unittest.TestCase):
+    """v13.4 strings (strings/vn.toml header): {xưng hô} / {tự xưng} address slots the machine fills or drops, VN lines
+    with no pronoun and no "nhé" the machine says with one and with the coach's particles."""
+
+    def test_an_address_slot_is_said_or_dropped(self):
+        m = graders.Matcher(VN_STRINGS, "vn")
+        for line in ('Cần chị · Giá gói bao nhiêu? Em không bịa đâu. (Hoặc gõ "bỏ qua".)',
+                     'Cần chị · Giá gói bao nhiêu? Không bịa đâu. (Hoặc gõ "bỏ qua".)',
+                     'Cần · Giá gói bao nhiêu? Không bịa đâu ạ. (Hoặc gõ "bỏ qua".)'):
+            with self.subTest(line=line):
+                self.assertEqual(m.verdict_kind(line), "needs")
+        self.assertIsNone(m.verdict_kind("Cần chị nghĩ thêm về giá."))
+        self.assertIsNone(m.verdict_kind('Cần chị · Giá gói bao nhiêu? (Hoặc gõ "bỏ qua".)'))      # its fixed tail is gone
+        self.assertTrue(m.says("research.now", "Trong lúc chị kể, em đang tìm hiểu cách khách nói (nhóm Facebook)."))
+        self.assertTrue(m.says("research.now", "Trong lúc kể, đang tìm hiểu cách khách nói (nhóm Facebook)."))
+        self.assertFalse(m.says("research.now", "Trong lúc chị nghỉ, em đi pha cà phê."))
+
+    def test_a_pronoun_free_line_takes_a_pronoun_and_a_particle_or_none(self):
+        strings = {"talk.ack": "Ghi lại rồi. Câu tiếp:", "map.ok": VG_STRINGS["map.ok"]}
+        m = graders.Matcher(strings, "vn")
+        for line in ("Ghi lại rồi. Câu tiếp:", "Em ghi lại rồi nha chị. Câu tiếp:", "Ghi lại rồi ạ. Câu tiếp:"):
+            with self.subTest(line=line):
+                self.assertTrue(m.says("talk.ack", line))
+        for line in ("Em ghi chú rồi. Câu tiếp:", "Ghi lại rồi."):
+            with self.subTest(line=line):
+                self.assertFalse(m.says("talk.ack", line))
+        run = type("FakeRun", (), {"strings": strings})()
+        self.assertTrue(graders._map_ok_line(run, m, "Mình chạy thử 4 tuần theo bản này nha chị. OK hay sửa một dòng?"))
+        self.assertTrue(graders._map_ok_line(run, m, "Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?"))
+        self.assertFalse(graders._map_ok_line(run, m, "Mình nghĩ 4 tuần là vừa. Chị thấy sao?"))
+        # English strings keep their exact words
+        en = graders.Matcher(EN_STRINGS, "en")
+        self.assertTrue(en.says("map.ok", "We'll run this for 4 weeks. OK, or change a line."))
+        self.assertFalse(en.says("map.ok", "I'll run this for 4 weeks. OK, or change a line."))
 
 
 if __name__ == "__main__":

@@ -52,11 +52,6 @@
 "verdict.override"         = { text = "Đăng theo ý {xưng hô} · điều còn lo: {defect} · đã ghi lại.", src = "8534b80dee" }
 "verdict.second_read"      = { text = "Lưu ý {n}: {defect}. Nhắn \"sửa {n}\" trước khi đăng.", src = "1d1d0f998b" }
 
-# Verdict verbs (QA spec §2.4)
-"verb.film" = { text = "quay", src = "d0607f7ad2" }
-"verb.post" = { text = "đăng", src = "72231043bc" }
-"verb.send" = { text = "gửi", src = "27ce1d1bf4" }
-
 # Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
 "cmd.start"         = { text = "Bắt đầu", src = "e4bb9f1ece" }
 "cmd.next"          = { text = "tiếp", src = "c6c1c9a9c8" }

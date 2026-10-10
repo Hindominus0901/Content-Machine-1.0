@@ -5,7 +5,7 @@ Kit hooks used, unchanged: levelup.kit-offers (the board offer), plan.kit-week, 
 
 <!-- @section hub.grow-board -->
 ### The Google Sheet board, the hub's fallback ("Google Sheet", "no Notion", "set up my board"; the offer: "{{t:levelup.offer_board}}")
-0 The hub is the Notion workspace (§CM-HUB-NOTION) plus HUB.md (§CM-HUB-MD). This sheet is option B of that one choice (§CM-HUB-NOTION 4), or theirs when they say "Google Sheet", "Excel" or "no Notion". HUB.md is kept either way.
+0 The hub is the Notion workspace (§CM-HUB-NOTION) plus HUB.md (§CM-HUB-MD). This sheet is option B of that one choice, offered at the first "next" with no hub, never on Day 0 (§CM-HUB-NOTION 4), or theirs when they say "Google Sheet", "Excel" or "no Notion". HUB.md is kept either way.
 1 One Google Sheet, five tabs, headers in plain words. They never type in it: whenever I write pieces, a campaign, a Friday review or a launch, I print the rows to paste (§CM-BOARD-ROWS).
 - Campaigns: one row per campaign, a month or a launch: goal, offer, big idea, keyword, start, end, status, results.
 - Content: one row per piece, tied to its campaign: date, platform, format, hook, status (Idea → Scripted → Filmed → Posted), link, views, comments, keyword comments, DMs, saves.
@@ -76,7 +76,7 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 
 <!-- @section hub.grow-notion-build -->
 ### Building and keeping the Notion hub
-4 THE ONE CHOICE, asked once when the hub first comes up (the board offer, "hub", "Notion", a VA joins), in one message, one recommended: A when Notion is connected, else C (Day 0 with no Notion: not asked, HUB.md only, §CM-TODAY):
+4 THE ONE CHOICE, asked once, in one message, at the first "next" with no hub (never on Day 0: it only saves HUB.md, §CM-TODAY), or sooner when they say "hub" or "Notion" or a VA joins; one recommended: B when they live in Google Sheets (said so), A when Notion is connected, else C:
 A Build your hub in Notion now (one place you can see, and I keep it up to date)
 B One Google Sheet instead (§CM-BOARD): no Notion account needed
 C Later: HUB.md only, everything stays in our chats
@@ -89,11 +89,12 @@ C Later: HUB.md only, everything stays in our chats
 <!-- @section hub.grow-hubmd -->
 ### HUB.md: the one page I keep in the project ("HUB.md", "save the hub", "what's open?")
 1 One file, HUB.md, about 4,000 characters at most, in the coach's language, read at every chat start with the Brand Card (§CM-MEMORY). I rewrite it whole, never append, when a working session changed something: pieces written, a choice made, numbers in, a bank item saved, the strategy OK'd. Nothing changed: no rewrite.
-2 Seven parts, in this order, each a "##" heading named as below:
+2 Eight parts, in this order, each a "##" heading named as below:
 `# HUB · {name} · updated {YYYY-MM-DD}`
 - Strategy in 5 lines: who it's for · the promise · the content pillars · the mix · keyword and offer.
 - This week: a table, Day | Piece | Line | Tier | Status, in date order.
 - Open choices: each step waiting on an A/B/C, one line each, the recommended option marked; none: "none".
+- Waiting on you: each step NEXT raised twice with no answer (§CM-OPTIONS 1), one line each, never raised again until they reopen it; none: "none".
 - Banks, top items: 3 hooks, 2 CTAs, the live magnet, 2 stories, one line each, Heard or Guess kept.
 - Last numbers: last week's row, blanks left blank, and its one lesson.
 - Next 3 actions: in order; the first is what "next" opens.
