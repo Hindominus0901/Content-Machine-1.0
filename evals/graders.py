@@ -6713,6 +6713,64 @@ OPINION_ASK = {"vn": re.compile(r"(?<!\w)(?:bạn|các bạn|anh chị|mọi ng�
                "en": re.compile(r"\bwhat do you think\b|\bthoughts\s*\?|\bagree\s*\?\s*$|\blet me know (?:what )?you think\b", re.I)}
 
 
+# v13.7 (founder on the v13.6 run: "hook cần phải như các cái t gửi m, các cái ảnh"): the screenshot shapes are mandatory
+# frames, not guidance (fmt-short.kit-video-short 1, packaging.grow-titles 2, hook-library.grow-titles 2). A short's first
+# spoken line and a text post's line 1 must fill one of them (HOOK_FRAMES); a scene ("Khách hỏi giá niềng, lễ tân gửi
+# nguyên bảng giá, rồi khách seen. Quen không anh chị?") fills none. The call-out may be asked as a question first
+# ("Khách hỏi giá rồi seen? 10 năm làm sale, …", founder-approved). The on-screen text is a big number, the result, or a
+# verdict or dare that hides the method; a label + the lesson ("tin đầu: đừng gửi giá.") or a how-to connector states
+# the method (ONSCREEN_METHOD). acceptance [hook_lab] frame_check turns both off (false).
+HOOK_FRAMES = {
+    "vn": [("cho mình N phút", re.compile(r"(?<!\w)cho (?:mình|tôi|em) (?:\S+ ){0,3}?(?:phút|giờ|tiếng)(?!\w)"
+                                          r"|\d+ năm[^.?!]* trong \d+ phút", re.I)),
+           ("xem cái này", re.compile(r"(?<!\w)(?:xem|nghe|đọc|lưu)(?: hết)? (?:cái|video|bài|clip|đoạn)(?: \S+)? (?:này|nè)(?!\w)", re.I)),
+           ("khó cho tới khi", re.compile(r"khó,?\s+(?:cho\s+)?(?:tới|đến|tận)\s+khi", re.I)),
+           ("làm lại từ đầu", re.compile(r"(?<!\w)nếu(?!\w)[^.?!]*(?:từ đầu|từ số 0|làm lại|bắt đầu lại|năm 20\d\d|năm nay"
+                                         r"|mới vào nghề|mới bắt đầu)", re.I)),
+           ("N cách", re.compile(r"(?:^|\s)\d+\s+(?:cách|bước|công thức|giai đoạn|lỗi|dấu hiệu|câu|việc|điều|bí mật|sai lầm"
+                                 r"|tin nhắn|chiêu)(?!\w)|^(?:cách|công thức|bật mí|bí quyết)(?!\w)", re.I)),
+           ("biên lai", re.compile(r"(?<!\w)(?:mình|tôi|em) đã(?!\w)[^.?!]*\d|(?<!\w)từ \d[\d.,]*\s*\S*\s+(?:lên|xuống|thành) \d"
+                                   r"|\d[^.?!]*:\s*(?:đây là cách|mình làm (?:vậy|thế này|như vầy))", re.I)),
+           ("tới mức", re.compile(r"(?<!\w)(?:tới|đến) mức(?!\w)", re.I)),
+           ("đang mất", re.compile(r"(?<!\w)đang (?:lãng phí|mất|bỏ lỡ|đánh rơi|đốt|phí)(?!\w)", re.I)),
+           ("hỏi mình cách", re.compile(r"(?<!\w)hỏi (?:mình|tôi|em) (?:cách|làm sao|làm thế nào)(?!\w)", re.I)),
+           ("gọi đúng người (câu hỏi)", re.compile(r"^[^.?!]{8,}\?\s+\S"))],
+    "en": [("give me N minutes", re.compile(r"\bgive me \S+ (?:minutes|mins|hours|seconds)\b|\bgive me \d"
+                                            r"|\b\d+ (?:years|yrs) of\b.* in \d+ (?:min|mins|minutes)\b", re.I)),
+           ("watch this", re.compile(r"\b(?:watch|read|save|hear) this\b|\bplease watch\b", re.I)),
+           ("hard until", re.compile(r"\bhard,? until\b", re.I)),
+           ("start over", re.compile(r"\bif i (?:was|were|had to|started|could|wanted|lost|went|had)\b|\bstart(?:ed|ing)? over\b", re.I)),
+           ("N ways", re.compile(r"^(?:the )?\d+ (?:\w+ ){0,2}?(?:ways|steps|signs|mistakes|lessons|things|rules|questions|lines"
+                                 r"|stages|replies|habits|messages)\b|^how (?:to|i'd|i)\b", re.I)),
+           ("receipt", re.compile(r"^i (?:went|grew|made|copied|tried|tested|listened|built|sent|asked|spent|quit|stopped|fixed"
+                                  r"|did|raised|doubled|cut)\b|\bfrom \$?\d[\d,.]*k? (?:\S+ )?to \$?\d", re.I)),
+           ("so X that Y", re.compile(r"\bso \w+ (?:that )?(?:it|they|clients|people|you|buyers)\b", re.I)),
+           ("you're losing", re.compile(r"\byou(?:'re| are) (?:wasting|losing|leaving|missing|burning)\b", re.I)),
+           ("asked me how", re.compile(r"\basked me (?:how|what|why)\b", re.I)),
+           ("call-out question", re.compile(r"^[^.?!]{8,}\?\s+\S"))],
+}
+ONSCREEN_METHOD = {
+    "vn": re.compile(r"^(?!pov\b)[^:]{2,30}:\s*\S|(?<!\w)(?:trước khi|thay vì|rồi mới|bằng cách|hãy|bước \d)(?!\w)", re.I),
+    "en": re.compile(r"^(?!pov\b)[^:]{2,30}:\s*\S|\b(?:before you|instead of|by (?:asking|sending|saying)|then)\b", re.I),
+}
+
+
+def hook_frame(text: str, lang: str) -> str:
+    """The frame a hook line fills (HOOK_FRAMES), '' when none: a scene, a lesson or a riddle."""
+    body = ck.straight_quotes(ck.nfc(text or "")).strip().strip('"').strip()
+    for name, rx in HOOK_FRAMES[lang]:
+        if rx.search(body):
+            return name
+    return ""
+
+
+def onscreen_method(text: str, lang: str) -> str:
+    """The words where an on-screen text states the method ("tin đầu: đừng gửi giá."), '' when it doesn't."""
+    body = ck.straight_quotes(ck.nfc(text or "")).strip().strip('"').strip()
+    m = ONSCREEN_METHOD[lang].search(body)
+    return m.group(0).strip() if m else ""
+
+
 def hook_sentences(text: str) -> int:
     """Sentences in a hook line, quoted words (a buyer's line) counted as part of their sentence."""
     body = _QUOTED.sub("Q", ck.straight_quotes(ck.nfc(text))).strip()
@@ -6771,6 +6829,9 @@ def check_hook_lab(run: Run) -> dict:
       words (acceptance [hook_lab] first_line_max_sentences, first_line_min_words_en / _vn); in a VN piece the coach
       never calls themself chị/anh, the machine's word for them in chat (coach_self_words); a comment ask on a short
       is a choice, never an opinion question (OPINION_ASK).
+    - v13.7 (the founder's screenshots as mandatory frames): a short's first line and a text post's line 1 fill one of
+      the hook frames (HOOK_FRAMES; a scene or a lesson fills none), and a short's on-screen text never states the
+      method (ONSCREEN_METHOD: a label + the lesson, "tin đầu: đừng gửi giá."); acceptance [hook_lab] frame_check.
     A warning (the check still passes) when a short's last line names the method instead of landing the answer.
     A proxy: the rubric's other items (HL1-HL5, HG1-HG3) need a reader. n/a when the run printed none of these."""
     cfg = _hook_cfg(run)
@@ -6792,9 +6853,17 @@ def check_hook_lab(run: Run) -> dict:
     max_sent = int(acc.get("first_line_max_sentences", FIRST_MAX_SENTENCES))
     min_words = int(acc.get(f"first_line_min_words_{lang}", FIRST_MIN_WORDS[lang]))
     self_words = coach_self_words(run)
-    shape, voice, opinion = [], [], []
+    shape, voice, opinion, frame, method = [], [], [], [], []
+    frames_on = bool(acc.get("frame_check", True))
     for s in shorts:
         where = f"turn {s['turn']}: " if s.get("turn") is not None else ""
+        if frames_on and s.get("first") and not hook_frame(s["first"], lang):
+            frame.append(f'{where}first line fills none of the hook frames (§CM-FORMATS 1; a scene or a lesson is no hook): '
+                         f'"{_short(s["first"], 70)}"')
+        hit = onscreen_method(s.get("on", ""), lang) if frames_on else ""
+        if hit:
+            method.append(f'{where}on-screen text states the method ("{hit}"): a big number, the result, or a verdict or '
+                          f'dare that hides it: "{_short(s["on"], 50)}"')
         why = hook_length_issue(s.get("first", ""), lang, max_sent, min_words) if s.get("first") else ""
         if why:
             shape.append(f'{where}first line is {why}, not one spoken sentence of medium length: "{_short(s["first"], 70)}"')
@@ -6815,6 +6884,8 @@ def check_hook_lab(run: Run) -> dict:
                 flat_line.append(f'{where}flat claim in the {what} ({fam}: "{words}"): "{_short(h["text"], 60)}"')
         for word in hook_hedges(h["text"], "headline", lang):
             hedge.append(f'{where}hedge "{word}" in the {what}: "{_short(h["text"], 60)}"')
+        if h["kind"] == "post" and frames_on and not hook_frame(h["text"], lang):
+            frame.append(f'{where}{what} fills none of the hook frames (§CM-FORMATS 1, §CM-POSTS 1): "{_short(h["text"], 70)}"')
         if h["kind"] == "post":
             why = hook_length_issue(h["text"], lang, max_sent, min_words)
             if why:
@@ -6841,6 +6912,10 @@ def check_hook_lab(run: Run) -> dict:
          "evidence": list(dict.fromkeys(voice))},
         {"item": "a comment ask is a choice, never an opinion question", "pass": not opinion,
          "evidence": list(dict.fromkeys(opinion))},
+        {"item": "the first line fills one of the hook frames (never a scene)", "pass": not frame,
+         "evidence": list(dict.fromkeys(frame))},
+        {"item": "the on-screen text never states the method", "pass": not method,
+         "evidence": list(dict.fromkeys(method))},
     ]
     passed = all(i["pass"] for i in items)
     out = {"id": "hook_lab", "pass": passed, "status": "pass" if passed else "fail", "items": items,

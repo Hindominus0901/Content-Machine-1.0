@@ -1334,14 +1334,14 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I8", "hook_lab"]
 max_questions = 1
-notes = """qa/standards/hook-lab.md HL7, HL8; review retest-ft1 §3 (EN: 'The bank app isn't a forecast.' on screen, over a first line about the bank app, is a bare 'X isn't Y' that states the ending). Passing shape: on-screen words that add a thing the first line does not say (a scene, a number of hers, a question); the first line is Dee's line or a scene; a last line that pays off. hook_lab fails a repeat at 75% of the on-screen words or more and the flat-claim families (that/this/it is not …, a generic subject with 'must', 'X is the key', a bare 'X is Y'). No dollar amount for Dee (her OK). Nothing under the piece (I3)."""
+notes = """qa/standards/hook-lab.md HL7, HL8; review retest-ft1 §3 (EN: 'The bank app isn't a forecast.' on screen, over a first line about the bank app, is a bare 'X isn't Y' that states the ending). Passing shape: on-screen words that add a thing the first line does not say (a scene, a number of hers, a question); the first line fills a frame of §CM-FORMATS 1 (v13.7), Dee's line or a scene only from line 2-3; a last line that pays off. hook_lab fails a repeat at 75% of the on-screen words or more and the flat-claim families (that/this/it is not …, a generic subject with 'must', 'X is the key', a bare 'X is Y'). No dollar amount for Dee (her OK). Nothing under the piece (I3)."""
 
 [[case]]
 id = "fmt-short.en.050"
 kind = "P"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "Hook lab, EN Wednesday post: line 1 is a scene, a buyer's line or her number, never an 'If X, Y' maxim"
+title = "Hook lab, EN Wednesday post: line 1 fills a frame (v13.7), never a scene or an 'If X, Y' maxim"
 context = "Week 2, Wednesday, Claude Free on her Windows laptop. Brand Card v1 present (persona default: LinkedIn, long text post; YOUR WORD RECORD YEAR). In her dump she said agency owners tell her 'record year and I can't sleep' and 'record year and I put payroll on my personal card', 'all of them say some version of it', and that she hears it a lot. Judge the post's first line (and its last) only."
 input = """[turn 1] write my Wednesday LinkedIn post: why growing an agency with broken margins just digs the hole deeper"""
 standard = "hook-lab"
@@ -1349,7 +1349,7 @@ critical = ["HL1", "HL2", "HL3", "HL4", "HL5", "HL6", "HL7"]
 min_score = 14
 invariants = ["I1", "I3", "I8", "I17"]
 max_questions = 1
-notes = """scope: pieces. qa/standards/hook-lab.md (HL8 and HL9 are N/A: not a short, no title; 7 items, all 2). The retest printed line 1 'If your margin's broken, growing just makes the hole bigger, faster.': no scene (HL1), 'margin's broken' is her term, not a buyer's (HL2), nothing paid off (HL3), a maxim that states the ending (HL7). The review's rewrite scores 14: line 1 '\"Record year, and I put payroll on my personal card.\"' (a line she reports many saying; the post says it is one she hears every month), last line 'Before you add a client, find the one you're paying to keep.' A question as the hook is fine when the last line answers it."""
+notes = """scope: pieces. qa/standards/hook-lab.md (HL8 and HL9 are N/A: not a short, no title; 7 items, all 2). The retest printed line 1 'If your margin's broken, growing just makes the hole bigger, faster.': no scene (HL1), 'margin's broken' is her term, not a buyer's (HL2), nothing paid off (HL3), a maxim that states the ending (HL7). The review's rewrite scores 14 (v13.7 frame): line 1 'If you had a record year and still put payroll on your card, read this.', line 2 the buyer line she hears every month ('\"Record year, and I put payroll on my personal card.\"'), last line 'Before you add a client, find the one you're paying to keep.' A question as the hook is fine when the last line answers it."""
 
 [[case]]
 id = "fmt-short.en.051"

@@ -4,10 +4,11 @@ Sources: founder-sources (Soo Wei Goh: three hooks per short, a hook wide for th
 House rules in every example: {N} and other slots are the coach's real facts; scenes are made up only to show the shape; no invented result, testimonial, number or scarcity; comment-word asks on; the coach's own "chấm" and thresholds kept word for word with one dated note; fake urgency and income or health promises blocked; no attack on a person or group. No years or "currently" in prose (E145).
 Budgets: each section ≤2,800 B; the file ≤45 KB (a HOOKS level-up needs its own budget, see the notes). Triggers: "hook library", "more hooks", "hook ideas" (VN "thư viện hook", "thêm hook").
 Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approved; it outranks the older hook-lab checks): THE CHECK (desire or daily pain · the two questions "what do I get / why should I care" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, method hidden · one spoken medium sentence, the coach says I/mình) replaces the 6 checks; the six title shapes and the title/thumbnail split (2–4 words: verdict, dare, big number) are the drafting frame; CTAs by tier (ATTRACT save/send · TRUST comment for this piece's {payoff} · CONVERT DM, real offer and deadline; the Season gift is the CONVERT default only; ≥1 in 4 save/send only; choice questions; keyword = the viewer's words from the hook). Notes: scratchpad v13/hooks-wire-notes.md.
+v13.7 (10 Oct 2026, founder on the v13.6 run: "hook cần phải như các cái t gửi m, các cái ảnh"; the run wrote scenes as hooks and lessons on screen): the screenshot shapes are MANDATORY frames, not guidance. Kit §CM-FORMATS 1 holds the frame list + one check line; §CM-PACKAGING 2 the full list; §CM-HOOK-TITLES an example pair per frame. First spoken line = the title said aloud; line 2 = the coach's proof; the scene from line 3. On-screen/thumbnail = a big real number, the result, or a verdict/dare that hides the method. Self-check: would it sit in a top business-YouTube grid / a viral VN Facebook image post? graders.py hook_lab: HOOK_FRAMES, ONSCREEN_METHOD (acceptance [hook_lab] frame_check). Notes: scratchpad v13/hooks-v137-notes.md.
 
 <!-- @section hook-library.grow-use -->
 ### The hook library: how the lab uses it ("hook library", "more hooks", "hook ideas"; deepens §CM-HOOKS)
-1 The lab (§CM-FORMATS 1, §CM-HOOKS) drafts from this library: ≥12 silent drafts in the six shapes (§CM-PACKAGING 2), with these mechanisms as raw material, chosen by the piece's purpose (ATTRACT, TRUST or CONVERT, as the week's plan says) and its surface; the next part says which suit which. Only the coach's facts and real buyer lines fill the slots. Every draft passes THE CHECK (§CM-HOOKS 2: desire or daily pain first · makes them ask "what do I get?" and "why now?" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, result promised, method hidden · one spoken sentence, medium length, the coach says I or we) or is dropped. An entry's example that would fail is a shape to rework, never a line to post. Only the winner prints.
+1 The lab (§CM-FORMATS 1, §CM-HOOKS) drafts from this library: ≥12 silent drafts, each filling one of the mandatory frames (§CM-PACKAGING 2, examples §CM-HOOK-TITLES); these mechanisms are raw material for the slots, chosen by the piece's purpose (ATTRACT, TRUST or CONVERT, as the week's plan says) and its surface; the next part says which suit which. Only the coach's facts and real buyer lines fill the slots. Every draft passes THE CHECK (§CM-HOOKS 2: desire or daily pain first · makes them ask "what do I get?" and "why now?" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, result promised, method hidden · one spoken sentence, medium length, the coach says I or we) or is dropped. An entry's example that would fail is a shape to rework, never a line to post. Only the winner prints.
 2 Never shown to the coach: mechanism names, slots, the words "pattern" or "library", trap notes, codes or scores. The piece's type shows only as its plain word in the piece's title line (ATTRACT, TRUST or CONVERT, §CM-TIERS; the same rule as §CM-CAMPAIGNS 2), never on a hook. They see a hook, never how it was made. "Another hook" → 3 more, each from a mechanism not yet used for this piece.
 3 Slots: {N}, {time}, {result}, {client role} take only their facts (dump, Card, hub, OK'd results). A research line becomes the viewer's own thought or "a line I keep seeing", never a client quote. No fact for a slot → another mechanism; if every strong draft needs it, one "[NEEDS: …]". In the examples, {N} is the coach's real number and the scenes are made up to show the shape; nothing here is posted as written.
 4 Variety: no mechanism two pieces running; an opening not in recent_hooks (§CM-HUMANIZE); a week's ATTRACT pieces use ≥3 mechanisms.
@@ -19,7 +20,7 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 2 ATTRACT hooks are wide: a friend passes it on and the buyer feels named. Start from: belief flip, myth-bust, a moment from the buyer's day, call-out, cold open, overheard line, dare, starting over.
 3 TRUST hooks show how the coach thinks. Start from: their number, costly mistake, confession, steps, behind the scenes, old vs new, how to X without Y.
 4 CONVERT hooks speak to the decision the buyer is weighing. Start from: the objection said out loud, the question buyers ask, the after-state, a result taken apart, before → after, a challenge to join, "not for… / for…".
-5 THE BAR (style only; these numbers belong to an example coach, the coach's own go in): "Clients ask your price, then go quiet? 10 years in sales, I fixed one thing." + "it's not the price." · "How to answer 'I'll think about it' so clients come back on their own (no chasing)." + "don't say 'sure'." · "From 14 to 33 bookings a month without a discount: here's what I did." + "2x bookings" · "Give me 10 minutes and I'll give you 10 years of closing in DMs." + "10 years → 10 min" · "Closing is hard until you ask this one question before the price." + "ask first." · "Post every day and nobody asks to buy? It's not your content." + "stop posting more." · "One challenge, 300 people, 100+ buyers: here's how I wrote it." + "100 buyers." · "If I started coaching from zero this year, I'd do exactly 3 things." + "no content yet." The shape: their pain or desire as a question or a condition, then a promise or a turn; 2-4 thumbnail words after. Numbers decide who comes: the stage just above the buyer, never past the coach's proof.
+5 THE BAR (style only; these numbers belong to an example coach, the coach's own go in): "Clients ask your price, then go quiet? 10 years in sales, I fixed one thing." + "it's not the price." · "How to answer 'I'll think about it' so clients come back on their own (no chasing)." + "don't say 'sure'." · "From 14 to 33 bookings a month without a discount: here's what I did." + "2x bookings" · "Give me 10 minutes and I'll give you 10 years of closing in DMs." + "10 years → 10 min" · "Closing is hard until you ask this one question before the price." + "ask first." · "Post every day and nobody asks to buy? It's not your content." + "stop posting more." · "One challenge, 300 people, 100+ buyers: here's how I wrote it." + "100 buyers." · "If I started coaching from zero this year, I'd do exactly 3 things." + "no content yet." The shape: one of the frames (§CM-PACKAGING 2), their pain or desire first, then a promise or a turn; 2-4 thumbnail words after. Numbers decide who comes: the stage just above the buyer, never past the coach's proof.
 6 "Hook library" or "more hooks" for a topic: ≤10 hooks for the next piece or the topic named, filled with their facts, grouped by surface, one line each, the one to post first on top. No names, no open slots. Then one question: which one to write.
 7 A liked post the coach pasted (§CM-LIKED) maps to its nearest mechanism; the shape is borrowed, never the words.
 
@@ -196,36 +197,37 @@ Trap: ten steps where three do the work. Flat: "Tips for growing your business."
 ### A short's three hooks: on-screen words, first frame, first line (one idea, three jobs)
 1 On-screen words (≤6, read with the sound off) name the tension or ask the question. The first frame shows one filmable thing that makes it real. The first spoken line (≤{{hook_max}} {{hook_unit}}) opens the loop in the buyer's words. None repeats another: on-screen is never line 1 reworded, never the frame captioned.
 2 Last line first: write the payoff word for word (the answer, never its name), then the three hooks that point at it.
-3 By mechanism (on-screen · first frame · first line):
-- call-out: "posting more?" · scrolling the coach's own quiet posts · "Post every day and still nobody asks to buy? It's not the post."
-- their number: "{N} intake forms later" · a stack of printed forms · "One question on these tells me who'll buy."
-- start over: "no website yet." · a blank notebook · "If I had to find 5 clients from zero this month, I'd do exactly this."
-- buyer's moment: "POV: 'quick question 🙂'" · a phone lighting up on the dinner table · "It's never one question."
-- objection: "keep the price." · a notebook with two columns · "Clients say you're too expensive and you drop the price? That's why they still leave."
-- give me N minutes: "10 years → 10 min" · a DM thread open on the phone · "Give me 10 minutes and I'll give you 10 years of closing in DMs."
-- costly mistake: "Don't answer this yet" · an inbox: "what's your rate?" · "Answer this the usual way and the client's gone."
-4 Flat: on-screen "Clients must trust you." + first line "For people to buy, they need to trust you." (one claim twice, no frame, the lesson said). Strong: on-screen "not the sales post." · frame: scrolling back to a post from months ago · line "Your sales post gets likes but no buyers? Look further back." · last line "They decided weeks ago, on the posts before it; the sales post is only the invitation."
+3 By frame (on-screen · first frame · first line → line 2, the proof); every first line fills a frame (§CM-PACKAGING 2):
+- call-out: "stop posting more." · scrolling the coach's own quiet posts · "If you post every day and nobody asks to buy, watch this." → "I posted daily for {time} and got {N} inquiries. Then I changed one thing."
+- give me N minutes: "10 years → 10 min" · a DM thread open on the phone · "Give me 10 minutes, I'll give you 10 years of closing in DMs." → "{N} years in sales, most of it closed by message."
+- start over: "no website yet." · a blank notebook · "If I had to find 5 clients from zero this month, I'd do exactly this." → "It's how I found my first {N}."
+- you're losing: "fix it in 5 min." · an inbox: "what's your rate?" · "You're losing clients every time you answer this the usual way." → "{N} of my last {N} quotes went quiet before I changed it."
+- hard until: "not the price." · a notebook with two columns · "Closing is hard until you ask this one question before the price." → "It took me from {X} to {Y} bookings a month."
+- receipt: "2x bookings" · a full booking calendar · "I went from 14 to 33 bookings a month without a discount." → "Same price, same page; one message changed."
+The buyer's moment (a client asks, then goes quiet) comes at line 3, never as the hook.
+4 Flat: on-screen "first reply: no price." + first line "A client asks the price, you send the list, they go quiet. Sound familiar?" (the method on screen, a scene as the hook, no frame). Strong: on-screen "not the sales post." · frame: scrolling back to a post from months ago · line "If your sales post gets likes but no buyers, watch this." · line 2 "{N} of my clients decided weeks before it." · last line "They decided on the posts before it; the sales post is only the invitation."
 5 Funnel shape for TRUST shorts (§CM-HOOKS 5): the three hooks stay wide; the buyer's own words come in the next 2-3 lines so the wrong crowd scrolls on.
 6 Caption line 1 continues the hook from a fourth angle (a fact, a stake), never a copy; the ask stays in the caption (§CM-HOOK-CTA).
 
 <!-- @section hook-library.grow-titles -->
 ### Title + thumbnail words, live and webinar titles
-1 Package first (§CM-PACKAGING): about 20 title drafts in the six shapes, then THE CHECK (§CM-HOOKS 2). The title says who + what they get, ≤60 characters, casual case fine, no hedge. The thumbnail adds 2-4 words the title doesn't say: a verdict, a dare or a big number; one idea in the picture.
-2 Pairs (title + thumbnail words; their numbers only):
-- call-out: "post every day and nobody asks to buy? watch this" + "stop posting more."
-- start over: "if I started coaching from zero this year, I'd do exactly this" + "no content yet."
-- hard until: "selling is hard until you ask this before the price" + "ask first."
-- give me N minutes: "give me 12 minutes, I'll fix why your posts don't sell" + "the leak's here."
-- receipt: "I listened to {N} sales calls. One sentence decided them." + "say it first."
-- so X that Y: "selling so calm clients ask if you have a slot" + "no pushing."
-- without: "how to raise your prices (without losing regulars)" + "skip the apology."
-- result taken apart: "how a bakery owner went from {before} to {after}" + "{before} → {after}" (OK'd)
-- question asked: "do I need a website before I start?" + "not yet."
-3 Never: thumbnail words that repeat a title word, a shocked face, money or income as the hook, a number that isn't theirs, a promise the video doesn't keep in its first minute.
-4 Live or webinar title: the result + who it's for + what they bring or leave with; the intro then runs proof, promise, plan (§CM-LONG-INTRO). "Fix your price page live: 45 minutes for tutors (bring yours)" · "The 3 messages that turn a quote into a yes (live, Thursday 8 pm)". The time, the place and any replay promise are real; "seats" only if there's a real cap.
-5 The title's promise is met early: the first spoken line repeats no title word and starts the proof.
+1 Package first (§CM-PACKAGING): about 20 title drafts, every one filling a frame below, then THE CHECK (§CM-HOOKS 2). The title says who + what they get, ≤60 characters, casual case fine, no hedge. The thumbnail adds 2-4 words the title doesn't say, one of: a big real number, the result, or a verdict or dare that hides the method. A short's first spoken line is the title said aloud; line 2 is proof (their real number or story); the scene starts at line 3.
+2 THE FRAMES (mandatory; title + thumbnail, their numbers only):
+- give me N minutes: "Give me 10 minutes, I'll give you 10 years of closing in DMs" + "10 years → 10 min"
+- call-out: "If you post every day and nobody asks to buy, watch this" + "stop posting more."
+- hard until: "Selling is hard until you ask this before the price" + "not the price."
+- start over: "If I started coaching from zero this year, I'd do exactly this" + "no content yet."
+- N ways (objection removed): "3 replies when a client says it's too expensive (no discount)" + "keep the price."
+- receipt: "I went from 14 to 33 bookings a month. No discount." + "2x bookings"
+- so X that Y: "Selling so calm clients ask if you have a slot" + "no pushing."
+- you're losing: "You're losing clients in your inbox every day (here's the fix)" + "fix it in 5 min."
+- they asked me: "A {N}-location owner asked me how to hit {N+2} without more staff" + "{N} → {N+2}"
+- 3-line image post: "The reply formula / that turns 'too expensive' into a booking / even if you never discount"
+3 Never: thumbnail words that repeat a title word or state the method ("ask first.", "first reply: no price."), a shocked face, money or income as the hook, a number that isn't theirs, a scene as the title, a promise the video doesn't keep in its first minute. Would it sit in a top business-YouTube grid? No → redraft.
+4 Live or webinar title: the result + who it's for + what they bring or leave with; the intro then runs proof, promise, plan (§CM-LONG-INTRO). "Fix your price page live: 45 minutes for tutors (bring yours)". The time, the place and any replay promise are real; "seats" only if there's a real cap.
+5 The title's promise is met early: line 2 starts the proof.
 6 Re-title once, by the rule in §CM-PACKAGING 5: a new title OR new thumbnail words, never both.
-Flat → strong: "My thoughts on pricing" → "how to raise your prices (without losing regulars)" · "Q&A session" → "bring the message that got no reply: live fixes, 45 minutes".
+Flat → strong: "My thoughts on pricing" → "3 ways to raise your prices (without losing regulars)" · "Q&A session" → "bring the message that got no reply: live fixes, 45 minutes".
 
 <!-- @section hook-library.grow-slides -->
 ### Carousel slide 1, line 1 of a long post
@@ -236,10 +238,10 @@ CAROUSEL (§CM-TEXT-FORMATS 1)
 4 The cover reads alone in a feed or shared into a group: it makes sense with no caption.
 5 Flat → strong: "Pricing tips for freelancers" → "5 lines that make a price feel fair (before you say it)" · "Content strategy 101" → "What to post when nobody's buying yet" · "My morning routine" → "The {N} minutes that decide my whole client day".
 LINE 1 OF A LONG POST (§CM-POSTS 1)
-6 Line 1 ≤12 words, standing alone: the buyer's desire or pain for the right person at the right moment, their number or a flip; the method stays hidden; never an "If X, Y" maxim or a stated lesson. Line 2 raises the stake or turns it. Both land before "See more".
-7 Strong: "Posting every day and nobody asks your price? / It's not the posts." · "'Just send me your rates.' / I used to. Then I counted who replied." Flat: "Today I want to talk about pricing." · "Pricing is one of the hardest parts of business."
+6 Line 1 ≤12 words, standing alone, fills a frame (§CM-PACKAGING 2): the buyer's desire or pain for the right person at the right moment, their number; the method stays hidden; never a scene, a maxim or a stated lesson. Line 2 raises the stake or turns it. Both land before "See more".
+7 Strong: "If you post every day and nobody asks your price, read this. / It's not the posts." · "I went from 14 to 33 bookings a month. / Same price; one message changed." Flat: "Today I want to talk about pricing." · "Pricing is one of the hardest parts of business."
 8 LinkedIn: line 1 may end in ":" for a list ("7 quiet signals a client will actually buy:"); one-sentence paragraphs, no hashtags, ≤1 emoji.
-9 Facebook long post: line 1 is the scene or the buyer's line, never a greeting; line 2 is the turn ("Not because of the price."), so the cut-off reads like a cliffhanger.
+9 Facebook long post: line 1 fills a frame, never a scene or a greeting; line 2 is the proof or the turn ("Not because of the price."), so the cut-off reads like a cliffhanger.
 
 <!-- @section hook-library.grow-subject -->
 ### Email subjects, chat openers (Zalo, WhatsApp)

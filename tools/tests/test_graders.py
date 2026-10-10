@@ -213,7 +213,7 @@ FILM_REPLY = f'''
     {TAG}Film today
     FILM TODAY · Short video · ATTRACT · 640 words
     On-screen: Coffee before resume
-    First line: "63 applications. 2 interviews."
+    First line: "I sent 63 applications and got 2 interviews."
     Beat 1: 24 years at HQ, out at 48.
     Last line: Comment CHAPTER for the coffee script.
     Caption:
@@ -3164,7 +3164,7 @@ class VG4RoundGraderTests(TempRepo):
         report = self.grade(base + [("machine", onscreen)], suite="day0")
         self.assertIs(self.item(report, "day0_shape", "FILM TODAY carries YOUR WORD")["pass"], True)
         self.assertFails(report, "day0_shape", 'FILM TODAY\'s text version carries YOUR WORD "chapter" only in the ask')
-        first = onscreen.replace('First line: "63 applications. 2 interviews."', 'First line: "A new chapter at 48."')
+        first = onscreen.replace('First line: "I sent 63 applications and got 2 interviews."', 'First line: "A new chapter at 48."')
         self.assertIs(self.item(self.grade(base + [("machine", first)], suite="day0"), "day0_shape", name)["pass"],
                       True)
 
@@ -3340,7 +3340,7 @@ class VG5RoundGraderTests(TempRepo):
         {TAG}Film today
         FILM TODAY · under 30 s, say it from memory
         On-screen: 63 applications. 2 interviews.
-        First line: "63 applications. 2 interviews."
+        First line: "I sent 63 applications and got 2 interviews."
         Beat 1: 24 years at HQ, out at 48.
         Last line: "The coffee comes first."
 
@@ -3375,7 +3375,7 @@ class VG5RoundGraderTests(TempRepo):
                                                                          'Last line: "The coffee comes first."\n```\n')
         self.assertIs(self.item(self.grade(base + [("machine", boxed)], suite="day0"), "day0_shape", name)["pass"],
                       False)
-        first = boxed.replace('First line: "63 applications. 2 interviews."', 'First line: "A new chapter at 48."')
+        first = boxed.replace('First line: "I sent 63 applications and got 2 interviews."', 'First line: "A new chapter at 48."')
         self.assertIs(self.item(self.grade(base + [("machine", first)], suite="day0"), "day0_shape", name)["pass"],
                       True)
         # no copy box at all: the item still does not run
@@ -3649,7 +3649,7 @@ NHI_N3 = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: V�
           "Comment KHÔNG AI NHẮN hay nhắn riêng, mình gửi 3 bước nghe khách cũ trước khi viết nha.\n```")
 NHI_N4 = ("N4 · thứ Ba 13/10 · 30 giây\n```\nChữ trên màn hình: Một email, 180 người\n"
           "Khung hình đầu: màn hình laptop mở hộp thư\n"
-          "Câu đầu: \"Một email gửi 180 người: 7 người trả lời, 1 người mua.\"\n"
+          "Câu đầu: \"Mình đã gửi một email cho 180 người: 7 người trả lời, 1 người mua.\"\n"
           "Ý 1: Mình viết lại trang giới thiệu bằng câu của 3 khách cũ, chị gửi 1 email.\n"
           "Câu cuối: \"Một email gửi đúng người cũng là tìm khách rồi.\"\nCaption:\n"
           "Trước đó chị đăng gần như mỗi ngày mà không ai nhắn hỏi giá.\n"
@@ -3657,7 +3657,7 @@ NHI_N4 = ("N4 · thứ Ba 13/10 · 30 giây\n```\nChữ trên màn hình: Một 
 # The review's rewrite of N3: the scene on screen adds what the first line does not, no flat claim, nothing in quotes.
 NHI_N3_FIXED = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: AI đâu có gọi khách cũ\n"
                 "Khung hình đầu: khung chat AI gõ dở \"từ khoá cho coach tài chính\"\n"
-                "Câu đầu: \"Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả?\"\n"
+                "Câu đầu: \"Đọc vài bài, nhờ AI kiếm từ khoá, vậy là hiểu khách rồi hả? Xem cái này.\"\n"
                 "Câu cuối: \"Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI không đoán được đâu.\"\nCaption:\n"
                 "Chị coach tài chính đăng gần như mỗi ngày, tim nhiều, không ai nhắn.\n```")
 HANH_WEEK = ("N1 · thứ Hai 12/10 · 30 giây\n```\nChữ trên màn hình: Khen tay nhẹ rồi mất hút\n"
@@ -3751,7 +3751,9 @@ class FT1RoundGraderTests(TempRepo):
         evidence = self.inv(report, "hook_lab")["evidence"]
         for on in ("Khen tay nhẹ rồi mất hút", "Sợ khách nghĩ mình chặt chém", "40 triệu, toàn khách săn 99k"):
             self.assertTrue(any(f'on-screen "{on}" says the first line again' in e for e in evidence), (on, evidence))
-        self.assertEqual(len(evidence), 3)               # no flat claim: these hooks fail on the repeat alone
+        frames = [e for e in evidence if "fills none of the hook frames" in e]
+        self.assertEqual(len(frames), 3)                 # scenes and worries, no frame (v13.7)
+        self.assertEqual(len(evidence), 6)               # no flat claim: the repeat and the missing frame only
 
     def test_the_threshold_is_acceptance_hook_lab(self):
         week = f"{TAG}Tuần 1\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."
@@ -3803,7 +3805,7 @@ class FT1RoundGraderTests(TempRepo):
         self.assertFails(report, "hook_lab", 'flat claim on screen "The bank app isn\'t a forecast."')
         self.assertFails(report, "hook_lab", "flat claim in the caption line 1")
         ok = [("coach", "go"), ("machine", f"{TAG}Film\nFILM TODAY\nOn-screen: Record year. Still no cash.\n"
-                                          "First line: \"Best year ever. I'm in a stairwell, asking the bank for payroll.\"\n"
+                                          "First line: \"If your best year left you asking the bank for payroll, watch this.\"\n"
                                           "Caption: Marcus sent me his numbers.\nNEXT → Film it.")]
         self.assertPasses(self.grade(ok), "hook_lab")
 
@@ -4011,7 +4013,7 @@ class FT1RoundGraderTests(TempRepo):
 # in the line, all of them in line and frame), the caption sits in a box of its own with no label.
 NHI_FILM = ("QUAY HÔM NAY · dưới 30 giây, nhớ ý rồi nói\n```\nChữ trên màn hình: Tim nhiều, hộp tin nhắn trống\n"
             "Khung hình đầu: Màn hình điện thoại, một bài nhiều tim, lướt sang hộp tin nhắn trống\n"
-            "Câu đầu: Bài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.\n"
+            "Câu đầu: Nếu bài nào bạn đăng cũng có người thả tim mà không ai nhắn hỏi giá, xem cái này.\n"
             "Ý 1: Câu này một chị coach tài chính nói với mình.\n"
             "Câu cuối: Người lạ chỉ nhắn khi đọc thấy đúng câu của chính họ.\n```\n"
             "```\nBài nào em đăng cũng có người thả tim, mà không ai nhắn hỏi giá hết.\n"
@@ -4035,7 +4037,7 @@ NHI_N3_LABEL = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hìn
 # Hạnh's N2: the last line names the method instead of landing the answer.
 HANH_N2 = ("N2 · thứ Hai 12/10 · 24 giây\n```\nChữ trên màn hình: Chào liệu trình bằng cái gương\n"
            "Khung hình đầu: chị cầm cái gương đưa về phía máy\n"
-           "Câu đầu: Chào liệu trình mà không dọa da câu nào thì chào thế nào?\n"
+           "Câu đầu: Nếu bạn ngại chào liệu trình vì sợ dọa da khách, xem cái này.\n"
            "Câu cuối: Chị gọi là cầm gương nói thật, đơn giản lắm.\n```\n"
            "```\nEm nào ngại chào thì thử ở khách tiếp theo: đưa gương trước, nói sau.\n```")
 
@@ -4194,7 +4196,7 @@ class FT2RoundGraderTests(TempRepo):
         self.assertTrue(any('flat claim on screen "Nghiên cứu có hai lớp" (label' in e for e in evidence), evidence)
         fixed = ("N3 · thứ Bảy 10/10 · 30 giây\n```\nChữ trên màn hình: AI đâu có gọi khách cũ\n"
                  "Khung hình đầu: Cuốn sổ ghi tay đúng câu khách nói, cạnh điện thoại đang mở khung chat AI\n"
-                 "Câu đầu: Nhiều người bảo đã nghiên cứu khách: đọc vài bài, hỏi AI ít từ khoá.\n"
+                 "Câu đầu: Nếu bạn nghĩ đọc vài bài, hỏi AI ít từ khoá là đã nghiên cứu khách, xem cái này.\n"
                  "Câu cuối: Câu làm người lạ nhắn tin là câu khách cũ nói ra, AI đoán không ra đâu.\nCaption:\n"
                  "Khách hay hỏi mình: viết bài sao, làm sao có thêm người theo dõi.\n```")
         self.assertPasses(self.vn(fixed), "hook_lab")
@@ -4232,7 +4234,8 @@ class FT2RoundGraderTests(TempRepo):
         self.assertEqual({k: check["details"][k] for k in ("text_posts", "slides", "subjects")},
                          {"text_posts": 1, "slides": 1, "subjects": 3})
         names = [i["item"] for i in check["items"]]
-        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False, False, True, True], names)
+        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False, False, True, True, False, True], names)
+        self.assertTrue(any('text post line 1 fills none of the hook frames' in e for e in ev), ev)   # a flat claim is no frame
         self.assertTrue(any('text post line 1 is 3 words, not one spoken sentence' in e for e in ev), ev)   # a riddle, too short
         self.assertIn("headline_max_chars", check["details"])
 
@@ -4249,7 +4252,7 @@ Subject lines:
 
 Wed, Oct 14 · LinkedIn post:
 ```
-6 in the morning, from a hockey rink parking lot.
+If you had your best year and still ran out of cash, read this.
 ```
 
 Thu, Oct 15 · LinkedIn PDF post (save the slides as a PDF):
@@ -4755,7 +4758,7 @@ S_WEEK = f'''
     {TAG}FILM TODAY and Week 1
     FILM TODAY · Short video · ATTRACT · 640 words
     On-screen: Coffee before resume
-    First line: "63 applications. 2 interviews."
+    First line: "I sent 63 applications and got 2 interviews."
     Last line: Comment CHAPTER for the coffee script.
     Caption:
     ```
@@ -4768,7 +4771,7 @@ S_WEEK = f'''
     N1 · Thu · Short video · ATTRACT · 640 words
     ```
     On-screen: The portal says no
-    First line: "63 applications. 2 interviews."
+    First line: "I sent 63 applications and got 2 interviews."
     Last line: Coffee before resume.
     Caption:
     Your next chapter starts with a coffee. Comment CHAPTER.
@@ -6359,6 +6362,79 @@ class HookPrinciplesGraderTests(TempRepo):
         report = self.vn(QUYEN_SHORT.format(who="mình", ask="Bạn báo giá liền hay hỏi trước? Ghi A hay B thôi."))
         self.assertPasses(report, "hook_lab")
 
+
+class HookFrameGraderTests(TempRepo):
+    """v13.7 (founder on the v13.6 run: "hook cần phải như các cái t gửi m, các cái ảnh"): the screenshot shapes are
+    mandatory frames. A short's first line fills one; the on-screen text never states the method."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", FT1_STRINGS))
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.write("evals/personas/vn/quyen/persona.toml", 'xung_ho = "chị–em"\ndialect = "Nam"\n'
+                   'allowed_numbers = ["10", "12"]\n')
+        self.write("evals/personas/vn/quyen/answers.md", "## Dump chunk 1\nChị làm sale 10 năm.\n")
+
+    vn = HookPrinciplesGraderTests.vn
+
+    FOUNDER_VN = ["Khách hỏi giá rồi seen? 10 năm làm sale, mình chỉ sửa đúng một chỗ.",
+                  "Cách trả lời \"để chị suy nghĩ\" khiến khách tự quay lại, không cần năn nỉ.",
+                  "Từ 14 lên 33 lịch hẹn mỗi tháng mà không giảm giá: mình làm vậy nè.",
+                  "Nếu nhân viên tiệm anh chị trả lời inbox kiểu này, anh chị đang mất khách mỗi ngày.",
+                  "Cho mình 10 phút, mình cho anh chị 10 năm kinh nghiệm chốt khách qua tin nhắn.",
+                  "Chốt sale khó, cho tới khi anh chị biết hỏi câu này trước khi báo giá.",
+                  "Khách chê đắt mà anh chị giảm giá liền? Đó là lý do khách vẫn đi.",
+                  "Nếu mở spa lại từ đầu, đây là điều đầu tiên mình dạy lễ tân.",
+                  "Chốt khách nhẹ tới mức khách tự hỏi \"còn lịch trống không em?\"",
+                  "Nhân viên học hoài kịch bản mà vẫn không chốt được? Xem cái này.",
+                  "Một thử thách 300 người, hơn 100 người mua: đây là cách mình viết nó.",
+                  "Cho mình 15 phút, mình chỉ ra vì sao phễu của bạn không ra tiền.",
+                  "Nếu là coach mới bắt đầu năm 2026, mình sẽ làm đúng 3 việc này.",
+                  "4 giai đoạn đầu tư giúp mình x10 Tài Sản trong 7 năm",
+                  "Bật mí công thức HOOK khiến bài viết flop bật dậy"]
+    SCREENSHOT_EN = ["Give Me 28 Minutes, I'll Give You 10,000 Hours of ChatGPT Knowledge",
+                     "5 Proven Ways To Make Money With AI (No Experience)", "If I Was Broke In My 20s, Here's What I'd Do",
+                     "Social Media Is Hard Until You Make Hires Like This", "If you're ambitious but feel lost, please watch this",
+                     "This $6M Business Owner Asked Me How To Hit $10M With Content",
+                     "13 Years of No BS Business Advice in 79 Mins", "How to Make Money So Fast It Feels ILLEGAL",
+                     "You're Wasting 80% of Your Time (here's how to fix it)",
+                     "i copied hormozi's sales funnel and it made me $151k/mo"]
+
+    def test_the_founder_and_screenshot_hooks_fill_a_frame(self):
+        for text in self.FOUNDER_VN:
+            with self.subTest(text=text):
+                self.assertTrue(graders.hook_frame(text, "vn"), text)
+        for text in self.SCREENSHOT_EN:
+            with self.subTest(text=text):
+                self.assertTrue(graders.hook_frame(text, "en"), text)
+        for text, lang in (("Khách hỏi giá niềng, lễ tân gửi nguyên bảng giá, rồi khách seen. Quen không anh chị?", "vn"),
+                           ("Muốn người ta mua, họ phải tin bạn.", "vn"),
+                           ("A client asks the price, you send the list, they go quiet. Sound familiar?", "en")):
+            with self.subTest(text=text):
+                self.assertEqual(graders.hook_frame(text, lang), "", text)
+
+    def test_the_onscreen_method(self):
+        for text in ("tin đầu: đừng gửi giá.", "hỏi nhu cầu trước khi báo giá"):
+            self.assertTrue(graders.onscreen_method(text, "vn"), text)
+        for text in ("không phải tại giá.", "đừng giảm giá.", "bỏ kịch bản đi.", "10 năm → 10 phút", "x2 lịch hẹn",
+                     "POV: 'hỏi xíu nha'"):
+            self.assertEqual(graders.onscreen_method(text, "vn"), "", text)
+        self.assertTrue(graders.onscreen_method("first reply: no price.", "en"))
+        self.assertEqual(graders.onscreen_method("step 1 isn't content.", "en"), "")
+
+    def test_the_v136_scene_hook_fails_and_the_frame_passes(self):
+        scene = QUYEN_SHORT.format(who="mình", ask="Lưu lại nha.").replace(
+            "Chữ trên màn hình: không phải tại giá.", "Chữ trên màn hình: tin đầu: đừng gửi giá.").replace(
+            "Khách hỏi giá rồi seen? 10 năm làm sale, mình chỉ sửa đúng một chỗ.",
+            "Khách hỏi giá niềng, lễ tân gửi nguyên bảng giá, rồi khách seen. Quen không anh chị?")
+        report = self.vn(scene)
+        self.assertFails(report, "hook_lab", "first line fills none of the hook frames")
+        self.assertFails(report, "hook_lab", 'on-screen text states the method ("tin đầu: đ')
+        self.assertPasses(self.vn(QUYEN_SHORT.format(who="mình", ask="Lưu lại nha.")), "hook_lab")
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nframe_check = false\n")
+        items = {i["item"]: i for i in self.inv(self.vn(scene), "hook_lab")["items"]}
+        self.assertTrue(items["the first line fills one of the hook frames (never a scene)"]["pass"])
+        self.assertTrue(items["the on-screen text never states the method"]["pass"])
 
 if __name__ == "__main__":
     unittest.main()

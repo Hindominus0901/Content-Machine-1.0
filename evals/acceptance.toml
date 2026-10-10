@@ -115,6 +115,11 @@ first_line_max_sentences = 2              # the founder-approved check (docs/res
 first_line_min_words_en = 4               # ... and with fewer words a riddle ("Why?", "That's not research."; "not a three-word riddle";
                                           #   "63 applications. 2 interviews." is 4 and passes)
 first_line_min_words_vn = 5               #   VN in tiếng ("Vì sao?", "Đắt quá hả?" fail)
+frame_check = true                        # v13.7 (founder on v13.6: "hook cần phải như các cái t gửi m, các cái ảnh"): a short's first
+                                          #   line and a text post's line 1 fill one of the hook frames (graders.HOOK_FRAMES: give me N
+                                          #   minutes · watch this · hard until · start over · N ways · receipt · so X that Y · you're
+                                          #   losing · asked me how · a call-out question); the on-screen text never states the method
+                                          #   ("tin đầu: đừng gửi giá."). false = both items off.
 
 [research_log]                            # check research_log (graders.py; the web lane's Research log in notes.md; review retest-ft2 fix 8)
 keep_min_pages = 2                        # a KEEP is backed by lines from this many distinct pages ...
