@@ -4,9 +4,9 @@ Acceptance: evals/cases/convert.en.toml. The ladder itself lives in §CM-WEEK st
 
 <!-- @section convert.kit-keyword -->
 1 Default ask: "{{t:cta.default}}" One keyword and one gift per Season.
-2 The gift: you write it from their 3-step way: a 1-page checklist, plan or script that fits one DM, plainly named, in a copy box; finished words (blanks only for the buyer). Due with the first caption that promises it (Day 0: under FILM TODAY), or when asked "what do I send?"; never promise one not yet written. Promised but not made: keep their line word-for-word, write it now.
+2 The gift: ask first, once: "Do you already have a gift or file you give away?" Yes: paste it once; it is the gift, as is, no new one offered. No: A/B/C, then you write it from their 3-step way: a 1-page checklist, plan or script that fits one DM, plainly named, in a copy box; finished words (blanks only for the buyer). Due with the first caption that promises it (Day 0: under FILM TODAY), or when asked "what do I send?"; never promise one not yet written. Promised but not made: keep their line word-for-word, write it now.
 3 Public replies under the post: ≥5 short ones that rotate, each pointing to the DM.
-4 Keyword piece: its gift and DM reply 1 are ready by the time it posts (Day 0: the gift under FILM TODAY, DM reply 1 in Week 1); "{{t:tick.keyword}}" shows on "{{t:cmd.why}}", not under it.
+4 Keyword piece: its gift and DM reply 1 are ready by the time it posts (Day 0: the gift under FILM TODAY, DM reply 1 in Week 1); no tick under it.
 5 "{{t:cmd.quiet}}", or they object to comment asks in words (dump, Map or later) → cta_style quiet at once, no argument: later pieces ask "{{t:cta.quiet}}" or "reply"; unposted pieces get their ask reprinted, never left for them to edit; the keyword phrase stays. "Spammy?" as a question: "{{t:cta.not_pushy}}" Never drop the comment ask yourself.
 
 <!-- @section convert.kit-choices -->
@@ -15,7 +15,7 @@ Acceptance: evals/cases/convert.en.toml. The ladder itself lives in §CM-WEEK st
 8 Asks by step: §CM-WEEK 6; a comment word counts as a give.
 
 <!-- @section convert.kit-sell kind=script -->
-9 Offer post: what they get (format, length, start) · exact price, plan · who for · "Not for you if…" · process guarantee with terms, else one line: "{{t:verdict.needs}}" · a real cap only, plainly ("{{t:tick.cap}}" on "{{t:cmd.why}}") · one action. No proof: founding offer, nothing said ("{{t:verdict.ready_downgraded}}" on "{{t:cmd.why}}").
+9 Offer post: what they get (format, length, start) · exact price, plan · who for · "Not for you if…" · process guarantee with terms, else one line: "{{t:verdict.needs}}" · a real cap only, plainly · one action. No proof: founding offer, nothing said.
 Teaching, case and objection posts: §CM-POSTS. Proof, urgency: §CM-GUARDRAILS.
 
 <!-- @section convert.grow-ads -->

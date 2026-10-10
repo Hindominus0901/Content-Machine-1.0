@@ -278,7 +278,7 @@ input = '''Khoan em, con bé lễ tân vừa gửi chị cái này, em xem có h
 <<screenshot: bài Facebook · Trang "Chủ Spa Thông Minh" · "Khách nói để suy nghĩ thêm là 90% không quay lại. Chủ spa phải chốt trong 5 phút đầu. Comment CHỐT NHANH để nhận kịch bản 👇" · 👍 1,4 N>>
 thôi chị kể tiếp nhé'''
 regex = [
-  '''\(Bài đó em giữ lại cho [^)\n]*, giờ làm video hôm nay trước đã\.?\)''',
+  '''\(Bài đó (?:em )?giữ lại cho [^)\n]*, giờ làm video hôm nay trước đã\.?\)''',
   '''(?i)kể tiếp|nói tiếp|kể nốt|nói nốt|chị cứ (?:kể|nói)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
@@ -310,7 +310,7 @@ context = '''Week 3, Tuesday 27/10/2026, lunch break at the studio, iPhone, Chat
 input = '''<<screenshot: TikTok · @tudo.cungyoga (Tự Do Cùng Yoga · Ly) · chữ to trên video, cô gái ngồi trên thảm cạnh laptop: "Tháng đầu dạy yoga online, mình kiếm $10k trong 30 ngày." · dòng thứ hai: "Từ 0 học viên, không cần studio." · caption: "10.000 đô (gần 250 triệu) chỉ sau 30 ngày với Lộ Trình Tự Do 30™ 🔥 Comment TỰ DO để nhận lộ trình miễn phí" · ▶ 932,5 N>>
 coi nè, ước gì mình cũng được vậy'''
 regex = [
-  '''Đã lưu vào Bài bạn thích: [^\n]+?\. Lên kế hoạch [^\n]{1,30}? mình lấy ra dùng''',
+  '''Đã lưu vào Bài (?:bạn|chị|anh) thích: [^\n]+?\. Lên kế hoạch [^\n]{1,30}? (?:mình |sẽ )lấy ra dùng''',
   '''TIẾP →[^\n]*A\) làm bản của (?:bạn|chị|anh|em|cô|chú|mình) luôn \(máy khuyên\) B\) để dành khung[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -361,15 +361,15 @@ title = "Two bare links (TikTok, YouTube Shorts) get liked.cant_open in mình–
 context = '''Week 4, Wednesday 04/11/2026, iPhone, ChatGPT Free. Brand Card v1 present (persona default; pair bạn–mình). She shares two links straight from the apps with no words.'''
 input = '''<<paste: evals/personas/vn/coldstart-coach/liked-paste.md, the "## L7" block: everything below its HTML comment, verbatim>>'''
 regex = [
-  '''(?i)(?<!\w)mình không mở được [^\n]{1,60}? ở đây, nên không đoán''',
-  '''TIẾP →[^\n]*[Cc]hụp màn hình thấy cả chữ, hoặc kể mình nghe 2 câu''',
+  '''(?i)(?<!\w)(?:mình )?không mở được [^\n]{1,60}? ở đây, nên không đoán''',
+  '''TIẾP →[^\n]*[Cc]hụp màn hình thấy cả chữ, hoặc kể (?:mình nghe|lại) 2 câu''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)(?<!\w)(?:mình|em)\s+(?:đã|vừa)\s+(?:xem|coi|mở|đọc|nghe)(?!\w)|(?<!\w)(?:mình|em)\s+(?:xem|coi|mở|đọc|nghe)\s+(?:qua\s+|hết\s+)?(?:rồi|xong)(?!\w)''',
   '''(?i)(?:video|clip|bài) (?:này|đó|đấy) (?:nói về|kể về|chỉ cách|dạy cách|hướng dẫn)|(?:họ|bạn ấy|cô ấy|anh ấy|chị ấy) (?:nói về|kể về|chỉ cách|dạy cách|hướng dẫn)''',
-  '''Đã lưu vào Bài bạn thích''',
-  '''(?i)Link [^\n]{1,40} mình không mở được ở đây nên không đoán''',
+  '''Đã lưu vào Bài (?:bạn|chị|anh) thích''',
+  '''(?i)Link [^\n]{1,40} (?:mình )?không mở được ở đây nên không đoán''',
 ]
 invariants = ["I1", "I4", "I5", "I15", "I17", "I20"]
 max_questions = 1
@@ -384,8 +384,8 @@ title = "Links shared from Zalo (TikTok short link, Facebook share) get liked.ca
 context = '''Week 4, Wednesday 04/11/2026, Android, ChatGPT Free. Brand Card v1 present (persona default; pair chị–em, Bắc). She forwards two links her students sent her on Zalo, no words.'''
 input = '''<<paste: evals/personas/vn/hanh-android-free-nocomputer/liked-paste.md, the "## L7" block: everything below its HTML comment, verbatim>>'''
 regex = [
-  '''(?i)(?<!\w)em không mở được [^\n]{1,60}? ở đây, nên không đoán''',
-  '''TIẾP →[^\n]*[Cc]hụp màn hình thấy cả chữ[^\n]*kể em nghe 2 câu''',
+  '''(?i)(?<!\w)(?:em )?không mở được [^\n]{1,60}? ở đây, nên không đoán''',
+  '''TIẾP →[^\n]*[Cc]hụp màn hình thấy cả chữ[^\n]*kể (?:em nghe|lại) 2 câu''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -407,7 +407,7 @@ title = "A bare YouTube link on Claude: can't open, no guess; asks for the trans
 context = '''Week 3, Thursday 29/10/2026, Claude Pro on the laptop (project kit). Brand Card v1 present (persona default: pair anh–em, Trung, keyword TUYỂN HOÀI). Anh Khoa pastes one YouTube link and nothing else.'''
 input = '''https://www.youtube.com/watch?v=EXAMPLE0905xyz'''
 regex = [
-  '''(?i)(?<!\w)em không mở được[^\n]{0,40}YouTube[^\n]{0,40}? ở đây, nên không đoán''',
+  '''(?i)(?<!\w)(?:em )?không mở được[^\n]{0,40}YouTube[^\n]{0,40}? ở đây, nên không đoán''',
   '''(?i)bản chép lời|chép lời|phụ đề|lời thoại|(?:2|3|hai|ba)\s*(?:[–-]\s*(?:3|ba)\s*)?câu''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
@@ -835,7 +835,7 @@ title = "'tuần nào em cũng vào xem mấy kênh giúp chị': liked.no_watch
 context = '''Week 5, Thursday 12/11/2026, Android, ChatGPT Free. Brand Card v1 present (persona default: pair chị–em, Bắc). Earlier this month she sent screenshots from two channels she follows; their shapes are in Bài chị thích.'''
 input = '''Em ơi tuần nào em cũng vào xem mấy kênh chị hay xem giúp chị nhé, kênh Spa Nhỏ Hải Phòng với kênh chị Diễm Quyên ấy, có bài nào hay thì em báo chị'''
 regex = [
-  '''(?i)(?<!\w)em không tự theo dõi kênh được''',
+  '''(?i)(?<!\w)(?:em )?không tự theo dõi kênh được''',
   '''(?i)2\s?[–-]\s?3 ảnh chụp''',
   '''(?i)kế hoạch tháng''',
   '''(?i)làm lại góc nhìn riêng''',

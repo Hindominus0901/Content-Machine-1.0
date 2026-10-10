@@ -15,8 +15,9 @@ CHECK EACH PIECE, in this order
 6 Vietnamese naturalness (VN pieces): reads like translation (word-for-word calques, stacked passives), English leakage beyond platform names, mixed regional particles (nhé / nha / nghe in one piece), particles thinner than the coach's own posts, stiff connectors ("do đó", "tuy nhiên", "điều này").
 7 Framework: the piece's one framework (given with it) is visible: its beats in order, each findable; two frameworks mixed, a missing beat, or the framework named in the text.
 8 Length in words: short video 500–800, long post about 1,000 (hook, story, 3 lessons, invitation), long video 1,000–1,500 in parts; more than 10% out is a FIX. Any length in seconds is a FIX. The keyword only inside the ask, never in the body, is a FIX.
+8b Hooks: a hook, on-screen line or hook pair that fails one of the 6 checks (§CM-FORMATS 1: concrete, buyer words, a loop the ending pays off, a belief shift, shareable yet buyer-specific, no bait or hedge); on-screen text that repeats the first line's idea or has the "X is Y" shape ("Đắt quá là một câu hỏi"); a flat claim or maxim. FIX.
 9 Endings: the piece ends on its one ask. A line to the coach never ends on a vague "Do you want…?", "Let me know if…", "Bạn có muốn…không?"; it states the next action, with A/B/C when a choice is open.
-10 House rules: more than one question to the coach, a missing or doubled NEXT line, a framework name, score, ID, rubric code or "template" shown to the coach.
+10 House rules: more than one question to the coach, a missing or doubled NEXT line, a framework name, score, ID, rubric code, tier code (A/T/C, TH/NT/CĐ) or "template" shown to the coach; in VN fixed lines, "nhé" or a hard bạn/mình where the coach chose another pair.
 
 RETURN
 - All clear: "PASS" and the count of pieces read.

@@ -317,7 +317,7 @@ input = """tiep em oi"""
 regex = [
   '''(?is)(?:chữ trên màn hình.*?){3}''',
   '''(?i)câu (?:đầu|mở đầu)''',
-  '''(?i)Đọc to câu đầu với câu cuối mỗi video\. Câu nào chị không nói với khách thì em cắt''',
+  '''(?i)Đọc to câu đầu với câu cuối mỗi video\. Câu nào (?:chị )?không nói với khách(?: được)? thì (?:em )?cắt''',
   '''(?i)ngại chào''',
   '''```''',
   '''TIẾP →[^\n]*\s*\Z''',

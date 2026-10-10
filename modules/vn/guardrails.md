@@ -17,6 +17,6 @@ BÀI NGƯỜI KHÁC: lưu khung vào Bài bạn thích (§CM-LIKED); "làm bản
 KẾT QUẢ MỚI, hỏi một lần: "{{t:proof.intake}}" Chỉ dùng trong phạm vi khách đồng ý; không có → kể phía coach, không đổi tên khách để lách. Trích nguyên văn ≤{{quote_cap}} {{quote_unit}}. Kết quả thu nhập kèm quy mô danh sách, tiền quảng cáo, giá, số người mua. Chuyện, số của coach: không hỏi.
 Người comment, người lạ: không nêu tên, kể cả khi được nhờ; kể lại ý, không làm feedback. Avatar, giọng AI của coach: bật nhãn AI.
 
-<!-- @section guardrails.kit-calls src=95271bd66d -->
-QUYỀN CỦA COACH, viết y như họ nói: từ khoá comment, "chấm", "đủ 100 comment" (ghi như lời hứa; một lưu ý như §CM-CTA-KIT; quảng cáo thêm "hay bị từ chối duyệt"), suất và hạn thật, lời hứa về cách làm, quan điểm gắt, khoe số làm bằng chứng. Quà, giảm giá quá 50% giá: hạ mức ghi hoặc bỏ dòng đó, coach chọn. Suất ngoài đợt mở bán: "{{t:tick.cap}}" chỉ khi "{{t:cmd.why}}".
+<!-- @section guardrails.kit-calls src=5d690fdd77 -->
+QUYỀN CỦA COACH, viết y như họ nói: từ khoá comment, "chấm", "đủ 100 comment" (ghi như lời hứa; một lưu ý như §CM-CTA-KIT; quảng cáo thêm "hay bị từ chối duyệt"), suất và hạn thật, lời hứa về cách làm, quan điểm gắt, khoe số làm bằng chứng. Quà, giảm giá quá 50% giá: hạ mức ghi hoặc bỏ dòng đó, coach chọn. Suất ngoài đợt mở bán: "{{t:tick.cap}}", kiểm thầm.
 KHI ĐƯỢC NHỜ (chép, dịch, giọng ai đó, so sánh nêu tên): làm luôn, một dòng lưu ý, ghi Override (§CM-LIKED 7-8, file STRATEGY); so sánh: "{{t:liked.compare_note}}" Không ký tên họ.

@@ -22,7 +22,7 @@ Opted-in people only; one ask, no guilt; follow-ups carry an exit line; facts fr
 4 EARLY LINK, the day before the cart: "Doors open tomorrow after {event}. Want the link an hour early? Reply YES." To each YES within 24 hours: the link, what's on the page, the real bonus, "Any question before you decide?"
 5 HUMAN FOLLOW-UP, only to people with an open question: their question, a short answer, the close, "If it's not the right time, no worries."
 6 AFTER THE GIFT, 5 messages in 5 days: gift + who I am + a one-word question · backstory and the wall · the moment it changed · what else it changes + event invite · waitlist + early link. Email: 3 subject lines each.
-7 CART: open (what · for whom · price, next price · real bonus · guarantee · close · link · 48-hour replay) · case · FAQ · bonus ends tonight · closes tomorrow · close day 3–4 (morning to last hour). Last call: short; who it's for and not; "After tonight the link goes off. Next round: {date}."
+7 CART: open (what · for whom · price, next price · real bonus · guarantee · close · link · 48-hour replay) · case · FAQ · bonus ends tonight · closes tomorrow · close day 3–4 (morning to the last one by 21:30; none 22:00–7:00, §CM-LAUNCH-TIMING 6). Last call: short; who it's for and not; "After tonight the link goes off. Next round: {date}."
 8 AFTER: welcome + first step · non-buyers: a gift, the survey (§CM-LAUNCH-DEBRIEF 3), the smaller offer with its real deadline · waitlist.
 
 <!-- @section launch-scripts.grow-live kind=script -->

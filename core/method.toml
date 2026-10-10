@@ -354,7 +354,7 @@ sections = ["strategy-doc.grow-engine", "strategy-doc.grow-engine-save", "strate
 
 [[levelup.playbook.anchor]]
 id = "TIERS"                     # ATTRACT / TRUST / CONVERT in depth
-sections = ["strategy-doc.grow-tiers", "strategy-doc.grow-tiers-convert"]
+sections = ["strategy-doc.grow-tiers", "strategy-doc.grow-tiers-convert", "review.grow-why"]   # "why isn't it working?" moved from §CM-NUMBERS (v13 kit fix, VN method budget)
 
 [[levelup.playbook.anchor]]
 id = "CONTENT-LINES"             # named recurring series per pillar, scaled to weekly hours

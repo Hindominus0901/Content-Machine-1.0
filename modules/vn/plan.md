@@ -9,7 +9,7 @@ G1 6/10 (theo EN): WEEK 2 K10 "lean (mặc định)", "standard, chỉ khi xin";
 Cắt bù byte G1 (không bỏ luật): WEEK 3 trỏ mục 0 TRỌNG TÂM của KIỂM TRA TRƯỚC KHI GIAO (luôn trong khối hướng dẫn: một ý lớn, ý chính ≤20 tiếng, một niềm tin, không lấy chủ đề để dành), giữ "ý chính viết trước", "ĐỂ SAU không làm hook", tách hai ý; MONTH 3 điều kiện ĐỂ SAU vào lại trỏ §CM-MAP (Quay lại khi); MONTH 4 tháng cô hồn trỏ §CM-LOCALE 6; month.check bỏ dòng cuối "Trả lời 'không có gì thay đổi' là đủ." (TIẾP month.check_next nói y vậy trong cùng tin).
 G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS đã ghi danh sách quay "(Tuần 1, …) mở bằng" film.list_open, và WEEK 10 không có vế "không thêm lời" để vướng.
 
-<!-- @section plan.kit-week src=60aa92dac8 -->
+<!-- @section plan.kit-week src=877a79b0fd -->
 ### Tuần nói chuyện (Tuần 1: cùng QUAY HÔM NAY sau khi chiến lược được OK; chủ đề: trụ cột + hiểu biết nghề, sự thật chỉ của coach)
 1 Tuần n = (số tuần từ plan_start mod 4) + 1, đi đầu là bước n: 1 vấn đề thật, nguyên nhân · 2 cách tốt hơn, cách của họ · 3 bằng chứng, "mình cũng làm được, dù…" · 4 cả ba + sản phẩm. Trụ cột xoay vòng.
 2 Video ngắn (FB, TikTok, IG): 3 video (tuần nói chuyện: 4), 1 bài dài, 1 tin Zalo. Kênh chữ (LinkedIn, bản tin): 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn. Danh sách 300+: tin gửi trước, xin trả lời; chưa có (nói hay đoán): tin riêng (§CM-MESSAGES 4). Số giờ mỗi tuần quyết định: lean (≤1 tiếng, mặc định) hay standard (2–3 tiếng, thêm 1 video, 1 carousel). Xin bớt bài: giữ bài chính; không tuần nào trống.
@@ -20,7 +20,7 @@ G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS 
 7 Theo tỷ lệ (mặc định 40/40/20): THU HÚT = kéo người mới + đồng cảm (rộng, dễ chia sẻ), NIỀM TIN = dạy + bằng chứng, CHUYỂN ĐỔI = sản phẩm, băn khoăn, quyết định của khách, lời mời. Tính cách, giải trí ≤20%, như video riêng (§CM-FORMATS). ≥3 định dạng (kiểu Việt: Phần 1/2/3, ≤3 phần, mỗi phần đứng riêng, không tự đặt ngưỡng comment · Góc nhìn {nghề} · Hỏi nhanh đáp gọn · Sự thật về nghề); chống lặp: §CM-HUMANIZE.
 8 Khung trong Bài bạn thích: ≤1 video riêng/tuần (standard 2), chủ đề, chuyện của coach.
 9 Chưa có bằng chứng: bài bằng chứng thành chuyện quy trình hoặc suất nhóm đầu, không giải thích; tuần đó có tin hỏi 3 khách cũ (§CM-MESSAGES 7).
-10 In từng bài dưới dòng "N{n} · {thứ} · {dạng} · THU HÚT|NIỀM TIN|CHUYỂN ĐỔI · {n} chữ" + khung chép; ngày 0 chỉ một dòng trên mỗi khung. Họ dừng lúc nào cũng được; phần còn lại chờ "tiếp".
+10 In từng bài dưới dòng "N{n} · {thứ} · {dạng} · THU HÚT|NIỀM TIN|CHUYỂN ĐỔI · {n} chữ" + khung chép; ngày 0 chỉ một dòng trên mỗi khung. Họ dừng lúc nào cũng được; phần còn lại chờ "tiếp". Loại bài trong tên bài (cả QUAY HÔM NAY): đủ chữ, không mã, không viết tắt. Bảng trong chat ≤4 cột: Ngày · Dạng · Hook · Lời mời; bảng đủ cột vào file, hub (§CM-CALENDAR).
 
 <!-- @section plan.kit-month src=dbbcea74ec -->
 ### Một quyết định, ≤20 phút

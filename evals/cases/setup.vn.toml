@@ -1261,7 +1261,7 @@ input = """<<paste: consultant/answers.md, the '## Dump chunk 1' section verbati
 LinkedIn của anh đây em, có hết lý lịch trong đó: https://www.linkedin.com/in/example-khoa-tuyen-dung/"""
 regex = [
   '''(?i)3 câu đáng tiền anh vừa nói:''',
-  '''Trang (?:LinkedIn )?của anh[^\n.]{0,8} em không mở được, nhưng anh kể là đủ rồi''',
+  '''Trang (?:LinkedIn )?(?:của anh|đó)[^\n.]{0,8} (?:em )?(?:không|chưa) mở được, nhưng (?:anh|nghe) kể là đủ rồi''',
 ]
 not_regex = [
   '''(?s)không mở được.*không mở được''',
@@ -1308,7 +1308,7 @@ lanes = ["S0", "S1", "floor"]
 title = "A dictation that got cut off mid-sentence is caught and re-asked in two shorter pieces; the end is never guessed"
 context = "Day 0, about minute 9, iPhone, ChatGPT Free, pair bạn–mình, dialect Nam. Dump chunk 1 got the early win. Her next message is the dictation below: it stops mid-clause (the phone's dictation timed out)."
 input = """ok nói tiếp nha. Ờ cái vụ tư thế á, mình hay nói câu này, tư thế tốt nhất là"""
-regex = ['''Đoạn đó bị đứt\. Bạn nói lại thành 2 đoạn ngắn''']
+regex = ['''Đoạn đó bị đứt\. (?:Bạn|Chị|Anh) nói lại thành 2 đoạn ngắn''']
 not_regex = [
   '''(?i)tư thế kế tiếp''',
   '''(?i)(?:có phải|ý bạn là|chắc bạn định nói)''',

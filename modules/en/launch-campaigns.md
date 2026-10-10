@@ -6,12 +6,11 @@ Proposed level-up: Level-ups/CAMPAIGNS-<SUFFIX>.md, anchors CAMPAIGNS, CAMPAIGN-
 
 <!-- @section launch-campaigns.grow-library -->
 ### The campaign library ("launch", "campaign", "open the doors", "livestream sale")
-Six ready-made campaigns, built on the launch program: picker and math (§CM-LAUNCH), Brief and real limits (§CM-LAUNCH-BRIEF), steps (§CM-LAUNCH-STEPS), calendars (§CM-LAUNCH-DAYS), Desk (§CM-LAUNCH-DESK). Where they differ, those win.
+Six ready-made campaigns, built on the launch program: picker, math (§CM-LAUNCH), Brief, real limits (§CM-LAUNCH-BRIEF), steps (§CM-LAUNCH-STEPS), calendars (§CM-LAUNCH-DAYS), Desk (§CM-LAUNCH-DESK). Where they differ, those win.
 1 PICK by the picker's type: A → 1 Founding seats (§CM-CAMPAIGN-FOUNDING) · B, no live → 2 Free-gift launch (§CM-CAMPAIGN-GIFT) · C → 3 Challenge or group class (§CM-CAMPAIGN-CLASS) · B with a workshop, or a public livestream sale → 4 Live sales event (§CM-CAMPAIGN-EVENT) · D → 6 Relaunch or evergreen (§CM-CAMPAIGN-RELAUNCH). Sold on a call (a price their buyers don't pay without talking first, or clients they choose) → 5 By application (§CM-CAMPAIGN-APPLY), whatever the type. Tell the coach the plain name, the length and why, in one line.
-2 DAY CARD. Each piece is planned as: format · role (ATTRACT, TRUST or CONVERT) · hook mechanism · beats · ask · follow-ups (public replies, inbox, Zalo, email). The coach sees: date · the step in plain words · each piece with its format and role, the hook written out, the script and the follow-up messages in copy boxes, the ask · coach minutes; mechanism and beat names stay with you. Mechanisms: the hook library's short names (its HOOKS file if the coach has it, else §CM-HOOKS 2), plus one for launches only, NEWS (a line from the real limits). No mechanism two days running. Lengths: the kit's (§CM-LOCALE 2); text-background post ≤130 characters. Beats: the next part of §CM-CAMPAIGNS.
-STORIES every day, 3–5 frames: today's piece · a poll or question box · one behind-the-scenes moment · the keyword or the YES ask; cart days add NEWS frames at the listed update times.
+2 DAY CARD. Each piece is planned as: format · role (ATTRACT, TRUST or CONVERT) · hook mechanism · beats · ask · follow-ups (public replies, inbox, Zalo, email). The coach sees: date · the step in plain words · each piece with its format and its role as a plain word in its title line (ATTRACT, TRUST or CONVERT, never a code, as §CM-HOOK-LIBRARY 2), the hook written out, the script and the follow-up messages in copy boxes, the ask · coach minutes; mechanism and beat names stay with you. Mechanisms: the hook library's short names (its HOOKS file if the coach has it, else §CM-HOOKS 2), plus one for launches only, NEWS (a line from the real limits). No mechanism two days running. Lengths: the kit's (§CM-LOCALE 2); text-background post ≤130 characters. Beats and the daily stories: the next part of §CM-CAMPAIGNS.
 3 ROLES: ≥3 ATTRACT or TRUST pieces before the first ask; in a 6-day cart about one TRUST per CONVERT; a 3-day cart (1, 6) carries TRUST in the stories (demo, behind the scenes); open and close days loudest. No proof: their own demo instead of CASE.
-4 CHECKPOINTS, on the Desk's numbers against their own math (first launch: their guess, marked; it becomes the baseline). Each prints: the number · the plan to date · GO, ADJUST or STOP · the one change. GO: at or above plan. ADJUST: below it; one change for tomorrow (hook, gift name, post time, an extra text post, a reminder, a 1:1 follow-up). STOP: before the cart opens and under half the plan to date, move the open date (if it was announced, say why) or switch to founding seats with fewer seats. Any time, trust at risk (a complaint about a claim, a flagged post): pause the pushes, answer in public, close on time. After the cart opens a low number is ADJUST, never STOP: nothing is extended or reopened.
+4 CHECKPOINTS, on the Desk's numbers against their own math (first launch: their guess, marked; it becomes the baseline). Each prints: the number · the plan to date · GO, ADJUST or STOP · the one change. GO: at or above plan. ADJUST: below it; one change for tomorrow (hook, gift name, post time, an extra post, a reminder, a 1:1 follow-up). STOP: before the cart opens and under half the plan to date, move the open date (if it was announced, say why; never so the close reaches the cohort start: then the next round instead) or switch to founding seats with fewer seats. Any time, trust at risk (a complaint about a claim, a flagged post): pause the pushes, answer in public, close on time. After the cart opens a low number is ADJUST, never STOP: nothing is extended or reopened.
 
 <!-- @section launch-campaigns.grow-beats -->
 ### Beats: the outlines every calendar reuses
@@ -30,6 +29,7 @@ ANSWER: one objection in their words → look again → proof or process → the
 HOT SEAT: one person's real question (theirs, with OK, or from the live's comments) → what's really going on → the step for them → what anyone can take from it.
 NEWS: what changed · the number · its reason · the next update time.
 CLOSE: §CM-LAUNCH-POSTS 7.
+STORIES every day, 3–5 frames: today's piece · a poll or question box · one behind-the-scenes moment · the keyword or the YES ask; cart days add NEWS frames at the listed update times.
 
 <!-- @section launch-campaigns.grow-founding -->
 ### 1 Founding seats (type A: a first round, no client result yet)
@@ -76,7 +76,7 @@ D14 CLOSE · CONVERT · NEWS · CLOSE: 3 posts + stories · then: 3–4 messages
 D15 post · TRUST · doors closed, thank you, waitlist · then: buyers' welcome; non-buyers hear nothing until day 7 (§CM-LAUNCH-AFTER).
 CHECKPOINTS (plan to date from the math):
 D3 night: gift requests ≥ half of leads needed → GO · fewer → ADJUST: D4 adds a keyword text post and keyword story frames, at their best hour.
-D5 night: requests under half of leads needed → STOP: the open date moves a week and the warm-up runs on, or switch to founding seats.
+D5 night: requests under half of leads needed → STOP: the open date moves a week (start date safe, §CM-CAMPAIGNS 4) and the warm-up runs on, or switch to founding seats.
 D8 night: YES replies + open questions ≥ seats → GO · fewer → ADJUST: D9 adds a story set and an open message to every opt-in.
 D10 night: sales + open questions vs seats · few questions → ADJUST: D11 answers the top objection first · many questions, few sales → the payment plan or not-for goes on top.
 D12 night: refund requests, a complaint about a claim, a flagged post → STOP the pushes, answer in public, close on time.
@@ -114,7 +114,7 @@ D20 CLOSE · CONVERT · NEWS · CLOSE: 3 posts + stories · then: 3–4 messages
 D21 post · TRUST · closed + waitlist; in the group: thank you, what's next, then the group is closed or kept, as said on D7.
 CHECKPOINTS:
 D6 night: case-series requests ≥ half of leads needed → GO · fewer → ADJUST: a keyword text post, keyword story frames.
-D10 night: sign-ups under half of needed → STOP: the class moves a week, or campaign 2's cart runs instead.
+D10 night: sign-ups under half of needed → STOP: the class moves a week (start date safe, §CM-CAMPAIGNS 4), or campaign 2's cart runs instead.
 D12 morning: night-1 exercises vs sign-ups · few → ADJUST: a simpler exercise, an earlier recap, a nudge in the group.
 D15 night: YES + questions ≥ seats → GO · fewer → ADJUST: D16 adds a short Q&A live.
 D18 night: trust signals as campaign 2 (§CM-CAMPAIGN-GIFT); close on time.
@@ -123,7 +123,7 @@ D18 night: trust signals as campaign 2 (§CM-CAMPAIGN-GIFT); close on time.
 ### 4 Live sales event: workshop, webinar or public livestream (type B with a live)
 FITS: ≥1 client result they may show (none → campaign 1's live) · a price where people want a demo or live answers first · 60 minutes live · warm pool ≥ registrations needed.
 MATH (§CM-LAUNCH 4) + registrations needed = seats ÷ their buyers per attendee ÷ their show-up rate; no past event: plan on leads needed and log registrations, attendees, buyers as the baseline. A room or group cap is a real limit.
-TIME: prep ≈4 h plus a rehearsal; D9 ≈2 h with the follow-ups.
+TIME: prep ≈4 h + a rehearsal; D9 ≈2 h with follow-ups.
 TWO WAYS: a workshop by registration (Zoom or a group; reminders; a replay with a real end) · a public livestream on Facebook, TikTok or YouTube (no registration: a reminder keyword, hot seats from comments, §CM-LIVE-SELLING 1).
 DAYS (14, §CM-LAUNCH-DAYS B with the workshop on D9):
 D1–D4 as campaign 2 (question, gift demo, gift text post, belief-1 story); the gift's last line points to the event. Public livestream: D5–D8 are reminder posts with a keyword, and D9 runs on the coach's page or channel.
@@ -137,7 +137,7 @@ D11 post · CONVERT · objection said out loud · ANSWER ×3 + not-for · replay
 D12–D15 as campaign 2 (bonus ends, closes tomorrow, CLOSE, closed).
 CHECKPOINTS:
 D7 night: registrations ≥ half of needed → GO · fewer → ADJUST: the invite in two more formats, a reminder keyword on stories, a note to the list.
-D8 night: still under half → STOP: move the event a week (say why), or the recorded walkthrough instead (campaign 2's D9).
+D8 night: still under half → STOP: move the event a week (say why; start safe, §CM-CAMPAIGNS 4), or the recorded walkthrough instead (campaign 2's D9).
 D9 after the live: attendees ÷ registrations; YES + questions vs seats · low show-up → ADJUST: the replay to every registrant, a reminder before it comes down · few YES → D10 answers the top objection first.
 D11 on: as campaign 2.
 
@@ -174,7 +174,7 @@ CHECKPOINTS: each step vs last round's · close to it → GO · one step far bel
 
 <!-- @section launch-campaigns.grow-prep -->
 ### Pre-launch checklist (runway week 2; nothing opens with a gap in OFFER, PAYMENT or LIMITS)
-Print as ☐ lines; the coach answers ✓ or gives the fact. A gap elsewhere → [NEEDS: …] in that piece.
+Never printed as a ☐ list (unreadable on a phone). It is your own check: fill each line from the Brief, the Card and the chat, then ask only what is missing, as plain questions, one a reply, OFFER, PAYMENT and LIMITS first, ≤6 in all (e.g. "Who confirms each transfer, and within how many hours?"). An answer, or "done", ticks it. A gap elsewhere → [NEEDS: …] in that piece. The coach sees the list only on "show the checklist".
 OFFER: name · promise + its condition · 3 steps · what's inside · start date · price, payment plan, real next price and date · process guarantee and refund terms · for (3), not for (2); all in the Brief (§CM-LAUNCH-BRIEF 1).
 PAGE: the offer post or page (§CM-SALES-PAGE) · FAQ from logged objections (§CM-LAUNCH-FAQ) · read on a phone · every link opens · one test purchase made and refunded.
 PAYMENT: checkout, or bank transfer with QR in the coach's own name or business · what to write in the transfer note · who confirms each payment, within how many hours, with what message · a plan if payment fails (§CM-LAUNCH-BRIEF 5) · invoices if buyers need them.
@@ -184,7 +184,7 @@ PROOF: each client story OK'd for each use (post, ad, page, live), with the date
 TEAM: who answers comments and messages, in which hours · saved replies · who posts · who changes the seat count (the coach gives the number) · a second reader for the offer, the page and the last-48-hour pieces.
 TECH: auto-replies on a Page or an Instagram professional account, else by hand (§CM-CTA-KIT 7) · email list or Zalo group ready, a test message sent · reminders scheduled · the live room tested (sound, screen share, recording) · where the replay sits and when it comes down.
 CALENDAR: every piece in copy boxes, videos recorded, posting times set, open and close days blocked (60–120 coach minutes).
-GO when OFFER, PAYMENT and LIMITS are ✓. Otherwise the open date waits; if it was announced, say plainly what moved and why.
+GO when OFFER, PAYMENT and LIMITS are complete, said in one line. Otherwise the open date waits; if it was announced, say plainly what moved and why.
 
 <!-- @section launch-campaigns.grow-objections-a kind=script -->
 ### Objection bank, part 1: money, time, fit
@@ -245,7 +245,7 @@ Checks: one price, one close time and one guarantee everywhere; no countdown wit
 
 <!-- @section launch-campaigns.grow-seq-open kind=script -->
 ### Email and Zalo, part 1: before the cart and the open (extends §CM-LAUNCH-MESSAGES 6–7)
-Opted-in people only; one ask a message; email gets 3 subject lines, Zalo a first line that works as one; facts from the Brief or [NEEDS: …], e.g. "{{t:verdict.needs}}"; the Card's pair; campaign 1: their demo wherever a case is listed. Each: when · beats · ask.
+Opted-in people only; a list never emailed, or silent 6+ months: the first email asks permission again, never sells ("You signed up for {what} a while back. Want {the gift, then news of the next round}? Reply YES; no reply, no more emails."), and only YES moves on; one ask a message; email gets 3 subject lines, Zalo a first line that works as one; facts from the Brief or [NEEDS: …], e.g. "{{t:verdict.needs}}"; the Card's pair; campaign 1: their demo wherever a case is listed. Each: when · beats · ask.
 AFTER THE GIFT (gift takers): same day: the gift + who I am + "A or B: which one are you?" · +1 day: the backstory, a scene where they were stuck · +2: the moment it changed, the new belief · +3: what else it changes + the event or class invite · +4: waitlist + "reply YES for the early link".
 EVENT (registrants): at once: date, time, zone, link, add to calendar, purpose + stop line · −24 h: what they'll leave with, one question to bring · −1 h: the link again · at start: "we're live" + link · after: the replay and its real end time.
 WAITLIST (campaigns 1 and 6): T−7 why this round, what's new · T−3 a case or a peek inside · T−1 "early link tomorrow; reply YES".
@@ -300,6 +300,7 @@ LIVE (coach says · helper does):
 33–37 "no time, no tech": the real hours, the tools · 37–41 a live demo of one step.
 41–43 recap of the 3 steps · 43–45 "the fastest way, with help" · 45–49 each part and why it's there · 49–51 price, plan, real next price · 51–52 guarantee · 52–53 seats and reason; bonus deadline · 53–55 how to join; the close date twice · helper pins the link or "message me JOIN", answers "how do I pay" in DMs.
 55–60 Q&A from logged objections (§CM-OBJECTIONS) and the chat; the close date again; thank you.
+NO HELPER (the coach alone): the pinned comment and the offer link set before going live; questions read out at 29 and 55 only; no live DMs: one line, "Comment JOIN and I'll message you after"; replies within an hour of the end.
 AFTER: within 1 hour the offer post pinned and the replay sent with its real end time · within 24 hours every chat question answered by DM or in the FAQ · Desk row: registrations, attendees, peak viewers, YES replies, sales.
 ABOUT 45 MINUTES (campaign 1): drop 15–25 and 29–33; their demo is the proof; the offer is the founding terms.
 PUBLIC LIVESTREAM: no registration, so minutes 0–5 are a hook and a reason to stay; hot seats from comments carry the middle; no planted comments; price and how to pay said plainly; platform rules on links and QR codes as one dated line (§CM-LIVE-SELLING 1).
@@ -319,6 +320,7 @@ PUBLIC LIVESTREAM: no registration, so minutes 0–5 are a hook and a reason to 
 3 SEASONS (English-speaking markets; their buyers' calendar wins): January and September, fresh-start months, suit learning offers · Black Friday week is loud with discounts: join only with a real price change, or open after it · late December, summer weeks and long weekends are quiet: runway or a gift, not a close · quarter ends for business buyers with budgets.
 4 SELLING TO VIETNAM (the VN edition has the full calendar): no close in the 2 weeks before Tết; the weeks after it are a fresh start · the 7th lunar month (the ghost month): many buyers put off big purchases, so never propose a launch then; the coach's call · 8/3 and 20/10 for offers to women · 20/11 for students' thanks, with OK.
 5 One campaign at a time; ≥6 normal weeks between big ones (§CM-LAUNCH 1); never in the coach's own busy season or their buyers' (exams, tax time, the peak of their trade).
+6 QUIET HOURS: no timed message (email, Zalo, DM, reminder, a Desk send) 22:00–7:00 in the buyer's time. A close after 22:00: the last message goes by 21:30; the post and the page carry the rest.
 
 <!-- @section launch-campaigns.grow-after -->
 ### After the campaign: nurture and debrief (adds to §CM-LAUNCH-DEBRIEF)

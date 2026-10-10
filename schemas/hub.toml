@@ -1158,13 +1158,14 @@ setup_steps = [
   "File > Import > Upload, one CSV per tab in tab order, each with 'Insert new sheet(s)' (each tab takes its file's name; the empty first tab can be deleted)",
   "optional: Share, to a VA as Editor, or the link pasted to the machine so a connected app can read the board",
 ]
-paste = "one fenced tsv block per tab touched, labelled with the tab's name; cells split by real tab characters, one row per line, in the tab's column order, no header row"
+paste = "fenced tsv blocks of at most 6 side-by-side columns (a phone screen), each labelled with the tab's name and the column to click; a wider row splits into blocks over the same rows (Content: A-F the plan, G the status, G-L status and numbers, M saves); cells split by real tab characters, one row per line, in the tab's column order, no header row"
+max_columns_per_box = 6                  # v13.4 (demo review, phone-readable pastes)
 new_rows = "pasted at the first empty row (click column A of that row, then paste)"
 updates = "printed with the same Key and pasted over that row; a week's Content rows always print in the same order, so Friday's box pastes over Monday's rows"
 key_first = true
 date = "YYYY-MM-DD"
 blank_not_zero = "an unknown number stays blank; never 0, never a guess"
-max_boxes_per_reply = 2
+max_boxes_per_reply = 3                  # v13.4: was 2; a Content row now pastes as two narrow blocks
 events = { pieces = "content", campaign = "campaigns", review = "numbers", launch = "campaigns, ledger, content", saved = "bank" }
 scheduled_runs_never = ["write to the sheet", "delete a row", "clear a filled cell", "change a number the coach gave"]
 live_write = "in a live chat the machine adds rows itself only when the app can edit the sheet and the coach said yes once; otherwise it prints the box"
@@ -1315,19 +1316,26 @@ name_vn = "Lượt xem"
 kind = "number"
 
 [[campaign_board.tables.columns]]
-name = "Saves"
-name_vn = "Lượt lưu"
-kind = "number"
-
-[[campaign_board.tables.columns]]
 name = "Comments"
 name_vn = "Bình luận"
 kind = "number"
 
 [[campaign_board.tables.columns]]
+name = "Keyword comments"
+name_vn = "Comment từ khoá"
+kind = "number"
+note = "comments that say the keyword back (v13.4, demo review: the per-piece count Friday's review needs)"
+
+[[campaign_board.tables.columns]]
 name = "DMs/leads"
 name_vn = "Tin nhắn/khách hỏi"
 kind = "number"
+
+[[campaign_board.tables.columns]]
+name = "Saves"
+name_vn = "Lượt lưu"
+kind = "number"
+note = "last, so Status → DMs/leads paste as one 6-column block (G-L); Saves only when given (v13.4: ≤6 columns a paste)"
 
 [[campaign_board.tables]]
 id = "bank"

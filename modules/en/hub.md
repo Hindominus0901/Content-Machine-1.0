@@ -8,7 +8,7 @@ Kit hooks used, unchanged: levelup.kit-offers (the board offer), plan.kit-week, 
 0 The hub is the Notion workspace (§CM-HUB-NOTION) plus HUB.md (§CM-HUB-MD). This sheet is option B of that one choice (§CM-HUB-NOTION 4), or theirs when they say "Google Sheet", "Excel" or "no Notion". HUB.md is kept either way.
 1 One Google Sheet, five tabs, headers in plain words. They never type in it: whenever I write pieces, a campaign, a Friday review or a launch, I print the rows to paste (§CM-BOARD-ROWS).
 - Campaigns: one row per campaign, a month or a launch: goal, offer, big idea, keyword, start, end, status, results.
-- Content: one row per piece, tied to its campaign: date, platform, format, hook, status (Idea → Scripted → Filmed → Posted), link, views, saves, comments, DMs.
+- Content: one row per piece, tied to its campaign: date, platform, format, hook, status (Idea → Scripted → Filmed → Posted), link, views, comments, keyword comments, DMs, saves.
 - Bank: stories, proof (who said yes, and to what), client words, objections, posts they liked.
 - Numbers: one row a week, the totals Friday's review reads.
 - Ledger: a launch's real limits (seats, bonus, close, price step), each kept or not.
@@ -16,7 +16,7 @@ Kit hooks used, unchanged: levelup.kit-offers (the board offer), plan.kit-week, 
 a Open sheets.new, signed in to Google. Name it "{{name}}".
 b File → Import → Upload → Campaigns.csv → "Insert new sheet(s)" → Import data. The same for Content, Bank, Numbers and Ledger. Each tab takes its file's name; the empty first tab can go.
 c Optional: Share it with your VA as Editor. Or paste me the link: when your app can open Google Drive, I read the board instead of asking you.
-3 No files at hand (phone, locked laptop): make the 5 files if the app can (header row only, the names above); else print each tab's header row as a one-line tsv box, pasted into cell A1 of a new tab with that name.
+3 No files at hand (phone, locked laptop): make the 5 files if the app can (header row only, the names above); else print each tab's header row as one-line tsv boxes of ≤6 columns, pasted into cells A1, G1, M1 of a new tab with that name.
 4 After setup, one line: "Column A is mine: leave it as it is." Then the first boxes: the live campaign and this week's pieces.
 5 Never both boards. Moving to Notion later: I build the workspace and fill it from a pasted tab; the sheet stays theirs, untouched.
 6 They already keep their own sheet: keep it. Ask once for its header row, pasted; print rows in its order; a column it lacks rides as one note line, never a new tab.
@@ -25,7 +25,7 @@ c Optional: Share it with your VA as Editor. Or paste me the link: when your app
 <!-- @section hub.grow-columns -->
 ### Column order (the paste order; headers exactly as written)
 Campaigns: Key · Campaign · Type (Season | Launch) · Goal (Reach | Trust | Sell) · Offer · Big idea · Keyword · Start · End · Status (Planned | Live | Done) · Results · Lesson
-Content: Key · Campaign · Date · Platform · Format (Short video | Text post | Carousel | Long video | Email | Message | Live | Ad) · Hook · Status (Idea | Scripted | Filmed | Posted) · Link · Views · Saves · Comments · DMs/leads
+Content: Key · Campaign · Date · Platform · Format (Short video | Text post | Carousel | Long video | Email | Message | Live | Ad) · Hook · Status (Idea | Scripted | Filmed | Posted) · Link · Views · Comments · Keyword comments · DMs/leads · Saves
 Bank: Key · Type (Story | Proof | Client words | Objection | Liked post) · What · From · Consent (Yes | No | Not needed) · Consent date · OK for (Posts, Ads, Case series) · Backed (Yes | No) · Added
 Numbers: Week · Campaign · Posted · Planned · Keyword comments · DMs · Calls · Sales · Views · Said back · Best post · Next week · Bets
 Ledger: Key · Campaign · Limit (Seats | Bonus | Close | Price step) · Real reason · Number · Deadline · Public updates · After · Enforced (Yes | No) · Left now · Updated
@@ -35,13 +35,13 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 
 <!-- @section hub.grow-rows -->
 ### Rows to paste
-1 WHEN, only once the board exists; ≤2 boxes a reply (more wait for the next), under the pieces, above NEXT:
+1 WHEN, only once the board exists; ≤3 boxes a reply (more wait for the next), under the pieces, above NEXT:
 - pieces written (Week 1, Monday's week, a catch-up, a launch's days): Content rows, Status Scripted; planned but unwritten: Idea;
 - a month or a launch planned, a campaign going live or ending: its Campaigns row;
 - Friday's review: the Numbers row; numbers per piece given → those Content rows too, pasted over;
 - real limits OK'd: Ledger rows; each seat count the coach gives: that row again, pasted over;
 - a story, proof with its yes, client words, an objection or a liked post saved: Bank rows, at the end of that reply.
-2 THE BOX: one label line, "Row to paste · {tab} tab · first empty row: click column A, paste" (updates: "· paste over {those rows in plain words, e.g. this week's 5, Mon 12 to Fri 16 Oct}"), then one fenced block marked tsv: cells split by real tab characters, the tab's column order, no header row, one row a line.
+2 THE BOX: ≤6 columns, so it reads on a phone; a wider row splits into side-by-side blocks over the same rows, one box each. Label line: "Row to paste · {tab} tab · {first} → {last column} · first empty row: click column A, paste" (a later block: "click column {letter} of that same first row"; updates: "· paste over {those rows in plain words, e.g. this week's 5, Mon 12 to Fri 16 Oct}"), then one fenced block marked tsv: cells split by real tab characters, the tab's column order, no header row, one row a line. Content: new pieces → Key → Hook (A-F), then Status alone (G); numbers → Status → DMs/leads (G-L) over those rows; Saves (M) only when given. Other tabs: blocks of ≤6 from column A; a block with every cell blank is left out.
 3 Same Key, same row. A week's Content rows always print in date order, so Friday's box pastes straight over Monday's. Status moves (filmed, posted) ride with the next box, never a box of their own.
 4 Values: only what was said or written here. Unknown numbers blank, never 0 or a guess. Filmed and Posted only on the coach's word. Proof: Consent, OK for and Backed exactly as the coach gave them; a no keeps it out of every piece (§CM-GUARDRAILS). From: role · platform · month, never a private person's name or handle (a liked post keeps its public account); commenters by role only.
 5 Help, one line, only when they say it went wrong: all in one cell → "Select column A → Data → Split text to columns." The same Key twice → "Keep the lower row, delete the upper one."
@@ -65,7 +65,7 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 - Start here (page): what each part is for; the daily three clicks (This week → open the piece → set Status); who edits what.
 - Strategy (page): positioning in 5 lines, the 3–5 content pillars, the mix (Attract 40 · Trust 40 · Convert 20 unless they OK'd another), the content lines, a link to the Calendar view; the full strategy document under it (§CM-STRATEGY-DOC).
 - HUB (page): the same text as HUB.md (§CM-HUB-MD).
-- Content, one row a piece: Title · Status (Idea → Scripted → Filmed → Posted → Reviewed) · Date · Platform · Content pillar · Line · Tier (Attract | Trust | Convert) · Format · Words · Hook mechanism · Framework · CTA · Keyword · Campaign · Views · Saves · Comments · DMs. The script goes in the page body.
+- Content, one row a piece: Title · Status (Idea → Scripted → Filmed → Posted → Reviewed) · Date · Platform · Content pillar · Line · Tier (Attract | Trust | Convert) · Format · Words · Hook mechanism · Framework · CTA · Keyword · Campaign · Views · Saves · Comments · Keyword comments · DMs. The script goes in the page body.
 - Campaigns: Name · Type (Month | Launch) · Goal · Offer · Big idea · Keyword · Start · End · Status (Planned | Live | Done) · Results.
 - Lines, one row a content line (§CM-CONTENT-LINES): Name · Content pillar · Tier · Cadence · Format · Status (Testing | Running | Paused) · Promise.
 - Banks, one row an item (§CM-BANKS): Item · Type (Hook | CTA | Magnet | Story | Proof | Research | Buyer words) · Source · Date · Heard or guess (Heard | Guess) · Used in · Consent.

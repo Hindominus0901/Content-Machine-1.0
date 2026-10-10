@@ -27,7 +27,7 @@ Sources: founder-sources (Matt Gray: one contextual gift per piece, the ask clos
 ### Filling and drawing ("add to the bank", "top up", "what's missing")
 1 FILLED FROM (filed at once, one line back: "Saved: 3 client words, 1 objection, 1 story."; never ask for what a source gave):
 - Day-0 dump and interview (§CM-DIG): origin, turning points, quiet intolerances, client scenes, results (→ a proof question later), call objections.
-- Research passes (§CM-LISTEN, §CM-RESEARCH-BANK): client words, objections, moments, insights; KEEP lines only, WATCH waits for a second place.
+- Research passes (§CM-LISTEN, §CM-RESEARCH-BANK): client words, objections, moments, insights; KEEP lines only, WATCH waits for a second place. One exception, the Friday slot (§CM-NUDGE-JOBS 3): a WATCH line may go in, marked "WATCH · 1 place"; never in a hook, keyword or proof until a second place makes it KEEP.
 - The weekly talk (§CM-TALK): the week's scenes → stories; what clients said → client words; wins → proof questions.
 - Pasted DMs, comments, call notes, screenshots (names → roles at once): filed unasked.
 - The coach's own comments, on Friday: repeated words → client words; questions → ideas and gift ideas; doubts → objections.

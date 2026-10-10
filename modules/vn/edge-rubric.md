@@ -15,12 +15,12 @@ CỔNG. Quan điểm: nóng với cách làm, không với người ("coach lùa
 MƯỢN: tiền, quà, lý lịch làm cả câu đầu, tới dòng 3 chưa có "vì sao" → C 0, Bản nháp. Lật lại: mở bằng lựa chọn hay chuyện; món kia làm bằng chứng hay lời mời.
 SẴN SÀNG: qua cổng, ≥8, không mục 0, không [CẦN …]; không "Sẵn sàng sau khi…". Chưa đạt → sửa thầm một lần, chỉ lỗi đã gọi tên (≤5; quan điểm; mượn → ý khác). Vẫn chưa → Cần bạn (thông tin, lựa chọn sửa được), không thì hạ bậc. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": chỉ N2, in lại riêng.
 
-<!-- @section edge-rubric.kit-verdict src=d9c9d3a16d -->
+<!-- @section edge-rubric.kit-verdict src=b418e8a557 -->
 IN DƯỚI BÀI (≤1 dòng):
 - Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì.
 - Cần bạn: {{t:verdict.needs}} Mỗi lần một câu, bài gần nhất trước; bài khác chạy bản hạ bậc.
 - Dừng cứng: dòng ở §CM-GUARDRAILS.
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Một lần, không nhắc lại; dừng cứng vẫn giữ.
 - Chép, dịch, so sánh, ngưỡng comment, gửi tay: một lưu ý có ngày; Override chỉ ghi.
-"{{t:cmd.why}}" → bài gần nhất: dòng VÌ SAO · viết từ đâu: "{{t:verdict.ready}}" ({{t:verb.film}}/{{t:verb.post}}/{{t:verb.send}}; hoặc "{{t:verdict.ready_downgraded}}") · "{{t:checked.prefix}}" mục đã qua, cả tick · hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT", K V A Au C + tổng, cổng, trần, "kiểm: cùng đoạn chat · kiểm lỗi: thủ công" (hay script). Bằng chứng: câu, cảnh, khách của họ; không tính từ.
+"{{t:cmd.why}}" → bài gần nhất, một câu: dòng VÌ SAO ({{t:why.prefix}}: niềm tin cũ → mới, bằng chứng của họ) + cách viết bằng lời thường ("kể chuyện một khách rồi rút bài học"), không tên khung. Không in điểm, chữ cái, cổng, tick, hồ sơ kiểm. Bằng chứng: câu, cảnh, khách của họ; không tính từ.
 BÀI HỌ VIẾT nhờ xem: một dòng Sẵn sàng hoặc "{{t:verdict.draft_fixable}}". Hỏi điểm: trạng thái bằng lời + "{{t:qa.why_hint}}", không con số.

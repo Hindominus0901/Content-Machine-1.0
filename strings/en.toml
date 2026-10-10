@@ -300,7 +300,8 @@
 "research.ask3"               = "Quick favor: I'm rewriting how I describe my work and want your words, not mine. {{t:ask3.question}} {{t:ask3.consent}}"
 "research.ask3_cold"          = "What's the hardest part of {problem} right now?"
 "research.drip"               = "Paste this week's 3 best comments or DMs, names swapped for letters, or say 'none'."
-"research.paste_steps"        = "15 minutes, any day: open the top 3 {platform} videos for \"{phrase}\", copy 20 comments from each by people who are clearly {buyer}; skip sellers. Start with [{place} · {month}], names swapped for letters, same person same letter. Paste it all here."
+"research.paste_steps"        = "About a minute: open {link | the top {platform} video for \"{phrase}\"}, tap the comments, screenshot 3 screens (computer: select the first 20 comments, copy) and send them here."
+"research.access_ask"         = "Your buyers talk in Facebook groups and TikTok, YouTube comments; web search can't read those. A) you have Claude in Chrome or ChatGPT Work with Chrome on a computer: I read them there B) you paste 20 comments, about a minute, any phone (recommended) C) skip: public pages only, the rest marked a guess"
 "research.no_client"          = "No client answers yet"
 
 # Posts the coach likes (§ LIKED; wf13-inspiration-spec §2). liked.cant_open and liked.copy_note are read by evals/graders.py

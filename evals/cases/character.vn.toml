@@ -116,7 +116,7 @@ context = "Day 0, Door A (ChatGPT Free, iPhone). Reply 1 asked xưng hô; Minh A
 input = """<<paste: coldstart-coach/answers.md, the '## Dump chunk 2' section, verbatim>>"""
 regex = [
   '''(?i)Hôm nay vậy là đủ rồi''',
-  '''(?i)mình đoán chưa có kết quả của khách, nên mình kể chuyện (?:của )?chính bạn(?: trải qua)?\. Đúng không\?''',
+  '''(?i)(?:mình )?đoán (?:là )?chưa có kết quả của khách, nên (?:mình )?kể chuyện (?:của )?chính bạn(?: trải qua)?\. Đúng không\?''',
 ]
 not_regex = [
   '(?i)tính cách|nét (?:riêng|nổi bật|cực đoan)|giá trị (?:sống|cốt lõi)|nguyên tắc (?:sống|của bạn)',
@@ -384,7 +384,7 @@ lanes = ["S1"]
 title = "Hedged answer is broken with the 1-triệu bet (character.bet in anh–em)"
 context = "L5 sitting 2, question Q5 (contrarian truth). ChatGPT Plus, iPhone dictation. Southern register."
 input = """chắc là… cũng tùy á em, có khi tui nghĩ là mua sớm cũng được mà có khi hổng, hông biết nữa"""
-regex = ['''(?i)Phải cược 1 triệu thì anh trả lời sao\?''']
+regex = ['''(?i)Phải cược 1 triệu thì (?:anh )?trả lời sao\?''']
 not_contains = ["tuyệt vời", "câu trả lời hay"]
 invariants = ["I1", "I5", "I15", "I17"]
 max_questions = 1

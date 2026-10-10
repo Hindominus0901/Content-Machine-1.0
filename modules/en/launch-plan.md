@@ -19,7 +19,7 @@ D Repeat: proven pieces re-run with new dates and proof. 7 days; the next round'
 4 Launch math, the coach's numbers only:
 seats = the lower of (revenue goal ÷ price) and what they can deliver well;
 close rate = theirs: "Of the last 10 people who asked about working with you, how many paid?";
-leads needed = seats ÷ close rate; warm pool = list + contacts + people who messaged or commented in 90 days.
+leads needed = seats ÷ close rate; warm pool = only people who could buy THIS, asked once: "Of your list, contacts and people who messaged or commented in 90 days, about how many are {buyer}? Friends, family, peers and buyers of something unrelated don't count." Never the raw follower or contact count.
 Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed > the warm pool → say so in one line; they choose: A with fewer seats, or 4 runway weeks first.
 5 Print the math in 3 lines (seats · leads needed · warm pool now), the type and its first step; then the Brief (§CM-LAUNCH-BRIEF) and the calendar (§CM-LAUNCH-DAYS), then the campaign's day cards if the CAMPAIGNS file is loaded (§CM-CAMPAIGNS). Never promise the seats will sell.
 
@@ -50,11 +50,12 @@ Rules: reuse the Map's beliefs, OK'd proof, their best hooks; ≥3 giving pieces
 
 <!-- @section launch-plan.grow-days -->
 ### Calendars (day · step · pieces; times in the coach's zone)
-RUNWAY: 4 weeks out: Brief, math, ask 3–5 past clients for an OK · 3: normal weeks tilt to the launch's big idea; a Page or Instagram mirror if ads · 2: gift written, sign-up page or form, real limits OK'd · 1: PREP, the whole pack in one batch (helpers, if the app has them: one writer per day, a separate reviewer reads all before printing), the coach records (≈2.5 h for 7 days, 4 h for 14, 5 h for 21; replaces that week).
+RUNWAY: 4 weeks out: Brief, math, ask 3–5 past clients for an OK · 3: normal weeks tilt to the launch's big idea; a Page or Instagram mirror if ads · 2: gift written, sign-up page or form, real limits OK'd · 1: PREP, the whole pack in one batch (helpers if the app has them: a writer per day, a separate reviewer reads all first), the coach records (≈2.5 h for 7 days, 4 h for 14, 5 h for 21; replaces that week).
 7 DAYS (A, D): 1 founding invite (why now · who · help shape it) + waitlist keyword · 2 gift video or text post · 3 belief story + day-5 live invite · 4 one step taught (A: own demo) + "reply YES for the early link" · 5 live 45 min → offer post · 6 FAQ + not-for + "founding price ends tomorrow" · 7 close: morning, noon, "2 hours left"; link off on time · 8 closed + kickoff + waitlist. D: days 1–4 re-run the best proven pieces.
 14 DAYS (B): 1 question · 2 gift demo video · 3 gift text post · 4 belief 1 story · 5 belief 2 carousel · 6 one step + case 1 + workshop invite · 7 belief 3 + case 2 · 8 "a week inside" + "doors open tomorrow" + reply YES · 9 OPEN: workshop 60 min (or the walkthrough) → offer post, 2 messages, links to the YES list · 10 OK'd case + replay · 11 FAQ + not-for · 12 bonus ends tonight + seat updates · 13 "closes tomorrow" + cost of waiting · 14 CLOSE: 3 posts + 3–4 messages; link off · 15 closed + waitlist · 16–21 wins, lessons post, survey, smaller offer.
 21 DAYS (C): 1 question · 2 gift video · 3 gift text post · 4 a dated 5-part case series, keyword for each part · 5 case 1 · 6 belief 1 + case 2 · 7 sign-ups: dates, what they get, group link by DM · 8 belief 2 + case 3 · 9 belief 3 + case 4 · 10 "starts tomorrow" + case 5 · 11–14 challenge days 1–4 (§CM-LAUNCH-LIVE 2; day 14 "doors open tomorrow") · 15 day 5 live + offer → offer post · 16 OK'd wins · 17 FAQ, not-for · 18 bonus 1 ends · 19 "closes tomorrow" + a student story · 20 CLOSE · 21 closed → after. Group class: 11–13 the 3 nights, 14 live 60 min + "doors open tomorrow", 15 offer post.
 Each day prints: date · plain step name · pieces in copy boxes · ask · coach minutes; open and close days (60–120 min) flagged ahead. An urgency piece with no matching real limit becomes a value or FAQ piece.
+DATE CHECK, silent, before printing: each template day on the real calendar, against the coach's dates (cohort start, busy days, events they named) and §CM-LAUNCH-TIMING's holidays (VN: 20/10, 20/11, Tết); a clash moves the piece, never a real deadline, said in one line. The close sits ≥3 days before the cohort start; no move or STOP (§CM-CAMPAIGNS 4) lands on or past it. Timed sends keep the quiet hours (§CM-LAUNCH-TIMING 6).
 
 <!-- @section launch-plan.grow-desk -->
 ### Launch mode and the daily Launch Desk

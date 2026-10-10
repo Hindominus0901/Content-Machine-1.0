@@ -30,10 +30,10 @@ CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài
 
 <!-- @section humanize.kit-natural src=15afda8b25 -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
-1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: thuật ý như họ nói tiếng Việt, không ngoặc kép (cần nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
+1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách, lúc nào, ở đâu; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: thuật ý như họ nói tiếng Việt, không ngoặc kép (nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
 3 Nối bằng chữ nói, connectors của họ trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
-4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): đếm từng bài, thưa hơn bài họ thì thêm vào câu kể, câu mời, câu đầu, câu cuối; coach dày tiểu từ thì câu dặn, câu rủ đều kết bằng tiểu từ của họ ("…trống trơn em ạ."). Nhắn khách, người lớn hơn: "Dạ… ạ".
+4 Một cặp xưng hô cả bài; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo bài mẫu của coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): tỉ lệ câu kết bằng tiểu từ lệch bài mẫu ≤10 điểm (họ 5/10 thì bài 4–6/10); thiếu thì thêm vào câu kể, câu mời, câu dặn, câu đầu, câu cuối, cả câu cố định ("…trống trơn em ạ."). Nhắn khách, người lớn hơn: "Dạ… ạ".
 5 Kể: cảnh (giờ, chỗ, người, đồ vật) → chuyện xảy ra, lời người ta nguyên văn (bảo/nói/kêu: "…") → mình nhận ra, bằng một việc làm + "mới/hoá ra" → bạn thì sao: một việc nhỏ cho một người. Bài học là câu hai vế.
 6 Mời: một việc; từ khoá là chữ khách hay nói, kèm đường nhắn riêng cho người ngại; bài bán ghi giá. Hạn, suất thật thì nói thẳng, kèm lý do. Không rao.
 7 Không → viết:
@@ -54,5 +54,5 @@ Chắc chắn rồi! / Câu hỏi hay! → trả lời luôn
 **, chữ đậm Unicode (vỡ dấu), emoji đầu dòng, —, chú thích (hook) → bỏ
 8 Ví dụ:
 "Cảm ơn bạn đã liên hệ!" → "Dạ chị, lớp 8 buổi 1.200.000đ ạ. Bé mấy tuổi chị?"
-"Hãy comment GUIDE để nhận tài liệu!" → "Ai cần file mẫu thì comment chữ TĂNG CA, ngại thì nhắn riêng nhé."
+"Hãy comment GUIDE để nhận tài liệu!" → "Ai cần file mẫu thì comment chữ TĂNG CA, ngại thì nhắn riêng."
 9 Đọc to: người Việt có nói câu này với khách không? Câu nào dịch từng chữ ra tiếng Anh vẫn trơn thì viết lại.

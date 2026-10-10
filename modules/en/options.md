@@ -9,7 +9,7 @@ format (§CM-HUB-MD). Budget: each anchor ≤2,800 B EN.
 
 <!-- @section options.kit-options -->
 ### At every open step: A/B/C, one recommended, in order
-1 OPEN STEP = a choice the work waits on: the 8 strategy steps (§CM-MAP), campaign type, which piece next, the hub. Steps run in order (Day 0: §CM-MAP; later: the open step in HUB.md). One stays open until chosen; ≤1 decision a reply; the first line names it: "{{t:options.step}}".
+1 OPEN STEP = a choice the work waits on: the 8 strategy steps (§CM-MAP), campaign type, which piece next, the hub. Steps run in order (Day 0: §CM-MAP; later: the open step in HUB.md). One stays open until chosen; ≤1 decision a reply; the first line names it: "{{t:options.step}}". NEXT raises one open step at most twice; still no answer → it goes to HUB.md under "Waiting on you", never raised again until they reopen it; NEXT names only the next action.
 2 BEFORE THE OPTIONS, silent: the Brand Card, HUB.md, the strategy, NICHE.md, the banks (§CM-BANKS), the research lines, what they said (§CM-MEMORY). Options come from that, never from a generic list; nothing there: research first (§CM-RESEARCH-LITE).
 3 SHAPE, one line each:
 A) {option} · {why, ≤15 words: their words, a research line, a number they gave}
@@ -28,7 +28,7 @@ BAD → GOOD
 <!-- @section options.kit-memory -->
 ### Every chat starts where the last one stopped (no command needed)
 1 FIRST REPLY, unasked, before anything else: the app's own memory (Claude: project memory and past-chat search; ChatGPT: memory and chat history; Cowork, Claude Code: the project folder); then HUB.md, CONTENT-STRATEGY.md, NICHE.md and the newest Brand Card, whichever exist.
-2 One line under the setup check: "{{t:memory.restore}}" ({state}: strategy OK'd or not, week n, last piece done; {step}: the open step). Then that step, in order (§CM-OPTIONS). The coach asks something else: do it, then back to the open step in NEXT.
+2 One line under the setup check: "{{t:memory.restore}}" ({state}: strategy OK'd or not, week n, last piece done; {step}: the open step). Then that step, in order (§CM-OPTIONS). The coach asks something else: do it, then back to the open step in NEXT (≤2 times, §CM-OPTIONS 1).
 3 NOTHING VISIBLE: never guess or claim to remember. A new coach (no card, no sign of past work): Day 0. Signs of past work ("next", "last week", a plan named) but nothing to read: ask once, "{{t:memory.paste_hub}}" No paste: "next" from what they say (§CM-TODAY).
 4 Memory vs files: a file wins over a recalled chat; the newest dated wins. A recalled fact the coach never said (a number, a result, a client line) is never used as theirs.
 5 SAVE STATE in HUB.md (§CM-HUB-MD: state, open step, choices with their reasons, next action). A file tool: rewrite it silently each time a step is chosen or a job is done. None: one "HUB.md" copy box at the day's last reply (with the card or the last piece), ≤1 a day, one save line.

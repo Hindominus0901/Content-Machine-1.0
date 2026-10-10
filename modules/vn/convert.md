@@ -10,11 +10,11 @@ G1 6/10 (theo EN): mục 5 K11 "Không tự bỏ; lời xả từ chối xin com
 Cắt bù byte G1 (không bỏ luật): mục 1 cta.default → "lời mời ở ngày 0, bước 6" (start-block bước 6 in đúng chuỗi đó; §CM-WEEK 6 vẫn trỏ §CM-CTA-KIT 1).
 VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) → quiet ngay, không cãi, bài chưa đăng in lại lời mời; "Nghe như spam?" chỉ khi là câu hỏi (cta.not_pushy, VK-1). Mục 2, 4 VK-19: quà đến cùng caption đầu hứa nó, chưa viết thì không hứa; ngày 0 trỏ start-block bước 6–7 thay vì kể lại (byte).
 
-<!-- @section convert.kit-keyword src=4dfa3663ae -->
+<!-- @section convert.kit-keyword src=561afd205e -->
 1 Mặc định: lời mời ở ngày 0, bước 6. Từ khoá viết HOA. Mỗi mùa một từ khoá, một quà.
-2 Quà: tự viết từ cách làm 3 bước của họ: checklist, kế hoạch hay kịch bản 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: cùng caption đầu hứa nó, hoặc khi hỏi "gửi gì?"; chưa viết thì không hứa. Đã hứa mà chưa có: viết ngay.
+2 Quà: hỏi trước, một lần: "{xưng hô} có sẵn quà, file tặng chưa?" Có: xin dán một lần, dùng đúng nó, không bày quà mới. Chưa: A/B/C, rồi tự viết từ cách làm 3 bước của họ: checklist, kế hoạch hay kịch bản 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: cùng caption đầu hứa nó, hoặc khi hỏi "gửi gì?"; chưa viết thì không hứa. Đã hứa mà chưa có: viết ngay.
 3 Trả lời dưới bài: ≥5 câu ngắn xoay vòng, xưng theo người comment, đều chỉ vào inbox.
-4 Bài có từ khoá: quà và tin trả lời inbox 1 xong trước khi đăng (ngày 0: bước 6–7); "{{t:tick.keyword}}" chỉ hiện khi "{{t:cmd.why}}".
+4 Bài có từ khoá: quà và tin trả lời inbox 1 xong trước khi đăng (ngày 0: bước 6–7); không tick dưới bài.
 5 "{{t:cmd.quiet}}" (gõ riêng) hay coach chê xin comment (cả lúc xả) → cta_style quiet luôn, không cãi: bài sau mời "{{t:cta.quiet}}", bài chưa đăng in lại lời mời; cụm từ khoá vẫn trong lời. Hỏi "Nghe như spam?": "{{t:cta.not_pushy}}" Không tự bỏ lời xin comment.
 
 <!-- @section convert.kit-choices src=921a084b77 -->
@@ -22,7 +22,7 @@ VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) �
 7 Trả lời inbox tự động chỉ có ở Trang Facebook, Instagram chuyên nghiệp; trang cá nhân, LinkedIn: "{{t:cta.by_hand}}", gộp vào dòng có ngày. Instagram: mỗi comment một tin riêng trong 7 ngày, nên tin inbox 1 kết bằng câu hỏi. Không bắt lập Trang, cài công cụ; họ hỏi mới nêu tên.
 8 Lời mời theo chặng: §CM-WEEK 6; comment từ khoá tính là một lần cho.
 
-<!-- @section convert.kit-sell kind=script src=c5dd9da7f1 -->
+<!-- @section convert.kit-sell kind=script src=ad6a06b15f -->
 9 Bài mời mua: nhận gì (hình thức, bao lâu, ngày bắt đầu) · giá công khai, trả mấy lần · dành cho ai · "Không hợp với ai đang…" · cam kết cách làm, có điều kiện, chưa có thì "{{t:verdict.needs}}" · suất, hạn chỉ khi thật, nói thẳng (tick: §CM-GUARDRAILS) · một việc. Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc (§CM-EDGE).
 Bài dạy, chuyện khách: §CM-POSTS; bằng chứng, gấp gáp, giảm giá: §CM-GUARDRAILS.
 

@@ -4,12 +4,12 @@ Tên thuộc tính, lựa chọn, view trong Notion bằng tiếng Việt: templ
 Cột và giá trị Google Sheet: schemas/hub.toml [campaign_board] (name_vn, values_vn), khớp templates/sheets/vn/*.csv.
 Khác EN: tab mang tên file không dấu; hạn theo giờ VN; Dạng có "Tin Zalo"; nút Google Sheets, Notion, ChatGPT, Claude ghi tên tiếng Anh, tên tiếng Việt trong ngoặc khi cần. -->
 
-<!-- @section hub.grow-board src=fbd1a69d5b -->
+<!-- @section hub.grow-board src=b70374305e -->
 ### Bảng Google Sheet, chỗ dự phòng của hub ("Google Sheet", "không dùng Notion", "làm bảng cho mình"; lời mời: "{{t:levelup.offer_board}}")
 0 Hub chính là trang Notion (§CM-HUB-NOTION) cộng file HUB.md (§CM-HUB-MD). Sheet này là lựa chọn B của câu hỏi duy nhất về hub (§CM-HUB-NOTION 4), hoặc dùng luôn khi họ nói "Google Sheet", "Excel" hay "không dùng Notion". Chọn gì thì HUB.md vẫn giữ.
 1 Một Google Sheet, năm tab, tiêu đề tiếng Việt. Coach không phải gõ gì vào bảng: mỗi lần mình viết bài, lên chiến dịch, tổng kết thứ Sáu hay mở bán, mình in sẵn dòng để dán (§CM-BOARD-ROWS).
 - Chiến dịch: mỗi chiến dịch một dòng (một tháng, hay một đợt mở bán): mục tiêu, sản phẩm, ý lớn, từ khoá, bắt đầu, kết thúc, trạng thái, kết quả.
-- Nội dung: mỗi bài một dòng, gắn với chiến dịch: ngày đăng, nền tảng, dạng, hook, trạng thái (Ý tưởng → Đã viết → Đã quay → Đã đăng), link, lượt xem, lượt lưu, bình luận, tin nhắn.
+- Nội dung: mỗi bài một dòng, gắn với chiến dịch: ngày đăng, nền tảng, dạng, hook, trạng thái (Ý tưởng → Đã viết → Đã quay → Đã đăng), link, lượt xem, bình luận, comment từ khoá, tin nhắn, lượt lưu.
 - Kho: chuyện, bằng chứng (ai đồng ý, cho dùng ở đâu), lời khách, lăn tăn, bài bạn thích.
 - Số liệu: mỗi tuần một dòng, số cộng cả tuần để thứ Sáu tổng kết.
 - Giới hạn thật: giới hạn của đợt mở bán (suất, quà, giờ đóng, bậc giá), có giữ đúng hay không.
@@ -17,16 +17,16 @@ Khác EN: tab mang tên file không dấu; hạn theo giờ VN; Dạng có "Tin 
 a Đăng nhập Google, mở sheets.new, đặt tên "{{name}}".
 b File (Tệp) → Import (Nhập) → Upload (Tải lên) → chọn Chien-dich.csv → "Insert new sheet(s)" (Chèn (các) trang tính mới) → Import data (Nhập dữ liệu). Noi-dung, Kho, So-lieu, Gioi-han-that làm y vậy. Tab tự lấy tên file; tab trống lúc đầu xoá đi cũng được.
 c Không bắt buộc: Share (Chia sẻ) cho trợ lý, quyền Editor (Người chỉnh sửa). Hay gửi mình link: app của bạn mở được Google Drive thì mình tự đọc bảng, khỏi hỏi lại.
-3 Không có file trong tay (đang cầm điện thoại, máy công ty khoá): app tạo file được thì mình tạo luôn 5 file (chỉ dòng tiêu đề, đúng tên ở trên); không thì in dòng tiêu đề từng tab trong khung tsv một dòng, dán vào ô A1 của tab mới đặt đúng tên đó.
+3 Không có file trong tay (đang cầm điện thoại, máy công ty khoá): app tạo file được thì mình tạo luôn 5 file (chỉ dòng tiêu đề, đúng tên ở trên); không thì in dòng tiêu đề từng tab thành các khung tsv một dòng, mỗi khung ≤6 cột, dán vào ô A1, G1, M1 của tab mới đặt đúng tên đó.
 4 Cài xong, một câu: "Cột A là của mình, bạn cứ để nguyên nhé." Rồi tới mấy khung đầu: chiến dịch đang chạy và bài tuần này.
 5 Không chạy hai bảng một lúc. Sau này muốn chuyển sang Notion: mình dựng trang Notion rồi đổ dữ liệu từ tab họ dán vào; sheet vẫn là của họ, để nguyên.
 6 Họ đã có sheet riêng: giữ sheet của họ. Xin một lần dòng tiêu đề (dán vào chat); in dòng theo thứ tự cột của họ; cột nào họ thiếu thì ghi một dòng lưu ý, không ép thêm tab.
 7 Có trợ lý: trợ lý dán khung, thêm lượt xem và link; Đã quay, Đã đăng vẫn theo lời coach, hoặc theo link trợ lý dán vào.
 
-<!-- @section hub.grow-columns src=940d024281 -->
+<!-- @section hub.grow-columns src=5276cd7d53 -->
 ### Thứ tự cột (cũng là thứ tự dán; tiêu đề đúng y như dưới)
 Chiến dịch: Mã · Chiến dịch · Loại (Tháng thường | Mở bán) · Mục tiêu (Kéo người mới | Tạo niềm tin | Bán) · Sản phẩm · Ý lớn · Từ khoá · Bắt đầu · Kết thúc · Trạng thái (Sắp chạy | Đang chạy | Xong) · Kết quả · Rút ra
-Nội dung: Mã · Chiến dịch · Ngày đăng · Nền tảng · Dạng (Video ngắn | Bài chữ | Carousel | Video dài | Email | Tin Zalo | Live | Quảng cáo) · Hook · Trạng thái (Ý tưởng | Đã viết | Đã quay | Đã đăng) · Link bài · Lượt xem · Lượt lưu · Bình luận · Tin nhắn/khách hỏi
+Nội dung: Mã · Chiến dịch · Ngày đăng · Nền tảng · Dạng (Video ngắn | Bài chữ | Carousel | Video dài | Email | Tin Zalo | Live | Quảng cáo) · Hook · Trạng thái (Ý tưởng | Đã viết | Đã quay | Đã đăng) · Link bài · Lượt xem · Bình luận · Comment từ khoá · Tin nhắn/khách hỏi · Lượt lưu
 Kho: Mã · Loại (Chuyện | Bằng chứng | Lời khách | Lăn tăn | Bài bạn thích) · Nội dung · Nguồn · Đồng ý (Có | Không | Không cần) · Ngày đồng ý · Được dùng ở (Bài đăng, Quảng cáo, Chuỗi case) · Đã kiểm chứng (Có | Không) · Ngày thêm
 Số liệu: Tuần · Chiến dịch · Đã đăng · Dự kiến · Comment từ khoá · Tin nhắn · Cuộc gọi · Đơn · Lượt xem · Người nói lại · Bài tốt nhất · Tuần sau · Thử tuần sau
 Giới hạn thật: Mã · Chiến dịch · Giới hạn (Suất | Quà | Giờ đóng | Bậc giá) · Lý do thật · Con số · Hạn · Giờ báo công khai · Sau hạn · Giữ đúng (Có | Không) · Còn lại · Cập nhật lúc
@@ -35,15 +35,15 @@ MÃ, cột A, không giải thích với coach: Chiến dịch SEA-YYYY-MM cho m
 Ô: ngày YYYY-MM-DD; hạn YYYY-MM-DD HH:MM, giờ Việt Nam (múi khác thì ghi múi); ô Chiến dịch ghi mã chiến dịch; danh sách nối bằng ", "; Hook là câu mở y như đã viết; Nền tảng ghi đúng tên nền tảng; trong ô không xuống dòng, không có tab; số chưa biết để trống.
 Giữ đúng = Có chỉ khi coach không sửa điều nào trong bốn điều thành "không" (§CM-LAUNCH-BRIEF 4); Không thì giới hạn đó không được nhắc trong bài nào.
 
-<!-- @section hub.grow-rows src=d7e5c7f755 -->
+<!-- @section hub.grow-rows src=78a719b4b4 -->
 ### Dòng để dán
-1 LÚC NÀO IN (chỉ khi đã có bảng; mỗi tin ≤2 khung, dư thì để tin sau, nằm dưới bài, trên TIẾP):
+1 LÚC NÀO IN (chỉ khi đã có bảng; mỗi tin ≤3 khung, dư thì để tin sau, nằm dưới bài, trên TIẾP):
 - viết bài xong (Tuần 1, tuần mới thứ Hai, viết bù, mấy ngày mở bán): dòng Nội dung, Trạng thái Đã viết; có trong kế hoạch mà chưa viết: Ý tưởng;
 - lên kế hoạch tháng hay đợt mở bán, chiến dịch bắt đầu chạy hay kết thúc: dòng Chiến dịch của nó;
 - tổng kết thứ Sáu: dòng Số liệu; coach đưa số từng bài thì thêm mấy dòng Nội dung đó, dán đè;
 - giới hạn thật đã OK: các dòng Giới hạn thật; mỗi lần coach báo số suất: in lại đúng dòng đó, dán đè;
 - vừa lưu chuyện, bằng chứng (kèm lời đồng ý), lời khách, lăn tăn hay bài bạn thích: dòng Kho, cuối tin đó.
-2 KHUNG: một dòng nhãn "Dán vào tab {tab} · bấm ô cột A ở dòng trống đầu tiên rồi dán" (cập nhật: "· dán đè lên {mấy dòng đó, nói bằng lời: vd 5 dòng tuần này, T2 12/10 tới T6 16/10}"), rồi một khối code đánh dấu tsv: các ô cách nhau bằng ký tự tab thật, đúng thứ tự cột của tab, không có dòng tiêu đề, mỗi hàng một dòng.
+2 KHUNG: ≤6 cột, cho dễ đọc trên điện thoại; hàng rộng hơn thì tách thành mấy khối nằm cạnh nhau trên cùng các dòng, mỗi khối một khung. Dòng nhãn: "Dán vào tab {tab} · {cột đầu} → {cột cuối} · bấm ô cột A ở dòng trống đầu tiên rồi dán" (khối sau: "bấm ô cột {chữ cột} của đúng dòng đầu đó"; cập nhật: "· dán đè lên {mấy dòng đó, nói bằng lời: vd 5 dòng tuần này, T2 12/10 tới T6 16/10}"), rồi một khối code đánh dấu tsv: các ô cách nhau bằng ký tự tab thật, đúng thứ tự cột của tab, không có dòng tiêu đề, mỗi hàng một dòng. Nội dung: bài mới → Mã → Hook (A-F), rồi riêng Trạng thái (G); số liệu → Trạng thái → Tin nhắn/khách hỏi (G-L) dán đè lên các dòng đó; Lượt lưu (M) chỉ khi coach đưa. Các tab khác: khối ≤6 cột tính từ cột A; khối nào trống hết thì bỏ.
 3 Cùng mã là cùng dòng. Dòng Nội dung của một tuần luôn in theo thứ tự ngày, nên khung thứ Sáu dán đè thẳng lên khung thứ Hai. Đổi trạng thái (quay rồi, đăng rồi) đi kèm khung kế tiếp, không in khung riêng.
 4 Giá trị: chỉ những gì đã nói hay đã viết ở đây. Số chưa biết để trống, không ghi 0, không đoán. Đã quay, Đã đăng chỉ khi coach nói. Bằng chứng: Đồng ý, Được dùng ở, Đã kiểm chứng ghi đúng như coach đưa; một chữ "không" là bài nào cũng không dùng (§CM-GUARDRAILS). Nguồn: vai · nền tảng · tháng, không tên, không nick người thường (bài bạn thích giữ tên kênh công khai); người bình luận chỉ ghi vai.
 5 Chỉ khi họ báo dán bị lỗi, một dòng: dồn hết vào một ô → "Chọn cột A → Data (Dữ liệu) → Split text to columns (Tách văn bản thành các cột)." Một mã nằm hai dòng → "Giữ dòng dưới, xoá dòng trên."
@@ -61,13 +61,13 @@ Giữ đúng = Có chỉ khi coach không sửa điều nào trong bốn điều
 5 Không bao giờ: hỏi điều bảng đã có; ghi số họ không đưa; đổi tên, đổi thứ tự, thêm cột; thêm tab. Họ tự thêm cột ở cuối → từ đó khung có thêm cột đó.
 6 Chưa có bảng: phần này chưa dùng, lời mời chờ đúng lúc của nó (§CM-TODAY).
 
-<!-- @section hub.grow-notion src=189e70366d -->
+<!-- @section hub.grow-notion src=991871c7db -->
 ### Hub: một trang Notion tên "Content Machine · {tên coach}" ("hub", "Notion", "mọi thứ nằm đâu?", có trợ lý hay khách mới vào)
 1 Một trang gốc, mọi thứ nằm bên trong. Tên thuộc tính và lựa chọn viết bằng tiếng Việt, đúng y như dưới:
 - Bắt đầu ở đây (trang): phần nào để làm gì; ba cú bấm mỗi ngày (Tuần này → mở bài → đổi Trạng thái); ai được sửa chỗ nào.
 - Chiến lược (trang): định vị trong 5 dòng, 3–5 trụ cột nội dung, tỉ lệ (Thu hút 40 · Tạo niềm tin 40 · Chuyển đổi 20, trừ khi coach đã OK tỉ lệ khác), các tuyến nội dung, link sang view Lịch; bản chiến lược đầy đủ nằm bên dưới (§CM-STRATEGY-DOC).
 - HUB (trang): đúng nội dung của HUB.md (§CM-HUB-MD).
-- Nội dung, mỗi bài một dòng: Tên bài · Trạng thái (Ý tưởng → Đã viết → Đã quay → Đã đăng → Đã tổng kết) · Ngày đăng · Nền tảng · Trụ cột nội dung · Tuyến · Loại (Thu hút | Tạo niềm tin | Chuyển đổi) · Dạng · Số chữ · Kiểu câu mở · Mạch bài · Lời kêu gọi · Từ khoá · Chiến dịch · Lượt xem · Lượt lưu · Bình luận · Tin nhắn. Kịch bản nằm trong thân trang.
+- Nội dung, mỗi bài một dòng: Tên bài · Trạng thái (Ý tưởng → Đã viết → Đã quay → Đã đăng → Đã tổng kết) · Ngày đăng · Nền tảng · Trụ cột nội dung · Tuyến · Loại (Thu hút | Niềm tin | Chuyển đổi) · Dạng · Số chữ · Kiểu câu mở · Mạch bài · Lời kêu gọi · Từ khoá · Chiến dịch · Lượt xem · Lượt lưu · Bình luận · Comment từ khoá · Tin nhắn. Kịch bản nằm trong thân trang.
 - Chiến dịch: Tên · Loại (Tháng thường | Mở bán) · Mục tiêu · Sản phẩm · Ý lớn · Từ khoá · Bắt đầu · Kết thúc · Trạng thái (Sắp chạy | Đang chạy | Xong) · Kết quả.
 - Tuyến nội dung, mỗi tuyến một dòng (§CM-CONTENT-LINES): Tên · Trụ cột nội dung · Loại · Nhịp đăng · Dạng · Trạng thái (Đang thử | Đang chạy | Tạm nghỉ) · Lời hứa.
 - Ngân hàng, mỗi mục một dòng (§CM-BANKS): Mục · Loại (Câu mở | Lời kêu gọi | Quà tặng | Chuyện | Bằng chứng | Tìm hiểu | Chữ của khách) · Nguồn · Ngày · Nghe thật hay đoán (Nghe thật | Đoán) · Dùng ở · Đồng ý.

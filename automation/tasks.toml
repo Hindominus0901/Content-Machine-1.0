@@ -68,12 +68,14 @@ notifications = "Settings → Notifications → Tasks: push and email (optional)
 [apps.claude]
 plans = ["Pro", "Max", "Team", "Enterprise"]
 tasks = ["claude"]
-where = "Scheduled → New task → Set up manually; Weekdays, 7:07; no folder; Run now once"
-note = "one task, the job chosen by the weekday (the month's first Wednesday: the monthly refresh instead of the drop): one nudge a day by construction"
-hub = "with the Notion connector on, it reads the HUB page and writes the hub itself"
+where = "the Claude desktop app only (sidebar → Scheduled; not the web or the phone) → New task → Set up manually; the one text twice: Weekdays 7:07, and Weekly Friday 15:07; no folder; Run now once"
+note = "one text, the job chosen by the weekday (the month's first Wednesday: the monthly refresh instead of the drop; Friday 7:07 stops without a message, the 15:07 run does the review): one nudge a day by construction"
+hub = "with the Notion connector on, it reads the HUB page and writes the hub itself; a Google Sheet hub is read only through the Google Drive connector, never written; no connector: not read"
+project_only = "no plugin: a scheduled task can't open the Project, its files or HUB.md; the same text only nudges (one line on today's job + a spare hook) and the job runs on 'next' in the Project; or the Google Calendar reminders (A/B/C, automation.grow-setup 2)"
+address = "the text carries how the machine addresses the coach ({my name} EN; {xưng hô} VN, e.g. 'chị, xưng em')"
 
 [apps.none]
-fallback = "3 weekly Google Calendar reminders (Monday, Wednesday, Friday) saying task.footer"
+fallback = "3 weekly Google Calendar reminders (Monday 7:07, Wednesday 7:07, Friday 15:07) saying task.footer"
 
 [[task]]
 id = "week"
@@ -115,8 +117,8 @@ name_key = "task.week.name"              # the three names appear inside the tex
 section = "automation.grow-task-claude"
 template = "task-nudge-claude.tmpl"
 app = "claude"
-schedule = "Weekdays at 7:07"
-runs_in_task = "Monday the week, Tuesday to Thursday today's piece or the catch-up, Friday the numbers, the month's first Wednesday the monthly refresh"
+schedule = "Weekdays at 7:07, and the same text Weekly on Friday at 15:07"
+runs_in_task = "Monday the week, Tuesday to Thursday today's piece or the catch-up, Friday 15:07 the numbers (the 7:07 Friday run stops without a message), the month's first Wednesday the monthly refresh; without the skill (Project only) one line on today's job + a spare hook"
 
 [[task]]
 id = "monthly"

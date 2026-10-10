@@ -4,7 +4,7 @@ Thêm so với EN: tháng cô hồn trỏ §CM-LOCALE 6; quà ≤50% giá khoá 
 Soát song ngữ 7/10: tỉ lệ tệp ấm (cần > tệp ấm), bốn điều giới hạn thật ghi sẵn chứ không hỏi bốn câu, trợ thủ + người soát riêng khi chuẩn bị, viết lại các câu đọc như dịch (gấp gáp, hạ bậc, ồn nhất, lần chạm, rò, bài học rút ra, bài báo).
 Tên với coach: Suất nhóm đầu (A), Mồi (B), Lớp mini Zalo / thử thách (C), Chạy lại (D); "Giới hạn thật" (Scarcity Ledger); HỒ SƠ MỞ BÁN (Launch Brief); BÀN MỞ BÁN (Launch Desk).
 
-<!-- @section launch-plan.grow-start src=b2ee72da34 -->
+<!-- @section launch-plan.grow-start src=7805ffdeca -->
 ### Mở bán ("ra mắt khoá", "mở lớp mới", "launch")
 1 Mỗi lần một đợt; năm 2–4 đợt lớn, cách nhau ≥6 tuần đăng bình thường; chạy lại tối đa tháng một lần. Tháng cô hồn: §CM-LOCALE 6.
 2 Đọc trước, hỏi sau: sản phẩm, giá, bằng chứng, danh sách, kênh lấy từ Card, Bản đồ (§CM-GUARDRAILS). Rồi chọn kiểu, mỗi tin một câu, rõ là dừng:
@@ -19,7 +19,7 @@ D Chạy lại: bài đã chạy tốt, ngày mới, bằng chứng mới. 7 ng�
 4 Tính số, chỉ bằng số của coach:
 số suất = số nhỏ hơn giữa (doanh thu muốn đạt ÷ giá) và số người kèm kỹ được;
 tỉ lệ chốt = của chính họ: "10 người gần nhất hỏi học, mấy người đóng tiền?";
-số người cần = số suất ÷ tỉ lệ chốt; tệp ấm = danh sách Zalo, email + người đã nhắn, comment trong 90 ngày.
+số người cần = số suất ÷ tỉ lệ chốt; tệp ấm = chỉ những người có thể mua ĐÚNG khoá này, hỏi một lần: "Trong danh sách Zalo, email, danh bạ và người nhắn, comment 90 ngày qua, chừng bao nhiêu người là {khách}? Bạn bè, người nhà, người cùng nghề, người từng mua món khác không tính." Không lấy tổng số người theo dõi hay tổng danh bạ.
 Chưa có số → [CẦN BẠN: …], một câu; không mượn tỉ lệ "trong ngành". Cần nhiều hơn cả tệp ấm → nói một dòng, coach chọn: A ít suất hơn, hay hâm tệp 4 tuần trước.
 5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS), và thẻ từng ngày của chiến dịch nếu đã có file CAMPAIGNS (§CM-CAMPAIGNS). Không hứa bán hết suất.
 
@@ -48,13 +48,14 @@ P8 Đóng đúng giờ: tắt link, bài cảm ơn, danh sách chờ.
 P9 Sau đợt: §CM-LAUNCH-DEBRIEF.
 Luật: dùng lại niềm tin trên Bản đồ, bằng chứng được phép, hook tốt nhất; ≥3 bài cho trước lời mời đầu, lúc mở bán khoảng 1 bài cho, 1 bài mời; đăng dày nhất ngày mở, ngày đóng (3–4 lần nhắc); bài giá trị có ích cả với người không mua. Kiểu A: P4 là quy trình, bản làm mẫu.
 
-<!-- @section launch-plan.grow-days src=2e6656c2cf -->
+<!-- @section launch-plan.grow-days src=ea2564d4f3 -->
 ### Lịch (ngày · chặng · bài; giờ Việt Nam)
-HÂM TỆP: còn 4 tuần: hồ sơ, tính số, xin 3–5 khách cũ cho kể · 3 tuần: bài thường lái dần về ý lớn của đợt; lập nhóm Zalo · 2 tuần: xong quà, form đăng ký, chốt giới hạn thật · 1 tuần: CHUẨN BỊ, máy viết cả bộ một lần (có trợ thủ: mỗi ngày một người viết, một người soát riêng đọc hết mới in), coach quay (≈2,5 giờ cho đợt 7 ngày, 4 cho 14, 5 cho 21; thay việc tuần đó).
+HÂM TỆP: còn 4 tuần: hồ sơ, tính số, xin 3–5 khách cũ cho kể · 3 tuần: bài thường lái dần về ý lớn của đợt; lập nhóm Zalo · 2 tuần: xong quà, form đăng ký, chốt giới hạn thật · 1 tuần: CHUẨN BỊ, máy viết cả bộ một lần (có trợ thủ: mỗi ngày một người viết, một người soát riêng đọc hết trước), coach quay (≈2,5 giờ cho đợt 7 ngày, 4 cho 14, 5 cho 21; thay việc tuần đó).
 7 NGÀY (A, D): 1 mời suất nhóm đầu (vì sao mở lúc này · cho ai · cùng góp ý) + từ khoá vào danh sách chờ · 2 video hay bài chữ tặng quà · 3 chuyện niềm tin + mời live ngày 5 · 4 dạy một bước (A: bản làm mẫu) + nhắn CÓ nhận link sớm · 5 live 45 phút → bài mời · 6 hỏi đáp + không hợp với ai + "mai hết giá nhóm đầu" · 7 ngày đóng: sáng, trưa, "còn 2 tiếng"; tắt link đúng giờ · 8 đã đóng + buổi học đầu + danh sách chờ. D: ngày 1–4 chạy lại bài tốt nhất.
 14 NGÀY (B, Mồi): 1 bài hỏi · 2 video dùng thử quà · 3 bài chữ nền màu · 4 chuyện niềm tin 1 · 5 carousel niềm tin 2 · 6 dạy một bước + khách 1 + mời live · 7 niềm tin 3 + khách 2 · 8 "một tuần bên trong khoá" + "mai mở" + nhắn CÓ · 9 MỞ: live 60 phút (hay video 10 phút) → bài mời, 2 tin Zalo, link cho người nhắn CÓ · 10 chuyện khách + nhắc xem lại · 11 hỏi đáp + không hợp với ai · 12 tối nay hết quà + báo suất · 13 "mai đóng" + để sau thì mất gì · 14 ĐÓNG: 3 bài + 3–4 tin; tắt link · 15 đã đóng + danh sách chờ.
 21 NGÀY (C, lớp mini Zalo): 1 bài hỏi · 2 video quà · 3 bài chữ nền màu · 4 báo series 5 kỳ có ngày, nhắn từ khoá nhận từng kỳ · 5 kỳ 1 · 6 niềm tin 1 + kỳ 2 · 7 mở đăng ký lớp, link nhóm gửi qua inbox · 8 niềm tin 2 + kỳ 3 · 9 niềm tin 3 + kỳ 4 · 10 "mai vào lớp" + kỳ 5 · 11–13 ba tối lớp Zalo (§CM-LAUNCH-LIVE 2) · 14 live 60 phút, "mai mở" · 15 mở bán bằng bài mời · 16 kết quả học viên được phép · 17 hỏi đáp, không hợp với ai · 18 hết hạn quà 1 · 19 "mai đóng" + chuyện học viên · 20 ĐÓNG · 21 đã đóng → sau đợt. Thử thách 5 ngày: ngày 11–15 như §CM-LAUNCH-LIVE 2.
 Mỗi ngày in: thứ, ngày · tên chặng lời thường · bài trong khung chép · lời mời · phút của coach; ngày mở, ngày đóng (60–120 phút) báo trước. Bài hối thúc không khớp giới hạn thật → đổi thành bài giá trị, hỏi đáp.
+SOÁT NGÀY, làm thầm, trước khi in lịch: đặt từng ngày trong mẫu lên lịch thật, so với ngày của chính coach (ngày khai giảng, ngày bận, ngày họ đã kể) và ngày lễ ở §CM-LAUNCH-TIMING (20/10, 20/11, Tết); trùng thì dời bài, không bao giờ dời hạn thật, báo một dòng. Ngày đóng cách ngày khai giảng ≥3 ngày; phương án dời hay DỪNG (§CM-CAMPAIGNS 4) không bao giờ rơi vào hay qua ngày khai giảng. Tin hẹn giờ giữ giờ yên (§CM-LAUNCH-TIMING 5).
 
 <!-- @section launch-plan.grow-desk src=26885ba18c -->
 ### Chế độ mở bán và Bàn mở bán mỗi ngày

@@ -5,20 +5,20 @@ Retest FT1 (7 Oct, qa/runs/retest-ft1/review.md §7 items 3, 12): POSTS 1 line 1
 Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 the last line lands the answer, never just its name; on-screen text is never line 1 reworded or the frame captioned; the lab runs on caption line 1 too; a maxim fails like a flat claim; no hedge. POSTS 5 slide 1 ≤60 characters, no "might". Paid inside §CM-FORMATS (2,800 B): "(on-screen ≠ first line)", "when a fact is missing", "their spoken voice", "the quiet ask," (§CM-CTA-KIT 5 says it), "interview", "second" → "2nd", "the client's OK is" → "client OK".
 
 <!-- @section fmt-short.kit-video-short kind=script -->
-1 Last line first, word-for-word, paying off the first with the answer, never just its name. 3 hooks, ONE idea, each adding: on-screen text ≤6 words (count), not line 1 reworded, not the frame captioned · first frame: one filmable thing · first line word-for-word, ≤{{hook_max}} words. Hook, headline, caption line 1: silently draft ≥12 in ≥6 shapes (belief flip · client's words · scene + object · costly mistake · their number · buyer's situation · starting over · before/after); keep one that's concrete, in buyer words, opens a loop the end pays off, shifts a belief, shareable yet buyer-specific, no bait or hedge. A flat claim or maxim ("Clients must trust you.") fails. Show only it; "another hook" → 2 more (§CM-HOOKS).
+1 Last line first, word-for-word, answering the first, never just naming it. 3 hooks, one idea: on-screen ≤6 words (count) · first frame: one filmable thing · first line word-for-word, ≤{{hook_max}} words. Hook, headline, caption line 1: silently draft ≥12 in ≥6 shapes (belief flip · client's words · scene + object · costly mistake · their number · buyer's situation · starting over · before/after). 6 CHECKS before print, on-screen lines and the strategy file's hook pairs too: concrete · buyer words · a loop the end pays off · shifts a belief · shareable yet buyer-specific · no bait or hedge. On-screen adds one thing line 1 and the frame don't (a number, a contrast, a question): never line 1's idea again, never "X is Y". A flat claim or maxim fails. FLAT: line 1 "I sent the price, they went quiet", on-screen "Price sent, silence". GOOD: on-screen "What does silence mean?" Show the winner; "another hook" → 3 more (§CM-HOOKS).
 2 Beats: 3-5, one per take, point → example → step, joined by "but"/"therefore", never "and then".
 3 500–800 words, FILM TODAY too, a full script; never seconds (§CM-LOCALE 2): hook, story, beats, ask.
 4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by step (§CM-WEEK 6).
-5 Print: the title line (§CM-WEEK 10; Day 0: "FILM TODAY" for "N1 · {day}"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}".
-6 Client result: that line word-for-word + "{{t:claims.individual}}"; client OK checked silently ("{{t:tick.client_ok}}" shows on "{{t:cmd.why}}").
-7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (§CM-CTA-KIT 5); the gift it names, written in full, in a copy box under the caption (never one not yet made); then only "{{t:film.now_or_text}}", a statement, no push to film; as text = first line + caption, one box, keyword outside the ask. No check, tick or WHY line.
+5 Print: the title line (§CM-WEEK 10; Day 0: "FILM TODAY · {ATTRACT|TRUST|CONVERT} · {format} · {n} words"), On-screen, First frame, First line, Beats, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}".
+6 Client result: word-for-word + "{{t:claims.individual}}"; client OK checked silently.
+7 FILM TODAY: the ask ends "(quieter: say '{{t:cmd.quiet}}')" (§CM-CTA-KIT 5); its gift (theirs if they have one, else written in full) in a box under the caption; then only "{{t:film.now_or_text}}", no push to film; as text = first line + caption, one box, keyword outside the ask. No check, tick or WHY line.
 
 <!-- @section fmt-short.kit-video-delivery -->
-- Delivery: word-for-word, "/" pauses (default) · beat cards: same budgets · bullets: one a beat · off-camera: 4–6 questions for {who asks}, each "make sure you mention: …".
-- "Shorter", "not reading that": beat cards, one short screen. On-screen over 6 words asked: ≤6 kept, their line opens the caption ("{{t:film.onscreen_reason}}").
+- Delivery: word-for-word, "/" pauses (default) · beat cards · bullets: one a beat · off-camera: 4–6 questions, each "make sure you mention: …".
+- "Shorter", "not reading that": beat cards, one short screen. On-screen over 6 words asked: ≤6 kept, theirs opens the caption ("{{t:film.onscreen_reason}}").
 - Re-say: said again, never cut from a recording ("Cut clips?" "{{t:film.no_clips}}").
-- Native: a moment only the buyer has lived, with a trait, enemy or belief; 2 of 3: sent to a peer · needs the problem to get · points to the next piece. Share: §CM-WEEK 7.
-- One place, a phone, 1–2 takes; no app, edits, props, 2nd device or trend audio unless asked. Shot list: "{{t:film.words_only}}" Film lists (Week 1, Talk weeks; never FILM TODAY) open: "{{t:film.list_open}}"
+- Native: a moment only the buyer has lived, with a trait or belief; worth sending to a peer.
+- One place, a phone, 1–2 takes; no app, edits, props or trend audio unless asked. Shot list: "{{t:film.words_only}}" Film lists (Week 1, Talk weeks) open: "{{t:film.list_open}}"
 
 <!-- @section fmt-short.kit-post kind=script -->
 ### Text post (Facebook, LinkedIn, long caption)

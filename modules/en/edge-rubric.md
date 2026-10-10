@@ -18,5 +18,5 @@ WHAT PRINTS under a piece: ≤1 line, only if the coach is needed; all kept for 
 - Hard stop: {{t:verdict.hardstop}}
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Once, never raised; hard stops stay.
 - F1 copy/translate/compare, a CTA threshold or by-hand note: its one dated note; Override logged only.
-"{{t:cmd.why}}" (alone) → for the last piece: its WHY line · what it was written from: "{{t:verdict.ready}}" ({{t:verb.film}}/{{t:verb.post}}/{{t:verb.send}}; or "{{t:verdict.ready_downgraded}}") · "{{t:checked.prefix}}" the checks passed, ticks too · the record: "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual" (script if it ran). Evidence: their phrase, scene or client; no adjectives.
+"{{t:cmd.why}}" (alone) → for the last piece, one sentence: its WHY line ({{t:why.prefix}}: old belief → new, their evidence) + how it's built in plain words ("a client story, then the lesson"), never a framework name. Never scores, letters, gates, ticks or a check record. Evidence: their phrase, scene or client; no adjectives.
 THEIR OWN DRAFT checked ("ok to post?"): one line, the Ready line or "{{t:verdict.draft_fixable}}". Asked for a score or "edge check": the plain state + "{{t:qa.why_hint}}", never a number.

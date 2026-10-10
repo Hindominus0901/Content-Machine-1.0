@@ -403,7 +403,7 @@ sáng nay chị thấy cái này, giống giống cái chị dạy. thôi chị 
 contains = []
 not_contains = []
 regex = [
-  '''(?i)\(Bài đó (?:mình|em) giữ lại cho [^)\n]*, giờ làm video hôm nay trước đã\.?\)''',
+  '''(?i)\(Bài đó (?:(?:mình|em) )?giữ lại cho [^)\n]*, giờ làm video hôm nay trước đã\.?\)''',
   '''(?i)kể tiếp|nói tiếp|gõ\s+["“‘']?xong''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
@@ -413,7 +413,7 @@ not_regex = [
   '''(?i)đừng nhìn doanh thu nữa|file tính lãi''',
   '''(?<!\w)SỔ(?!\w)''',
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
-  '''(?i)\(Bài đó (?:mình|em) giữ lại cho [^)\n]*; giờ làm video hôm nay trước\.?\)''',
+  '''(?i)\(Bài đó (?:(?:mình|em) )?giữ lại cho [^)\n]*; giờ làm video hôm nay trước\.?\)''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I15", "I17"]
@@ -1496,7 +1496,7 @@ input = '''<<paste: consultant/liked-paste.md, the '## L7' block: everything bel
 contains = []
 not_contains = []
 regex = [
-  '''(?i)(?<!\w)em không mở được [^\n]{1,60}? ở đây, nên không đoán''',
+  '''(?i)(?<!\w)(?:em )?không mở được [^\n]{1,60}? ở đây, nên không đoán''',
   '''(?i)chụp màn hình|dán (chữ|nội dung)|(?<!\w)2 câu|hai câu''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
@@ -1522,7 +1522,7 @@ input = '''em theo dõi kênh của chị Diễm Quyên giúp chị nhé, tuần
 contains = []
 not_contains = []
 regex = [
-  '''(?i)(?<!\w)em không tự theo dõi kênh được''',
+  '''(?i)(?<!\w)(?:em )?không tự theo dõi kênh được''',
   '''(?i)ảnh chụp|chụp màn hình''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]

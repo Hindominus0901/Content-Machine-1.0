@@ -15,7 +15,7 @@ Mỗi bài: giọng, kênh của coach (§CM-VOICE), một cặp xưng hô suố
 6 CAROUSEL NGỘ NHẬN (P2), 6 trang: mỗi niềm tin cũ một trang: lầm tưởng · sự thật · làm ngay hôm nay · cái thật sự làm đa số kẹt lại · lưu lại + lời mời.
 7 NGÀY ĐÓNG: 3 bài (sáng "ngày cuối", trưa hỏi đáp, tối "còn 2 tiếng") + story: đếm ngược · suất · bằng chứng được phép · không hợp với ai · hộp câu hỏi · giờ cuối · đã đóng + danh sách chờ. Bài mời: §CM-LAUNCH-LIVE 3. Câu mồi coach tự chọn: §CM-LAUNCH-BRIEF 7.
 
-<!-- @section launch-scripts.grow-messages kind=script src=2adffeffb9 -->
+<!-- @section launch-scripts.grow-messages kind=script src=4d87ae8387 -->
 ### Tin mở bán: Zalo, inbox, email
 Chỉ gửi người đã đồng ý; mỗi tin một lời mời, không làm khách áy náy; tin nhắc có lối ra (như mục 5); số liệu từ hồ sơ hay [CẦN BẠN: …]; tin 1:1 xưng số ít theo Card, tiểu từ theo giọng coach; khung chép; dưới khung: §CM-EDGE, vd "{{t:verdict.ready}}".
 1 TRẢ LỜI DƯỚI BÀI có từ khoá: ≥5 câu ngắn xoay vòng, xưng theo người comment, vài câu gõ tay.
@@ -24,7 +24,7 @@ Chỉ gửi người đã đồng ý; mỗi tin một lời mời, không làm k
 4 LINK SỚM, hôm trước ngày mở: "Mai sau buổi {sự kiện} mình mở đăng ký. Ai muốn nhận link sớm 1 tiếng thì nhắn CÓ nha." Ai nhắn CÓ, trong 24 giờ gửi: link, trang có gì, quà thật, "Bạn cần hỏi gì thêm không?"
 5 HỎI THĂM RIÊNG, chỉ người còn câu hỏi dở: câu họ hỏi, trả lời ngắn, giờ đóng, "chưa phải lúc thì cũng không sao nha."
 6 SAU KHI NHẬN QUÀ, 5 tin trong 5 ngày: quà + mình là ai + hỏi một chữ (CÓ/CHƯA) · chuyện cũ, chỗ mình từng kẹt cứng · lúc mọi chuyện xoay chiều · cách này còn giúp gì + mời live, lớp · danh sách chờ + link sớm. Email: mỗi tin 3 tiêu đề.
-7 MỞ BÁN: tin mở (khoá gì · cho ai · giá, giá đợt sau · quà thật · cam kết · giờ đóng · link · xem lại 48 giờ) · chuyện khách · hỏi đáp · tối nay hết quà · mai đóng · ngày đóng 3–4 tin. Tin cuối: ngắn; hợp, không hợp với ai; "Hết tối nay mình tắt link. Đợt sau: {ngày}."
+7 MỞ BÁN: tin mở (khoá gì · cho ai · giá, giá đợt sau · quà thật · cam kết · giờ đóng · link · xem lại 48 giờ) · chuyện khách · hỏi đáp · tối nay hết quà · mai đóng · ngày đóng 3–4 tin (từ sáng, tin cuối trước 21 giờ 30; không gửi từ 22 giờ tới 7 giờ, §CM-LAUNCH-TIMING 5). Tin cuối: ngắn; hợp, không hợp với ai; "Hết tối nay mình tắt link. Đợt sau: {ngày}."
 8 SAU ĐỢT: chào mừng + bước đầu · người chưa mua: quà, khảo sát (§CM-LAUNCH-DEBRIEF 3), gói nhỏ hơn có hạn thật · danh sách chờ. Không nhắn hàng loạt từ tài khoản cá nhân.
 
 <!-- @section launch-scripts.grow-live kind=script src=f861f1b9ea -->
