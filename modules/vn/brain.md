@@ -11,7 +11,7 @@ G1 6/10 (theo EN): mục 3 K4 "plan_start = hôm sau ngày 0, tuần n = mỗi 7
 Cắt bù byte G1 (không bỏ luật): mục 1 bỏ "; không chặn gì" (start-block bước 8: "Chưa lưu vẫn làm tiếp"); mục 3 card.machine.heading → "dòng cho máy như BRAND CARD" (start-block BRAND CARD in đúng chuỗi đó).
 G2/VG1 6/10: mục 3 list_size=ask|{n} (schema đổi sang text; thay VK-20), VK-13 "proof: … (không thì not_now)". Trả bằng month.save_card bỏ ", chạm 2 cái là xong" (cắt VK-16 đã nêu). Chưa theo EN: K28 (7/7 lượt VG1 đã in dự phòng Zalo: start-block "Dự phòng"); K29 thứ tự cắt (cần ~38 byte; file phương pháp đang 56.318/56.320).
 
-<!-- @section brain.kit-print src=e9504668b4 -->
+<!-- @section brain.kit-print src=1d3242aee9 -->
 1 KHI NÀO: ngày 0, "tiếp" sau QUAY HÔM NAY (§CM-SETUP 9); in lại: mục 4.
 2 PHẦN TRÊN, ≤500 ký tự, 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {trụ cột} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, giữ dòng giọng.
 3 Rồi dòng cho máy như BRAND CARD + một khung code, mỗi dòng `tên: giá trị`, " | " giữa mục, [n] tối đa, ? = không có thì bỏ, không để trống:
@@ -20,7 +20,7 @@ who their_words[2] promise method old_way pillars[5] mix=a/t/c% offer bio_line k
 tone rhythm phrases[5] openers_closers?[3] audience_address address_1to1? connectors?[5] pronouns dialect=vùng·tiểu từ ~n%·3 tiểu từ code_mix humour=none|dry|playful|self-roast written_vs_spoken? never_say?[10] do_say?[10]
 trait(một nét + người nó đẩy ra) enemy(một cách làm) principles[3] passages[5] client_words[8] stories[5] proof?[5]
 plan_start season=1 talk_day=Mon..Sun week tier=lean|standard platform=chữ thường owned_channel=zalo|email|both|none list_size=ask|{n} cta_style=keyword|quiet delivery=beat-cards|interview|bullets|word-for-word timezone=ask|{zone} mode=always-on hub=none automations=none|reminders recent_hooks?[10] liked?[8]
-plan_start = hôm sau ngày 0, tuần n = mỗi 7 ngày từ đó; trial_ends = plan_start + 25 ngày. offer kèm giá (§CM-LOCALE 5). proof: đếm được, khách đồng ý (không thì not_now), dùng đúng như đã xin. passages ≤60 tiếng, nguyên văn. Nhóm giọng: §CM-VOICE; pronouns: cặp chọn ở trả lời 1 (em – chị). liked: mới trước, ≤90 ký tự. Quá 6.600: cắt liked trước, nhóm giọng sau cùng.
+plan_start = hôm sau ngày 0, tuần n = mỗi 7 ngày từ đó; trial_ends = plan_start + 25 ngày. offer kèm giá (§CM-LOCALE 5). proof: đếm được, đúng việc khách cho; chưa rõ: hỏi 1 lần trước khi đăng, không cho: not_now. passages ≤60 tiếng, nguyên văn. Nhóm giọng: §CM-VOICE; pronouns: cặp chọn ở trả lời 1. liked: mới trước, ≤90 ký tự. Quá 6.600: cắt liked trước, nhóm giọng sau cùng.
 
 <!-- @section brain.kit-keep src=67b215f2a1 -->
 4 In lại khi lên kế hoạch tháng, thứ Sáu có thêm bài họ thích hay kết quả, đổi giá, sản phẩm; + "{{t:month.save_card}}" Câu, cách mở mới từ buổi nói chuyện vào bản in sau.

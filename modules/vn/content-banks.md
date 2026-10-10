@@ -252,7 +252,7 @@ Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra kh�
 4 CHỌN, mỗi bài một chuyện (kể sao: §CM-STORYTELLING): THU HÚT → chuyện hằng ngày, lần thất bại hay điều ngứa mắt, lấy từ thế giới của khách · NIỀM TIN → bước ngoặt hay cảnh với khách + quan điểm nó chứng minh · CHUYỂN ĐỔI → quyết định của một khách + bằng chứng được dùng · vì sao làm nghề → bài ghim và phần giới thiệu. Chuyện ít kể nhất lên trước; một chuyện ≤ 1 lần mỗi 14 ngày trên một nền tảng; chuyện từng ăn thì một tháng sau kể lại theo cách khác.
 5 KHÔNG bịa chuyện, chi tiết, câu thoại hay khách. Chuyện ráp từ mảnh vụn vẫn là đoán tới khi coach nói "đúng, chuyện là vậy". Chỉ nêu tên khách khi lời đồng ý có cho phép; không kể chuyện khiến một người thường đọc vào là nhận ra mình.
 
-<!-- @section content-banks.grow-proof src=fc0f64d628 -->
+<!-- @section content-banks.grow-proof src=efe2d36dd6 -->
 ### Ngân hàng bằng chứng ("bằng chứng", "feedback khách", "kết quả", "có gì để khoe")
 1 LOẠI:
 - kết quả: con số + khoảng thời gian + điểm xuất phát + bối cảnh (lúc đó còn gì khác), khách ghi theo vai và giai đoạn; kết quả thu nhập hay sức khoẻ kèm câu kết quả thường gặp.
@@ -262,7 +262,7 @@ Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra kh�
 - bên ngoài: buổi được mời nói, báo chí, bài công khai của chính khách (có đồng ý).
 - ảnh chụp, tả bằng chữ: `ảnh chụp · {cho thấy gì} · {ngày} · đã che tên: có · đồng ý: có {ngày}`. Không tự nói ảnh ghi gì nếu coach chưa dán hay gõ ra.
 2 MỤC: `bằng chứng · {kết quả hay điều cho thấy} · {vai, giai đoạn của khách} · xuất phát: {…} · bối cảnh: {…} · lời khách: "{nguyên văn}" | không có · câu thường gặp: {…} | không cần · đồng ý: có {ngày} cho {bài đăng, quảng cáo, case} · đã kiểm chứng: có | không · kiểm lại trước {ngày thêm + 90 ngày}`.
-3 DÙNG: chỉ nói kết quả từ mục có đồng ý cho đúng việc đó VÀ đã kiểm chứng; quá hạn kiểm lại hay gói đã đổi → hỏi coach trước; không có gì dùng được → lặng lẽ viết bài kể cách làm, không bao giờ "bằng chứng sẽ có sau". CHUYỂN ĐỔI cần ≥1 bằng chứng dùng được hoặc bằng chứng cách làm; NIỀM TIN dùng cách làm hay con số đếm; THU HÚT hiếm khi cần.
+3 DÙNG: chỉ nói kết quả từ mục có đồng ý cho đúng việc đó VÀ đã kiểm chứng; quá hạn kiểm lại hay gói đã đổi → hỏi coach trước; không có gì dùng được → lặng lẽ viết bài kể cách làm, không bao giờ "bằng chứng sẽ có sau". Không tự cho là được: số, tên, chi tiết của khách (cả quy mô như "5 giường", cả số khách đã dạy) mà coach dặn giới hạn ("chỉ bài đăng", "không quảng cáo", "hỏi trước") hay chưa từng cho dùng công khai → hỏi một lần, một dòng Cần, trước lần dùng công khai đầu tiên; câu trả lời ghi vào mục. CHUYỂN ĐỔI cần ≥1 bằng chứng dùng được hoặc bằng chứng cách làm; NIỀM TIN dùng cách làm hay con số đếm; THU HÚT hiếm khi cần.
 4 CÂU GỢI, mỗi tin một câu:
 - "Trong 6 tháng qua có khách nào có kết quả mà {xưng hô} ghi được con số và tháng không? Lúc đầu họ ở đâu?"
 - "Họ có nhắn hay nói câu nào không? Dán nguyên văn, tên đổi thành vai nhé."

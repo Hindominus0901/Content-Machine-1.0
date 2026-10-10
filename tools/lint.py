@@ -130,6 +130,10 @@ CM_REF_RE = re.compile(r"§CM-([A-Z0-9][A-Z0-9]*(?:-[A-Z0-9]+)*)")
 # pair notation ("mình–bạn", "bạn →") set aside; plus, anywhere in VN prose, the printed markers that leaked to
 # coaches in the v13.4 demo: "[CẦN BẠN: …]", a raw "[anh/chị]" slot and the label "Bài bạn thích".
 # "bạn bè", "kết bạn" are the word "friend", never flagged; "Bạn là {{name}}" speaks to the model.
+# The leak markers are also checked (v13.7) in every strings/vn.toml value (buyer keys too: a missing fact in a CTA
+# still prints to the coach) and in the surfaces outside the sections: plugin/agents/*.md, plugin/companions.toml
+# and automation/* (scheduled-task prompts); an agent line that names the marker as a "never" example is waived.
+VN_MARKER_SURFACES = ("plugin/agents/*.md", "plugin/companions.toml", "automation/*")
 VN_ADDRESS_LANG = "vn"
 VN_BUYER_KEYS = ("ask3.", "research.ask3", "cta.", "dm.", "series.", "talk.question")   # lines the coach sends to buyers
 BARE_BAN_RE = re.compile(r"(?<!\w)bạn(?!\w)(?!\s*bè)", re.IGNORECASE)
@@ -1343,10 +1347,14 @@ class Linter:
     def check_vn_address(self) -> None:
         texts = self.strings.get(VN_ADDRESS_LANG, ({}, {}))[0]
         for key, text in sorted(texts.items()):
-            if key.startswith(VN_BUYER_KEYS):
-                continue
             for line in nfc(text).splitlines():
                 if waived(line, "E147"):
+                    continue
+                for label, rx in VN_LEAK_MARKERS:
+                    for m in rx.finditer(WAIVER_RE.sub("", line)):
+                        self.add("E147", f"strings/{VN_ADDRESS_LANG}.toml",
+                                 f"key '{key}': {label} '{m.group(0)}' prints to the coach (use {{XƯNG HÔ}})")
+                if key.startswith(VN_BUYER_KEYS):
                     continue
                 for hit in bare_ban(WAIVER_RE.sub("", line)):
                     self.add("E147", f"strings/{VN_ADDRESS_LANG}.toml",
@@ -1367,6 +1375,21 @@ class Linter:
                 if coach_facing:
                     for hit in bare_ban(body):
                         self.add("E147", f"{relp}:{lineno}", f"bare '{hit}' in a coach-facing line (use {{xưng hô}})")
+        for pattern in VN_MARKER_SURFACES:
+            for path in sorted(self.root.glob(pattern)):
+                if not path.is_file():
+                    continue
+                try:
+                    text = path.read_text(encoding="utf-8")
+                except (OSError, UnicodeDecodeError):
+                    continue
+                for lineno, line in enumerate(nfc(text).splitlines(), 1):
+                    if waived(line, "E147"):
+                        continue
+                    for label, rx in VN_LEAK_MARKERS:
+                        for m in rx.finditer(WAIVER_RE.sub("", line)):
+                            self.add("E147", f"{self.rel(path)}:{lineno}", f"{label} '{m.group(0)}' prints to the "
+                                     f"coach (use {{XƯNG HÔ}} / {{xưng hô}})")
 
     # -- Ship Check card budgets (E101)
 

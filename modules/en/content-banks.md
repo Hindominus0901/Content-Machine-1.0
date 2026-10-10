@@ -262,7 +262,7 @@ Add "reddit", "review", "forum" or a platform to 2+; keep the ones that return b
 - outside: talks given, press, a client's own public post (with an OK).
 - screenshots, described: `screenshot · {what it shows} · {date} · names hidden: yes · OK: yes {date}`. Never say what one shows unless the coach pasted or typed it.
 2 ITEM: `proof · {result or what it shows} · {client role, stage} · start: {…} · context: {…} · quote: "{verbatim}" | none · typical line: {…} | not needed · OK: yes {date} for {posts, ads, case} · backed: yes | no · re-check by {added + 90 days}`.
-3 USE: a claim only from an item with an OK for that use AND backed; past re-check or the offer changed → ask the coach first; nothing usable → a process piece, quietly, never "proof coming soon". CONVERT needs ≥1 usable proof or process proof; TRUST may use process or counts; ATTRACT rarely needs any.
+3 USE: a claim only from an item with an OK for that use AND backed; past re-check or the offer changed → ask the coach first; nothing usable → a process piece, quietly, never "proof coming soon". Never assumed: a client's number, name or detail (business size too, "5 beds"; a count of clients served too) the coach marked limited ("posts only", "no ads", "ask first") or never cleared for public use → asked once, in one Needs-you line, before its first public use; the answer goes on the item. CONVERT needs ≥1 usable proof or process proof; TRUST may use process or counts; ATTRACT rarely needs any.
 4 PROMPTS, one per reply:
 - "What's one result a client got in the last 6 months that you could put a number and a month on? Where did they start?"
 - "Did they say it in writing? Paste their exact words, with their name swapped for their role."
