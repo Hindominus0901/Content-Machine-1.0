@@ -1522,14 +1522,14 @@ id = "router.en.052"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'next' on a Week-1 weekday hands over today's piece, ready to copy"
+title = "'next' on a Week-1 weekday after Week 1 was printed on Day 0: one line pointing to today's piece, never the script again"
 context = "Week 1, Wednesday 14 Oct 2026, Android phone. Day 0 delivered the Week-1 pieces unasked after FILM TODAY (3 reels, 1 long Facebook post, 1 email), then the Brand Card, which she saved. Monday's and Tuesday's reels are posted. Today's piece is the long Facebook post (Teresa's 'different logo' coffee story)."
 input = '''next'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)different logo''',
-  '''(?m)^[ \t]*(?:```|~~~)''',
+  '''(?im)^\W*Today\b[^\n]*\bN\d+\b''',
+  '''(?i)print it''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1538,13 +1538,14 @@ not_regex = [
   '''Setup check:''',
   '''(?i)weekly talk''',
   '''(?i)\byour numbers\b''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: fmt-short (trigger set). UX §4 phrase 1 'next': today's piece; UX §3.1 Week 1 days 2-5: 'next' → copy → post. The Week-1 pieces were cut from the dump on Day 0, so 'next' hands over today's (stats-w1.csv: 14 Oct is the Teresa long post), ready to copy: §CM-TODAY 5 'today's piece … as written: day, time, copy box; under it only what §CM-EDGE prints', so the copy box is the piece detector and nothing prints under it (wf15 §2, R4). Text posts belong to fmt-short (arch §4)."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. route: fmt-short (trigger set). UX §4 phrase 1 'next': today's piece; UX §3.1 Week 1 days 2-5: 'next' → copy → post. The Week-1 pieces were cut from the dump on Day 0, so 'next' hands over today's (stats-w1.csv: 14 Oct is the Teresa long post), ready to copy: §CM-TODAY 5 'today's piece … as written: day, time, copy box; under it only what §CM-EDGE prints', so the copy box is the piece detector and nothing prints under it (wf15 §2, R4). Text posts belong to fmt-short (arch §4)."""
 
 [[case]]
 id = "router.en.053"
@@ -1790,22 +1791,26 @@ id = "router.en.062"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'why?' prints the internal record for the last piece, starting 'Result:'"
+title = "'why?' on her own Draft opens the edge-rubric job: the defect or WHY in plain words, no Result record"
 context = "Week 2, Monday 19 Oct 2026, Claude Free. Brand Card v1 present (persona default). Earlier the machine gave two LinkedIn posts (N1, N2) with nothing under them; Erin rewrote N2 herself, pasted it and asked 'ok to post?'. The check printed its one line: 'Draft · the stance is soft. Say \"fix N2\" and I'll sharpen it.'"
 input = '''why?'''
 contains = []
 not_contains = []
 regex = [
-  '''(?m)^\W*Result: (PASS|FAIL)\b''',
+  '''(?i)WHY THIS GETS CLIENTS|\b(?:stance|soft|sharpen)\b''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
-not_regex = []
+not_regex = [
+  '''(?m)^\W*✓ Checked:''',
+  '''(?im)^\W*Result\s*:''',
+  '''(?i)\blint\s*:''',
+]
 verdict = ""
 invariants = ["I1", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (trigger set). QA §2.4: 'why?' prints the internal record for a piece, the only way QA detail reaches chat; §2.6: the record's first line is 'Result: PASS/FAIL', then the Edge pillars, gates, failed format items and lens fails. graders.py skips I4 and deny_list on the reply after an exact 'why?'. wf15 §2 (R5): a machine-written piece never shows a Draft line (it is fixed silently), so the Draft here is her own rewrite checked on request, as in edge-rubric.en.003."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. route: edge-rubric (trigger set). QA §2.4: 'why?' prints the internal record for a piece, the only way QA detail reaches chat; §2.6: the record's first line is 'Result: PASS/FAIL', then the Edge pillars, gates, failed format items and lens fails. graders.py skips I4 and deny_list on the reply after an exact 'why?'. wf15 §2 (R5): a machine-written piece never shows a Draft line (it is fixed silently), so the Draft here is her own rewrite checked on request, as in edge-rubric.en.003."""
 
 [[case]]
 id = "router.en.063"
@@ -2499,7 +2504,7 @@ id = "router.en.090"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after a Ready reel prints the WHY line, what it was written from and the checks; the reel itself had nothing under it"
+title = "'why?' after a Ready reel prints the WHY line and how it is built from his scene; the reel itself had nothing under it; no check record"
 context = "Same state as router.en.023: Week 2, Thursday 22 Oct 2026, iPhone. Brand Card v1 present (persona default: keyword KEEP UP, beat cards, keyword CTA). Turn 1 gets the beat-card short with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] script this as a reel: the time my 5 year old beat me up the stairs and I realised I hadn't trained in like 5 years
 [turn 2] why?'''
@@ -2507,21 +2512,22 @@ contains = []
 not_contains = []
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
-  '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:[^\n]*(?:stairs|5[- ]year[- ]old|five[- ]year[- ]old|5 years|five years|beat me|race|keep up)''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)(?:stairs|5[- ]year[- ]old|five[- ]year[- ]old|5 years|five years|beat me|race|keep up)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''\b(Owen|Lily|Jess|Tommy)\b''',
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:\s*(?:it(?:'|’)s |this is |the (?:reel|post|hook) is )?(?:great|strong|good|solid|punchy|powerful|engaging|compelling|on[- ]brand|authentic|relatable|scroll-stopping)\b''',
   '''(?i)\b(TITLE HOOK|VISUAL HOOK|VERBAL HOOK|LOCK-IN|LINK-FORWARD|Mode [ABC])\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (trigger set). wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"why?" (alone) → for the last piece: its WHY line · what it was written from: verdict.ready … · checked.prefix the checks passed, ticks too · the record'; plan.kit-week 5 gives the WHY form ('WHY THIS GETS CLIENTS: "{old belief}" → "{new belief}" · next: {step}'). The evidence is his scene (the stairs, his 5-year-old), never an adjective (I17). The turn-1 reply is router.en.023 (no status line, I3). verdict "Ready" after 'why?' means evals/run.py wants a Ready or ✓ Checked line here. Scores and codes are allowed only after 'why?', so I4 is not listed; template labels stay hidden even here."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. route: edge-rubric (trigger set). wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"why?" (alone) → for the last piece: its WHY line · what it was written from: verdict.ready … · checked.prefix the checks passed, ticks too · the record'; plan.kit-week 5 gives the WHY form ('WHY THIS GETS CLIENTS: "{old belief}" → "{new belief}" · next: {step}'). The evidence is his scene (the stairs, his 5-year-old), never an adjective (I17). The turn-1 reply is router.en.023 (no status line, I3). verdict "Ready" after 'why?' means evals/run.py wants a Ready or ✓ Checked line here. Scores and codes are allowed only after 'why?', so I4 is not listed; template labels stay hidden even here."""
 
 [[case]]
 id = "router.en.091"
@@ -2559,7 +2565,7 @@ id = "router.en.092"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'why?' after 'skip' shows the downgrade: the WHY line, 'Ready to post · written as …' and the checks; still no quote from Marcus"
+title = "'why?' after 'skip' shows the downgrade in plain words: the WHY line and how it is built; still no quote from Marcus; no check record"
 context = "Same state as router.en.059: Week 2, Thursday 22 Oct 2026, Claude Free. Brand Card v1 present (persona default). The last reply held two LinkedIn posts; under N2 (Marcus's client margin sheet story; Marcus consented to any use) sat 'Needs you · Marcus's exact words when he saw the sheet? I won't make it up. (Or say \"skip\".)'. Turn 1 'skip' gets N2 written as a process story with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] skip
 [turn 2] why?'''
@@ -2567,8 +2573,8 @@ contains = []
 not_contains = []
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
-  '''(?im)^\W*Ready to post · written as [^\n]*(?:process|story|steps?|how|sheet|no quote|without)''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)\b(?:process|story|steps?|sheet)\b|no quote|without (?:a |the |his )?(?:quote|Marcus)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -2576,20 +2582,21 @@ not_regex = [
   '''\[NEEDS:''',
   '''(?im)^[^\n]*\bMarcus (?:said|told me|says)\b[ \t]*:?[ \t]*["“]''',
   '''(?i)Ready after''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (route set). 'why?' after a downgraded piece: wf15 §2 'Ready, downgraded … The content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: what it was written from is verdict.ready_downgraded ('Ready to {verb} · written as {evidence}'), with the checks. R3: the 'written as' line left the piece (router.en.059) for this reply. The downgrade names the framing (a process story), and asking why never brings back the fact that was skipped. verdict "Ready-downgraded" after 'why?' means evals/run.py wants a Ready line here. A state-dependent branch of the 'why?' trigger (router.en.062, .090)."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. route: edge-rubric (route set). 'why?' after a downgraded piece: wf15 §2 'Ready, downgraded … The content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: what it was written from is verdict.ready_downgraded ('Ready to {verb} · written as {evidence}'), with the checks. R3: the 'written as' line left the piece (router.en.059) for this reply. The downgrade names the framing (a process story), and asking why never brings back the fact that was skipped. verdict "Ready-downgraded" after 'why?' means evals/run.py wants a Ready line here. A state-dependent branch of the 'why?' trigger (router.en.062, .090)."""
 
 [[case]]
 id = "router.en.093"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after 'make my version' opens the version's why: 'their shape, your …; nothing copied' naming her Bank, the WHY line, the checks"
+title = "'why?' after 'make my version' opens the version's why: 'their shape, your …; nothing copied' naming her Bank, the WHY line and how it is built; no check record"
 context = "Same state as router.en.070: Week 2, Wednesday 21 Oct 2026. Brand Card v1 present (persona default). Thursday's character short is not filmed yet. The machine saved the shape of a career coach's reel (on-screen text 'Stop applying. Start asking.'; one blunt rule on screen → 3 quick wrong moves → the one right move → a question). Turn 1 gets her version with nothing under it and the liked.slot NEXT line. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] make my version
 [turn 2] why?'''
@@ -2599,20 +2606,21 @@ regex = [
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it: their shape, your [^\n;]+; nothing copied''',
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it: their shape, your [^\n;]*(?:coffee|carrot|4B|63|applications|Lorraine|Gail|Bev|conference room|chapter|24 years|keepers|test drive|portal)''',
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)stop applying|start asking''',
   '''(?i)follows their post closely|Platforms may show copies less''',
   '''(?im)^\W*Not writing''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: liked (route set). A state-dependent 'why?': after a version it prints §CM-LIKED 7's 'on "why?": liked.evidence' ('Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied.'), a line only that job has, with the WHY line and the checks (edge-rubric.kit-verdict). R8: the line left the version (router.en.070) for this reply. The fact named is hers (the coffees, the carrot cake, 4B, the portal), never the creator's words; the default path passed DISTANCE, so no copy note here either."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. route: liked (route set). A state-dependent 'why?': after a version it prints §CM-LIKED 7's 'on "why?": liked.evidence' ('Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied.'), a line only that job has, with the WHY line and the checks (edge-rubric.kit-verdict). R8: the line left the version (router.en.070) for this reply. The fact named is hers (the coffees, the carrot cake, 4B, the portal), never the creator's words; the default path passed DISTANCE, so no copy note here either."""
 
 [[case]]
 id = "router.en.094"

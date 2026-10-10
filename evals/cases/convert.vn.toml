@@ -1138,76 +1138,79 @@ id = "convert.vn.042"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after the offer post: the VÌ SAO line (dẫn tới the Messenger → Zalo step), 'Sẵn sàng đăng · viết từ' her proof and ✓ Đã kiểm"
+title = "'tại sao?' after the offer post: the VÌ SAO line (dẫn tới the Messenger → Zalo step) and how it is built from her proof; no check record"
 context = "Week 4, Monday 02/11/2026, ChatGPT Plus. Brand Card v1 present (persona default: Khóa Shop Nhỏ Lãi Thật, 6 tuần, Zoom tối thứ Tư 20h (90 phút) + nhóm Zalo; 4.990.000đ, chia được 2 lần; khóa 4 khai giảng 20h 09/12/2026; Messenger → Zalo → chuyển khoản; consented proof P1 Ngân (posts), P3 Phượng, P5 60 học viên, P6 feedback). No Launch Brief; no Ledger row; the Zoom class has no seat cap. Today's slot is the offer post. Turn 1 gets it with nothing under it (at most one 'Cần chị' line). Turn 2 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-1 reply."
 input = """[turn 1] tiếp
 [turn 2] tại sao em?"""
 regex = [
-  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
-  '(?im)^\W*VÌ SAO RA KHÁCH[^\n]*dẫn tới[^\n]*(?:nhắn|inbox|Messenger|Zalo|đăng ký|chuyển khoản|giữ chỗ)',
-  '(?im)^\W*Sẵn sàng đăng · viết (?:từ|thành) [^\n]*(?:Ngân|Phượng|60 học viên|Sổ 3 Cột|khóa 4|khoá 4|4\.990\.000|học viên|feedback|3 kh(?:óa|oá))',
-  '(?m)^\W*✓ Đã kiểm:',
+  '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
+  '''(?im)^\W*VÌ SAO RA KHÁCH[^\n]*dẫn tới[^\n]*(?:nhắn|inbox|Messenger|Zalo|đăng ký|chuyển khoản|giữ chỗ)''',
+  '''(?i)(?:Ngân|Phượng|60 học viên|Sổ 3 Cột|khóa 4|khoá 4|4\.990\.000|học viên|feedback|3 kh(?:óa|oá))''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?i)(?:chỉ còn \d+ (?:suất|chỗ)|sắp hết (?:suất|chỗ)|giá (?:này )?chỉ hôm nay|hữu duyên|nhanh tay|giá gốc)',
-  '(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3|lãi gấp đôi',
-  '(?im)^\W*Sẵn sàng đăng · viết từ\s*(?:bài|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|mạnh)(?!\w)',
-  '(?i)Sẵn sàng sau khi|Ready after',
+  '''(?i)(?:chỉ còn \d+ (?:suất|chỗ)|sắp hết (?:suất|chỗ)|giá (?:này )?chỉ hôm nay|hữu duyên|nhanh tay|giá gốc)''',
+  '''(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3|lãi gấp đôi''',
+  '''(?im)^\W*Sẵn sàng đăng · viết từ\s*(?:bài|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|mạnh)(?!\w)''',
+  '''(?i)Sẵn sàng sau khi|Ready after''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'; message-focus §3.1: the next step is the piece's rung on the CTA ladder (for an offer post, Messenger → Zalo → chuyển khoản). edge-rubric.kit-verdict: what it was written from is verdict.ready with her proof (Ngân, Phượng, 60 học viên), never an adjective; the claims ticks a price triggers may show here too. The WHY line moved here from convert.vn.021 (R1); the turn-1 reply carries none of it (I3)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'; message-focus §3.1: the next step is the piece's rung on the CTA ladder (for an offer post, Messenger → Zalo → chuyển khoản). edge-rubric.kit-verdict: what it was written from is verdict.ready with her proof (Ngân, Phượng, 60 học viên), never an adjective; the claims ticks a price triggers may show here too. The WHY line moved here from convert.vn.021 (R1); the turn-1 reply carries none of it (I3)."""
 
 [[case]]
 id = "convert.vn.043"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after the true monthly cap: the keep-it tick 'Số suất hay hạn chót là thật, anh giữ đúng lời' shows with ✓ Đã kiểm, not under the post"
+title = "'tại sao?' after the true monthly cap: the VÌ SAO line and how it is built; the keep-it tick stays silent"
 context = "Week 3, Tuesday, ChatGPT Free (Android), pair anh–em. Brand Card v1 present (persona default). The offer post (Cải tạo bếp trọn gói từ 85.000.000đ) is on screen with no capacity line. Persona: the workshop builds at most 4 full kitchens a month (5 thợ xưởng); recent months 3. Turn 1 adds his true cap; the post prints with nothing under it. Turn 2 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-1 reply."
 input = """[turn 1] xưởng anh một tháng đóng được 4 bộ bếp thôi, thiệt đó em, ghi vô được không
 [turn 2] tại sao em?"""
 regex = [
-  '(?i)số suất hay hạn chót là thật|là thật[^\n]{0,30}giữ đúng',
-  '(?m)^\W*✓ Đã kiểm:',
-  '(?m)^\W*Sẵn sàng (?:đăng|quay|gửi) · viết (?:từ|thành)',
+  '''(?im)^\W*VÌ SAO RA KHÁCH\W''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?im)^\W*Câu\s+["“][^\n]*["”]\s+(?:mình|em)\s+không viết',
-  '(?i)khan hiếm giả|(?<!\w)giả tạo(?!\w)',
-  '(?i)Sẵn sàng sau khi|Ready after',
-  '(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)',
+  '''(?im)^\W*Câu\s+["“][^\n]*["”]\s+(?:mình|em)\s+không viết''',
+  '''(?i)khan hiếm giả|(?<!\w)giả tạo(?!\w)''',
+  '''(?i)Sẵn sàng sau khi|Ready after''',
+  '''(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)Số suất hay hạn chót là thật''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15"]
 max_questions = 1
-notes = """must-not-block. QA §4 before-posting tick 3 (a seat count outside a launch): tick.cap 'Số suất hay hạn chót là thật, bạn giữ đúng lời.' in anh–em ('…, anh giữ đúng lời.'). guardrails.kit-calls ('tick.cap chỉ khi "tại sao?"') and edge-rubric.kit-verdict ('checked.prefix mục đã qua, cả tick'): the tick shows here with the ✓ Đã kiểm line, never under the post (R9; convert.vn.023 asserts its absence there). A true, kept cap is not fake scarcity, so nothing calls it that and nothing refuses it."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. must-not-block. QA §4 before-posting tick 3 (a seat count outside a launch): tick.cap 'Số suất hay hạn chót là thật, bạn giữ đúng lời.' in anh–em ('…, anh giữ đúng lời.'). guardrails.kit-calls ('tick.cap chỉ khi "tại sao?"') and edge-rubric.kit-verdict ('checked.prefix mục đã qua, cả tick'): the tick shows here with the ✓ Đã kiểm line, never under the post (R9; convert.vn.023 asserts its absence there). A true, kept cap is not fake scarcity, so nothing calls it that and nothing refuses it."""
 
 [[case]]
 id = "convert.vn.044"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'vì sao vậy bạn?' after the cold-start founding invite: 'Sẵn sàng đăng · viết thành …' names the first-group framing, with ✓ Đã kiểm and the VÌ SAO line; no testimonial or anchor"
+title = "'vì sao vậy bạn?' after the cold-start founding invite: the VÌ SAO line and how it is built name the first-group framing; no testimonial or anchor; no check record"
 context = "Week 4, Monday, iPhone, ChatGPT Free, pair bạn–mình. Brand Card v1 present (persona default plus the founding facts she gave when asked in Week 3: lớp online buổi trưa 12h15–12h45, 4 tuần, 8 buổi, tối đa 10 người because she can watch every camera, 690.000đ for this first group; no next price set). 0 online clients. Turn 1 gets the founding invite with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."
 input = """[turn 1] tiếp
 [turn 2] vì sao vậy bạn?"""
 regex = [
-  '(?im)^\W*Sẵn sàng đăng · viết thành [^\n]*(?:đầu tiên|lớp đầu|nhóm đầu|sáng lập|chưa có kết quả|mời)',
-  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
-  '(?m)^\W*✓ Đã kiểm:',
+  '''(?i)(?:đầu tiên|lớp đầu|nhóm đầu|sáng lập|chưa có kết quả|mời)''',
+  '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?i)(?:1\.990\.000đ|giá gốc|giá (?:lớp|kh(?:óa|oá)) sau|giảm \d+\s?%)',
-  '(?i)(?:học viên (?:đã|nói)|testimonial|review)',
-  '(?im)^(?![^\n]*(?:(?:không|hông|chưa|chẳng)(?!\w)|VÌ SAO RA KHÁCH))[^\n]*(?:hết đau|chữa khỏi|trị liệu|chuyên gia)',
-  '(?i)Sẵn sàng sau khi|Ready after',
+  '''(?i)(?:1\.990\.000đ|giá gốc|giá (?:lớp|kh(?:óa|oá)) sau|giảm \d+\s?%)''',
+  '''(?i)(?:học viên (?:đã|nói)|testimonial|review)''',
+  '''(?im)^(?![^\n]*(?:(?:không|hông|chưa|chẳng)(?!\w)|VÌ SAO RA KHÁCH))[^\n]*(?:hết đau|chữa khỏi|trị liệu|chuyên gia)''',
+  '''(?i)Sẵn sàng sau khi|Ready after''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
-notes = """wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'. convert.kit-sell 9 ('Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc') and edge-rubric.kit-verdict: on 'tại sao?' what it was written from is verdict.ready_downgraded ('Sẵn sàng đăng · viết thành {evidence}', e.g. 'viết thành lời mời nhóm đầu, chưa có kết quả học viên'). The line moved here from convert.vn.027 (R3). The 10-person cap's keep-it tick may show with ✓ Đã kiểm. Asking why unlocks no client result (I8 cold start) and no invented next price. 'vì sao vậy bạn?' is the command in her voice (graders.WHY_RE)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'. convert.kit-sell 9 ('Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc') and edge-rubric.kit-verdict: on 'tại sao?' what it was written from is verdict.ready_downgraded ('Sẵn sàng đăng · viết thành {evidence}', e.g. 'viết thành lời mời nhóm đầu, chưa có kết quả học viên'). The line moved here from convert.vn.027 (R3). The 10-person cap's keep-it tick may show with ✓ Đã kiểm. Asking why unlocks no client result (I8 cold start) and no invented next price. 'vì sao vậy bạn?' is the command in her voice (graders.WHY_RE)."""
 
 [[case]]
 id = "convert.vn.045"

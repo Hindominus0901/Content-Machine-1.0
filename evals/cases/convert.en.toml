@@ -1144,40 +1144,41 @@ id = "convert.en.045"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'why?' after the editorial post: the WHY line (old belief → new belief, next: the comment-word step), the checks and what it was written from"
+title = "'why?' after the editorial post: the WHY line (old belief → new belief, next: the comment-word step) and how it is built; no check record"
 context = "Same state as convert.en.011: Week 2, Wednesday, Claude Free, after the Weekly Talk. Brand Card v1 present (persona default: method 'margin before more', old way 'top-line theater', keyword RECORD YEAR, gift the client margin sheet). Today's piece is the LinkedIn editorial post on big idea 1. Turn 1 gets it with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] next
 [turn 2] why?'''
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
   '''(?im)^\W*WHY THIS GETS CLIENTS[^\n]*\bnext\b[^\n]*(?:record year|margin sheet|comment|reply|DM|message)''',
-  '''(?im)^\W*Ready to (?:post|film) · I(?:'|’)d post it:[^\n]*(?:Marcus|\b38\b|\b51\b|stairwell|banker|Tom[aá]s|\bDee\b|record year|top-line|margin before more|client by client|real hours)''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)(?:Marcus|\b38\b|\b51\b|stairwell|banker|Tom[aá]s|\bDee\b|record year|top-line|margin before more|client by client|real hours)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''\bRaj\b''',
   '''(?i)\b70\s*(%|percent)''',
   '''(?i)\b85,000\b''',
   '''(?i)Ready after''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}'; message-focus §3.1: the next step is the piece's rung on the CTA ladder (comment RECORD YEAR → the margin sheet). edge-rubric.kit-verdict: what it was written from is verdict.ready with her Bank fact (Marcus, the stairwell call), never an adjective. The WHY line moved here from convert.en.011 (R1); the turn-1 reply carries none of it (I3)."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}'; message-focus §3.1: the next step is the piece's rung on the CTA ladder (comment RECORD YEAR → the margin sheet). edge-rubric.kit-verdict: what it was written from is verdict.ready with her Bank fact (Marcus, the stairwell call), never an adjective. The WHY line moved here from convert.en.011 (R1); the turn-1 reply carries none of it (I3)."""
 
 [[case]]
 id = "convert.en.046"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after the cold-start founding invite: 'Ready to post · written as a founding offer …', the checks and the WHY line; no testimonial or count appears"
+title = "'why?' after the cold-start founding invite: the WHY line and how it is built name the founding framing; no testimonial or count; no check record"
 context = "Same state as convert.en.017: Week 4, Monday, iPhone. Brand Card v1 present (persona default; 0 clients; founding facts given in Week 3: 8 weeks, a small group of 5 dads, $249 for this first group only, one 15-minute check-in a week, a full refund after the first 2 weeks). Turn 1 gets the founding invite with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] next
 [turn 2] why?'''
 regex = [
-  '''(?im)^\W*Ready to (?:post|film) · written as[^\n]*(?:founding|first group|no client results|process)''',
+  '''(?i)(?:founding|first group|no client results|process)''',
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''\$499''',
@@ -1185,32 +1186,34 @@ not_regex = [
   '''(?i)\b(join \d+|\d+\+? dads (already|in)|dads in my program)\b''',
   '''(?i)\b(lose|lost|burn|melt)\s+(\d|fat|weight|belly)''',
   '''(?i)Ready after''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
-notes = """wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'. convert.kit-sell 9: 'No proof: founding offer, nothing said (verdict.ready_downgraded on "why?")'; QA §2.4 wording 'Ready to post · written as a founding offer (no client results yet).' The line moved here from convert.en.017 (R3). Asking why unlocks no client number (I8 cold start) and no invented next price."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'. convert.kit-sell 9: 'No proof: founding offer, nothing said (verdict.ready_downgraded on "why?")'; QA §2.4 wording 'Ready to post · written as a founding offer (no client results yet).' The line moved here from convert.en.017 (R3). Asking why unlocks no client number (I8 cold start) and no invented next price."""
 
 [[case]]
 id = "convert.en.047"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after the true capacity line: the 'real and you'll keep it' tick shows with the checks, not under the post"
+title = "'why?' after the true capacity line: the WHY line and how it is built; the 'real and you'll keep it' tick stays silent"
 context = "Same state as convert.en.016: Week 4, Monday, ChatGPT Free. Brand Card v1 present (persona default). The offer post is on screen with no seat line. Turn 1 adds her true cap; the post prints with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] I really only take 2 new people a month, that's true, I have 6 max. can we say that?
 [turn 2] why?'''
 regex = [
-  '''(?i)(\b(real|true)\b[^.\n]{0,60}\b(keep|stick to|hold)\b|you(?:'|’)ll keep)''',
-  '''(?m)^\W*✓ Checked:''',
-  '''(?m)^\W*Ready to (?:post|film|send) · (?:I(?:'|’)d post it:|written as)''',
+  '''(?im)^\W*WHY THIS GETS CLIENTS\W''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''(?im)^\W*Not writing''',
   '''(?i)\bspots? left\b''',
   '''(?i)Ready after''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?i)The cap or deadline is real, and you(?:'|’)ll keep it''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8"]
 max_questions = 1
-notes = """QA §4 before-posting tick 3 (a seat count outside a launch): tick.cap 'The cap or deadline is real, and you'll keep it.' convert.kit-sell 9 and edge-rubric.kit-verdict: the tick shows on 'why?' with the ✓ Checked line ('the checks passed, ticks too'), never under the post (R9; convert.en.016 asserts its absence there). A true, kept cap is not fake scarcity, so nothing refuses it."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. QA §4 before-posting tick 3 (a seat count outside a launch): tick.cap 'The cap or deadline is real, and you'll keep it.' convert.kit-sell 9 and edge-rubric.kit-verdict: the tick shows on 'why?' with the ✓ Checked line ('the checks passed, ticks too'), never under the post (R9; convert.en.016 asserts its absence there). A true, kept cap is not fake scarcity, so nothing refuses it."""

@@ -597,23 +597,24 @@ id = "character.vn.029"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao vậy?' after QUAY HÔM NAY: the checks and the evidence name her own story, never a client she doesn't have"
+title = "'tại sao vậy?' after QUAY HÔM NAY: the VÌ SAO line and how it is built name her own story, never a client she doesn't have; no check record"
 context = "Day 0, about minute 18, ChatGPT Free on her iPhone (S1: method file in the project). Pair bạn–mình; audience mình – mấy bạn; Southern; cold start (0 online clients, proof locked). The soft cut after dump chunk 2 carried the best-result guess ('… mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the last guess was what she sells. Turn 1 answers it and gets the 4-line Bản đồ (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it, nothing under the piece, then map.ok; turn 2 asks why."
 input = """[turn 1] chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi
 [turn 2] tại sao vậy?"""
 regex = [
-  '''(?m)^\W*(?:✓ Đã kiểm:|Sẵn sàng quay · viết (?:từ|thành))[^\n]*(?i:9 giờ tối|tháng 3|2023|vịn|kế toán|quyết toán|chuyện của bạn|chuyện (?:của )?chính bạn|cứng đơ)''',
-  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+  '''(?i)(?:9 giờ tối|tháng 3|2023|vịn|kế toán|quyết toán|chuyện của bạn|chuyện (?:của )?chính bạn|cứng đơ)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
 ]
 not_regex = [
   '''(?i)(?:học viên|khách)\s+(?:của mình\s+)?(?:đã|đều)\s+(?:hết|khỏi|đỡ)''',
   '''(?i)(?:3 tuần|4 viên|chuyên gia|vật lý trị liệu)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I17", "I18"]
 max_questions = 1
-notes = "expected.toml [day0]: the old QUAY HÔM NAY 'Checked' line named her own story (9 giờ tối tháng 3 năm 2023, holding the desk); it now prints only on 'tại sao?' (wf15 §2, R2; §CM-EDGE '\"tại sao?\" → bài gần nhất: dòng VÌ SAO · viết từ đâu · \"✓ Đã kiểm:\"'), with the VÌ SAO line and what the piece was written from ('Sẵn sàng quay · viết từ {her story}', or with no client result '… · viết thành {her story}'). Turn 1 prints the Map with QUAY HÔM NAY under it (K2) and nothing under the piece (I3 grades it; fmt-short.vn.002 asserts the piece on S0); turn 2's 'tại sao vậy?' (a close variant graders.py WHY_RE reads) is about its piece, QUAY HÔM NAY. Turn 2 (assertions here): her own story named on the Checked or evidence line, the ✓ Đã kiểm line, the VÌ SAO line. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. Never a client, a credential or the friend's '3 tuần'. Mirrors character.en.028."
+notes = "v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. expected.toml [day0]: the old QUAY HÔM NAY 'Checked' line named her own story (9 giờ tối tháng 3 năm 2023, holding the desk); it now prints only on 'tại sao?' (wf15 §2, R2; §CM-EDGE '\"tại sao?\" → bài gần nhất: dòng VÌ SAO · viết từ đâu · \"✓ Đã kiểm:\"'), with the VÌ SAO line and what the piece was written from ('Sẵn sàng quay · viết từ {her story}', or with no client result '… · viết thành {her story}'). Turn 1 prints the Map with QUAY HÔM NAY under it (K2) and nothing under the piece (I3 grades it; fmt-short.vn.002 asserts the piece on S0); turn 2's 'tại sao vậy?' (a close variant graders.py WHY_RE reads) is about its piece, QUAY HÔM NAY. Turn 2 (assertions here): her own story named on the Checked or evidence line, the ✓ Đã kiểm line, the VÌ SAO line. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. Never a client, a credential or the friend's '3 tuần'. Mirrors character.en.028."
 
 [[case]]
 id = "character.vn.030"

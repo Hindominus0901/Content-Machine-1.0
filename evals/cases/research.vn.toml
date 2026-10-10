@@ -648,25 +648,25 @@ id = "research.vn.033"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' on a post built from the research paste: the post carries nothing, the VÌ SAO line starts from the buyers' own words"
+title = "'tại sao?' on a post built from the research paste: the post carries nothing, the VÌ SAO line starts from the buyers' own words; no check record"
 context = "Brand Card v1 present (persona default: pair chị–em, audience mình – các chị em, keyword LÃI ẢO), Week 2, Wednesday, ChatGPT Plus project with the method file. The previous turn pasted research-paste.md (lines 1-32) with 'em xem giúp chị người ta nói gì, cái nào dùng được' and got the RESEARCH-LITE summary: conclusion first, buyer lines by pattern with '{n} người · {n} nơi' ('bán thì đắt mà không thấy tiền đâu', 'lãi ảo hết các chị ạ', 'tắt ads là đứng hình'), the 2 seller promos and 3 duplicates dropped, line 19 (her own 'Doanh thu là để khoe, lãi mới là để tiêu.', reposted) not counted."
 input = """[turn 1] ok em viết chị bài hôm nay từ cái câu 'bán thì đắt mà không thấy tiền đâu' nhé
 [turn 2] tại sao thế em?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:không thấy tiền|bán thì đắt|lãi ảo)[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng (?:đăng|quay) · viết (?:từ|thành) ''',
-  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?i)399k|x3 doanh thu|giảm 40%|ra đơn ầm ầm''',
   '''(?i)(?:\d+|hai|ba|bốn|năm) người[^\n]{0,60}Doanh thu là để khoe''',
   '''(?i)Doanh thu là để khoe[^\n]{0,60}(?:\d+|hai|ba|bốn|năm) người''',
   '''(?i)50 triệu|gấp 3|1 tỷ''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I9", "I10", "I15", "I18"]
 max_questions = 1
-notes = "wf15 §2 and research.kit-paste: a piece built from the research prints with nothing under it (I3 grades the turn-1 reply). On 'tại sao?' (assertions here; §CM-EDGE 'tại sao?'): the stored WHY line (plan.kit-week 5 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}') starts from the buyers' words ('bán thì đắt mà không thấy tiền đâu', heard from 2+ people in 2+ places), 'Sẵn sàng đăng · viết từ {evidence}' names that pattern or her own story, and '✓ Đã kiểm:' lists the checks passed. Sellers' numbers and the coach's own line never count as buyer voices (RB1, G3). I8 is not listed: the reply may name '{n} người · {n} nơi' (header). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
+notes = "v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 and research.kit-paste: a piece built from the research prints with nothing under it (I3 grades the turn-1 reply). On 'tại sao?' (assertions here; §CM-EDGE 'tại sao?'): the stored WHY line (plan.kit-week 5 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}') starts from the buyers' words ('bán thì đắt mà không thấy tiền đâu', heard from 2+ people in 2+ places), 'Sẵn sàng đăng · viết từ {evidence}' names that pattern or her own story, and '✓ Đã kiểm:' lists the checks passed. Sellers' numbers and the coach's own line never count as buyer voices (RB1, G3). I8 is not listed: the reply may name '{n} người · {n} nơi' (header). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
 
 [[case]]
 id = "research.vn.034"

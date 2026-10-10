@@ -1066,11 +1066,12 @@ id = "liked.vn.033"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "First quiet weekday 'tiếp' of Week 2: today's piece as planned, nothing under it; a post invite, if any, only as a clause of the TIẾP line"
+title = "First quiet weekday 'tiếp' of Week 2: the one-line pointer to today's piece (printed after the Talk), nothing under it; a post invite, if any, only as a clause of the TIẾP line"
 context = '''Week 2, Monday 19/10/2026, 12h10, iPhone, ChatGPT Free. Brand Card v1 present (persona default: pair bạn–mình, Nam, keyword CỨNG ĐƠ, talk day Chủ nhật). Sunday's Weekly Talk is done and its reply printed this week's plan; today is a plain weekday (no Talk, no Friday numbers, no launch). She has never sent a post. She opens the newest chat and types the taught word.'''
 input = '''tiếp'''
 regex = [
-  '''(?m)^[ \t]*(?:```|~~~)''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1080,21 +1081,23 @@ not_regex = [
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
   '''(?i)Buổi nói chuyện tuần: 5 câu hỏi|Số liệu thứ Sáu, 3 phút''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17"]
 max_questions = 1
-notes = """route: §CM-TODAY 5 ('Ngày khác: một bài hôm nay trong kế hoạch tuần, y như đã viết: thứ, giờ, khung chép'): today's piece from the week plan, in its copy box, with nothing under it (wf15 §2, I3). Rewritten from the old invite case: wf13 §2-§3 specify liked.invite ('Thấy bài nào hay cứ chụp gửi mình, …') as a clause on the first quiet weekday 'tiếp' of Week 2, but the built kit has no such string or rule (strings/vn.toml has no liked.invite; §CM-TODAY and §CM-LIKED say nothing of it; NÂNG CẤP offers one level-up at a time), so the case now tests the weekday piece and keeps only the placement guard: an invite, if the kit ever prints one, sits in the TIẾP line, never on its own line, twice or as a question. Flagged for the strings / module owner."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. route: §CM-TODAY 5 ('Ngày khác: một bài hôm nay trong kế hoạch tuần, y như đã viết: thứ, giờ, khung chép'): today's piece from the week plan, in its copy box, with nothing under it (wf15 §2, I3). Rewritten from the old invite case: wf13 §2-§3 specify liked.invite ('Thấy bài nào hay cứ chụp gửi mình, …') as a clause on the first quiet weekday 'tiếp' of Week 2, but the built kit has no such string or rule (strings/vn.toml has no liked.invite; §CM-TODAY and §CM-LIKED say nothing of it; NÂNG CẤP offers one level-up at a time), so the case now tests the weekday piece and keeps only the placement guard: an invite, if the kit ever prints one, sits in the TIẾP line, never on its own line, twice or as a question. Flagged for the strings / module owner."""
 
 [[case]]
 id = "liked.vn.034"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "Week 1 weekday 'tiếp': today's Week-1 piece, nothing under it, no post invite"
+title = "Week 1 weekday 'tiếp': the one-line pointer to today's Week-1 piece (printed on Day 0), nothing under it, no post invite"
 context = '''Week 1, Wednesday 14/10/2026, 12h05, iPhone, ChatGPT Free. Day 0 was Monday 12/10 and ended with Tuần 1, the Brand Card and the save line; Brand Card v1 is a project source (pair bạn–mình, Nam, keyword CỨNG ĐƠ). Week 1 pieces are being filmed and posted. She has never sent a post. She types the taught word.'''
 input = '''tiếp'''
 regex = [
-  '''(?m)^[ \t]*(?:```|~~~)''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1102,21 +1105,23 @@ not_regex = [
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
   '''(?i)Hôm nay mình làm 3 việc|gọi bạn là anh, chị hay bạn''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17"]
 max_questions = 1
-notes = """§CM-TODAY 5: a plain weekday 'tiếp' prints today's piece from the Week-1 plan as written (day, time, copy box), nothing under it (wf15 §2). wf13 §3: Week 1 saves posts and 'làm bản của mình' works if she sends one, but no invite runs before Week 2 ('None on Day 0, in Week 1 …'); the built kit has no invite at all (liked.vn.033). Day 0 is never restarted."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. §CM-TODAY 5: a plain weekday 'tiếp' prints today's piece from the Week-1 plan as written (day, time, copy box), nothing under it (wf15 §2). wf13 §3: Week 1 saves posts and 'làm bản của mình' works if she sends one, but no invite runs before Week 2 ('None on Day 0, in Week 1 …'); the built kit has no invite at all (liked.vn.033). Day 0 is never restarted."""
 
 [[case]]
 id = "liked.vn.035"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "Week 4 weekday 'tiếp' after she has sent 5 posts: today's piece, no invite, no list of saved posts"
+title = "Week 4 weekday 'tiếp' after she has sent 5 posts: the one-line pointer to today's piece, no invite, no list of saved posts"
 context = '''Week 4, Monday 02/11/2026, 12h10, iPhone, ChatGPT Free. Brand Card v1 present (persona default: pair bạn–mình, Nam, keyword CỨNG ĐƠ, talk day Chủ nhật; Sunday's Talk printed this week's plan). Since 20/10 she has sent five posts (liked-paste.md L1-L5, 20/10-29/10), all saved in Bài bạn thích. Today is a plain weekday; this is her first 'tiếp' of the day.'''
 input = '''tiếp'''
 regex = [
-  '''(?m)^[ \t]*(?:```|~~~)''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1124,10 +1129,11 @@ not_regex = [
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
   '''(?i)khung của họ''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15", "I17"]
 max_questions = 1
-notes = """§CM-TODAY 5: today's piece as planned, nothing under it. wf13 §3 invite rules ('Proactive invites are ≥14 days apart. They stop after 2 are ignored, or once the coach has sent 2 posts.'): she already sent five, so no invite even if the kit had one (it has none, liked.vn.033). A piece built on one of her saved shapes still prints no evidence line (R8; 'khung của họ' only on 'tại sao?')."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. §CM-TODAY 5: today's piece as planned, nothing under it. wf13 §3 invite rules ('Proactive invites are ≥14 days apart. They stop after 2 are ignored, or once the coach has sent 2 posts.'): she already sent five, so no invite even if the kit had one (it has none, liked.vn.033). A piece built on one of her saved shapes still prints no evidence line (R8; 'khung của họ' only on 'tại sao?')."""
 
 # ================================================================ "like [person]": feel words on the default path
 
@@ -1161,7 +1167,7 @@ id = "liked.vn.037"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after 'làm bản của mình': the VÌ SAO line, liked.evidence naming her own story, ✓ Đã kiểm; the version itself carried nothing"
+title = "'tại sao?' after 'làm bản của mình': the VÌ SAO line, liked.evidence naming her own story, and how it is built; the version itself carried nothing"
 context = '''Week 2, Thursday 22/10/2026, laptop, ChatGPT Plus. Brand Card v1 present (persona default: pair chị–em, Bắc, keyword LÃI ẢO, gift Sổ 3 Cột bản 1 trang, stories P4 (28 Tết 2019, adding up the 2018 books in the warehouse) and P1/P2 (em Ngân, consented for posts)). Earlier today she pasted proof-coach/liked-paste.md L2 (a market-stall caption: the stall owner asks which item sells best and how much it makes per order) and the machine saved its shape (a market scene → one question → she can't answer → a one-line lesson → save CTA), offering 'làm bản của mình'. Thursday's short video is not filmed yet. Turn 1 gets her version with nothing under it and the liked.slot TIẾP line. Turn 2 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-1 reply.'''
 input = '''[turn 1] làm bản của mình
 [turn 2] tại sao?'''
@@ -1169,7 +1175,7 @@ regex = [
   '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
   '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]+? của chị,? không chép câu nào''',
   '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]*(?:28 Tết|Tết 2019|2018|trong kho|Sổ 3 Cột|Ngân|sổ sách|lãi)''',
-  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1179,25 +1185,25 @@ not_regex = [
   '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ,\s*(?:bài |câu |video |hook )?(?:hay|mạnh|tốt|ổn|cuốn|chất|đỉnh|thu hút|hấp dẫn|ấn tượng|gần gũi|chạm)(?!\w)''',
   '''(?i)\b(?:TITLE HOOK|VISUAL HOOK|VERBAL HOOK|LOCK-IN|Mode [ABC])\b|(?<!\w)SG-copy(?!\w)''',
   '''Bài bạn thích|(?<!\w)của bạn(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' liked.kit-make 7 'Hỏi "tại sao?": liked.evidence' in chị–em ('Sẵn sàng quay · khung của họ, {fact} của chị, không chép câu nào.'); §CM-EDGE '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu · "✓ Đã kiểm:" mục đã qua, cả tick · hồ sơ' and 'Bằng chứng: câu, cảnh, khách của họ; không tính từ' (the adjective guard; also I17). plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'). The fact named is hers (28 Tết 2019, the warehouse books, Sổ 3 Cột, Ngân), never the creator's market stall; the default path passed DISTANCE, so no copy note on 'tại sao?' either. Scores and codes may print after 'tại sao?' (I4 not listed); template labels stay hidden. R8: this line left the version (liked.vn.002) for this reply. verdict "Ready" after 'tại sao?' means a Ready or ✓ Đã kiểm line is wanted here; the turn-1 reply carries none."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' liked.kit-make 7 'Hỏi "tại sao?": liked.evidence' in chị–em ('Sẵn sàng quay · khung của họ, {fact} của chị, không chép câu nào.'); §CM-EDGE '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu · "✓ Đã kiểm:" mục đã qua, cả tick · hồ sơ' and 'Bằng chứng: câu, cảnh, khách của họ; không tính từ' (the adjective guard; also I17). plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'). The fact named is hers (28 Tết 2019, the warehouse books, Sổ 3 Cột, Ngân), never the creator's market stall; the default path passed DISTANCE, so no copy note on 'tại sao?' either. Scores and codes may print after 'tại sao?' (I4 not listed); template labels stay hidden. R8: this line left the version (liked.vn.002) for this reply. verdict "Ready" after 'tại sao?' means a Ready or ✓ Đã kiểm line is wanted here; the turn-1 reply carries none."""
 
 [[case]]
 id = "liked.vn.038"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after an F1 copy: the logged Override shows with the record; never 'không chép câu nào', no second copy note, no refusal"
+title = "'tại sao?' after an F1 copy: the logged Override shows; never 'không chép câu nào', no second copy note, no refusal, no check record"
 context = '''Week 2, Thursday 22/10/2026, iPhone, ChatGPT Free. Brand Card v1 present (persona default; pair bạn–mình, Nam). F1 (DECISIONS, 5 Oct 2026) applies. Turn 1 pastes a TikTok caption she likes; the machine saves its shape. Turn 2 asks for an exact copy; the reply prints the caption word for word with ONE dated liked.copy_note and no Override line. Turn 3 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-2 reply.'''
 input = '''[turn 1] <<paste: evals/personas/vn/coldstart-coach/liked-paste.md, the "## L2" block: everything below its HTML comment, verbatim>>
 [turn 2] thôi cái này mình muốn đăng y nguyên luôn, chép nguyên văn giùm mình nha, khỏi sửa chữ nào
 [turn 3] tại sao?'''
 regex = [
   '''(?i)\boverride\b|Đăng theo ý bạn|theo ý bạn[^\n]{0,80}ghi lại|ghi lại[^\n]{0,60}(?:theo ý bạn|bạn (?:nhờ|bảo|muốn|yêu cầu))|bạn (?:nhờ|bảo|muốn|yêu cầu) (?:chép|đăng)[^\n]{0,80}(?:ghi lại|override)''',
-  '''(?im)^\W*Kết quả\s*:''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1206,7 +1212,9 @@ not_regex = [
   '''(?i)khung của họ, ''',
   '''(?s)Bài na ná dễ bị giảm hiển thị.*Bài na ná dễ bị giảm hiển thị''',
   '''(?i)vẫn là bài của họ|bạn có chắc''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
 ]
 invariants = ["I1", "I3", "I5", "I17"]
 max_questions = 1
-notes = """must-not-block. wf15 §2 and R7: F1 prints only its one dated note; liked.kit-make 8 'Ghi Override' and §CM-EDGE IN DƯỚI BÀI ('Chép, dịch, so sánh …: một lưu ý có ngày; Override chỉ ghi'); '"tại sao?" → bài gần nhất: … viết từ đâu … hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT" …' (QA §2.6: the record's result for a requested copy is an Override). strings/vn.toml does not fix the wording of the logged Override here (verdict.override 'Đăng theo ý bạn · mình vẫn lo: {defect} · đã ghi lại.' or the record), so the first regex reads it loosely, as liked.en.037 does; flagged for the strings owner. A copied piece is never described as 'không chép câu nào' (liked.evidence is the default path's line), the copy note is not printed twice, and asking why never turns the copy into a refusal. The turn-2 reply is liked.vn.022."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. must-not-block. wf15 §2 and R7: F1 prints only its one dated note; liked.kit-make 8 'Ghi Override' and §CM-EDGE IN DƯỚI BÀI ('Chép, dịch, so sánh …: một lưu ý có ngày; Override chỉ ghi'); '"tại sao?" → bài gần nhất: … viết từ đâu … hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT" …' (QA §2.6: the record's result for a requested copy is an Override). strings/vn.toml does not fix the wording of the logged Override here (verdict.override 'Đăng theo ý bạn · mình vẫn lo: {defect} · đã ghi lại.' or the record), so the first regex reads it loosely, as liked.en.037 does; flagged for the strings owner. A copied piece is never described as 'không chép câu nào' (liked.evidence is the default path's line), the copy note is not printed twice, and asking why never turns the copy into a refusal. The turn-2 reply is liked.vn.022."""

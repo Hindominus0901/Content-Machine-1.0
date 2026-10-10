@@ -914,22 +914,24 @@ id = "setup.vn.042"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "floor"]
-title = "Day 3, Door B: 'tiep em oi' in the renamed chat gives today's piece with nothing under it, no project, no re-asking"
+title = "Day 3, Door B: 'tiep em oi' in the renamed chat gives the one-line pointer to today's piece (printed on Day 0), nothing under it, no project, no re-asking"
 context = "Door B, pair chị–em. Day 0 ended with the rename and the box in Zalo 'Cloud của tôi'. Day 3 morning she opens the chat named 'Content Machine' (same chat)."
 input = """tiep em oi"""
 regex = [
-  '\A◆ Content Machine',
-  '''(?:```|(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Video\b|Bài\b)))''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
+  '''\A◆ Content Machine''',
 ]
 not_contains = ["dự án", "anh, chị hay bạn", "VÌ SAO RA KHÁCH"]
 not_regex = [
-  '(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)',
-  '(?i)(dán|gửi)\s+lại\s+(hộp|khối|Brand Card)',
+  '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?i)(dán|gửi)\s+lại\s+(hộp|khối|Brand Card)''',
   '''(?m)^\W*(?:✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 invariants = ["I1", "I3", "I5", "I15"]
 max_questions = 1
-notes = "UX §6 Return row 'Day 3: opens the right place and gets today's piece unaided, 6/6 (Door B: ≤1 paste)'. Same chat, so no paste is needed at all. §CM-TODAY 5: today's piece from this week's plan, as written. It prints with nothing under it (R1); its WHY waits for 'tại sao?'. 'bạn' would be a pronoun slip only in the machine's words; a piece for her owners uses 'các em', so the whole-reply guard holds."
+notes = "v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. UX §6 Return row 'Day 3: opens the right place and gets today's piece unaided, 6/6 (Door B: ≤1 paste)'. Same chat, so no paste is needed at all. §CM-TODAY 5: today's piece from this week's plan, as written. It prints with nothing under it (R1); its WHY waits for 'tại sao?'. 'bạn' would be a pronoun slip only in the machine's words; a piece for her owners uses 'các em', so the whole-reply guard holds."
 
 # ---------------------------------------------------------------- golden-run budgets (transcript graders)
 
@@ -1178,47 +1180,48 @@ id = "setup.vn.052"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "'tại sao?' after QUAY HÔM NAY: the piece printed clean; the 'tại sao?' reply gives the VÌ SAO line, what it was written from and the checks"
+title = "'tại sao?' after QUAY HÔM NAY: the piece printed clean; the 'tại sao?' reply gives the VÌ SAO line and how it is built from her own story; no check record"
 context = "Helper-installed Door A, ChatGPT Android app, pair chị–em, audience chị – các em. After the soft cut her one missing fact was the multi-income guess. Turn 1 answers it and gets the 4-line Map (TỪ KHOÁ: NGẠI CHÀO) with QUAY HÔM NAY under it; turn 2 asks why."
 input = """[turn 1] Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.
 [turn 2] tại sao thế em?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng quay · viết (?:từ|thành) [^\n]*(?i:2018|kịch bản|41|27 thẻ|mưa|cô giáo|dọa da|Thảo|sổ thẻ)''',
-  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+  '''(?i)(?:2018|kịch bản|41|27 thẻ|mưa|cô giáo|dọa da|Thảo|sổ thẻ)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?i)70\s?%|cô Hoa|gấp đôi''',
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_questions = 1
-notes = "wf15 §2 ('\"why?\" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE 'tại sao?': 'dòng VÌ SAO · viết từ đâu: verdict.ready (quay/đăng/gửi; hoặc verdict.ready_downgraded) · checked.prefix mục đã qua, cả tick · hồ sơ'. Turn 1 prints the Map with QUAY HÔM NAY under it (K2) and nothing under the piece: I3 grades that reply (setup.vn.012 asserts the piece). Turn 2's 'tại sao thế em?' (graders.WHY_RE) is read as about its piece, QUAY HÔM NAY. Assertions here: the stored WHY line (plan.kit-week 5: 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}'), 'Sẵn sàng quay · viết từ {evidence}' naming her own story, and '✓ Đã kiểm:' (the old visible line named 'dùng chuyện spa 2018 · từ khoá 1 lần'); the record (Kết quả: ĐẠT, K V A Au C) may follow. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. I4 is not listed: scores may print after 'tại sao?'."
+notes = "v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 ('\"why?\" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE 'tại sao?': 'dòng VÌ SAO · viết từ đâu: verdict.ready (quay/đăng/gửi; hoặc verdict.ready_downgraded) · checked.prefix mục đã qua, cả tick · hồ sơ'. Turn 1 prints the Map with QUAY HÔM NAY under it (K2) and nothing under the piece: I3 grades that reply (setup.vn.012 asserts the piece). Turn 2's 'tại sao thế em?' (graders.WHY_RE) is read as about its piece, QUAY HÔM NAY. Assertions here: the stored WHY line (plan.kit-week 5: 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}'), 'Sẵn sàng quay · viết từ {evidence}' naming her own story, and '✓ Đã kiểm:' (the old visible line named 'dùng chuyện spa 2018 · từ khoá 1 lần'); the record (Kết quả: ĐẠT, K V A Au C) may follow. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. I4 is not listed: scores may print after 'tại sao?'."
 
 [[case]]
 id = "setup.vn.053"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after Week 1: the VÌ SAO line for the last piece, its checks and the fact it was written from; the pieces carried none"
+title = "'tại sao?' after Week 1: the VÌ SAO line for the last piece and how it is built from her fact; the pieces carried none; no check record"
 context = "Door A, ChatGPT Plus, pair chị–em, audience mình – các chị em. The 4-line Map (TỪ KHOÁ: LÃI ẢO) is on screen with QUAY HÔM NAY under it. Turn 1 brings all of Week 1 (the Brand Card may follow in the same reply); turn 2 asks why."
 input = """[turn 1] ok em, tối chị quay
 [turn 2] tại sao thế em?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng (?:quay|đăng|gửi) · viết (?:từ|thành) ''',
-  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
   '''(?i)Ngân|28 Tết|2019|kho|Sổ 3 Cột|lãi ảo|không thấy tiền|Phượng|đua doanh thu''',
 ]
 not_regex = [
   '''(?i)50 triệu|gấp 3|1 tỷ''',
   '''(?i)(?<!\w)(?:nha|nè)(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I10", "I15", "I18"]
 max_questions = 1
-notes = "wf15 §2-§3 and plan.kit-week 5: a VÌ SAO line is stored with every Week-1 piece and printed only on 'tại sao?', for the last piece ([week] why_available_rate = 1.0). Turn 1 prints Week 1 with nothing under any piece (I3 grades it; setup.vn.030 asserts the pieces). Turn 2: the WHY line, what the piece was written from ('Sẵn sàng {verb} · viết từ {evidence}', a fact of hers: Ngân, 28 Tết 2019 in the storeroom, Sổ 3 Cột) and '✓ Đã kiểm:'. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
+notes = "v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2-§3 and plan.kit-week 5: a VÌ SAO line is stored with every Week-1 piece and printed only on 'tại sao?', for the last piece ([week] why_available_rate = 1.0). Turn 1 prints Week 1 with nothing under any piece (I3 grades it; setup.vn.030 asserts the pieces). Turn 2: the WHY line, what the piece was written from ('Sẵn sàng {verb} · viết từ {evidence}', a fact of hers: Ngân, 28 Tết 2019 in the storeroom, Sổ 3 Cột) and '✓ Đã kiểm:'. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
 
 # ---------------------------------------------------------------- stopping early, links, pasted posts, cut-off dictation, the CTA question
 

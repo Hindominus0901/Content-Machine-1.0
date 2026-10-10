@@ -1380,7 +1380,7 @@ id = "message.vn.045"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after the bridged piece: the VÌ SAO RA KHÁCH line (old belief → new belief, dẫn tới), the checks, what it was written from"
+title = "'tại sao?' after the bridged piece: the VÌ SAO RA KHÁCH line (old belief → new belief, dẫn tới) and how it is built from her Bank; no check record"
 context = """Week 2, Wednesday, new chat in the project; Brand Card v1 saved (keyword 'lãi ảo'; big ideas 'Lãi ảo, không phải bán ít' / 'Nhìn lãi từng đơn, đừng nhìn doanh thu' / 'Cắt mã lỗ trước, chạy quảng cáo sau'; Facebook ads parked as a tool). Turn 1 asks for an ads piece; the machine bridges it to a chủ đề and prints the piece with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."""
 input = '''[turn 1] tuần này viết cho chị một bài về chạy quảng cáo đi em, khách hỏi chị về quảng cáo nhiều nhất
 [turn 2] tại sao thế em?'''
@@ -1389,22 +1389,22 @@ not_contains = []
 regex = [
   '''(?m)^[^\w\n]*VÌ SAO RA KHÁCH:?[^\n]*→''',
   '''(?im)^[^\w\n]*VÌ SAO RA KHÁCH[^\n]*dẫn tới''',
-  '''(?m)^[^\w\n]*✓ Đã kiểm:''',
-  '''(?m)^[^\w\n]*Sẵn sàng (?:quay|đăng|gửi) · viết (?:từ|thành)''',
-  '''(?im)^[^\w\n]*Sẵn sàng (?:quay|đăng|gửi) ·[^\n]*(Ngân|Phượng|Tết|tầng ba|vở ô li|sổ|lãi ảo|60 học viên|theo lãi|mã lỗ)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
+  '''(?i)(Ngân|Phượng|Tết|tầng ba|vở ô li|sổ|lãi ảo|60 học viên|theo lãi|mã lỗ)''',
 ]
 not_regex = [
   '''(?m)^\s*(?:```|~~~)''',
   '''(?<!\w)(bạn Trang|anh Khải)(?!\w)''',
   '''(?im)^(?!.*(không|chưa)).*(gấp 3|x3|1 tỷ)''',
   '''(?i)(?<!\w)trụ\s*[1-9]''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2: 'why?' prints, for the last piece, the WHY line, the checks it passed, what it was written from. §CM-WEEK 5 (plan.kit-week): 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}', stored with every piece; §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready "Sẵn sàng {verb} · viết từ {evidence}" (or verdict.ready_downgraded) · checked.prefix "✓ Đã kiểm:" mục đã qua'). The evidence is her phrase, scene or client. The piece is not reprinted. The turn-1 reply carries no Sẵn sàng, ✓ Đã kiểm or VÌ SAO RA KHÁCH line (I3), as message.vn.034 asserts."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: 'why?' prints, for the last piece, the WHY line, the checks it passed, what it was written from. §CM-WEEK 5 (plan.kit-week): 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}', stored with every piece; §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready "Sẵn sàng {verb} · viết từ {evidence}" (or verdict.ready_downgraded) · checked.prefix "✓ Đã kiểm:" mục đã qua'). The evidence is her phrase, scene or client. The piece is not reprinted. The turn-1 reply carries no Sẵn sàng, ✓ Đã kiểm or VÌ SAO RA KHÁCH line (I3), as message.vn.034 asserts."""
 
 # ---------------------------------------------------------------- the voice line (GIỌNG) and changing it
 

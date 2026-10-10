@@ -1063,7 +1063,7 @@ id = "humanize.vn.047"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after 'viết lại giọng mình': the VÌ SAO line, the voice check and the fact it was written from; the rewrite carried none"
+title = "'tại sao?' after 'viết lại giọng mình': the VÌ SAO line and how it is built in her voice, from a fact of hers; the rewrite carried none; no check record"
 context = "Week 2, Tuesday, ChatGPT Plus project with method file. Brand Card v1 present (persona default: pair chị–em; public posts mình – các chị em; dialect Bắc; TỪ KHOÁ LÃI ẢO; P4 her own 28 Tết 2019 storeroom story: adding up 2018 in her son's squared notebook, revenue about 1,2 tỷ, real profit about 40 triệu; phrase 'Doanh thu là để khoe, lãi mới là để tiêu.'). Turn 1 pastes her niece's AI caption with 'viết lại giọng mình' and gets only the reworked caption, nothing under it; turn 2 asks why."
 input = """[turn 1] viết lại giọng mình cho chị cái caption này, con cháu chị nhờ máy viết mà đọc sượng quá:
 
@@ -1071,24 +1071,26 @@ Trong thời đại ngày nay, quản lý tài chính đóng vai trò vô cùng 
 [turn 2] tại sao?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng đăng · viết (?:từ|thành) [^\n]*(?i:28 Tết|2019|(?<!\w)kho(?!\w)|(?<!\w)vở(?!\w)|40 triệu|1,2 tỷ|lãi ảo|Doanh thu là để khoe)''',
-  '''(?im)^\W*✓ Đã kiểm:[^\n]*(?:giọng|câu (?:chị|của chị)|cách chị nói|xưng hô|các chị em)''',
+  '''(?i)(?:28 Tết|2019|(?<!\w)kho(?!\w)|(?<!\w)vở(?!\w)|40 triệu|1,2 tỷ|lãi ảo|Doanh thu là để khoe)''',
+  '''(?i)(?:giọng|câu (?:chị|của chị)|cách chị nói|xưng hô|các chị em)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''\bV[1-9]\b''',
   '''(?i)danh sách (?:cắt|cấm)|banned|strip list|deny''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu · "✓ Đã kiểm:" mục đã qua'); humanize.kit-pass ('Chỉ in lại bài đã sửa'). Turn 1 prints the rewrite with nothing under it (I3 grades it; humanize.vn.001 asserts the piece). Turn 2 (assertions here): the VÌ SAO line; 'Sẵn sàng đăng · viết từ {evidence}', a fact or phrase of hers (the storeroom, the notebook, the 40 triệu, her word, her line about revenue); the '✓ Đã kiểm:' line naming the voice check (ship.kit 4 GIỌNG + NGƯỜI MUA: her tone, rhythm, phrases, her way of calling the audience, no never-words). Strip-list codes (V1-V9) and list names stay internal even here (modules/vn/humanize.md: 'Mã V1-V9 và tên danh sách chỉ ở bên trong'). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. Mirrors humanize.en.030."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu · "✓ Đã kiểm:" mục đã qua'); humanize.kit-pass ('Chỉ in lại bài đã sửa'). Turn 1 prints the rewrite with nothing under it (I3 grades it; humanize.vn.001 asserts the piece). Turn 2 (assertions here): the VÌ SAO line; 'Sẵn sàng đăng · viết từ {evidence}', a fact or phrase of hers (the storeroom, the notebook, the 40 triệu, her word, her line about revenue); the '✓ Đã kiểm:' line naming the voice check (ship.kit 4 GIỌNG + NGƯỜI MUA: her tone, rhythm, phrases, her way of calling the audience, no never-words). Strip-list codes (V1-V9) and list names stay internal even here (modules/vn/humanize.md: 'Mã V1-V9 và tên danh sách chỉ ở bên trong'). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. Mirrors humanize.en.030."""
 
 [[case]]
 id = "humanize.vn.048"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after the default remix in his voice: the remix evidence (liked.evidence in anh–em) prints here, never under the version"
+title = "'tại sao?' after the default remix in his voice: the remix evidence (liked.evidence in anh–em) prints here, never under the version; no check record"
 context = """Week 3, Wednesday 28/10/2026, ChatGPT Free on the old Android. Brand Card v1 present (persona default: pair anh–em; posts xưng Đức / tụi em, gọi anh chị; dialect Trung; keyword PHÁT SINH; stories P11 his own 2019 Liên Chiểu job, P3 the hidden pipe case told without the client's name, P9 the two quotes at the café). On Thursday 22/10 he sent liked-paste.md L2 (another workshop's caption about a test hole behind the sink); the machine saved its shape. Turn 1 asks for his version in his voice and gets it with nothing under it (no copy was asked for); turn 2 asks why."""
 input = """[turn 1] làm bản của anh cái bài đục thử bữa trước đó, viết giọng anh nghe, đừng giống giọng bên nớ
 [turn 2] tại sao?"""
@@ -1100,7 +1102,8 @@ not_regex = [
   '''(?i)cô Sáu''',
   '''(?i)bám sát bài của họ|Bài na ná dễ bị giảm hiển thị''',
   '''(?<!\w)của bạn(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_questions = 1
-notes = """§CM-LIKED 7 ('Hỏi "tại sao?": liked.evidence') and R8: the remix evidence 'Sẵn sàng {verb} · khung của họ, {fact} của bạn, không chép câu nào.' moved from under the version to 'tại sao?'; here in anh–em ('… của anh, không chép câu nào.'), naming his own fact (P11, P3, P9). Turn 1 prints the version with nothing under it (I3 grades it; humanize.vn.030 asserts the version). Turn 2 (assertions here): the evidence line and the VÌ SAO line. No F1 note here either: nothing was copied on request. No verdict field: graders.py reads verdict.* lines as status kinds and liked.evidence is not one, so run.py's Ready check would not see it (a ✓ Đã kiểm line may still print)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. §CM-LIKED 7 ('Hỏi "tại sao?": liked.evidence') and R8: the remix evidence 'Sẵn sàng {verb} · khung của họ, {fact} của bạn, không chép câu nào.' moved from under the version to 'tại sao?'; here in anh–em ('… của anh, không chép câu nào.'), naming his own fact (P11, P3, P9). Turn 1 prints the version with nothing under it (I3 grades it; humanize.vn.030 asserts the version). Turn 2 (assertions here): the evidence line and the VÌ SAO line. No F1 note here either: nothing was copied on request. No verdict field: graders.py reads verdict.* lines as status kinds and liked.evidence is not one, so run.py's Ready check would not see it (a ✓ Đã kiểm line may still print)."""

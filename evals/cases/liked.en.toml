@@ -1151,7 +1151,7 @@ id = "liked.en.036"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after 'make my version': the WHY line, 'their shape, your …; nothing copied' naming his own material, the checks; the version itself carried nothing"
+title = "'why?' after 'make my version': the WHY line, 'their shape, your …; nothing copied' naming his own material, and how it is built; the version itself carried nothing"
 context = '''Same state as liked.en.006: Week 2, Wednesday 21 Oct 2026, iPhone at the pickup line, ChatGPT Plus. Brand Card v1 present (persona default: keyword KEEP UP, gift the minimum week one-pager, beat cards). This week's big idea: train for Saturday, not the mirror. Thursday's video is planned and not filmed. Earlier today Dan sent coldstart-coach/liked-paste.md L2 (the POV caption) and the machine saved its shape (liked.saved). Turn 1 gets his version with nothing under it and the liked.slot NEXT line. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply.'''
 input = '''[turn 1] make my version
 [turn 2] why?'''
@@ -1159,7 +1159,7 @@ regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it: their shape, your [^\n;]+; nothing copied''',
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it: their shape, your [^\n;]*(?:garage|kitchen floor|grandpa|both kids|stairs|pull-?ups?|30 minutes|minimum week|backpacks?|floor)''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1168,25 +1168,25 @@ not_regex = [
   '''(?i)weight vest|kindergarten''',
   '''\b(?:Owen|Lily|Jess|Tommy)\b''',
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:\s*(?:it(?:'|’)s |this is |the (?:reel|post|hook) is )?(?:great|strong|good|solid|punchy|powerful|engaging|compelling|on[- ]brand|authentic|relatable|scroll-stopping)\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' §CM-LIKED 7: under the version only a hard-stop line, if any; 'on "why?": liked.evidence' ('Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied.'). edge-rubric.kit-verdict: the evidence is their phrase, scene or client, never an adjective (the last not_regex; also I17). plan.kit-week 5 gives the WHY form ('WHY THIS GETS CLIENTS: "{old belief}" → "{new belief}" · next: {step}'). The fact named is Dan's (the garage, the kitchen floor, both kids up the stairs, the minimum week), never the creator's; the default path passed DISTANCE, so no copy note on 'why?' either. verdict "Ready" after 'why?' means evals/run.py wants a Ready or ✓ Checked line here; the turn-1 reply carries none (liked.en.006)."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' §CM-LIKED 7: under the version only a hard-stop line, if any; 'on "why?": liked.evidence' ('Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied.'). edge-rubric.kit-verdict: the evidence is their phrase, scene or client, never an adjective (the last not_regex; also I17). plan.kit-week 5 gives the WHY form ('WHY THIS GETS CLIENTS: "{old belief}" → "{new belief}" · next: {step}'). The fact named is Dan's (the garage, the kitchen floor, both kids up the stairs, the minimum week), never the creator's; the default path passed DISTANCE, so no copy note on 'why?' either. verdict "Ready" after 'why?' means evals/run.py wants a Ready or ✓ Checked line here; the turn-1 reply carries none (liked.en.006)."""
 
 [[case]]
 id = "liked.en.037"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'why?' after an F1 copy: the logged Override shows with the record; never 'nothing copied', no second copy note, no refusal"
+title = "'why?' after an F1 copy: the logged Override shows; never 'nothing copied', no second copy note, no refusal, no check record"
 context = "Same state as liked.en.027: Week 2, Thursday 22 Oct 2026, MacBook Air, ChatGPT Plus. Brand Card v1 present (persona default). F1 (DECISIONS, 5 Oct 2026) applies. Turn 1 pastes the carousel; the machine saves its shape. Turn 2 asks for an exact copy; the reply prints the carousel word for word with ONE dated copy note and no Override line. Turn 3 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-2 reply."
 input = '''[turn 1] <<paste: evals/personas/en/service-biz/liked-paste.md, the "## L2" block: everything below its HTML comment, verbatim>>
 [turn 2] Bree wants to post that carousel exactly as it is on our page, same words. go ahead
 [turn 3] why?'''
 regex = [
   '''(?i)\boverride\b|posted on your call|on your call\b[^\n]{0,60}\blogged|logged[^\n]{0,40}\byour (?:call|request)''',
-  '''(?im)^\W*Result\s*:''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1195,8 +1195,10 @@ not_regex = [
   '''(?i)their shape, your\b''',
   '''(?s)Platforms may show copies less.*Platforms may show copies less''',
   '''(?i)Changing a few words still makes it their post|\bare you sure\b''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?im)^\W*Result\s*:''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I17"]
 max_questions = 1
-notes = """must-not-block. wf15 §2 and R7: F1 prints only its one dated note; §CM-LIKED 8 'The Override is logged, shown on "why?"'; edge-rubric.kit-verdict: 'why?' prints what the last piece was written from and the record ('Result: …'; QA §2.6 Result = Override for a requested copy). strings/en.toml does not fix the wording here (verdict.override 'Posted on your call · my concern: {defect} · logged.' or the record's 'Result: Override'), so the first regex reads either loosely, as guardrails.en.068 does. A copied piece is never described as 'nothing copied' (liked.evidence is the default path's line), the copy note is not printed twice, and asking why never turns the copy into a refusal. The turn-2 reply is liked.en.027."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. must-not-block. wf15 §2 and R7: F1 prints only its one dated note; §CM-LIKED 8 'The Override is logged, shown on "why?"'; edge-rubric.kit-verdict: 'why?' prints what the last piece was written from and the record ('Result: …'; QA §2.6 Result = Override for a requested copy). strings/en.toml does not fix the wording here (verdict.override 'Posted on your call · my concern: {defect} · logged.' or the record's 'Result: Override'), so the first regex reads either loosely, as guardrails.en.068 does. A copied piece is never described as 'nothing copied' (liked.evidence is the default path's line), the copy note is not printed twice, and asking why never turns the copy into a refusal. The turn-2 reply is liked.en.027."""

@@ -802,7 +802,7 @@ id = "voice.en.024"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after today's piece: the WHY line, the checks, and the voice it used (her line, her 'you') in plain words; the piece itself carried none"
+title = "'why?' after today's piece: the WHY line and how it is built in her voice (her line, her 'you') in plain words; the piece itself carried none; no check record"
 context = "Week 1, Tuesday, ChatGPT Free, new chat in the project. Brand Card v1 present (persona default: tone 'plain · dry · warm'; phrases include 'Coffee before resume. Every time.' and 'You're not too old. You're too vague.'; audience 'you'). Turn 1 gets today's piece with nothing under it; turn 2 asks why."
 input = '''[turn 1] next
 [turn 2] why?'''
@@ -810,8 +810,8 @@ contains = []
 not_contains = []
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
-  '''(?im)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·)[^\n]*(?:nobody tells you|too vague|too old|coffee before resume|carrot cake|blow smoke|picture this|reorg|ops person|feeding the portal|keepers list|different logo|your (?:words|phrase|line|voice|tone)|sounds like you|in your voice)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
+  '''(?i)(?:nobody tells you|too vague|too old|coffee before resume|carrot cake|blow smoke|picture this|reorg|ops person|feeding the portal|keepers list|different logo|your (?:words|phrase|line|voice|tone)|sounds like you|in your voice)''',
   '''(?i)\b(?:your (?:voice|words|phrases?|tone|rhythm|line)|sounds like you|to (?:one|a) (?:reader|woman|person)|talks? to (?:them|her|you) as|(?:no|none of your) never[- ]words?|words you(?:'|’)d never say)\b''',
 ]
 not_regex = [
@@ -819,20 +819,21 @@ not_regex = [
   '''(?i)\b(?:audience_address|code_mix|written_vs_spoken|openers_closers|never_say|do_say)\b''',
   '''\bPam\b''',
   '''(?i)\b90\s*(?:%|percent)''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from'); §CM-EDGE "why?" ('Evidence: their phrase, scene or client'); ship.kit 4 VOICE ('their tone, rhythm, phrases and audience address, no never-words'). Turn 1 prints the piece with nothing under it (I3 grades it). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the piece used, shown in plain words: one of her lines or 'your words', her 'you', no never-words. No string fixes how 'why?' names the voice, so it is asserted loosely (see flags). Field names stay internal; the piece is not reprinted. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Not on S0: the WHY prefix, '✓ Checked:' and the Ready wording for 'why?' live only in the method file (§CM-EDGE), as for edge-rubric.en.033."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from'); §CM-EDGE "why?" ('Evidence: their phrase, scene or client'); ship.kit 4 VOICE ('their tone, rhythm, phrases and audience address, no never-words'). Turn 1 prints the piece with nothing under it (I3 grades it). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the piece used, shown in plain words: one of her lines or 'your words', her 'you', no never-words. No string fixes how 'why?' names the voice, so it is asserted loosely (see flags). Field names stay internal; the piece is not reprinted. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Not on S0: the WHY prefix, '✓ Checked:' and the Ready wording for 'why?' live only in the method file (§CM-EDGE), as for edge-rubric.en.033."""
 
 [[case]]
 id = "voice.en.025"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'why?' after her lead email: the voice it used (her line, her sign-off, one owner at a time) prints here, never under the email"
+title = "'why?' after her lead email: the WHY line and the voice it used (her line, her sign-off, one owner at a time) in plain words; never under the email; no check record"
 context = "Week 1, Monday, Claude Free. Brand Card v1 present (persona default: email-first; the Monday Number, 380 subscribers; keyword RECORD YEAR; tone 'calm · precise · dry'; openers 'Okay. Here's the math.', 'Margin before more.'; she signs 'Erin' or 'E.'). Turn 1 gets this week's lead email with nothing under it; turn 2 asks why."
 input = '''[turn 1] next
 [turn 2] why?'''
@@ -840,8 +841,8 @@ contains = []
 not_contains = []
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
-  '''(?im)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·)[^\n]*(?:here(?:'|’)s the math|margin before more|client by client|bank app|on purpose|stairwell|record year|Marcus|your (?:words|phrase|line|voice|tone|sign-off)|signed|one (?:reader|owner|person)|sounds like you)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
+  '''(?i)(?:here(?:'|’)s the math|margin before more|client by client|bank app|on purpose|stairwell|record year|Marcus|your (?:words|phrase|line|voice|tone|sign-off)|signed|one (?:reader|owner|person)|sounds like you)''',
   '''(?i)\b(?:your (?:voice|words|phrases?|tone|rhythm|line|sign-off)|sounds like you|to (?:one|a) (?:reader|owner|person)|signed (?:like|as) you|(?:no|none of your) never[- ]words?|words you(?:'|’)d never say)\b''',
 ]
 not_regex = [
@@ -851,13 +852,14 @@ not_regex = [
   '''(?i)\b85,000\b''',
   '''(?i)\b70\s*(?:%|percent)''',
   '''(?i)\b(?:former|ex-)\s*(?:agency\s+)?CFO\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 and §CM-EDGE "why?"; ship.kit 4 VOICE. Turn 1 prints the email with nothing under it (I3 grades it; setup.en.028 asserts its shape). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the email used: one of her lines ('Okay. Here's the math.', 'Margin before more.', 'client by client'), her sign-off or her one reader, in plain words, no field names. Asserted loosely: no string fixes how 'why?' names the voice (see flags). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2 and §CM-EDGE "why?"; ship.kit 4 VOICE. Turn 1 prints the email with nothing under it (I3 grades it; setup.en.028 asserts its shape). Turn 2 (assertions here): the WHY line, the ✓ Checked line, and the voice the email used: one of her lines ('Okay. Here's the math.', 'Margin before more.', 'client by client'), her sign-off or her one reader, in plain words, no field names. Asserted loosely: no string fixes how 'why?' names the voice (see flags). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
 
 # ---------------------------------------------------------------- Day 0 never asks about voice (wf14 V3; §CM-VOICE 1)
 

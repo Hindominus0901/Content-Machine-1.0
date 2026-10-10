@@ -1596,7 +1596,7 @@ id = "message.en.055"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after the bridged piece: the WHY line (old belief → new belief, next step), the checks, what it was written from"
+title = "'why?' after the bridged piece: the WHY line (old belief → new belief, next step) and how it is built from her Bank; no check record"
 context = "Brand Card v1 present (persona default: big ideas 'not too old, too vague' / 'coffee before resume' / 'test drive before you quit'; keyword CHAPTER). Week 2, Thursday. Interview prep is not on the Map. Turn 1 asks for it; the machine bridges it to a big idea and prints the piece with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] write something about interviews. people our age interview terrible because they haven't interviewed since the nineties
 [turn 2] why?'''
@@ -1605,19 +1605,19 @@ not_contains = []
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
   '''(?im)^\W*WHY THIS GETS CLIENTS[^\n]*\bnext\b''',
-  '''(?m)^\W*✓ Checked:''',
-  '''(?m)^\W*Ready to (?:film|post|send) · (?:I(?:'|’)d post it:|written as)''',
-  '''(?im)^\W*Ready to (?:film|post|send) ·[^\n]*\b(coffee|Teresa|63|different logo|nineties|keepers|Lorraine|Bev|Gail|portal|4B|carrot cake|reorg)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
+  '''(?i)\b(coffee|Teresa|63|different logo|nineties|keepers|Lorraine|Bev|Gail|portal|4B|carrot cake|reorg)''',
 ]
 not_regex = [
   '''(?m)^\s*(?:```|~~~)''',
   '''(?i)\bpillar''',
   '''\bPam\b''',
   '''(?i)\b90\s*(%|percent)''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}', stored with every piece; edge-rubric.kit-verdict: '"why?" → its WHY line · what it was written from: verdict.ready (or verdict.ready_downgraded) · checked.prefix the checks passed … Evidence: their phrase, scene or client.' The belief shift follows the big idea the request was bridged to. The piece is not reprinted. The turn-1 reply carries no Ready, ✓ Checked or WHY line (I3), as message.en.034 asserts."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}', stored with every piece; edge-rubric.kit-verdict: '"why?" → its WHY line · what it was written from: verdict.ready (or verdict.ready_downgraded) · checked.prefix the checks passed … Evidence: their phrase, scene or client.' The belief shift follows the big idea the request was bridged to. The piece is not reprinted. The turn-1 reply carries no Ready, ✓ Checked or WHY line (I3), as message.en.034 asserts."""

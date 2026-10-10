@@ -893,24 +893,25 @@ id = "fmt-short.vn.028"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "Daily 'tiếp' on site: one piece, one screen, nothing under it, one TIẾP"
+title = "Daily 'tiếp' on site: one line pointing to today's piece (printed on Day 0), one screen, nothing under it, one TIẾP"
 context = "Week 1, day 3, ChatGPT Free (Samsung), 11:40 at a site in Sơn Trà. Brand Card v1 present (persona default). QUAY HÔM NAY went out on Day 0 and Tuần 1 was delivered right after it; today's piece is the long post's follow-up short."
 input = """tiếp"""
 regex = [
-  '''(?i)câu (?:đầu|mở đầu)''',
-  '''```''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?s)(?m:^\W*N\d+\s*·).*(?m:^\W*N\d+\s*·)''',
   '''(?i)(?<!\w)(?:nhé|nhỉ|đấy)(?!\w)''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
-max_words = 330
+max_words = 90
 max_questions = 1
-notes = """UX §3.1 days 2–5: 'tiếp' → copy → post, 3–5 minutes; §CM-TODAY: today's piece from this week's plan, one piece. Nothing under it (wf15 §2: its VÌ SAO prints on 'tại sao?'), one TIẾP line, one phone screen with its caption box. The piece is found by its câu đầu field and copy box, never a status line (R4); a second N label means a second piece. Persona quit trigger: text longer than one screen."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. UX §3.1 days 2–5: 'tiếp' → copy → post, 3–5 minutes; §CM-TODAY: today's piece from this week's plan, one piece. Nothing under it (wf15 §2: its VÌ SAO prints on 'tại sao?'), one TIẾP line, one phone screen with its caption box. The piece is found by its câu đầu field and copy box, never a status line (R4); a second N label means a second piece. Persona quit trigger: text longer than one screen."""
 
 [[case]]
 id = "fmt-short.vn.029"
@@ -1377,70 +1378,74 @@ id = "fmt-short.vn.047"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after QUAY HÔM NAY: the VÌ SAO line, what it was written from (her storeroom story) and '✓ Đã kiểm'; the piece itself printed clean"
+title = "'tại sao?' after QUAY HÔM NAY: the VÌ SAO line and how it is built from her storeroom story; the piece itself printed clean; no check record"
 context = "Day 0, about minute 18, Door A on ChatGPT Plus. Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: the soft cut after chunk 2 had nothing to guess ('… không thì gõ 'xong'.'), she told one more story and now types 'xong'. Turn 1 brings the 4-line Bản đồ (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang) with QUAY HÔM NAY right under it, nothing under the piece, then map.ok; turn 2 asks why."
 input = """[turn 1] xong rồi em. Tối nay chị quay luôn, em đưa chị cái video đi
 [turn 2] tại sao?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)[^\n]*dẫn tới''',
-  '''(?m)^\W*Sẵn sàng quay · viết (?:từ|thành) [^\n]*(?i:28 Tết|2019|(?<!\w)kho(?!\w)|cộng sổ|(?<!\w)vở(?!\w)|lãi ảo|Ngân)''',
-  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+  '''(?i)(?:28 Tết|2019|(?<!\w)kho(?!\w)|cộng sổ|(?<!\w)vở(?!\w)|lãi ảo|Ngân)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3|(?<![\d,.])1 tỷ''',
   '''(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready … · "✓ Đã kiểm:" mục đã qua, cả tick · hồ sơ'). Turn 1 prints the Bản đồ with QUAY HÔM NAY under it (K2) and nothing under the piece: I3 grades that reply (fmt-short.vn.001 asserts the piece); turn 2's 'tại sao?' is about its piece, QUAY HÔM NAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored VÌ SAO line (plan.kit-week 5: 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'); verdict.ready 'Sẵn sàng quay · viết từ {evidence}' naming her own story (28 Tết 2019 in the kho, the notebook) or her buyers' word, which the old QUAY HÔM NAY Checked line used to name; the '✓ Đã kiểm:' line with the checks passed (the before-filming ticks may print here). Whether Tuần 1 follows in the same reply is an open kit question (wf15-case-impact Open flags: what 'why?' prints right after FILM TODAY); nothing here forbids it. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. I4 is not listed: scores and the record may print after 'tại sao?'."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE ('"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready … · "✓ Đã kiểm:" mục đã qua, cả tick · hồ sơ'). Turn 1 prints the Bản đồ with QUAY HÔM NAY under it (K2) and nothing under the piece: I3 grades that reply (fmt-short.vn.001 asserts the piece); turn 2's 'tại sao?' is about its piece, QUAY HÔM NAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored VÌ SAO line (plan.kit-week 5: 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'); verdict.ready 'Sẵn sàng quay · viết từ {evidence}' naming her own story (28 Tết 2019 in the kho, the notebook) or her buyers' word, which the old QUAY HÔM NAY Checked line used to name; the '✓ Đã kiểm:' line with the checks passed (the before-filming ticks may print here). Whether Tuần 1 follows in the same reply is an open kit question (wf15-case-impact Open flags: what 'why?' prints right after FILM TODAY); nothing here forbids it. verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply. I4 is not listed: scores and the record may print after 'tại sao?'."""
 
 [[case]]
 id = "fmt-short.vn.048"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S1", "floor"]
-title = "'tại sao thế em?' on the 'chia sẻ thật' post: the VÌ SAO line, the fact it was written from and its checks; the post carried none"
+title = "'tại sao thế em?' on the 'chia sẻ thật' post: the VÌ SAO line and how it is built from her fact; the post carried none; no check record"
 context = "Week 1, day 3, ChatGPT Free (Android). Brand Card v1 present (persona default: pair chị–em; audience chị – các em; TỪ KHOÁ NGẠI CHÀO). Today's piece is the long Facebook post (chia sẻ thật) on the November 2018 rainy night (P1: 41 thẻ in 3 months, the young teacher's 18 triệu card, 12 buổi, half refunded, 27 trên 41 cards abandoned, the script torn up). Turn 1 gets the post with nothing under it; turn 2 asks why."
 input = """[turn 1] tiep em
 [turn 2] tại sao thế em?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)[^\n]*dẫn tới''',
-  '''(?m)^\W*Sẵn sàng đăng · viết (?:từ|thành) [^\n]*(?i:2018|mưa|41|27 trên 41|(?<!\w)xé|kịch bản|quầy)''',
-  '''(?m)^\W*✓ Đã kiểm:[^\n]+''',
+  '''(?i)(?:2018|mưa|41|27 trên 41|(?<!\w)xé|kịch bản|quầy)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?i)(?<!\w)(?:hết nám|trị dứt điểm|trắng da)(?!\w)''',
   '''(?:cô giáo|trường)\s+[A-ZĐ][a-zà-ỹ]+''',
   '''(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I10", "I15", "I18"]
 max_questions = 1
-notes = """plan.kit-week 5: a VÌ SAO line is stored with every piece and printed only on 'tại sao?' ([week] why_available_rate = 1.0). Turn 1 prints the post with nothing under it (I3 grades it; fmt-short.vn.038 asserts the post). Turn 2 (assertions here; 'tại sao thế em?' is a close variant graders.py WHY_RE reads): the VÌ SAO line; 'Sẵn sàng đăng · viết từ {evidence}', a fact of hers (P1: the rainy night, 41 thẻ, 27 trên 41, the torn script); the '✓ Đã kiểm:' line (hook before 'Xem thêm', no link in the body, keyword once, ≤1 hashtag). The record may follow (§CM-EDGE). The teacher stays unidentified here too (P1 note). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. plan.kit-week 5: a VÌ SAO line is stored with every piece and printed only on 'tại sao?' ([week] why_available_rate = 1.0). Turn 1 prints the post with nothing under it (I3 grades it; fmt-short.vn.038 asserts the post). Turn 2 (assertions here; 'tại sao thế em?' is a close variant graders.py WHY_RE reads): the VÌ SAO line; 'Sẵn sàng đăng · viết từ {evidence}', a fact of hers (P1: the rainy night, 41 thẻ, 27 trên 41, the torn script); the '✓ Đã kiểm:' line (hook before 'Xem thêm', no link in the body, keyword once, ≤1 hashtag). The record may follow (§CM-EDGE). The teacher stays unidentified here too (P1 note). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."""
 
 [[case]]
 id = "fmt-short.vn.049"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after the Ngân short: the consent tick and the evidence print here, never under the piece"
+title = "'tại sao?' after the Ngân short: the VÌ SAO line and how it is built name Ngân; the consent tick stays silent, not under the piece either"
 context = "Week 2, Wednesday, ChatGPT Plus. Brand Card v1 present (persona default: pair chị–em). P1 Ngân consented for posts and case study (not ads); delivery gạch đầu dòng. Turn 1 asks for the Ngân short and gets it with the result line word for word + 'kết quả tuỳ người, không phải cam kết' and no tick under it; turn 2 asks why."
 input = """[turn 1] làm cho chị cái video về em Ngân đi, em ấy cho kể rồi, từ lãi ảo 30 triệu ra lãi thật 9 triệu ấy
 [turn 2] tại sao?"""
 regex = [
-  '''(?i)Chuyện có thật, Ngân đồng ý cho kể như vậy''',
-  '''(?m)^\W*(?:Sẵn sàng quay · viết (?:từ|thành)|✓ Đã kiểm:)[^\n]*Ngân''',
+  '''(?i)Ngân''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3|lãi gấp đôi''',
   '''(?i)(?:cam kết|đảm bảo)\s+(?:lãi|doanh thu|tăng)''',
   '''(?i)(?:tăng|gấp)\s*\d+(?:,\d+)?\s?(?:%|lần)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)Chuyện có thật, \w+ đồng ý cho kể như vậy''',
 ]
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_questions = 1
-notes = """fmt-short.kit-video-short 6: the client's OK is checked silently; tick.client_ok ('Chuyện có thật, {client} đồng ý cho kể như vậy.') prints only on 'tại sao?' with the other checks (§CM-EDGE '"✓ Đã kiểm:" mục đã qua, cả tick'; R9). Turn 1 prints the short with nothing under it, or one 'Cần chị · …' line if the context the income result needs is missing (fmt-short.vn.031 asserts the piece). Turn 2 (assertions here): the tick naming Ngân, the evidence or Checked line naming her, the VÌ SAO line. No verdict field: if turn 1 asked a 'Cần chị' question, the record on 'tại sao?' may read CHƯA ĐẠT rather than a Ready line."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. fmt-short.kit-video-short 6: the client's OK is checked silently; tick.client_ok ('Chuyện có thật, {client} đồng ý cho kể như vậy.') prints only on 'tại sao?' with the other checks (§CM-EDGE '"✓ Đã kiểm:" mục đã qua, cả tick'; R9). Turn 1 prints the short with nothing under it, or one 'Cần chị · …' line if the context the income result needs is missing (fmt-short.vn.031 asserts the piece). Turn 2 (assertions here): the tick naming Ngân, the evidence or Checked line naming her, the VÌ SAO line. No verdict field: if turn 1 asked a 'Cần chị' question, the record on 'tại sao?' may read CHƯA ĐẠT rather than a Ready line."""
 
 [[case]]
 id = "fmt-short.vn.050"
@@ -1471,22 +1476,24 @@ id = "fmt-short.vn.051"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' on a cold-start proof short: the downgrade ('viết thành' her own story) shows here, never under the piece"
+title = "'tại sao?' on a cold-start proof short: the downgrade (built from her own story) shows in plain words here, never under the piece"
 context = "Week 2, Thursday, iPhone, ChatGPT Free. Brand Card v1 present (persona default: pair bạn–mình; audience mình – mấy bạn; cold start, 0 online clients, proof locked; TỪ KHOÁ CỨNG ĐƠ). Today's plan slot is the week's proof piece, a short; with no client result it runs as her own story or process (plan.kit-week 9: 'bài bằng chứng thành chuyện quy trình hoặc suất nhóm đầu, không giải thích') and prints with nothing under it. Turn 2 asks why."
 input = """[turn 1] tiếp
 [turn 2] tại sao vậy?"""
 regex = [
-  '''(?m)^\W*Sẵn sàng quay · viết thành [^\n]*(?i:chuyện|cách làm|quy trình|nhóm đầu|5 người đầu|9 giờ tối|2023|kế toán|vịn)''',
+  '''(?i)(?:chuyện|cách làm|quy trình|nhóm đầu|5 người đầu|9 giờ tối|2023|kế toán|vịn)''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?i)(?:học viên|khách)\s+(?:của mình\s+)?(?:đã|đều)\s+(?:hết|khỏi|đỡ)''',
   '''(?i)(?:3 tuần|4 viên|chuyên gia)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_questions = 1
-notes = """R3 and §CM-EDGE IN DƯỚI BÀI ('Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì'): a downgraded piece prints only its content; the downgrade shows on 'tại sao?' as verdict.ready_downgraded 'Sẵn sàng quay · viết thành {evidence}' (her own 9 giờ tối tháng 3 năm 2023 story, her process, or the first small group). Turn 1 prints the proof short with nothing under it (I3 grades it: a 'viết thành' line there fails). Turn 2 (assertions here; 'tại sao vậy?' is a close variant graders.py WHY_RE reads): the 'viết thành' line and the VÌ SAO line. verdict Ready-downgraded: evals/run.py wants a Ready line on a 'tại sao?' reply. Cold start (I8): no client result, never the friend's '3 tuần'."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. R3 and §CM-EDGE IN DƯỚI BÀI ('Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì'): a downgraded piece prints only its content; the downgrade shows on 'tại sao?' as verdict.ready_downgraded 'Sẵn sàng quay · viết thành {evidence}' (her own 9 giờ tối tháng 3 năm 2023 story, her process, or the first small group). Turn 1 prints the proof short with nothing under it (I3 grades it: a 'viết thành' line there fails). Turn 2 (assertions here; 'tại sao vậy?' is a close variant graders.py WHY_RE reads): the 'viết thành' line and the VÌ SAO line. verdict Ready-downgraded: evals/run.py wants a Ready line on a 'tại sao?' reply. Cold start (I8): no client result, never the friend's '3 tuần'."""
 
 # ---------------------------------------------------------------- hook lab (founder test 7 Oct; review retest-ft1 §3, fix 2)
 # Seeded from the retest's own failing hooks (qa/runs/retest-ft1/review.md §3): Nhi N3 and N4, Hạnh N1-N3. The D cases

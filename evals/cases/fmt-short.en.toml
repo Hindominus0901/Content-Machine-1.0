@@ -1074,12 +1074,12 @@ id = "fmt-short.en.040"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "Daily 'next' in the pickup line: one piece, one screen, nothing under it, one NEXT"
+title = "Daily 'next' in the pickup line: one line pointing to today's piece (printed on Day 0), one screen, nothing under it, one NEXT"
 context = "Week 1, day 4, iPhone in the school pickup line. Brand Card v1 present (persona default). FILM TODAY went out on Day 0 and Week 1 was delivered right after it; today's piece is the long post's follow-up short."
 input = '''next'''
 regex = [
-  '''(?i)first line''',
-  '''```''',
+  '''(?im)^\W*Today\b[^\n]*\bN\d+\b''',
+  '''(?i)print it''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1087,12 +1087,13 @@ not_regex = [
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?s)(?m:^\W*N\d+\s*·).*(?m:^\W*N\d+\s*·)''',
   '''(?i)\b(Owen|Lily|Jess|Tommy)\b''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
-max_words = 220
+max_words = 90
 max_questions = 1
-notes = """UX §3.1 days 2-5: 'next' → copy → post, 3-5 minutes; §CM-TODAY 5: today's piece from this week's plan, one piece. Nothing under it (wf15 §2: its WHY prints on 'why?'), one NEXT line, one phone screen. The piece is found by its first-line field and copy box, never a status line (R4); a second N label means a second piece. Persona quit trigger: two screen-long replies in a row."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. UX §3.1 days 2-5: 'next' → copy → post, 3-5 minutes; §CM-TODAY 5: today's piece from this week's plan, one piece. Nothing under it (wf15 §2: its WHY prints on 'why?'), one NEXT line, one phone screen. The piece is found by its first-line field and copy box, never a status line (R4); a second N label means a second piece. Persona quit trigger: two screen-long replies in a row."""
 
 [[case]]
 id = "fmt-short.en.041"
@@ -1187,73 +1188,77 @@ id = "fmt-short.en.044"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "S0", "floor"]
-title = "'why?' after FILM TODAY: the WHY line, what it was written from (her own story) and the checks; the piece itself printed clean"
+title = "'why?' after FILM TODAY: the WHY line and how it is built from her own story; the piece itself printed clean; no check record"
 context = "Day 0, about minute 17, ChatGPT Plus on the iPhone. Same state as fmt-short.en.001: after 'done' the one missing fact was the multi-income guess. Turn 1 answers it and gets the 4-line Map (YOUR WORD: nothing room; gift the Tape-Out Guide; beat cards) with FILM TODAY under it and nothing under the piece; turn 2 asks why."
 input = '''[turn 1] Reset is the one I want to grow. full projects pay the 5 salaries but those come from referrals. I've got like 20 minutes before pickup, give me the video
 [turn 2] why?'''
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*Ready to film · (?:I(?:'|’)d post it|written as)[^\n]*(?i:sectional|stairs?|landing|measure the door|Whitfields?|Megan|front room|piano|swatch|Priya|bonus room|storage unit|nothing room)''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)(?:sectional|stairs?|landing|measure the door|Whitfields?|Megan|front room|piano|swatch|Priya|bonus room|storage unit|nothing room)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''(?i)\bHollis\b''',
   '''(?i)\b(400|30\s*(%|percent))''',
   '''(?i)\b(elevated?|curated|timeless|forever home|dream home)\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step), the checks it passed, what it was written from') and edge-rubric.kit-verdict. Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece: I3 grades that reply (a WHY, ✓ Checked or Ready line there fails without 'why?'; fmt-short.en.001 asserts the piece); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored WHY line (plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {step}'); 'Ready to film · I'd post it: {evidence}' naming her own story (the 2012 sectional on the landing, the Whitfields' front room, Priya's storage unit), which the old FILM TODAY Checked line used to name; the ✓ Checked line with the checks passed (the FILM TODAY ticks, such as saying the first line out loud, may print here). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. I4 is not listed: scores may print after 'why?'."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step), the checks it passed, what it was written from') and edge-rubric.kit-verdict. Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece: I3 grades that reply (a WHY, ✓ Checked or Ready line there fails without 'why?'; fmt-short.en.001 asserts the piece); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored WHY line (plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {step}'); 'Ready to film · I'd post it: {evidence}' naming her own story (the 2012 sectional on the landing, the Whitfields' front room, Priya's storage unit), which the old FILM TODAY Checked line used to name; the ✓ Checked line with the checks passed (the FILM TODAY ticks, such as saying the first line out loud, may print here). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. I4 is not listed: scores may print after 'why?'."""
 
 [[case]]
 id = "fmt-short.en.045"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'why?' on a LinkedIn text post: the WHY line, the fact it was written from and its checks; the post carried none"
+title = "'why?' on a LinkedIn text post: the WHY line and how it is built from her fact; the post carried none; no check record"
 context = "Same state as fmt-short.en.020: Week 1, day 3, Claude Free, Brand Card v1 present (persona default: keyword RECORD YEAR, cta_style keyword); today's piece is the second LinkedIn text post. Turn 1 gets the post with nothing under it; turn 2 asks why."
 input = '''[turn 1] next
 [turn 2] why?'''
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*Ready to post · (?:I(?:'|’)d post it|written as)[^\n]*(?i:stairwell|banker|Thanksgiving|2019|best year|ice sculpture|Marcus|record year|biggest client|client by client|payroll|bank app)''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)(?:stairwell|banker|Thanksgiving|2019|best year|ice sculpture|Marcus|record year|biggest client|client by client|payroll|bank app)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''\bRaj\b''',
   '''(?i)\b70\s*(%|percent)''',
   '''(?i)\b85,000\b''',
   '''(?i)\b(former|ex-)\s*(agency\s+)?CFO\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I10", "I18"]
 max_questions = 1
-notes = """wf15 §2-§3 and plan.kit-week 5: a WHY line is stored with every piece and printed only on 'why?' ([week] why_available_rate = 1.0). Turn 1 prints the post with nothing under it (I3 grades it; fmt-short.en.020 asserts the post). Turn 2 (assertions here): the WHY line; 'Ready to post · I'd post it: {evidence}', a fact of hers (the stairwell, Marcus, record year); the ✓ Checked line (hook before 'See more', no link in the body, keyword once, no crowd question). The record may follow (edge-rubric.kit-verdict). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2-§3 and plan.kit-week 5: a WHY line is stored with every piece and printed only on 'why?' ([week] why_available_rate = 1.0). Turn 1 prints the post with nothing under it (I3 grades it; fmt-short.en.020 asserts the post). Turn 2 (assertions here): the WHY line; 'Ready to post · I'd post it: {evidence}', a fact of hers (the stairwell, Marcus, record year); the ✓ Checked line (hook before 'See more', no link in the body, keyword once, no crowd question). The record may follow (edge-rubric.kit-verdict). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
 
 [[case]]
 id = "fmt-short.en.046"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after the Gail short: the consent tick and the evidence print here, not under the piece"
+title = "'why?' after the Gail short: the WHY line and how it is built name Gail; the consent tick stays silent, not under the piece either"
 context = "Same state as fmt-short.en.017: Week 2, Wednesday, ChatGPT Free, Brand Card v1 present (persona default); Gail's proof row has consent for posts, ads and case study; Dana's delivery mode is bullets. Turn 1 asks for the Gail short and gets it with nothing under it; turn 2 asks why."
 input = '''[turn 1] can we do a short about Gail? 57, 31 years in claims, now she trains people at insurance agencies on her own. she said I could share anything
 [turn 2] why?'''
 regex = [
-  '''(?i)It(?:'|’)s true, and Gail said yes to being shown this way''',
-  '''(?m)^\W*Ready to (?:film|post) · I(?:'|’)d post it:[^\n]*\bGail\b''',
+  '''(?i)\bGail\b''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''\bPam\b''',
   '''(?i)\b90\s*(%|percent)''',
   '''(?i)\bguarantee''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?i)It(?:'|’)s true, and \w+ said yes to being shown this way''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
-notes = """fmt-short.kit-video-short 6 and §CM-EDGE WHAT PRINTS: a client result's consent is checked silently; tick.client_ok ('It's true, and {client} said yes to being shown this way.') prints only on 'why?' with the other checks (R9). Turn 1 prints the short with nothing under it (I3 grades it; fmt-short.en.017 asserts the piece: the result line word-for-word + 'individual result, not a promise'). Turn 2 (assertions here): the tick naming Gail, 'Ready to film · I'd post it: {evidence}' naming Gail (her result, consented), and the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. fmt-short.kit-video-short 6 and §CM-EDGE WHAT PRINTS: a client result's consent is checked silently; tick.client_ok ('It's true, and {client} said yes to being shown this way.') prints only on 'why?' with the other checks (R9). Turn 1 prints the short with nothing under it (I3 grades it; fmt-short.en.017 asserts the piece: the result line word-for-word + 'individual result, not a promise'). Turn 2 (assertions here): the tick naming Gail, 'Ready to film · I'd post it: {evidence}' naming Gail (her result, consented), and the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
 
 [[case]]
 id = "fmt-short.en.047"
@@ -1282,24 +1287,26 @@ id = "fmt-short.en.048"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'why?' on a cold-start proof short: the downgrade ('written as' his own story) shows here, never under the piece"
+title = "'why?' on a cold-start proof short: the downgrade (built from his own story) shows in plain words here, never under the piece"
 context = "Week 2, Thursday, iPhone, ChatGPT Plus. Brand Card v1 present (persona default: cold start, 0 clients, proof locked). Today's plan slot is the week's proof piece, a short; with no client result it runs as his own story (plan.kit-week 9: 'nothing said') and prints with nothing under it. Turn 2 asks why."
 input = '''[turn 1] next
 [turn 2] why?'''
 regex = [
-  '''(?m)^\W*Ready to (?:film|post) · written as [^\n]*(?i:own story|your story|process|pull-?ups?|sets of 8|\b35\b|garage|founding)''',
+  '''(?i)(?:own story|your story|process|pull-?ups?|sets of 8|\b35\b|garage|founding)''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''\b22\b''',
   '''(?i)\b(?:my|his) clients\b''',
   '''\b(Owen|Lily|Jess|Tommy)\b''',
   '''(?i)\bcertified\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
-notes = """R3 and §CM-EDGE WHAT PRINTS ('Ready (also downgraded): nothing'): a downgraded piece prints only its content; the downgrade shows on 'why?' as verdict.ready_downgraded 'Ready to {verb} · written as {evidence}' (here his own story or process: no pull-up at 35, sets of 8 by 37, the garage). Turn 1 prints the proof short with nothing under it (I3 grades it: a 'written as' line there fails). Turn 2 (assertions here): the 'written as' line and the WHY line. verdict Ready-downgraded: evals/run.py wants a Ready line on a 'why?' reply. Cold start (I8): no client result, no brother."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. R3 and §CM-EDGE WHAT PRINTS ('Ready (also downgraded): nothing'): a downgraded piece prints only its content; the downgrade shows on 'why?' as verdict.ready_downgraded 'Ready to {verb} · written as {evidence}' (here his own story or process: no pull-up at 35, sets of 8 by 37, the garage). Turn 1 prints the proof short with nothing under it (I3 grades it: a 'written as' line there fails). Turn 2 (assertions here): the 'written as' line and the WHY line. verdict Ready-downgraded: evals/run.py wants a Ready line on a 'why?' reply. Cold start (I8): no client result, no brother."""
 
 # ---------------------------------------------------------------- hook lab (founder test 7 Oct; review retest-ft1 §3, fix 2, fix 11)
 # Seeded from the retest's EN consultant run (qa/runs/retest-ft1/review.md §3): the short with a flat on-screen claim, the

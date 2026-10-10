@@ -583,24 +583,24 @@ id = "research.en.027"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' on a post built from the research paste: the post carries nothing, the WHY starts from the buyers' own words"
+title = "'why?' on a post built from the research paste: the post carries nothing, the WHY starts from the buyers' own words; no check record"
 context = "Brand Card v1 present (persona default), Week 2, Wednesday. The previous turn inlined research-paste.md (lines 1-32) and got the RESEARCH-LITE summary: conclusion first, buyer phrases by pattern with '{n} people · {n} places' ('Is it too late for me?', 'one more chapter'), sellers (lines 8, 9) dropped, line 15 (her own 'not too old, too vague' line, reposted) not counted."
 input = """[turn 1] ok write today's post from that. the too late one
 [turn 2] why?"""
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*Ready to (?:post|film) · (?:I(?:'|’)d post it|written as)''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''(?i)too late''',
 ]
 not_regex = [
-  '(?i)(?:\b500\+|\b48-hour\b|\b20% off\b)',
-  '(?i)\bBLUEPRINT\b',
-  '\bPam\b',
-  '(?i)\b(?:\d+|two|three|four|five)\s+(?:people|women|voices|places)\b[^\n]{0,60}too vague',
-  '(?i)too vague[^\n]{0,60}\b(?:\d+|two|three|four|five)\s+(?:people|women|voices|places)\b',
+  '''(?i)(?:\b500\+|\b48-hour\b|\b20% off\b)''',
+  '''(?i)\bBLUEPRINT\b''',
+  '''\bPam\b''',
+  '''(?i)\b(?:\d+|two|three|four|five)\s+(?:people|women|voices|places)\b[^\n]{0,60}too vague''',
+  '''(?i)too vague[^\n]{0,60}\b(?:\d+|two|three|four|five)\s+(?:people|women|voices|places)\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I9", "I10", "I18"]
 max_questions = 1
-notes = "wf15 §2 and research.kit-paste OUT: a piece built from the research prints with nothing under it (I3 grades the turn-1 reply). On 'why?' (assertions here): the stored WHY line (plan.kit-week 5) starts from the buyers' words ('Is it too late for me?', heard from 2+ people in 2+ places), 'Ready to post · I'd post it: {evidence}' names that pattern or her own story, and the ✓ Checked line lists the checks passed. Sellers' numbers and the coach's own line never count as buyer voices (RB1, G3). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."
+notes = "v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2 and research.kit-paste OUT: a piece built from the research prints with nothing under it (I3 grades the turn-1 reply). On 'why?' (assertions here): the stored WHY line (plan.kit-week 5) starts from the buyers' words ('Is it too late for me?', heard from 2+ people in 2+ places), 'Ready to post · I'd post it: {evidence}' names that pattern or her own story, and the ✓ Checked line lists the checks passed. Sellers' numbers and the coach's own line never count as buyer voices (RB1, G3). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."

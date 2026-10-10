@@ -125,23 +125,23 @@ id = "edge-rubric.vn.003"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' prints the record for her own Draft: Kết quả CHƯA ĐẠT first, the failed pillar, cùng đoạn chat, kiểm lỗi: thủ công"
+title = "'tại sao?' on her own Draft: the defect in plain words (quan điểm còn mềm); no Kết quả line, scores, cổng or lint record"
 context = '''Week 2, Thursday, ChatGPT Plus project with method file; no code was run, so the lint ran as presence checks. Pair chị–em. Chị Thu rewrote N2 (a Facebook post on 'lãi ảo') herself and asked 'đăng được chưa em?'; the check printed its one line: 'Bản nháp · quan điểm còn mềm. Nhắn "sửa N2" là em chỉnh ngay.' Nothing else failed in N2; N1 and N3 were delivered Ready, with nothing under them.'''
 input = """tại sao?"""
 regex = [
-  '(?im)^\W*(?:Result|Kết quả)\s*:\s*(?:FAIL|KHÔNG ĐẠT|CHƯA ĐẠT)',
-  '(?i)same-context|cùng (?:đoạn chat|ngữ cảnh)',
-  '(?i)(?:lint|kiểm lỗi)\s*:\s*(?:manual|thủ công|tay)',
-  '(?i)(?<!\w)C\s*[:=]?\s*[01](?!\d)|quan điểm[^\n]{0,20}(?<!\d)[01](?!\d)',
+  '''(?i)quan điểm|còn mềm|(?<!\w)mềm(?!\w)''',
 ]
 not_regex = [
-  '(?i)Ready after|Sẵn sàng sau khi',
-  '(?im)^\W*(?:Result|Kết quả)\s*:\s*(?:PASS|ĐẠT)',
-  '(?i)(?:lint|kiểm lỗi)\s*:\s*script',
+  '''(?i)Ready after|Sẵn sàng sau khi''',
+  '''(?im)^\W*(?:Result|Kết quả)\s*:\s*(?:PASS|ĐẠT)''',
+  '''(?i)(?:lint|kiểm lỗi)\s*:\s*script''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
+  '''(?i)(?:\bkiểm lỗi|\blint)\s*:''',
 ]
 invariants = ["I1", "I5", "I18"]
 max_questions = 1
-notes = """QA §2.6 and edge-rubric.kit-verdict: on 'tại sao?' the record prints 'Kết quả: ĐẠT|CHƯA ĐẠT' first, then K V A Au C and the total, the gates, the ceiling and 'kiểm: cùng đoạn chat · kiểm lỗi: thủ công' (script only when it ran). The module uses Vietnamese labels; PLAN reconciliation 1 keeps IDs and rubric codes in the shared tier, so the English keys are accepted too. I4 allows the record only after 'tại sao?' (not listed here). QA §1 rule 4: no code ran, so never 'kiểm lỗi: script'; rule 6: no conditional pass. Only the context moved since wf15: a machine-written N2 is fixed silently, so the Draft is her own rewrite checked on request. The Ready counterpart is edge-rubric.vn.029."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. QA §2.6 and edge-rubric.kit-verdict: on 'tại sao?' the record prints 'Kết quả: ĐẠT|CHƯA ĐẠT' first, then K V A Au C and the total, the gates, the ceiling and 'kiểm: cùng đoạn chat · kiểm lỗi: thủ công' (script only when it ran). The module uses Vietnamese labels; PLAN reconciliation 1 keeps IDs and rubric codes in the shared tier, so the English keys are accepted too. I4 allows the record only after 'tại sao?' (not listed here). QA §1 rule 4: no code ran, so never 'kiểm lỗi: script'; rule 6: no conditional pass. Only the context moved since wf15: a machine-written N2 is fixed silently, so the Draft is her own rewrite checked on request. The Ready counterpart is edge-rubric.vn.029."""
 
 # ---------------------------------------------------------------- the coach's own draft, checked on request: one line
 
@@ -663,80 +663,85 @@ id = "edge-rubric.vn.029"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after the Ready mirror short: the VÌ SAO line, 'Sẵn sàng quay · viết từ' her Bank (never an adjective), ✓ Đã kiểm and the record (Kết quả: ĐẠT, kiểm lỗi: thủ công)"
+title = "'tại sao?' after the Ready mirror short: the VÌ SAO line and how it is built in plain words, evidence from her Bank (never an adjective); no ticks, score or record"
 context = "Week 2, Monday after the Weekly Talk. Door A project on ChatGPT Free (Android), method file pasted as text; no code is run, so the lint runs as presence checks. Brand Card v1 in the chat: pair chị–em, audience chị–các em, keyword 'ngại chào', enemy 'dọa da', stories P1 (đêm mưa 11/2018, tờ kịch bản xé) and P8 (em sinh viên 2022, cái gương). Big idea 1 'Khách không sợ giá, khách sợ bị dọa'. Turn 1 gets the mirror short with nothing under it; turn 2 asks why. Assertions run on the reply to 'tại sao?'; I3 also grades the turn-1 reply."
 input = """[turn 1] em viết chị 1 video ngắn về cái gương nhé, tối nay chị quay
 [turn 2] tại sao thế em?"""
 regex = [
-  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
-  '(?im)^\W*VÌ SAO RA KHÁCH[^\n]*dẫn tới',
-  '(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ [^\n]*(?:gương|em sinh viên|2022|ngại chào|2018|kịch bản|d(?:ọa|oạ)|P8|P1)',
-  '(?m)^\W*✓ Đã kiểm:',
-  '(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:ĐẠT|PASS)',
-  '(?i)(?:kiểm lỗi|lint)\s*:\s*(?:thủ công|manual)',
+  '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
+  '''(?im)^\W*VÌ SAO RA KHÁCH[^\n]*dẫn tới''',
+  '''(?i)(?:gương|em sinh viên|2022|ngại chào|2018|kịch bản|d(?:ọa|oạ)|P8|P1)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh|chạm)(?!\w)',
-  '(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:CHƯA ĐẠT|FAIL)',
-  '(?i)(?:kiểm lỗi|lint)\s*:\s*script',
-  '(?i)Sẵn sàng sau khi|Ready after',
+  '''(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ\s*(?:bài|video|clip|nội dung)?\s*(?:này )?(?:hay|ổn|tốt|chất|cuốn|hấp dẫn|đúng giọng|mạnh|chạm)(?!\w)''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:CHƯA ĐẠT|FAIL)''',
+  '''(?i)(?:kiểm lỗi|lint)\s*:\s*script''',
+  '''(?i)Sẵn sàng sau khi|Ready after''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
+  '''(?i)(?:\bkiểm lỗi|\blint)\s*:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready … · checked.prefix mục đã qua, cả tick · hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT", K V A Au C + tổng, cổng, trần, "kiểm: cùng đoạn chat · kiểm lỗi: thủ công" (hay script). Bằng chứng: câu, cảnh, khách của họ; không tính từ.' plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "…" → "…" · dẫn tới: …'). The evidence names a Bank item (the mirror, em sinh viên, the keyword), never an adjective (the first not_regex, also I17). A Ready piece's record says ĐẠT; no code ran, so 'kiểm lỗi: thủ công', never 'script' (QA §1 rule 4). Scores and pillar codes are allowed here only because she asked (I4 not listed); the turn-1 reply carries none of it (edge-rubric.vn.001). Not on S0: the record's fields live in the method file (§CM-EDGE). The Draft counterpart is edge-rubric.vn.003."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: verdict.ready … · checked.prefix mục đã qua, cả tick · hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT", K V A Au C + tổng, cổng, trần, "kiểm: cùng đoạn chat · kiểm lỗi: thủ công" (hay script). Bằng chứng: câu, cảnh, khách của họ; không tính từ.' plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "…" → "…" · dẫn tới: …'). The evidence names a Bank item (the mirror, em sinh viên, the keyword), never an adjective (the first not_regex, also I17). A Ready piece's record says ĐẠT; no code ran, so 'kiểm lỗi: thủ công', never 'script' (QA §1 rule 4). Scores and pillar codes are allowed here only because she asked (I4 not listed); the turn-1 reply carries none of it (edge-rubric.vn.001). Not on S0: the record's fields live in the method file (§CM-EDGE). The Draft counterpart is edge-rubric.vn.003."""
 
 [[case]]
 id = "edge-rubric.vn.030"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'vì sao vậy bạn?' after the downgraded cold-start post: 'Sẵn sàng đăng · viết thành …' names the first-group or own-story framing, with ✓ Đã kiểm and the ceiling; still no student result"
+title = "'vì sao vậy bạn?' after the downgraded cold-start post: the VÌ SAO line and how it is built name the first-group or own-story framing; still no student result; no record"
 context = "Week 2, Monday, ChatGPT Free (iPhone). Brand Card v1 present (persona default: cold start, 0 online clients; pair bạn–mình; audience mình – mấy bạn; dialect Nam; keyword CỨNG ĐƠ; P1 her own March 2023 story, 9 giờ tối mùa quyết toán, vịn bàn; P3 nearly 3 years teaching studio group classes, no consented student words or results; P4 the 2024 lunchtime session, 22 people, an event not a result; P5 the friend's 'hết đau sau 3 tuần', unusable). Turn 1 gets the post written as her own or a first-group piece, with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."
 input = """[turn 1] viết giùm mình bài kể kết quả học viên đi, mấy bạn văn phòng tập theo mình rồi đỡ đau ra sao đó, người ta cần thấy bằng chứng á
 [turn 2] vì sao vậy bạn?"""
 regex = [
-  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
-  '(?im)^\W*Sẵn sàng (?:đăng|quay) · viết thành [^\n]*(?:lớp đầu|nhóm đầu|sáng lập|chuyện (?:của )?(?:bạn|mình)|cách làm|chưa có kết quả|9 giờ tối|2023|vịn bàn|buổi trưa)',
-  '(?m)^\W*✓ Đã kiểm:',
-  '(?i)(?<!\w)trần(?!\w)',
+  '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
+  '''(?i)(?:lớp đầu|nhóm đầu|sáng lập|chuyện (?:của )?(?:bạn|mình)|cách làm|chưa có kết quả|9 giờ tối|2023|vịn bàn|buổi trưa)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?im)^(?![^\n]*(?:(?<!\w)(?:chưa|không)(?!\w)|VÌ SAO RA KHÁCH))[^\n]*(?:học viên|mấy bạn|khách)[^\n]{0,40}(?:hết đau|đỡ đau|khỏi đau|bớt đau|giảm đau|hết cứng)',
-  '(?i)3 tuần|4 viên|nhỏ bạn',
-  '(?m)^\W*Cần bạn ·',
-  '(?i)Sẵn sàng sau khi|Ready after',
+  '''(?im)^(?![^\n]*(?:(?<!\w)(?:chưa|không)(?!\w)|VÌ SAO RA KHÁCH))[^\n]*(?:học viên|mấy bạn|khách)[^\n]{0,40}(?:hết đau|đỡ đau|khỏi đau|bớt đau|giảm đau|hết cứng)''',
+  '''(?i)3 tuần|4 viên|nhỏ bạn''',
+  '''(?m)^\W*Cần bạn ·''',
+  '''(?i)Sẵn sàng sau khi|Ready after''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
+  '''(?i)(?:\bkiểm lỗi|\blint)\s*:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_questions = 1
-notes = """wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: on 'tại sao?', what it was written from is verdict.ready_downgraded ('Sẵn sàng {verb} · viết thành {evidence}', e.g. 'viết thành chuyện của bạn hồi 2023, chưa có kết quả học viên'), with the checks and the record. QA §2.2 DOWNGRADE table: the Authority ceiling is recorded and never waived, so the record names it ('trần', a record field in edge-rubric.kit-verdict). The student-result guard skips the WHY line, whose old belief may quote buyers ('phải thấy học viên hết đau mới tin'). The turn-1 reply carried none of this (edge-rubric.vn.027). Asking why unlocks no student result (I8, cold start); no question, because a cold start has no fact to give. 'vì sao vậy bạn?' is the command in her voice (graders.WHY_RE)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: on 'tại sao?', what it was written from is verdict.ready_downgraded ('Sẵn sàng {verb} · viết thành {evidence}', e.g. 'viết thành chuyện của bạn hồi 2023, chưa có kết quả học viên'), with the checks and the record. QA §2.2 DOWNGRADE table: the Authority ceiling is recorded and never waived, so the record names it ('trần', a record field in edge-rubric.kit-verdict). The student-result guard skips the WHY line, whose old belief may quote buyers ('phải thấy học viên hết đau mới tin'). The turn-1 reply carried none of this (edge-rubric.vn.027). Asking why unlocks no student result (I8, cold start); no question, because a cold start has no fact to give. 'vì sao vậy bạn?' is the command in her voice (graders.WHY_RE)."""
 
 [[case]]
 id = "edge-rubric.vn.031"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after her default version of a saved post: liked.evidence 'khung của họ, … của chị, không chép câu nào', the checks and the VÌ SAO line; no copy note"
+title = "'tại sao?' after her default version of a saved post: liked.evidence 'khung của họ, … của chị, không chép câu nào', the VÌ SAO line and how it is built; no copy note, no record"
 context = "Week 2, Thursday 22/10/2026, ChatGPT Free on her Android phone, Door A project. Earlier today chị Hạnh sent liked-paste L2 (a caption her daughter copied: a spa owner in Nam Định on the day she did not pitch a package); the machine saved its shape and offered 'làm bản của mình'. Brand Card v1 (persona default: pair chị–em; keyword NGẠI CHÀO; gift her 5 câu nói thật khi cầm gương; stories P1, đêm mưa tháng 11/2018, 41 thẻ, the torn script, and P8, em sinh viên 2022 and the mirror). Turn 1 gets her version with nothing under it. Turn 2 asks why; assertions run on the reply to it. I3 also grades the turn-1 reply."
 input = """[turn 1] em làm bản của chị đi
 [turn 2] tại sao em?"""
 regex = [
-  '(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]+ của chị[,;] không chép câu nào',
-  '(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]*(?:2018|kịch bản|gương|đêm mưa|em sinh viên|41 thẻ|ngại chào)',
-  '(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→',
-  '(?m)^\W*✓ Đã kiểm:',
+  '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]+ của chị[,;] không chép câu nào''',
+  '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]*(?:2018|kịch bản|gương|đêm mưa|em sinh viên|41 thẻ|ngại chào)''',
+  '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?i)bám sát bài của họ|Bài na ná dễ bị giảm hiển thị',
-  '(?i)Nam Định',
-  '(?i)khung của họ, [^\n]*của bạn',
-  '(?i)Sẵn sàng sau khi|Ready after',
+  '''(?i)bám sát bài của họ|Bài na ná dễ bị giảm hiển thị''',
+  '''(?i)Nam Định''',
+  '''(?i)khung của họ, [^\n]*của bạn''',
+  '''(?i)Sẵn sàng sau khi|Ready after''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I17"]
 max_questions = 1
-notes = """liked.kit-make 7: 'Hỏi "tại sao?": liked.evidence' ('Sẵn sàng {verb} · khung của họ, {fact} của bạn, không chép câu nào.', in chị–em '… của chị, …') and wf15-case-impact R8: the evidence line moved from under the version to 'tại sao?'. The fact named is hers (the 2018 night, the mirror), never the Nam Định owner's day. Nothing was copied on request, so no F1 copy note, on 'tại sao?' either. The turn-1 reply carried no line (liked.vn.005 and edge-rubric.vn.028 judge the version itself)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. liked.kit-make 7: 'Hỏi "tại sao?": liked.evidence' ('Sẵn sàng {verb} · khung của họ, {fact} của bạn, không chép câu nào.', in chị–em '… của chị, …') and wf15-case-impact R8: the evidence line moved from under the version to 'tại sao?'. The fact named is hers (the 2018 night, the mirror), never the Nam Định owner's day. Nothing was copied on request, so no F1 copy note, on 'tại sao?' either. The turn-1 reply carried no line (liked.vn.005 and edge-rubric.vn.028 judge the version itself)."""
 
 [[case]]
 id = "edge-rubric.vn.032"

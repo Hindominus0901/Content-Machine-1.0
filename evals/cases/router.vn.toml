@@ -486,14 +486,14 @@ id = "router.vn.013"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
-title = "Day 2 with the Brand Card unsaved: 'tiếp' opens today's piece, not a save gate, a card hunt or Day 0 again"
+title = "Day 2 with the Brand Card unsaved: 'tiếp' opens the one-line pointer to today's piece (printed on Day 0), not a save gate, a card hunt or Day 0 again"
 context = '''Week 1, Tuesday 13 Oct 2026, 7:10 am, the same chat as Day 0, ChatGPT Plus app on the iPhone; pair anh–em, Nam. Day 0 ended with all of Tuần 1 (TikTok short videos N1-N3 with their days, a long post, a Zalo message, the inbox replies), then Brand Card v1, 'Lưu lại để em nhớ anh (30 giây).' and the TIẾP line 'Quay video hôm nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' His phone did not show the save button, so the card sits in this chat but not in the project sources (forced test). Today's piece in the Week-1 plan is Tuesday's short video.'''
 input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
-  '''(?im)^(?:[ \t]*(?:```|~~~)|\W*N\d+ · |\W*(?:Chữ trên màn hình|Khung hình đầu|Câu đầu|Ý 1|Câu cuối|Caption)[^:\n]{0,30}:)''',
-  '''(?i)gồng lãi''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -504,13 +504,14 @@ not_regex = [
   '''(?i)xả hết|Hôm nay mình làm 3 việc''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I15", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: fmt-short (route set). Rewritten from the old stop-point case (R13): Week 1 now arrives before the card exists, so 'tiếp' at a stop point no longer occurs; the routing question moves to day 2 with the card unsaved. §CM-TODAY 1 and 5: Day 0 is done (its card is in this chat), so 'tiếp' opens today's piece from the Week-1 plan as written (day, time, copy box), with nothing under it (wf15 §2, R4: found by its copy box, N label or field lines); not a save gate (acceptance [day0] save_gates = 0; §CM-CARD 'Chưa lưu vẫn làm tiếp'), not card.fix_missing (that is for a new chat with no card), not Day 0 again. A one-line save tip may follow the piece (setup.vn.027 tests the same state from the setup side). Persona: no save button on the phone → skips it, sometimes types 'đã lưu'."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. route: fmt-short (route set). Rewritten from the old stop-point case (R13): Week 1 now arrives before the card exists, so 'tiếp' at a stop point no longer occurs; the routing question moves to day 2 with the card unsaved. §CM-TODAY 1 and 5: Day 0 is done (its card is in this chat), so 'tiếp' opens today's piece from the Week-1 plan as written (day, time, copy box), with nothing under it (wf15 §2, R4: found by its copy box, N label or field lines); not a save gate (acceptance [day0] save_gates = 0; §CM-CARD 'Chưa lưu vẫn làm tiếp'), not card.fix_missing (that is for a new chat with no card), not Day 0 again. A one-line save tip may follow the piece (setup.vn.027 tests the same state from the setup side). Persona: no save button on the phone → skips it, sometimes types 'đã lưu'."""
 
 # ================================================================ ROUTE set: one job per module
 
@@ -1896,7 +1897,7 @@ id = "router.vn.108"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after 'bỏ qua' shows the downgrade: the VÌ SAO line, 'Sẵn sàng đăng · viết thành …' and ✓ Đã kiểm; still no quote from chị Phượng"
+title = "'tại sao?' after 'bỏ qua' shows the downgrade in plain words: the VÌ SAO line and how it is built; still no quote from chị Phượng; no check record"
 context = '''Week 2, Thursday 22 Oct 2026, ChatGPT Plus. Brand Card v1 present (persona default; pair chị–em, Bắc). The last reply held two Facebook posts: N1 with nothing under it, and N2 (chị Phượng's story; consent for posts, ads, case study) with 'Cần chị · Lúc thấy sổ, chị Phượng nói nguyên văn câu gì? Em không bịa đâu. (Hoặc gõ "bỏ qua".)' under it. Turn 1 'bỏ qua' gets N2 written without the quote, with nothing under it (as router.vn.069). Turn 2 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-1 reply.'''
 input = '''[turn 1] bỏ qua
 [turn 2] tại sao?'''
@@ -1904,8 +1905,8 @@ contains = []
 not_contains = []
 regex = [
   '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
-  '''(?im)^\W*Sẵn sàng (?:đăng|quay) · viết thành [^\n]*(?:quy trình|cách làm|chuyện|kể|sổ|không trích|bỏ câu)''',
-  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)(?:quy trình|cách làm|không trích|bỏ câu|kể (?:chuyện|lại|cách))''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1913,20 +1914,21 @@ not_regex = [
   '''\[CẦN''',
   '''(?im)^[^\n]*chị Phượng (?:nói|bảo|kể)[ \t]*:?[ \t]*["“]''',
   '''(?i)Sẵn sàng sau khi''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (route set). 'tại sao?' after a downgraded piece: wf15 §2 'Ready, downgraded … The content only. The downgrade shows on "why?"'; §CM-EDGE '"tại sao?" → … viết từ đâu: "Sẵn sàng {verb} · viết từ {evidence}" (…; hoặc "Sẵn sàng {verb} · viết thành {evidence}")' (verdict.ready_downgraded), with '✓ Đã kiểm:' and the record. R3: the 'viết thành / viết dạng' line left the piece (router.vn.069) for this reply. The downgrade names the framing (her process, the story told without the quote), and asking why never brings back the fact that was skipped. verdict "Ready-downgraded" after 'tại sao?' means a Ready line is wanted here. A state-dependent branch of the 'tại sao?' trigger (router.vn.072, .073, .106)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. route: edge-rubric (route set). 'tại sao?' after a downgraded piece: wf15 §2 'Ready, downgraded … The content only. The downgrade shows on "why?"'; §CM-EDGE '"tại sao?" → … viết từ đâu: "Sẵn sàng {verb} · viết từ {evidence}" (…; hoặc "Sẵn sàng {verb} · viết thành {evidence}")' (verdict.ready_downgraded), with '✓ Đã kiểm:' and the record. R3: the 'viết thành / viết dạng' line left the piece (router.vn.069) for this reply. The downgrade names the framing (her process, the story told without the quote), and asking why never brings back the fact that was skipped. verdict "Ready-downgraded" after 'tại sao?' means a Ready line is wanted here. A state-dependent branch of the 'tại sao?' trigger (router.vn.072, .073, .106)."""
 
 [[case]]
 id = "router.vn.109"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after 'làm bản của mình' opens the version's why: liked.evidence naming her own story, the VÌ SAO line, ✓ Đã kiểm"
+title = "'tại sao?' after 'làm bản của mình' opens the version's why: liked.evidence naming her own story, the VÌ SAO line and how it is built; no check record"
 context = '''Week 2, Thursday 22 Oct 2026, ChatGPT Plus. Brand Card v1 present (persona default: pair chị–em, Bắc, keyword LÃI ẢO; story P4, 28 Tết 2019 adding up the books in the warehouse; Ngân P1/P2 consented for posts). Thursday's short video is not filmed yet. The machine saved the shape of proof-coach/liked-paste.md L2 (một cảnh đi lấy hàng → người khác hỏi một câu → mình không trả lời được → bài học một dòng → rủ lưu lại) and offered 'làm bản của mình'. Turn 1 gets her version with nothing under it and the liked.slot TIẾP line (as router.vn.082). Turn 2 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-1 reply.'''
 input = '''[turn 1] làm bản của mình
 [turn 2] tại sao?'''
@@ -1936,20 +1938,21 @@ regex = [
   '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]+? của chị,? không chép câu nào''',
   '''(?im)^\W*Sẵn sàng (?:quay|đăng) · khung của họ, [^\n]*(?:28 Tết|Tết 2019|2018|trong kho|Sổ 3 Cột|Ngân|sổ|lãi)''',
   '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
-  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)váy hoa|chủ sạp|túi zip''',
   '''(?i)bám sát bài của họ|Bài na ná dễ bị giảm hiển thị''',
   '''(?i)(?:mình|em|tôi)\s+không viết:''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: liked (route set). A state-dependent 'tại sao?': after a version it prints liked.kit-make 7's 'Hỏi "tại sao?": liked.evidence' in chị–em ('Sẵn sàng quay · khung của họ, {fact} của chị, không chép câu nào.'), a line only that job has, with the VÌ SAO line and '✓ Đã kiểm:' (§CM-EDGE). R8: the line left the version (router.vn.082) for this reply. The fact named is hers (28 Tết 2019, the warehouse books, Sổ 3 Cột, Ngân), never the creator's words; the default path passed DISTANCE, so no copy note here either."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. route: liked (route set). A state-dependent 'tại sao?': after a version it prints liked.kit-make 7's 'Hỏi "tại sao?": liked.evidence' in chị–em ('Sẵn sàng quay · khung của họ, {fact} của chị, không chép câu nào.'), a line only that job has, with the VÌ SAO line and '✓ Đã kiểm:' (§CM-EDGE). R8: the line left the version (router.vn.082) for this reply. The fact named is hers (28 Tết 2019, the warehouse books, Sổ 3 Cột, Ngân), never the creator's words; the default path passed DISTANCE, so no copy note here either."""
 
 [[case]]
 id = "router.vn.110"
@@ -1992,14 +1995,14 @@ id = "router.vn.057"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'tiếp' on a Week-1 weekday hands over today's piece, ready to copy, nothing under it"
+title = "'tiếp' on a Week-1 weekday after Tuần 1 was printed on Day 0: one line pointing to today's piece, nothing under it, never the script again"
 context = "Week 1, Wednesday 14 Oct 2026, Android phone, ChatGPT Plus; pair chị–em, Bắc. Day 0 delivered QUAY HÔM NAY with the Map, then all of Tuần 1 unasked (3 videos, 1 long Facebook post, 1 Zalo message, the inbox replies), then the Brand Card, which she saved. Monday's video and Tuesday's long post are up. Today's piece is Video 2 (4 khoản chị em hay quên khi tính lãi)."
 input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)4 khoản''',
-  '''(?im)^(?:[ \t]*(?:```|~~~)|\W*N\d+ · |\W*(?:Chữ trên màn hình|Khung hình đầu|Câu đầu|Ý 1|Câu cuối|Caption)[^:\n]{0,30}:)''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -2008,27 +2011,29 @@ not_regex = [
   '''(?i)câu (hỏi )?(1|một) (trên|trong) (5|năm)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
+  '''(?im)^\W*(?:Chữ trên màn hình|Khung hình đầu|Câu đầu|Ý 1|Câu cuối|Caption)[^:\n]{0,30}:''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: fmt-short (trigger set). UX §4 phrase 1 'tiếp': today's piece; §CM-TODAY 5 ('Ngày khác: một bài hôm nay trong kế hoạch tuần, y như đã viết: thứ, giờ, khung chép'). The Week-1 pieces were cut from the dump on Day 0, so 'tiếp' hands over today's (stats-w1.csv: 14/10 is Video 2, 4 khoản chị em hay quên khi tính lãi), ready to film, found by its copy box, N label or field lines, with nothing under it (wf15 §2, R4)."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. route: fmt-short (trigger set). UX §4 phrase 1 'tiếp': today's piece; §CM-TODAY 5 ('Ngày khác: một bài hôm nay trong kế hoạch tuần, y như đã viết: thứ, giờ, khung chép'). The Week-1 pieces were cut from the dump on Day 0, so 'tiếp' hands over today's (stats-w1.csv: 14/10 is Video 2, 4 khoản chị em hay quên khi tính lãi), ready to film, found by its copy box, N label or field lines, with nothing under it (wf15 §2, R4)."""
 
 [[case]]
 id = "router.vn.058"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "'tiep' without diacritics fires the same row as 'tiếp': today's piece, answered with diacritics, nothing under it"
+title = "'tiep' without diacritics fires the same row as 'tiếp': the one-line pointer to today's piece, answered with diacritics, nothing under it"
 context = "Week 1, Tuesday 13 Oct 2026, 7:20 am, Android phone, Door B chat renamed Content Machine; pair chị–em, Bắc. Day 0 delivered QUAY HÔM NAY with the Map, then all of Tuần 1 and the card box; Monday's video is up. Today's piece is the long Facebook post (đêm mưa năm 2018, tờ kịch bản bị xé). She types without diacritics."
 input = '''tiep'''
 contains = []
 not_contains = []
 regex = [
-  '''(?i)2018|tờ kịch bản|(?<!\w)xé(?!\w)''',
-  '''(?m)^[ \t]*(?:```|~~~)''',
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
+  '''(?i)in lại''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -2037,13 +2042,14 @@ not_regex = [
   '''(?i)(?<!\w)(hom nay|bai dang|chi oi|em gui|tiep theo)(?!\w)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?m)^[ \t]*(?:```|~~~)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: fmt-short (trigger set). An unaccented 'tiếp' must fire the same row (§CM-TODAY heading: '"tiep", "tiếp em" cũng tính'; persona behaviour 'gõ không dấu'); stats-w1.csv: 13/10 is the 2018 long post, printed as written in its copy box with nothing under it (wf15 §2, R4). The machine answers in full Vietnamese with diacritics, chị–em."""
+notes = """v13.4 (§CM-TODAY 5): when the day's piece was already printed (Week 1 on Day 0, or the week's pieces after the Talk) a later-day 'next' prints ONE line, 'Today: {N2 · Tue · short}, in yesterday's reply; say 'print it' to see it here.' (VN: 'Hôm nay: {N2 · thứ Ba · video}, ở tin hôm qua; gõ 'in lại' nếu cần.'), never the script again. The assertions look for that line (a Today / Hôm nay line with its N label, plus 'print it' / 'in lại') and forbid the copy box; older sentences below about 'next' handing over the piece in its copy box are superseded. route: fmt-short (trigger set). An unaccented 'tiếp' must fire the same row (§CM-TODAY heading: '"tiep", "tiếp em" cũng tính'; persona behaviour 'gõ không dấu'); stats-w1.csv: 13/10 is the 2018 long post, printed as written in its copy box with nothing under it (wf15 §2, R4). The machine answers in full Vietnamese with diacritics, chị–em."""
 
 [[case]]
 id = "router.vn.059"
@@ -2409,50 +2415,56 @@ id = "router.vn.072"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'tại sao?' prints the internal record for the last piece, starting 'Kết quả:'"
+title = "'tại sao?' on his own Draft opens the edge-rubric job: the defect or VÌ SAO in plain words, no Kết quả record"
 context = '''Week 2, Monday 19 Oct 2026, Claude Pro. Brand Card v1 present (persona default; pair anh–em). Earlier the machine gave two LinkedIn posts (N1, N2) with nothing under them; anh Khoa rewrote N2 himself, pasted it and asked 'đăng được chưa em?'. The check printed its one line under it: 'Bản nháp · quan điểm còn mềm. Nhắn "sửa N2" là em chỉnh ngay.' '''
 input = '''tại sao?'''
 contains = []
 not_contains = []
 regex = [
-  '''(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:ĐẠT|CHƯA ĐẠT|KHÔNG ĐẠT|PASS|FAIL)''',
+  '''(?i)VÌ SAO RA KHÁCH|quan điểm|(?<!\w)mềm(?!\w)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)Ready after|Sẵn sàng sau khi''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
+  '''(?i)(?:\bkiểm lỗi|\blint)\s*:''',
 ]
 verdict = ""
 invariants = ["I1", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (trigger set). Not an R1/R2 case: §CM-EDGE '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu · "✓ Đã kiểm:" · hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT", K V A Au C + tổng, cổng, trần, …' (QA §2.4, §2.6: the record is the only way QA detail reaches chat; the English 'Result: PASS/FAIL' keys are still accepted, as in edge-rubric.vn.003). wf15 §2 (R5): a machine-written piece never shows a Bản nháp line, so the Draft here is his own rewrite checked on request (CHECK_ASK_RE 'đăng được chưa'). graders.py skips I4 and deny_list on the reply after an exact 'tại sao?' (WHY_RE)."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. route: edge-rubric (trigger set). Not an R1/R2 case: §CM-EDGE '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu · "✓ Đã kiểm:" · hồ sơ: "Kết quả: ĐẠT|CHƯA ĐẠT", K V A Au C + tổng, cổng, trần, …' (QA §2.4, §2.6: the record is the only way QA detail reaches chat; the English 'Result: PASS/FAIL' keys are still accepted, as in edge-rubric.vn.003). wf15 §2 (R5): a machine-written piece never shows a Bản nháp line, so the Draft here is his own rewrite checked on request (CHECK_ASK_RE 'đăng được chưa'). graders.py skips I4 and deny_list on the reply after an exact 'tại sao?' (WHY_RE)."""
 
 [[case]]
 id = "router.vn.073"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'tai sao' without diacritics prints the same 'tại sao?' reply for a Ready short: the VÌ SAO line and the record"
+title = "'tai sao' without diacritics prints the same 'tại sao?' reply for a Ready short: the VÌ SAO line and how it is built; no record"
 context = "Week 2, Tuesday 20 Oct 2026, phone, ChatGPT Free. Brand Card v1 present (persona default: keyword PHÁT SINH; pair anh–em, Trung). The last reply held tomorrow's video as N1, with nothing under it."
 input = '''tai sao'''
 contains = []
 not_contains = []
 regex = [
   '''(?m)^\W*VÌ SAO RA KHÁCH''',
-  '''(?im)^\W*(?:Kết quả|Result)\s*:\s*(?:ĐẠT|CHƯA ĐẠT|KHÔNG ĐẠT|PASS|FAIL)''',
   '''TIẾP →[^\n]*\s*\Z''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?i)Ready after|Sẵn sàng sau khi''',
   '''(?i)(?<!\w)(ket qua|vi sao|da kiem|san sang)(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?im)^\W*(?:Kết quả|Result)\s*:''',
+  '''(?i)(?:\bkiểm lỗi|\blint)\s*:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (trigger set). The unaccented 'tai sao' is the same command (graders.py WHY_RE accepts 'tại sao?', 'tai sao'; UX §5.12 synonyms). §CM-EDGE '"tại sao?" → bài gần nhất': the WHY line (plan.kit-week 5 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'), what it was written from, '✓ Đã kiểm:' and the record ('Kết quả: ĐẠT|CHƯA ĐẠT'). The context no longer has a machine-written Bản nháp line under N1 (R5): N1 printed with nothing under it, so this reply is where its WHY first shows. Answered with diacritics."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. route: edge-rubric (trigger set). The unaccented 'tai sao' is the same command (graders.py WHY_RE accepts 'tại sao?', 'tai sao'; UX §5.12 synonyms). §CM-EDGE '"tại sao?" → bài gần nhất': the WHY line (plan.kit-week 5 'VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'), what it was written from, '✓ Đã kiểm:' and the record ('Kết quả: ĐẠT|CHƯA ĐẠT'). The context no longer has a machine-written Bản nháp line under N1 (R5): N1 printed with nothing under it, so this reply is where its WHY first shows. Answered with diacritics."""
 
 [[case]]
 id = "router.vn.074"
@@ -2796,7 +2808,7 @@ id = "router.vn.106"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after a Ready short prints the VÌ SAO line, what it was written from and ✓ Đã kiểm; the short itself had nothing under it"
+title = "'tại sao?' after a Ready short prints the VÌ SAO line and how it is built from her scene; the short itself had nothing under it; no check record"
 context = '''Week 2, Thursday 22 Oct 2026, iPhone, ChatGPT Free. Brand Card v1 present (persona default: pair bạn–mình, Nam, keyword CỨNG ĐƠ, beat cards, keyword CTA). Turn 1 asks for a script and gets the beat-card short with nothing under it (as router.vn.027). Turn 2 asks why; assertions run on the reply to 'tại sao?'. I3 also grades the turn-1 reply.'''
 input = '''[turn 1] viết kịch bản: tối qua mình ngồi soạn bài trên laptop nguyên buổi, đứng dậy lưng cứng đơ y chang hồi làm kế toán, mắc cười ghê
 [turn 2] tại sao?'''
@@ -2804,21 +2816,22 @@ contains = []
 not_contains = []
 regex = [
   '''(?m)^\W*VÌ SAO RA KHÁCH:?[^\n]*→''',
-  '''(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ [^\n]*(?:laptop|soạn bài|cứng đơ|kế toán|lưng|tối qua|đứng dậy)''',
-  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)(?:laptop|soạn bài|cứng đơ|kế toán|lưng|tối qua|đứng dậy)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?im)^\W*Sẵn sàng (?:quay|đăng) · viết từ\s*(?:bài |câu |video |hook )?(?:hay|mạnh|tốt|ổn|cuốn|chất|đỉnh|thu hút|hấp dẫn|ấn tượng|gần gũi|chạm)(?!\w)''',
   '''(?i)TITLE HOOK|VISUAL HOOK|VERBAL HOOK|LOCK-IN|LINK-FORWARD|Mode [ABC]''',
   '''(?i)(học viên|khách)[^\n]{0,20}(hết đau|khỏi)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: edge-rubric (trigger set). wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' §CM-EDGE '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: "Sẵn sàng {verb} · viết từ {evidence}" · "✓ Đã kiểm:" mục đã qua, cả tick · hồ sơ …; Bằng chứng: câu, cảnh, khách của họ; không tính từ' (the adjective guard; also I17); plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'). The evidence is her scene (the laptop evening, the stiff back, her accounting years), never an adjective. The turn-1 reply is router.vn.027 (no status line, I3). verdict "Ready" after 'tại sao?' means a Ready or ✓ Đã kiểm line is wanted here. Scores and codes are allowed only after 'tại sao?', so I4 is not listed; template labels stay hidden even here."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. route: edge-rubric (trigger set). wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' §CM-EDGE '"tại sao?" → bài gần nhất: dòng VÌ SAO · viết từ đâu: "Sẵn sàng {verb} · viết từ {evidence}" · "✓ Đã kiểm:" mục đã qua, cả tick · hồ sơ …; Bằng chứng: câu, cảnh, khách của họ; không tính từ' (the adjective guard; also I17); plan.kit-week 5 gives the WHY form ('VÌ SAO RA KHÁCH: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}'). The evidence is her scene (the laptop evening, the stiff back, her accounting years), never an adjective. The turn-1 reply is router.vn.027 (no status line, I3). verdict "Ready" after 'tại sao?' means a Ready or ✓ Đã kiểm line is wanted here. Scores and codes are allowed only after 'tại sao?', so I4 is not listed; template labels stay hidden even here."""
 
 # ================================================================ NON-TRIGGER set: no job fires
 

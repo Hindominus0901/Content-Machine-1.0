@@ -452,23 +452,24 @@ id = "signature.vn.022"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1"]
-title = "'tại sao?' on a Week-1 post: the post carries nothing; the VÌ SAO line shows the VN path (comment LÃI ẢO → gift → inbox, Zalo) in their words"
+title = "'tại sao?' on a Week-1 post: the post carries nothing; the VÌ SAO line shows the VN path (comment LÃI ẢO → gift → inbox, Zalo) in their words, with how it is built"
 context = "Week 1, Day 1, Brand Card v1 present (pair chị–em, audience mình – các chị em). Keyword 'lãi ảo'; gift: file Sổ 3 Cột; offer path Messenger → Zalo → chuyển khoản."
 input = """[turn 1] viết chị bài Facebook dài kể chuyện 28 Tết ngồi tính sổ trong kho nhé em
 [turn 2] tại sao thế em?"""
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)[^\n]*(?:comment|bình luận|nhắn|inbox|Messenger|Zalo)''',
   '''(?i)VÌ SAO RA KHÁCH[^\n]*(?:lãi (?:ảo|thật)|không thấy tiền|bán thì đắt)''',
-  '''(?m)^\W*Sẵn sàng đăng · viết (?:từ|thành) ''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?i)\b(?:pillar|Trụ [1-9]|B[1-7])\b',
-  '(?i)hãy cùng khám phá|nâng tầm|bứt phá|hành trình|chìa kh[óo]a',
+  '''(?i)\b(?:pillar|Trụ [1-9]|B[1-7])\b''',
+  '''(?i)hãy cùng khám phá|nâng tầm|bứt phá|hành trình|chìa kh[óo]a''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I8", "I15", "I18"]
 max_questions = 1
-notes = "wf15 §2 (R1): the WHY line no longer prints under the post; it is stored with every piece (plan.kit-week 5: 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}') and prints on 'tại sao?' with 'Sẵn sàng đăng · viết từ {evidence}' and '✓ Đã kiểm:' (§CM-EDGE). I3 grades the turn-1 reply (the post, nothing under it). Assertions here: the WHY line starts from their words (lãi ảo / không thấy tiền) and its next step is the VN path (wf11-message-focus §3.1 VN; wf2 §6: comment → inbox → Zalo). The template's '(Trụ 2)' tag is internal and never printed (deny-list). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
+notes = "v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 (R1): the WHY line no longer prints under the post; it is stored with every piece (plan.kit-week 5: 'VÌ SAO RA KHÁCH: \"{niềm tin cũ, chữ khách}\" → \"{niềm tin mới}\" · dẫn tới: {bước kế}') and prints on 'tại sao?' with 'Sẵn sàng đăng · viết từ {evidence}' and '✓ Đã kiểm:' (§CM-EDGE). I3 grades the turn-1 reply (the post, nothing under it). Assertions here: the WHY line starts from their words (lãi ảo / không thấy tiền) and its next step is the VN path (wf11-message-focus §3.1 VN; wf2 §6: comment → inbox → Zalo). The template's '(Trụ 2)' tag is internal and never printed (deny-list). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
 
 [[case]]
 id = "signature.vn.023"
@@ -547,20 +548,21 @@ id = "signature.vn.027"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "'tại sao?' after QUAY HÔM NAY shows the keyword check that no longer prints under the piece"
+title = "'tại sao?' after QUAY HÔM NAY: the VÌ SAO line and how it is built; the keyword check no longer prints as a ✓ line or a tick"
 context = "Day 0, pair bạn–mình, audience mình – mấy bạn. Her last missing fact was what she sells. Turn 1 answers it and gets the 4-line Map (TỪ KHOÁ: CỨNG ĐƠ) with QUAY HÔM NAY under it; turn 2 asks why."
 input = """[turn 1] chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi
 [turn 2] tại sao vậy?"""
 regex = [
-  '''(?im)^\W*✓ Đã kiểm:[^\n]*(?:từ kh(?:oá|óa)|c(?:ứ|u)ng đ(?:ơ|o))''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng quay · viết (?:từ|thành) ''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
-  '(?i)\b(?:registry|echo|K-\d+)\b',
-  '(?i)chữa cháy[^\n]{0,20}(?:là )?từ kh(?:oá|óa)',
+  '''(?i)\b(?:registry|echo|K-\d+)\b''',
+  '''(?i)chữa cháy[^\n]{0,20}(?:là )?từ kh(?:oá|óa)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
+  '''(?i)Hôm nay ai comment là có quà ngay''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I14", "I15", "I18"]
 max_questions = 1
-notes = "wf15 §2 and §CM-EDGE 'tại sao?': the old '✓ Đã kiểm: … từ khoá 1 lần …' line moved to 'tại sao?' (R2, R9). Turn 1 prints the Map with QUAY HÔM NAY under it (K2) and nothing under the piece (I3 grades it; signature.vn.023 asserts the piece); turn 2's 'tại sao vậy?' (graders.WHY_RE) is read as about its piece, QUAY HÔM NAY. Assertions here: the ✓ Đã kiểm line names the keyword check (once in the words, not only in the CTA), next to the VÌ SAO line and 'Sẵn sàng quay · viết từ {evidence}'; tick.keyword ('Hôm nay ai comment là có quà ngay: tin trả lời soạn sẵn rồi.') may print here too. Internal words stay out ('registry', 'echo', K-IDs). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."
+notes = "v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 and §CM-EDGE 'tại sao?': the old '✓ Đã kiểm: … từ khoá 1 lần …' line moved to 'tại sao?' (R2, R9). Turn 1 prints the Map with QUAY HÔM NAY under it (K2) and nothing under the piece (I3 grades it; signature.vn.023 asserts the piece); turn 2's 'tại sao vậy?' (graders.WHY_RE) is read as about its piece, QUAY HÔM NAY. Assertions here: the ✓ Đã kiểm line names the keyword check (once in the words, not only in the CTA), next to the VÌ SAO line and 'Sẵn sàng quay · viết từ {evidence}'; tick.keyword ('Hôm nay ai comment là có quà ngay: tin trả lời soạn sẵn rồi.') may print here too. Internal words stay out ('registry', 'echo', K-IDs). verdict Ready: evals/run.py wants a Ready or ✓ Đã kiểm line on a 'tại sao?' reply."

@@ -1679,7 +1679,7 @@ id = "setup.en.049"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'why?' after FILM TODAY: the piece printed clean; the 'why?' reply gives the WHY line, what it was written from and the checks"
+title = "'why?' after FILM TODAY: the piece printed clean; the 'why?' reply gives the WHY line and how it is built from her own story; no check record"
 context = "Day 0, about minute 17, ChatGPT Free. Same state as setup.en.020: after 'done' the one missing fact was the multi-income guess. Turn 1 answers it and gets the 4-line Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) with FILM TODAY under it; Dana asked for bullets. Turn 2 asks why."
 input = '''[turn 1] yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all
 [turn 2] why?'''
@@ -1687,27 +1687,28 @@ contains = []
 not_contains = []
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*Ready to film · (?:I(?:'|’)d post it|written as)[^\n]*(?i:carrot|cake|4B|63|applications|Teresa|coffee|24 years|Lorraine)''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)(?:carrot|cake|4B|63|applications|Teresa|coffee|24 years|Lorraine)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''(?i)\b90\s*(%|percent)''',
   '''\bPam\b''',
   '''(?i)\bcertified\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE WHAT PRINTS. Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece: I3 grades that reply (a WHY, ✓ Checked or Ready line there fails without 'why?'); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored WHY line (plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {step}'), 'Ready to film · I'd post it: {evidence}' naming her own story, and the ✓ Checked line with the checks passed (ticks too); the record may follow. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. I4 is not listed: scores may print after 'why?'."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line, the checks it passed, what it was written from') and §CM-EDGE WHAT PRINTS. Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece: I3 grades that reply (a WHY, ✓ Checked or Ready line there fails without 'why?'); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): the stored WHY line (plan.kit-week 5: 'WHY THIS GETS CLIENTS: "{old belief, their words}" → "{new belief}" · next: {step}'), 'Ready to film · I'd post it: {evidence}' naming her own story, and the ✓ Checked line with the checks passed (ticks too); the record may follow. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. I4 is not listed: scores may print after 'why?'."""
 
 [[case]]
 id = "setup.en.050"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'why?' after Week 1: the WHY line for the last piece, its checks and the fact it was written from; the pieces carry none"
+title = "'why?' after Week 1: the WHY line for the last piece and how it is built from her fact; the pieces carry none; no check record"
 context = "Day 0, Claude Free. Same state as setup.en.028: the Map (YOUR WORD: record year; LinkedIn + the Monday Number, 380 subscribers) is on screen with FILM TODAY under it; her next message brings Week 1."
 input = '''[turn 1] next
 [turn 2] why?'''
@@ -1715,8 +1716,7 @@ contains = []
 not_contains = []
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*Ready to (?:post|send|film) · (?:I(?:'|’)d post it|written as)''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''(?i)\b(?:record year|Marcus|stairwell|bank app|heart monitor|13-week|client by client|margin before more|underwater)\b''',
 ]
 not_regex = [
@@ -1724,13 +1724,14 @@ not_regex = [
   '''(?i)85,000''',
   '''(?i)\b70\s*(%|percent)''',
   '''(?i)\bformer CFO\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I10", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2-§3 and plan.kit-week 5: a WHY line is stored with every Week-1 piece and printed only on 'why?', for the last piece ([week] why_available_rate = 1.0). Turn 1 prints Week 1 with nothing under any piece (I3 grades it). Turn 2: the WHY line ('"{old belief, their words}" → "{new belief}" · next: {step}'), what the piece was written from ('Ready to {verb} · I'd post it: {evidence}', a fact of hers: Marcus, the stairwell, record year) and the ✓ Checked line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2-§3 and plan.kit-week 5: a WHY line is stored with every Week-1 piece and printed only on 'why?', for the last piece ([week] why_available_rate = 1.0). Turn 1 prints Week 1 with nothing under any piece (I3 grades it). Turn 2: the WHY line ('"{old belief, their words}" → "{new belief}" · next: {step}'), what the piece was written from ('Ready to {verb} · I'd post it: {evidence}', a fact of hers: Marcus, the stairwell, record year) and the ✓ Checked line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
 
 [[case]]
 id = "setup.en.051"

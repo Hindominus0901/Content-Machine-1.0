@@ -729,7 +729,7 @@ id = "humanize.en.030"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'why?' after 'make it sound like me': the WHY line, the voice check and the fact it was written from; the rewrite carried none"
+title = "'why?' after 'make it sound like me': the WHY line and how it is built in her voice, from a fact of hers; the rewrite carried none; no check record"
 context = "Same state as humanize.en.001: Week 2, Wednesday, ChatGPT Free (Windows laptop). Brand Card v1 present (persona default: keyword 'one more chapter', comment word CHAPTER; P6 her own story: 24 years, conference room 4B, the carrot sheet cake, 63 applications, coffees instead). Turn 1 pastes her niece's AI caption with 'make it sound like me' and gets the rewrite with nothing under it; turn 2 asks why."
 input = '''[turn 1] my niece made this with some AI app. make it sound like me:
 
@@ -737,14 +737,16 @@ In today's fast-paced world, navigating a career change after 50 can feel like a
 [turn 2] why?'''
 regex = [
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
-  '''(?m)^\W*Ready to post · (?:I(?:'|’)d post it|written as)[^\n]*(?i:carrot|cake|4B|63|applications|coffee|24 years|reorg|ops person|too vague|different logo)''',
-  '''(?im)^\W*✓ Checked:[^\n]*\b(?:sounds like (?:you|her|Dana)|your (?:words|voice|phrases?|register)|voice|her (?:words|phrases?))\b''',
+  '''(?i)(?:carrot|cake|4B|63|applications|coffee|24 years|reorg|ops person|too vague|different logo)''',
+  '''(?i)\b(?:sounds like (?:you|her|Dana)|your (?:words|voice|phrases?|register)|voice|her (?:words|phrases?))\b''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''\bH[1-9]\b''',
   '''(?i)\bstrip list\b|banned[- ]tells?|deny[- ]list''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step), the checks it passed, what it was written from') and §CM-EDGE WHAT PRINTS; humanize.kit-pass ('Reprint only the reworked piece, nothing under it'). Turn 1 prints the rewrite with nothing under it (I3 grades it; humanize.en.001 asserts the piece). Turn 2 (assertions here): the WHY line; 'Ready to post · I'd post it: {evidence}', a detail of her own story (the carrot cake, 4B, 63 applications, the coffees); the ✓ Checked line naming the voice check (ship.kit 4 VOICE: her tone, rhythm and phrases, no never-words). Strip-list codes and list names stay internal even here (modules/en/humanize.md: 'the coach hears plain words only'). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line (old belief → new belief, next step), the checks it passed, what it was written from') and §CM-EDGE WHAT PRINTS; humanize.kit-pass ('Reprint only the reworked piece, nothing under it'). Turn 1 prints the rewrite with nothing under it (I3 grades it; humanize.en.001 asserts the piece). Turn 2 (assertions here): the WHY line; 'Ready to post · I'd post it: {evidence}', a detail of her own story (the carrot cake, 4B, 63 applications, the coffees); the ✓ Checked line naming the voice check (ship.kit 4 VOICE: her tone, rhythm and phrases, no never-words). Strip-list codes and list names stay internal even here (modules/en/humanize.md: 'the coach hears plain words only'). verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply."""

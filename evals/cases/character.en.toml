@@ -520,21 +520,22 @@ id = "character.en.028"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "'why?' after FILM TODAY: the checks and the evidence name his own story, never a client he doesn't have"
+title = "'why?' after FILM TODAY: the WHY line and how it is built name his own story, never a client he doesn't have; no check record"
 context = "Same state as character.en.002: Day 0, persona default (cold start, 0 clients, proof locked); the best-result guess is on screen. Turn 1 answers it and gets the 4-line Map with FILM TODAY under it and nothing under the piece; turn 2 asks why."
 input = """[turn 1] yep
 [turn 2] why?"""
 regex = [
-  '''(?m)^\W*(?:✓ Checked:|Ready to film · (?:I(?:'|’)d post it|written as))[^\n]*(?i:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8|your (?:own )?story)''',
-  '''(?m)^\W*✓ Checked:[^\n]+''',
+  '''(?i)(?:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8|your (?:own )?story)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
 ]
 not_regex = [
-  '(?i)\bmy clients?\b',
-  '(?i)\b(certified (personal )?trainer|22 (pounds|lbs)|(two|a couple) hundred (people|clients)|200\+? (people|clients|dads))\b',
+  '''(?i)\bmy clients?\b''',
+  '''(?i)\b(certified (personal )?trainer|22 (pounds|lbs)|(two|a couple) hundred (people|clients)|200\+? (people|clients|dads))\b''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 not_contains = ["Owen", "Lily", "Jess", "Tommy", "Coach Dan"]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = "expected.toml [day0]: the old FILM TODAY 'Checked' line named his own story (birthday relay or kitchen floor); it now prints only on 'why?' (wf15 §2, R2; §CM-EDGE WHAT PRINTS), with the WHY line and what the piece was written from ('Ready to film · I'd post it: {his story}', or with no client result '… · written as {his story}'). Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece (I3 grades it; character.en.002 asserts the piece); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): his own story named on the Checked or evidence line, the ✓ Checked line, the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Never a client, a credential or the brother's number."
+notes = "v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. expected.toml [day0]: the old FILM TODAY 'Checked' line named his own story (birthday relay or kitchen floor); it now prints only on 'why?' (wf15 §2, R2; §CM-EDGE WHAT PRINTS), with the WHY line and what the piece was written from ('Ready to film · I'd post it: {his story}', or with no client result '… · written as {his story}'). Turn 1 prints the Map with FILM TODAY under it (K2) and nothing under the piece (I3 grades it; character.en.002 asserts the piece); turn 2's 'why?' is read as about its piece, FILM TODAY (wf15 §2 'for the last piece'). Turn 2 (assertions here): his own story named on the Checked or evidence line, the ✓ Checked line, the WHY line. verdict Ready: evals/run.py wants a Ready or ✓ Checked line on a 'why?' reply. Never a client, a credential or the brother's number."

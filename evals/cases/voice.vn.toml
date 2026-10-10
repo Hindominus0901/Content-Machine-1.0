@@ -937,7 +937,7 @@ id = "voice.vn.026"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after today's piece: the VÌ SAO line, the verdict and '✓ Đã kiểm:' with the voice check, her line and 'các chị em' named in plain words; the piece itself carried none"
+title = "'tại sao?' after today's piece: the VÌ SAO line and how it is built in her voice (her line, 'các chị em') in plain words; the piece itself carried none; no check record"
 context = """Week 1, Tuesday, ChatGPT Plus on the laptop, new chat in the project, em–chị. Brand Card v1 present (persona default: tone 'thẳng · gần gũi · khiêm tốn'; phrases include 'Doanh thu là để khoe, lãi mới là để tiêu.' and 'Bán được hàng chưa chắc đã có tiền đâu nhé.'; audience 'mình – các chị em'; TỪ KHOÁ LÃI ẢO). Today's plan slot is the long post on Tết 2019 in the storeroom (stats-w1.csv 13/10). Turn 1 gets today's piece with nothing under it; turn 2 asks why."""
 input = '''[turn 1] tiếp
 [turn 2] tại sao?'''
@@ -945,28 +945,29 @@ contains = []
 not_contains = []
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng (?:quay|đăng|gửi) · viết (?:từ|thành) [^\n]*(?i:Tết 2019|28 Tết|(?<!\w)kho(?!\w)|vở ô li|1,2 tỷ|40 triệu|300 triệu|lãi ảo|để khoe|đèn tuýp)''',
-  '''(?im)^\W*✓ Đã kiểm:[^\n]*(?:giọng|câu (?:chị|của chị)|cách chị nói|xưng|các chị em|chữ (?:cấm|chị không dùng|chị không nói))''',
+  '''(?i)(?:Tết 2019|28 Tết|(?<!\w)kho(?!\w)|vở ô li|1,2 tỷ|40 triệu|300 triệu|lãi ảo|để khoe|đèn tuýp)''',
   '''(?i)(?:giọng (?:của )?chị|câu (?:của )?chị|chữ của chị|lời (?:của )?chị|các chị em|đúng giọng)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?m)^\s*(?:```|~~~)''',
   '''(?i)(?:audience_address|code_mix|written_vs_spoken|openers_closers|never_say|do_say|connectors)''',
   '''(?i)50 triệu|gấp 3|1 tỷ một tháng''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I15", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 ('"why?" prints, for the last piece: the WHY line …; the checks it passed; what it was written from'); §CM-EDGE "tại sao?" ('bài gần nhất: dòng VÌ SAO · viết từ đâu: "Sẵn sàng {verb} · viết từ {evidence}" · "✓ Đã kiểm:" mục đã qua … Bằng chứng: câu, cảnh, khách của họ'); ship.kit 4 GIỌNG + NGƯỜI MUA ('giọng, nhịp, câu hay nói, cách gọi khách của coach, không chữ cấm'); plan.kit-week 5 (the VÌ SAO line is stored with every piece). Turn 1 prints her long post with nothing under it (I3 grades it). Turn 2 (assertions here): the VÌ SAO line, the verdict with what it was written from (her storeroom night, her notebook, her numbers, her keyword, her line about revenue), the '✓ Đã kiểm:' line naming the voice check, and the voice in plain words (her line, 'các chị em', no never-words); no field names; the piece is not reprinted. No string fixes how 'tại sao?' names the voice, so it is asserted loosely (see flags). verdict Ready: evals/run.py wants a Sẵn sàng or ✓ Đã kiểm line on a 'tại sao?' reply. Not on S0: the VÌ SAO prefix and the 'tại sao?' record live in the method file (§CM-EDGE). Mirrors voice.en.024."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 ('"why?" prints, for the last piece: the WHY line …; the checks it passed; what it was written from'); §CM-EDGE "tại sao?" ('bài gần nhất: dòng VÌ SAO · viết từ đâu: "Sẵn sàng {verb} · viết từ {evidence}" · "✓ Đã kiểm:" mục đã qua … Bằng chứng: câu, cảnh, khách của họ'); ship.kit 4 GIỌNG + NGƯỜI MUA ('giọng, nhịp, câu hay nói, cách gọi khách của coach, không chữ cấm'); plan.kit-week 5 (the VÌ SAO line is stored with every piece). Turn 1 prints her long post with nothing under it (I3 grades it). Turn 2 (assertions here): the VÌ SAO line, the verdict with what it was written from (her storeroom night, her notebook, her numbers, her keyword, her line about revenue), the '✓ Đã kiểm:' line naming the voice check, and the voice in plain words (her line, 'các chị em', no never-words); no field names; the piece is not reprinted. No string fixes how 'tại sao?' names the voice, so it is asserted loosely (see flags). verdict Ready: evals/run.py wants a Sẵn sàng or ✓ Đã kiểm line on a 'tại sao?' reply. Not on S0: the VÌ SAO prefix and the 'tại sao?' record live in the method file (§CM-EDGE). Mirrors voice.en.024."""
 
 [[case]]
 id = "voice.vn.027"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'tại sao?' after his LinkedIn post: the voice it used (his line, 'tôi – anh chị', his sign-off) prints here, never under the post"
+title = "'tại sao?' after his LinkedIn post: the VÌ SAO line and the voice it used (his line, 'tôi – anh chị', his sign-off) in plain words; never under the post; no check record"
 context = """Week 1, Tuesday, Claude Pro on the laptop, em–anh. Brand Card v1 present (persona default: LinkedIn first; tone 'chắc · chậm · thẳng'; phrases 'Nói thật nghe anh chị', 'Tuyển 15 phút thì người ta ở 15 ngày', 'Cho làm thử 2 tiếng là biết'; audience 'tôi – anh chị'; he signs 'Khoa'; TỪ KHOÁ TUYỂN HOÀI). Turn 1 gets today's LinkedIn post with nothing under it; turn 2 asks why."""
 input = '''[turn 1] tiếp
 [turn 2] tại sao?'''
@@ -974,22 +975,23 @@ contains = []
 not_contains = []
 regex = [
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
-  '''(?m)^\W*Sẵn sàng (?:quay|đăng|gửi) · viết (?:từ|thành) [^\n]*(?i:quán hải sản|10 giờ đêm|ghế nhựa|15 phút|phiếu việc|làm thử|(?<!\w)kèm(?!\w)|mùng 8|cổng xưởng|tuyển hoài|chấm công)''',
-  '''(?im)^\W*✓ Đã kiểm:[^\n]*(?:giọng|câu (?:anh|của anh)|xưng|anh chị|(?<!\w)tôi(?!\w)|ký tên|chữ (?:cấm|anh không dùng))''',
+  '''(?i)(?:quán hải sản|10 giờ đêm|ghế nhựa|15 phút|phiếu việc|làm thử|(?<!\w)kèm(?!\w)|mùng 8|cổng xưởng|tuyển hoài|chấm công)''',
   '''(?i)(?:giọng (?:của )?anh|câu (?:của )?anh|chữ của anh|tôi\s*[–-]\s*anh chị|xưng tôi|ký (?:tên )?Khoa|đúng giọng)''',
+  '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
   '''(?m)^\s*(?:```|~~~)''',
   '''(?i)(?:audience_address|code_mix|written_vs_spoken|openers_closers|never_say|do_say|connectors)''',
   '''(?i)70\s*%|80\s*%|6 tháng lương|200 triệu''',
   '''(?i)(?<!\w)(?:coach|KOL)(?!\w)''',
+  '''(?m)^\W*✓ Đã kiểm:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I15", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2 and §CM-EDGE "tại sao?"; ship.kit 4 GIỌNG + NGƯỜI MUA. Turn 1 prints the LinkedIn post with nothing under it (I3 grades it). Turn 2 (assertions here): the VÌ SAO line, the verdict with what the post was written from (his seafood-restaurant night, the plastic stools, the 15-minute hire, the job sheet, the 2-hour trial, the factory gate), the '✓ Đã kiểm:' line naming the voice check, and the voice the post used in plain words: one of his lines, 'tôi – anh chị', his sign-off; no field names; the post is not reprinted. Asserted loosely: no string fixes how 'tại sao?' names the voice (see flags). verdict Ready: evals/run.py wants a Sẵn sàng or ✓ Đã kiểm line on a 'tại sao?' reply. The traps ('70%', '80%', '6 tháng lương', '200 triệu') stay out even here. Mirrors voice.en.025."""
+notes = """v13.4 (SS-EDGE): 'tại sao?' prints ONE sentence, the VÌ SAO line plus how the piece is built in plain words, never a check record: no '✓ Đã kiểm:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Đã kiểm line, a 'Sẵn sàng … · viết từ' line, ticks or the record are superseded. wf15 §2 and §CM-EDGE "tại sao?"; ship.kit 4 GIỌNG + NGƯỜI MUA. Turn 1 prints the LinkedIn post with nothing under it (I3 grades it). Turn 2 (assertions here): the VÌ SAO line, the verdict with what the post was written from (his seafood-restaurant night, the plastic stools, the 15-minute hire, the job sheet, the 2-hour trial, the factory gate), the '✓ Đã kiểm:' line naming the voice check, and the voice the post used in plain words: one of his lines, 'tôi – anh chị', his sign-off; no field names; the post is not reprinted. Asserted loosely: no string fixes how 'tại sao?' names the voice (see flags). verdict Ready: evals/run.py wants a Sẵn sàng or ✓ Đã kiểm line on a 'tại sao?' reply. The traps ('70%', '80%', '6 tháng lương', '200 triệu') stay out even here. Mirrors voice.en.025."""
 
 # ---------------------------------------------------------------- Day 0 never asks about voice (wf14 V3; §CM-VOICE 1)
 

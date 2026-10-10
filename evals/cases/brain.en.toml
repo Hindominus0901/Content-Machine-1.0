@@ -1063,7 +1063,7 @@ id = "brain.en.033"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'why?' after today's piece: the WHY line, the checks and what it was written from, traced to her card"
+title = "'why?' after today's piece: the WHY line and how it is built in plain words, traced to her card; no check record"
 context = "Day 2 (Tuesday of week 1), ChatGPT Plus. Project sources: method file + Brand Card v1 (persona default: keyword NOTHING ROOM; email-first). New chat in the project. Turn 1 gets today's piece with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] next
 [turn 2] why?'''
@@ -1072,19 +1072,19 @@ not_contains = []
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
   '''(?im)^\W*WHY THIS GETS CLIENTS[^\n]*\bnext\b''',
-  '''(?m)^\W*✓ Checked:''',
-  '''(?m)^\W*Ready to (?:film|post|send) · (?:I(?:'|’)d post it:|written as)''',
-  '''(?im)^\W*Ready to (?:film|post|send) ·[^\n]*\b(tape|sofa|rug|tuesday night|nothing room|Megan|Priya|bonus room|homework room|a job|measure|door|storage unit)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
+  '''(?i)\b(tape|sofa|rug|tuesday night|nothing room|Megan|Priya|bonus room|homework room|a job|measure|door|storage unit)''',
 ]
 not_regex = [
   '''(?m)^\s*(?:```|~~~)''',
   '''(?i)\bHollis\b''',
   '''\b400\b''',
   '''(?i)\b(20|30)\s*(%|percent)''',
+  '''(?m)^\W*✓ Checked:''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5 (WHY stored with every piece), edge-rubric.kit-verdict ('"why?" → its WHY line · what it was written from: verdict.ready … · checked.prefix the checks passed … Evidence: their phrase, scene or client'). The evidence is a fact the card carries (her stories, client words, the keyword), which is how the card is used to validate a piece. The piece is not reprinted. The turn-1 reply prints the piece with nothing under it (brain.en.013)."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' plan.kit-week 5 (WHY stored with every piece), edge-rubric.kit-verdict ('"why?" → its WHY line · what it was written from: verdict.ready … · checked.prefix the checks passed … Evidence: their phrase, scene or client'). The evidence is a fact the card carries (her stories, client words, the keyword), which is how the card is used to validate a piece. The piece is not reprinted. The turn-1 reply prints the piece with nothing under it (brain.en.013)."""

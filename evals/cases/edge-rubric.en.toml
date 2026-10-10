@@ -150,24 +150,24 @@ id = "edge-rubric.en.003"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' prints the record for the Draft: Result: FAIL first, the low pillar, the gates, same-context, lint: manual"
+title = "'why?' on her own Draft: the defect in plain words (the soft stance); no Result line, scores, gates or lint record"
 context = '''Week 2, Thursday, ChatGPT Free (no code execution, so the lint ran as presence checks). Dana rewrote N2 (an Instagram reel on 'feeding the portal') herself and asked 'ok to post?'; the check printed its one line: 'Draft · the stance is soft. Say "fix N2" and I'll sharpen it.' Nothing else failed in N2; N1 and N3 were delivered Ready, with nothing under them.'''
 input = '''why?'''
 regex = [
-  '''(?im)^\W*Result\s*:\s*FAIL\b''',
-  '''(?i)checker\s*:\s*same-context''',
-  '''(?i)lint\s*:\s*manual''',
-  '''(?i)\bC\s*[:=]?\s*[01]\b|Character[^\n]{0,30}(?<!\d)[01](?!\d)''',
-  '''(?i)\bgates?\b|\bG1\b''',
+  '''(?i)\b(?:stance|soft|sharpen|opinion)\b''',
 ]
 not_regex = [
   '''(?i)Ready after''',
   '''(?im)^\W*Result\s*:\s*PASS\b''',
   '''(?i)lint\s*:\s*script''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?im)^\W*Result\s*:''',
+  '''(?i)\blint\s*:''',
+  '''(?i)\bchecker\s*:''',
 ]
 invariants = ["I1", "I5", "I18"]
 max_questions = 1
-notes = """QA §2.6: the full record is written only for a Draft or an Override; its first line is 'Result: PASS/FAIL', then the Edge pillars, the gates, failed format items, lens fails, the ceiling, 'checker: same-context' and 'lint: script|manual'. QA §2.4: 'why?' is the one door to this detail, so I4 is not listed here. QA §1 rule 4 (never claim a check that didn't run): ChatGPT Free ran presence checks, so the record says 'lint: manual', never 'script' (QA §2.2 step 2; PLAN reconciliation 8). QA §1 rule 6: no conditional pass. Assertions unchanged by wf15 (a 'why?' reply may print the record); only the context moved: a machine-written N2 is fixed silently, so the Draft is her own rewrite checked on request. The Ready counterpart is edge-rubric.en.033."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. QA §2.6: the full record is written only for a Draft or an Override; its first line is 'Result: PASS/FAIL', then the Edge pillars, the gates, failed format items, lens fails, the ceiling, 'checker: same-context' and 'lint: script|manual'. QA §2.4: 'why?' is the one door to this detail, so I4 is not listed here. QA §1 rule 4 (never claim a check that didn't run): ChatGPT Free ran presence checks, so the record says 'lint: manual', never 'script' (QA §2.2 step 2; PLAN reconciliation 8). QA §1 rule 6: no conditional pass. Assertions unchanged by wf15 (a 'why?' reply may print the record); only the context moved: a machine-written N2 is fixed silently, so the Draft is her own rewrite checked on request. The Ready counterpart is edge-rubric.en.033."""
 
 [[case]]
 id = "edge-rubric.en.004"
@@ -821,62 +821,64 @@ id = "edge-rubric.en.033"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after a Ready reel: the WHY line, the Ready line naming her Bank (never an adjective), the checks and the record (Result: PASS, lint: manual)"
+title = "'why?' after a Ready reel: the WHY line and how it is built in plain words, evidence from her Bank (never an adjective); no ticks, score or record"
 context = "Same state as edge-rubric.en.001: Week 2, Tuesday after the Weekly Talk, ChatGPT Free on the Windows laptop (no code execution, so the lint runs as presence checks). Brand Card v1 present (persona default). Turn 1 gets the carrot-cake reel with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] write me a reel on the carrot cake day. bullets. I'll film it tonight after dinner
 [turn 2] why?'''
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
   '''(?im)^\W*WHY THIS GETS CLIENTS[^\n]*\bnext\b''',
-  '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:[^\n]*(?:carrot|cake|4B|24 years|63|chapter|coffee|portal|too vague|box|title|HQ|reorg|Lorraine|Bev|Gail)''',
-  '''(?m)^\W*✓ Checked:''',
-  '''(?im)^\W*Result\s*:\s*PASS\b''',
-  '''(?i)lint\s*:\s*manual''',
+  '''(?i)(?:carrot|cake|4B|24 years|63|chapter|coffee|portal|too vague|box|title|HQ|reorg|Lorraine|Bev|Gail)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it:\s*(?:it(?:'|’)s |this is |the (?:reel|post|hook) is )?(?:great|strong|good|solid|punchy|powerful|engaging|compelling|on[- ]brand|authentic|relatable|scroll-stopping)\b''',
   '''(?im)^\W*Result\s*:\s*FAIL\b''',
   '''(?i)lint\s*:\s*script''',
   '''(?i)Ready after''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?im)^\W*Result\s*:''',
+  '''(?i)\blint\s*:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17", "I18"]
 max_questions = 1
-notes = """wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"why?" (alone) → for the last piece: its WHY line · what it was written from: verdict.ready … · checked.prefix the checks passed … · the record: "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual" (script if it ran). Evidence: their phrase, scene or client; no adjectives.' plan.kit-week 5 gives the WHY form ('"{old belief}" → "{new belief}" · next: {step}'). The evidence slot names a Bank item (a keyword, scene, client or P-row): the third regex needs one, the first not_regex fails praise-as-evidence (also I17). A Ready piece's record says PASS; ChatGPT Free ran presence checks, so 'lint: manual', never 'script' (QA §1 rule 4). Scores and pillar codes are allowed here only because the coach asked 'why?' (I4 is not listed); the turn-1 reply carries none (edge-rubric.en.001). Not on S0: the record's fields live in the method file (§CM-EDGE). The Draft counterpart is edge-rubric.en.003."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: '"why?" prints, for the last piece: the WHY line (old belief → new belief, next step); the checks it passed; what it was written from.' edge-rubric.kit-verdict: '"why?" (alone) → for the last piece: its WHY line · what it was written from: verdict.ready … · checked.prefix the checks passed … · the record: "Result: PASS|FAIL", K V A Au C + total, gates, ceiling, "checker: same-context · lint: manual" (script if it ran). Evidence: their phrase, scene or client; no adjectives.' plan.kit-week 5 gives the WHY form ('"{old belief}" → "{new belief}" · next: {step}'). The evidence slot names a Bank item (a keyword, scene, client or P-row): the third regex needs one, the first not_regex fails praise-as-evidence (also I17). A Ready piece's record says PASS; ChatGPT Free ran presence checks, so 'lint: manual', never 'script' (QA §1 rule 4). Scores and pillar codes are allowed here only because the coach asked 'why?' (I4 is not listed); the turn-1 reply carries none (edge-rubric.en.001). Not on S0: the record's fields live in the method file (§CM-EDGE). The Draft counterpart is edge-rubric.en.003."""
 
 [[case]]
 id = "edge-rubric.en.034"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after the downgraded cold-start post: 'Ready to post · written as …' names the founding or process framing, with the checks and the ceiling; still no client result"
+title = "'why?' after the downgraded cold-start post: the WHY line and how it is built name the founding or process framing; still no client result; no record"
 context = "Same state as edge-rubric.en.018: Week 2, Monday, ChatGPT Plus (iPhone). Brand Card v1 present (persona default: cold start, 0 clients, proof locked). Turn 1 gets the post written as a founding or process piece with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply."
 input = '''[turn 1] write me a post with some client results. dads who stuck with the 3 x 30 and what happened. people want proof
 [turn 2] why?'''
 regex = [
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
-  '''(?im)^\W*Ready to (?:film|post) · written as[^\n]*(?:founding|first group|process|own story|your story|no client results|garage|pilot)''',
-  '''(?m)^\W*✓ Checked:''',
-  '''(?im)^\W*Result\s*:\s*PASS\b''',
-  '''(?i)\bceiling\b''',
+  '''(?i)(?:founding|first group|process|own story|your story|no client results|garage|pilot)''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''(?i)\b(?:clients?|dads? I(?:(?:'|’)ve)? (?:coached|trained))\b[^\n]{0,40}\b(?:lost|dropped|went from|gained|pounds|lbs)\b''',
   '''(?i)\b22\s*(?:lb|lbs|pounds)\b|\b200\+?\b|\bbrother\b''',
   '''(?m)^\W*Needs you ·''',
   '''(?i)Ready after''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?im)^\W*Result\s*:''',
+  '''(?i)\blint\s*:''',
 ]
 verdict = "Ready-downgraded"
 invariants = ["I1", "I3", "I5", "I8", "I18"]
 max_questions = 1
-notes = """wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: on 'why?', what it was written from is verdict.ready_downgraded ('Ready to post · written as {evidence}', e.g. 'written as a founding offer (no client results yet)'), with the checks and the record. QA §2.2 DOWNGRADE table: the Authority ceiling is recorded and never waived, so the record names it ('ceiling', a record field in edge-rubric.kit-verdict). The turn-1 reply carried none of this (edge-rubric.en.018). Asking why unlocks no client result (I8: cold start); no question, because a cold start has no fact to give."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf15 §2: 'Ready, downgraded (e.g. founding framing): the content only. The downgrade shows on "why?"'; edge-rubric.kit-verdict: on 'why?', what it was written from is verdict.ready_downgraded ('Ready to post · written as {evidence}', e.g. 'written as a founding offer (no client results yet)'), with the checks and the record. QA §2.2 DOWNGRADE table: the Authority ceiling is recorded and never waived, so the record names it ('ceiling', a record field in edge-rubric.kit-verdict). The turn-1 reply carried none of this (edge-rubric.en.018). Asking why unlocks no client result (I8: cold start); no question, because a cold start has no fact to give."""
 
 [[case]]
 id = "edge-rubric.en.035"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'why?' after a default 'make my version': liked.evidence 'their shape, your …; nothing copied', the checks and the WHY line; no copy note"
+title = "'why?' after a default 'make my version': liked.evidence 'their shape, your …; nothing copied', the WHY line and how it is built; no copy note, no record"
 context = '''Same state as edge-rubric.en.024: Week 3, Thursday, ChatGPT Free. Brand Card v1 present (persona default). Earlier this week Dana sent liked-paste.md drop L2 (the "no skills, just two decades of keeping things from falling apart" post); the machine saved its shape. Turn 1 gets her version with nothing under it. Turn 2 asks why; assertions run on the reply to 'why?'. I3 also grades the turn-1 reply.'''
 input = '''[turn 1] make my version of that keepers list one. instagram reel, bullets
 [turn 2] why?'''
@@ -884,14 +886,16 @@ regex = [
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it: their shape, your [^\n;]+; nothing copied''',
   '''(?im)^\W*Ready to (?:film|post) · I(?:'|’)d post it: their shape, your [^\n;]*(?:keepers|box|title|24 years|4B|carrot|store operations|coffee|63)''',
   '''(?m)^\W*WHY THIS GETS CLIENTS:?[^\n]*→''',
-  '''(?m)^\W*✓ Checked:''',
+  '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
   '''(?i)this follows their post closely|Platforms may show copies less''',
   '''(?i)Ready after''',
   '''(?i)\bswipe\b|\bproven\b|\boutliers?\b''',
+  '''(?m)^\W*✓ Checked:''',
+  '''(?im)^\W*Result\s*:''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I17"]
 max_questions = 1
-notes = """wf13 §2 liked.evidence ('Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied.') and wf15-case-impact R8: the evidence line moved from under the version to 'why?'. edge-rubric.kit-verdict: '"why?" → … what it was written from: verdict.ready'; for a default-path remix that is liked.evidence, naming her Bank fact (the keepers list, 'what goes in the box, not your title'). Nothing was copied on request, so no F1 note, on 'why?' either. The turn-1 reply carried no line (edge-rubric.en.024)."""
+notes = """v13.4 (SS-EDGE): 'why?' prints ONE sentence, the WHY line plus how the piece is built in plain words, never a check record: no '✓ Checked:' line, ticks, scores, codes or record; the checks run silently. Assertions follow that; older sentences below about a ✓ Checked line, a 'Ready to … · I'd post it' line, ticks or the record are superseded. wf13 §2 liked.evidence ('Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied.') and wf15-case-impact R8: the evidence line moved from under the version to 'why?'. edge-rubric.kit-verdict: '"why?" → … what it was written from: verdict.ready'; for a default-path remix that is liked.evidence, naming her Bank fact (the keepers list, 'what goes in the box, not your title'). Nothing was copied on request, so no F1 note, on 'why?' either. The turn-1 reply carried no line (edge-rubric.en.024)."""
