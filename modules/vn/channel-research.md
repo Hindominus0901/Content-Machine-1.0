@@ -39,13 +39,13 @@ KHÔNG TRẢ LỜI SUÔNG: coach hỏi chiến lược, trụ cột nội dung, 
 THẺ, sau C2 và C3 (đi vào định vị §CM-MAP, trụ cột nội dung và tuyến bài §CM-STRATEGY-ENGINE, §CM-CONTENT-LINES, hook §CM-HOOK-LIBRARY; bản hằng tháng là "Góc nhìn riêng" ở §CM-MONTH):
 AI CŨNG NÓI: một lời hứa, nhận định hay khung bài thấy ở 2+ kênh (tiêu đề, dòng đầu, sản phẩm) → hook của coach tránh lặp lại.
 CHƯA AI NÓI: một nhu cầu của khách từ 2+ người ở 2+ nơi (C3, R3, tin nhắn) mà chưa kênh nào trả lời; ít hơn → "{{t:angle.hunch}}", và bài kế tiếp kết bằng một câu hỏi để thử.
-COACH NÓI ĐƯỢC: chỗ trống đó × chuyện, bằng chứng hay niềm tin của chính coach, trên một trụ cột nội dung có sẵn (không thêm trụ mới); ≤3 dòng.
+{XƯNG HÔ} NÓI ĐƯỢC: chỗ trống đó × chuyện, bằng chứng hay niềm tin của chính coach, trên một trụ cột nội dung có sẵn (không thêm trụ mới); ≤3 dòng.
 Dòng nào trên thẻ cũng có dấu vết trong ghi chú: bài nào, comment nào (vai · kênh · tháng · link), số đếm. Dòng không có dấu vết thì bỏ.
 COACH THẤY, sau mỗi lượt, ≤5 dòng, lời thường, không link, không người comment, không chữ nội bộ:
 "Đã đọc {n} kênh: {n} bài, {n} comment (tháng {tháng}).
 Cái đang chạy ở đây: {mẫu} ({n} kênh).
 Người xem cứ hỏi mà chưa ai trả lời: {chỗ trống} ({n} người).
-Góc của {xưng hô}: {một dòng COACH NÓI ĐƯỢC}.
+Góc của {xưng hô}: {một dòng {XƯNG HÔ} NÓI ĐƯỢC}.
 Gõ "xem nghiên cứu" để xem báo cáo đầy đủ."
 0 KÊNH ĐỌC ĐƯỢC: dòng 1 nói thẳng và vì sao ("Chưa mở được kênh nào ({nền tảng}: trang trắng); dưới đây từ {n} trang và bản {xưng hô} dán:"), dòng 2–3 chỉ in khi có nguồn, không thì bỏ; không bao giờ có mẫu không nguồn.
 Ngày 0: các dòng này gộp vào NGHIÊN CỨU CHO THẤY dưới chiến lược (kết quả §CM-LISTEN, ≤3 dòng; chưa GIỮ được câu khách nào: một dòng kênh thay dòng "Nguồn câu khách"); trụ cột nội dung, tuyến bài, tỷ lệ trong đề xuất ghi rõ lấy từ đâu. Các lượt sau: 5 dòng + một TIẾP có A/B/C (§CM-OPTIONS). Tuyến bài chỉ đổi ở buổi nhìn lại tháng, mỗi tháng nhiều nhất một tuyến (§CM-CONTENT-LINES), nên phát hiện mới chỉ đề xuất cho buổi đó: "A) đưa chỗ trống này thành tuyến mới ở buổi nhìn lại tháng (máy khuyên) · B) một bài lẻ tuần này · C) giữ kế hoạch".

@@ -1571,8 +1571,15 @@ def i4_codes(run: Run) -> dict:
     return result("I4", "No score, Edge, Ship Check, rubric, lint or pillar codes in coach text", ev)
 
 
+# A Markdown table row ("| Thứ 2 | Reel | Bạn có đang bỏ lỡ khách? |", "|---|---|"): its cells are the plan's (a
+# question-shaped hook in the Week-1 table is the audience's), never a question to the coach.
+TABLE_ROW_RE = re.compile(r"^\s*\|.*\|\s*$")
+
+
 def reply_questions(r: Reply) -> list[str]:
-    return _questions(r.prose_text())
+    """Questions to the coach in a reply's talk: prose and the NEXT line, without table rows (copy and paste boxes
+    are never prose)."""
+    return _questions("\n".join(ln for ln in r.prose_text().splitlines() if not TABLE_ROW_RE.match(ln)))
 
 
 # The coach's private asks: the message to 3 past clients (or 3 people like the buyer), sent one to one from a copy
@@ -2886,7 +2893,10 @@ def i20_unopened_links(run: Run) -> dict:
 
 
 ANGLE_DEFAULT_LABELS = {"everyone": ("EVERYONE SAYS", "AI CŨNG NÓI"), "nobody": ("NOBODY SAYS", "CHƯA AI NÓI"),
-                        "you": ("YOU CAN SAY", "BẠN NÓI ĐƯỢC")}
+                        "you": ("YOU CAN SAY", "{XƯNG HÔ} NÓI ĐƯỢC")}
+# An address slot in a label ("{XƯNG HÔ} NÓI ĐƯỢC", strings/vn.toml angle.labels): the machine fills it with the coach's
+# pronoun, so it reads as any pronoun.
+ADDRESS_SLOT_RE = re.compile(r"\{\s*(?:xưng hô|tự xưng)\s*\}", re.I)
 ACCOUNT_HEAD_RE = re.compile(r"^(?:Account|Channel|Page|Kênh|Tài khoản|Trang)\s+[A-Z0-9]+\s*[·:.–—-]\s*(.+)$", re.I)
 HUNCH_RE = re.compile(r"\bhunch\b|\bmy guess\b|\bI'?m guessing\b|\bguess\b|\bnot (?:sure|proven) yet\b"
                       r"|(?<!\w)đoán(?!\w)|linh cảm|chưa chắc", re.I)
@@ -2933,8 +2943,9 @@ def _angle_expected(run: Run) -> dict:
 
 def _label_re(label: str) -> re.Pattern:
     """A card label at the start of a line, followed by ':' '·' '(' a dash or nothing ("Ai cũng nói là…"
-    is a sentence, not the label); VN pronouns match any pronoun ("CHỊ NÓI ĐƯỢC")."""
-    words = ck.plain_line(label).split()
+    is a sentence, not the label); VN pronouns and an address slot ({XƯNG HÔ}, {xưng hô}) match any pronoun
+    ("CHỊ NÓI ĐƯỢC")."""
+    words = ck.plain_line(ADDRESS_SLOT_RE.sub(PRONOUNS[0], ck.nfc(label))).split()
     parts = ["(?:" + "|".join(PRONOUNS) + ")" if w.casefold() in PRONOUNS else re.escape(w) for w in words]
     return re.compile("^" + r"\s+".join(parts) + r"(?=\s*(?:[:·•|(—–-]|$))", re.I)
 
@@ -3422,7 +3433,8 @@ TRANSLATE_ASK_RE = re.compile(r"(?<!\w)dịch(?!\s+(?:vụ|bệnh|chuyển)(?!\w
 _EMOJI_NOT = re.compile(r"[\u2190-\u21ff\u2500-\u25ff\u00a9\u00ae\u2122]")   # arrows, box drawing, shapes, ©®™
 VN_NATURAL_DEFAULTS = {"min_tieng": 15, "patterns_per_100_max": 2.0, "patterns_min_hits": 2, "bold_max": 0,
                        "emoji_line_max": 2, "ai_emoji": ["🚀", "💡", "✨", "🎯", "🌟"], "em_dash_max": 0,
-                       "particle_share_ratio_min": 0.5, "particle_share_floor": 0.1, "particle_min_sentences": 10}
+                       "particle_share_ratio_min": 0.5, "particle_share_floor": 0.1, "particle_min_sentences": 10,
+                       "particle_card_tolerance": 0.10}
 
 
 def _is_emoji(ch: str) -> bool:
@@ -3616,6 +3628,23 @@ def pasted_posts(run: Run) -> list[tuple[str, str]]:
     return pasted or sections
 
 
+# The Brand Card's dialect field with the particle share measured on Day 0 (§CM-VOICE 1, §CM-CARD 3):
+# dialect: "nam · tiểu từ ~45% · nha, nè, á" (or dialect=nam·tiểu từ ~45%·…).
+CARD_PARTICLE_RE = re.compile(r"(?<!\w)dialect\s*[:=]\s*[\"'“]?[^\n]*?tiểu từ\s*~?\s*(\d{1,3})\s*%", re.I)
+
+
+def card_particle_share(run: Run) -> float | None:
+    """The particle share on the latest Brand Card in the run (a machine reply or a card the coach pasted back), as a
+    fraction; None when no card line carries one."""
+    found = None
+    for t in run.turns:
+        for m in CARD_PARTICLE_RE.finditer(ck.nfc(t.text)):
+            n = int(m.group(1))
+            if n <= 100:
+                found = n / 100
+    return found
+
+
 def check_vn_natural(run: Run) -> dict:
     """VN pieces read like a Vietnamese person wrote them (vn-language-guide §9.3, §10.2 items 4-5; flags, lenient
     thresholds in acceptance.toml [vn_natural]). In each piece the machine wrote (copy-verbatim asks and "why?"
@@ -3624,7 +3653,8 @@ def check_vn_natural(run: Run) -> dict:
     dash, unless the coach's own written-posts.md uses them; and the share of written sentences that end in a
     particle (captions, posts, messages: script directions and spoken lines left out, split_script), compared with
     the coach's own posts that they pasted in the run (pasted_posts; all of written-posts.md when none was pasted; no
-    posts: a floor); the spoken lines' share is reported in details. The pieces leave out titles, bare labels, dated
+    posts: a floor), or, when the run's Brand Card carries its share (dialect "… tiểu từ ~45% …", card_particle_share),
+    against that number ± particle_card_tolerance (10 points); the spoken lines' share is reported in details. The pieces leave out titles, bare labels, dated
     notes and the card top, and count a reprinted box once (_vn_pieces; review retest-vg4-g5 G37). A pattern the
     coach's own posts or [voice] do_say hold is theirs and does not count. EN runs: n/a."""
     if run.lang != "vn":
@@ -3694,9 +3724,17 @@ def check_vn_natural(run: Run) -> dict:
         details["coach_posts"] = [sid for sid, _ in compared]
     if own_sents:
         details["coach_particle_share"] = round(own_ends / own_sents, 2)
+    target = card_particle_share(run)
+    if target is not None:
+        details["card_particle_share"] = target
     if sents >= int(cfg["particle_min_sentences"]):
         share = ends / sents
-        if own_sents:
+        tol = float(cfg["particle_card_tolerance"])
+        if target is not None:
+            if abs(share - target) > tol + 1e-9:
+                ev.append(f"pieces end {ends} of {sents} sentences with a particle ({share:.0%}); the Brand Card says "
+                          f"{target:.0%} (±{tol:.0%})")
+        elif own_sents:
             floor = float(cfg["particle_share_ratio_min"]) * own_ends / own_sents
             if share < floor:
                 ev.append(f"pieces end {ends} of {sents} sentences with a particle ({share:.0%}); their own posts "

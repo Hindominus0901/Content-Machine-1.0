@@ -74,7 +74,7 @@ checks_vn = [
 
 - File CHIEN-LUOC-NOI-DUNG.md; headings: "1. Bạn giúp ai, và vì sao là bạn" · "2. Trụ cột nội dung của bạn" · "3. Tuyến nội dung của bạn" · "4. Tỷ lệ nội dung: thu hút, niềm tin, chuyển đổi" · "5. Hệ thống nội dung của bạn" · "6. 30 ngày đầu" · "7. Quà tặng và lời mời của bạn" · "8. Chiến lược này dựa vào đâu" · "9. Dùng file này thế nào".
 - Tin Zalo before email; the ladder runs comment từ khoá → inbox → quà → Zalo or a call → the offer, price said plainly (never "giá ib").
-- Gap tags [CẦN BẠN: …] and "(mình đoán)"; held / watching lines are GIỮ / THEO DÕI with "{n} người · {n} nơi"; the angle card reads "AI CŨNG NÓI · CHƯA AI NÓI · BẠN NÓI ĐƯỢC".
+- Gap tags [CẦN {XƯNG HÔ}: …] and "(mình đoán)"; held / watching lines are GIỮ / THEO DÕI with "{n} người · {n} nơi"; the angle card reads "AI CŨNG NÓI · CHƯA AI NÓI · {XƯNG HÔ} NÓI ĐƯỢC".
 - Xưng hô follows the Card from the title to the last line; the document talks to the coach, the quotes keep each speaker's own pronouns.
 
 ## Calibration (fictional coaches)

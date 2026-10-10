@@ -350,14 +350,13 @@ id = "setup.vn.013"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "One phone: a question after QUAY HÔM NAY gets a one-line 'memorise it' answer first, then Week 1 arrives unasked"
-context = "Day 0, helper-installed Door A, Hạnh on the ChatGPT Android app, pair chị–em. The 4-line Map (TỪ KHOÁ: NGẠI CHÀO) is on screen with QUAY HÔM NAY under it (a beat card: chữ trên màn hình, câu đầu, 3 ý, câu cuối; caption and gift in copy boxes), ending '… OK hay sửa một dòng?'. She has one Android phone with a cracked corner and films propped on the reception shelf."
+title = "One phone: a question after QUAY HÔM NAY gets a one-line 'memorise it' answer first, then the Brand Card and the Tuần 1 table arrive unasked"
+context = "Day 0, helper-installed Door A, Hạnh on the ChatGPT Android app, pair chị–em. The strategy (TỪ KHOÁ: NGẠI CHÀO) was OK'd and the last reply was QUAY HÔM NAY alone (a beat card: chữ trên màn hình, câu đầu, 3 ý, câu cuối; caption and gift in copy boxes; one 'Cần chị' line about her own gift; TIẾP 'quay xong nhắn tiếp'). She has one Android phone with a cracked corner and films propped on the reception shelf."
 input = """chị chỉ có mỗi cái điện thoại thôi, vừa quay vừa đọc sao được em"""
 regex = [
-  '''\A(?:(?!(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)))[\s\S])*?(?i:thuộc|nhớ)''',
-  '''\A(?:(?!(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)))[\s\S])*?(?i:câu đầu|câu cuối|(?:3|ba) ý)''',
-  '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)''',
-  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì (?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
+  '''\A(?:(?!(?m:^\W*(?:\|?\s*Ngày\s*\||Brand Card\b)))[\s\S])*?(?i:thuộc|nhớ)''',
+  '''\A(?:(?!(?m:^\W*(?:\|?\s*Ngày\s*\||Brand Card\b)))[\s\S])*?(?i:câu đầu|câu cuối|(?:3|ba) ý)''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
 ]
 not_regex = [
   '(?i)(đọc|nhìn)[^.\n]{0,30}(màn hình|điện thoại|kịch bản)[^.\n]{0,30}(trong lúc|khi|lúc)\s+(đang\s+)?quay',
@@ -368,7 +367,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I5", "I15", "I18"]
 max_questions = 1
-notes = "Quit point 16 'reading the script while filming on the same phone'; UX §2 'built to memorise because one phone can't film and show the script at once' (step 6: 'nhớ ý rồi nói'). §CM-TODAY 1 (levelup.kit-next): after the Map + QUAY HÔM NAY any message but a Map change brings all of Week 1, never 'làm Tuần 1 không?'; a question in it gets a one-line answer first, so the answer is asserted before the first Week-1 piece and no max_words applies. Her question is not a change, so it also settles the Map. setup.plan_guess sits once above Week 1. QUAY HÔM NAY is not reprinted. A second device is a detour."
+notes = "Quit point 16 'reading the script while filming on the same phone'; UX §2 'built to memorise because one phone can't film and show the script at once' (step 6: 'nhớ ý rồi nói'). v13.5 (setup.kit-order 9, start-block steps 6-8, §CM-TODAY 1): after QUAY HÔM NAY any message but a change brings the Brand Card + save line + the Tuần 1 table (Ngày · Dạng · Hook · Lời mời), never 'làm Tuần 1 không?'; a question in it gets a one-line answer first, so the answer is asserted before the table and the card, and no max_words applies. The other pieces come one per 'tiếp'. The plan guess sits in HỆ THỐNG NỘI DUNG of the strategy now, so it is not asserted here. QUAY HÔM NAY is not reprinted. A second device is a detour."
 
 [[case]]
 id = "setup.vn.014"
@@ -596,14 +595,14 @@ id = "setup.vn.026"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "floor"]
-title = "Door B: after Week 1 the card is kept by sending it to Zalo 'Cloud của tôi'; no project words; TIẾP names tomorrow"
-context = "Door B (phone only, no helper today), ChatGPT Free, pair chị–em. The 4-line Map with QUAY HÔM NAY under it is on screen. Her answer brings Week 1; the Brand Card comes after it, in the same reply or the next."
+title = "Door B: the card that comes with the Tuần 1 table is kept by sending it to Zalo 'Cloud của tôi'; no project words; TIẾP names tomorrow"
+context = "Door B (phone only, no helper today), ChatGPT Free, pair chị–em. The strategy was OK'd and QUAY HÔM NAY is on screen (alone, ending with TIẾP 'quay xong nhắn tiếp'). Her answer brings the Brand Card, the save line and the Tuần 1 table in one reply (an app cut may push the table to the next)."
 input = """[turn 1] ok em, tối chị quay
-[turn 2] <<simulator: only if the Brand Card has not printed yet, send 'tiep em'; otherwise stop>>"""
+[turn 2] <<simulator: only if the Brand Card or the Tuần 1 table has not printed yet, send 'tiep em'; otherwise stop>>"""
 contains = ["Brand Card", "Cloud của tôi"]
 not_contains = ["dự án", "project", "Save to project", "Lưu vào dự án"]
 regex = [
-  '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
   '''Phần còn lại là cho máy, không cần đọc:''',
   '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]''',
 ]
@@ -615,7 +614,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15"]
 max_questions = 1
-notes = "scope: each reply. UX §1.4 Door B never mentions a project; the save route on a phone is phone.save ('… nhấn giữ đoạn chat này → Đổi tên → \"Content Machine\". Rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". …') or the Zalo backup of the BRAND CARD block. Week 1 comes first (R13); TIẾP now names tomorrow's 'tiếp' instead of offering Week 1. Hạnh quits on 'mở máy tính' and on a lost card (persona behaviour)."
+notes = "scope: each reply. UX §1.4 Door B never mentions a project; the save route on a phone is phone.save ('… nhấn giữ đoạn chat này → Đổi tên → \"Content Machine\". Rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". …') or the Zalo backup of the BRAND CARD block. v13.5 (start-block steps 7-8): her answer to QUAY HÔM NAY brings the Brand Card + card.save_line + the Tuần 1 table (Ngày · Dạng · Hook · Lời mời); TIẾP names tomorrow's 'tiếp', never offers Week 1. Hạnh quits on 'mở máy tính' and on a lost card (persona behaviour)."
 
 [[case]]
 id = "setup.vn.027"
@@ -661,12 +660,13 @@ id = "setup.vn.029"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "ChatGPT Free: Week 1 arrives unasked after QUAY HÔM NAY, the plan guess once above it, every piece with nothing under it"
-context = "Door B, ChatGPT Free, pair chị–em. The 4-line Map (TỪ KHOÁ: NGẠI CHÀO) is on screen with QUAY HÔM NAY under it, ending '… OK hay sửa một dòng?'. Her dump named Facebook, TikTok and her Zalo but no talk day."
-input = """ok em. chi chup man hinh ban do gui vao cloud cua toi roi"""
+title = "ChatGPT Free: the Tuần 1 table arrives unasked after QUAY HÔM NAY, then one piece per 'tiếp' with nothing under it"
+context = "Door B, ChatGPT Free, pair chị–em. The strategy (TỪ KHOÁ: NGẠI CHÀO) was OK'd and QUAY HÔM NAY is on screen alone (TIẾP 'quay xong nhắn tiếp'). Her dump named Facebook, TikTok and her Zalo but no talk day. Turn 1 brings the Brand Card, the save line and the Tuần 1 table; turn 2 'tiếp' brings the first Tuần 1 piece."
+input = """[turn 1] ok em. chi chup man hinh ban do gui vao cloud cua toi roi
+[turn 2] tiep em"""
 regex = [
-  '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì (?:mình|em) đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
-  '''(?s)(?:(?m:^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)).*?){2}''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
+  '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b|Tin trả lời inbox|Zalo ·)''',
   '''(?s)```.+?```''',
 ]
 not_regex = [
@@ -679,7 +679,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I8", "I12", "I14", "I15", "I17", "I18"]
 max_questions = 1
-notes = "start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)' and §CM-TODAY 1: her 'ok' (and the Zalo screenshot, persona behaviour) brings all of Week 1, unasked. Above it, once: setup.plan_guess 'Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).' in chị–em ('(chưa nghe thì em đoán, chị gõ một chữ là đổi)'). Every piece prints with nothing under it; the WHY of a piece shows on 'tại sao?' (setup.vn.053; R1). No upper bound on pieces: the old case asserted 3 pieces a reply on Free with a WHY line each, but the VN kit says all of Week 1 in the next reply (the card may move to the reply after); whether Free splits Week 1 into replies of ≤3 pieces is an open kit question (wf15-case-impact open flags), so either form passes."
+notes = "scope: transcript. v13.5 (start-block steps 7-8, §CM-TODAY 1): her 'ok' (and the Zalo screenshot, persona behaviour) brings the Brand Card + save line + the Tuần 1 table (Ngày · Dạng · Hook · Lời mời), unasked; the other pieces come one per 'tiếp' or on their day, so turn 2 brings one piece in its copy box with nothing under it; the WHY of a piece shows on 'tại sao?' (setup.vn.053; R1). The plan guess sits once in HỆ THỐNG NỘI DUNG of the strategy (setup.plan_guess), so it is never repeated here. No bare 'bạn' to a chị coach."
 
 [[case]]
 id = "setup.vn.030"

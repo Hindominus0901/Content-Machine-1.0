@@ -43,9 +43,10 @@
 # - "why?" cases: "[turn 1] <the piece>" and "[turn 2] why?" on their own lines; assertions run on the
 #   "why?" reply, I3 grades the turn-1 reply; verdict "Ready" / "Ready-downgraded" wants no status line
 #   under a piece and a Ready or ✓ Checked line on "why?".
-# - Day 0 (wf15 §1): no stop point. After FILM TODAY any coach message brings all of Week 1 (a question
-#   answered in one line first); the Brand Card and its save line close Day 0 after Week 1. "later"
-#   before the card prints card + save line at once, and Week 1 waits for "next".
+# - Day 0 (wf15 §1; v13.5 setup.kit-order 9): no stop point. FILM TODAY comes alone on the strategy OK;
+#   after it any coach message brings the Brand Card, its save line and the Week 1 table (a question
+#   answered in one line first); the other Week-1 pieces come one per "next" or on their day. "later"
+#   before the card prints card + save line at once, and the rest waits for "next".
 # - `max_questions` counts like I5: question marks in coach-facing prose and status lines only. The
 #   qualifying question inside a DM reply copy box, or a question inside a post, does not count.
 # - `invariants` lists I1-I23 ids. graders.py also runs its deny_list and quit_triggers checks.

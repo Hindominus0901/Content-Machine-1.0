@@ -81,9 +81,9 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Week 1 carries 'ask 3 past clients one question': one question, consent built in, no form"
-context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was delivered and is on screen; no Brand Card yet. Turn 1 answers it and gets Week 1, unasked (all of it, or on Free a first reply of 3 Reels); turn 2 'next' brings the rest of Week 1 if any is left (free gift, DM replies 1-2, the ask-3-past-clients message in a copy box)."
+context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was delivered alone (after the strategy OK) and is on screen; no Brand Card yet. Turn 1 answers it and gets the Brand Card, the save line and the Week 1 table (its rows include the ask-3-past-clients message); turn 2 'next' asks for that message first, so it prints in its copy box."
 input = """[turn 1] ok I'll film it tomorrow morning
-[turn 2] next"""
+[turn 2] next. the message to my past clients first please"""
 regex = [
   '(?i)\b(3|three)\b[^\n]{0,30}\bpast clients?\b',
   '(?i)\b(quote|use|share)\b[^.\n]{0,40}\b(name|ok|okay|permission)\b|\b(name|ok|okay|permission)\b[^.\n]{0,40}\b(quote|use|share)\b',
@@ -97,7 +97,7 @@ not_regex = [
 ]
 invariants = ["I1", "I2", "I3", "I4", "I5", "I10"]
 max_questions = 1
-notes = "scope: transcript. Both replies are read joined, so the case holds whether Week 1 arrives in one reply (§CM-TODAY 1: 'any message gets all of Week 1') or in 2 replies on Free (wf11-ux-spec §2, R13). wf15 §1.6 and research.kit-quick ASK 3: 'ask 3 past clients one question' rides in Week 1 (unlocks real proof for Week 3), as a copy box with research.ask3 ('… What was going on right before you called me? Can I share your answer, first name only?'), printed with nothing under it. wf7 §5: ask permission before using anyone's words. Lorraine, Bev and Gail consented; Pam never. The client question sits in a copy box, so it is not a question to the coach."
+notes = "scope: transcript. v13.5 (setup.kit-order 9, start-block steps 5-7): the Week 1 table comes on the answer to FILM TODAY and the pieces one per 'next' (the coach may name which one), so both replies are read joined. wf15 §1.6 and research.kit-quick ASK 3: 'ask 3 past clients one question' rides in Week 1 (unlocks real proof for Week 3), as a copy box with research.ask3 ('… What was going on right before you called me? Can I share your answer, first name only?'), printed with nothing under it. wf7 §5: ask permission before using anyone's words. Lorraine, Bev and Gail consented; Pam never. The client question sits in a copy box, so it is not a question to the coach."
 
 [[case]]
 id = "research.en.004"
@@ -105,7 +105,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold start: 'ask 3 dads you know one question', never 'past clients'"
-context = "Day 0 continued, persona default (0 clients; iPhone, ChatGPT Plus). FILM TODAY was delivered; this message gets all of Week 1, unasked, extras included; the Brand Card follows it."
+context = "Day 0 continued, persona default (0 clients; iPhone, ChatGPT Plus). FILM TODAY was delivered alone (after the strategy OK); this message gets, unasked, the Brand Card, the save line and the Week 1 table, whose rows include the ask-3 message."
 input = """ok. filming it tonight after the kids are down"""
 regex = [
   '(?i)\b(3|three)\b[^\n]{0,30}\b(dads?|guys|people|friends)\b',
@@ -120,7 +120,7 @@ not_regex = [
 not_contains = ["Tommy", "Owen", "Lily"]
 invariants = ["I1", "I2", "I3", "I5", "I8"]
 max_questions = 1
-notes = "research.kit-quick ASK 3: no clients yet → 3 people like the buyer he knows (a brother, a coworker), asked research.ask3_cold ('What's the hardest part of {problem} right now?'); never 'past clients'. expected.toml [week1] must_include \"'ask 3 dads you know one question' (brother, soccer dads, a guy at work), not 'past clients'\"; must_not 'past clients' or 'your clients'. Week 1 arrives with any message after FILM TODAY (wf15 §1.6). private_names never appear."
+notes = "research.kit-quick ASK 3: no clients yet → 3 people like the buyer he knows (a brother, a coworker), asked research.ask3_cold ('What's the hardest part of {problem} right now?'); never 'past clients'. expected.toml [week1] must_include \"'ask 3 dads you know one question' (brother, soccer dads, a guy at work), not 'past clients'\"; must_not 'past clients' or 'your clients'. v13.5 (setup.kit-order 9, start-block step 6): any message after FILM TODAY brings the card, the save line and the Week 1 table; the ask-3 line is a row of that table (its copy box comes on its 'next'). private_names never appear."
 
 [[case]]
 id = "research.en.005"

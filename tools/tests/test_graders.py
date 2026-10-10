@@ -437,6 +437,14 @@ class InvariantTests(TempRepo):
                                                       "NEXT → What do clients ask you most?")])
         self.assertPasses(ok, "I5")
 
+    def test_i5_a_question_shaped_hook_in_a_table_or_copy_box_is_not_a_question(self):
+        week = (f"{TAG}Tuần 1\n| Ngày | Dạng | Hook |\n|---|---|---|\n| Thứ 2 | Reel | Is it too late for me? |\n"
+                "| Thứ 4 | Post | What did your last boss never say? |\n```\nStill job hunting at 52?\n```\n"
+                "NEXT → Want Monday's script now?")
+        self.assertPasses(self.grade([("coach", "next"), ("machine", week)]), "I5")
+        report = self.grade([("coach", "next"), ("machine", week.replace("NEXT →", "Which day suits you?\nNEXT →"))])
+        self.assertFails(report, "I5", "turn 2: 2 questions")                    # talk outside the table still counts
+
     def test_i8_numbers(self):
         report = self.grade([("coach", "go"), ("machine", f'''
             {TAG}Week 1
@@ -1575,6 +1583,29 @@ class VnNaturalTests(TempRepo):
         self.assertTrue(graders._particle_end("Dạ chị, sơn gel bên em 150k nha chị."))
         self.assertTrue(graders._particle_end("Chị em nào làm xong thì nhắn mình với nhé ❤️"))
         self.assertFalse(graders._particle_end("Em gửi chị."))
+
+    def test_particle_share_against_the_card_when_it_carries_one(self):
+        self.write("evals/personas/vn/nat/written-posts.md", NAT_POSTS)       # their posts: 50%
+        flat = "\n".join(f"Hôm thứ {k} mình ngồi cộng sổ cho một chị bán đồ bộ." for k in range(2, 14))
+        warm = flat + "\nTối nay thử nhé.\nXong nhắn mình nha.\nMột cột thôi á.\nLàm thử đi nha."   # 4 of 16 = 25%
+        card = 'Brand Card v1\ndialect: "nam · tiểu từ ~{n}% · nha, nè, á"\ntiếp'
+        report, item = self.vn(warm, coach=card.format(n=30))
+        self.assertEqual(item["details"]["card_particle_share"], 0.3)
+        self.assertPasses(report, "vn_natural")                                  # 25% within 30 ± 10
+        report, _ = self.vn(warm, coach=card.format(n=50))                       # passes on the posts, not the card
+        self.assertFails(report, "vn_natural", "pieces end 4 of 16 sentences with a particle (25%); "
+                                               "the Brand Card says 50% (±10%)")
+        self.assertIsNone(self.vn(warm)[1]["details"].get("card_particle_share"))
+
+    def test_angle_labels_read_an_address_slot_as_any_pronoun(self):
+        pat = graders._label_re("{XƯNG HÔ} NÓI ĐƯỢC")
+        for line in ("CHỊ NÓI ĐƯỢC: chị đọc đoạn chat thật.", "BẠN NÓI ĐƯỢC · một dòng", "ANH NÓI ĐƯỢC"):
+            with self.subTest(line=line):
+                self.assertTrue(pat.match(line))
+        for line in ("KHÁCH NÓI ĐƯỢC: giá", "{XƯNG HÔ} NÓI ĐƯỢC: chưa điền", "Chị nói được rằng giá cao"):
+            with self.subTest(line=line):
+                self.assertFalse(pat.match(line))
+        self.assertTrue(graders._label_re("{xưng hô} nói được").match("Em nói được: một dòng"))
 
     def test_a_copy_ask_is_left_out_a_translation_is_not(self):
         bad = "Việc ghi sổ rất quan trọng. Tuy nhiên, nhiều chị em vẫn gặp khó khăn trong việc tính giá."

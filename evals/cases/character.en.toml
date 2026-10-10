@@ -65,19 +65,19 @@ id = "character.en.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "FILM TODAY under the Map stands on Dan's own story, never a client he doesn't have, kids unnamed, nothing under it"
-context = "Day 0, persona default (cold start, 0 clients, proof locked). The one missing fact was the best result ('My guess: no client result yet, so I'll use your own story. Right?'); his answer brings the 4-line Map with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' No Brand Card yet: it prints after Week 1."
+title = "FILM TODAY after the strategy OK stands on Dan's own story, never a client he doesn't have, kids unnamed, nothing under it"
+context = "Day 0, persona default (cold start, 0 clients, proof locked). The strategy (built on his own story, since he has no client result yet) is on screen, its last message ending 'We'll run this for 4 weeks. OK, or change a line.' His 'yep' is the OK, so FILM TODAY follows alone. No Brand Card yet: it prints on his next message, with the Week 1 table."
 input = """yep"""
 regex = [
   '''FILM TODAY''',
   '''FILM TODAY[\s\S]*(?i:\b(?:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8)\b)''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''Film it now, or post the caption as text\.''',
 ]
 not_regex = [
   '(?i)\bmy clients?\b',
   '(?i)\bdads? in my (program|group|coaching)\b',
   '(?i)\b(certified (personal )?trainer|22 (pounds|lbs)|(two|a couple) hundred (people|clients)|200\+? (people|clients|dads))\b',
+  '''(?im)^\W*\|?\s*Day\s*\|\s*Format\s*\|''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
 ]
@@ -85,7 +85,7 @@ not_contains = ["Owen", "Lily", "Jess", "Tommy", "Coach Dan"]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I8", "I17", "I18"]
 max_questions = 1
-notes = "K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the story pattern is anchored after the FILM TODAY title because the Map's lines sit in the same reply. expected.toml [day0] lead piece: built on his own story (the birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), now asserted in the piece itself: the ✓ Checked line that used to name it prints only on 'why?' (character.en.028; R2, wf15 §2). verdict Ready is hidden state (evals/run.py: no status line). private_names and 'never his kids' names or faces'. P3 (brother's 22 lb) and P4 ('a couple hundred people') are unsubstantiated; credential lapsed in 2019. Character = what he has lived, never borrowed proof."
+notes = "v13.5 (start-block DAY 0 steps 4-5, setup.kit-order 9): FILM TODAY prints alone, only on the strategy OK (script, caption, my gift pick, 'Film it now…', one 'Needs you' line, NEXT); the Week 1 table and the card wait for his next message. The story pattern is anchored after the FILM TODAY title. expected.toml [day0] lead piece: built on his own story (the birthday relay 'Daddy, you're so slow' or the kitchen floor 'You sound like grandpa'), asserted in the piece itself: the ✓ Checked line that used to name it prints only on 'why?' (character.en.028; R2, wf15 §2). verdict Ready is hidden state (evals/run.py: no status line). private_names and 'never his kids' names or faces'. P3 (brother's 22 lb) and P4 ('a couple hundred people') are unsubstantiated; credential lapsed in 2019. Character = what he has lived, never borrowed proof."
 
 [[case]]
 id = "character.en.003"
@@ -109,7 +109,7 @@ kind = "P"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start Brand Card: nothing invented to fill the character fields"
-context = "Day 0, persona default (cold start, ChatGPT Plus). The Map was shown with FILM TODAY under it; his 'brb kid's up' got 'No rush. Say 'ok back' when you're back.' Turn 1 (his return) gets all of Week 1, unasked; turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the machine block), the save line and NEXT. Judge the card in the reply that holds it."
+context = "Day 0, persona default (cold start, ChatGPT Plus). The strategy was OK'd and FILM TODAY was shown alone; his 'brb kid's up' got 'No rush. Say 'ok back' when you're back.' Turn 1 (his return) gets, unasked, the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; trait, enemy and principles in the machine block), the save line, the Week 1 table and NEXT; turn 2 answers that reply and gets the first Week-1 piece. Judge the card in the reply that holds it."
 input = """[turn 1] ok back. filmed it in the garage, one take. what now
 [turn 2] ok"""
 standard = "character-card"
@@ -117,7 +117,7 @@ critical = ["CC1", "CC4", "CC5", "CC8", "CC10"]
 min_score = 14
 invariants = ["I1", "I4", "I5", "I8", "I17"]
 max_questions = 1
-notes = "Cold start: the trait, enemy ('the all-or-nothing plan built for a 25-year-old with no kids') and principles must trace to the dump; empty fields are [GAP], never a made-up value or story. All five critical items apply at the Day-0 v0 bar (character-card.md): a cold start scores CC5 = 2 with 2 hills plus 'proof hill coming' (wf11 §2.3), and CC8 = 2 with 5 phrases verbatim from his dump. Must not hold 'certified', the brother's 22 lb, or 'trained 200 people'. No stop point (R13): 'ok back' resumes with Week 1 (§CM-TODAY 1), and the card follows it."
+notes = "Cold start: the trait, enemy ('the all-or-nothing plan built for a 25-year-old with no kids') and principles must trace to the dump; empty fields are [GAP], never a made-up value or story. All five critical items apply at the Day-0 v0 bar (character-card.md): a cold start scores CC5 = 2 with 2 hills plus 'proof hill coming' (wf11 §2.3), and CC8 = 2 with 5 phrases verbatim from his dump. Must not hold 'certified', the brother's 22 lb, or 'trained 200 people'. No stop point (R13): 'ok back' resumes with the card, the save line and the Week 1 table (v13.5, setup.kit-order 9, §CM-TODAY 1)."
 
 [[case]]
 id = "character.en.005"
@@ -482,11 +482,11 @@ id = "character.en.026"
 kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
-title = "Day 0's last reply: the Brand Card carries character in plain words, no framework names"
-context = "Day 0, persona default (ChatGPT Plus). The Map is on screen with FILM TODAY under it. Turn 1 answers it and gets all of Week 1, unasked (her question answered in one line first); turn 2 answers that reply. Day 0's last reply prints the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the 'for the machine' block with trait, enemy, principles), the save line and NEXT."
+title = "Day 0: the Brand Card carries character in plain words, no framework names"
+context = "Day 0, persona default (ChatGPT Plus). The strategy was OK'd and FILM TODAY is on screen alone. Turn 1 answers it (her question answered in one line first) and gets the Brand Card (top: title, WHAT YOU SAY:, HOW YOU SAY IT:; then the 'for the machine' block with trait, enemy, principles), the save line, the Week 1 table and NEXT; turn 2 answers that reply and gets the first Week-1 piece."
 input = """[turn 1] ok filmed it in the Whitfield room, Bree has it. are we done for today?
 [turn 2] ok"""
-contains = ["brand card", "Save this so I remember you (30 s)"]
+contains = ["brand card", "Save this so I remember you."]
 not_regex = [
   '(?i)\b(Admirable|Likable|Credible|Trustable|3D test|Stance Bank|Buyer Mirror|Character Card|Belief Bomb|Big Domino)\b',
   '(?i)\bheat\s*[1-3]\b',
@@ -494,7 +494,7 @@ not_regex = [
 ]
 invariants = ["I1", "I4", "I5", "I17"]
 max_questions = 1
-notes = "scope: transcript. UX §5.7: the Brand Card machine block uses plain field names, no framework words (trait, enemy, principles heard). UX §4 never-sees list; I4. No stop point (wf15 §1.6-§1.8, R13): her 'are we done?' gets a one-line answer and all of Week 1, then the card + card.save_line + NEXT, in that reply or the next; never 'That's today done' or 'stop here'. Saving is offered, never a gate."
+notes = "scope: transcript. UX §5.7: the Brand Card machine block uses plain field names, no framework words (trait, enemy, principles heard). UX §4 never-sees list; I4. No stop point (wf15 §1.6-§1.8, R13; v13.5 setup.kit-order 9): her 'are we done?' gets a one-line answer, then the card + card.save_line + the Week 1 table + NEXT in that reply; the pieces follow one per 'next'; never 'That's today done' or 'stop here'. Saving is offered, never a gate."
 
 [[case]]
 id = "character.en.027"

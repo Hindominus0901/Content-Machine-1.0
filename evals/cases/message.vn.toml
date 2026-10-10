@@ -438,20 +438,22 @@ id = "message.vn.014"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'Thôi em đừng bắt chị chọn mỗi một cái': one plain line, no lecture, no forced choice, then Tuần 1"
-context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong') and chunk 3 ended 'xong rồi đấy em'; nothing was missing, so that reply showed the 4-line Map (TỪ KHOÁ: LÃI ẢO) with QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé chị. OK hay sửa một dòng?'. Ads, livestream, Shopee, Quảng Châu, tax and TikTok Shop are on none of its lines. She objects."""
+title = "'Thôi em đừng bắt chị chọn mỗi một cái': one plain line, no lecture, no forced choice, then the OK ask again"
+context = """Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-3 (her posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 ended 'không thì gõ xong') and chunk 3 ended 'xong rồi đấy em'; nothing was missing, so the strategy followed (ĐIỀU KHÁCH NHỚ, TRỤ CỘT NỘI DUNG, TỪ KHOÁ: LÃI ẢO, …), its last message ending 'Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?'. QUAY HÔM NAY waits for her OK. Ads, livestream, Shopee, Quảng Châu, tax and TikTok Shop are on none of its lines. She objects."""
 input = '''Thôi em đừng bắt chị chọn mỗi một cái, chị biết nhiều thế mà chỉ nói một chuyện à?'''
 contains = []
 not_contains = []
 regex = [
-  '''(?s)\A(?:(?!```).){0,700}?(?i:ai đọc cũng được|thử 4 tuần|lồng|ghép|chủ đề [1-3]|ý lớn [1-3])''',
-  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+  '''(?s)\A(?:(?!```).){0,700}?(?i:ai đọc cũng được|thử 4 tuần|lồng|ghép|chủ đề [1-3]|ý lớn [1-3]|trụ cột)''',
+  '''(?i)OK hay sửa một dòng''',
 ]
 not_regex = [
   '''(?i)(phải|bắt buộc)\s+chọn''',
   '''(?i)(sai|nhầm) rồi''',
   '''(?i)(chị (có )?chắc (chưa|không)|xác nhận)''',
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
+  '''(?m)^\W*QUAY HÔM NAY''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|''',
   '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
 ]
 verdict = ""
@@ -459,7 +461,7 @@ invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """Her verbatim objection (persona Behaviour). §CM-MAP 'CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1' (VK-4; DECISIONS K2 'any other message brings Week 1'): one line (a loved topic folded into a chủ đề, message.pushback.who, or the 4-week try), never a lecture or a forced choice, then all of Tuần 1 in the same reply with nothing under its pieces (I3). The line opens the reply, before any copy box. Persona: 'máy giảng luật quá 3 dòng là chị bực'."""
+notes = """Her verbatim objection (persona Behaviour). STRATEGY PUSHBACK (modules message.md, Founder 7 Oct, amends K2 'any other message brings Week 1'; v13.5 start-block step 6): one line (a loved topic folded into a trụ cột, message.pushback.who, or the 4-week try), never a lecture or a forced choice, then the OK ask again (map.ok); QUAY HÔM NAY and Tuần 1 wait for her OK. The line opens the reply, before any copy box. Persona: 'máy giảng luật quá 3 dòng là chị bực'."""
 
 # ---------------------------------------------------------------- the 4-line Map (with QUAY HÔM NAY under it)
 
@@ -1532,22 +1534,22 @@ id = "message.vn.050"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
-title = "'Tháng này anh cần chốt căn hộ, sao bỏ BĐS?': one line (the apartment is on the Map through the buyer), then Tuần 1 with the 2 tỷ 68 piece"
-context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the multi-income câu đoán. Turn 1 is chunk 3 (his one more story: the 2 tỷ 68 apartment with a broker contract to 30/11, the 'view sông' idea, his cousin's 'lời gấp đôi'; it ends 'Thôi, xong.'), which gets the 4-line Map with QUAY HÔM NAY under it. In turn 2 he pushes back with his verbatim objection. Assertions run on the reply to turn 2."""
+title = "'Tháng này anh cần chốt căn hộ, sao bỏ BĐS?': one line (the apartment is on the Map through the buyer), then the OK ask again"
+context = """Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the multi-income câu đoán. Turn 1 is chunk 3 (his one more story: the 2 tỷ 68 apartment with a broker contract to 30/11, the 'view sông' idea, his cousin's 'lời gấp đôi'; it ends 'Thôi, xong.'), which gets the strategy, its last message ending 'Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?'. In turn 2 he pushes back with his verbatim objection. Assertions run on the reply to turn 2."""
 input = '''[turn 1] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>
 [turn 2] Tháng này anh cần chốt căn hộ, sao bỏ BĐS?'''
 contains = []
 not_contains = []
 regex = [
   '''(?s)\A(?:(?!```).){0,700}?(?i:căn|bất động sản|BĐS|môi giới)''',
-  '''(?i)(2 tỷ 68|2,68 tỷ)''',
-  '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
+  '''(?i)OK hay sửa một dòng''',
 ]
 not_regex = [
   '''(?im)^(?!.*(không|chưa|đừng|hổng)).*view sông''',
   '''(?i)(giá tốt|bán gấp|căn cuối|cơ hội vàng|siêu phẩm)''',
   '''(?im)^(?!.*(không|chưa|đừng|hổng)).*(lời gấp đôi|sinh lời)''',
   '''(?im)^(?!.*(không|đâu|chẳng|hổng)).*(bỏ|để sau|để dành)\s+(BĐS|bất động sản|căn hộ)''',
+  '''(?m)^\W*QUAY HÔM NAY''',
   '''(?m)^[^\w\n]*(?:Sẵn sàng (?:quay|đăng|gửi) ·|✓ Đã kiểm:|Bản nháp ·|VÌ SAO RA KHÁCH)''',
 ]
 verdict = ""
@@ -1555,4 +1557,4 @@ invariants = ["I1", "I3", "I5", "I8", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """His verbatim objection (persona Behaviour). §CM-MAP CÃI BẢN ĐỒ: one line, then Tuần 1 in the same reply (VK-4). expected.toml [map] cash_now: the 2 tỷ 68 apartment is IN the Map through the bridge buyer, as a weekly 'tính thử căn này' piece (the reverse calculation: what a couple's salaries can carry, the 6-month fund, who signs the loan), with the keyword, never written as a listing: 'nhìn ra hồ bơi nội khu', never 'view sông', no 'giá tốt' or 'bán gấp'. A refusal line may name 'view sông' or the cousin's 'lời gấp đôi' (expected.toml [traps])."""
+notes = """His verbatim objection (persona Behaviour). STRATEGY PUSHBACK (Founder 7 Oct, amends K2; v13.5 start-block step 6): one line, then the OK ask again (map.ok); QUAY HÔM NAY and Tuần 1 wait for his OK. expected.toml [map] cash_now: the 2 tỷ 68 apartment is IN the Map through the bridge buyer, as a weekly 'tính thử căn này' piece (the reverse calculation: what a couple's salaries can carry, the 6-month fund, who signs the loan), with the keyword, never written as a listing: 'nhìn ra hồ bơi nội khu', never 'view sông', no 'giá tốt' or 'bán gấp'. A refusal line may name 'view sông' or the cousin's 'lời gấp đôi' (expected.toml [traps])."""

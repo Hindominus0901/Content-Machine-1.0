@@ -1252,7 +1252,7 @@ class LevelUpTests(TempRepo):
         rules = {"en": ("one NEXT line", "[NEEDS: …]", "never post, react, follow, DM or join",
                         "subagents or parallel tasks", "separate reviewer", "sees only the result",
                         "Claude in Chrome or ChatGPT Work", "asking once", "never on Day 0", "fake scarcity"),
-                 "vn": ("một dòng TIẾP", "[CẦN BẠN: …]", "không đăng, thả cảm xúc, theo dõi, nhắn tin hay vào nhóm",
+                 "vn": ("một dòng TIẾP", "[CẦN {XƯNG HÔ}: …]", "không đăng, thả cảm xúc, theo dõi, nhắn tin hay vào nhóm",
                         "trợ lý con hay việc song song", "người soát riêng", "Coach chỉ thấy kết quả",
                         "Claude in Chrome hay ChatGPT Work", "hỏi đúng một lần", "không bao giờ ngày 0",
                         "khan hiếm giả")}

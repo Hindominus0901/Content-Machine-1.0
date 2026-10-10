@@ -1764,22 +1764,22 @@ id = "router.vn.103"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "floor"]
-title = "Day 0: any message after the Map + QUAY HÔM NAY reply gets all of Tuần 1, unasked, with the plan guess above it; never 'muốn làm Tuần 1 không?' or a stop point"
-context = '''Day 0, Monday 12 Oct 2026, about minute 19, ChatGPT Plus app on the iPhone; pair anh–em, Nam. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: GỒNG LÃI (gong lai) · GIỌNG), QUAY HÔM NAY under it (Chữ trên màn hình, Câu đầu, 3 ý, Câu cuối, the caption box with 'Comment GỒNG LÃI hay nhắn riêng, …' and '(ngại xin comment thì gõ 'nhẹ')', the gift box), 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' and 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. His dump never named his talk day or a Zalo list. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
+title = "Day 0: any message after QUAY HÔM NAY gets the Brand Card, the save line and the Tuần 1 table, unasked; never 'muốn làm Tuần 1 không?' or a stop point"
+context = '''Day 0, Monday 12 Oct 2026, about minute 19, ChatGPT Plus app on the iPhone; pair anh–em, Nam. The strategy (TỪ KHOÁ: GỒNG LÃI (gong lai); HỆ THỐNG NỘI DUNG with the plan guess) was OK'd and the last reply was QUAY HÔM NAY alone (Chữ trên màn hình, Câu đầu, 3 ý, Câu cuối, the caption box with 'Comment GỒNG LÃI hay nhắn riêng, …' and '(ngại xin comment thì gõ 'nhẹ')', the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', one 'Cần anh' line, TIẾP 'quay xong nhắn tiếp'). His dump never named his talk day or a Zalo list. No Tuần 1 table and no Brand Card yet.'''
 input = '''chiều nay anh quay ở nhà mẫu bên Dĩ An luôn, chỗ đó sáng'''
 contains = []
 not_contains = []
 regex = [
-  '''\(chưa nghe thì (?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
-  '''(?i)hằng tuần kể 15 phút''',
-  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
+  '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
+  '''Phần còn lại là cho máy, không cần đọc:''',
   '''(?i)gồng lãi''',
   '''(?i)loay hoay nhất|(?:3|ba) (?:khách|người)(?: cũ| quen)?''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?m)^\W*QUAY HÔM NAY\b''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
+  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|NGHIÊN CỨU CHO THẤY):''',
+  '''(?ims)^\W*Cần (?:anh|chị|bạn) ·.*^\W*Cần (?:anh|chị|bạn) ·''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
   '''(?i)Hôm nay xong rồi|Hôm nay vậy là đủ rồi|nghỉ ở đây''',
   '''(?i)(?:ngày nào|thứ mấy|nền tảng nào|đăng ở đâu|có danh sách)[^\n?]{0,40}\?''',
@@ -1791,7 +1791,7 @@ invariants = ["I1", "I3", "I5", "I6", "I15", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). wf15 §0 S4 and §1.6 (R13) as amended by K2 (DECISIONS 6 Oct 2026): start-block step 7 'TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; §CM-SETUP 9 'coach đáp (trừ sửa): 7–9 chung một tin, không chờ hỏi (app cắt: card ở tin sau)'; §CM-TODAY 1 'Sau Bản đồ + QUAY HÔM NAY, nhắn gì (trừ sửa Bản đồ) cũng ra đủ Tuần 1, không hỏi "làm Tuần 1 không?"'. His message is not a change, so it also settles the Map. §CM-SETUP 5: platform and the Zalo/email list are asked only in the dump prompt's hint list, talk day never; what the dump left unheard is guessed and named once above Tuần 1 with setup.plan_guess ('Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì mình đoán, gõ một chữ là đổi).', a line only this step has). §CM-WEEK 10: each piece with its day and copy box (≥3 boxes here), nothing under a Ready piece (R1, R4); start-block step 7: the inbox replies and the Zalo message asking 3 past clients one question (research.ask3 '… Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?'). ChatGPT Plus: all of Tuần 1 in one reply. The Brand Card and save line may close this reply or come in the next; no stop point, no wrap-up. Graded with day0_timing when the run carries the Map step. Not on S0: setup.plan_guess lives only in the method file."""
+notes = """route: setup (route set). v13.5 (start-block steps 7-8, §CM-SETUP 9, §CM-TODAY 1): after QUAY HÔM NAY any message but a change brings, unasked, the Brand Card (top ≤500 characters, then 'Phần còn lại là cho máy, không cần đọc:' and the machine block with the keyword) + card.save_line + the Tuần 1 table (Ngày · Dạng · Hook · Lời mời: 3 video ngắn, 1 bài dài, 1 tin Zalo; 1–2 tin trả lời inbox; the Zalo message asking 3 past clients one question, research.ask3 '… Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?') + TIẾP 'Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.'; the other pieces come one per 'tiếp' or on their day. Never 'làm Tuần 1 không?', no stop point, no wrap-up; at most one 'Cần' line. §CM-SETUP 5: platform and the Zalo/email list are asked only in the dump prompt's hint list, talk day never; the unheard ones were guessed once in HỆ THỐNG NỘI DUNG of the strategy (setup.plan_guess). Graded with day0_timing when the run carries the strategy step."""
 
 [[case]]
 id = "router.vn.104"

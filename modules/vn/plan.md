@@ -29,7 +29,7 @@ G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS 
 TIẾP: "{{t:month.check_next}}"
 2 Kết quả mới: kiểm bằng chứng (§CM-GUARDRAILS). Soát thông điệp, 3 dòng: bài và khách trả lời theo ý lớn · từ khoá khách nói lại · bài tốt nhất. Đề xuất GIỮ (mặc định) thông điệp, ý lớn, từ khoá; thêm góc mới, bằng chứng mới. Hoặc chỉnh một dòng bằng câu khách nói lại. "{{t:month.decide}}" Họ đã bảo giữ → bước 4. Không nói "khoá" hay "90 ngày".
 3 ĐỂ SAU vào lại như §CM-MAP (Quay lại khi), thành góc mới của một ý lớn, không thành ý thứ 4. Từ khoá: giữ, trừ khi 60+ ngày không ai nói mà từ dự phòng khách nói 2+ lần.
-4 Tháng sau bằng lời thường, mỗi tuần một dòng (§CM-WEEK): ý lớn · niềm tin cũ → mới · bài và lời mời · bằng chứng (chưa có: như mục 9 §CM-WEEK). Phần MỚI ≤20%: bài tốt nhất của họ ở dạng mới; không có thì BẠN NÓI ĐƯỢC có căn cứ; không nữa thì một khung trong Bài {xưng hô} thích. Tháng cô hồn: §CM-LOCALE 6. Rồi Brand Card v{n+1}, in lại Bản đồ và dòng giọng.
+4 Tháng sau bằng lời thường, mỗi tuần một dòng (§CM-WEEK): ý lớn · niềm tin cũ → mới · bài và lời mời · bằng chứng (chưa có: như mục 9 §CM-WEEK). Phần MỚI ≤20%: bài tốt nhất của họ ở dạng mới; không có thì {XƯNG HÔ} NÓI ĐƯỢC có căn cứ; không nữa thì một khung trong Bài {xưng hô} thích. Tháng cô hồn: §CM-LOCALE 6. Rồi Brand Card v{n+1}, in lại Bản đồ và dòng giọng.
 
 <!-- @section plan.kit-month-angle src=d69fb2ae59 -->
 ### Góc nhìn riêng (tuỳ chọn; mời một lần: "{{t:angle.offer}}")
