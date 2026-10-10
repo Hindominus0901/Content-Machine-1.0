@@ -818,7 +818,7 @@ input = """tiếp em"""
 contains = ["NÓI GÌ:", "NÓI THẾ NÀO:", "Lưu lại để em nhớ chị (30 giây)", "đoạn chat mới nhất"]
 regex = [
   '''(?m)^TIẾP →[^\n]*[Qq]uay video hôm nay[^\n]*\. Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]\.?\s*\Z''',
-  '''A\) Notion[^\n]*B\) (?:một )?Google Sheet[^\n]*C\) [^\n]*HUB\.md[^\n]*Gõ A, B hay C''',
+  '''A\) Notion[^\n]*B\) (?:một )?Google Sheet[^\n]*(?:mở|dùng|xài) Sheet[^\n]*C\) [^\n]*HUB\.md[^\n]*Gõ A, B hay C''',
 ]
 not_regex = [
   '(?i)(ngoài|bên ngoài)\s+dự án',
@@ -829,7 +829,7 @@ not_regex = [
 ]
 invariants = ["I1", "I5", "I15"]
 max_questions = 1
-notes = "start-block steps 8-9 and §CM-TODAY offers (levelup.kit-offers, 9 Oct: Day 0's last reply offers the hub, levelup.offer_board 'A) Notion … B) một Google Sheet C) chỉ file HUB.md ở đây … Gõ A, B hay C'; the reminder offer moved to Day 1) in chị–em, + TIẾP 'Quay video hôm nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' The old 3-line wrap-up and its NEXT line ('Mai: mở Content Machine, đoạn chat mới nhất, gõ …') are gone (R13). No Week-1 piece after the card. Quit point 8 'new chat outside the project'. Reminders are offered, not pushed; the offer's '?' is the reply's only question."
+notes = "start-block steps 8-9 and §CM-TODAY offers (levelup.kit-offers, 9 Oct: Day 0's last reply offers the hub, levelup.offer_board 'A) Notion … B) Google Sheet, nếu ngày nào cũng mở Sheet C) để sau, chỉ HUB.md … Gõ A, B hay C' (v13.8: the Sheet fact is asked inside B, COMPARE v13.7 #3); the reminder offer moved to Day 1) in chị–em, + TIẾP 'Quay video hôm nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'.' The old 3-line wrap-up and its NEXT line ('Mai: mở Content Machine, đoạn chat mới nhất, gõ …') are gone (R13). No Week-1 piece after the card. Quit point 8 'new chat outside the project'. Reminders are offered, not pushed; the offer's '?' is the reply's only question."
 
 [[case]]
 id = "setup.vn.038"

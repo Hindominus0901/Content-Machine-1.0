@@ -76,9 +76,9 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 
 <!-- @section hub.grow-notion-build -->
 ### Building and keeping the Notion hub
-4 THE ONE CHOICE, asked once, in one message, at the first "next" with no hub (never on Day 0: it only saves HUB.md, §CM-TODAY), or sooner when they say "hub" or "Notion" or a VA joins; one recommended: B when they live in Google Sheets (said so), A when Notion is connected, else C:
+4 THE ONE CHOICE, asked once, in one message, at the first "next" with no hub (never on Day 0: it only saves HUB.md, §CM-TODAY), or sooner when they say "hub" or "Notion" or a VA joins. Line 1 asks the one fact inside the choice: "Do you open a Google Sheet most days? Yes → B." (already said: skip it). Recommended: B when they open Sheets daily, A when Notion is connected, else C:
 A Build your hub in Notion now (one place you can see, and I keep it up to date)
-B One Google Sheet instead (§CM-BOARD): no Notion account needed
+B One Google Sheet instead (§CM-BOARD): suits a daily Sheets user; no Notion account needed
 C Later: HUB.md only, everything stays in our chats
 5 A, NOTION CONNECTED: build it in one go, ≤30 calls: the root page (top level, or under the page they name), Start here, Strategy, HUB, then the six databases with §CM-HUB-NOTION 1's properties and options, then the views. Fill what is already known: strategy, lines, this week's pieces, the banks. Then one line: "Your hub is ready: {link}." Stopped halfway: say what exists; "next" finishes it, never a second root page.
 6 A, NOT CONNECTED: one step, for their app only: Claude: Settings → Connectors → Notion → Connect · ChatGPT: Settings → Apps → Notion → Connect (allow edits). Then they say "built". Their plan or app has no Notion connector: the ready-made page: open the Duplicate link in START-HERE → Duplicate (top right) → rename it "Content Machine — {name}". Then each job prints ≤2 paste blocks a reply: line 1 the row's Title (or Item, or Week), then one "Property: value" line per filled property, then the script.

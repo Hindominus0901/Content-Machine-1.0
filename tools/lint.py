@@ -41,6 +41,10 @@ Where docs/BUILD.md leaves a choice, this file decides:
     non-EN edition, or render.py would fall back to the EN text there.
   * E152 fails closed: if tools/package.py cannot be imported, every zip is
     reported, because its determinism cannot be shown.
+  * E148: a term from evals/personas/leak-terms.toml (a test persona's names,
+    offer, coined phrases or story numbers) in a shipped kit source: a module or
+    core section body, a strings value, or a file under plugin/. Without that
+    file the check is skipped.
 """
 from __future__ import annotations
 
@@ -151,6 +155,28 @@ def bare_ban(line: str) -> list[str]:
     """Bare "bạn" left in a VN coach-facing line once quotes, slots and pair notation are set aside."""
     body = QUOTED_RE.sub(" ", BAN_PAIR_RE.sub(" ", nfc(line)))
     return [m.group(0) for m in BARE_BAN_RE.finditer(body)]
+
+
+# E148: kit examples must not be built from a test persona's own facts (COMPARE v13.7, new defect 1): the demo can no
+# longer tell thinking from copying. The curated list lives with the fixtures; see its header.
+LEAK_TERMS_FILE = "evals/personas/leak-terms.toml"
+
+
+def leak_term_re(term: str) -> re.Pattern:
+    term = nfc(term).strip()
+    head = r"(?<!\w)" if term[:1].isalnum() else ""
+    tail = r"(?!\w)" if term[-1:].isalnum() else ""
+    return re.compile(head + re.escape(term) + tail, re.IGNORECASE)
+
+
+def load_leak_terms(root: Path) -> list[tuple[str, str, re.Pattern]]:
+    """(persona, term, regex) for every term in evals/personas/leak-terms.toml; [] when the file is absent."""
+    path = Path(root) / LEAK_TERMS_FILE
+    if not path.is_file():
+        return []
+    data = tomllib.loads(path.read_text(encoding="utf-8"))
+    return [(persona, term, leak_term_re(term)) for persona, block in sorted(data.items())
+            for term in [*block.get("terms", []), *block.get("echoes", [])]]
 
 
 PII_RULES = (
@@ -592,7 +618,7 @@ class Linter:
             self.load_allowlist, self.load_toml_files, self.load_editions, self.load_strings,
             self.load_terms, self.check_strings, self.check_sections, self.check_pending,
             self.check_targets, self.check_schemas, self.check_router, self.check_templates, self.check_hub_refs,
-            self.check_source_text, self.check_vn_address, self.check_cards, self.check_tasks_data, self.check_levelup_sections,
+            self.check_source_text, self.check_vn_address, self.check_leak_terms, self.check_cards, self.check_tasks_data, self.check_levelup_sections,
             self.check_dist, self.check_unused,
         ]
         for step in steps:
@@ -1390,6 +1416,45 @@ class Linter:
                         for m in rx.finditer(WAIVER_RE.sub("", line)):
                             self.add("E147", f"{self.rel(path)}:{lineno}", f"{label} '{m.group(0)}' prints to the "
                                      f"coach (use {{XƯNG HÔ}} / {{xưng hô}})")
+
+    # -- persona fixture facts in kit sources (E148)
+
+    def check_leak_terms(self) -> None:
+        try:
+            terms = load_leak_terms(self.root)
+        except (OSError, tomllib.TOMLDecodeError) as exc:
+            self.add("E161", LEAK_TERMS_FILE, f"cannot read: {exc}")
+            return
+        if not terms:
+            return
+
+        def scan(where: str, first: int, text: str) -> None:
+            for lineno, line in enumerate(nfc(text).splitlines(), first):
+                if waived(line, "E148"):
+                    continue
+                body = WAIVER_RE.sub("", line)
+                for persona, term, rx in terms:
+                    if rx.search(body):
+                        self.add("E148", f"{where}:{lineno}" if first else where,
+                                 f"'{term}' is a test persona's fact ({persona}); write the example for another niche")
+
+        for lang, secs in sorted(self.sections.items()):
+            for sid, sec in sorted(secs.items()):
+                where = self.section_where.get((lang, sid), sec.file)
+                relp, _, start = where.rpartition(":")
+                if not start.isdigit():
+                    relp, start = where, "0"
+                scan(relp, int(start) + 1, sec.body)
+        for lang, (texts, _) in sorted(self.strings.items()):
+            for key, text in sorted(texts.items()):
+                scan(f"strings/{lang}.toml key '{key}'", 0, text)
+        for path in sorted((self.root / "plugin").rglob("*")):
+            if path.is_file() and path.suffix in TEXT_SUFFIXES:
+                try:
+                    text = path.read_text(encoding="utf-8")
+                except (OSError, UnicodeDecodeError):
+                    continue
+                scan(self.rel(path), 1, text)
 
     # -- Ship Check card budgets (E101)
 

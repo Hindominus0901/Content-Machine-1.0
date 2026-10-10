@@ -15,7 +15,7 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 
 <!-- @section levelup.kit-offers -->
 ### Level-ups: one A/B/C line above NEXT (§CM-OPTIONS), at its trigger, ≤1 a reply; none mid-Talk or on Day 0
-- The first "next" with no hub yet (Day 0 only saves HUB.md), a VA, "where is everything?": the hub, asked once: "{{t:levelup.offer_board}}" Recommend B when they live in Google Sheets (said so), A when Notion is connected, else C. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- The first "next" with no hub yet (Day 0 only saves HUB.md), a VA, "where is everything?": the hub, asked once: "{{t:levelup.offer_board}}" Recommend A when Notion is connected; else B (the option itself asks the fact; the dump says they open Sheets daily: say so as the why); C only when they said they don't use Sheets. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
 - The "next" after the hub is chosen, or asked: "{{t:levelup.offer_reminders}}" Then 2 weekly calendar links.
 - Week-1 Friday review: "{{t:levelup.offer_nudges}}" Then §CM-NUDGES.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"

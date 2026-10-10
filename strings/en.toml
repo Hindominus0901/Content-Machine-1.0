@@ -214,7 +214,7 @@
 "task.footer"             = "Open {{name}}, newest chat, say 'next'."
 "levelup.offer_reminders" = "Next: 2 calendar reminders, {day} and Friday. A) set them (recommended): {why}. B) not now."
 "levelup.offer_nudges"    = "You did a full week. Next: my messages on Monday, each morning and Friday. A) set them (recommended): {why}. B) Friday only C) not now."
-"levelup.offer_board"     = "One place to see everything: A) Notion, built for you B) a Google Sheet C) later, HUB.md only. I'd pick {letter}: {why}. Type A, B or C."
+"levelup.offer_board"     = "One place to see everything: A) Notion, built for you B) a Google Sheet, if you open Sheets every day C) later, HUB.md only. I'd pick {letter}: {why}. Type A, B or C."
 "levelup.offer_autopilot" = "Next: each week written into Notion by itself. A) set it up (recommended): {why}. B) not now."
 "levelup.offer_grow"      = "That lives in {LAUNCH-EN.md} (Level-ups folder). Add it here (one upload), then ask again."
 "levelup.offer_character" = "Next: make it sound more like you, 3 talks of 20 minutes. A) talk 1 now (recommended): {why}. B) next week."

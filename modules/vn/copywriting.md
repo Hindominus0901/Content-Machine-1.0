@@ -42,7 +42,7 @@ DANH SÁCH VÀ TIN NHẮN (§CM-COPY-LISTS): DANH SÁCH CÓ SỢI CHỈ "N ý, m
 ### Khung chuyện: chuyện năm dòng, chuyện một bài học, câu kéo câu (hợp lúc nào · nhịp và số chữ · ví dụ dựng ra · hỏng khi)
 CHUYỆN NĂM DÒNG · THU HÚT, NIỀM TIN · video ngắn, bài ngắn, caption, story; khung chuyện mặc định của Tuần 1.
 Nhịp (video ngắn ≈600): khoảnh khắc trong đời khách, để khách thấy mình trong đó ≈100 · chỗ vướng: đã thử gì, vì sao không ăn thua, kèm một chi tiết ≈120 · mình thấy ra: bước ngoặt, bằng một việc làm hay một đồ vật ≈120 · cái đổi: cách mới và một dữ kiện ≈150 · "tới lượt bạn": một bước nhỏ, rồi lời mời khép câu bỏ ngỏ ≈60. Bài ngắn: năm đoạn, mỗi đoạn ≈50 tiếng.
-VD: Chị chủ tiệm hoa cưới ngồi báo giá từng đám tới 12 giờ đêm. · Làm bảng giá rồi mà cô dâu vẫn hỏi "có gói nào rẻ hơn không chị". · Tới hôm có cặp hỏi riêng giá hoa ở bảng chào khách. · Giờ chị báo ba gói, bảng chào khách tính riêng. · Tuần này thử tách riêng một món; ai cần mẫu báo giá ba dòng thì comment GOI nhé.
+VD: Chị chủ tiệm hoa cưới ngồi báo giá từng đám tới 12 giờ đêm. · Làm bảng giá rồi mà cô dâu vẫn hỏi "có gói nào rẻ hơn không chị". · Tới hôm có cặp hỏi riêng giá hoa ở bảng chào khách. · Giờ chị báo ba gói, bảng chào khách tính riêng. · Tuần này thử tách riêng một món; ai cần mẫu báo giá ba dòng thì comment BA DÒNG.
 Hỏng khi: chỗ vướng chung chung ("khó lắm"); bước ngoặt là "mình chợt nhận ra" mà không có việc gì, vật gì; cuối bài giảng đạo thay vì đưa một bước.
 CHUYỆN MỘT BÀI HỌC · NIỀM TIN, THU HÚT · email, Zalo, bài ngắn, một phần của bài dài; khi lời xả có một cảnh sắc và một ý.
 Nhịp (email ≈300 tiếng): cảnh: giờ, chỗ, một đồ vật ≈100 · chuyện xảy ra, lời người ta nguyên văn ≈80 · bài học một câu ≈25 · nghĩa là gì với người đọc ≈60 · một bước hay lời mời ≈25.
@@ -65,7 +65,7 @@ VD: "Cứ chọn ngách hẹp vào." · Nghe đúng: hẹp thì dễ nhớ. · M
 Hỏng khi: "X chết rồi", "sự thật người ta giấu"; gỡ một điều chẳng ai tin; nhắm vào người khuyên thay vì lời khuyên.
 CÁCH CŨ – CÁCH MỚI · NIỀM TIN, CHUYỂN ĐỔI · video ngắn, carousel, bài ngắn, quảng cáo. Cách cũ là thói quen hay lời khuyên, không phải một người hay một nhóm người.
 Nhịp (bài ngắn ≈350 tiếng): cách cũ y như khách đang làm, nói công bằng ≈80 · nó tốn gì (giờ, tiền, cảm giác) ≈70 · cách mới một câu ≈25 · làm thế nào, 2–3 bước ≈110 · cái giá phải trả, nói thật ≈30 · lời mời ≈30.
-VD: Cách cũ: gọi tư vấn 40 phút, mình giải thích hết. · Mình nói nửa buổi, khách chào "để chị suy nghĩ thêm". · Cách mới: gửi trước ba câu hỏi. · Khách trả lời bằng chữ, cuộc gọi vào thẳng vấn đề của họ. · Đổi lại mỗi khách tốn thêm mười phút. · Ai cần ba câu đó thì comment HOI.
+VD: Cách cũ: gọi tư vấn 40 phút, mình giải thích hết. · Mình nói nửa buổi, khách gật gù rồi hẹn "để lần sau". · Cách mới: gửi trước ba câu hỏi. · Khách trả lời bằng chữ, cuộc gọi vào thẳng vấn đề của họ. · Đổi lại mỗi khách tốn thêm mười phút. · Ai cần ba câu đó thì comment HOI.
 Hỏng khi: cách cũ bị biếm hoạ; không có cái giá (đọc như quảng cáo); "cách nào cũng được" mà không có lập trường.
 
 <!-- @section copywriting.grow-problem src=538225551b -->
@@ -107,7 +107,7 @@ Hỏng khi: bài học chẳng dính gì tới chuyện; thêm bài học thứ 
 VIDEO DÀI THEO PHẦN, 1.000–1.500 chữ · NIỀM TIN, CHUYỂN ĐỔI · YouTube, video Facebook, podcast (§CM-LONG). Lời nói; mỗi phần là gạch đầu dòng; chỉ đoạn mở và câu cuối viết nguyên văn.
 Nhịp: mở ≈120: bằng chứng (một dữ kiện của họ), lời hứa (xem xong làm được gì), lộ trình (3–4 phần, gọi tên thường), một câu bỏ ngỏ trả lời gần cuối, một câu "kể cả khi bạn…" (§CM-LONG-INTRO) · bối cảnh hay chuyện ≈200 · 3–4 phần, mỗi phần ≈200–250: ý → vì sao → ví dụ → làm gì → câu móc gợi phần sau hay mở lại câu bỏ ngỏ ("Phần 3 là chỗ phần lớn mọi người bỏ cuộc.") · giữa video, một lần, câu tự kiểm dạng khẳng định · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80: quà, sản phẩm chỉ khi có, video nên xem tiếp. Một phần có thể chạy khung riêng (lật niềm tin, mổ xẻ quyết định).
 VD: "Nếu phải lấp kín lịch từ con số 0": bằng chứng (số năm, số khách của họ) · các phần: nói với ai, nói gì, nói ở đâu, mời thế nào · câu bỏ ngỏ: "câu hỏi cho biết khách này có mua hay không".
-Hỏng khi: câu móc chỉ là "xem hết video nhé"; các phần không theo thứ tự nào (không có sợi chỉ); độn chữ cho đủ 1.000.
+Hỏng khi: câu móc chỉ là "nhớ xem hết video"; các phần không theo thứ tự nào (không có sợi chỉ); độn chữ cho đủ 1.000.
 
 <!-- @section copywriting.grow-lists src=24f5079f4c -->
 ### Danh sách có sợi chỉ, tin ngắn
@@ -134,8 +134,8 @@ Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy 
 1 Độ căng: mở bằng câu hỏi mà chuyện sẽ trả lời; giấu câu trả lời thêm một nhịp, quá chỗ mình thấy vừa; đẩy cái giá lên một lần trước bước ngoặt ("rồi chị ấy đòi hoàn tiền"). Mỗi chuyện một vấn đề.
 2 Kể trong video: câu ngắn ở cảnh và bước ngoặt, câu dài hơn ở chỗ giải thích; mỗi lần quay một nhịp; "mà", "nên", "thế là" giữa các nhịp; một câu dọn đường trước bước ngoặt ("Rồi chị nói đúng một câu."); một câu móc quanh giữa bài. Lời nói không dùng gạch ngang. Đọc to lên.
 3 Thang cụ thể: leo tới khi người lạ hình dung được. "Khách gặp khó" → "một khách gặp khó chuyện giá" → "một thợ chụp ảnh cưới cứ báo giá theo giờ" → "báo 8 tiếng, làm 14 tiếng, quên tính tiền cuốn album". Dừng ở bậc mà dữ kiện của coach với tới; không leo bằng chi tiết bịa.
-4 Nỗi khổ và mong muốn: viết "trước" bằng thứ khách thấy, nghe, cảm (tin báo giá "đã xem", cái nặng lòng tối Chủ nhật) và "sau" cũng vậy (hộp tin sáng thứ Hai nhẹ tênh), lấy từ nghiên cứu và lời xả, không từ tính từ.
-5 Cái kết trao sang lời mời: câu cuối trả lời câu mở; lời mời đi tiếp từ kết quả của chuyện ("Ai muốn ba câu chị ấy giờ hay hỏi thì comment HOI nhé."), không lạc sang chuyện khác. Quà đặt tên theo kết quả của chính chuyện này (§CM-HOOK-CTA). Không tóm lại bài học, không "Bạn thấy sao?".
+4 Nỗi khổ và mong muốn: viết "trước" bằng thứ khách thấy, nghe, cảm (thùng hoá đơn chưa mở, cái nặng lòng tối Chủ nhật) và "sau" cũng vậy (hộp tin sáng thứ Hai nhẹ tênh), lấy từ nghiên cứu và lời xả, không từ tính từ.
+5 Cái kết trao sang lời mời: câu cuối trả lời câu mở; lời mời đi tiếp từ kết quả của chuyện ("Ai muốn ba câu chị ấy giờ hay hỏi thì comment BA CÂU HỎI."), không lạc sang chuyện khác. Quà đặt tên theo kết quả của chính chuyện này (§CM-HOOK-CTA). Không tóm lại bài học, không "Bạn thấy sao?".
 6 Bao nhiêu chữ cho chuyện: video ngắn ≈150–250 trong 500–800 · bài dài ≈300 · video dài ≈200, thêm một chuyện trong một phần · email ≈100–150 tiếng · story: một cảnh, một ý, một lời mời.
 
 <!-- @section copywriting.grow-persuade src=06a38f0f21 -->
@@ -162,16 +162,16 @@ Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy 
 <!-- @section copywriting.grow-voice src=b9a91f1bcc -->
 ### Thuyết phục mà vẫn nói như người Việt
 1 Xưng hô: một cặp từ dòng đầu tới dòng cuối, theo Card ("mình – bạn", "chị – em", "em – anh chị"); không trôi mình → tôi → chúng tôi; tin riêng gọi một người ("chị", "anh"), không "các bạn". Lời khách trích nguyên văn giữ cách xưng của họ.
-2 Tiểu từ: "nhé", "nha", "nghen" theo vùng và theo chính bài của coach, đặt ở câu mời, câu dặn cho mềm; "dạ", "ạ" khi nhắn khách lớn tuổi; không ba câu liền một tiểu từ. Câu nêu bằng chứng thì nói thẳng, khỏi tiểu từ.
+2 Tiểu từ: đúng chữ và tỉ lệ trên Card, lấy từ chính bài của coach (giọng Nam: nha, nghen, hen, không nhé, nhỉ, đấy), đặt ở câu mời, câu dặn cho mềm; "dạ", "ạ" khi nhắn khách lớn tuổi; không ba câu liền một tiểu từ. Câu nêu bằng chứng thì nói thẳng, khỏi tiểu từ.
 3 Nhịp nói: chủ đề trước rồi "thì / là / mà" ("Báo giá thì đừng gửi lúc 11 giờ đêm."); bỏ chủ ngữ đã rõ; câu ngắn, một hơi; nối bằng rồi, xong, mà, nên, thế là, hoá ra, có điều. Kịch bản không "Tuy nhiên", "Do đó", "Bên cạnh đó".
 4 Bỏ chữ quảng cáo dịch: "Hãy cùng khám phá", "bí mật", "bí quyết thành công", "Bạn đã bao giờ…", "Hãy tưởng tượng…", "Bạn có biết rằng…", "giải pháp tối ưu", "thay đổi cuộc đời", "bùng nổ doanh số", "đột phá", "cơ hội có một không hai", "đừng bỏ lỡ", "số lượng có hạn" (có hạn thật thì nói số và lý do), "ib để biết giá", chữ thổi phồng (đỉnh cao, siêu, cực kỳ, vô cùng).
-5 Lời mời kiểu Việt: một việc, nói như rủ ("Ai cần thì comment GIA nhé"), luôn có đường cho người ngại ("ngại thì nhắn riêng mình"), bài bán thì ghi giá.
+5 Lời mời kiểu Việt: một việc, nói như rủ ("Ai cần thì comment BẢNG TÍNH" + tiểu từ theo Card), luôn có đường cho người ngại ("ngại thì nhắn riêng mình"), bài bán thì ghi giá.
 6 Trơn → tự nhiên:
 - "Hãy cùng khám phá bí mật để có thêm khách hàng!" → "Trước mỗi cuộc gọi tư vấn, mình chỉ hỏi khách đúng một câu."
-- "Bạn đã bao giờ cảm thấy mệt mỏi vì báo giá?" → "Gửi báo giá hôm thứ Hai. Giờ thứ Năm rồi, tin vẫn 'đã xem'."
+- "Bạn đã bao giờ cảm thấy mệt mỏi vì sổ sách?" → "Ba giờ chiều thứ Sáu, thùng hoá đơn vẫn nằm dưới gầm bàn."
 - "Giải pháp tối ưu giúp thay đổi hoàn toàn việc kinh doanh của bạn" → "Ba việc mình làm với mọi khách mới, ngay tuần đầu."
 - "Đừng bỏ lỡ cơ hội có một không hai này!" → "Thứ Sáu chốt danh sách, vì thứ Hai lớp vào học." (ngày thật)
-- "Inbox để biết giá" → "Khoá 4 buổi giá {giá}. Ai cần thì comment GIA, ngại thì nhắn riêng nhé."
+- "Inbox để biết giá" → "Khoá 4 buổi giá {giá}. Ai cần thì comment BẢNG TÍNH, ngại thì nhắn riêng mình."
 - "Mình rất đam mê giúp đỡ các coach phát triển" → "Mình đọc trang bán hàng của {N} coach rồi. Phần lớn thiếu đúng một câu."
-- "Bình luận nếu bạn đồng ý nhé!" → "Comment GIA, mình gửi bảng tính cho."
+- "Bình luận nếu bạn đồng ý nhé!" → "Comment BẢNG TÍNH, mình gửi cho."
 7 Đọc to: coach có nói câu này với một khách ngồi đối diện không? Không thì viết lại câu đó.

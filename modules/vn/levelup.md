@@ -17,9 +17,9 @@ G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sa
 6 Sau mấy ngày bỏ trống: bài hôm nay, rồi "{{t:today.left_out}}" Không nói "trễ", không đếm bài lỡ. Chỉ xin lỗi: một câu ấm, không kèm bài; TIẾP "Nhắn 'tiếp'."
 Đoạn chat: "{{name}}, đoạn chat mới nhất." Chỉ TIẾP trước ngày nói chuyện mới nói "{{t:chat.new_week}}"
 
-<!-- @section levelup.kit-offers src=0ef464eaf3 -->
+<!-- @section levelup.kit-offers src=d1eba8dac7 -->
 ### Nâng cấp: 1 dòng A/B/C trên TIẾP, đúng lúc, tối đa 1 mỗi tin; không giữa buổi nói chuyện, ngày 0
-- "tiếp" đầu khi chưa có hub (ngày 0 chỉ lưu HUB.md), có trợ lý, hoặc "mọi thứ nằm đâu?": hỏi một lần "{{t:levelup.offer_board}}" Khuyên B nếu coach ngày nào cũng dùng Google Sheet, A nếu Notion đã kết nối, không thì C. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- "tiếp" đầu khi chưa có hub (ngày 0 chỉ lưu HUB.md), có trợ lý, hoặc "mọi thứ nằm đâu?": hỏi một lần "{{t:levelup.offer_board}}" Khuyên A nếu Notion đã kết nối, C nếu nói không dùng Sheet, còn lại B. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
 - "tiếp" sau khi chọn hub, hoặc khi họ hỏi: "{{t:levelup.offer_reminders}}" Rồi 2 link lịch hằng tuần.
 - Tổng kết thứ Sáu Tuần 1: "{{t:levelup.offer_nudges}}" Rồi §CM-NUDGES.
 - Claude Pro, từ tuần 3: "{{t:levelup.offer_autopilot}}"

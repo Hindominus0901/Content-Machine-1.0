@@ -50,13 +50,13 @@ Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. L�
 1 THEO LOẠI BÀI, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi người quen, phần 2 hay câu hỏi cho chọn · NIỀM TIN → từ khoá lấy đúng món bài này hứa, nhắn riêng hay link · CHUYỂN ĐỔI → nhắn riêng, gọi hay đăng ký, mời mua có hạn thật. Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Chưa mở bán thì không mời mua.
 2 LUẬT (cho mọi câu bên dưới):
 - Khép điều hook đã hé: món hứa đặt tên theo kết quả của CHÍNH bài đó ("3 câu làm hỏng trang báo giá" → "bảng soát trang báo giá").
-- Từ khoá: chữ người xem trong hook, ≥2 tiếng, viết HOA không dấu (BANG GIA, DE CHI SUY NGHI); không GUIDE, FREE, INFO hay chữ comment thường cũng có; giống nhau trên màn hình, caption và trả lời tự động (nhận cả dạng có dấu). Từ khoá, quà của mùa là mặc định của CHUYỂN ĐỔI (§CM-CTA-KIT 1); ≤3 từ khoá chạy cùng lúc.
+- Từ khoá: chữ người xem trong hook, ≥2 tiếng, viết HOA có dấu (SOÁT GIÁ, BÁNH THỨ BA), in kèm dạng không dấu một lần (BANH THU BA); không GUIDE, FREE, INFO hay chữ comment thường cũng có; giống nhau trên màn hình, caption và trả lời tự động (nhận cả hai dạng). Từ khoá, quà của mùa là mặc định của CHUYỂN ĐỔI (§CM-CTA-KIT 1); ≤3 từ khoá chạy cùng lúc.
 - Quà có sẵn trước khi đăng (§CM-CTA-KIT 2); câu mời mua có giá thật, ngày thật, giới hạn thật (§CM-CTA-KIT 9).
 - Coach tự chọn ("chấm", "comment nếu…", "đủ 100 comment mình làm phần 2", emoji): ghi y nguyên, không làm mềm, không chặn; dưới đó MỘT dòng, có ngày hôm nay: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 - Trả lời: tự động chỉ ở Trang Facebook và tài khoản Instagram chuyên nghiệp; chỗ khác gửi tay, nên chỉ xin comment ở nơi coach kịp trả lời trong ngày (§CM-CTA-KIT 7). YouTube không có tin nhắn: không xin từ khoá; quà để ở mô tả và bình luận ghim.
 - Hỏi để comment thì cho chọn ("thứ nhất hay thứ hai?"), không "bạn nghĩ sao?".
 - Không: "follow để xem thêm", "link ở bio" mà không nói link gì, "giá ib" cho gói có giá cố định, gấp gáp giả, hai lời mời trong một bài, một câu comment chung cho mọi bài.
-3 CHỖ TRỐNG: {KEYWORD} từ khoá · {món hứa} món bài này hứa, tên gọi thẳng · {quà} quà của mùa · {hoàn cảnh} khoảnh khắc của khách · {gói}, {giá}, {ngày}, {N} chỉ điền số thật, không thì [CẦN {XƯNG HÔ}: …].
+3 CHỖ TRỐNG: {KEYWORD} từ khoá · {món hứa} món bài này hứa, tên gọi thẳng · {quà} quà của mùa · {hoàn cảnh} khoảnh khắc của khách · {gói}, {giá}, {ngày}, {N} chỉ điền số thật, không thì [CẦN {XƯNG HÔ}: …] · tiểu từ cuối câu theo Card (Card giọng Nam: không nhé, nhỉ, đấy).
 4 DANH SÁCH LỜI MỜI: câu coach đã duyệt hay từng kéo được người hỏi: `lời mời · {bậc} · {nền tảng} · "{câu}" · {quà hay gói} · {tầng}`; dùng lại câu tốt nhất từng nền tảng trước khi viết mới.
 Nhãn bên dưới: bậc · tầng (TH THU HÚT, NT NIỀM TIN, CĐ CHUYỂN ĐỔI).
 
@@ -91,7 +91,7 @@ SHORTS
 <!-- @section content-banks.grow-cta-text src=90dbcb55af -->
 ### Câu mời: Facebook, LinkedIn, email, Zalo
 BÀI FACEBOOK (trang cá nhân hay Trang)
-21 từ khoá·NT "Comment BANG GIA hay nhắn riêng, mình gửi bảng soát giá một trang trong bài này nhé."
+21 từ khoá·NT "Comment SOÁT GIÁ hay nhắn riêng, mình gửi bảng soát giá một trang trong bài này."
 22 nhẹ·TH "Bạn thuộc kiểu thứ nhất hay thứ hai? Ghi 1 hay 2 thôi."
 23 link·NT "Checklist mình để ở comment đầu tiên nha."
 24 nhắn·NT "Ai muốn mình xem giúp {cái của bạn} thì nhắn mình chữ {KEYWORD}. Tuần này mình tự trả lời từng người."
@@ -101,8 +101,8 @@ NHÓM FACEBOOK (nhóm của coach; nhóm người khác: không mời gì nếu 
 27 nhẹ·TH "Các phần trước của chuỗi này mình gom ở bài ghim đầu nhóm."
 28 gọi·CĐ "Tối thứ Năm {giờ} mình sửa trực tiếp {cái gì} cho {N} bạn trong nhóm. Comment {KEYWORD} để giữ một suất."
 LINKEDIN
-29 từ khoá·NT "Mình gom {N} câu hỏi vào một trang. Comment {KEYWORD}, mình nhắn cho anh chị (gửi tay, chờ mình một ngày nhé)."
-30 nhẹ·TH "Anh chị chia sẻ giúp bài này tới người {vai} nào đang {hoàn cảnh} nhé."
+29 từ khoá·NT "Mình gom {N} câu hỏi vào một trang. Comment {KEYWORD}, mình nhắn cho anh chị (gửi tay, nên chờ mình một ngày)."
+30 nhẹ·TH "Anh chị chia sẻ giúp bài này tới người {vai} nào đang {hoàn cảnh}."
 31 link·NT "Mỗi {thứ} mình viết một bài về {chủ đề}. Link đăng ký ở mục Nổi bật trên trang cá nhân."
 32 gọi·CĐ "Anh chị đang điều hành {vai} mà {hoàn cảnh} thì link lịch ở trang cá nhân: 20 phút, không chào bán trừ khi anh chị hỏi."
 EMAIL (danh sách chưa từng nhận thư hay im 6 tháng: thư đầu là thư xin phép lại, §CM-MESSAGES 3)
@@ -265,7 +265,7 @@ Gắn "voz", "review", "nhóm" hay tên nền tảng vào 2+ cụm; cụm ra kh�
 3 DÙNG: chỉ nói kết quả từ mục có đồng ý cho đúng việc đó VÀ đã kiểm chứng; quá hạn kiểm lại hay gói đã đổi → hỏi coach trước; không có gì dùng được → lặng lẽ viết bài kể cách làm, không bao giờ "bằng chứng sẽ có sau". Không tự cho là được: số, tên, chi tiết của khách (cả quy mô như "5 giường", cả số khách đã dạy) mà coach dặn giới hạn ("chỉ bài đăng", "không quảng cáo", "hỏi trước") hay chưa từng cho dùng công khai → hỏi một lần, một dòng Cần, trước lần dùng công khai đầu tiên; câu trả lời ghi vào mục. CHUYỂN ĐỔI cần ≥1 bằng chứng dùng được hoặc bằng chứng cách làm; NIỀM TIN dùng cách làm hay con số đếm; THU HÚT hiếm khi cần.
 4 CÂU GỢI, mỗi tin một câu:
 - "Trong 6 tháng qua có khách nào có kết quả mà {xưng hô} ghi được con số và tháng không? Lúc đầu họ ở đâu?"
-- "Họ có nhắn hay nói câu nào không? Dán nguyên văn, tên đổi thành vai nhé."
+- "Họ có nhắn hay nói câu nào không? Dán nguyên văn, tên đổi thành vai."
 - "Họ có đồng ý cho đưa lên bài không? Lên quảng cáo thì sao? {Xưng hô} hỏi họ rồi báo {tự xưng} câu trả lời kèm ngày."
 - "Việc nào {xưng hô} cho xem được trước và sau, mà che hết thông tin của khách?"
 - "{Xưng hô} đã làm bao nhiêu {việc} rồi? Số thật là được, nhỏ cũng được."

@@ -236,7 +236,7 @@
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
 "levelup.offer_reminders" = { text = "Tiếp theo: 2 lời nhắc trên lịch, {day} và thứ Sáu. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "8d1cb38751" }
 "levelup.offer_nudges"    = { text = "Theo đủ một tuần rồi. Tiếp theo: lời nhắc thứ Hai, mỗi sáng, thứ Sáu. A) cài luôn (máy khuyên): {why}. B) chỉ thứ Sáu C) để sau.", src = "821f4d0b5f" }
-"levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, dựng sẵn cho {xưng hô} B) một Google Sheet C) để sau, chỉ HUB.md. Máy khuyên {letter}: {why}. Gõ A, B hay C.", src = "629e4d8574" }
+"levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, dựng sẵn cho {xưng hô} B) Google Sheet, nếu ngày nào cũng mở Sheet C) để sau, chỉ HUB.md. Máy khuyên {letter}: {why}. Gõ A, B hay C.", src = "52fd5b044b" }
 "levelup.offer_autopilot" = { text = "Tiếp theo: tuần nào bài cũng tự vào Notion. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "8688cc1974" }
 "levelup.offer_grow"      = { text = "Phần đó nằm trong {LAUNCH-VN.md} (thư mục Level-ups). Tải lên đây một lần rồi hỏi lại.", src = "80d274bfc4" }
 "levelup.offer_character" = { text = "Tiếp theo: cho bài giống {xưng hô} hơn, 3 buổi trò chuyện 20 phút. A) làm buổi 1 luôn (máy khuyên): {why}. B) tuần sau.", src = "e5e0ef535a" }
