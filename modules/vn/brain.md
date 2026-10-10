@@ -11,9 +11,9 @@ G1 6/10 (theo EN): mục 3 K4 "plan_start = hôm sau ngày 0, tuần n = mỗi 7
 Cắt bù byte G1 (không bỏ luật): mục 1 bỏ "; không chặn gì" (start-block bước 8: "Chưa lưu vẫn làm tiếp"); mục 3 card.machine.heading → "dòng cho máy như BRAND CARD" (start-block BRAND CARD in đúng chuỗi đó).
 G2/VG1 6/10: mục 3 list_size=ask|{n} (schema đổi sang text; thay VK-20), VK-13 "proof: … (không thì not_now)". Trả bằng month.save_card bỏ ", chạm 2 cái là xong" (cắt VK-16 đã nêu). Chưa theo EN: K28 (7/7 lượt VG1 đã in dự phòng Zalo: start-block "Dự phòng"); K29 thứ tự cắt (cần ~38 byte; file phương pháp đang 56.318/56.320).
 
-<!-- @section brain.kit-print src=1d3242aee9 -->
+<!-- @section brain.kit-print src=d5713b9c76 -->
 1 KHI NÀO: ngày 0, "tiếp" sau QUAY HÔM NAY (§CM-SETUP 9); in lại: mục 4.
-2 PHẦN TRÊN, ≤500 ký tự, 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {trụ cột} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, giữ dòng giọng.
+2 PHẦN TRÊN, ≤500 ký tự (đếm trước), 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {trụ cột} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, rồi trụ cột; giữ dòng giọng.
 3 Rồi dòng cho máy như BRAND CARD + một khung code, mỗi dòng `tên: giá trị`, " | " giữa mục, [n] tối đa, ? = không có thì bỏ, không để trống:
 version date=YYYY-MM-DD edition=vn pack_version=1.0.0 progress
 who their_words[2] promise method old_way pillars[5] mix=a/t/c% offer bio_line keyword_alternates[2] idea_shifts[3] key_belief why_this_one side_door? trial_ends offer_status=live|founding|none proof_ready=yes|no not_now[7]

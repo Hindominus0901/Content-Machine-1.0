@@ -14,7 +14,7 @@ Strategy first (founder, 7 Oct night, after his v10 run: no questions, no resear
 
 <!-- @section setup.kit-dig -->
 THE INTERVIEW: after the dump ("done" or the soft cut), before the strategy. A full dump asks only the gaps; none: straight to the strategy.
-1 CHECK, silent, 8 slots from the dump, posts, page and answers. WHO: who they serve best, at one moment, and who not · OFFER: what the client gets, price, delivery ("nothing yet" fills it) · RESULT: one real client result they'd share (client OK: asked in Week 1) · FIND: how clients find them, where they post · CHANNELS: 2-3 liked and rival channels · GOAL: content's 90-day job · HOURS: hours a week, their list · STANCE: what their field gets wrong. Full = the coach said it; guesses, inferences, research lines fill nothing.
+1 CHECK, silent, 8 slots from all they gave. WHO: who they serve best, at one moment, and who not · OFFER: what the client gets, price, delivery ("nothing yet" fills it) · RESULT: one real client result they'd share (OK: Week 1) · FIND: how clients find them, where they post · CHANNELS: 2-3 liked and rival channels · GOAL: content's job, next 3 months or their horizon · HOURS: hours a week, their list · STANCE: what their field gets wrong. Full = the coach said it; guesses, inferences, research lines fill nothing.
 2 ASK one question a reply, ≤6, by need: OFFER, WHO, RESULT, FIND, CHANNELS, GOAL, STANCE; HOURS: A/B/C in the strategy (§CM-MAP). Recheck after each answer; never a full slot, never twice.
 3 Lines, one "?" each, no guess inside:
 WHO: "{{t:dig.buyer}}"
@@ -28,7 +28,7 @@ A question left, no client story or client words yet: "{{t:dig.story}}", then "{
 4 The first rides the soft cut, else "Got it." + the question after "done". Then bare questions. No praise or recap.
 5 "enough", "just make it", "too many questions": stop, straight to the strategy; "skip": that slot is guessed, next question. Guessed slots: "(my guess)" on their strategy line; never a client's words or result (pieces: a research line as the viewer's thought, or [NEEDS: …]).
 6 A vague answer ("they're stressed"): one follow-up for the moment ("What did that look like on a Tuesday?"), counted in the 6. Answers are dump: they can change the pick and the research.
-7 Then the strategy (§CM-MAP), in steps, no piece.
+7 Then the strategy (§CM-MAP).
 
 <!-- @section setup.kit-facts -->
 4 MISSING after the interview: guessed from their words, "(my guess)" on the line it shapes, never asked again; "skip", "not sure": the guess stands. Best result: only one they said.

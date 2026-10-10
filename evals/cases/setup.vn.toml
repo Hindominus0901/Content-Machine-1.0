@@ -703,7 +703,7 @@ not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
 invariants = ["I1", "I3", "I8", "I9", "I12", "I14", "I15"]
-notes = "scope: transcript. start-block step 7 and §CM-WEEK 2: 3 video ngắn, 1 bài dài, 1 tin Zalo (có danh sách: email), 1-2 tin trả lời inbox, and one Zalo message asking 3 past students one question: research.ask3 'Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn lấy đúng câu của bạn. Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?' in her one-to-one voice; wf2 §1 Zalo replaces email nurture; expected.toml [week1]. Saying 'thay cho email' is fine; an email piece (subject line, 'gửi email cho') is not, because her list is 0. Her Zalo facts are in chunk 3, so the context has her tell it after the cut (else they are guessed above Week 1, setup.vn.051). Nothing under the pieces (R1, R4)."
+notes = "scope: transcript. start-block step 7 and §CM-WEEK 2 (mix by the core platform; hers is video-first): 3 video ngắn, 1 bài dài, 1 tin Zalo (có danh sách: email), 1-2 tin trả lời inbox, and one Zalo message asking 3 past students one question: research.ask3 'Nhờ bạn một chút: mình đang viết lại phần giới thiệu công việc, muốn lấy đúng câu của bạn. Hồi mới tìm đến mình, bạn đang loay hoay nhất chuyện gì?' in her one-to-one voice; wf2 §1 Zalo replaces email nurture; expected.toml [week1]. Saying 'thay cho email' is fine; an email piece (subject line, 'gửi email cho') is not, because her list is 0. Her Zalo facts are in chunk 3, so the context has her tell it after the cut (else they are guessed above Week 1, setup.vn.051). Nothing under the pieces (R1, R4)."
 
 [[case]]
 id = "setup.vn.031"
@@ -723,7 +723,7 @@ not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
 ]
 invariants = ["I1", "I3", "I8", "I9", "I12", "I14", "I15"]
-notes = "scope: transcript. §CM-WEEK 2: Kênh chữ (LinkedIn, bản tin) → 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn; his 'Tôi không quay video đâu, tôi viết thôi.' (persona behaviour) is not a Map change, so it brings Week 1 text-first. Quit point 12 'email list ignored'; persona audience pair tôi – anh chị; he quits when called 'bạn' and on marketing English. Nothing under the pieces (R1)."
+notes = "scope: transcript. §CM-WEEK 2: Kênh chữ (bài viết Facebook, LinkedIn, bản tin) → 2 bài, 1 carousel, 1 video tuỳ chọn (không quay: thêm bài), 1 tin Zalo/email; his 'Tôi không quay video đâu, tôi viết thôi.' (persona behaviour) is not a Map change, so it brings Week 1 text-first. Quit point 12 'email list ignored'; persona audience pair tôi – anh chị; he quits when called 'bạn' and on marketing English. Nothing under the pieces (R1)."
 
 [[case]]
 id = "setup.vn.032"

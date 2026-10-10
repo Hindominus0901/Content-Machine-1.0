@@ -319,7 +319,7 @@
 "research.ask3_cold"          = { text = "Chuyện {problem}, giờ bạn thấy khó nhất chỗ nào?", src = "c5564ea07c" }
 "research.drip"               = { text = "Dán 3 comment hoặc tin nhắn hay nhất tuần này, tên đổi thành chữ cái. Không có thì gõ 'không có'.", src = "34c9df6797" }
 "research.paste_steps"        = { text = "Chừng một phút: mở {link | video {platform} đầu tiên khi tìm \"{phrase}\"}, bấm vào bình luận, chụp 3 màn hình (máy tính: bôi đen 20 bình luận đầu, chép) rồi gửi vào đây.", src = "9d98036213" }
-"research.access_ask"         = { text = "Khách hay nói chuyện trong nhóm Facebook, TikTok, comment YouTube, mà tìm web không đọc được mấy chỗ đó. A) {xưng hô} có Claude in Chrome hay ChatGPT Work kèm Chrome trên máy tính: đọc thẳng ở đó B) dán 20 comment, chừng một phút, điện thoại nào cũng được (máy khuyên) C) bỏ qua: chỉ đọc trang công khai, chỗ chưa đọc ghi là đoán", src = "f519a79a17" }
+"research.access_ask"         = { text = "Khách hay nói chuyện trong {B2B: comment LinkedIn, diễn đàn | nhóm Facebook, TikTok, comment YouTube}, mà tìm web không đọc được mấy chỗ đó. A) {xưng hô} có Claude in Chrome hay ChatGPT Work kèm Chrome trên máy tính: đọc thẳng ở đó B) dán 20 comment, chừng một phút, điện thoại nào cũng được (máy khuyên) C) bỏ qua: chỉ đọc trang công khai, chỗ chưa đọc ghi là đoán", src = "b26a649fef" }
 "research.no_client"          = { text = "Chưa có khách nào trả lời", src = "418a8548c2" }
 
 # Posts the coach likes (§ LIKED; wf13-inspiration-spec §2). liked.cant_open and liked.copy_note are read by evals/graders.py
@@ -377,7 +377,7 @@
 "dig.buyer"                    = { text = "Được nhân bản một khách thì chọn ai, còn kiểu khách nào không muốn nhận?", src = "890b2a58bb" }
 "dig.find"                     = { text = "Giờ khách mới tìm tới từ đâu?", src = "bc74eafb1b" }
 "dig.channels"                 = { text = "Trong nghề có 2–3 kênh nào {xưng hô} hay xem, kênh thích hay kênh đối thủ đều được?", src = "ff1ae05112" }
-"dig.goal"                     = { text = "Trong 90 ngày tới, đăng bài phải mang lại điều gì?", src = "287ee7d652" }
+"dig.goal"                     = { text = "Trong 3 tháng tới, đăng bài phải mang lại điều gì?", src = "27c2058d6c" }
 "setup.plan_guess"             = { text = "Viết cho {platform} · {day} hằng tuần kể 15 phút cho tuần sau · danh sách Zalo, email: {n người | chưa có} (chưa nghe thì {tự xưng} đoán, gõ một chữ là đổi).", src = "df8c84d17e" }
 "map.ok"                       = { text = "Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?", src = "1e6d1e3eeb" }
 "card.visible.to_them"         = { text = "với khách:", src = "912443d07f" }

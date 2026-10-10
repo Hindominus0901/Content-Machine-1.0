@@ -399,7 +399,7 @@ not_regex = [
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I14", "I15", "I17", "I18"]
 max_questions = 1
-notes = """editions/vn.toml platform_mix.text-first and plan.kit-week 2 ('Kênh chữ (LinkedIn, bản tin): 2 bài, 1 carousel, 1 tin Zalo/email, 1 video tuỳ chọn'); email-first needs min_list_size = 300 and his list is 250 (expected.toml lead_piece 'Không phải email'). The email to the 250 still ships (quit point 12 'email list ignored'; graders.py day0_shape 'an email in Week 1 when the coach named a list'). wf15 §1.6: Tuần 1 arrives unasked after QUAY HÔM NAY, before the card exists. Nothing under the pieces (R1; CTX: there is no stop point). expected.toml week1 must_not: 'onboarding', 'coach', 'KOL' in posts, TikTok or daily-posting demands. Traps 70% / 80% / 6 tháng lương / 200 triệu (P8, P9)."""
+notes = """editions/vn.toml platform_mix.text-first and plan.kit-week 2 ('Kênh chữ (bài viết Facebook, LinkedIn, bản tin): 2 bài, 1 carousel, 1 video tuỳ chọn (không quay: thêm bài), 1 tin Zalo/email'); email-first needs min_list_size = 300 and his list is 250 (expected.toml lead_piece 'Không phải email'). The email to the 250 still ships (quit point 12 'email list ignored'; graders.py day0_shape 'an email in Week 1 when the coach named a list'). wf15 §1.6: Tuần 1 arrives unasked after QUAY HÔM NAY, before the card exists. Nothing under the pieces (R1; CTX: there is no stop point). expected.toml week1 must_not: 'onboarding', 'coach', 'KOL' in posts, TikTok or daily-posting demands. Traps 70% / 80% / 6 tháng lương / 200 triệu (P8, P9)."""
 
 [[case]]
 id = "fmt-short.vn.009"

@@ -15,21 +15,21 @@ Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 item 1): FORMATS 1 câu cuối
 Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duyệt; thắng các điều soát cũ): phần SOÁT mới (điều thèm hay cái khổ · hai câu "được gì / sao phải biết" · đúng người đúng lúc, không chi tiết nội bộ · số nhìn là thấy lớn, chỉ số thật · có độ căng, giấu cách làm · một câu nói vừa đủ dài, coach xưng mình/tôi) thay 6 câu soát; sáu dáng tiêu đề, tiêu đề/ảnh bìa chia việc (2–4 chữ: câu phán, lời thách, số lớn; ảnh Facebook 3 dòng) là khung nháp; lời mời theo loại bài (THU HÚT lưu/gửi · NIỀM TIN comment lấy {payoff} của chính bài · CHUYỂN ĐỔI nhắn riêng, sản phẩm và hạn thật; quà của mùa chỉ mặc định ở CHUYỂN ĐỔI; ≥1/4 bài chỉ xin lưu/gửi; hỏi cho chọn; từ khoá = chữ người xem trong hook). Ví dụ VN lấy từ 16 hook founder đã duyệt (chỉ để thấy giọng).
 v13.7 (10/10/2026, founder xem bản v13.6: "hook cần phải như các cái t gửi m, các cái ảnh"; bản đó lấy cảnh làm hook, nói ra bài học trên màn hình): các dáng trong ảnh chụp founder gửi thành KHUNG BẮT BUỘC. Kit §CM-FORMATS 1 giữ danh sách khung + một dòng soát; §CM-PACKAGING 2 danh sách đủ; §CM-HOOK-TITLES ví dụ từng khung. Câu đầu = tiêu đề nói ra; câu 2 = bằng chứng; cảnh từ câu 3. Chữ màn hình/ảnh bìa: số lớn thật, kết quả, hay câu phán/lời thách không lộ cách làm. Trả byte: FORMATS bỏ ví dụ HAY (đã ở HOOKS), "hook, chuyện, ý, mời" ở mục 3; PACKAGING bỏ ví dụ từng dáng (chuyển sang §CM-HOOK-TITLES) và câu "điều người xem muốn… không phải thành tích coach" (SOÁT giữ).
 
-<!-- @section fmt-short.kit-video-short kind=script src=0f3350cc05 -->
+<!-- @section fmt-short.kit-video-short kind=script src=7dbda9d65c -->
 1 Câu cuối viết trước, nguyên văn: trả lời thẳng câu đầu. Mọi hook, cả tiêu đề, slide 1, dòng 1 caption, BẮT BUỘC đổ vào một khung, bằng dữ kiện thật; nháp thầm ≥12, in câu thắng: Cho mình {N phút}, mình cho bạn {N năm kinh nghiệm, kết quả lớn} · Nếu bạn {đang khổ vì…}, xem cái này · {Việc} khó, cho tới khi bạn {làm điều này} · Nếu mình {bắt đầu lại từ đầu}, mình sẽ làm đúng vậy · {N} cách {kết quả lớn} ({gỡ lăn tăn}) · Mình đã {làm X}, giờ {số} · {Kết quả} nhẹ tới mức {hệ quả bất ngờ} · Bạn đang mất {N%, khách} ({và cách sửa}) · {Người có số} hỏi mình cách {kết quả lớn hơn} · ảnh 3 dòng: {N bước, công thức} / {kết quả lớn} / {gỡ lăn tăn}. Câu đầu = tiêu đề nói ra, ≤{{hook_max}} {{hook_unit}}; câu 2 = bằng chứng thật của coach; cảnh từ câu 3. Chữ trên màn hình 2–4 tiếng: số lớn thật, kết quả, câu phán, lời thách giấu cách làm ("đừng giảm giá."); không lặp câu đầu. SOÁT: thèm hay khổ · muốn biết "được gì, sao phải biết?" · đúng người đúng lúc · số thật, thấy lớn · giấu cách làm · không rào, xưng mình/tôi. Lọt lưới YouTube kinh doanh top, bài ảnh Facebook triệu view không? Không → viết lại. "hook khác" → thêm 3 (§CM-HOOKS).
 2 Ý: 3–5, mỗi ý một lần quay: ý → ví dụ → việc làm; nối bằng "mà", "nên", "thế là", không "rồi… rồi…".
-3 500–800 chữ, cả QUAY HÔM NAY: kịch bản nói đủ câu; không tính giây (§CM-LOCALE 2).
+3 500–800 chữ, cả QUAY HÔM NAY: kịch bản nói đủ câu; không tính giây (§CM-LOCALE 2). Kênh chữ, không quay: bài ngày 0 là bài dài (§CM-POSTS).
 4 Caption, khung chép: dòng 1 nối câu đầu · dòng 2 một chi tiết thật · dòng 3 lời mời theo loại bài (§CM-CTA-KIT 1).
-5 In: dòng tên (§CM-WEEK 10; ngày 0: "QUAY HÔM NAY · {THU HÚT|NIỀM TIN|CHUYỂN ĐỔI} · {dạng} · {n} chữ"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: chỉ §CM-EDGE, vd "{{t:verdict.needs}}"
+5 In: dòng tên (§CM-WEEK 10; ngày 0: "QUAY HÔM NAY · {THU HÚT|NIỀM TIN|CHUYỂN ĐỔI} · {dạng} · {n} chữ"), Chữ trên màn hình, Khung hình đầu, Câu đầu, Ý 1, 2…, Câu cuối, Caption, "{{t:series.part2_tomorrow}}" nếu có. Dưới bài: chỉ §CM-EDGE ("{{t:verdict.needs}}").
 6 Kết quả của khách: nguyên văn, kèm câu ở dòng LỜI HỨA; kiểm thầm khách đồng ý chưa.
-7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà là món kịch bản hứa, viết đủ chữ (chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời. Không dòng kiểm, tick hay VÌ SAO.
+7 QUAY HÔM NAY: kết như ngày 0, bước 6, quà là món kịch bản hứa, viết đủ chữ (chê xin comment: §CM-CTA-KIT 5); không giục; bài chữ = câu đầu + caption, một khung, có từ khoá ngoài lời mời.
 
-<!-- @section fmt-short.kit-video-delivery src=3d20f19de8 -->
+<!-- @section fmt-short.kit-video-delivery src=377794d4c7 -->
 - Cách nói: nguyên văn, "/" chỗ ngắt hơi (mặc định) · thẻ ý · gạch đầu dòng mỗi ý · có người hỏi: 4–6 câu, kèm "nhớ nói tới: …".
 - "Ngắn thôi", "đọc như robot": thẻ ý, một màn hình. Xin chữ trên màn hình dài hơn: vẫn ≤6, câu đó lên dòng 1 caption ("{{t:film.onscreen_reason}}").
 - Sửa thì nói lại, không cắt từ bản ghi ("Cắt ra à?" "{{t:film.no_clips}}").
 - Video riêng: khoảnh khắc chỉ khách của họ từng trải, đáng gửi người cùng cảnh.
-- Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu không xin. Xin shot list: "{{t:film.words_only}}" Danh sách quay (Tuần 1, tuần nói chuyện) mở bằng: "{{t:film.list_open}}"
+- Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu không xin. Xin shot list: "{{t:film.words_only}}" Danh sách quay mở bằng: "{{t:film.list_open}}"
 
 <!-- @section fmt-short.kit-post kind=script src=9481452db1 -->
 ### Bài "chia sẻ thật" (Facebook, LinkedIn, caption dài)

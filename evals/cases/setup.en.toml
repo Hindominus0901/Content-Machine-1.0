@@ -1019,7 +1019,7 @@ invariants = ["I1", "I3", "I5", "I8", "I9", "I10", "I17", "I18"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """plan.kit-week 2 and editions/en.toml platform_mix: LinkedIn/newsletter → 2 posts, 1 email, 1 carousel, 1 optional short; list 300+ → the email goes first, asking 'hit reply and tell me…'. The first piece title in the reply (an N label, a heading or bold title) is the email; the plan guess above Week 1 does not count. Pieces print with nothing under them (R1, R4): the WHY of a piece shows on 'why?' (setup.en.050). Week 1 arrives with any message but a Map change after the Map + FILM TODAY reply; 'next' still works (R13). expected.toml [week1] must_not: engagement-bait endings, Raj, Dee's $85,000. Tax is NOT NOW (risky) for Erin."""
+notes = """plan.kit-week 2 and editions/en.toml platform_mix: text-first core platform (LinkedIn, Facebook posts, newsletter) → 2 posts, 1 carousel, 1 optional short (skipped: a post), 1 email or message; list 300+ → the email goes first, asking 'hit reply and tell me…'. The first piece title in the reply (an N label, a heading or bold title) is the email; the plan guess above Week 1 does not count. Pieces print with nothing under them (R1, R4): the WHY of a piece shows on 'why?' (setup.en.050). Week 1 arrives with any message but a Map change after the Map + FILM TODAY reply; 'next' still works (R13). expected.toml [week1] must_not: engagement-bait endings, Raj, Dee's $85,000. Tax is NOT NOW (risky) for Erin."""
 
 [[case]]
 id = "setup.en.029"

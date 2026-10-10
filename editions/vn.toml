@@ -41,7 +41,7 @@ helper_channel = "Zalo"
 
 # Same keys as en.toml; owned_messages are Zalo (or email) messages.
 
-[platform_mix.short-video]       # Facebook, TikTok or Instagram first
+[platform_mix.short-video]       # video-first core platform (TikTok, Reels, YouTube; Facebook video)
 lead = "short"
 shorts = 3
 long_posts = 1
@@ -51,7 +51,7 @@ owned_messages = 1
 optional_shorts = 0
 talk_week_shorts = 4
 
-[platform_mix.text-first]        # LinkedIn or newsletter first
+[platform_mix.text-first]        # text-first core platform (LinkedIn, Facebook posts, newsletter)
 lead = "post"
 shorts = 0
 long_posts = 0

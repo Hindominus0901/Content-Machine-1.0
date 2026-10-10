@@ -188,7 +188,7 @@ invariants = ["I4", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. wf15 S3, §4 and wf14 §1-§2; brain.kit-print 2: 'TOP, ≤500 chars, 3 lines: card.title · "WHAT YOU SAY: {message} · {3 topics} · "{word}"" · "HOW YOU SAY IT: {tone} · {rhythm} · "{phrase}", "{phrase}" · to them: "{address}"".' Dana's address is 'you' (expected.toml [voice] audience_address). The offer ($2,400), the week line (card.label.week 'talk {day} · film {day} · numbers Fri') and NOT NOW left the top for the machine block (offer, talk_day, week, not_now fields). The top-window patterns run from the card title to the machine heading; the start-anchored patterns keep IDs, framework words and lock talk out of everything coach-visible before the block. snake_case field names belong to the block only. UX §4 never-sees list."""
+notes = """scope: transcript. wf15 S3, §4 and wf14 §1-§2; brain.kit-print 2: 'TOP, ≤500 chars (count first), 3 lines: card.title · "WHAT YOU SAY: {message} · {3 topics} · "{word}"" · "HOW YOU SAY IT: {tone} · {rhythm} · "{phrase}", "{phrase}" · to them: "{address}"".' Dana's address is 'you' (expected.toml [voice] audience_address). The offer ($2,400), the week line (card.label.week 'talk {day} · film {day} · numbers Fri') and NOT NOW left the top for the machine block (offer, talk_day, week, not_now fields). The top-window patterns run from the card title to the machine heading; the start-anchored patterns keep IDs, framework words and lock talk out of everything coach-visible before the block. snake_case field names belong to the block only. UX §4 never-sees list."""
 
 [[case]]
 id = "brain.en.004"
@@ -903,7 +903,7 @@ invariants = ["I4", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brain.kit-print 2: 'TOP, ≤500 chars, 3 lines … Over 500: shorten the message, never the voice line.' schemas/brand-card.toml: message ≤170 chars (who, promise, method and old_way keep the full version in the block), voice_line ≤124. The HOW line keeps tone · rhythm · "phrase", "phrase" · to them: "address" (three quoted items: 2 phrases and the address). expected.toml [voice]: tone 'warm · wry · writerly', rhythm 'a long scene-setting sentence, then a short line that lands', audience_address 'you, one reader (never "ladies")'; phrases from voice-samples.md. Plain words, no praise, no field names in the top."""
+notes = """scope: transcript. brain.kit-print 2: 'TOP, ≤500 chars (count first), 3 lines … Over 500: shorten the message, then pillars; never the voice line.' schemas/brand-card.toml: message ≤170 chars (who, promise, method and old_way keep the full version in the block), voice_line ≤124. The HOW line keeps tone · rhythm · "phrase", "phrase" · to them: "address" (three quoted items: 2 phrases and the address). expected.toml [voice]: tone 'warm · wry · writerly', rhythm 'a long scene-setting sentence, then a short line that lands', audience_address 'you, one reader (never "ladies")'; phrases from voice-samples.md. Plain words, no praise, no field names in the top."""
 
 [[case]]
 id = "brain.en.028"
