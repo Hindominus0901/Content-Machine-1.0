@@ -126,28 +126,29 @@ id = "signature.en.006"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "FILM TODAY under the Map carries the keyword in its words and the comment ask with the quiet option; no Checked line under it"
-context = "Day 0, persona default. After 'done' the one missing fact was the multi-income guess; her answer brings the 4-line Map (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.'"
-input = """yep. the 12 weeks is the one I want to grow. resume reviews pay the electric bill, that's all"""
+title = "FILM TODAY alone after the strategy's OK carries the keyword in its words and the comment ask with the quiet option; no Checked line under it"
+context = "Day 0, persona default. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' (YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word). Her OK brings FILM TODAY alone."
+input = '''yep, ok'''
 regex = [
   '''(?m)FILM TODAY[\s\S]*^(?![^\n]*(?i:\bcomment\b))[^\n]*(?i:\bone more chapter\b)''',
   '''(?i)\bcomment\W{0,3}["“'‘]?chapter\b''',
   '''(?i)say ["“'‘]?quiet''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?i)NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
   '''(?m)^\W*✓ Checked:''',
-  'WHY THIS GETS CLIENTS',
+  '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)isn(?:'|’)t pushy''',
   '''(?i)your keyword delivers today''',
   '''(?i)keyword (?:is in|once)''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I5", "I14", "I17", "I18"]
 max_questions = 1
-notes = "K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the keyword-in-words pattern is anchored after the FILM TODAY title because the Map lines hold the keyword too. wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {payoff}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 5): strategy first, then FILM TODAY alone: the coach's OK on the strategy's last step brings ONE reply that holds only FILM TODAY (one idea; no strategy line, no map.ok, no Week 1, no card; its one 'Needs you' line, ≤20 words; NEXT: say 'next' once filmed), so the keyword and story patterns need no anchor any more; the card and the Week-1 table come on that 'next'. Superseded K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; the keyword-in-words pattern is anchored after the FILM TODAY title because the Map lines hold the keyword too. wf15 §1.5, start-block DAY 0 step 5 and fmt-short.kit-video-short 7: FILM TODAY carries the keyword in its words (hook, on-screen text, first line or caption line 1, never only in the CTA) and ends with the ask 'Comment CHAPTER and I'll send you {payoff}' (quieter: say 'quiet'), then 'Film it now, or post the caption as text.' No Checked line, tick or 'isn't pushy' line under it (R2, R9); the keyword check ('✓ Checked: … keyword once') prints on 'why?' (signature.en.026)."
 
 [[case]]
 id = "signature.en.007"

@@ -555,20 +555,20 @@ id = "character.vn.027"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S0", "S1"]
-title = "Undecided audience xưng hô: the machine proposes mình – bạn on the Map's GIỌNG line, no bounce-back question"
-context = "Day 0. Reply 1 asked his xưng hô ('anh'). In chunk 2 he said 'mình – bạn hay anh – em, em chọn giùm anh, nói lý do một câu thôi'. Past ~1.200 tiếng the soft cut came after chunk 2 with the multi-income guess (bảo hiểm, môi giới căn hộ, dạy sale). This turn answers it and repeats the pair ask, so the reply is the 4-line Bản đồ with QUAY HÔM NAY under it and map.ok."
-input = """ok đúng á em, đều đều thì bảo hiểm. còn vụ xưng hô trên video em chọn giùm anh luôn đi"""
+title = "Undecided audience xưng hô: the machine picks mình – bạn on the card's NÓI THẾ NÀO line, no bounce-back question"
+context = "Day 0. Reply 1 asked his xưng hô ('anh'). In chunk 2 he said 'mình – bạn hay anh – em, em chọn giùm anh, nói lý do một câu thôi'. The interview (with the multi-income line: bảo hiểm, môi giới căn hộ, dạy sale) and the strategy are done and OK'd; QUAY HÔM NAY printed alone and he filmed it. This turn says 'tiếp' and repeats the pair ask, so the reply is the Brand Card (NÓI THẾ NÀO … với khách: …) + the save line + the Tuần 1 table."
+input = '''quay xong rồi em, tiếp. còn vụ xưng hô trên video em chọn giùm anh luôn đi'''
 regex = [
-  '''(?im)^\W*(?:[1-4][.)]?\s+)?GIỌNG:[^\n]*với khách:[^\n]*mình\s*[–-]\s*bạn''',
+  '''(?im)^\W*NÓI THẾ NÀO:[^\n]*với khách:[^\n]*mình\s*[–-]\s*bạn''',
   '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 not_regex = [
-  '(?i)anh muốn (?:xưng|chọn)[^\n?]*\?',
-  '''(?im)^(?!\W*(?:[1-4][.)]?\s+)?GIỌNG:)[^\n]*(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em)[^\n]*\?''',
+  '''(?i)anh muốn (?:xưng|chọn)[^\n?]*\?''',
+  '''(?im)^(?!\W*NÓI THẾ NÀO:)[^\n]*(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em)[^\n]*\?''',
 ]
 invariants = ["I1", "I5", "I6", "I15"]
 max_questions = 1
-notes = "expected.toml voice.audience_xung_ho_expected and §CM-VOICE 2-3: propose one pair with a one-sentence reason (mình – bạn: the 28–35 audience includes people older than him; 'chưa rõ: mình – bạn'), shown on the Map's GIỌNG line ('với khách: \"mình – bạn\"', start-block step 5) where 'sửa dòng 4' changes it inside the one decision (I6); never asked again; one pair per piece. The machine's own pair with him stays anh–em (I15). Re-anchored (R10): the 7-line check where this used to sit is gone; the pick now lands on the Map."
+notes = "Cập nhật 11/10/2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block NGÀY 0 bước 7, §CM-CARD 2): dòng giọng không còn trên chiến lược; nó là dòng NÓI THẾ NÀO của Brand Card ('{giọng} · {nhịp} · \"{câu}\" · với khách: \"{xưng hô}\"'), in cùng dòng lưu và bảng Tuần 1 ở lần 'tiếp' sau QUAY HÔM NAY. Assert về giọng chuyển từ GIỌNG sang dòng đó; luật giữ nguyên (§CM-VOICE 1-3). expected.toml voice.audience_xung_ho_expected and §CM-VOICE 2-3: propose one pair with a one-sentence reason (mình – bạn: the 28–35 audience includes people older than him; 'chưa rõ: mình – bạn'), shown on the Map's GIỌNG line ('với khách: \"mình – bạn\"', start-block step 5) where 'sửa dòng 4' changes it inside the one decision (I6); never asked again; one pair per piece. The machine's own pair with him stays anh–em (I15). Re-anchored (R10): the 7-line check where this used to sit is gone; the pick now lands on the Map."
 
 [[case]]
 id = "character.vn.028"

@@ -5,7 +5,8 @@
 # wf14-voice-language-spec.md §5; [vn_natural] from docs/research/vn-language-guide.md §9.3. wf14/wf15 win
 # over wf11/wf12 where they differ. Where they differ, the reconciliations in docs/PLAN.md apply (Ready = Edge >= 8;
 # release floor 7). Strategy first (founder, 7 Oct 2026 night, after his v10 run): [day0] and [lengths] below are for the order
-# xưng hô, dump, interview, the strategy (one reply, or up to 3 steps since 9 Oct), FILM TODAY and Week 1 only after the OK; lengths are in words.
+# xưng hô, dump, interview, the strategy (up to 3 replies since 9 Oct), FILM TODAY alone after the OK, then on 'next' the Brand
+# Card + the Week-1 table, then a Week-1 piece per 'next' (v13.5, 10 Oct); lengths are in words.
 
 [install]
 door_a_max_actions = 4
@@ -18,9 +19,10 @@ helper_path_max_minutes = 10
 
 [day0]
 # Strategy first (founder, 7 Oct 2026 night, after his v10 run; DECISIONS "Strategy first on Day 0"): xưng hô (VN) -> the
-# dump -> the interview about the coach's side (§CM-DIG, at most 6 questions, one a reply) -> ONE reply with the strategy and
-# no piece (§CM-MAP; the one decision) -> only after the OK: FILM TODAY and Week 1 in one reply -> the Brand Card. It
-# replaces K2 (the Map and FILM TODAY in one reply). The budgets below are for that longer order: the founder accepts a
+# dump -> the interview about the coach's side (§CM-DIG, at most 6 questions, one a reply) -> the strategy in up to 3 replies,
+# no piece (§CM-MAP; each step one OK, the last the one decision) -> only after the OK: FILM TODAY alone, one idea -> on 'next'
+# (once filmed): the Brand Card + the save line + the Week-1 table -> one Week-1 piece per 'next' (v13.5, 10 Oct; audit a3 L1).
+# It replaces K2 (the Map and FILM TODAY in one reply) and the 7 Oct order (FILM TODAY and Week 1 in one reply). The budgets below are for that longer order: the founder accepts a
 # longer Day 0 (the kit says "about 35 min"). Read by graders.py (day0_timing, day0_shape, day0_strategy) and run.py.
 early_win_max_minutes_after_dump_start = 4   # the early win only QUOTES 3 lines now (no copy box, no "post it")
 strategy_max_minutes = 25                 # the strategy proposal, in active minutes (t_min minus away_min). The interview's
@@ -41,8 +43,11 @@ strategy_max_steps = 3                    # v13 (founder, 9 Oct: choices one ste
                                           #   steps (§CM-MAP; with PLAYBOOK loaded §CM-STRATEGY-ENGINE), one a reply, the coach's OK after
                                           #   each; the LAST one ends on map.ok ("the one decision"). day0_timing adds one coach turn per
                                           #   step but the last to the session's turns. 1 = the old one-reply strategy.
-strategy_max_words_en = 400               # the strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): a
-strategy_max_words_vn = 450               #   proposal, not a wall (VN in tiếng)
+strategy_max_words_en = 160               # each strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): the
+strategy_max_words_vn = 200               #   kit's caps (start-block step 4 "≤160 words (reply 2 ≤100)"; VN step 5 "≤200 tiếng (tin 2
+strategy_step2_max_words_en = 100         #   ≤120)"). Were 400/450 (audit a3 M4)
+strategy_step2_max_words_vn = 120
+strategy_words_tolerance = 0.10           # read with this much slack (the grader counts the tag and NEXT lines)
 pillars_min = 3                           # CONTENT PILLARS: 3-5 broad topic clusters (message.kit-map 2) ...
 pillars_max = 5
 pillar_max_words_en = 4                   # ... 1-4 words each ("direct response", "human psychology", "working with clients")
@@ -52,8 +57,8 @@ mix_max_share = 60                        #   share; the three add up to 100; de
                                           #   30/40/30 selling to a warm list); no type under 10 or over 60
 system_min_words_en = 12                  # YOUR SYSTEM: a platform, pieces a week, the ask path: at least this many words
 system_min_words_vn = 14
-found_min_lines = 2                       # WHAT I FOUND: 2-4 lines, each with its source (a place, a month) or labelled a guess
-found_max_lines = 4
+found_min_lines = 2                       # WHAT I FOUND: 2-3 lines (the kit: "≤3 lines", retest v13, 9 Oct; was 4, audit a3 M5), each
+found_max_lines = 3                       #   with its source (a place, a month) or labelled a guess
 film_ready_max_minutes = 35               # FILM TODAY (after the OK), in active minutes. It was 20 with the Map and FILM TODAY in
                                           #   one reply; the interview and the research now come first
 film_ready_max_minutes_from_email = 45    # with the install, from the setup email
@@ -71,7 +76,8 @@ session_max_turns = 10                    # the kit: "<= 10 coach turns + the in
 session_max_turns_vn = 11                 # VN adds the xưng hô turn, as map_max_turns_vn does (the VN block: "coach
                                           #   nhắn <= 11 lượt (chưa kể hỏi thêm)"; review retest-vg5-g6 G43)
 detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
-save_gates = 0                            # saving never gates anything; Week 1 arrives before the Brand Card (wf15 §1.6-§1.7)
+save_gates = 0                            # saving never gates anything: the card never blocks (v13.5: the card and the Week-1 table come
+                                          #   together on the 'next' after FILM TODAY; Week 1's pieces follow, one per 'next')
 brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/brand-card.toml, targets [budgets.brand_card_visible]
                                           # (the whole card's budget is platform/targets.toml [budgets.brand_card])
 known_for_max_en = 35                     # the strategy's KNOWN FOR, "one breath" (modules/en/message.md §CM-MAP)
@@ -116,7 +122,8 @@ first_line_min_words_en = 4               # ... and with fewer words a riddle ("
                                           #   "63 applications. 2 interviews." is 4 and passes)
 first_line_min_words_vn = 5               #   VN in tiếng ("Vì sao?", "Đắt quá hả?" fail)
 frame_check = true                        # v13.7 (founder on v13.6: "hook cần phải như các cái t gửi m, các cái ảnh"): a short's first
-                                          #   line and a text post's line 1 fill one of the hook frames (graders.HOOK_FRAMES: give me N
+                                          #   line, a text post's line 1 and (v13.10, every Week-1 piece; audit a3 M2) slide 1 and the
+                                          #   first subject line (a whole question counts there) fill one of the hook frames (graders.HOOK_FRAMES: give me N
                                           #   minutes · watch this · hard until · start over · N ways · receipt · so X that Y · you're
                                           #   losing · asked me how · a call-out question); the on-screen text never states the method
                                           #   ("tin đầu: đừng gửi giá."). false = both items off.
@@ -142,7 +149,8 @@ lean_max_minutes = 60
 talk_max_minutes = 15
 on_map_min = 0.90                         # over 4 simulated weeks
 why_available_rate = 1.0                  # a WHY is stored for every piece and printed on "why?" (none under a Ready piece)
-keyword_exactly_once_rate = 1.0           # EN: once per piece outside the comment ask (plan.kit-week 4 "plus the ask")
+keyword_exactly_once_rate = 1.0           # the CTA keyword once in every body, plus the ask (plan.kit-week 4; v13.10 counts the CTA
+                                          #   form only, a topic mention is free)
 own_words_min = 0.70                      # re-say shorts vs the coach's Talk transcript
 hook_stem_window = 10                     # no repeated stem in 10 consecutive pieces
 same_structure_max_in_a_row = 2
@@ -285,4 +293,14 @@ paraphrase_min_words = 5                  # ... counted only when both sentences
 [style]                                   # check style (graders.py; v13.9 fixK9)
 pet_phrase_max = 1                        # warn: a card phrase more than once in a piece (VN em dash "—" in a piece fails)
 asks_max = 1                              # warn: more than one ask line in a piece
-needs_questions_max = 1                   # fail: a "Needs you" / "Cần" line asking more than one thing
+needs_questions_max = 1                   # fail: a "Needs you" / "Cần" line ("·" or ":") asking more than one thing
+needs_words_max = 20                      # fail: a "Needs you" / "Cần" line over this many words (VN tiếng): "one ask, ≤20 words" (v13.10)
+
+[week1]                                   # check week1_plan (graders.py; v13.9 / v13.10, audit a3 M3)
+pieces_by_hours = [[0, 2, 3], [2, 3.25, 5], [3.25, 4.5, 7], [4.5, 99, 8]]   # [from h, to h, Week-1 pieces] (§CM-WEEK 2,
+                                          #   §CM-CALENDAR 2: under 2 h 3 · ≈2½ h Lean 5 (about 3 h: the same 5, edited; DECISIONS
+                                          #   9 Oct item 8) · ≈3½ h Standard 7 · ≈5 h 8; 8 h+ a long video + cuts, 8);
+                                          #   the DM replies, "ask 3" and the gift are not counted
+tier_pieces = { lean = 5, standard = 7 }  # with no hours on the card or the strategy: the card's tier=
+idea_overlap = 0.6                        # two "Idea, hook" cells (or FILM TODAY's first line and a Week-1 idea) sharing this share of
+idea_min_shared = 2                       #   the shorter one's content words, and at least 2 of them, are one idea twice

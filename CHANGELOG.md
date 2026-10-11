@@ -2,6 +2,15 @@
 
 Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers. All other lines are for maintainers.
 
+## [Unreleased]
+
+Maintainer changes after v13.10 (audit a3, 11 Oct 2026): QA and docs brought to the current kit. No kit text changed.
+
+### Changed
+- Graders (`evals/graders.py`): Week 1 is every piece after the strategy up to week 2, so the Week-1 items run on the v13.5 order (pieces one per 'next' after the card + Week-1 table; pieces printed under the card count); a pillar is read only off a full table. New check `week1_plan` (acceptance.toml [week1]): Week 1's count by the coach's hours, the "Idea, hook" column with no idea twice, FILM TODAY's one idea kept out of the week, no offer in Week 1's CONVERT. `style` reads "Needs you:" / "Cần chị:" (colon) and fails a Needs line over 20 words (`needs_words_max`). Hook frames now also on slide 1 and the first subject line. Strategy caps per reply 160 / 100 words (VN 200 / 120 tiếng) instead of 400 / 450; WHAT I FOUND ≤3 lines; length defaults 500–800; `deny_list` adds Matt Gray's framework names.
+- Eval cases: the retired 4-line Map (3 TOPICS, YOUR VOICE, FILM TODAY under the Map) replaced by the strategy in steps, FILM TODAY alone and the card's voice line, each case's intent kept; Day 0's last reply asserts no hub offer, and new cases setup.en.055 / setup.vn.059 assert the hub at Day 1's first 'next'. `evals/run.py`'s coach packet plays the current Day 0 and routes all nine level-ups.
+- QA standards: native-short in words (500–800), message-map re-based on the strategy proposal (3–5 broad pillars), shared (call-out question hooks, the type ladder, generalizations as facts, the "Added by me" line), calendar (no week-1 offer, proof or not), vn-naturalness (mình/tôi in public). DECISIONS gains the 9–11 Oct 2026 block and marks the superseded lines; the real-account checklist tests the v13.9 / v13.10 rules.
+
 ## [1.3.10] - 2026-10-11
 
 Build v13.10: founder decision (11 Oct, option A) after the v13.9 thin and sales measurements (evals/runs/v139-thin, evals/runs/v139-sales): keep the length rules and mark what the machine added by paragraph.
@@ -36,6 +45,15 @@ Build v13.9: the readiness gaps from the founder's own app test (outside assessm
 
 Everything from v1 to v13.8, built under VERSION 1.0.0 and never released on its own.
 
+### Changed in v13.1–v13.8 (9–10 Oct 2026; listed 11 Oct, audit a3 M18)
+- [buyer] Day 0 is strategy first: a short interview (one question a message), then your strategy in up to 3 short messages with options (one recommended), each OK'd; then today's video alone, a full script on one idea; when you've filmed it and say "next", your Brand Card and Week 1's table.
+- [buyer] A short video is a full script of 500–800 words in 3–5 beats, one per take (no lengths in seconds anywhere).
+- [buyer] Asked once, early on Day 0 (right after the channels question): how the machine may read the web for you (your browser, or paste).
+- [buyer] A client's result or detail is used only if it's real and they agreed; when it's unclear, you're asked once.
+- [buyer] Hooks follow the founder-approved principles: one spoken sentence, a clear "what do I get / why should I care", a mandatory hook frame for line 1; in Vietnamese pieces you speak as mình/tôi, never the chị/anh of the chat.
+- [buyer] Your hub (Notion, a Google Sheet, or HUB.md) is offered once, at your first "next" after Day 0, never on Day 0; Notion is recommended only when it's connected.
+- WHAT I FOUND ≤3 lines; the interview asks the liked and rival channels as their own question and no hours (hours are the strategy's A/B/C); no "90 days" in the goal question; Week 1's mix follows YOUR SYSTEM's core platform; the card top ≤500 characters is counted before printing; one "?" in talk.
+
 
 ### Added
 - Research corpus, plan and founder decisions (`docs/`).
@@ -51,5 +69,5 @@ Everything from v1 to v13.8, built under VERSION 1.0.0 and never released on its
 - Budgets: RESEARCH 41,984 / 54,272 B, BOARD 35,840 / 47,104, PLAYBOOK 34,816 / 45,056, BANKS 32,768 / 40,960, COPY 40,960 / 53,248 (EN / VN); the strategy document grew from 7 to 9 parts (evals `STRATEGY_PARTS`).
 
 ### Changed
-- The comment keyword is a buyer phrase of 2 or more words (VN: 2 tiếng or more), in the hook library's CTA part too; the strategy document's offer and the level-up offers are A/B/C lines, not "Want …? Say 'yes'"; the Day-0 strategy may come in up to 3 steps (`evals/acceptance.toml [day0] strategy_max_steps`); Day 0's last reply offers the hub, the reminders offer moved to Day 1; `schemas/hub.toml` names the Notion workspace the default hub.
+- The comment keyword is a buyer phrase of 2 or more words (VN: 2 tiếng or more), in the hook library's CTA part too; the strategy document's offer and the level-up offers are A/B/C lines, not "Want …? Say 'yes'"; the Day-0 strategy may come in up to 3 steps (`evals/acceptance.toml [day0] strategy_max_steps`); Day 0's last reply offers the hub, the reminders offer moved to Day 1 (superseded in v13.4: the hub at the first 'next', never on Day 0); `schemas/hub.toml` names the Notion workspace the default hub.
 - ChatGPT agent was removed in August 2026: the research access question, the helpers line, the companion skills and `cm-researcher` now name ChatGPT Work and its browser (`platform/targets.toml` `chatgpt_agent_mode_available`, checked 2026-10-07).

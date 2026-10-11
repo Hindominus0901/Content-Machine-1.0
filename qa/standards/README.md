@@ -35,7 +35,7 @@ All 18 standards in spec §3.1, plus `strategy-doc`, `hook-library` and `launch-
 | `shared` | Every script (SG + Edge v2) | SG1 trace, SG2 claims, SG3 polarity (hard gates); SG-copy distance (default path); SG5 Edge; SG6 ladder. SG4 and SG7 are code gates | Gates clear, Edge ≥8/10, no pillar at 0, stance formats C = 2 |
 | `micro` | Under 40 words EN / 60 tiếng VN | MC1 trace, MC2 claims, MC3 polarity, MC4 no hedge in the hook, MC5 length, MC6 the keyword delivers a real A-row, MC7 urgency from the Ledger | All yes (N/A only for MC6, MC7) |
 | `research-brief` | Research Brief | RB1 right people, RB3 depth, RB4 roots, RB8 swap test, RB9 honesty | ≥16/20, second read at build. Starter brief: RB1, RB9 at 2, ≥14/20, Week 1 only |
-| `message-map` | Message Map | MM1 one buyer, MM2 problem in their words, MM6 Big Domino and chain, MM7 focus, MM10 traceable | ≥16/20 |
+| `message-map` | The Day-0 strategy proposal (was the Message Map; re-based 11 Oct 2026) | MM1 one buyer, MM2 problem in their words, MM6 Big Domino and chain, MM7 focus (3–5 broad pillars), MM10 traceable | ≥20/24 |
 | `character-card` | Character Card | CC1 one trait, CC4 enemy, CC5 stances (3D), CC8 verbatim voice, CC10 honest and current | ≥16/20; Day-0 v0 ≥14/20 with [GAP] in CC3, CC6, CC7 |
 | `signature-keyword` | Keyword pick | SK1 origin (≥3 people, ≥2 places), SK2 not owned, SK6 default shown with origin and reason, swappable | ≥13/16, no 0 |
 | `season-plan` | Season / domino plan | SP1 chain, SP2 four rungs, SP3 funnel balance, SP4 give:ask, SP6 proof gate | ≥16/20 |

@@ -211,14 +211,20 @@ class RunPackets(TempRepo):
         self.assertIn("or after 20 coach turns.", en)
 
     def test_coach_script_follows_the_strategy_first_order(self):
-        """The coach side is told what the machine now does: it interviews (<= 6 questions, one a reply), proposes the
-        strategy in one reply with no piece, and prints FILM TODAY and Week 1 only after the coach's OK."""
+        """The coach side is told what the machine now does (v13.5 order; audit a3 H4): it interviews (<= 6 questions,
+        one a reply, no 90-day goal, no hours question), proposes the strategy in up to 3 replies with no piece, each
+        OK'd, prints FILM TODAY alone after the last OK; the coach says 'next' as if filmed for the card + Week-1 table,
+        and once more for the first Week-1 piece; the hub question never comes on Day 0."""
         coach = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
         for fragment in ("Day 0 is strategy first", "INTERVIEWS you about your side", "at most 6 questions, one a reply",
-                         "proposes your STRATEGY in one reply and no piece", "Only after your OK does it print FILM TODAY and Week 1",
-                         "a piece that comes before your OK is a kit break to note", "note the re-ask in notes.md"):
+                         "Your hours a week are no interview question", "proposes your STRATEGY in up to 3 replies and no piece",
+                         "OK each step", "does it print FILM TODAY, alone in its reply",
+                         "say \"next\" as if you had filmed it", "prints the Brand Card, its save line and the WEEK 1 table",
+                         "never on Day 0", "a piece that comes before your OK is a kit break to note",
+                         "note the re-ask in notes.md"):
             self.assertIn(fragment, coach)
-        self.assertNotIn("Accept the Map", coach)
+        for stale in ("Accept the Map", "90-day goal", "in one reply and no piece", "FILM TODAY and Week 1"):
+            self.assertNotIn(stale, coach)
         machine = (self.packets(web=True, tag="w")[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
         self.assertIn("The pass starts after the coach's first send", machine)
         off = (self.packets(tag="o")[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
@@ -322,6 +328,12 @@ class FT1Packets(TempRepo):
         self.assertIn("**Level-ups:** `BOARD-EN.md`, `LAUNCH-EN.md`, `RESEARCH-EN.md`, `STRATEGY-EN.md` are project files in "
                       "`kit/Level-ups/`", text)
         self.assertIn("read the §CM- part the job needs, never the whole file", text)
+        # the nine level-ups' routes (audit a3 M16: hooks and the strategy were sent to STRATEGY)
+        flat = " ".join(text.split())
+        for route in ("the strategy, step by step: PLAYBOOK", "hooks and titles: HOOKS", "campaigns: CAMPAIGNS",
+                      "copy frameworks and story frames: COPY", "the banks of asks and gifts: BANKS"):
+            self.assertIn(route, flat)
+        self.assertNotIn("strategy, hooks, titles and long video: STRATEGY", flat)
         self.assertEqual(self.tree(self.packets(lane="floor", tag="f")[0])[-1], "Level-ups/STRATEGY-EN.md")
 
     def test_compact_mode_has_no_level_ups(self):

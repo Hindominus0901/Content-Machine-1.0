@@ -53,17 +53,18 @@ id = "message.en.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "The Map: 4 lines (known for, 3 topics, your word, your voice) and one decision; nothing else on it"
-context = "Day 0, about minute 12, ChatGPT Free. Dana sent dump chunks 1-3 (her written posts pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map."
-input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
+title = "The strategy: KNOWN FOR, CONTENT PILLARS, CONTENT MIX, YOUR SYSTEM, YOUR WORD, WHAT I FOUND over ≤3 steps and one decision; nothing else on it"
+context = "Day 0, about minute 12, ChatGPT Free. Dana sent dump chunks 1-3 (her written posts pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the last interview question was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
+[turn 2] ok
+[turn 3] ok'''
 contains = []
 not_contains = []
 regex = [
+  '''(?ms)\A(?=.*^\W*KNOWN FOR:)(?=.*^\W*CONTENT PILLARS:)(?=.*^\W*CONTENT MIX:)(?=.*^\W*YOUR SYSTEM:)(?=.*^\W*YOUR WORD:)(?=.*^\W*WHAT I FOUND:)''',
   '''(?m)^\W*KNOWN FOR:[^\n]*\bI help\b''',
-  '''(?m)^\W*3 TOPICS:\W*\S''',
+  '''(?m)^\W*CONTENT PILLARS:\W*\S''',
   '''(?m)^\W*YOUR WORD:\W*\S''',
-  '''(?m)^\W*YOUR VOICE:\W*\S''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
@@ -75,7 +76,7 @@ not_regex = [
   '''(?im)^\W*(?:one message|3 big ideas|big ideas|offer|old way|keyword|promise|who|bio(?: line)?|their words|method)\s*:''',
   '''\$\d''',
   '''(?i)\broot cause\b''',
-  '''(?i)\bpillars?\b''',
+  '''(?i)(?<!content )\bpillars?\b''',
   '''\bB[1-7]\b''',
   '''(?i)big domino|focus score|candidate|buyer mirror|belief bomb|buyer filter''',
   '''\b(PAID|WORDS|PROOF|EDGE|NARROW|ENERGY)\b''',
@@ -88,10 +89,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I6", "I17"]
-max_words = 300
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 §0 S2, §1.4; start-block DAY 0 step 4; §CM-MAP message.kit-map: the Map is 4 labelled lines (strings map.known, map.topics, map.word, map.voice), then map.ok, the day's one decision. Never on it: NOT NOW, why this one, the runner-up, the root cause, scores; the offer and the price live in the card's machine block (brain.en.003). The old screen (ONE MESSAGE, 3 BIG IDEAS, OFFER, Why this one, NOT NOW, 'Nothing you know is wasted', the pocket version 'screenshot this') is gone; why this one, the root cause and NOT NOW print on 'why?' (message.en.009). The coach never sees 'lock' or '90 days' (quit point 7). The Map arrives at coach turn 5 (Start, 3 chunks, the one missing fact), within map_max_turns_en 6 (message.en.054). max_words 160 kept the Map alone to one short screen; 300 now that FILM TODAY sits under it in the same reply (K2, DECISIONS 6 Oct 2026). Graded with graders.py checks day0_timing (map_lines = 4) and deny_list as well as the invariants listed."""
+notes = "scope: transcript. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 4): the 4-line Map is retired. The strategy comes in up to 3 pre-filled replies, one OK each (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND ≤3 lines), the last ending on map.ok; YOUR VOICE left it (the voice line is the card's HOW YOU SAY IT, after FILM TODAY). The input OKs each step, so the assertions read the whole transcript; 'ok' on a step takes its (recommended) option. max_words is off here (it reads the last reply only); day0_strategy holds each step to the kit's ≤160 words (reply 2 ≤100). wf15 §0 S2, §1.4; start-block DAY 0 step 4; §CM-MAP message.kit-map: the Map is 4 labelled lines (strings map.known, map.topics, map.word, map.voice), then map.ok, the day's one decision. Never on it: NOT NOW, why this one, the runner-up, the root cause, scores; the offer and the price live in the card's machine block (brain.en.003). The old screen (ONE MESSAGE, 3 BIG IDEAS, OFFER, Why this one, NOT NOW, 'Nothing you know is wasted', the pocket version 'screenshot this') is gone; why this one, the root cause and NOT NOW print on 'why?' (message.en.009). The coach never sees 'lock' or '90 days' (quit point 7). The Map arrives at coach turn 5 (Start, 3 chunks, the one missing fact), within map_max_turns_en 6 (message.en.054). max_words 160 kept the Map alone to one short screen; 300 now that FILM TODAY sits under it in the same reply (K2, DECISIONS 6 Oct 2026). Graded with graders.py checks day0_timing (map_lines = 4) and deny_list as well as the invariants listed."
 
 [[case]]
 id = "message.en.002"
@@ -237,13 +238,15 @@ id = "message.en.008"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1"]
-title = "Cold-start Map: 4 lines for desk-job dads, KEEP UP as his word, no body outcome, nothing parked shown"
-context = "Day 0, iPhone, ChatGPT Plus. After 'done' the machine asked Dan's missing facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea; this reply shows the Map."
-input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.'''
+title = "Cold-start strategy for desk-job dads, KEEP UP as his word, no body outcome, nothing parked shown"
+context = "Day 0, iPhone, ChatGPT Plus. After 'done' the interview asked Dan's open facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.
+[turn 2] ok
+[turn 3] ok'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
+  '''(?ms)\A(?=.*^\W*KNOWN FOR:)(?=.*^\W*CONTENT PILLARS:)(?=.*^\W*CONTENT MIX:)(?=.*^\W*YOUR SYSTEM:)(?=.*^\W*YOUR WORD:)(?=.*^\W*WHAT I FOUND:)''',
   '''(?im)^\W*KNOWN FOR:[^\n]*\bdads?\b''',
   '''(?im)^\W*YOUR WORD:[^\n]*\bkeep up\b''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
@@ -251,7 +254,7 @@ regex = [
 not_regex = [
   '''(?i)\bwhy this one\b''',
   '''(?i)\bnot now\b''',
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS):[^\n]*\b(moms?|TRT|testosterone|supplements?)\b''',
+  '''(?im)^\W*(?:KNOWN FOR|CONTENT PILLARS):[^\n]*\b(moms?|TRT|testosterone|supplements?)\b''',
   '''(?i)\b(people|clients?|dads|guys) (have )?paid you\b''',
   '''(?i)\bpaying clients\b''',
   '''(?i)\bcertified\b''',
@@ -263,10 +266,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I4", "I5", "I6", "I8", "I10"]
-max_words = 300
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 S2: the Map shows 4 lines; why this one, the moms and TRT (NOT NOW) print on 'why?' (message.en.046), and the founding offer lives in the card (brain.en.006 offer_status founding|none), so neither is asserted here. KNOWN FOR names the dads; his word comes from audience words: KEEP UP (expected.toml [keyword]). A cold start may show 2 topics (expected 'proof coming'). Any dollar figure other than his own $249 guess is invented. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
+notes = "scope: transcript. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 4): the 4-line Map is retired. The strategy comes in up to 3 pre-filled replies, one OK each (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND ≤3 lines), the last ending on map.ok; YOUR VOICE left it (the voice line is the card's HOW YOU SAY IT, after FILM TODAY). The input OKs each step, so the assertions read the whole transcript; 'ok' on a step takes its (recommended) option. max_words is off here (it reads the last reply only); day0_strategy holds each step to the kit's ≤160 words (reply 2 ≤100). wf15 S2: the Map shows 4 lines; why this one, the moms and TRT (NOT NOW) print on 'why?' (message.en.046), and the founding offer lives in the card (brain.en.006 offer_status founding|none), so neither is asserted here. KNOWN FOR names the dads; his word comes from audience words: KEEP UP (expected.toml [keyword]). A cold start may show 2 topics (expected 'proof coming'). Any dollar figure other than his own $249 guess is invented. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."
 
 [[case]]
 id = "message.en.009"
@@ -313,13 +316,15 @@ id = "message.en.010"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "Erin's Map: 4 lines, RECORD YEAR as her word, her method or old way in the one breath, nothing parked shown"
-context = "Day 0, Claude Free. Erin sent 3 dump chunks and 'done'; her dump holds her clients' words, Marcus's result and the Margin Sprint, so the one missing fact was the multi-income line (retainers, sprints, deal prep, the class). She answers it; this reply shows the Map."
-input = '''The retainers pay the bills. The sprint is how people get to the retainer, and that's what I want to sell more of. Deal prep is my best hourly rate, but it's lumpy and it's a different person. The class is a hobby.'''
+title = "Erin's strategy, RECORD YEAR as her word, her method or old way in the one breath, nothing parked shown"
+context = "Day 0, Claude Free. Erin sent 3 dump chunks and 'done'; her dump holds her clients' words, Marcus's result and the Margin Sprint, so the last interview question was the multi-income line (retainers, sprints, deal prep, the class). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+input = '''The retainers pay the bills. The sprint is how people get to the retainer, and that's what I want to sell more of. Deal prep is my best hourly rate, but it's lumpy and it's a different person. The class is a hobby.
+[turn 2] ok
+[turn 3] ok'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
+  '''(?ms)\A(?=.*^\W*KNOWN FOR:)(?=.*^\W*CONTENT PILLARS:)(?=.*^\W*CONTENT MIX:)(?=.*^\W*YOUR SYSTEM:)(?=.*^\W*YOUR WORD:)(?=.*^\W*WHAT I FOUND:)''',
   '''(?im)^\W*YOUR WORD:[^\n]*\brecord year\b''',
   '''(?im)^\W*KNOWN FOR:[^\n]*\bI help\b[^\n]*\b(margin before more|top[- ]line theater)''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
@@ -327,14 +332,14 @@ regex = [
 not_regex = [
   '''(?i)\bwhy this one\b''',
   '''(?i)\bnot now\b''',
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS):[^\n]*\b(tax|deal prep|due diligence|valuation|the class)\b''',
+  '''(?im)^\W*(?:KNOWN FOR|CONTENT PILLARS):[^\n]*\b(tax|deal prep|due diligence|valuation|the class)\b''',
   '''(?i)\bformer CFO\b|\bBig 4\b|\bMBA\b''',
   '''\bRaj\b''',
-  '''(?i)\b70\s*(%|percent)''',
+  '''(?im)^(?!\W*CONTENT MIX:)[^\n]*\b70\s*(%|percent)''',
   '''(?i)\b(doubl(e|es|ing)|guarantee)''',
   '''™|®''',
   '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
-  '''(?i)\bpillars?\b''',
+  '''(?i)(?<!content )\bpillars?\b''',
   '''(?i)\b(4|four) big ideas\b''',
 ]
 verdict = ""
@@ -342,20 +347,22 @@ invariants = ["I4", "I5", "I6", "I8", "I10"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """expected.toml [keyword] preferred 'record year' (Marcus's first words, 8 audience members). wf15 S2: why this one (14 sprints since 2023), tax parked (risky: she does not do tax) and deal prep kept referral-only (side door) print on 'why?' (message.en.047), not on the Map. Her dump says 'nothing cute' and she rejects trademark signs. Claude Free: a save point (save.limit_claude_free) may follow the Map lines, so max_words is not set. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed."""
+notes = "scope: transcript. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 4): the 4-line Map is retired. The strategy comes in up to 3 pre-filled replies, one OK each (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND ≤3 lines), the last ending on map.ok; YOUR VOICE left it (the voice line is the card's HOW YOU SAY IT, after FILM TODAY). The input OKs each step, so the assertions read the whole transcript; 'ok' on a step takes its (recommended) option. max_words is off here (it reads the last reply only); day0_strategy holds each step to the kit's ≤160 words (reply 2 ≤100). expected.toml [keyword] preferred 'record year' (Marcus's first words, 8 audience members). wf15 S2: why this one (14 sprints since 2023), tax parked (risky: she does not do tax) and deal prep kept referral-only (side door) print on 'why?' (message.en.047), not on the Map. Her dump says 'nothing cute' and she rejects trademark signs. Claude Free: a save point (save.limit_claude_free) may follow the Map lines, so max_words is not set. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed."
 
 [[case]]
 id = "message.en.011"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "Corinne's Map: 4 lines for the Room Reset homeowner, NOTHING ROOM as her word, full projects off the Map"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). She answers it; this reply shows the Map."
-input = '''Full projects, about 70 percent. They pay 5 salaries. The Reset is what I want to grow, because it's the one we can actually sell from content. Color consults are $250 for 90 minutes and I'd stop tomorrow. Staging is a favor for 2 realtor friends.'''
+title = "Corinne's strategy for the Room Reset homeowner, NOTHING ROOM as her word, full projects off the strategy"
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the last interview question was the multi-income line (full projects, Resets, color consults, staging). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+input = '''Full projects, about 70 percent. They pay 5 salaries. The Reset is what I want to grow, because it's the one we can actually sell from content. Color consults are $250 for 90 minutes and I'd stop tomorrow. Staging is a favor for 2 realtor friends.
+[turn 2] ok
+[turn 3] ok'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
+  '''(?ms)\A(?=.*^\W*KNOWN FOR:)(?=.*^\W*CONTENT PILLARS:)(?=.*^\W*CONTENT MIX:)(?=.*^\W*YOUR SYSTEM:)(?=.*^\W*YOUR WORD:)(?=.*^\W*WHAT I FOUND:)''',
   '''(?im)^\W*YOUR WORD:[^\n]*\bnothing room\b''',
   '''(?im)^\W*KNOWN FOR:[^\n]*\bI help\b[^\n]*\b(tape it out|tape-out|sofa first|rug before sofa|a job)''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
@@ -363,35 +370,37 @@ regex = [
 not_regex = [
   '''(?i)\bwhy this one\b''',
   '''(?i)\bnot now\b''',
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS):[^\n]*\b(whole[- ]house|full[- ]service|renovations?|kitchens?|staging|realtors?|color consults?)\b''',
+  '''(?im)^\W*(?:KNOWN FOR|CONTENT PILLARS):[^\n]*\b(whole[- ]house|full[- ]service|renovations?|kitchens?|staging|realtors?|color consults?)\b''',
   '''(?i)\b(decor|decorat\w*|elevated|curated|timeless)\b''',
   '''(?i)\bHollis\b''',
   '''\b400\b''',
-  '''(?i)\b(20|30)\s*(%|percent)''',
+  '''(?im)^(?!\W*CONTENT MIX:)[^\n]*\b(20|30)\s*(%|percent)''',
   '''(?i)\b(home|resale) value\b''',
   '''(?i)\b(award-winning|architect)\b''',
-  '''(?i)\bpillars?\b''',
+  '''(?i)(?<!content )\bpillars?\b''',
   '''(?i)\b(4|four) big ideas\b''',
 ]
 verdict = ""
 invariants = ["I4", "I5", "I6", "I8", "I10"]
-max_words = 300
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """expected.toml [map] / [keyword]: preferred 'nothing room' (Megan's words, 8 audience members); her method lines ('Tape it out before you buy it', 'Rug before sofa', 'Every room needs a job') may carry KNOWN FOR's method. wf15 S2: why this one (64 paid Room Resets) and full projects kept by a side door (referral, builders, DMs) print on 'why?' (message.en.048); full projects are never a topic. The Hollis kitchen has no consent; '400-plus rooms' and 'save 30 percent' are guesses; 'decor', 'elevated', 'curated', 'timeless' are on her must-not list ('We're designers, not decorators'). Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
+notes = "scope: transcript. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 4): the 4-line Map is retired. The strategy comes in up to 3 pre-filled replies, one OK each (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND ≤3 lines), the last ending on map.ok; YOUR VOICE left it (the voice line is the card's HOW YOU SAY IT, after FILM TODAY). The input OKs each step, so the assertions read the whole transcript; 'ok' on a step takes its (recommended) option. max_words is off here (it reads the last reply only); day0_strategy holds each step to the kit's ≤160 words (reply 2 ≤100). expected.toml [map] / [keyword]: preferred 'nothing room' (Megan's words, 8 audience members); her method lines ('Tape it out before you buy it', 'Rug before sofa', 'Every room needs a job') may carry KNOWN FOR's method. wf15 S2: why this one (64 paid Room Resets) and full projects kept by a side door (referral, builders, DMs) print on 'why?' (message.en.048); full projects are never a topic. The Hollis kitchen has no consent; '400-plus rooms' and 'save 30 percent' are guesses; 'decor', 'elevated', 'curated', 'timeless' are on her must-not list ('We're designers, not decorators'). Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."
 
 [[case]]
 id = "message.en.012"
 kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "S0"]
-title = "Linda's Map: 4 lines, BADGE as her word, her method in the one breath, the 4-week framing"
-context = "Day 0, Claude Pro (Mac). Linda dictated chunks 1-2 (her written posts pasted with chunk 1). Her dump holds her clients' words, Renée's result and her one offer, so nothing is missing: chunk 3 ends 'okay done.' The reply to chunk 3 shows the Map."
-input = '''<<paste: linda-claude-pro-mac-newsletter/answers.md, the '## Dump chunk 3' section verbatim>>'''
+title = "Linda's strategy, BADGE as her word, her method in the one breath, the 4-week framing"
+context = "Day 0, Claude Pro (Mac). Linda dictated chunks 1-2 (her written posts pasted with chunk 1). Her dump holds her clients' words, Renée's result and her one offer, so the interview has nothing to ask: chunk 3 ends 'okay done.' and the strategy follows."
+input = '''<<paste: linda-claude-pro-mac-newsletter/answers.md, the '## Dump chunk 3' section verbatim>>
+[turn 2] ok
+[turn 3] ok'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
+  '''(?ms)\A(?=.*^\W*KNOWN FOR:)(?=.*^\W*CONTENT PILLARS:)(?=.*^\W*CONTENT MIX:)(?=.*^\W*YOUR SYSTEM:)(?=.*^\W*YOUR WORD:)(?=.*^\W*WHAT I FOUND:)''',
   '''(?im)^\W*YOUR WORD:[^\n]*\bbadge\b''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''(?im)^\W*KNOWN FOR:[^\n]*\bI help\b[^\n]*\b(tuesday|garage|badge)''',
@@ -399,22 +408,22 @@ regex = [
 not_regex = [
   '''(?i)\bwhy this one\b''',
   '''(?i)\bnot now\b''',
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS):[^\n]*\b(empty nest|marriage|menopause|ghostwrit\w*|journaling|LinkedIn headlines?)\b''',
+  '''(?im)^\W*(?:KNOWN FOR|CONTENT PILLARS):[^\n]*\b(empty nest|marriage|menopause|ghostwrit\w*|journaling|LinkedIn headlines?)\b''',
   '''(?i)\block(ed|s)?\b''',
   '''(?i)\b90[- ]days?\b''',
   '''(?i)\bcertified\b|\bICF\b|master coach''',
   '''\bMargaret\b''',
-  '''(?i)\b100\s*(%|percent)''',
+  '''(?im)^(?!\W*CONTENT MIX:)[^\n]*\b100\s*(%|percent)''',
   '''(?i)140,000''',
   '''(?i)\bkeyword\b[^\n]*\b(tuesday|garage|chapter|exit|pivot|reinvent)''',
-  '''(?i)\bpillars?\b''',
+  '''(?i)(?<!content )\bpillars?\b''',
 ]
 verdict = ""
 invariants = ["I4", "I5", "I6", "I8", "I10"]
-max_words = 300
+max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf15 S2: her 3 clients as the reason, and the life topics coming back as 'who am I after corporate' (expected.toml life_topics_bridge), print on 'why?' (message.en.049); her pushback when she misses them is message.en.017. The Map's 4-week line is map.ok; she hesitates at 'lock' / '90 days' (quit point 7). Keyword 'without the badge' (BADGE); 'Write the Tuesday' is the method name, not the keyword. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."""
+notes = "scope: transcript. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 4): the 4-line Map is retired. The strategy comes in up to 3 pre-filled replies, one OK each (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND ≤3 lines), the last ending on map.ok; YOUR VOICE left it (the voice line is the card's HOW YOU SAY IT, after FILM TODAY). The input OKs each step, so the assertions read the whole transcript; 'ok' on a step takes its (recommended) option. max_words is off here (it reads the last reply only); day0_strategy holds each step to the kit's ≤160 words (reply 2 ≤100). wf15 S2: her 3 clients as the reason, and the life topics coming back as 'who am I after corporate' (expected.toml life_topics_bridge), print on 'why?' (message.en.049); her pushback when she misses them is message.en.017. The Map's 4-week line is map.ok; she hesitates at 'lock' / '90 days' (quit point 7). Keyword 'without the badge' (BADGE); 'Write the Tuesday' is the method name, not the keyword. Graded with graders.py checks day0_timing and deny_list as well as the invariants listed. max_words: the Map's 160 before K2 plus about 140 for FILM TODAY under it in the same reply (DECISIONS 6 Oct 2026)."
 
 # ---------------------------------------------------------------- the one decision and pushback
 
@@ -448,21 +457,24 @@ id = "message.en.014"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
-title = "Multi-income answer steers the pick: the Map is built for the 12-week program's buyer; resume reviews and life coaching stay off it"
-context = "Day 0, after 'done'. The one missing fact was the multi-income line (setup.multi_income: 'You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Dana answers it; nothing else is missing, so this reply shows the Map."
-input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
+title = "Multi-income answer steers the pick: the strategy is built for the 12-week program's buyer; resume reviews and life coaching stay off it"
+context = "Day 0, after 'done'. The one missing fact was the multi-income line (setup.multi_income: 'You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Dana answers it; nothing else is missing. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
+[turn 2] ok
+[turn 3] ok'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
+  '''(?ms)\A(?=.*^\W*KNOWN FOR:)(?=.*^\W*CONTENT PILLARS:)(?=.*^\W*CONTENT MIX:)(?=.*^\W*YOUR SYSTEM:)(?=.*^\W*YOUR WORD:)(?=.*^\W*WHAT I FOUND:)''',
   '''(?im)^\W*KNOWN FOR:[^\n]*\b(women|4[05]\+?|fifties|50s|corporate|one company|20\+? years|chapter)\b''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS):[^\n]*\b(resume reviews?|ATS|LinkedIn|life coach\w*|divorce|empty nest|20-?somethings|UX)\b''',
+  '''(?im)^\W*(?:KNOWN FOR|CONTENT PILLARS):[^\n]*\b(resume reviews?|ATS|LinkedIn|life coach\w*|divorce|empty nest|20-?somethings|UX)\b''',
   '''(?i)\$(175|95)\b''',
   '''(?i)\bI help\b[^\n]*\b(resume reviews?|life coach\w*|divorce|empty nest)''',
   '''(?i)\b(4|four) big ideas\b''',
-  '''(?i)\bpillars?\b''',
+  '''(?i)(?<!content )\bpillars?\b''',
   '''(?i)\bnot now\b''',
 ]
 verdict = ""
@@ -470,7 +482,7 @@ invariants = ["I4", "I5", "I6", "I8"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """setup.kit-facts 6 and UX §5.17 multi-income bridge-buyer step: the coach's answer settles which stream the Season sells (offer = the stream they want to grow, the 12-week program). wf15 S2: the offer is not on the Map (card field), and the side door is internal (card side_door): resume reviews stay a DM-only side door for the same buyer, said on 'why?' (message.en.009) or when she pushes back (message.en.016); life coaching takes no new clients and gets no content. 'coffee before resume' in KNOWN FOR is her method, not the resume-review stream, hence 'resume reviews?' in the patterns."""
+notes = "scope: transcript. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 4): the 4-line Map is retired. The strategy comes in up to 3 pre-filled replies, one OK each (KNOWN FOR · CONTENT PILLARS 3-5 broad · CONTENT MIX · YOUR SYSTEM · YOUR WORD · WHAT I FOUND ≤3 lines), the last ending on map.ok; YOUR VOICE left it (the voice line is the card's HOW YOU SAY IT, after FILM TODAY). The input OKs each step, so the assertions read the whole transcript; 'ok' on a step takes its (recommended) option. max_words is off here (it reads the last reply only); day0_strategy holds each step to the kit's ≤160 words (reply 2 ≤100). setup.kit-facts 6 and UX §5.17 multi-income bridge-buyer step: the coach's answer settles which stream the Season sells (offer = the stream they want to grow, the 12-week program). wf15 S2: the offer is not on the Map (card field), and the side door is internal (card side_door): resume reviews stay a DM-only side door for the same buyer, said on 'why?' (message.en.009) or when she pushes back (message.en.016); life coaching takes no new clients and gets no content. 'coffee before resume' in KNOWN FOR is her method, not the resume-review stream, hence 'resume reviews?' in the patterns."
 
 [[case]]
 id = "message.en.015"
@@ -1431,118 +1443,118 @@ id = "message.en.050"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "YOUR VOICE in plain words: her tone, her rhythm, one phrase of hers verbatim, and how she talks to buyers ('you')"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it; this reply shows the Map. Her dump is the spoken voice; her pasted posts are the written voice."
-input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
+title = "HOW YOU SAY IT (the card's voice line) in plain words: her tone, her rhythm, one phrase of hers verbatim, and how she talks to buyers ('you')"
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the last interview question was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). The interview and the strategy are done and OK'd, and FILM TODAY printed alone; she filmed it and now says 'next', so this reply is the Brand Card (its HOW YOU SAY IT line is the voice line) + the save line + the Week-1 table. Her dump is the spoken voice; her pasted posts are the written voice."
+input = '''filmed it. next'''
 contains = []
 not_contains = []
 regex = [
-  '''(?im)^\W*YOUR VOICE:[^\n]*·[^\n]*·''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(plain|dry|warm|direct|blunt|practical|no-nonsense|straight)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*["“][^"”\n]*\b(nobody tells you|too vague|too old|coffee before resume|carrot cake|blow smoke|picture this|reorg talking|show me the steps)''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\bto them\b[^\n]{0,25}\byou\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*·[^\n]*·''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(plain|dry|warm|direct|blunt|practical|no-nonsense|straight)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*["“][^"”\n]*\b(nobody tells you|too vague|too old|coffee before resume|carrot cake|blow smoke|picture this|reorg talking|show me the steps)''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bto them\b[^\n]{0,25}\byou\b''',
 ]
 not_regex = [
-  '''(?im)^\W*YOUR VOICE:(?:(?!\bnever\b)[^\n])*\b(ladies|girls|gals|y(?:'|’)all|guys|friend)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(authentic|inspiring|inspirational|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|magnetic|captivating)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(register|cadence|syntax|tonality|archetype|persona|brand voice|audience[ _]address|code[ _]mix|openers?_closers|written_vs_spoken)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(reinvent\w*|pivot|second act|journey|empower\w*|hustle|dream job)\b''',
-  '''(?im)^\W*YOUR VOICE:\**(?:[^\S\n]+\S+){31,}''',
+  '''(?im)^\W*HOW YOU SAY IT:(?:(?!\bnever\b)[^\n])*\b(ladies|girls|gals|y(?:'|’)all|guys|friend)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(authentic|inspiring|inspirational|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|magnetic|captivating)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(register|cadence|syntax|tonality|archetype|persona|brand voice|audience[ _]address|code[ _]mix|openers?_closers|written_vs_spoken)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(reinvent\w*|pivot|second act|journey|empower\w*|hustle|dream job)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:\**(?:[^\S\n]+\S+){31,}''',
+  '''(?i)\bA\)[^\n]*Notion[^\n]*\bB\)''',
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf14 V1, §2; start-block step 4 'YOUR VOICE: {3-word tone} · {rhythm} · "{their phrase}" · talks to them as "{how they address the audience}"'; voice.kit-build 2: tone in words they'd use about themselves, no praise · rhythm in ≤4 plain words · their most repeated phrase, verbatim · the address exactly as they say it; 3: the audience address is how she speaks to buyers ('you', one reader), never how the machine addresses her. expected.toml [voice]: tone 'plain · dry · warm', rhythm 'short lines; story first, then the step', audience_address 'you (women 45+; never "ladies")', must_sound_like and openers_closers give the phrases. Field names and craft jargon never print. ≤30 words. The line can be changed inside the same one decision (message.en.052)."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 6, §CM-CARD 2): the voice line left the strategy; it is the Brand Card's HOW YOU SAY IT line ('{tone} · {rhythm} · \"{phrase}\" · to them: \"{address}\"'), printed with the save line and the Week-1 table on the 'next' after FILM TODAY. The voice assertions moved from YOUR VOICE to that line; the rules are the same (§CM-VOICE 1-3). The hub question never comes on Day 0 (levelup.md: the first 'next' of a later day). wf14 V1, §2; start-block step 4 'YOUR VOICE: {3-word tone} · {rhythm} · \"{their phrase}\" · talks to them as \"{how they address the audience}\"'; voice.kit-build 2: tone in words they'd use about themselves, no praise · rhythm in ≤4 plain words · their most repeated phrase, verbatim · the address exactly as they say it; 3: the audience address is how she speaks to buyers ('you', one reader), never how the machine addresses her. expected.toml [voice]: tone 'plain · dry · warm', rhythm 'short lines; story first, then the step', audience_address 'you (women 45+; never \"ladies\")', must_sound_like and openers_closers give the phrases. Field names and craft jargon never print. ≤30 words. The line can be changed inside the same one decision (message.en.052)."
 
 [[case]]
 id = "message.en.051"
 kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1"]
-title = "YOUR VOICE for a writerly coach: warm, a long scene then a short line, one phrase of hers verbatim, 'you' to one reader"
-context = "Day 0, Claude Pro (Mac). Linda dictated chunks 1-2 (her written posts pasted with chunk 1). Her dump holds her clients' words, Renée's result and her one offer, so nothing is missing: chunk 3 ends 'okay done.' The reply to chunk 3 shows the Map. Her dump is the spoken voice; her pasted posts are the written voice."
-input = '''<<paste: linda-claude-pro-mac-newsletter/answers.md, the '## Dump chunk 3' section verbatim>>'''
+title = "HOW YOU SAY IT (the card's voice line) for a writerly coach: warm, a long scene then a short line, one phrase of hers verbatim, 'you' to one reader"
+context = "Day 0, Claude Pro (Mac). Linda dictated chunks 1-2 (her written posts pasted with chunk 1). Her dump holds her clients' words, Renée's result and her one offer, The interview and the strategy are done and OK'd, and FILM TODAY printed alone; she filmed it and now says 'next', so this reply is the Brand Card (its HOW YOU SAY IT line is the voice line) + the save line + the Week-1 table. Her dump is the spoken voice; her pasted posts are the written voice."
+input = '''filmed it. next'''
 contains = []
 not_contains = []
 regex = [
-  '''(?im)^\W*YOUR VOICE:[^\n]*·[^\n]*·''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(warm|wry|writerly|dry|plain|gentle|honest|frank)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*["“][^"”\n]*\b(write the tuesday|plan the dream|lost your answer|lose a job|make you ready|other people(?:'|’)s words|wish someone had told me|hit reply|corkboard|ramble)''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\bto them\b[^\n]{0,30}\byou\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*·[^\n]*·''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(warm|wry|writerly|dry|plain|gentle|honest|frank)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*["“][^"”\n]*\b(write the tuesday|plan the dream|lost your answer|lose a job|make you ready|other people(?:'|’)s words|wish someone had told me|hit reply|corkboard|ramble)''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bto them\b[^\n]{0,30}\byou\b''',
 ]
 not_regex = [
-  '''(?im)^\W*YOUR VOICE:(?:(?!\bnever\b)[^\n])*\b(ladies|girls|gals|y(?:'|’)all|guys)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(authentic|inspiring|inspirational|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|magnetic|captivating|eloquent)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(register|cadence|syntax|tonality|archetype|persona|brand voice|audience[ _]address|code[ _]mix|openers?_closers|written_vs_spoken)\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*\b(next chapter|second act|reinvent\w*|pivot|encore career)\b''',
-  '''(?im)^\W*YOUR VOICE:\**(?:[^\S\n]+\S+){31,}''',
+  '''(?im)^\W*HOW YOU SAY IT:(?:(?!\bnever\b)[^\n])*\b(ladies|girls|gals|y(?:'|’)all|guys)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(authentic|inspiring|inspirational|empowering|powerful|compelling|amazing|engaging|charismatic|relatable|magnetic|captivating|eloquent)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(register|cadence|syntax|tonality|archetype|persona|brand voice|audience[ _]address|code[ _]mix|openers?_closers|written_vs_spoken)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(next chapter|second act|reinvent\w*|pivot|encore career)\b''',
+  '''(?im)^\W*HOW YOU SAY IT:\**(?:[^\S\n]+\S+){31,}''',
+  '''(?i)\bA\)[^\n]*Notion[^\n]*\bB\)''',
 ]
 verdict = ""
 invariants = ["I1", "I4", "I5", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """wf14 §2, voice.kit-build 1-3 for a coach whose written voice is strong: expected.toml [voice] tone 'warm · wry · writerly', rhythm 'a long scene-setting sentence, then a short line that lands', audience_address 'you, one reader (never "ladies")'; phrases from voice-samples.md ('Don't plan the dream. Write the Tuesday.', 'You didn't lose a job. You lost your answer.'). Her never-words ('next chapter', 'second act'…) stay off the line. ≤30 words, plain words only."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 6, §CM-CARD 2): the voice line left the strategy; it is the Brand Card's HOW YOU SAY IT line ('{tone} · {rhythm} · \"{phrase}\" · to them: \"{address}\"'), printed with the save line and the Week-1 table on the 'next' after FILM TODAY. The voice assertions moved from YOUR VOICE to that line; the rules are the same (§CM-VOICE 1-3). The hub question never comes on Day 0 (levelup.md: the first 'next' of a later day). wf14 §2, voice.kit-build 1-3 for a coach whose written voice is strong: expected.toml [voice] tone 'warm · wry · writerly', rhythm 'a long scene-setting sentence, then a short line that lands', audience_address 'you, one reader (never \"ladies\")'; phrases from voice-samples.md ('Don't plan the dream. Write the Tuesday.', 'You didn't lose a job. You lost your answer.'). Her never-words ('next chapter', 'second act'…) stay off the line. ≤30 words, plain words only."
 
 [[case]]
 id = "message.en.052"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
-title = "'change 4' edits the voice line inside the one decision: line 4 reprinted with her words, the same OK, no voice quiz"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the one missing fact was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Turn 1 answers it and gets the 4-line Map with FILM TODAY under it. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
-input = '''[turn 1] The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
-[turn 2] change 4: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.'''
+title = "'change the voice line' on the card edits HOW YOU SAY IT in her words: the line reprinted, no voice quiz"
+context = "Day 0, ChatGPT Free. Dana's dump (chunks 1-3, her written posts W1-W2 with chunk 1), the interview and the strategy are done and OK'd, and FILM TODAY printed alone. Turn 1 says 'next' once filmed and gets the Brand Card + save line + the Week-1 table; its HOW YOU SAY IT line is the voice line. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
+input = '''[turn 1] filmed it. next
+[turn 2] change the voice line: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.'''
 contains = []
 not_contains = []
 regex = [
-  '''(?im)^\W*YOUR VOICE:[^\n]*\bblunt\b''',
-  '''(?im)^\W*YOUR VOICE:[^\n]*blow smoke''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bblunt\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*blow smoke''',
 ]
 not_regex = [
-  '''(?im)^\W*YOUR VOICE:[^\n]*\bfuzzy\b''',
+  '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bfuzzy\b''',
   '''(?i)\bFILM TODAY\b''',
   '''(?i)\b(how would you describe|what words would you use|which (tone|words|phrase)|describe your (voice|tone))\b''',
   '''(?i)\b(audience_address|code_mix|openers_closers|written_vs_spoken|never_say|do_say)\b''',
   '''(?i)\bA\)[\s\S]*\bB\)''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I6", "I17"]
 max_words = 140
 max_chars = 0
 max_questions = 1
-notes = """wf14 V1 'It can be changed inside the same one decision ("change line N")'; §CM-MAP CHANGE '"change N: …" → that line reprinted + map.ok … Voice line too'; voice.kit-build 2 '"change 4": §CM-MAP, same one decision'. Her own words go in as given: tone 'blunt', her phrase verbatim (voice-samples.md 7). No second decision round, no questions about her voice, no A) B) (that is for 'change N' alone), and FILM TODAY, printed under the Map in turn 1, is not reprinted: start-block 4 reprints the script only if the change alters it, and a voice-line change in her own words leaves the script, already cut from her words, as it is. The card carries the change (brain.en.030)."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 6, §CM-CARD 2): the voice line left the strategy; it is the Brand Card's HOW YOU SAY IT line ('{tone} · {rhythm} · \"{phrase}\" · to them: \"{address}\"'), printed with the save line and the Week-1 table on the 'next' after FILM TODAY. The voice assertions moved from YOUR VOICE to that line; the rules are the same (§CM-VOICE 1-3). A change in her own words is taken as given: the voice line is reprinted with 'blunt' and her phrase verbatim, no voice questions, no A) B) (that is for a change with no words), no FILM TODAY or strategy reprint. wf14 V1 'It can be changed inside the same one decision (\"change line N\")'; §CM-MAP CHANGE '\"change N: …\" → that line reprinted + map.ok … Voice line too'; voice.kit-build 2 '\"change 4\": §CM-MAP, same one decision'. Her own words go in as given: tone 'blunt', her phrase verbatim (voice-samples.md 7). No second decision round, no questions about her voice, no A) B) (that is for 'change N' alone), and FILM TODAY, printed under the Map in turn 1, is not reprinted: start-block 4 reprints the script only if the change alters it, and a voice-line change in her own words leaves the script, already cut from her words, as it is. The card carries the change (brain.en.030)."
 
 [[case]]
 id = "message.en.053"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
-title = "'ok' with a voice change: the change is applied and the day goes on to Week 1, no second OK"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the one missing fact was the multi-income line (full projects, Resets, color consults, staging). Turn 1 answers it and gets the 4-line Map, whose voice line says she talks to them as 'you', with FILM TODAY under it. In turn 2 Corinne says OK and adds how she addresses newsletter readers. Assertions run on the reply to turn 2."
-input = '''[turn 1] Full projects, about 70 percent. They pay 5 salaries. The Reset is what I want to grow, because it's the one we can actually sell from content. Color consults are $250 for 90 minutes and I'd stop tomorrow. Staging is a favor for 2 realtor friends.
-[turn 2] ok. but in the newsletter I call them neighbors'''
+title = "'ok' with a voice change on the strategy's last step: the change is stored and the day goes on to FILM TODAY, no second OK"
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset. The interview is done and the strategy's last step is on screen, ending 'We'll run this for 4 weeks. OK, or change a line.' She says OK and adds how she addresses newsletter readers (the voice line is the card's, which comes after FILM TODAY)."
+input = '''ok. but in the newsletter I call them neighbors'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
+  '''(?m)^\W*FILM TODAY\b''',
 ]
 not_regex = [
   '''We(?:'|’)ll run this for 4 weeks''',
-  '''(?m)^\W*FILM TODAY\b''',
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD):''',
   '''(?i)\bneighbou?rs\b[^\n]*\?''',
   '''(?i)\b(are you sure|just to confirm|confirm (that|this))\b''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
 ]
 verdict = ""
 invariants = ["I1", "I5", "I6", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """§CM-MAP CHANGE: '"ok" with a change → apply it and go on. Voice line too.' The OK is the one decision; the change (expected.toml [voice] audience_address 'you; "neighbors" in the newsletter') is stored for the newsletter and the card, and, FILM TODAY already sitting under the Map (K2, DECISIONS 6 Oct 2026), the reply moves on to all of Week 1 (start-block step 6; ChatGPT Plus: one reply, at least 3 copy boxes). No reprinted Map or FILM TODAY, no second OK, no question about it. The Instagram pieces still talk to 'you'; 'neighbors' belongs to the newsletter (voice.kit-shift 8: the address belongs to the platform where she uses it)."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'): the OK on the strategy's last step is its one decision; 'ok' with a change applies the change (here stored for the newsletter and the card's voice line) and goes on: FILM TODAY alone, no strategy reprint, no second OK, no confirmation question. §CM-MAP CHANGE: '\"ok\" with a change → apply it and go on. Voice line too.' The OK is the one decision; the change (expected.toml [voice] audience_address 'you; \"neighbors\" in the newsletter') is stored for the newsletter and the card, and, FILM TODAY already sitting under the Map (K2, DECISIONS 6 Oct 2026), the reply moves on to all of Week 1 (start-block step 6; ChatGPT Plus: one reply, at least 3 copy boxes). No reprinted Map or FILM TODAY, no second OK, no question about it. The Instagram pieces still talk to 'you'; 'neighbors' belongs to the newsletter (voice.kit-shift 8: the address belongs to the platform where she uses it)."
 
 # ---------------------------------------------------------------- Day-0 budget for the Map (acceptance [day0])
 
@@ -1551,25 +1563,28 @@ id = "message.en.054"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "Whole run to the Map: early win, one missing fact with a guess, the 4-line Map by coach turn 6; no check screen"
-context = "Whole run, Day 0, ChatGPT Free, from Start to the Map reply, persona default (answers.md order; t_min on every turn). The coach turns are scripted below; the machine replies come from the kit. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."
+title = "Whole run to the strategy: early win, the interview, the strategy in its steps; no check screen"
+context = "Whole run, Day 0, ChatGPT Free, from Start to the strategy's last step, persona default (answers.md order; t_min on every turn). The coach turns are scripted below; the machine replies come from the kit. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."
 input = '''[turn 1] Start
 [turn 2] <<paste: proof-coach/answers.md, the '## Dump chunk 1' section verbatim>>
 [turn 3] <<paste: proof-coach/written-posts.md, the '## W1' and '## W2' section bodies, verbatim, without their headings>>
 [turn 4] <<paste: proof-coach/answers.md, the '## Dump chunk 2' section verbatim>>
 [turn 5] <<paste: proof-coach/answers.md, the '## Dump chunk 3' section verbatim>>
-[turn 6] The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.'''
+[turn 6] The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
+[turn 7] ok
+[turn 8] ok'''
 contains = []
 not_contains = []
 regex = [
   '''(?i)3 lines you just said that are worth money''',
-  '''(?i)\bmy guess\b''',
+  '''(?i)\(recommended\)''',
   '''(?i)you earn from (3|three) things''',
   '''(?m)^\W*KNOWN FOR:''',
-  '''(?m)^\W*3 TOPICS:''',
+  '''(?m)^\W*CONTENT PILLARS:''',
   '''(?m)^\W*YOUR WORD:''',
-  '''(?m)^\W*YOUR VOICE:''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?m)^\W*CONTENT MIX:''',
+  '''(?m)^\W*YOUR SYSTEM:''',
 ]
 not_regex = [
   '''(?im)^\W*[1-7][.):]?\s+(?:who|their words|old way|best result|your way|how you(?:'|’)ll work)\b''',
@@ -1587,7 +1602,7 @@ invariants = ["I1", "I2", "I4", "I5", "I6", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: each reply. wf15 §1.2-§1.4, acceptance.toml [day0]: map_max_turns_en = 6, map_lines = 4. The Map is the reply to coach turn 6 (Start, chunk 1, her pasted posts, chunk 2, chunk 3 + 'done', the one missing fact), so it lands on the budget; a second missing-fact turn would break it. Her dump holds her clients' words, Lorraine's result and her offer, so the only missing fact is the multi-income line (setup.multi_income, 'You earn from 3 things. My guess: …'). Never on Day 0: the 7-line check screen and its numbered lines, the inventory, 'fix N', and questions about platform, list size, talk day, delivery or hours (setup.kit-facts 5). Graded with graders.py checks day0_timing (map_coach_turns ≤ 6, map_lines = 4), deny_list and quit_triggers as well as the invariants listed."""
+notes = "scope: each reply. Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'): the 4-line Map is retired; the run stops at the strategy's last step (up to 3 pre-filled replies after the interview, each OK'd, the last ending on map.ok). YOUR VOICE left the strategy (the card's HOW YOU SAY IT line). The multi-income line is A/B now (setup.multi_income: 'You earn from {n} things; I'll write for one buyer. A) … (recommended) …'), so '(recommended)' replaces 'my guess'; turns 7-8 OK the strategy's steps. wf15 §1.2-§1.4, acceptance.toml [day0]: map_max_turns_en = 6, map_lines = 6. The Map is the reply to coach turn 6 (Start, chunk 1, her pasted posts, chunk 2, chunk 3 + 'done', the one missing fact), so it lands on the budget; a second missing-fact turn would break it. Her dump holds her clients' words, Lorraine's result and her offer, so the only missing fact is the multi-income line (setup.multi_income, 'You earn from 3 things. My guess: …'). Never on Day 0: the 7-line check screen and its numbered lines, the inventory, 'fix N', and questions about platform, list size, talk day, delivery or hours (setup.kit-facts 5). Graded with graders.py checks day0_timing (map_coach_turns ≤ 6, map_lines = 6), deny_list and quit_triggers as well as the invariants listed."
 
 # ---------------------------------------------------------------- "why?" after a piece (wf15 §2)
 

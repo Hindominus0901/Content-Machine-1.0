@@ -253,7 +253,7 @@ Each finding has a stable code (`E` = error, `W` = warning), so fixtures can ass
 
 **`tools/cmcore/checks.py`** is the shared check core, standard library only, with no repo imports. Two things use it:
 - **`tools/shiplint.py`** is the runtime lint. It is copied into the skill as `scripts/ship_lint.py`, so it must be a single self-contained file. `build.py` inlines `cmcore/checks.py` into it.
-- **`evals/graders.py`** is the transcript graders I1–I18.
+- **`evals/graders.py`** is the transcript graders: the invariants I1–I23 and 16 other checks (deny_list, quit_triggers, running_tag, day0_timing, day0_strategy, day0_shape, lengths, vn_natural, vn_messages, hook_lab, strategy_doc, research_log, source_check, week_dedupe, style, week1_plan), thresholds in `evals/acceptance.toml`; `evals/README.md` describes each.
 
 This keeps the runtime and the build in agreement (QA spec §5.1 G1).
 

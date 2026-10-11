@@ -74,9 +74,9 @@ id = "fmt-short.en.001"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "S0", "floor"]
-title = "FILM TODAY under the Map has every part: on-screen ≤6, first line, 3-5 beats (a full 500–800-word script, retest v13), last line, caption box, CTA + quiet, then 'Film it now…'; nothing under it"
-context = "Day 0, about minute 17, ChatGPT Plus on the iPhone, Corinne in her car between site visits. After 'done' the one missing fact was the multi-income guess; she answers it in this turn, so this reply shows the 4-line Map with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.': KNOWN FOR built on 'the nothing room' and taping a room out before buying; YOUR WORD: nothing room; free gift = the Tape-Out Guide and offer the Room Reset ($3,500), both from her dump. Delivery: beat cards (the default), not a script."
-input = '''Reset is the one I want to grow. full projects pay the 5 salaries but those come from referrals. I've got like 20 minutes before pickup, give me the video'''
+title = "FILM TODAY alone after the strategy's OK has every part: on-screen ≤6, first line, 3-5 beats (a full 500–800-word script, retest v13), last line, caption box, CTA + quiet, then 'Film it now…'; nothing under it"
+context = "Day 0, about minute 22, ChatGPT Plus on the iPhone, Corinne in her car between site visits. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: KNOWN FOR built on 'the nothing room' and taping a room out before buying; YOUR WORD: nothing room; free gift = the Tape-Out Guide and offer the Room Reset ($3,500), both from her dump. She OKs it in this turn, so this reply is FILM TODAY alone. Delivery: beat cards (the default), not a script."
+input = '''ok. I've got like 20 minutes before pickup, give me the video'''
 regex = [
   '''FILM TODAY''',
   '''(?i)on-screen''',
@@ -90,8 +90,7 @@ regex = [
   '''(?i)say ["“'‘]?quiet''',
   '''Film it now, or post the caption as text\.''',
   '''NEXT →[^\n]*\s*\Z''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?i)NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
   '''(?im)on-screen(?: text)?[^\S\n]*[:—–-][^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
@@ -106,19 +105,21 @@ not_regex = [
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)isn(?:'|’)t pushy|gets people something real|\bout loud\b|keyword (?:is in|once)|your keyword delivers today|no risky claims''',
   '''(?im)^[^\n]*(?:post the caption as text|quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I14", "I17", "I18", "I23"]
 max_questions = 1
-notes = """K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. wf15 §1.5, start-block DAY 0 step 5, fmt-short.kit-video-short 5 and 7: the whole FILM TODAY shape in one reply: on-screen text ≤6 words; first line word-for-word (the verbal hook, ≤12 words, SG4); 3 beats ≤12 words each; last line word-for-word; caption in a copy box; 'Comment NOTHING ROOM and I'll send you the Tape-Out Guide' (quieter: say 'quiet'), quit point 11; then only 'Film it now, or post the caption as text.' (film.now_or_text), a statement. Nothing under the piece (wf15 §2; R1, R2, R9): no WHY line, no ✓ Checked line, no before-you-film ticks (say the first line out loud, keyword is in), no 'it isn't pushy' line. The story the old Checked line named (the 2012 sectional stuck on the landing, the Whitfields' front room with the piano and 11 swatches, Priya's 'storage unit') is asserted in the piece itself; the WHY line, the checks and what it was written from print on 'why?' (fmt-short.en.044). verdict Ready is hidden state (evals/run.py: no status line). Template labels stay internal (UX §4). Her never-words (expected.toml [voice] banned) are graded by I23; Hollis has no consent; 400+ and 30% are excluded numbers. S0 included: Day-0-critical."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 5): strategy first, then FILM TODAY alone: the coach's OK on the strategy's last step brings ONE reply that holds only FILM TODAY (one idea; no strategy line, no map.ok, no Week 1, no card; its one 'Needs you' line, ≤20 words; NEXT: say 'next' once filmed), so the keyword and story patterns need no anchor any more; the card and the Week-1 table come on that 'next'. Superseded K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. wf15 §1.5, start-block DAY 0 step 5, fmt-short.kit-video-short 5 and 7: the whole FILM TODAY shape in one reply: on-screen text ≤6 words; first line word-for-word (the verbal hook, ≤12 words, SG4); 3 beats ≤12 words each; last line word-for-word; caption in a copy box; 'Comment NOTHING ROOM and I'll send you the Tape-Out Guide' (quieter: say 'quiet'), quit point 11; then only 'Film it now, or post the caption as text.' (film.now_or_text), a statement. Nothing under the piece (wf15 §2; R1, R2, R9): no WHY line, no ✓ Checked line, no before-you-film ticks (say the first line out loud, keyword is in), no 'it isn't pushy' line. The story the old Checked line named (the 2012 sectional stuck on the landing, the Whitfields' front room with the piano and 11 swatches, Priya's 'storage unit') is asserted in the piece itself; the WHY line, the checks and what it was written from print on 'why?' (fmt-short.en.044). verdict Ready is hidden state (evals/run.py: no status line). Template labels stay internal (UX §4). Her never-words (expected.toml [voice] banned) are graded by I23; Hollis has no consent; 400+ and 30% are excluded numbers. S0 included: Day-0-critical."
 
 [[case]]
 id = "fmt-short.en.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
-title = "Compact mode: FILM TODAY under the Map is complete with no method file, prints nothing under it, and never asks for the file"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 17, iPhone. The one missing fact was the best result ('My guess: no client result yet, so I'll use your own story. Right?'); his 'yep' answers it, so this reply shows the 4-line Map (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; founding small group, no price set) with FILM TODAY under it and 'We'll run this for 4 weeks. OK, or change a line.' His dump said reading a script makes him sound like a 'hostage video', so beat cards (the default)."
+title = "Compact mode: FILM TODAY alone after the strategy's OK is complete with no method file, prints nothing under it, and never asks for the file"
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 22, iPhone. The interview is done (his best result: none yet, so his own story) and the strategy came in its pre-filled steps (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; founding small group, no price set), each OK'd; the last ended 'We'll run this for 4 weeks. OK, or change a line.' His 'yep' OKs it, so this reply is FILM TODAY alone. His dump said reading a script makes him sound like a 'hostage video', so beat cards (the default)."
 input = '''yep'''
 regex = [
   '''FILM TODAY''',
@@ -131,8 +132,7 @@ regex = [
   '''(?i)say ["“'‘]?quiet''',
   '''Film it now, or post the caption as text\.''',
   '''NEXT →[^\n]*\s*\Z''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?i)NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
   '''(?i)method file''',
@@ -146,11 +146,13 @@ not_regex = [
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)isn(?:'|’)t pushy|gets people something real|\bout loud\b|keyword (?:is in|once)|your keyword delivers today|no risky claims''',
   '''(?im)^[^\n]*(?:post the caption as text|quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I14", "I17", "I18"]
 max_questions = 1
-notes = """UX §6 'Day 0 completes with 0 files and with 1 file'; quit point 1 'method file requested mid-session'. The start block alone carries the FILM TODAY shape (DAY 0 step 5) and the per-piece rule (EVERY REPLY: 'Under a finished piece print nothing more'), so S0 prints the same whole piece with nothing under it (R1, R2): its WHY and checks wait for 'why?'. setup.en.023 checks the story and no-claim side of this same state; this case checks the format is whole on compact mode. Kids' names are in answers.md but never in output ('my son', 'my daughter' are fine). graders.py deny_list also runs. K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 5): strategy first, then FILM TODAY alone: the coach's OK on the strategy's last step brings ONE reply that holds only FILM TODAY (one idea; no strategy line, no map.ok, no Week 1, no card; its one 'Needs you' line, ≤20 words; NEXT: say 'next' once filmed), so the keyword and story patterns need no anchor any more; the card and the Week-1 table come on that 'next'. UX §6 'Day 0 completes with 0 files and with 1 file'; quit point 1 'method file requested mid-session'. The start block alone carries the FILM TODAY shape (DAY 0 step 5) and the per-piece rule (EVERY REPLY: 'Under a finished piece print nothing more'), so S0 prints the same whole piece with nothing under it (R1, R2): its WHY and checks wait for 'why?'. setup.en.023 checks the story and no-claim side of this same state; this case checks the format is whole on compact mode. Kids' names are in answers.md but never in output ('my son', 'my daughter' are fine). graders.py deny_list also runs. Superseded K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too."
 
 [[case]]
 id = "fmt-short.en.003"
@@ -158,8 +160,8 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Word-for-word coach at a desk webcam: full sentences, same budgets, her own story, no teleprompter, nothing under it"
-context = "Day 0, about minute 17, Claude Free on the Windows laptop. After 'done' the one missing fact was the income-streams guess; she answers it in this turn and asks for word-for-word, so this reply shows the 4-line Map (agency owners after a record year with no cash; YOUR WORD: record year; Margin Sprint $7,500, from her dump) with FILM TODAY under it, word for word, and 'We'll run this for 4 weeks. OK, or change a line.' Delivery is never asked on Day 0 (beat cards by default); her own ask switches it. Her dump says she films at her desk on the laptop webcam, 1-2 takes."
-input = '''The retainers pay the bills. The sprint is what I want to sell more of. Deal prep is lumpy and a different person. The class is a hobby. Word for word please. I'll read it once at my desk and post it on LinkedIn.'''
+context = "Day 0, about minute 22, Claude Free on the Windows laptop. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: agency owners after a record year with no cash; YOUR WORD: record year; Margin Sprint $7,500, from her dump. She OKs it in this turn and asks for word-for-word, so this reply is FILM TODAY alone, word for word. Delivery is never asked on Day 0 (beat cards by default); her own ask switches it. Her dump says she films at her desk on the laptop webcam, 1-2 takes."
+input = '''ok. Word for word please. I'll read it once at my desk and post it on LinkedIn.'''
 regex = [
   '''FILM TODAY''',
   '''(?i)on-screen''',
@@ -170,8 +172,7 @@ regex = [
   '''FILM TODAY[\s\S]*(?i:record year)''',
   '''Film it now, or post the caption as text\.''',
   '''NEXT →[^\n]*\s*\Z''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?i)NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
   '''(?im)on-screen(?: text)?[^\S\n]*[:—–-][^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
@@ -188,11 +189,13 @@ not_regex = [
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)isn(?:'|’)t pushy|gets people something real|\bout loud\b|keyword (?:is in|once)|your keyword delivers today|no risky claims''',
   '''(?im)^[^\n]*(?:post the caption as text|quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I12", "I17", "I18", "I23"]
 max_questions = 1
-notes = """K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. arch §5.7 Mode C = full word-for-word text; the UX §2 budgets still hold (on-screen ≤6, first line ≤12, beats ≤12 each) so it can be read once or memorised. Delivery is guessed, never asked, on Day 0 (setup.kit-facts 5); her own ask switches it (fmt-short.kit-video-delivery). She reads from the laptop screen while the webcam films, so quit point 16 (reading on the same phone) does not apply. Nothing under the piece (R1, R2): the story the old Checked line named (the stairwell call to the banker the Friday before Thanksgiving 2019, the agency's best year; Marcus) is asserted in the script; its WHY and checks print on 'why?'. Her voice ends on a step, never 'Agree?'. Traps from expected.toml: Raj (no consent), 70% (a guess), Dee's $85,000, 'former CFO' (she was VP of Finance)."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 5): strategy first, then FILM TODAY alone: the coach's OK on the strategy's last step brings ONE reply that holds only FILM TODAY (one idea; no strategy line, no map.ok, no Week 1, no card; its one 'Needs you' line, ≤20 words; NEXT: say 'next' once filmed), so the keyword and story patterns need no anchor any more; the card and the Week-1 table come on that 'next'. Superseded K2 (DECISIONS 6 Oct 2026; start-block DAY 0 steps 4-5): FILM TODAY prints under the 4-line Map in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the FILM TODAY title because the Map holds the keyword too. arch §5.7 Mode C = full word-for-word text; the UX §2 budgets still hold (on-screen ≤6, first line ≤12, beats ≤12 each) so it can be read once or memorised. Delivery is guessed, never asked, on Day 0 (setup.kit-facts 5); her own ask switches it (fmt-short.kit-video-delivery). She reads from the laptop screen while the webcam films, so quit point 16 (reading on the same phone) does not apply. Nothing under the piece (R1, R2): the story the old Checked line named (the stairwell call to the banker the Friday before Thanksgiving 2019, the agency's best year; Marcus) is asserted in the script; its WHY and checks print on 'why?'. Her voice ends on a step, never 'Agree?'. Traps from expected.toml: Raj (no consent), 70% (a guess), Dee's $85,000, 'former CFO' (she was VP of Finance)."
 
 [[case]]
 id = "fmt-short.en.004"
@@ -284,9 +287,9 @@ id = "fmt-short.en.007"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Whole run: FILM TODAY comes whole in the Map reply, so film-ready lands by minute 20"
-context = "Whole run: Day 0 on S0 compact mode (no method file), iPhone, Sunday night. Coach turns are replayed from answers.md (dump chunks 1-3, then his short answer to the one missing-fact guess per ## Behaviour, including the sound-wave slip in turn 1) up to and including 'yep' to the best-result guess, which brings the 4-line Map with FILM TODAY under it. Regexes below run on that last reply; graders.py day0_timing runs on the whole transcript."
-input = '''<<coach turns: answers.md "## Dump chunk 1..3" in order, then short answers to the missing-fact guesses from "## Answer bank" in the persona's style, ending with "yep" to the best-result guess, which brings the Map with FILM TODAY under it>>'''
+title = "Whole run: FILM TODAY comes whole and alone after the strategy's OK, within the film-ready budget"
+context = "Whole run: Day 0 on S0 compact mode (no method file), iPhone, Sunday night. Coach turns are replayed from answers.md (dump chunks 1-3, including the sound-wave slip in turn 1, then short answers to the interview's questions from ## Answer bank per ## Behaviour, then 'ok' to each strategy step) up to and including his 'yep' to the strategy's last step, which brings FILM TODAY alone. Regexes below run on that last reply; graders.py day0_timing runs on the whole transcript."
+input = '''<<coach turns: answers.md "## Dump chunk 1..3" in order, then short answers to the interview's questions from "## Answer bank" in the persona's style, then "ok" to each strategy step, ending with "yep" to the last one, which brings FILM TODAY alone>>'''
 regex = [
   '''FILM TODAY''',
   '''(?i)first line''',
@@ -295,8 +298,7 @@ regex = [
   '''(?i)\bcomment\b[^\n]{0,40}\bkeep up\b''',
   '''(?i)say ["“'‘]?quiet''',
   '''Film it now, or post the caption as text\.''',
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:.*FILM TODAY''',
-  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
+  '''(?i)NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
   '''(?i)\bwant (the|a|me to write the) caption\b''',
@@ -304,10 +306,12 @@ not_regex = [
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?im)^[^\n]*(?:post the caption as text|quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
+  '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 invariants = ["I1", "I3", "I5", "I6", "I14"]
 max_questions = 1
-notes = """acceptance.toml [day0] (wf15 §1, §3): map_max_turns_en = 6, film_ready_max_minutes = 20, session_max_turns = 10. K2 (DECISIONS 6 Oct 2026): FILM TODAY comes under the 4-line Map in one reply, so film-ready lands with the Map. That reply carries script + caption + the comment ask with its quiet option + 'Film it now, or post the caption as text.' in one go, with nothing under it (R1, R2): a 'want the caption too?' follow-up costs a turn and pushes film-ready past minute 20. Graded with graders.py day0_timing as well as the invariants listed."""
+notes = "Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block DAY 0 step 5): strategy first, then FILM TODAY alone: the coach's OK on the strategy's last step brings ONE reply that holds only FILM TODAY (one idea; no strategy line, no map.ok, no Week 1, no card; its one 'Needs you' line, ≤20 words; NEXT: say 'next' once filmed), so the keyword and story patterns need no anchor any more; the card and the Week-1 table come on that 'next'. acceptance.toml [day0] (wf15 §1, §3): map_max_turns_en = 6, film_ready_max_minutes = 35 (strategy first; was 20), session_max_turns = 10. Superseded K2 (DECISIONS 6 Oct 2026): FILM TODAY comes under the 4-line Map in one reply, so film-ready lands with the Map. That reply carries script + caption + the comment ask with its quiet option + 'Film it now, or post the caption as text.' in one go, with nothing under it (R1, R2): a 'want the caption too?' follow-up costs a turn and pushes film-ready past minute 20. Graded with graders.py day0_timing as well as the invariants listed."
 
 [[case]]
 id = "fmt-short.en.008"

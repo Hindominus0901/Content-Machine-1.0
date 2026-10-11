@@ -1,4 +1,4 @@
-# Thử Content Machine trên tài khoản thật (khoảng 90 phút)
+# Thử Content Machine trên tài khoản thật (khoảng 100 phút)
 
 **Để làm gì.** Bạn đóng vai coach mới, cài plugin rồi dùng thử từ đầu đến cuối trên Claude và ChatGPT thật. Mỗi bước: làm gì, phải thấy gì, chụp gì; đánh dấu ☐ Đạt hay ☐ Không. Bước nào "Không": chụp màn hình, ghi một dòng, làm bước kế.
 
@@ -47,7 +47,7 @@ Bước 2 không được: dùng file dự phòng `CONTENT-MACHINE-VN-1-FILE.md`
 
 ---
 
-## 3. Buổi đầu, tới lúc có video quay hôm nay (25 phút, làm trên Claude)
+## 3. Buổi đầu, tới lúc có video quay hôm nay (35 phút, làm trên Claude)
 
 **Bấm giờ khi gửi tin đầu, dừng khi thấy "QUAY HÔM NAY".** Ghi số phút: ______ (mục tiêu: khoảng 35 phút với coach thật, khi kể nhanh thì ít hơn).
 
@@ -59,10 +59,15 @@ Bước 2 không được: dùng file dự phòng `CONTENT-MACHINE-VN-1-FILE.md`
 | 3. Gõ `chị`. | Từ đây máy xưng **em**, gọi **chị** ("Dạ, em chào chị."). Máy mời kể bằng **micro bàn phím điện thoại** vì micro của Claude chưa nghe được tiếng Việt. | ☐ Đạt ☐ Không | Tin trả lời 2 |
 | 4. Dán chuyện của Lan. | "Nhận rồi. 3 câu đáng tiền chị vừa nói:" và một câu kiểu "em đang tìm hiểu …". | ☐ Đạt ☐ Không | |
 | 5. Trả lời các câu hỏi thêm (tối đa khoảng 6 câu, **mỗi tin một câu**). Đến câu hỏi về kênh, máy có thể hỏi **một lần** chị có Claude in Chrome hay muốn dán comment (A/B/C). Chọn A. | Không bao giờ có 2 câu hỏi trong một tin. Câu hỏi về trình duyệt chỉ xuất hiện một lần. | ☐ Đạt ☐ Không | Tin có câu hỏi trình duyệt |
-| 6. Gõ `xong` khi hết câu hỏi. | Chiến lược gửi trong **tối đa 3 tin**, mỗi tin ngắn, có lựa chọn A/B/C, một lựa chọn ghi "(máy khuyên)". Máy không kết bằng "Bạn có muốn…không?". | ☐ Đạt ☐ Không | Cả 3 tin |
+| 6. Trả lời câu hỏi cuối (máy tự dừng hỏi); muốn dừng sớm thì gõ `đủ rồi`. | Chiến lược gửi trong **tối đa 3 tin**, mỗi tin ngắn, có lựa chọn A/B/C, một lựa chọn ghi "(máy khuyên)". Máy không kết bằng "Bạn có muốn…không?". | ☐ Đạt ☐ Không | Cả 3 tin |
 | 7. Gõ `OK` ở mỗi tin. | Một tin riêng **"QUAY HÔM NAY · …"**: kịch bản đủ câu nằm trong khung chép, caption nằm ở khung riêng, có dòng "Ngại xin comment thì gõ 'nhẹ'.". | ☐ Đạt ☐ Không | Tin QUAY HÔM NAY |
 | 8. Đọc kịch bản. | Viết toàn tiếng Việt, không hứa "giảm X ký Y ngày", không bịa số liệu. | ☐ Đạt ☐ Không | |
-| 9. Gõ `tiếp`. | Brand Card, dòng lưu, bảng **Tuần 1** (5 bài). | ☐ Đạt ☐ Không | Card + bảng |
+| 9. Xem dưới kịch bản. | Nếu máy tự thêm phần dạy hay ví dụ: một dòng **"Máy tự thêm: đoạn N"** ghi theo số đoạn (bao nhiêu đoạn cũng được). Không có câu nào máy thêm mà thiếu trên dòng đó. | ☐ Đạt ☐ Không ☐ Không có gì máy thêm | Kịch bản + dòng dưới |
+| 10. Đọc dòng "Cần". | Chỉ **một** dòng "Cần", hỏi **một điều**, ≤20 chữ (kiểu "có sẵn quà chưa? (có thì dán)"). | ☐ Đạt ☐ Không | (cùng ảnh) |
+| 11. Đọc câu đầu và cả kịch bản. | Kịch bản xoay quanh **một ý** (ý khác để cho tuần). Câu đầu theo một khung hook (ví dụ "Nếu…", câu hỏi gọi đúng người, "Cho mình N phút…", "Từ … lên …"), một câu nói vừa phải. | ☐ Đạt ☐ Không | |
+| 12. Xem Lan xưng gì trong kịch bản. | Lan xưng **mình/tôi** như bài của Lan, **không** xưng "chị" (chị–em chỉ dùng trong chat). | ☐ Đạt ☐ Không | |
+| 13. Xem chỗ dùng chuyện chị khách 32 tuổi. | Trước khi đưa kết quả hay chi tiết của chị khách vào bài, máy hỏi **một lần** chị khách đã cho kể chưa (hỏi ở dòng "Cần" hay lúc hỏi thêm); chưa rõ thì chưa dùng. Không hỏi lại lần hai. | ☐ Đạt ☐ Không | Tin có câu hỏi này |
+| 14. Quay xong (hay giả như đã quay), gõ `tiếp`. | Brand Card, dòng lưu, bảng **Tuần 1**: số bài khớp **số giờ chị chọn ở chiến lược** (khoảng 2,5 giờ: 3 video ngắn + 1 bài dài + 1 tin Zalo hay email; khoảng 3,5 giờ: thêm 1 video ngắn, 1 carousel; dưới 2 giờ: 3 bài), có cột **Ý, hook**, không hai bài cùng một ý. Bài CHUYỂN ĐỔI của tuần 1 là tin xin khách trả lời, **chưa chào bán, chưa có giá**. Chưa có câu hỏi hub. Máy lưu **HUB.md** cuối ngày 0. | ☐ Đạt ☐ Không | Card + bảng + HUB.md |
 
 Làm lại bước 1–3 trên ChatGPT (chỉ đến tin trả lời 2, khoảng 5 phút). ☐ Đạt ☐ Không.
 
@@ -70,7 +75,7 @@ Làm lại bước 1–3 trên ChatGPT (chỉ đến tin trả lời 2, khoảng
 
 | Làm gì | Phải thấy gì | Kết quả | Chụp |
 |---|---|---|---|
-| 1. Claude: làm theo dòng lưu (chép card → project → **Add text content**). Mở **chat mới** trong project, gõ `tiếp`. | "Kiểm tra cài đặt: … · Brand Card v1 ✓" rồi một dòng **"Lần trước: … · đang dở bước …"** (hoặc "Mình nhớ: …"), sau đó làm tiếp đúng chỗ. Vẫn xưng em–chị. | ☐ Đạt ☐ Không | Tin đầu |
+| 1. Claude: làm theo dòng lưu (chép card → project → **Add text content**). Mở **chat mới** trong project, gõ `tiếp`. | "Kiểm tra cài đặt: … · Brand Card v1 ✓" rồi một dòng **"Lần trước: … · đang dở bước …"** (hoặc "Mình nhớ: …"), sau đó làm tiếp đúng chỗ. Vì đây là lần "tiếp" đầu khi chưa có hub, cùng tin đó có **một** dòng hỏi hub: A) Notion B) Google Sheet C) Để sau, chỉ HUB.md, có "(máy khuyên)": chưa kết nối Notion thì máy khuyên B hay C, không khuyên A. Vẫn xưng em–chị. | ☐ Đạt ☐ Không | Tin đầu |
 | 2. Mở chat mới **ngoài** project, gõ `tiếp`. | Máy **không đoán**, không nói "mình nhớ". Máy nhờ dán HUB.md hay Brand Card. | ☐ Đạt ☐ Không | Tin đầu |
 | 3. Làm lại bước 1 trên ChatGPT. | Như bước 1. | ☐ Đạt ☐ Không | Tin đầu |
 
@@ -78,14 +83,14 @@ Làm lại bước 1–3 trên ChatGPT (chỉ đến tin trả lời 2, khoảng
 
 | Làm gì | Phải thấy gì | Kết quả | Chụp |
 |---|---|---|---|
-| 1. Trong chat của bước 4, gõ `tiếp` thêm lần nữa nếu cần. | Lần "tiếp" đầu sau ngày 0, máy hỏi **một câu** về hub: A) Notion B) Google Sheet C) Để sau, có ghi "(máy khuyên)". | ☐ Đạt ☐ Không | Tin hỏi hub |
+| 1. Trả lời câu hỏi hub đã có ở bước 4.1 (không cần gõ thêm `tiếp`). | Câu hỏi hub chỉ xuất hiện **một lần** (ở bước 4.1), không lặp lại ở tin sau. | ☐ Đạt ☐ Không | Tin hỏi hub |
 | 2. Chọn A khi **chưa** kết nối Notion. | Một bước duy nhất: Claude: **Settings → Connectors → Notion → Connect**. | ☐ Đạt ☐ Không | |
 | 3. Kết nối Notion, nhắn `xong`. | Máy dựng trang **"Content Machine · Lan"** có Bắt đầu ở đây, Chiến lược, HUB, sáu bảng (Nội dung, Chiến dịch, Tuyến nội dung, Ngân hàng, Tìm hiểu, Số liệu). Báo "Hub của chị xong rồi: {link}". Ghi số phút: ______ | ☐ Đạt ☐ Không | Trang Notion + view Lịch |
 | 4. Mở Notion, xem các trang khác của bạn. | Máy **không đụng** tới trang nào ngoài "Content Machine · Lan". | ☐ Đạt ☐ Không | |
 | 5. Chat mới, gõ `dùng Google Sheet`. | 3 bước: sheets.new → File → Import → Upload 5 file CSV trong `Level-ups/Board` (hoặc máy in sẵn dòng tiêu đề để dán). Sau khi viết một bài, máy in **dòng để dán** (khung tsv, ≤6 cột). | ☐ Đạt ☐ Không | Sheet sau khi dán |
 | 6. Gõ `lưu hub`. | HUB.md có 8 phần (Chiến lược trong 5 dòng, Lịch tuần này, Đang chờ chị chọn, …). Claude: một file + "Add to project". ChatGPT: file tải về, hoặc khung chép. | ☐ Đạt ☐ Không | HUB.md trong project |
 
-## 6. Việc tự chạy (10 phút)
+## 6. Việc tự chạy (15 phút)
 
 **Claude (chỉ app trên máy tính, không có trên web hay điện thoại):**
 
@@ -93,13 +98,14 @@ Làm lại bước 1–3 trên ChatGPT (chỉ đến tin trả lời 2, khoảng
 |---|---|---|---|
 | 1. Trong chat, gõ `cài tác vụ`. | Một tin: các bước + khung lời nhắc để chép. | ☐ Đạt ☐ Không | |
 | 2. App Claude máy tính → thanh bên **Scheduled → New task → Set up manually**. Tên "Content Machine", dán khung, chọn **Weekdays 7:07**, không chọn thư mục → **Schedule** → **Run now**. | Chạy xong không đứng lại chờ bạn bấm duyệt (nếu có hỏi duyệt thì ghi lại mình đã chọn chế độ nào). Ra bài hoặc nhắc đúng việc của hôm nay, kết bằng "TIẾP →". | ☐ Đạt ☐ Không | Kết quả lần chạy + hộp duyệt nếu có |
+| 2b. Tạo thêm **tác vụ thứ hai**: dán đúng khung đó, tên "Content Machine · thứ Sáu", chọn **Weekly, thứ Sáu, 15:07** → Schedule → Run now. | Lần chạy hỏi số liệu tuần (Số liệu thứ Sáu), không ra bài mới. Danh sách Scheduled có **2** tác vụ. | ☐ Đạt ☐ Không | Danh sách tác vụ + kết quả |
 | 3. Mở Notion. | Tác vụ chỉ ghi vào trong trang hub, không ghi gì hai lần. | ☐ Đạt ☐ Không | |
 
 **ChatGPT (Plus):**
 
 | Làm gì | Phải thấy gì | Kết quả | Chụp |
 |---|---|---|---|
-| 4. Trong project, gõ `cài tác vụ`, chép khung "Bài tuần này", dán vào chat mới, gửi. | ChatGPT tạo tác vụ thứ Hai 7:07. Xem lại ở **Scheduled** (hoặc **Tasks**) trên thanh bên. | ☐ Đạt ☐ Không | Danh sách tác vụ |
+| 4. Trong project, gõ `cài tác vụ`. Máy in **4 khung**; mỗi khung dán vào một chat mới rồi gửi. | ChatGPT tạo đủ 4 tác vụ, xem ở **Scheduled** (hoặc **Tasks**): "Bài tuần này" thứ Hai 7:07 · "Một việc hôm nay" thứ Ba tới thứ Năm 6:37 · "Số liệu thứ Sáu" thứ Sáu 15:07 · "Làm mới hằng tháng" thứ Tư đầu tháng 11:07. (ChatGPT Free/Go chỉ có 3: không có tác vụ hằng tháng, nó thành TIẾP của thứ Sáu cuối tháng.) | ☐ Đạt ☐ Không | Danh sách tác vụ |
 | 5. Nếu ChatGPT chỉ trả lời mà không hẹn giờ: Scheduled → **New**, dán khung. | Tác vụ có trong danh sách. | ☐ Đạt ☐ Không | |
 
 Xong thì **xoá** tác vụ thử cho khỏi tốn lượt.

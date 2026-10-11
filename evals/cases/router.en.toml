@@ -133,34 +133,36 @@ id = "router.en.002"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "'next' after a Claude Free limit resumes Day 0 at Week 1, not at Start"
-context = "Day 0, Claude Free, Windows laptop. The 4-line Map was shown with FILM TODAY under it and its save point (save.limit_claude_free); Claude Free hit its message limit right after it, before Erin answered. About 5 hours later she returns to the same chat."
+title = "'next' after a Claude Free limit resumes Day 0 at the card + Week-1 table, not at Start"
+context = "Day 0, Claude Free, Windows laptop. The strategy was OK'd and FILM TODAY printed alone (with its save point, save.limit_claude_free); Claude Free hit its message limit right after it, before Erin answered. About 5 hours later she returns to the same chat."
 input = '''next'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
-  '''(?i)\(my guess, where unheard; one word changes it\)''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){2}''',
+  '''(?m)^\W*WHAT YOU SAY:''',
+  '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''Setup check:''',
   '''(?i)empty your head''',
   '''(?i)\bwhy this one\b''',
-  '''(?im)^\W*(?:KNOWN FOR|3 TOPICS|YOUR WORD|YOUR VOICE):''',
   '''(?im)^\W*(?:Ready to (?:film|post|send)\b|Draft ·|✓ Checked:)''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*FILM TODAY\b''',
   '''(?i)\b(?:want|ready for|shall I (?:send|write)) (?:your |the )?week 1\b''',
   '''(?i)\b(start (over|again)|from the beginning)\b''',
   '''(?im)^[^\n]*(?:not filming today|post the caption as text|(?:prefer|want)(?: it)? quieter|(?:say|type)\s+["“'‘]?quiet\b)[^\n]*\?''',
+  '''(?m)^\W*(?:KNOWN FOR|CONTENT PILLARS|CONTENT MIX|YOUR SYSTEM|YOUR WORD|WHAT I FOUND|YOUR VOICE):''',
+  '''(?i)\bA\)[^\n]*Notion[^\n]*\bB\)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; persona behaviour (Claude Free limit right after the Map; back about 5 hours later, same chat, 'next'); UX §2 budget 'Claude Free: save points after the dump and after the Map'. K2 (DECISIONS 6 Oct 2026): FILM TODAY came in the Map reply, so she left with today's video; the next step is Week 1 (§CM-TODAY 1: after the Map + FILM TODAY any message but a Map change gets all of Week 1; on Free ≤3 pieces a reply, so at least 2 copy boxes here) with the plan guess above it (setup.plan_guess). Neither the Map nor FILM TODAY is shown again and nothing restarts (§CM-TODAY 1: 'the first unfinished step … never re-ask or reprint'); never 'want Week 1?'. The pieces print with nothing under them (R1: no WHY or ✓ Checked line; the WHY prints on 'why?')."""
+notes = "route: setup (route set). Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'): FILM TODAY comes alone after the strategy's OK, so the first unfinished step after it is the 'next' reply: the Brand Card + the save line + the Week-1 table (the pieces then come one per 'next'); the plan guess sits in YOUR SYSTEM now; nothing restarts or is reprinted; the hub question never comes on Day 0. arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; persona behaviour (Claude Free limit right after the Map; back about 5 hours later, same chat, 'next'); UX §2 budget 'Claude Free: save points after the dump and after the Map'. Superseded K2 (DECISIONS 6 Oct 2026): FILM TODAY came in the Map reply, so she left with today's video; the next step is Week 1 (§CM-TODAY 1: after the Map + FILM TODAY any message but a Map change gets all of Week 1; on Free ≤3 pieces a reply, so at least 2 copy boxes here) with the plan guess above it (setup.plan_guess). Neither the Map nor FILM TODAY is shown again and nothing restarts (§CM-TODAY 1: 'the first unfinished step … never re-ask or reprint'); never 'want Week 1?'. The pieces print with nothing under them (R1: no WHY or ✓ Checked line; the WHY prints on 'why?')."
 
 [[case]]
 id = "router.en.003"
@@ -363,18 +365,19 @@ id = "router.en.010"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'Show me my map again' reprints the 4-line Map; no new decision, nothing parked shown"
+title = "'Show me my map again' reprints the strategy as it stands; no new decision, nothing parked shown"
 context = "Week 2, Thursday 22 Oct 2026. Brand Card v1 present (persona default). Dana is meeting a friend about her business and wants the summary first."
 input = '''can you show me my map again? the one with the big ideas. I want to read it before I meet my friend'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*KNOWN FOR:.*^\W*3 TOPICS:.*^\W*YOUR WORD:.*^\W*YOUR VOICE:''',
   '''(?im)^\W*YOUR WORD:[^\n]*(?:one more chapter|\bCHAPTER\b)''',
   '''NEXT →[^\n]*\s*\Z''',
+  '''(?m)^\W*KNOWN FOR:''',
+  '''(?m)^\W*CONTENT PILLARS:''',
 ]
 not_regex = [
-  '''(?i)\bpillars?\b|big domino|focus score''',
+  '''(?i)(?<!content )\bpillars?\b|big domino|focus score''',
   '''(?i)\block(ed|s)?\b''',
   '''WHY THIS GETS CLIENTS''',
   '''(?i)\bnot now\b|\bwhy this one\b''',
@@ -385,7 +388,7 @@ invariants = ["I1", "I4", "I5", "I6"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: message (route set). wf15 §0 S2 and §CM-MAP (message.kit-map): the Map is 4 lines, KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE; 'Never on it: NOT NOW, why this one, the runner-up, the root cause, scores' (R11). Her 'big ideas' are the 3 TOPICS line. Shown as it stands, not rebuilt and not re-decided: mid-season there is no map.ok decision line (I6; message.kit-drift 'no 4th big idea, new name or keyword until plan next month'). why this one and NOT NOW with plain reasons print on 'why?' (router.en.091)."""
+notes = "route: message (route set). Updated 11 Oct 2026 (audit a3 H2): the 4-line Map is retired; 'my map' is the strategy, reprinted as it stands (KNOWN FOR, CONTENT PILLARS 3-5 broad, CONTENT MIX, YOUR SYSTEM, YOUR WORD), with no map.ok; her 'big ideas' are the CONTENT PILLARS line. YOUR VOICE is the card's HOW YOU SAY IT line now. wf15 §0 S2 and §CM-MAP (message.kit-map): the Map is 4 lines, KNOWN FOR · 3 TOPICS · YOUR WORD · YOUR VOICE; 'Never on it: NOT NOW, why this one, the runner-up, the root cause, scores' (R11). Her 'big ideas' are the 3 TOPICS line. Shown as it stands, not rebuilt and not re-decided: mid-season there is no map.ok decision line (I6; message.kit-drift 'no 4th big idea, new name or keyword until plan next month'). why this one and NOT NOW with plain reasons print on 'why?' (router.en.091)."
 
 [[case]]
 id = "router.en.011"
@@ -1291,7 +1294,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "floor"]
 title = "'Put Mondays and Fridays on my calendar' gives the reminder links (L0.5), nothing heavier"
-context = "Week 1, Wednesday 14 Oct 2026, Claude Pro. Brand Card v1 present (persona default). She said 'later' to the reminder offer (levelup.offer_reminders) in Day 1's reply (Day 0's last reply now offers the hub)."
+context = "Week 1, Wednesday 14 Oct 2026, Claude Pro. Brand Card v1 present (persona default). She said 'later' to the reminder offer (levelup.offer_reminders) in Day 1's reply (the hub came at Day 1's first 'next', never on Day 0; the reminder offer follows the hub's)."
 input = '''can you put Mondays and Fridays on my calendar? I'll forget'''
 contains = []
 not_contains = []
@@ -1309,7 +1312,7 @@ invariants = ["I1", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: levelup (route set). UX §3.3 L0.5 Reminders: 1-2 taps on calendar links (Google Calendar links or an iPhone .ics) for talk day + Friday; strings ics.talk.* and ics.friday.*. Linda says yes to calendar links and skips Notion and Autopilot (persona behaviour)."""
+notes = "route: levelup (route set). UX §3.3 L0.5 Reminders: 1-2 taps on calendar links (Google Calendar links or an iPhone .ics) for talk day + Friday; strings ics.talk.* and ics.friday.*. Linda says yes to calendar links and skips Notion and Autopilot (persona behaviour)."
 
 [[case]]
 id = "router.en.045"

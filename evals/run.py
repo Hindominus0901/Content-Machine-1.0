@@ -43,8 +43,8 @@ Lane options (flags of `packet`, kept in meta.json and shown as "S1+web" in the 
             its companion skills, one per level-up area: SKILL.md) and the plugin's agents, read from
             dist/content-machine-plugin.zip. The run id gets "-plugin".
 Every lane with a method file (S1, floor) also ships the edition's Level-ups/*.md in packet/kit/Level-ups/, as the
-coach's Project or Cowork folder holds them (the method file and the instructions point to them: RESEARCH-<ED>.md,
-STRATEGY-<ED>.md, LAUNCH-<ED>.md, BOARD-<ED>.md), and the board's header-row files in packet/kit/Level-ups/Board/
+coach's Project or Cowork folder holds them (the method file and the instructions point to them, nine since v13:
+RESEARCH, PLAYBOOK, COPY, BANKS, BOARD, HOOKS, STRATEGY, LAUNCH and CAMPAIGNS-<ED>.md), and the board's header-row files in packet/kit/Level-ups/Board/
 (§CM-BOARD 2 sends the coach to that folder); S0 (instruction block only) ships none.
 
 `grade` runs graders.py (I1-I23 and the other checks) on each run. A cases-suite run also checks its
@@ -332,8 +332,10 @@ WEB_ON = (
     "\"which clients\") is a leak and makes the run invalid.\n")
 LEVELUPS_LINE = (
     "- **Level-ups:** {names} are project files in `kit/Level-ups/`, next to the method file, as in the coach's Project or "
-    "folder. Open one only when the instructions name it for the job (research and listening: RESEARCH; strategy, hooks, "
-    "titles and long video: STRATEGY; launch: LAUNCH; the board: BOARD), and read the §CM- part the job needs, never the "
+    "folder. Open one only when the instructions name it for the job (their LEVEL-UPS line routes each job: research and "
+    "listening: RESEARCH; the strategy, step by step: PLAYBOOK; copy frameworks and story frames: COPY; the banks of asks "
+    "and gifts: BANKS; the hub and the board: BOARD; hooks and titles: HOOKS; where you stand, the season and the month "
+    "plan: STRATEGY; a launch and ads: LAUNCH; campaigns: CAMPAIGNS), and read the §CM- part the job needs, never the "
     "whole file.{board}\n")
 BOARD_LINE = (
     " `kit/Level-ups/Board/` holds the board's files ({names}), the download's Level-ups/Board folder §CM-BOARD 2 "
@@ -366,8 +368,10 @@ answer keys for the graders) and never let them shape a turn.
    you to wrap up, say done there and skip what is not yet dictated (the machine then asks only what it is
    missing).
 3. Day 0 is strategy first: after the dump the machine INTERVIEWS you about your side (who you serve and who not,
-   the offer with its price and delivery, one result you would share, how clients find you, your 90-day goal,
-   hours a week, where you post and your list, what your field gets wrong), at most 6 questions, one a reply.
+   the offer with its price and delivery, a client result you would share, where clients find you, 2-3 channels in
+   your field you like or compete with, your goal, what your field gets wrong; the kit's start-block step 3, VN step
+   4), at most 6 questions, one a reply. Your hours a week are no interview question: the strategy offers them as
+   A/B/C. Near the channels question it may ask once how it may read the web for you (the research access).
    Answer only what it asks, one answer per question, from `## Answer bank`, in the persona's style. Say "skip"
    when the answer bank has nothing and the behaviour fits. If it asks what your dump already said, answer in one
    short line and note the re-ask in notes.md. "enough" / "đủ rồi" stops the interview: say it only if
@@ -375,12 +379,17 @@ answer keys for the graders) and never let them shape a turn.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
    the moment a quit trigger in `persona.toml` or `## Behaviour` happens: write the quit line as the last
    coach turn with `"quit": true`, and stop.
-5. The machine then proposes your STRATEGY in one reply and no piece (the positioning, 3-5 content pillars, the
-   attract / trust / convert mix, your content system, your word, what its research found). Accept it with a short
-   OK unless something on it is wrong for this coach, then fix only that line. Only after your OK does it print
-   FILM TODAY and Week 1; a piece that comes before your OK is a kit break to note.
-6. Stop when the machine has delivered FILM TODAY, Week 1 and the Brand Card with the save line and NEXT, or when
-   the coach quits, or after {max_turns} coach turns.
+5. The machine then proposes your STRATEGY in up to 3 replies and no piece (the positioning, 3-5 content pillars, the
+   attract / trust / convert mix, your content system with your hours a week as A/B/C, your word, what its research
+   found), each step pre-filled with its pick marked recommended. OK each step with a short "ok" (that takes the
+   recommended option) unless something on it is wrong for this coach, then fix only that line. Only after the
+   last step's OK does it print FILM TODAY, alone in its reply, one script on one idea; a piece that comes before
+   your OK is a kit break to note.
+6. After FILM TODAY, say "next" as if you had filmed it (the NEXT line says "say 'next' once filmed"; answer its one
+   "Needs you" line in the same turn if the persona has a gift). On that 'next' the machine prints the Brand Card,
+   its save line and the WEEK 1 table (its count follows your hours); the hub question (Notion, Sheet or HUB.md)
+   comes at the first 'next' of a later day, never on Day 0. Say "next" once more for the first Week-1 piece, then
+   stop; or stop when the coach quits, or after {max_turns} coach turns.
 
 Time: model `t_min` from dictation (about 130 words a minute), typing (about 30 words a minute on a phone,
 40 on a laptop), reading (about 200 words a minute) and the persona's time away (`away_min`). A pasted post

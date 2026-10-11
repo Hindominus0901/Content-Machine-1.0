@@ -84,8 +84,9 @@ reply opens with the running tag), day0_timing (the strategy's and film-ready's 
 pasted posts not counted toward the strategy's; its six labelled lines; the session's minutes, the early win; a budget
 over its limit is a warning when the soft cut came on time and the coach's own talk accounts for the overrun: they chose
 to keep talking after it, or the send it answered ran long past the threshold), day0_strategy (Day 0 is STRATEGY FIRST
-since the founder's v10 run, 7 Oct 2026 night: the dump, the interview about the coach's side, ONE reply with the
-strategy and no piece, FILM TODAY and Week 1 only after the coach's OK; the early win only quotes 3 lines; the research
+since the founder's v10 run, 7 Oct 2026 night: the dump, the interview about the coach's side, the strategy in up to 3
+replies and no piece, FILM TODAY alone only after the coach's OK, then on 'next' the card + Week-1 table and one Week-1
+piece per 'next' (v13.5); the early win only quotes 3 lines; the research
 said once; WHAT I FOUND with its sources; at most 6 interview questions, none for what the dump gave; 3-5 broad CONTENT
 PILLARS; the ATTRACT / TRUST / CONVERT mix adding to 100; YOUR SYSTEM; Week 1 on all three types and a pillar per piece),
 lengths (in WORDS, never seconds: a short video 500-800, a long post about 1,000, a long video 1,000-1,500 in parts),
@@ -128,6 +129,12 @@ wording from strings/<edition>.toml keys (map.*, film.now_or_text, film.not_film
 card.*, setup.*, save.*, message.*, dump.enough), never from the kit's literal text, so a reworded string needs no
 grader change; a VN particle at a clause end in a string ("…mình gửi {gift} nhé.") reads as any particle or none, as
 the machine says it in the coach's region.
+v13.9 / v13.10 (audit a3, 11 Oct 2026): source_check, week_dedupe and style (acceptance [source_check], [week_dedupe],
+[style]: one "Needs you" ask, "·" or ":", ≤needs_words_max words) and week1_plan (acceptance [week1]: Week 1's count by
+the coach's hours, the "Idea, hook" column and no idea twice, FILM TODAY's one idea kept out of the week, no offer before
+week 2). Week 1 is every piece after the strategy up to week 2 (week1_replies): in the v13.5 order the pieces come one per
+'next' after the Brand Card + Week-1 table, and the Week-1 items read them there. deny_list adds Matt Gray's framework names
+(MATT_GRAY_NAMES, as tools/lint.py E142) to the locale's list.
 Status is pass | fail | warn | n/a | not_run; "pass" is null when the check did not run; "warn" passes with
 "warnings" or "confusions" to read.
 """
@@ -3374,11 +3381,20 @@ INVARIANTS = (i1_next_line, i2_template, i3_status_lines, i4_codes, i5_questions
 
 # ---------------------------------------------------------------- other checks
 
+# Matt Gray's framework names: never in shipped text (tools/lint.py MATT_GRAY_NAMES, E142; DECISIONS "No Matt Gray names"), and
+# never in what a run prints either, whether or not locales/<lang>/deny-list.txt lists them (audit a3 L3). Keep in step
+# with tools/lint.py.
+MATT_GRAY_NAMES = ("Content Waterfall", "Content GPS", "4-3-2-1", "Authenticity Machine", "Founder OS")
+
+
 def check_deny_list(run: Run) -> dict:
     path = run.root / "locales" / run.lang / "deny-list.txt"
     terms = load_term_list(path)
     if not terms:
         return {"id": "deny_list", "pass": None, "status": "not_run", "evidence": [f"{path.name} missing or empty"]}
+    listed = {label.casefold() for label, _ in terms}
+    terms = list(terms) + [(name, re.compile(r"(?<!\w)" + re.escape(name) + r"(?!\w)", re.I))
+                           for name in MATT_GRAY_NAMES if name.casefold() not in listed]
     ev = []
     for r in run.replies:
         if r.after_why:
@@ -4631,8 +4647,8 @@ def _over_budget(run: Run, reply: Reply, active: float, limit: float, what: str)
 
 
 def check_day0(run: Run) -> dict:
-    """wf15 §3 budgets, for the strategy-first order (founder, 7 Oct night: xưng hô, dump, interview, ONE reply with the
-    strategy, FILM TODAY and Week 1 only after its OK, the Brand Card): the strategy within map_max_turns coach turns
+    """wf15 §3 budgets, for the strategy-first order (founder, 7 Oct night; v13.5, 10 Oct: xưng hô, dump, interview, the
+    strategy in up to 3 replies, FILM TODAY alone only after its OK, then the Brand Card + Week-1 table): the strategy within map_max_turns coach turns
     (plus the interview's answers, up to dig_answers_max), as its labelled lines (STRATEGY_LABEL_KEYS: map_lines; a coach
     turn that is mostly their own pasted posts is not counted: posts_only_turns, G31) and within strategy_max_minutes of
     active time (t_min minus away_min); film-ready (FILM TODAY, after the OK) within film_ready_max_minutes; at most
@@ -4937,21 +4953,52 @@ def _first_send_index(run: Run, prompt: Reply | None) -> int | None:
     return next((i for i, t in enumerate(run.turns) if i > prompt.index and t.role == "coach"), None)
 
 
-def week_pieces(run: Run, upto_card: bool = True) -> list[tuple[Reply, Piece]]:
-    """The pieces of the reply that follows the strategy's OK and of the replies after it, up to the Brand Card: the
-    ones that count toward the mix (a post, a video, an email or a Zalo message; not FILM TODAY, a DM reply, the
-    gift or "ask 3")."""
+WEEK2_RE = re.compile(r"(?<!\w)(?:week|tuần)\s*(?:2|two|hai)(?!\w)", re.I)
+
+
+def card_span(run: Run, r: Reply) -> tuple[int, int]:
+    """(first, end) line indices of the Brand Card in a reply: from its first mark (title, WHAT YOU SAY, the machine
+    heading) to its last one, plus the copy box right under it (the machine part); (len, len) with no card. Lines from
+    `end` on (the save line, the Week-1 table, a piece) are not the card's."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    marks = [i for i, ln in enumerate(r.lines) if _card_mark(run, matcher, ln)]
+    if not marks:
+        return len(r.lines), len(r.lines)
+    end = j = marks[-1] + 1
+    while j < len(r.lines) and (not r.lines[j].text.strip() or r.lines[j].block == "copy"):
+        if r.lines[j].block == "copy":
+            end = j + 1
+        j += 1
+    return marks[0], end
+
+
+def week1_replies(run: Run) -> list[Reply]:
+    """The replies of Day 0's Week 1 (v13.5 order: FILM TODAY alone, then on 'next' the Brand Card + the Week-1 table,
+    then one piece per 'next' or on its day): every reply after the strategy's first step, up to the first one that opens
+    week 2 (its running tag or a piece title names "Week 2" / "Tuần 2"). An older run that printed Week 1 with FILM
+    TODAY, before the card, reads the same way."""
     maps = [r for r in run.replies if _is_map_reply(run, r)]
     if not maps:
         return []
     out = []
-    card = next((r for r in run.replies if _is_card_reply(run, r) and r.index > maps[0].index), None)
     for r in run.replies:
-        if r.index <= maps[0].index or (upto_card and card is not None and r.index > card.index):
+        if r.index <= maps[0].index:
             continue
-        card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, run.matcher, ln)), default=len(r.lines))
+        if (r.step and WEEK2_RE.search(r.step)) or any(p.title and WEEK2_RE.search(p.title) for p in r.pieces):
+            break
+        out.append(r)
+    return out
+
+
+def week_pieces(run: Run) -> list[tuple[Reply, Piece]]:
+    """The Week-1 pieces (week1_replies): the ones that count toward the mix (a post, a video, an email or a Zalo
+    message; not FILM TODAY, a DM reply, the gift or "ask 3"), in the card's reply only those printed after the card
+    (the card's own lines are no piece). Since v13.5 they come after the card, one per 'next' (audit a3 H1)."""
+    out = []
+    for r in week1_replies(run):
+        c0, c1 = card_span(run, r)
         for p in r.pieces:
-            if not p.title or p.start > card_at or not p.body.strip():
+            if not p.title or c0 <= p.start < c1 or not p.body.strip():
                 continue
             head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
             if FILM_STEP_RE.match(head) or _bare_label(p.title) or REPLY_LABEL_RE.search(p.title) \
@@ -5008,14 +5055,14 @@ def reply_tables(r: Reply) -> list[tuple[int, str, list[str]]]:
 def check_day0_strategy(run: Run) -> dict:
     """Day 0 is strategy first (founder, 7 Oct 2026 night, after his v10 run: "it has not asked me anything … it should
     have asked me questions regarding more on my side to understand, so that it can propose STRATEGY FIRST, not propose
-    content right away"; "it has not done any research"; DECISIONS "Strategy first on Day 0"). The order is xưng hô (VN),
-    the dump, the interview, ONE reply with the strategy and no piece, and only after the coach's OK FILM TODAY and Week 1,
-    then the Brand Card. This reads what a transcript shows of that, in four groups:
+    content right away"; "it has not done any research"; DECISIONS "Strategy first on Day 0"). The order (v13.5) is xưng
+    hô (VN), the dump, the interview, the strategy in up to 3 replies with no piece, and only after the coach's OK FILM
+    TODAY alone; on 'next' the Brand Card + the Week-1 table; then one Week-1 piece per 'next'. This reads what a transcript shows of that, in four groups:
     - the order: no piece, FILM TODAY, copy box or Brand Card before the strategy (the early win only quotes its 3 lines:
       no copy box, no "post it"); the first reply that holds a piece after the strategy follows the coach's OK ("ok",
       "next", "go"), not a question or a change; the strategy reply carries the one decision (map.ok);
     - the research: said once, in plain words, after the coach's first send (research.now; research.no_tool when the app
-      has no tool), and the strategy's WHAT I FOUND (2-4 lines) gives each line its source or labels it a guess; a web
+      has no tool), and the strategy's WHAT I FOUND (at most 3 lines, retest v13) gives each line its source or labels it a guess; a web
       run (meta web) needs one real source and may not say it cannot search;
     - the interview: at most interview_max_questions (6), one a reply, none for a slot the persona's expected.toml
       [interview] dump_gives says the dump filled, none twice, at least one when the dump left gaps (dump_gaps) and the
@@ -5023,8 +5070,11 @@ def check_day0_strategy(run: Run) -> dict:
     - the strategy: 3-5 broad CONTENT PILLARS (each a few words, no number, none of [strategy] pillars_too_narrow), a CONTENT
       MIX of ATTRACT / TRUST / CONVERT (VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI) with shares that add up to 100, none under
       mix_min_share or over mix_max_share, YOUR SYSTEM with a platform, pieces a week and an ask path, no NOT NOW or "why
-      this one" on it, talk within strategy_max_words; and Week 1 covers all three types and names a pillar on each piece
-      (5 pieces at the default mix: 2 ATTRACT, 2 TRUST, 1 CONVERT; another split is a warning; the count follows the hours, v13.10);
+      this one" on it, each reply's talk within the kit's caps (strategy_max_words 160 / VN 200, reply 2
+      strategy_step2_max_words 100 / VN 120, read with strategy_words_tolerance); and Week 1 covers all three types and names a pillar on each piece
+      (at 5 pieces the default mix gives 2 ATTRACT, 2 TRUST, 1 CONVERT; another split is a warning; the count follows the
+      hours, v13.10, and is week1_plan's). Week 1 is every piece after the strategy up to week 2 (week1_replies): since
+      v13.5 the pieces come one per 'next' AFTER the card (audit a3 H1); a pillar is read only off a full table;
     - v13.1 (9 Oct): the strategy is at most 3 grouped replies, each one OK with at most one A/B/C line and one option marked
       recommended; each piece title names its type and its length in words (FILM TODAY's too, never seconds); FILM TODAY
       comes before the calendar and Day 0 prints Week 1's table only (more than one table before FILM TODAY fails).
@@ -5198,7 +5248,7 @@ def check_day0_strategy(run: Run) -> dict:
 
     ev = []
     found = found_items(blocks.get("map.found", []))
-    lo, hi = int(day0.get("found_min_lines", 2)), int(day0.get("found_max_lines", 4))
+    lo, hi = int(day0.get("found_min_lines", 2)), int(day0.get("found_max_lines", 3))      # kit: "≤3 lines" (retest v13)
     if "map.found" in blocks:
         details["found_lines"] = len(found)
         if not lo <= len(found) <= hi:
@@ -5218,7 +5268,7 @@ def check_day0_strategy(run: Run) -> dict:
                               f'"{_short(line, 60)}"')
         if web is True and found and not sourced:
             ev.append(f"{t_found}: WHAT I FOUND has no line with a real source, in a run with web tools")
-    item("WHAT I FOUND has 2-4 lines, each with its source or labelled a guess", ev, ran="map.found" in blocks)
+    item(f"WHAT I FOUND has {lo}-{hi} lines, each with its source or labelled a guess", ev, ran="map.found" in blocks)
 
     # -- the interview
     asked = [r for r in before if reply_questions(r)]
@@ -5339,15 +5389,21 @@ def check_day0_strategy(run: Run) -> dict:
 
     ev = []
     if S is not None:
-        cap = int(day0.get(f"strategy_max_words_{ed}", day0.get("strategy_max_words_en", 400)))
-        for st in (steps or [S]):
+        # the kit's caps (start-block step 4 / VN step 5): each strategy reply ≤160 words, reply 2 ≤100 (VN ≤200 tiếng, tin 2
+        # ≤120); read with strategy_words_tolerance (the tag and NEXT lines count here, the kit's count may not)
+        tol = float(day0.get("strategy_words_tolerance", 0.10))
+        cap1 = int(day0.get(f"strategy_max_words_{ed}", day0.get("strategy_max_words_en", 200 if ed == "vn" else 160)))
+        cap2 = int(day0.get(f"strategy_step2_max_words_{ed}", 120 if ed == "vn" else 100))
+        for n_st, st in enumerate(steps or [S], 1):
+            cap = cap2 if n_st == 2 else cap1
             for i, ln in enumerate(st.lines):
                 if not ln.block and ln.plain and NOT_NOW_LINE_RE.match(ln.plain):
                     ev.append(f'{_turn(st)}: "{_short(ln.plain, 40)}" on the strategy (NOT NOW and "why this one" print on "why?")')
             words = sum(ck.count_words(ln.text, run.lang) for ln in st.lines if not ln.block and not ln.fence)   # copy boxes aside
             details["strategy_talk_words"] = max(words, details.get("strategy_talk_words", 0))
-            if words > cap:
-                ev.append(f"{_turn(st)}: the strategy reply is {words} {'tiếng' if run.lang == 'vn' else 'words'} of talk (max {cap})")
+            if words > cap * (1 + tol):
+                ev.append(f"{_turn(st)}: the strategy reply{f' {n_st}' if len(steps) > 1 else ''} is {words} "
+                          f"{'tiếng' if run.lang == 'vn' else 'words'} of talk (max {cap})")
     item("the strategy is short enough and carries no NOT NOW or 'why this one'", ev, ran=S is not None)
 
     # -- Week 1 on the strategy
@@ -5359,6 +5415,10 @@ def check_day0_strategy(run: Run) -> dict:
         counts = {k: 0 for k in names}
         no_type, no_pillar = [], []
         pillar_res = [(n, re.compile(r"(?<!\w)" + re.escape(ck.fold(n)) + r"(?!\w)")) for n in pillars if len(n) >= 3]
+        # the chat table is Day · Format · Idea, hook · Ask (§CM-WEEK 10) and a title names no pillar: a pillar is read
+        # only when the run printed the full table, with its Content pillar column (an older run, or "calendar")
+        if not any(re.search(r"pillar|tru cot", rows[0]) for rr in week1_replies(run) for _s, _k, rows in reply_tables(rr)):
+            pillar_res = []
         for r, p in wk:
             window = [r.lines[i].plain for i in range(max(0, p.start - 2), min(len(r.lines), p.start + 4))
                       if not r.lines[i].block and r.lines[i].plain]
@@ -5379,7 +5439,8 @@ def check_day0_strategy(run: Run) -> dict:
                                                                                           counts.items()) + ")")
         elif sorted(counts.values()) != [1, 2, 2] and len(wk) == 5:
             wk_warn.append("Week 1 splits " + " / ".join(f"{k.upper()} {v}" for k, v in counts.items())
-                           + " (5 pieces at the default mix: 2 ATTRACT, 2 TRUST, 1 CONVERT)")
+                           + " (at 5 pieces the default 40/40/20 mix gives 2 ATTRACT, 2 TRUST, 1 CONVERT; the count "
+                             "itself follows the hours: week1_plan)")
         if no_type and not missing:
             wk_warn.append("no content type named on: " + "; ".join(no_type[:4]))
         if no_pillar:
@@ -5426,7 +5487,8 @@ def check_day0_strategy(run: Run) -> dict:
 
 # ---------------------------------------------------------------- lengths in words (founder, 7 Oct night)
 
-LENGTH_DEFAULTS = {"tolerance": 0.10, "short_words_min": 120, "short_words_max": 200, "long_post_words": 1000,
+# (short 500-800: founder 7 Oct night, kept 11 Oct; the defaults match acceptance.toml [lengths], audit a3 L2)
+LENGTH_DEFAULTS = {"tolerance": 0.10, "short_words_min": 500, "short_words_max": 800, "long_post_words": 1000,
                    "long_post_tolerance": 0.15, "long_video_words_min": 1000, "long_video_words_max": 1500,
                    "long_video_parts_min": 3, "seconds_budget_fails": True}
 LONG_VIDEO_TITLE_RE = re.compile(r"\blong(?:[- ]form)?\s+(?:video|film)\b|(?<!\w)video\s+dài(?!\w)|\byoutube\b|\bpodcast\b",
@@ -5526,9 +5588,9 @@ def check_lengths(run: Run) -> dict:
     pieces = [(r, p) for r in run.replies for p in r.pieces if p.title and not r.after_why]
     for r, p in pieces:
         head = re.sub(r"^\s*#{1,6}\s*", "", p.title)
-        card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, run.matcher, ln)), default=len(r.lines))
-        if p.start > card_at:
-            continue
+        c0, c1 = card_span(run, r)
+        if c0 <= p.start < c1:
+            continue                     # the card's own lines; a piece printed under the card's reply still counts
         seen["titles"] += 1
         if cfg.get("seconds_budget_fails", True) and SECONDS_RE.search(head):
             ev_sec.append(f'{_turn(r)}: "{_short(head, 60)}" gives a length in seconds (words, never seconds)')
@@ -6101,9 +6163,9 @@ def check_day0_shape(run: Run) -> dict:
                     else:
                         named = True
     zalo_list = zalo_list and not named
-    # Week 1 comes in FILM TODAY's own reply (strategy first: both after the OK) or in the replies after it
-    week = [r for r in run.replies if film is not None and r.index >= film.index
-            and (card is None or r.index < card.index or (r is card and r.pieces))]
+    # Week 1: since v13.5 FILM TODAY comes alone, then on 'next' the card + the Week-1 table, then a piece per 'next'
+    # (after the card; audit a3 H1); an older run printed it with FILM TODAY. Up to the reply that opens week 2.
+    week = [r for r in week1_replies(run) if film is not None and r.index >= film.index]
     ev = []
     if (named or zalo_list) and week:
         has_email = has_zalo = False
@@ -6137,9 +6199,9 @@ def check_day0_shape(run: Run) -> dict:
     own_ask = [ck.plain_line(run.strings.get(k, "")).casefold() for k in ("message.label.side_door",
                                                                            "message.label.off_map")]
     for r in week if word else []:
-        card_at = min((i for i, ln in enumerate(r.lines) if _card_mark(run, matcher, ln)), default=len(r.lines))
+        c0, c1 = card_span(run, r)
         for p in r.pieces:
-            if not _public_piece(p) or p.start > card_at or any(x and x in p.title.casefold() for x in own_ask) \
+            if not _public_piece(p) or c0 <= p.start < c1 or any(x and x in p.title.casefold() for x in own_ask) \
                     or FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title)):
                 continue                         # a side-door or off-map piece asks for its own thing; FILM TODAY has its own item
             checked += 1
@@ -6778,6 +6840,9 @@ HOOK_FRAMES = {
            ("asked me how", re.compile(r"\basked me (?:how|what|why)\b", re.I)),
            ("call-out question", re.compile(r"^[^.?!]{8,}\?\s+\S"))],
 }
+# A slide 1 or a subject line that is one whole question calls the reader out on its own (the call-out frame without the
+# line after it, which a headline has no room for).
+HEADLINE_QUESTION_RE = re.compile(r"^[^.?!]{8,}\?[\s\W]*$")
 # v13.8 (§CM-HOOKS 4 pairs: "tăng giá combo.", "nộp trước ngày 20." state the method): an on-screen or thumbnail text
 # that opens on an imperative and names what to do it to (a price, a message, a deadline: ONSCREEN_IMPERATIVE) states
 # the method too. A dare in the negative ("đừng giảm giá.", "don't discount.") hides it and stays allowed.
@@ -6929,8 +6994,8 @@ def check_hook_lab(run: Run) -> dict:
       words (acceptance [hook_lab] first_line_max_sentences, first_line_min_words_en / _vn); in a VN piece the coach
       never calls themself chị/anh, the machine's word for them in chat (coach_self_words); a comment ask on a short
       is a choice, never an opinion question (OPINION_ASK).
-    - v13.7 (the founder's screenshots as mandatory frames): a short's first line and a text post's line 1 fill one of
-      the hook frames (HOOK_FRAMES; a scene or a lesson fills none), and a short's on-screen text never states the
+    - v13.7 (the founder's screenshots as mandatory frames): a short's first line, a text post's line 1 and (v13.10, every
+      Week-1 piece) slide 1 and the first subject line fill one of the hook frames (HOOK_FRAMES; a scene or a lesson fills none), and a short's on-screen text never states the
       method (ONSCREEN_METHOD: a label + the lesson, "tin đầu: đừng gửi giá."); acceptance [hook_lab] frame_check.
     - v13.8 (§CM-HOOKS 4): the repeat share is 0.6, an imperative + what to do it to ("tăng giá combo.", "nộp trước
       ngày 20.": ONSCREEN_IMPERATIVE) states the method, and a long video's thumbnail text (hook_thumbs) is held to the
@@ -6991,7 +7056,11 @@ def check_hook_lab(run: Run) -> dict:
                 flat_line.append(f'{where}flat claim in the {what} ({fam}: "{words}"): "{_short(h["text"], 60)}"')
         for word in hook_hedges(h["text"], "headline", lang):
             hedge.append(f'{where}hedge "{word}" in the {what}: "{_short(h["text"], 60)}"')
-        if h["kind"] == "post" and frames_on and not hook_frame(h["text"], lang):
+        # v13.10: every Week-1 piece opens on a frame, posts, carousels and emails too (ship.kit 2; audit a3 M2): a text
+        # post's line 1, slide 1 and the first subject line (its 2nd and 3rd drafts are held to hedges only)
+        if frames_on and (h["kind"] in ("post", "slide") or (h["kind"] == "subject" and h["n"] == 1)) \
+                and not hook_frame(h["text"], lang) \
+                and not (h["kind"] != "post" and HEADLINE_QUESTION_RE.match(h["text"].strip())):
             frame.append(f'{where}{what} fills none of the hook frames (§CM-FORMATS 1, §CM-POSTS 1): "{_short(h["text"], 70)}"')
         if h["kind"] == "post":
             why = hook_length_issue(h["text"], lang, max_sent, min_words)
@@ -7596,7 +7665,7 @@ def check_strategy_doc(run: Run) -> dict:
 SOURCE_DEFAULTS = {"generalization_check": 1}
 DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2,
                    "paraphrase_overlap": 0.6, "paraphrase_min_words": 5}
-STYLE_DEFAULTS = {"pet_phrase_max": 1, "asks_max": 1, "needs_questions_max": 1}
+STYLE_DEFAULTS = {"pet_phrase_max": 1, "asks_max": 1, "needs_questions_max": 1, "needs_words_max": 20}
 
 ADDED_LABEL_RE = re.compile(r"^[\s>*_•-]*(?:máy tự thêm|added by me)\s*[*_]*\s*[:：]\s*[*_]*\s*(.*)$", re.I)
 BULLET_RE = re.compile(r"^\s*(?:[-*•+]|\d{1,2}[.)])\s+(.*)$")
@@ -7612,7 +7681,11 @@ EN_NAME_RES = (
 )
 NAME_STOP = {"em", "anh", "chị", "bạn", "cô", "chú", "bác", "dạ", "ơi", "nè", "nha", "ạ", "ai", "nào", "khác", "mình",
              "the", "this", "that", "your", "you", "who", "whose", "someone", "everyone", "one"}
-NEEDS_LINE_RE = re.compile(r"^\W*(?:needs you|cần(?:\s+\S+){0,2}?)\s*·\s*(.+)$", re.I)
+# "Needs you · …" (verdict.needs) or "Needs you: …" (FILM TODAY's own line, start-block step 5: "Needs you: have your own
+# gift? (paste it)"); VN "Cần chị · …", "Cần chị: …", "Cần: …" (audit a3 M1: the colon form was never read). With a colon
+# only an address word may follow "Cần", so a prose line "Cần 3 thứ: …" is no Needs line.
+NEEDS_LINE_RE = re.compile(r"^\W*(?:(?:needs you|cần(?:\s+\S+){0,2}?)\s*·|(?:needs you|cần(?:\s+(?:bạn|chị|anh|em|cô|chú|"
+                           r"mình|anh chị|các bạn))?)\s*[:：])\s*(.+)$", re.I)
 NEEDS_TAIL_RE = re.compile(r"\s*(?:I won'?t make it up|[^.?!]{0,12}không bịa)[^\n]*$|\s*\((?:or say|hoặc gõ)[^)]*\)", re.I)
 NEEDS_JOIN_RE = re.compile(r"(?<!\w)(?:và|and)(?!\w)|;")
 _ASK_VERB = (r"(?:comment|reply|dm|message|send|type|text|book|join|sign up|subscribe|follow|share|save|click|tap|"
@@ -8026,8 +8099,10 @@ def needs_questions(line: str) -> tuple[bool, str] | None:
 
 
 def check_style(run: Run) -> dict:
-    """House style of the pieces. Fail: a VN piece with an em dash "—"; a "Needs you" / "Cần …" line asking more than one
-    thing (more than needs_questions_max "?", or asks joined by "và" / "and" / ";"). Warn: the coach's pet phrase (the
+    """House style of the pieces. Fail: a VN piece with an em dash "—"; a "Needs you" / "Cần …" line ("·" or ":") asking
+    more than one thing (more than needs_questions_max "?", or asks joined by "và" / "and" / ";") or longer than
+    needs_words_max words (EN words, VN tiếng; the kit: "one ask, ≤20 words", v13.10; its "I won't make it up" tail and
+    "(Or say 'skip')" left out). Warn: the coach's pet phrase (the
     card's phrases) more than pet_phrase_max times in a piece; more than asks_max ask lines in a piece (heuristic: lines
     opening with an ask verb such as gõ / nhắn / comment / reply / send, after "hãy", "if you …," and the like)."""
     cfg = dict(STYLE_DEFAULTS, **run.acceptance.get("style", {}))
@@ -8054,12 +8129,223 @@ def check_style(run: Run) -> dict:
             hit = needs_questions(ln.plain or "") if not ln.block else None
             if hit and (hit[0] or hit[1].count("?") > int(cfg["needs_questions_max"])):
                 ev.append(f'{_turn(r)}: a "Needs you" line asks more than one thing: "{_short(hit[1], 70)}"')
+            if hit and ck.count_words(re.sub(r"\([^()]*\)\s*$", "", hit[1]), run.lang) > int(cfg["needs_words_max"]):
+                n = ck.count_words(re.sub(r"\([^()]*\)\s*$", "", hit[1]), run.lang)
+                ev.append(f'{_turn(r)}: a "Needs you" line is {n} {"tiếng" if run.lang == "vn" else "words"} '
+                          f'(one ask, ≤{int(cfg["needs_words_max"])}): "{_short(hit[1], 70)}"')
     ev, warns = list(dict.fromkeys(ev)), list(dict.fromkeys(warns))
     status = "fail" if ev else ("warn" if warns else "pass")
     out = {"id": "style", "pass": not ev, "status": status, "evidence": ev, "details": {"pieces": len(units)}}
     if warns:
         out["warnings"] = warns
     return out
+
+
+# ---------------------------------------------------------------- week1_plan (v13.9 / v13.10; audit a3 M3)
+# Week 1's count follows the hours the coach chose (§CM-WEEK 2, §CM-CALENDAR 2: under 2 h 3 pieces, ≈2½ h Lean 5, ≈3½ h
+# Standard 7, ≈5 h 8, 8 h+ a long video and its cuts, 8); the chat table carries "Idea, hook" and no idea twice (the idea
+# ledger, §CM-HUMANIZE); FILM TODAY's one idea is not a Week-1 piece's; Week 1's CONVERT asks for replies, never a price,
+# a call or an offer (no offer before week 2 outside a launch, v13.9). Thresholds in acceptance.toml [week1].
+WEEK1_DEFAULTS = {"pieces_by_hours": [[0, 2, 3], [2, 3.25, 5], [3.25, 4.5, 7], [4.5, 99, 8]],
+                  "tier_pieces": {"lean": 5, "standard": 7}, "idea_overlap": 0.6, "idea_min_shared": 2}
+_HOURS_NUM = r"(\d{1,2}(?:[.,]\d)?\s*½?|½)"
+HOURS_TEXT_RE = re.compile(r"(?<![\w.,])≈?\s*" + _HOURS_NUM + r"\s*(?:h|hrs?|hours?|giờ|tiếng)(?!\w)", re.I)
+HOURS_FIELD_RE = re.compile(r"(?<!\w)(?:hours?(?:_week|_a_week|/week)?|số giờ|giờ)\s*[=:]\s*≈?\s*" + _HOURS_NUM, re.I)
+TIER_FIELD_RE = re.compile(r"(?<!\w)tier\s*[=:]\s*(lean|standard)(?!\w)", re.I)
+WEEK_WORD_RE = re.compile(r"(?<!\w)(?:a week|per week|weekly|/\s*week|/\s*wk|mỗi tuần|một tuần|/\s*tuần|tuần)(?!\w)", re.I)
+WEEK1_EXTRA_ROW_RE = re.compile(r"(?<!\w)(?:dm|inbox|reply \d|ask 3|past clients?|hoi (?:3|ba) khach|khach cu|gift|qua|"
+                                r"weekly talk|talk|tra loi)(?!\w)")
+WEEK1_OFFER_RE = re.compile(
+    r"[$€£]\s?\d|(?<![\w.,])\d[\d.,]*\s?(?:k|tr|triệu|đ|vnđ|vnd|usd|dollars?)(?!\w)"
+    r"|\bbook (?:a |your |my |the )?(?:free |quick |short )?(?:call|session|slot|consult\w*|spot)\b"
+    r"|\b(?:discount|\d+% off|spots? left|enrol+ (?:now|today)|sign up (?:now|today)|buy now|founding (?:price|offer))\b"
+    r"|(?<!\w)(?:đặt lịch|giảm giá|ưu đãi|còn \d+ suất|đăng ký ngay|chốt đơn|giá (?:chỉ|còn|gói|ưu đãi))(?!\w)", re.I)
+
+
+def _hours(text: str) -> float | None:
+    t = text.replace(" ", "").replace(",", ".")
+    if t == "½":
+        return 0.5
+    half = t.endswith("½")
+    try:
+        v = float(t.rstrip("½") or 0) + (0.5 if half else 0)
+    except ValueError:
+        return None
+    return v if 0 < v <= 40 else None
+
+
+def week1_hours(run: Run) -> tuple[float | None, str, str]:
+    """(hours a week, tier, where) the coach's Week 1 is planned for: the Brand Card's plan fields first (hours=…,
+    tier=lean|standard), else the strategy's lines that name hours a week (the "(recommended)" option when several)."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    tier = ""
+    for r in run.replies:
+        if not _is_card_reply(run, r):
+            continue
+        text = "\n".join([card_parts(run, r).machine] + r.machine_blocks)
+        m = HOURS_FIELD_RE.search(text)
+        t = TIER_FIELD_RE.search(text)
+        tier = tier or (t.group(1).casefold() if t else "")
+        if m and _hours(m.group(1)) is not None:
+            return _hours(m.group(1)), tier, f"the card ({_turn(r)})"
+    rec = ck.plain_line(str(run.strings.get("options.recommended", "(recommended)"))).casefold()
+    picked, values = None, []
+    for r in strategy_steps(run):
+        for ln in r.lines:
+            if ln.block or not ln.plain or not WEEK_WORD_RE.search(ln.plain):
+                continue
+            for m in HOURS_TEXT_RE.finditer(ln.plain):
+                v = _hours(m.group(1))
+                if v is None:
+                    continue
+                values.append(v)
+                if rec and rec in ln.plain.casefold() and picked is None:
+                    picked = (v, _turn(r))
+    if picked:
+        return picked[0], tier, f"the strategy's recommended option ({picked[1]})"
+    if len(set(values)) == 1:
+        return values[0], tier, "the strategy"
+    return None, tier, ""
+
+
+def _raw_tables(r: Reply) -> list[tuple[int, list[list[str]]]]:
+    """(first line, rows as cell lists) of each markdown table in a reply, the separator row left out."""
+    out, rows, start = [], [], -1
+    for i, ln in enumerate(r.lines + [Line("", "")]):
+        if ln.text.lstrip().startswith("|") and not ln.fence:
+            if not rows:
+                start = i
+            cells = [c.strip() for c in ln.text.strip().strip("|").split("|")]
+            if not all(re.fullmatch(r":?-{2,}:?|", c) for c in cells):
+                rows.append(cells)
+        else:
+            if len(rows) >= 2:
+                out.append((start, rows))
+            rows = []
+    return out
+
+
+def week1_table(run: Run) -> tuple[Reply, list[str], list[list[str]]] | None:
+    """(reply, header cells, content rows) of the Week-1 table: the first table of 3+ rows from FILM TODAY's reply on, in
+    week1_replies (v13.5: in the card's reply). Content rows leave out the DM replies, "ask 3", the gift and the Talk
+    (read off the day and format cells): they are no Week-1 piece in the count."""
+    film = next((r for r in run.replies if _is_film_reply(run, r)), None)
+    for r in week1_replies(run):
+        if film is not None and r.index < film.index:
+            continue
+        for _start, rows in _raw_tables(r):
+            if len(rows) < 3:
+                continue
+            head = [ck.fold(c) for c in rows[0]]
+            fmt = next((k for k, c in enumerate(head) if re.search(r"format|piece|dang|bai|loai", c)), 1)
+            keep = []
+            for row in rows[1:]:
+                key = ck.fold(" ".join(row[:1] + row[fmt:fmt + 1]))
+                if not WEEK1_EXTRA_ROW_RE.search(key):
+                    keep.append(row)
+            return r, rows[0], keep
+    return None
+
+
+def _first_line_of(p: Piece) -> str:
+    for raw in p.body.splitlines():
+        m = FIRST_LINE_RE.match(ck.plain_line(raw))
+        if m:
+            return m.group(1).strip().strip('"“”')
+    return ""
+
+
+def check_week1_plan(run: Run) -> dict:
+    """Week 1 against the v13.9 / v13.10 rules no other check reads (audit a3 M3):
+    - the count follows the hours (§CM-WEEK 2): the Week-1 table's pieces (or, with no table, the Week-1 pieces) match
+      [week1] pieces_by_hours for the hours on the card or the strategy (else tier_pieces for tier=lean|standard);
+    - the idea ledger: the chat table has an "Idea, hook" column (§CM-WEEK 10) and no two rows share an idea (content
+      words overlapping by idea_overlap of the shorter, at least idea_min_shared words);
+    - Day 0's one idea: FILM TODAY's first line is no Week-1 row's idea, nor a Week-1 piece's first line;
+    - no offer before week 2: a Week-1 CONVERT piece asks for replies; a price, a currency amount, "book a call", a
+      discount or "spots left" fails (a persona with launch = true is exempt).
+    n/a when the run has no strategy, or none of these was printed."""
+    cfg = dict(WEEK1_DEFAULTS, **run.acceptance.get("week1", {}))
+    if not any(_is_map_reply(run, r) for r in run.replies):
+        return {"id": "week1_plan", "pass": True, "status": "n/a", "items": [], "evidence": ["no strategy in the run"]}
+    items = []
+
+    def item(name: str, ev: list[str], ran: bool) -> None:
+        items.append({"item": name, "pass": (not ev) if ran else None, "evidence": ev})
+
+    table = week1_table(run)
+    wk = week_pieces(run)
+    hours, tier, where = week1_hours(run)
+    count = len(table[2]) if table else (len(wk) if wk else None)
+    want = None
+    if hours is not None:
+        want = next((int(n) for lo, hi, n in cfg["pieces_by_hours"] if float(lo) <= hours < float(hi)), None)
+    elif tier:
+        want = cfg["tier_pieces"].get(tier)
+    ev = []
+    if count is not None and want is not None and count != want:
+        basis = f"≈{hours:g} h a week ({where})" if hours is not None else f"tier={tier}"
+        ev.append(f"{_turn(table[0]) if table else 'Week 1'}: Week 1 has {count} pieces; at {basis} the kit's count is "
+                  f"{want} (§CM-WEEK 2: the count follows the hours, never a fixed list)")
+    item("Week 1's piece count follows the coach's hours", ev, ran=count is not None and want is not None)
+
+    ev = []
+    ideas: list[tuple[str, set]] = []
+    if table:
+        r, head, rows = table
+        col = next((k for k, c in enumerate(head) if re.match(r"^(?:idea|y)\b", ck.fold(c))), None)
+        if col is None:
+            ev.append(f'{_turn(r)}: the Week-1 table has no "Idea, hook" column (Day · Format · Idea, hook · Ask)')
+        else:
+            for row in rows:
+                cell = row[col] if col < len(row) else ""
+                cs = _content_set(cell)
+                for prev, ps in ideas:
+                    shared = cs & ps
+                    if cell.strip() and (ck.fold(cell.strip()) == ck.fold(prev.strip()) or (
+                            len(shared) >= int(cfg["idea_min_shared"])
+                            and len(shared) >= float(cfg["idea_overlap"]) * min(len(cs), len(ps)))):
+                        ev.append(f'{_turn(r)}: two Week-1 rows use one idea ("{_short(prev, 40)}" ~ "{_short(cell, 40)}"); '
+                                  "each piece its own idea, story, example")
+                        break
+                ideas.append((cell, cs))
+    item("the Week-1 table has an 'Idea, hook' column and no idea twice", ev, ran=table is not None)
+
+    ev = []
+    film = next((r for r in run.replies if _is_film_reply(run, r)), None)
+    fp = film_today_piece(run, film) if film is not None else None
+    first = _first_line_of(fp) if fp is not None else ""
+    fs = _content_set(first)
+    ran = bool(fs) and (bool(ideas) or bool(wk))
+    if ran:
+        others = [(cell, cs, _turn(table[0])) for cell, cs in ideas] + \
+                 [(fl, _content_set(fl), _turn(r)) for r, p in wk for fl in [_first_line_of(p)] if fl]
+        for text, cs, at in others:
+            shared = fs & cs
+            if len(shared) >= int(cfg["idea_min_shared"]) and len(shared) >= float(cfg["idea_overlap"]) * min(len(fs), len(cs)):
+                ev.append(f'{at}: a Week-1 piece reuses FILM TODAY\'s idea ("{_short(first, 40)}" ~ "{_short(text, 40)}"); '
+                          "Day 0 uses one idea, the rest wait for the week")
+    item("FILM TODAY's one idea is not reused in Week 1", list(dict.fromkeys(ev)), ran=ran)
+
+    ev, seen = [], 0
+    names = _mix_names(run.lang)
+    exp_week1 = run.expected.get("week1", {})
+    launch = bool(run.persona.get("launch")) or (isinstance(exp_week1, dict) and bool(exp_week1.get("launch")))
+    for r, p in ([] if launch else wk):
+        if not names["convert"].search(ck.fold(p.title)):
+            continue
+        seen += 1
+        m = WEEK1_OFFER_RE.search(p.body)
+        if m:
+            ev.append(f'{_turn(r)}: Week 1\'s CONVERT piece "{_short(p.title, 40)}" makes an offer ("{m.group(0)}"): week 1 '
+                      "asks for replies, no price, call or offer before week 2")
+    item("Week 1's CONVERT asks for replies, no offer before week 2", ev, ran=bool(seen))
+
+    passed = all(i["pass"] is not False for i in items)
+    ran_any = any(i["pass"] is not None for i in items)
+    return {"id": "week1_plan", "pass": passed, "status": ("pass" if passed else "fail") if ran_any else "n/a",
+            "items": items, "evidence": [e for i in items if i["pass"] is False for e in i["evidence"]],
+            "details": {"hours": hours, "tier": tier, "pieces": count, "want": want}}
 
 
 def grade(run_dir: Path, root: Path | None = None) -> dict:
@@ -8071,7 +8357,7 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_day0(run),
               check_day0_strategy(run), check_day0_shape(run), check_lengths(run), check_vn_natural(run),
               check_vn_messages(run), check_hook_lab(run), check_strategy_doc(run), check_research_log(run),
-              check_source_check(run), check_week_dedupe(run), check_style(run)]
+              check_source_check(run), check_week_dedupe(run), check_style(run), check_week1_plan(run)]
     everything = invariants + checks
     return {
         "run": run_dir.resolve().name,         # "." graded from inside the folder still names it (review G16)

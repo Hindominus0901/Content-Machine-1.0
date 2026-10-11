@@ -160,14 +160,15 @@ id = "router.vn.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
-title = "'tiếp' after a ChatGPT Free limit resumes Day 0 at Tuần 1, not at Bắt đầu: the plan guess above it, nothing under the pieces"
-context = '''Day 0, Monday 12 Oct 2026, ChatGPT Free on her iPhone (a friend did Door A on a laptop; the project opens in the phone app); pair bạn–mình, Nam. The Day-0 decision reply came (K2): the 4-line Bản đồ, QUAY HÔM NAY under it and 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'; ChatGPT Free hit its limit right after, before Minh Anh answered. Nothing of Tuần 1 has been printed; no Brand Card yet. About 5 hours later, after her evening class, she opens the same chat.'''
+title = "'tiếp' after a ChatGPT Free limit resumes Day 0 at the card + Tuần 1 table, not at Bắt đầu"
+context = "Day 0, Monday 12 Oct 2026, ChatGPT Free on her iPhone (a friend did Door A on a laptop; the project opens in the phone app); pair bạn–mình, Nam. The strategy was OK'd and QUAY HÔM NAY printed alone ('TIẾP → quay xong nhắn 'tiếp''); ChatGPT Free hit its limit right after. Nothing after it has printed: no Brand Card, no Tuần 1 table. About 5 hours later, after her evening class, she opens the same chat."
 input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
-  '''\(chưa nghe thì (?:em|mình) đoán, (?:anh |chị |bạn )?gõ một chữ là đổi\)''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){2}''',
+  '''(?m)^\W*NÓI GÌ:''',
+  '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -176,19 +177,20 @@ not_regex = [
   '''(?i)anh, chị hay bạn''',
   '''(?i)(làm lại|bắt đầu lại|kể lại) từ đầu''',
   '''(?m)^\W*QUAY HÔM NAY\b''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
   '''(?i)nhẹ nhàng hơn\s*\?''',
   '''(?i)chưa (?:kịp )?quay[^.!?\n]{0,30}\?''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
+  '''A\) Notion[^\n]*B\)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; §CM-TODAY 1 'Ngày 0 còn dở: bước kế (§CM-SETUP 9) … không hỏi lại, không in lại'; persona behaviour ('bản free hay hết lượt, quay lại buổi tối cùng đoạn chat và gõ tiếp'). K2 (DECISIONS 6 Oct 2026): QUAY HÔM NAY came in the Map reply, so she left with today's video; the next step is Tuần 1 (start-block step 7: it comes on any answer but a change; ChatGPT Free may split it, ≤3 pieces a reply, so at least 2 copy boxes here), with what the dump left unheard guessed once above it (setup.plan_guess '… (chưa nghe thì mình đoán, gõ một chữ là đổi).', §CM-SETUP 5). Neither the Map nor QUAY HÔM NAY is shown again, nothing restarts, the pieces print with nothing under them (wf15 §2, R1, R4) and no question about Week 1 or the plan is asked."""
+notes = "route: setup (route set). Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'): QUAY HÔM NAY comes alone after the strategy's OK, so the first unfinished step after it is the 'tiếp' reply: Brand Card + dòng lưu + bảng Tuần 1 (the pieces then come one per 'tiếp'); the plan guess sits in HỆ THỐNG NỘI DUNG now; nothing restarts or is reprinted; no hub offer on Day 0. arch §7.4 row 2 'SETUP incomplete → resume at the first unticked step'; §CM-TODAY 1 'Ngày 0 còn dở: bước kế (§CM-SETUP 9) … không hỏi lại, không in lại'; persona behaviour ('bản free hay hết lượt, quay lại buổi tối cùng đoạn chat và gõ tiếp'). Superseded K2 (DECISIONS 6 Oct 2026): QUAY HÔM NAY came in the Map reply, so she left with today's video; the next step is Tuần 1 (start-block step 7: it comes on any answer but a change; ChatGPT Free may split it, ≤3 pieces a reply, so at least 2 copy boxes here), with what the dump left unheard guessed once above it (setup.plan_guess '… (chưa nghe thì mình đoán, gõ một chữ là đổi).', §CM-SETUP 5). Neither the Map nor QUAY HÔM NAY is shown again, nothing restarts, the pieces print with nothing under them (wf15 §2, R1, R4) and no question about Week 1 or the plan is asked."
 
 [[case]]
 id = "router.vn.003"
@@ -196,7 +198,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "floor"]
 title = "Door B, back mid-dump with 'tiep em oi': the dump resumes with one gợi ý, nothing restarts"
-context = '''Day 0, Monday 12 Oct 2026, Door B: ChatGPT Free app on her Android phone, no project; pair chị–em, Bắc. Reply 2 (the dump prompt in chị–em) and the early win after dump chunk 1 ('Em nhận rồi. 3 câu đáng tiền chị vừa nói:', her best line in a copy box with 'Câu này hôm nay đăng luôn cũng được.', two more in quotes, 'Chị cứ kể tiếp, hết thì gõ 'xong'.') were sent. During chunk 2 she told Linh she had to serve a customer and left. 35 minutes later she comes back to the same chat and types without diacritics.'''
+context = "Day 0, Monday 12 Oct 2026, Door B: ChatGPT Free app on her Android phone, no project; pair chị–em, Bắc. Reply 2 (the dump prompt in chị–em) and the early win after dump chunk 1 ('Em nhận rồi. 3 câu đáng tiền chị vừa nói:', her best line in a copy box with 'Câu này hôm nay đăng luôn cũng được.', two more in quotes, 'Chị cứ kể tiếp, hết thì gõ 'xong'.') were sent. During chunk 2 she told Linh she had to serve a customer and left. 35 minutes later she comes back to the same chat and types without diacritics."
 input = '''tiep em oi'''
 contains = []
 not_contains = []
@@ -211,7 +213,7 @@ not_regex = [
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)(?<!\w)(dự án|project)(?!\w)''',
   '''(?i)(?<!\w)(chi oi|ke tiep|em nhan|noi tiep)(?!\w)''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
   '''(?i)3 câu đáng tiền''',
 ]
 verdict = ""
@@ -219,7 +221,7 @@ invariants = ["I1", "I5", "I15", "I17"]
 max_words = 110
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). arch §7.4 row 2 resume; §CM-TODAY 1 ('"tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại, không in lại'); start-block step 3: after the early win, later chunks get 'Mình nhận rồi.' + one gợi ý, so the resume is one gợi ý or dump.keep_going ('Cứ kể tiếp, hết thì gõ 'xong'.'), never the early win again and never the Map yet; persona behaviour (interrupted every 20-30 min, comes back with 'tiếp em ơi' or types without diacritics). Door B never mentions a project (UX §1.4). The answer stays in full Vietnamese with diacritics and in chị–em (she quits when called 'bạn')."""
+notes = "route: setup (route set). arch §7.4 row 2 resume; §CM-TODAY 1 ('\"tiếp\", \"ok rồi\", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại, không in lại'); start-block step 3: after the early win, later chunks get 'Mình nhận rồi.' + one gợi ý, so the resume is one gợi ý or dump.keep_going ('Cứ kể tiếp, hết thì gõ 'xong'.'), never the early win again and never the Map yet; persona behaviour (interrupted every 20-30 min, comes back with 'tiếp em ơi' or types without diacritics). Door B never mentions a project (UX §1.4). The answer stays in full Vietnamese with diacritics and in chị–em (she quits when called 'bạn')."
 
 [[case]]
 id = "router.vn.004"
@@ -520,18 +522,19 @@ id = "router.vn.014"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "'Cho chị xem lại bản đồ' reprints the 4-line Bản đồ; no new decision, nothing parked shown"
+title = "'Cho chị xem lại bản đồ' reprints the strategy as it stands; no new decision, nothing parked shown"
 context = "Week 2, Thursday 22 Oct 2026, ChatGPT Plus. Brand Card v1 present (persona default: pair chị–em, Bắc, keyword LÃI ẢO; the machine block holds why_this_one and not_now). Chị Thu is meeting an old friend from the wholesale market about the course and wants the summary first."
 input = '''em cho chị xem lại cái bản đồ với mấy ý lớn được không, chị muốn đọc lại trước khi đi gặp bạn chị'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA)(?: CỦA \w+)?:.*^\W*GIỌNG(?: CỦA \w+)?:''',
+  '''(?m)^\W*ĐIỀU KHÁCH NHỚ:''',
+  '''(?m)^\W*TRỤ CỘT NỘI DUNG:''',
   '''(?im)^\W*TỪ KH(?:OÁ|ÓA)(?: CỦA \w+)?:[^\n]*(?i:lãi ảo)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?i)trụ cột|(?<!\w)Trụ [1-9]|quân domino|Big Domino|Focus Score''',
+  '''(?i)trụ cột(?!\s+nội\s+dung)|(?<!\w)Trụ [1-9]|quân domino|Big Domino|Focus Score''',
   '''(?i)(?<!\w)kh(?:óa|oá) (thông điệp|bản đồ|lại)|90 ngày''',
   '''ĐỂ SAU|(?i:vì sao chọn|phương án nhì)''',
   '''(?m)^\W*(?:MỘT THÔNG ĐIỆP|3 Ý LỚN|ĐƯỢC BIẾT ĐẾN VÌ)''',
@@ -543,7 +546,7 @@ invariants = ["I1", "I4", "I5", "I6", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: message (route set). wf15 §0 S2 and §CM-MAP (message.kit-map): the Bản đồ is 4 lines, ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ · GIỌNG (strings map.known, map.topics, map.word, map.voice); 'Không in: ĐỂ SAU, vì sao chọn, phương án nhì, gốc rễ, điểm' (R11). Her 'mấy ý lớn' are the 3 CHỦ ĐỀ line. Shown as it stands, not rebuilt and not re-decided: mid-season there is no map.ok decision line (I6; §CM-MAP 'Giữa mùa: không ý lớn thứ 4, không đổi tên, từ khoá tới "lên kế hoạch tháng sau"'). Why this one and ĐỂ SAU with plain reasons print on 'tại sao?' (router.vn.107). The old labels (MỘT THÔNG ĐIỆP, 3 Ý LỚN, ĐƯỢC BIẾT ĐẾN VÌ) are gone. Deny-list: 'trụ cột', 'Trụ n', framework names."""
+notes = "route: message (route set). Updated 11 Oct 2026 (audit a3 H2): the 4-line Bản đồ is retired; 'bản đồ' is the strategy, reprinted as it stands (ĐIỀU KHÁCH NHỚ, TRỤ CỘT NỘI DUNG 3–5 cụm rộng, TỶ LỆ NỘI DUNG, HỆ THỐNG NỘI DUNG, TỪ KHOÁ), with no map.ok; her 'mấy ý lớn' are the TRỤ CỘT NỘI DUNG line; GIỌNG is the card's NÓI THẾ NÀO line now. wf15 §0 S2 and §CM-MAP (message.kit-map): the Bản đồ is 4 lines, ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ · GIỌNG (strings map.known, map.topics, map.word, map.voice); 'Không in: ĐỂ SAU, vì sao chọn, phương án nhì, gốc rễ, điểm' (R11). Her 'mấy ý lớn' are the 3 CHỦ ĐỀ line. Shown as it stands, not rebuilt and not re-decided: mid-season there is no map.ok decision line (I6; §CM-MAP 'Giữa mùa: không ý lớn thứ 4, không đổi tên, từ khoá tới \"lên kế hoạch tháng sau\"'). Why this one and ĐỂ SAU with plain reasons print on 'tại sao?' (router.vn.107). The old labels (MỘT THÔNG ĐIỆP, 3 Ý LỚN, ĐƯỢC BIẾT ĐẾN VÌ) are gone. Deny-list: 'trụ cột', 'Trụ n', framework names."
 
 [[case]]
 id = "router.vn.015"
@@ -689,8 +692,8 @@ id = "router.vn.020"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "'đổi từ khóa' on the Day-0 Map reply swaps to a pre-picked alternate with its origin: that line and the script reprinted, then the OK question; no Tuần 1 yet"
-context = '''Day 0, Monday 12 Oct 2026, about minute 18, ChatGPT Plus on the laptop; pair chị–em, Bắc. The last reply was the one Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ · 3 CHỦ ĐỀ · TỪ KHOÁ: LÃI ẢO (lai ao) · GIỌNG), QUAY HÔM NAY under it with the CTA in her audience pair, 'Comment LÃI ẢO hay nhắn riêng, mình gửi Sổ 3 Cột bản 1 trang', and the gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. The keyword's 2 alternates (lãi thật, không thấy tiền đâu) sit in the machine's notes only. Chị Thu answers the one decision.'''
+title = "'đổi từ khóa' on the strategy's last step swaps to a pre-picked alternate with its origin: that line reprinted, then the OK question; no QUAY HÔM NAY yet"
+context = "Day 0, Monday 12 Oct 2026, about minute 18, ChatGPT Plus on the laptop; pair chị–em, Bắc. The last reply was the strategy's last step (TỪ KHOÁ: LÃI ẢO (lai ao) with the ask path, then 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'); its earlier steps were OK'd. The keyword's 2 alternates (lãi thật, không thấy tiền đâu) sit in the machine's notes only. Chị Thu answers the decision."
 input = '''đổi từ khóa em ơi'''
 contains = []
 not_contains = []
@@ -704,18 +707,19 @@ not_regex = [
   '''(?i)đốt tiền ads|ra đơn|x3 doanh thu|tự do tài chính|xin giá''',
   '''(?i)chọn (1|một) trong (3|ba)''',
   '''(?i)(?<!\w)SEO(?!\w)''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|GIỌNG)(?: CỦA \w+)?:''',
   '''(?i)comment\W{0,3}lãi ảo''',
   '''(?im)^\W*(?:N\d+ · |Tin trả lời inbox|Bài dài ·|Tin Zalo ·)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|NGHIÊN CỨU CHO THẤY|GIỌNG)(?: CỦA \w+)?:''',
+  '''(?m)^\W*QUAY HÔM NAY\b''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I6", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: signature (route set). QA §3.1 signature-keyword 'The machine picks; change swaps'; §CM-SIGNATURE ('Chọn sẵn + 2 dự phòng, không hỏi; "đổi" → từ kế + vai người nói ra'); no 'pick 1 of 3 keywords'. §CM-MAP SỬA: the changed line is reprinted (and QUAY HÔM NAY's script, whose CTA carries the keyword: 'cả kịch bản nếu đổi') + the OK question, still the one decision (I6); the other Map lines are not reprinted. K2 order: a Map change is the one answer that does not bring Tuần 1 (start-block step 7 'trừ sửa'). The swap goes to one of the 2 pre-picked alternates from buyer words, shown with who says it (expected.toml [keyword] candidates 'lãi thật', 'không thấy tiền đâu'; must_not_pick list)."""
+notes = "route: signature (route set). Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'): the keyword sits on the strategy's last step; 'đổi' swaps to the next pre-picked keyword with its origin, that line is reprinted with the OK question (the other lines are not), and QUAY HÔM NAY waits for the OK. QA §3.1 signature-keyword 'The machine picks; change swaps'; §CM-SIGNATURE ('Chọn sẵn + 2 dự phòng, không hỏi; \"đổi\" → từ kế + vai người nói ra'); no 'pick 1 of 3 keywords'. §CM-MAP SỬA: the changed line is reprinted (and QUAY HÔM NAY's script, whose CTA carries the keyword: 'cả kịch bản nếu đổi') + the OK question, still the one decision (I6); the other Map lines are not reprinted. K2 order: a Map change is the one answer that does not bring Tuần 1 (start-block step 7 'trừ sửa'). The swap goes to one of the 2 pre-picked alternates from buyer words, shown with who says it (expected.toml [keyword] candidates 'lãi thật', 'không thấy tiền đâu'; must_not_pick list)."
 
 [[case]]
 id = "router.vn.021"
@@ -1834,33 +1838,33 @@ id = "router.vn.105"
 kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
-title = "The day after a Day-0 'lát nữa', 'tiếp' delivers all of Tuần 1 (not one weekday piece), with no Day-0 restart and no second card"
-context = '''Week 1, Tuesday 13 Oct 2026, 7:40 am, Claude Pro, the same chat as Day 0 (the newest chat in the project); pair anh–em, Trung. On Day 0 he said 'lát nữa' right after the Map + QUAY HÔM NAY reply; Brand Card v1 and the save line printed, he saved the card (it is a project source), and Tuần 1 still waits.'''
+title = "The day after a Day-0 'lát nữa' right after QUAY HÔM NAY, 'tiếp' finishes Day 0: the card + the Tuần 1 table, no restart"
+context = "Week 1, Tuesday 13 Oct 2026, 7:40 am, Claude Pro, the same chat as Day 0 (the newest chat in the project); pair anh–em, Trung. On Day 0 he said 'lát nữa' right after QUAY HÔM NAY (the strategy was OK'd, keyword TUYỂN HOÀI); nothing printed after it: no Brand Card, no Tuần 1 table."
 input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
-  '''(?i)loay hoay nhất|(?:3|ba) (?:khách|người)(?: cũ)?''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){2}''',
+  '''(?m)^\W*NÓI GÌ:''',
+  '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
   '''(?i)tuyển hoài''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?m)^\W*QUAY HÔM NAY\b''',
   '''(?i)Hôm nay mình làm 3 việc|gọi bạn là anh, chị hay bạn|Kiểm tra cài đặt''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
-  '''(?i)Phần còn lại là cho máy''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
   '''(?i)buổi nói chuyện tuần''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I17", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). §CM-TODAY 1 'Ngày 0 còn dở: bước kế (§CM-SETUP 9) … không hỏi lại, không in lại' and §CM-SETUP 9 'Tuần 1 khi "tiếp"': the waiting step is Tuần 1, so 'tiếp' delivers all of it (text-first mix for him: LinkedIn posts, a carousel, the email or message; Claude Pro, one reply) with the Zalo or email message asking 3 past clients one question (research.ask3), each piece with its day and copy box (≥3 boxes) and nothing under it (R1, R4). The plan guess (setup.plan_guess) may sit above it; not asserted, since the card already holds the plan. Not §CM-TODAY 5's one weekday piece (router.vn.057 is that branch, with Tuần 1 already delivered), not the Day-0 promise again, not the Map, not a second Brand Card."""
+notes = "route: setup (route set). Updated 11 Oct 2026 (audit a3 H2/L12; DECISIONS '9–11 Oct 2026'): the waiting step after QUAY HÔM NAY is the card + dòng lưu + bảng Tuần 1 (§CM-TODAY 1: the first unfinished step, never re-asked or reprinted); the Tuần 1 pieces then come one per 'tiếp' or on their day (not all at once). The hub question comes at the first 'tiếp' once the card exists, so not in this reply. §CM-TODAY 1 'Ngày 0 còn dở: bước kế (§CM-SETUP 9) … không hỏi lại, không in lại' and §CM-SETUP 9 'Tuần 1 khi \"tiếp\"': the waiting step is Tuần 1, so 'tiếp' delivers all of it (text-first mix for him: LinkedIn posts, a carousel, the email or message; Claude Pro, one reply) with the Zalo or email message asking 3 past clients one question (research.ask3), each piece with its day and copy box (≥3 boxes) and nothing under it (R1, R4). The plan guess (setup.plan_guess) may sit above it; not asserted, since the card already holds the plan. Not §CM-TODAY 5's one weekday piece (router.vn.057 is that branch, with Tuần 1 already delivered), not the Day-0 promise again, not the Map, not a second Brand Card."
 
 [[case]]
 id = "router.vn.107"
@@ -1959,15 +1963,13 @@ id = "router.vn.110"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "Day 0: 'xong' with nothing left to ask brings ONE reply: the 4-line Bản đồ, QUAY HÔM NAY under it, then the OK question; no Tuần 1 yet"
-context = '''Day 0, Monday 12 Oct 2026, about minute 14, ChatGPT Plus on the laptop; pair chị–em, Bắc. She dictated dump chunk 1 (pasting 2 posts she wrote, as the dump prompt invited) and got the early win; dump chunk 2 passed ~1.200 tiếng and the soft cut came with nothing left to guess: 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì chị kể luôn, không thì chị gõ 'xong'.' Her dump named her buyers' words ('bán thì đắt mà cuối tháng không thấy tiền đâu', 'lãi ảo'), Ngân's result with consent for posts, her offer (Khóa Shop Nhỏ Lãi Thật, 6 tuần, 4.990.000đ), where she posts and her Zalo list.'''
+title = "Day 0: 'xong' with nothing left to ask brings the strategy (its first pre-filled step), no piece; QUAY HÔM NAY only after the OK"
+context = "Day 0, Monday 12 Oct 2026, about minute 14, ChatGPT Plus on the laptop; pair chị–em, Bắc. She dictated dump chunk 1 (pasting 2 posts she wrote, as the dump prompt invited) and got the early win; dump chunk 2 passed ~1.200 tiếng and the soft cut came with nothing left to guess: 'Hôm nay vậy là đủ rồi. Còn chuyện nào thì chị kể luôn, không thì chị gõ 'xong'.' Her dump named her buyers' words ('bán thì đắt mà cuối tháng không thấy tiền đâu', 'lãi ảo'), Ngân's result with consent for posts, her offer (Khóa Shop Nhỏ Lãi Thật, 6 tuần, 4.990.000đ), where she posts and her Zalo list."
 input = '''xong'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)^\W*ĐIỀU KHÁCH NHỚ:.*^\W*3 CHỦ ĐỀ:.*^\W*TỪ KH(?:OÁ|ÓA)(?: CỦA \w+)?:.*^\W*GIỌNG(?: CỦA \w+)?:.*^\W*QUAY HÔM NAY\b.*(?i:quay luôn bây giờ, hoặc đăng phần chữ làm bài viết).*OK hay sửa một dòng\?''',
-  '''(?im)^\W*GIỌNG(?: CỦA \w+)?:[^\n]*với khách:''',
-  '''(?s)QUAY HÔM NAY.*(?i:lãi ảo)''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -1980,13 +1982,15 @@ not_regex = [
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
   '''(?i)(?<!\w)(?:nha|nè)(?!\w)''',
+  '''(?m)^\W*QUAY HÔM NAY\b''',
+  '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b)''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I6", "I15", "I17"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (route set). 'xong' (dump.keep_going's word) in this state ends the dump: start-block step 4 asks only what is still unheard, and here nothing is, so step 5 comes in ONE reply (K2, DECISIONS 6 Oct 2026): the 4-line Bản đồ (strings map.known 'ĐIỀU KHÁCH NHỚ:', map.topics '3 CHỦ ĐỀ:', map.word 'TỪ KHOÁ:', map.voice 'GIỌNG:' with 'với khách: "…"'), QUAY HÔM NAY right under it ending with film.now_or_text ('Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.'), then map.ok last ('Chạy thử 4 tuần nhé. OK hay sửa một dòng?'), the one decision (I6) and the one question. Gone (R10, R11, R18): the 7-line check screen, the old Map labels and ĐỂ SAU / vì sao chọn on the Map, QUAY HÔM NAY after 'ok', the old film line ('… đăng caption dạng bài chữ cũng được') and early win ('Câu {n} đăng được luôn'). Tuần 1 waits for her answer (step 7). Budgets (acceptance [day0], day0_timing): the Map at coach turn 5 here (≤7), film-ready by minute 20. Her register is Bắc (no 'nha', 'nè')."""
+notes = "route: setup (route set). Cập nhật 11/10/2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block NGÀY 0 bước 5): Bản đồ 4 dòng đã bỏ. Chiến lược ≤3 tin điền sẵn, mỗi tin một lần OK (ĐIỀU KHÁCH NHỚ · TRỤ CỘT NỘI DUNG 3–5 cụm rộng · TỶ LỆ NỘI DUNG · HỆ THỐNG NỘI DUNG · TỪ KHOÁ · NGHIÊN CỨU CHO THẤY ≤3 dòng), tin cuối kết bằng map.ok; GIỌNG không còn trên chiến lược (dòng giọng là NÓI THẾ NÀO trên card, sau QUAY HÔM NAY). Input OK từng tin nên assert đọc cả transcript; 'ok' lấy lựa chọn (máy khuyên). 'xong' with nothing unheard ends the dump and the interview has nothing to ask, so the strategy's first step comes (ĐIỀU KHÁCH NHỚ first); QUAY HÔM NAY waits for the OK on its last step. 'xong' (dump.keep_going's word) in this state ends the dump: start-block step 4 asks only what is still unheard, and here nothing is, so step 5 comes in ONE reply (K2, DECISIONS 6 Oct 2026): the 4-line Bản đồ (strings map.known 'ĐIỀU KHÁCH NHỚ:', map.topics '3 CHỦ ĐỀ:', map.word 'TỪ KHOÁ:', map.voice 'GIỌNG:' with 'với khách: \"…\"'), QUAY HÔM NAY right under it ending with film.now_or_text ('Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.'), then map.ok last ('Chạy thử 4 tuần nhé. OK hay sửa một dòng?'), the one decision (I6) and the one question. Gone (R10, R11, R18): the 7-line check screen, the old Map labels and ĐỂ SAU / vì sao chọn on the Map, QUAY HÔM NAY after 'ok', the old film line ('… đăng caption dạng bài chữ cũng được') and early win ('Câu {n} đăng được luôn'). Tuần 1 waits for her answer (step 7). Budgets (acceptance [day0], day0_timing): the Map at coach turn 5 here (≤7), film-ready by minute 20. Her register is Bắc (no 'nha', 'nè')."
 
 # ================================================================ TRIGGER set: taught phrases and universal words
 
@@ -2719,19 +2723,18 @@ id = "router.vn.083"
 kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
-title = "'ok em' on the Map + QUAY HÔM NAY is the one decision: all of Tuần 1 follows at once, nothing under the pieces"
-context = '''Day 0, Monday 12 Oct 2026, about minute 19, Door B (ChatGPT Free, Android); pair chị–em, Bắc. The last reply was the Day-0 decision reply (K2): the 4-line Bản đồ (ĐIỀU KHÁCH NHỚ, 3 CHỦ ĐỀ, TỪ KHOÁ: NGẠI CHÀO (ngai chao), GIỌNG … với khách: "chị – các em"), QUAY HÔM NAY under it (the beat card, its caption box, the CTA with '(ngại xin comment thì gõ 'nhẹ')', the gift box), 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' and 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing of Tuần 1 has been printed; no Brand Card yet.'''
+title = "'ok em' on the strategy's last step is its decision: QUAY HÔM NAY alone follows at once, no confirmation round, nothing under the piece"
+context = "Day 0, Monday 12 Oct 2026, about minute 19, Door B (ChatGPT Free, Android); pair chị–em, Bắc. The strategy's steps came one by one (TỪ KHOÁ: NGẠI CHÀO (ngai chao)); the last reply was its last step, ending 'Chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Nothing to film yet; no Brand Card yet."
 input = '''ok em'''
 contains = []
 not_contains = []
 regex = [
-  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){4}''',
+  '''(?m)^\W*QUAY HÔM NAY\b''',
+  '''(?ms)(?:^[ \t]*(?:```|~~~).*?){2}''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
   '''(?i)chị (có )?chắc (chưa|không)|xác nhận''',
-  '''(?m)^\W*QUAY HÔM NAY\b''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KH(?:OÁ|ÓA)|GIỌNG)(?: CỦA \w+)?:''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)''',
   '''(?i)nhẹ nhàng hơn\s*\?''',
@@ -2739,13 +2742,17 @@ not_regex = [
   '''(?i)Hôm nay xong rồi|Hôm nay vậy là đủ rồi''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''(?m)^\W*(?:N\d+ ·|Bài dài\b|Tin Zalo\b)''',
+  '''(?m)^\W*NÓI GÌ:''',
 ]
 verdict = ""
 invariants = ["I1", "I3", "I5", "I6", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: setup (trigger set). K2 (DECISIONS 6 Oct 2026; start-block NGÀY 0 steps 5-7; §CM-TODAY 1): QUAY HÔM NAY already came under the Map, so 'ok em' on that reply is THE one decision and brings Tuần 1 at once ('TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; ChatGPT Free may split it, ≤3 pieces a reply, so at least 2 copy boxes here): no QUAY HÔM NAY or Map reprint, no confirmation round, never 'muốn làm tuần 1 không?', no stop point (card.stop_lines is retired). The pieces print with nothing under them (R1, R2, R4). 'ok' is a universal word (UX §4). Door B (S0) has no method file, so setup.plan_guess is not required here (router.vn.103 asserts it on S1)."""
+notes = "route: setup (trigger set). Updated 11 Oct 2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'): the OK on the strategy's last step brings QUAY HÔM NAY alone at once (no strategy reprint, no 'chắc chưa?', no Tuần 1, no card: those come on the 'tiếp' once filmed). Superseded K2 (DECISIONS 6 Oct 2026; start-block NGÀY 0 steps 5-7; §CM-TODAY 1): QUAY HÔM NAY already came under the Map, so 'ok em' on that reply is THE one decision and brings Tuần 1 at once ('TUẦN 1 ra ngay khi coach đáp (trừ sửa)'; ChatGPT Free may split it, ≤3 pieces a reply, so at least 2 copy boxes here): no QUAY HÔM NAY or Map reprint, no confirmation round, never 'muốn làm tuần 1 không?', no stop point (card.stop_lines is retired). The pieces print with nothing under them (R1, R2, R4). 'ok' is a universal word (UX §4). Door B (S0) has no method file, so setup.plan_guess is not required here (router.vn.103 asserts it on S1)."
 
 [[case]]
 id = "router.vn.084"

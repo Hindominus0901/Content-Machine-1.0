@@ -3,7 +3,8 @@
 Source: founder feedback rounds on demo hooks (v1 "too many sentences", v2 "câu bình thường", v3 "nói toạc ra",
 v4 "vẫn tệ, sao lại là chị?") + the founder's reference screenshots (Matt Gray, Hormozi, Soo Wei Goh YouTube grids;
 VN Facebook posts) + 800+ verbatim titles in scratchpad hook-formula/corpus.md. Founder's own four rules are marked ★.
-This file outranks the older hook lab checks wherever they differ.
+This file outranks the older hook lab checks wherever they differ; it does not outrank the kit's offer rules (no offer
+before week 2 outside a launch, v13.9; DECISIONS "9–11 Oct 2026"), which win where a CTA line below reads otherwise.
 
 ## The two questions every hook must make the viewer want answered ★
 1. **Tôi sẽ được gì?** (what do I get)
@@ -55,7 +56,8 @@ The hook raises both; the piece answers them. A hook that answers them itself ("
 ## CTA principles
 1. The CTA closes the loop the hook opened and names the thing promised (never one generic "comment X" for every piece).
 2. Rotate by tier: ATTRACT → save / send to someone; TRUST → comment to get the specific thing this piece promised;
-   CONVERT → DM with a real offer and real deadline.
+   CONVERT → DM with a real offer and real deadline, from week 2 or in a launch (Week 1's CONVERT asks for a reply,
+   never a price, a call or an offer; added 11 Oct 2026, audit a3 M8).
 3. Comment questions give a choice ("A hay B?"), never "bạn nghĩ sao?".
 4. The comment keyword is the viewer's own words from the hook.
 5. At least 1 in 4 pieces asks only for a save/send.

@@ -273,7 +273,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S1", "S0", "floor"]
 title = "A post forwarded mid-dump on Day 0 gets liked.day0 in one clause; the dump continues; nothing of it feeds the early win or the Map"
-context = '''Day 0, Monday 12/10/2026, about minute 7, ChatGPT Free on Android, project kit (S1) or the block only (S0). Reply 1 went out (the promise, the mic tip, 'Cho mình hỏi trước: gọi bạn là anh, chị hay bạn? (gõ 1 chữ là được)'); she answered 'Gọi chị là chị thôi em, chị bốn lăm tuổi rồi' and reply 2 (pair chị–em) gave the dump prompt. After dump chunk 1 the early win came: 'Em nhận rồi. 3 câu đáng tiền chị vừa nói:', her best line in a copy box with 'Câu này hôm nay đăng luôn cũng được.', two more in quotes, then 'Chị cứ kể tiếp, hết thì gõ 'xong'.' Before chunk 2 her receptionist forwards her a post on Zalo and she pastes it in.'''
+context = "Day 0, Monday 12/10/2026, about minute 7, ChatGPT Free on Android, project kit (S1) or the block only (S0). Reply 1 went out (the promise, the mic tip, 'Cho mình hỏi trước: gọi bạn là anh, chị hay bạn? (gõ 1 chữ là được)'); she answered 'Gọi chị là chị thôi em, chị bốn lăm tuổi rồi' and reply 2 (pair chị–em) gave the dump prompt. After dump chunk 1 the early win came: 'Em nhận rồi. 3 câu đáng tiền chị vừa nói:', her best line in a copy box with 'Câu này hôm nay đăng luôn cũng được.', two more in quotes, then 'Chị cứ kể tiếp, hết thì gõ 'xong'.' Before chunk 2 her receptionist forwards her a post on Zalo and she pastes it in."
 input = '''Khoan em, con bé lễ tân vừa gửi chị cái này, em xem có hay không
 <<screenshot: bài Facebook · Trang "Chủ Spa Thông Minh" · "Khách nói để suy nghĩ thêm là 90% không quay lại. Chủ spa phải chốt trong 5 phút đầu. Comment CHỐT NHANH để nhận kịch bản 👇" · 👍 1,4 N>>
 thôi chị kể tiếp nhé'''
@@ -289,14 +289,14 @@ not_regex = [
   '''(?i)90\s?%|5 phút đầu|chốt trong''',
   '''(?i)Chủ Spa Thông Minh''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:|VÌ SAO RA KHÁCH)''',
-  '''(?im)^\W*(?:ĐIỀU KHÁCH NHỚ|3 CHỦ ĐỀ|TỪ KHOÁ|GIỌNG):''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
   '''(?i)Hôm nay vậy là đủ rồi''',
   '''Bài bạn thích|(?<!\w)của bạn(?!\w)''',
 ]
 invariants = ["I1", "I4", "I5", "I8", "I15", "I17"]
 max_words = 90
 max_questions = 1
-notes = """wf13 §3 Day 0 and liked.kit-save 4 ('Ngày 0: chỉ liked.day0'): 'A post sent on Day 0 gets liked.day0 and costs 0 turns. It never feeds voice fields, buyer words, the keyword or the early win.' liked.day0 in chị–em ('(Bài đó em giữ lại cho {when}, giờ làm video hôm nay trước đã.)'); the same reply keeps the dump going (dump.keep_going or one gợi ý), so the post adds no machine step; no save line and no make offer on Day 0; no soft cut yet (her chunk 1 is far below ~1.200 tiếng). The post's comment word CHỐT NHANH is never a keyword candidate and its numbers never reach the Map or QUAY HÔM NAY. graders.py day0_timing counts her forwarding turn as a coach turn (the Map still has to come within 7 coach turns, acceptance [day0]); any detour or question about the post on Day 0 is a quit risk for her (persona behaviour)."""
+notes = "wf13 §3 Day 0 and liked.kit-save 4 ('Ngày 0: chỉ liked.day0'): 'A post sent on Day 0 gets liked.day0 and costs 0 turns. It never feeds voice fields, buyer words, the keyword or the early win.' liked.day0 in chị–em ('(Bài đó em giữ lại cho {when}, giờ làm video hôm nay trước đã.)'); the same reply keeps the dump going (dump.keep_going or one gợi ý), so the post adds no machine step; no save line and no make offer on Day 0; no soft cut yet (her chunk 1 is far below ~1.200 tiếng). The post's comment word CHỐT NHANH is never a keyword candidate and its numbers never reach the Map or QUAY HÔM NAY. graders.py day0_timing counts her forwarding turn as a coach turn (the Map still has to come within 7 coach turns, acceptance [day0]); any detour or question about the post on Day 0 is a quit risk for her (persona behaviour)."
 
 # ================================================================ cold start: someone's income claim is saved, never hers
 

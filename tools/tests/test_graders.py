@@ -4267,7 +4267,7 @@ NEXT → Say "next".'''
         self.assertEqual(self.inv(self.en(text), "hook_lab")["status"], "pass")
 
     def test_the_headline_cap_is_acceptance_and_the_vn_cap_is_70(self):
-        slide61 = "Your biggest client is underwater. Here's the 6-step way to check it."       # 69 characters
+        slide61 = "6 signs your biggest client is underwater. Here's a way to check it."      # 68 characters, a frame
         text = f'''{TAG}Week 1
 
 Thu, Oct 15 · LinkedIn PDF post (save the slides as a PDF):
@@ -4276,14 +4276,14 @@ Slide 1: {slide61}
 ```
 
 NEXT → Say "next".'''
-        self.assertFails(self.en(text), "hook_lab", "slide 1 is 69 characters, over 60")
+        self.assertFails(self.en(text), "hook_lab", "slide 1 is 68 characters, over 60")
         self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nheadline_max_chars_en = 80\n")
         self.assertPasses(self.en(text), "hook_lab")
-        vn70 = " ".join(["abcde"] * 11 + ["abcd"])
+        vn70 = " ".join(["5 cách"] + ["abcde"] * 10 + ["abc"])          # a frame ("N cách", v13.10 slide frames)
         self.assertEqual(len(vn70), 70)
         body = f"Thứ Hai, 12/10 · carousel LinkedIn\n```\nTrang 1: {vn70}\n```"
         self.assertPasses(self.vn(body), "hook_lab")
-        self.assertFails(self.vn(body.replace("abcd\n", "abcde\n")), "hook_lab", "slide 1 is 71 characters, over 70")
+        self.assertFails(self.vn(body.replace("abc\n", "abcd\n")), "hook_lab", "slide 1 is 71 characters, over 70")
 
     def test_a_dm_or_zalo_first_line_is_never_read(self):
         text = f"{TAG}Tuần 1\n\nTin Zalo · thứ Hai 12/10\n```\nCó lẽ chị đang bận, nhưng em nhờ chị một chút nha.\n```"
@@ -4838,7 +4838,7 @@ class StrategyFirstBase(TempRepo):
             map_lines = 6
             strategy_max_steps = 3
             found_min_lines = 2
-            found_max_lines = 4
+            found_max_lines = 3
             [lengths]
             [voice]
             i23_phrase_share_min = 0.5
@@ -4940,7 +4940,7 @@ class StrategyFirstOrderTests(StrategyFirstBase):
     def test_a_strategy_reply_is_not_a_wall_of_text(self):
         long = MAP_REPLY.replace("YOUR WORD: CHAPTER", "YOUR WORD: CHAPTER\n" + "Because buyers read. " * 120)
         report = self.report(self.day0(strategy=long))
-        self.assertFails(report, "day0_strategy", "of talk (max 400)")
+        self.assertFails(report, "day0_strategy", "of talk (max 160)")
         # the strategy is what a coach reads the reply for: it is not "more than 300 words before anything usable"
         self.assertPasses(self.report(self.day0(strategy=MAP_REPLY.replace("YOUR WORD: CHAPTER",
                                                                            "YOUR WORD: CHAPTER\n" + "Because buyers read. " * 80))),
@@ -5010,21 +5010,27 @@ class StrategyFirstResearchTests(StrategyFirstBase):
         # it says it researches although the run had none
         self.assertFails(self.report(self.day0(), web=False), "day0_strategy", "says it is researching, but the run had no tool")
 
-    def test_what_i_found_has_2_to_4_lines_each_sourced_or_a_guess(self):
+    def test_what_i_found_has_2_to_3_lines_each_sourced_or_a_guess(self):
         one = MAP_REPLY.replace(' · "coffee before resume" is your own line (my guess)', "")
-        self.assertFails(self.report(self.day0(strategy=one)), "day0_strategy", "WHAT I FOUND has 1 line (want 2-4)")
+        self.assertFails(self.report(self.day0(strategy=one)), "day0_strategy", "WHAT I FOUND has 1 line (want 2-3)")
         bare = MAP_REPLY.replace('"coffee before resume" is your own line (my guess)', "buyers want to be heard")
         self.assertFails(self.report(self.day0(strategy=bare)), "day0_strategy",
                          'WHAT I FOUND line with no source and no guess label: "buyers want to be heard"')
         found_line = [l for l in MAP_REPLY.splitlines() if "WHAT I FOUND" in l][0]
         five = MAP_REPLY.replace(found_line, "    WHAT I FOUND:\n    - a (my guess)\n    - b (my guess)\n    - c (my guess)\n    - d (my guess)\n    - e (my guess)")
-        self.assertFails(self.report(self.day0(strategy=five)), "day0_strategy", "WHAT I FOUND has 5 lines (want 2-4)")
+        self.assertFails(self.report(self.day0(strategy=five)), "day0_strategy", "WHAT I FOUND has 5 lines (want 2-3)")
+        # the kit's cap is 3 (retest v13, audit a3 M5): a 4th line fails too, also under the shipped default
+        four = MAP_REPLY.replace(found_line, "    WHAT I FOUND:\n    - a (my guess)\n    - b (my guess)\n    - c (my guess)\n    - d (my guess)")
+        self.assertFails(self.report(self.day0(strategy=four)), "day0_strategy", "WHAT I FOUND has 4 lines (want 2-3)")
         bullets = MAP_REPLY.replace(found_line, '    WHAT I FOUND:\n    - women say they feel invisible after a layoff (Facebook group, Sept 2026)\n'
                                                 '    - "coffee before resume" is your own line (my guess)\n    - what you told me about the portal (your words)')
         self.assertPasses(self.report(self.day0(strategy=bullets)), "day0_strategy")
         # a web run needs one line with a real source
         guesses = MAP_REPLY.replace("women say they feel invisible after a layoff (Facebook group, Sept 2026)", "women feel invisible (my guess)")
         self.assertFails(self.report(self.day0(strategy=guesses), web=True), "day0_strategy", "no line with a real source, in a run with web tools")
+        # the shipped default (no found_max_lines in acceptance) is the kit's 3 too
+        self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\n")
+        self.assertFails(self.report(self.day0(strategy=four)), "day0_strategy", "WHAT I FOUND has 4 lines (want 2-3)")
 
     def test_the_web_lane_log_starts_after_the_first_send_and_feeds_the_strategy(self):
         def run(queries):
@@ -5329,22 +5335,23 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
     def length(self, report: dict, name: str) -> dict:
         return next(i for i in self.inv(report, "lengths")["items"] if i["item"].startswith(name))
 
-    def test_a_short_video_is_120_to_200_words_with_a_little_slack(self):
-        for n, ok in ((150, True), (120, True), (200, True), (110, True), (218, True), (60, False), (260, False)):
+    def test_a_short_video_is_500_to_800_words_with_a_little_slack(self):
+        """The defaults match acceptance [lengths] (founder 7 Oct night, kept 11 Oct; audit a3 L2: they were 120-200)."""
+        for n, ok in ((650, True), (500, True), (800, True), (460, True), (870, True), (150, False), (900, False)):
             with self.subTest(words=n):
                 report = self.grade(self.reply(self.short(n)))
                 item = self.length(report, "a short video's script")
                 self.assertIs(item["pass"], ok, item)
-        report = self.grade(self.reply(self.short(60)))
-        self.assertFails(report, "lengths", "says 60 words (a short video runs 120-200)")
+        report = self.grade(self.reply(self.short(150)))
+        self.assertFails(report, "lengths", "says 150 words (a short video runs 500-800)")
 
     def test_only_the_spoken_script_is_counted(self):
-        piece = self.short(150) + "\n\nExtra caption words here " + self.words(300, "x")
+        piece = self.short(650) + "\n\nExtra caption words here " + self.words(300, "x")
         self.assertIs(self.length(self.grade(self.reply(piece)), "a short video's script")["pass"], True)
-        run = graders.load_run(self.run_dir(self.reply(self.short(150))), self.root)
-        self.assertEqual(graders.spoken_words(run, run.replies[0], run.replies[0].pieces[0]), 150)
+        run = graders.load_run(self.run_dir(self.reply(self.short(650))), self.root)
+        self.assertEqual(graders.spoken_words(run, run.replies[0], run.replies[0].pieces[0]), 650)
         # a caption in a copy box of its own under the script's box (no "Caption:" label), and the gift in a third: not spoken
-        script = self.short(150).split("Caption:")[0]                 # up to the last line, inside the script's box
+        script = self.short(650).split("Caption:")[0]                 # up to the last line, inside the script's box
         boxes = script + "```\n\n```\n" + self.words(80, "cap") + "\n```\n\n```\n" + self.words(90, "gift") + "\n```"
         self.assertIs(self.length(self.grade(self.reply(boxes)), "a short video's script")["pass"], True)
 
@@ -5352,14 +5359,14 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
         self.write("strings/vn.toml", toml_table("strings", VN_STRINGS))
         self.write("evals/personas/vn/thu/persona.toml", 'xung_ho = "chị–em"\nallowed_numbers = ["3"]\nseeded_names = []\n')
         piece = ("N1 · thứ Năm · Video ngắn · 150 chữ\n```\nChữ trên màn hình: Nghe khách trước\nCâu đầu: " + self.words(10, "mot")
-                 + "\nÝ 1: " + self.words(100, "hai") + "\nCâu cuối: " + self.words(40, "ba") + "\nCaption:\nMột dòng.\n```")
+                 + "\nÝ 1: " + self.words(550, "hai") + "\nCâu cuối: " + self.words(40, "ba") + "\nCaption:\nMột dòng.\n```")
         report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{piece}\n\nTIẾP → Nhắn 'tiếp'.")],
                             persona="vn/thu", edition="vn")
         self.assertIs(self.length(report, "a short video's script")["pass"], True, self.length(report, "a short video's script"))
-        short = piece.replace(self.words(100, "hai"), self.words(20, "hai"))
+        short = piece.replace(self.words(550, "hai"), self.words(20, "hai"))
         report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{short}\n\nTIẾP → Nhắn 'tiếp'.")],
                             persona="vn/thu", edition="vn")
-        self.assertFails(report, "lengths", "says 70 tiếng (a short video runs 120-200)")
+        self.assertFails(report, "lengths", "says 70 tiếng (a short video runs 500-800)")
 
     def test_a_long_post_is_about_1000_words(self):
         for n, ok in ((1000, True), (850, True), (1150, True), (800, False), (1300, False)):
@@ -5390,7 +5397,7 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
             with self.subTest(title=title):
                 report = self.grade(self.reply(self.short(150, title)))
                 self.assertFails(report, "lengths", "gives a length in seconds (words, never seconds)")
-        ok = self.grade(self.reply(self.short(150, "FILM TODAY · say it from memory")))
+        ok = self.grade(self.reply(self.short(650, "FILM TODAY · say it from memory")))
         self.assertPasses(ok, "lengths")
         # a talk of 15 minutes is no piece length
         self.assertPasses(self.grade(self.reply("Weekly Talk · Mon · 15 minutes\n```\nTalk for 15 minutes.\n```")), "lengths")
@@ -6083,7 +6090,7 @@ class V131FalseFailureTests(StrategyFirstBase):
         found = [l for l in MAP_REPLY.splitlines() if "WHAT I FOUND" in l][0]
         five = "WHAT I FOUND:\n" + "\n".join(f"    line {n} (my guess) · more (my guess)" for n in range(5))
         self.assertFails(self.report(self.day0(strategy=MAP_REPLY.replace(found, "    " + five))), "day0_strategy",
-                         "WHAT I FOUND has 5 lines (want 2-4)")
+                         "WHAT I FOUND has 5 lines (want 2-3)")
         bare = self.FOUND_3.replace("Could not read: the Facebook groups (through your Chrome) · say \"show research\" to see each quote",
                                     "buyers want to be heard")
         self.assertFails(self.report(self.day0(strategy=MAP_REPLY.replace(found, "    " + bare))), "day0_strategy",
@@ -6724,6 +6731,202 @@ class V139SourceDedupeStyleTests(TempRepo):
         one = self.reply("Lorraine's story. [NEEDS: the month]",
                          extra='Needs you · Which month did Lorraine start? I won\'t make it up. (Or say "skip".)')
         self.assertEqual(self.inv(one, "style")["status"], "pass")
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Audit a3 (11 Oct 2026, HEAD 50bd6bb, v13.10): the graders follow the current Day-0 order (v13.5: FILM TODAY alone; on
+# 'next' the Brand Card + the Week-1 table; then one Week-1 piece per 'next', after the card) and read the v13.9 / v13.10
+# rules: one ask ≤20 words in "Needs you:" too, hook frames on slide 1 and subject lines, the strategy's per-reply caps,
+# Week 1's count by hours, the idea ledger, Day 0's one idea, no offer before week 2, Matt Gray's names.
+# ---------------------------------------------------------------------------------------------------------------------
+
+A3_FILM = f"""
+    {TAG}Film today
+    FILM TODAY · Short video · ATTRACT · 640 words
+    On-screen: Coffee before resume
+    First line: "I sent 63 applications and got 2 interviews."
+    Beat 1: 24 years at HQ, out at 48.
+    Last line: Comment CHAPTER for the coffee script.
+    Caption:
+    ```
+    Your next chapter starts with a coffee.
+    Comment CHAPTER and I'll send you the coffee script.
+    ```
+    (quieter: say 'quiet')
+    Film it now, or post the caption as text.
+    Needs you: have your own gift? (paste it)
+    NEXT → Say 'next' once filmed.
+    """
+
+A3_TABLE = """| Day | Format | Idea, hook | Ask |
+    |---|---|---|---|
+    | Thu | Short video | The portal says no: one coffee beat it | save |
+    | Fri | Short video | Ask for the coffee first: the HQ years | comment CHAPTER |
+    | Sat | Short video | Who are you after the box: identity | send |
+    | Sun | Long post | Lorraine's trade: what she gave up | comment CHAPTER |
+    | Mon | Email | Who should you have coffee with: reply | reply |
+    | Tue | DM replies | answer each CHAPTER comment | - |"""
+
+
+def a3_card(hours: str = "hours=2.5", table: str = A3_TABLE) -> str:
+    return f"""
+    {TAG}Brand Card
+    Brand Card v1 · 9 Oct 2026
+    WHAT YOU SAY: coffee before resume · job search, confidence, talking to people · "CHAPTER"
+    HOW YOU SAY IT: dry, short, warm
+    The rest is for the machine, no need to read:
+    ```
+    plan_start=2026-10-10 tier=lean {hours} platform=linkedin
+    ```
+    Save this so I remember you (30 s).
+
+    Week 1 · the coffee route · belief: you think a resume gets the call, actually a coffee does
+    {table}
+    NEXT → Say 'next' for the first piece.
+    """
+
+
+A3_PIECES = [
+    """N1 · Thu · Short video · ATTRACT · 640 words
+    ```
+    On-screen: The portal says no
+    First line: "Give me 2 minutes and I'll show you what the portal never will."
+    Last line: Coffee before resume, CHAPTER people know.
+    Caption:
+    Your next chapter starts with a coffee. Comment CHAPTER.
+    ```""",
+    """N2 · Fri · Short video · TRUST · 620 words
+    ```
+    On-screen: Coffee first
+    First line: "If I started over at 48, I'd ask for one coffee a week."
+    Last line: Ask for the coffee, that is the CHAPTER move.
+    Caption:
+    Ask first. Comment CHAPTER.
+    ```""",
+    """N3 · Sat · Short video · ATTRACT · 700 words
+    ```
+    On-screen: Who are you now
+    First line: "You're losing interviews to people who just asked for a coffee."
+    Last line: Say that out loud, a new CHAPTER.
+    Caption:
+    Say it out loud. Comment CHAPTER.
+    ```""",
+    """N4 · Sun · Long post · TRUST · 1000 words
+    ```
+    Lorraine asked me how to stop feeding the portal. This is the CHAPTER she wrote next, and what she gave up.
+    ```""",
+    """N5 · Mon · Email · CONVERT · 300 words
+    ```
+    Subject: Who should you have coffee with?
+    One question for this CHAPTER of yours: if a coffee is the next step, hit reply and tell me who.
+    ```""",
+]
+
+
+class A3AuditGraderTests(StrategyFirstBase):
+    def v135(self, card=None, pieces=None, film=A3_FILM):
+        """Strategy → OK → FILM TODAY alone → 'next' → the card + the Week-1 table → one piece per 'next'."""
+        turns = self.day0(week=film, card=card if card is not None else a3_card())
+        for body in (pieces if pieces is not None else A3_PIECES):
+            turns += [("coach", "next"), ("machine", f"{TAG}Week 1\n    {body}\n    NEXT → Say 'next'.")]
+        return turns
+
+    def item(self, report, check, start):
+        return next(i for i in self.inv(report, check)["items"] if i["item"].startswith(start))
+
+    # -- H1: Week 1 after the card is Week 1
+    def test_h1_pieces_after_the_card_are_week_one(self):
+        report = self.report(self.v135())
+        strat = self.inv(report, "day0_strategy")
+        self.assertEqual(strat["details"]["week_pieces"], 5)
+        self.assertEqual(strat["details"]["week_types"], {"attract": 2, "trust": 2, "convert": 1})
+        self.assertIs(self.item(report, "day0_strategy", "Week 1 covers")["pass"], True)
+        self.assertIsNotNone(self.item(report, "day0_shape", "each Week-1 piece carries YOUR WORD")["pass"])
+        no_convert = [p.replace("CONVERT", "TRUST") for p in A3_PIECES]
+        self.assertFails(self.report(self.v135(pieces=no_convert)), "day0_strategy", "Week 1 has no CONVERT piece")
+
+    def test_h1_a_week_two_reply_ends_week_one(self):
+        turns = self.v135() + [("coach", "plan week 2"),
+                               ("machine", f"{TAG}Week 2\n    N1 · Mon · Short video · CONVERT · 600 words\n    ```\n    "
+                                           "First line: x\n    ```\n    NEXT → Say 'next'.")]
+        run = graders.load_run(self.run_dir(self.numbered(turns), suite="day0"), self.root)
+        self.assertEqual(len(graders.week_pieces(run)), 5)
+
+    # -- M4: the strategy's caps per reply
+    def test_m4_strategy_reply_two_is_capped_at_100_words(self):
+        steps = StrategyStepsTests
+        ok = self.report(StrategyStepsTests.steps(self, steps.STEP1, steps.STEP2, steps.STEP3))
+        self.assertIs(self.strat(ok, "the strategy is short enough")["pass"], True)
+        long2 = steps.STEP2.replace("NEXT →", "Because a buyer reads three of your pieces before a call. " * 8 + "\nNEXT →")
+        bad = self.report(StrategyStepsTests.steps(self, steps.STEP1, long2, steps.STEP3))
+        self.assertFails(bad, "day0_strategy", "the strategy reply 2 is")
+        self.assertIn("(max 100)", " ".join(self.strat(bad, "the strategy is short enough")["evidence"]))
+
+    # -- M1: "Needs you:" with a colon, one ask, ≤20 words
+    def test_m1_needs_line_with_a_colon_is_read_and_capped_at_20_words(self):
+        self.assertEqual(graders.needs_questions("Needs you: have your own gift? (paste it)"),
+                         (False, "have your own gift? (paste it)"))
+        self.assertIsNotNone(graders.needs_questions("Cần chị: có sẵn quà chưa? (có thì dán)"))
+        self.assertIsNone(graders.needs_questions("Cần 3 thứ: giá, lịch, quà."))
+        ok = self.grade([("coach", "go"), ("machine", f"{TAG}Film\nNeeds you: have your own gift? (paste it)\nNEXT → Say 'next'.")])
+        self.assertPasses(ok, "style")
+        long = ("Needs you: which month did Lorraine start with you, what did she do before, and can I use her first name "
+                "in the post?")
+        bad = self.grade([("coach", "go"), ("machine", f"{TAG}Film\n{long}\nNEXT → Say 'next'.")])
+        self.assertFails(bad, "style", "(one ask, ≤20)")
+
+    # -- M2: frames on slide 1 and the first subject line
+    def test_m2_slide_one_and_subject_fill_a_frame(self):
+        def run(body):
+            return self.grade([("coach", "next"), ("machine", f"{TAG}Week 1\n\n{body}\n\nNEXT → Say 'next'.")])
+        good = run("Thu, Oct 15 · LinkedIn carousel\n```\nSlide 1: 5 signs your job search stalled\n```")
+        self.assertIs(self.item(good, "hook_lab", "the first line fills one of the hook frames")["pass"], True)
+        bad = run("Thu, Oct 15 · LinkedIn carousel\n```\nSlide 1: Coffee comes before the resume.\n```")
+        self.assertFails(bad, "hook_lab", "slide 1 fills none of the hook frames")
+        subj = run("Tue, Oct 13 · Email to your list:\n```\nSubject lines:\n1. A note about coffee\n2. The stairwell call\n```")
+        self.assertFails(subj, "hook_lab", "subject line 1 fills none of the hook frames")
+        asked = run("Tue, Oct 13 · Email to your list:\n```\nSubject lines:\n1. Who should you have coffee with?\n2. The stairwell call\n```")
+        self.assertPasses(asked, "hook_lab")
+
+    # -- M3: week1_plan
+    def test_m3_week_one_count_follows_the_hours(self):
+        ok = self.report(self.v135())
+        plan = self.inv(ok, "week1_plan")
+        self.assertEqual((plan["details"]["hours"], plan["details"]["pieces"], plan["details"]["want"]), (2.5, 5, 5), plan)
+        self.assertIs(self.item(ok, "week1_plan", "Week 1's piece count")["pass"], True)
+        bad = self.report(self.v135(card=a3_card(hours="hours=1.5")))
+        self.assertFails(bad, "week1_plan", "Week 1 has 5 pieces; at ≈1.5 h a week")
+        standard = self.report(self.v135(card=a3_card(hours="").replace("tier=lean", "tier=standard")))
+        self.assertFails(standard, "week1_plan", "at tier=standard the kit's count is 7")
+
+    def test_m3_idea_ledger_column_and_no_idea_twice(self):
+        self.assertIs(self.item(self.report(self.v135()), "week1_plan", "the Week-1 table has")["pass"], True)
+        no_col = A3_TABLE.replace("| Day | Format | Idea, hook | Ask |", "| Day | Format | Hook | Ask |")
+        self.assertFails(self.report(self.v135(card=a3_card(table=no_col))), "week1_plan", 'no "Idea, hook" column')
+        twice = A3_TABLE.replace("Who are you after the box: identity", "The portal says no: one coffee beat it again")
+        self.assertFails(self.report(self.v135(card=a3_card(table=twice))), "week1_plan", "two Week-1 rows use one idea")
+
+    def test_m3_film_today_idea_is_not_reused(self):
+        self.assertIs(self.item(self.report(self.v135()), "week1_plan", "FILM TODAY's one idea")["pass"], True)
+        reused = [A3_PIECES[0].replace("Give me 2 minutes and I'll show you what the portal never will.",
+                                       "I sent 63 applications and got 2 interviews, here's why.")] + A3_PIECES[1:]
+        self.assertFails(self.report(self.v135(pieces=reused)), "week1_plan", "reuses FILM TODAY's idea")
+
+    def test_m3_no_offer_before_week_two(self):
+        self.assertIs(self.item(self.report(self.v135()), "week1_plan", "Week 1's CONVERT")["pass"], True)
+        offer = A3_PIECES[:4] + [A3_PIECES[4].replace("hit reply and tell me who.",
+                                                      "book a call this week: 8 weeks, $2,400.")]
+        self.assertFails(self.report(self.v135(pieces=offer)), "week1_plan", "makes an offer")
+        self.write("evals/personas/en/test-coach/persona.toml", PERSONA.replace('cold_start = false', 'cold_start = false\nlaunch = true'))
+        self.assertPasses(self.report(self.v135(pieces=offer)), "week1_plan")
+
+    # -- L3: Matt Gray's names fail the deny-list check whatever the list holds
+    def test_l3_matt_gray_names_fail_deny_list(self):
+        bad = self.grade([("coach", "go"), ("machine", f"{TAG}Plan\nThis is your Content Waterfall for the week.\nNEXT → Say 'next'.")])
+        self.assertFails(bad, "deny_list", "Content Waterfall")
+        self.assertPasses(self.grade([("coach", "go"), ("machine", f"{TAG}Plan\nThis is your plan for the week.\nNEXT → Say 'next'.")]),
+                          "deny_list")
 
 
 if __name__ == "__main__":

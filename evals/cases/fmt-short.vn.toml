@@ -126,9 +126,9 @@ id = "fmt-short.vn.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "QUAY HÔM NAY under the Bản đồ has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3–5 ý (kịch bản đủ câu 500–800 chữ, retest v13), câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
-context = "Day 0, about minute 18, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: past ~1.200 tiếng the soft cut came after chunk 2 and, with nothing missing (her buyers' words 'bán thì đắt mà cuối tháng không thấy tiền đâu', Ngân's consented result, the offer), ended '… Còn chuyện nào thì kể luôn, không thì gõ 'xong'.'; she told one more story (chunk 3) and now types 'xong'. That brings ONE reply: the 4-line Bản đồ (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang; offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ), QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Delivery: gạch đầu dòng (chunk 3: 'em cho chị mấy gạch đầu dòng')."
-input = """xong rồi em. Tối nay chị quay luôn, em đưa chị cái video đi"""
+title = "QUAY HÔM NAY alone after the strategy's OK has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3–5 ý (kịch bản đủ câu 500–800 chữ, retest v13), câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
+context = "Day 0, about minute 18, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: past ~1.200 tiếng the soft cut came after chunk 2 and, with nothing missing (her buyers' words 'bán thì đắt mà cuối tháng không thấy tiền đâu', Ngân's consented result, the offer), ended '… Còn chuyện nào thì kể luôn, không thì gõ 'xong'.'; she told one more story (chunk 3) and typed 'xong'. The interview is done and the strategy came in its pre-filled steps (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang; offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ), each OK'd; the last one ended '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: gạch đầu dòng (chunk 3: 'em cho chị mấy gạch đầu dòng')."
+input = '''ok em. Tối nay chị quay luôn, em đưa chị cái video đi'''
 regex = [
   '''QUAY HÔM NAY''',
   '''(?i)chữ trên màn hình''',
@@ -143,8 +143,7 @@ regex = [
   '''(?ms)QUAY HÔM NAY(?:.*?^[ \t]*```){4}''',
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
-  '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''(?i)TIẾP →[^\n]*['‘’"“”]?tiếp''',
 ]
 not_regex = [
   '''(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
@@ -160,20 +159,22 @@ not_regex = [
   '''(?i)đọc to|từ kh(?:oá|óa) (?:đã có|1 lần)|không có câu hứa|nói chậm câu cuối|ai comment cũng nhận quà|có quà ngay: tin trả lời soạn sẵn|đồng ý cho kể như vậy''',
   '''(?i)caption (?:dạng|thành) (?:bài )?chữ|chưa quay[^\n]{0,30}đăng caption''',
   '''(?is)QUAY HÔM NAY(?:.*?lãi ảo){5}''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I9", "I12", "I14", "I15", "I17", "I18", "I23"]
 max_questions = 1
-notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the 4-line Bản đồ in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?'); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map's TỪ KHOÁ line holds the keyword too. Start-block step 6 and fmt-short.kit-video-short 1-7, the whole shape in one reply: 'QUAY HÔM NAY · dưới 30 giây, nhớ ý rồi nói'; chữ trên màn hình ≤6 tiếng; câu đầu nguyên văn ≤18 tiếng (hook_max); 3 ý ≤18 tiếng each; câu cuối nguyên văn; the caption in a copy box; cta.default 'Comment LÃI ẢO hay nhắn riêng, mình gửi …' in her audience address with '(ngại xin comment thì gõ 'nhẹ')' (quit point 11); the quà (Sổ 3 Cột bản 1 trang, written in full, one inbox message long) in its own copy box under the caption (at least two boxes after the title); then film.now_or_text 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' The keyword sits once in the words, outside the ask (§CM-WEEK 4); the {5} bound after the title is a loose upper limit (graders.py day0_shape reads the Week-1 pieces). Nothing under the piece (wf15 §2; R1, R2, R9): no VÌ SAO line, no '✓ Đã kiểm:' line, no before-filming ticks ('đọc to câu đầu', 'từ khoá đã có'), no Ready line; the storeroom story the old Checked line named (28 Tết 2019, the kho, the notebook) is asserted in the piece itself, and the VÌ SAO line, the checks and what it was written from print on 'tại sao?' (fmt-short.vn.047). The two option sentences are statements (header rule): map.ok is the reply's one question. Template labels stay internal (UX §4). Traps from persona.toml: Trang's 50 triệu (no consent), Khải's 'gấp 3', the 1 tỷ rumour. Her Northern voice never takes nha / nè / hông / tui (expected.toml banned_particles_whole_word). verdict Ready is hidden state (evals/run.py: no status line). S0 included: Day-0-critical."""
+notes = "Cập nhật 11/10/2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block NGÀY 0 bước 6): chiến lược trước, rồi QUAY HÔM NAY một mình: OK ở tin cuối của chiến lược mang đúng MỘT tin chỉ có QUAY HÔM NAY (một ý; không dòng chiến lược, không map.ok, không Tuần 1, không card; dòng Cần duy nhất ≤20 chữ; TIẾP: quay xong nhắn 'tiếp'); Brand Card và bảng Tuần 1 đến ở lần 'tiếp' đó. Superseded K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the 4-line Bản đồ in the reply that brings it, then map.ok ('… chạy thử 4 tuần nhé. OK hay sửa một dòng?'); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map's TỪ KHOÁ line holds the keyword too. Start-block step 6 and fmt-short.kit-video-short 1-7, the whole shape in one reply: 'QUAY HÔM NAY · dưới 30 giây, nhớ ý rồi nói'; chữ trên màn hình ≤6 tiếng; câu đầu nguyên văn ≤18 tiếng (hook_max); 3 ý ≤18 tiếng each; câu cuối nguyên văn; the caption in a copy box; cta.default 'Comment LÃI ẢO hay nhắn riêng, mình gửi …' in her audience address with '(ngại xin comment thì gõ 'nhẹ')' (quit point 11); the quà (Sổ 3 Cột bản 1 trang, written in full, one inbox message long) in its own copy box under the caption (at least two boxes after the title); then film.now_or_text 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.' The keyword sits once in the words, outside the ask (§CM-WEEK 4); the {5} bound after the title is a loose upper limit (graders.py day0_shape reads the Week-1 pieces). Nothing under the piece (wf15 §2; R1, R2, R9): no VÌ SAO line, no '✓ Đã kiểm:' line, no before-filming ticks ('đọc to câu đầu', 'từ khoá đã có'), no Ready line; the storeroom story the old Checked line named (28 Tết 2019, the kho, the notebook) is asserted in the piece itself, and the VÌ SAO line, the checks and what it was written from print on 'tại sao?' (fmt-short.vn.047). The two option sentences are statements (header rule): map.ok is the reply's one question. Template labels stay internal (UX §4). Traps from persona.toml: Trang's 50 triệu (no consent), Khải's 'gấp 3', the 1 tỷ rumour. Her Northern voice never takes nha / nè / hông / tui (expected.toml banned_particles_whole_word). verdict Ready is hidden state (evals/run.py: no status line). S0 included: Day-0-critical."
 
 [[case]]
 id = "fmt-short.vn.002"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
-title = "Compact mode: QUAY HÔM NAY under the Bản đồ is complete with no method file, prints nothing under it, never asks for the file, carries no client result"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 18, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the best-result guess ('… không thì mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the last missing fact was a guess on what she sells ('Mình đoán: …. Đúng không?'). Her answer brings ONE reply: the 4-line Bản đồ (dân văn phòng 25–35 ngồi máy tính cả ngày; TỪ KHOÁ: CỨNG ĐƠ; quà = 3 động tác 5 phút tại bàn; no offer yet: cold start, 0 online clients) with QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Delivery: thẻ ý (the default)."
-input = """chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi"""
+title = "Compact mode: QUAY HÔM NAY alone after the strategy's OK is complete with no method file, prints nothing under it, never asks for the file, carries no client result"
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 18, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the best-result guess ('… không thì mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the interview's last question was what she sells (nothing yet). The interview is done and the strategy came in its pre-filled steps (dân văn phòng 25–35 ngồi máy tính cả ngày; TỪ KHOÁ: CỨNG ĐƠ; quà = 3 động tác 5 phút tại bàn; no offer yet: cold start, 0 online clients), each OK'd; the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: thẻ ý (the default)."
+input = '''ok luôn. tối nay mình quay'''
 regex = [
   '''QUAY HÔM NAY''',
   '''(?i)chữ trên màn hình''',
@@ -187,8 +188,7 @@ regex = [
   '''(?ms)QUAY HÔM NAY(?:.*?^[ \t]*```){4}''',
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
-  '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''(?i)TIẾP →[^\n]*['‘’"“”]?tiếp''',
 ]
 not_regex = [
   '''(?i)file phương pháp''',
@@ -204,36 +204,36 @@ not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)đọc to|từ kh(?:oá|óa) (?:đã có|1 lần)|không có câu hứa|nói chậm câu cuối|ai comment cũng nhận quà|có quà ngay: tin trả lời soạn sẵn''',
   '''(?i)caption (?:dạng|thành) (?:bài )?chữ|chưa quay[^\n]{0,30}đăng caption''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I14", "I15", "I17", "I18", "I23"]
 max_questions = 1
-notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the 4-line Bản đồ in the reply to the last missing-fact answer, then map.ok (Southern particle 'nha'); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. UX §6 'Day 0 completes with 0 files and with 1 file'; quit point 1 'method file requested mid-session'. The instruction block alone carries the QUAY HÔM NAY shape (NGÀY 0 step 6) and the IN rule ('bài xong → chỉ in bài'), so S0 prints the same whole piece with nothing under it (R1, R2): its VÌ SAO and checks wait for 'tại sao?' (character.vn.029 asks it on this state). The piece stands on her own 9 giờ tối tháng 3 năm 2023 story (expected.toml week1 lead_piece), asserted in the piece; the ask is 'Comment CỨNG ĐƠ hay nhắn riêng, mình gửi …' with the 'nhẹ' route, the quà in its own box. Cold start: any client-result number is a fabrication (I8); '3 tuần' and '4 viên' are trap_numbers (the friend's anecdote, P5). Pair bạn–mình: 'chị' or 'em' addressed to her is a slip (setup.vn.007), and her script speaks to 'mấy bạn'. graders.py deny_list also runs."""
+notes = "Cập nhật 11/10/2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block NGÀY 0 bước 6): chiến lược trước, rồi QUAY HÔM NAY một mình: OK ở tin cuối của chiến lược mang đúng MỘT tin chỉ có QUAY HÔM NAY (một ý; không dòng chiến lược, không map.ok, không Tuần 1, không card; dòng Cần duy nhất ≤20 chữ; TIẾP: quay xong nhắn 'tiếp'); Brand Card và bảng Tuần 1 đến ở lần 'tiếp' đó. Superseded K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the 4-line Bản đồ in the reply to the last missing-fact answer, then map.ok (Southern particle 'nha'); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. UX §6 'Day 0 completes with 0 files and with 1 file'; quit point 1 'method file requested mid-session'. The instruction block alone carries the QUAY HÔM NAY shape (NGÀY 0 step 6) and the IN rule ('bài xong → chỉ in bài'), so S0 prints the same whole piece with nothing under it (R1, R2): its VÌ SAO and checks wait for 'tại sao?' (character.vn.029 asks it on this state). The piece stands on her own 9 giờ tối tháng 3 năm 2023 story (expected.toml week1 lead_piece), asserted in the piece; the ask is 'Comment CỨNG ĐƠ hay nhắn riêng, mình gửi …' with the 'nhẹ' route, the quà in its own box. Cold start: any client-result number is a fabrication (I8); '3 tuần' and '4 viên' are trap_numbers (the friend's anecdote, P5). Pair bạn–mình: 'chị' or 'em' addressed to her is a slip (setup.vn.007), and her script speaks to 'mấy bạn'. graders.py deny_list also runs."
 
 [[case]]
 id = "fmt-short.vn.003"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
-title = "Undecided audience pair: the machine picks one on the Map's GIỌNG line, never asks; the quiet ask and 'Quay luôn bây giờ…' are statements"
-context = "Day 0, about minute 18, ChatGPT Plus; he dumped from the iPhone app and reads on the laptop. Pair anh–em; Southern. His audience pair is undecided (persona: 'mình – bạn' hay 'anh – em'; he picks at random if the machine proposes nothing). Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bảo hiểm, môi giới căn hộ, dạy sale); his answer brings ONE reply: the 4-line Bản đồ (bridge buyer = vợ chồng trẻ mua căn hộ đầu tiên; TỪ KHOÁ: GỒNG LÃI; quà = bảng tính ngược 1 trang; offer = buổi tính trước khi cọc: 0đ, he lives on commission and says so; GIỌNG: … · với khách: one pair, picked) with QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Delivery: thẻ ý."
-input = """Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11. Lẹ đi em"""
+title = "Undecided audience pair: QUAY HÔM NAY alone uses one picked pair, never asks; the quiet ask and 'Quay luôn bây giờ…' are statements"
+context = "Day 0, about minute 18, ChatGPT Plus; he dumped from the iPhone app and reads on the laptop. Pair anh–em; Southern. His audience pair is undecided (persona: 'mình – bạn' hay 'anh – em'; he picks at random if the machine proposes nothing). Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bảo hiểm, môi giới căn hộ, dạy sale); he answered it in the interview. The interview is done and the strategy came in its pre-filled steps (bridge buyer = vợ chồng trẻ mua căn hộ đầu tiên; TỪ KHOÁ: GỒNG LÃI; quà = bảng tính ngược 1 trang; offer = buổi tính trước khi cọc: 0đ, he lives on commission and says so), each OK'd; the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. His OK in this turn brings ONE reply: QUAY HÔM NAY alone. The audience pair is picked, never asked; it shows on the card's NÓI THẾ NÀO line ('với khách: …') after this, and in the script itself. Delivery: thẻ ý."
+input = '''ok em. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11. Lẹ đi em'''
 regex = [
   '''QUAY HÔM NAY''',
   '''(?m)QUAY HÔM NAY[\s\S]*^(?![^\n]*(?i:comment|bình luận|nhắn riêng|TIẾP))[^\n]*(?i:gồng lãi)''',
   '''QUAY HÔM NAY[\s\S]*(?i:toilet|nhà mẫu|khăn giấy|dí cọc)''',
-  '''(?im)^\W*(?:[1-4][.)]?\s+)?GIỌNG:[^\n]*với khách:[^\n]*(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em)''',
   '''(?i)comment\s+["“]?GỒNG LÃI["”]?\s+hay nhắn riêng''',
   '''(?i)ngại xin comment[^\n]{0,20}gõ\s+['"“‘]nhẹ''',
   '''(?ms)QUAY HÔM NAY(?:.*?^[ \t]*```){4}''',
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
-  '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''(?i)TIẾP →[^\n]*['‘’"“”]?tiếp''',
 ]
 not_regex = [
   '''(?im)(?:nhẹ nhàng hơn|ngại xin comment|gõ\s+['"“‘]nhẹ['"”’]?|quay luôn bây giờ|chưa (?:kịp )?quay)[^.!\n]*\?''',
-  '''(?im)^(?!\W*(?:[1-4][.)]?\s+)?GIỌNG:)[^\n]*(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em|xưng\s+\S+\s+hay)[^\n]*\?''',
+  '''(?im)^(?!\W*NÓI THẾ NÀO:)[^\n]*(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em|xưng\s+\S+\s+hay)[^\n]*\?''',
   '''(?im)^\W*chữ trên màn hình[^:\n]{0,30}:[^\S\n]*(?:\S+[^\S\n]+){6}\S+''',
   '''(?im)^\W*câu (?:đầu|mở đầu)[^:\n]{0,40}:[^\S\n]*(?:\S+[^\S\n]+){18}\S+''',
   '''(?i)(?:view sông|bị từ chối bồi thường|lãi suất đảm bảo|sinh lời|cơ hội vàng|siêu phẩm|căn cuối cùng)''',
@@ -242,20 +242,22 @@ not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)đọc to|từ kh(?:oá|óa) (?:đã có|1 lần)|không có câu hứa|nói chậm câu cuối|ai comment cũng nhận quà|có quà ngay: tin trả lời soạn sẵn''',
   '''(?i)caption (?:dạng|thành) (?:bài )?chữ|chưa quay[^\n]{0,30}đăng caption''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I6", "I8", "I9", "I10", "I12", "I15", "I17", "I18"]
 max_questions = 1
-notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the Bản đồ in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. 'Options with no default' is a G6 quit trigger: the machine picks the audience pair (his test video used mình – bạn; §CM-VOICE 3 'chưa rõ: mình – bạn') and shows it on the Map's GIỌNG line ('với khách: "…"', start-block step 5), where 'sửa dòng 4' changes it inside the one decision (I6); no line naming a pair ends in '?' (the GIỌNG line itself may quote one of his phrases). The quiet ask and film.now_or_text are statements (header option-sentence rule, I5); map.ok is the reply's one question, with the Southern particle ('nha'), never 'nhé'. His caller's line 'Bên sale dí cọc quá, em có nên cọc không anh?' may sit verbatim in the piece (I9); in-piece questions do not count. The toilet-nhà-mẫu story the old Checked line named is asserted in the piece (R2); its VÌ SAO and checks print on 'tại sao?'. Traps: P8 'chưa khách nào bị từ chối bồi thường', 'view sông' (the unit faces the pool), 'lãi suất đảm bảo'. Southern voice: no nhé / nhỉ / đấy (expected.toml avoid_regional_in_his_voice). Quit points 7 ('khóa 90 ngày') and 8 ('ngoài dự án')."""
+notes = "Cập nhật 11/10/2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block NGÀY 0 bước 6): chiến lược trước, rồi QUAY HÔM NAY một mình: OK ở tin cuối của chiến lược mang đúng MỘT tin chỉ có QUAY HÔM NAY (một ý; không dòng chiến lược, không map.ok, không Tuần 1, không card; dòng Cần duy nhất ≤20 chữ; TIẾP: quay xong nhắn 'tiếp'); Brand Card và bảng Tuần 1 đến ở lần 'tiếp' đó. Superseded K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the Bản đồ in the reply to the last missing-fact answer, then map.ok; keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. 'Options with no default' is a G6 quit trigger: the machine picks the audience pair (his test video used mình – bạn; §CM-VOICE 3 'chưa rõ: mình – bạn') and shows it on the Map's GIỌNG line ('với khách: \"…\"', start-block step 5), where 'sửa dòng 4' changes it inside the one decision (I6); no line naming a pair ends in '?' (the GIỌNG line itself may quote one of his phrases). The quiet ask and film.now_or_text are statements (header option-sentence rule, I5); map.ok is the reply's one question, with the Southern particle ('nha'), never 'nhé'. His caller's line 'Bên sale dí cọc quá, em có nên cọc không anh?' may sit verbatim in the piece (I9); in-piece questions do not count. The toilet-nhà-mẫu story the old Checked line named is asserted in the piece (R2); its VÌ SAO and checks print on 'tại sao?'. Traps: P8 'chưa khách nào bị từ chối bồi thường', 'view sông' (the unit faces the pool), 'lãi suất đảm bảo'. Southern voice: no nhé / nhỉ / đấy (expected.toml avoid_regional_in_his_voice). Quit points 7 ('khóa 90 ngày') and 8 ('ngoài dự án')."
 
 [[case]]
 id = "fmt-short.vn.004"
 kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
-title = "On site: QUAY HÔM NAY is a walk-around beat card on his 2019 story, never 'sit and talk to the camera', no 'không phát sinh', nothing under it"
-context = "Day 0, about minute 19, ChatGPT Free on his old Samsung, standing in a client's kitchen in Thanh Khê at lunch. Pair anh–em; Central (Quảng) voice; public posts xưng Đức / tụi em, gọi anh chị. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bếp trọn gói, nội thất homestay, đóng tủ cho công ty thiết kế); this turn answers it and brings ONE reply: the 4-line Bản đồ (chủ nhà phố và căn hộ ở Đà Nẵng sợ phát sinh khi sửa bếp; TỪ KHOÁ: PHÁT SINH; quà = danh sách 7 chỗ hay phát sinh khi sửa bếp) with QUAY HÔM NAY right under it, then '… chạy thử 4 tuần nghe. OK hay sửa một dòng?'. Delivery: thẻ ý (persona behaviour: 'Đừng bắt anh ngồi nói trước camera')."
-input = """bếp đó em, tháng ni bếp nuôi xưởng. homestay với đóng tủ cho công ty là phụ thôi. nói ngắn thôi em, anh đang ở công trình"""
+title = "On site: QUAY HÔM NAY alone after the strategy's OK is a walk-around beat card on his 2019 story, never 'sit and talk to the camera', no 'không phát sinh', nothing under it"
+context = "Day 0, about minute 19, ChatGPT Free on his old Samsung, standing in a client's kitchen in Thanh Khê at lunch. Pair anh–em; Central (Quảng) voice; public posts xưng Đức / tụi em, gọi anh chị. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bếp trọn gói, nội thất homestay, đóng tủ cho công ty thiết kế); he answered it in the interview. The interview is done and the strategy came in its pre-filled steps (chủ nhà phố và căn hộ ở Đà Nẵng sợ phát sinh khi sửa bếp; TỪ KHOÁ: PHÁT SINH; quà = danh sách 7 chỗ hay phát sinh khi sửa bếp), each OK'd; the last one ended '… chạy thử 4 tuần nghe. OK hay sửa một dòng?'. His OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: thẻ ý (persona behaviour: 'Đừng bắt anh ngồi nói trước camera')."
+input = '''ok em. nói ngắn thôi em, anh đang ở công trình'''
 regex = [
   '''QUAY HÔM NAY''',
   '''(?m)QUAY HÔM NAY[\s\S]*^(?![^\n]*(?i:comment|bình luận|nhắn riêng|TIẾP))[^\n]*(?i:phát sinh)''',
@@ -269,8 +271,7 @@ regex = [
   '''(?ms)QUAY HÔM NAY(?:.*?^[ \t]*```){4}''',
   '''(?i)Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết''',
   '''TIẾP →[^\n]*\s*\Z''',
-  '''(?ms)^\W*(?:[1-4][.)]?\s+)?ĐIỀU KHÁCH NHỚ:.*^\W*(?:[1-4][.)]?\s+)?3 CHỦ ĐỀ:.*^\W*(?:[1-4][.)]?\s+)?TỪ KH(?:OÁ|ÓA|OA):.*^\W*(?:[1-4][.)]?\s+)?GIỌNG:.*QUAY HÔM NAY''',
-  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
+  '''(?i)TIẾP →[^\n]*['‘’"“”]?tiếp''',
 ]
 not_regex = [
   '''(?im)^(?![^\n]*(?:không|khỏi|đừng|chẳng)\s)[^\n]*ngồi\s+(?:nói|nhìn)[^.\n]{0,20}(?:camera|máy quay|ống kính)''',
@@ -282,12 +283,14 @@ not_regex = [
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)đọc to|từ kh(?:oá|óa) (?:đã có|1 lần)|không có câu hứa|nói chậm câu cuối|ai comment cũng nhận quà|có quà ngay: tin trả lời soạn sẵn''',
   '''(?i)caption (?:dạng|thành) (?:bài )?chữ|chưa quay[^\n]{0,30}đăng caption''',
+  '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?(?:ĐIỀU KHÁCH NHỚ|TRỤ CỘT NỘI DUNG|TỶ LỆ NỘI DUNG|HỆ THỐNG NỘI DUNG|TỪ KH(?:OÁ|ÓA)|NGHIÊN CỨU CHO THẤY|GIỌNG):''',
+  '''[Cc]hạy thử 4 tuần[^\n]{0,20}OK hay sửa một dòng\?''',
 ]
 verdict = "Ready"
 invariants = ["I1", "I3", "I4", "I5", "I8", "I12", "I15", "I17", "I18"]
 max_words = 520
 max_questions = 1
-notes = """K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the Bản đồ in the reply to the last missing-fact answer, then map.ok (Central particle 'nghe'); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Persona behaviour 'Nói ngắn thôi em, anh đang ở công trình' and 'Đừng bắt anh ngồi nói trước camera': the short is filmed walking the site with the phone (expected.toml week1 lead_piece). The 2019 Liên Chiểu story (ông chú, đục thử) the old Checked line named is asserted in the piece (R2); its VÌ SAO and checks print on 'tại sao?'. The ask 'Comment PHÁT SINH hay nhắn riêng, …' with the 'nhẹ' route, the quà (the list of 7 places) in its own box. Quit trigger: talk longer than one screen; max_words counts copy boxes too (run.py), so 520 tiếng holds the 4 Map lines, the beat card, the caption and quà boxes, film.now_or_text and map.ok (≈330 tiếng of talk plus the boxes; start-block 'Một màn hình điện thoại (trừ khung chép)'). Any absolute 'không phát sinh' is his hard-blocked trap (P8; setup.vn.021). His Central voice never takes đấy / nhỉ / nhé (voice-samples.md). Hidden: anh Quân's kitchens (no consent), dì Năm's 70 → 130 triệu (hearsay about another team)."""
+notes = "Cập nhật 11/10/2026 (audit a3 H2; DECISIONS '9–11 Oct 2026'; start-block NGÀY 0 bước 6): chiến lược trước, rồi QUAY HÔM NAY một mình: OK ở tin cuối của chiến lược mang đúng MỘT tin chỉ có QUAY HÔM NAY (một ý; không dòng chiến lược, không map.ok, không Tuần 1, không card; dòng Cần duy nhất ≤20 chữ; TIẾP: quay xong nhắn 'tiếp'); Brand Card và bảng Tuần 1 đến ở lần 'tiếp' đó. Superseded K2 (DECISIONS 6 Oct 2026; VN start-block NGÀY 0 steps 5-6): QUAY HÔM NAY prints right under the Bản đồ in the reply to the last missing-fact answer, then map.ok (Central particle 'nghe'); keyword and story patterns are anchored after the QUAY HÔM NAY title because the Map holds the keyword too. Persona behaviour 'Nói ngắn thôi em, anh đang ở công trình' and 'Đừng bắt anh ngồi nói trước camera': the short is filmed walking the site with the phone (expected.toml week1 lead_piece). The 2019 Liên Chiểu story (ông chú, đục thử) the old Checked line named is asserted in the piece (R2); its VÌ SAO and checks print on 'tại sao?'. The ask 'Comment PHÁT SINH hay nhắn riêng, …' with the 'nhẹ' route, the quà (the list of 7 places) in its own box. Quit trigger: talk longer than one screen; max_words counts copy boxes too (run.py), so 520 tiếng holds the 4 Map lines, the beat card, the caption and quà boxes, film.now_or_text and map.ok (≈330 tiếng of talk plus the boxes; start-block 'Một màn hình điện thoại (trừ khung chép)'). Any absolute 'không phát sinh' is his hard-blocked trap (P8; setup.vn.021). His Central voice never takes đấy / nhỉ / nhé (voice-samples.md). Hidden: anh Quân's kitchens (no consent), dì Năm's 70 → 130 triệu (hearsay about another team)."
 
 [[case]]
 id = "fmt-short.vn.005"
