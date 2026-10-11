@@ -12,7 +12,7 @@ READY: gates, ≥8, no 0, no [NEEDS]; never "Ready after". Not Ready → one sil
 
 <!-- @section edge-rubric.kit-verdict -->
 WHAT PRINTS under a piece: ≤1 line, only if the coach is needed, + "Added by me".
-- "Added by me: ¶2, ¶5, ¶6": every paragraph (beat, slide; from the top, labels like On-screen not counted) with a line not theirs, no cap, to OK or cut; none: no line. Never a fact (§CM-HUMANIZE 1). Right under its piece's box, not a gift box.
+- "Added by me: ¶2, ¶5, ¶6": every paragraph (beat, slide; from top, no label lines) with a line not theirs, no cap, to OK or cut; none: no line. Never a fact (§CM-HUMANIZE 1). Right under its piece's box, not a gift box.
 - Ready, downgraded, Draft (fixed silently): nothing.
 - Needs you (a fact or choice only they have): {{t:verdict.needs}} One ask (not "have it? paste it"); one a reply, soonest first; others run downgraded, as "skip" does.
 - Hard stop: {{t:verdict.hardstop}}
