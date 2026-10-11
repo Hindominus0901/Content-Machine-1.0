@@ -17,13 +17,15 @@ v13.5 (10/10, agent K): ship.kit 3 "giọng: tỉ lệ tiểu từ như bài m�
 
 v13.10 (founder 11/10): 0 từ khoá một lần (nhắc chủ đề không tính); 1 câu chung về khách, thị trường là dữ kiện, trích đúng người nói, không thêm thắt; 2 hook mọi bài theo khung §CM-FORMATS 1 (kit); 3 từng bài, cả bài dài; IN "Máy tự thêm: đoạn 2, 5" theo đoạn. ship.kit 998 → 997.
 
-<!-- @section ship.kit src=f866cc0260 -->
+v13.13 (12/10, qa/runs/v1312): 1 NGUỒN thêm câu chung, tốc độ ("nhiều người…", "10 phút là xong") là dữ kiện, "không độn"; 2 (kit) khung cả tiêu đề email, trang 1, không tên khách, chữ màn hình trùng tiêu đề <2 chữ; 3 "tiểu từ đếm như card ±10". Trả bằng "Lý do: chỉ khi hỏi" (§CM-EDGE), "từng bài, cả bài dài" (§CM-HUMANIZE 2), chữ gọn hơn. ship.kit 997 → 997.
+
+<!-- @section ship.kit src=9142278eeb -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → cắt hoặc hạ bậc
-0 TRỌNG TÂM: một trụ cột, một loại · ý chính ≤20 tiếng · một niềm tin ("X → hoá ra Y") · không chủ đề để dành · từ khoá một lần trong thân bài (nhắc chủ đề: không tính) + một lời mời
-1 NGUỒN: cảnh, số, tên, câu trích, kết quả, khách làm gì, nghĩ gì, vì A nên B, chuyện cũ coach, câu chung về khách, thị trường: có trong lời coach, card, nghiên cứu đã giữ; trích y nguyên, đúng người nói, không thêm thắt; không có → cắt hay hỏi. Phần dạy, ví dụ: hiểu biết nghề, ghi ra
-2 KHÁC BIỆT{{#if phone}}: cụ thể, một ý, có bằng chứng, chỉ coach có, có người cãi{{else}} ≥8, không ô 0 (§CM-EDGE){{/if}}. Hook mọi bài, dòng 1 caption: {{#if phone}}không rào, phán suông, châm ngôn; chữ màn hình thêm một điều, không lặp ý câu đầu{{else}}một khung §CM-FORMATS 1{{/if}}
-3 GIỌNG + NGƯỜI MUA, từng bài, cả bài dài: nhịp, câu hay nói (≥ nửa; câu cửa miệng 1 lần), cách gọi khách; tiểu từ như số trên card (±10), không chồng; không chữ cấm, tiếng Anh, "—"; người mua dừng ở câu đầu, tin. Sửa một lần
-IN: bài; dưới bài "Máy tự thêm: đoạn 2, 5"{{#if phone}}: đoạn (ý, trang) có câu không của coach; không có: bỏ dòng{{else}} (§CM-EDGE){{/if}}. Thiếu, điều cấm → "Cần {xưng hô} · <một câu hỏi>". Lý do: chỉ khi hỏi "tại sao?"
+0 TRỌNG TÂM: một trụ cột, một loại · ý chính ≤20 tiếng · một niềm tin ("X → hoá ra Y") · không ý để dành · từ khoá một lần trong thân bài (nhắc chủ đề không tính) + một lời mời
+1 NGUỒN: cảnh, số, tên, câu trích, kết quả, việc khách làm, nghĩ, vì A nên B, chuyện cũ coach, câu chung về khách, thị trường ("nhiều người…", "10 phút là xong"): từ lời coach, card, nghiên cứu đã giữ; trích y nguyên, đúng người, không độn; không có → cắt. Dạy, ví dụ: hiểu biết nghề, ghi ra
+2 KHÁC BIỆT{{#if phone}}: cụ thể, một ý, có bằng chứng, chỉ coach có, có người cãi{{else}} ≥8, không ô 0 (§CM-EDGE){{/if}}. Hook, dòng 1 caption: {{#if phone}}không rào, phán suông, châm ngôn; chữ màn hình thêm một điều, không lặp ý câu đầu{{else}}một khung §CM-FORMATS 1 (cả tiêu đề, trang 1), không tên khách; chữ màn hình trùng tiêu đề <2 chữ{{/if}}
+3 GIỌNG + NGƯỜI MUA: nhịp, câu hay nói (≥ nửa; câu cửa miệng 1 lần), xưng hô; tiểu từ đếm như card ±10, không chồng; không chữ cấm, tiếng Anh, "—"; người mua dừng ở câu đầu, tin. Sửa một lần
+IN: bài; dưới bài "Máy tự thêm: đoạn 2, 5"{{#if phone}}: đoạn (ý, trang) có câu không của coach; không có: bỏ dòng{{else}} (§CM-EDGE){{/if}}. Thiếu, điều cấm → "Cần {xưng hô} · <một câu hỏi>"
 
 <!-- @section ship.card src=9ab2ae814b -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · một lần mỗi đợt · không chắc → cắt hoặc hạ bậc · không khen

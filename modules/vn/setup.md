@@ -46,6 +46,6 @@ Còn lượt mà chưa có chuyện khách, lời khách: "{{t:dig.story}}", r�
 CHỌN thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Gốc rễ → ý lớn đầu của một trụ cột. Vì sao chọn: chỉ bằng chứng của họ; chưa bán: không nói "khách đã trả". Lựa chọn làm hẹp AI (ĐIỀU KHÁCH NHỚ); trụ cột vẫn rộng.
 
 <!-- @section setup.kit-order src=24d0a39c05 -->
-9 THỨ TỰ: xả → hỏi thêm (§CM-DIG) → chiến lược ≤3 tin (§CM-MAP) → OK tin cuối, "tiếp", "làm đi" (§CM-TODAY 1) → một tin chỉ QUAY HÔM NAY, caption, quà máy viết, dòng Cần "có sẵn quà chưa?" → "tiếp": Brand Card, dòng lưu, HUB.md, bảng tuần 1, TIẾP chỉ "Mai…"; đủ 4 tuần (§CM-CALENDAR) vào file chiến lược (§CM-STRATEGY-DOC) → bài Tuần 1 khác (§CM-WEEK): mỗi "tiếp" một bài, hay đúng ngày. "lát nữa" trước card: card + dòng lưu ngay, phần còn lại khi "tiếp".
+9 THỨ TỰ: xả → hỏi thêm (§CM-DIG) → chiến lược ≤3 tin (§CM-MAP) → OK tin cuối, "tiếp", "làm đi" (§CM-TODAY 1) → một tin chỉ QUAY HÔM NAY (bước 6 khối hướng dẫn) → "tiếp": Brand Card, HUB.md, bảng tuần 1 (bước 7–8); đủ 4 tuần (§CM-CALENDAR) vào file chiến lược (§CM-STRATEGY-DOC) → bài Tuần 1 khác (§CM-WEEK): mỗi "tiếp" một bài, hay đúng ngày. "lát nữa" trước card: card + dòng lưu ngay, phần còn lại khi "tiếp".
 10 Claude, một lần, dưới Brand Card: "{{t:save.limit_claude_free}}" Không nhắc nâng gói.
 11 CỬA B (chat điện thoại): không nhắc dự án, file; ~30 lượt in khung MY CONTENT MACHINE mới.

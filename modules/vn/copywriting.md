@@ -98,12 +98,13 @@ Nhịp (≈450 tiếng): kết quả nó nhắm tới, một câu ≈30 · hợp
 VD: Nhóm 4 tuần để chốt mức giá trọn gói đầu tiên. · Cho designer đang tính tiền theo giờ, không dành cho agency. · Mỗi tuần một buổi gọi, một bảng tính giá, báo giá của từng người được sửa ngay trong buổi. · {giá}. · {N} suất, vì báo giá của từng người được sửa trực tiếp. · Comment GIÁ TRỌN GÓI.
 Hỏng khi: giấu giá ("ib báo giá"); giới hạn suất, hạn chót giả; cộng "giá trị" ra một con số thổi phồng.
 
-<!-- @section copywriting.grow-long src=f46b78f646 -->
+<!-- @section copywriting.grow-long src=bbf4f2c9cc -->
 ### Khung dài: bài dài bỏ ngỏ, video dài theo phần
 BÀI DÀI BỎ NGỎ, ≈1.000 chữ · chủ yếu NIỀM TIN, THU HÚT trên Facebook, LinkedIn; mỗi tuần nhiều nhất một bài, là bài chữ chính của tuần.
 Nhịp: câu mở ≤18 tiếng, ý chính nằm trước "Xem thêm" · câu móc ≈30: cái được mất hay câu hỏi, mở câu bỏ ngỏ ("cuối bài là câu mình giờ đưa vào mọi báo giá") · chuyện ≈300 (chuyện năm dòng hay chuyện một bài học) · bài học 1 ≈170: ý → vì sao → ví dụ · bài học 2 ≈170 · bài học 3 ≈170, mạnh nhất, trả lời câu bỏ ngỏ · lời mời ≈80, một việc. Mỗi bài học mở bằng một câu đứng riêng được, để người lướt vẫn nắm được bài. Quá giới hạn nền tảng: câu mở, chuyện, một bài học, lời mời (§CM-POSTS 4).
 VD: Câu mở "Khách nào cũng mặc cả từng báo giá? Đọc cái này trước khi giảm." · Chuyện: hai khách cùng tháng, một người mặc cả từng đồng, một người chuyển đủ ngay hôm đầu. · Bài học: giá lọc ra người nghiêm túc · tuần đầu định nhịp cho cả khoá · câu mình giờ đưa vào mọi báo giá. · Mời: comment CÂU BÁO GIÁ để lấy câu đó.
 Hỏng khi: bài học chẳng dính gì tới chuyện; thêm bài học thứ tư; nối kiểu văn viết (Bên cạnh đó, Hơn nữa); câu bỏ ngỏ không bao giờ được trả.
+CÂU MỞ, soát khung (§CM-FORMATS 1, §CM-HOOK-TEXT): là một khung, không mở bằng cảnh khách hay tên khách. TRƯỢT: "Tối đó cô học trò ôm cuốn nhạc tới lớp, mắt đỏ hoe." → ĐẠT: "Tập đàn mấy tháng mà chưa đàn trọn một bài? Không phải tại ngón tay đâu." Dưới 950 chữ: thêm một ví dụ trong bài học, không độn.
 VIDEO DÀI THEO PHẦN, 1.000–1.500 chữ · NIỀM TIN, CHUYỂN ĐỔI · YouTube, video Facebook, podcast (§CM-LONG). Lời nói; mỗi phần là gạch đầu dòng; chỉ đoạn mở và câu cuối viết nguyên văn.
 Nhịp: mở ≈120: bằng chứng (một dữ kiện của họ), lời hứa (xem xong làm được gì), lộ trình (3–4 phần, gọi tên thường), một câu bỏ ngỏ trả lời gần cuối, một câu "kể cả khi bạn…" (§CM-LONG-INTRO) · bối cảnh hay chuyện ≈200 · 3–4 phần, mỗi phần ≈200–250: ý → vì sao → ví dụ → làm gì → câu móc gợi phần sau hay mở lại câu bỏ ngỏ ("Phần 3 là chỗ phần lớn mọi người bỏ cuộc.") · giữa video, một lần, câu tự kiểm dạng khẳng định · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80: quà, sản phẩm chỉ khi có, video nên xem tiếp. Một phần có thể chạy khung riêng (lật niềm tin, mổ xẻ quyết định).
 VD: "Nếu phải lấp kín lịch từ con số 0": bằng chứng (số năm, số khách của họ) · các phần: nói với ai, nói gì, nói ở đâu, mời thế nào · câu bỏ ngỏ: "câu hỏi cho biết khách này có mua hay không".
@@ -126,9 +127,18 @@ Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy 
 2 CÁC KIỂU BÀI, độ dài · phút của coach (máy viết hết): video ngắn 500–800 chữ · ≈20 (quay ≈10, đọc, đăng) · bài dài ≈1.000 chữ · ≈10 · carousel 10–12 trang · ≈15 · bài ngắn 250–450 tiếng · ≈5 · ảnh trích câu, một câu của coach ≤30 tiếng · ≈10 · story hay bình chọn 3–5 khung, mỗi khung ≤35 tiếng · ≈5 · tin Zalo ≤150 tiếng hay email ≤375 · ≈5 · video dài 1.000–1.500 chữ · ≈3 tiếng.
 3 MỘT CHẤT LIỆU, NHIỀU BÀI, khi mỗi bài một dạng khác, một góc riêng (cảnh lúc đó · bài học · cái sai · các bước · câu hỏi nó gợi ra · phía khách), khung hook riêng (§CM-FORMATS 1), lời mời riêng theo loại bài (§CM-CTA-KIT 1). Một ý, một chuyện ra 2–3 bài một tuần là bình thường. Không chép một câu từ bài này sang bài kia: ảnh trích câu được lấy một câu, bài gốc chỉ nói câu đó một lần. Hai bài cùng dạng trên một chất liệu: bỏ một.
 4 SỔ Ý (§CM-HUMANIZE): mỗi chất liệu → các bài của nó ("câu trả lời 3 → video thứ Hai, ảnh trích thứ Năm, bình chọn thứ Bảy"), ghi vào kế hoạch tuần và `used:` trên card; tuần sau lấy chất liệu mới trước; chuyện đã dùng chỉ quay lại ở tháng sau, dạng khác.
-<!-- @section copywriting.grow-cuts-example src=710336bc74 -->
+<!-- @section copywriting.grow-cuts-thin src=77b17b3643 -->
+### Ít chất liệu: bớt bài quay, không độn ("không có chuyện gì để kể", "hết ý")
+5 ĐẾM TRƯỚC khi viết tuần: chuyện, bằng chứng thật = lời chính coach (ngày 0, buổi nói chuyện), tài liệu họ đưa, dòng kho bằng chứng, câu nghiên cứu đã GIỮ; một khoảnh khắc tính một lần. Mỗi bài quay ít nhất một.
+6 ÍT HƠN SỐ BÀI QUAY: (a) video thiếu chuyện đổi thành bài viết: bài dài ≈1.000 (phần dạy gánh được), carousel hay ảnh trích câu; tuần vẫn đủ 7 bài. Hoặc (b) trước khi viết, hỏi một câu xin chuyện ("Lần gần nhất khách … thì chuyện gì xảy ra?"), là dòng Cần duy nhất của tin; họ kể xong mới viết video.
+7 KHÔNG ĐỘN: đoạn "Máy tự thêm" sắp quá ~30% video thì video thành bài viết, hay chờ chuyện. Bài ngắn, ảnh trích câu ít phần dạy; bài dài được nhiều hơn, vẫn ghi ra.
+8 MỘT Ý ≤3 BÀI MỘT TUẦN, sổ ý đếm từng bài (§CM-HUMANIZE). Các video cùng dạng mỗi bài một kiểu ví dụ: một bài "giả sử…", một bài cảnh của chính coach, một bài câu nghiên cứu; một tuần không lặp kiểu.
+9 DỮ KIỆN TRÁ HÌNH: câu nói chung hay tốc độ ("bước này nhiều người bỏ qua nhất", "mười phút là xong", "khách lúc nào cũng…") là dữ kiện: có nguồn (coach nói; dòng GIỮ kèm số thật: "hai người ở hai nhóm kể…") hoặc cắt. Câu nghiên cứu vào bài ghi nguồn theo vai và nơi, hay "(mình đoán)".
+VD: Lời xả mỏng, gói lean (3 bài quay), hai chuyện thật: video thứ Hai (chuyện 1) · video thứ Tư (chuyện 2) · thứ Sáu đổi thành bài dài về cách làm, phần dạy dùng ví dụ "giả sử…", có ghi ra; dòng Cần của tin ngày 0 hỏi "Lần gần nhất khách mới im luôn sau buổi gọi đầu, chuyện gì xảy ra?"
+
+<!-- @section copywriting.grow-cuts-example src=e786cd66c6 -->
 ### Bảy bài từ một tuần, một ví dụ
-5 MỘT TUẦN, chỉ để thấy dáng (bịa ra): cô giáo dạy piano cho người lớn mới học; câu trả lời buổi nói chuyện về một học viên bỏ tập gam, mỗi tuần đàn trọn một bài, cộng một câu khách hay than đã giữ. Gói light, 2 bài quay:
+10 MỘT TUẦN, chỉ để thấy dáng (bịa ra): cô giáo dạy piano cho người lớn mới học; câu trả lời buổi nói chuyện về một học viên bỏ tập gam, mỗi tuần đàn trọn một bài, cộng một câu khách hay than đã giữ. Gói light, 2 bài quay:
 - T2 · video ngắn · THU HÚT · học viên bỏ tập gam · lưu lại
 - T3 · carousel · NIỀM TIN · 5 bước tập xong một bài trong tuần · comment chữ trong hook
 - T4 · bài ngắn · THU HÚT · cái sai: tập gam cho xong rồi mới đàn bài · gửi cho bạn cũng đang học

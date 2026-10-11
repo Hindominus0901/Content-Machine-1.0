@@ -9,13 +9,15 @@ Strategy first (founder, 7 Oct night): ship.kit 0 FOCUS names one pillar and one
 
 v13.10 (founder 11 Oct): 0 the CTA keyword once (topic uses free); 1 a claim about their clients or market is a fact, quotes keep their speaker, stories not padded; 2 every hook on a §CM-FORMATS 1 frame (kit); 3 each piece, long ones too; PRINT "Added by me: ¶2, ¶5" by paragraph (phone spells it out, kit → §CM-EDGE). ship.kit 895 → 899.
 
+v13.13 (12 Oct, qa/runs/v1312): 1 SOURCE names generalizations and speeds ("most…", "10 min, done") as facts; 2 (kit) the frame covers the email subject and slide 1, no client name, on-screen <2 title words. Paid by "WHY only on why?" (§CM-EDGE), "(each piece, long ones too)" (§CM-HUMANIZE 2), shorter wording. ship.kit 899 → 897.
+
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
-0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · the CTA keyword once in the body (topic uses free) + one ask
-1 SOURCE: each scene, number, name, quote, result, client act or thought, cause → effect, their past, a claim on their clients or market: from their words, card or a kept research line; quotes exact, same speaker, stories not padded; else cut or ask. Teaching, examples: yours, listed
-2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}a §CM-FORMATS 1 frame{{/if}}
-3 VOICE + BUYER (each piece, long ones too): their tone, rhythm, phrases (≥ half; a pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once
-PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: every paragraph (beat, slide; counted from the top) holding a line not from them; none: no line{{else}} (§CM-EDGE){{/if}}. Missing fact, hard stop → "Needs you · <one question>". WHY only on "why?"
+0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · the CTA keyword once in the body (topic free) + one ask
+1 SOURCE: each scene, number, name, quote, result, client act, thought, cause → effect, their past, claim on clients, market ("most…", "10 min, done"): from their words, card, a kept research line; quotes exact, same speaker, no padding; else cut. Teaching, examples: yours, listed
+2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}a §CM-FORMATS 1 frame (subject, slide 1), no client name; on-screen: <2 title words{{/if}}
+3 VOICE + BUYER: tone, rhythm, phrases (≥ half; pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once
+PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: every paragraph (beat, slide; counted from the top) holding a line not from them; none: no line{{else}} (§CM-EDGE){{/if}}. Missing fact, hard stop → "Needs you · <one question>"
 
 <!-- @section ship.card -->
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise

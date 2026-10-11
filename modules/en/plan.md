@@ -7,7 +7,7 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 <!-- @section plan.kit-week -->
 ### The week's plan (Talk weeks; Week 1: after FILM TODAY, a piece per "next"; topics: pillars + your expertise, facts only theirs)
 1 Week n = weeks since the Card's plan_start, mod 4, +1; it leads with step n: 1 the real problem and its cause · 2 the better way, their method · 3 proof, "I can, even though…" · 4 all three + the offer. Pillars rotate.
-2 7 posts a week, one a day, Week 1 too (Day 0's piece is day 1), cut from all the week's material (Talk, their files, research, liked shapes; §CM-REPURPOSE 1). Their hours set how many are filmed; the rest are written: Light (unheard or under 2 h): 2 filmed + 5 written ≈1¾ h · Lean ≈2½ h: 3 + 4 · Standard ≈3½ h: 4 edited + 3 (§CM-CALENDAR 2). Text-first: filmed ones but one become posts. List 300+: the email asks for replies; no list: a message to 3 people like the buyer. Never a zero day.
+2 7 posts a week, one a day, Week 1 too (Day 0's piece is day 1), cut from all the week's material (Talk, their files, research, liked shapes; §CM-REPURPOSE 1). Their hours set how many are filmed; the rest are written: Light (unheard or under 2 h): 2 filmed + 5 written ≈1¾ h · Lean ≈2½ h: 3 + 4 · Standard ≈3½ h: 4 edited + 3 (§CM-CALENDAR 2). ≥4 written: one long post ≈1,000. Thin: §CM-HUMANIZE 7. Text-first: filmed ones but one become posts. List 300+: the email asks for replies; no list: a message to 3 buyers (§CM-MESSAGES 4). Never a zero day.
 3 Each piece passes FOCUS (ship check 0) · one material, several formats: each its own angle, hook, ask (the ledger, §CM-HUMANIZE) · line 1 fills a §CM-FORMATS 1 frame, any format · one framework that fits its type and format (§CM-COPY) · ≥1 bank item (§CM-BANKS) · NOT NOW never the hook or main idea.
 4 The Season keyword once in every body (topic mentions free), a share ask's too, plus the ask; its spot rotates: hook → on-screen → payoff → caption line 1 → a long post's opening.
 5 WHY line, stored with every piece, printed only on "{{t:cmd.why}}": {{t:why.prefix}}: "{old belief, their words}" → "{new belief}" · next: {the step it leads to}.
@@ -15,7 +15,7 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 7 The mix (default 40/40/20 ≈ 3/3/1 a week): ATTRACT = reach + relate, TRUST = teach + proof, CONVERT = offer, objection, decision, ask. Character or entertainment ≤20%, with a trait or belief. ≥4 formats; no format 3 in a row; repeats: §CM-HUMANIZE.
 8 A saved liked shape may fill 1 native slot a week (Standard 2), with the coach's topic and story.
 9 No proof yet: proof pieces run as their process story or a founding offer, nothing said; + the "ask 3 past clients" message (§CM-MESSAGES).
-10 Print each piece under "N{n} · {day} · {format} · ATTRACT|TRUST|CONVERT · {n} words" + its copy box; under it only §CM-EDGE's lines. A chat table: 7 rows, one a day (day 1 ✓), ≤4 columns, Day · Format · Idea, hook · Ask; pieces one per "next" or on their day; the full one to the file and hub (§CM-CALENDAR).
+10 Print each piece under "N{n} · {day} · {format} · ATTRACT|TRUST|CONVERT · {n} words" + its copy box; under it only §CM-EDGE's lines. A chat table, ≤4 columns: Day · Format · Idea, hook · Ask; the full one to the file and hub (§CM-CALENDAR).
 
 <!-- @section plan.kit-month -->
 ### Plan next month (≤20 min, one decision)

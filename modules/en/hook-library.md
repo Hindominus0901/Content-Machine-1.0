@@ -237,6 +237,7 @@ CAROUSEL (§CM-TEXT-FORMATS 1)
 3 Slide 2 keeps them reading: why listen (one fact of theirs) or the stake. The last slide answers the loop, then this carousel's gift + its keyword (§CM-HOOK-CTA).
 4 The cover reads alone in a feed or shared into a group: it makes sense with no caption.
 5 Flat → strong: "Pricing tips for freelancers" → "5 lines that make a price feel fair (before you say it)" · "Content strategy 101" → "What to post when nobody's buying yet" · "My morning routine" → "The {N} minutes that decide my whole client day".
+5b FRAME CHECK, slide 1 like any hook (§CM-FORMATS 1): a frame, no client name, no insider number only a client would get. Fail: "Hannah's salon: 9 → 26 bookings. 3 photos, 2 captions." → Pass: "Nail photos get likes but no bookings? 5 fixes (no new photos)."
 LINE 1 OF A LONG POST (§CM-POSTS 1)
 6 Line 1 ≤12 words, standing alone, fills a frame (§CM-PACKAGING 2): the buyer's desire or pain for the right person at the right moment, their number; the method stays hidden; never a scene, a maxim or a stated lesson. Line 2 raises the stake or turns it. Both land before "See more".
 7 Strong: "If your nail photos get likes but no weekday bookings, read this. / It's not the photos." · "I went from 9 to 26 piano students. / Same fee; only the trial lesson changed." Flat: "Today I want to talk about pricing." · "Pricing is one of the hardest parts of business."
@@ -248,7 +249,8 @@ LINE 1 OF A LONG POST (§CM-POSTS 1)
 EMAIL (§CM-TEXT-FORMATS 2)
 1 The subject is in buyer words, one idea, about 4-9 words, lowercase fine. The preview line adds (like thumbnail words), never repeats. The email's first line starts paying off the subject.
 2 Shapes: how I {result} (with {limit}) · I ignored {X} (it cost me {Y}) · {N} signs you've {problem} · a reframe ("you're not lazy. you're unclear.") · the question they asked ("do I need a website first?") · a scene ("the email I almost didn't send") · a confession ("I undercharged for {time}").
-3 Flat → strong: "Newsletter #12" → "the client who cancelled (good thing)" · "Pricing tips" → "I charged too little for {time} (here's the math)" · "Exciting news!" → "doors open Monday: {N} seats, here's why {N}" (only with a real cap and its reason).
+3 FRAME CHECK (§CM-FORMATS 1): the subject fills a frame like any hook, no client name. Fail: "This week's update" · "My new student" → Pass: "if your students quit halfway, read this" · "I stopped assigning scales, now they finish songs".
+3b Flat → strong: "Newsletter #12" → "the client who cancelled (good thing)" · "Pricing tips" → "I charged too little for {time} (here's the math)" · "Exciting news!" → "doors open Monday: {N} seats, here's why {N}" (only with a real cap and its reason).
 4 Never: a fake "Re:" or "Fwd:", "last chance" or "closing tonight" unless it's true (§CM-GUARDRAILS), all caps, a subject the email doesn't pay off, a gift the email doesn't hold.
 5 Launch emails say what happens and when, plainly; real dates and seats only (§CM-LAUNCH-DAYS).
 CHAT OPENER (Zalo, WhatsApp, a DM)

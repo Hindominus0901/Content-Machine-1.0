@@ -63,7 +63,7 @@ Bước 2 không được: dùng file dự phòng `CONTENT-MACHINE-VN-1-FILE.md`
 | 7. Gõ `OK` ở mỗi tin. | Một tin riêng **"QUAY HÔM NAY · …"**: kịch bản đủ câu nằm trong khung chép, caption nằm ở khung riêng, có dòng "Ngại xin comment thì gõ 'nhẹ'.". | ☐ Đạt ☐ Không | Tin QUAY HÔM NAY |
 | 8. Đọc kịch bản. | Viết toàn tiếng Việt, không hứa "giảm X ký Y ngày", không bịa số liệu. | ☐ Đạt ☐ Không | |
 | 9. Xem dưới kịch bản. | Nếu máy tự thêm phần dạy hay ví dụ: một dòng **"Máy tự thêm: đoạn N"** ghi theo số đoạn (bao nhiêu đoạn cũng được). Không có câu nào máy thêm mà thiếu trên dòng đó. | ☐ Đạt ☐ Không ☐ Không có gì máy thêm | Kịch bản + dòng dưới |
-| 10. Đọc dòng "Cần". | Chỉ **một** dòng "Cần", hỏi **một điều**, ≤20 chữ (kiểu "có sẵn quà chưa? (có thì dán)"). | ☐ Đạt ☐ Không | (cùng ảnh) |
+| 10. Đọc dòng "Cần". | Chỉ **một** dòng "Cần", hỏi **một điều**, ≤20 chữ (kiểu "có sẵn quà chưa?"). | ☐ Đạt ☐ Không | (cùng ảnh) |
 | 11. Đọc câu đầu và cả kịch bản. | Kịch bản xoay quanh **một ý** (ý khác để cho tuần). Câu đầu theo một khung hook (ví dụ "Nếu…", câu hỏi gọi đúng người, "Cho mình N phút…", "Từ … lên …"), một câu nói vừa phải. | ☐ Đạt ☐ Không | |
 | 12. Xem Lan xưng gì trong kịch bản. | Lan xưng **mình/tôi** như bài của Lan, **không** xưng "chị" (chị–em chỉ dùng trong chat). | ☐ Đạt ☐ Không | |
 | 13. Xem chỗ dùng chuyện chị khách 32 tuổi. | Trước khi đưa kết quả hay chi tiết của chị khách vào bài, máy hỏi **một lần** chị khách đã cho kể chưa (hỏi ở dòng "Cần" hay lúc hỏi thêm); chưa rõ thì chưa dùng. Không hỏi lại lần hai. | ☐ Đạt ☐ Không | Tin có câu hỏi này |

@@ -22,7 +22,6 @@ NEXT → "{{t:options.reply}}" An edit is a choice: apply it, reprint that line,
 7 AFTER A CHOICE: one line naming it, then straight into the next step or the work it unlocks. A chosen step stays chosen until they reopen it or the monthly review does.
 BAD → GOOD
 - "Here's your strategy. Want me to change anything?" → "Step 1 of 3 · content pillars. A) … B) … (recommended): 3 of your 5 stories sit there · C) … NEXT → Type A, B or C, change one, or 'OK' for B."
-- "Want me to write the week now?" → "Next: today's piece from Week 1 ({N2 · Tue · short}); the rest one per 'next'. NEXT → Say 'next'."
 
 <!-- @section options.kit-memory -->
 ### Every chat starts where the last one stopped (no command needed)

@@ -231,7 +231,7 @@ Cảnh của khách (học thử xong không quay lại) vào từ câu 3, khôn
 7 Đổi tiêu đề một lần, theo §CM-PACKAGING 5: tiêu đề mới HOẶC chữ ảnh bìa mới, không đổi cả hai.
 TRƠN → HAY: "Chia sẻ về chuyện định giá" → "3 cách tăng giá mà không mất khách quen" · "Buổi hỏi đáp" → "Mang bài đăng không ai đặt vào đây: sửa trực tiếp 45 phút".
 
-<!-- @section hook-library.grow-slides src=5e06439ae1 -->
+<!-- @section hook-library.grow-slides src=9badbd8b05 -->
 ### Slide 1 của carousel, dòng 1 bài dài
 CAROUSEL (§CM-TEXT-FORMATS 1; Facebook, TikTok dạng ảnh)
 1 Slide 1 là lời hứa cả bộ phải giữ: kết quả bằng chữ khách, ≤70 ký tự, hai dòng chữ to. Có số chỉ khi đúng số slide hay số bước. Không nhãn ("Bắt đầu từ đây", "Mẹo cho coach"), không rào đón, không lấy tên thương hiệu làm hook, không để dấu "→" gánh việc.
@@ -239,18 +239,20 @@ CAROUSEL (§CM-TEXT-FORMATS 1; Facebook, TikTok dạng ảnh)
 3 Slide 2 giữ người đọc lại: vì sao nên nghe (một dữ kiện của họ) hoặc cái được mất. Slide cuối trả lời điều đã hé, rồi tới quà của chính bộ đó + từ khoá của nó (§CM-HOOK-CTA).
 4 Bìa đứng một mình vẫn hiểu, khi lướt feed hay khi được chia sẻ vào nhóm, không cần caption.
 5 TRƠN → HAY: "Mẹo định giá cho freelancer" → "5 câu nói trước khi báo giá để khách thấy giá hợp lý" · "Chiến lược nội dung cơ bản" → "Chưa ai mua thì đăng gì?" · "Thói quen buổi sáng của mình" → "{N} phút quyết định cả ngày làm việc với khách".
+5b SOÁT KHUNG trang 1 như mọi hook (§CM-FORMATS 1): một khung, không tên khách, không số chỉ người trong cuộc hiểu. TRƯỢT: "Tiệm chị Thảo: 9 lên 26 lịch. 3 ảnh, 2 caption." → ĐẠT: "Ảnh nail nhiều like mà không ai đặt lịch? 5 chỗ sửa (không cần chụp lại)."
 BÀI DÀI FACEBOOK (§CM-POSTS 1)
 6 Dòng 1 ≤18 tiếng, đứng riêng được, đổ vào một khung (§CM-PACKAGING 2): điều khách thèm hay cái khổ của đúng người, đúng lúc, con số của họ; giấu cách làm; không mở bằng cảnh, không châm ngôn, không nói toạc bài học. Dòng 2 đẩy cái được mất lên hay bẻ ngoặt. Cả hai nằm trước chữ "Xem thêm".
 7 HAY: "Nếu ảnh móng nhiều like mà ngày thường chẳng ai đặt lịch, đọc cái này. / Không phải tại ảnh." · "Mình đã đưa lớp piano từ 9 lên 26 học trò. / Vẫn học phí đó, chỉ đổi buổi học thử." TRƠN: "Hôm nay mình muốn chia sẻ về chuyện định giá." · "Định giá là một trong những phần khó nhất khi kinh doanh."
 8 LinkedIn (coach B2B): dòng 1 có thể kết bằng ":" cho bài liệt kê ("7 dấu hiệu nho nhỏ cho thấy khách sẽ mua thật:"); đoạn và hashtag theo §CM-POSTS 3-4, ≤1 emoji.
 9 Dòng 1 theo khung, không bao giờ là cảnh hay lời chào; dòng 2 là bằng chứng hay cú ngoặt, nên chỗ "Xem thêm" cắt ngang đúng lúc người đọc muốn biết tiếp.
 
-<!-- @section hook-library.grow-subject src=bbacc77967 -->
+<!-- @section hook-library.grow-subject src=f75f72f054 -->
 ### Tiêu đề email, dòng đầu tin Zalo
 EMAIL (§CM-TEXT-FORMATS 2)
 1 Tiêu đề bằng chữ khách, một ý, khoảng 6-12 tiếng, viết thường được. Dòng xem trước nói thêm (như chữ ảnh bìa), không lặp. Câu đầu email bắt đầu trả lời tiêu đề.
 2 Dáng: cách mình {kết quả} (dù {giới hạn}) · mình bỏ bê {X} (và trả giá đắt) · "{N} dấu hiệu bạn đang {vấn đề}" · một câu lật ("bạn không lười đâu, chỉ là chưa rõ đường.") · câu khách hỏi ("chưa có website thì sao?") · một cảnh ("cái email suýt nữa mình không gửi") · thú nhận ("mình lấy giá rẻ suốt {thời gian}").
-3 TRƠN → HAY: "Bản tin số 12" → "khách huỷ lịch (may mà huỷ)" · "Mẹo định giá" → "mình lấy giá rẻ suốt {thời gian} (tính lại cho bạn xem)" · "Tin vui!" → "thứ Hai mở lớp: {N} chỗ, vì sao là {N}" (chỉ khi giới hạn và lý do là thật).
+3 SOÁT KHUNG (§CM-FORMATS 1): tiêu đề cũng đổ vào một khung như mọi hook, không tên khách. TRƯỢT: "Chuyện tuần này" · "Học trò mới của mình" → ĐẠT: "nếu học trò hay bỏ giữa chừng, đọc thư này" · "mình bỏ bắt tập gam, giờ học trò đàn trọn bài".
+3b TRƠN → HAY: "Bản tin số 12" → "khách huỷ lịch (may mà huỷ)" · "Mẹo định giá" → "mình lấy giá rẻ suốt {thời gian} (tính lại cho bạn xem)" · "Tin vui!" → "thứ Hai mở lớp: {N} chỗ, vì sao là {N}" (chỉ khi giới hạn và lý do là thật).
 4 Không: "Re:" hay "Fwd:" giả, "cơ hội cuối", "đóng tối nay" khi không đúng (§CM-GUARDRAILS), viết hoa toàn bộ, tiêu đề mà email không trả lời, quà mà email không có.
 5 Email mở bán nói rõ chuyện gì, khi nào; ngày, suất đều thật (§CM-LAUNCH-DAYS).
 ZALO (tin riêng, tin nhóm, tin OA)
