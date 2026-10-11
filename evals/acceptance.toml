@@ -268,3 +268,17 @@ items = [
   "options with no default",
   "a score, 'Edge' or rubric code in chat",
 ]
+
+[source_check]                            # check source_check (graders.py; v13.9 fixK9, SOURCE before print)
+added_max_items = 5                       # "Máy tự thêm: …" / "Added by me: …": at most 5 items ...
+added_item_max_words = 12                 # ... each at most 12 words, no number or quote inside (facts never go there)
+
+[week_dedupe]                             # check week_dedupe (graders.py; v13.9 fixK9, WEEK CROSS-READ)
+sentence_min_words = 8                    # the same sentence (normalised) of at least this many words in 2 pieces of a batch fails
+opener_words = 5                          # the same first 5 words in 2 pieces of a batch fails
+belief_max_pieces = 2                     # the card's key_belief line in more than 2 pieces of a batch fails
+
+[style]                                   # check style (graders.py; v13.9 fixK9)
+pet_phrase_max = 1                        # warn: a card phrase more than once in a piece (VN em dash "—" in a piece fails)
+asks_max = 1                              # warn: more than one ask line in a piece
+needs_questions_max = 1                   # fail: a "Needs you" / "Cần" line asking more than one thing

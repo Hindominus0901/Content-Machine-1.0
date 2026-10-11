@@ -6546,5 +6546,126 @@ class V138GraderFixTests(TempRepo):
             with self.subTest(text=text):
                 self.assertFalse(graders._described_tell(text, rx.search(text)), text)
 
+
+class V139SourceDedupeStyleTests(TempRepo):
+    """v13.9 fixK9: source_check (every figure, quote and name traces; the "Added by me" list), week_dedupe (a batch's
+    repeated sentences, openers and belief line) and style (VN em dash, pet phrase, asks, one "Needs you" question)."""
+
+    COACH = "I worked at HQ for 24 years. Lorraine got a job offer in 11 weeks. I tell people that coffee comes before resume."
+    CARD = 'machine\nkey_belief: coffee comes before the resume\nphrases: "coffee before resume" | "walk in first"\n'
+
+    def reply(self, *pieces, extra="", coach=None):
+        body = "\n\n".join(f"N{k} · Reel · TRUST · 60 words\n{text}" for k, text in enumerate(pieces, 1))
+        return self.grade([("coach", coach or self.COACH),
+                           ("machine", f"{TAG}Week 1\n{body}\n{extra}\nNEXT → Say \"next\".")])
+
+    # --- source_check
+    def test_source_check_a_traced_number_passes_and_an_untraced_one_fails(self):
+        ok = self.reply("Lorraine got an offer in 11 weeks. Coffee comes before resume.")
+        self.assertPasses(ok, "source_check")
+        self.assertEqual(self.inv(ok, "source_check")["status"], "pass")
+        bad = self.reply("Lorraine got an offer in 11 weeks. Eighty-two of my clients did too, 82 in all.")
+        self.assertFails(bad, "source_check", 'number "82"')
+
+    def test_source_check_a_quote_nobody_said_fails(self):
+        self.assertPasses(self.reply('She told me "coffee comes before resume" and I never forgot.'), "source_check")
+        bad = self.reply('A client wrote "this changed how I walk into every room now" to me.')
+        self.assertFails(bad, "source_check", "quoted line")
+
+    def test_source_check_a_named_person_nobody_gave_fails(self):
+        self.assertPasses(self.reply("My client Lorraine started in March."), "source_check")
+        self.assertFails(self.reply("My client Priyanka started in March."), "source_check", 'name "Priyanka"')
+
+    def test_source_check_an_example_needs_the_added_by_me_list(self):
+        bad = self.reply("Say a client walks in cold. Coffee comes before resume.")
+        self.assertFails(bad, "source_check", "Added by me")
+        good = self.reply("Say a client walks in cold. Coffee comes before resume.",
+                          extra="Added by me: the walk-in scene; the cold-room framing")
+        self.assertPasses(good, "source_check")
+        self.assertEqual(self.inv(good, "source_check")["details"]["added_lists"], 1)
+
+    def test_source_check_the_added_list_is_short_and_holds_no_fact(self):
+        piece = "Say a client walks in cold. Coffee comes before resume."
+        six = self.reply(piece, extra="Added by me: a; b; c; d; e; f")
+        self.assertFails(six, "source_check", "6 items")
+        fact = self.reply(piece, extra='Added by me: a client who earned 90 thousand; the "walk-in" line')
+        self.assertFails(fact, "source_check", "holds a number or a quote")
+        long = self.reply(piece, extra="Added by me: " + " ".join(["word"] * 13))
+        self.assertFails(long, "source_check", "over 12 words")
+
+    def test_source_check_vn_added_label_and_kin_name(self):
+        self.write("evals/personas/vn/nat/persona.toml", 'xung_ho = "chị–em"\n')
+        self.write("evals/personas/vn/nat/expected.toml", "")
+        coach = "Em bán bảo hiểm 7 năm. Chị Lan là khách đầu tiên của em."
+
+        def run(piece, extra=""):
+            return self.grade([("coach", coach), ("machine", f"{TAG}Tuần 1\nN1 · Bài\n{piece}\n{extra}\nTIẾP → Gõ \"tiếp\".")],
+                              persona="vn/nat", edition="vn")
+        self.assertPasses(run("Chị Lan là khách đầu tiên của em. Giả sử có một chị khác.", "Máy tự thêm: chị khách giả sử"),
+                          "source_check")
+        self.assertFails(run("Chị Hương là khách đầu tiên của em."), "source_check", 'name "Hương"')
+        self.assertFails(run("Giả sử có một chị khác ngồi đó."), "source_check", "Máy tự thêm")
+
+    # --- week_dedupe
+    def test_week_dedupe_a_repeated_sentence_or_opener_fails(self):
+        a = "Coffee comes before the resume every single time I coach someone."
+        ok = self.reply("Start with a walk. " + a, "Lorraine got an offer. Different story entirely, nothing shared here.")
+        self.assertEqual(self.inv(ok, "week_dedupe")["status"], "pass")
+        same = self.reply("Start with a walk. " + a, "Lorraine got an offer. " + a.upper())
+        self.assertFails(same, "week_dedupe", "repeat a sentence")
+        opener = self.reply("I sat in a car and cried. First story.", "I sat in a car and thought. Second story.")
+        self.assertFails(opener, "week_dedupe", "open the same way")
+
+    def test_week_dedupe_the_belief_line_in_more_than_two_pieces_fails(self):
+        card = f"```{self.CARD}```"
+        card = f"```{self.CARD}```"
+        a, b, c = ("Lately I keep saying that coffee comes before the resume.",
+                   "My answer to every client: coffee comes before the resume, no exceptions at all.",
+                   "Why does it work? Because coffee comes before the resume in hiring rooms.")
+        three = self.reply("One thing. " + a, "Two things. " + b, "Three things. " + c, extra=card)
+        self.assertFails(three, "week_dedupe", "belief line")
+        two = self.reply("One thing. " + a, "Two things. " + b, "Three things, a walk instead.", extra=card)
+        self.assertEqual(self.inv(two, "week_dedupe")["status"], "pass")
+
+    # --- style
+    def test_style_a_vn_em_dash_fails_and_a_comma_passes(self):
+        self.write("evals/personas/vn/nat/persona.toml", 'xung_ho = "chị–em"\n')
+        self.write("evals/personas/vn/nat/expected.toml", "")
+
+        def run(piece):
+            return self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\nN1 · Bài\n```\n{piece}\n```\nTIẾP → Gõ \"tiếp\".")],
+                              persona="vn/nat", edition="vn")
+        self.assertFails(run("Mình hỏi trước — rồi mới báo giá."), "style", "em dash")
+        self.assertEqual(self.inv(run("Mình hỏi trước, rồi mới báo giá."), "style")["status"], "pass")
+
+    def test_style_a_pet_phrase_twice_in_a_piece_warns(self):
+        card = f"```{self.CARD}```"
+        twice = self.reply("Coffee before resume, I say. Then coffee before resume again.", extra=card)
+        item = self.inv(twice, "style")
+        self.assertEqual(item["status"], "warn")
+        self.assertTrue(any("coffee before resume" in w for w in item["warnings"]), item)
+        self.assertIs(item["pass"], True)
+        once = self.inv(self.reply("Coffee before resume, I say. Then a walk.", extra=card), "style")
+        self.assertEqual(once["status"], "pass")
+
+    def test_style_more_than_one_ask_in_a_piece_warns(self):
+        two = self.inv(self.reply("A short story.\nComment CHAPTER for the script.\nSend me a DM if you want the gift."), "style")
+        self.assertEqual(two["status"], "warn")
+        self.assertTrue(any("ask lines" in w for w in two["warnings"]), two)
+        one = self.inv(self.reply("A short story.\nComment CHAPTER for the script."), "style")
+        self.assertEqual(one["status"], "pass")
+
+    def test_style_a_needs_you_line_asks_one_thing(self):
+        two = self.reply("Lorraine's story. [NEEDS: the month]",
+                         extra='Needs you · Which month did she start? And what was her old job? I won\'t make it up. (Or say "skip".)')
+        self.assertFails(two, "style", "more than one thing")
+        joined = self.reply("Lorraine's story. [NEEDS: the month]",
+                            extra='Needs you · What month did she start and which city was it? I won\'t make it up. (Or say "skip".)')
+        self.assertFails(joined, "style", "more than one thing")
+        one = self.reply("Lorraine's story. [NEEDS: the month]",
+                         extra='Needs you · Which month did Lorraine start? I won\'t make it up. (Or say "skip".)')
+        self.assertEqual(self.inv(one, "style")["status"], "pass")
+
+
 if __name__ == "__main__":
     unittest.main()

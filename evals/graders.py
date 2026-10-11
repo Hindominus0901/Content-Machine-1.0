@@ -7589,6 +7589,338 @@ def check_strategy_doc(run: Run) -> dict:
 
 # ---------------------------------------------------------------- report
 
+# ---------------------------------------------------------------- source_check, week_dedupe, style (v13.9, fixK9)
+# What the machine prints as a piece must trace to the coach, the Brand Card or the research log; a week's pieces must not
+# repeat each other; the VN house style (no em dash, one pet phrase, one ask, one question in "Cần …"). Thresholds in
+# acceptance.toml [source_check], [week_dedupe], [style]; the defaults below apply without them.
+SOURCE_DEFAULTS = {"added_max_items": 5, "added_item_max_words": 12}
+DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2}
+STYLE_DEFAULTS = {"pet_phrase_max": 1, "asks_max": 1, "needs_questions_max": 1}
+
+ADDED_LABEL_RE = re.compile(r"^[\s>*_•-]*(?:máy tự thêm|added by me)\s*[*_]*\s*[:：]\s*[*_]*\s*(.*)$", re.I)
+BULLET_RE = re.compile(r"^\s*(?:[-*•+]|\d{1,2}[.)])\s+(.*)$")
+ILLUSTRATIVE_RE = re.compile(
+    r"\b(?:say (?:a|an|you|one)\b|imagine\b|suppose\b|for example\b|for instance\b|e\.g\.|picture this\b|let'?s say\b)"
+    r"|(?<!\w)(?:giả sử|ví dụ|chẳng hạn|tưởng tượng|thử nghĩ|kiểu như)(?!\w)", re.I)
+KIN_NAME_RE = re.compile(r"(?<!\w)(?:chị|anh|cô|chú|bác|bạn|em)\s+([^\W\d_]+(?:\s+[^\W\d_]+)?)(?!\w)", re.I)
+EN_NAME_RES = (
+    re.compile(r"\b(?:client|customer|student|member|buyer|mentee|friend|colleague|sister|brother|mom|dad|husband|wife|"
+               r"boss|coach|patient)\s+(?:named\s+|called\s+)?([A-Z][a-z]{2,})\b"),
+    re.compile(r"\b(?:named|called)\s+([A-Z][a-z]{2,})\b"),
+    re.compile(r"\b(?:Mr|Mrs|Ms|Dr)\.?\s+([A-Z][a-z]{2,})\b"),
+)
+NAME_STOP = {"em", "anh", "chị", "bạn", "cô", "chú", "bác", "dạ", "ơi", "nè", "nha", "ạ", "ai", "nào", "khác", "mình",
+             "the", "this", "that", "your", "you", "who", "whose", "someone", "everyone", "one"}
+NEEDS_LINE_RE = re.compile(r"^\W*(?:needs you|cần(?:\s+\S+){0,2}?)\s*·\s*(.+)$", re.I)
+NEEDS_TAIL_RE = re.compile(r"\s*(?:I won'?t make it up|[^.?!]{0,12}không bịa)[^\n]*$|\s*\((?:or say|hoặc gõ)[^)]*\)", re.I)
+NEEDS_JOIN_RE = re.compile(r"(?<!\w)(?:và|and)(?!\w)|;")
+_ASK_VERB = (r"(?:comment|reply|dm|message|send|type|text|book|join|sign up|subscribe|follow|share|save|click|tap|"
+             r"gõ|nhắn|bình luận|để lại|inbox|đăng ký|theo dõi|chia sẻ|lưu lại|bấm|tải|liên hệ|đặt lịch|trả lời|chat)")
+ASK_LINE_RE = re.compile(r"^[\s>*_•+\-\"“]*(?:(?:hãy|cứ|nhớ|please|just|now|then|rồi|giờ|nếu[^,.:]{0,40}[,:]|ai[^,.:]{0,30}thì|"
+                         r"if you[^,.:]{0,40}[,:])\s*)?" + _ASK_VERB + r"(?!\w)", re.I)
+
+
+def _cap_name(text: str) -> str:
+    """The capitalised words at the start of `text` ("Tài đổi" -> "Tài"), "" when the first word is lower case."""
+    out = []
+    for w in text.split():
+        if not w[:1].isupper():
+            break
+        out.append(w)
+    return " ".join(out)
+
+
+def _added_items(r: Reply) -> tuple[dict[int, list[str]], set[int]]:
+    """The "Máy tự thêm: …" / "Added by me: …" lists of a reply: {label line index: items} and every line index they
+    take (the label line and the bullets under it). Items: the bullets, else the parts split at ";" "·" "|", and at
+    "," when the whole is one long run."""
+    lists: dict[int, list[str]] = {}
+    taken: set[int] = set()
+    i = 0
+    while i < len(r.lines):
+        m = ADDED_LABEL_RE.match(r.lines[i].plain or "")
+        if not m:
+            i += 1
+            continue
+        taken.add(i)
+        first, bullets, j = m.group(1).strip(), [], i + 1
+        while j < len(r.lines):
+            b = BULLET_RE.match(r.lines[j].plain or "")
+            if not b:
+                break
+            bullets.append(b.group(1).strip())
+            taken.add(j)
+            j += 1
+        if bullets:
+            items = ([first] if first else []) + bullets
+        else:
+            items = [x.strip() for x in re.split(r"\s*[;·|]\s*", first) if x.strip()]
+            if len(items) == 1 and len(items[0].split()) > int(SOURCE_DEFAULTS["added_item_max_words"]):
+                items = [x.strip() for x in re.split(r"\s*,\s*", items[0]) if x.strip()]
+        lists[i] = items
+        i = j
+    return lists, taken
+
+
+@dataclass
+class PieceUnit:
+    reply: Reply
+    key: tuple
+    first: int          # index of its first line in the reply
+    text: str = ""
+    carried: list = field(default_factory=list)       # the added-lists printed under it (item lists)
+
+
+def piece_units(run: Run) -> list[PieceUnit]:
+    """One unit per piece the machine wrote (a piece's boxes joined; _vn_pieces' filters: "why?" replies, copy-verbatim
+    asks, titles, bare labels, dated notes, the card top, a reprinted box once), the "Added by me" lists left out of
+    the text and attached to the piece they sit under (until the next piece starts)."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    units: list[PieceUnit] = []
+    seen: set = set()
+    for r in run.replies:
+        if r.after_why:
+            continue
+        coach = _last_coach(run, r)
+        words = coach_words(run, coach.text) if coach else ""
+        if coach and explicit_ask(words, EXPLICIT_COPY_RE) and not TRANSLATE_ASK_RE.search(words):
+            continue
+        top = _card_lines(run, r) if _is_card_reply(run, r) else set()
+        lists, taken = _added_items(r)
+        if not r.pieces:
+            continue                     # talk, a strategy step or a card: its boxes are plans and fields, not pieces
+        mine: dict[tuple, PieceUnit] = {}
+        own_runs: dict[tuple, set] = {}
+        for p, idx in _post_chunk_lines(r, paste_steps_marks(run.strings)):
+            keep = []
+            for i in idx:
+                ln = r.lines[i]
+                title = p is not None and bool(p.title) and i == p.start
+                if i in top or i in taken or (not ln.block and ln.plain and (title or _is_marker(ln, matcher)
+                                                                           or _dated_note(matcher, ln.plain))):
+                    continue
+                keep.append(ln.text)
+            text = "\n".join(keep)
+            if not text.strip():
+                continue
+            key = (r.index, p.start) if p is not None else (r.index, "box", min(idx))
+            covered, total = run_coverage(text, seen | own_runs.get(key, set()))   # not the reply's other pieces: dedupe reads them
+            own_runs.setdefault(key, set()).update(post_runs([text]))
+            if total and covered * 2 > total:
+                continue
+            if key in mine:
+                mine[key].text += "\n" + text
+            else:
+                mine[key] = PieceUnit(r, key, min(idx), text)
+                units.append(mine[key])
+        for runs_ in own_runs.values():
+            seen |= runs_
+        ordered = sorted(mine.values(), key=lambda u: u.first)
+        for at, items in lists.items():
+            owner = [u for u in ordered if u.first <= at]
+            if owner:
+                owner[-1].carried.append(items)
+            elif ordered:
+                ordered[0].carried.append(items)
+    return units
+
+
+CARD_FIELD_RE = re.compile(r"(?<![\w])(?:key_belief|phrases)\s*[:=]")
+
+
+def _card_text(run: Run, upto: int) -> str:
+    """The printed Brand Card(s) up to reply index `upto`: the card reply's lines and machine blocks."""
+    out = []
+    for r in run.replies:
+        if r.index <= upto:
+            if _is_card_reply(run, r):
+                out.append(r.text)
+                out += r.machine_blocks
+            else:
+                out += [b for b in r.machine_blocks if CARD_FIELD_RE.search(b)]
+    return "\n".join(out)
+
+
+def source_text(run: Run, upto: int) -> str:
+    """Everything a piece may trace to at reply index `upto`: the coach's own words so far (someone else's posts
+    left out; the persona's files and proof items stand for what the coach gives), the printed Brand Card and the
+    research log."""
+    sources = third_party_sources(run)
+    coach = [_coach_own_text(run, i, t, sources) for i, t in enumerate(run.turns) if t.role == "coach" and i < upto]
+    persona = list(run.persona_texts.values()) + [str(p.get("text", "")) for p in run.persona.get("proof_items", [])] \
+        + [str(x) for x in run.persona.get("allowed_numbers", [])]      # what the persona's coach said or gave (as I8, I9)
+    return ck.nfc("\n".join(coach + persona + [_card_text(run, upto), research_log_text(run.run_dir)]))
+
+
+def check_source_check(run: Run) -> dict:
+    """Every number, quoted line and named person in a piece traces to the coach's turns, the printed Brand Card or the
+    research log (else fail). A piece with illustrative content the coach never gave ("say a client…", "giả sử…", "for
+    example") carries the list "Máy tự thêm: …" / "Added by me: …" under it: at most added_max_items items, each at
+    most added_item_max_words words, no number or quote inside (facts never go there). Heuristic: it reads figures,
+    quote marks, names after a kinship word / "client named" / "Mr", and the illustrative openers; a fact told in plain
+    words is the reviewer's to find. n/a without a piece."""
+    cfg = dict(SOURCE_DEFAULTS, **run.acceptance.get("source_check", {}))
+    units = piece_units(run)
+    if not units:
+        return {"id": "source_check", "pass": True, "status": "n/a", "evidence": []}
+    kit_strings = " " + " ␞ ".join(" ".join(ck.copy_tokens(str(v))) for v in run.strings.values()) + " "
+    level_ups = level_up_tokens(run.run_dir)
+    ev: list[str] = []
+    n_lists = 0
+    for u in units:
+        src = source_text(run, u.reply.index)
+        src_tokens = " " + " ".join(ck.copy_tokens(src)) + " "
+        src_keys = ck.allowed_number_keys([src])
+        src_fold = src.casefold()
+        label = f"{_turn(u.reply)} {_short(u.text.strip().splitlines()[0], 30)!r}"
+        for raw in u.text.splitlines():
+            if _mix_line(raw, run.lang):
+                continue
+            line = _blank_urls(raw)
+            for n in ck.numbers_in(line):
+                if n.structural or n.tagged or n.kind in ("date", "time", "id") or _page_label(line, n) \
+                        or non_claim_number(line, n):
+                    continue
+                if _verbatim_in(line, n.start, n.end, kit_strings) or _verbatim_in(line, n.start, n.end, level_ups):
+                    continue
+                keys = ck.number_keys(n)
+                if keys and not keys & src_keys:
+                    ev.append(f'{label}: number "{n.raw}" is nowhere in the coach\'s turns, the card or the research log')
+            names = [_cap_name(m.group(1)) for m in KIN_NAME_RE.finditer(line)] if run.lang == "vn" \
+                else [m.group(1) for p in EN_NAME_RES for m in p.finditer(line)]
+            for name in filter(None, names):
+                head = name.split()[0]
+                if head.casefold() not in NAME_STOP and not re.search(r"(?<!\w)" + re.escape(name.casefold()) + r"(?!\w)", src_fold):
+                    ev.append(f'{label}: name "{name}" is nowhere in the sources')
+        for q in ck.quotes_in(u.text, run.lang):
+            toks = ck.copy_tokens(q.text)
+            if q.attributed and len(toks) >= 4 and f" {' '.join(toks)} " not in src_tokens \
+                    and f" {' '.join(toks)} " not in kit_strings and not misheard_match(q.text, [src]):
+                ev.append(f'{label}: quoted line "{_short(q.text, 50)}" is nowhere in the sources')
+        added = [x for items in u.carried for x in items]
+        n_lists += len(u.carried)
+        if ILLUSTRATIVE_RE.search(u.text) and not u.carried:
+            m = ILLUSTRATIVE_RE.search(u.text)
+            ev.append(f'{label}: illustrative content ("{_short(m.group(0), 24)}") with no "Máy tự thêm / Added by me" list')
+        if len(added) > int(cfg["added_max_items"]):
+            ev.append(f'{label}: the added list has {len(added)} items (max {int(cfg["added_max_items"])})')
+        for item in added:
+            if len(item.split()) > int(cfg["added_item_max_words"]):
+                ev.append(f'{label}: added item over {int(cfg["added_item_max_words"])} words: "{_short(item, 50)}"')
+            if re.search(r"\d|[\"“”«»]", item):
+                ev.append(f'{label}: added item holds a number or a quote (facts never go there): "{_short(item, 50)}"')
+    ev = list(dict.fromkeys(ev))
+    return {"id": "source_check", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
+            "details": {"pieces": len(units), "added_lists": n_lists}}
+
+
+def _belief_tokens(run: Run) -> list[str]:
+    for r in run.replies:
+        for text in ([r.text] if _is_card_reply(run, r) else []) + r.machine_blocks:
+            m = re.search(r"(?<![\w])key_belief\s*[:=]\s*(.+)", text)
+            if m:
+                return ck.copy_tokens(ck.straight_quotes(m.group(1)).strip(" \"'|"))
+    return []
+
+
+def _opener_tokens(text: str, n: int) -> list[str]:
+    for ln in text.splitlines():
+        body = re.sub(r"^[\s>*_•+\-\"“]*(?:[^\W\d_][^:\n]{0,20}:\s+)?", "", ln)
+        toks = ck.copy_tokens(body)
+        if len(toks) >= n:
+            return toks[:n]
+        if toks:
+            return []
+    return []
+
+
+def check_week_dedupe(run: Run) -> dict:
+    """Across one batch (the pieces of one reply, two or more): the same sentence of at least sentence_min_words words
+    (normalised: case, punctuation, quotes) or the same opener (the first opener_words words) in two pieces fails, and the
+    Brand Card's key_belief line in more than belief_max_pieces pieces fails. n/a without a batch of two pieces."""
+    cfg = dict(DEDUPE_DEFAULTS, **run.acceptance.get("week_dedupe", {}))
+    belief = _belief_tokens(run)
+    batches: dict[int, list[PieceUnit]] = {}
+    for u in piece_units(run):
+        batches.setdefault(u.reply.index, []).append(u)
+    ev, seen_batches = [], 0
+    for index, units in batches.items():
+        if len(units) < 2:
+            continue
+        seen_batches += 1
+        where = _turn(units[0].reply)
+        sent_in: dict[str, int] = {}
+        open_in: dict[tuple, int] = {}
+        for k, u in enumerate(units, 1):
+            sents = {" ".join(ck.copy_tokens(s)) for s in ck.sentences(u.text)}
+            for s in sorted(x for x in sents if len(x.split()) >= int(cfg["sentence_min_words"])):
+                if s in sent_in and sent_in[s] != k:
+                    ev.append(f'{where}: pieces {sent_in[s]} and {k} repeat a sentence: "{_short(s, 60)}"')
+                sent_in.setdefault(s, k)
+            op = tuple(_opener_tokens(u.text, int(cfg["opener_words"])))
+            if op:
+                if op in open_in and open_in[op] != k:
+                    ev.append(f'{where}: pieces {open_in[op]} and {k} open the same way: "{_short(" ".join(op), 40)}"')
+                open_in.setdefault(op, k)
+        if len(belief) >= 3:
+            gram = " " + " ".join(belief) + " "
+            hits = [k for k, u in enumerate(units, 1) if gram in " " + " ".join(ck.copy_tokens(u.text)) + " "]
+            if len(hits) > int(cfg["belief_max_pieces"]):
+                ev.append(f'{where}: the card\'s belief line "{_short(" ".join(belief), 50)}" is in {len(hits)} pieces '
+                          f'(max {int(cfg["belief_max_pieces"])}): {", ".join(map(str, hits))}')
+    ev = list(dict.fromkeys(ev))
+    if not seen_batches:
+        return {"id": "week_dedupe", "pass": True, "status": "n/a", "evidence": []}
+    return {"id": "week_dedupe", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
+            "details": {"batches": seen_batches}}
+
+
+def needs_questions(line: str) -> tuple[bool, str] | None:
+    """(more than one ask?, the question) for a "Needs you · …" / "Cần chị · …" line, else None."""
+    m = NEEDS_LINE_RE.match(line.strip())
+    if not m:
+        return None
+    q = NEEDS_TAIL_RE.sub("", m.group(1)).strip()
+    return (q.count("?") > 1 or bool(NEEDS_JOIN_RE.search(q)), q)
+
+
+def check_style(run: Run) -> dict:
+    """House style of the pieces. Fail: a VN piece with an em dash "—"; a "Needs you" / "Cần …" line asking more than one
+    thing (more than needs_questions_max "?", or asks joined by "và" / "and" / ";"). Warn: the coach's pet phrase (the
+    card's phrases) more than pet_phrase_max times in a piece; more than asks_max ask lines in a piece (heuristic: lines
+    opening with an ask verb such as gõ / nhắn / comment / reply / send, after "hãy", "if you …," and the like)."""
+    cfg = dict(STYLE_DEFAULTS, **run.acceptance.get("style", {}))
+    units = piece_units(run)
+    phrases = card_phrases(run)
+    ev, warns = [], []
+    for u in units:
+        label = f"{_turn(u.reply)} {_short(u.text.strip().splitlines()[0], 30)!r}"
+        if run.lang == "vn" and "—" in u.text:
+            at = u.text.index("—")
+            ev.append(f'{label}: em dash in a VN piece: "{_short(u.text[max(0, at - 25):at + 15], 45)}"')
+        hay = " " + " ".join(ck.copy_tokens(u.text)) + " "
+        for toks in phrases:
+            gram = " " + " ".join(toks) + " "
+            n = hay.count(gram)
+            if n > int(cfg["pet_phrase_max"]):
+                warns.append(f'{label}: pet phrase "{" ".join(toks)}" {n}× in a piece (max {int(cfg["pet_phrase_max"])})')
+        asks = [ln.strip() for ln in u.text.splitlines() if ASK_LINE_RE.match(ln)]
+        if len(asks) > int(cfg["asks_max"]):
+            warns.append(f'{label}: {len(asks)} ask lines in a piece (max {int(cfg["asks_max"])}): '
+                         + " | ".join(f'"{_short(a, 30)}"' for a in asks[:3]))
+    for r in run.replies:
+        for ln in r.lines:
+            hit = needs_questions(ln.plain or "") if not ln.block else None
+            if hit and (hit[0] or hit[1].count("?") > int(cfg["needs_questions_max"])):
+                ev.append(f'{_turn(r)}: a "Needs you" line asks more than one thing: "{_short(hit[1], 70)}"')
+    ev, warns = list(dict.fromkeys(ev)), list(dict.fromkeys(warns))
+    status = "fail" if ev else ("warn" if warns else "pass")
+    out = {"id": "style", "pass": not ev, "status": status, "evidence": ev, "details": {"pieces": len(units)}}
+    if warns:
+        out["warnings"] = warns
+    return out
+
+
 def grade(run_dir: Path, root: Path | None = None) -> dict:
     run_dir = Path(run_dir)
     root = Path(root or DEFAULT_ROOT)
@@ -7597,7 +7929,8 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     by_id = {i["id"]: i for i in invariants}
     checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_day0(run),
               check_day0_strategy(run), check_day0_shape(run), check_lengths(run), check_vn_natural(run),
-              check_vn_messages(run), check_hook_lab(run), check_strategy_doc(run), check_research_log(run)]
+              check_vn_messages(run), check_hook_lab(run), check_strategy_doc(run), check_research_log(run),
+              check_source_check(run), check_week_dedupe(run), check_style(run)]
     everything = invariants + checks
     return {
         "run": run_dir.resolve().name,         # "." graded from inside the folder still names it (review G16)
