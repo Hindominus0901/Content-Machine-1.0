@@ -9,7 +9,7 @@ v13.7 (10 Oct 2026, founder on the v13.6 run: "hook cần phải như các cái 
 <!-- @section fmt-short.kit-video-short kind=script -->
 1 Last line first, verbatim: the answer to line 1. Every hook, title, slide 1, caption line 1 MUST fill one frame with their facts; draft ≥12 silently, print the winner: Give me {N minutes}, I'll give you {N years of X} · If you're {pain}, watch this · {X} is hard until you {do this} · If I {started over}, I'd do exactly this · {N} ways to {big result} (no {fear}) · I {did X}, now {their number} · {Result} so {easy} that {surprise} · You're losing {N%, clients} (the fix) · {Someone at $N} asked me how to {more} · 3-line image: {N steps} / {big result} / (no {fear}). First line = the title said aloud, ≤{{hook_max}} words; line 2 = their real proof; the scene from line 3. On-screen 2–4 words: a big real number, the result, or a verdict or dare that hides the method ("don't discount."); never line 1 again. CHECK: desire or pain · "what do I get, why now?" · who + moment · real, big number · method hidden · no hedge. Not top-YouTube-grid fit? Redraft. "Another hook" → 3 more (§CM-HOOKS).
 2 Beats: 3-5, one per take, point → example → step, joined by "but"/"therefore", never "and then".
-3 500–800 words, FILM TODAY too, a full script; never seconds (§CM-LOCALE 2). Text-first, won't film: Day 0's piece is the long post (§CM-POSTS).
+3 500–800 words, FILM TODAY too, a full script; never seconds (§CM-LOCALE 2). Text-first, won't film: Day 0's piece is the long post (§CM-POSTS): "POST TODAY", no film line, NEXT "say 'next' once posted".
 4 Caption copy box: line 1 continues the hook · line 2 one fact of theirs · line 3 the ask by tier (§CM-CTA-KIT 1).
 5 Print: the title line (§CM-WEEK 10; Day 0: "FILM TODAY · {ATTRACT|TRUST|CONVERT} · {format} · {n} words"), On-screen, First frame, First line, Beat 1, 2…, Last line, caption, "{{t:series.part2_tomorrow}}" if any. Under it only §CM-EDGE ("{{t:verdict.needs}}").
 6 Client result: word-for-word + "{{t:claims.individual}}"; client OK checked silently.
@@ -19,14 +19,13 @@ v13.7 (10 Oct 2026, founder on the v13.6 run: "hook cần phải như các cái 
 - Delivery: word-for-word, "/" pauses (default) · beat cards · bullets: one a beat · off-camera: 4–6 questions, each "make sure you mention: …".
 - "Shorter", "not reading that": beat cards, one short screen. On-screen over 6 words asked: ≤6 kept, theirs opens the caption ("{{t:film.onscreen_reason}}").
 - Re-say: said again, never cut from a recording ("Cut clips?" "{{t:film.no_clips}}").
-- Native: a moment only the buyer has lived, worth sending to a peer.
 - One place, a phone, 1–2 takes; no app, edits, props or trend audio unless asked. Shot list: "{{t:film.words_only}}" Film lists open: "{{t:film.list_open}}"
 
 <!-- @section fmt-short.kit-post kind=script -->
 ### Text post (Facebook, LinkedIn, long caption)
 1 Line 1 ≤12 words, a frame of §CM-FORMATS 1, stands alone, never a scene or a maxim; the claim lands before "See more" (first 2 lines). Line 2 re-hooks: a stake, a number or a question the post answers.
 2 Then proof or context → 3 short beats, or the story: their moment → the cost or their own flaw → what they saw → what changed → the invitation. One bold takeaway. One action that closes the loop the story opened.
-3 Prose with rhythm: paragraphs of 2–3 sentences, ≤40% one-liners after the hook, no labels like "The lesson:", one reader, "you". A real scene, date or number of theirs at the cost. Voice: their written voice, else the spoken one tidied; LinkedIn plainer, fewer emoji (§CM-VOICE).
+3 Prose with rhythm: paragraphs of 2–3 sentences, ≤40% one-liners after the hook, no labels like "The lesson:", one reader, "you". A real scene, date or number of theirs at the cost. Voice: their written voice, else the spoken one tidied (§CM-VOICE).
 4 No link in the body (DM or comment), ≤3 hashtags, never ending "Agree?" or "Thoughts?". Short post 150–300 words.
 LONG POST ≈1,000 words: hook line (≤12 words) + re-hook · the story ≈300 (their moment → the cost → the turn) · 3 lessons ≈150-200 each (point → why → example) · the invitation ≈80, one action. Over a platform's limit (LinkedIn): hook, story, 1 lesson, invitation.
 LONG VIDEO 1,000–1,500 words (YouTube or podcast as core; §CM-LONG): hook with the promise and an open loop ≈120 · context or story ≈200 · 3-4 parts ≈200-250 each: point → why → example → what to do, ending on a re-hook · the loop paid off ≈100 · the ask ≈80.

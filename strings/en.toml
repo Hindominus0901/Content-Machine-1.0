@@ -26,7 +26,6 @@
 "verdict.draft_fixable"    = "Draft · {defect}. Say \"fix {n}\" and I'll sharpen it."
 "verdict.hardstop"         = "Not writing \"{line}\": {defect}. Give me the real {fact} and I'll write it."
 "verdict.override"         = "Posted on your call · my concern: {defect} · logged."
-"verdict.second_read"      = "Heads-up on {n}: {defect}. Say \"fix {n}\" before posting."
 
 # Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
 "cmd.start"         = "Start"
@@ -175,7 +174,7 @@
 "ics.talk.summary"       = "Weekly Talk · {{name}}"
 "ics.talk.description"   = "Open {{name}}, newest chat, and say \"next\". 15 minutes, voice only."
 "ics.friday.summary"     = "Friday numbers · {{name}}"
-"ics.friday.description" = "Open {{name}}, newest chat, and say \"my numbers\". 5 minutes."
+"ics.friday.description" = "Open {{name}}, newest chat, and say \"my numbers\". 3 minutes."
 
 # Setup-check variants and the Phone Starter (UX spec §1.2, §1.4)
 "setup.check_compact" = "◆ {{name}} · Setup check: ✓ instructions ✗ method file (compact mode) · Brand Card: we make it today"
@@ -191,11 +190,9 @@
 # message (one question mark in all; since 7 Oct the first dig question, §CM-DIG); dump.post_it follows the early win's best line in its copy box.
 "dump.keep_going"        = "Keep going, or say 'done'."
 "dump.enough"            = "That's plenty for today. If you have one more story, tell it now. If not: {your first question | say 'done'.}"
-"dump.post_it"           = "Post it as text today if you like."
 "check.pick"             = "My pick: {option}, because {reason}."
 "save.limit_claude_free" = "Hit the limit? Come back when it resets, same chat, say 'next'."
 "resume.brb"             = "No rush. Say 'ok back' when you're back."
-"card.stop_lines"        = "That's today done. This card is how I remember you. Save it: {route}. Then say 'next' for your Week 1 scripts (8 min), or stop here; they'll wait."
 "card.title"             = "Brand Card v{n} · {date}"
 "card.label.week"        = "talk {day} · film {day} · numbers Fri"
 "card.machine.heading"   = "The rest is for the machine, no need to read:"
@@ -226,7 +223,7 @@
 "talk.next"      = "Answer out loud, then send."
 "talk.probe"     = "Where were you, and what did they say?"
 "talk.paused"    = "We stopped at question {n}. Say 'next' and we carry on."
-"talk.film"      = "Film the 4 shorts back to back, 1–2 takes each, about 20 min. Just say it again; no editing."
+"talk.film"      = "Film the shorts back to back, 1–2 takes each, about 10 min a short. Just say it again; no editing."
 "talk.mini_open" = "Short week: 3 quick questions, 5 minutes, voice is fine."
 
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)
@@ -240,14 +237,13 @@
 "angle.hunch"      = "my hunch"
 
 # Short videos, posts, messages, calls to action (§ FORMATS, POSTS, MESSAGES, CTA-KIT)
-"cta.default"           = "Comment {KEYWORD} and I'll send you {payoff}."
-"cta.quiet"             = "Message me {KEYWORD} and I'll send you {payoff}."
+"cta.default"           = "Comment {WORD} and I'll send you {payoff}."
+"cta.quiet"             = "Message me {WORD} and I'll send you {payoff}."
 "cta.not_pushy"         = "A comment word gets people something real, so it isn't pushy. For a quieter ending, say '{{t:cmd.quiet}}'."
 "cta.platform_note"     = "Platform note (as of {date}): Facebook and Instagram may show 'comment if…' posts to fewer people. Your call."
 "cta.by_hand"           = "Replies go by hand."
 "cta.emoji_trigger"     = "Add it to your auto-reply's trigger words."
 "tick.client_ok"        = "It's true, and {client} said yes to being shown this way."
-"tick.keyword"          = "Your keyword delivers today: the DM reply is ready."
 "tick.cap"              = "The cap or deadline is real, and you'll keep it."
 "claims.individual"     = "individual result, not a promise"
 "film.not_filming"      = "Not filming today: post the caption as text."
@@ -263,7 +259,6 @@
 
 # Stand-out check, sounding like the coach, guardrails (§ EDGE, HUMANIZE, GUARDRAILS). Dated notes: {date} per §CM-LOCALE
 "qa.why_hint"        = "Say '{{t:cmd.why}}'"
-"voice.not_me_done"  = "Gone. I won't use it again."
 "voice.cant_allow"   = "I can't add that one: {why}."
 "voice.match"        = "Voice-note how you'd say it; I'll match it."
 "proof.intake"       = "Is it on record, and did the client OK it in writing for posts, ads or a case study?"
@@ -310,7 +305,7 @@
 "liked.grid_none"   = "No counts here, so no ranking."
 "liked.no_watch"    = "I can't watch anyone's account and won't pretend to. At each monthly plan, send 2–3 screenshots; I'll redo your angle in 5 minutes."
 "liked.batch"       = "The other {n} are saved for later."
-"liked.evidence"    = "Ready to {verb} · I'd post it: their shape, your {fact}; nothing copied."
+"liked.evidence"    = "{why line}; built on their shape with your {fact}, nothing copied."
 "liked.slot"        = "This replaces {Thursday's video}. Film it today, 2 takes. Say 'skip' to keep the old one."
 
 # Friday numbers and review (§ NUMBERS); language and market (§ LOCALE)
@@ -356,7 +351,7 @@
 "dig.buyer"                    = "If you could clone one client, who would it be, and who would you rather not take on?"
 "dig.find"                     = "Where do new clients find you today?"
 "dig.channels"                 = "Which 2–3 channels in your field do you like or compete with?"
-"dig.goal"                     = "What should your content do for you in the next 3 months?"
+"dig.goal"                     = "What should your content do for you, and by when?"
 "setup.plan_guess"             = "For {platform} · talk day {day} · email list: {n | none} (my guess, where unheard; one word changes it)."
 "map.ok"                       = "We'll run this for 4 weeks. OK, or change a line."
 "card.visible.to_them"         = "to them:"

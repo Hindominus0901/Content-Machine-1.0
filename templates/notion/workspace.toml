@@ -3,8 +3,8 @@
 # database, property and option in the coach's language; hub.grow-notion-build holds the build, upsert and fence rules).
 #
 # Used three ways:
-# - the maintainer builds the master "ready-made page" once from this file (with the Notion connector), turns on
-#   Share → Publish → "Allow duplicate as template", and puts its Duplicate link in START-HERE (per edition);
+# - (planned, not shipped: no Duplicate link exists yet, so hub.grow-notion-build 6 and 9 never point to one) a master
+#   "ready-made page" built once from this file, published with "Allow duplicate as template", linked in START-HERE;
 # - the machine builds the same structure in the coach's workspace via the connector (hub.grow-notion-build 5);
 # - lint/tests may check that every name here appears verbatim in hub.grow-notion of its edition.
 #
@@ -76,7 +76,7 @@ row = "one month or one launch"
 key = "Name"
 properties = [
   { name = "Name", name_vn = "Tên", type = "title" },
-  { name = "Type", name_vn = "Loại", type = "select", options = ["Month", "Launch"], options_vn = ["Tháng thường", "Mở bán"] },
+  { name = "Type", name_vn = "Loại", type = "select", options = ["Season", "Launch"], options_vn = ["Tháng thường", "Mở bán"] },
   { name = "Goal", name_vn = "Mục tiêu", type = "select" },
   { name = "Offer", name_vn = "Sản phẩm", type = "rich_text" },
   { name = "Big idea", name_vn = "Ý lớn", type = "rich_text" },

@@ -29,7 +29,7 @@ v13.7 (10/10/2026, founder xem bản v13.6: "hook cần phải như các cái t 
 LẬT NIỀM TIN: người xem đang tin A; hook nói B; bài chứng minh B.
 1 "Bạn không thiếu {thứ quen}. Bạn thiếu {câu trả lời của coach}." · THU HÚT, NIỀM TIN · ngắn, bài, slide 1 · "Bạn không thiếu người theo dõi. Bạn thiếu đúng mười người này." · Bẫy: lật một điều chẳng ai tin ("đâu cần phải gắt với khách").
 2 "{Khách} không {vấn đề họ tưởng}. {Nguyên nhân thật}." · THU HÚT · ngắn, tiêu đề, email · "Shop ế mà cứ tưởng tại giá cao? Lỗi không nằm ở giá đâu." · TRƠN: "Giá phải đi đôi với giá trị."
-3 "Chính {việc họ làm để gỡ} làm {vấn đề} kéo dài." · NIỀM TIN · ngắn, bài · "Đăng càng nhiều, càng chẳng ai nhắn. Không phải tại thuật toán đâu." · Bẫy: đổ lỗi cho khách; nhắm vào thói quen.
+3 "Chính {việc họ làm để gỡ} làm {vấn đề} kéo dài." · NIỀM TIN · ngắn, bài · "Đăng mỗi ngày mà vẫn chẳng ai nhắn? Không phải tại thuật toán đâu." · Bẫy: đổ lỗi cho khách; nhắm vào thói quen.
 4 "Đừng {lời khuyên quen}. {Cách của coach}." · THU HÚT · màn hình, ngắn, quảng cáo · "Học trò mới, đừng dạy bài một vội. Làm cái này trước đã." · TRƠN: "Mẹo dạy học trò mới."
 5 "{Điều họ tự hào} lại là cái làm khổ họ." · NIỀM TIN · bài, email · "11 giờ đêm vẫn trả lời khách mà khách vẫn không nể giờ giấc của bạn? Lỗi nằm ở chính cái bạn tự hào."
 6 "Nhiều {khách} tưởng {A} mới là lúc chốt. Thật ra người ta chốt ở {B}." · THU HÚT, CHUYỂN ĐỔI · bài, tiêu đề, live · "Nhiều người dạy kèm tưởng buổi học thử mới là lúc chốt. Thật ra phụ huynh chốt ở chỗ khác."
@@ -88,14 +88,14 @@ NGÀY SAU KHI HẾT VẤN ĐỀ: một ngày của khách khi vấn đề đã g
 10 "Nếu {vấn đề} xong trước {ngày}, việc đầu tiên bạn làm là gì?" · CHUYỂN ĐỔI · Zalo, quảng cáo, live · "Nếu trang bảng giá xong trước thứ Sáu, bạn gửi cho ai đầu tiên?" · Bẫy: viễn cảnh mà gói không làm ra được; kể một ngày theo cách làm, không hứa kết quả.
 TRƠN: "Hãy tưởng tượng công việc mơ ước của bạn." · HAY: mục 7.
 
-<!-- @section hook-library.grow-scene src=13eb927188 -->
+<!-- @section hook-library.grow-scene src=74f0321d16 -->
 ### Hook 5: mở bằng cảnh, câu nghe được (dáng · việc · chỗ đặt · ví dụ · trơn hay bẫy)
-MỞ BẰNG CẢNH: một cảnh người xem từng sống, nói sao cho họ thấy mình trong đó (không chi tiết chỉ người trong cuộc hiểu), không dạo đầu; câu thứ hai phải có cái giá.
+MỞ BẰNG CẢNH: một cảnh người xem từng sống, nói sao cho họ thấy mình trong đó (không chi tiết chỉ người trong cuộc hiểu), không dạo đầu; câu thứ hai phải có cái giá. Nói thành dòng 1 thì vẫn phải theo khung (§CM-HOOK-SHORT 3); cảnh trơn chỉ để trên màn hình hay khung hình đầu.
 1 "{Giờ}. {Đồ vật, hành động}." · THU HÚT, NIỀM TIN · ngắn, bài · "Nửa đêm vẫn ngồi sửa bảng giá lần thứ tư? Dừng ở dòng này."
 2 "{Hôm nào}, {ai} {một việc nhỏ}." · NIỀM TIN · bài, Zalo · "Tuần trước có chị khách gửi mình ảnh inbox trống trơn. Inbox bạn cũng vậy thì xem cái này." · Lời khách chỉ khi coach kể lại.
 3 "{Đồ vật} ở {chỗ}: '{chữ trên đó}'." · THU HÚT · màn hình, ngắn (làm khung đầu) · "Tờ giấy note dán mép màn hình: 'đừng xin lỗi'."
 4 "Món {đồ} mình vẫn giữ từ {lúc}" · NIỀM TIN · bài, ngắn · "Gửi báo giá mà mở đầu bằng 'em xin lỗi'? Cái email đầu tiên của mình cũng vậy, mình vẫn giữ."
-5 "Đang {làm dở việc gì} thì {ai} hỏi '{câu}'." · NIỀM TIN, CHUYỂN ĐỔI · ngắn, live · "Đang tư vấn dở thì anh khách cắt ngang: 'Rốt cuộc anh được cái gì?'" · Bẫy: cảnh chẳng có gì căng (ly cà phê, bình minh).
+5 "Đang {làm dở việc gì} thì {ai} hỏi '{câu}'." · NIỀM TIN, CHUYỂN ĐỔI · bài, live (sau dòng 1 có khung) · "Đang tư vấn dở thì anh khách cắt ngang: 'Rốt cuộc anh được cái gì?'" · Bẫy: cảnh chẳng có gì căng (ly cà phê, bình minh).
 CÂU NGHE ĐƯỢC: câu khách nói hoặc nghe, ghi trung thực: coach kể lại, hoặc "câu mình gặp suốt".
 6 "'{Câu khách nói nguyên văn}.' {Nghe ở đâu}." · NIỀM TIN · ngắn, bài · "'Chừng nào làm xong website em mới đăng bài.' Câu này mình gặp suốt trong mấy nhóm freelancer."
 7 "Có người trong {nhóm} viết: '{câu}'. {Cú ngoặt}." · THU HÚT · bài, slide 1 · "Có bạn trong nhóm freelancer viết: 'Bận tối mặt mà vẫn rỗng túi.' Hai chuyện đó thường chung một gốc."
@@ -223,7 +223,7 @@ Cảnh của khách (học thử xong không quay lại) vào từ câu 3, khôn
 - nhẹ tới mức: "Dạy chạy bộ nhẹ tới mức học viên tự hỏi 'mai chạy nữa không cô?'" + "không ép ai."
 - đang mất: "Dạy học thử kiểu này, tháng nào anh chị cũng mất học trò (và cách sửa)" + "sửa trong 5 phút."
 - họ hỏi mình: "Chủ tiệm {N} chi nhánh hỏi mình cách lên {N+2} mà không thêm người" + "{N} → {N+2}"
-- ảnh Facebook 3 dòng (nhỏ / to / nghiêng): "Công thức chụp ảnh bánh / biến bài thứ Ba thành đơn đặt / không cần chạy quảng cáo" (mẫu: "Bật mí công thức HOOK / khiến bài viết flop bật dậy / chạm mốc triệu view")
+- ảnh Facebook 3 dòng (nhỏ / to / nghiêng): "Công thức chụp ảnh bánh / biến bài thứ Ba thành đơn đặt / không cần chạy quảng cáo" (mẫu: "Công thức câu mở / cho bài đăng mãi không ai đọc / không cần chạy quảng cáo")
 3 Không: chữ ảnh bìa lặp chữ tiêu đề hay nói ra cách làm ("giữ hoá đơn từ tháng Một."; "đăng lúc 6 giờ." đã sát lằn ranh), mặt hốt hoảng, tiền hay thu nhập làm hook, số không phải của họ, lấy cảnh làm tiêu đề, lời hứa mà phút đầu video không giữ. Tự hỏi: câu này nằm lọt lưới tiêu đề YouTube kinh doanh hàng đầu, bài ảnh Facebook triệu view không? Không → viết lại.
 4 Tên buổi live, webinar: kết quả + cho ai + mang gì vào hoặc mang gì về; phần mở chạy bằng chứng, lời hứa, lộ trình (§CM-LONG-INTRO). "Sửa bảng giá trực tiếp: 45 phút cho người dạy kèm (mang bảng của bạn vào)". Giờ, nơi diễn ra, có xem lại hay không: đều phải thật; "suất" chỉ khi có giới hạn thật.
 5 YouTube: tiêu đề viết như người nói, đủ dấu. Video Facebook: dòng đầu caption gánh việc của tiêu đề.
@@ -231,7 +231,7 @@ Cảnh của khách (học thử xong không quay lại) vào từ câu 3, khôn
 7 Đổi tiêu đề một lần, theo §CM-PACKAGING 5: tiêu đề mới HOẶC chữ ảnh bìa mới, không đổi cả hai.
 TRƠN → HAY: "Chia sẻ về chuyện định giá" → "3 cách tăng giá mà không mất khách quen" · "Buổi hỏi đáp" → "Mang bài đăng không ai đặt vào đây: sửa trực tiếp 45 phút".
 
-<!-- @section hook-library.grow-slides src=a8ee94bbe8 -->
+<!-- @section hook-library.grow-slides src=5e06439ae1 -->
 ### Slide 1 của carousel, dòng 1 bài dài
 CAROUSEL (§CM-TEXT-FORMATS 1; Facebook, TikTok dạng ảnh)
 1 Slide 1 là lời hứa cả bộ phải giữ: kết quả bằng chữ khách, ≤70 ký tự, hai dòng chữ to. Có số chỉ khi đúng số slide hay số bước. Không nhãn ("Bắt đầu từ đây", "Mẹo cho coach"), không rào đón, không lấy tên thương hiệu làm hook, không để dấu "→" gánh việc.
@@ -242,10 +242,10 @@ CAROUSEL (§CM-TEXT-FORMATS 1; Facebook, TikTok dạng ảnh)
 BÀI DÀI FACEBOOK (§CM-POSTS 1)
 6 Dòng 1 ≤18 tiếng, đứng riêng được, đổ vào một khung (§CM-PACKAGING 2): điều khách thèm hay cái khổ của đúng người, đúng lúc, con số của họ; giấu cách làm; không mở bằng cảnh, không châm ngôn, không nói toạc bài học. Dòng 2 đẩy cái được mất lên hay bẻ ngoặt. Cả hai nằm trước chữ "Xem thêm".
 7 HAY: "Nếu ảnh móng nhiều like mà ngày thường chẳng ai đặt lịch, đọc cái này. / Không phải tại ảnh." · "Mình đã đưa lớp piano từ 9 lên 26 học trò. / Vẫn học phí đó, chỉ đổi buổi học thử." TRƠN: "Hôm nay mình muốn chia sẻ về chuyện định giá." · "Định giá là một trong những phần khó nhất khi kinh doanh."
-8 LinkedIn (coach B2B): dòng 1 có thể kết bằng ":" cho bài liệt kê ("7 dấu hiệu nho nhỏ cho thấy khách sẽ mua thật:"); mỗi đoạn một câu, không hashtag, ≤1 emoji.
+8 LinkedIn (coach B2B): dòng 1 có thể kết bằng ":" cho bài liệt kê ("7 dấu hiệu nho nhỏ cho thấy khách sẽ mua thật:"); đoạn và hashtag theo §CM-POSTS 3-4, ≤1 emoji.
 9 Dòng 1 theo khung, không bao giờ là cảnh hay lời chào; dòng 2 là bằng chứng hay cú ngoặt, nên chỗ "Xem thêm" cắt ngang đúng lúc người đọc muốn biết tiếp.
 
-<!-- @section hook-library.grow-subject src=884e0aaf7e -->
+<!-- @section hook-library.grow-subject src=bbacc77967 -->
 ### Tiêu đề email, dòng đầu tin Zalo
 EMAIL (§CM-TEXT-FORMATS 2)
 1 Tiêu đề bằng chữ khách, một ý, khoảng 6-12 tiếng, viết thường được. Dòng xem trước nói thêm (như chữ ảnh bìa), không lặp. Câu đầu email bắt đầu trả lời tiêu đề.
@@ -254,10 +254,10 @@ EMAIL (§CM-TEXT-FORMATS 2)
 4 Không: "Re:" hay "Fwd:" giả, "cơ hội cuối", "đóng tối nay" khi không đúng (§CM-GUARDRAILS), viết hoa toàn bộ, tiêu đề mà email không trả lời, quà mà email không có.
 5 Email mở bán nói rõ chuyện gì, khi nào; ngày, suất đều thật (§CM-LAUNCH-DAYS).
 ZALO (tin riêng, tin nhóm, tin OA)
-6 Dòng đầu = gọi tên + xưng mình là ai + lý do nhắn, như người nhắn người; danh sách chat chỉ hiện mấy chữ đầu nên lý do phải nằm ở đó: "Dạ chị Mai, em Quân bên lớp định giá đây ạ. Cái checklist hôm trước chị hỏi, em gửi ngay bên dưới nha."
+6 Dòng đầu = xưng mình là ai + lý do nhắn (không gọi tên khách, §CM-MESSAGES 6), như người nhắn người; danh sách chat chỉ hiện mấy chữ đầu nên lý do phải nằm ở đó: "Dạ chị, em {tên coach} bên lớp định giá đây ạ. Cái checklist hôm trước chị hỏi, em gửi ngay bên dưới nha."
 7 Tin nhóm, tin gửi nhiều người: dòng đầu là một cảnh hay câu họ từng hỏi; không "Kính gửi Quý khách", không "Chào cả nhà, chúc cả nhà một ngày tốt lành".
 8 Một tin một việc; nhắc tới sản phẩm chỉ khi họ hỏi hoặc đã đăng ký nhận; tin nhắc lại chừa đường lui ("chưa phải lúc thì chị cứ để đó nha").
-9 TRƠN → HAY: "Xin chào! Bên em đang có ưu đãi cực sốc dành riêng cho bạn" → "Chị Mai ơi, em Lan bên buổi live định giá đây ạ. Lớp sau chị hỏi, thứ Hai em mở nha."
+9 TRƠN → HAY: "Xin chào! Bên em đang có ưu đãi cực sốc dành riêng cho bạn" → "Chị ơi, em {tên coach} bên buổi live định giá đây ạ. Lớp sau chị hỏi, thứ Hai em mở nha."
 
 <!-- @section hook-library.grow-ads src=e45a6837dd -->
 ### Hook quảng cáo (từ bài đã chạy tốt; đào sâu §CM-ADS)
@@ -270,12 +270,12 @@ ZALO (tin riêng, tin nhóm, tin OA)
 7 TRƠN → HAY: "Khoá coaching tốt nhất cho freelancer!" → "Lịch học thử kín mà chẳng ai đăng ký học tiếp." · "Giảm cân cấp tốc!" → không bao giờ; thay bằng "Tan làm mệt quá, không đi tập nổi? Lịch tập gói gọn trong 20 phút bạn còn rảnh." (cách làm, không kết quả) · "Ưu đãi có hạn!" → hạn thật: "Đóng đăng ký 8 giờ tối thứ Sáu; lớp sau phải qua Tết mới mở."
 8 Sản phẩm về tiền, sức khoẻ, cơ thể: hook nói cách làm; dưới quảng cáo MỘT dòng lưu ý nền tảng như §CM-ADS 7.
 
-<!-- @section hook-library.grow-cta src=2c1cf9dd94 -->
+<!-- @section hook-library.grow-cta src=21ed4f8b0f -->
 ### Lời mời theo loại bài (lời mời khép lại điều hook đã hé)
 1 Theo loại bài, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi cho bạn · NIỀM TIN → comment lấy đúng món bài này hứa · CHUYỂN ĐỔI → nhắn riêng, sản phẩm thật, hạn thật (ngoài đợt mở bán thì từ tuần 2; bài CHUYỂN ĐỔI của Tuần 1 chỉ xin một câu trả lời, chưa mời mua). Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Món hứa phải có sẵn trước khi đăng (§CM-CTA-KIT 2).
 2 THU HÚT: "Lưu lại, lần tới cô dâu xin gói rẻ hơn thì mở ra đọc câu thứ hai." · "Gửi cái này cho đứa bạn đang {hoàn cảnh}." · "Mai lên phần 2: {điều còn bỏ ngỏ}." · Cho chọn: "Bạn gom hoá đơn từng tháng hay dồn tới tháng Chạp? Ghi A hay B thôi." Không "bạn nghĩ sao?".
 3 NIỀM TIN: "{{t:cta.default}}", {payoff} là món bài này hứa: "Comment BÁNH THỨ BA, mình gửi 3 khung giờ đăng trong video này." Từ khoá là chữ người xem trong hook, từ 2 tiếng trở lên, viết hoa (nhận cả dạng không dấu); không GUIDE, FREE do máy tự chọn. Coach chọn kiểu nhẹ (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
-4 CHUYỂN ĐỔI (từ tuần 2, khi có bằng chứng): được gì, giá chính xác, cho ai, hạn hay giới hạn thật kèm lý do, một việc: "Học phí {giá}, {N} buổi. Lớp nhận {N} bạn vì bài ai mình cũng mở ra sửa; thứ Sáu đóng. Nhắn mình chữ LOP, mình gửi lịch." · "Ai đang kẹt đúng chỗ này cứ nhắn riêng mình, kể đang vướng ở đâu; mình tự trả lời từng người." Từ khoá, quà của mùa mặc định nằm ở đây. Chỉ số thật.
+4 CHUYỂN ĐỔI (từ tuần 2, khi có bằng chứng): được gì, giá chính xác, cho ai, hạn hay giới hạn thật kèm lý do, một việc: "Học phí {giá}, {N} buổi. Lớp nhận {N} bạn vì bài ai mình cũng mở ra sửa; thứ Sáu đóng. Nhắn mình chữ GIỮ CHỖ, mình gửi lịch." · "Ai đang kẹt đúng chỗ này cứ nhắn riêng mình, kể đang vướng ở đâu; mình tự trả lời từng người." Từ khoá, quà của mùa mặc định nằm ở đây. Chỉ số thật.
 5 Link: để ở comment, bio hay phần mô tả, không để trong thân bài chữ: "Checklist mình để ở comment đầu tiên nha."
 6 Coach tự chọn ("chấm", "comment nếu…", "đủ 100 comment mình làm phần 2", emoji): ghi y nguyên, không làm mềm; dưới đó MỘT dòng: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 7 Món hứa hợp với từng dáng: số của coach → tờ bảng đằng sau con số · lỗi → checklist · băn khoăn → nhắn riêng nói chuyện · câu khách hỏi → câu trả lời đầy đủ · thử thách → vào nhóm (ngày bắt đầu thật) · ngày sau khi hết vấn đề, mổ xẻ kết quả → lời mời mua.

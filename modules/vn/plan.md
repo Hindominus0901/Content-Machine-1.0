@@ -10,32 +10,31 @@ Cắt bù byte G1 (không bỏ luật): WEEK 3 trỏ mục 0 TRỌNG TÂM của 
 G2 6/10: WEEK 2 "chưa có (nói hay đoán)". K33 không cần ở VN: FORMATS đã ghi danh sách quay "(Tuần 1, …) mở bằng" film.list_open, và WEEK 10 không có vế "không thêm lời" để vướng.
 Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duyệt; thắng các điều soát cũ): phần SOÁT mới (điều thèm hay cái khổ · hai câu "được gì / sao phải biết" · đúng người đúng lúc, không chi tiết nội bộ · số nhìn là thấy lớn, chỉ số thật · có độ căng, giấu cách làm · một câu nói vừa đủ dài, coach xưng mình/tôi) thay 6 câu soát; sáu dáng tiêu đề, tiêu đề/ảnh bìa chia việc (2–4 chữ: câu phán, lời thách, số lớn; ảnh Facebook 3 dòng) là khung nháp; lời mời theo loại bài (THU HÚT lưu/gửi · NIỀM TIN comment lấy {payoff} của chính bài · CHUYỂN ĐỔI nhắn riêng, sản phẩm và hạn thật; quà của mùa chỉ mặc định ở CHUYỂN ĐỔI; ≥1/4 bài chỉ xin lưu/gửi; hỏi cho chọn; từ khoá = chữ người xem trong hook). Ví dụ VN lấy từ 16 hook founder đã duyệt (chỉ để thấy giọng).
 
-<!-- @section plan.kit-week src=72950aa5ec -->
+<!-- @section plan.kit-week src=53f1be3dce -->
 ### Tuần nói chuyện (Tuần 1: sau QUAY HÔM NAY, mỗi "tiếp" một bài; chủ đề: trụ cột + hiểu biết nghề, sự thật chỉ của coach)
 1 Tuần n = (số tuần từ plan_start mod 4) + 1, đi đầu là bước n: 1 vấn đề thật, nguyên nhân · 2 cách tốt hơn, cách của họ · 3 bằng chứng, "mình cũng làm được, dù…" · 4 cả ba + sản phẩm. Trụ cột xoay vòng.
-2 Theo nền tảng chính ở HỆ THỐNG NỘI DUNG: kênh video (TikTok, Reels): 3 video ngắn (tuần nói chuyện: 4), 1 bài dài, 1 tin Zalo. Kênh chữ (bài viết Facebook, LinkedIn, bản tin): 2 bài, 1 carousel, 1 video tuỳ chọn (không quay: thêm bài), 1 tin Zalo/email. Danh sách 300+: tin gửi trước, xin trả lời; chưa có: tin riêng (§CM-MESSAGES 4). Số giờ mỗi tuần quyết định số bài, cả Tuần 1: lean (mặc định, ≈2,5 tiếng) hay standard (≈3,5 tiếng, thêm 1 video, 1 carousel); số phút: §CM-CALENDAR 2. Dưới 2 tiếng: 3 bài (≈1,5 tiếng), bài chính trước; không tuần nào trống.
+2 Theo nền tảng chính ở HỆ THỐNG NỘI DUNG: kênh video (TikTok, Reels): 3 video ngắn, 1 bài dài, 1 tin Zalo. Kênh chữ (bài viết Facebook, LinkedIn, bản tin): 2 bài, 1 carousel, 1 video tuỳ chọn (không quay: thêm bài), 1 tin Zalo/email. Danh sách 300+: tin gửi trước, xin trả lời; chưa có: tin riêng (§CM-MESSAGES 4). Số giờ mỗi tuần quyết định số bài, cả Tuần 1 và tuần nói chuyện: light (chưa nghe số giờ, hay dưới 2 tiếng): 3 bài ≈1,5 tiếng, bài chính trước (2 video hay 2 bài viết + tin Zalo/email) · lean ≈2,5 tiếng: như trên · standard ≈3,5 tiếng: thêm 1 video, 1 carousel; số phút: §CM-CALENDAR 2. Không tuần nào trống.
 3 Mỗi bài một trụ cột, một loại, qua mục 0 TRỌNG TÂM; ý riêng viết trước (sổ ý, §CM-HUMANIZE); câu đầu theo khung §CM-FORMATS 1, mọi dạng bài; một khung viết hợp loại bài, định dạng (§CM-COPY); ≥1 món trong kho (§CM-BANKS); ĐỂ SAU không làm hook.
-4 Từ khoá (dạng lời mời) 1 lần trong thân mọi bài, nhắc như chủ đề không tính, cả bài mời gửi bạn, + lời mời; xoay vòng: hook → chữ trên màn hình → câu chốt → dòng 1 caption → mở đầu bài dài, carousel.
+4 Từ khoá của mùa 1 lần trong thân mọi bài, nhắc như chủ đề không tính, cả bài mời gửi bạn, + lời mời; xoay vòng: hook → chữ trên màn hình → câu chốt → dòng 1 caption → mở đầu bài dài, carousel.
 5 Dòng VÌ SAO lưu kèm mỗi bài, chỉ in khi hỏi "{{t:cmd.why}}": {{t:why.prefix}}: "{niềm tin cũ, chữ khách}" → "{niềm tin mới}" · dẫn tới: {bước kế}.
-6 Lời mời theo loại bài (§CM-CTA-KIT 1): THU HÚT → lưu, gửi bạn bè ("{{t:series.part2_tomorrow}}") · NIỀM TIN → từ khoá (nhẹ: nhắn mình) · CHUYỂN ĐỔI → nhắn tin, đặt lịch, từ tuần 2 (tuần 1: tin xin trả lời, chưa chào bán), khi có bằng chứng (kết quả khách cho dùng, quy trình, suất nhóm đầu), lean ≤1/tuần, standard ≤2. Cho ≥3 lần mới xin 1 lần.
-7 Theo tỷ lệ (mặc định 40/40/20): THU HÚT = kéo người mới + đồng cảm, NIỀM TIN = dạy + bằng chứng, CHUYỂN ĐỔI = sản phẩm, băn khoăn, quyết định của khách, lời mời. Tính cách, giải trí ≤20%, như video riêng (§CM-FORMATS). ≥3 định dạng (Phần 1/2/3 · Góc nhìn {nghề} · Hỏi nhanh đáp gọn · Sự thật về nghề); chống lặp: §CM-HUMANIZE.
+6 Lời mời theo loại bài (§CM-CTA-KIT 1): THU HÚT → lưu, gửi bạn bè ("{{t:series.part2_tomorrow}}") · NIỀM TIN → chữ comment (nhẹ: nhắn mình) · CHUYỂN ĐỔI → nhắn tin, đặt lịch, từ tuần 2 (tuần 1: tin xin trả lời, chưa chào bán), khi có bằng chứng (kết quả khách cho dùng, quy trình, suất nhóm đầu), ≤1/tuần, standard ≤2. Cho ≥3 lần mới xin 1 lần.
+7 Theo tỷ lệ (mặc định 40/40/20): THU HÚT = kéo người mới + đồng cảm, NIỀM TIN = dạy + bằng chứng, CHUYỂN ĐỔI = sản phẩm, băn khoăn, quyết định của khách, lời mời. Tính cách, giải trí ≤20%, như video riêng (§CM-FORMATS). ≥3 định dạng; chống lặp: §CM-HUMANIZE.
 8 Khung trong Bài {xưng hô} thích: ≤1 video riêng/tuần (standard 2), chủ đề, chuyện của coach.
 9 Chưa có bằng chứng: bài bằng chứng thành chuyện quy trình hoặc suất nhóm đầu, không giải thích; tuần đó có tin hỏi 3 khách cũ (§CM-MESSAGES 7).
-10 In từng bài dưới dòng "N{n} · {thứ} · {dạng} · THU HÚT|NIỀM TIN|CHUYỂN ĐỔI · {n} chữ" + khung chép; ngày 0 chỉ một dòng trên mỗi khung. Phần còn lại chờ "tiếp". Bảng trong chat ≤4 cột: Ngày · Dạng · Ý, hook · Lời mời; bảng đủ cột vào file, hub (§CM-CALENDAR).
+10 In từng bài dưới dòng "N{n} · {thứ} · {dạng} · THU HÚT|NIỀM TIN|CHUYỂN ĐỔI · {n} chữ" + khung chép. Bảng trong chat ≤4 cột: Ngày · Dạng · Ý, hook · Lời mời; bảng đủ cột vào file, hub (§CM-CALENDAR).
 
-<!-- @section plan.kit-month src=dbbcea74ec -->
+<!-- @section plan.kit-month src=b72d0d1915 -->
 ### Một quyết định, ≤20 phút
 1 Mở bằng:
 "{{t:month.check}}"
 TIẾP: "{{t:month.check_next}}"
-2 Kết quả mới: kiểm bằng chứng (§CM-GUARDRAILS). Soát thông điệp, 3 dòng: bài và khách trả lời theo ý lớn · từ khoá khách nói lại · bài tốt nhất. Đề xuất GIỮ (mặc định) thông điệp, ý lớn, từ khoá; thêm góc mới, bằng chứng mới. Hoặc chỉnh một dòng bằng câu khách nói lại. "{{t:month.decide}}" Họ đã bảo giữ → bước 4. Không nói "khoá" hay "90 ngày".
-3 ĐỂ SAU vào lại như §CM-MAP (Quay lại khi), thành góc mới của một ý lớn, không thành ý thứ 4. Từ khoá: giữ, trừ khi 60+ ngày không ai nói mà từ dự phòng khách nói 2+ lần.
-4 Tháng sau bằng lời thường, mỗi tuần một dòng (§CM-WEEK): ý lớn · niềm tin cũ → mới · bài và lời mời · bằng chứng (chưa có: như mục 9 §CM-WEEK). Phần MỚI ≤20%: bài tốt nhất của họ ở dạng mới; không có thì {XƯNG HÔ} NÓI ĐƯỢC có căn cứ; không nữa thì một khung trong Bài {xưng hô} thích. Tháng cô hồn: §CM-LOCALE 6. Rồi Brand Card v{n+1}, in lại Bản đồ và dòng giọng.
+2 Kết quả mới: kiểm bằng chứng (§CM-GUARDRAILS). Soát thông điệp, 3 dòng: bài và khách trả lời theo ý lớn · từ khoá khách nói lại · bài tốt nhất. Đề xuất GIỮ (mặc định) thông điệp, ý lớn, từ khoá; thêm góc mới, bằng chứng mới. Hoặc chỉnh một dòng bằng câu khách nói lại. "{{t:month.decide}}" Đã bảo giữ → bước 4.
+3 ĐỂ SAU vào lại như §CM-MAP (Quay lại khi), thành góc mới trong một trụ cột (mỗi trụ một ý lớn); giữa mùa không thêm trụ, không có trụ thứ 6. Từ khoá: giữ, trừ khi 60+ ngày không ai nói mà từ dự phòng khách nói 2+ lần.
+4 Tháng sau bằng lời thường, mỗi tuần một dòng (§CM-WEEK): ý lớn · niềm tin cũ → mới · bài và lời mời · bằng chứng (chưa có: §CM-WEEK 9). Phần MỚI ≤20%: bài tốt nhất của họ ở dạng mới; không có thì {XƯNG HÔ} NÓI ĐƯỢC có căn cứ; không nữa thì một khung trong Bài {xưng hô} thích. Rồi Brand Card v{n+1}, in lại Bản đồ và dòng giọng.
 
-<!-- @section plan.kit-month-angle src=d69fb2ae59 -->
+<!-- @section plan.kit-month-angle src=f350fb2836 -->
 ### Góc nhìn riêng (tuỳ chọn; mời một lần: "{{t:angle.offer}}")
 {{t:angle.tag}}
 AI CŨNG NÓI: chỉ điều thấy ở 2+ kênh; nêu tên kênh được, không tên người comment hay con số.
 CHƯA AI NÓI: nhu cầu khách từ 2+ người ở 2+ nơi; ít hơn thì ghi "{{t:angle.hunch}}", bài kế kết bằng câu hỏi để thử.
 {XƯNG HÔ} NÓI ĐƯỢC: khoảng trống đó × chuyện, bằng chứng, niềm tin của coach, trên một ý lớn có sẵn.
-Theo dõi kênh: §CM-LIKED 6.

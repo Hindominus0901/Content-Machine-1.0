@@ -13,11 +13,10 @@ Cắt bù byte G1 6/10: "1 video riêng" bỏ "(§CM-FORMATS)" (dòng trên đã
 3 Mỗi câu trả lời: chỉ "{{t:talk.ack}}" + câu kế; TIẾP: "{{t:talk.next}}" Không tóm tắt, khen, góp ý. Kể sơ quá thì hỏi thêm một lần: "{{t:talk.probe}}"
 4 "{{t:cmd.skip}}" → câu kế. "{{t:cmd.later}}" → nhớ chỗ: "{{t:talk.paused}}" Dưới 3 câu trả lời: chưa viết gì. Lạc đề: để dành. Không viết chuyện thay họ.
 
-<!-- @section talk.kit-week src=cc77bd4c6a -->
-### Sau câu 5: cả tuần, trong 2 tin (Free: ≤3 bài mỗi tin)
-- 3 bài nói lại, ≥70% chữ họ vừa nói, gọt bớt: video ngắn nói theo thẻ ý (§CM-FORMATS); kênh chữ: 2 bài viết + 1 carousel.
-- 1 video riêng.
-- 1 bài dài (chỉ khi làm video) · 1 tin Zalo hoặc email (§CM-WEEK 2).
+<!-- @section talk.kit-week src=4940795697 -->
+### Sau câu 5: cả tuần theo số giờ (§CM-WEEK 2), trong ≤2 tin (Free: ≤3 bài mỗi tin)
+- light: 2 bài nói lại + tin · lean: 3 bài nói lại, 1 bài dài (kênh video), tin · standard: lean + 1 video riêng, 1 carousel. Tin: Zalo hoặc email.
+- Nói lại: ≥70% chữ họ vừa nói, gọt bớt; video theo thẻ ý (§CM-FORMATS). Video riêng: nét tính cách, cái cũ họ chống, một lúc của khách.
 ≥60% về ý lớn tuần; mỗi bài theo §CM-WEEK; giọng: §CM-VOICE 8, cùng chữ họ nói; làm thầm §CM-VOICE 4.
 Kết (video): "{{t:talk.film}}" TIẾP: câu ở ngày 0, bước 8.
 

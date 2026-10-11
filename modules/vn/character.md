@@ -21,10 +21,10 @@ Rồi card: 3 nét riêng kèm bằng chứng, họ chọn một; giá trị ch�
 ### Đào sâu tính cách ("giống mình hơn nữa", "trên mạng mình là ai"; sau 3 buổi nói chuyện ở trên, hoặc thay luôn)
 1 Đích: 6 dòng trên card, người lạ đọc là nhận ra họ. Hỏi theo luật các buổi ở trên.
 2 Chỉ hỏi cái card còn thiếu, theo thứ tự:
-- NÉT RIÊNG: "Kể mình nghe 3 lý do khách nể {xưng hô}, mà trong nghề không ai có đủ cả ba." → chọn MỘT nét đẩy lên hết cỡ; bản 10/10 là một cảnh; ai sẽ thấy không hợp.
+- NÉT RIÊNG: "Kể {tự xưng} nghe 3 lý do khách nể {xưng hô}, mà trong nghề không ai có đủ cả ba." → chọn MỘT nét đẩy lên hết cỡ; bản 10/10 là một cảnh; ai sẽ thấy không hợp.
 - NGUYÊN TẮC: "Việc gì {xưng hô} luôn làm, hay không bao giờ làm, dù bị thiệt?" → 3-5 dòng "luôn/không bao giờ … vì …".
 - GIÁ TRỊ: mỗi cái cần một chuyện kèm cái giá (tiền, một khách, thời gian); không có → "chưa chứng minh", không in như lời khẳng định.
-- TẦM NHÌN: "10 năm nữa, nghề mình sẽ ngượng vì từng làm gì?" → một dòng + "người như mình thì {làm X}".
+- TẦM NHÌN: "10 năm nữa, nghề của {xưng hô} sẽ ngượng vì từng làm gì?" → một dòng + "người như mình thì {làm X}".
 - PHÂN CỰC: cách cũ họ chống + một điều người cùng nghề sẽ cãi ("Nhiều người nghĩ X; thật ra là Y"), qua đủ 3 phép thử QUAN ĐIỂM (§CM-CHARACTER-LITE).
 - CHỖ TỪNG DỞ: 2 lần sai, cái giá, giờ làm khác ra sao; một mâu thuẫn ("khó tính, mà lễ tốt nghiệp nào cũng khóc") và giá trị phía sau.
 3 Một màn hình, mỗi phần trên một dòng (3 nguyên tắc, 1 giá trị kèm cái giá, 2 lần sai). "OK hay sửa một dòng?" Lần in card tới lưu vào trait, enemy, principles, stories.

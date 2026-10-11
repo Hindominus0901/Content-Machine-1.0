@@ -15,6 +15,6 @@ Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 2 bỏ 
 5 Lưới 6+ con số: bài nổi bật "{{t:liked.grid_ratio}}" (mức thường = số ở giữa), không nói "chắc ăn"; ít hơn: "{{t:liked.grid_none}}" Không xin số.
 6 Nhờ theo dõi kênh: "{{t:liked.no_watch}}"
 
-<!-- @section liked.kit-make src=ee0d03a370 -->
-7 LÀM BẢN: khung của họ + ý lớn tuần + ≥1 chuyện của coach; từ khoá, quà, nền tảng: của coach. 2+ bài: làm một; "{{t:liked.batch}}" Khác bài gốc ở 2+ chỗ: chủ đề, quan điểm, định dạng, nền tảng; không trùng chuỗi 8 tiếng, không theo thứ tự ý của họ. Giọng của coach; "kiểu như chị X" → tả cảm giác. Kết quả, số, chuyện, chữ tự đặt của họ không thành của coach ("Câu "{line}" mình không viết: {why}."). Hỏi "{{t:cmd.why}}": "{{t:liked.evidence}}" Video riêng tuần này chưa quay: TIẾP "{{t:liked.slot}}"
+<!-- @section liked.kit-make src=87ccab188a -->
+7 LÀM BẢN: khung của họ + ý lớn tuần + ≥1 chuyện của coach; từ khoá, quà, nền tảng: của coach. 2+ bài: làm một; "{{t:liked.batch}}" Khác bài gốc ở 2+ chỗ: chủ đề, quan điểm, định dạng, nền tảng; không trùng chuỗi 8 tiếng, không theo thứ tự ý của họ. Giọng của coach; "kiểu như chị X" → tả cảm giác. Kết quả, số, chuyện, chữ tự đặt của họ không thành của coach ("Câu "{line}" {tự xưng} không viết: {why}."); dưới bài: "Máy tự thêm" (§CM-EDGE) và dòng đó.. Hỏi "{{t:cmd.why}}": "{{t:liked.evidence}}" Video riêng tuần này chưa quay: TIẾP "{{t:liked.slot}}"
 8 Nhờ chép, dịch (sang tiếng Việt): làm luôn; dưới bài chỉ một "{{t:liked.copy_note}}" Ghi Override.

@@ -90,12 +90,12 @@ Flat: "Imagine your dream business." · Strong: entry 7.
 
 <!-- @section hook-library.grow-scene -->
 ### Hooks 5: cold open, the overheard line (shape · purpose · where · example · flat or trap)
-COLD OPEN: one scene the viewer has lived, said so they see themselves (never an insider's detail), no setup; line 2 must cost something.
+COLD OPEN: one scene the viewer has lived, said so they see themselves (never an insider's detail), no setup; line 2 must cost something. Spoken as line 1 it still fills a frame (§CM-HOOK-SHORT 3); a bare scene is for the screen or first frame only.
 1 "{Time}. {Object or action}." · ATTRACT, TRUST · short, post · "Rewriting your price page for the fourth time at midnight? Stop at this line."
 2 "Last {day}, {who} {small act}." · TRUST · post, chat · "Last week a client sent me her empty inbox. If yours looks the same, watch this." · A client's words only if the coach reported them.
 3 "{Object} on {place}: '{what it says}'." · ATTRACT · screen, short (as the first frame) · "A sticky note on her screen: 'don't say sorry.'"
 4 "The {object} I still keep from {moment}" · TRUST · post, short · "Still opening invoices with 'sorry'? I kept my first one; it says it twice."
-5 "I was {mid-action} when {someone} said '{line}'." · TRUST, CONVERT · short, live · "I was mid-pitch when he cut in: 'What do I actually get?'" · Trap: a scene with no tension (a coffee, a sunrise).
+5 "I was {mid-action} when {someone} said '{line}'." · TRUST, CONVERT · post, live (after a framed line 1) · "I was mid-pitch when he cut in: 'What do I actually get?'" · Trap: a scene with no tension (a coffee, a sunrise).
 OVERHEARD LINE: a line the buyer says or hears, framed honestly: reported by the coach, or "a line I keep seeing".
 6 "'{Exact buyer line}.' {Where it's heard}." · TRUST · short, post · "'I'll start posting when my website's done.' A line I keep seeing in freelancer groups."
 7 "Someone in {buyer place} wrote: '{line}'. {Turn}." · ATTRACT · post, slide 1 · "Someone in a freelancer group wrote: 'I'm busy but broke.' Both can be true for one reason."
@@ -240,7 +240,7 @@ CAROUSEL (§CM-TEXT-FORMATS 1)
 LINE 1 OF A LONG POST (§CM-POSTS 1)
 6 Line 1 ≤12 words, standing alone, fills a frame (§CM-PACKAGING 2): the buyer's desire or pain for the right person at the right moment, their number; the method stays hidden; never a scene, a maxim or a stated lesson. Line 2 raises the stake or turns it. Both land before "See more".
 7 Strong: "If your nail photos get likes but no weekday bookings, read this. / It's not the photos." · "I went from 9 to 26 piano students. / Same fee; only the trial lesson changed." Flat: "Today I want to talk about pricing." · "Pricing is one of the hardest parts of business."
-8 LinkedIn: line 1 may end in ":" for a list ("7 quiet signals a client will actually buy:"); one-sentence paragraphs, no hashtags, ≤1 emoji.
+8 LinkedIn: line 1 may end in ":" for a list ("7 quiet signals a client will actually buy:"); paragraphs and hashtags as §CM-POSTS 3-4, ≤1 emoji.
 9 Facebook long post: line 1 fills a frame, never a scene or a greeting; line 2 is the proof or the turn ("Not because of the price."), so the cut-off reads like a cliffhanger.
 
 <!-- @section hook-library.grow-subject -->
@@ -252,10 +252,10 @@ EMAIL (§CM-TEXT-FORMATS 2)
 4 Never: a fake "Re:" or "Fwd:", "last chance" or "closing tonight" unless it's true (§CM-GUARDRAILS), all caps, a subject the email doesn't pay off, a gift the email doesn't hold.
 5 Launch emails say what happens and when, plainly; real dates and seats only (§CM-LAUNCH-DAYS).
 CHAT OPENER (Zalo, WhatsApp, a DM)
-6 First line = name + who you are + why you're writing, the way one person texts another; the chat list shows only the start, so the reason goes there. "Hi Sam, it's Lee from Tuesday's workshop: the checklist you asked for is below."
+6 First line = who you are + why you're writing (never their name, §CM-MESSAGES 6), the way one person texts another; the chat list shows only the start, so the reason goes there. "Hi, it's {your name} from Tuesday's workshop: the checklist you asked for is below."
 7 Broadcast to a list or group: line 1 is a scene or their question, never "Dear valued customer" or "Hello everyone, I hope you're well".
 8 One message, one job; the offer only when they asked or opted in; a follow-up gives an easy exit ("if now's not the time, ignore this one").
-9 Flat → strong: "Hello! I have an exciting offer for you" → "Hi Mai, it's Lan from the pricing live: you asked about the next round, it opens Monday."
+9 Flat → strong: "Hello! I have an exciting offer for you" → "Hi, it's {your name} from the pricing live: you asked about the next round, it opens Monday."
 
 <!-- @section hook-library.grow-ads -->
 ### Ad hooks (from a post that already worked; deepens §CM-ADS)
@@ -273,7 +273,7 @@ CHAT OPENER (Zalo, WhatsApp, a DM)
 1 Tiers, rotated (§CM-CTA-KIT 1): ATTRACT → save or send · TRUST → comment for THIS piece's payoff · CONVERT → DM with the real offer and a real deadline (outside a launch, from week 2; Week 1's CONVERT piece asks for a reply, no offer). One ask per piece, never the same ask twice running; ≥1 in 4 pieces asks only for a save or send. The payoff exists before the post goes out (§CM-CTA-KIT 2).
 2 ATTRACT: "Save this for the next time a couple asks for a cheaper package." · "Send this to the friend who {situation}." · "Part 2 tomorrow: {the open question}." · a choice: "Do you file receipts monthly or all in December? Just type A or B." Never "thoughts?".
 3 TRUST: "{{t:cta.default}}", {payoff} = what this piece promised: "Comment TUESDAY BAKE and I'll send you the 3 posting times from this video." The keyword is the viewer's own words from the hook, 2+ words, never a machine-picked GUIDE or FREE. Quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
-4 CONVERT (week 2+, with proof): what they get, the exact price, who it's for, the real deadline or cap with its reason, one action: "{N} seats, because I review every page myself; sign-ups close Friday. Message me SEAT." · "If this is you, message me 'stuck' and say where you are; I'll reply myself." The Season keyword and gift live here by default. Only real numbers.
+4 CONVERT (week 2+, with proof): what they get, the exact price, who it's for, the real deadline or cap with its reason, one action: "{N} seats, because I review every page myself; sign-ups close Friday. Message me SAVE MY SEAT." · "If this is you, message me STILL STUCK and say where you are; I'll reply myself." The Season keyword and gift live here by default. Only real numbers.
 5 Link: in a comment, the bio or the description, never in a text post's body: "The checklist is in the first comment."
 6 The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 7 Each mechanism's natural payoff: their number → the sheet behind it · mistake → the checklist · objection → a message to talk it through · question → the full answer · challenge → join (real start) · after-state, result taken apart → the offer.

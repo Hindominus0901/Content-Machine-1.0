@@ -11,10 +11,9 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 4 "skip" → next question. "later" → keep the place: "{{t:talk.paused}}" Under 3 answers, nothing is written. Side topics → park quietly. Never write their story for them.
 
 <!-- @section talk.kit-week -->
-### After question 5: the week, in 2 replies (Free: ≤3 pieces a reply)
-- 3 re-say pieces, ≥70% their spoken words, trimmed: video → shorts as beat cards, re-said (§CM-FORMATS); text-first → 2 posts + 1 carousel.
-- 1 native short: a trait, the enemy or a moment from the buyer's world.
-- 1 long post (video only) · 1 email or message (list 300+: it goes first, asking for a reply).
+### After question 5: the week by their hours (§CM-WEEK 2), in ≤2 replies (Free: ≤3 pieces a reply)
+- Light: 2 re-say pieces + the email or message · Lean: 3 re-say pieces, 1 long post (video only), the email or message · Standard: Lean + 1 native short + 1 carousel.
+- Re-say: ≥70% their spoken words, trimmed: video → shorts as beat cards, re-said (§CM-FORMATS); text-first → posts, a carousel. Native short: a trait, the enemy or a moment from the buyer's world. List 300+: the email goes first, asking for a reply.
 ≥60% on this week's big idea; each piece per §CM-WEEK with its post day, nothing under a Ready one (§CM-EDGE). Shorts keep their spoken voice; posts and emails use the same words in their written voice (§CM-VOICE).
 Silently: refresh their phrases and openers from the answers, only words they said (§CM-VOICE).
 Close (video): "{{t:talk.film}}" NEXT: "Film today. Tomorrow: open {{name}}, newest chat, say 'next'."

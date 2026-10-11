@@ -1251,10 +1251,10 @@ class LevelUpTests(TempRepo):
         self.build_all()
         rules = {"en": ("one NEXT line", "[NEEDS: …]", "never post, react, follow, DM or join",
                         "subagents or parallel tasks", "separate reviewer", "sees only the result",
-                        "Claude in Chrome or ChatGPT Work", "asking once", "never on Day 0", "fake scarcity"),
+                        "Claude in Chrome or ChatGPT Work", "asking once", "it may be in the Day-0 interview", "fake scarcity"),
                  "vn": ("một dòng TIẾP", "[CẦN {XƯNG HÔ}: …]", "không đăng, thả cảm xúc, theo dõi, nhắn tin hay vào nhóm",
                         "trợ lý con hay việc song song", "người soát riêng", "Coach chỉ thấy kết quả",
-                        "Claude in Chrome hay ChatGPT Work", "hỏi đúng một lần", "không bao giờ ngày 0",
+                        "Claude in Chrome hay ChatGPT Work", "hỏi đúng một lần", "có thể ngay trong phỏng vấn ngày 0",
                         "khan hiếm giả")}
         with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
             for ed, phrases in rules.items():

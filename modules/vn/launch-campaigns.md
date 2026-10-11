@@ -3,11 +3,11 @@ Nguồn: như bản EN; thêm wf5-vietnam-launch A3, A7-A10, B10-B14 (Mồi → 
 Thêm so với EN: lăn tăn kiểu Việt (hỏi ý ông xã/bà xã, sợ lùa gà, xin học thử, học online), giờ khách rảnh và mùa trong năm của Việt Nam (Tết, Vía Thần Tài, 8/3, 20/10, 20/11, ngày đôi, tháng cô hồn), nhóm Zalo (200, duyệt thành viên, bình chọn, nhắc hẹn, ghi chú), cú pháp chốt trên live, khách nhờ giữ suất tới ngày lương. Câu mồi của founder giữ nguyên văn.
 Tên với coach: THU HÚT / NIỀM TIN / CHUYỂN ĐỔI; CHẠY TIẾP / CHỈNH / DỪNG. Dáng hook theo tên ngắn của thư viện hook (hook-library.grow-pick bản VN: lật niềm tin, gỡ lời khuyên quen, gọi đúng người, mở bằng cảnh, câu nghe được, thú nhận, hậu trường, cách cũ cách mới, số của coach, lỗi đắt giá, băn khoăn nói ra, câu khách hay hỏi, ngày sau khi hết vấn đề, mổ xẻ kết quả thật, trước → sau, thử thách mời vào nhóm, "không dành cho… / dành cho…"), chưa có HOOKS thì §CM-HOOKS 2; thêm TIN MỚI; coach chỉ thấy hook đã viết, không thấy tên dáng, tên sườn; sườn bài: CÂU HỎI, DÙNG THỬ QUÀ, KỂ CHUYỆN, DẠY MỘT BƯỚC, GÓC NHÌN, CHUYỆN KHÁCH, QUYẾT ĐỊNH, MỘT TUẦN TRONG KHOÁ, MỜI ĐĂNG KÝ, BÀI MỜI, GỠ LĂN TĂN, GHẾ NÓNG, TIN MỚI, NGÀY ĐÓNG. Chiến dịch: Suất nhóm đầu, Mồi, Lớp mini Zalo / thử thách, Live chốt lớp, Ứng tuyển, Chạy lại / mở quanh năm. "N1" = ngày 1 của lịch; in cho coach thì ghi thứ, ngày.
 
-<!-- @section launch-campaigns.grow-library src=a6acb85801 -->
+<!-- @section launch-campaigns.grow-library src=b56b1d6cab -->
 ### Thư viện chiến dịch ("mở bán", "chiến dịch", "launch", "livestream bán")
 Sáu chiến dịch dựng sẵn, đặt trên chương trình mở bán: chọn kiểu, tính số (§CM-LAUNCH), hồ sơ và giới hạn thật (§CM-LAUNCH-BRIEF), mười chặng (§CM-LAUNCH-STEPS), lịch (§CM-LAUNCH-DAYS), Bàn mở bán (§CM-LAUNCH-DESK). Chỗ nào khác nhau thì theo mấy phần đó.
 1 KIỂU NÀO, CHIẾN DỊCH NẤY: A → 1 Suất nhóm đầu (§CM-CAMPAIGN-FOUNDING) · B, không live → 2 Mồi (§CM-CAMPAIGN-GIFT) · C → 3 Lớp mini Zalo hay thử thách (§CM-CAMPAIGN-CLASS) · B có workshop, hay livestream bán công khai → 4 Live chốt lớp (§CM-CAMPAIGN-EVENT) · D → 6 Chạy lại, mở quanh năm (§CM-CAMPAIGN-RELAUNCH). Chốt qua cuộc gọi (giá cao tới mức khách phải nói chuyện rồi mới quyết, hay coach tự chọn học viên) → 5 Ứng tuyển (§CM-CAMPAIGN-APPLY), kiểu nào cũng vậy. Báo coach một dòng: tên chiến dịch, bao nhiêu ngày, vì sao.
-2 THẺ NGÀY. Mỗi bài, máy lên kế hoạch theo: định dạng · vai · dáng hook · sườn bài · lời mời · chăm (trả lời dưới bài, inbox, Zalo, email). Ngày 1–3 in đủ: thứ, ngày · tên chặng bằng lời thường · từng bài với định dạng và vai ghi bằng chữ thường ở dòng tên bài (THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI), hook viết sẵn, kịch bản và tin chăm trong khung chép, lời mời · phút của coach; các ngày sau mỗi ngày một dòng, in đủ ở Bàn mở bán sáng hôm đó (§CM-LAUNCH-DAYS). Kịch bản, tin nhắn đều qua lượt giọng và dòng "Máy tự thêm: đoạn …" trước khi in (§CM-HUMANIZE). Coach không quay: sườn video viết thành bài. Tên dáng, tên sườn chỉ máy biết. Dáng hook: tên ngắn trong thư viện hook (HOOKS nếu có, không thì §CM-HOOKS 2), thêm một dáng chỉ dùng khi mở bán: TIN MỚI (một dòng lấy từ giới hạn thật). Không dùng một dáng hai ngày liền. Độ dài: như kit (§CM-LOCALE 2); bài chữ nền màu ≤130 ký tự. Sườn bài và story mỗi ngày: phần kế của §CM-CAMPAIGNS.
+2 THẺ NGÀY. Mỗi bài, máy lên kế hoạch theo: định dạng · vai · dáng hook · sườn bài · lời mời · chăm (trả lời dưới bài, inbox, Zalo, email). Ngày 1–3 in đủ: thứ, ngày · tên chặng bằng lời thường · từng bài với định dạng và vai ghi bằng chữ thường ở dòng tên bài (THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI), hook viết sẵn, kịch bản và tin chăm trong khung chép, lời mời · phút của coach; các ngày sau mỗi ngày một dòng, in đủ ở Bàn mở bán sáng hôm đó (§CM-LAUNCH-DAYS). Kịch bản, tin nhắn đều qua lượt giọng và dòng "Máy tự thêm: đoạn …" trước khi in (§CM-HUMANIZE). Coach không quay: sườn video viết thành bài. Tên dáng, tên sườn chỉ máy biết. Dáng hook: tên ngắn trong thư viện hook (HOOKS, không thì §CM-CHANNELS C2 2), thêm một dáng chỉ dùng khi mở bán: TIN MỚI (một dòng lấy từ giới hạn thật). Không dùng một dáng hai ngày liền. Độ dài: như kit (§CM-LOCALE 2); bài chữ nền màu ≤130 ký tự. Sườn bài và story mỗi ngày: phần kế của §CM-CAMPAIGNS.
 3 VAI: ≥3 bài THU HÚT hay NIỀM TIN trước lời mời đầu tiên; mở bán 6 ngày thì cứ một bài CHUYỂN ĐỔI có một bài NIỀM TIN; mở bán 3 ngày (1, 6) thì story gánh phần NIỀM TIN (bản làm mẫu, hậu trường); ngày mở, ngày đóng đăng dày nhất. Chưa có bằng chứng: bản làm mẫu của coach thay cho CHUYỆN KHÁCH.
 4 MỐC SOÁT: lấy số trên Bàn mở bán so với phép tính của chính coach (đợt đầu: số coach đoán, ghi rõ là đoán; xong đợt thành mốc gốc). Mỗi mốc in: con số · kế hoạch tới hôm đó · CHẠY TIẾP, CHỈNH hay DỪNG · một chỗ đổi. CHẠY TIẾP: bằng hay vượt kế hoạch. CHỈNH: thấp hơn; mai đổi một chỗ (hook, tên quà, giờ đăng, thêm bài hay tin nhắc). DỪNG: chưa mở bán mà chưa tới nửa kế hoạch thì dời ngày mở (đã báo ngày thì nói lý do; dời mà ngày đóng chạm ngày khai giảng thì thôi, để đợt sau) hay chuyển sang suất nhóm đầu, ít suất hơn. Niềm tin lung lay (có người phản ánh một lời hứa trong bài, bài bị gắn cờ): ngưng các bài thúc, trả lời công khai, đóng đúng giờ. Đã mở bán thì số thấp chỉ là CHỈNH, không DỪNG: không gia hạn, không mở lại.
 
@@ -39,7 +39,7 @@ THỜI GIAN: chuẩn bị ≈2,5 giờ; tuần mở bán ≈4 giờ của coach;
 LỊCH 7 NGÀY (§CM-LAUNCH-DAYS):
 N1 bài dài · THU HÚT · gọi đúng người · vì sao mở lúc này, cho ai, "học rồi góp ý giúp mình làm khoá tốt hơn", điều khoản · mời: từ khoá vào danh sách chờ · chăm: tin inbox 1 (thông tin + một câu hỏi A/B), ≥5 câu trả lời dưới bài.
 N2 video ngắn · THU HÚT · trước → sau, trên việc của chính coach · DÙNG THỬ QUÀ · từ khoá · chăm: tin inbox 2 cho ai đã trả lời; xin Zalo, nói rõ để làm gì.
-N3 bài dài · NIỀM TIN · lật niềm tin · KỂ CHUYỆN (niềm tin 1) · "{thứ} này mình live, ai muốn mình nhắc thì comment NHẮC nha" · chăm: ai comment thì vào danh sách nhắc.
+N3 bài dài · NIỀM TIN · lật niềm tin · KỂ CHUYỆN (niềm tin 1) · "{thứ} này mình live, ai cần mình nhắc thì nhắn riêng mình nha" · chăm: ai nhắn thì vào danh sách nhắc.
 N4 video ngắn · NIỀM TIN · số của coach (số giờ, số lần tự thử) · DẠY MỘT BƯỚC trên bản làm mẫu · "nhắn SỚM, nhận link trước" · chăm: ai nhắn SỚM thì trả lời trong 24 giờ.
 N5 live 45 phút (§CM-RUN-OF-SHOW, bản nhóm đầu), nhắc trước 24 giờ, 1 giờ, lúc bắt đầu · CHUYỂN ĐỔI · rồi ghim bài mời: BÀI MỜI kèm điều khoản nhóm đầu · chăm: link cho người nhắn SỚM; tin mở qua Zalo, email.
 N6 bài chữ + carousel · CHUYỂN ĐỔI · băn khoăn nói ra · GỠ LĂN TĂN ×3, không hợp với ai, "mai {giờ} hết giá nhóm đầu" · chăm: trả lời riêng người còn hỏi dở.
@@ -48,11 +48,11 @@ N8 bài · NIỀM TIN · "đã đóng đăng ký, chào mừng các bạn nhóm 
 MỐC SOÁT: tối N2, danh sách chờ so với số cần (chưa tới nửa → DỪNG: không mở công khai, mời riêng người ấm nhất qua kênh họ đã đồng ý, cùng điều khoản, mỗi người một tin) · sau live N5, số nhắn SỚM + câu hỏi so với số suất (ít hơn → CHỈNH: N6 gỡ câu được hỏi nhiều nhất trước) · trưa N6, suất đã chốt so với kế hoạch (thấp hơn → CHỈNH: trả lời riêng từng câu còn dở) · N8, ai trong nhóm đầu cũng đã có lịch góp ý.
 KHÔNG: "học viên đã…", CHUYỆN KHÁCH, cảm nhận. Bằng chứng: cách làm, bản làm mẫu, kết quả của chính coach kèm bối cảnh.
 
-<!-- @section launch-campaigns.grow-gift src=3e88d964a7 -->
+<!-- @section launch-campaigns.grow-gift src=fb91d34497 -->
 ### 2 Mồi: tặng quà rồi mở bán, 14 ngày (kiểu B, không live; mặc định VN)
 HỢP KHI: có ≥1 kết quả khách được phép kể · giá mà khách chịu chuyển khoản sau một bài viết và vài tin nhắn, không cần gọi · tệp ấm ≥ số người cần · không live (live được một buổi → §CM-CAMPAIGN-EVENT).
 TÍNH SỐ (§CM-LAUNCH 4) + số người xin quà cần = số người cần (mỗi người xin quà là một người quan tâm) · số người nhắn SỚM ≥ số suất.
-QUÀ: gỡ xong một bước nhỏ, lộ ra chỗ kẹt kế tiếp mà khoá gỡ (§CM-LAUNCH-STEPS P1); đặt tên theo kết quả nó mang lại; cả đợt một từ khoá; tin inbox 1 và 5 tin làm quen sau khi nhận quà (§CM-LAUNCH-MESSAGES 2, 6) xong trước N2; lên ý video giới thiệu khoá 10 phút cho N9.
+QUÀ: gỡ xong một bước nhỏ, lộ ra chỗ kẹt kế tiếp mà khoá gỡ (§CM-LAUNCH-STEPS P1); đặt tên theo kết quả nó mang lại; cả đợt một từ khoá; tin inbox 1 và 5 tin làm quen sau khi nhận quà (§CM-LAUNCH-MESSAGES 2, 6) xong trước N2; lên ý video giới thiệu khoá ≈1.500 chữ cho N9.
 THỜI GIAN: chuẩn bị ≈4 giờ; tuần 1 ≈2 giờ, tuần 2 ≈5 giờ của coach, không có trợ lý thì ≈9 giờ (khi đó N10–N11 chỉ đăng story); N9 và N14 mỗi ngày 60–120 phút.
 N1–N8, HÂM NÓNG:
 N1 bài chữ nền màu hay bình chọn trên story · THU HÚT · câu khách hay hỏi · CÂU HỎI · "A hay B?" · chăm: hỏi y vậy qua Zalo, email; câu trả lời ghi thành lăn tăn.
@@ -64,9 +64,9 @@ N6 video ngắn hay bài dài · NIỀM TIN · câu nghe được · DẠY MỘT
 N7 video ngắn · NIỀM TIN · ngày sau khi hết vấn đề (đã xin phép) · KỂ CHUYỆN (niềm tin 3: không có thời gian, không có tiền) + khách 2 · mời trả lời · chăm: trả lời riêng từng người.
 N8 carousel hay video ngắn · NIỀM TIN · hậu trường · MỘT TUẦN TRONG KHOÁ + "mai mở đăng ký" · "nhắn SỚM, nhận link trước" · chăm: ai nhắn SỚM thì trả lời trong 24 giờ; tin "mai mở" qua Zalo, email.
 
-<!-- @section launch-campaigns.grow-gift-cart src=a5b40f39ae -->
+<!-- @section launch-campaigns.grow-gift-cart src=796f5a0ec3 -->
 ### 2 Mồi: mấy ngày mở bán N9–N15, và mốc soát
-N9 MỞ · video giới thiệu khoá 10 phút, quay sẵn (sườn video dài, §CM-LONG) · CHUYỂN ĐỔI · TIN MỚI · rồi ghim bài mời: BÀI MỜI · chăm: trong 24 giờ gửi link cho người nhắn SỚM; tin mở qua Zalo, email; tin thứ hai: "trang có gì" + trả lời câu được hỏi nhiều nhất.
+N9 MỞ · video giới thiệu khoá ≈1.500 chữ, quay sẵn (sườn video dài, §CM-LONG) · CHUYỂN ĐỔI · TIN MỚI · rồi ghim bài mời: BÀI MỜI · chăm: trong 24 giờ gửi link cho người nhắn SỚM; tin mở qua Zalo, email; tin thứ hai: "trang có gì" + trả lời câu được hỏi nhiều nhất.
 N10 bài dài hay video ngắn · NIỀM TIN · mổ xẻ kết quả thật · CHUYỆN KHÁCH (đã xin phép) + "video giới thiệu xem được tới {giờ thật}" · mời trả lời · chăm: tin chuyện khách; inbox riêng từng người đã hỏi.
 N11 bài chữ + carousel · CHUYỂN ĐỔI · băn khoăn nói ra · GỠ LĂN TĂN ×3 (lăn tăn ghi được nhiều nhất) + không hợp với ai · chăm: tin hỏi đáp; trả lời riêng.
 N12 bài chữ nền màu + story · CHUYỂN ĐỔI · TIN MỚI · tối nay hết quà (thật) + báo suất đúng giờ hẹn · chăm: tin hết hạn quà.
@@ -81,11 +81,11 @@ Tối N10: người mua + câu hỏi còn dở so với số suất · ít ngư�
 Tối N12: có người xin hoàn tiền, phản ánh một câu hứa, bài bị gắn cờ → DỪNG các bài thúc, trả lời công khai, đóng đúng giờ.
 Đóng: người mua so với số suất → §CM-LAUNCH-AFTER. Không gia hạn (trừ lỗi thanh toán, §CM-LAUNCH-BRIEF 5).
 
-<!-- @section launch-campaigns.grow-class src=5763c39789 -->
+<!-- @section launch-campaigns.grow-class src=06734338ca -->
 ### 3 Lớp mini Zalo hay thử thách 5 ngày (kiểu C, 21 ngày; mặc định VN: lớp mini Zalo)
 HỢP KHI: có ≥1 kết quả khách được phép kể · giá mà khách muốn học thử cách làm rồi mới quyết · 3 tối học trong nhóm + 1 buổi live, hay 5 buổi live (thử thách) · coach muốn tệp lớn thêm · đủ 21 ngày.
 TÍNH SỐ (§CM-LAUNCH 4) + số đăng ký lớp cần = số người cần; lớp đầu: ghi lại số người vào học, số bài tập nộp, thành mốc gốc. Nhóm Zalo loại thường (tối đa 200 người, §CM-LIVE-SELLING 2) là giới hạn thật, nói kèm lý do.
-CHUẨN BỊ: nhóm Zalo (ghim nội quy, duyệt người vào, trong giờ học chỉ trưởng, phó nhóm được nhắn), 3 video ≤7 phút, 3 bài tập, tóm tắt buổi sáng, lịch nhắc.
+CHUẨN BỊ: nhóm Zalo (ghim nội quy, duyệt người vào, trong giờ học chỉ trưởng, phó nhóm được nhắn), 3 video ≤1.000 chữ, 3 bài tập, tóm tắt buổi sáng, lịch nhắc.
 THỜI GIAN: chuẩn bị ≈5 giờ; tuần 1 ≈2 giờ, tuần 2 và 3 mỗi tuần ≈5 giờ của coach; nên có trợ lý.
 N1–N10, HÂM NÓNG VÀ MỜI VÀO LỚP:
 N1 bài chữ nền màu hay bình chọn · THU HÚT · câu khách hay hỏi · CÂU HỎI · chăm: hỏi y vậy qua Zalo, email.
@@ -99,9 +99,9 @@ N8 carousel · NIỀM TIN · gỡ lời khuyên quen · ngộ nhận (niềm tin
 N9 video ngắn · NIỀM TIN · lỗi đắt giá · niềm tin 3 (không có thời gian) + kỳ 4 · chăm: "còn 2 ngày nữa vào lớp, chuẩn bị sẵn 3 thứ nha".
 N10 bài · NIỀM TIN · ngày sau khi hết vấn đề (đã xin phép) · kỳ 5 (bài học + lời mời) + "mai vào lớp" · chăm: nhắc trong nhóm, qua Zalo, email.
 
-<!-- @section launch-campaigns.grow-class-cart src=328c371543 -->
+<!-- @section launch-campaigns.grow-class-cart src=926010ac13 -->
 ### 3 Lớp mini Zalo hay thử thách: ngày học, mở bán, mốc soát (N11–N21)
-LỚP MINI ZALO: N11–N13 mỗi tối một buổi, cùng một giờ: video ≤7 phút + một bài tập · NIỀM TIN · tối 1 làm được ngay một việc nhỏ (DẠY MỘT BƯỚC), tối 2 cách làm (niềm tin 1), tối 3 "mình cũng làm được" + chuyện khách (niềm tin 2) · chăm: sáng hôm sau gửi tóm tắt, kèm bài tập của 2–3 học viên (đã hỏi ý), nhắc trước giờ học 1 tiếng. N14 live 60 phút (§CM-RUN-OF-SHOW) · NIỀM TIN → CHUYỂN ĐỔI · niềm tin 3 + hé bên trong khoá + "mai mở đăng ký" · chăm: bản ghi để tới giờ gỡ thật; "nhắn SỚM, nhận link trước".
+LỚP MINI ZALO: N11–N13 mỗi tối một buổi, cùng một giờ: video ≤1.000 chữ + một bài tập · NIỀM TIN · tối 1 làm được ngay một việc nhỏ (DẠY MỘT BƯỚC), tối 2 cách làm (niềm tin 1), tối 3 "mình cũng làm được" + chuyện khách (niềm tin 2) · chăm: sáng hôm sau gửi tóm tắt, kèm bài tập của 2–3 học viên (đã hỏi ý), nhắc trước giờ học 1 tiếng. N14 live 60 phút (§CM-RUN-OF-SHOW) · NIỀM TIN → CHUYỂN ĐỔI · niềm tin 3 + hé bên trong khoá + "mai mở đăng ký" · chăm: bản ghi để tới giờ gỡ thật; "nhắn SỚM, nhận link trước".
 THỬ THÁCH 5 NGÀY: N11–N15 như §CM-LAUNCH-LIVE 2; live ngày 5 kết bằng lời mời.
 Trên trang của coach mấy ngày học: mỗi ngày một video ngắn cắt từ lớp (một đoạn hay, câu hỏi của một học viên, đã xin phép) · THU HÚT · câu nghe được và câu khách hay hỏi, ngày nào đổi ngày đó · "vào lớp" chỉ khi lớp còn nhận.
 N15 MỞ · bài mời · CHUYỂN ĐỔI · TIN MỚI · BÀI MỜI · chăm: link cho người nhắn SỚM; tin mở trong nhóm, qua Zalo, email.
@@ -189,9 +189,9 @@ MỞ khi SẢN PHẨM, THANH TOÁN, GIỚI HẠN đều đủ, báo một dòng.
 ### Kho lăn tăn, phần 1: tiền, thời gian, có hợp không
 Dáng câu, không in y nguyên: viết lại bằng giọng, chữ và cặp xưng hô của coach (dưới đây tạm dùng cặp "mình – bạn"; khách xưng "em" thì đáp theo cặp 1:1 trên Card, vd chị – em); dữ kiện từ hồ sơ, bằng chứng được phép hay [CẦN {XƯNG HÔ}: …], vd "{{t:verdict.needs}}". Dùng trong bài GỠ LĂN TĂN, hỏi đáp, phần hỏi đáp của live, tin trả lời riêng; mỗi GỠ LĂN TĂN một lăn tăn (carousel hỏi đáp thì 3, mỗi trang một). Không làm khách áy náy, không doạ, không "mỗi ngày chỉ bằng ly cà phê", không cộng "giá trị" cho to. Câu trả lời nào cũng qua lượt giọng trước khi in (§CM-HUMANIZE 2: tiểu từ theo Card).
 1 "Học phí cao quá." → "Mình hiểu. Học phí đó gồm {bên trong khoá, tính ra là mấy giờ mình kèm}. Chưa xoay kịp thì có {trả góp hay gói nhỏ hơn}. Vẫn chưa hợp thì bạn cứ giữ {quà}, làm xong {bước} trước đã."
-2 "Để em suy nghĩ thêm." → "Được chứ, bạn cứ từ từ. Bạn đang phân vân chỗ nào nhất? Nếu là {lăn tăn hay gặp} thì {trả lời ngắn}. {Thứ, giờ} mình đóng đăng ký; vào hay không thì phần quà vẫn là của bạn."
-3 "Em bận lắm." → "Mỗi tuần mất chừng {số giờ thật}, mà phần lớn là bạn làm trên việc thật của bạn, không phải ngồi nghe mình giảng. Tháng này kín lịch quá thì đợi đợt sau: {ngày thật}."
-4 "Ngành em khác, áp dụng được không?" → "Bạn kể mình nghe hoàn cảnh trong một câu, hợp hay không mình nói thật. {một khách cùng hoàn cảnh, đã đồng ý; chưa có thì: cách này khớp với việc của bạn ở chỗ nào}. Khoá không hợp với {không hợp với ai}."
+2 "Để em suy nghĩ thêm." → "Được chứ, em cứ từ từ. Em đang phân vân chỗ nào nhất? Nếu là {lăn tăn hay gặp} thì {trả lời ngắn}. {Thứ, giờ} {chị/anh} đóng đăng ký; vào hay không thì phần quà vẫn là của em."
+3 "Em bận lắm." → "Mỗi tuần mất chừng {số giờ thật}, mà phần lớn là em làm trên việc thật của em, không phải ngồi nghe {chị/anh} giảng. Tháng này kín lịch quá thì đợi đợt sau: {ngày thật}."
+4 "Ngành em khác, áp dụng được không?" → "Em kể {chị/anh} nghe hoàn cảnh trong một câu, hợp hay không {chị/anh} nói thật. {một khách cùng hoàn cảnh, đã đồng ý; chưa có thì: cách này khớp với việc của em ở chỗ nào}. Khoá không hợp với {không hợp với ai}."
 5 "Em mới bắt đầu, sợ theo không kịp." → "Bước 1 bắt đầu từ con số 0: {bước 1 là gì}. Chưa từng {điều cần biết trước} thì làm thử {quà} trước rồi hẵng tính."
 6 "Mấy cái cơ bản em biết rồi." → "Vậy bước 1 bạn lướt qua nhanh thôi. Cái bạn còn thiếu là {người sửa bài cho bạn, một sản phẩm làm xong hẳn, bạn học cùng trình độ}."
 7 "Có trả góp không?" → "{số kỳ} kỳ, mỗi kỳ {số tiền}." Không có → "Đợt này chưa có trả góp. Có gói nhỏ hơn: {gói}."
@@ -244,7 +244,7 @@ Mỗi khối phải nói gì; dữ kiện từ hồ sơ, bằng chứng được
 16 MẤY DÒNG CUỐI: dành cho ai, giờ đóng, một việc cần làm; P.S. danh sách chờ cho ai chưa tới lúc.
 Soát: giá, giờ đóng, cam kết ở đâu cũng giống nhau; giá luôn công khai; không đếm ngược khi không có giờ đóng; bài mời dài có thể dừng ở khối 14, hỏi đáp để trong bình luận ghim.
 
-<!-- @section launch-campaigns.grow-seq-open kind=script src=82729c28b3 -->
+<!-- @section launch-campaigns.grow-seq-open kind=script src=380c982a2e -->
 ### Zalo và email, phần 1: trước khi mở và lúc mở (mở rộng §CM-LAUNCH-MESSAGES 6–7)
 Chỉ gửi người đã đồng ý; danh sách chưa từng nhận email, hay im 6 tháng trở lên: email đầu chỉ xin phép lại, kèm dòng dừng, không bán (§CM-MESSAGES 3: "Hồi trước bạn có đăng ký nhận {gì}. Giờ bạn còn muốn nhận {quà, rồi tin về đợt tới} không? Trả lời CÓ; không trả lời thì mình không gửi nữa."), chỉ ai trả lời CÓ mới đi tiếp; mỗi tin một lời mời; email có 3 tiêu đề, Zalo thì dòng đầu làm tiêu đề; dữ kiện từ hồ sơ hay [CẦN {XƯNG HÔ}: …], vd "{{t:verdict.needs}}"; xưng số ít theo Card; chiến dịch 1: chỗ nào ghi chuyện khách thì dùng bản làm mẫu của coach; tin nào cũng qua lượt giọng trước khi in (§CM-HUMANIZE 2). Mỗi tin: khi nào · ý chính · lời mời.
 5 TIN LÀM QUEN (người nhận quà): ngay hôm đó: quà + mình là ai + "bạn thuộc bên A hay B?" · hôm sau: chuyện cũ, một cảnh hồi mình kẹt · ngày 3: lúc mọi chuyện xoay chiều, niềm tin mới · ngày 4: cách này còn giúp được gì + mời live hay lớp Zalo · ngày 5: danh sách chờ + "nhắn SỚM, nhận link trước".
@@ -257,7 +257,7 @@ Trong 1 giờ đầu: khoá gì · cho ai · giá, giá đợt sau · quà thậ
 Hôm sau: một chuyện khách (đã xin phép) hay kết quả đầu tiên của một học viên · mời: nhắn câu hỏi.
 Không gửi người đã mua; chưa tới 48 giờ cuối thì mỗi ngày tối đa 2 tin; tin nhắc nào cũng có lối ra ("chưa phải lúc thì cũng không sao nha").
 
-<!-- @section launch-campaigns.grow-seq-close kind=script src=1bb2c68aff -->
+<!-- @section launch-campaigns.grow-seq-close kind=script src=97f2139593 -->
 ### Zalo và email, phần 2: giữa đợt và 48 giờ cuối (hối thúc chỉ dựa vào giới hạn thật)
 Như phần 1 (§CM-LAUNCH-SEQUENCES); dữ kiện từ hồ sơ hay [CẦN {XƯNG HÔ}: …], vd "{{t:verdict.needs}}".
 GIỮA ĐỢT:
@@ -273,7 +273,7 @@ Buổi chiều: 3 câu mọi người vừa hỏi, trả lời luôn · mời: �
 Còn 3 tiếng: ngắn; hợp với ai, giờ đóng, link.
 Giờ cuối: 2–3 dòng: "Đúng {giờ} mình tắt link. Đợt sau: {ngày}." Chưa có ngày: "Ai trong danh sách chờ sẽ biết trước."
 SAU ĐÓ: "đã đóng, cảm ơn" cho mọi người đã nhận tin mở bán; người mua: chào mừng + bước đầu; người chưa mua: để yên tới ngày 7 (§CM-LAUNCH-AFTER).
-Luật: số và giờ khớp từng dòng giới hạn thật (§CM-LAUNCH-BRIEF 3–4); số suất chỉ theo số coach đưa; không "chỉ hôm nay" khi không phải; lỗi thanh toán thì gia hạn công khai một lần, nói rõ mấy tiếng (§CM-LAUNCH-BRIEF 5). Ngày đóng tối đa 3–4 tin trên một kênh; ai nhắn "dừng" hay "chưa" thì thôi nhắn người đó. Giờ gửi nào ở đây (còn 48 giờ, còn 3 tiếng, giờ cuối) cũng soát với giờ yên (§CM-LAUNCH-TIMING 5): rơi vào 22 giờ–7 giờ → 7 giờ 30 sáng hôm sau, hay gộp vào tin trước; đóng sau 22 giờ: hai tin cuối gộp một, gửi trước 21 giờ 30.
+Luật: số và giờ khớp từng dòng giới hạn thật (§CM-LAUNCH-BRIEF 3–4); số suất chỉ theo số coach đưa; không "chỉ hôm nay" khi không phải; lỗi thanh toán thì gia hạn công khai một lần, nói rõ mấy tiếng (§CM-LAUNCH-BRIEF 5). Ngày đóng tối đa 3–4 tin trên một kênh; ai nhắn "dừng" hay "chưa" thì thôi nhắn người đó. Giờ gửi nào ở đây (còn 48 giờ, còn 3 tiếng, giờ cuối) cũng soát với giờ yên (§CM-LAUNCH-TIMING 5): rơi vào 22h–7h → 7h30 sáng hôm sau, hay gộp vào tin trước; đóng sau 22h: hai tin cuối gộp một, gửi trước 21h30.
 
 <!-- @section launch-campaigns.grow-inbox kind=script src=1d7e4842d8 -->
 ### Inbox và bình luận mấy ngày mở bán (phần lớn khách Việt chốt qua tin nhắn)
@@ -289,32 +289,32 @@ Dáng câu, không in y nguyên: giọng coach, xưng số ít, dữ kiện từ
 9 Phàn nàn, xin hoàn tiền → cảm ơn, làm đúng điều khoản, nhanh và tử tế; ghi vào Bàn mở bán; nhiều người phàn nàn cùng một chuyện là dấu hiệu DỪNG (§CM-CAMPAIGNS 4).
 10 Bình luận khó nghe, khiêu khích → một câu bình tĩnh công khai, hay im; không cãi; chỉ ẩn spam và bình luận có số điện thoại.
 
-<!-- @section launch-campaigns.grow-runshow src=4cb008abb1 -->
+<!-- @section launch-campaigns.grow-runshow src=d9db86451b -->
 ### Buổi live, webinar từng phút (theo các khối 60 phút của §CM-LAUNCH-LIVE 1)
 TRƯỚC: −60 phút thử tiếng, ánh sáng, chia sẻ màn hình, ghi hình; link và bình luận ghim soạn sẵn · −30 trợ lý báo "30 phút nữa lên live" trong nhóm, qua Zalo, trên story · −5 mở phòng: một slide ghi lời hứa tối nay.
 TRONG LIVE (coach nói · trợ lý làm; phần coach nói viết bằng giọng nói của coach, qua lượt giọng §CM-HUMANIZE 2 trước khi in):
 0–2 chào tên những người vào trước; "mọi người đang xem ở đâu, gõ cho mình biết với" · trợ lý chào lại, ghi câu hỏi.
-2–5 lời hứa, dành cho ai, nói trước chuyện bán ("Cuối buổi mình sẽ nói về khoá học. Không hợp thì 45 phút đầu bạn vẫn mang về được hết.") · trợ lý ghim 3 ý của tối nay.
+2–5 lời hứa, dành cho ai, nói trước chuyện bán ("Cuối buổi mình sẽ nói về khoá học. Không hợp thì 40 phút đầu bạn vẫn mang về được hết.") · trợ lý ghim 3 ý của tối nay.
 5–10 chuyện của coach: một cảnh hồi mình kẹt · 10–15 điều gì làm mọi thứ đổi: một ý lớn, lật niềm tin cũ.
 15–20 chuyện một khách, đã xin phép, có bối cảnh · 20–25 lỗi đắt giá đa số mắc + bước sửa.
 25–29 "bạn cũng làm được": một người giống người xem, không giống coach · 29–33 ghế nóng nhỏ: trả lời 1–2 bình luận ngay trên live (trợ lý chọn).
 33–37 gỡ "không có thời gian", "không rành công nghệ": số giờ thật, công cụ · 37–41 làm mẫu một bước ngay trên live.
-41–43 tóm lại 3 bước · 43–45 "muốn nhanh thì có người kèm" · 45–49 từng phần của khoá, vì sao có · 49–51 học phí, trả góp, giá đợt sau thật · 51–52 cam kết · 52–53 số suất, lý do; hạn quà · 53–55 cách đăng ký; nói giờ đóng hai lần · trợ lý ghim link hay câu "nhắn mình chữ ĐĂNG KÝ", trả lời "chuyển khoản sao" qua inbox.
+41–43 tóm lại 3 bước · 43–45 "muốn nhanh thì có người kèm" · 45–49 từng phần của khoá, vì sao có · 49–51 học phí, trả góp, giá đợt sau thật · 51–52 cam kết · 52–53 số suất, lý do; hạn quà · 53–55 cách đăng ký; nói giờ đóng hai lần · trợ lý ghim link hay câu "nhắn mình chữ VÀO LỚP", trả lời "chuyển khoản sao" qua inbox.
 55–60 hỏi đáp từ lăn tăn đã ghi (§CM-OBJECTIONS) và bình luận; nhắc lại giờ đóng; cảm ơn.
-KHÔNG CÓ TRỢ THỦ (coach live một mình): ghim bình luận và link bài mời từ trước khi lên sóng; chỉ đọc câu hỏi ở phút 29 và 55; không nhắn riêng trong lúc live, chỉ nói một câu: "Ai muốn vào thì gõ VÀO ở khung chat, xong buổi mình nhắn riêng" (Zoom, Meet: khung chat; livestream công khai: "comment VÀO"); trả lời hết trong vòng một giờ sau live.
+KHÔNG CÓ TRỢ THỦ (coach live một mình): ghim bình luận và link bài mời từ trước khi lên sóng; chỉ đọc câu hỏi ở phút 29 và 55; không nhắn riêng trong lúc live, chỉ nói một câu: "Ai muốn vào thì gõ VÀO LỚP ở khung chat, xong buổi mình nhắn riêng" (Zoom, Meet: khung chat; livestream công khai: "comment VÀO LỚP"); trả lời hết trong vòng một giờ sau live.
 SAU LIVE: trong 1 giờ ghim bài mời, gửi bản ghi kèm giờ gỡ thật · trong 24 giờ trả lời hết câu hỏi trong bình luận, qua inbox hay trong hỏi đáp · ghi vào Bàn mở bán: số đăng ký, số người vào, lúc đông nhất, số nhắn SỚM, số người mua.
 KHOẢNG 45 PHÚT (chiến dịch 1): bỏ 15–25 và 29–33; bản làm mẫu của coach là bằng chứng; lời mời là điều khoản nhóm đầu.
 LIVESTREAM CÔNG KHAI: không có đăng ký nên 5 phút đầu phải có hook và lý do để ở lại; khúc giữa chạy bằng ghế nóng từ bình luận; không comment mồi, không nick ảo; giá và cách chuyển khoản nói rõ; luật link, mã QR của nền tảng: một dòng có ngày (§CM-LIVE-SELLING 1).
 
 <!-- @section launch-campaigns.grow-live-selling src=8c547fcca8 -->
 ### Live chốt lớp, nhóm Zalo, chấm và ngưỡng comment ("livestream bán", "live chốt lớp", "nhóm Zalo", "chấm")
-1 LIVESTREAM CHỐT LỚP (Facebook, TikTok, YouTube): báo trước 2–3 ngày bằng bài nhắc có từ khoá ("comment NHẮC, lên live mình báo") hay nút nhắc của nền tảng; live cùng một khung giờ; 45–60 phút; một trợ lý trực bình luận, trả lời "chuyển khoản sao" qua inbox; khoảng phút 40 nói về khoá: giá công khai, được gì, giờ đóng, cách chuyển khoản; cú pháp chốt là một từ khoá (vd ĐK), inbox gửi link và cách chuyển khoản, không bảo khách để số điện thoại dưới bình luận; bản ghi đăng lại, caption có bài mời. Luật bán hàng trên live (link, mã QR, kéo khách ra ngoài nền tảng) mỗi nơi một khác và hay đổi: một dòng có ngày ({date} = hôm nay, §CM-LOCALE 6), kiểm lại trước khi nói.
+1 LIVESTREAM CHỐT LỚP (Facebook, TikTok, YouTube): báo trước 2–3 ngày bằng bài nhắc có từ khoá ("comment NHẮC GIỜ LIVE, lên live mình báo") hay nút nhắc của nền tảng; live cùng một khung giờ; 45–60 phút; một trợ lý trực bình luận, trả lời "chuyển khoản sao" qua inbox; khoảng phút 40 nói về khoá: giá công khai, được gì, giờ đóng, cách chuyển khoản; cú pháp chốt là một từ khoá 2+ tiếng (vd VÀO LỚP), inbox gửi link và cách chuyển khoản, không bảo khách để số điện thoại dưới bình luận; bản ghi đăng lại, caption có bài mời. Luật bán hàng trên live (link, mã QR, kéo khách ra ngoài nền tảng) mỗi nơi một khác và hay đổi: một dòng có ngày ({date} = hôm nay, §CM-LOCALE 6), kiểm lại trước khi nói.
 2 NHÓM ZALO: nhóm loại thường tối đa 200 người, đó là giới hạn thật, nói kèm lý do; muốn đông hơn thì nâng lên cộng đồng (số liệu nền tảng: một dòng có ngày). Bật duyệt thành viên mới; ghim nội quy (nhóm để làm gì, mở tới khi nào, không ai bán hàng trong nhóm); trong giờ học chỉ trưởng, phó nhóm được nhắn, học xong mới mở chat; ghim lịch học; hôm trước dùng bình chọn ("tối nay ai vào?"), đặt nhắc hẹn trước 1 tiếng; tài liệu để ở ghi chú nhóm; bài tập của ai chỉ đưa lên khi người đó đồng ý. Lúc đăng ký nói rõ hết đợt nhóm sẽ ra sao (giải tán, giữ lại, thành nhóm học viên) và làm đúng như vậy. Không tự thêm ai vào nhóm khi chưa hỏi.
 3 CHẤM, NGƯỠNG COMMENT, SỐ SLOT coach tự chọn ("Chấm q.t mình hướng dẫn 👇", "Đủ 100 comment 'UP' …", "50 slot trải nghiệm ai muốn?"): giữ nguyên văn, không sửa, không làm nhẹ; dưới bài đúng một dòng: "{{t:cta.platform_note}}" Dấu chấm, emoji làm từ khoá thì dặn coach: "{{t:cta.emoji_trigger}}" Có người chấm chỉ để theo dõi bài, nên tin inbox 1 gửi quà kèm một câu hỏi; khách không trả lời thì thôi, không nhắn tiếp. Ngưỡng comment là lời hứa Bàn mở bán theo dõi: đủ thì đăng gì, chưa đủ thì sao; coach quyết cả hai trước khi đăng, máy không bịa số comment. "50 slot" là giới hạn thật: đủ 50 thì bài sau báo đủ (§CM-LAUNCH-BRIEF 7).
 4 Trả lời tự động chỉ chạy trên Trang Facebook và Instagram chuyên nghiệp; trang cá nhân thì trả lời tay (§CM-CTA-KIT 7). TikTok: link, nhóm Zalo để ở bio hay gửi qua tin nhắn từ khoá. Ẩn bình luận có số điện thoại; tin xin Zalo nói rõ để làm gì, nhắn DỪNG là thôi (§CM-MESSAGES 3).
 5 Bằng chứng trên live: chỉ chuyện đã xin phép; không khoe ảnh chuyển khoản, ảnh thu nhập; chỉ gọi tên người xem khi họ tự ghi tên trong bình luận.
 
-<!-- @section launch-campaigns.grow-timing src=f6ef97b239 -->
+<!-- @section launch-campaigns.grow-timing src=4365f3b0a4 -->
 ### Giờ, ngày, mùa trong năm
 1 GIỜ: số của chính coach quyết (Bàn mở bán: lượt tiếp cận theo giờ đăng, 4 tuần gần nhất). Chưa có số thì đoán trước, ghi rõ là đoán, theo lúc khách rảnh: dân văn phòng trưa 11h30–13h, tối 20h–22h; mẹ bỉm sau khi con ngủ; chủ quán, chủ shop sáng sớm hay sau giờ đóng cửa. Live và giờ đóng đặt vào lúc khách rảnh tay, ngồi xem được. Báo suất đúng giờ đã ghi trong giới hạn thật, ngày nào cũng giờ đó.
 2 NGÀY: mở đầu tuần hay ngay sau buổi live; đóng vào tối ngày thường, giờ Việt Nam; không mở, không đóng đúng ngày lễ. Khách đi làm ăn lương: mở bán sau ngày lương thì họ dễ xoay tiền hơn (hỏi coach khách thường nhận lương ngày nào).
@@ -326,7 +326,7 @@ Tháng cô hồn (tháng 7 âm): nhiều người kiêng mua lớn, kiêng bắt
 Ngày đôi (9.9 tới 12.12), Black Friday: sàn giảm giá ầm ầm; khoá học chỉ giảm khi giảm thật (≤50%, §CM-GUARDRAILS), không giá gạch giả; hay né, mở sau.
 Cuối năm: tất niên, bận rộn, có thưởng Tết; khoá lập kế hoạch năm mới bán hợp nhất cuối tháng 12, đầu tháng 1.
 4 Mỗi lần một đợt; cách nhau ≥6 tuần đăng bình thường (§CM-LAUNCH 1); không trùng mùa bận của coach hay của khách (mùa cưới với ngành cưới, mùa quyết toán với kế toán).
-5 GIỜ YÊN: không hẹn gửi tin nào (email, Zalo, inbox, lời nhắc, tin từ Bàn mở bán) từ 22 giờ tới 7 giờ sáng theo giờ của khách. Đóng sau 22 giờ: tin cuối gửi trước 21 giờ 30; phần còn lại để bài đăng và trang bán lo. Soát mọi tin trong chuỗi (§CM-LAUNCH-SEQUENCES), không riêng tin đóng.
+5 GIỜ YÊN: không hẹn gửi tin nào (email, Zalo, inbox, lời nhắc, tin từ Bàn mở bán) từ 22h tới 7h sáng theo giờ của khách. Đóng sau 22h: tin cuối gửi trước 21h30; phần còn lại để bài đăng và trang bán lo. Soát mọi tin trong chuỗi (§CM-LAUNCH-SEQUENCES), không riêng tin đóng.
 
 <!-- @section launch-campaigns.grow-after src=24e15c5728 -->
 ### Sau chiến dịch: chăm tiếp và nhìn lại (thêm vào §CM-LAUNCH-DEBRIEF)

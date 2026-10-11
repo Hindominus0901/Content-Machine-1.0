@@ -4,16 +4,16 @@ Thêm so với EN: tháng cô hồn trỏ §CM-LOCALE 6; quà ≤50% giá khoá 
 Soát song ngữ 7/10: tỉ lệ tệp ấm (cần > tệp ấm), bốn điều giới hạn thật ghi sẵn chứ không hỏi bốn câu, trợ thủ + người soát riêng khi chuẩn bị, viết lại các câu đọc như dịch (gấp gáp, hạ bậc, ồn nhất, lần chạm, rò, bài học rút ra, bài báo).
 Tên với coach: Suất nhóm đầu (A), Mồi (B), Lớp mini Zalo / thử thách (C), Chạy lại (D); "Giới hạn thật" (Scarcity Ledger); HỒ SƠ MỞ BÁN (Launch Brief); BÀN MỞ BÁN (Launch Desk).
 
-<!-- @section launch-plan.grow-start src=bfb4137b10 -->
+<!-- @section launch-plan.grow-start src=30c9012898 -->
 ### Mở bán ("ra mắt khoá", "mở lớp mới", "launch")
-1 Mỗi lần một đợt; năm 2–4 đợt lớn, cách nhau ≥6 tuần đăng bình thường; chạy lại tối đa tháng một lần. Tháng cô hồn: §CM-LOCALE 6.
+1 Mỗi lần một đợt; năm 2–4 đợt lớn, giữa hai đợt lớn ≥6 tuần đăng bình thường; mở lại cùng sản phẩm (§CM-CAMPAIGN-RELAUNCH) không tính vào đó, tối đa tháng một lần. Tháng cô hồn: §CM-LOCALE 6.
 2 Đọc trước, hỏi sau: sản phẩm, giá, bằng chứng, danh sách, kênh lấy từ Card, Bản đồ (§CM-GUARDRAILS). Rồi chọn kiểu, mỗi tin một câu, rõ là dừng:
 a "Đã có ai trả tiền học khoá này (hay bản gần giống) mà có kết quả, cho {xưng hô} kể chưa?" Chưa → A.
 b "Khoá này {xưng hô} mở bán rồi, có đợt nào đạt số đặt ra chưa?" Rồi → D.
 c "Đợt này {xưng hô} live được mấy buổi?" 0 → B; 1–2 → B kèm một buổi live (trừ khi còn đủ 21 ngày và muốn danh sách đông hơn: khi đó C, dạng lớp nhóm); 3+ và còn đủ 21 ngày → C.
 3 Các kiểu, nói lời thường với coach:
 A Suất nhóm đầu: chưa có bằng chứng. Khoá đầu, giá nhóm đầu, đổi lại học viên góp ý. 7 ngày, mở bán 3 ngày. Bằng chứng là quy trình, bản làm mẫu, không "học viên đã…".
-B Mồi (mặc định): quà → inbox → Zalo → đổi niềm tin → giá trị → chuyện khách → mở bán. 14 ngày, mở bán 6 ngày. Không live: video quay sẵn 10 phút thay.
+B Mồi (mặc định): quà → inbox → Zalo → đổi niềm tin → giá trị → chuyện khách → mở bán. 14 ngày, mở bán 6 ngày. Không live: video quay sẵn ≈1.500 chữ thay.
 C Lớp mini Zalo (hay thử thách 5 ngày): 3 tối trong nhóm Zalo + 1 buổi live. 21 ngày, mở bán 6 ngày.
 D Chạy lại: bài đã chạy tốt, ngày mới, bằng chứng mới. 7 ngày; ngày khai giảng đợt sau là giới hạn.
 4 Tính số, chỉ bằng số của coach:
@@ -50,17 +50,17 @@ Luật: dùng lại niềm tin trên Bản đồ, bằng chứng được phép,
 
 <!-- @section launch-plan.grow-days src=557149bc42 -->
 ### Lịch (ngày · chặng · bài; giờ Việt Nam)
-HÂM TỆP: còn 4 tuần: hồ sơ, tính số, xin 3–5 khách cũ cho kể · 3 tuần: bài thường lái dần về ý lớn của đợt; lập nhóm Zalo · 2 tuần: xong quà, form đăng ký, chốt giới hạn thật · 1 tuần: CHUẨN BỊ, viết từng ngày, không in cả bộ trong một tin: ngày 1–3 in đủ chữ, ngày sau in ở Bàn mở bán sáng hôm đó (có trợ thủ: mỗi ngày một người viết, một người soát riêng), coach quay (≈2,5 giờ cho đợt 7 ngày, 4 cho 14, 5 cho 21; thay việc tuần đó).
+HÂM TỆP: còn 4 tuần: hồ sơ, tính số, xin 3–5 khách cũ cho kể · 3 tuần: bài thường lái dần về ý lớn của đợt; lập nhóm Zalo · 2 tuần: xong quà, form đăng ký, chốt giới hạn thật · 1 tuần: CHUẨN BỊ, viết từng ngày, không in cả bộ trong một tin: ngày 1–3 in đủ chữ, ngày sau in ở Bàn mở bán sáng hôm đó (có trợ thủ: ngày nào cũng một người viết, một người soát), coach quay (≈2,5 giờ cho đợt 7 ngày, 4 cho 14, 5 cho 21; thay việc tuần đó).
 7 NGÀY (A, D): 1 mời suất nhóm đầu (vì sao mở lúc này · cho ai · cùng góp ý) + từ khoá vào danh sách chờ · 2 video hay bài chữ tặng quà · 3 chuyện niềm tin + mời live ngày 5 · 4 dạy một bước (A: bản làm mẫu) + nhắn SỚM nhận link trước · 5 live 45 phút → bài mời · 6 hỏi đáp + không hợp với ai + "mai hết giá nhóm đầu" · 7 ngày đóng: sáng, trưa, "còn 2 tiếng"; tắt link đúng giờ · 8 đã đóng + buổi học đầu + danh sách chờ. D: ngày 1–4 chạy lại bài tốt nhất.
-14 NGÀY (B, Mồi): 1 bài hỏi · 2 video dùng thử quà · 3 bài chữ nền màu · 4 chuyện niềm tin 1 · 5 carousel niềm tin 2 · 6 dạy một bước + khách 1 + mời live · 7 niềm tin 3 + khách 2 · 8 "một tuần bên trong khoá" + "mai mở" + nhắn SỚM · 9 MỞ: live 60 phút (hay video 10 phút) → bài mời, 2 tin Zalo, link cho người nhắn SỚM · 10 chuyện khách + nhắc xem lại · 11 hỏi đáp + không hợp với ai · 12 tối nay hết quà + báo suất · 13 "mai đóng" + để sau thì mất gì · 14 ĐÓNG: 3 bài + 3–4 tin; tắt link · 15 đã đóng + danh sách chờ.
+14 NGÀY (B, Mồi): 1 bài hỏi · 2 video dùng thử quà · 3 bài chữ nền màu · 4 chuyện niềm tin 1 · 5 carousel niềm tin 2 · 6 dạy một bước + khách 1 + mời live · 7 niềm tin 3 + khách 2 · 8 "một tuần bên trong khoá" + "mai mở" + nhắn SỚM · 9 MỞ: live 60 phút (hay video quay sẵn) → bài mời, 2 tin Zalo, link cho người nhắn SỚM · 10 chuyện khách + nhắc xem lại · 11 hỏi đáp + không hợp với ai · 12 tối nay hết quà + báo suất · 13 "mai đóng" + để sau thì mất gì · 14 ĐÓNG: 3 bài + 3–4 tin; tắt link · 15 đã đóng + danh sách chờ · 16–21 kết quả, bài rút kinh nghiệm, khảo sát, gói nhỏ hơn.
 21 NGÀY (C, lớp mini Zalo): 1 bài hỏi · 2 video quà · 3 bài chữ nền màu · 4 báo series 5 kỳ có ngày, nhắn từ khoá nhận từng kỳ · 5 kỳ 1 · 6 niềm tin 1 + kỳ 2 · 7 mở đăng ký lớp, link nhóm gửi qua inbox · 8 niềm tin 2 + kỳ 3 · 9 niềm tin 3 + kỳ 4 · 10 "mai vào lớp" + kỳ 5 · 11–13 ba tối lớp Zalo (§CM-LAUNCH-LIVE 2) · 14 live 60 phút, "mai mở" · 15 mở bán bằng bài mời · 16 kết quả học viên được phép · 17 hỏi đáp, không hợp với ai · 18 hết hạn quà 1 · 19 "mai đóng" + chuyện học viên · 20 ĐÓNG · 21 đã đóng → sau đợt. Thử thách 5 ngày: ngày 11–15 như §CM-LAUNCH-LIVE 2.
-Mỗi ngày in: thứ, ngày · tên chặng lời thường · bài trong khung chép · lời mời · phút của coach; ngày mở, ngày đóng (60–120 phút) báo trước. Bài hối thúc không khớp giới hạn thật → đổi thành bài giá trị, hỏi đáp.
-SOÁT NGÀY, làm thầm, trước khi in lịch: đặt từng ngày trong mẫu lên lịch thật, so với ngày của chính coach (ngày khai giảng, ngày bận, ngày họ đã kể) và ngày lễ ở §CM-LAUNCH-TIMING (20/10, 20/11, Tết); trùng thì dời bài, không bao giờ dời hạn thật, báo một dòng. Ngày đóng cách ngày khai giảng ≥3 ngày, vào tối ngày thường (§CM-LAUNCH-TIMING); hạn coach tự chốt cách khai giảng <3 ngày: giữ hạn, báo một dòng một lần, không nhắc lại. Phương án dời hay DỪNG (§CM-CAMPAIGNS 4) không bao giờ rơi vào hay qua ngày khai giảng. Mọi tin hẹn giờ giữ giờ yên (§CM-LAUNCH-TIMING 5).
+Mỗi ngày in: thứ, ngày · tên chặng lời thường · bài trong khung chép · lời mời · phút của coach; ngày mở, ngày đóng (60–120 phút) báo trước. Bài hối thúc không khớp giới hạn thật → thành bài giá trị, hỏi đáp.
+SOÁT NGÀY, làm thầm trước khi in: đặt từng ngày trong mẫu lên lịch thật, so với ngày của chính coach (ngày khai giảng, ngày bận, ngày họ đã kể) và ngày lễ ở §CM-LAUNCH-TIMING (20/10, 20/11, Tết); trùng thì dời bài, không dời hạn thật, báo một dòng. Ngày đóng cách ngày khai giảng ≥3 ngày, vào tối ngày thường (§CM-LAUNCH-TIMING); hạn coach tự chốt cách khai giảng <3 ngày: giữ hạn, báo một dòng, một lần. Phương án dời hay DỪNG (§CM-CAMPAIGNS 4) không bao giờ rơi vào hay qua ngày khai giảng. Mọi tin hẹn giờ giữ giờ yên (§CM-LAUNCH-TIMING 5).
 
-<!-- @section launch-plan.grow-desk src=8bc5fc31af -->
+<!-- @section launch-plan.grow-desk src=ae578025ec -->
 ### Chế độ mở bán và Bàn mở bán mỗi ngày
 1 CHẾ ĐỘ: bình thường → hâm tệp (4 tuần, chưa bán) → chuẩn bị (tuần trước) → mở bán (theo lịch) → hạ nhiệt (2 tuần: nhìn lại, xin cảm nhận, lăn tăn thành bài tháng sau) → bình thường. Bài trong đợt mang `hub:Phase` Launch.
-2 Ba việc tự động trong đợt: bộ kịch bản hằng tuần viết 7 ngày tới theo lịch, xoay quanh lăn tăn mới nhất (chủ đề khác tạm nghỉ, giữ 1 bài đồng cảm/tuần); ý tưởng + hook mỗi ngày thành Bàn mở bán; soát số hằng tuần thành bảng điểm (từng chặng, kế hoạch so với thực tế).
+2 Tác vụ hẹn giờ trong đợt: các lời nhắc hằng tuần tạm dừng, chỉ còn tác vụ "Ngày mở bán" chạy Bàn này mỗi ngày (§CM-NUDGE-RULES 6); bài viết xoay quanh lăn tăn mới nhất (chủ đề khác tạm nghỉ, giữ 1 bài đồng cảm/tuần); soát số thứ Sáu thành bảng điểm (từng chặng, kế hoạch so với thực tế). Hạ nhiệt thì trả lại như cũ.
 3 BÀN MỞ BÁN, mỗi ngày, coach ≤20 phút (trợ lý làm phần còn lại):
 - bài hôm nay trong khung chép, theo thứ tự đăng, kèm giờ;
 - số hôm qua: tiếp cận · tin nhắn · lượt vào trang · đơn · suất còn · lăn tăn chính; mai đổi một chỗ;

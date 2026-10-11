@@ -18,7 +18,7 @@ House rules in every example: made up to show the shape and labelled so; no inve
 
 <!-- @section copywriting.grow-length -->
 ### Lengths in words, and how a framework uses them
-1 Counted in words, never seconds or minutes (§CM-LOCALE 2). Home lengths: short video 500–800 · short post 150–300 · carousel 10–12 slides, ≤30 words each · long post ≈1,000 (hook, story, 3 lessons, invitation) · long video 1,000–1,500 in parts · email ≤250 · chat message ≤60 · story frames 3–5, ≤25 each.
+1 Counted in words, never seconds or minutes (§CM-LOCALE 2). Home lengths: short video 500–800 on every platform (Reels or Shorts over their length cap: trim there) · short post 150–300 · carousel 10–12 slides, ≤30 words each · long post ≈1,000 (hook, story, 3 lessons, invitation) · long video 1,000–1,500 in parts · email ≤250 · chat message ≤60 · story frames 3–5, ≤25 each.
 2 Each framework's beats are given at its home length. In another format each beat keeps its share; the hook stays ≤{{hook_max}} {{hook_unit}} and the ask 20–80 words at any length.
 3 Short video, 500–800: hook and re-hook ≈40 · scene or setup ≈100–150 · 3–5 beats ≈80–120 each, joined by "but" or "so", never "and then" · last line ≈20, the answer itself · ask ≈30. Five beats (belief shift, five-line story): ≈100 each. Three beats (problem → cost → way out): the way out takes half.
 4 Long post ≈1,000: hook ≤12 + re-hook ≈30 · story ≈300 · 3 lessons ≈150–200 each (point → why → example) · invitation ≈80. Story frames live in the ≈300; teaching frames in the lessons.
@@ -43,7 +43,7 @@ LISTS AND MESSAGES (§CM-COPY-LISTS): LIST WITH A SPINE "N points, one thread" �
 ### Story frames: five-line story, one-lesson story, slippery slope (when · beats in words · example, made up · fails when)
 FIVE-LINE STORY · ATTRACT, TRUST · short video, short post, caption, story frames; Week 1's default story.
 Beats (short video ≈600): their moment, in the buyer's world, so the buyer sees themselves ≈100 · the snag: what was tried and why it didn't work, with one detail ≈120 · what was seen: the turn, shown by an action or object ≈120 · what changed: the new way and one fact ≈150 · your turn: one small step, then the ask that closes the loop ≈60. Short post: five lines of ≈40.
-EX: A florist re-quotes every wedding by hand at midnight. · She tried a price sheet; couples still asked for "something cheaper". · One couple asked what the welcome-sign flowers cost on their own. · Now she quotes three packages and the sign as an add-on. · Price one thing separately this week; comment PACKAGES for the three-line quote.
+EX: A florist re-quotes every wedding by hand at midnight. · She tried a price sheet; couples still asked for "something cheaper". · One couple asked what the welcome-sign flowers cost on their own. · Now she quotes three packages and the sign as an add-on. · Price one thing separately this week; comment THREE PACKAGES for the three-line quote.
 Fails when: the snag is generic ("it was hard"); the turn is "I realised" with nothing done or seen; the end preaches instead of giving a step.
 ONE-LESSON STORY · TRUST, ATTRACT · email, Zalo, short post, one part of a long piece; when the dump has one sharp scene and one point.
 Beats (email ≈220): scene: time, place, one object ≈80 · what happened, someone's exact words ≈60 · the lesson in one line ≈20 · what it means for the reader ≈40 · one step or ask ≈20.
@@ -51,7 +51,7 @@ EX: Tuesday, 7 a.m., a client's spreadsheet with 40 tabs. · "I don't know which
 Fails when: two lessons; the scene is a summary ("I was working with a client recently"); the lesson said three times.
 SLIPPERY SLOPE · ATTRACT · short video, text-led post, an ad's first lines; also the rhythm inside any frame.
 Beats (short ≈550): hook ≤12 that opens a question · each sentence answers part of it and opens a smaller one ("but", "so", "which means") · a re-hook near halfway · the last line closes the first question · ask ≈30.
-EX: "Your best client is the one most likely to leave." · Not because they're unhappy; nobody asks what's next. · So they finish, say thanks, go quiet. · Which means the next offer they hear is someone else's. · Ask in the last session: "What do you want to fix next?"
+EX: "Best clients finish, say thanks, and never book again? It isn't the work." · Nobody asks what's next. · So they go quiet. · Which means the next offer they hear is someone else's. · Ask in the last session: "What do you want to fix next?"
 Fails when: a line could go without anyone noticing; a re-hook promises more than the piece pays; a tease never delivered.
 
 <!-- @section copywriting.grow-beliefs -->
@@ -66,7 +66,7 @@ EX: "Just niche down." · It sounds right: narrow is memorable. · It skips a st
 Fails when: "X is dead", "the truth they hide"; a myth nobody believes; the people who give the advice attacked, not the advice.
 OLD VS NEW · TRUST, CONVERT · short video, carousel, short post, ad. The old way is a habit or advice, never a person or group.
 Beats (short post ≈250): the old way as the buyer does it, fairly ≈60 · what it costs (time, money, the feeling) ≈50 · the new way in one line ≈20 · how it works, 2–3 steps ≈80 · the honest trade (what the new way asks) ≈20 · ask ≈20.
-EX: Old way: a 40-minute call where you explain everything. · You talk half of it; they leave to "think about it". · New way: three questions sent before the call. · They answer in writing; the call starts at their problem. · It costs ten minutes a lead. · Comment QUESTIONS for the three.
+EX: Old way: a 40-minute call where you explain everything. · You talk half of it; they leave to "think about it". · New way: three questions sent before the call. · They answer in writing; the call starts at their problem. · It costs ten minutes a lead. · Comment THREE QUESTIONS for them.
 Fails when: the old way caricatured; no trade (it reads like an ad); "both work" with no stance.
 
 <!-- @section copywriting.grow-problem -->
@@ -81,7 +81,7 @@ EX: Before: Sunday night, a tutor rewriting the week's lessons from scratch. · 
 Fails when: an after nobody reached; an income or body after; the bridge skipped (the gap is the content).
 AIDA · CONVERT · ad, offer lead-in, email to a warm list, the first screen of a sales page; also the check that a selling piece has all four.
 Beats (ad ≈120, email ≈220): stop: the call-out or a pain in buyer words ≈15 · interest: a cause or fact they didn't know ≈60 · want: the after as a scene and one OK'd proof line ≈80 · act: one action and a reason now, only from the real limits ≈30.
-EX: Bookkeepers who still chase receipts on WhatsApp: · most missing receipts aren't lost, they're never asked for at the right moment. · One message on the 25th, and the month closes with the receipts in. · Reply RECEIPT for the wording.
+EX: Bookkeepers who still chase receipts on WhatsApp: · most missing receipts aren't lost, they're never asked for at the right moment. · One message on the 25th, and the month closes with the receipts in. · Reply CHASE RECEIPTS for the wording.
 Fails when: "act now!" with no reason; want built from adjectives; no interest beat (every line shouts).
 
 <!-- @section copywriting.grow-proof -->
@@ -96,14 +96,14 @@ EX: "I can't afford coaching right now." · Fair: that money leaves where you ca
 Fails when: arguing with the buyer; "it pays for itself" or any return figure; a guarantee that doesn't exist.
 OFFER POST · CONVERT · post, email, Zalo, a long video's end; only a live offer with its real price and real limits (§CM-LAUNCH-BRIEF).
 Beats (≈300): the result it's for, one line ≈20 · who it's for, who not ≈50 · what's inside: format, length, what they do ≈100 · one OK'd proof line ≈30 · the price, shown ≈20 · why now, only a real limit and its reason ≈30 · how to join, one action ≈30.
-EX: A 4-week group to set your first retainer price. · For designers billing by the hour, not agencies. · A weekly call, a pricing sheet, your proposal reviewed live. · {price}. · {N} seats, because each proposal is reviewed live. · Comment SEAT.
+EX: A 4-week group to set your first retainer price. · For designers billing by the hour, not agencies. · A weekly call, a pricing sheet, your proposal reviewed live. · {price}. · {N} seats, because each proposal is reviewed live. · Comment FIRST RETAINER.
 Fails when: the price hidden ("DM for price"); a fake cap or deadline; a "value" stack adding up to an inflated sum.
 
 <!-- @section copywriting.grow-long -->
 ### Long frames: the open-loop long post, the long video in parts
 OPEN-LOOP LONG POST, ≈1,000 words · TRUST mostly, ATTRACT on Facebook and LinkedIn; at most one a week, the week's lead text piece.
 Beats: hook ≤12, the claim before "See more" · re-hook ≈30: the stake or the question, opening the loop ("by the end, the one line I now put in every proposal") · story ≈300 (five-line or one-lesson story) · lesson 1 ≈170: point → why → example · lesson 2 ≈170 · lesson 3 ≈170, the strongest, which pays the loop · invitation ≈80, one action. Each lesson opens on a line that stands alone, so a skimmer still gets the post. Over a platform's limit: hook, story, one lesson, invitation (§CM-POSTS 4).
-EX: Hook "The client who paid the most complained the least." · Story: two clients, same month, one haggled, one paid in full the first day. · Lessons: price filters for commitment · the first week sets the tone · the line in every proposal now. · Invitation: comment PROPOSAL for that line.
+EX: Hook "Clients haggle over every proposal? Read this before you discount." · Story: two clients, same month, one haggled, one paid in full the first day. · Lessons: price filters for commitment · the first week sets the tone · the line in every proposal now. · Invitation: comment PROPOSAL LINE for that line.
 Fails when: the lessons have nothing to do with the story; a fourth lesson; essay links (Moreover); the loop never paid.
 LONG VIDEO IN PARTS, 1,000–1,500 words · TRUST, CONVERT · YouTube, Facebook video, podcast (§CM-LONG). Spoken; bullets per part; word for word only the opening and the last line.
 Beats: opening ≈120: proof (one fact of theirs), promise (what the viewer can do by the end), plan (3–4 parts by plain name), one loop paid near the end, one "even if you…" (§CM-LONG-INTRO) · context or story ≈200 · 3–4 parts ≈200–250 each: point → why → example → what to do → a re-hook that sells the next part or re-opens the loop ("Part 3 is where most people stop.") · once, mid-video, a self-test as a statement · the loop paid ≈100 · ask ≈80: the gift, the offer only if one exists, the next video. A part may run its own frame (a belief shift, a case).
@@ -136,7 +136,7 @@ Fails when: two asks; newsletter tone in a one-to-one chat; "I saw you opened my
 2 Spoken video: short sentences at the scene and the turn, longer at the explaining; one beat per take; "but" or "so" between beats; one set-up line before the turn ("Then she said one thing."); a re-hook near the halfway word. No dashes in spoken lines. Read it aloud.
 3 Specificity ladder: climb until a stranger can picture it. "Clients struggle" → "a client struggled with pricing" → "a wedding photographer kept quoting by the hour" → "she quoted 8 hours, worked 14, and never billed the album". Stop at the rung the coach's facts reach; never climb with invented detail.
 4 Pain and dream: write the before as the buyer sees, hears and feels it (the unread proposal, the Sunday dread) and the after the same way (a quiet Monday inbox), from research and the dump, never from adjectives.
-5 Endings hand over to the ask: the last line answers the hook; the ask carries on from the story's result ("Want the three questions she asks now? Comment QUESTIONS."), never a new topic. The gift is named after this story's result (§CM-HOOK-CTA). No moral recap, no "Agree?".
+5 Endings hand over to the ask: the last line answers the hook; the ask carries on from the story's result ("Want the three questions she asks now? Comment THREE QUESTIONS."), never a new topic. The gift is named after this story's result (§CM-HOOK-CTA). No moral recap, no "Agree?".
 6 How much story: short video ≈150–250 of its 500–800 · long post ≈300 · long video ≈200, plus one inside a part · email ≈80–120 · story frames: one scene, one point, one ask.
 
 <!-- @section copywriting.grow-persuade -->
@@ -168,11 +168,11 @@ Fails when: two asks; newsletter tone in a one-to-one chat; "I saw you opened my
 4 The ask in plain words: what to do, what they get, the quiet route ("or just message me").
 5 Flat → natural:
 - "Unlock the secret to more clients" → "The one question I ask before every sales call"
-- "Are you tired of struggling with pricing?" → "You sent the quote on Monday. It's Thursday."
+- "Are you tired of struggling with pricing?" → "Quote sent Monday, still no answer Thursday? It isn't your price."
 - "Our proven system will transform your business" → "The three checks I run with every new client, in order"
 - "Don't miss out on this amazing opportunity!" → "Doors close Friday, because the group starts Monday." (a real date)
 - "Imagine waking up to a full inbox" → a scene of theirs that happened, or nothing
-- "Comment below if you agree!" → "Comment PRICE and I'll send the sheet."
+- "Comment below if you agree!" → "Comment PRICE SHEET and I'll send it."
 - "I'm passionate about helping coaches grow" → "I've read {N} coaches' sales pages. The same line is missing from most."
 6 Read it aloud: would they say it to one client across a table? If not, rewrite the line.
 

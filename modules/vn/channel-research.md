@@ -14,7 +14,7 @@ DÁN, khi không mở được kênh: chiến lược trước, rồi cùng Tu�
 <!-- @section channel-research.grow-teardown src=ddb1ec1082 -->
 ### C2 Mổ xẻ từng kênh (mỗi lượt một kênh, chỉ đọc, trang công khai)
 1 90 NGÀY GẦN NHẤT, số đếm đúng như trang hiện, không đoán; trang không hiện view → lượt thả cảm xúc + comment, ghi rõ. MỨC THƯỜNG = số ở giữa của ~20 bài gần nhất; BÀI NỔI = từ 3× mức thường trở lên (nói với coach: "{{t:liked.grid_ratio}}", §CM-LIKED). Đọc rõ chưa tới 6 số: không xếp hạng, và nói thẳng như vậy.
-2 TOP 10 theo view, đánh dấu bài nổi. Mỗi bài: tiêu đề hay dòng đầu, nguyên văn (≤{{quote_cap}} {{quote_unit}}, giữ không dấu, teencode) · hook: dáng gần nhất trong §CM-HOOK-LIBRARY (lật niềm tin, đập lầm tưởng, cảnh đời thường, gọi tên, con số, sai lầm, các bước, câu hỏi, lăn tăn, trước → sau, kể chuyện) · định dạng (video ngắn, video dài, carousel, bài chữ, live) · độ dài tính bằng chữ (đếm từ phụ đề hay caption; không có thì ≈180 tiếng mỗi phút video, ghi ≈) · mục đích: THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI (§CM-TIERS) · lời mời (comment từ khoá, link, inbox, "chấm", nhóm Zalo, không có) · view · comment · ngày · link.
+2 TOP 10 theo view, đánh dấu bài nổi. Mỗi bài: tiêu đề hay dòng đầu, nguyên văn (≤{{quote_cap}} {{quote_unit}}, giữ không dấu, teencode) · hook: dáng gần nhất trong §CM-HOOK-LIBRARY (lật niềm tin, đập lầm tưởng, cảnh đời thường, gọi tên, con số, sai lầm, các bước, câu hỏi, lăn tăn, trước → sau, kể chuyện) · định dạng (video ngắn, video dài, carousel, bài chữ, live) · độ dài tính bằng chữ (đếm từ phụ đề hay caption; không có thì ≈210 tiếng mỗi phút video, ghi ≈) · mục đích: THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI (§CM-TIERS) · lời mời (comment từ khoá, link, inbox, "chấm", nhóm Zalo, không có) · view · comment · ngày · link.
 3 NHỊP ĐĂNG: mỗi tuần mấy bài mỗi định dạng, đăng ngày nào, tuyến bài lặp lại (một chuyên mục có tên, một khung cố định trong tuần).
 4 ĐƯỜNG ĐI CỦA KHÁCH: quà tặng, lời mời họ đẩy (tài liệu, comment từ khoá, nhóm Zalo, webinar, bản tin) → sản phẩm (tên, giá như trang ghi, "giá ib" thì ghi đúng vậy, link) → bằng chứng họ đưa. Tự hỏi "kênh này có bán đúng thứ coach bán không?"; không thì chỉ lấy khung.
 5 CÒN THIẾU: câu khách hỏi dưới bài mà kênh không trả lời, định dạng họ bỏ qua, chặng khách họ bỏ trống, chỗ đáng có lời mời mà không có.
@@ -33,7 +33,7 @@ KHOẢNG CÁCH (§CM-LIKED 7): chỉ mượn khung, không mượn chữ, kết 
 7 Câu khách giữ lại vào lượt nghe khách (§CM-LISTEN) và vào Kho như lời khách (vai, nơi, tháng; §CM-RESEARCH-BANK); một mẫu GIỮ mạnh hơn câu khách hay từ khoá trong chiến lược → báo một dòng, coach quyết.
 8 NGƯỜI MUA LÀ NGƯỜI LÀM NGHỀ (coach, chuyên gia, chủ dịch vụ): câu của họ ở chỗ người trong nghề nói với nhau, không ở chỗ khách của họ nói. Tìm theo vai + nỗi khổ nghề ("làm coach đăng đều mà không ai hỏi giá"): comment dưới video dạy marketing cho coach, chuyên gia · nhóm Facebook công khai, diễn đàn của nghề (Spiderum, Voz) · đánh giá khoá học, sách cho coach · bài tự kể (Substack, blog). Ngày 0 nhắm ≥2 câu của chính người mua ở ≥2 nơi; câu của khách của họ chỉ là bối cảnh, không thành GIỮ. Nhóm kín: Chrome hay bản dán (R0).
 
-<!-- @section channel-research.grow-card src=3661ab9338 -->
+<!-- @section channel-research.grow-card src=a02ccffbc2 -->
 ### C4 Thẻ góc nhìn riêng và điều coach thấy
 KHÔNG TRẢ LỜI SUÔNG: coach hỏi chiến lược, trụ cột nội dung, tuyến bài, hook, "ngách mình cái gì chạy" mà còn đọc được → đọc trước, hoặc lấy từ NICHE.md và nói rõ: "Từ {n} kênh, {n} bài, {n} comment (tháng {tháng}): …". Chưa đọc được gì: "(mình đoán)" + cần đọc gì để chắc. Không lấy trí nhớ làm kết quả nghiên cứu.
 THẺ, sau C2 và C3 (đi vào định vị §CM-MAP, trụ cột nội dung và tuyến bài §CM-STRATEGY-ENGINE, §CM-CONTENT-LINES, hook §CM-HOOK-LIBRARY; bản hằng tháng là "Góc nhìn riêng" ở §CM-MONTH):
@@ -48,7 +48,7 @@ Người xem cứ hỏi mà chưa ai trả lời: {chỗ trống} ({n} người)
 Góc của {xưng hô}: {một dòng {XƯNG HÔ} NÓI ĐƯỢC}.
 Gõ "xem nghiên cứu" để xem báo cáo đầy đủ."
 0 KÊNH ĐỌC ĐƯỢC: dòng 1 nói thẳng và vì sao ("Chưa mở được kênh nào ({nền tảng}: trang trắng); dưới đây từ {n} trang và bản {xưng hô} dán:"), dòng 2–3 chỉ in khi có nguồn, không thì bỏ; không bao giờ có mẫu không nguồn.
-Ngày 0: các dòng này gộp vào NGHIÊN CỨU CHO THẤY dưới chiến lược (kết quả §CM-LISTEN, ≤3 dòng; chưa GIỮ được câu khách nào: một dòng kênh thay dòng "Nguồn câu khách"); trụ cột nội dung, tuyến bài, tỷ lệ trong đề xuất ghi rõ lấy từ đâu. Các lượt sau: 5 dòng + một TIẾP có A/B/C (§CM-OPTIONS). Tuyến bài chỉ đổi ở buổi nhìn lại tháng, mỗi tháng nhiều nhất một tuyến (§CM-CONTENT-LINES), nên phát hiện mới chỉ đề xuất cho buổi đó: "A) đưa chỗ trống này thành tuyến mới ở buổi nhìn lại tháng (máy khuyên) · B) một bài lẻ tuần này · C) giữ kế hoạch".
+Ngày 0: các dòng này gộp vào NGHIÊN CỨU CHO THẤY dưới chiến lược (kết quả §CM-LISTEN, ≤3 dòng; chưa GIỮ được câu khách nào: một dòng kênh làm dòng 2); trụ cột nội dung, tuyến bài, tỷ lệ trong đề xuất ghi rõ lấy từ đâu. Các lượt sau: 5 dòng + một TIẾP có A/B/C (§CM-OPTIONS). Tuyến bài chỉ đổi ở buổi nhìn lại tháng, mỗi tháng nhiều nhất một tuyến (§CM-CONTENT-LINES), nên phát hiện mới chỉ đề xuất cho buổi đó: "A) đưa chỗ trống này thành tuyến mới ở buổi nhìn lại tháng (máy khuyên) · B) một bài lẻ tuần này · C) giữ kế hoạch".
 "xem nghiên cứu", báo cáo đầy đủ, một khung chép, kết luận trước: tổng hợp các kênh · thẻ kèm dấu vết · bảng và 5 dòng của từng kênh · chủ đề kèm số đếm · mẫu GIỮ kèm đủ câu, THEO DÕI · câu hỏi chưa ai trả lời · mọi cụm đã tìm, trang đã mở, nơi chưa đọc và vì sao · đã đổi gì (định vị, trụ cột nội dung, tuyến bài, hook: trước → sau) · còn chưa biết, ai trả lời được.
 LƯU: tổng hợp, thẻ và 3 dòng mỗi kênh vào NICHE.md, mục Kênh (C6); danh sách kênh là khối đầu của file (Brand Card không có ô kênh).
 
@@ -66,12 +66,12 @@ CẦN CÓ, mỗi mục một khối ngắn:
 8 CÂU CÒN BỎ NGỎ và ai trả lời được (coach, một cuộc gọi với khách, một bản dán).
 Không bao giờ viết phần này chỉ từ trí nhớ: chỗ nào chưa đọc ghi "(mình đoán)" kèm cần đọc gì để chắc.
 
-<!-- @section channel-research.grow-niche-file src=da6d982e92 -->
+<!-- @section channel-research.grow-niche-file src=b64e1c7dee -->
 ### C6 NICHE.md: lưu lại, đọc mỗi lần mở chat, làm mới hằng tháng
 KHUÔN, một file, ≤6.000 ký tự, tiêu đề mục ngắn:
 "# NICHE · {ngách} · v{n} · tháng {tháng}
 Bản đồ lĩnh vực · Chữ của khách và chữ trong nghề · Lầm tưởng và tranh cãi · Mùa vụ · Cẩn trọng khi nói · Tiếng nói lớn · Điều đã đổi · Kênh (tổng hợp, thẻ góc nhìn riêng, 3 dòng mỗi kênh) · Câu còn bỏ ngỏ · Nguồn (link · ngày đọc)."
 Được ghi tên kênh, thương hiệu công khai (nội bộ); không bao giờ ghi người comment, người không công khai, số điện thoại, email, Zalo; câu trích không quá {{quote_cap}} {{quote_unit}}.
-LƯU: app ghi được file (Claude Code, Cowork, Drive hay Notion đã kết nối) → tự ghi, hub gắn link (§CM-HUB-NOTION, §CM-HUB-MD). Không thì một khung chép + các bước: "ChatGPT: ⋯ dưới khung này → Lưu vào dự án. Claude: chép khung, + cạnh file của project → Add text content, đặt tên NICHE, bấm Save. Rồi xoá bản NICHE cũ trong file của project." Dự phòng: gửi vào Zalo "Cloud của tôi".
+LƯU: app ghi được file (Claude Code, Cowork, Drive hay Notion đã kết nối) → tự ghi, hub gắn link (§CM-HUB-NOTION, §CM-HUB-MD). Không thì một khung chép + các bước, chỉ cho đường coach đang dùng: có Project thì "Chép khung vào file của dự án, dạng văn bản tên NICHE, rồi xoá bản NICHE cũ." Không có Project (chat trong plugin): "Cất lại (ghi chú, hay gửi vào Zalo 'Cloud của tôi') rồi dán vào đầu đoạn chat mới khi cần nghiên cứu."
 ĐỌC: mỗi lần mở chat cùng HUB.md và Brand Card, coach không cần gõ gì (§CM-MEMORY); trước mọi câu trả lời về chiến lược, trụ cột nội dung, tuyến bài, hook hay "cái gì đang chạy", và nói rõ nguồn: "Theo ghi chú về ngách của {xưng hô} (tháng {tháng}): …". Project chưa có file: chạy C5 ngầm, báo một lần là đang chạy.
 LÀM MỚI: mở chat thấy file quá 30 ngày, hoặc buổi nhìn lại tháng → một dòng: "Ghi chú về ngách của {xưng hô} đã {n} ngày rồi. A) làm mới ngay, {tự xưng} chạy ngầm chừng 10 phút (máy khuyên) · B) để tới buổi tổng kết thứ Sáu · C) tháng này bỏ qua." Làm mới chỉ đọc lại phần hay đổi: 90 ngày mới của từng kênh, comment mới, điều đã đổi; ra v{n+1} kèm 3 dòng trước → sau; thẻ góc nhìn chỉ làm lại khi có dòng đổi.

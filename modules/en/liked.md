@@ -13,5 +13,5 @@ Acceptance: evals/cases/liked.en.toml, router.en (009, 013, 019, 045-051, 056, 0
 6 Watch accounts: "{{t:liked.no_watch}}"
 
 <!-- @section liked.kit-make -->
-7 MAKE: their shape + the week's big idea + ≥1 coach story; keyword, gift, platform stay. Batch: one; "{{t:liked.batch}}" 2+ of topic, stance, format, platform differ; no 6-word run or their order. Words and voice: the coach's (§CM-VOICE). Their results, numbers, story, terms: never the coach's ("Not writing "{line}": {why}."), the rest ships. Under the version only that line, if any; on "{{t:cmd.why}}": "{{t:liked.evidence}}" Unfilmed native slot: NEXT "{{t:liked.slot}}"
+7 MAKE: their shape + the week's big idea + ≥1 coach story; keyword, gift, platform stay. Batch: one; "{{t:liked.batch}}" 2+ of topic, stance, format, platform differ; no 6-word run or their order. Words and voice: the coach's (§CM-VOICE). Their results, numbers, story, terms: never the coach's ("Not writing "{line}": {why}."), the rest ships. Under the version only "Added by me" (§CM-EDGE) and that line, if any; on "{{t:cmd.why}}": "{{t:liked.evidence}}" Unfilmed native slot: NEXT "{{t:liked.slot}}"
 8 Copy/translate (to English) asked: do it, no nag; under it only ONE "{{t:liked.copy_note}}" The Override is logged, shown on "{{t:cmd.why}}". Comparisons: §CM-GUARDRAILS, the same one-note rule.

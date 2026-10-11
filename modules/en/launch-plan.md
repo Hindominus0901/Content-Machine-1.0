@@ -6,14 +6,14 @@ Scripts per step and format: launch-scripts.grow-* (§CM-LAUNCH-POSTS, §CM-LAUN
 
 <!-- @section launch-plan.grow-start -->
 ### Start a launch ("launch", "open the doors", "sell my program", "open a cohort")
-1 One launch at a time; 2–4 big ones a year, ≥6 normal weeks between; a repeat at most monthly. Each launch reply ends with one NEXT: the next piece or the one fact needed.
+1 One launch at a time; 2–4 big ones a year, ≥6 normal weeks between big ones; a relaunch of the same offer (§CM-CAMPAIGN-RELAUNCH) is exempt, at most monthly. Each launch reply ends with one NEXT: the next piece or the one fact needed.
 2 Read before asking: offer, price, proof, list, platforms from the Card, the Map and OK'd proof (§CM-GUARDRAILS). Then the picker, one question per reply, stopping once the type is clear:
 a "Has anyone paid for this, or something close, and got a result you may show?" No → A.
 b "Have you already run this exact offer and hit your numbers?" Yes → D.
 c "How many times can you go live in the launch window?" 0 → B; 1–2 → B with one live workshop (unless 21 days are free and they want a bigger list: then C as the group class); 3+ with 21 days free → C.
 3 The types, in plain words to the coach:
 A Founding seats: no proof yet. Round 1 at a founding price for feedback. 7 days, 3-day cart. Proof = their process and demo, never "clients got".
-B Free-gift launch: gift → messages → belief → value → cases → offer. 14 days, 6-day cart. No live: a 10-minute recorded walkthrough opens it.
+B Free-gift launch: gift → messages → belief → value → cases → offer. 14 days, 6-day cart. No live: a recorded walkthrough (≈1,500 words) opens it.
 C Challenge or mini-class: 5 short lives, or 3 recorded nights in a group + 1 live. 21 days, 6-day cart.
 D Repeat: proven pieces re-run with new dates and proof. 7 days; the next round's start date is the limit.
 4 Launch math, the coach's numbers only:
@@ -60,7 +60,7 @@ DATE CHECK, silent, before printing: each day on the real calendar, against the 
 <!-- @section launch-plan.grow-desk -->
 ### Launch mode and the daily Launch Desk
 1 MODES: normal → runway (4 weeks, no selling) → prep (the week before) → launch (the calendar) → cooldown (2 weeks: debrief, testimonials, objections → next month's belief posts) → normal. Launch pieces carry `hub:Phase` Launch.
-2 Automations in launch mode: the weekly script batch writes the next 7 calendar days around the latest objections (other topics paused but 1 relate piece a week); the daily idea + hook drop becomes the Desk; the weekly review becomes the scoreboard (plan vs actual per step). Cooldown switches them back.
+2 Scheduled tasks in launch mode: the weekly ones pause and the one "Launch day" task runs this Desk daily (§CM-NUDGE-RULES 6); pieces are written around the latest objections (other topics paused but 1 relate piece a week); the Friday review becomes the scoreboard (plan vs actual per step). Cooldown switches them back.
 3 LAUNCH DESK, daily, ≤20 coach minutes (a VA can do the rest):
 - today's pieces in copy boxes, in posting order with times;
 - yesterday's row: reach · messages · page visits · sales · seats left · top objection; one change for tomorrow;

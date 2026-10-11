@@ -494,9 +494,9 @@ limit = "chatgpt_project_instructions_chars"
 artifact = "CONTENT-MACHINE-{EN,VN}.md"
 unit = "bytes"
 en = 57344
-vn = 65536
+vn = 66560
 limit = "chatgpt_free_context_tokens"
-note = "56 KB / 64 KB since 7 Oct 2026 night (founder strategy-first, 7 Oct: the Day-0 interview, the strategy proposal with broad pillars, the ATTRACT/TRUST/CONVERT mix and the system, the research said once, lengths in words; was 50 KB / 55 KB). At 3.7 bytes per o200k token the VN file is about 17.7k tokens, still inside chatgpt_free_context_tokens with room for the conversation. Before: 50 KB / 55 KB. A <=25 KB 'Claude Free light' variant ships if claude_free_turns_with_kit < 12. Measured 2026-10-06 (o200k tokens): EN 46,066 B = 12.3k tokens, VN 56,261 B = 15.3k tokens; VN costs about the same bytes per token as EN (3.7), so a bigger VN byte cap only takes room from the conversation. Keep VN at 55 KB: a VN addition is paid for by a VN cut."
+note = "VN 65 KB since 11 Oct 2026 (audit a1 fixes, founder decisions 11 Oct: one strategy OK model, the access ask alone, Week 1 printed on its day, level-up fallbacks, comment word vs Season keyword, hours-scaled Talk weeks with a 1.5 h default, a Reels/Shorts trim note, VN address slots in client messages): about 1.5 KB of VN cuts paid most of it; +1 KB (~270 tokens) for the rest. 56 KB / 64 KB since 7 Oct 2026 night (founder strategy-first, 7 Oct: the Day-0 interview, the strategy proposal with broad pillars, the ATTRACT/TRUST/CONVERT mix and the system, the research said once, lengths in words; was 50 KB / 55 KB). At 3.7 bytes per o200k token the VN file is about 17.7k tokens, still inside chatgpt_free_context_tokens with room for the conversation. Before: 50 KB / 55 KB. A <=25 KB 'Claude Free light' variant ships if claude_free_turns_with_kit < 12. Measured 2026-10-06 (o200k tokens): EN 46,066 B = 12.3k tokens, VN 56,261 B = 15.3k tokens; VN costs about the same bytes per token as EN (3.7), so a bigger VN byte cap only takes room from the conversation. Keep VN at 55 KB: a VN addition is paid for by a VN cut."
 
 [budgets.method_section]
 artifact = "each §CM section of the method file"

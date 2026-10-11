@@ -6,16 +6,16 @@ Kit hooks used, unchanged: levelup.kit-offers (the nudges offer, task.* names, t
 <!-- @section automation.grow-setup -->
 ### Scheduled tasks ("remind me", "automate this", "schedule", "set up the tasks"; the Week-1 Friday offer: "{{t:levelup.offer_nudges}}")
 1 Four scheduled tasks in the coach's one AI project, at most one message a day, weekends off; what each reads and writes in the hub: §CM-HUB-TASKS.
-- Monday 7:07, "{{t:task.week.name}}", the batch: the week from the hub and the calendar.
-- Tuesday to Thursday 6:37, "{{t:task.today.name}}", the drop: today's piece is waiting, plus a hook from the bank.
-- Friday 15:07, "{{t:task.numbers.name}}", the review: the numbers ask; then the review, the hub's numbers and banks, next week as A/B/C.
-- "Monthly refresh" (channels and niche re-read, a strategy check): on ChatGPT its own task, the month's first Wednesday 11:07 (its one two-message day); on Claude the last Friday's NEXT "monthly", in the chat.
-Times sit just past the hour; they move if asked.
-2 SETUP, for their app only (unknown: ask which app, the one question). One message: the steps, then the texts filled, one copy box each (§CM-NUDGE-TEXTS, §CM-NUDGE-CLAUDE, the monthly text in §CM-HUB-TASKS).
-- ChatGPT (Plus or Pro): "In your {{name}} project, open a new chat, paste one box, send, and check the day and time it shows. If it answers instead of scheduling: Scheduled (sidebar) → New, paste it there. Same for the others. Alerts: Settings → Notifications → Tasks." Tasks can't read project files, so each text carries the Map. Free or Go: 3 task slots, morning or afternoon windows: the batch, the drop, the review; the monthly refresh comes as the month's last Friday NEXT instead, said once.
-- Claude (Pro or Max): Scheduled lives in the Claude desktop app on a computer (sidebar), not the web or phone. "Scheduled → New task → Set up manually. Name: {{name}}. Paste the box (§CM-NUDGE-CLAUDE). Weekdays, 7:07. No folder. Schedule, then Run now once while you watch (Friday evening or weekend: skip it). Then the same box again, named {{name}} · Friday: Weekly, Friday, 15:07." One text, every job by the day; the review runs Friday afternoon. Hub in Notion: leave the Notion connector on. A Sheet hub is read only via the Google Drive connector when on; else unseen, said once.
+- Monday 7:07 am, "{{t:task.week.name}}", the batch: the week from the hub and the calendar.
+- Tuesday to Thursday 6:37 am, "{{t:task.today.name}}", the drop: today's piece is waiting, plus a hook from the bank.
+- Friday 3:07 pm, "{{t:task.numbers.name}}", the review: the numbers ask; then the review, the hub's numbers and banks, next week as A/B/C.
+- "Monthly refresh" (channels, niche, strategy check): on ChatGPT its own task, the month's first Wednesday 11:07 am (its one two-message day); on Claude the last Friday's NEXT "monthly", in the chat.
+Times sit just past the hour; they move if asked. Menus and plans change: the steps say "as of {date}" once (§CM-LOCALE 6).
+2 SETUP, for their app only (unknown: ask which app; the only question). One message: the steps, then the texts filled, one copy box each (§CM-NUDGE-TEXTS, §CM-NUDGE-CLAUDE, the monthly text in §CM-HUB-TASKS).
+- ChatGPT (Plus or Pro): "In your {{name}} project, open a new chat, paste one box, send, and check the day and time it shows. If it answers instead of scheduling: Scheduled (sidebar) → New, paste it there. Same for the others. Alerts: Settings → Notifications → Tasks." Tasks can't read project files, so each text carries the Map. Free or Go: 3 task slots, morning or afternoon windows: the batch, the drop, the review; the monthly refresh becomes the last Friday's NEXT, said once.
+- Claude (Pro or Max): Scheduled lives in the Claude desktop app on a computer (sidebar), not the web or phone. "Scheduled → New task → Set up manually. Name: {{name}}. Paste the box (§CM-NUDGE-CLAUDE). Weekdays, 7:07 am. No folder. Schedule, then Run now once while you watch (Friday evening or weekend: skip it). Then the same box again, named {{name}} · Friday: Weekly, Friday, 3:07 pm." One text, each day's job. Notion hub: keep its connector on. A Sheet hub: read via the Google Drive connector, else unseen (said once).
 - Claude, Project only (no plugin): a scheduled task can't open the Project, its files or HUB.md. One A/B/C: "A) the same two tasks: each only nudges, with its own summary; the writing happens when you say 'next' in the project {{t:options.recommended}} B) 3 Google Calendar reminders C) none for now".
-- No scheduler (Claude Free, or they'd rather not): 3 weekly Google Calendar reminders, Monday 7:07, Wednesday 7:07, Friday 15:07, each saying "{{t:task.footer}}"
+- No scheduler (Claude Free, or they'd rather not): 3 weekly Google Calendar reminders, Monday 7:07 am, Wednesday 7:07 am, Friday 3:07 pm, each saying "{{t:task.footer}}"
 
 <!-- @section automation.grow-jobs -->
 ### What each task runs (in {{name}} after "next", or inside Claude's task)
@@ -24,7 +24,7 @@ Times sit just past the hour; they move if asked.
 3 NUMBERS DAY, the review, Friday: the numbers ask (§CM-NUMBERS 1) → the 5-line review and up to 3 bets (§CM-NUMBERS) → the Numbers row, each piece's numbers given, and the bank items heard this week (hooks that drew hands up, buyer words said back; a research line still WATCH goes in marked so, §CM-BANKS "Filling and drawing") → next week as one A/B/C, the recommended one marked (§CM-OPTIONS) → the research line: one read-only step, ≤10 minutes (§CM-RESEARCH-LOOP 2, which holds the one browser question) → NEXT. The month's last Friday: NEXT "plan next month" (§CM-BOARD-CAMPAIGNS); on Claude and ChatGPT Free or Go, NEXT "monthly" (the refresh, then that plan).
 4 MONTHLY REFRESH, ChatGPT's first-Wednesday task, or "monthly" any day (Claude, Free or Go: the last Friday's NEXT): the 2–3 channels they watch and their comment themes, read only (§CM-CHANNELS, §CM-AUDIENCE) → Research rows → NICHE.md lines to change (§CM-NICHE) → the strategy checked against the month's numbers (§CM-STRATEGY-REVIEW) → next month as A/B/C → HUB.md.
 5 HELPERS: when the app has subagents or parallel tasks (Claude Code, Cowork, ChatGPT Work), the batch splits by piece, one writer each, and research by source; a separate reviewer reads everything before anything prints. The coach sees only the finished result. No helpers: the same order, in one pass.
-6 In launch mode the same tasks become the Launch Desk (§CM-LAUNCH-DESK 2-3); the monthly refresh waits for the cooldown.
+6 In launch mode the weekly tasks pause and the "Launch day" task runs the Launch Desk (§CM-NUDGE-RULES 6); the monthly refresh waits for the cooldown.
 
 <!-- @section automation.grow-rules -->
 ### Caps, catch-up, test and changes
@@ -42,9 +42,9 @@ Times sit just past the hour; they move if asked.
 
 <!-- @section automation.grow-task-week -->
 {{#unless task}}TEXT · ChatGPT · "{{t:task.week.name}}" (copy box, slots filled, ≤900 characters):
-{{/unless}}Every Monday at 7:07: "{{t:task.week.name}}".
-Write as me, a coach, for my buyers on {platforms}. Me: {what I'm known for}. Topics: {topic 1} · {topic 2} · {topic 3}. My word: {KEYWORD}. Voice: {voice line}.
-This month: {goal · offer · old belief → new · start to end}. Week n = (weeks since {plan start}) mod 4 + 1; it leads with topic n (week 4: all three + my offer).
+{{/unless}}Every Monday at 7:07 am: "{{t:task.week.name}}".
+Write as me, a coach, for my buyers on {platforms}. Me: {what I'm known for}. Content pillars: {my 3-5}. My word: {KEYWORD}. Voice: {voice line}.
+This month: {goal · offer · old belief → new · start to end}. Week n = (weeks since {plan start}) mod 4 + 1; it leads with step n: 1 the real problem · 2 my better way · 3 proof · 4 all three + my offer. Pillars rotate.
 Write week n's idea in one line, then 3 hooks for this week, ≤12 words each, my word in one.
 Hub: if you can open my Notion page "Content Machine — {my name}", read its HUB page first, then add this week's pieces to Content (Status Idea: title, date, hook); change or delete nothing else.
 Invent no numbers, results, client words or deadlines: write [NEEDS: …]. No questions. Never post or message anyone.
@@ -52,17 +52,17 @@ End with: {{t:next.prefix}} {{t:task.footer}}
 
 <!-- @section automation.grow-task-today -->
 {{#unless task}}TEXT · ChatGPT · "{{t:task.today.name}}" (copy box, slots filled, ≤900 characters):
-{{/unless}}Every Tuesday, Wednesday and Thursday at 6:37: "{{t:task.today.name}}".
-Write as me, a coach, for my buyers. Me: {what I'm known for}. Topics: {topic 1} · {topic 2} · {topic 3}. My word: {KEYWORD}. Voice: {voice line}.
-One short message: "Today's piece is waiting in {{name}}." Then one spare hook on one of my topics, ≤12 words. Then: "Week not written yet: 'next' writes the rest of it first."
+{{/unless}}Every Tuesday, Wednesday and Thursday at 6:37 am: "{{t:task.today.name}}".
+Write as me, a coach, for my buyers. Me: {what I'm known for}. Content pillars: {my 3-5}. My word: {KEYWORD}. Voice: {voice line}.
+One short message: "Today's piece is waiting in {{name}}." Then one spare hook on one of my pillars, ≤12 words. Then: "Week not written yet: 'next' writes the rest of it first."
 Hub: if you can open my Notion page "Content Machine — {my name}", name today's piece from its This week view and take the spare hook from Banks (Type Hook, not used yet). Change nothing there.
 Invent no numbers, results, client words or deadlines: write [NEEDS: …]. No questions. Never post or message anyone.
 End with: {{t:next.prefix}} {{t:task.footer}}
 
 <!-- @section automation.grow-task-numbers -->
 {{#unless task}}TEXT · ChatGPT · "{{t:task.numbers.name}}" (copy box, slots filled, ≤900 characters):
-{{/unless}}Every Friday at 15:07: "{{t:task.numbers.name}}".
-I'm a coach. Topics: {topic 1} · {topic 2} · {topic 3}. My word: {KEYWORD}.
+{{/unless}}Every Friday at 3:07 pm: "{{t:task.numbers.name}}".
+I'm a coach. Content pillars: {my 3-5}. My word: {KEYWORD}.
 Ask me once, short, for this week's {KEYWORD} comments · DMs · calls · sales · what people said to "how did you find me?" · my best post and why. Blanks are fine.
 If I answer here: 5 lines (Posted · Hands up · My message · Best post · Next week), up to 3 bets, each tied to one of my numbers, next week as A/B/C with one marked recommended, then one read-only research step, ≤10 minutes.
 Hub: if you can open my Notion page "Content Machine — {my name}", add my answer as this week's Numbers row; nothing else.
@@ -71,16 +71,16 @@ End with: {{t:next.prefix}} {{t:task.footer}}
 
 <!-- @section automation.grow-task-claude -->
 {{#unless task}}TEXT · Claude · one text, two schedules (copy box, slots filled, ≤900 characters):
-{{/unless}}{{name}} · Mon–Fri 7:07 + Fri 15:07.
-Me: {what I'm known for}. Call me {my name}. Topics: {topic 1} · {topic 2} · {topic 3}. My word: {KEYWORD}. Voice: {voice line}.
+{{/unless}}{{name}} · Mon–Fri 7:07 am + Fri 3:07 pm.
+Me: {what I'm known for}. Call me {my name}. Content pillars: {my 3-5}. My word: {KEYWORD}. Voice: {voice line}.
 With the {{skill_name}} skill: read my hub first (Notion "Content Machine — {my name}": write only inside it, never delete; or Sheet "{{name}}" via Google Drive: read only). No skill: one line on today's job + a hook.
-Mon {{t:task.week.name}} · Tue–Thu {{t:task.today.name}} (no week yet: its rest) · Fri 15:07 {{t:task.numbers.name}} (month's last Fri: NEXT "monthly") · Fri 7:07 or job done today: stop.
+Mon {{t:task.week.name}} · Tue–Thu {{t:task.today.name}} (no week yet: its rest) · Fri 3:07 pm {{t:task.numbers.name}} (month's last Fri: NEXT "monthly") · Fri 7:07 am or job done today: stop.
 Never post, message, react, follow, join or open apps on my computer. Invent no numbers, client words or deadlines: [NEEDS: …]. ≤1 question.
 End with: {{t:next.prefix}} {{t:task.footer}}
 
 <!-- @section automation.grow-task-launch -->
 {{#unless task}}TEXT · ChatGPT or Claude · "Launch day" (copy box, slots filled, ≤900 characters):
-{{/unless}}Daily at 7:07 until {the day after the close}, then stop: "Launch day". With the {{skill_name}} skill: run its Launch Desk.
+{{/unless}}Daily at 7:07 am until {the day after the close}, then stop: "Launch day". With the {{skill_name}} skill: run its Launch Desk.
 Write as me, a coach. My word: {KEYWORD}. Voice: {voice line}.
 Launch: {offer} · {price} · cart {open} to {close, time, zone} · real limits: {seats + reason, or none} · days: {calendar, ≤60 characters}.
 Day n = today − {day 1} + 1. Write day n's step (one line) and a hook for its main piece; then ask for yesterday: reach · messages · sales · seats left · top question.
@@ -102,8 +102,8 @@ Then each rewrites HUB.
 
 <!-- @section automation.grow-task-monthly -->
 {{#unless task}}TEXT · ChatGPT · "Monthly refresh" (copy box, slots filled, ≤900 characters):
-{{/unless}}The first Wednesday of each month at 11:07: "Monthly refresh".
-I'm a coach for {my buyers}. Topics: {topic 1} · {topic 2} · {topic 3}. Channels I watch: {2–3 channels}.
+{{/unless}}The first Wednesday of each month at 11:07 am: "Monthly refresh".
+I'm a coach for {my buyers}. Content pillars: {my 3-5}. Channels I watch: {2–3 channels}.
 Read only, ≤15 minutes: what changed this month in {my niche} and on those channels (formats, what drew comments, questions asked). People by role only.
 Write 3 findings, each with its source and date; the lines of my niche notes to change; then next month's focus as A/B/C, one line each with its reason, one marked recommended.
 Hub: if you can open my Notion page "Content Machine — {my name}", add the findings to Research and update its HUB page; change nothing else.

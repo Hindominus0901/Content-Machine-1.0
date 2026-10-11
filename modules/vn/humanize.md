@@ -31,7 +31,7 @@ CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài
 
 <!-- @section humanize.kit-natural src=a0a69e0bb1 -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
-1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: thuật ý như họ nói tiếng Việt, không ngoặc kép (nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
+1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: thuật ý như họ nói tiếng Việt, không ngoặc kép (nguyên văn: §CM-DIG 3).
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
 3 Nối bằng chữ nói, connectors của họ trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
 4 Một cặp xưng hô cả bài; coach tự xưng như bài họ (mình, tôi), không lấy chị/anh máy gọi coach; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo bài mẫu của coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): tỉ lệ lệch card ≤10 điểm (mục 2; card 50% → 40–60%); thiếu thì thêm vào câu kể, câu mời, câu dặn, câu cuối; một câu một tiểu từ. Nhắn khách, người lớn hơn: "Dạ… ạ".
