@@ -357,7 +357,7 @@ id = "TIERS"                     # ATTRACT / TRUST / CONVERT in depth
 sections = ["strategy-doc.grow-tiers", "strategy-doc.grow-tiers-convert", "review.grow-why"]   # "why isn't it working?" moved from §CM-NUMBERS (v13 kit fix, VN method budget)
 
 [[levelup.playbook.anchor]]
-id = "CONTENT-LINES"             # named recurring series per pillar, scaled to weekly hours
+id = "CONTENT-LINES"             # named recurring series, 2-3 per pillar (founder 11 Oct: 7 posts a week gives every line room)
 sections = ["strategy-doc.grow-lines", "strategy-doc.grow-lines-example"]
 
 [[levelup.playbook.anchor]]
@@ -564,6 +564,10 @@ sections = ["copywriting.grow-long"]
 [[levelup.copy.anchor]]
 id = "COPY-LISTS"
 sections = ["copywriting.grow-lists"]
+
+[[levelup.copy.anchor]]
+id = "REPURPOSE"                 # founder 11 Oct: a post a day, cut from the week's material into many formats
+sections = ["copywriting.grow-cuts", "copywriting.grow-cuts-example"]
 
 [[levelup.copy.anchor]]
 id = "STORYTELLING"

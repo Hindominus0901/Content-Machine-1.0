@@ -715,7 +715,7 @@ invariants = ["I1", "I5", "I6"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: plan (route set). arch §4 plan 'change my plan': volume tiers and slot grids; a list of 1,200 (≥300) keeps the email as the lead piece (UX §5.11); a smaller week, never a zero week (QA §2.5). Any decision offered has a default (quit trigger 'options with no default')."""
+notes = """route: plan (route set). arch §4 plan 'change my plan': volume tiers and slot grids; a list of 1,200 (≥300) keeps the email as the lead piece (UX §5.11); a smaller week, never a zero week (QA §2.5). Any decision offered has a default (quit trigger 'options with no default'). v13.12: the default is a post a day (written cuts need no filming); a coach who asks for fewer gets their count, their call (DECISIONS 11 Oct, later)."""
 
 [[case]]
 id = "router.en.023"

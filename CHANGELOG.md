@@ -4,6 +4,19 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.12] - 2026-10-11 (v13.12)
+
+Founder decisions (11 Oct, later): a post a day, cut from all the week's material into many kinds of post; 2–3 content lines per pillar. Overrides v13.11's "Light = 3 pieces a week".
+
+### Changed
+- [buyer] Every day one post, 7 a week, Week 1 included (today's piece is day 1): short videos, long posts, carousels, short posts, quote images, stories or polls, Zalo or email messages, cut from your Weekly Talk, your stories and proof, the files you hand over, the market research and the posts you like (their shape only).
+- [buyer] Your hours set how many you film, not how many you post: with no hours given (Light) 2 filmed + 5 written, about 1¾ hours a week; about 2½ h: 3 filmed; about 3½ h: 4 edited. The written ones need no filming, about 5–15 minutes each.
+- [buyer] One idea may feed 2–3 posts a week, each in its own format with its own angle, hook and ask; no sentence is ever copied from post to post.
+- [buyer] 3–5 content pillars with 2–3 named series each; a month of about 30 posts gives every series room.
+- [buyer] Still one piece at a time: today's piece on Day 0, then one per 'next' (or the day's post). Reminders now come on posting days, weekends included.
+- Kit: §CM-WEEK 2/3/6/7/10 (7 posts, filmed count by tier, ≈3/3/1, `{KEYWORD}` + gift on CONVERT from week 2, ≥1 in 4 save/send, 7-row table), §CM-TALK (the week's 7 posts, filmed batch ≤3 a reply), §CM-HUMANIZE idea ledger (material → posts), §CM-MAP and the block (2–3 series, a post a day). New COPY anchor §CM-REPURPOSE (sources, the cuts with minutes, the rules, a worked week). PLAYBOOK: §CM-CONTENT-LINES 1 (2–3 a pillar whatever the hours), §CM-CALENDAR 2–7 (slot math with honest minutes, 28 slots → 11/11/6, 7-row tables), engine steps 3 and 5, strategy doc part 5. Automation: the drop runs Tue–Thu and weekends, Friday's review names today's post, Claude's task daily, Monday's batch prints only the table and today's post.
+- Graders: `week_dedupe` flags near-verbatim (≥0.8) sentences across any posts and paraphrase (≥0.6) only within one format (`piece_format`); `week1_plan` wants 7 rows, the filmed count at most the tier's (`filmed_by_hours`, `tier_filmed`), one idea in ≤3 rows and never twice in one format; a daily cadence counts in YOUR SYSTEM. Acceptance, tests, QA standards (calendar CL2/CL6, message-map), DECISIONS and two router cases follow.
+
 ## [1.3.11] - 2026-10-11 (v13.11)
 
 Full audit fixed (a1 kit 39, a2 level-ups/plugin 43, a3 QA/docs 39).

@@ -107,7 +107,7 @@ description = "Content Machine playbook: strategy built step by step, content li
 part = "playbook"
 jobs = """\
 - "build my strategy", "content strategy", and on Day 0 after the interview when this file is loaded: §CM-STRATEGY-ENGINE (8 steps, one a reply, A/B/C with one pick; "ok all"; resume at the open step)
-- "content calendar", "posting schedule", a calendar after "plan next month": §CM-CALENDAR (hours → pieces, the weekly table, rules, launches, a missed week)
+- "content calendar", "posting schedule", a calendar after "plan next month": §CM-CALENDAR (a post a day, hours → how many filmed, the weekly table, rules, launches, a missed week)
 - "content lines", "series ideas", "recurring content": §CM-CONTENT-LINES · "content types", "attract trust convert": §CM-TIERS
 - "strategy", "my strategy", "content pillars", "content system": §CM-STRATEGY-DOC (saved as CONTENT-STRATEGY.md when you can create files, else printed whole)
 - positioning alone ("positioning", "what makes me different"): §CM-STRATEGY (cm-strategy) · hooks: §CM-HOOK-LIBRARY (cm-hooks) · gifts and asks: §CM-MAGNET-BANK, §CM-CTA-BANK · copy shapes: §CM-COPY"""
@@ -158,6 +158,7 @@ part = "copywriting"
 jobs = """\
 - "write a post", "copywriting", "framework", and before any post, script, email or message: §CM-COPY (pick ONE framework by tier, format and goal; lengths in words), then the framework's own part
 - the frameworks by group: §CM-COPY-FRAMEWORKS · stories §CM-COPY-STORIES · beliefs §CM-COPY-BELIEFS · problem, before and after §CM-COPY-PROBLEM · client decision, objection, offer §CM-COPY-PROOF · long post, long video §CM-COPY-LONG · lists, email, Zalo §CM-COPY-LISTS
+- "a post a day", "repurpose", one week's material into 7 posts of many formats: §CM-REPURPOSE
 - "storytelling", "tell a story", finding the story in the dump: §CM-STORYTELLING
 - "persuade", "convince", urgency, guarantees, proof: §CM-PERSUASION · sounding natural, not like an ad: §CM-COPY-VOICE"""
 extra = """\
@@ -257,7 +258,7 @@ description = "Content Machine file chiến lược: dựng chiến lược từ
 part = "file chiến lược"
 jobs = """\
 - "làm chiến lược", "chiến lược nội dung", và ngày 0 sau phần phỏng vấn khi có file này: §CM-STRATEGY-ENGINE (8 bước, mỗi tin một bước, A/B/C kèm một lựa chọn; "ok hết"; lần sau làm tiếp đúng bước đang dở)
-- "lịch content", "lịch đăng bài", lịch sau buổi "lên kế hoạch tháng sau": §CM-CALENDAR (giờ → số bài, bảng từng tuần, luật, mùa ra mắt, khi lỡ một tuần)
+- "lịch content", "lịch đăng bài", lịch sau buổi "lên kế hoạch tháng sau": §CM-CALENDAR (mỗi ngày 1 bài, giờ → mấy bài quay, bảng từng tuần, luật, mùa ra mắt, khi lỡ một tuần)
 - "tuyến nội dung", "ý tưởng series", "loạt bài": §CM-CONTENT-LINES · "loại nội dung", "thu hút niềm tin chuyển đổi": §CM-TIERS
 - "chiến lược", "content pillars", "trụ cột nội dung", "hệ thống nội dung": §CM-STRATEGY-DOC (tạo được file thì lưu CHIEN-LUOC-NOI-DUNG.md, không thì in trọn)
 - chỉ hỏi định vị ("định vị", "mình khác người ta chỗ nào"): §CM-STRATEGY (cm-strategy) · hook: §CM-HOOK-LIBRARY (cm-hooks) · quà và lời mời: §CM-MAGNET-BANK, §CM-CTA-BANK · cách viết: §CM-COPY"""
@@ -308,6 +309,7 @@ part = "viết bài"
 jobs = """\
 - "viết bài", "copywriting", "framework", và trước mọi bài đăng, kịch bản, email, tin nhắn: §CM-COPY (chọn MỘT khung theo tầng, dạng bài, mục tiêu; độ dài tính bằng chữ), rồi phần riêng của khung đó
 - các khung theo nhóm: §CM-COPY-FRAMEWORKS · chuyện §CM-COPY-STORIES · niềm tin §CM-COPY-BELIEFS · vấn đề, trước và sau §CM-COPY-PROBLEM · quyết định của khách, băn khoăn, bài mời mua §CM-COPY-PROOF · bài dài, video dài §CM-COPY-LONG · danh sách, email, Zalo §CM-COPY-LISTS
+- "mỗi ngày 1 bài", "cắt ra nhiều dạng", chất liệu một tuần thành 7 bài nhiều kiểu: §CM-REPURPOSE
 - "kể chuyện", "storytelling", tìm chuyện trong lời xả: §CM-STORYTELLING
 - "thuyết phục", hối thúc, cam kết, bằng chứng: §CM-PERSUASION · cho tự nhiên, không giọng quảng cáo: §CM-COPY-VOICE"""
 extra = """\

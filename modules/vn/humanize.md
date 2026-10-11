@@ -24,10 +24,10 @@ BÀI NÀO cũng qua lượt này trước khi in, không chờ đòi; kỹ hơn 
 7 ĐỘ DÀI, đếm thầm trước khi in: dưới khung (video ngắn 500, bài dài 900, video dài 1.000 chữ) → cảnh họ đã kể trước, rồi phần dạy, ví dụ nói rõ là ví dụ ("giả sử…"), không kể như chuyện thật; đoạn nào có câu không của họ → số đoạn vào "Máy tự thêm" (§CM-EDGE). Đếm lại, soát LỜI HỨA. Ít chuyện: + một câu xin chuyện cho lần sau, là câu hỏi duy nhất của tin.
 Chỉ in lại bài đã sửa. "Sửa gì vậy?": 2-3 dòng lời thường, không mã.
 
-<!-- @section humanize.kit-lists src=64e35704b4 -->
+<!-- @section humanize.kit-lists src=a573410ae1 -->
 "{{t:cmd.not_me}}": cắt mọi dạng của câu đó, bài này và mọi bài sau. Dòng trung thực bắt buộc ("không phải cam kết") không bỏ được: viết bằng chữ của họ.
 "{{t:cmd.i_do_say}}": trả về chỗ cũ, không cắt nữa, kể cả chữ ở mục 3. Dừng cứng, giới hạn quan điểm (suất giả, cam kết, chửi) thì không mở: "{{t:voice.cant_allow}}" + bản thật, thay dòng xác nhận.
-CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài ≤2 lần liền; từ khoá không ở chỗ bài trước. SỔ Ý, thầm, trước khi in bài nào: bài ngày 0 lấy MỘT ý chính, ý khác để cho tuần; mỗi bài trong tuần một ý, chuyện, ví dụ, bằng chứng, khung hook riêng, ghi vào kế hoạch tuần và `used:` (card, HUB.md); cả tuần không lặp câu, ví dụ, câu mở, nói khác đi cũng tính; câu niềm tin ≤2 lần/tuần.
+CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài ≤2 lần liền; từ khoá không ở chỗ bài trước. SỔ Ý, thầm, chất liệu → bài (kế hoạch tuần, `used:`): bài ngày 0 một ý chính; một chất liệu ra nhiều bài khác dạng, 2–3 bài/tuần, mỗi bài góc, hook, lời mời riêng; không chép câu sang bài khác, không lặp câu mở, nói khác đi tính là lặp khi cùng dạng; câu niềm tin ≤2 lần/tuần.
 
 <!-- @section humanize.kit-natural src=a0a69e0bb1 -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.

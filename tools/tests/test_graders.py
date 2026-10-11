@@ -6670,13 +6670,36 @@ class V139SourceDedupeStyleTests(TempRepo):
                  ("machine", f"{TAG}Week 1\nN1 · Reel · TRUST · 60 words\nBefore you ask how to write it, ask who "
                              "it is for and when they feel stuck.\nNEXT → Say \"next\"."),
                  ("coach", "next"),
-                 ("machine", f"{TAG}Week 1\nN2 · Post · ATTRACT · 60 words\nAsk who the post is for and when they "
+                 ("machine", f"{TAG}Week 1\nN2 · Reel · ATTRACT · 60 words\nAsk who the post is for and when they "
                              "feel stuck, before asking how to write it well.\nNEXT → Say \"next\".")]
         self.assertFails(self.grade(turns), "week_dedupe", "say the same thing")
+        # v13.12: one material may feed several formats; a paraphrase in a post of another format is no repeat,
+        # a near-verbatim sentence (>= 0.8) still is
+        other_format = list(turns)
+        other_format[3] = (turns[3][0], turns[3][1].replace("N2 · Reel", "N2 · Carousel"))
+        self.assertEqual(self.inv(self.grade(other_format), "week_dedupe")["status"], "pass")
+        verbatim = list(turns)
+        verbatim[3] = ("machine", f"{TAG}Week 1\nN2 · Carousel · ATTRACT · 60 words\nLorraine walked into the hiring office "
+                                  "with coffee and a question. The manager laughed, then asked her to sit down and talk "
+                                  "for an hour about the warehouse she ran.\nBefore you ask how to write it, ask who it is for and when "
+                                  "they feel stuck today.\nNEXT → Say \"next\".")
+        self.assertFails(self.grade(verbatim), "week_dedupe", "say the same thing")
         other = list(turns)
         other[3] = ("machine", f"{TAG}Week 1\nN2 · Post · ATTRACT · 60 words\nLorraine walked into the hiring "
                                "office with coffee and left with an interview date.\nNEXT → Say \"next\".")
         self.assertEqual(self.inv(self.grade(other), "week_dedupe")["status"], "pass")
+
+    def test_v1312_piece_format_and_daily_cadence(self):
+        # v13.12 (founder 11 Oct): a post a day, cut into many formats; the format is read off the title
+        cases = {"N1 · Reel · TRUST": "short", "N3 · Thu · Short post · TRUST": "post", "N4 · Quote image": "quote",
+                 "N5 · Mon · Email · CONVERT": "message", "N6 · Sat · Story poll": "story", "N2 · Carousel": "carousel",
+                 "N3 · Sat · Short video · the story of": "short", "N2 · T3 · bài ngắn": "post", "N3 · Video dài": "long video",
+                 "N4 · Sun · Long post": "long post", "N7 · CN · tin Zalo": "message", "DM reply 1": None}
+        for title, want in cases.items():
+            self.assertEqual(graders.piece_format(title), want, title)
+        self.assertTrue(graders.has_cadence("TikTok, a post a day, 2 filmed"))
+        self.assertTrue(graders.has_cadence("TikTok, ngày một bài, quay 2"))
+        self.assertTrue(graders.has_cadence("Facebook, mỗi ngày 1 bài"))
 
     def test_week_dedupe_a_fixed_reprint_of_the_same_piece_is_no_repeat(self):
         turns = [("coach", self.COACH),
@@ -6761,11 +6784,13 @@ A3_FILM = f"""
 
 A3_TABLE = """| Day | Format | Idea, hook | Ask |
     |---|---|---|---|
+    | Wed | Short video | ✓ today: 63 applications, 2 interviews | comment CHAPTER |
     | Thu | Short video | The portal says no: one coffee beat it | save |
     | Fri | Short video | Ask for the coffee first: the HQ years | comment CHAPTER |
-    | Sat | Short video | Who are you after the box: identity | send |
+    | Sat | Carousel | Who are you after the box: identity | send |
     | Sun | Long post | Lorraine's trade: what she gave up | comment CHAPTER |
     | Mon | Email | Who should you have coffee with: reply | reply |
+    | Tue | Quote image | Their line on walking in first | save |
     | Tue | DM replies | answer each CHAPTER comment | - |"""
 
 
@@ -6893,19 +6918,36 @@ class A3AuditGraderTests(StrategyFirstBase):
     def test_m3_week_one_count_follows_the_hours(self):
         ok = self.report(self.v135())
         plan = self.inv(ok, "week1_plan")
-        self.assertEqual((plan["details"]["hours"], plan["details"]["pieces"], plan["details"]["want"]), (2.5, 5, 5), plan)
-        self.assertIs(self.item(ok, "week1_plan", "Week 1's piece count")["pass"], True)
+        d = plan["details"]
+        self.assertEqual((d["hours"], d["pieces"], d["filmed"], d["want"]), (2.5, 7, 3, 3), plan)
+        self.assertIs(self.item(ok, "week1_plan", "Week 1 posts every day")["pass"], True)
+        self.assertIs(self.item(ok, "week1_plan", "Week 1's filmed count")["pass"], True)
+        # v13.12: 7 rows whatever the hours; the hours cap the filmed count
         bad = self.report(self.v135(card=a3_card(hours="hours=1.5")))
-        self.assertFails(bad, "week1_plan", "Week 1 has 5 pieces; at ≈1.5 h a week")
+        self.assertFails(bad, "week1_plan", "Week 1 films 3 posts; at ≈1.5 h a week")
+        self.assertFails(bad, "week1_plan", "the kit films 2, the rest are written cuts")
+        light = self.report(self.v135(card=a3_card(hours="").replace("tier=lean", "tier=light")))
+        self.assertFails(light, "week1_plan", "at tier=light the kit films 2")
         standard = self.report(self.v135(card=a3_card(hours="").replace("tier=lean", "tier=standard")))
-        self.assertFails(standard, "week1_plan", "at tier=standard the kit's count is 7")
+        self.assertIs(self.item(standard, "week1_plan", "Week 1's filmed count")["pass"], True)
+        six = A3_TABLE.replace("    | Tue | Quote image | Their line on walking in first | save |\n", "")
+        self.assertFails(self.report(self.v135(card=a3_card(table=six))), "week1_plan", "the Week-1 table has 6 posts")
 
     def test_m3_idea_ledger_column_and_no_idea_twice(self):
         self.assertIs(self.item(self.report(self.v135()), "week1_plan", "the Week-1 table has")["pass"], True)
         no_col = A3_TABLE.replace("| Day | Format | Idea, hook | Ask |", "| Day | Format | Hook | Ask |")
         self.assertFails(self.report(self.v135(card=a3_card(table=no_col))), "week1_plan", 'no "Idea, hook" column')
-        twice = A3_TABLE.replace("Who are you after the box: identity", "The portal says no: one coffee beat it again")
-        self.assertFails(self.report(self.v135(card=a3_card(table=twice))), "week1_plan", "two Week-1 rows use one idea")
+        twice = A3_TABLE.replace("Ask for the coffee first: the HQ years", "The portal says no: one coffee beat it again")
+        self.assertFails(self.report(self.v135(card=a3_card(table=twice))), "week1_plan", "two Week-1 rows of one format")
+        # v13.12: one idea feeding 2-3 posts of different formats is normal; a 4th is too many
+        idea = "Portal rejection beaten by one coffee"
+        formats = A3_TABLE.replace("The portal says no: one coffee beat it", idea) \
+                          .replace("Who are you after the box: identity", idea + ", 5 steps") \
+                          .replace("Lorraine's trade: what she gave up", idea + ", 3 lessons")
+        self.assertIs(self.item(self.report(self.v135(card=a3_card(table=formats))), "week1_plan",
+                                "the Week-1 table has")["pass"], True)
+        four = formats.replace("Their line on walking in first", idea + ", one line")
+        self.assertFails(self.report(self.v135(card=a3_card(table=four))), "week1_plan", "one idea in 4 Week-1 rows")
 
     def test_m3_film_today_idea_is_not_reused(self):
         self.assertIs(self.item(self.report(self.v135()), "week1_plan", "FILM TODAY's one idea")["pass"], True)

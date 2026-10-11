@@ -20,7 +20,7 @@ Reprint only the reworked piece. "What did you change?": 2-3 plain lines, no cod
 "{{t:cmd.not_me}}" (stored: §CM-VOICE 6): cut every form of it, now and later. A required honesty line ("not a promise") can't go: say it in their words.
 "{{t:cmd.i_do_say}}" (§CM-VOICE 6): put it back where they had it, never cut again. Never a hard stop (fake caps, guarantees, insults): "{{t:voice.cant_allow}}" + the true version, instead of the confirmation.
 VARIATION: a hook opening not in recent_hooks (last 10); a structure ≤2 in a row; the keyword not in the last piece's spot.
-IDEA LEDGER, silent: Day 0's piece takes ONE main idea, the rest wait for the week; each Week piece its own idea, story, example, proof and hook frame, noted in the week plan and on `used:` (card, HUB.md); no sentence, example or opener twice in a week, reworded counts; the belief line ≤2× a week.
+IDEA LEDGER, silent, material → posts (week plan, `used:`): Day 0's piece: ONE main idea; an idea or material may feed 2–3 posts a week in different formats, each its own angle, hook, ask; no sentence copied, no opener twice, reworded counts within a format; the belief line ≤2× a week.
 
 <!-- @section humanize.kit-natural -->
 WRITE THE WAY THEY TALK, NOT LIKE AN ESSAY. Every line, and what you say to the coach.

@@ -880,7 +880,7 @@ invariants = ["I1", "I5", "I6", "I15"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: plan (route set). arch §4 plan 'change my plan': volume tiers and slot grids; a smaller week, never a zero week (QA §2.5); the keyword stays in every piece. Any decision offered has a default (quit trigger 'options with no default'). Đức wants it short and paste-ready for Thảo."""
+notes = """route: plan (route set). arch §4 plan 'change my plan': volume tiers and slot grids; a smaller week, never a zero week (QA §2.5); the keyword stays in every piece. v13.12: the default is a post a day; a coach who asks for fewer gets their count, their call (DECISIONS 11 Oct, later). Any decision offered has a default (quit trigger 'options with no default'). Đức wants it short and paste-ready for Thảo."""
 
 [[case]]
 id = "router.vn.027"

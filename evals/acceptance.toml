@@ -289,6 +289,9 @@ belief_max_pieces = 2                     # the card's key_belief line in more t
 paraphrase_overlap = 0.6                  # v13.10: two sentences in different pieces of the run (Day 0 + Week 1, across replies) sharing
                                           # this share of content words (of the longer one) repeat each other in meaning: fail
 paraphrase_min_words = 5                  # ... counted only when both sentences hold at least this many content words
+verbatim_overlap = 0.8                    # v13.12 (founder 11 Oct, a post a day cut into many formats): between posts of
+                                          #   different formats only a near-verbatim sentence (this share) fails; the 0.6
+                                          #   paraphrase counts within one format (unknown format: counted as the same)
 
 [style]                                   # check style (graders.py; v13.9 fixK9)
 pet_phrase_max = 1                        # warn: a card phrase more than once in a piece (VN em dash "—" in a piece fails)
@@ -296,11 +299,14 @@ asks_max = 1                              # warn: more than one ask line in a pi
 needs_questions_max = 1                   # fail: a "Needs you" / "Cần" line ("·" or ":") asking more than one thing
 needs_words_max = 20                      # fail: a "Needs you" / "Cần" line over this many words (VN tiếng): "one ask, ≤20 words" (v13.10)
 
-[week1]                                   # check week1_plan (graders.py; v13.9 / v13.10, audit a3 M3)
-pieces_by_hours = [[0, 2, 3], [2, 3.25, 5], [3.25, 4.5, 7], [4.5, 99, 8]]   # [from h, to h, Week-1 pieces] (§CM-WEEK 2,
-                                          #   §CM-CALENDAR 2: under 2 h or no hours 3 (Light ≈1½ h) · ≈2½ h Lean 5 (about 3 h: the same 5, edited; DECISIONS
-                                          #   9 Oct item 8) · ≈3½ h Standard 7 · ≈5 h 8; 8 h+ a long video + cuts, 8);
-                                          #   the DM replies, "ask 3" and the gift are not counted
-tier_pieces = { light = 3, lean = 5, standard = 7 }  # with no hours on the card or the strategy: the card's tier=
+[week1]                                   # check week1_plan (graders.py; v13.9 / v13.10, audit a3 M3; v13.12 a post a day)
+week_posts = 7                            # v13.12 (founder 11 Oct): the Week-1 table holds 7 rows, one a day (day 1 = Day 0's
+                                          #   piece), whatever the hours; the DM replies, "ask 3" and the gift are not counted
+filmed_by_hours = [[0, 2, 2], [2, 3.25, 3], [3.25, 4.5, 4], [4.5, 99, 5]]   # [from h, to h, filmed at most] (§CM-WEEK 2,
+                                          #   §CM-CALENDAR 2: under 2 h or no hours Light 2 filmed + 5 written ≈1¾ h · ≈2½ h
+                                          #   Lean 3 · ≈3½ h Standard 4 · ≈5 h 5; 8 h+ a long video + its cuts); fewer is fine
+tier_filmed = { light = 2, lean = 3, standard = 4 }  # with no hours on the card or the strategy: the card's tier=
 idea_overlap = 0.6                        # two "Idea, hook" cells (or FILM TODAY's first line and a Week-1 idea) sharing this share of
 idea_min_shared = 2                       #   the shorter one's content words, and at least 2 of them, are one idea twice
+idea_max_posts = 3                        # v13.12 (founder 11 Oct): one idea may feed 2-3 posts a week in different formats; two
+                                          #   rows of one format on one idea, or one idea in more rows than this, fail

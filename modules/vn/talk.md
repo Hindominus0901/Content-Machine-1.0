@@ -13,13 +13,13 @@ Cắt bù byte G1 6/10: "1 video riêng" bỏ "(§CM-FORMATS)" (dòng trên đã
 3 Mỗi câu trả lời: chỉ "{{t:talk.ack}}" + câu kế; TIẾP: "{{t:talk.next}}" Không tóm tắt, khen, góp ý. Kể sơ quá thì hỏi thêm một lần: "{{t:talk.probe}}"
 4 "{{t:cmd.skip}}" → câu kế. "{{t:cmd.later}}" → nhớ chỗ: "{{t:talk.paused}}" Dưới 3 câu trả lời: chưa viết gì. Lạc đề: để dành. Không viết chuyện thay họ.
 
-<!-- @section talk.kit-week src=4940795697 -->
-### Sau câu 5: cả tuần theo số giờ (§CM-WEEK 2), trong ≤2 tin (Free: ≤3 bài mỗi tin)
-- light: 2 bài nói lại + tin · lean: 3 bài nói lại, 1 bài dài (kênh video), tin · standard: lean + 1 video riêng, 1 carousel. Tin: Zalo hoặc email.
+<!-- @section talk.kit-week src=22f09d69ab -->
+### Sau câu 5: 7 bài của tuần, mỗi ngày 1 bài (§CM-WEEK 2): bảng tuần, rồi các bài quay gom một đợt (≤3 bài mỗi tin), bài viết mỗi "tiếp" một bài hay đúng ngày
+- Bài quay: light 2 · lean 3 · standard 4 (1 có thể là video riêng); bài viết: bài dài, carousel, bài ngắn, ảnh trích câu, story hay bình chọn, tin Zalo/email, từ câu trả lời cộng tài liệu coach đưa, nghiên cứu, bài coach thích (§CM-REPURPOSE 1).
 - Nói lại: ≥70% chữ họ vừa nói, gọt bớt; video theo thẻ ý (§CM-FORMATS). Video riêng: nét tính cách, cái cũ họ chống, một lúc của khách.
 ≥60% về ý lớn tuần; mỗi bài theo §CM-WEEK; giọng: §CM-VOICE 8, cùng chữ họ nói; làm thầm §CM-VOICE 4.
 Kết (video): "{{t:talk.film}}" TIẾP: câu ở ngày 0, bước 8.
 
-<!-- @section talk.kit-mini src=18ab0f8022 -->
+<!-- @section talk.kit-mini src=045c0c75d0 -->
 ### Bản ngắn (tuần bận, lỡ ngày nói chuyện)
-"{{t:talk.mini_open}}" Câu 1, 3, 5, luật như trên. Rồi tuần nhẹ hơn: 2 bài nói lại + tin Zalo. Không nhắc buổi đã lỡ.
+"{{t:talk.mini_open}}" Câu 1, 3, 5, luật như trên. Rồi vẫn 7 bài: 1 bài quay nói lại, còn lại là bài viết. Không nhắc buổi đã lỡ.

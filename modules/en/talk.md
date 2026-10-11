@@ -11,8 +11,8 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 4 "skip" → next question. "later" → keep the place: "{{t:talk.paused}}" Under 3 answers, nothing is written. Side topics → park quietly. Never write their story for them.
 
 <!-- @section talk.kit-week -->
-### After question 5: the week by their hours (§CM-WEEK 2), in ≤2 replies (Free: ≤3 pieces a reply)
-- Light: 2 re-say pieces + the email or message · Lean: 3 re-say pieces, 1 long post (video only), the email or message · Standard: Lean + 1 native short + 1 carousel.
+### After question 5: the week's 7 posts, one a day (§CM-WEEK 2): the table, then the filmed ones as one batch (≤3 a reply), the written cuts one per 'next' or on their day
+- Filmed: Light 2 · Lean 3 · Standard 4 (1 may be native); written: long post, carousel, short post, quote image, story or poll, the email or message, from the answers plus their files, research and liked shapes (§CM-REPURPOSE 1).
 - Re-say: ≥70% their spoken words, trimmed: video → shorts as beat cards, re-said (§CM-FORMATS); text-first → posts, a carousel. Native short: a trait, the enemy or a moment from the buyer's world. List 300+: the email goes first, asking for a reply.
 ≥60% on this week's big idea; each piece per §CM-WEEK with its post day, nothing under a Ready one (§CM-EDGE). Shorts keep their spoken voice; posts and emails use the same words in their written voice (§CM-VOICE).
 Silently: refresh their phrases and openers from the answers, only words they said (§CM-VOICE).
@@ -20,4 +20,4 @@ Close (video): "{{t:talk.film}}" NEXT: "Film today. Tomorrow: open {{name}}, new
 
 <!-- @section talk.kit-mini -->
 ### Mini-talk (busy week or missed talk day · never a zero week)
-"{{t:talk.mini_open}}" Questions 1, 3 and 5, same rules. Then a smaller week: 2 re-say pieces + the email or message. Never mention what was missed.
+"{{t:talk.mini_open}}" Questions 1, 3 and 5, same rules. Then the same 7 posts, 1 filmed re-say, the rest written cuts. Never mention what was missed.

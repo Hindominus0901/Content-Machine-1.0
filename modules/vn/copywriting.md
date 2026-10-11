@@ -120,6 +120,24 @@ Nhịp (email ≈300 tiếng): tiêu đề bằng chữ khách, giải đáp tro
 VD: Email tiêu đề "cái báo giá mình không gửi" · 11 giờ đêm thứ Sáu, bản báo giá để giá thấp · báo giá gửi lúc mệt là báo giá gửi lúc sợ · nhắn lại mình hôm nào gửi. Zalo: "Thấy chị đang làm thực đơn đặt tiệc. Khách bên chị hay đặt theo suất hay theo mâm ạ?"
 Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy bạn xem tin rồi"; làm người ta áy náy.
 
+<!-- @section copywriting.grow-cuts src=7122fa7675 -->
+### Chất liệu một tuần, bảy bài ("mỗi ngày 1 bài", "cắt ra nhiều dạng", "từ một chuyện ra nhiều bài", "đăng đều mỗi ngày")
+1 CHẤT LIỆU, lấy từ mọi nguồn: đoạn xả và câu trả lời buổi nói chuyện (§CM-TALK) · tài liệu coach đưa (file, bài cũ, bản ghi lời, ghi chú, slide, lời khen khách họ gửi) · chuyện, bằng chứng trong kho (§CM-STORY-BANK, §CM-PROOF-BANK) · nghiên cứu của máy, chỉ dòng đã GIỮ: chữ khách, chủ đề bình luận, mổ kênh, ghi chú về ngách (§CM-RESEARCH-BANK, §CM-CHANNELS, §CM-NICHE) · kênh, bài coach thích hay theo dõi: chỉ mượn dáng, không chép (§CM-LIKED). Dữ kiện (số, kết quả, lời khách, sự việc) chỉ lấy từ coach, card hay tài liệu của họ; dòng nghiên cứu là tiếng nói khách theo vai, không phải bằng chứng; chuyện của người làm nội dung khác không bao giờ thành chuyện của coach. Mỗi ngày 1 bài, 7 bài một tuần, cắt từ đó ra nhiều kiểu bài; số giờ quyết định mấy bài phải quay (§CM-CALENDAR 2), còn lại không cần quay.
+2 CÁC KIỂU BÀI, độ dài · phút của coach (máy viết hết): video ngắn 500–800 chữ · ≈20 (quay ≈10, đọc, đăng) · bài dài ≈1.000 chữ · ≈10 · carousel 10–12 trang · ≈15 · bài ngắn 250–450 tiếng · ≈5 · ảnh trích câu, một câu của coach ≤30 tiếng · ≈10 · story hay bình chọn 3–5 khung, mỗi khung ≤35 tiếng · ≈5 · tin Zalo ≤150 tiếng hay email ≤375 · ≈5 · video dài 1.000–1.500 chữ · ≈3 tiếng.
+3 MỘT CHẤT LIỆU, NHIỀU BÀI, khi mỗi bài một dạng khác, một góc riêng (cảnh lúc đó · bài học · cái sai · các bước · câu hỏi nó gợi ra · phía khách), khung hook riêng (§CM-FORMATS 1), lời mời riêng theo loại bài (§CM-CTA-KIT 1). Một ý, một chuyện ra 2–3 bài một tuần là bình thường. Không chép một câu từ bài này sang bài kia: ảnh trích câu được lấy một câu, bài gốc chỉ nói câu đó một lần. Hai bài cùng dạng trên một chất liệu: bỏ một.
+4 SỔ Ý (§CM-HUMANIZE): mỗi chất liệu → các bài của nó ("câu trả lời 3 → video thứ Hai, ảnh trích thứ Năm, bình chọn thứ Bảy"), ghi vào kế hoạch tuần và `used:` trên card; tuần sau lấy chất liệu mới trước; chuyện đã dùng chỉ quay lại ở tháng sau, dạng khác.
+<!-- @section copywriting.grow-cuts-example src=710336bc74 -->
+### Bảy bài từ một tuần, một ví dụ
+5 MỘT TUẦN, chỉ để thấy dáng (bịa ra): cô giáo dạy piano cho người lớn mới học; câu trả lời buổi nói chuyện về một học viên bỏ tập gam, mỗi tuần đàn trọn một bài, cộng một câu khách hay than đã giữ. Gói light, 2 bài quay:
+- T2 · video ngắn · THU HÚT · học viên bỏ tập gam · lưu lại
+- T3 · carousel · NIỀM TIN · 5 bước tập xong một bài trong tuần · comment chữ trong hook
+- T4 · bài ngắn · THU HÚT · cái sai: tập gam cho xong rồi mới đàn bài · gửi cho bạn cũng đang học
+- T5 · ảnh trích câu · THU HÚT · câu của cô "Đàn bài trước, gam tính sau." · lưu lại
+- T6 · video ngắn · NIỀM TIN · một học viên khác, 3 bài học · comment chữ trong hook
+- T7 · story bình chọn · NIỀM TIN · "Tháng này đàn trọn được bài nào chưa? rồi / chưa" · bấm chọn
+- CN · tin Zalo · CHUYỂN ĐỔI · đang kẹt ở bài nào · nhắn lại (tuần 1: chưa chào bán)
+Hai chất liệu, 7 bài, 6 dạng; ý bỏ tập gam ra 4 bài, mỗi bài một góc, không câu nào lặp.
+
 <!-- @section copywriting.grow-story src=98aeab05f8 -->
 ### Kể chuyện: dáng chung của mọi khung chuyện ("kể chuyện", "storytelling")
 1 Cảnh trước: một giờ, một chỗ, một chi tiết nghe, thấy, ngửi được hay một đồ vật ("10 giờ tối thứ Ba, cái laptop kê trên bàn ủi đồ"), không mở bằng "Dạo gần đây mình làm với một khách…". Rồi mâu thuẫn: ai muốn gì, cái gì cản, bằng đúng lời người ta nói. Rồi bước ngoặt, bằng một việc làm hay một thứ nhìn thấy, không phải "mình chợt nhận ra". Rồi bài học, một câu ngắn, hoặc để người khác nói. Rồi một bước.

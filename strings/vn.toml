@@ -391,6 +391,7 @@
 "anchor.copy-proof" = { text = "Khung bằng chứng: quyết định của khách, băn khoăn, bài mời mua", src = "3c5e6baeac" }
 "anchor.copy-long" = { text = "Bài dài và video dài", src = "2c7829405f" }
 "anchor.copy-lists" = { text = "Danh sách và tin ngắn", src = "fa217b2e7a" }
+"anchor.repurpose" = { text = "Mỗi ngày 1 bài từ chất liệu một tuần", src = "2f025dad59" }
 "anchor.storytelling" = { text = "Kể chuyện", src = "5d4710cc7b" }
 "anchor.persuasion" = { text = "Thuyết phục và những lằn ranh", src = "0a7adca681" }
 "anchor.copy-voice" = { text = "Thuyết phục mà vẫn nói như người Việt", src = "502f9902e9" }

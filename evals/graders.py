@@ -4830,8 +4830,9 @@ POST_IT_RE = re.compile(r"\bpost (?:it|this|that|these)\b(?!\s+(?:later|after|to
 NOT_NOW_LINE_RE = re.compile(r"^\W*(?:not now|để sau|why this one|vì sao chọn (?:cái|ý|bài) này|runner-?up)\b", re.I)
 PLATFORM_RE = re.compile(r"\b(?:facebook|fb|instagram|ig|linkedin|tiktok|youtube|zalo|email|e-mail|newsletter|podcast|"
                          r"threads|x|twitter|substack|messenger|reels?|shorts?)\b", re.I)
-CADENCE_RE = re.compile(r"\b(?:a|per|each|every)\s+week\b|\bweekly\b|/\s*week\b|(?<!\w)(?:mỗi|một|hằng|hàng)\s+tuần(?!\w)"
-                        r"|/\s*tuần(?!\w)", re.I)
+CADENCE_RE = re.compile(r"\b(?:a|per|each|every)\s+(?:week|day)\b|\b(?:weekly|daily)\b|/\s*(?:week|day)\b"
+                        r"|(?<!\w)(?:mỗi|một|hằng|hàng)\s+(?:tuần|ngày)(?!\w)|/\s*(?:tuần|ngày)(?!\w)"
+                        r"|(?<!\w)ngày\s+(?:một|1)\s+bài(?!\w)", re.I)   # v13.12: "a post a day" is the cadence
 # A weekday that plans the week's pieces ("3 tiếng tối Chủ nhật: 3 video ngắn quay một lèo, 1 bài dài, 1 email") is a weekly
 # cadence too: a count of pieces and a weekday in one sentence.
 CADENCE_DAY_RE = re.compile(r"(?<!\w)(?:thứ\s+(?:hai|ba|tư|năm|sáu|bảy)|chủ nhật)(?!\w)"
@@ -7666,7 +7667,7 @@ def check_strategy_doc(run: Run) -> dict:
 # acceptance.toml [source_check], [week_dedupe], [style]; the defaults below apply without them.
 SOURCE_DEFAULTS = {"generalization_check": 1}
 DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2,
-                   "paraphrase_overlap": 0.6, "paraphrase_min_words": 5}
+                   "paraphrase_overlap": 0.6, "paraphrase_min_words": 5, "verbatim_overlap": 0.8}
 STYLE_DEFAULTS = {"pet_phrase_max": 1, "asks_max": 1, "needs_questions_max": 1, "needs_words_max": 20}
 
 ADDED_LABEL_RE = re.compile(r"^[\s>*_•-]*(?:máy tự thêm|added by me)\s*[*_]*\s*[:：]\s*[*_]*\s*(.*)$", re.I)
@@ -7989,7 +7990,10 @@ def check_week_dedupe(run: Run) -> dict:
     (normalised: case, punctuation, quotes) or the same opener (the first opener_words words) in two pieces fails, and the
     Brand Card's key_belief line in more than belief_max_pieces pieces fails. v13.10 (founder 11 Oct, "paraphrase
     counts"): across every piece of the run (Day 0 and the week, across replies), two sentences whose content words
-    overlap by at least paraphrase_overlap fail (paraphrase_repeats). n/a with fewer than two pieces."""
+    overlap by at least paraphrase_overlap fail (paraphrase_repeats). v13.12 (founder 11 Oct, a post a day cut from one
+    week's material into many formats): a near-verbatim sentence (verbatim_overlap) fails between any two posts; a
+    paraphrase (paraphrase_overlap) fails only between posts of the same format (piece_format; unknown counts as the
+    same). n/a with fewer than two pieces."""
     cfg = dict(DEDUPE_DEFAULTS, **run.acceptance.get("week_dedupe", {}))
     belief = _belief_tokens(run)
     batches: dict[int, list[PieceUnit]] = {}
@@ -8021,7 +8025,8 @@ def check_week_dedupe(run: Run) -> dict:
                 ev.append(f'{where}: the card\'s belief line "{_short(" ".join(belief), 50)}" is in {len(hits)} pieces '
                           f'(max {int(cfg["belief_max_pieces"])}): {", ".join(map(str, hits))}')
     units_all = piece_units(run)
-    pairs = paraphrase_repeats(run, units_all, float(cfg["paraphrase_overlap"]), int(cfg["paraphrase_min_words"]))
+    pairs = paraphrase_repeats(run, units_all, float(cfg["paraphrase_overlap"]), int(cfg["paraphrase_min_words"]),
+                               float(cfg["verbatim_overlap"]))
     ev += pairs
     ev = list(dict.fromkeys(ev))
     if not seen_batches and len(units_all) < 2:
@@ -8049,10 +8054,39 @@ def _content_set(sentence: str) -> set[str]:
     return {t for t in ck.copy_tokens(body) if t not in ck.STOPWORDS and not t.isdigit()}
 
 
-def paraphrase_repeats(run: Run, units: list, overlap: float, min_words: int) -> list[str]:
+# v13.12: a piece's format read off its title ("N3 · Thu · Quote image · ATTRACT"): the earliest format word, the longer
+# name on a tie. One week's material may feed posts of different formats (§CM-REPURPOSE): a paraphrase is a repeat
+# only within one format.
+PIECE_FORMATS = (
+    ("long video", r"long video|video dài|youtube"),
+    ("carousel", r"carousel|slides?"),
+    ("long post", r"long post|bài dài"),
+    ("story", r"stor(?:y|ies)|poll|bình chọn|khung story"),
+    ("quote", r"quote|image|ảnh"),
+    ("message", r"e-?mail|newsletter|zalo|message|tin nhắn|(?<!\w)tin(?!\w)"),
+    ("post", r"short post|text post|bài ngắn|bài viết"),
+    ("short", r"short|reels?|tiktok|video|clip|film today|quay hôm nay"),
+    ("post", r"post|text|đăng hôm nay|(?<!\w)bài(?!\w)"),
+)
+_PIECE_FORMAT_RES = [(k, re.compile(r"(?<!\w)(?:" + rx + r")", re.I)) for k, rx in PIECE_FORMATS]
+
+
+def piece_format(title: str) -> str | None:
+    """The format of a piece from its title line: the format word that comes first (the longer name on a tie, "short
+    post" over "short"), None when the title names none."""
+    best = None
+    for key, rx in _PIECE_FORMAT_RES:
+        m = rx.search(title or "")
+        if m and (best is None or (m.start(), -len(m.group(0))) < best[0]):
+            best = ((m.start(), -len(m.group(0))), key)
+    return best[1] if best else None
+
+
+def paraphrase_repeats(run: Run, units: list, overlap: float, min_words: int, verbatim: float = 1.01) -> list[str]:
     """Sentences in two different pieces of the run (Day 0 + the week, across replies) that say the same thing: their
     content words (ck.STOPWORDS left out) overlap by at least `overlap` of the longer one (the same sentence reworded
-    counts; founder 11 Oct "paraphrase counts"). Left out: a reprint or fix of one piece (the same "N2" label, or half its
+    counts; founder 11 Oct "paraphrase counts"). v13.12: between posts of different formats (piece_format) only a
+    near-verbatim sentence counts (overlap at least `verbatim`); one material may feed several formats. Left out: a reprint or fix of one piece (the same "N2" label, or half its
     sentences repeating the other), ask lines (the CTA repeats by design), sentences the kit strings hold (the required
     results line) and sentences under min_words content words."""
     kit = " " + " ␞ ".join(" ".join(ck.copy_tokens(str(v))) for v in run.strings.values()) + " "
@@ -8069,18 +8103,19 @@ def paraphrase_repeats(run: Run, units: list, overlap: float, min_words: int) ->
             if len(cs) >= min_words:
                 sents.append((s_, cs))
         lab = PIECE_LABEL_RE.search(u.title or "")
-        prepared.append((u, (lab.group(1).casefold() if lab else None), sents))
+        prepared.append((u, (lab.group(1).casefold() if lab else None), sents, piece_format(u.title or "")))
     ev = []
     for i in range(len(prepared)):
-        ui, li, si = prepared[i]
+        ui, li, si, fi = prepared[i]
         for j in range(i + 1, len(prepared)):
-            uj, lj, sj = prepared[j]
+            uj, lj, sj, fj = prepared[j]
             if li and li == lj:
                 continue                       # the same piece reprinted or fixed
+            need = overlap if (fi is None or fj is None or fi == fj) else verbatim
             hits = []
             for a, ca in si:
                 for b, cb in sj:
-                    if len(ca & cb) >= overlap * max(len(ca), len(cb)):
+                    if len(ca & cb) >= need * max(len(ca), len(cb)):
                         hits.append((a, b))
                         break
             if not hits or (len(hits) * 2 > min(len(si), len(sj)) and len(hits) >= 3):
@@ -8144,12 +8179,14 @@ def check_style(run: Run) -> dict:
 
 
 # ---------------------------------------------------------------- week1_plan (v13.9 / v13.10; audit a3 M3)
-# Week 1's count follows the hours the coach chose (§CM-WEEK 2, §CM-CALENDAR 2: under 2 h or no hours given 3 pieces ≈1½ h Light, ≈2½ h Lean 5, ≈3½ h
-# Standard 7, ≈5 h 8, 8 h+ a long video and its cuts, 8); the chat table carries "Idea, hook" and no idea twice (the idea
-# ledger, §CM-HUMANIZE); FILM TODAY's one idea is not a Week-1 piece's; Week 1's CONVERT asks for replies, never a price,
+# v13.12 (founder 11 Oct): Week 1 posts every day, 7 rows one a day (day 1 = Day 0's piece), whatever the hours; the
+# hours set how many are filmed (§CM-WEEK 2, §CM-CALENDAR 2: under 2 h or no hours given Light 2 filmed ≈1¾ h, ≈2½ h
+# Lean 3, ≈3½ h Standard 4, ≈5 h+ 5); the chat table carries "Idea, hook" and no idea twice (the idea ledger,
+# §CM-HUMANIZE); FILM TODAY's one idea is not a later Week-1 piece's; Week 1's CONVERT asks for replies, never a price,
 # a call or an offer (no offer before week 2 outside a launch, v13.9). Thresholds in acceptance.toml [week1].
-WEEK1_DEFAULTS = {"pieces_by_hours": [[0, 2, 3], [2, 3.25, 5], [3.25, 4.5, 7], [4.5, 99, 8]],
-                  "tier_pieces": {"light": 3, "lean": 5, "standard": 7}, "idea_overlap": 0.6, "idea_min_shared": 2}
+WEEK1_DEFAULTS = {"week_posts": 7, "filmed_by_hours": [[0, 2, 2], [2, 3.25, 3], [3.25, 4.5, 4], [4.5, 99, 5]],
+                  "tier_filmed": {"light": 2, "lean": 3, "standard": 4}, "idea_overlap": 0.6, "idea_min_shared": 2,
+                  "idea_max_posts": 3}
 _HOURS_NUM = r"(\d{1,2}(?:[.,]\d)?\s*½?|½)"
 HOURS_TEXT_RE = re.compile(r"(?<![\w.,])≈?\s*" + _HOURS_NUM + r"\s*(?:h|hrs?|hours?|giờ|tiếng)(?!\w)", re.I)
 HOURS_FIELD_RE = re.compile(r"(?<!\w)(?:hours?(?:_week|_a_week|/week)?|số giờ|giờ)\s*[=:]\s*≈?\s*" + _HOURS_NUM, re.I)
@@ -8259,8 +8296,9 @@ def _first_line_of(p: Piece) -> str:
 
 def check_week1_plan(run: Run) -> dict:
     """Week 1 against the v13.9 / v13.10 rules no other check reads (audit a3 M3):
-    - the count follows the hours (§CM-WEEK 2): the Week-1 table's pieces (or, with no table, the Week-1 pieces) match
-      [week1] pieces_by_hours for the hours on the card or the strategy (else tier_pieces for tier=light|lean|standard);
+    - a post a day (§CM-WEEK 2, v13.12): the Week-1 table holds week_posts rows (7, whatever the hours), and no more of
+      them are filmed (short, video) than [week1] filmed_by_hours allows for the hours on the card or the strategy (else
+      tier_filmed for tier=light|lean|standard); fewer filmed is fine (text-first);
     - the idea ledger: the chat table has an "Idea, hook" column (§CM-WEEK 10) and no two rows share an idea (content
       words overlapping by idea_overlap of the shorter, at least idea_min_shared words);
     - Day 0's one idea: FILM TODAY's first line is no Week-1 row's idea, nor a Week-1 piece's first line;
@@ -8278,21 +8316,39 @@ def check_week1_plan(run: Run) -> dict:
     table = week1_table(run)
     wk = week_pieces(run)
     hours, tier, where = week1_hours(run)
-    count = len(table[2]) if table else (len(wk) if wk else None)
+    count = len(table[2]) if table else None
+    posts = int(cfg["week_posts"])
+    ev = []
+    if count is not None and count != posts:
+        ev.append(f"{_turn(table[0])}: the Week-1 table has {count} posts; the week posts every day, {posts} rows, one a "
+                  "day, day 1 = today's piece (§CM-WEEK 2)")
+    item("Week 1 posts every day, 7 rows", ev, ran=count is not None)
+
     want = None
     if hours is not None:
-        want = next((int(n) for lo, hi, n in cfg["pieces_by_hours"] if float(lo) <= hours < float(hi)), None)
+        want = next((int(n) for lo, hi, n in cfg["filmed_by_hours"] if float(lo) <= hours < float(hi)), None)
     elif tier:
-        want = cfg["tier_pieces"].get(tier)
+        want = cfg["tier_filmed"].get(tier)
+    filmed = None
+    if table:
+        r, head, rows = table
+        fcol = next((k for k, c in enumerate(head) if re.search(r"format|piece|dang|loai", ck.fold(c))), 1)
+        filmed = sum(1 for row in rows if piece_format(row[fcol] if fcol < len(row) else "") in ("short", "long video"))
     ev = []
-    if count is not None and want is not None and count != want:
+    if filmed is not None and want is not None and filmed > want:
         basis = f"≈{hours:g} h a week ({where})" if hours is not None else f"tier={tier}"
-        ev.append(f"{_turn(table[0]) if table else 'Week 1'}: Week 1 has {count} pieces; at {basis} the kit's count is "
-                  f"{want} (§CM-WEEK 2: the count follows the hours, never a fixed list)")
-    item("Week 1's piece count follows the coach's hours", ev, ran=count is not None and want is not None)
+        ev.append(f"{_turn(table[0])}: Week 1 films {filmed} posts; at {basis} the kit films {want}, the rest are "
+                  "written cuts (§CM-WEEK 2: the hours set the filmed count)")
+    item("Week 1's filmed count fits the coach's hours", ev, ran=filmed is not None and want is not None)
 
     ev = []
-    ideas: list[tuple[str, set]] = []
+    ideas: list[tuple[str, set, str | None]] = []
+
+    def same_idea(a: str, ca: set, b: str, cb: set) -> bool:
+        shared = ca & cb
+        return bool(a.strip()) and (ck.fold(a.strip()) == ck.fold(b.strip()) or (
+            len(shared) >= int(cfg["idea_min_shared"]) and len(shared) >= float(cfg["idea_overlap"]) * min(len(ca), len(cb))))
+
     if table:
         r, head, rows = table
         col = next((k for k, c in enumerate(head) if re.match(r"^(?:idea|y)\b", ck.fold(c))), None)
@@ -8302,16 +8358,19 @@ def check_week1_plan(run: Run) -> dict:
             for row in rows:
                 cell = row[col] if col < len(row) else ""
                 cs = _content_set(cell)
-                for prev, ps in ideas:
-                    shared = cs & ps
-                    if cell.strip() and (ck.fold(cell.strip()) == ck.fold(prev.strip()) or (
-                            len(shared) >= int(cfg["idea_min_shared"])
-                            and len(shared) >= float(cfg["idea_overlap"]) * min(len(cs), len(ps)))):
-                        ev.append(f'{_turn(r)}: two Week-1 rows use one idea ("{_short(prev, 40)}" ~ "{_short(cell, 40)}"); '
-                                  "each piece its own idea, story, example")
-                        break
-                ideas.append((cell, cs))
-    item("the Week-1 table has an 'Idea, hook' column and no idea twice", ev, ran=table is not None)
+                fmt = piece_format(row[fcol] if fcol < len(row) else "")
+                hits = [(prev, pf) for prev, ps, pf in ideas if same_idea(cell, cs, prev, ps)]
+                # v13.12 (founder 11 Oct): one idea feeding 2-3 posts of different formats is normal; one idea in two
+                # posts of one format, or in more than idea_max_posts posts, is a repeat
+                twin = next((prev for prev, pf in hits if fmt is None or pf is None or pf == fmt), None)
+                if twin is not None:
+                    ev.append(f'{_turn(r)}: two Week-1 rows of one format use one idea ("{_short(twin, 40)}" ~ '
+                              f'"{_short(cell, 40)}"); one idea may feed 2-3 posts, each in its own format')
+                elif len(hits) + 1 > int(cfg["idea_max_posts"]):
+                    ev.append(f'{_turn(r)}: one idea in {len(hits) + 1} Week-1 rows ("{_short(cell, 40)}"); at most '
+                              f'{int(cfg["idea_max_posts"])} posts a week')
+                ideas.append((cell, cs, fmt))
+    item("the Week-1 table has an 'Idea, hook' column and no idea twice in one format", ev, ran=table is not None)
 
     ev = []
     film = next((r for r in run.replies if _is_film_reply(run, r)), None)
@@ -8320,14 +8379,18 @@ def check_week1_plan(run: Run) -> dict:
     fs = _content_set(first)
     ran = bool(fs) and (bool(ideas) or bool(wk))
     if ran:
-        others = [(cell, cs, _turn(table[0])) for cell, cs in ideas] + \
-                 [(fl, _content_set(fl), _turn(r)) for r, p in wk for fl in [_first_line_of(p)] if fl]
+        # v13.12: the table's first row is day 1, Day 0's own piece (FILM TODAY / POST TODAY), so it is left out here
+        # v13.12: FILM TODAY's idea may feed later posts of other formats (§CM-REPURPOSE); only the same format repeats it
+        ffmt = piece_format(fp.title if fp is not None else "") or "short"
+        others = [(cell, cs, _turn(table[0])) for cell, cs, f in ideas[1:] if f in (None, ffmt)] + \
+                 [(fl, _content_set(fl), _turn(r)) for r, p in wk for fl in [_first_line_of(p)]
+                  if fl and piece_format(p.title) in (None, ffmt)]
         for text, cs, at in others:
             shared = fs & cs
             if len(shared) >= int(cfg["idea_min_shared"]) and len(shared) >= float(cfg["idea_overlap"]) * min(len(fs), len(cs)):
                 ev.append(f'{at}: a Week-1 piece reuses FILM TODAY\'s idea ("{_short(first, 40)}" ~ "{_short(text, 40)}"); '
                           "Day 0 uses one idea, the rest wait for the week")
-    item("FILM TODAY's one idea is not reused in Week 1", list(dict.fromkeys(ev)), ran=ran)
+    item("FILM TODAY's one idea is not reused in Week 1 in its format", list(dict.fromkeys(ev)), ran=ran)
 
     ev, seen = [], 0
     names = _mix_names(run.lang)
@@ -8347,7 +8410,7 @@ def check_week1_plan(run: Run) -> dict:
     ran_any = any(i["pass"] is not None for i in items)
     return {"id": "week1_plan", "pass": passed, "status": ("pass" if passed else "fail") if ran_any else "n/a",
             "items": items, "evidence": [e for i in items if i["pass"] is False for e in i["evidence"]],
-            "details": {"hours": hours, "tier": tier, "pieces": count, "want": want}}
+            "details": {"hours": hours, "tier": tier, "pieces": count, "filmed": filmed, "want": want}}
 
 
 def grade(run_dir: Path, root: Path | None = None) -> dict:

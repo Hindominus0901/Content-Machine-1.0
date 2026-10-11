@@ -1018,7 +1018,7 @@ LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.
                                 "LAUNCH-AFTER"]),
     "banks": ("BANKS", ["BANKS", "CTA-BANK", "MAGNET-BANK", "RESEARCH-BANK", "STORY-BANK", "PROOF-BANK"]),
     "copy": ("COPY", ["COPY", "COPY-FRAMEWORKS", "COPY-STORIES", "COPY-BELIEFS", "COPY-PROBLEM", "COPY-PROOF",
-                      "COPY-LONG", "COPY-LISTS", "STORYTELLING", "PERSUASION", "COPY-VOICE"]),
+                      "COPY-LONG", "COPY-LISTS", "REPURPOSE", "STORYTELLING", "PERSUASION", "COPY-VOICE"]),
 }
 LEVELUP_BUDGETS = {   # bytes (en, vn) where an area is not the 30,720 B default
     "strategy": (36864, 36864),      # +MONTH, LIKED (7 Oct)
