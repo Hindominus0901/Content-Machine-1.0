@@ -19,5 +19,5 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 - The "next" after the hub is chosen, or asked: "{{t:levelup.offer_reminders}}" Then 2 weekly calendar links.
 - Week-1 Friday review: "{{t:levelup.offer_nudges}}" Then §CM-NUDGES.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"
-- A job whose level-up file isn't loaded (LEVEL-UPS): "{{t:levelup.offer_grow}}" A liked post then: save its shape, offer once.
+- A job whose level-up file isn't loaded (LEVEL-UPS; plugin: its skill loads, never an upload ask): "{{t:levelup.offer_grow}}" A liked post then: save its shape, offer once.
 - Week 3+, or generic output: "{{t:levelup.offer_character}}" Then §CM-CHARACTER-DEEP, talk 1 of 3.

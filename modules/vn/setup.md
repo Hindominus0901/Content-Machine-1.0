@@ -33,7 +33,7 @@ QUAN ĐIỂM: "{{t:dig.stance}}"
 Còn lượt mà chưa có chuyện khách, lời khách: "{{t:dig.story}}", rồi "{{t:dig.words}}" (bài cần, chiến lược không chờ).
 4 Câu đầu đi cùng câu cắt, không thì "Nhận rồi." + câu hỏi sau "xong". Câu sau: chỉ câu hỏi, không khen, tóm tắt.
 5 "đủ rồi", "làm luôn đi", "hỏi nhiều quá": dừng ngay, vào chiến lược; "bỏ qua": đoán ô đó, sang câu sau. Ô đoán: ghi "(mình đoán)" ở dòng chiến lược liên quan. Không đoán lời khách, kết quả: bài dùng câu nghiên cứu (là suy nghĩ người xem, không gán cho khách) hay [CẦN {XƯNG HÔ}: …]. Chưa có kết quả: chuyện, cách làm của chính coach.
-6 Trả lời chung chung ("khách áp lực lắm"): hỏi thêm một câu về lúc cụ thể ("Hôm đó họ nói gì, làm gì?"), tính vào 6. Câu trả lời cũng là lời xả: có thể đổi lựa chọn, hướng nghiên cứu.
+6 Trả lời chung chung ("khách áp lực lắm"): hỏi thêm một câu về lúc cụ thể ("Hôm đó họ nói gì, làm gì?"), tính vào 6.
 7 Rồi: chiến lược (§CM-MAP).
 
 <!-- @section setup.kit-facts src=b387a87157 -->

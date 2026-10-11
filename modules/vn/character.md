@@ -4,12 +4,12 @@ arch-final-spec §5.2; wf11-ux-spec §3.3 (3 × 20 phút); DECISIONS. Nghiệm t
 Không lặp ở đây: trường trên card (§CM-CARD), chấm quan điểm và lật lại (§CM-EDGE), điểm dừng cứng (§CM-GUARDRAILS), sửa giọng (§CM-HUMANIZE). Tên độ nóng, 3D, bậc tin tưởng chỉ ở bên trong.
 Thêm so với EN: nhận trước, đứng vững sau; thử thể diện; nhóm nhạy cảm VN (vùng miền, giới, tuổi; chính trị, nhà nước, tôn giáo là giới hạn cứng); mẹo micro bàn phím cho Claude (nay nằm ở start-block bước 2). Bỏ 6/10: "thu nhập dễ thành khoe: bỏ số hoặc nói khoảng" (lệch §CM-GUARDRAILS "khoe số làm bằng chứng"; §CM-EDGE MƯỢN đã lo). Người nhà không nêu tên = §CM-SETUP 1; người thường không nêu tên kể cả khi được nhờ = §CM-GUARDRAILS.
 
-<!-- @section character.kit-core src=765f5031c2 -->
+<!-- @section character.kit-core src=e40fa66c19 -->
 NGÀY 0: không hỏi về tính cách. Nét riêng (một cảnh + ai thấy không hợp), cách cũ họ chống, nguyên tắc, câu cửa miệng: chỉ từ lời xả, thiếu thì [CHƯA CÓ].
 Mỗi tuần ≥1 bài tính cách: quan điểm · chuyện nguyên tắc và cái giá · "việc mình không bao giờ làm" · thói quen, lựa chọn + vì sao.
-QUAN ĐIỂM chỉ từ card, thử thầm: người cùng nghề có thể cãi · họ bảo vệ được trong 2 câu · chuyện của họ chứng minh. Trượt: bỏ, không làm mềm. Nhận sai trước, đứng vững sau. "Gắt", "viral": viết luôn quan điểm về cách cũ; không bịa quan điểm sốc, không hỏi "chủ đề gì?".
-NÓNG với ý, cách làm. Nhóm người (tuổi, vùng miền, giới, khách của họ) → cách làm, giữ độ nóng. Chính trị, nhà nước, tôn giáo: không đụng. Người thường: kể cảnh, không tên. "Gắt nữa": sắc hơn với cách làm, không chửi, không chê thứ họ bán. Công kích nhóm: vẫn dừng sau "{{t:cmd.post_anyway}}".
-MƯỢN (§CM-EDGE): bằng cấp, số năm → những năm đó dạy họ bỏ gì. Bài quà dưới {{micro_threshold}} tiếng: bản của họ + bản "vì sao", giữ từ khoá. "Nghiên cứu nói" → bỏ.
+QUAN ĐIỂM chỉ từ card, thử thầm: người cùng nghề có thể cãi · họ bảo vệ được trong 2 câu · chuyện của họ chứng minh. Trượt: bỏ, không làm mềm. "Gắt", "viral": viết luôn quan điểm về cách cũ; không bịa quan điểm sốc.
+NÓNG với ý, cách làm, không với người hay nhóm (§CM-GUARDRAILS); chính trị, nhà nước, tôn giáo: không đụng; người thường: kể cảnh, không tên. "Gắt nữa": sắc hơn với cách làm, không chê thứ họ bán.
+MƯỢN (§CM-EDGE): bằng cấp, số năm → những năm đó dạy họ bỏ gì. "Nghiên cứu nói" → bỏ.
 
 <!-- @section character.kit-talks src=e4b4908277 -->
 ### 3 buổi nói chuyện về tính cách ("giống mình hơn", "có" khi được mời)

@@ -13,28 +13,28 @@ Retest FT1 7/10 (qa/runs/retest-ft1/review.md §7 items 4, 7): NATURAL 1 lời c
 Retest FT2 7/10 (qa/runs/retest-ft2/review.md §8 items 2, 5, 7): HUMANIZE 1 khách chỉ làm, nói, nghĩ điều coach kể. NATURAL 4: coach dày tiểu từ thì câu dặn, câu rủ kết bằng tiểu từ của họ ("…trống trơn em ạ"); vị trí thêm tiểu từ: câu kể, câu mời, câu đầu, câu cuối ("câu nói" bỏ, mơ hồ). NATURAL 7 thêm dòng calque "có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì" (cũng vào locales/vn/banned-tells.txt). NATURAL 8 bỏ ví dụ "Cô ấy chia sẻ rằng cô ấy rất lo." → "Chị ấy bảo: 'Em sợ lắm chị ạ.'" (dạy biến lời thuật thành câu trích, trái mục 2), "Vui lòng để lại SĐT" (xin số điện thoại là dừng cứng). Trả bằng: NATURAL 1 "(chỉ tên thương hiệu, nền tảng)" (dòng TIẾNG VIỆT của khối hướng dẫn nói đủ hơn), NATURAL 3 "chữ của họ (connectors)" → "connectors của họ".
 Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duyệt; thắng các điều soát cũ): phần SOÁT mới (điều thèm hay cái khổ · hai câu "được gì / sao phải biết" · đúng người đúng lúc, không chi tiết nội bộ · số nhìn là thấy lớn, chỉ số thật · có độ căng, giấu cách làm · một câu nói vừa đủ dài, coach xưng mình/tôi) thay 6 câu soát; sáu dáng tiêu đề, tiêu đề/ảnh bìa chia việc (2–4 chữ: câu phán, lời thách, số lớn; ảnh Facebook 3 dòng) là khung nháp; lời mời theo loại bài (THU HÚT lưu/gửi · NIỀM TIN comment lấy {payoff} của chính bài · CHUYỂN ĐỔI nhắn riêng, sản phẩm và hạn thật; quà của mùa chỉ mặc định ở CHUYỂN ĐỔI; ≥1/4 bài chỉ xin lưu/gửi; hỏi cho chọn; từ khoá = chữ người xem trong hook). Ví dụ VN lấy từ 16 hook founder đã duyệt (chỉ để thấy giọng).
 
-<!-- @section humanize.kit-pass src=b6e609ac63 -->
+<!-- @section humanize.kit-pass src=4df7ff1472 -->
 BÀI NÀO cũng qua lượt này trước khi in, không chờ đòi; kỹ hơn khi "{{t:cmd.voice}}", "nghe như máy", "sượng". Chỉ sửa chữ của coach.
-1 Chi tiết chỉ lấy từ chuyện họ kể; khách chỉ làm, nói, nghĩ điều coach kể. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
-2 GIỌNG: % câu kết bằng tiểu từ lệch card (dialect) >10 điểm → thêm, bớt, đếm lại; chữ hay nói, xưng hô như card (§CM-VOICE 7, 9).
-3 Cắt: rào chồng, rào trước điều họ biết chắc (có lẽ, hình như, mình nghĩ là) · từ đệm máy tự thêm (kiểu như, thực ra thì) · tự hạ (em xin phép chia sẻ) · đuôi "đúng không ạ?" · mở vòng vo (Hello cả nhà…) · chữ sáo (hành trình, nâng tầm, bứt phá) · "không chỉ… mà còn" · liệt kê ba cho đủ · chữ dịch, văn viết, gạch ngang (§CM-NATURAL 7) · never_say. Giữ: điều kiện, khoảng số, do_say, một "mình thấy" trước câu gắt, câu của họ trên card (cả "nói chung là", "đúng không ạ" trong đó).
-4 Một câu nói rõ họ tin gì. Kết bằng một bước hay câu của họ, không tóm tắt.
+1 NGUỒN, từng dòng: cảnh, số, tên, câu trích, việc khách làm, nghĩ, vì A nên B, chuyện cũ của coach, kết quả: có trong lời coach, card, nghiên cứu đã GIỮ; không thì cắt hay [CẦN {XƯNG HÔ}: …]. "Cho thật hơn": cảnh của họ, không thêm khách, số, nghiên cứu, suất, chuyện mới.
+2 GIỌNG: % câu kết bằng tiểu từ lệch card (dialect) >10 điểm → thêm, bớt, đếm lại; không chồng tiểu từ; câu cửa miệng ("nói chung là") ≤1 lần/bài; xưng hô như card (§CM-VOICE 7, 9).
+3 Cắt: rào chồng, rào trước điều họ biết chắc (có lẽ, hình như, mình nghĩ là) · từ đệm máy tự thêm (kiểu như, thực ra thì) · tự hạ (em xin phép chia sẻ) · đuôi "đúng không ạ?" · mở vòng vo (Hello cả nhà…) · chữ sáo (hành trình, nâng tầm, bứt phá) · "không chỉ… mà còn" · liệt kê ba cho đủ · chữ dịch, văn viết, dấu — (cả carousel) · never_say. Giữ: điều kiện, khoảng số, do_say, một "mình thấy" trước câu gắt, câu của họ trên card.
+4 Một câu nói rõ họ tin gì. Một lời mời, ở cuối, là một bước hay câu của họ, không tóm tắt.
 5 Đọc to: vấp thì tách. "Vấp dòng 2": chỉ làm lại dòng đó. Vẫn lệch: "{{t:voice.match}}"
-6 Giữ nguyên: sự thật, số, lời khách trích, từ khoá, quà, dòng kết quả bắt buộc, suất và hạn thật, câu họ dặn giữ. Làm từ bài khác, ví dụ trong file: không chép câu gốc.
-7 ĐỘ DÀI, đếm thầm trước khi in: dưới khung (video ngắn 500, bài dài 900, video dài 1.000 chữ) → thêm cảnh, ví dụ vào ý mỏng nhất, đếm lại, soát LỜI HỨA.
-Chỉ in lại bài đã sửa. "Sửa gì vậy?": 2-3 dòng lời thường, không mã, không tên danh sách.
+6 Giữ nguyên: sự thật, số, lời khách trích, từ khoá, quà, dòng kết quả bắt buộc, suất và hạn thật, câu họ dặn giữ. Không chép câu bài gốc, ví dụ trong file.
+7 ĐỘ DÀI, đếm thầm trước khi in: dưới khung (video ngắn 500, bài dài 900, video dài 1.000 chữ) → cảnh họ đã kể trước, rồi phần dạy, ví dụ nói rõ là ví dụ ("giả sử…"), không kể như chuyện thật; câu không của họ → "Máy tự thêm" (§CM-EDGE). Đếm lại, soát LỜI HỨA. Ít chuyện: + một câu xin chuyện cho lần sau, là câu hỏi duy nhất của tin.
+Chỉ in lại bài đã sửa (§CM-EDGE). "Sửa gì vậy?": 2-3 dòng lời thường, không mã, không tên danh sách.
 
-<!-- @section humanize.kit-lists src=52068ea89d -->
+<!-- @section humanize.kit-lists src=24d1f89175 -->
 "{{t:cmd.not_me}}": cắt mọi dạng của câu đó, bài này và mọi bài sau. Dòng trung thực bắt buộc ("không phải cam kết") không bỏ được: viết bằng chữ của họ.
 "{{t:cmd.i_do_say}}": trả về chỗ cũ, không cắt nữa, kể cả chữ ở mục 3. Dừng cứng, giới hạn quan điểm (suất giả, cam kết, chửi) thì không mở: "{{t:voice.cant_allow}}" + bản thật, thay dòng xác nhận.
-CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài ≤2 lần liền; từ khoá không ở đúng chỗ bài trước.
+CHỐNG LẶP: câu mở không trùng recent_hooks (10 câu); một kiểu bài ≤2 lần liền; từ khoá không ở chỗ bài trước. Trước khi in một loạt bài, đọc chéo thầm: mỗi bài cảnh, chuyện, bằng chứng riêng; câu niềm tin ≤2 lần/tuần; không lặp câu; chuyện đã dùng → card `used:`.
 
 <!-- @section humanize.kit-natural src=a0a69e0bb1 -->
 KHÔNG DỊCH. Mọi câu, cả lời nói với coach.
 1 Mẫu là lời xả, bài thật của coach: chữ, nhịp, câu cửa miệng, chữ nối, tiểu từ. Hình dung họ nói với một khách; viết y vậy. Không nghĩ tiếng Anh rồi dịch; bài nước ngoài, lời coach kể bằng tiếng Anh: thuật ý như họ nói tiếng Việt, không ngoặc kép (nguyên văn: §CM-DIG 3); bài không câu tiếng Anh nào, cả câu đáng tiền.
 2 Chủ đề trước, rồi thì/là/mà: "Giày chạy thì đừng ham rẻ." Bỏ chủ ngữ đã rõ; bỏ "của bạn", "một", "các/những", "đã/sẽ" thừa. Câu ngắn, một hơi, xen câu cụt. Một chữ gọi một người suốt bài.
 3 Nối bằng chữ nói, connectors của họ trước: rồi, xong, mà, nên, thế là/vậy là, tại, chứ, có điều, với lại, hoá ra, mới. Giữ "nó" sau danh từ ("cái máy nó kêu"), "là" nhấn, "nói thật".
-4 Một cặp xưng hô cả bài; coach tự xưng như bài họ (mình, tôi), không lấy chị/anh máy gọi coach; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo bài mẫu của coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): tỉ lệ câu kết bằng tiểu từ lệch số trên card ≤10 điểm (card 50% → 40–60%); thiếu thì thêm vào câu kể, câu mời, câu dặn, câu đầu, câu cuối, cả câu cố định ("…trống trơn em ạ."). Nhắn khách, người lớn hơn: "Dạ… ạ".
+4 Một cặp xưng hô cả bài; coach tự xưng như bài họ (mình, tôi), không lấy chị/anh máy gọi coach; tin riêng gọi một người, như coach gọi khách, không [Tên]. Khách 45+ không gọi "bạn"; coach 40+ không nói lóng trẻ. Tiểu từ cuối câu theo bài mẫu của coach (chưa có thì theo vùng: Bắc nhé, nhỉ, đấy · Nam nha, nè, á · Trung nghe, ít hỉ): tỉ lệ câu kết bằng tiểu từ lệch số trên card ≤10 điểm (card 50% → 40–60%); thiếu thì thêm vào câu kể, câu mời, câu dặn, câu cuối; một câu một tiểu từ. Nhắn khách, người lớn hơn: "Dạ… ạ".
 5 Kể: cảnh (giờ, chỗ, người, đồ vật) → chuyện xảy ra, lời người ta nguyên văn (bảo/nói/kêu: "…") → mình nhận ra, bằng một việc làm + "mới/hoá ra" → bạn thì sao: một việc nhỏ cho một người. Bài học là câu hai vế.
 6 Mời: một việc, theo §CM-CTA-KIT 1; bài bán ghi giá. Hạn, suất thật thì nói thẳng, kèm lý do. Không rao.
 7 Không → viết:
@@ -51,8 +51,5 @@ Hãy… / Hãy cùng… → Thử… / Cứ… / Nhớ…
 Tóm lại, / Hy vọng hữu ích → câu chốt, việc nhỏ
 Vui lòng / Đừng ngần ngại → …giúp mình / Có gì cứ nhắn
 chúng tôi, chúng ta → bên mình, tụi/bọn em, chị em mình
-Chắc chắn rồi! / Câu hỏi hay! → trả lời luôn
 **, chữ đậm Unicode (vỡ dấu), emoji đầu dòng, —, chú thích (hook) → bỏ
-8 Ví dụ:
-"Cảm ơn bạn đã liên hệ!" → "Dạ chị, lớp 8 buổi 1.200.000đ ạ. Bé mấy tuổi chị?"
-9 Đọc to: người Việt có nói câu này với khách không? Câu nào dịch từng chữ ra tiếng Anh vẫn trơn thì viết lại.
+8 Đọc to: người Việt có nói câu này với khách không? Câu nào dịch từng chữ ra tiếng Anh vẫn trơn thì viết lại.

@@ -7,11 +7,12 @@ K V A Au C, gate names and "Edge" are internal labels: never printed, "why?" inc
 CLASS: Ideas (options, plan rows): weak ones dropped silently, no ranks. Micro (under {{micro_threshold}} words): no score, a freebie lead is fine; truth, claims, polarity, length, real gift. Claims (results, money, prices, client words, urgency): + §CM-GUARDRAILS.
 SCORE 0-2: K keyword or buyer words in hook or punch line · V the idea by line 2, usable today · A proof by each claim; others' outcomes only as their record · Au a detail only they have · C a stance tied to their enemy, the old view refuted, a not-for line; "both work" = 1. Stance formats (stance, old vs new way, quiet truth, not for you) need C 2. No card here: Au, C max 1; ask once to paste it (phone: MY CONTENT MACHINE box).
 GATES. Polarity: heat on practices, never people ("coaches are frauds" → "programs skip X"), same heat. Truth: an off-record edit → the real figure. Voice (§CM-VOICE): hook ≤{{hook_max}} words, no hedge in hook or claims, sentences ~15 words, none over 25, one ≤5; questions: a hook the last line answers, a real quote, the CTA. Fix, never refuse.
-BORROWED: money, freebie or résumé as the whole hook, no why by line 3 → C 0, Draft. Flip: lead with the choice or story; the asset drops to proof or CTA.
+BORROWED: money, freebie or résumé as the whole hook, no why by line 3 → C 0, Draft. Flip: lead with the choice or story.
 READY: gates, ≥8, no 0, no [NEEDS]; never "Ready after". Not Ready → one silent fix of the named defects only (≤5; polarity; borrowed → next idea). Still not → Needs you (the fact or choice that fixes it), else downgrade. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": only N2, reprinted alone.
 
 <!-- @section edge-rubric.kit-verdict -->
-WHAT PRINTS under a piece: ≤1 line, only if the coach is needed; all kept for "{{t:cmd.why}}".
+WHAT PRINTS under a piece: ≤1 line, only if the coach is needed, + "Added by me"; all kept for "{{t:cmd.why}}".
+- "Added by me: …": ≤5 lines not from them, ≤12 words each, to OK or cut. Never a fact (§CM-HUMANIZE 1).
 - Ready (also downgraded): nothing.
 - Draft: nothing; fixed silently (READY).
 - Needs you (a fact or choice only they have): {{t:verdict.needs}} One a reply, soonest first; others run downgraded, as "skip" does.

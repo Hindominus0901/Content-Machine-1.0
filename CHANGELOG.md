@@ -2,7 +2,24 @@
 
 Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers. All other lines are for maintainers.
 
-## [Unreleased]
+## [1.3.9] - 2026-10-11
+
+Build v13.9: the readiness gaps from the founder's own app test (outside assessment of v13.8, 11 Oct 2026). VERSION now follows the build (13.9 → 1.3.9); it stayed 1.0.0 through v13.8.
+
+### Changed
+- One level-up rule per route. Plugin: each level-up is a companion skill that loads when its job comes up, nothing to upload (the main SKILL.md pointer and every companion body say so, and say that the method's "add the file" step is the Project route's). Project or folder: add the one Level-ups file the job needs. The board's setup (§CM-BOARD 2) names both routes: the download's Level-ups/Board folder, or the files handed over in the plugin.
+- `plugin.json` version comes from VERSION (1.3.9, was 1.0.0 while the content was v13.8); its description names all nine companions (banks and copywriting were missing).
+- No offer before week 2 outside a launch, written where the asks are chosen: Week 1's CONVERT piece asks for a reply, never a price (§CM-CTA-BANK 1, §CM-HOOK-CTA 1, §CM-COPY 2).
+- One ask per piece in the examples: the email P.S. with "3 ways I can help" is now one call ask; the myth carousel asks for the keyword only; cart emails ask "join" (or, to EARLY replies, for the one question in the way), never "join or reply"; the belief-shift step asks for the story only.
+- Launch and campaign pieces carry the added-details list under each piece ("Máy tự thêm: …", §CM-HUMANIZE) next to the voice pass; a coach who doesn't film gets a video's beats as a post (§CM-CAMPAIGNS 2, §CM-LAUNCH-POSTS).
+- Kit: source check before print (every concrete detail traces to the coach's words, the Brand Card or a kept research line; facts never added; illustrative lines listed under the piece as "Máy tự thêm" / "Added by me").
+- Kit: silent week cross-read (one scene/story per piece, belief line at most twice a week, `used` stories on the card); thin dump keeps the founder's lengths with the list and one story-first question.
+- Kit: style (pet phrase once a piece, one particle a sentence, no em dash in VN pieces, one ask per piece, one-question "Cần" line); Week-1 convert slot asks for replies only; platform-neutral inbox replies; honest tier hours; §CM-TODAY plugin level-ups load on their own.
+
+## [Before 1.3.9]
+
+Everything from v1 to v13.8, built under VERSION 1.0.0 and never released on its own.
+
 
 ### Added
 - Research corpus, plan and founder decisions (`docs/`).

@@ -12,11 +12,11 @@ Kit hooks used, unchanged: levelup.kit-offers (the board offer), plan.kit-week, 
 - Bank: stories, proof (who said yes, and to what), client words, objections, posts they liked, hooks that worked.
 - Numbers: one row a week, the totals Friday's review reads.
 - Ledger: a launch's real limits (seats, bonus, close, price step), each kept or not.
-2 SETUP, 3 steps, about 5 minutes, no code, all in one message; the 5 files are in the download's Level-ups/Board folder:
+2 SETUP, 3 steps, about 5 minutes, no code, all in one message; the 5 files: in a Project, the download's Level-ups/Board folder; in the plugin, I hand them over (3), nothing to upload:
 a Open sheets.new, signed in to Google. Name it "{{name}}".
 b File → Import → Upload → Campaigns.csv → "Insert new sheet(s)" → Import data. The same for Content, Bank, Numbers and Ledger. Each tab takes its file's name; the empty first tab can go.
 c Optional: Share it with your VA as Editor. Or paste me the link: when your app can open Google Drive, I read the board instead of asking you.
-3 No files at hand (phone, locked laptop): make the 5 files if the app can (header row only, the names above); else print each tab's header row as one-line tsv boxes of ≤6 columns, pasted into cells A1, G1, M1 of a new tab with that name.
+3 No files at hand (phone, locked laptop, the plugin): make the 5 files if the app can (header row only, the names above); else print each tab's header row as one-line tsv boxes of ≤6 columns, pasted into cells A1, G1, M1 of a new tab with that name.
 4 After setup, one line: "Column A is mine: leave it as it is." Then the first boxes: the live campaign and this week's pieces.
 5 Never both boards. Moving to Notion later: I build the workspace and fill it from a pasted tab; the sheet stays theirs, untouched.
 6 They already keep their own sheet: keep it. Ask once for its header row, pasted; print rows in its order; a column it lacks rides as one note line, never a new tab.

@@ -270,9 +270,9 @@ ZALO (tin riêng, tin nhóm, tin OA)
 7 TRƠN → HAY: "Khoá coaching tốt nhất cho freelancer!" → "Lịch học thử kín mà chẳng ai đăng ký học tiếp." · "Giảm cân cấp tốc!" → không bao giờ; thay bằng "Tan làm mệt quá, không đi tập nổi? Lịch tập gói gọn trong 20 phút bạn còn rảnh." (cách làm, không kết quả) · "Ưu đãi có hạn!" → hạn thật: "Đóng đăng ký 8 giờ tối thứ Sáu; lớp sau phải qua Tết mới mở."
 8 Sản phẩm về tiền, sức khoẻ, cơ thể: hook nói cách làm; dưới quảng cáo MỘT dòng lưu ý nền tảng như §CM-ADS 7.
 
-<!-- @section hook-library.grow-cta src=4eed3444b4 -->
+<!-- @section hook-library.grow-cta src=2c1cf9dd94 -->
 ### Lời mời theo loại bài (lời mời khép lại điều hook đã hé)
-1 Theo loại bài, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi cho bạn · NIỀM TIN → comment lấy đúng món bài này hứa · CHUYỂN ĐỔI → nhắn riêng, sản phẩm thật, hạn thật. Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Món hứa phải có sẵn trước khi đăng (§CM-CTA-KIT 2).
+1 Theo loại bài, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi cho bạn · NIỀM TIN → comment lấy đúng món bài này hứa · CHUYỂN ĐỔI → nhắn riêng, sản phẩm thật, hạn thật (ngoài đợt mở bán thì từ tuần 2; bài CHUYỂN ĐỔI của Tuần 1 chỉ xin một câu trả lời, chưa mời mua). Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Món hứa phải có sẵn trước khi đăng (§CM-CTA-KIT 2).
 2 THU HÚT: "Lưu lại, lần tới cô dâu xin gói rẻ hơn thì mở ra đọc câu thứ hai." · "Gửi cái này cho đứa bạn đang {hoàn cảnh}." · "Mai lên phần 2: {điều còn bỏ ngỏ}." · Cho chọn: "Bạn gom hoá đơn từng tháng hay dồn tới tháng Chạp? Ghi A hay B thôi." Không "bạn nghĩ sao?".
 3 NIỀM TIN: "{{t:cta.default}}", {payoff} là món bài này hứa: "Comment BÁNH THỨ BA, mình gửi 3 khung giờ đăng trong video này." Từ khoá là chữ người xem trong hook, từ 2 tiếng trở lên, viết hoa (nhận cả dạng không dấu); không GUIDE, FREE do máy tự chọn. Coach chọn kiểu nhẹ (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
 4 CHUYỂN ĐỔI (từ tuần 2, khi có bằng chứng): được gì, giá chính xác, cho ai, hạn hay giới hạn thật kèm lý do, một việc: "Học phí {giá}, {N} buổi. Lớp nhận {N} bạn vì bài ai mình cũng mở ra sửa; thứ Sáu đóng. Nhắn mình chữ LOP, mình gửi lịch." · "Ai đang kẹt đúng chỗ này cứ nhắn riêng mình, kể đang vướng ở đâu; mình tự trả lời từng người." Từ khoá, quà của mùa mặc định nằm ở đây. Chỉ số thật.

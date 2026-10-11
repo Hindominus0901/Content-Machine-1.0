@@ -305,7 +305,7 @@
 "liked.cant_open"   = "I can't open {what} here, so I won't guess. {{t:next.prefix}} Send a screenshot with the words showing, or tell me in two lines."
 "liked.saved"       = "Saved to Posts you like: {shape}. I'll use it when we plan {Monday}."
 "liked.make_offer"  = "A) your version now (recommended) B) keep the shape for later."
-"liked.day0"        = "(Kept that post for {when}; first, today's video.)"
+"liked.day0"        = "(Kept that post for {when}; first, today's piece.)"
 "liked.grid_ratio"  = "about {N}× their usual"
 "liked.grid_none"   = "No counts here, so no ranking."
 "liked.no_watch"    = "I can't watch anyone's account and won't pretend to. At each monthly plan, send 2–3 screenshots; I'll redo your angle in 5 minutes."

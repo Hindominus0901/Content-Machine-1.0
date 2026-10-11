@@ -4,7 +4,7 @@ Thêm so với EN: tháng cô hồn trỏ §CM-LOCALE 6; quà ≤50% giá khoá 
 Soát song ngữ 7/10: tỉ lệ tệp ấm (cần > tệp ấm), bốn điều giới hạn thật ghi sẵn chứ không hỏi bốn câu, trợ thủ + người soát riêng khi chuẩn bị, viết lại các câu đọc như dịch (gấp gáp, hạ bậc, ồn nhất, lần chạm, rò, bài học rút ra, bài báo).
 Tên với coach: Suất nhóm đầu (A), Mồi (B), Lớp mini Zalo / thử thách (C), Chạy lại (D); "Giới hạn thật" (Scarcity Ledger); HỒ SƠ MỞ BÁN (Launch Brief); BÀN MỞ BÁN (Launch Desk).
 
-<!-- @section launch-plan.grow-start src=ac8e21e5b5 -->
+<!-- @section launch-plan.grow-start src=bfb4137b10 -->
 ### Mở bán ("ra mắt khoá", "mở lớp mới", "launch")
 1 Mỗi lần một đợt; năm 2–4 đợt lớn, cách nhau ≥6 tuần đăng bình thường; chạy lại tối đa tháng một lần. Tháng cô hồn: §CM-LOCALE 6.
 2 Đọc trước, hỏi sau: sản phẩm, giá, bằng chứng, danh sách, kênh lấy từ Card, Bản đồ (§CM-GUARDRAILS). Rồi chọn kiểu, mỗi tin một câu, rõ là dừng:
@@ -21,7 +21,7 @@ số suất = số nhỏ hơn giữa (doanh thu muốn đạt ÷ giá) và số 
 tỉ lệ chốt = của chính họ: "10 người gần nhất hỏi học, mấy người đóng tiền?";
 số người cần = số suất ÷ tỉ lệ chốt; tệp ấm = chỉ những người có thể mua ĐÚNG khoá này, hỏi một lần: "Trong danh sách Zalo, email, danh bạ và người nhắn, comment 90 ngày qua, chừng bao nhiêu người là {khách}? Người quen, người nhà, người cùng nghề, người từng mua món khác không tính." Không lấy tổng số người theo dõi hay tổng danh bạ. Hỏi một lần rồi vẫn chưa đếm được: lấy phần chắc làm sàn (người đăng ký lớp, người nhắn 90 ngày qua), ghi "({tự xưng} đoán)"; không hỏi lại.
 Chưa có số → [CẦN {XƯNG HÔ}: …], một câu; không mượn tỉ lệ "trong ngành". Cần nhiều hơn cả tệp ấm → nói một dòng, coach chọn: A ít suất hơn, hay hâm tệp 4 tuần trước.
-5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS), và thẻ từng ngày của chiến dịch nếu đã có file CAMPAIGNS (§CM-CAMPAIGNS). Không hứa bán hết suất.
+5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS), và thẻ từng ngày của chiến dịch nếu đã có phần CAMPAIGNS (file, hay skill cm-campaigns khi dùng plugin; §CM-CAMPAIGNS). Không hứa bán hết suất.
 
 <!-- @section launch-plan.grow-brief src=55c20c4ad2 -->
 ### Hồ sơ mở bán và giới hạn thật
@@ -33,12 +33,12 @@ Chưa có số → [CẦN {XƯNG HÔ}: …], một câu; không mượn tỉ l�
 6 Thiếu thì lùi một bước: chưa có bằng chứng khách → kiểu A, không series; suất không lý do → không nêu suất; không giờ đóng → không đếm ngược, "đợt sau khai giảng {ngày}"; số thiếu bối cảnh → kể quy trình; khách chưa cho dùng ở chỗ đó → bỏ; chưa có danh sách → tin inbox 1 xin Zalo + bài "nhắn mình để nhận link"; quảng cáo từ trang cá nhân → §CM-ADS 4.
 7 Câu mồi coach tự chọn giữ nguyên văn, một dòng lưu ý (§CM-CTA-KIT 6): "50 slot trải nghiệm ai muốn?", "Chấm q.t mình hướng dẫn 👇", "Đủ 100 comment UP …". Số slot là giới hạn thật, qua mục 4 (đủ người → bài sau báo đủ; không giữ đúng số → mục 5); ngưỡng comment là lời hứa Bàn mở bán theo dõi, không bịa số. "Hữu duyên" chỉ là giọng, một lần.
 
-<!-- @section launch-plan.grow-steps src=776a615eb4 -->
+<!-- @section launch-plan.grow-steps src=2354ffd6f8 -->
 ### Mười chặng (nhãn P để máy dùng; với coach gọi tên thường)
 Chăm lại (story, trả lời, Zalo, email, quảng cáo) chạy suốt P1–P7, không phải một ngày.
 P0 Dò sóng: khách kẹt ở đâu? Ghi 5 lăn tăn hay gặp, đúng chữ khách (nhóm, comment: chỉ đọc, §CM-RESEARCH) · bài hỏi, story bình chọn, hỏi y vậy qua Zalo · mời: một câu hỏi thật.
 P1 Mồi: quà gỡ xong một bước nhỏ, lộ ra chỗ kẹt kế tiếp mà khoá học gỡ · video làm mẫu, bài chữ nền màu · mời: từ khoá (§CM-CTA-KIT); tin inbox 1: §CM-LAUNCH-MESSAGES 2.
-P2 Đổi niềm tin: 3 niềm tin cũ theo thứ tự (cách này không ăn thua · mình không làm nổi · không có thời gian, tiền) · bài kể chuyện, carousel ngộ nhận · mời: lưu lại, "kể chuyện của bạn".
+P2 Đổi niềm tin: 3 niềm tin cũ theo thứ tự (cách này không ăn thua · mình không làm nổi · không có thời gian, tiền) · bài kể chuyện, carousel ngộ nhận · mời: "kể chuyện của bạn".
 P3 Trao giá trị: dạy trọn một bước, làm là thấy kết quả · mời: làm thử rồi kể mình nghe.
 P4 Chuyện khách, mời: series có ngày giờ, "một tuần bên trong khoá"; số nào cũng kèm bối cảnh (§CM-LAUNCH-POSTS 5) · mời live, lớp Zalo, danh sách chờ.
 P5 Mở bán: một lời mời đủ thông tin · bài mời ghim, hỏi đáp, "không hợp với ai" · link gửi qua inbox, Zalo.

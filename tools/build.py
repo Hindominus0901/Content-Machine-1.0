@@ -87,8 +87,10 @@ PORTABLE = {
                     "and the newest BRAND CARD",
         "save_from": "Save: ChatGPT: ⋯ under the card → Save to project. Claude: copy it, + by the project files → "
                      "Add text content. Backup: email it to yourself.",
-        "companions": "Companion skills carry the level-ups: {{skills}}. When a job is theirs, use that skill, and never "
-                      "ask the coach to upload a Level-ups file.",
+        "companions": "Companion skills carry the level-ups: {{skills}}. In the plugin each level-up is its companion "
+                      "skill and loads when its job comes up: use that skill (load it if it is not in this chat). "
+                      "There is nothing to upload, so never ask the coach to upload a Level-ups file; where the "
+                      "method says to add one (§CM-TODAY), that is the Project route: here, load the skill.",
         "h_instructions": "INSTRUCTIONS",
         "h_method": "METHOD",
         "intro": "# {{name}} — a file for the AI\n\nYou are the AI receiving this file. Read all of it. "
@@ -120,8 +122,10 @@ PORTABLE = {
                     "và BRAND CARD",
         "save_from": "Lưu: ChatGPT: ⋯ dưới card → Lưu vào dự án. Claude: chép card, + cạnh file của project → "
                      'Add text content. Dự phòng: gửi vào Zalo "Cloud của tôi".',
-        "companions": "Các skill đồng hành giữ phần nâng cấp: {{skills}}. Việc nào của skill đó thì dùng skill đó, "
-                      "không bảo coach tải file Level-ups lên.",
+        "companions": "Các skill đồng hành giữ phần nâng cấp: {{skills}}. Với plugin, mỗi phần nâng cấp là một skill "
+                      "đồng hành, tự nạp khi tới việc của nó: việc nào của skill nào thì dùng skill đó (chat chưa có "
+                      "thì nạp). Không có gì để tải lên, nên không bao giờ bảo coach tải file Level-ups lên; chỗ "
+                      "phương pháp bảo thêm file (§CM-TODAY) là cách dùng Project: ở đây thì nạp skill.",
         "h_instructions": "HƯỚNG DẪN",
         "h_method": "PHƯƠNG PHÁP",
         "intro": "# {{name}} — file cho AI đọc\n\nBạn là AI đang nhận file này. Đọc hết file. Phần "
@@ -153,7 +157,8 @@ PLUGIN_NAME = "content-machine"
 PLUGIN_EDITIONS = ("vn", "en")
 PLUGIN_DESCRIPTION = ("Content Machine for coaches (Tiếng Việt + English): a voice dump becomes one message, "
                       "a video to film today and a week plan.")
-PLUGIN_DESCRIPTION_COMPANIONS = " Companions for research, launch and ads, launch campaigns, board and nudges, strategy, hooks, playbook."
+PLUGIN_DESCRIPTION_COMPANIONS = (" Companions for research, launch and ads, launch campaigns, hub and scheduled tasks, strategy, "
+                                 "hooks, playbook, banks, copywriting.")
 PLUGIN_KEYWORDS = ["content", "coach", "vn", "en"]
 COMPANIONS_FILE = Path("plugin") / "companions.toml"     # the companion skills' words (docs/BUILD.md §6)
 AGENTS_DIR = Path("plugin") / "agents"                    # the plugin's agents, copied as they are

@@ -4,23 +4,23 @@ Tên thuộc tính, lựa chọn, view trong Notion bằng tiếng Việt: templ
 Cột và giá trị Google Sheet: schemas/hub.toml [campaign_board] (name_vn, values_vn), khớp templates/sheets/vn/*.csv.
 Khác EN: tab mang tên file không dấu; hạn theo giờ VN; Dạng có "Tin Zalo"; nút Google Sheets, Notion, ChatGPT, Claude ghi tên tiếng Anh, tên tiếng Việt trong ngoặc khi cần. -->
 
-<!-- @section hub.grow-board src=5bb82bd234 -->
+<!-- @section hub.grow-board src=0b6a451930 -->
 ### Bảng Google Sheet, chỗ dự phòng của hub ("Google Sheet", "không dùng Notion", "làm bảng cho mình"; lời mời: "{{t:levelup.offer_board}}")
-0 Hub chính là trang Notion (§CM-HUB-NOTION) cộng file HUB.md (§CM-HUB-MD). Sheet này là lựa chọn B của câu hỏi duy nhất về hub, hỏi ở lần "tiếp" đầu tiên khi chưa có hub, không hỏi ngày 0 (§CM-HUB-NOTION 4), hay dùng luôn khi họ nói "Google Sheet", "Excel" hay "không dùng Notion". Chọn gì thì HUB.md vẫn giữ.
-1 Một Google Sheet, năm tab, tiêu đề tiếng Việt. Coach không phải gõ gì vào bảng: mỗi lần mình viết bài, lên chiến dịch, tổng kết thứ Sáu hay mở bán, mình in sẵn dòng để dán (§CM-BOARD-ROWS).
+0 Hub chính là trang Notion (§CM-HUB-NOTION) cộng file HUB.md (§CM-HUB-MD). Sheet này là lựa chọn B của câu hỏi về hub, hỏi ở lần "tiếp" đầu khi chưa có hub, không hỏi ngày 0 (§CM-HUB-NOTION 4), hay dùng luôn khi họ nói "Google Sheet", "Excel" hay "không dùng Notion". Chọn gì thì HUB.md vẫn giữ.
+1 Một Google Sheet, năm tab, tiêu đề tiếng Việt. Coach không gõ gì vào bảng: mỗi lần viết bài, lên chiến dịch, tổng kết thứ Sáu hay mở bán, mình in sẵn dòng để dán (§CM-BOARD-ROWS).
 - Chiến dịch: mỗi chiến dịch một dòng (một tháng, hay một đợt mở bán): mục tiêu, sản phẩm, ý lớn, từ khoá, bắt đầu, kết thúc, trạng thái, kết quả.
 - Nội dung: mỗi bài một dòng, gắn với chiến dịch: ngày đăng, nền tảng, dạng, tiêu đề, hook, trạng thái (Ý tưởng → Đã viết → Đã quay → Đã đăng → Đã tổng kết), link, lượt xem, bình luận, comment từ khoá, tin nhắn, lượt lưu.
 - Kho: chuyện, bằng chứng (ai đồng ý, cho dùng ở đâu), lời khách, lăn tăn, bài {xưng hô} thích, hook từng ăn.
 - Số liệu: mỗi tuần một dòng, số cộng cả tuần để thứ Sáu tổng kết.
 - Giới hạn thật: giới hạn của đợt mở bán (suất, quà, giờ đóng, bậc giá), có giữ đúng hay không.
-2 CÀI, 3 bước, chừng 5 phút, không cần biết code, gửi gọn trong một tin; 5 file nằm trong thư mục Level-ups/Board của bộ tải về:
+2 CÀI, 3 bước, chừng 5 phút, không cần code, gửi gọn một tin; 5 file: dùng Project thì ở thư mục Level-ups/Board của bộ tải về, dùng plugin thì mình đưa (mục 3), không cần tải gì lên:
 a Đăng nhập Google, mở sheets.new, đặt tên "{{name}}".
-b File (Tệp) → Import (Nhập) → Upload (Tải lên) → chọn Chien-dich.csv → "Insert new sheet(s)" (Chèn (các) trang tính mới) → Import data (Nhập dữ liệu). Noi-dung, Kho, So-lieu, Gioi-han-that làm y vậy. Tab tự lấy tên file; tab trống lúc đầu xoá đi cũng được.
-c Không bắt buộc: Share (Chia sẻ) cho trợ lý, quyền Editor (Người chỉnh sửa). Hay gửi {tự xưng} link: app của {xưng hô} mở được Google Drive thì {tự xưng} tự đọc bảng, khỏi hỏi lại.
-3 Không có file trong tay: app tạo file được thì mình tạo luôn 5 file (chỉ dòng tiêu đề, đúng tên ở trên); không thì in dòng tiêu đề từng tab thành các khung tsv một dòng, mỗi khung ≤6 cột, dán vào ô A1, G1, M1 của tab mới đặt đúng tên đó.
+b File (Tệp) → Import (Nhập) → Upload (Tải lên) → chọn Chien-dich.csv → "Insert new sheet(s)" (Chèn (các) trang tính mới) → Import data (Nhập dữ liệu). Noi-dung, Kho, So-lieu, Gioi-han-that làm y vậy. Tab tự lấy tên file; tab trống đầu xoá được.
+c Không bắt buộc: Share (Chia sẻ) cho trợ lý, quyền Editor (Người chỉnh sửa). Hay gửi {tự xưng} link: app mở được Google Drive thì {tự xưng} tự đọc bảng, khỏi hỏi lại.
+3 Không có file trong tay (hay dùng plugin): app tạo file được thì mình tạo luôn 5 file (chỉ dòng tiêu đề, đúng tên ở trên); không thì in dòng tiêu đề từng tab thành các khung tsv một dòng, mỗi khung ≤6 cột, dán vào ô A1, G1, M1 của tab mới đặt đúng tên đó.
 4 Cài xong, một câu: "Cột A là của {tự xưng}: {xưng hô} cứ để nguyên." Rồi tới mấy khung đầu: chiến dịch đang chạy và bài tuần này.
 5 Không chạy hai bảng một lúc. Sau này chuyển sang Notion: mình dựng trang Notion, đổ dữ liệu từ tab họ dán; sheet của họ để nguyên.
-6 Họ đã có sheet riêng: giữ nó. Xin một lần dòng tiêu đề (dán vào chat); in dòng theo thứ tự cột của họ; cột nào họ thiếu thì ghi một dòng lưu ý, không ép thêm tab.
+6 Họ đã có sheet riêng: giữ nó. Xin một lần dòng tiêu đề; in dòng theo thứ tự cột của họ; cột họ thiếu thì ghi một dòng lưu ý, không ép thêm tab.
 7 Có trợ lý: trợ lý dán khung, thêm lượt xem và link; Đã quay, Đã đăng vẫn theo lời coach, hoặc theo link trợ lý dán vào.
 
 <!-- @section hub.grow-columns src=151991f5d1 -->

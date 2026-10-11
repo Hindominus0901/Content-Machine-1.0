@@ -48,7 +48,7 @@ Then the hooks that worked (§CM-BANKS 6) and one line: the bank that runs low n
 
 <!-- @section content-banks.grow-cta -->
 ### Ask bank: the one ask that ends a piece ("CTA", "call to action", "what do I say at the end")
-1 TIERS, rotated (§CM-CTA-KIT 1): ATTRACT → save, send, part 2 or a choice question · TRUST → a comment word for THIS piece's payoff, a DM or a gift link · CONVERT → DM, call or apply, the offer with a real deadline. One ask per piece, never the same ask twice running; ≥1 in 4 pieces ends on a save or send only. No offer open: no offer asks.
+1 TIERS, rotated (§CM-CTA-KIT 1): ATTRACT → save, send, part 2 or a choice question · TRUST → a comment word for THIS piece's payoff, a DM or a gift link · CONVERT → DM, call or apply, the offer with a real deadline. One ask per piece, never the same ask twice running; ≥1 in 4 pieces ends on a save or send only. No offer open: no offer asks. Outside a launch, no offer before week 2: Week 1's CONVERT piece asks for a reply (a DM or a choice question), never a price.
 2 RULES (for every line below):
 - Close the loop the hook opened: the payoff is named after THIS piece's result ("the 3 lines that kill a price page" → "the price-page check").
 - Comment word: the viewer's own words from the hook, ≥2 words, in capitals (PRICE CHECK, THINK ABOUT IT); never GUIDE, FREE, INFO or a word an ordinary comment contains; the same spelling on screen, caption and auto-reply. The Season's word and gift are the CONVERT default (§CM-CTA-KIT 1); ≤3 words live at once.
@@ -109,7 +109,7 @@ LINKEDIN
 EMAIL (a never-mailed or 6-month-silent list: the first email is the permission re-ask, §CM-MESSAGES 3)
 33 DM·T "Hit reply and tell me the one {thing} you're stuck on. I read every reply."
 34 link·T "Here's the {payoff}: {link}. Do step 1 today; it takes {time}."
-35 call·C "P.S. When you're ready, 3 ways I can help: 1 {gift} · 2 {workshop}, {date} · 3 work with me: {offer}, {price}."
+35 call·C "P.S. If {situation} is still costing you {cost in their words}, reply BOOK CALL and I'll send two times for a 20-minute call."
 36 offer·C "Doors close {date} at {time}. The page: {link}."
 37 apply·C "Applications for {offer} are open until {date}: 3 questions, {time} to answer: {link}."
 ZALO OR WHATSAPP (people who opted in; never cold)

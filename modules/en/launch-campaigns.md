@@ -7,8 +7,8 @@ Proposed level-up: Level-ups/CAMPAIGNS-<SUFFIX>.md, anchors CAMPAIGNS, CAMPAIGN-
 <!-- @section launch-campaigns.grow-library -->
 ### The campaign library ("launch", "campaign", "open the doors", "livestream sale")
 Six ready-made campaigns, built on the launch program: picker, math (§CM-LAUNCH), Brief, real limits (§CM-LAUNCH-BRIEF), steps (§CM-LAUNCH-STEPS), calendars (§CM-LAUNCH-DAYS), Desk (§CM-LAUNCH-DESK). Where they differ, those win.
-1 PICK by the picker's type: A → 1 Founding seats (§CM-CAMPAIGN-FOUNDING) · B, no live → 2 Free-gift launch (§CM-CAMPAIGN-GIFT) · C → 3 Challenge or group class (§CM-CAMPAIGN-CLASS) · B with a workshop, or a public livestream sale → 4 Live sales event (§CM-CAMPAIGN-EVENT) · D → 6 Relaunch or evergreen (§CM-CAMPAIGN-RELAUNCH). Sold on a call (a price their buyers don't pay without talking first, or clients they choose) → 5 By application (§CM-CAMPAIGN-APPLY), whatever the type. Tell the coach the name, the length and why, in one line.
-2 DAY CARD. Each piece is planned as: format · role · hook mechanism · beats · ask · follow-ups (replies, inbox, Zalo, email). Days 1–3 print in full: date · the step in plain words · each piece with its format and its role as a plain word in its title line (ATTRACT, TRUST or CONVERT, never a code), the hook written out, the script and follow-ups in copy boxes, the ask · coach minutes; later days one line each, in full on their morning Desk (§CM-LAUNCH-DAYS). Scripts and messages get the voice pass before print (§CM-HUMANIZE 2). Mechanism and beat names stay with you. Mechanisms: the hook library's short names (its HOOKS file if the coach has it, else §CM-HOOKS 2), plus one for launches only, NEWS (a line from the real limits). No mechanism two days running. Lengths: §CM-LOCALE 2; text-background post ≤130 characters. Beats and the daily stories: the next part of §CM-CAMPAIGNS.
+1 PICK by the picker's type: A → 1 Founding seats (§CM-CAMPAIGN-FOUNDING) · B, no live → 2 Free-gift launch (§CM-CAMPAIGN-GIFT) · C → 3 Challenge or group class (§CM-CAMPAIGN-CLASS) · B with a workshop, or a public livestream sale → 4 Live sales event (§CM-CAMPAIGN-EVENT) · D → 6 Relaunch or evergreen (§CM-CAMPAIGN-RELAUNCH). Sold on a call (a price their buyers don't pay without talking first, or clients they choose) → 5 By application (§CM-CAMPAIGN-APPLY), whatever the type. Tell the coach its name, length and why in one line.
+2 DAY CARD. Each piece is planned as: format · role · hook mechanism · beats · ask · follow-ups (replies, inbox, Zalo, email). Days 1–3 in full: date · the step in plain words · each piece with its format and its role as a plain word in its title line (ATTRACT, TRUST or CONVERT), the hook written out, the script and follow-ups in copy boxes, the ask · coach minutes; later days one line each, in full on their morning Desk (§CM-LAUNCH-DAYS). Scripts and messages: the voice pass and the added-details list before print (§CM-HUMANIZE). No filming: video beats become a post. Mechanism and beat names stay with you. Mechanisms: the hook library's short names (HOOKS if here, else §CM-HOOKS 2), plus NEWS for launches only (a line from the real limits). No mechanism two days running. Lengths: §CM-LOCALE 2; text-background post ≤130 characters. Beats and daily stories: the next part of §CM-CAMPAIGNS.
 3 ROLES: ≥3 ATTRACT or TRUST pieces before the first ask; in a 6-day cart about one TRUST per CONVERT; a 3-day cart (1, 6) carries TRUST in the stories (demo, behind the scenes); open and close days loudest. No proof: their own demo instead of CASE.
 4 CHECKPOINTS, on the Desk's numbers against their own math (first launch: their guess, marked; it becomes the baseline). Each prints: the number · the plan to date · GO, ADJUST or STOP · the one change. GO: at or above plan. ADJUST: below it; one change for tomorrow (hook, gift name, post time, an extra post or reminder). STOP: before the cart opens and under half the plan, move the open date (if it was announced, say why; never so the close reaches the cohort start: then the next round instead) or switch to founding seats with fewer seats. Trust at risk (a complaint about a claim, a flagged post): pause the pushes, answer in public, close on time. After the cart opens a low number is ADJUST, never STOP: nothing is extended or reopened.
 
@@ -60,7 +60,7 @@ D1 text-background post or story poll · ATTRACT · the question buyers ask · Q
 D2 short video · ATTRACT · before → after · GIFT DEMO · keyword → DM reply 1 · then: ≥5 public replies; DM reply 2 to each answer; welcome 1.
 D3 text-background post · ATTRACT · their number or costly mistake · result · time · "free, not for sale" · a cap only from the real limits · keyword · then: DM flow; welcome 2. The coach's own bait line ("50 seats, who wants one?", the dot comment) stays word-for-word with one note (§CM-CTA-KIT 6).
 D4 long post · TRUST · confession · STORY (belief 1: the method won't work) · "save it; reply with yours" · then: welcome 3.
-D5 carousel, 6 slides · TRUST · myth-bust · myths (belief 2: I can't), §CM-LAUNCH-POSTS 6 · save + keyword · then: welcome 4 + "the walkthrough comes out {day}".
+D5 carousel, 6 slides · TRUST · myth-bust · myths (belief 2: I can't), §CM-LAUNCH-POSTS 6 · keyword · then: welcome 4 + "the walkthrough comes out {day}".
 D6 short video or long post · TRUST · overheard line · TEACH + case 1 (OK'd, in context) · "try it, tell me" · then: welcome 5 (waitlist + early link).
 D7 short video · TRUST · the after-state (OK'd) · STORY (belief 3: no time or money) + case 2 · reply · then: 1:1 answers to replies.
 D8 carousel or short video · TRUST · behind the scenes · INSIDE + "doors open tomorrow" · "reply EARLY for the early link" · then: each EARLY within 24 hours; a "tomorrow" note by email or Zalo.
@@ -252,7 +252,7 @@ WAITLIST (campaigns 1 and 6): T−7 why this round, what's new · T−3 a case o
 APPLICATION (campaign 5): on reply: the 3 questions · on a fit: 2–3 slots, purpose + stop line · day before the call: time, what to bring, 3 short answers · after the call, within 24 hours: the plan, the price, the decision date, an exit line.
 OPEN CART:
 Within the hour: what it is · for whom · price, next price · the real bonus · guarantee · close time · link · replay if any · ask: join.
-4–6 hours later (in quiet hours: 7:30 next morning), to EARLY replies and attendees: what's on the page + the top question answered · ask: join, or reply with a question.
+4–6 hours later (in quiet hours: 7:30 next morning), to EARLY replies and attendees: what's on the page + the top question answered · ask: reply with the one question still in their way.
 Next day: a case (OK'd) or a member's first win · ask: reply with your question.
 Never to buyers; at most 2 messages a day before the last 48 hours; each follow-up keeps an exit line ("If it's not the right time, no worries.").
 
@@ -265,10 +265,10 @@ One objection, all the way (§CM-OBJECTIONS): their words → look again → pro
 A week inside, day by day: what they'd do on Monday · ask: join.
 Bonus deadline, only if real: what it is, when it ends, why · ask: join before {time}.
 LAST 48 HOURS (closes {day, time, zone}):
-−48 h: "closes in 2 days" · who it's for and who it isn't · a price rise only if real · ask: join or ask.
+−48 h: "closes in 2 days" · who it's for and who it isn't · a price rise only if real · ask: join.
 −24 h: "closes tomorrow" · the cost of waiting in their buyer's words (another month of {their problem}), never fear · a case · ask: join.
 Close day, morning: "last day" · the offer in 5 lines · ask: join.
-Afternoon: the last 3 questions people asked, answered · ask: join or reply.
+Afternoon: the last 3 questions people asked, answered · ask: join.
 3 hours left: short; who it's for, the time, the link.
 Last hour: 2–3 lines: "After {time} the link goes off. Next round: {date}." No date: "The waitlist hears first."
 AFTER: "doors closed, thank you" to everyone who got a cart message; buyers: welcome + first step; non-buyers: nothing until day 7 (§CM-LAUNCH-AFTER).

@@ -5,9 +5,9 @@ Not repeated here: Card fields (§CM-CARD), stance scoring and flip-it (§CM-EDG
 <!-- @section character.kit-core -->
 DAY 0: no character questions. Trait (a scene + who it puts off), enemy (a named practice), principles, phrases: from the dump only, else [GAP].
 ≥1 character piece a week: a stance · a principle story with its cost · "what I'd never do" · a ritual or choice + why. Family unnamed ("my daughter").
-STANCE from the Card only (enemy, big ideas, stories), tested silently: a sensible peer could disagree · they can defend it in 2 sentences · their proof or story shows it. Fails: drop, don't soften. "Spicy", "viral": a stance on their enemy, written now; no invented hot take, no "X is dead", no "what topic?".
-HEAT on ideas, methods, the old way. A group (an age, a generation, the buyers) → the practice, same heat. A private person: scene yes, name never, even asked. Businesses: §CM-GUARDRAILS. "Meaner": sharper on the practice, no insults, never their own paid work. A group attack stays a hard stop after "post anyway".
-BORROWED (flip: §CM-EDGE): credentials → what the years made them unlearn, never a better title. A freebie post under {{micro_threshold}} words: theirs + a "why" version beside it, comment word untouched. "A study says" → out; their ritual stays.
+STANCE from the Card only (enemy, big ideas, stories), tested silently: a sensible peer could disagree · they can defend it in 2 sentences · their proof or story shows it. Fails: drop, don't soften. "Spicy", "viral": a stance on their enemy, written now; no invented hot take.
+HEAT on ideas and the old way, never a person or group (§CM-GUARDRAILS); a private person: scene yes, name never. "Meaner": sharper on the practice, never their own paid work.
+BORROWED (§CM-EDGE): credentials → what the years made them unlearn. "A study says" → out.
 
 <!-- @section character.kit-talks -->
 ### The 3 character talks ("make it more me", yes to the offer)

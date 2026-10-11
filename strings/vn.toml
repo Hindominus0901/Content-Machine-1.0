@@ -328,7 +328,7 @@
 "liked.cant_open"   = { text = "Không mở được {what} ở đây, nên không đoán. {{t:next.prefix}} Chụp màn hình thấy cả chữ, hoặc kể lại 2 câu.", src = "85e7a5b06c" }
 "liked.saved"       = { text = "Đã lưu vào Bài {xưng hô} thích: {shape}. Lên kế hoạch {thứ Hai} sẽ lấy ra dùng.", src = "da895e40dc" }
 "liked.make_offer"  = { text = "A) làm bản của {xưng hô} luôn (máy khuyên) B) để dành khung.", src = "2508c2784c" }
-"liked.day0"        = { text = "(Bài đó giữ lại cho {when}, giờ làm video hôm nay trước đã.)", src = "736b88dcd7" }
+"liked.day0"        = { text = "(Bài đó giữ lại cho {when}, giờ làm bài hôm nay trước đã.)", src = "daf686362a" }
 "liked.grid_ratio"  = { text = "khoảng {N}× mức thường của họ", src = "5db6960151" }
 "liked.grid_none"   = { text = "Không có số nên mình không xếp hạng.", src = "fa3055d1eb" }
 "liked.no_watch"    = { text = "Không tự theo dõi kênh được. Mỗi lần lên kế hoạch tháng, gửi 2–3 ảnh chụp, 5 phút là làm lại góc nhìn riêng.", src = "89e8e241c8" }

@@ -21,7 +21,7 @@ seats = the lower of (revenue goal ÷ price) and what they can deliver well;
 close rate = theirs: "Of the last 10 people who asked about working with you, how many paid?";
 leads needed = seats ÷ close rate; warm pool = only people who could buy THIS, asked once: "Of your list, contacts and people who messaged or commented in 90 days, about how many are {buyer}? Friends, family, peers and buyers of something unrelated don't count." Never the raw follower or contact count. Still uncounted after that one ask: the sure part as the floor (class sign-ups, people who messaged in 90 days), marked "(my guess)"; never asked again.
 Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed > the warm pool → say so in one line; they choose: A with fewer seats, or 4 runway weeks first.
-5 Print the math in 3 lines (seats · leads needed · warm pool now), the type and its first step; then the Brief (§CM-LAUNCH-BRIEF) and the calendar (§CM-LAUNCH-DAYS), then the campaign's day cards if the CAMPAIGNS file is loaded (§CM-CAMPAIGNS). Never promise the seats will sell.
+5 Print the math in 3 lines (seats · leads needed · warm pool now), the type and its first step; then the Brief (§CM-LAUNCH-BRIEF) and the calendar (§CM-LAUNCH-DAYS), then the campaign's day cards if CAMPAIGNS is here (its file, or cm-campaigns in the plugin; §CM-CAMPAIGNS). Never promise the seats will sell.
 
 <!-- @section launch-plan.grow-brief -->
 ### Launch Brief and the real limits
@@ -38,7 +38,7 @@ Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed >
 Follow-up (stories, replies, email or Zalo, ads optional) runs from P1 to P7 as a layer, not a day.
 P0 Listen: where are they stuck? Top 5 objections logged in their words (groups, comments: read-only, §CM-RESEARCH) · question post, story poll, same question by email or Zalo · ask: a real question.
 P1 Gift: solves one narrow step and shows the next problem the offer solves · demo video, short text post · ask: the keyword (§CM-CTA-KIT); reply 1 = gift + one A/B question + consent line (§CM-LAUNCH-MESSAGES 2).
-P2 Belief shift: the 3 old beliefs in order (the method · I can't · no time or money) · story post, myths carousel · ask: save, reply with your story.
+P2 Belief shift: the 3 old beliefs in order (the method · I can't · no time or money) · story post, myths carousel · ask: reply with your story.
 P3 Value: one step taught in full, a quick win · ask: try it, tell me.
 P4 Cases and invite: a dated case series, "a week inside"; every number with its context (§CM-LAUNCH-POSTS 5) · invite to the live, class or waitlist.
 P5 Open cart: one complete offer · pinned offer post, FAQ, not-for · link by DM, email or Zalo.

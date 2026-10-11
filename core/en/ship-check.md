@@ -9,11 +9,11 @@ Strategy first (founder, 7 Oct night): ship.kit 0 FOCUS names one pillar and one
 
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
-0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · keyword once in the body + ask
-1 FACTS (numbers, names, quotes, results, a client's act or thought) only theirs or a page read; quotes exact; topics, teaching: your expertise too. Missing → downgrade (process story, founding offer) or ask
-2 STAND-OUT 0–2 each, ≥8, no 0: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance. Hooks, caption line 1: no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again, no "X is Y"
-3 VOICE + BUYER: their tone, rhythm, phrases (≥ half), audience address, no never-words; a buyer stops at line 1, believes it. Fix once
-PRINT: a ready piece → the content only. Missing fact or hard stop → one line ("Needs you · <question>"). WHY only on "why?"
+0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · keyword once in the body + one ask
+1 SOURCE: each scene, number, name, quote, result, client act or thought, cause → effect, their past: from their words, the card or a kept research line, quotes exact; else cut or ask. Teaching, examples: your expertise, listed
+2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Hooks, caption line 1: no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again
+3 VOICE + BUYER: their tone, rhythm, phrases (≥ half; a pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once
+PRINT: the piece; under it "Added by me: …"{{#if phone}} (lines not from them, ≤12 words each){{else}} (§CM-EDGE){{/if}}. Missing fact or hard stop → one line ("Needs you · <one question>"). WHY only on "why?"
 
 <!-- @section ship.card -->
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise

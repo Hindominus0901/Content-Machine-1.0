@@ -1585,6 +1585,38 @@ class RealRepoLevelUps(unittest.TestCase):
                     self.assertIn(f"{stem}-{ed}", first)
                 self.assertIn("Level-ups", first)
 
+    def test_one_level_up_rule_per_route(self):
+        """v13.9 (outside assessment): SKILL.md said "never upload" while the method and the board said "add the
+        file". The rule is one per route: plugin, the companion skill loads, nothing to upload; Project, add the file."""
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            files = {n: zf.read(n).decode("utf-8") for n in zf.namelist() if n.endswith("SKILL.md")}
+        words = {"en": ("never ask the coach to upload a Level-ups file", "Project route", "in the plugin"),
+                 "vn": ("không bao giờ bảo coach tải file Level-ups lên", "cách dùng Project", "dùng plugin")}
+        for ed, (never, project, plugin) in words.items():
+            with self.subTest(ed=ed):
+                pointer = files[f"content-machine/skills/content-machine-{ed}/SKILL.md"].split("---\n\n", 1)[1]
+                pointer = pointer.split("\n", 1)[0]
+                self.assertIn(never, pointer)
+                self.assertIn(project, pointer)
+                for area in LEVELUP_AREAS:
+                    body = files[f"content-machine/skills/cm-{area}-{ed}/SKILL.md"].split("\n## FILE (", 1)[0]
+                    self.assertIn(never, body, area)
+                board = (self.root / "dist" / ed / "Level-ups" / f"BOARD-{ed.upper()}.md").read_text(encoding="utf-8")
+                setup = next(ln for ln in board.splitlines() if "Level-ups/Board" in ln)
+                self.assertIn("Project", setup)                 # §CM-BOARD 2 names both routes
+                self.assertIn(plugin, setup)
+
+    def test_plugin_json_version_is_the_repo_version_with_a_changelog_entry(self):
+        with zipfile.ZipFile(self.root / "dist/content-machine-plugin.zip") as zf:
+            manifest = json.loads(zf.read("content-machine/.claude-plugin/plugin.json"))
+        version = (REPO / "VERSION").read_text(encoding="utf-8").strip()
+        self.assertEqual(manifest["version"], version)
+        self.assertNotEqual(version, "1.0.0")                   # v13.8 shipped content with a 1.0.0 manifest
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertRegex(changelog, rf"(?m)^## \[{re.escape(version)}\]")
+        for part in ("banks", "copywriting"):                   # the description names every companion
+            self.assertIn(part, manifest["description"])
+
     def test_the_kits_level_up_line_names_files_that_exist(self):
         for ed, suffix in (("en", "EN"), ("vn", "VN")):
             kit = (self.root / "dist" / ed / f"CONTENT-MACHINE-{suffix}.md").read_text(encoding="utf-8")
