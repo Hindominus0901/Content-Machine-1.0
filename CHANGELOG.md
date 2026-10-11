@@ -4,6 +4,17 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.13] - 2026-10-12 (v13.13)
+
+Fixes from the v13.12 simulated runs (qa/runs/v1312).
+
+### Changed
+- [buyer] Thin material makes fewer videos, never padded ones: a video with too little real story becomes a written post, or the machine asks for one story first.
+- [buyer] Posts sound more like the coach: the voice pass counts the coach's sentence-ending words in every spoken piece and long post.
+- [buyer] Hooks on email subjects, carousel slide 1 and long-post openings follow the same frames; no client names in hooks; thumbnail text never repeats the title.
+- Kit: ≤30% "Máy tự thêm" paragraphs per video; one idea in ≤3 posts a week; generalizations and claimed speeds are facts (Ship Check line 1); one-ask "Cần"; inbox replies use one pronoun pair; "Máy tự thêm" sits under its post, counted from the top without label lines; long post ≥950 words; a week with ≥4 written slots carries one ≈1,000-word long post. Detail moved to COPY (§CM-REPURPOSE 5–9) and HOOKS.
+- Graders: per-script particle share, video teaching share, idea in >3 posts, on-screen vs title overlap, client names in hooks; misreads fixed (paragraph numbering, chosen hours, comment word, Zalo row, Cần tail, list under a gift box).
+
 ## [1.3.12] - 2026-10-11 (v13.12)
 
 Founder decisions (11 Oct, later): a post a day, cut from all the week's material into many kinds of post; 2–3 content lines per pillar. Overrides v13.11's "Light = 3 pieces a week".

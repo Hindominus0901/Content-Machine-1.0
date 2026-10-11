@@ -121,6 +121,10 @@ first_line_max_sentences = 2              # the founder-approved check (docs/res
 first_line_min_words_en = 4               # ... and with fewer words a riddle ("Why?", "That's not research."; "not a three-word riddle";
                                           #   "63 applications. 2 interviews." is 4 and passes)
 first_line_min_words_vn = 5               #   VN in tiếng ("Vì sao?", "Đắt quá hả?" fail)
+onscreen_title_shared_fail = 2            # v13.13 (founder 11 Oct, v1312 "Khách đang nói thật" over "…khách nói…"): a short's on-screen text
+                                          #   or a long video's thumbnail text that shares this many content words with the first spoken
+                                          #   line / the title fails, even under onscreen_repeat_share; 0 = off (it follows the repeat
+                                          #   share: a share above 1 switches it off too)
 frame_check = true                        # v13.7 (founder on v13.6: "hook cần phải như các cái t gửi m, các cái ảnh"): a short's first
                                           #   line, a text post's line 1 and (v13.10, every Week-1 piece; audit a3 M2) slide 1 and the
                                           #   first subject line (a whole question counts there) fill one of the hook frames (graders.HOOK_FRAMES: give me N
@@ -180,6 +184,10 @@ particle_share_ratio_min = 0.5            # sentences ending in a particle, run 
 particle_share_floor = 0.1                # no written-posts.md: below this share (guide: 1/3 for captions and messages;
                                           #   pieces mix scripts and LinkedIn, and the guide's own "after" lines run 19%)
 particle_min_sentences = 10               # fewer sentences in the run's pieces: not compared
+particle_card_tolerance = 0.10            # the run's written pieces against the Brand Card's "tiểu từ ~N%": beyond ±10 points fails
+spoken_particle_warn = 0.10               # v13.13: each spoken piece (a video script: it has a Câu đầu / Câu cuối line, directions
+spoken_particle_fail = 0.20               #   left out, the Ý n beats read as spoken) against the Brand Card's share, one by one:
+spoken_particle_min_sentences = 8         #   beyond ±10 points a warning, beyond ±20 a failure; a script of fewer sentences is not read
 
 [quality]
 ready_edge_min = 8                        # runtime "Ready": gates pass, Edge >= 8, no pillar at 0
@@ -281,6 +289,10 @@ items = [
 generalization_check = 1                  # a claim about the coach's clients or market ("nhiều cơ sở … nhất", "ai cũng…", "most of my clients…") must trace to the sources (1 = on)
 # The "Máy tự thêm: đoạn 3, 5" / "Added by me: ¶3, ¶5" line names paragraphs only, no cap (founder 11 Oct): every paragraph
 # holding illustrative content is on it, every number on it is a paragraph of the piece.
+teaching_share_max = 0.30                 # v13.13: warn when a video's "Máy tự thêm" paragraphs are more than this share of its script
+                                          #   paragraphs (up to the Câu cuối): a script mostly the machine's teaching is not the coach's.
+                                          #   The list is read under the label count and under the counts from the top (with and without
+                                          #   the direction blocks, line by line): the reading with the fewest defects is the one reported
 
 [week_dedupe]                             # check week_dedupe (graders.py; v13.9 fixK9, WEEK CROSS-READ)
 sentence_min_words = 8                    # the same sentence (normalised) of at least this many words in 2 pieces of a batch fails
@@ -289,6 +301,10 @@ belief_max_pieces = 2                     # the card's key_belief line in more t
 paraphrase_overlap = 0.6                  # v13.10: two sentences in different pieces of the run (Day 0 + Week 1, across replies) sharing
                                           # this share of content words (of the longer one) repeat each other in meaning: fail
 paraphrase_min_words = 5                  # ... counted only when both sentences hold at least this many content words
+idea_overlap = 0.75                       # v13.13 (founder 11 Oct: one idea feeds 2-3 posts a week): an idea of the ledger (the Week-1 table's
+idea_min_shared = 3                       #   Idea cells, the card's method, principles and idea_shifts) is said in a post when one of its
+idea_max_posts = 3                        #   sentences holds this share of the idea's words (at least idea_min_shared); in more than
+                                          #   idea_max_posts posts of the run it fails, whatever the formats
 verbatim_overlap = 0.8                    # v13.12 (founder 11 Oct, a post a day cut into many formats): between posts of
                                           #   different formats only a near-verbatim sentence (this share) fails; the 0.6
                                           #   paraphrase counts within one format (unknown format: counted as the same)

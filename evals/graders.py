@@ -3470,7 +3470,8 @@ _EMOJI_NOT = re.compile(r"[\u2190-\u21ff\u2500-\u25ff\u00a9\u00ae\u2122]")   # a
 VN_NATURAL_DEFAULTS = {"min_tieng": 15, "patterns_per_100_max": 2.0, "patterns_min_hits": 2, "bold_max": 0,
                        "emoji_line_max": 2, "ai_emoji": ["🚀", "💡", "✨", "🎯", "🌟"], "em_dash_max": 0,
                        "particle_share_ratio_min": 0.5, "particle_share_floor": 0.1, "particle_min_sentences": 10,
-                       "particle_card_tolerance": 0.10}
+                       "particle_card_tolerance": 0.10,
+                       "spoken_particle_warn": 0.10, "spoken_particle_fail": 0.20, "spoken_particle_min_sentences": 8}
 
 
 def _is_emoji(ch: str) -> bool:
@@ -3691,7 +3692,9 @@ def check_vn_natural(run: Run) -> dict:
     the coach's own posts that they pasted in the run (pasted_posts; all of written-posts.md when none was pasted; no
     posts: a floor), or, when the run's Brand Card carries its share (dialect "… tiểu từ ~45% …", card_particle_share),
     against that number ± particle_card_tolerance (10 points); the spoken lines' share is reported in details. The pieces leave out titles, bare labels, dated
-    notes and the card top, and count a reprinted box once (_vn_pieces; review retest-vg4-g5 G37). A pattern the
+    notes and the card top, and count a reprinted box once (_vn_pieces; review retest-vg4-g5 G37). v13.13: with a card
+    share, each spoken piece (a video script) is also read alone against it: warn beyond ±spoken_particle_warn (10
+    points), fail beyond ±spoken_particle_fail (20). A pattern the
     coach's own posts or [voice] do_say hold is theirs and does not count. EN runs: n/a."""
     if run.lang != "vn":
         return {"id": "vn_natural", "pass": True, "status": "n/a", "evidence": []}
@@ -3778,10 +3781,35 @@ def check_vn_natural(run: Run) -> dict:
         elif share < float(cfg["particle_share_floor"]):
             ev.append(f"pieces end {ends} of {sents} sentences with a particle ({share:.0%}, min "
                       f"{float(cfg['particle_share_floor']):.0%}; no written-posts.md)")
+    # v13.13: each spoken piece (a video script: it has a "Câu đầu" / "Câu cuối" line) against the Brand Card's share,
+    # one by one, the direction lines left out and the "Ý n" beats read as spoken: a run can hold the card's share on
+    # average while one video, read aloud, is flat written Vietnamese. Warn beyond ±spoken_particle_warn (10 points),
+    # fail beyond ±spoken_particle_fail (20); a script of fewer than spoken_particle_min_sentences sentences is not read.
+    warns, spoken = [], []
+    if target is not None:
+        for r, text in _vn_pieces(run):
+            if not any(SPOKEN_LINE_RE.match(ln) for ln in text.splitlines()):
+                continue
+            kept = [ln for ln in _voice_scrub(text, "vn").splitlines() if not DIRECTION_LINE_RE.match(ln)]
+            sp_e, sp_n = particle_share(["\n".join(_piece_lines("\n".join(kept)))])
+            if sp_n < int(cfg["spoken_particle_min_sentences"]):
+                continue
+            gap = abs(sp_e / sp_n - target)
+            spoken.append({"turn": r.turn, "share": round(sp_e / sp_n, 2), "sentences": sp_n})
+            msg = (f"{_turn(r)}: the spoken script ends {sp_e} of {sp_n} sentences with a particle ({sp_e / sp_n:.0%}); "
+                   f"the Brand Card says {target:.0%} (")
+            if gap > float(cfg["spoken_particle_fail"]) + 1e-9:
+                ev.append(msg + f"{gap * 100:.0f} points off, max ±{float(cfg['spoken_particle_fail']) * 100:.0f})")
+            elif gap > float(cfg["spoken_particle_warn"]) + 1e-9:
+                warns.append(msg + f"{gap * 100:.0f} points off, ±{float(cfg['spoken_particle_warn']) * 100:.0f} is the band)")
+        details["spoken_pieces"] = spoken
     if not seen:
         return {"id": "vn_natural", "pass": True, "status": "n/a", "evidence": [], "details": details}
-    return {"id": "vn_natural", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
-            "details": details}
+    out = {"id": "vn_natural", "pass": not ev, "status": "fail" if ev else ("warn" if warns else "pass"),
+           "evidence": ev, "details": details}
+    if warns:
+        out["warnings"] = warns
+    return out
 
 
 # ---------------------------------------------------------------- vn_messages (review VG-13)
@@ -5713,6 +5741,9 @@ QUIET_VERBS = {"dm me", "message me", "nhắn"}
 NOT_CTA_WORDS = {"riêng", "tin", "lại", "cho", "với", "vào", "thêm", "it", "this", "that", "the", "a", "me", "us"}
 
 
+# An address phrase is never a comment word: "chị ơi", "anh chị ơi", "em ơi", "dạ chị" (VN) / "hey you" (EN).
+ADDRESS_PHRASE_RE = re.compile(r"^(?:(?:da|a|ha|oi|vang)\s+)?(?:anh|chi|em|co|chu|bac|ban|minh|toi|tui|cac ban|anh chi|"
+                               r"hey|hi|hello|dear)(?:\s+(?:anh|chi|em|oi|ban|nhe|nha|a))*\s*(?:oi|ay)?$")
 _caps_or_quoted = ck.caps_or_quoted         # a keyword as an ask prints it: in capitals or in quotes
 
 
@@ -5737,11 +5768,15 @@ def cta_keyword(run: Run, text: str) -> tuple[str, bool] | None:
         m = next((m for m in p.finditer(plain) if marked(m.start(1), m.end(1))), None) if p else None
         if m:
             found.append((m.start(), m.group(1), quiet))
-    for m in CTA_FALLBACK_RE.finditer(plain):
+    # v13.13: the kit's own CTA slot ("Comment {WORD} là mình gửi {payoff}.") names the keyword; the looser "nhắn WORD
+    # chị …" shape is read only when no slot matched, and never on an address phrase ("nhắn "chị ơi chị suy nghĩ tới
+    # đâu rồi"" is a line the coach is told not to send, not the keyword; v1312-sales read "chị ơi")
+    for m in CTA_FALLBACK_RE.finditer("" if found else plain):
         verb = (m.group(1) or m.group(3)).casefold()
         word = m.group(2) or m.group(4)
         g = 2 if m.group(2) else 4
-        if _norm_word(word) in commands or word.split()[0].casefold() in NOT_CTA_WORDS:
+        if _norm_word(word) in commands or word.split()[0].casefold() in NOT_CTA_WORDS \
+                or ADDRESS_PHRASE_RE.match(ck.fold(word)):
             continue
         if (verb == "nhắn" and TIN_BEFORE_RE.search(plain[:m.start()])) or not marked(m.start(g), m.end(g)):
             continue
@@ -6039,6 +6074,58 @@ def film_text_version(run: Run, film: Reply) -> str | None:
     return "\n".join([first] + text)
 
 
+FIRST_LABEL_RE = re.compile(FIRST_LINE_RE.pattern.replace("(.+)$", "(.*)$"), re.I)
+
+
+def _first_spoken_line(p: Piece) -> str:
+    """A script's first spoken line: the text after "Câu đầu:" / "First line:", or the line under a label that stands alone
+    ("Câu đầu:" then the line, v1312-copywriter)."""
+    lines = [ck.plain_line(x) for x in p.body.splitlines()]
+    for k, raw in enumerate(lines):
+        m = FIRST_LABEL_RE.match(raw)
+        if not m:
+            continue
+        if m.group(1).strip():
+            return m.group(1).strip().strip('"“” ')
+        return next((x for x in lines[k + 1:] if x.strip() and not FENCE_RE.match(x)), "").strip().strip('"“” ')
+    return _first_line_of(p)
+
+
+def week_message_formats(run: Run, week: list[Reply]) -> tuple[bool, bool]:
+    """(an email, a Zalo message) in the Week-1 replies: a piece titled for one ("Tin Zalo · thứ Ba, 13/10 · …", "Mon,
+    Oct 19 · the Monday Number (email)", v13.13: behind an "N7 ·" label too), a subject line, a day line naming an
+    email, and the Week-1 table's own Zalo row ("CN 18/10 | tin Zalo | …")."""
+    has_email = has_zalo = False
+    for r in week:
+        for p in r.pieces:
+            head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
+            head = re.sub(r"^N\d{1,2}\s*[·•|:.)\-–—]+\s*", "", head)      # v13.13: "N7 · Chủ nhật 18/10 · tin Zalo · …"
+            day = DAY_TITLE_RE.match(head)
+            head = head[day.end():] if day else head
+            m = FORMAT_TITLE_RE.match(head)
+            if (m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I)) \
+                    or re.search(r"e-?mail|newsletter", p.title, re.I) and (LABEL_RE.match(p.title) or day):
+                has_email = True                     # "Mon, Oct 19 · the Monday Number (email)" (G25)
+            if m and re.search(r"(?<!\w)zalo(?!\w)", m.group(0), re.I) and not REPLY_LABEL_RE.search(p.title):
+                has_zalo = True                      # "Tin Zalo · thứ Ba, 13/10 · gửi người quen …"
+        for ln in r.lines:
+            if re.match(r"^\W*(?:subject|tiêu đề)(?: lines?)?\s*\d*\s*(?:\([^)\n]*\))?\s*:", ln.plain, re.I):
+                has_email = True                     # a subject line, in a box or not
+            day = DAY_TITLE_RE.match(ln.plain) if not ln.block else None
+            m = FORMAT_TITLE_RE.match(ln.plain[day.end():]) if day else None
+            if m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I):
+                has_email = True                     # "Wed, Oct 7 · Email to your list"
+    # v13.13: the Week-1 table's own Zalo row counts too ("CN 18/10 | tin Zalo | …"): the plan names the Zalo post
+    table = week1_table(run)
+    if table:
+        fmt = next((k for k, c in enumerate(table[1]) if re.search(r"format|piece|dang|loai", ck.fold(c))), 1)
+        for row in table[2]:
+            cell = row[fmt] if fmt < len(row) else ""
+            has_zalo = has_zalo or bool(re.search(r"(?<!\w)zalo(?!\w)", cell, re.I)
+                                        and not REPLY_LABEL_RE.search(" ".join(row[:fmt + 1])))
+    return has_email, has_zalo
+
+
 def check_day0_shape(run: Run) -> dict:
     """wf15 §1 deliverables a transcript shows (reviews G8, G11-G14, G17, VG-3-VG-7; each item caught a real defect):
     - FILM TODAY: the caption in a copy box; a keyword CTA, and a comment-keyword CTA offers the quiet ask
@@ -6105,7 +6192,15 @@ def check_day0_shape(run: Run) -> dict:
     word_map = next((r for r in reversed(upto) if "map.word" in map_lines(run, r)), None)
     word = word_head(map_lines(run, word_map)["map.word"]) if word_map else ""
     ev = []
-    if word and cta and _norm_word(cta[0]) != word and ck.fold(_norm_word(cta[0])) != ck.fold(word):
+    # v13.13: a VN NIỀM TIN / QUAY HÔM NAY piece asks for its own comment word, taken from its hook (convert.md 1: "{WORD}:
+    # CHỮ COMMENT, ≥2 tiếng của người xem trong hook"); the season keyword (YOUR WORD) is the CONVERT one. A comment word
+    # of 2+ tiếng that the piece's first spoken line holds is that word, not a mismatch (v1312: SUY NGHĨ, HỎI GIÁ)
+    from_hook = False
+    if word and cta and own is not None and run.lang == "vn":
+        ctoks = ck.copy_tokens(ck.fold(cta[0]))
+        line = " " + " ".join(ck.copy_tokens(ck.fold(_first_spoken_line(own)))) + " "
+        from_hook = len(ctoks) >= 2 and f" {' '.join(ctoks)} " in line
+    if word and cta and _norm_word(cta[0]) != word and ck.fold(_norm_word(cta[0])) != ck.fold(word) and not from_hook:
         ev.append(f'{_turn(film)}: the CTA asks for "{cta[0]}" but YOUR WORD is "{word}"')
     item("YOUR WORD is the CTA keyword", ev, ran=bool(word and cta))
 
@@ -6171,25 +6266,7 @@ def check_day0_shape(run: Run) -> dict:
     week = [r for r in week1_replies(run) if film is not None and r.index >= film.index]
     ev = []
     if (named or zalo_list) and week:
-        has_email = has_zalo = False
-        for r in week:
-            for p in r.pieces:
-                head = re.sub(r"^[\W\d_]+", "", re.sub(r"^\s*#{1,6}\s*", "", p.title))
-                day = DAY_TITLE_RE.match(head)
-                head = head[day.end():] if day else head
-                m = FORMAT_TITLE_RE.match(head)
-                if (m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I)) \
-                        or re.search(r"e-?mail|newsletter", p.title, re.I) and (LABEL_RE.match(p.title) or day):
-                    has_email = True                     # "Mon, Oct 19 · the Monday Number (email)" (G25)
-                if m and re.search(r"(?<!\w)zalo(?!\w)", m.group(0), re.I) and not REPLY_LABEL_RE.search(p.title):
-                    has_zalo = True                      # "Tin Zalo · thứ Ba, 13/10 · gửi người quen …"
-            for ln in r.lines:
-                if re.match(r"^\W*(?:subject|tiêu đề)(?: lines?)?\s*\d*\s*(?:\([^)\n]*\))?\s*:", ln.plain, re.I):
-                    has_email = True                     # a subject line, in a box or not
-                day = DAY_TITLE_RE.match(ln.plain) if not ln.block else None
-                m = FORMAT_TITLE_RE.match(ln.plain[day.end():]) if day else None
-                if m and re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", m.group(0), re.I):
-                    has_email = True                     # "Wed, Oct 7 · Email to your list"
+        has_email, has_zalo = week_message_formats(run, week)
         if named and not has_email:
             ev.append(f"{_turn(week[0])}: the coach named an email list, and Week 1 has no email")
         elif zalo_list and not (has_email or has_zalo):
@@ -6306,6 +6383,8 @@ ONSCREEN_REPEAT_SHARE = 0.6      # acceptance [hook_lab] onscreen_repeat_share: 
 ONSCREEN_MIN_WORDS = 2           # acceptance [hook_lab] onscreen_min_words: content words needed to judge the repeat
 ONSCREEN_REPEAT_MIN_SHARED = 3   # acceptance [hook_lab] onscreen_repeat_min_shared: words that must be shared with the first line
                                  #   before a repeat is read (two shared words, "gặp" and "khách" used in two senses, are no repeat)
+ONSCREEN_TITLE_SHARED_FAIL = 2   # acceptance [hook_lab] onscreen_title_shared_fail (v13.13): an on-screen or thumbnail text sharing
+                                 #   this many content words with its title / first line fails (0 switches the check off)
 ONSCREEN_NEW_WORDS_MIN = 1       # acceptance [hook_lab] onscreen_new_words_min: content words the on-screen text must hold that are
                                  #   in neither the first line nor the first frame (0 switches the check off)
 # Words that carry no idea, per language (the two never mix: "than" is an EN function word and the VN verb "to
@@ -6643,7 +6722,7 @@ def hook_hedges(text: str, where: str, lang: str) -> list[str]:
 # subjects"): a text post's line 1, a carousel's or PDF's slide 1, an email's subject lines. Found by the label or
 # title of the piece or copy box that holds them; a one-to-one message (DM, Zalo, inbox reply) opens in the coach's own
 # words and is never read.
-SLIDE1_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:slide|trang|ảnh)\s*0?1\s*(?:\([^)\n]*\))?\s*[:.)–—-]\s*(?:\*\*|__)?\s*"
+SLIDE1_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:slide|trang|ảnh|page)\s*0?1(?:\s*/\s*\d{1,2}|\s+of\s+\d{1,2})?\s*(?:\([^)\n]*\))?\s*[:.)–—-]\s*(?:\*\*|__)?\s*"
                        r"(\S.*)$", re.I)
 SUBJECT_LABEL_RE = re.compile(r"^[\s>*_`-]*(?:\*\*|__)?\s*(?:subject(?:\s+lines?)?|tiêu đề(?:\s+thư)?)\s*\d*\s*"
                               r"(?:\([^)\n]*\)|,[^:\n]{0,24})?\s*(?:\*\*|__)?\s*:\s*(.*)$", re.I)
@@ -6726,6 +6805,7 @@ def _hook_cfg(run: Run) -> dict:
             "min_words": int(cfg.get("onscreen_min_words", ONSCREEN_MIN_WORDS)),
             "new_words_min": int(cfg.get("onscreen_new_words_min", ONSCREEN_NEW_WORDS_MIN)),
             "min_shared": int(cfg.get("onscreen_repeat_min_shared", ONSCREEN_REPEAT_MIN_SHARED)),
+            "title_shared": int(cfg.get("onscreen_title_shared_fail", ONSCREEN_TITLE_SHARED_FAIL)),
             "max_chars": int(cfg.get("headline_max_chars_vn" if run.lang == "vn" else "headline_max_chars_en",
                                      HEADLINE_MAX_CHARS[run.lang]))}
 
@@ -6761,6 +6841,14 @@ def short_findings(s: dict, cfg: dict, lang: str, topics=()) -> dict:
                 ("the first line" if s.get("first") else "the first frame")
             out["adds"].append(f'{where}on-screen "{on}" has no word that is not already in {source} '
                                f'({", ".join(got[0][:5])}): it paraphrases them; give it a number, a contrast or a question')
+    if s.get("first") and not out["repeat"] and not out["adds"] and cfg.get("title_shared") and cfg["share"] <= 1.0:
+        # v13.13: the text on the screen and the line that titles the video share two content words or more: the screen
+        # says the title again in part (v1312: "Khách đang nói thật" over "…khách nói…"); the repeat share switched off
+        # (above 1) switches this off too
+        found = onscreen_repeat(s["on"], s["first"], cfg["min_words"], lang)
+        if found and len(found[1]) >= int(cfg["title_shared"]):
+            out["repeat"].append(f'{where}on-screen "{on}" shares {len(found[1])} content words with the first line '
+                                 f'({", ".join(found[1][:5])}); max {int(cfg["title_shared"]) - 1}: it should add, not repeat')
     for fam, words in flat_claims(s["on"], "on", lang):
         out["flat_on"].append(f'{where}flat claim on screen "{on}" ({fam}: "{words}"): show a scene, a flip or the '
                               "buyer's words instead")
@@ -6914,6 +7002,9 @@ def thumb_findings(t: dict, cfg: dict, lang: str, frames_on: bool = True) -> tup
         if got and len(got[1]) < cfg["new_words_min"]:
             repeat.append(f'{where}thumbnail "{on}" has no word that is not already in its title '
                           f'({", ".join(got[0][:5])}): "{title}"')
+        elif found and cfg.get("title_shared") and cfg["share"] <= 1.0 and len(found[1]) >= int(cfg["title_shared"]):
+            repeat.append(f'{where}thumbnail "{on}" shares {len(found[1])} content words with its title '
+                          f'({", ".join(found[1][:5])}): "{title}"; max {int(cfg["title_shared"]) - 1}, it should add, not repeat')
     hit = onscreen_method(t["on"], lang) if frames_on else ""
     if hit:
         method.append(f'{where}thumbnail text states the method ("{hit}"): a big number, the result, or a verdict or '
@@ -6978,6 +7069,61 @@ def public_self_hits(text: str, words: set[str]) -> list[str]:
     return [m.group(0) for m in VN_SELF_CHAT.finditer(body) if m.group(1).casefold() in words]
 
 
+# A client the coach names by role: "chị coach tài chính" (a kin word, "coach", the field), read in a coach sentence that
+# also says client / khách / học viên. A buyer's own job ("chủ spa", "lễ tân") is the audience a hook calls out, never a
+# client, so it is no role-name here.
+CLIENT_ROLE_RE = re.compile(r"(?<!\w)(?:chị|anh|cô|chú|bác|em|bạn)\s+coach(?:\s+[^\W\d_]+){1,2}", re.I)
+PLATFORM_NAMES = {"messenger", "zalo", "facebook", "tiktok", "instagram", "youtube", "zoom", "claude", "google", "notion",
+                  "linkedin", "canva", "capcut", "inbox", "page", "seen", "comment", "email"}
+CLIENT_WORD_RE = re.compile(r"(?<!\w)(?:khách|client|customer|học viên|student|member)(?!\w)", re.I)
+TITLE_NAME_RE = re.compile(r"(?<!\w)(?:bác sĩ|giám đốc|luật sư|cô giáo|thầy|dr\.?|mr\.?|mrs\.?|ms\.?)\s+"
+                           r"((?-i:[A-ZÀ-Ỹ][^\W\d_]+))", re.I)
+
+
+def client_names(run: Run) -> list[str]:
+    """The people the coach named as their clients, from the coach's own words (_coach_own_text: someone else's pasted
+    post left out): a kin word + a capitalised name ("chị Trâm", "anh Tài"), a title + a name ("bác sĩ Long"), an EN
+    "client Priya" / "Mr Lee", and a role in a sentence that also says client / khách ("chị coach tài chính"). The
+    coach's own name (persona display_name) and the NAME_STOP words are never a client. v13.13: a hook names no client."""
+    sources = third_party_sources(run)
+    own = {w.casefold() for w in re.findall(r"[^\W\d_]+", str(run.persona.get("display_name", "")))}
+    found: list[str] = []
+    for i, t in enumerate(run.turns):
+        if t.role != "coach":
+            continue
+        text = _coach_own_text(run, i, t, sources)
+        if run.lang == "vn":
+            names = [_cap_name(m.group(1)).split(" ")[0] for m in KIN_NAME_RE.finditer(text)] \
+                + [m.group(1) for m in TITLE_NAME_RE.finditer(text)]
+        else:
+            names = [m.group(1) for pat in EN_NAME_RES for m in pat.finditer(text)]
+        found += [n for n in names if len(n) >= 2 and n.casefold() not in NAME_STOP | PLATFORM_NAMES
+                  and n.casefold() not in own]
+        for sentence in re.split(r"(?<=[.!?\n])\s+", text):
+            if CLIENT_WORD_RE.search(sentence):
+                found += [m.group(0).strip() for m in CLIENT_ROLE_RE.finditer(sentence)]
+    return list(dict.fromkeys(found))
+
+
+def hook_client_names(text: str, names: list[str]) -> list[str]:
+    """The clients' names (client_names) a hook line holds. A name is matched as written (a capital: "Tài" is a person,
+    "tài chính" is not); a bare name at the start of the line is read only after a kin word, so "Tài chính" opening a
+    hook is no client."""
+    body = ck.straight_quotes(ck.nfc(text or ""))
+    hits = []
+    for name in names:
+        if " " in name:
+            if re.search(r"(?<!\w)" + re.escape(name) + r"(?!\w)", body, re.I):
+                hits.append(name)
+            continue
+        for m in re.finditer(r"(?<!\w)((?:chị|anh|cô|chú|bác|em|bạn|bác sĩ)\s+)?" + re.escape(name) + r"(?!\w)", body, re.I):
+            word = m.group(0).split()[-1]
+            if m.group(1) or (word == name and body[:m.start()].strip() and not re.search(r"[.!?…:]\s*$", body[:m.start()])):
+                hits.append(name)
+                break
+    return hits
+
+
 def check_hook_lab(run: Run) -> dict:
     """The defects of the founder's Day 0 that no grader read (qa/standards/hook-lab.md HL6-HL9; reviews retest-ft1
     fix 2, retest-ft2 §7 and §8 fix 8), on every hook the machine printed:
@@ -7003,6 +7149,10 @@ def check_hook_lab(run: Run) -> dict:
     - v13.8 (§CM-HOOKS 4): the repeat share is 0.6, an imperative + what to do it to ("tăng giá combo.", "nộp trước
       ngày 20.": ONSCREEN_IMPERATIVE) states the method, and a long video's thumbnail text (hook_thumbs) is held to the
       same repeat, paraphrase and method checks against its title.
+    - v13.13: an on-screen text or a thumbnail sharing onscreen_title_shared_fail (2) content words with the first line /
+      the title fails; a hook (a short's on-screen text, first line and caption's line 1, a slide 1, a text post's line 1,
+      a subject line, a thumbnail) names no client the coach gave (client_names: "chị Trâm", "bác sĩ Long"). The frame
+      check already runs on a subject line, a slide 1 and a text post's (a long post's) line 1.
     A warning (the check still passes) when a short's last line names the method instead of landing the answer.
     A proxy: the rubric's other items (HL1-HL5, HG1-HG3) need a reader. n/a when the run printed none of these."""
     cfg = _hook_cfg(run)
@@ -7076,6 +7226,18 @@ def check_hook_lab(run: Run) -> dict:
         if h["kind"] in ("slide", "subject") and not (h["kind"] == "subject" and h["n"] > 1) \
                 and len(h["text"]) > cfg["max_chars"]:
             long.append(f'{where}{what} is {len(h["text"])} characters, over {cfg["max_chars"]}: "{_short(h["text"], 70)}"')
+    # v13.13 (PRINCIPLES.md item 3: a hook is the buyer's, never an insider's): a hook names no client the coach gave
+    clients = client_names(run)
+    named = []
+    if clients:
+        hooks = [(f"turn {s['turn']}: ", key, s.get(key, "")) for s in shorts for key in ("on", "first", "caption")]
+        hooks += [(f"turn {h['turn']}: ", names[h["kind"]] + (f" {h['n']}" if h["kind"] == "subject" else ""), h["text"])
+                  for h in heads]
+        hooks += [(f"turn {t['turn']}: ", "thumbnail", t["on"]) for t in thumbs]
+        for where, what, text in hooks:
+            for name in hook_client_names(text, clients):
+                named.append(f'{where}the {"on-screen text" if what == "on" else what} names a client '
+                             f'("{name}"): a hook is the buyer\'s scene, not the coach\'s client: "{_short(text, 60)}"')
     items = [
         {"item": "on-screen text adds to the first spoken line (never repeats it)", "pass": not repeat,     # thumbnails vs titles too
          "evidence": list(dict.fromkeys(repeat))},
@@ -7095,6 +7257,8 @@ def check_hook_lab(run: Run) -> dict:
          "evidence": list(dict.fromkeys(frame))},
         {"item": "the on-screen text never states the method", "pass": not method,
          "evidence": list(dict.fromkeys(method))},
+        {"item": "no hook names a client the coach gave (a name or a role)", "pass": not named,
+         "evidence": list(dict.fromkeys(named))},
     ]
     passed = all(i["pass"] for i in items)
     out = {"id": "hook_lab", "pass": passed, "status": "pass" if passed else "fail", "items": items,
@@ -7665,9 +7829,10 @@ def check_strategy_doc(run: Run) -> dict:
 # What the machine prints as a piece must trace to the coach, the Brand Card or the research log; a week's pieces must not
 # repeat each other; the VN house style (no em dash, one pet phrase, one ask, one question in "Cần …"). Thresholds in
 # acceptance.toml [source_check], [week_dedupe], [style]; the defaults below apply without them.
-SOURCE_DEFAULTS = {"generalization_check": 1}
+SOURCE_DEFAULTS = {"generalization_check": 1, "teaching_share_max": 0.30}
 DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2,
-                   "paraphrase_overlap": 0.6, "paraphrase_min_words": 5, "verbatim_overlap": 0.8}
+                   "paraphrase_overlap": 0.6, "paraphrase_min_words": 5, "verbatim_overlap": 0.8,
+                   "idea_overlap": 0.75, "idea_min_shared": 3, "idea_max_posts": 3}
 STYLE_DEFAULTS = {"pet_phrase_max": 1, "asks_max": 1, "needs_questions_max": 1, "needs_words_max": 20}
 
 ADDED_LABEL_RE = re.compile(r"^[\s>*_•-]*(?:máy tự thêm|added by me)\s*[*_]*\s*[:：]\s*[*_]*\s*(.*)$", re.I)
@@ -7689,7 +7854,10 @@ NAME_STOP = {"em", "anh", "chị", "bạn", "cô", "chú", "bác", "dạ", "ơi"
 # only an address word may follow "Cần", so a prose line "Cần 3 thứ: …" is no Needs line.
 NEEDS_LINE_RE = re.compile(r"^\W*(?:(?:needs you|cần(?:\s+\S+){0,2}?)\s*·|(?:needs you|cần(?:\s+(?:bạn|chị|anh|em|cô|chú|"
                            r"mình|anh chị|các bạn))?)\s*[:：])\s*(.+)$", re.I)
-NEEDS_TAIL_RE = re.compile(r"\s*(?:I won'?t make it up|[^.?!]{0,12}không bịa)[^\n]*$|\s*\((?:or say|hoặc gõ)[^)]*\)", re.I)
+NEEDS_TAIL_RE = re.compile(r"\s*(?:I won'?t make it up|[^.?!]{0,12}không bịa)[^\n]*$|\s*\((?:or say|hoặc gõ)[^)]*\)"
+                           # v13.13: the kit's VN tail ({tự xưng} không đoán bừa; gõ "bỏ qua" cũng được) is its own
+                           # string (verdict.needs), not a second ask: v1312 counted its ";" and "gõ" as one
+                           r"|\s*\([^()]{0,16}không (?:đoán bừa|bịa)[^()]*\)\s*$", re.I)
 NEEDS_JOIN_RE = re.compile(r"(?<!\w)(?:và|and)(?!\w)|;")
 _ASK_VERB = (r"(?:comment|reply|dm|message|send|type|text|book|join|sign up|subscribe|follow|share|save|click|tap|"
              r"gõ|nhắn|bình luận|để lại|inbox|đăng ký|theo dõi|chia sẻ|lưu lại|bấm|tải|liên hệ|đặt lịch|trả lời|chat)")
@@ -7795,7 +7963,10 @@ def piece_units(run: Run) -> list[PieceUnit]:
         for at, items in lists.items():
             owner = [u for u in ordered if u.first <= at]
             if owner:
-                owner[-1].carried.append(items)
+                # v13.13: a "Máy tự thêm" line printed under the gift page (a bare box after the post, v1312-sales N5)
+                # belongs to the post it follows, not to the gift's one page
+                posts = [u for u in owner if u.key[1] != "box"]
+                (posts[-1] if owner[-1].key[1] == "box" and posts else owner[-1]).carried.append(items)
             elif ordered:
                 ordered[0].carried.append(items)
     return units
@@ -7867,12 +8038,42 @@ def piece_paragraphs(text: str) -> list[tuple[int, str]]:
     return [(n, "\n".join(lines)) for n, lines in paras]
 
 
+def piece_blocks(text: str, staging: bool = True, lines: bool = False) -> list[tuple[int, str]]:
+    """A piece's paragraphs counted by position, "from the top" (§CM-EDGE "đếm từ trên"): a blank line starts one, and so
+    does a "Ý 2:" / "Slide 3:" / "Trang 4:" / "2." label line; the label's own number is not read, so a numbered
+    heading ("1. Để anh về bàn với vợ") cannot reset the count. `staging` False leaves out the blocks that are
+    directions only ("Chữ trên màn hình: …", "Khung hình đầu: …"), the way a script counts its spoken paragraphs
+    (Câu đầu = 1, Ý 1 = 2 …). `lines` counts every line (a caption's, an email body's: "one line = one đoạn", v1312
+    copywriter N5). The machine has used all three (v1312: sales counted the direction blocks, copywriter did not and
+    counted caption lines), so check_source_check reads a list under any of them (v13.13)."""
+    paras: list[list[str]] = []
+    cur: list[str] | None = None
+    for ln in text.splitlines():
+        if not ln.strip():
+            cur = None
+            continue
+        if lines:
+            if not re.fullmatch(r"\W*[^\W\d_][^:\n]{0,30}:\W*", ln) and not FENCE_RE.match(ln):   # a bare "Caption:" is no line
+                paras.append([ln])
+            continue
+        if cur is None or PARA_LABEL_RE.match(ln):
+            cur = [ln]
+            paras.append(cur)
+        else:
+            cur.append(ln)
+    if not staging:
+        paras = [p_ for p_ in paras if not all(DIRECTION_LINE_RE.match(x) for x in p_)]
+    return [(n, "\n".join(p_)) for n, p_ in enumerate(paras, 1)]
+
+
 def added_paragraphs(items: list[str]) -> tuple[set[int], list[str]]:
     """The paragraph numbers an "Added by me" line names, and the items that are no paragraph reference (old-style
-    lines, facts)."""
+    lines, facts). A closing note without a figure in brackets ("đoạn 6, 7 (kịch bản, đếm từ trên)") says how the
+    paragraphs were counted; it is no fact and is left out (v13.13)."""
     nums: set[int] = set()
     bad: list[str] = []
     for item in items:
+        item = re.sub(r"\s*\([^()\d]*\)\s*$", "", item.strip())
         for part in re.split(r"\s*(?:,|;|·|\band\b|\bvà\b)\s*", item.strip().strip(".")):
             part = part.strip()
             if not part:
@@ -7886,6 +8087,43 @@ def added_paragraphs(items: list[str]) -> tuple[set[int], list[str]]:
     return nums, bad
 
 
+def paragraph_reading(text: str, listed: set[int], has_list: bool, label: str = "") -> tuple[list[str], list[tuple[int, str]]]:
+    """(defects, paragraphs) of a piece against its "Máy tự thêm" numbers. The list is read under the counts from the top
+    (a script without its direction blocks, with them, line by line) and under the label count (a "Ý 2" is ¶2); the
+    reading with the fewest defects is the one reported (the first on a tie, the script without its direction blocks). v13.13: the machine counted both ways in
+    v1312 (sales included "Chữ trên màn hình" and "Khung hình đầu" as paragraphs, copywriter did not), and the grader's
+    label count was one off either way."""
+    best, paras = None, []
+    for cand in (piece_blocks(text, False), piece_blocks(text, True), piece_paragraphs(text),
+                 piece_blocks(text, False, True)):
+        numbers = {n for n, _ in cand}
+        got = []
+        for n in sorted(listed - numbers):
+            got.append(f'{label}: the added line names ¶{n}, the piece has no such paragraph ({len(cand)} in all)')
+        for n, ptext in cand:
+            m = ILLUSTRATIVE_RE.search(ptext)
+            if not m:
+                continue
+            if not has_list:
+                got.append(f'{label}: illustrative content ("{_short(m.group(0), 24)}") with no "Máy tự thêm / Added by me" line')
+                break
+            if n not in listed:
+                got.append(f'{label}: ¶{n} holds illustrative content ("{_short(m.group(0), 24)}") and is not on the '
+                           '"Máy tự thêm / Added by me" line')
+        if best is None or len(got) < len(best):
+            best, paras = got, cand
+    return best or [], paras
+
+
+def teaching_share(paras: list[tuple[int, str]], listed: set[int]) -> tuple[float, int, int]:
+    """(share, listed, total) of a video's script paragraphs on the "Máy tự thêm" line. The script ends at its "Câu cuối"
+    (the caption after it is no script paragraph)."""
+    end = max((n for n, ptext in paras if any(SPOKEN_LINE_RE.match(x) for x in ptext.splitlines())), default=paras[-1][0])
+    script = {n for n, _ in paras if n <= end}
+    hit = len(script & listed)
+    return hit / len(script), hit, len(script)
+
+
 def check_source_check(run: Run) -> dict:
     """Every number, quoted line and named person in a piece traces to the coach's turns, the printed Brand Card or the
     research log (else fail); so does a claim about the coach's clients or market ("most of my clients…", "nhiều cơ sở
@@ -7893,7 +8131,10 @@ def check_source_check(run: Run) -> dict:
     ("say a client…", "giả sử…", "for example") carries one line under it naming those paragraphs: "Added by me: ¶3, ¶5"
     / "Máy tự thêm: đoạn 3, 5" (founder 11 Oct: by paragraph, no cap); every such paragraph is on it, every number on
     it is a paragraph of the piece, and it holds paragraph numbers only (a line or a fact on it fails). Paragraphs:
-    piece_paragraphs. Heuristic: it reads figures, quote marks, names after a kinship word / "client named" / "Mr", the
+    piece_paragraphs. v13.13: the list is read under the label count and under the counts from the top, with and without
+    the direction blocks and line by line (paragraph_reading; the machine counted both ways in v1312), a closing note
+    without a figure ("(đếm từ trên)") is left out of it, and a list printed under the gift page belongs to the post
+    above it. Warn when a video's listed paragraphs are over teaching_share_max (30%) of its script. Heuristic: it reads figures, quote marks, names after a kinship word / "client named" / "Mr", the
     illustrative openers and the generalization shapes; a fact told in plain words is the reviewer's to find. n/a
     without a piece."""
     cfg = dict(SOURCE_DEFAULTS, **run.acceptance.get("source_check", {}))
@@ -7903,6 +8144,7 @@ def check_source_check(run: Run) -> dict:
     kit_strings = " " + " ␞ ".join(" ".join(ck.copy_tokens(str(v))) for v in run.strings.values()) + " "
     level_ups = level_up_tokens(run.run_dir)
     ev: list[str] = []
+    warns: list[str] = []
     n_lists = 0
     for u in units:
         src = source_text(run, u.reply.index)
@@ -7946,23 +8188,21 @@ def check_source_check(run: Run) -> dict:
         for item in dict.fromkeys(bad):
             ev.append(f'{label}: the added line names lines, not paragraph numbers ("Added by me: ¶3, ¶5"): '
                       f'"{_short(item, 50)}"')
-        paras = piece_paragraphs(u.text)
-        numbers = {n for n, _ in paras}
-        for n in sorted(listed - numbers):
-            ev.append(f'{label}: the added line names ¶{n}, the piece has no such paragraph ({len(paras)} in all)')
-        for n, ptext in paras:
-            m = ILLUSTRATIVE_RE.search(ptext)
-            if not m:
-                continue
-            if not u.carried:
-                ev.append(f'{label}: illustrative content ("{_short(m.group(0), 24)}") with no "Máy tự thêm / Added by me" line')
-                break
-            if n not in listed:
-                ev.append(f'{label}: ¶{n} holds illustrative content ("{_short(m.group(0), 24)}") and is not on the '
-                          '"Máy tự thêm / Added by me" line')
-    ev = list(dict.fromkeys(ev))
-    return {"id": "source_check", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
-            "details": {"pieces": len(units), "added_lists": n_lists}}
+        got, paras = paragraph_reading(u.text, listed, bool(u.carried), label)
+        ev += got
+        # v13.13 (founder 11 Oct, a post a day): a video whose script is mostly machine teaching reads like the machine's,
+        # not the coach's; warn above teaching_share_max of its paragraphs on the "Máy tự thêm" line
+        if piece_format(u.title) in ("short", "long video") and paras and listed:
+            share, n, total = teaching_share(paras, listed)
+            if share > float(cfg["teaching_share_max"]) + 1e-9:
+                warns.append(f'{label}: {share:.0%} of the video\'s paragraphs are listed as the machine\'s teaching '
+                             f'(max {float(cfg["teaching_share_max"]):.0%}): {n} of {total}')
+    ev, warns = list(dict.fromkeys(ev)), list(dict.fromkeys(warns))
+    out = {"id": "source_check", "pass": not ev, "status": "fail" if ev else ("warn" if warns else "pass"),
+           "evidence": ev, "details": {"pieces": len(units), "added_lists": n_lists}}
+    if warns:
+        out["warnings"] = warns
+    return out
 
 
 def _belief_tokens(run: Run) -> list[str]:
@@ -7985,6 +8225,66 @@ def _opener_tokens(text: str, n: int) -> list[str]:
     return []
 
 
+def idea_ledger(run: Run) -> list[str]:
+    """The week's ideas as the idea ledger holds them (§CM-HUMANIZE): the Week-1 table's "Idea, hook" cells (the idea is
+    the part before the hook's " · "), and the Brand Card's method, principles and the "after" side of idea_shifts
+    ("A → B | C → D"). v13.13."""
+    out: list[str] = []
+    table = week1_table(run)
+    if table:
+        _, head, rows = table
+        col = next((k for k, c in enumerate(head) if re.match(r"^(?:idea|y)\b", ck.fold(c))), None)
+        if col is not None:
+            out += [re.split(r"\s+[·|]\s+", row[col])[0].strip() for row in rows if col < len(row)]
+    def field(block: str, key: str) -> str:
+        m = re.search(r"(?<![\w])" + key + r"\s*[:=]\s*(.+?)(?=\s*[·|]\s*[a-z_]{3,24}\s*[:=]|\n|$)", block)
+        return m.group(1) if m else ""
+
+    for r in run.replies:
+        if not _is_card_reply(run, r):
+            continue
+        for block in r.machine_blocks + [r.text]:
+            for key in ("method", "principles"):
+                out += [x.strip() for x in re.split(r"\s*\|\s*", ck.straight_quotes(field(block, key))) if x.strip()]
+            out += [re.split(r"\s*(?:→|->)\s*", x)[-1].strip() for x in re.split(r"\s*\|\s*", field(block, "idea_shifts"))
+                    if x.strip()]
+    return list(dict.fromkeys(x for x in out if len(_idea_words(x)) >= 2))
+
+
+def _idea_words(text: str) -> set[str]:
+    """The words of an idea or a sentence for the idea count: ck.STOPWORDS left out, numbers and quoted words kept
+    ('"đắt quá" là một câu hỏi' keeps đắt, quá; "1 thư, 7 người trả lời" keeps 1 and 7)."""
+    return {t for t in ck.copy_tokens(LINE_LABEL_RE.sub("", text)) if t not in ck.STOPWORDS}
+
+
+def idea_posts(units: list, idea: str, overlap: float, min_shared: int) -> list:
+    """The week's posts (N<n>, FILM TODAY / POST TODAY; not a DM reply, the gift, the card) in which one idea
+    (idea_ledger) is said: one sentence holds `overlap` of the idea's words and at least `min_shared`
+    of them (an idea of fewer words needs all of them). A reprint of a post (the same label) counts once."""
+    ic = _idea_words(idea)
+    if len(ic) < 2:
+        return []
+    need = min(len(ic), max(min_shared, -(-int(overlap * 100 * len(ic)) // 100)))
+    out, seen = [], set()
+    for u in units:
+        lab = PIECE_LABEL_RE.search(u.title or "")
+        if not lab or not re.match(r"N\d|film today|post today|quay hôm nay|đăng hôm nay", lab.group(1), re.I):
+            continue
+        key = lab.group(1).casefold()
+        if key in seen:
+            continue
+        sets = [_idea_words(x) for x in ck.sentences(u.text) if not STAGING_RE.match(x) and not ADDED_LABEL_RE.match(x)]
+        if any(len(ic & w) >= need for w in sets):
+            seen.add(key)
+            out.append(u)
+    return out
+
+
+def _piece_name_of(u) -> str:
+    lab = PIECE_LABEL_RE.search(u.title or "")
+    return lab.group(1) if lab else _turn(u.reply)
+
+
 def check_week_dedupe(run: Run) -> dict:
     """Across one batch (the pieces of one reply, two or more): the same sentence of at least sentence_min_words words
     (normalised: case, punctuation, quotes) or the same opener (the first opener_words words) in two pieces fails, and the
@@ -7993,7 +8293,8 @@ def check_week_dedupe(run: Run) -> dict:
     overlap by at least paraphrase_overlap fail (paraphrase_repeats). v13.12 (founder 11 Oct, a post a day cut from one
     week's material into many formats): a near-verbatim sentence (verbatim_overlap) fails between any two posts; a
     paraphrase (paraphrase_overlap) fails only between posts of the same format (piece_format; unknown counts as the
-    same). n/a with fewer than two pieces."""
+    same). v13.13: an idea of the ledger (idea_ledger) said in more than idea_max_posts (3) posts of the run fails. n/a
+    with fewer than two pieces."""
     cfg = dict(DEDUPE_DEFAULTS, **run.acceptance.get("week_dedupe", {}))
     belief = _belief_tokens(run)
     batches: dict[int, list[PieceUnit]] = {}
@@ -8025,6 +8326,14 @@ def check_week_dedupe(run: Run) -> dict:
                 ev.append(f'{where}: the card\'s belief line "{_short(" ".join(belief), 50)}" is in {len(hits)} pieces '
                           f'(max {int(cfg["belief_max_pieces"])}): {", ".join(map(str, hits))}')
     units_all = piece_units(run)
+    # v13.13 (founder 11 Oct: one idea feeds 2-3 posts a week, in different formats): an idea of the ledger said in more
+    # than idea_max_posts pieces of the run fails, whatever the formats
+    for idea in idea_ledger(run):
+        hits = idea_posts(units_all, idea, float(cfg["idea_overlap"]), int(cfg["idea_min_shared"]))
+        if len(hits) > int(cfg["idea_max_posts"]):
+            names = ", ".join(dict.fromkeys(_piece_name_of(u) for u in hits))
+            ev.append(f'one idea in {len(hits)} posts ("{_short(idea, 50)}": {names}); at most {int(cfg["idea_max_posts"])} '
+                      "posts a week")
     pairs = paraphrase_repeats(run, units_all, float(cfg["paraphrase_overlap"]), int(cfg["paraphrase_min_words"]),
                                float(cfg["verbatim_overlap"]))
     ev += pairs
@@ -8138,8 +8447,8 @@ def needs_questions(line: str) -> tuple[bool, str] | None:
 def check_style(run: Run) -> dict:
     """House style of the pieces. Fail: a VN piece with an em dash "—"; a "Needs you" / "Cần …" line ("·" or ":") asking
     more than one thing (more than needs_questions_max "?", or asks joined by "và" / "and" / ";") or longer than
-    needs_words_max words (EN words, VN tiếng; the kit: "one ask, ≤20 words", v13.10; its "I won't make it up" tail and
-    "(Or say 'skip')" left out). Warn: the coach's pet phrase (the
+    needs_words_max words (EN words, VN tiếng; the kit: "one ask, ≤20 words", v13.10; its "I won't make it up" tail,
+    "(Or say 'skip')" and, v13.13, the VN "({tự xưng} không đoán bừa; gõ "bỏ qua" cũng được)" left out). Warn: the coach's pet phrase (the
     card's phrases) more than pet_phrase_max times in a piece; more than asks_max ask lines in a piece (heuristic: lines
     opening with an ask verb such as gõ / nhắn / comment / reply / send, after "hãy", "if you …," and the like)."""
     cfg = dict(STYLE_DEFAULTS, **run.acceptance.get("style", {}))
@@ -8213,9 +8522,61 @@ def _hours(text: str) -> float | None:
     return v if 0 < v <= 40 else None
 
 
+_NUM_WORDS = {"một": 1, "hai": 2, "ba": 3, "bốn": 4, "năm": 5, "sáu": 6, "bảy": 7, "tám": 8,
+              "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6}
+# Hours as a coach says them: "3 tiếng rưỡi", "ba tiếng rưỡi", "2,5 tiếng", "3 hours", "three and a half hours".
+HOURS_SAID_RE = re.compile(r"(?<![\w.,])(\d{1,2}(?:[.,]\d)?|" + "|".join(_NUM_WORDS) + r")\s*(?:h|hrs?|hours?|giờ|tiếng)"
+                           r"(?!\w)(?:\s*(?:rưỡi|and a half|and half))?", re.I)
+HOURS_OPTION_RE = re.compile(r"(?<![\w/(])([A-C])\)\s*(.*?)(?=\s+[A-C]\)|$)")
+HOURS_LETTER_RE = re.compile(r"(?<![\w])([A-Ca-c])(?![\w)])")
+
+
+def _said_hours(text: str) -> float | None:
+    """The hours a coach's turn names ("3 tiếng rưỡi" → 3.5, "ba tiếng" → 3), None when it names none."""
+    m = HOURS_SAID_RE.search(ck.nfc(text))
+    if not m:
+        return None
+    word = m.group(1).casefold()
+    v = float(_NUM_WORDS[word]) if word in _NUM_WORDS else float(word.replace(",", "."))
+    if re.search(r"rưỡi|and (?:a )?half", m.group(0), re.I):
+        v += 0.5
+    return v if 0 < v <= 40 else None
+
+
+def chosen_hours(run: Run) -> tuple[float, str] | None:
+    """(hours, where) the coach picked from the strategy's hours options (v13.13: "SỐ GIỜ MỖI TUẦN: A) dưới 2 tiếng …
+    B) 2,5 tiếng … (máy khuyên) C) 3,5 tiếng …"): the coach's next turn names the hours ("3 tiếng rưỡi nha") or a letter
+    ("C"); "OK" or silence takes the marked option. None without an options line with hours."""
+    rec = ck.plain_line(str(run.strings.get("options.recommended", "(recommended)"))).casefold()
+    for r in strategy_steps(run):
+        for ln in r.lines:
+            if ln.block or not ln.plain or not WEEK_WORD_RE.search(ln.plain):
+                continue
+            opts = {m.group(1): m.group(2) for m in HOURS_OPTION_RE.finditer(ln.plain)}
+            vals = {k: _hours(m.group(1)) for k, v in opts.items() for m in [HOURS_TEXT_RE.search(v)] if m}
+            vals = {k: v for k, v in vals.items() if v is not None}
+            if len(vals) < 2:
+                continue
+            nxt = run.turns[r.index + 1] if r.index + 1 < len(run.turns) else None
+            said = _said_hours(nxt.text) if nxt is not None and nxt.role == "coach" else None
+            if said is not None:
+                return said, f"the coach's pick ({_turn(r)}, next turn)"
+            letter = None
+            if nxt is not None and nxt.role == "coach":
+                letters = {x.upper() for x in HOURS_LETTER_RE.findall(nxt.text)} & set(vals)
+                letter = letters.pop() if len(letters) == 1 else None
+            if letter is None:
+                letter = next((k for k, v in opts.items() if rec and rec in v.casefold() and k in vals), None)
+            if letter is not None:
+                return vals[letter], f"the coach's pick, option {letter} ({_turn(r)})"
+    return None
+
+
 def week1_hours(run: Run) -> tuple[float | None, str, str]:
     """(hours a week, tier, where) the coach's Week 1 is planned for: the Brand Card's plan fields first (hours=…,
-    tier=light|lean|standard), else the strategy's lines that name hours a week (the "(recommended)" option when several)."""
+    tier=light|lean|standard), then the hours the coach picked from the strategy's options (chosen_hours; v13.13: the
+    "(recommended)" option is not the coach's choice), then the card's tier, else the strategy's lines that name hours a
+    week (the "(recommended)" option when several)."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
     tier = ""
     for r in run.replies:
@@ -8227,6 +8588,11 @@ def week1_hours(run: Run) -> tuple[float | None, str, str]:
         tier = tier or (t.group(1).casefold() if t else "")
         if m and _hours(m.group(1)) is not None:
             return _hours(m.group(1)), tier, f"the card ({_turn(r)})"
+    pick = chosen_hours(run)
+    if pick:
+        return pick[0], tier, pick[1]
+    if tier:
+        return None, tier, "the card's tier"
     rec = ck.plain_line(str(run.strings.get("options.recommended", "(recommended)"))).casefold()
     picked, values = None, []
     for r in strategy_steps(run):

@@ -734,6 +734,10 @@ class Protocol(TempRepo):
         paste = f"{w1}\n\n{w2}"
         tuan = pace(paste, 0.7)                                  # two posts in 0.7 min: still short, for the right reason
         self.assertEqual(tuan["evidence"], ["turn 5: 2 pasted posts in 0.7 min (needs ≥1.0 at 0.5 min a post)"])
+        # v1312-sales turn 4: two pasted posts in 0.9 min (0.45 a post) fail too. COACH.md: "A pasted post takes about half
+        # a minute"; pasting is already far quicker than typing (two 80-word posts: ~5 min at 30 wpm), so the floor stays and
+        # the run is the one to fix (its t_min), not the check (v13.13 decision)
+        self.assertEqual(pace(paste, 0.9)["evidence"], ["turn 5: 2 pasted posts in 0.9 min (needs ≥1.0 at 0.5 min a post)"])
         self.assertTrue(pace(paste, 1.0)["pass"])
         self.assertTrue(pace("2 bài mình viết:\n\n" + paste, 1.1)["pass"])       # a short intro line is no dictation
         # a dictated chunk with a post pasted after it: the chunk's words at 160 wpm plus 0.5 min for the post
