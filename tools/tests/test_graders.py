@@ -7697,5 +7697,539 @@ class V1313RegradeTests(unittest.TestCase):
         self.assertTrue(any("subject line 1 fills none" in e for e in got["hook_lab"]["evidence"]))
 
 
+# ---------------------------------------------------------------- v13.14: the misreads found grading the two v1313 runs
+# (qa/runs/v1313/MEASURE-*.md). V14S_* are replies of evals/runs/v1313-sales (chị Quyên), V14C_* of v1313-copywriter,
+# copied from the transcripts (V14S_CARD is the Brand Card reply cut to its top, the Week-1 table and the HUB.md box).
+V14S_M25 = '''◆ Content Machine · Chiến lược 1/3 · Điều khách nhớ, trụ cột nội dung
+
+ĐIỀU KHÁCH NHỚ: Chủ spa, nha khoa, trung tâm nhỏ nào hay than "khách hỏi giá xong là seen" thì tìm chị Quyên: hỏi trước, báo giá sau, nhắn lại lần nào cũng mang theo một thứ cho khách, chứ không gửi bảng giá rồi năn nỉ; tin hỏi giá thành lịch hẹn.
+
+TRỤ CỘT NỘI DUNG (em chọn sẵn):
+1 Tin nhắn hỏi giá · tuyến: Tin đầu tiên · Nhắn lại không phiền
+2 Câu khách hay nói · tuyến: Để chị suy nghĩ · Đắt quá là câu hỏi
+3 Chốt không ép · tuyến: Chuyện ép thẻ · Bỏ học thuộc kịch bản
+4 Chuyện học viên · tuyến: Trước và sau lớp · Câu khách nói nguyên văn
+Vì sao: bốn cụm này đi đúng hai câu chủ cơ sở nhắn chị nhiều nhất, chuyện chị Trâm, anh Tài và cái chị ghét trong nghề.
+
+KÊNH EM ĐỌC GIÚP (chị không đưa tên, nên em tự tìm theo loại chị kể, ghi rõ là kênh máy chọn):
+A) Kênh mổ ghi âm cuộc gọi thật, kênh quay lễ tân tiếp khách thật (máy khuyên): gần cách chị dạy, coi người xem hỏi gì
+B) Kênh TikTok đứng đọc "khách nói A mình đáp B": coi người xem phản ứng với cách cũ
+C) Cả hai, lâu hơn một ngày
+
+TIẾP → "OK" là lấy cả tin này, kênh lấy A; sửa thì gõ "sửa dòng N: …".'''
+V14S_M27 = '''◆ Content Machine · Chiến lược 2/3 · Số giờ, tuyến bài, tỷ lệ
+
+Dạ, thêm rồi: 5 Dạy nhân viên · tuyến: Học xong về dạy tụi nhỏ · Nhân viên mới tuần đầu. Kênh em đọc: A.
+
+SỐ GIỜ MỖI TUẦN (mỗi ngày một bài, 7 bài):
+A) Dưới 2 tiếng · 2 video + 5 bài viết
+B) Khoảng 2,5 tiếng · 3 video + 4 bài viết (máy khuyên): chị nói được, viết thì bí, mà chị đang dạy lớp
+C) Khoảng 3,5 tiếng · 4 video có dựng + 3 bài viết
+
+TỶ LỆ NỘI DUNG: THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20: chị muốn người lạ tìm tới, mà khóa 4 cũng cần người tin.
+
+```
+Tuyến bài (5 trụ cột, xoay vòng mỗi tuần)
+1 Tin nhắn hỏi giá: Tin đầu tiên · Nhắn lại không phiền
+2 Câu khách hay nói: Để chị suy nghĩ · Đắt quá là câu hỏi
+3 Chốt không ép: Chuyện ép thẻ · Bỏ học thuộc kịch bản
+4 Chuyện học viên: Trước và sau lớp · Câu khách nói nguyên văn
+5 Dạy nhân viên: Học xong về dạy tụi nhỏ · Nhân viên mới tuần đầu
+```
+
+TIẾP → Gõ A, B hay C, sửa một ý, hoặc 'OK' để lấy B.'''
+V14S_M29 = '''◆ Content Machine · Chiến lược 3/3 · Hệ thống, quà, từ khoá
+
+Dạ, lấy C: 3 tiếng rưỡi, mỗi tuần 4 video có dựng + 3 bài viết.
+
+HỆ THỐNG NỘI DUNG: Facebook cá nhân là chính, video đăng lại TikTok; mỗi ngày một bài; Zalo để chốt, chăm khách. Chủ nhật hằng tuần kể 15 phút cho tuần sau (em đoán, gõ một chữ là đổi) · Zalo 1.400 người, email 210 chưa gửi lần nào.
+NẤC LỜI MỜI: comment chữ của bài → inbox → quà → Zalo → Lớp Chốt Khách Không Ép.
+QUÀ: chưa nghe chị có món nào, nên em viết 1 trang từ cách làm của chị, hỏi lại sau video.
+TỪ KHOÁ: "hỏi giá xong" (chủ cơ sở nào nhắn chị lần đầu cũng nói, chị Trâm cũng nói y vậy) · dự phòng: "để chị suy nghĩ", "nhắn thêm sợ phiền".
+NGHIÊN CỨU CHO THẤY:
+- 2 người ở 2 nơi (6/2021, 6/2023), một bên hỏi giá, một bên chủ shop, kể cùng một cảnh: báo giá xong là im.
+- 1 diễn đàn (6/2023): người mua ghét phải nhắn mới biết giá; nên hỏi một câu rồi báo giá thẳng (mình đoán, mới 1 nơi).
+- Nhóm Facebook, comment TikTok chưa đọc: chỗ đó còn đoán.
+
+Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?
+
+TIẾP → Gõ "OK" là em in bài quay hôm nay.'''
+V14S_M31 = '''◆ Content Machine · Chiến lược 3/3 · Quà
+
+Dạ, chị có rồi thì dùng đúng file đó, em không làm cái mới. Em chỉ cần chữ trong file một lần, để lời mời dưới video hứa đúng thứ chị gửi.
+QUÀ: file "để chị suy nghĩ" của chị, gửi qua inbox cho ai comment.
+
+Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?
+
+TIẾP → Gõ "OK" là em in bài quay hôm nay.'''
+V14S_M33 = '''◆ Content Machine · Quay hôm nay
+
+```
+QUAY HÔM NAY · NIỀM TIN · video ngắn · 517 chữ
+Chữ trên màn hình: 3 tháng, 0 hợp đồng
+Khung hình đầu: Chị ngồi ghế lái, điện thoại dựng trước mặt, nhìn thẳng vô máy.
+
+Câu đầu: Nếu anh chị đang sợ câu "để chị suy nghĩ", coi cái này nha.
+
+Mình làm sale mười năm rồi. Bảy năm bán bảo hiểm nhân thọ, từ năm 2013, / từ tư vấn viên lên trưởng nhóm mười bốn người. Mà ba tháng đầu tiên mình không ký được hợp đồng nào hết á. Không cái nào luôn.
+
+Ý 1: Có bữa mình hẹn khách ở quán cà phê. Mình nói một mạch bốn mươi phút về quyền lợi. Khách ngồi nghe xong kêu "để chị suy nghĩ", / rồi chặn số mình luôn. Chiều đó mình ngồi trong xe mà khóc.
+
+Chị quản lý hồi đó nói đúng một câu, mình nhớ tới giờ: "Em đang bán cho em, chứ em chưa bán cho khách."
+
+Ý 2: Từ bữa đó mình bỏ cái kiểu nói một mạch. Mình hỏi trước. Hỏi nhà có mấy đứa nhỏ, lo nhất chuyện gì. Rồi mới ký được nha.
+
+Bữa cà phê đó, bốn mươi phút là mình nói về quyền lợi. Mình chưa hỏi khách được câu nào hết. Khách đâu có chỗ để nói ra cái khách lo.
+
+Ý 3: Giờ mình dạy chốt sale cho chủ spa, nha khoa, trung tâm tiếng Anh, phòng gym, / với mấy bạn trực inbox của họ. Toàn cơ sở nhỏ, một hai chi nhánh, chủ tự trực inbox hoặc có hai ba bạn trực page. Mình dạy sao cho khách nhắn hỏi xong thì đặt lịch, / chứ không phải hỏi xong rồi im luôn.
+
+Mấy anh chị đó giỏi chuyên môn lắm. Làm da giỏi, dạy tiếng Anh giỏi, làm răng giỏi. Mà mở miệng nói giá là run.
+
+Câu mình nghe nhiều nhất là "khách hỏi giá xong là seen, nhắn thêm thì sợ khách thấy phiền". Câu thứ hai là "khách nói để chị suy nghĩ rồi mất luôn". Nghe hoài luôn á, thuộc lòng rồi.
+
+Mà nói thiệt, khách nói "để chị suy nghĩ" là khách đang nói thật đó. Chỉ là mình chưa trả lời cái câu khách chưa dám hỏi thôi.
+
+Trong nghề, người ta hay bày đủ câu đáp lại câu này, như đi đánh trận. Mình thấy sai.
+
+Ý 4: Vậy lần tới khách nói câu đó, anh chị hỏi lại nhẹ nhàng: "Dạ chị đang cân nhắc chỗ nào nhất ạ?" Hỏi rồi thì ngồi im, để khách nói. Khoan gửi thêm ưu đãi nha. Anh chị thử rồi kể mình nghe hen.
+
+Khách nói ra chỗ nào thì mình trả lời đúng chỗ đó. Kiểu như khách lo giá thì nói chuyện giá. Khách lo không có giờ thì nói chuyện lịch. Đừng trả lời cái khách không hỏi.
+
+Câu hỏi lại đó ngắn thôi. Đừng nói tiếp bốn mươi phút như mình hồi xưa. Để khách nói, mình nghe, rồi mới tới lượt mình.
+
+Ở lớp của mình, nguyên tuần 4 là để tập câu "để chị suy nghĩ" này đó.
+
+Chốt sale không phải là ép. Đừng đợi khách gật. Hỏi cho khách kể nha.
+
+Câu cuối: Khách nói "để chị suy nghĩ" là đang nói thật đó, / mình hỏi lại đúng một câu là nghe được phần còn lại hen.
+```
+Máy tự thêm: đoạn 6, 13, 14, 16
+
+```
+Caption
+Nếu anh chị đang sợ câu "để chị suy nghĩ", đọc cái này trước nha.
+Ba tháng đầu bán bảo hiểm mình không ký được hợp đồng nào, có bữa nói một mạch bốn mươi phút rồi bị khách chặn số.
+Ai trực inbox chắc thuộc lòng câu "hỏi giá xong là seen" rồi.
+Comment SUY NGHĨ là mình gửi file "để chị suy nghĩ" qua inbox.
+```
+
+```
+Bản chữ (không quay thì đăng cái này)
+Nếu anh chị đang sợ câu "để chị suy nghĩ", đọc cái này trước nha.
+Ba tháng đầu bán bảo hiểm mình không ký được hợp đồng nào. Có bữa nói một mạch bốn mươi phút, khách kêu "để chị suy nghĩ" rồi chặn số luôn.
+Ai trực inbox chắc thuộc lòng câu "hỏi giá xong là seen" rồi. Mà khách nói suy nghĩ là đang nói thật đó, mình hỏi lại một câu: "Dạ chị đang cân nhắc chỗ nào nhất ạ?"
+Comment SUY NGHĨ là mình gửi file "để chị suy nghĩ" qua inbox.
+```
+Ngại xin comment thì gõ 'nhẹ'.
+Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.
+Cần chị · Chị dán chữ trong file "để chị suy nghĩ" vào đây giúp em? (em không đoán bừa; gõ "bỏ qua" cũng được)
+
+TIẾP → Quay xong nhắn 'tiếp'.'''
+V14C_M27 = '''◆ Content Machine · Bước 1/3 · Khách nhớ gì, nói về gì
+
+ĐIỀU KHÁCH NHỚ: Coach 1-1 đã có khách trả tiền mà hay than "đăng đều, tim nhiều, không ai hỏi giá" (mình đoán) thì tìm mình: nghe 3 khách cũ trước rồi mới viết, chứ không đăng thêm; 3 tuần ra 1 trang, 3 email, 6 bài bằng chữ khách.
+Vì sao: đúng người bạn muốn nhân bản, có khách cũ để nghe.
+
+TRỤ CỘT NỘI DUNG:
+1. Nghe khách trước khi viết: nghe chữ của khách, từ phía khách
+2. Vì sao trước cách làm: hỏi tại sao trước làm sao
+3. Lời mời và sản phẩm: gốc là thứ bạn làm được cho người ta
+4. Niềm tin trước khi bán: tin bạn, biết bạn ở đó, biết bạn có thứ cho họ
+
+KÊNH MÌNH ĐỌC GIÚP BẠN: tìm theo kiểu bạn tả, chưa ra kênh nào đọc được.
+A) Dán comment dưới video đầu tiên khi tìm "đăng bài không ai hỏi giá" trên TikTok: một phút là có chữ thật của khách (máy khuyên)
+B) Bạn gõ tên một kênh
+C) Đọc trang cùng loại: diễn đàn, trang bán khoá
+
+TIẾP → Gõ OK, hoặc sửa một dòng.'''
+V14C_M29 = '''◆ Content Machine · Bước 2/3 · Giờ, tuyến bài, tỷ lệ
+
+Lấy A.
+
+SỐ GIỜ: mỗi ngày 1 bài, 7 bài một tuần.
+A) 3 video quay một lèo + 4 bài viết, khoảng 2 tiếng · bạn có 3 tiếng, còn giờ trả lời tin (máy khuyên)
+B) 4 video có dựng + 3 bài viết, khoảng 3 tiếng · kín hết giờ
+C) 2 video + 5 bài viết, khoảng 1 tiếng 45 · ít quay nhất
+
+TỶ LỆ NỘI DUNG: THU HÚT 40 · NIỀM TIN 40 · CHUYỂN ĐỔI 20: vừa kéo người lạ, vừa giữ 2 suất mỗi tháng.
+
+TUYẾN BÀI (mỗi trụ cột 2 tuyến):
+```
+Nghe khách trước khi viết
+- "Chưa phải nghiên cứu": một kiểu 'nghiên cứu' hay gặp, sửa lại · bài dài · hằng tháng · NIỀM TIN
+- "Câu khách nói thật": một câu khách thật, vì sao nó hơn câu mình tự nghĩ · video ngắn · hằng tuần · THU HÚT
+Vì sao trước cách làm
+- "Hỏi lại tại sao": một câu 'làm sao' coach hay hỏi, đổi thành tại sao · bài ngắn · hằng tuần · THU HÚT
+- "Một thư, một người": một việc nhỏ thay chiến dịch lớn · video ngắn · 2 tuần một lần · NIỀM TIN
+Lời mời và sản phẩm
+- "Sửa lời mời trước": gốc là thứ mình bán và cách mời · video ngắn · 2 tuần một lần · THU HÚT
+- "Hỏi thật trước khi làm cùng": băn khoăn về gói 3 tuần, giá nói thẳng · email · hằng tuần · CHUYỂN ĐỔI
+Niềm tin trước khi bán
+- "Ba tuần với một coach": làm cùng một coach từ đầu tới cuối (đã cho kể) · carousel · 2 tuần một lần · NIỀM TIN
+- "Tim chưa phải tin": vì sao bài nhiều tim mà không ai nhắn · ảnh trích câu · hằng tháng · THU HÚT
+```
+
+TIẾP → Gõ OK để lấy A, hoặc sửa một dòng.'''
+V14C_M31 = '''◆ Content Machine · Bước 3/3 · Hệ thống, từ khoá, nghiên cứu
+
+Lấy A: 3 video + 4 bài viết.
+
+HỆ THỐNG NỘI DUNG: Facebook cá nhân, mỗi ngày một bài · tối Chủ nhật kể 15 phút cho tuần sau · danh sách: email từ file tặng, chưa rõ số người; Zalo chưa nghe (mình đoán, gõ một chữ là đổi).
+Thang lời mời: comment chữ trong hook → inbox → quà → gọi → gói 3 tuần 9.500.000đ.
+QUÀ: file tặng bạn dùng gom email.
+
+TỪ KHOÁ: "KHÔNG AI HỎI GIÁ" (mình đoán: cụm bạn tả khách, chưa nghe khách nào nói đúng vậy; Tuần 1 kiểm) · dự phòng: "TOÀN NGƯỜI QUEN", "NHIỀU TIM".
+
+NGHIÊN CỨU CHO THẤY:
+8 câu của người làm nghề tự do (gần tệp coach, chưa phải coach), 3 nơi, 6/2020–5/2024: khách tới qua giới thiệu · ngoài người quen thì khách lạ khó, không đều. Chỗ trống: chưa ai nói cách để người lạ nhắn.
+KHÔNG AI HỎI GIÁ: 0 người nói, ở 0 nơi · chưa đọc được: nhóm Facebook, comment TikTok (bật Chrome là mình đọc).
+
+Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?
+
+TIẾP → Gõ OK, hoặc sửa một dòng.'''
+V14C_M33 = '''◆ Content Machine · Bước 3/3 · Sửa dòng hệ thống
+
+HỆ THỐNG NỘI DUNG: Facebook cá nhân (2.600 bạn, khoảng một phần ba là coach), mỗi ngày một bài · tối Chủ nhật kể 15 phút cho tuần sau · danh sách: email 320 người từ file "5 câu hỏi phỏng vấn khách cũ" (năm nay đã gửi 4 lần), Zalo 410.
+Thang lời mời: comment chữ trong hook → inbox → file "5 câu hỏi phỏng vấn khách cũ" → gọi → gói 3 tuần 9.500.000đ.
+
+Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?
+
+TIẾP → Gõ OK, hoặc sửa một dòng.'''
+V14C_M51 = '''◆ Content Machine · Tuần 1 · N7
+
+Rồi, chưa có comment nào để đọc.
+
+N7 · thứ Bảy 17/10 · email cho 320 người · CHUYỂN ĐỔI (xin trả lời, chưa chào bán) · 174 chữ
+```
+Tiêu đề (chọn 1):
+1. nếu bạn đăng đều mà chưa ai hỏi giá, đọc thư này
+2. mình đã gửi bạn 4 thư năm nay, giờ xin bạn 1 chữ
+3. 1 câu hỏi cho người đăng đều mà tin nhắn vẫn trống (trả lời 1 chữ thôi)
+
+Chào bạn,
+
+Thư này chỉ xin bạn trả lời một chữ. Mình hỏi để thư sau viết đúng chỗ bạn đang kẹt.
+
+Tháng 8, một chị coach tài chính làm với mình gửi đúng một email cho 180 người trong danh sách của chị. 7 người trả lời. 2 người đặt một buổi nói chuyện, 1 người mua gói của chị. Chị cho mình kể, không nêu tên. Kết quả của một coach, không phải lời hứa.
+
+Trước đó chị đăng gần như mỗi ngày, tim nhiều mà không ai hỏi giá. Trang giới thiệu của chị viết lại xong, chị mới gửi thư đó.
+
+Còn bạn đang ở đâu?
+A) đã có người lạ nhắn hỏi giá
+B) mới có người quen hỏi thôi
+
+Bấm trả lời, gõ A hay B là được.
+
+Nhi
+
+P.S. File 5 câu hỏi phỏng vấn khách cũ bạn nhận hồi trước vẫn dùng được cho chuyện này. Lạc mất thì trả lời chữ FILE, mình gửi lại.
+
+Không muốn nhận nữa thì nhắn mình chữ DỪNG.
+```
+Máy tự thêm: đoạn 2, 5, 6, 8, 9
+
+TIẾP → Chủ nhật: mở Content Machine, tạo đoạn chat mới rồi nhắn 'tiếp'.'''
+V14S_CARD = '''◆ Content Machine · Brand Card v1 · Tuần 1
+
+Brand Card v1 · 12/10/2026
+NÓI GÌ: Hỏi trước, báo giá sau: tin hỏi giá thành lịch hẹn, không ép · Tin nhắn hỏi giá, Câu khách hay nói, Chốt không ép, Chuyện học viên, Dạy nhân viên · "hỏi giá xong"
+NÓI THẾ NÀO: ấm · thẳng · hơi sale · câu ngắn, xen câu cụt · "nói thiệt", "nghe hoài luôn á" · với khách: "mình – anh chị" · không bao giờ: "chốt sale thần tốc", "ép thẻ"
+
+Phần còn lại là cho máy, không cần đọc:
+```
+version: v1 | date=2026-10-12 | edition=vn | pack_version=1.3.10 | progress: ngày 0 xong, N1 đã quay
+who: chủ spa, nha khoa, trung tâm tiếng Anh, phòng gym nhỏ, 1–2 chi nhánh, tự trực inbox hoặc có 2–3 bạn trực page · 30–45 tuổi · Sài Gòn, Biên Hòa, Bình Dương
+their_words: "Khách hỏi giá xong là seen, nhắn thêm thì sợ khách thấy phiền" | "khách nói để chị suy nghĩ rồi mất luôn"
+```
+
+TUẦN 1 · mỗi ngày 1 bài · 4 video, 3 bài viết
+| Ngày | Dạng | Ý, hook | Lời mời |
+|---|---|---|---|
+| T2 12/10 ✓ | Video · NIỀM TIN | Bảo hiểm, 3 tháng 0 hợp đồng · "Nếu anh chị đang sợ câu 'để chị suy nghĩ', coi cái này nha." | comment SUY NGHĨ |
+| T3 13/10 | Carousel · THU HÚT | Nhắn lại không phiền · "Anh chị đang mất khách ở tin nhắn lại (và cách sửa)" | lưu, gửi |
+| T4 14/10 | Video · NIỀM TIN | Chị Trâm, 14 lên 33 · "Chốt lịch nhẹ tới mức nhân viên hết sợ câu 'để chị suy nghĩ'" | comment HẾT SỢ |
+| T5 15/10 | Video · THU HÚT | Ba năm chuỗi spa, ép thẻ · "Cho mình 3 phút, mình cho anh chị 3 năm quản lý một chuỗi spa." | lưu, gửi |
+| T6 16/10 | Bài dài · NIỀM TIN | Anh Tài, "về bàn với vợ" · "3 cách giữ phụ huynh sau buổi học thử" | comment BÀN VỚI VỢ |
+| T7 17/10 | Video · THU HÚT | "Đắt quá" là câu hỏi · còn thiếu một chuyện thật, em hỏi chị trước khi viết | lưu, gửi |
+| CN 18/10 | Tin Zalo · CHUYỂN ĐỔI | Hỏi người quen câu khách nào làm khó nhất | xin trả lời |
+
+```
+HUB.md
+# HUB · chị Quyên · cập nhật 12/10/2026
+## Chiến lược trong 5 dòng
+Viết cho chủ spa, nha khoa, trung tâm, gym nhỏ hay than "khách hỏi giá xong là seen"
+Lời hứa: tin hỏi giá thành lịch hẹn mà không ép
+Trụ cột: Tin nhắn hỏi giá · Câu khách hay nói · Chốt không ép · Chuyện học viên · Dạy nhân viên
+Tỉ lệ 40/40/20 · 3,5 tiếng: 4 video + 3 bài viết
+Từ khoá "hỏi giá xong" · Lớp Chốt Khách Không Ép 5.900.000đ
+## Lịch tuần này
+| Thứ | Bài | Ý | Tuyến | Loại | Trạng thái |
+| T2 | N1 video | bảo hiểm 3 tháng 0 hợp đồng | Để chị suy nghĩ | NIỀM TIN | đã quay |
+| T3 | N2 carousel | nhắn lại mang theo một thứ | Nhắn lại không phiền | THU HÚT | ý tưởng |
+| T4 | N3 video | chị Trâm 14 lên 33 | Trước và sau lớp | NIỀM TIN | ý tưởng |
+| T5 | N4 video | chuỗi spa ép thẻ | Chuyện ép thẻ | THU HÚT | ý tưởng |
+| T6 | N5 bài dài | anh Tài "về bàn với vợ" | Câu khách nói nguyên văn | NIỀM TIN | ý tưởng |
+| T7 | N6 video | "đắt quá" là câu hỏi (cần chuyện) | Đắt quá là câu hỏi | THU HÚT | ý tưởng |
+| CN | N7 tin Zalo | hỏi câu nào khó nhất | Tin đầu tiên | CHUYỂN ĐỔI | ý tưởng |
+```'''
+
+
+class V1314RealLinesTests(TempRepo):
+    """Each misread of MEASURE-sales.md / MEASURE-copywriter.md on the real lines, and the real failure it hid still failing."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", (REPO / "strings" / "vn.toml").read_text(encoding="utf-8"))
+        self.write("editions/vn.toml", (REPO / "editions" / "vn.toml").read_text(encoding="utf-8"))
+        self.write("evals/acceptance.toml", (REPO / "evals" / "acceptance.toml").read_text(encoding="utf-8"))
+        self.write("evals/personas/vn/nat/persona.toml", 'xung_ho = "em–chị"\ndisplay_name = "Chị Quyên"\n')
+        self.write("evals/personas/vn/nat/expected.toml", """
+            [traps]
+            compliance = ["tốt nhất", "đảm bảo"]
+            """)
+
+    def load(self, *turns, **meta):
+        return graders.load_run(self.run_dir(list(turns), persona="vn/nat", edition="vn", **meta), self.root)
+
+    def sales_day0(self, *tail):
+        return [("coach", "Start"), ("machine", V14S_M25), ("coach", "OK em, mà thêm trụ cột dạy nhân viên nha"),
+                ("machine", V14S_M27), ("coach", "3 tiếng rưỡi nha em. Còn lại OK."), ("machine", V14S_M29),
+                ("coach", "Quà chị có rồi mà, cái file 'để chị suy nghĩ' đó"), ("machine", V14S_M31),
+                ("coach", "ừ được, vậy OK chạy thử 4 tuần"), ("machine", V14S_M33),
+                ("coach", "tiếp nha em. file đó chị để trong máy tính, mai chị dán"), ("machine", V14S_CARD), *tail]
+
+    @staticmethod
+    def item(check: dict, start: str) -> dict:
+        return next(i for i in check["items"] if i["item"].startswith(start))
+
+    # ---- day0_timing / day0_strategy: which replies are the strategy
+    def test_a_numbered_step_with_one_label_is_a_step_and_the_quà_line_is_not(self):
+        # sales: "Chiến lược 2/3 · Số giờ, tuyến bài, tỷ lệ" holds one label (TỶ LỆ NỘI DUNG): the Map read "missing map.mix"
+        run = self.load(*self.sales_day0())
+        self.assertEqual([r.turn for r in graders.strategy_steps(run)], [2, 4, 6])     # "3/3 · Quà" (turn 8) has no label
+        timing = graders.check_day0(run)
+        self.assertEqual(timing["details"]["map_lines"], 6, timing)
+        self.assertFalse([e for e in timing["evidence"] if "labelled lines" in e], timing["evidence"])
+
+    def test_the_list_fix_reprint_is_no_fourth_strategy_step(self):
+        # copywriter: "Bước 3/3 · Sửa dòng hệ thống" reprints the system line after the coach's change; same step number again
+        turns = [("coach", "Start"), ("machine", V14C_M27), ("coach", "ok"), ("machine", V14C_M29), ("coach", "ok"),
+                 ("machine", V14C_M31), ("coach", "sua dong danh sach: Facebook personal, 2.600 friends"), ("machine", V14C_M33)]
+        run = self.load(*turns)
+        self.assertEqual([r.turn for r in graders.strategy_steps(run)], [2, 4, 6])
+        self.assertFalse([e for e in graders.check_day0(run)["evidence"] if "steps (max" in e])
+        self.assertFalse([e for e in graders.check_day0_strategy(run)["evidence"] if "steps (max" in e])
+        # a real fourth step (its own number) still counts
+        fourth = V14C_M33.replace("Bước 3/3 · Sửa dòng hệ thống", "Bước 4/4 · Hệ thống")
+        run = self.load(*turns[:-1], ("machine", fourth))
+        self.assertEqual(len(graders.strategy_steps(run)), 4)
+        self.assertTrue([e for e in graders.check_day0(run)["evidence"] if "steps (max 3" in e])
+
+    def test_day0_ends_at_the_brand_card_reply(self):
+        # sales: the Week-1 pieces come one a day after the card; their turns and minutes are Week 1's
+        week = [("coach", "tiếp", {"t_min": 1334.0 + k}) if k % 2 == 0 else ("machine", f"◆ Content Machine · Tuần 1 · N{k}\n\nDạ.", {"t_min": 1334.5 + k})
+                for k in range(16)]
+        run = self.load(*self.sales_day0(*week))
+        timing = graders.check_day0(run)
+        self.assertFalse([e for e in timing["evidence"] if "coach turns in the session" in e or "active minutes" in e],
+                         timing["evidence"])
+        self.assertEqual(timing["details"]["day0_ends_at_turn"], 12)
+        # no card yet: the whole transcript is Day 0, so a day of minutes still fails
+        run = self.load(*self.sales_day0()[:-1], *week)
+        self.assertTrue([e for e in graders.check_day0(run)["evidence"] if "active minutes" in e])
+
+    def test_series_names_are_not_pillars_and_the_reason_line_is_not_one(self):
+        run = self.load(*self.sales_day0())
+        names = graders.parse_pillars(graders.strategy_blocks(run, graders.strategy_steps(run)[0])["map.topics"])
+        self.assertEqual(names, ["Tin nhắn hỏi giá", "Câu khách hay nói", "Chốt không ép", "Chuyện học viên"])
+        check = graders.check_day0_strategy(run)
+        self.assertTrue(self.item(check, "CONTENT PILLARS")["pass"], check)
+        # a made-up fifth-to-ninth pillar still breaks the 3-5 range
+        many = V14S_M25.replace("4 Chuyện học viên", "4 Chuyện học viên\n5 A bài\n6 B bài\n7 C bài")
+        run = self.load(("coach", "Start"), ("machine", many))
+        self.assertFalse(self.item(graders.check_day0_strategy(run), "CONTENT PILLARS")["pass"])
+
+    def test_the_series_box_and_the_hub_file_box_are_the_kits(self):
+        run = self.load(*self.sales_day0())
+        check = graders.check_day0_strategy(run)
+        self.assertTrue(self.item(check, "no piece, FILM TODAY")["pass"], check)
+        self.assertTrue(self.item(check, "FILM TODAY comes before the calendar")["pass"], check)
+        self.assertEqual(check["details"]["calendar_tables"], 1)
+        # a second copy box in a strategy reply is not the series box
+        two = V14S_M27.replace("TIẾP →", "```\nBài mẫu: Khách hỏi giá xong là seen.\n```\nTIẾP →")
+        turns = self.sales_day0()
+        turns[3] = ("machine", two)
+        self.assertFalse(self.item(graders.check_day0_strategy(self.load(*turns)), "no piece, FILM TODAY")["pass"])
+        # a calendar printed in chat next to Week 1's table is still a second table
+        second = V14S_CARD.replace("```\nHUB.md", "| Tuần | Bài |\n|---|---|\n| 2 | N8 |\n\n```\nHUB.md")
+        turns = self.sales_day0()
+        turns[-1] = ("machine", second)
+        self.assertFalse(self.item(graders.check_day0_strategy(self.load(*turns)), "FILM TODAY comes before the calendar")["pass"])
+
+    def test_n7_labelled_chuyen_doi_with_xin_tra_loi_in_its_title_is_a_piece(self):
+        run = self.load(("coach", "Start"), ("machine", V14C_M27), ("coach", "ok"), ("machine", V14C_M29),
+                        ("coach", "tiếp"), ("machine", V14C_M51))
+        titles = [p.title for _, p in graders.week_pieces(run)]
+        self.assertTrue(any(t.startswith("N7 ·") for t in titles), titles)
+        # a reply to one person is still no Week-1 piece
+        run = self.load(("coach", "Start"), ("machine", V14C_M27), ("coach", "tiếp"),
+                        ("machine", "◆ Content Machine · Tuần 1\n\nTin trả lời inbox 1 (người comment HỎI GIÁ)\n```\nCảm ơn chị nha.\n```"))
+        self.assertFalse(graders.week_pieces(run))
+
+    # ---- day0_shape: the per-piece comment word is not the season keyword
+    def test_the_comment_word_comes_from_the_hook_not_from_your_word(self):
+        # QUAY HÔM NAY asks "SUY NGHĨ" (the hook says "để chị suy nghĩ"); YOUR WORD is "hỏi giá xong" (the season's, in the body)
+        run = self.load(*self.sales_day0())
+        shape = graders.check_day0_shape(run)
+        self.assertTrue(self.item(shape, "YOUR WORD is the CTA keyword")["pass"], shape)
+        # a comment word the hook never says is still a mismatch
+        other = V14S_M33.replace('Câu đầu: Nếu anh chị đang sợ câu "để chị suy nghĩ", coi cái này nha.', "Câu đầu: Chuyện ba năm trước.")
+        turns = self.sales_day0()
+        turns[9] = ("machine", other)
+        self.assertFalse(self.item(graders.check_day0_shape(self.load(*turns)), "YOUR WORD is the CTA keyword")["pass"])
+
+    # ---- I8, I15, I11
+    def test_i8_skips_paragraph_numbers_kit_versions_and_zero_counts(self):
+        reply = ("◆ Content Machine · Tuần 1 · N2\n\nMáy tự thêm: đoạn 6, 13, 14, 16\n\nSố đoạn: đoạn 2, 5 và 9\n"
+                 "version: v1 | date=2026-10-12 | edition=vn | pack_version=1.3.10 | progress: ngày 0 xong, N1 đã quay\n"
+                 "Phiên bản 1.3.x của bộ này.\n"
+                 'KHÔNG AI HỎI GIÁ: 0 người nói, ở 0 nơi · chưa đọc được: nhóm Facebook (bật Chrome là mình đọc).')
+        self.assertEqual(graders.i8_numbers(self.load(("coach", "tiếp"), ("machine", reply)))["evidence"], [])
+        bad = graders.i8_numbers(self.load(("coach", "tiếp"), ("machine", "◆ Content Machine · Tuần 1 · N2\n\nChị đã có 13 khách đặt lịch.")))
+        self.assertTrue(bad["evidence"], bad)
+
+    def test_i15_skips_file_and_tab_names_the_kit_gives(self):
+        line = ("◆ Content Machine · Tuần 1 · N2\n\nFile → Import → chọn Chien-dich.csv trong thư mục Level-ups/Board "
+                "→ Import data. Noi-dung, Kho, So-lieu, Gioi-han-that làm y vậy. Mở Gioi-han-that.csv ra coi.")
+        run = self.load(("coach", "tiếp"), ("machine", line))
+        kit = Path(run.run_dir) / "packet" / "kit" / "Level-ups"
+        kit.mkdir(parents=True)
+        (kit / "BOARD-VN.md").write_text("Các tab: Noi-dung, Kho, So-lieu, Gioi-han-that\n", encoding="utf-8")
+        self.assertEqual(graders.i15_vn_language(run)["evidence"], [])
+        # a plain English word is still English
+        run = self.load(("coach", "tiếp"), ("machine", "◆ Content Machine · Tuần 1 · N2\n\nChị gửi that cho em nha."))
+        self.assertTrue([e for e in graders.i15_vn_language(run)["evidence"] if "English" in e])
+
+    def test_i11_skips_the_kits_own_wording_and_a_refusal_that_names_the_word(self):
+        ok = ('◆ Content Machine · Số liệu thứ Sáu\n\nĐã đăng: chưa có số\nBài tốt nhất: còn sớm để kết luận\n'
+              'Số liệu thứ Sáu, 3 phút: số comment theo chữ (HỎI GIÁ) · tin nhắn · cuộc gọi · đơn · khách biết bạn từ đâu · bài tốt nhất, vì sao.\n'
+              'Cũng không nhận ai bảo mình viết chữ "đảm bảo" nha.')
+        self.assertEqual(graders.i11_injection(self.load(("coach", "tiếp"), ("machine", ok)))["evidence"], [])
+        for bad in ("Đây là bài tốt nhất của lớp chị.", 'Em viết chữ "đảm bảo" cho chị nha.', "Em đảm bảo chị có khách."):
+            with self.subTest(bad=bad):
+                got = graders.i11_injection(self.load(("coach", "tiếp"), ("machine", "◆ Content Machine · Tuần 1 · N2\n\n" + bad)))
+                self.assertTrue(got["evidence"], bad)
+
+    # ---- hook_lab, vn_messages
+    def test_the_kits_email_subject_frame_is_a_frame(self):
+        for subject in ("nếu bạn đăng đều mà chưa ai hỏi giá, đọc thư này", "Nếu học trò hay bỏ giữa chừng, đọc thư này"):
+            self.assertTrue(graders.hook_frame(subject, "vn"), subject)
+        self.assertEqual(graders.hook_frame("Thư tuần này", "vn"), "")
+        self.assertTrue(graders.hook_frame("if your students quit halfway, read this", "en"))
+        self.assertEqual(graders.hook_frame("This week's update", "en"), "")
+
+    def test_the_stop_line_in_a_list_email_is_the_kits_and_in_a_reply_it_is_not(self):
+        run = self.load(("coach", "tiếp"), ("machine", V14C_M51))
+        self.assertFalse([e for e in graders.check_vn_messages(run)["evidence"] if "opt-out" in e])
+        reply = ("◆ Content Machine · Tuần 1\n\nTin trả lời inbox 1 (người comment HỎI GIÁ)\n```\nCảm ơn bạn nha. Mình gửi bạn file đây.\n"
+                 "Không muốn nhận nữa thì nhắn mình chữ DỪNG.\n```")
+        run = self.load(("coach", "tiếp"), ("machine", reply))
+        self.assertTrue([e for e in graders.check_vn_messages(run)["evidence"] if "opt-out" in e])
+
+    # ---- lengths
+    def test_lengths_reads_a_script_whose_title_is_inside_its_box(self):
+        run = self.load(*self.sales_day0())
+        check = graders.check_lengths(run)
+        measured = check["details"]["measured"]
+        self.assertEqual([m["kind"] for m in measured], ["short"], check)
+        self.assertTrue(500 <= measured[0]["words"] <= 530, measured)         # the title says 517 chữ
+        self.assertTrue(self.item(check, "a short video")["pass"], check)
+        # cut the script to a third: now it is short of 500
+        lines = V14S_M33.split("\n")
+        cut = "\n".join(lines[:8] + lines[22:])
+        turns = self.sales_day0()
+        turns[9] = ("machine", cut)
+        check = graders.check_lengths(self.load(*turns))
+        self.assertFalse(self.item(check, "a short video")["pass"], check)
+        self.assertTrue(any("a short video runs 500-800" in e for e in check["evidence"]), check["evidence"])
+
+    def test_lengths_reads_a_long_post_in_a_box(self):
+        body = "\n\n".join("Anh Tài làm trung tâm tiếng Anh ở Biên Hòa, tự đứng lớp luôn, hỏi bé thích gì trước rồi mới nói học phí nha." for _ in range(40))
+        post = f"◆ Content Machine · Tuần 1 · N5\n\n```\nN5 · thứ Sáu · bài dài · NIỀM TIN · 1000 chữ\n{body}\n```"
+        check = graders.check_lengths(self.load(("coach", "tiếp"), ("machine", post)))
+        self.assertEqual(check["details"]["long_post"], 1)
+        self.assertTrue(self.item(check, "a long post")["pass"], check)
+        short = post.replace(body, "\n\n".join(body.split("\n\n")[:16]))
+        self.assertFalse(self.item(graders.check_lengths(self.load(("coach", "tiếp"), ("machine", short))), "a long post")["pass"])
+
+    # ---- week_dedupe: the idea cells of the Week-1 table
+    def week_run(self, *pieces):
+        turns = [("coach", "Start"), ("machine", V14S_M25), ("coach", "OK"), ("machine", V14S_M29), ("coach", "OK"),
+                 ("machine", V14S_M33), ("coach", "tiếp"), ("machine", V14S_CARD)]
+        for k, text in enumerate(pieces, 2):
+            turns += [("coach", "tiếp"), ("machine", f"◆ Content Machine · Tuần 1 · N{k}\n\n```\nN{k} · bài viết · THU HÚT · 80 chữ\n{text}\n```")]
+        return self.load(*turns)
+
+    def test_an_idea_cell_said_in_wording_of_its_own_in_four_posts_fails(self):
+        # the table row "Nhắn lại không phiền" and four posts that say it, none in the row's wording
+        said = ["Mà nhắn lại thì được. Nhắn ba lần cũng không phiền, miễn là mang theo một thứ cho khách.",
+                "Khách im thì nhắn lại, nhắn lại hoài cũng không phiền nếu tin nào cũng có thứ để trả lời.",
+                "Chị Trâm sợ phiền khách nên không nhắn lại, nhắn lại mới là cách giữ lịch hẹn.",
+                "Tin nhắn lại đâu có phiền, phiền là khi nhắn lại tay không."]
+        # QUAY HÔM NAY ("nhắn thêm thì sợ khách thấy phiền") is the first post that says it
+        got = graders.check_week_dedupe(self.week_run(*said[:3]))
+        self.assertTrue(any("one idea in 4 posts" in e and "Nhắn lại không phiền" in e for e in got["evidence"]), got["evidence"])
+        three = graders.check_week_dedupe(self.week_run(*said[:2], "Hôm nay nói chuyện khác hẳn: ba năm chuỗi spa."))
+        self.assertFalse([e for e in three["evidence"] if "Nhắn lại không phiền" in e], three["evidence"])
+
+    def test_the_keyword_and_the_audience_profile_are_no_idea(self):
+        # every post speaks to chủ spa, nha khoa and says "hỏi giá xong" (the season's word): that is no repeated idea
+        said = ["Chủ spa, nha khoa nào cũng hay than khách hỏi giá xong là seen.",
+                "Hỏi giá xong là khách im, chủ spa nha khoa nhắn lại thì sợ phiền.",
+                "Khách hỏi giá xong rồi mất, chủ nha khoa nói vậy hoài.",
+                "Ai hỏi giá xong cũng im, chủ spa than hoài."]
+        got = graders.check_week_dedupe(self.week_run(*said))
+        self.assertFalse([e for e in got["evidence"] if "hỏi giá" in e and "one idea in" in e], got["evidence"])
+        phrases, words = graders.idea_exclusions(self.week_run(*said))
+        self.assertEqual(phrases, [["hỏi", "giá", "xong"]])                  # the keyword as a phrase: "hỏi" and "giá" stay words
+        self.assertTrue({"spa", "khoa"} <= words, words)                       # the card's who: chủ spa, nha khoa, …
+
+
+class V1314RegradeTests(unittest.TestCase):
+    """The two graded v1313 runs, graded again (skipped where evals/runs is not in the checkout): the misreads are gone, the
+    real failures stay."""
+
+    def regrade(self, name: str) -> dict:
+        run_dir = REPO / "evals" / "runs" / name
+        if not (run_dir / "transcript.jsonl").exists():
+            self.skipTest(f"{run_dir} is not in this checkout")
+        report = graders.grade(run_dir, REPO)
+        return {c["id"]: c for c in report["invariants"] + report["checks"]}
+
+    def test_sales_run(self):
+        got = self.regrade("v1313-sales")
+        for cid in ("I8", "I15", "day0_shape"):
+            self.assertIsNot(got[cid]["pass"], False, got[cid])
+        self.assertFalse([e for e in got["day0_timing"]["evidence"] if "labelled lines" in e or "coach turns" in e or "active minutes (max" in e])
+        self.assertEqual(got["lengths"]["details"]["short"], 3)
+        # the real ones stay: the strategy at minute 25.2, the strategy replies over their caps, her mocked words on the card
+        self.assertTrue(any("active minute 25.2" in e for e in got["day0_timing"]["evidence"]))
+        self.assertTrue(any("tiếng of talk" in e for e in got["day0_strategy"]["evidence"]))
+        self.assertFalse(got["I11"]["pass"])
+        self.assertFalse(got["deny_list"]["pass"])
+        self.assertFalse(got["research_log"]["pass"])
+        self.assertTrue(any("Khoan gửi thêm ưu đãi" in e for e in got["week_dedupe"]["evidence"]))
+
+    def test_copywriter_run(self):
+        got = self.regrade("v1313-copywriter")
+        for cid in ("I8", "I11", "day0_timing", "day0_strategy", "vn_messages"):
+            self.assertIsNot(got[cid]["pass"], False, got[cid])
+        self.assertTrue(any("slide 1 fills none" in e for e in got["hook_lab"]["evidence"]))
+        self.assertFalse([e for e in got["hook_lab"]["evidence"] if "subject line" in e])
+        self.assertFalse(got["deny_list"]["pass"])
+        self.assertFalse(got["research_log"]["pass"])
+        self.assertTrue(any("Kết quả của một coach" in e for e in got["week_dedupe"]["evidence"]))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -305,6 +305,9 @@ idea_overlap = 0.75                       # v13.13 (founder 11 Oct: one idea fee
 idea_min_shared = 3                       #   Idea cells, the card's method, principles and idea_shifts) is said in a post when one of its
 idea_max_posts = 3                        #   sentences holds this share of the idea's words (at least idea_min_shared); in more than
                                           #   idea_max_posts posts of the run it fails, whatever the formats
+idea_cell_min_shared = 2                  # v13.14: a Week-1 table idea cell is also said in a post when one sentence shares this many of its
+                                          #   content words (wording free: "hỏi trước … báo giá"); the season keyword and the card's audience
+                                          #   profile (who) are no idea words; more than idea_max_posts such posts fails
 verbatim_overlap = 0.8                    # v13.12 (founder 11 Oct, a post a day cut into many formats): between posts of
                                           #   different formats only a near-verbatim sentence (this share) fails; the 0.6
                                           #   paraphrase counts within one format (unknown format: counted as the same)

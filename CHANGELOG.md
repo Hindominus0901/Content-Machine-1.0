@@ -4,6 +4,17 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.14] - 2026-10-11 (v13.14)
+
+Fixes from the v13.13 simulated runs (qa/runs/v1313).
+
+### Changed
+- [buyer] One idea feeds at most 3 posts a week; the keyword can appear more often but carries a new idea each time.
+- [buyer] A result used again is retold in new words, with the same numbers.
+- [buyer] When thin material means fewer videos than the coach chose, the machine says so in one plain line.
+- Kit: the week table's Idea column is the ledger (client profile = audience, not an idea); listed "Máy tự thêm" paragraphs still need a source for any generalization; teaching speaks as "có thể / thử…"; bare "trụ cột" removed from kit labels, HUB.md and task texts (STRATEGY-VN machine-only lines left, budget full).
+- Graders: Day 0 ends at the Brand Card reply; pillars read from the pillar table; list-fix reprint not a step; comment word vs season keyword roles; I8/I11/I15 skip kit strings, paragraph lists, versions and file names; kit email-subject frames accepted; DỪNG line accepted in list emails; `lengths` measures pieces; idea count matches table idea cells by shared content words.
+
 ## [1.3.13] - 2026-10-12 (v13.13)
 
 Fixes from the v13.12 simulated runs (qa/runs/v1312).
