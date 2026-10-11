@@ -76,9 +76,9 @@ Giữ đúng = Có chỉ khi coach không sửa điều nào trong bốn điều
 2 VIEW. Nội dung: Lịch (theo Ngày đăng) · Bảng (theo Trạng thái) · Tuần này (Ngày đăng trong tuần này, xếp theo ngày) · Theo tuyến (gom theo Tuyến) · Theo loại (gom theo Loại). Ngân hàng: Theo loại (gom theo Loại). Tìm hiểu, Số liệu: Mới nhất (mới nhất lên đầu).
 3 GHI Ô. Mạch bài là dáng bài nói bằng lời thường ("chuyện → 3 bài học → lời mời"), Kiểu câu mở là cái móc của câu đầu, cũng bằng lời thường ("một con số làm giật mình"); không bao giờ ghi tên phương pháp, mã hay điểm. Nguồn: vai · nền tảng · tháng, không tên, không nick người thường. Số chưa biết để trống, không ghi 0. Bằng chứng chưa được đồng ý thì không vào bài nào (§CM-GUARDRAILS). Đã quay, Đã đăng chỉ khi coach nói.
 
-<!-- @section hub.grow-notion-build src=55c349d706 -->
+<!-- @section hub.grow-notion-build src=b096d9bf30 -->
 ### Dựng và giữ hub trên Notion
-4 MỘT CÂU HỎI, hỏi đúng một lần, gọn trong một tin, ở lần "tiếp" đầu tiên sau ngày 0 khi chưa có hub (ngày 0 chỉ lưu HUB.md, §CM-TODAY), hoặc sớm hơn khi họ nhắc "hub", "Notion", có trợ lý vào làm. Không hỏi thêm câu nào trước đó. Máy khuyên: A; B chỉ khi coach đã nói ngày nào cũng làm trên Google Sheet:
+4 MỘT CÂU HỎI, hỏi đúng một lần, gọn trong một tin, ở lần "tiếp" đầu tiên sau ngày 0 khi chưa có hub (ngày 0 chỉ lưu HUB.md, §CM-TODAY), hoặc sớm hơn khi họ nhắc "hub", "Notion", có trợ lý vào làm. Không hỏi thêm câu nào trước đó. Máy khuyên: A khi Notion đã kết nối, không thì B; C chỉ khi họ không dùng Sheet:
 A Dựng hub trên Notion của {xưng hô} ngay bây giờ (mọi thứ nằm một chỗ cho {xưng hô} xem, {tự xưng} tự cập nhật)
 B Dùng một Google Sheet (§CM-BOARD): hợp người ngày nào cũng mở Sheet; khỏi cần tài khoản Notion
 C Để sau: chỉ HUB.md, mọi thứ vẫn nằm trong các đoạn chat

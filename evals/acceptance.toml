@@ -298,9 +298,9 @@ needs_words_max = 20                      # fail: a "Needs you" / "Cần" line o
 
 [week1]                                   # check week1_plan (graders.py; v13.9 / v13.10, audit a3 M3)
 pieces_by_hours = [[0, 2, 3], [2, 3.25, 5], [3.25, 4.5, 7], [4.5, 99, 8]]   # [from h, to h, Week-1 pieces] (§CM-WEEK 2,
-                                          #   §CM-CALENDAR 2: under 2 h 3 · ≈2½ h Lean 5 (about 3 h: the same 5, edited; DECISIONS
+                                          #   §CM-CALENDAR 2: under 2 h or no hours 3 (Light ≈1½ h) · ≈2½ h Lean 5 (about 3 h: the same 5, edited; DECISIONS
                                           #   9 Oct item 8) · ≈3½ h Standard 7 · ≈5 h 8; 8 h+ a long video + cuts, 8);
                                           #   the DM replies, "ask 3" and the gift are not counted
-tier_pieces = { lean = 5, standard = 7 }  # with no hours on the card or the strategy: the card's tier=
+tier_pieces = { light = 3, lean = 5, standard = 7 }  # with no hours on the card or the strategy: the card's tier=
 idea_overlap = 0.6                        # two "Idea, hook" cells (or FILM TODAY's first line and a Week-1 idea) sharing this share of
 idea_min_shared = 2                       #   the shorter one's content words, and at least 2 of them, are one idea twice

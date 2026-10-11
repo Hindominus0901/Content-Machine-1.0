@@ -27,7 +27,7 @@
 #   nhé. OK hay sửa một dòng?" (K2) → any answer but a Map change brings Tuần 1, unasked, with setup.plan_guess named
 #   once above it → Brand Card (top: "NÓI GÌ:" / "NÓI THẾ NÀO:", then "Phần còn lại là cho máy, không cần đọc:") +
 #   card.save_line "Lưu lại để mình nhớ bạn (30 giây)." + the reminder offer + TIẾP "Quay video hôm nay nhé. Mai mở
-#   Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'." A long Week-1 reply may push the card to the next reply
+#   quay lại đoạn chat này, nhắn 'tiếp'." A long Week-1 reply may push the card to the next reply
 #   (setup.kit-order 9). "lát nữa" before the card: card + save line at once, Tuần 1 on "tiếp".
 #   Gone (R10-R14, R18): the inventory, the 7-line check screen, the old Map labels (ĐƯỢC BIẾT ĐẾN VÌ, MỘT THÔNG ĐIỆP,
 #   3 Ý LỚN, ĐỂ SAU), the stop point and wrap-up (card.stop_lines "Hôm nay xong rồi…"), the "quá ~10 phút" / "nói thêm một
@@ -575,7 +575,7 @@ regex = [
   '''Lưu lại để em nhớ chị''',
   '''Lưu vào dự án''',
   '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
-  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]''',
+  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?quay lại đoạn chat này, nhắn ['"“‘]tiếp['"”’]''',
 ]
 not_regex = [
   '''(?i)Hôm nay xong rồi''',
@@ -605,7 +605,7 @@ not_contains = ["dự án", "project", "Save to project", "Lưu vào dự án"]
 regex = [
   '''(?im)^\W*\|?\s*Ngày\s*\|\s*Dạng\s*\|\s*Hook\s*\|\s*Lời mời''',
   '''Phần còn lại là cho máy, không cần đọc:''',
-  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]''',
+  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?quay lại đoạn chat này, nhắn ['"“‘]tiếp['"”’]''',
 ]
 not_regex = [
   '(?i)(lưu|gửi)[^.\n]{0,40}(rồi mới|xong mới|mới\s+(làm|viết|được|tiếp))',
@@ -820,10 +820,10 @@ contains = [
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
   '''Lưu lại để em nhớ chị (30 giây)''',
-  '''đoạn chat mới nhất''',
+  '''quay lại đoạn chat này''',
 ]
 regex = [
-  '''(?m)^TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]\.?\s*\Z''',
+  '''(?m)^TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?quay lại đoạn chat này, nhắn ['"“‘]tiếp['"”’]\.?\s*\Z''',
   '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
 ]
 not_regex = [
@@ -1000,7 +1000,7 @@ regex = [
   '''NÓI THẾ NÀO:''',
   '''Phần còn lại là cho máy, không cần đọc:''',
   '''Lưu lại để em nhớ anh \(30 giây\)''',
-  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?mở Content Machine, vào đoạn chat mới nhất, nhắn ['"“‘]tiếp['"”’]''',
+  '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?quay lại đoạn chat này, nhắn ['"“‘]tiếp['"”’]''',
   '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?m)^\W*TRỤ CỘT NỘI DUNG:''',
   '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',

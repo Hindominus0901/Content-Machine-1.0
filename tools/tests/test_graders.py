@@ -58,8 +58,8 @@ EN_STRINGS = {
     "dump.keep_going": "Keep going, or say 'done'.",
     "dump.post_it": "Post it as text today if you like.",
     "cmd.quiet": "quiet",
-    "cta.default": "Comment {KEYWORD} and I'll send you {gift}.",
-    "cta.quiet": "Message me {KEYWORD} and I'll send you {gift}.",
+    "cta.default": "Comment {WORD} and I'll send you {gift}.",
+    "cta.quiet": "Message me {WORD} and I'll send you {gift}.",
     "cta.not_pushy": "A comment word gets people something real, so it isn't pushy. For a quieter ending, say 'quiet'.",
     "film.now_or_text": "Film it now, or post the caption as text.",
     "card.title": "Brand Card v{n} · {date}",
@@ -1622,7 +1622,7 @@ CARD_REPLY = f'''
     HOW YOU SAY IT: dry · plain · warm · "the best trade I ever made" · to them: "you"
     The rest is for the machine, no need to read:
     ```
-    version date=2026-10-06 plan_start=2026-10-07 trial_ends=2026-11-06 list_size=0
+    version date=2026-10-06 plan_start=2026-10-07 list_size=0
     ```
     Save this so I remember you (30 s). Copy the card, press + by the project files, choose Add text content, paste, Save. You won't lose this chat. Backup: email it to yourself.
     NEXT → Film today's video. Tomorrow: say 'next'.
@@ -1659,7 +1659,7 @@ class G1RoundGraderTests(TempRepo):
             ```
             The rest is for the machine, no need to read:
             ```
-            version date=2026-10-06 plan_start=2026-10-12 trial_ends=2026-11-06
+            version date=2026-10-06 plan_start=2026-10-12
             ```
             NEXT → Say "next".
             ''')])
@@ -2321,8 +2321,8 @@ VG_STRINGS = dict(VN_STRINGS, **{
     "map.known": "ĐIỀU KHÁCH NHỚ:", "map.topics": "TRỤ CỘT NỘI DUNG:", "map.mix": "TỶ LỆ NỘI DUNG:",
     "map.system": "HỆ THỐNG NỘI DUNG:", "map.word": "TỪ KHOÁ:", "map.found": "NGHIÊN CỨU CHO THẤY:", "map.voice": "GIỌNG:",
     "map.ok": "Chạy thử 4 tuần theo bản này. OK hay sửa một dòng?",          # v13.4: no pronoun, no "nhé"
-    "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.",
-    "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.",
+    "cta.default": "Comment {WORD} hay nhắn riêng, mình gửi {gift}.",
+    "cta.quiet": "Nhắn mình chữ {WORD}, mình gửi {gift}.",
     "cta.not_pushy": "Người xem comment là nhận được thứ có ích thật, đâu có ép ai. Muốn kết nhẹ hơn thì gõ 'nhẹ'.",
     "cmd.quiet": "nhẹ", "cmd.ok": "ok",
     "film.now_or_text": "Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.",
@@ -2948,8 +2948,8 @@ class VG3RoundGraderTests(TempRepo):
 VG4_STRINGS = dict(VG2_STRINGS, **{
     # the kit after review retest-vg4-g5 (6e61e51): VK-33 ended both asks with "nhé", which v13.4 took out again (the
     # machine adds end particles at the coach's rate, _slot_pattern); the text post is offered in a line
-    "cta.default": "Comment {KEYWORD} hay nhắn riêng, mình gửi {gift}.",
-    "cta.quiet": "Nhắn mình chữ {KEYWORD}, mình gửi {gift}.",
+    "cta.default": "Comment {WORD} hay nhắn riêng, mình gửi {gift}.",
+    "cta.quiet": "Nhắn mình chữ {WORD}, mình gửi {gift}.",
     "film.now_or_text": "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.",
     "film.not_filming": "Hôm nay không quay thì đăng caption thành bài chữ.",
     "cta.by_hand": "Tin trả lời phải gửi bằng tay.",

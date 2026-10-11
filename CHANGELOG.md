@@ -4,6 +4,21 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.11] - 2026-10-11 (v13.11)
+
+Full audit fixed (a1 kit 39, a2 level-ups/plugin 43, a3 QA/docs 39).
+
+### Changed
+- [buyer] Default week when no hours are given: Light, 3 pieces in about 1½ hours. Weekly Talk output follows the hours.
+- [buyer] Short video stays 500–800 words on every platform; one honest note that Reels/Shorts over ~3 minutes may need a trim or posting as a longer video.
+- [buyer] Coaches who write instead of film get "POST TODAY" / "ĐĂNG HÔM NAY".
+- [buyer] Fewer asks per reply: each strategy reply ends on one OK (only the last opens today's piece); the browser question is asked once, alone; the Day-0 card reply has one ask and one next step; Friday has one paste ask.
+- Kit: per-piece comment word `{WORD}` (TRUST) vs Season keyword + gift `{KEYWORD}` (CONVERT); ATTRACT asks save/send. 40/40/20 everywhere. Hub offer at the first 'next' after Day 0 (A Notion if connected, else B Sheet). Level-up-only steps get kit fallbacks. `trial_ends` and stale strings removed. VN wording pass ({gọi khách}, {tự xưng}, accented keywords).
+- Level-ups/plugin: 3–5 pillars with one big idea each (no stale "never a 4th"); no fake Notion Duplicate link; Day-0 WHAT I FOUND without quotes or links; no ChatGPT Computer Use; cm-writer drafts ≥12 first lines.
+- Graders, cases, schema and DECISIONS follow (tier=light, POST TODAY label, `{WORD}` CTA parse, new Day-0 NEXT line). VN method budget 66,560 B.
+
+## [1.3.10-audit-a3]
+
 Maintainer changes after v13.10 (audit a3, 11 Oct 2026): QA and docs brought to the current kit. No kit text changed.
 
 ### Changed

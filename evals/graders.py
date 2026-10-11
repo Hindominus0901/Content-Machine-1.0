@@ -348,7 +348,7 @@ MAP_STEP_RE = re.compile(r"\bmap\b|bản đồ|thông điệp", re.I)
 # A strategy step's running tag counts its steps ("Bước 2/3 · …", "Step 2 of 3 · …"): v13's 3 pre-filled steps (§CM-MAP).
 STRATEGY_PART_STEP_RE = re.compile(r"(?<!\w)(?:bước|step)\s+\d+\s*(?:/|of|trên)\s*\d+(?!\w)", re.I)
 STRATEGY_STEP_RE = re.compile(r"\bstrateg(?:y|ies)\b|chiến lược", re.I)
-FILM_STEP_RE = re.compile(r"\bfilm\b|(?<!\w)quay(?!\w)", re.I)
+FILM_STEP_RE = re.compile(r"\bfilm\b|(?<!\w)quay(?!\w)|\bpost today\b|(?<!\w)đăng hôm nay(?!\w)", re.I)  # v13.11: text-first coaches get POST TODAY / ĐĂNG HÔM NAY
 CARD_STEP_RE = re.compile(r"\bbrand card\b|\bcard\b|(?<!\w)thẻ(?!\w)", re.I)
 OVERLAP_N = 8
 OVERLAP_MAX_DEFAULT = 2
@@ -5720,8 +5720,8 @@ TIN_BEFORE_RE = re.compile(r"(?<!\w)tin\s*$", re.I)
 
 
 def cta_keyword(run: Run, text: str) -> tuple[str, bool] | None:
-    """(keyword, quiet) of the first keyword CTA in a text: cta.default ("Comment {KEYWORD} and I'll send you…"),
-    cta.quiet ("Message me {KEYWORD}…": quiet = True), else a plain "comment WORD and …" ("message me WORD …" is
+    """(keyword, quiet) of the first keyword CTA in a text: cta.default ("Comment {WORD} and I'll send you…"),
+    cta.quiet ("Message me {WORD}…": quiet = True), else a plain "comment WORD and …" ("message me WORD …" is
     quiet). A command word is never a keyword ("gõ 'ok' là…", "say 'quiet'": strings cmd.*). VN (review VG2 G23): an
     ask names its keyword in capitals or quotes ("nhắn của em" is talk), and "nhắn" right after "tin" is the noun "tin
     nhắn". EN keeps a lowercase keyword ("Comment margin and I'll send the sheet" is an ask)."""
@@ -5730,7 +5730,9 @@ def cta_keyword(run: Run, text: str) -> tuple[str, bool] | None:
     marked = (lambda a, b: _caps_or_quoted(plain, a, b)) if run.lang == "vn" else (lambda a, b: True)
     found = []
     for key, quiet in (("cta.default", False), ("cta.quiet", True)):
-        p = _slot_capture(run.strings.get(key, ""), run.lang, "KEYWORD")
+        # v13.11: the strings carry {WORD} (the per-piece comment word); older packs carried {KEYWORD}
+        p = (_slot_capture(run.strings.get(key, ""), run.lang, "WORD")
+             or _slot_capture(run.strings.get(key, ""), run.lang, "KEYWORD"))
         m = next((m for m in p.finditer(plain) if marked(m.start(1), m.end(1))), None) if p else None
         if m:
             found.append((m.start(), m.group(1), quiet))
@@ -6040,7 +6042,7 @@ def check_day0_shape(run: Run) -> dict:
     """wf15 §1 deliverables a transcript shows (reviews G8, G11-G14, G17, VG-3-VG-7; each item caught a real defect):
     - FILM TODAY: the caption in a copy box; a keyword CTA, and a comment-keyword CTA offers the quiet ask
       (cmd.quiet); the NEXT line is never read for the CTA;
-    - YOUR WORD (map.word) is the CTA's {KEYWORD} (cta.default / cta.quiet): the keyword at the head of its value
+    - YOUR WORD (map.word) is the CTA's {WORD} (cta.default / cta.quiet): the keyword at the head of its value
       (word_head: quotes, a leading "the" and a source or spelling note left out);
     - YOUR WORD carries the guess tag ("(my guess", "(mình đoán", "(em đoán") exactly when the dump does not give the
       phrase: it is heard (no tag) when the coach quotes it from 3+ named clients, or quotes it and says many clients
@@ -8028,7 +8030,7 @@ def check_week_dedupe(run: Run) -> dict:
             "details": {"batches": seen_batches, "pieces": len(units_all)}}
 
 
-PIECE_LABEL_RE = re.compile(r"(?<!\w)(N\d{1,2}|FILM TODAY|QUAY HÔM NAY|DM reply \d|Tin trả lời inbox \d)(?!\w)", re.I)
+PIECE_LABEL_RE = re.compile(r"(?<!\w)(N\d{1,2}|FILM TODAY|POST TODAY|QUAY HÔM NAY|ĐĂNG HÔM NAY|DM reply \d|Tin trả lời inbox \d)(?!\w)", re.I)
 
 
 # A label in front of a line ("Câu đầu: …", "Ý 3 · …", "Slide 2: …"): left out before two sentences are compared.
@@ -8142,16 +8144,16 @@ def check_style(run: Run) -> dict:
 
 
 # ---------------------------------------------------------------- week1_plan (v13.9 / v13.10; audit a3 M3)
-# Week 1's count follows the hours the coach chose (§CM-WEEK 2, §CM-CALENDAR 2: under 2 h 3 pieces, ≈2½ h Lean 5, ≈3½ h
+# Week 1's count follows the hours the coach chose (§CM-WEEK 2, §CM-CALENDAR 2: under 2 h or no hours given 3 pieces ≈1½ h Light, ≈2½ h Lean 5, ≈3½ h
 # Standard 7, ≈5 h 8, 8 h+ a long video and its cuts, 8); the chat table carries "Idea, hook" and no idea twice (the idea
 # ledger, §CM-HUMANIZE); FILM TODAY's one idea is not a Week-1 piece's; Week 1's CONVERT asks for replies, never a price,
 # a call or an offer (no offer before week 2 outside a launch, v13.9). Thresholds in acceptance.toml [week1].
 WEEK1_DEFAULTS = {"pieces_by_hours": [[0, 2, 3], [2, 3.25, 5], [3.25, 4.5, 7], [4.5, 99, 8]],
-                  "tier_pieces": {"lean": 5, "standard": 7}, "idea_overlap": 0.6, "idea_min_shared": 2}
+                  "tier_pieces": {"light": 3, "lean": 5, "standard": 7}, "idea_overlap": 0.6, "idea_min_shared": 2}
 _HOURS_NUM = r"(\d{1,2}(?:[.,]\d)?\s*½?|½)"
 HOURS_TEXT_RE = re.compile(r"(?<![\w.,])≈?\s*" + _HOURS_NUM + r"\s*(?:h|hrs?|hours?|giờ|tiếng)(?!\w)", re.I)
 HOURS_FIELD_RE = re.compile(r"(?<!\w)(?:hours?(?:_week|_a_week|/week)?|số giờ|giờ)\s*[=:]\s*≈?\s*" + _HOURS_NUM, re.I)
-TIER_FIELD_RE = re.compile(r"(?<!\w)tier\s*[=:]\s*(lean|standard)(?!\w)", re.I)
+TIER_FIELD_RE = re.compile(r"(?<!\w)tier\s*[=:]\s*(light|lean|standard)(?!\w)", re.I)
 WEEK_WORD_RE = re.compile(r"(?<!\w)(?:a week|per week|weekly|/\s*week|/\s*wk|mỗi tuần|một tuần|/\s*tuần|tuần)(?!\w)", re.I)
 WEEK1_EXTRA_ROW_RE = re.compile(r"(?<!\w)(?:dm|inbox|reply \d|ask 3|past clients?|hoi (?:3|ba) khach|khach cu|gift|qua|"
                                 r"weekly talk|talk|tra loi)(?!\w)")
@@ -8176,7 +8178,7 @@ def _hours(text: str) -> float | None:
 
 def week1_hours(run: Run) -> tuple[float | None, str, str]:
     """(hours a week, tier, where) the coach's Week 1 is planned for: the Brand Card's plan fields first (hours=…,
-    tier=lean|standard), else the strategy's lines that name hours a week (the "(recommended)" option when several)."""
+    tier=light|lean|standard), else the strategy's lines that name hours a week (the "(recommended)" option when several)."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
     tier = ""
     for r in run.replies:
@@ -8258,7 +8260,7 @@ def _first_line_of(p: Piece) -> str:
 def check_week1_plan(run: Run) -> dict:
     """Week 1 against the v13.9 / v13.10 rules no other check reads (audit a3 M3):
     - the count follows the hours (§CM-WEEK 2): the Week-1 table's pieces (or, with no table, the Week-1 pieces) match
-      [week1] pieces_by_hours for the hours on the card or the strategy (else tier_pieces for tier=lean|standard);
+      [week1] pieces_by_hours for the hours on the card or the strategy (else tier_pieces for tier=light|lean|standard);
     - the idea ledger: the chat table has an "Idea, hook" column (§CM-WEEK 10) and no two rows share an idea (content
       words overlapping by idea_overlap of the shorter, at least idea_min_shared words);
     - Day 0's one idea: FILM TODAY's first line is no Week-1 row's idea, nor a Week-1 piece's first line;

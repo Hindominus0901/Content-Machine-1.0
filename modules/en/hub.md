@@ -76,7 +76,7 @@ Enforced = Yes only when none of the four facts was corrected to "no" (§CM-LAUN
 
 <!-- @section hub.grow-notion-build -->
 ### Building and keeping the Notion hub
-4 THE ONE CHOICE, asked once, in one message, at the first "next" after Day 0 with no hub yet (Day 0 only saves HUB.md, §CM-TODAY), or sooner when they say "hub" or "Notion" or a VA joins. No question before it. Recommended: A; B only when they've said they live in Google Sheets:
+4 THE ONE CHOICE, asked once, in one message, at the first "next" after Day 0 with no hub yet (Day 0 only saves HUB.md, §CM-TODAY), or sooner when they say "hub" or "Notion" or a VA joins. No question before it. Recommended: A when Notion is connected, else B; C only if they don't use Sheets:
 A Build your hub in Notion now (one place you can see, and I keep it up to date)
 B One Google Sheet instead (§CM-BOARD): suits a daily Sheets user; no Notion account needed
 C Later: HUB.md only, everything stays in our chats

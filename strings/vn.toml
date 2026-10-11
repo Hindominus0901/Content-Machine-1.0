@@ -303,7 +303,6 @@
 "message.reason.generic"      = { text = "ai nói cũng được", src = "e9d5cd410d" }
 "message.reason.risky"        = { text = "dễ thành hứa quá lời", src = "eddac40188" }
 "message.reason.too_early"    = { text = "đúng khách, mà để sau mới hợp", src = "67f9fcf122" }
-"signature.seo"               = { text = "Không đâu, đây là chữ khách vẫn hay nói, mỗi bài dùng một lần thôi.", src = "61deae16e0" }
 "signature.friday"            = { text = "{keyword}: {n} người nói lại.", src = "5671417ef8" }
 "character.talk_start"        = { text = "Buổi 1/3, khoảng 20 phút.", src = "1f43302d58" }
 "character.voice_first"       = { text = "bấm micro, cứ nói tự nhiên 2–3 phút", src = "1414c9af7f" }

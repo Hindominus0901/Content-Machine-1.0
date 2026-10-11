@@ -310,15 +310,6 @@ label_key = "card.label.side_door"
 note = "multi-income coaches only: the parked income stream that gets ≤1 labelled piece a week"
 
 [[machine.field]]
-name = "trial_ends"
-group = "map"
-type = "date"
-source = "machine"
-required = true
-label_key = "card.label.trial_ends"
-note = "end of the 4-week try; the monthly re-plan keeps or sharpens the message"
-
-[[machine.field]]
 name = "offer_status"
 group = "map"
 type = "enum"
@@ -616,7 +607,7 @@ note = "talk day · film day · numbers day (visible until wf15)"
 name = "tier"
 group = "plan"
 type = "enum"
-options = ["lean", "standard", "va"]
+options = ["light", "lean", "standard", "va"]
 source = "check"
 required = true
 label_key = "card.label.tier"

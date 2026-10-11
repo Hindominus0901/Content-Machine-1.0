@@ -111,7 +111,6 @@ regex = [
   '''(?m)^\s*idea_shifts:\s*\S''',
   '''(?m)^\s*key_belief:\s*\S''',
   '''(?m)^\s*why_this_one:\s*\S''',
-  '''(?m)^\s*trial_ends:\s*20\d\d-\d\d-\d\d\b''',
   '''(?m)^\s*offer_status:\s*live\b''',
   '''(?m)^\s*proof_ready:\s*yes\b''',
   '''(?m)^\s*tone:\s*\S''',
@@ -151,7 +150,7 @@ invariants = ["I1", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card.toml [[machine.field]] required = true (EN): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, offer, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, trial_ends, offer_status, proof_ready, tone, rhythm, phrases, audience_address, code_mix, humour, trait, enemy, principles, passages, client_words, stories, plan_start, season, talk_day, week, tier, platform, owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations, not_now. wf15 S3: offer and week left the visible part, so they are machine-block fields now; message, big_ideas and keyword are not repeated in the block. pronouns and dialect are VN only. Platform and email list are asked only in the dump prompt's list, talk day and delivery never (setup.kit-facts 5, G2 K24): Instagram and 140 are in her dump; talk day is a guess (she is at her mom's on Mondays; her real answer is Tuesday) and delivery defaults to the beat-card form FILM TODAY uses. timezone is 'ask' until Dana names a zone, never blank (brain.kit-print 3: timezone=ask|{zone}, G1 K8). tier is lean, the default; Standard only when she asks (plan.kit-week 2, G1 K10). Voice fields in detail: brain.en.028."""
+notes = """scope: transcript. brand-card.toml [[machine.field]] required = true (EN): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, offer, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, offer_status, proof_ready, tone, rhythm, phrases, audience_address, code_mix, humour, trait, enemy, principles, passages, client_words, stories, plan_start, season, talk_day, week, tier, platform, owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations, not_now. wf15 S3: offer and week left the visible part, so they are machine-block fields now; message, big_ideas and keyword are not repeated in the block. pronouns and dialect are VN only. Platform and email list are asked only in the dump prompt's list, talk day and delivery never (setup.kit-facts 5, G2 K24): Instagram and 140 are in her dump; talk day is a guess (she is at her mom's on Mondays; her real answer is Tuesday) and delivery defaults to the beat-card form FILM TODAY uses. timezone is 'ask' until Dana names a zone, never blank (brain.kit-print 3: timezone=ask|{zone}, G1 K8). tier is lean, the default; Standard only when she asks (plan.kit-week 2, G1 K10). Voice fields in detail: brain.en.028."""
 
 [[case]]
 id = "brain.en.003"
@@ -299,12 +298,10 @@ not_contains = []
 regex = [
   '''(?m)^\s*date:\s*2026-10-11\b''',
   '''(?m)^\s*plan_start:\s*2026-10-12\b''',
-  '''(?m)^\s*trial_ends:\s*2026-11-0[6-9]\b''',
   '''(?ms)^\s*talk_day:\s*(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b.*?^\s*week:[^\n]*\b\1''',
 ]
 not_regex = [
-  '''(?m)^\s*trial_ends:\s*2027''',
-  '''(?m)^\s*trial_ends:\s*2026-1[0-2]-(?!0[6-9])\d\d''',
+  '''(?m)^\s*trial_ends:''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?(?i:\bnumbers fri)''',
 ]
 verdict = ""
@@ -312,7 +309,7 @@ invariants = ["I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card.toml: plan_start = 'the day after Day 0; week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1' (brain.kit-print 3, G1 K4); Day 0 is a Sunday, so plan_start is Monday 2026-10-12; brain.kit-print 3: 'trial_ends = plan_start + 25 days' (2026-11-06). A 90-day date here would be the old lock leaking into the card. wf15 S3: the week line (talk day · film day · numbers Fri) left the visible top for the machine block; it names the same day as talk_day (talk_day comes before week in the block's order)."""
+notes = """scope: transcript. brand-card.toml: plan_start = 'the day after Day 0; week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1' (brain.kit-print 3, G1 K4); Day 0 is a Sunday, so plan_start is Monday 2026-10-12; (trial_ends was dropped from the card in v13.11). A 90-day date here would be the old lock leaking into the card. wf15 S3: the week line (talk day · film day · numbers Fri) left the visible top for the machine block; it names the same day as talk_day (talk_day comes before week in the block's order)."""
 
 [[case]]
 id = "brain.en.008"

@@ -610,7 +610,7 @@ regex = [
   '''HOW YOU SAY IT:''',
   '''for the machine, no need to read''',
   '''Save this so I remember you \(30 s\)''',
-  '''NEXT →[^\n]*(?i:open Content Machine, newest chat)''',
+  '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''(?m)^\W*CONTENT PILLARS:''',
   '''(?m)^\W*CONTENT MIX:''',
@@ -915,7 +915,7 @@ regex = [
   '''Brand Card v1\b[\s\S]{0,800}?for the machine, no need to read''',
   '''Save this so I remember you''',
   '''(?im)^\W*\|?\s*Day\s*\|\s*Format\s*\|\s*Hook\s*\|\s*Ask''',
-  '''NEXT →[^\n]*(?i:open Content Machine, newest chat)''',
+  '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
 ]
 not_regex = [
   '''(?i)that(?:'|’)s today done''',
@@ -1217,7 +1217,7 @@ regex = [
   '''(?i)\bfri(day)?\b''',
   '''(?m)^\W*WHAT YOU SAY:''',
   '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
-  '''NEXT →[^\n]*(?i:open Content Machine, newest chat)''',
+  '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
 ]
 not_regex = [
   '''(?i)\b(?:which|what) (?:day|talk day)\b[^\n?]{0,30}\byou\b[^\n]*\?''',
@@ -1615,7 +1615,7 @@ regex = [
   '''for the machine, no need to read''',
   '''Save this so I remember you\.''',
   '''(?im)^\W*\|?\s*Day\s*\|\s*Format\s*\|\s*Hook\s*\|\s*Ask''',
-  '''NEXT →[^\n]*(?i:open Content Machine, newest chat)''',
+  '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
 ]
 not_regex = [
   '''WHY THIS GETS CLIENTS''',

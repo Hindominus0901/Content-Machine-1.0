@@ -30,7 +30,7 @@
 # - Day 0 now (start-block NGÀY 0, K2): … the Map with QUAY HÔM NAY under it and map.ok → any answer but a Map change
 #   brings all of Tuần 1, unasked, with setup.plan_guess named once above it → the Brand Card + card.save_line ("Lưu lại
 #   để mình nhớ bạn (30 giây)." in the pair: "Lưu lại để em nhớ chị (30 giây).") + the app route + TIẾP ("Quay video hôm
-#   nay nhé. Mai mở Content Machine, vào đoạn chat mới nhất, nhắn 'tiếp'."). setup.kit-order 9: Tuần 1, card and save
+#   nay nhé. Mai quay lại đoạn chat này, nhắn 'tiếp'."). setup.kit-order 9: Tuần 1, card and save
 #   line come in one message, the card in the next message when the reply runs long; "Ngắn thôi" puts the card in the
 #   next message (§CM-TODAY 1); "lát nữa" before the card prints card + save line at once and Tuần 1 waits for "tiếp".
 #   No stop point ("Hôm nay xong rồi. Có tấm card này…", card.stop_lines, is gone) and no wrap-up.
@@ -130,7 +130,6 @@ regex = [
   '''(?m)^\s*idea_shifts:\s*\S''',
   '''(?m)^\s*key_belief:\s*\S''',
   '''(?m)^\s*why_this_one:\s*\S''',
-  '''(?m)^\s*trial_ends:\s*20\d\d-\d\d-\d\d\b''',
   '''(?m)^\s*offer_status:\s*live\b''',
   '''(?m)^\s*proof_ready:\s*yes\b''',
   '''(?m)^\s*not_now:\s*\S''',
@@ -165,7 +164,7 @@ invariants = ["I1", "I5", "I8", "I10"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card.toml [[machine.field]] required (VN adds pronouns and dialect): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, offer, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, trial_ends, offer_status, proof_ready, not_now, the voice group (brain.vn.032), the character group, passages, client_words, stories, and the plan group plan_start, season, talk_day, week, tier, platform (lower case), owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations. wf15 S3: offer and week left the visible top, so they are block fields; message, the 3 chủ đề and the keyword are the top's. Platform and the Zalo/email list come from the dump prompt (G2 K24); talk day is a guess from 'Tối thứ Ba là chị rảnh nhất' (Tue); list_size is her Zalo count (brain.kit-print 3 list_size=ask|{n}: a number she said, else ask). proof_ready yes: Ngân and Phượng consented. Field names are never framework words (key_belief, idea_shifts, trial_ends replace Big Domino, B1-B7 and any lock). The last not_regex flags a line that groups three fields (vg2-day0-vn-hanh turn 8 'version: v1 | date=…', vg2-day0-vn-tuan '… | season: 1 | talk_day: …'): brain.kit-print 3 says 'mỗi dòng tên: giá trị'."""
+notes = """scope: transcript. brand-card.toml [[machine.field]] required (VN adds pronouns and dialect): version, date, edition, pack_version, progress, who, their_words, promise, method, old_way, offer, bio_line, keyword_alternates, idea_shifts, key_belief, why_this_one, offer_status, proof_ready, not_now, the voice group (brain.vn.032), the character group, passages, client_words, stories, and the plan group plan_start, season, talk_day, week, tier, platform (lower case), owned_channel, list_size, cta_style, delivery, timezone, mode, hub, automations. wf15 S3: offer and week left the visible top, so they are block fields; message, the 3 chủ đề and the keyword are the top's. Platform and the Zalo/email list come from the dump prompt (G2 K24); talk day is a guess from 'Tối thứ Ba là chị rảnh nhất' (Tue); list_size is her Zalo count (brain.kit-print 3 list_size=ask|{n}: a number she said, else ask). proof_ready yes: Ngân and Phượng consented. Field names are never framework words (key_belief, idea_shifts replace Big Domino, B1-B7 and any lock). The last not_regex flags a line that groups three fields (vg2-day0-vn-hanh turn 8 'version: v1 | date=…', vg2-day0-vn-tuan '… | season: 1 | talk_day: …'): brain.kit-print 3 says 'mỗi dòng tên: giá trị'."""
 
 [[case]]
 id = "brain.vn.003"
@@ -215,7 +214,6 @@ regex = [
   '''(?m)^\s*promise:\s*\S''',
   '''(?m)^\s*method:\s*\S''',
   '''(?m)^\s*key_belief:\s*\S''',
-  '''(?m)^\s*trial_ends:\s*\S''',
   '''(?m)^\s*passages:\s*\S''',
   '''(?m)^\s*side_door:[^\n]*(?i:sale)''',
   '''cho máy, không cần đọc[^\n]*\n\s*```[^\n]*\n(?:(?!```)[\s\S]){1,6100}```''',
@@ -651,7 +649,6 @@ contains = []
 not_contains = []
 regex = [
   '''(?m)^\s*version:\s*v?2\s*$''',
-  '''(?m)^\s*trial_ends:\s*\S''',
   '''(?i)x(?:óa|oá|oa)[^.\n]{0,40}v1|v1[^.\n]{0,40}x(?:óa|oá|oa)''',
 ]
 not_regex = [
