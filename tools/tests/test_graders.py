@@ -6576,22 +6576,46 @@ class V139SourceDedupeStyleTests(TempRepo):
         self.assertPasses(self.reply("My client Lorraine started in March."), "source_check")
         self.assertFails(self.reply("My client Priyanka started in March."), "source_check", 'name "Priyanka"')
 
-    def test_source_check_an_example_needs_the_added_by_me_list(self):
+    def test_source_check_an_example_needs_the_added_by_me_line(self):
         bad = self.reply("Say a client walks in cold. Coffee comes before resume.")
         self.assertFails(bad, "source_check", "Added by me")
-        good = self.reply("Say a client walks in cold. Coffee comes before resume.",
-                          extra="Added by me: the walk-in scene; the cold-room framing")
+        good = self.reply("Say a client walks in cold. Coffee comes before resume.", extra="Added by me: ¶1")
         self.assertPasses(good, "source_check")
         self.assertEqual(self.inv(good, "source_check")["details"]["added_lists"], 1)
 
-    def test_source_check_the_added_list_is_short_and_holds_no_fact(self):
+    def test_source_check_the_added_line_names_every_paragraph_with_an_example(self):
+        # v13.10 (founder 11 Oct): by paragraph, no cap; every paragraph with illustrative content is on the line
+        piece = ("Lorraine got an offer in 11 weeks.\n\nSay a client walks in cold.\n\nCoffee comes before resume."
+                 "\n\nFor example, a recruiter at a career fair.")
+        missing = self.reply(piece, extra="Added by me: ¶2")
+        self.assertFails(missing, "source_check", "¶4 holds illustrative content")
+        self.assertPasses(self.reply(piece, extra="Added by me: ¶2, ¶4"), "source_check")
+        self.assertPasses(self.reply(piece, extra="Added by me: ¶2-4"), "source_check")
+        many = self.reply(piece, extra="Added by me: ¶1, ¶2, ¶3, ¶4")          # no cap on how many
+        self.assertPasses(many, "source_check")
+        self.assertFails(self.reply(piece, extra="Added by me: ¶2, ¶4, ¶9"), "source_check", "no such paragraph")
+
+    def test_source_check_the_added_line_holds_paragraph_numbers_only(self):
         piece = "Say a client walks in cold. Coffee comes before resume."
-        six = self.reply(piece, extra="Added by me: a; b; c; d; e; f")
-        self.assertFails(six, "source_check", "6 items")
-        fact = self.reply(piece, extra='Added by me: a client who earned 90 thousand; the "walk-in" line')
-        self.assertFails(fact, "source_check", "holds a number or a quote")
-        long = self.reply(piece, extra="Added by me: " + " ".join(["word"] * 13))
-        self.assertFails(long, "source_check", "over 12 words")
+        lines = self.reply(piece, extra="Added by me: the walk-in scene; the cold-room framing")
+        self.assertFails(lines, "source_check", "names lines, not paragraph numbers")
+        fact = self.reply(piece, extra='Added by me: a client who earned 90 thousand')
+        self.assertFails(fact, "source_check", "names lines, not paragraph numbers")
+
+    def test_source_check_beats_and_slides_keep_their_numbers(self):
+        self.assertEqual([n for n, _ in graders.piece_paragraphs("Hook line\nBeat 2: one\nmore\n\nBeat 3: two")],
+                         [1, 2, 3])
+        self.assertEqual([n for n, _ in graders.piece_paragraphs("Slide 1: a\nSlide 2: b\nSlide 3: c")], [1, 2, 3])
+        self.assertEqual([n for n, _ in graders.piece_paragraphs("A.\n\nB.\nB2.\n\nC.")], [1, 2, 3])
+        self.assertEqual(graders.added_paragraphs(["¶3, ¶5", "đoạn 6"]), ({3, 5, 6}, []))
+        self.assertEqual(graders.added_paragraphs(["đoạn 2–4"])[0], {2, 3, 4})
+
+    def test_source_check_a_generalization_about_clients_is_a_fact(self):
+        bad = self.reply("Lorraine got an offer in 11 weeks. Most of my clients get stuck right here.")
+        self.assertFails(bad, "source_check", "a claim about clients or the market")
+        said = self.reply("Lorraine got an offer in 11 weeks. Most of my clients get stuck right here.",
+                          coach=self.COACH + " Most of my clients get stuck right here, at the coffee.")
+        self.assertPasses(said, "source_check")
 
     def test_source_check_vn_added_label_and_kin_name(self):
         self.write("evals/personas/vn/nat/persona.toml", 'xung_ho = "chị–em"\n')
@@ -6601,10 +6625,16 @@ class V139SourceDedupeStyleTests(TempRepo):
         def run(piece, extra=""):
             return self.grade([("coach", coach), ("machine", f"{TAG}Tuần 1\nN1 · Bài\n{piece}\n{extra}\nTIẾP → Gõ \"tiếp\".")],
                               persona="vn/nat", edition="vn")
-        self.assertPasses(run("Chị Lan là khách đầu tiên của em. Giả sử có một chị khác.", "Máy tự thêm: chị khách giả sử"),
+        self.assertPasses(run("Chị Lan là khách đầu tiên của em.\n\nGiả sử có một chị khác.", "Máy tự thêm: đoạn 2"),
                           "source_check")
+        self.assertFails(run("Chị Lan là khách đầu tiên của em.\n\nGiả sử có một chị khác.", "Máy tự thêm: đoạn 1"),
+                         "source_check", "¶2 holds illustrative content")
         self.assertFails(run("Chị Hương là khách đầu tiên của em."), "source_check", 'name "Hương"')
         self.assertFails(run("Giả sử có một chị khác ngồi đó."), "source_check", "Máy tự thêm")
+        self.assertFails(run("Chị Lan là khách đầu tiên của em. Nhiều cơ sở kẹt nhất ở chỗ này."), "source_check",
+                         "a claim about clients or the market")
+        self.assertFails(run("Chị Lan là khách đầu tiên của em. Ai cũng sợ báo giá qua tin nhắn."), "source_check",
+                         "a claim about clients or the market")
 
     # --- week_dedupe
     def test_week_dedupe_a_repeated_sentence_or_opener_fails(self):
@@ -6626,6 +6656,35 @@ class V139SourceDedupeStyleTests(TempRepo):
         self.assertFails(three, "week_dedupe", "belief line")
         two = self.reply("One thing. " + a, "Two things. " + b, "Three things, a walk instead.", extra=card)
         self.assertEqual(self.inv(two, "week_dedupe")["status"], "pass")
+
+    def test_week_dedupe_a_reworded_sentence_across_replies_fails(self):
+        # v13.10: paraphrase counts, across the week's replies too (content-word overlap >= 0.6)
+        turns = [("coach", self.COACH),
+                 ("machine", f"{TAG}Week 1\nN1 · Reel · TRUST · 60 words\nBefore you ask how to write it, ask who "
+                             "it is for and when they feel stuck.\nNEXT → Say \"next\"."),
+                 ("coach", "next"),
+                 ("machine", f"{TAG}Week 1\nN2 · Post · ATTRACT · 60 words\nAsk who the post is for and when they "
+                             "feel stuck, before asking how to write it well.\nNEXT → Say \"next\".")]
+        self.assertFails(self.grade(turns), "week_dedupe", "say the same thing")
+        other = list(turns)
+        other[3] = ("machine", f"{TAG}Week 1\nN2 · Post · ATTRACT · 60 words\nLorraine walked into the hiring "
+                               "office with coffee and left with an interview date.\nNEXT → Say \"next\".")
+        self.assertEqual(self.inv(self.grade(other), "week_dedupe")["status"], "pass")
+
+    def test_week_dedupe_a_fixed_reprint_of_the_same_piece_is_no_repeat(self):
+        turns = [("coach", self.COACH),
+                 ("machine", f"{TAG}Week 1\nN2 · Post · ATTRACT · 60 words\nAsk who the post is for and when they "
+                             "feel stuck, before asking how to write it well.\nNEXT → Say \"next\"."),
+                 ("coach", "fix N2"),
+                 ("machine", f"{TAG}Week 1\nN2 · Post · ATTRACT · 60 words\nAsk who the post is for, and when they "
+                             "feel stuck, before you ask how to write it well.\nNEXT → Say \"next\".")]
+        self.assertNotEqual(self.inv(self.grade(turns), "week_dedupe")["status"], "fail")
+
+    def test_week_dedupe_paraphrase_helpers(self):
+        a = graders._content_set("lúc sáng mở mắt ra đã thấy vấn đề đó nằm sẵn đó")
+        b = graders._content_set("lúc họ mở mắt ra buổi sáng, đã thấy chuyện đó nằm sẵn đó")
+        self.assertGreaterEqual(len(a & b), 0.6 * max(len(a), len(b)))
+        self.assertEqual(graders._content_set("Câu mở: \"5 câu hỏi phỏng vấn\" ở đây"), {"ở", "đây"})
 
     # --- style
     def test_style_a_vn_em_dash_fails_and_a_comma_passes(self):

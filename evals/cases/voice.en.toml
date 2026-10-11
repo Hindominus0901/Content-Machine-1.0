@@ -325,7 +325,7 @@ invariants = ["I1", "I3", "I5", "I10", "I23"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. §CM-VOICE 6: '"not me: {line}" → never_say: voice.not_me_ok … One line, then the work. Both hold for every later piece, task and card.' §CM-HUMANIZE lists: 'cut every form of it, now and in every later piece.' The confirmation prints once, in the exact string ('Got it: "{line}" is out of your voice from now on.'); then the caption without the opener, then the email (W2 shows how she greets newsletter readers: 'Hi neighbors,'). No question back, no list names. The guard skips the confirmation line, which quotes the banned opener. I23 reads the coach's 'not me:' lines in later pieces."""
+notes = """scope: transcript. §CM-VOICE 6: '"not me: {line}" → never_say: voice.not_me_ok … One line, then the work. Both hold for every later piece, task and card.' §CM-HUMANIZE lists: 'cut every form of it, now and later.' The confirmation prints once, in the exact string ('Got it: "{line}" is out of your voice from now on.'); then the caption without the opener, then the email (W2 shows how she greets newsletter readers: 'Hi neighbors,'). No question back, no list names. The guard skips the confirmation line, which quotes the banned opener. I23 reads the coach's 'not me:' lines in later pieces."""
 
 [[case]]
 id = "voice.en.009"

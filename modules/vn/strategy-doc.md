@@ -96,21 +96,21 @@ NÓI CHUYỆN TIỀN VỚI NHAU
 Soát: cụm nào cũng có tuyến THU HÚT và tuyến NIỀM TIN ✓ · một tuyến CHUYỂN ĐỔI, gắn với sản phẩm, ra mỗi tuần ✓ · 7 tuyến, 19 chỗ một tháng (khoảng 5 bài một tuần) ✓ · tên nào họ cũng nói tự nhiên được trước máy quay ✓.
 Trong kế hoạch thật, tuyến nào cũng là của coach: chữ của họ, chuyện của họ, khách của họ (đã đồng ý); kết quả của khách mà họ chưa đưa thì để [CẦN {XƯNG HÔ}: …].
 
-<!-- @section strategy-doc.grow-calendar src=6f850b7365 -->
+<!-- @section strategy-doc.grow-calendar src=a8ff7e7441 -->
 ### Lịch 4 tuần: đầu vào và cách chia chỗ ("lịch content", "lịch đăng bài", "kế hoạch tháng")
 1 ĐẦU VÀO, lấy hết từ chiến lược và Card (thiếu thứ nào thì quay về bước đặt ra thứ đó, §CM-STRATEGY-ENGINE): số giờ mỗi tuần họ thật sự có · kênh chính và nơi đăng lại · tỷ lệ (bước 4) · trụ cột nội dung và tuyến (bước 3) · các mốc: ra mắt, mở bán, một dịp trong năm của khách (§CM-MOMENTS: Tết, 8/3, 20/10, 20/11…), tuần nghỉ · sản phẩm và giá · quà và từ khoá · danh sách Zalo hay email, bao nhiêu người.
 2 CHIA CHỖ THEO GIỜ. Giờ của họ gồm quay, sửa nhẹ, đăng và trả lời khách; viết thì mình lo hết. Mỗi bài: video ngắn ≈30 phút · bài dài ≈20 · carousel ≈30 · tin Zalo hay email ≈10 · video dài ≈3 tiếng (quay, dựng, đăng). Cố định: buổi nói chuyện hằng tuần 15 phút (§CM-TALK) và thứ Sáu 15 phút. Vậy:
 - Dưới 2 tiếng: 3 bài, bài chính (video ngắn hay bài viết), 1 bài NIỀM TIN, 1 tin Zalo hay email: khoảng 1,5 tiếng kể cả buổi nói chuyện.
-- Khoảng 2,5 tiếng (tuần gọn, mặc định; §CM-WEEK 2): 3 video ngắn quay một lèo, đăng kèm phụ đề tự động, 1 bài dài, 1 tin Zalo hay email: 90 + 20 + 10 + nói chuyện và thứ Sáu 30 = 150 phút. Tuần 1 là tuần này.
+- Khoảng 2,5 tiếng (tuần gọn, mặc định; §CM-WEEK 2): 3 video ngắn quay một lèo, đăng kèm phụ đề tự động, 1 bài dài, 1 tin Zalo hay email: 90 + 20 + 10 + nói chuyện và thứ Sáu 30 = 150 phút.
 - Khoảng 3,5 tiếng (đủ): thêm 1 video ngắn, 1 carousel, có dựng, còn giờ trả lời comment và tin nhắn.
 - Khoảng 5 tiếng: 5 video ngắn, 2 bài dài (hoặc 1 bài dài + 1 carousel), 1 tin Zalo hay email.
 - Từ 8 tiếng: 1 video dài về trụ cột nội dung của tuần (1.000–1.500 chữ) → cắt ra 4 video ngắn, viết lại thành 1 bài dài và 1 carousel, 1 tin Zalo hay email dẫn về video.
-Không bao giờ nhiều hơn số giờ họ có; dư giờ thì dành trả lời khách, không thêm bài. Kênh chữ: video ngắn đổi thành bài viết, chừa một video, cùng số phút (§CM-WEEK 2).
+Một luật cho mọi tuần, cả Tuần 1: số bài theo số giờ họ chọn, không theo danh sách cố định. Không bao giờ nhiều hơn số giờ họ có; dư giờ thì dành trả lời khách, không thêm bài. Kênh chữ: video ngắn đổi thành bài viết, chừa một video, cùng số phút (§CM-WEEK 2).
 3 THỨ TỰ XẾP: chia chỗ cả tháng theo tỷ lệ (5 bài × 4 tuần = 20 chỗ, tỷ lệ 40/40/20 → 8 THU HÚT, 8 NIỀM TIN, 4 CHUYỂN ĐỔI; lẻ thì nghiêng về NIỀM TIN) → xếp CHUYỂN ĐỔI trước, tuần nào cũng một bài (các tuyến CHUYỂN ĐỔI, §CM-CONTENT-LINES 1): tuần 1 là tin Zalo hay email xin trả lời, chưa chào bán, chưa mời inbox (cùng luật §CM-WEEK 6); tuần 2 gỡ một băn khoăn; giới thiệu sản phẩm ở tuần 4 → tuyến nội dung theo nhịp của từng tuyến → trụ cột nội dung xoay vòng, còn chỗ thì cụm nào cũng có mặt mỗi tuần → bậc niềm tin của tuần quyết định niềm tin của từng bài (§CM-SEASON 1–2).
 
-<!-- @section strategy-doc.grow-calendar-table src=d22ad90df0 -->
+<!-- @section strategy-doc.grow-calendar-table src=382d17d61a -->
 ### Bảng lịch và nhịp của một tuần
-4 BẢNG, mỗi tuần một bảng, in ngay trong chat (dài quá bị cắt thì gõ "tiếp" ra tuần sau). Ngày 0: chỉ bảng tuần 1, ở tin "tiếp" sau QUAY HÔM NAY, cùng Brand Card; tuần 2–4 vào file chiến lược (phần 6) và hub, in khi họ gõ "lịch" hay tới ngày lên kế hoạch tuần đó. Trên bảng: "Tuần {n} · {tuần này khách thấy {xưng hô} thế nào} · niềm tin: bạn nghĩ X → thật ra Y". Trong chat chỉ 4 cột: Ngày · Dạng · Hook · Lời mời (vừa màn hình điện thoại); bảng đủ cột, trong file và hub: Ngày · Kênh · Trụ cột nội dung (viết đủ, không rút thành "Trụ cột") · Tuyến · Loại · Dạng · Số chữ · Hook · Cách viết · Lời mời · Trạng thái. Loại ghi bằng chữ (THU HÚT, NIỀM TIN, CHUYỂN ĐỔI), không mã.
+4 BẢNG, mỗi tuần một bảng, in ngay trong chat (dài quá bị cắt thì gõ "tiếp" ra tuần sau). Ngày 0: chỉ bảng tuần 1, ở tin "tiếp" sau QUAY HÔM NAY, cùng Brand Card; tuần 2–4 vào file chiến lược (phần 6) và hub, in khi họ gõ "lịch" hay tới ngày lên kế hoạch tuần đó. Trên bảng: "Tuần {n} · {tuần này khách thấy {xưng hô} thế nào} · niềm tin: bạn nghĩ X → thật ra Y". Trong chat chỉ 4 cột: Ngày · Dạng · Ý, hook · Lời mời (vừa màn hình điện thoại); bảng đủ cột, trong file và hub: Ngày · Kênh · Trụ cột nội dung (viết đủ, không rút thành "Trụ cột") · Tuyến · Loại · Dạng · Ý (một ý, chuyện hay ví dụ bài dùng) · Số chữ · Hook · Cách viết · Lời mời · Trạng thái. Loại ghi bằng chữ (THU HÚT, NIỀM TIN, CHUYỂN ĐỔI), không mã.
 - Hook = nhóm hook, gọi bằng tên thường (§CM-HOOK-LIBRARY); Cách viết = tên thường của cách viết (§CM-COPY); Lời mời = theo loại bài, lời thường: lưu, gửi (THU HÚT) · comment {chữ trong hook} lấy món bài hứa (NIỀM TIN) · inbox · gọi · mua (CHUYỂN ĐỔI) (§CM-CTA-BANK).
 - Trạng thái: Ý tưởng → Đã viết → Đã quay → Đã đăng. Mình tự ghi Ý tưởng và Đã viết; Đã quay, Đã đăng chỉ ghi khi họ báo.
 - Dưới bảng cuối cùng được in và trong file: tổng cả tháng theo loại ("THU HÚT 8 · NIỀM TIN 8 · CHUYỂN ĐỔI 4 = 40/40/20 ✓") và số giờ mỗi tuần ("khoảng 2,5 tiếng ✓").
@@ -122,13 +122,13 @@ Không bao giờ nhiều hơn số giờ họ có; dư giờ thì dành trả l�
 - Thứ Sáu xem số (§CM-NUMBERS): loại nào đo bằng số của loại đó (§CM-TIERS); mỗi con số một quyết định; tuyến nào đang thắng thì ghi lại cho tuần sau.
 Lời nhắc, nếu đã cài (§CM-NUDGES): thứ Hai "{{t:task.week.name}}", thứ Ba tới thứ Năm "{{t:task.today.name}}", thứ Sáu "{{t:task.numbers.name}}".
 
-<!-- @section strategy-doc.grow-calendar-rules src=142c99ea3a -->
+<!-- @section strategy-doc.grow-calendar-rules src=5202fdd499 -->
 ### Luật của lịch, mùa ra mắt, và khi lỡ một tuần
 7 LUẬT, soát thầm trước khi in:
 - Tuần nào cũng đủ ba loại; không bao giờ 2 bài CHUYỂN ĐỔI liền nhau trên cùng một kênh.
 - ≥3 lần cho đi trên mỗi lần mời; mời inbox, gọi, mua chỉ từ tuần 2 và phải có bằng chứng.
 - Mỗi tuần ≥3 dạng bài; không dạng nào 3 lần liền; không hai hook mở giống nhau.
-- Đọc chéo cả tuần trước khi in (§CM-HUMANIZE): mỗi bài cảnh, chuyện, bằng chứng riêng; câu niềm tin ≤2 lần; không câu nào lặp; chuyện đã dùng ghi vào dòng `used:` trên card và HUB.md, tuần sau lấy chuyện khác.
+- Sổ ý, soát trước khi in mỗi tuần (§CM-HUMANIZE): bài ngày 0 chỉ dùng MỘT ý chính, ý khác để cho tuần; mỗi bài một ý, chuyện, ví dụ, bằng chứng, khung hook riêng; cả tuần không lặp câu, ví dụ, câu mở, nói khác đi cũng tính là lặp; câu niềm tin ≤2 lần; ý, chuyện, ví dụ đã dùng ghi vào dòng `used:` trên card và HUB.md, tuần sau lấy cái khác.
 - Mỗi bài: một trụ cột nội dung, một tuyến, một niềm tin. Chủ đề ĐỂ SAU không bao giờ dẫn bài.
 - Tuyến nào gấp đôi mức thường thì tuần sau quay lại (§CM-CONTENT-LINES 4); bài thắng quay lại tháng sau ở dạng mới, không chép y nguyên.
 - Tổng khớp tỷ lệ, lệch không quá 5 điểm, và tuần vừa số giờ của họ.

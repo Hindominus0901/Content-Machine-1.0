@@ -574,6 +574,31 @@ def keyword_outside_ask(text: str, keyword: str, lang: str = "en", variants=()) 
     return outside
 
 
+def keyword_cta_outside_ask(text: str, keyword: str, lang: str = "en", variants=()) -> int:
+    """Occurrences of the keyword in its CTA form (capitals or quotes, as an ask prints it) outside the ask: the "once in
+    the body" rule counts these only (v13.10, founder 11 Oct); a keyword that is also the topic phrase may be said in
+    plain words as often as the topic needs."""
+    forms = [f for f in (keyword, *(variants or ())) if nfc(f).strip()]
+    if not forms:
+        return 0
+    kw = "|".join(r"\s+".join(re.escape(w) for w in fold(nfc(f)).split()) for f in forms)
+    asks = re.compile(r"(?<!\w)" + ASK_BEFORE + "(" + kw + r")(?!\w)")
+    bare = re.compile(r"(?<!\w)(" + kw + r")(?!\w)")
+    count = 0
+    for sentence in (ASK_SENTENCE_SPLIT_RE.split(nfc(text)) if lang == "vn" else [nfc(text)]):
+        sentence = plain_line(sentence)
+        folded = fold(sentence)
+        ask_spans = [(m.start(1), m.end(1)) for m in asks.finditer(folded)]
+        if lang == "vn" and any(caps_or_quoted(sentence, a, b) for a, b in ask_spans):
+            continue
+        for m in bare.finditer(folded):
+            if (m.start(1), m.end(1)) in ask_spans:
+                continue
+            if caps_or_quoted(sentence, m.start(1), m.end(1)):
+                count += 1
+    return count
+
+
 STOPWORDS = {
     # EN function words and contractions (apostrophes removed)
     "a", "an", "the", "and", "or", "but", "so", "if", "then", "i", "im", "ive", "id", "ill", "you", "youre",

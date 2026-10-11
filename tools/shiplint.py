@@ -224,15 +224,17 @@ def lint_piece(piece: dict, data: dict, bank: dict, batch_stems: list) -> tuple[
         if not ok:
             defects.append(f'urgency without an enforced Ledger row: "{_sl_short(urgent[0])}"')
 
-    # the keyword once in the words, plus the ask (§CM-WEEK 4, K9): the ask itself is not counted
+    # the keyword once in the words, plus the ask (§CM-WEEK 4, K9): the ask itself is not counted; "once" counts the
+    # CTA form only (capitals or quotes), plain topic mentions of a keyword that is also the topic phrase are free (v13.10)
     keyword = str(data.get("keyword", "")).strip()
     if keyword:
         variants = data.get("keyword_variants", [])
         n = ck.keyword_outside_ask(text, keyword, lang, variants)
+        cta = ck.keyword_cta_outside_ask(text, keyword, lang, variants)
         if n == 0:
             defects.append("keyword only in the ask" if ck.keyword_count(text, keyword, variants) else "keyword ×0")
-        elif n > 1:
-            defects.append(f"keyword ×{n} outside the ask")
+        elif cta > 1:
+            defects.append(f"keyword ×{cta} outside the ask")
 
     stem = ck.hook_stem(hook or body)
     recent = {ck.hook_stem(str(s)) for s in data.get("recent_hook_stems", [])}

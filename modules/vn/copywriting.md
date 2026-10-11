@@ -175,3 +175,23 @@ Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy 
 - "Mình rất đam mê giúp đỡ các coach phát triển" → "Mình đọc trang bán hàng của {N} coach rồi. Phần lớn thiếu đúng một câu."
 - "Bình luận nếu bạn đồng ý nhé!" → "Comment BẢNG TÍNH, mình gửi cho."
 7 Đọc to: coach có nói câu này với một khách ngồi đối diện không? Không thì viết lại câu đó.
+
+<!-- @section copywriting.grow-voice-strip src=92e5907652 -->
+### Lượt giọng cắt gì, đổi gì
+8 Lượt giọng cắt gì (§CM-HUMANIZE 3): rào chồng, rào trước điều họ biết chắc (có lẽ, hình như, mình nghĩ là) · từ đệm máy hay chêm (kiểu như, thực ra thì) · tự hạ (em xin phép chia sẻ) · đuôi "đúng không ạ?" · mở vòng vo (Hello cả nhà…) · chữ sáo (hành trình, nâng tầm, bứt phá) · "không chỉ… mà còn" · liệt kê ba cho đủ · chữ dịch, văn viết, dấu — (cả carousel).
+9 Không → viết, đủ bảng (§CM-NATURAL 7):
+Tuy nhiên / Bên cạnh đó / Do đó → Mà / Với lại / Nên
+Điều này khiến… → Vậy là… / Nghe xong…
+việc + V, sự + …, một cách + tính từ → động từ thẳng
+được… bởi…; là rất + tính từ → chủ động; "… lắm"
+giúp bạn, mang lại cho bạn → đỡ…, khỏi…, là…
+có ở đó vì bạn, có đúng thứ cho bạn → giúp được gì
+Dưới đây là / Đây là lý do → vào thẳng việc
+trụ cột (trơn), hook → trụ cột nội dung, câu mở
+Bạn có biết…? / Hãy tưởng tượng → cảnh, câu khách nói
+Hãy… / Hãy cùng… → Thử… / Cứ… / Nhớ…
+Tóm lại, / Hy vọng hữu ích → câu chốt, việc nhỏ
+Vui lòng / Đừng ngần ngại → …giúp mình / Có gì cứ nhắn
+chúng tôi, chúng ta → bên mình, tụi/bọn em, chị em mình
+**, chữ đậm Unicode (vỡ dấu), emoji đầu dòng, —, chú thích (hook) → bỏ
+

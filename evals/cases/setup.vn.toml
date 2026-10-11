@@ -614,7 +614,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I4", "I5", "I15"]
 max_questions = 1
-notes = "scope: each reply. UX §1.4 Door B never mentions a project; the save route on a phone is phone.save ('… nhấn giữ đoạn chat này → Đổi tên → \"Content Machine\". Rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". …') or the Zalo backup of the BRAND CARD block. v13.5 (start-block steps 7-8): her answer to QUAY HÔM NAY brings the Brand Card + card.save_line + the Tuần 1 table (Ngày · Dạng · Hook · Lời mời); TIẾP names tomorrow's 'tiếp', never offers Week 1. Hạnh quits on 'mở máy tính' and on a lost card (persona behaviour)."
+notes = "scope: each reply. UX §1.4 Door B never mentions a project; the save route on a phone is phone.save ('Lưu: nhấn giữ đoạn chat → Đổi tên → \"Content Machine\", chép khung MY CONTENT MACHINE gửi Zalo \"Cloud của tôi\". …') or the Zalo backup of the BRAND CARD block. v13.5 (start-block steps 7-8): her answer to QUAY HÔM NAY brings the Brand Card + card.save_line + the Tuần 1 table (Ngày · Dạng · Hook · Lời mời); TIẾP names tomorrow's 'tiếp', never offers Week 1. Hạnh quits on 'mở máy tính' and on a lost card (persona behaviour)."
 
 [[case]]
 id = "setup.vn.027"
@@ -858,7 +858,7 @@ contains = ["Content Machine", "Cloud của tôi", "MY CONTENT MACHINE"]
 regex = ['(?i)(đổi tên|Rename)', '(?s)```', '(?m)^TIẾP →[^\n]*Content Machine']
 not_contains = ["dự án", "project"]
 invariants = ["I1", "I4", "I15"]
-notes = "UX §1.4 Door B ends with 2 actions (strings phone.save: 'Lưu lại: cuối buổi, nhấn giữ đoạn chat này → Đổi tên → \"Content Machine\". Rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". …'); quit point 2 'Door B Day 2 refers to a project that does not exist'. It is Day 0's last reply now (wf15 §1.7), not a wrap-up after a stop point: any message after Week 1 brings it."
+notes = "UX §1.4 Door B ends with 2 actions (strings phone.save: 'Lưu: nhấn giữ đoạn chat → Đổi tên → \"Content Machine\", chép khung MY CONTENT MACHINE gửi Zalo \"Cloud của tôi\". …'); quit point 2 'Door B Day 2 refers to a project that does not exist'. It is Day 0's last reply now (wf15 §1.7), not a wrap-up after a stop point: any message after Week 1 brings it."
 
 # ---------------------------------------------------------------- free-tier caps, resume, return
 

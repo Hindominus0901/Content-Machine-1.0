@@ -575,7 +575,7 @@ sections = ["copywriting.grow-persuade", "copywriting.grow-ethics"]
 
 [[levelup.copy.anchor]]
 id = "COPY-VOICE"
-sections = ["copywriting.grow-voice"]
+sections = ["copywriting.grow-voice", "copywriting.grow-voice-strip"]
 
 # ---------------------------------------------------------------- L3 Autopilot skill references
 # One file per entry under <skill_name>/references/ (≤150 lines, ≤9 KB each), wrapped by

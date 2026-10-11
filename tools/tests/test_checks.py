@@ -389,7 +389,7 @@ BATCH = {
          "cites": ["S-1"], "verdict_line": "Ready to film · I'd post it: your 63 applications and CHAPTER."},
         {"id": "N2", "format": "text-post", "hook": "Maybe you're not too old.",
          "body": "90% of my clients land a job in 12 weeks. Pam got a $15,000 raise. Only 2 spots left. "
-                 "CHAPTER chapter",
+                 "CHAPTER and \"CHAPTER\"",
          "cites": ["P-5"], "verdict_line": "Ready to post · I'd post it: [NEEDS: a real number]"},
         {"id": "N3", "format": "native-short", "hook": "Not too old to start",
          "body": 'Lorraine said "the best decision I ever made" and meant it. Comment CHAPTER.',
@@ -471,6 +471,23 @@ class ShiplintTests(unittest.TestCase):
                 "pieces": [{"id": "N1", "format": "native-short", "hook": "Sixty-three applications.",
                             "body": "Then I stopped applying.", "cites": []}]}
         self.assertIn("keyword ×0", self.lint(bare)["N1"])
+
+    def test_keyword_topic_mentions_are_free(self):
+        # v13.10: "once in the body" counts the CTA form (capitals, quotes) only; plain topic mentions are free
+        topic = {"lang": "en", "keyword": "CHAPTER",
+                 "pieces": [{"id": "N1", "format": "native-short", "hook": "Sixty-three applications.",
+                             "body": "My next chapter started late. Every chapter needs a first coffee. "
+                                     "Comment CHAPTER for the script.", "cites": []}]}
+        self.assertNotIn("keyword", self.lint(topic)["N1"])
+        twice = {"lang": "en", "keyword": "CHAPTER",
+                 "pieces": [{"id": "N1", "format": "native-short", "hook": "Sixty-three applications.",
+                             "body": "CHAPTER one. CHAPTER two. Comment CHAPTER for the script.", "cites": []}]}
+        self.assertIn("keyword ×2 outside the ask", self.lint(twice)["N1"])
+        vn = {"lang": "vn", "keyword": "SUY NGHĨ",
+              "pieces": [{"id": "N1", "format": "native-short", "hook": "Khách nói để chị suy nghĩ.",
+                          "body": "Khách nói để chị suy nghĩ là khách còn đang nghĩ. Suy nghĩ không phải từ chối. "
+                                  "Ai cần kịch bản thì comment SUY NGHĨ.", "cites": []}]}
+        self.assertNotIn("keyword", self.lint(vn)["N1"])
 
     def test_ad_needs_ads_consent(self):
         self.assertIn("result claim without a Substantiated+consent P-row", self.lines()["N4"])

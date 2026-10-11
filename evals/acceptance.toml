@@ -269,14 +269,18 @@ items = [
   "a score, 'Edge' or rubric code in chat",
 ]
 
-[source_check]                            # check source_check (graders.py; v13.9 fixK9, SOURCE before print)
-added_max_items = 5                       # "Máy tự thêm: …" / "Added by me: …": at most 5 items ...
-added_item_max_words = 12                 # ... each at most 12 words, no number or quote inside (facts never go there)
+[source_check]                            # check source_check (graders.py; v13.9 fixK9, SOURCE before print; v13.10 by paragraph)
+generalization_check = 1                  # a claim about the coach's clients or market ("nhiều cơ sở … nhất", "ai cũng…", "most of my clients…") must trace to the sources (1 = on)
+# The "Máy tự thêm: đoạn 3, 5" / "Added by me: ¶3, ¶5" line names paragraphs only, no cap (founder 11 Oct): every paragraph
+# holding illustrative content is on it, every number on it is a paragraph of the piece.
 
 [week_dedupe]                             # check week_dedupe (graders.py; v13.9 fixK9, WEEK CROSS-READ)
 sentence_min_words = 8                    # the same sentence (normalised) of at least this many words in 2 pieces of a batch fails
 opener_words = 5                          # the same first 5 words in 2 pieces of a batch fails
 belief_max_pieces = 2                     # the card's key_belief line in more than 2 pieces of a batch fails
+paraphrase_overlap = 0.6                  # v13.10: two sentences in different pieces of the run (Day 0 + Week 1, across replies) sharing
+                                          # this share of content words (of the longer one) repeat each other in meaning: fail
+paraphrase_min_words = 5                  # ... counted only when both sentences hold at least this many content words
 
 [style]                                   # check style (graders.py; v13.9 fixK9)
 pet_phrase_max = 1                        # warn: a card phrase more than once in a piece (VN em dash "—" in a piece fails)

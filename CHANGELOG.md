@@ -2,6 +2,22 @@
 
 Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers. All other lines are for maintainers.
 
+## [1.3.10] - 2026-10-11
+
+Build v13.10: founder decision (11 Oct, option A) after the v13.9 thin and sales measurements (evals/runs/v139-thin, evals/runs/v139-sales): keep the length rules and mark what the machine added by paragraph.
+
+### Changed
+- [buyer] Under a piece, one line names the paragraphs that hold anything the machine added: "Added by me: ¶3, ¶5, ¶6" / "Máy tự thêm: đoạn 3, 5, 6" (paragraphs counted from the top; a script's beat or a carousel slide is one paragraph), as many as there are; nothing added, no line. Replaces the ≤5-item list (kit Ship Check PRINT, §CM-EDGE, §CM-HUMANIZE 7, §CM-LAUNCH-POSTS, §CM-CAMPAIGNS 2, cm-writer, cm-reviewer). Short-video beats print as "Beat 1, 2…".
+- Source check: a claim about the coach's clients or market ("most of my clients…", "nhiều cơ sở kẹt nhất", "ai cũng…") is a fact, only if the coach said it; the coach's and clients' stories and quotes are used as told (no added detail, no stretched quote, no line moved to another speaker).
+- [buyer] One idea per piece across the week: the Day-0 piece takes one main idea and leaves the others for the week; each Week-1 piece gets its own idea, story, example and hook frame, kept in an idea ledger (week table "Idea, hook" column, the calendar's Idea column, HUB.md "This week" Idea column, card `used:` ideas, stories, examples); no sentence or worked example repeats in the week, reworded included.
+- Voice pass on every piece, long pieces (500+ words) and launch pieces included; VN particle share within ±10 points of the card, counted per piece.
+- The CTA keyword "once in the body" counts the CTA form only; plain topic mentions of a keyword that is also the topic phrase are free (kit FOCUS, §CM-WEEK 4; tools/shiplint.py counts capitals or quotes only).
+- [buyer] Week 1's piece count follows the weekly hours the coach chose (one rule with §CM-CALENDAR 2), no fixed list in the kit.
+- Inbox replies never promise the gift file before its text exists; VN inbox replies follow the pair the coach uses with that person (no "Dạ" to someone called "em"). The "Needs you" / "Cần" line: one ask, 20 words at most.
+- Every Week-1 piece opens on a hook frame (§CM-FORMATS 1), posts, carousels and emails too.
+- Budgets paid: the strip lists moved to COPY (§CM-COPY-VOICE 7 EN, 8–9 VN, new section copywriting.grow-voice-strip), §CM-NATURAL 7 VN keeps a short row list; shorter mix line (§CM-WEEK 7), kit lines that §CM-MAP / §CM-OPTIONS / §CM-WEEK already hold, phone save line VN.
+- Graders: source_check reads the paragraph line (every paragraph with illustrative content listed, numbers inside the piece, paragraph numbers only) and flags untraced generalizations; week_dedupe adds a paraphrase pass across every piece of the run, replies included (content-word overlap ≥0.6, acceptance.toml [week_dedupe]).
+
 ## [1.3.9] - 2026-10-11
 
 Build v13.9: the readiness gaps from the founder's own app test (outside assessment of v13.8, 11 Oct 2026). VERSION now follows the build (13.9 → 1.3.9); it stayed 1.0.0 through v13.8.

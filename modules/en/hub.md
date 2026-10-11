@@ -92,7 +92,7 @@ C Later: HUB.md only, everything stays in our chats
 2 Eight parts, in this order, each a "##" heading named as below:
 `# HUB · {name} · updated {YYYY-MM-DD}`
 - Strategy in 5 lines: who it's for · the promise · the content pillars · the mix · keyword and offer.
-- This week: a table, Day | Piece | Line | Tier | Status, in date order.
+- This week: a table, Day | Piece | Idea | Line | Tier | Status, in date order; Idea = the one idea, story or example the piece uses (the idea ledger), never two pieces on one.
 - Open choices: each step waiting on an A/B/C, one line each, the recommended option marked; none: "none".
 - Waiting on you: each step NEXT raised twice with no answer (§CM-OPTIONS 1), one line each, never raised again until they reopen it; none: "none".
 - Banks, top items: 3 hooks, 2 CTAs, the live magnet, 2 stories, one line each, Heard or Guess kept.

@@ -175,3 +175,8 @@ Fails when: two asks; newsletter tone in a one-to-one chat; "I saw you opened my
 - "Comment below if you agree!" → "Comment PRICE and I'll send the sheet."
 - "I'm passionate about helping coaches grow" → "I've read {N} coaches' sales pages. The same line is missing from most."
 6 Read it aloud: would they say it to one client across a table? If not, rewrite the line.
+
+<!-- @section copywriting.grow-voice-strip -->
+### What the voice pass strips
+7 The voice pass (§CM-HUMANIZE 3) strips: hedges (might, maybe, kind of, I think) · intensifiers (really, literally) · warm-ups (hey guys, so today) · undercutting (hopefully this helps) · tags (right?, you know?) · recaps (in conclusion) · fog (journey, unlock, elevate, crucial role, Moreover, dive in) · clichés (crush it, thrilled to announce) · a 2nd "not just" · lists of three · dashes in spoken lines.
+

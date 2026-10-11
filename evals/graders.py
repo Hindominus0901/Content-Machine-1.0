@@ -5024,7 +5024,7 @@ def check_day0_strategy(run: Run) -> dict:
       MIX of ATTRACT / TRUST / CONVERT (VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI) with shares that add up to 100, none under
       mix_min_share or over mix_max_share, YOUR SYSTEM with a platform, pieces a week and an ask path, no NOT NOW or "why
       this one" on it, talk within strategy_max_words; and Week 1 covers all three types and names a pillar on each piece
-      (2 ATTRACT, 2 TRUST, 1 CONVERT is the kit's: another split is a warning);
+      (5 pieces at the default mix: 2 ATTRACT, 2 TRUST, 1 CONVERT; another split is a warning; the count follows the hours, v13.10);
     - v13.1 (9 Oct): the strategy is at most 3 grouped replies, each one OK with at most one A/B/C line and one option marked
       recommended; each piece title names its type and its length in words (FILM TODAY's too, never seconds); FILM TODAY
       comes before the calendar and Day 0 prints Week 1's table only (more than one table before FILM TODAY fails).
@@ -5379,7 +5379,7 @@ def check_day0_strategy(run: Run) -> dict:
                                                                                           counts.items()) + ")")
         elif sorted(counts.values()) != [1, 2, 2] and len(wk) == 5:
             wk_warn.append("Week 1 splits " + " / ".join(f"{k.upper()} {v}" for k, v in counts.items())
-                           + " (the kit's Week 1 is 2 ATTRACT, 2 TRUST, 1 CONVERT)")
+                           + " (5 pieces at the default mix: 2 ATTRACT, 2 TRUST, 1 CONVERT)")
         if no_type and not missing:
             wk_warn.append("no content type named on: " + "; ".join(no_type[:4]))
         if no_pillar:
@@ -7589,12 +7589,13 @@ def check_strategy_doc(run: Run) -> dict:
 
 # ---------------------------------------------------------------- report
 
-# ---------------------------------------------------------------- source_check, week_dedupe, style (v13.9, fixK9)
+# ---------------------------------------------------------------- source_check, week_dedupe, style (v13.9, fixK9; v13.10)
 # What the machine prints as a piece must trace to the coach, the Brand Card or the research log; a week's pieces must not
 # repeat each other; the VN house style (no em dash, one pet phrase, one ask, one question in "Cần …"). Thresholds in
 # acceptance.toml [source_check], [week_dedupe], [style]; the defaults below apply without them.
-SOURCE_DEFAULTS = {"added_max_items": 5, "added_item_max_words": 12}
-DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2}
+SOURCE_DEFAULTS = {"generalization_check": 1}
+DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2,
+                   "paraphrase_overlap": 0.6, "paraphrase_min_words": 5}
 STYLE_DEFAULTS = {"pet_phrase_max": 1, "asks_max": 1, "needs_questions_max": 1}
 
 ADDED_LABEL_RE = re.compile(r"^[\s>*_•-]*(?:máy tự thêm|added by me)\s*[*_]*\s*[:：]\s*[*_]*\s*(.*)$", re.I)
@@ -7631,9 +7632,9 @@ def _cap_name(text: str) -> str:
 
 
 def _added_items(r: Reply) -> tuple[dict[int, list[str]], set[int]]:
-    """The "Máy tự thêm: …" / "Added by me: …" lists of a reply: {label line index: items} and every line index they
-    take (the label line and the bullets under it). Items: the bullets, else the parts split at ";" "·" "|", and at
-    "," when the whole is one long run."""
+    """The "Máy tự thêm: …" / "Added by me: …" lines of a reply: {label line index: items} and every line index they
+    take (the label line and the bullets under it). Items: the bullets, else the parts split at ";" "·" "|"
+    (added_paragraphs reads the paragraph numbers in them)."""
     lists: dict[int, list[str]] = {}
     taken: set[int] = set()
     i = 0
@@ -7655,8 +7656,6 @@ def _added_items(r: Reply) -> tuple[dict[int, list[str]], set[int]]:
             items = ([first] if first else []) + bullets
         else:
             items = [x.strip() for x in re.split(r"\s*[;·|]\s*", first) if x.strip()]
-            if len(items) == 1 and len(items[0].split()) > int(SOURCE_DEFAULTS["added_item_max_words"]):
-                items = [x.strip() for x in re.split(r"\s*,\s*", items[0]) if x.strip()]
         lists[i] = items
         i = j
     return lists, taken
@@ -7669,6 +7668,7 @@ class PieceUnit:
     first: int          # index of its first line in the reply
     text: str = ""
     carried: list = field(default_factory=list)       # the added-lists printed under it (item lists)
+    title: str = ""     # the piece's title line ("N2 · Tue · carousel · TRUST"), "" for a bare copy box
 
 
 def piece_units(run: Run) -> list[PieceUnit]:
@@ -7711,7 +7711,7 @@ def piece_units(run: Run) -> list[PieceUnit]:
             if key in mine:
                 mine[key].text += "\n" + text
             else:
-                mine[key] = PieceUnit(r, key, min(idx), text)
+                mine[key] = PieceUnit(r, key, min(idx), text, title=(p.title if p is not None else "") or "")
                 units.append(mine[key])
         for runs_ in own_runs.values():
             seen |= runs_
@@ -7752,13 +7752,74 @@ def source_text(run: Run, upto: int) -> str:
     return ck.nfc("\n".join(coach + persona + [_card_text(run, upto), research_log_text(run.run_dir)]))
 
 
+# A paragraph reference on the "Added by me: ¶3, ¶5" / "Máy tự thêm: đoạn 3, 5" line (v13.10, founder 11 Oct): an
+# optional label (¶, đoạn, ý, trang, slide, beat, para, paragraph) and a number, or a range "3-5".
+PARA_REF_RE = re.compile(r"^(?:¶\s*|(?:đoạn|doan|ý|trang|slide|beat|para(?:graph)?|p)\.?\s*)?(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?$", re.I)
+# A numbered paragraph start inside a piece: a beat, slide or page label, or "¶n" / "Đoạn n" / "n." at a line start.
+PARA_LABEL_RE = re.compile(r"^[\s>*_•\-]*(?:¶\s*|(?:ý|beat|slide|trang|page|đoạn|para(?:graph)?)\s+)(\d{1,2})\b"
+                           r"|^[\s>*_]*(\d{1,2})[.)]\s+\S", re.I)
+# A claim about the coach's clients or market (a generalization): a fact, so it must trace to the sources (v13.10).
+GENERALIZATION_RE = re.compile(
+    r"\b(?:most|many|nearly all|almost all|every|all)\s+(?:of\s+)?(?:my\s+|our\s+|the\s+)?"
+    r"(?:clients|customers|students|buyers|coaches|owners|businesses|people in|founders|salons|clinics)\b[^.!?\n]{0,40}"
+    r"|\beveryone\s+(?:in|who|I)\b[^.!?\n]{0,40}"
+    r"|(?<!\w)(?:nhiều|hầu hết|đa số|phần lớn|gần như)\s+(?:cơ sở|khách|chủ|người|coach|chị em|anh chị|trung tâm|tiệm|spa)"
+    r"[^.!?\n]{0,30}?(?:nhất|đều|cũng)(?!\w)"
+    r"|(?<!\w)(?:ai|chủ [^\W\d_]+|cơ sở|khách|người) nào cũng(?!\w)[^.!?\n]{0,25}"
+    r"|(?<!\w)ai cũng(?!\w)[^.!?\n]{0,25}", re.I)
+
+
+def piece_paragraphs(text: str) -> list[tuple[int, str]]:
+    """A piece's paragraphs, numbered as the "Added by me" line counts them: blank lines split; a line opening with a
+    beat, slide or page label ("Ý 2:", "Slide 3:", "Trang 4:", "¶5", "2.") starts a paragraph that takes that number;
+    other paragraphs take the next number."""
+    paras: list[tuple[int, list[str]]] = []
+    nxt = 1
+    cur: list[str] | None = None
+    for ln in text.splitlines():
+        if not ln.strip():
+            cur = None
+            continue
+        m = PARA_LABEL_RE.match(ln)
+        if m or cur is None:
+            num = int(m.group(1) or m.group(2)) if m else nxt
+            cur = [ln]
+            paras.append((num, cur))
+            nxt = num + 1
+        else:
+            cur.append(ln)
+    return [(n, "\n".join(lines)) for n, lines in paras]
+
+
+def added_paragraphs(items: list[str]) -> tuple[set[int], list[str]]:
+    """The paragraph numbers an "Added by me" line names, and the items that are no paragraph reference (old-style
+    lines, facts)."""
+    nums: set[int] = set()
+    bad: list[str] = []
+    for item in items:
+        for part in re.split(r"\s*(?:,|;|·|\band\b|\bvà\b)\s*", item.strip().strip(".")):
+            part = part.strip()
+            if not part:
+                continue
+            m = PARA_REF_RE.match(part)
+            if not m:
+                bad.append(item)
+                break
+            a, b = int(m.group(1)), int(m.group(2) or m.group(1))
+            nums.update(range(min(a, b), max(a, b) + 1))
+    return nums, bad
+
+
 def check_source_check(run: Run) -> dict:
     """Every number, quoted line and named person in a piece traces to the coach's turns, the printed Brand Card or the
-    research log (else fail). A piece with illustrative content the coach never gave ("say a client…", "giả sử…", "for
-    example") carries the list "Máy tự thêm: …" / "Added by me: …" under it: at most added_max_items items, each at
-    most added_item_max_words words, no number or quote inside (facts never go there). Heuristic: it reads figures,
-    quote marks, names after a kinship word / "client named" / "Mr", and the illustrative openers; a fact told in plain
-    words is the reviewer's to find. n/a without a piece."""
+    research log (else fail); so does a claim about the coach's clients or market ("most of my clients…", "nhiều cơ sở
+    kẹt nhất", "ai cũng…"), a fact too (v13.10). A piece whose paragraphs hold illustrative content the coach never gave
+    ("say a client…", "giả sử…", "for example") carries one line under it naming those paragraphs: "Added by me: ¶3, ¶5"
+    / "Máy tự thêm: đoạn 3, 5" (founder 11 Oct: by paragraph, no cap); every such paragraph is on it, every number on
+    it is a paragraph of the piece, and it holds paragraph numbers only (a line or a fact on it fails). Paragraphs:
+    piece_paragraphs. Heuristic: it reads figures, quote marks, names after a kinship word / "client named" / "Mr", the
+    illustrative openers and the generalization shapes; a fact told in plain words is the reviewer's to find. n/a
+    without a piece."""
     cfg = dict(SOURCE_DEFAULTS, **run.acceptance.get("source_check", {}))
     units = piece_units(run)
     if not units:
@@ -7792,23 +7853,37 @@ def check_source_check(run: Run) -> dict:
                 head = name.split()[0]
                 if head.casefold() not in NAME_STOP and not re.search(r"(?<!\w)" + re.escape(name.casefold()) + r"(?!\w)", src_fold):
                     ev.append(f'{label}: name "{name}" is nowhere in the sources')
+            if int(cfg.get("generalization_check", 1)):
+                for m in GENERALIZATION_RE.finditer(line):
+                    toks = ck.copy_tokens(m.group(0))
+                    head = " ".join(toks[:4])
+                    if len(toks) >= 2 and f" {head} " not in src_tokens and f" {head} " not in kit_strings:
+                        ev.append(f'{label}: a claim about clients or the market ("{_short(m.group(0), 40)}") '
+                                  "is nowhere in the sources (a generalization is a fact)")
         for q in ck.quotes_in(u.text, run.lang):
             toks = ck.copy_tokens(q.text)
             if q.attributed and len(toks) >= 4 and f" {' '.join(toks)} " not in src_tokens \
                     and f" {' '.join(toks)} " not in kit_strings and not misheard_match(q.text, [src]):
                 ev.append(f'{label}: quoted line "{_short(q.text, 50)}" is nowhere in the sources')
-        added = [x for items in u.carried for x in items]
         n_lists += len(u.carried)
-        if ILLUSTRATIVE_RE.search(u.text) and not u.carried:
-            m = ILLUSTRATIVE_RE.search(u.text)
-            ev.append(f'{label}: illustrative content ("{_short(m.group(0), 24)}") with no "Máy tự thêm / Added by me" list')
-        if len(added) > int(cfg["added_max_items"]):
-            ev.append(f'{label}: the added list has {len(added)} items (max {int(cfg["added_max_items"])})')
-        for item in added:
-            if len(item.split()) > int(cfg["added_item_max_words"]):
-                ev.append(f'{label}: added item over {int(cfg["added_item_max_words"])} words: "{_short(item, 50)}"')
-            if re.search(r"\d|[\"“”«»]", item):
-                ev.append(f'{label}: added item holds a number or a quote (facts never go there): "{_short(item, 50)}"')
+        listed, bad = added_paragraphs([x for items in u.carried for x in items])
+        for item in dict.fromkeys(bad):
+            ev.append(f'{label}: the added line names lines, not paragraph numbers ("Added by me: ¶3, ¶5"): '
+                      f'"{_short(item, 50)}"')
+        paras = piece_paragraphs(u.text)
+        numbers = {n for n, _ in paras}
+        for n in sorted(listed - numbers):
+            ev.append(f'{label}: the added line names ¶{n}, the piece has no such paragraph ({len(paras)} in all)')
+        for n, ptext in paras:
+            m = ILLUSTRATIVE_RE.search(ptext)
+            if not m:
+                continue
+            if not u.carried:
+                ev.append(f'{label}: illustrative content ("{_short(m.group(0), 24)}") with no "Máy tự thêm / Added by me" line')
+                break
+            if n not in listed:
+                ev.append(f'{label}: ¶{n} holds illustrative content ("{_short(m.group(0), 24)}") and is not on the '
+                          '"Máy tự thêm / Added by me" line')
     ev = list(dict.fromkeys(ev))
     return {"id": "source_check", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
             "details": {"pieces": len(units), "added_lists": n_lists}}
@@ -7837,7 +7912,9 @@ def _opener_tokens(text: str, n: int) -> list[str]:
 def check_week_dedupe(run: Run) -> dict:
     """Across one batch (the pieces of one reply, two or more): the same sentence of at least sentence_min_words words
     (normalised: case, punctuation, quotes) or the same opener (the first opener_words words) in two pieces fails, and the
-    Brand Card's key_belief line in more than belief_max_pieces pieces fails. n/a without a batch of two pieces."""
+    Brand Card's key_belief line in more than belief_max_pieces pieces fails. v13.10 (founder 11 Oct, "paraphrase
+    counts"): across every piece of the run (Day 0 and the week, across replies), two sentences whose content words
+    overlap by at least paraphrase_overlap fail (paraphrase_repeats). n/a with fewer than two pieces."""
     cfg = dict(DEDUPE_DEFAULTS, **run.acceptance.get("week_dedupe", {}))
     belief = _belief_tokens(run)
     batches: dict[int, list[PieceUnit]] = {}
@@ -7868,11 +7945,75 @@ def check_week_dedupe(run: Run) -> dict:
             if len(hits) > int(cfg["belief_max_pieces"]):
                 ev.append(f'{where}: the card\'s belief line "{_short(" ".join(belief), 50)}" is in {len(hits)} pieces '
                           f'(max {int(cfg["belief_max_pieces"])}): {", ".join(map(str, hits))}')
+    units_all = piece_units(run)
+    pairs = paraphrase_repeats(run, units_all, float(cfg["paraphrase_overlap"]), int(cfg["paraphrase_min_words"]))
+    ev += pairs
     ev = list(dict.fromkeys(ev))
-    if not seen_batches:
+    if not seen_batches and len(units_all) < 2:
         return {"id": "week_dedupe", "pass": True, "status": "n/a", "evidence": []}
     return {"id": "week_dedupe", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev,
-            "details": {"batches": seen_batches}}
+            "details": {"batches": seen_batches, "pieces": len(units_all)}}
+
+
+PIECE_LABEL_RE = re.compile(r"(?<!\w)(N\d{1,2}|FILM TODAY|QUAY HÔM NAY|DM reply \d|Tin trả lời inbox \d)(?!\w)", re.I)
+
+
+# A label in front of a line ("Câu đầu: …", "Ý 3 · …", "Slide 2: …"): left out before two sentences are compared.
+LINE_LABEL_RE = re.compile(r"^[\s>*_•+\-]*(?:[^\W\d_][^:·\n]{0,24}?\s*\d{0,2}\s*[:·]\s+)")
+# Staging lines that are no spoken or written words of the piece (the first frame, on-screen text, subject lines).
+STAGING_RE = re.compile(r"^[\s>*_•+\-]*(?:first frame|on-screen|subject|tiêu đề|khung hình đầu|chữ trên màn hình|"
+                        r"caption|preview)\b", re.I)
+SHORT_QUOTE_RE = re.compile(r"[\"“«][^\"”»\n]{1,60}?[\"”»]")
+
+
+def _content_set(sentence: str) -> set[str]:
+    """Content words of a sentence: its label, short quoted titles ("5 câu hỏi phỏng vấn khách cũ") and
+    ck.STOPWORDS left out."""
+    body = LINE_LABEL_RE.sub("", sentence)
+    body = SHORT_QUOTE_RE.sub(lambda m: " " if len(ck.copy_tokens(m.group(0))) <= 7 else m.group(0), body)
+    return {t for t in ck.copy_tokens(body) if t not in ck.STOPWORDS and not t.isdigit()}
+
+
+def paraphrase_repeats(run: Run, units: list, overlap: float, min_words: int) -> list[str]:
+    """Sentences in two different pieces of the run (Day 0 + the week, across replies) that say the same thing: their
+    content words (ck.STOPWORDS left out) overlap by at least `overlap` of the longer one (the same sentence reworded
+    counts; founder 11 Oct "paraphrase counts"). Left out: a reprint or fix of one piece (the same "N2" label, or half its
+    sentences repeating the other), ask lines (the CTA repeats by design), sentences the kit strings hold (the required
+    results line) and sentences under min_words content words."""
+    kit = " " + " ␞ ".join(" ".join(ck.copy_tokens(str(v))) for v in run.strings.values()) + " "
+    prepared = []
+    for u in units:
+        sents = []
+        for s_ in ck.sentences(u.text):
+            if STAGING_RE.match(s_) or ADDED_LABEL_RE.match(s_) or ASK_LINE_RE.match(LINE_LABEL_RE.sub("", s_)):
+                continue
+            toks = ck.copy_tokens(s_)
+            if toks and f" {' '.join(toks)} " in kit:
+                continue
+            cs = _content_set(s_)
+            if len(cs) >= min_words:
+                sents.append((s_, cs))
+        lab = PIECE_LABEL_RE.search(u.title or "")
+        prepared.append((u, (lab.group(1).casefold() if lab else None), sents))
+    ev = []
+    for i in range(len(prepared)):
+        ui, li, si = prepared[i]
+        for j in range(i + 1, len(prepared)):
+            uj, lj, sj = prepared[j]
+            if li and li == lj:
+                continue                       # the same piece reprinted or fixed
+            hits = []
+            for a, ca in si:
+                for b, cb in sj:
+                    if len(ca & cb) >= overlap * max(len(ca), len(cb)):
+                        hits.append((a, b))
+                        break
+            if not hits or (len(hits) * 2 > min(len(si), len(sj)) and len(hits) >= 3):
+                continue                       # nothing shared, or one piece is a rewrite of the other
+            a, b = hits[0]
+            ev.append(f'{_turn(ui.reply)} and {_turn(uj.reply)}: two pieces say the same thing '
+                      f'("{_short(a, 50)}" ~ "{_short(b, 50)}")')
+    return ev
 
 
 def needs_questions(line: str) -> tuple[bool, str] | None:

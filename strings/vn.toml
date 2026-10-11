@@ -205,7 +205,7 @@
 "setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
 "setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
 "phone.opening" = { text = "Chỉ cần bấm Gửi. Phần dưới là cho máy, khỏi cần đọc.", src = "b6a97fd51f" }
-"phone.save" = { text = "Lưu lại: cuối buổi, nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", rồi chép khung MY CONTENT MACHINE gửi vào Zalo \"Cloud của tôi\". Chat dài quá thì in khung mới, dán vào chat mới cùng tên.", src = "f6e358cc8f" }
+"phone.save" = { text = "Lưu: nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", chép khung MY CONTENT MACHINE gửi Zalo \"Cloud của tôi\". Chat dài quá: in khung mới, dán vào chat mới.", src = "f6e358cc8f" }
 
 # ---- Method anchors (P2 kit sections); same keys as strings/en.toml
 

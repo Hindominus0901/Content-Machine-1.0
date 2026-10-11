@@ -7,13 +7,15 @@ Retest FT2 (7 Oct, qa/runs/retest-ft2/review.md §8 items 1, 2): ship.kit 3 runs
 
 Strategy first (founder, 7 Oct night): ship.kit 0 FOCUS names one pillar and one type; 1 FACTS merges WRITE and TRUTH and lets topics and teaching come from the machine's expertise (only facts must be theirs); 3 drops "in 5 s" (lengths are words, never seconds). ship.card "5-sec phone" → "line-1 stop". ship.kit 899 → 879.
 
+v13.10 (founder 11 Oct): 0 the CTA keyword once (topic uses free); 1 a claim about their clients or market is a fact, quotes keep their speaker, stories not padded; 2 every hook on a §CM-FORMATS 1 frame (kit); 3 each piece, long ones too; PRINT "Added by me: ¶2, ¶5" by paragraph (phone spells it out, kit → §CM-EDGE). ship.kit 895 → 899.
+
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
-0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · keyword once in the body + one ask
-1 SOURCE: each scene, number, name, quote, result, client act or thought, cause → effect, their past: from their words, the card or a kept research line, quotes exact; else cut or ask. Teaching, examples: your expertise, listed
-2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Hooks, caption line 1: no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again
-3 VOICE + BUYER: their tone, rhythm, phrases (≥ half; a pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once
-PRINT: the piece; under it "Added by me: …"{{#if phone}} (lines not from them, ≤12 words each){{else}} (§CM-EDGE){{/if}}. Missing fact or hard stop → one line ("Needs you · <one question>"). WHY only on "why?"
+0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · the CTA keyword once in the body (topic uses free) + one ask
+1 SOURCE: each scene, number, name, quote, result, client act or thought, cause → effect, their past, a claim on their clients or market: from their words, card or a kept research line; quotes exact, same speaker, stories not padded; else cut or ask. Teaching, examples: yours, listed
+2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}a §CM-FORMATS 1 frame{{/if}}
+3 VOICE + BUYER (each piece, long ones too): their tone, rhythm, phrases (≥ half; a pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once
+PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: every paragraph (beat, slide; counted from the top) holding a line not from them; none: no line{{else}} (§CM-EDGE){{/if}}. Missing fact, hard stop → "Needs you · <one question>". WHY only on "why?"
 
 <!-- @section ship.card -->
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise

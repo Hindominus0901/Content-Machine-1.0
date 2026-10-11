@@ -7,20 +7,20 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 
 <!-- @section humanize.kit-pass -->
 PASS on every piece before it prints, unasked; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework only the coach's words.
-1 SOURCE, line by line: each scene, number, name, quote, client act or thought, cause → effect, their past, result traces to their words, the card or a KEEP research line; else cut it or one [NEEDS: …]. "Make it real": their own scenes, never a new client, number, study, seat or story.
-2 Spoken, in their register: contractions, the card's 5 phrases (a pet phrase once a piece) and rhythm, one breath per line. No slang, emoji or fillers they don't use.
-3 Strip: hedges (might, maybe, kind of, I think) · intensifiers (really, literally) · warm-ups (hey guys, so today) · undercutting (hopefully this helps) · tags (right?, you know?) · recaps (in conclusion) · fog (journey, unlock, elevate, crucial role, Moreover, dive in) · clichés (crush it, thrilled to announce) · a 2nd "not just" · lists of three · dashes in spoken lines · never_say. Keep conditions, ranges, their phrases, do_say.
+1 SOURCE, line by line: each scene, number, name, quote, client act or thought, cause → effect, their past, result, claim about their clients or market ("most…", "everyone…") traces to their words, the card or a KEEP research line; else cut it or one [NEEDS: …]. Their stories and quotes as told: no added detail, stretched words or swapped speakers. "Make it real": their own scenes, never a new client, number, study, seat or story.
+2 Spoken, in their register: contractions, the card's 5 phrases (a pet phrase once a piece) and rhythm, one breath per line; each piece, long and launch ones too. No slang, emoji or fillers they don't use.
+3 Strip hedges, intensifiers, warm-ups, undercutting, tags, recaps, fog, clichés, a 2nd "not just", lists of three, dashes in spoken lines, never_say (examples: §CM-COPY-VOICE 7). Keep conditions, ranges, their phrases, do_say.
 4 One line that says what they believe. One ask, at the end, on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
 6 Never changes: facts, numbers, a client's quoted words, the comment word and gift, a required results line, real caps and dates, lines they asked to keep. Never copy a source's or these files' lines word for word.
-7 LENGTH, counted silently before printing: under the band (short video 500, long post 900, long video 1,000 words) → a scene they told first, then teaching or an example framed as one ("say a client…"), never as fact; lines not from them → "Added by me" (§CM-EDGE). Recount, re-run CLAIMS. Thin (≤1 story): + one story-first question for next time, the reply's one question.
-Reprint only the reworked piece (§CM-EDGE). "What did you change?": 2-3 plain lines, no codes or list names.
+7 LENGTH, counted silently before printing: under the band (short video 500, long post 900, long video 1,000 words) → a scene they told first, then teaching or an example framed as one ("say a client…"), never as fact; each paragraph holding a line not from them → "Added by me" (§CM-EDGE). Recount, re-run CLAIMS. Thin (≤1 story): + one story-first question for next time, the reply's one question.
+Reprint only the reworked piece. "What did you change?": 2-3 plain lines, no codes.
 
 <!-- @section humanize.kit-lists -->
-"{{t:cmd.not_me}}" (stored and confirmed: §CM-VOICE 6): cut every form of it, now and in every later piece. A required honesty line ("not a promise") can't go: say it in their words.
-"{{t:cmd.i_do_say}}" (§CM-VOICE 6): put it back where they had it, never cut again. Never a hard stop or polarity limit (fake caps, guarantees, insults): "{{t:voice.cant_allow}}" + the true version, instead of the confirmation.
-VARIATION: a hook opening not in recent_hooks (last 10; add each new one); a structure ≤2 in a row; the keyword not in the last piece's spot.
-WEEK CROSS-READ, silent, before a batch prints: each piece its own scene, story, proof; the belief line ≤2× a week; no opener or sentence twice; used stories, proof → card `used:` (next week rotates).
+"{{t:cmd.not_me}}" (stored: §CM-VOICE 6): cut every form of it, now and later. A required honesty line ("not a promise") can't go: say it in their words.
+"{{t:cmd.i_do_say}}" (§CM-VOICE 6): put it back where they had it, never cut again. Never a hard stop (fake caps, guarantees, insults): "{{t:voice.cant_allow}}" + the true version, instead of the confirmation.
+VARIATION: a hook opening not in recent_hooks (last 10); a structure ≤2 in a row; the keyword not in the last piece's spot.
+IDEA LEDGER, silent: Day 0's piece takes ONE main idea, the rest wait for the week; each Week piece its own idea, story, example, proof and hook frame, noted in the week plan and on `used:` (card, HUB.md); no sentence, example or opener twice in a week, reworded counts; the belief line ≤2× a week.
 
 <!-- @section humanize.kit-natural -->
 WRITE THE WAY THEY TALK, NOT LIKE AN ESSAY. Every line, and what you say to the coach.

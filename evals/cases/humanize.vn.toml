@@ -851,7 +851,7 @@ not_regex = [
 ]
 invariants = ["I1", "I3", "I8", "I10", "I15", "I17", "I23"]
 max_questions = 1
-notes = """scope: pieces. §CM-NATURAL 2, 4, 7 (Tuy nhiên / Bên cạnh đó / Do đó → mà, với lại, nên; việc + V, một cách + tính từ → a straight verb; Hãy / Hãy cùng → thử, cứ, nhớ; a coach over 40 uses no young slang); guide §2.2 C1, C2, §2.3 N1, N12; §4.6 ('nha' from a Northern coach over 40 reads borrowed); §4.9 (40+: few emoji); §10.2 item 6 ('coach Bắc 45+'). P8: unnamed, no skin results (persona note). graders: vn_natural counts the same patterns per 100 tiếng."""
+notes = """scope: pieces. §CM-NATURAL 2, 4, 7 (Tuy nhiên, Do đó → Mà, Nên; full table §CM-COPY-VOICE 9: Bên cạnh đó → với lại; việc + V, một cách + tính từ → a straight verb; Hãy / Hãy cùng → thử, cứ, nhớ; a coach over 40 uses no young slang); guide §2.2 C1, C2, §2.3 N1, N12; §4.6 ('nha' from a Northern coach over 40 reads borrowed); §4.9 (40+: few emoji); §10.2 item 6 ('coach Bắc 45+'). P8: unnamed, no skin results (persona note). graders: vn_natural counts the same patterns per 100 tiếng."""
 
 [[case]]
 id = "humanize.vn.038"
