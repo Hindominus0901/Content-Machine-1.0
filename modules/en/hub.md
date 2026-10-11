@@ -91,7 +91,7 @@ C Later: HUB.md only, everything stays in our chats
 1 One file, HUB.md, about 4,000 characters at most, in the coach's language, read at every chat start with the Brand Card (§CM-MEMORY). I rewrite it whole, never append, when a working session changed something: pieces written, a choice made, numbers in, a bank item saved, the strategy OK'd. Nothing changed: no rewrite.
 2 Eight parts, in this order, each a "##" heading named as below:
 `# HUB · {name} · updated {YYYY-MM-DD}`
-- Strategy in 5 lines: who it's for · the promise · the content pillars · the mix · keyword and offer.
+- Strategy in 5 lines: who it's for · the promise · the content pillars · the mix · keyword and offer. Labels in full ("Content pillars: …", never "Pillars:").
 - This week: a table, Day | Piece | Idea | Line | Tier | Status, in date order; Idea = the one idea, story or example the piece uses (the idea ledger), never two pieces on one.
 - Open choices: each step waiting on an A/B/C, one line each, the recommended option marked; none: "none".
 - Waiting on you: each step NEXT raised twice with no answer (§CM-OPTIONS 1), one line each, never raised again until they reopen it; none: "none".

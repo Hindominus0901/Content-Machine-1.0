@@ -127,18 +127,26 @@ Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy 
 2 CÁC KIỂU BÀI, độ dài · phút của coach (máy viết hết): video ngắn 500–800 chữ · ≈20 (quay ≈10, đọc, đăng) · bài dài ≈1.000 chữ · ≈10 · carousel 10–12 trang · ≈15 · bài ngắn 250–450 tiếng · ≈5 · ảnh trích câu, một câu của coach ≤30 tiếng · ≈10 · story hay bình chọn 3–5 khung, mỗi khung ≤35 tiếng · ≈5 · tin Zalo ≤150 tiếng hay email ≤375 · ≈5 · video dài 1.000–1.500 chữ · ≈3 tiếng.
 3 MỘT CHẤT LIỆU, NHIỀU BÀI, khi mỗi bài một dạng khác, một góc riêng (cảnh lúc đó · bài học · cái sai · các bước · câu hỏi nó gợi ra · phía khách), khung hook riêng (§CM-FORMATS 1), lời mời riêng theo loại bài (§CM-CTA-KIT 1). Một ý, một chuyện ra 2–3 bài một tuần là bình thường. Không chép một câu từ bài này sang bài kia: ảnh trích câu được lấy một câu, bài gốc chỉ nói câu đó một lần. Hai bài cùng dạng trên một chất liệu: bỏ một.
 4 SỔ Ý (§CM-HUMANIZE): mỗi chất liệu → các bài của nó ("câu trả lời 3 → video thứ Hai, ảnh trích thứ Năm, bình chọn thứ Bảy"), ghi vào kế hoạch tuần và `used:` trên card; tuần sau lấy chất liệu mới trước; chuyện đã dùng chỉ quay lại ở tháng sau, dạng khác.
-<!-- @section copywriting.grow-cuts-thin src=77b17b3643 -->
+<!-- @section copywriting.grow-cuts-thin src=195b2840f9 -->
 ### Ít chất liệu: bớt bài quay, không độn ("không có chuyện gì để kể", "hết ý")
 5 ĐẾM TRƯỚC khi viết tuần: chuyện, bằng chứng thật = lời chính coach (ngày 0, buổi nói chuyện), tài liệu họ đưa, dòng kho bằng chứng, câu nghiên cứu đã GIỮ; một khoảnh khắc tính một lần. Mỗi bài quay ít nhất một.
-6 ÍT HƠN SỐ BÀI QUAY: (a) video thiếu chuyện đổi thành bài viết: bài dài ≈1.000 (phần dạy gánh được), carousel hay ảnh trích câu; tuần vẫn đủ 7 bài. Hoặc (b) trước khi viết, hỏi một câu xin chuyện ("Lần gần nhất khách … thì chuyện gì xảy ra?"), là dòng Cần duy nhất của tin; họ kể xong mới viết video.
+6 ÍT HƠN SỐ BÀI QUAY: (a) video thiếu chuyện đổi thành bài viết: bài dài ≈1.000 (phần dạy gánh được), carousel hay ảnh trích câu; tuần vẫn đủ 7 bài. Hoặc (b) trước khi viết, hỏi một câu xin chuyện ("Lần gần nhất khách … thì chuyện gì xảy ra?"), là dòng Cần duy nhất của tin; họ kể xong mới viết video. Bớt video thì tin tuần nói đúng một dòng, gộp vào dòng Cần hay TIẾP, không hỏi thêm: "Tuần này 3 video thay vì 4: chưa đủ chuyện cho video thứ 4; {xưng hô} kể thêm một chuyện là mình đổi lại."
 7 KHÔNG ĐỘN: đoạn "Máy tự thêm" sắp quá ~30% video thì video thành bài viết, hay chờ chuyện. Bài ngắn, ảnh trích câu ít phần dạy; bài dài được nhiều hơn, vẫn ghi ra.
-8 MỘT Ý ≤3 BÀI MỘT TUẦN, sổ ý đếm từng bài (§CM-HUMANIZE). Các video cùng dạng mỗi bài một kiểu ví dụ: một bài "giả sử…", một bài cảnh của chính coach, một bài câu nghiên cứu; một tuần không lặp kiểu.
+8 MỘT Ý ≤3 BÀI MỘT TUẦN, sổ ý đếm từng bài (mục 10). Các video cùng dạng mỗi bài một kiểu ví dụ: một bài "giả sử…", một bài cảnh của chính coach, một bài câu nghiên cứu; một tuần không lặp kiểu.
 9 DỮ KIỆN TRÁ HÌNH: câu nói chung hay tốc độ ("bước này nhiều người bỏ qua nhất", "mười phút là xong", "khách lúc nào cũng…") là dữ kiện: có nguồn (coach nói; dòng GIỮ kèm số thật: "hai người ở hai nhóm kể…") hoặc cắt. Câu nghiên cứu vào bài ghi nguồn theo vai và nơi, hay "(mình đoán)".
 VD: Lời xả mỏng, gói lean (3 bài quay), hai chuyện thật: video thứ Hai (chuyện 1) · video thứ Tư (chuyện 2) · thứ Sáu đổi thành bài dài về cách làm, phần dạy dùng ví dụ "giả sử…", có ghi ra; dòng Cần của tin ngày 0 hỏi "Lần gần nhất khách mới im luôn sau buổi gọi đầu, chuyện gì xảy ra?"
 
-<!-- @section copywriting.grow-cuts-example src=e786cd66c6 -->
+<!-- @section copywriting.grow-cuts-ledger src=ad2a435720 -->
+### Đếm ý, kể lại kết quả ("lại ý cũ", "lặp hoài", "số này dùng rồi")
+10 SỔ Ý NGAY LÚC LÊN BẢNG TUẦN, trước khi viết bài nào: mỗi dòng bảng ghi đúng một ý (cột Ý), rồi đếm số bài của từng ý; một ý ≤3 bài, câu nhắc ngang cũng tính ("bỏ học thuộc kịch bản" chen vào 6 bài là 6 bài). Từ khoá của mùa đi mọi bài được, nhưng câu mang từ khoá mỗi bài chở một ý khác. Chân dung khách trên card (họ là ai, đang kẹt gì) là người xem, không phải ý: không đếm, không làm thân bài; bài nào cũng nói với họ, mỗi bài bằng một ý riêng. Ý chạm bài thứ 4 → đổi sang ý khác trong cùng trụ cột nội dung, hay cắt câu nhắc.
+11 KỂ LẠI, KHÔNG CHÉP: một kết quả dùng lại ở bài khác thì kể bằng câu mới. Số giữ y nguyên, câu quanh số đổi: bài đầu kể theo thứ tự xảy ra; bài sau mở từ con số cuối, hay từ việc khách làm; tin, thư chỉ nhắc gọn ("chuyện tháng 8, 7 người trả lời"). Dòng trung thực lặp nguyên văn tối đa một lần một tuần; các lần khác giữ nghĩa, nói bằng câu khác.
+12 PHẦN DẠY KHÔNG NÓI THAY CẢ NGHỀ: ghi đoạn vào "Máy tự thêm" không làm câu khái quát thành đúng; khai rồi vẫn cần nguồn như mục 9. Đoạn dạy nói "có thể…", "thử…", không "nhiều người…", "ai cũng…", "khách nào cũng…" trừ khi coach nói vậy.
+TRƯỢT: "Tin nhắn lại mà tay không thì khách chỉ đọc được một câu 'mua chưa'." (câu nói thay mọi khách, không ai nói ra)
+ĐẠT: "Lần sau nhắn lại, thử mang theo một thứ: tấm ảnh hôm trước, hay câu trả lời khách còn đang chờ." (lời gợi ý, không nói thay ai)
+
+<!-- @section copywriting.grow-cuts-example src=d9e1e38168 -->
 ### Bảy bài từ một tuần, một ví dụ
-10 MỘT TUẦN, chỉ để thấy dáng (bịa ra): cô giáo dạy piano cho người lớn mới học; câu trả lời buổi nói chuyện về một học viên bỏ tập gam, mỗi tuần đàn trọn một bài, cộng một câu khách hay than đã giữ. Gói light, 2 bài quay:
+13 MỘT TUẦN, chỉ để thấy dáng (bịa ra): cô giáo dạy piano cho người lớn mới học; câu trả lời buổi nói chuyện về một học viên bỏ tập gam, mỗi tuần đàn trọn một bài, cộng một câu khách hay than đã giữ. Gói light, 2 bài quay:
 - T2 · video ngắn · THU HÚT · học viên bỏ tập gam · lưu lại
 - T3 · carousel · NIỀM TIN · 5 bước tập xong một bài trong tuần · comment chữ trong hook
 - T4 · bài ngắn · THU HÚT · cái sai: tập gam cho xong rồi mới đàn bài · gửi cho bạn cũng đang học

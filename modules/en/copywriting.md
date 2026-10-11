@@ -131,15 +131,23 @@ Fails when: two asks; newsletter tone in a one-to-one chat; "I saw you opened my
 <!-- @section copywriting.grow-cuts-thin -->
 ### Thin material: fewer filmed, never padded ("not enough stories", "nothing to say")
 5 COUNT FIRST, before the week is written: real stories and proof = the coach's own turns (Day 0, the Talk), the files they hand over, proof-bank rows, KEEP research lines; one moment counts once. At least one per filmed slot.
-6 FEWER THAN FILMED SLOTS: (a) the video short of a story turns written: a long post ≈1,000 (teaching can carry it), a carousel or a quote image; the week still has 7 posts. Or (b) before writing, one story-first question ("What happened the last time a client …?"), that reply's one Needs you; the video is written once they answer.
+6 FEWER THAN FILMED SLOTS: (a) the video short of a story turns written: a long post ≈1,000 (teaching can carry it), a carousel or a quote image; the week still has 7 posts. Or (b) before writing, one story-first question ("What happened the last time a client …?"), that reply's one Needs you; the video is written once they answer. When a video turns written, the week reply says so in one plain line, folded into the Needs you or NEXT, no extra ask: "This week 3 videos instead of 4: not enough stories for the fourth yet; tell me one more and I'll switch it back."
 7 NEVER PADDED: when listed "Added by me" paragraphs would pass ~30% of a video, it becomes a written post or waits for a story. Short posts and quotes carry little teaching; a long post may carry more, listed.
-8 ONE IDEA ≤3 POSTS A WEEK, the ledger counting each (§CM-HUMANIZE). Videos of one format each use their own example device: one "say a client…", one the coach's own scene, one a research line; never one device twice in a week.
+8 ONE IDEA ≤3 POSTS A WEEK, the ledger counting each (item 10). Videos of one format each use their own example device: one "say a client…", one the coach's own scene, one a research line; never one device twice in a week.
 9 FACTS IN DISGUISE: a generalization or a speed ("most people skip this step", "ten minutes and it's done", "clients always…") is a fact: source it (the coach said it; a KEEP line with its true count: "two people in two groups said…") or cut it. A research line in a post carries its source by role and place, or "(my guess)".
 EX: Thin dump, Lean (3 filmed), two real stories: Mon video (story 1) · Wed video (story 2) · Fri slot turns into a long post on the method, teaching with "say a client…" examples, listed; the Day-0 reply's Needs you asks "What happened the last time a new client went quiet after the first call?"
 
+<!-- @section copywriting.grow-cuts-ledger -->
+### Counting ideas, retelling results ("same idea again", "repeating myself", "used that number already")
+10 THE LEDGER AT PLANNING TIME, before any piece is written: each row of the week table names one idea (the Idea column), then each idea's posts are counted; an idea ≤3 posts, a one-line aside counts too ("drop the memorized script" slipped into 6 posts is 6). The Season keyword may ride in every post, but the sentence carrying it carries a different idea each time. The card's client profile (who they are, where they're stuck) is the audience, never an idea: it doesn't count and never fills a body; every post speaks to them, each with its own idea. An idea about to hit a 4th post → another idea from the same content pillar, or cut the aside.
+11 RETOLD, NEVER COPIED: a result reused in another post is told in new words. Numbers stay exact; the sentence around them changes: the first post tells it in order; a later one opens on the last number, or on what the client did; an email or message just points back ("the August story, 7 replies"). The honesty line may repeat word for word at most once a week; other times, same meaning, new sentence.
+12 TEACHING NEVER SPEAKS FOR EVERYONE: listing a paragraph under "Added by me" never makes a generalization OK; listed, it still needs a source (item 9). Teaching paragraphs speak as "you can…", "try…", never "most people…", "everyone…", "clients always…" unless the coach said it.
+FAIL: "A follow-up with nothing in hand just reads as 'so, are you buying?'" (speaks for every client; no one said it)
+PASS: "Next time you follow up, try bringing one thing: the photo from last time, or the answer they're still waiting on." (a suggestion, speaks for no one)
+
 <!-- @section copywriting.grow-cuts-example -->
 ### Seven posts from one week, an example
-10 A WEEK, the shape only (made up): a piano teacher for adult beginners; a Talk answer about a student who dropped scales and learned one whole song a week, plus one held buyer line. Light, 2 filmed:
+13 A WEEK, the shape only (made up): a piano teacher for adult beginners; a Talk answer about a student who dropped scales and learned one whole song a week, plus one held buyer line. Light, 2 filmed:
 - Mon · short · ATTRACT · the student who dropped scales · save it
 - Tue · carousel · TRUST · 5 steps to learn one song in a week · comment the hook's word
 - Wed · short post · ATTRACT · the mistake: scales before songs · send it to a friend

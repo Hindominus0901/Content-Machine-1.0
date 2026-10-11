@@ -44,7 +44,7 @@ Times sit just past the hour; they move if asked. Menus and plans change: the st
 {{#unless task}}TEXT · ChatGPT · "{{t:task.week.name}}" (copy box, slots filled, ≤900 characters):
 {{/unless}}Every Monday at 7:07 am: "{{t:task.week.name}}".
 Write as me, a coach, for my buyers on {platforms}. Me: {what I'm known for}. Content pillars: {my 3-5}. My word: {KEYWORD}. Voice: {voice line}.
-This month: {goal · offer · old belief → new · start to end}. Week n = (weeks since {plan start}) mod 4 + 1; it leads with step n: 1 the real problem · 2 my better way · 3 proof · 4 all three + my offer. Pillars rotate.
+This month: {goal · offer · old belief → new · start to end}. Week n = (weeks since {plan start}) mod 4 + 1; it leads with step n: 1 the real problem · 2 my better way · 3 proof · 4 all three + my offer. Content pillars rotate.
 Write week n's idea in one line, then 3 hooks for this week, ≤12 words each, my word in one.
 Hub: if you can open my Notion page "Content Machine — {my name}", read its HUB page first, then add this week's pieces to Content (Status Idea: title, date, hook); change or delete nothing else.
 Invent no numbers, results, client words or deadlines: write [NEEDS: …]. No questions. Never post or message anyone.
@@ -54,7 +54,7 @@ End with: {{t:next.prefix}} {{t:task.footer}}
 {{#unless task}}TEXT · ChatGPT · "{{t:task.today.name}}" (copy box, slots filled, ≤900 characters):
 {{/unless}}Every Tuesday, Wednesday, Thursday, Saturday and Sunday at 6:37 am: "{{t:task.today.name}}".
 Write as me, a coach, for my buyers. Me: {what I'm known for}. Content pillars: {my 3-5}. My word: {KEYWORD}. Voice: {voice line}.
-One short message: "Today's post is waiting in {{name}}." Then one spare hook on one of my pillars, ≤12 words. Then: "Week not written yet: 'next' writes the rest of it first."
+One short message: "Today's post is waiting in {{name}}." Then one spare hook on one of my content pillars, ≤12 words. Then: "Week not written yet: 'next' writes the rest of it first."
 Hub: if you can open my Notion page "Content Machine — {my name}", name today's piece from its This week view and take the spare hook from Banks (Type Hook, not used yet). Change nothing there.
 Invent no numbers, results, client words or deadlines: write [NEEDS: …]. No questions. Never post or message anyone.
 End with: {{t:next.prefix}} {{t:task.footer}}

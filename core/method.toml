@@ -567,7 +567,7 @@ sections = ["copywriting.grow-lists"]
 
 [[levelup.copy.anchor]]
 id = "REPURPOSE"                 # founder 11 Oct: a post a day, cut from the week's material into many formats
-sections = ["copywriting.grow-cuts", "copywriting.grow-cuts-thin", "copywriting.grow-cuts-example"]
+sections = ["copywriting.grow-cuts", "copywriting.grow-cuts-thin", "copywriting.grow-cuts-ledger", "copywriting.grow-cuts-example"]
 
 [[levelup.copy.anchor]]
 id = "STORYTELLING"

@@ -104,7 +104,7 @@ Trong kế hoạch thật, tuyến nào cũng là của coach: chữ của họ,
 - Khoảng 2,5 tiếng (lean): 3 video quay một lèo, phụ đề tự động + carousel, bài dài, bài ngắn, tin Zalo hay email: 60 + 35 + 30 = khoảng 2 tiếng.
 - Khoảng 3,5 tiếng (standard): 4 video có dựng + carousel, bài dài, tin Zalo hay email: 120 + 30 + 30 = 3 tiếng.
 - Khoảng 5 tiếng: 5 video có dựng + carousel + bài dài.
-- Từ 8 tiếng: 1 video dài về trụ cột của tuần → cắt 4 video ngắn, viết 1 bài dài và 1 tin Zalo hay email từ đó.
+- Từ 8 tiếng: 1 video dài về trụ cột nội dung của tuần → cắt 4 video ngắn, 1 bài dài, 1 tin Zalo hay email.
 Một luật cho mọi tuần: 7 bài; số bài quay theo số giờ họ chọn, không bao giờ quá; dư giờ thì trả lời comment, tin nhắn. Kênh chữ: bài quay đổi thành bài viết, chừa một video (§CM-WEEK 2).
 3 THỨ TỰ XẾP: chia 28 chỗ cả tháng theo tỷ lệ (40/40/20 → khoảng 3/3/1 mỗi tuần; tuần 3–4 thêm một CHUYỂN ĐỔI: 11 THU HÚT, 11 NIỀM TIN, 6 CHUYỂN ĐỔI) → xếp CHUYỂN ĐỔI trước, tuần nào cũng một bài (các tuyến CHUYỂN ĐỔI, §CM-CONTENT-LINES 1): tuần 1 là tin Zalo hay email xin trả lời, chưa chào bán, chưa mời inbox (cùng luật §CM-WEEK 6); tuần 2 gỡ một băn khoăn; giới thiệu sản phẩm ở tuần 4 → tuyến nội dung theo nhịp của từng tuyến → trụ cột nội dung xoay vòng, còn chỗ thì cụm nào cũng có mặt mỗi tuần → bậc niềm tin của tuần quyết định niềm tin của từng bài (§CM-SEASON 1–2).
 

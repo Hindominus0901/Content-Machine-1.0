@@ -29,6 +29,8 @@ One question: **would a Vietnamese reader believe this coach typed or said every
 
 **Particle count (v13.13):** the judge writes "{n}/{N} sentences end in a particle" for each spoken piece (video, Zalo, inbox) and each long post, against the Card's share (e.g. card 40%, 40 sentences → 12–20 pass). More than 10 points off caps VN5 at 1; under a third of the card's share is a 0. The kit runs the same count before printing (§CM-HUMANIZE 2, §CM-NATURAL 4 fail → pass pair).
 
+**Teaching voice, retold results (v13.14):** a teaching paragraph that speaks for everyone ("nhiều người…", "ai cũng…", "khách nào cũng…") the coach never said is an invented fact even when its number sits in "Máy tự thêm"; the natural form is a suggestion ("có thể…", "thử…"). A result reused across posts keeps its numbers and changes the sentence around them; the same result sentence word for word in two posts is a copy (§CM-REPURPOSE 11, 12).
+
 **Never scored down:** a keyword, "chấm", "ib" or threshold the coach chose themselves (DECISIONS; `shared.md` "Never blocked"); a word on the coach's `do_say`; natural forms the guide lists in §2.7 ("nó" after a noun, emphatic "là", "là" meaning "that" after thấy / nói / khen ("khách khen là rất ngon"), "tóm lại là" mid-story, "nói thật", "anh ấy" in a Bắc voice, "không những… mà còn" once, a real well-wish ("Chúc anh chị thành công nha!" before an opening), literal "chìa khóa", "hành trang", "chợt nhận ra quên…", the coach's own abbreviations to people they know).
 
 ## Build pass rule

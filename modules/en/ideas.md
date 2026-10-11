@@ -9,7 +9,7 @@ Kit hooks untouched: §CM-WEEK 7 (character or entertainment ≤20%), §CM-LIKED
 - series: a shape that drew hands up twice returns on a set rhythm (each quarter, each year in business, each client milestone) with what changed since, never the same text re-dated;
 - objections and questions (calls, DMs, comments) → the belief under each ("if I…, then…") → a piece shifting it before the call;
 - past-client answers (§CM-RESEARCH-PLAN R2 2): what first made them take the coach seriously → reach; the last thing before they messaged → trust; what almost stopped them → objections;
-- liked shapes (§CM-LIKED) × this week's pillar; none saved yet → once, one line above NEXT: "When a post hits you hard, or does far better than that account usually does, send me a screenshot. I keep its shape, never its words.";
+- liked shapes (§CM-LIKED) × this week's content pillar; none saved yet → once, one line above NEXT: "When a post hits you hard, or does far better than that account usually does, send me a screenshot. I keep its shape, never its words.";
 - moments from the buyer's world (§CM-MOMENTS);
 - the gap: what everyone in the field says vs what buyers need and nobody says (§CM-MONTH, Your angle);
 - what their field teaches only behind a paywall → their own version, free and in full, before anyone else (their method only, never someone else's paid material);

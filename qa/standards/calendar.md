@@ -36,6 +36,7 @@ What good means: each step offered as 2-3 real alternatives with one pick backed
 - **Here:** CL1, CL2, CL3, CL4, CL5, CL6 and CL10 score 2, and the total is ≥16/20.
 - A transcript that shows only the "ok all" path scores CL3 on the first card and the "ok all" reply (every pick printed, in order).
 - A reflowed calendar (missed week) is scored the same way, plus CL7's slide rule; the re-made month 2 calendar also needs the review's calls behind each change.
+- Week table as the idea ledger (v13.14, §CM-WEEK 10, §CM-REPURPOSE 10): each row names one idea; an idea in 4+ posts of a week, a one-line aside counted, scores CL2 at most 1. The Season keyword riding in every post is fine when each carries another idea; the card's client profile is the audience, never an idea, and is not counted. A filmed slot turned written needs one plain line in the week reply ("3 videos instead of 4: …"), folded into Needs you or NEXT; missing, CL6 scores 1.
 
 ## Hard gates
 
