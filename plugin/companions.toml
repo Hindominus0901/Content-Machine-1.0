@@ -83,6 +83,7 @@ jobs = """\
 - HUB.md, "save the hub", "what's open?", the end of any job: §CM-HUB-MD
 - "Google Sheet", "no Notion", option B: §CM-BOARD · rows to paste ("rows", "no rows", "board rows for this week"): §CM-BOARD-ROWS · column order: §CM-BOARD-COLUMNS · campaigns, reading the board back: §CM-BOARD-CAMPAIGNS
 - "schedule", "automate this", "remind me", "set up the tasks", "yes" to the nudge offer: §CM-NUDGES, what each task reads and writes: §CM-HUB-TASKS, then the text for the app: §CM-NUDGE-TEXTS (ChatGPT), §CM-NUDGE-CLAUDE, the Monthly text in §CM-HUB-TASKS
+- on a computer, "mic", "dictate", no mic button: §CM-HUB-TASKS 6 (Mac, Windows dictation)
 - what each task runs: §CM-NUDGE-JOBS · "stop the nudges", "fewer", a missed run: §CM-NUDGE-RULES · launch mode: §CM-NUDGE-LAUNCH"""
 extra = """\
 BOARD FILES: the five header-row files (Campaigns, Content, Bank, Numbers, Ledger) are in full under "{{assets}}" below, and also sit in Board/ next to this file. When you can create files, write each one exactly as shown and hand it over; otherwise print each header row as the tsv box §CM-BOARD 3 describes.
@@ -107,7 +108,8 @@ extra = ""
 description = "Content Machine playbook: strategy built step by step, content lines, attract/trust/convert, a 4-week calendar, one strategy file. Use for \"content strategy\", \"content calendar\", \"content lines\"."
 part = "playbook"
 jobs = """\
-- "build my strategy", "content strategy", and on Day 0 after the interview when this file is loaded: §CM-STRATEGY-ENGINE (8 steps, one a reply, A/B/C with one pick; "ok all"; resume at the open step)
+- Day 0 at setup step 3 (the strategy): the main skill's one strategy reply, ≤3 picks (§CM-MAP); this file only deepens its lines
+- "build my strategy", "content strategy", "details", after Day 0: §CM-STRATEGY-ENGINE (8 steps, one a reply, A/B/C with one pick; "ok all"; resume at the open step)
 - "content calendar", "posting schedule", a calendar after "plan next month": §CM-CALENDAR (a post a day, hours → how many filmed, the weekly table, rules, launches, a missed week)
 - "content lines", "series ideas", "recurring content": §CM-CONTENT-LINES · "content types", "attract trust convert": §CM-TIERS
 - "strategy", "my strategy", "content pillars", "content system": §CM-STRATEGY-DOC (saved as CONTENT-STRATEGY.md when you can create files, else printed whole)
@@ -235,6 +237,7 @@ jobs = """\
 - HUB.md, "lưu hub", "đang chờ gì?", cuối mỗi việc: §CM-HUB-MD
 - "Google Sheet", "không dùng Notion", lựa chọn B: §CM-BOARD · dòng để dán ("in dòng", "thôi in dòng", "in dòng tuần này", "tự thêm luôn"): §CM-BOARD-ROWS · thứ tự cột: §CM-BOARD-COLUMNS · chiến dịch, đọc bảng ngược lại: §CM-BOARD-CAMPAIGNS
 - "lịch tự động", "hẹn giờ", "nhắc mình", "cho nó tự chạy", "cài tác vụ", "có" với lời mời nhắc: §CM-NUDGES, tác vụ đọc gì ghi gì: §CM-HUB-TASKS, rồi lời nhắc cho app: §CM-NUDGE-TEXTS (ChatGPT), §CM-NUDGE-CLAUDE, lời nhắc hằng tháng ở §CM-HUB-TASKS
+- trên máy tính, "micro", "đọc chính tả", không thấy nút micro: §CM-HUB-TASKS 6 (nói thay gõ trên Mac, Windows)
 - mỗi tác vụ chạy việc gì: §CM-NUDGE-JOBS · "tắt nhắc", "nhắc nhiều quá", "bớt lại", lỡ một buổi: §CM-NUDGE-RULES · vào chế độ mở bán: §CM-NUDGE-LAUNCH"""
 extra = """\
 FILE BẢNG: năm file chỉ có dòng tiêu đề (Chien-dich, Noi-dung, Kho, So-lieu, Gioi-han-that) nằm trọn ở phần "{{assets}}" bên dưới, và cũng có trong thư mục Board/ cạnh file này. Tạo được file thì viết đúng từng file như đã thấy rồi giao; không thì in từng dòng tiêu đề thành khung tsv như §CM-BOARD 3.
@@ -259,7 +262,8 @@ extra = ""
 description = "Content Machine file chiến lược: dựng chiến lược từng bước, tuyến nội dung, ba loại nội dung, lịch 4 tuần, một file. Dùng khi nghe \"chiến lược nội dung\", \"lịch content\", \"tuyến nội dung\"."
 part = "file chiến lược"
 jobs = """\
-- "làm chiến lược", "chiến lược nội dung", và ngày 0 sau phần phỏng vấn khi có file này: §CM-STRATEGY-ENGINE (8 bước, mỗi tin một bước, A/B/C kèm một lựa chọn; "ok hết"; lần sau làm tiếp đúng bước đang dở)
+- ngày 0, bước 3 của cài đặt (chiến lược): một tin chiến lược của skill chính, ≤3 lựa chọn (§CM-MAP); file này chỉ làm sâu thêm các dòng của nó
+- "làm chiến lược", "chiến lược nội dung", "chi tiết", sau ngày 0: §CM-STRATEGY-ENGINE (8 bước, mỗi tin một bước, A/B/C kèm một lựa chọn; "ok hết"; lần sau làm tiếp đúng bước đang dở)
 - "lịch content", "lịch đăng bài", lịch sau buổi "lên kế hoạch tháng sau": §CM-CALENDAR (mỗi ngày 1 bài, giờ → mấy bài quay, bảng từng tuần, luật, mùa ra mắt, khi lỡ một tuần)
 - "tuyến nội dung", "ý tưởng series", "loạt bài": §CM-CONTENT-LINES · "loại nội dung", "thu hút niềm tin chuyển đổi": §CM-TIERS
 - "chiến lược", "content pillars", "trụ cột nội dung", "hệ thống nội dung": §CM-STRATEGY-DOC (tạo được file thì lưu CHIEN-LUOC-NOI-DUNG.md, không thì in trọn)

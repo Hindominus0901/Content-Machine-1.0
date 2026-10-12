@@ -4,6 +4,18 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-12 (v14.0)
+
+Founder (12 Oct): a mission-control assistant that runs the protocol until everything is set up; coaches talk less before the first piece.
+
+### Changed
+- [buyer] Every reply opens with two short lines: the step and why, then what we have and what is missing. When something blocks, it says Situation → Problem → Fix. The last line is always the machine's next action, never "Do you want…?".
+- [buyer] Setup is a 10-step checklist the machine walks by itself and remembers across chats; after setup, replies show Week n · Day d.
+- [buyer] Fast Day 0: paste links, old posts or files and/or talk once for 3–5 minutes; the strategy comes in one reply with at most 3 picks; the first piece in about 12 minutes. Deeper questions come later, one "question of the day".
+- Kit: one reply protocol replaces the scattered per-step talk rules; banned endings (EN + VN) at the top and bottom of the instruction block; step= in the Brand Card and HUB.md; companions and agents follow the protocol.
+- Level-ups: PLAYBOOK engine runs on request or after Day 0; channels and access asked from day 2; HUB.md carries the step line; scheduled-task texts open with the status lines; Mac/Windows mic tips in BOARD.
+- Graders: reply_protocol (status lines, banned endings, NEXT, blocks, one-reply strategy, question of the day), minutes and coach words to the first piece; legacy acceptance for pre-v14 runs.
+
 ## [1.3.18] - 2026-10-12 (v13.18)
 
 Fixes from the v13.17 safety spot test (qa/runs/v1317/SAFETY-TEST.md, gaps G1–G11).
