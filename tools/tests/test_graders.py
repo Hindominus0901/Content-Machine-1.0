@@ -1833,10 +1833,10 @@ class G1RoundGraderTests(TempRepo):
         shape = self.inv(report, "day0_shape")
         self.assertPasses(report, "day0_shape")
         # FILM TODAY, YOUR WORD, its guess tag (no [keyword] day0_heard: not run), KNOWN FOR, email (no list named),
-        # keyword outside the ask (Week 1, FILM TODAY, its text version), card top, whole card, save line, placeholders,
-        # "Shorter" (not asked)
+        # keyword outside the ask (Week-1 CONVERT pieces only since v13.17; N1 is untagged, so not run), card top,
+        # whole card, save line, placeholders, "Shorter" (not asked)
         self.assertEqual([i["pass"] for i in shape["items"]],
-                         [True, True, None, True, None, True, True, True, True, True, True, True, None])
+                         [True, True, None, True, None, None, True, True, True, True, None])
 
     def test_g8_film_today_box_quiet_and_your_word(self):
         floor = FILM_REPLY.replace("```\n", "").replace("    ```", "").replace("(quieter: say 'quiet')", "")
@@ -2271,7 +2271,10 @@ class G2RoundGraderTests(TempRepo):
 
     # -- G17: the keyword outside the ask, KNOWN FOR in one breath, before → after pairs
     def test_g17_keyword_outside_the_ask(self):
-        only_ask = WEEK_REPLY.replace("    On-screen: Your next chapter\n", "")
+        only_ask = WEEK_REPLY.replace("    On-screen: Your next chapter\n", "").replace("20 s", "20 s · CONVERT")
+        # v13.17: the Season keyword is a CONVERT piece's; an untagged (ATTRACT / TRUST) piece is not read
+        self.assertIsNone(self.item(self.day0(("coach", "next"), ("machine", only_ask.replace(" · CONVERT", " · TRUST"))),
+                                    "each Week-1")["pass"])
         self.assertFails(self.day0(("coach", "next"), ("machine", only_ask)), "day0_shape",
                          'N1 carries YOUR WORD "chapter" only in the ask')
         in_ask_line = only_ask.replace("Comment CHAPTER and I'll send you the coffee script.",
@@ -2667,17 +2670,17 @@ class VG2RoundGraderTests(TempRepo):
         week = (f"{TAG}Week 1\nFri, Oct 16 · LinkedIn post\n```\nThe bank app is not a forecast.\nComment CHAPTER and "
                 "I'll send you the check.\n```\n\nMon, Oct 19 · the Monday Number (email)\n```\nSubject: minus 6\n"
                 "A new chapter can hide a bad client.\n```\nNEXT → ok")
+        tagged = week.replace("LinkedIn post\n", "LinkedIn post · CONVERT\n")       # v13.17: only a CONVERT piece is read
         en_report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", FILM_REPLY),
-                                           ("coach", "next"), ("machine", week)], suite="day0")
-        self.assertFails(en_report, "day0_shape", 'Fri, Oct 16 · LinkedIn post carries YOUR WORD "chapter" only in '
-                                                  "the ask")
+                                           ("coach", "next"), ("machine", tagged)], suite="day0")
+        self.assertFails(en_report, "day0_shape", 'carries YOUR WORD "chapter" only in the ask')
         run = graders.load_run(self.run_dir([("coach", "go"), ("machine", week)]), self.root)
         self.assertEqual([p.title for p in run.replies[0].pieces],
                          ["Fri, Oct 16 · LinkedIn post", "Mon, Oct 19 · the Monday Number (email)"])
 
     # -- G26: VN pieces carry the keyword in the body too; an ask's lead-in is part of the ask
     def test_g26_keyword_outside_the_ask_in_vn(self):
-        only_ask = self.week("N1 · Bài\n```\nMùng 8 Tết còn dư 40 bao lì xì.\nNhắn tôi chữ TUYỂN HOÀI, tôi gửi phiếu "
+        only_ask = self.week("N1 · Bài · CHUYỂN ĐỔI\n```\nMùng 8 Tết còn dư 40 bao lì xì.\nNhắn tôi chữ TUYỂN HOÀI, tôi gửi phiếu "
                              "việc.\n```")
         self.assertFails(self.vn(("coach", "ok"), ("machine", only_ask)), "day0_shape",
                          'N1 carries YOUR WORD "tuyển hoài" only in the ask')
@@ -2843,39 +2846,6 @@ class VG3RoundGraderTests(TempRepo):
         self.assertFails(self.vn(("coach", "ok"), ("machine", offer)), "I11", '"cam kết"')
         post = self.week("N1 · Bài\n```\nLãi suất cam kết 7%, anh chị yên tâm.\n```")
         self.assertFails(self.vn(("coach", "ok"), ("machine", post)), "I11", '"cam kết"')
-
-    # -- G30: FILM TODAY's script and caption carry YOUR WORD outside the ask, like each Week-1 piece
-    def test_g30_film_today_keyword_outside_the_ask(self):
-        name = "FILM TODAY carries YOUR WORD"
-        # Hạnh's shape: a blank line and "Caption (…):" end the parsed piece before its box; the caption is still read
-        labelled = VG_MAP.replace("    Caption:\n", "\n    Caption (đăng chữ thì dùng luôn khung này):\n")
-        report = self.vn(map_reply=labelled)
-        self.assertFails(report, "day0_shape", 'turn 4: QUAY HÔM NAY · dưới 30 giây carries YOUR WORD "tuyển hoài" '
-                                               "only in the ask (keyword once in the script or caption, plus the ask)")
-        caption = labelled.replace("Mùng 8 Tết tôi đứng", "Tuyển hoài mà không giữ được ai. Mùng 8 Tết tôi đứng")
-        self.assertIs(self.item(self.vn(map_reply=caption), "day0_shape", name)["pass"], True)
-        script = labelled.replace("Chữ trên màn hình: Còn dư 40 bao lì xì",
-                                  "Chữ trên màn hình: Tuyển hoài? Còn dư 40 bao")
-        self.assertIs(self.item(self.vn(map_reply=script), "day0_shape", name)["pass"], True)
-        gift = labelled.replace("    Muốn kết nhẹ hơn",
-                                "    Quà gửi anh chị (vừa một tin inbox):\n    ```\n"
-                                "    Mẫu phiếu việc cho ai đang tuyển hoài.\n    ```\n    Muốn kết nhẹ hơn")
-        self.assertIs(self.item(self.vn(map_reply=gift), "day0_shape", name)["pass"], False)   # the gift is not read
-        # "as text = first line + caption, one box": a box that opens with the caption label belongs to FILM TODAY
-        one_box = VG_MAP.replace("    Caption:\n    ```\n",
-                                 "\n    Đăng chữ thì dùng khung này:\n    ```\n"
-                                 "    Caption: Tuyển hoài mà không giữ được ai.\n")
-        self.assertIs(self.item(self.vn(map_reply=one_box), "day0_shape", name)["pass"], True)
-        # EN: a caption printed without a box is read to its paragraph's end
-        unboxed = FILM_REPLY.replace("    ```\n    Your next chapter starts with a coffee.\n", "    Coffee first.\n") \
-            .replace("    Comment CHAPTER and I'll send you the coffee script.\n    ```\n",
-                     "    Comment CHAPTER and I'll send you the coffee script.\n\n")
-        report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", unboxed)], suite="day0")
-        self.assertFails(report, "day0_shape", 'FILM TODAY · Short video · AT… carries YOUR WORD "chapter" only in the ask')
-        said = unboxed.replace("Coffee first.", "Your next chapter starts with a coffee.")
-        report = self.grade(GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok"), ("machine", said)], suite="day0")
-        self.assertIs(self.item(report, "day0_shape", name)["pass"], True)
-        self.assertIs(self.item(report, "day0_shape", "FILM TODAY: caption")["pass"], False)   # no box: still caught
 
     # -- founder after the VG3 retest: an on-time cut and long chunks make film-ready over budget a warning
     CHUNK_EN = " ".join(["We sat in the stairwell and I called the bank about payroll."] * 60)       # 720 words
@@ -3116,8 +3086,9 @@ class VG4RoundGraderTests(TempRepo):
         self.assertNotIn("NÓI GÌ", pieces[1].body)
         self.assertNotIn("Căn hộ", pieces[1].body)
         # Tuấn's N3: the keyword only in the ask, the card top's "tuyển hoài" no longer hides it
+        week = week.replace("20 giây\n", "20 giây · CHUYỂN ĐỔI\n", 1)             # v13.17: only a CONVERT piece is read
         report = self.vn(("coach", "ok"), ("machine", week))
-        self.assertFails(report, "day0_shape", 'turn 6: N3 carries YOUR WORD "tuyển hoài" only in the ask')
+        self.assertFails(report, "day0_shape", 'carries YOUR WORD "tuyển hoài" only in the ask')
         body = week.replace("Mua cái để che", "Tuyển hoài thì mua cái để che")
         self.assertIs(self.item(self.vn(("coach", "ok"), ("machine", body)), "day0_shape", "each Week-1")["pass"], True)
         # "Ai nhắn … · Tin trả lời inbox 1 (…)" is a label too, not talk to the coach (I15 reads talk)
@@ -3135,40 +3106,15 @@ class VG4RoundGraderTests(TempRepo):
         self.assertIn("Your next chapter or not", pieces[0].body)
         self.assertNotIn("Thanks for commenting", pieces[0].body)
 
-    # -- G36: FILM TODAY's text version (first line + caption) carries the keyword outside the ask on its own
-    def test_g36_film_today_text_version(self):
-        name = "FILM TODAY's text version"
-        # the review's consultant VN: the script carries "tuyển hoài" (G30 passes), the text post only in its ask
-        script = VG_MAP.replace("Chữ trên màn hình: Còn dư 40 bao lì xì", "Chữ trên màn hình: Tuyển hoài? Còn dư 40 bao")
+    # -- v13.17 (keyword table, §CM-CTA-BANK 2): FILM TODAY is a TRUST piece with its own comment word; the Season keyword
+    # is not required in its script, caption or text version (it was, G30/G36/G41)
+    def test_v1317_film_today_needs_no_season_keyword(self):
+        script = VG_MAP.replace("Chữ trên màn hình: Còn dư 40 bao lì xì", "Chữ trên màn hình: Còn dư 40 bao")
         report = self.vn(map_reply=script)
-        self.assertIs(self.item(report, "day0_shape", "FILM TODAY carries YOUR WORD")["pass"], True)
-        self.assertFails(report, "day0_shape", 'turn 4: FILM TODAY\'s text version carries YOUR WORD "tuyển hoài" only '
-                                               "in the ask (first line + caption")
-        # a box of its own under "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết:" is the text version
-        box = script.replace("    Muốn kết nhẹ hơn",
-                             "    Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết:\n    ```\n"
-                             "    Tôi tuyển hoài mà không giữ được ai, anh chủ quán nói vậy.\n"
-                             "    Anh chị nào cần thì comment TUYỂN HOÀI hay nhắn riêng, tôi gửi mẫu phiếu việc 1 trang.\n"
-                             "    ```\n    Muốn kết nhẹ hơn")
-        self.assertIs(self.item(self.vn(map_reply=box), "day0_shape", name)["pass"], True)
-        only_ask = box.replace("Tôi tuyển hoài mà không giữ được ai, anh chủ quán nói vậy.", "Anh chủ quán nói vậy.")
-        self.assertIs(self.item(self.vn(map_reply=only_ask), "day0_shape", name)["pass"], False)
-        # a caption labelled as the text post is the text version; its first line may carry the keyword
-        labelled = script.replace("    Caption:\n", "    Caption (đăng chữ thì dùng nguyên khung này):\n") \
-            .replace("Mùng 8 Tết tôi đứng ở cổng xưởng", "Tuyển hoài thì nhớ Mùng 8 Tết tôi đứng ở cổng xưởng")
-        self.assertIs(self.item(self.vn(map_reply=labelled), "day0_shape", name)["pass"], True)
-        # EN: no text box, so the first line + caption; the on-screen text is not posted as text
-        base = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok")]
-        self.assertIs(self.item(self.grade(base + [("machine", FILM_REPLY)], suite="day0"), "day0_shape",
-                                name)["pass"], True)
-        onscreen = FILM_REPLY.replace("On-screen: Coffee before resume", "On-screen: Your next chapter.") \
-            .replace("Your next chapter starts with a coffee.", "It starts with a coffee.")
-        report = self.grade(base + [("machine", onscreen)], suite="day0")
-        self.assertIs(self.item(report, "day0_shape", "FILM TODAY carries YOUR WORD")["pass"], True)
-        self.assertFails(report, "day0_shape", 'FILM TODAY\'s text version carries YOUR WORD "chapter" only in the ask')
-        first = onscreen.replace('First line: "I sent 63 applications and got 2 interviews."', 'First line: "A new chapter at 48."')
-        self.assertIs(self.item(self.grade(base + [("machine", first)], suite="day0"), "day0_shape", name)["pass"],
-                      True)
+        names = [i["item"] for i in self.inv(report, "day0_shape")["items"]]
+        self.assertFalse([n for n in names if n.startswith("FILM TODAY") and "carries YOUR WORD" in n], names)
+        self.assertFalse([n for n in names if "text version" in n], names)
+        self.assertTrue(any(n.startswith("FILM TODAY: caption") for n in names), names)
 
     # -- G37: vn_natural reads the pieces only (no card, dated notes or labels), a reprinted box once, and compares
     # with the posts the coach pasted
@@ -3336,54 +3282,6 @@ class VG5RoundGraderTests(TempRepo):
         self.assertPasses(self.vn(("coach", "ok"), ("machine", guess)), "I15")
         slip = guess.replace("Đúng không anh?", "Chị thấy đúng không?")
         self.assertFails(self.vn(("coach", "ok"), ("machine", slip)), "I15", 'pronoun "Chị" outside the pair anh–em')
-
-    # -- G41: FILM TODAY's caption box with no "Caption" label is the first copy box after the script's last line
-    ERIN_FILM = f'''
-        {TAG}Film today
-        FILM TODAY · under 30 s, say it from memory
-        On-screen: 63 applications. 2 interviews.
-        First line: "I sent 63 applications and got 2 interviews."
-        Beat 1: 24 years at HQ, out at 48.
-        Last line: "The coffee comes first."
-
-        ```
-        24 years at HQ and the portal still said no. Your next chapter starts with a coffee.
-        Comment CHAPTER and I'll send you the coffee script.
-        ```
-
-        Comment CHAPTER and I'll send you the coffee script. (quieter: say 'quiet')
-
-        ```
-        The coffee script (one page)
-        1. Ask for 20 minutes. Your next chapter starts there.
-        ```
-
-        Film it now, or post the caption as text.
-        NEXT → Say 'OK', or change a line.
-        '''
-
-    def test_g41_film_today_caption_box_without_a_label(self):
-        name = "FILM TODAY's text version"
-        base = GOOD[:3] + [("machine", MAP_REPLY), ("coach", "ok")]
-        film = textwrap.dedent(self.ERIN_FILM)
-        ok = self.grade(base + [("machine", film)], suite="day0")                   # Erin's item now runs
-        self.assertIs(self.item(ok, "day0_shape", name)["pass"], True)
-        # the caption carries the keyword only in its ask (the gift box below it does not count)
-        only_ask = film.replace("Your next chapter starts with a coffee.", "It starts with a coffee.")
-        report = self.grade(base + [("machine", only_ask)], suite="day0")
-        self.assertFails(report, "day0_shape", 'FILM TODAY\'s text version carries YOUR WORD "chapter" only in the ask')
-        # the script in a box of its own: the caption is the next box, the first line is read inside the script box
-        boxed = only_ask.replace("On-screen:", "```\nOn-screen:").replace('Last line: "The coffee comes first."\n',
-                                                                         'Last line: "The coffee comes first."\n```\n')
-        self.assertIs(self.item(self.grade(base + [("machine", boxed)], suite="day0"), "day0_shape", name)["pass"],
-                      False)
-        first = boxed.replace('First line: "I sent 63 applications and got 2 interviews."', 'First line: "A new chapter at 48."')
-        self.assertIs(self.item(self.grade(base + [("machine", first)], suite="day0"), "day0_shape", name)["pass"],
-                      True)
-        # no copy box at all: the item still does not run
-        bare = (f"{TAG}Film today\nFILM TODAY · under 30 s\nOn-screen: 63 applications.\nFirst line: \"A new chapter.\"\n"
-                "Last line: \"Coffee first.\"\nFilm it now, or post the caption as text.\nNEXT → Say 'OK'.")
-        self.assertIsNone(self.item(self.grade(base + [("machine", bare)], suite="day0"), "day0_shape", name)["pass"])
 
     # -- G42: an identical sentence counts once in the particle share
     def test_g42_an_identical_sentence_counts_once(self):
@@ -6872,7 +6770,7 @@ class A3AuditGraderTests(StrategyFirstBase):
         self.assertEqual(strat["details"]["week_pieces"], 5)
         self.assertEqual(strat["details"]["week_types"], {"attract": 2, "trust": 2, "convert": 1})
         self.assertIs(self.item(report, "day0_strategy", "Week 1 covers")["pass"], True)
-        self.assertIsNotNone(self.item(report, "day0_shape", "each Week-1 piece carries YOUR WORD")["pass"])
+        self.item(report, "day0_shape", "each Week-1 CONVERT piece carries YOUR WORD")      # v13.17: CONVERT pieces only
         no_convert = [p.replace("CONVERT", "TRUST") for p in A3_PIECES]
         self.assertFails(self.report(self.v135(pieces=no_convert)), "day0_strategy", "Week 1 has no CONVERT piece")
 
@@ -7483,12 +7381,26 @@ class V1313RealLinesTests(TempRepo):
     def test_week_one_hours_are_the_coachs_pick_not_the_recommended_option(self):
         run = self.load(("coach", SALES_C13), ("machine", SALES_M13), ("coach", SALES_C14))
         hours, _, where = graders.week1_hours(run)
-        self.assertEqual(hours, 3.5)                       # "3 tiếng rưỡi nha em", the strategy recommended B (2,5 tiếng)
+        self.assertEqual(hours, 3.5)                       # "3 tiếng rưỡi nha em", the strategy recommended B (2,5 tiếng); "dưới 2 tiếng" reads just under 2 (v13.17)
         self.assertIn("coach's pick", where)
-        for said, want in (("C", 3.5), ("chọn C nha", 3.5), ("A", 2.0), ("OK", 2.5), ("2 tiếng rưỡi", 2.5), ("ba tiếng", 3.0)):
+        for said, want in (("C", 3.5), ("chọn C nha", 3.5), ("A", 1.98), ("OK", 2.5), ("2 tiếng rưỡi", 2.5), ("ba tiếng", 3.0)):
             with self.subTest(said=said):
                 run = self.load(("coach", SALES_C13), ("machine", SALES_M13), ("coach", said))
                 self.assertEqual(graders.week1_hours(run)[0], want)
+
+    # ---- v13.17 hours bands: Light under 2 h, Lean 2-3 h, Standard over 3 h
+    def test_hours_bands_v1317(self):
+        def hrs(text):
+            return graders._hours_in(text, graders.HOURS_TEXT_RE.search(text))
+        self.assertEqual((hrs("2 hours"), hrs("3 hours"), hrs("3,5 giờ")), (2.0, 3.0, 3.5))
+        self.assertLess(hrs("under 2 hours"), 2.0)
+        self.assertLess(hrs("dưới 2 tiếng"), 2.0)
+        self.assertGreater(hrs("Over 3 hours"), 3.01)
+        self.assertGreater(hrs("trên 3 giờ"), 3.01)
+        bands = graders.WEEK1_DEFAULTS["filmed_by_hours"]
+        filmed = lambda h: next(n for lo, hi, n in bands if lo <= h < hi)
+        self.assertEqual([filmed(1.98), filmed(2.0), filmed(3.0), filmed(3.02), filmed(5.0)], [2, 3, 3, 4, 5])
+        self.assertIn("dig.method", graders.DIG_SLOTS)
 
     # ---- the comment word
     def test_comment_word_comes_from_the_cta_slot_not_an_address_phrase(self):

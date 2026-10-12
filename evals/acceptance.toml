@@ -73,8 +73,8 @@ dump_cut_words_vn = 1200                  # ~1,200 tiếng, pasted posts left ou
 # No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
 session_max_minutes = 45                  # the whole Day 0 (was 40, with the strategy inside the first 20 minutes)
 session_max_turns = 10                    # the kit: "<= 10 coach turns + the interview"; the interview's answers are added (above)
-session_max_turns_vn = 11                 # VN adds the xưng hô turn, as map_max_turns_vn does (the VN block: "coach
-                                          #   nhắn <= 11 lượt (chưa kể hỏi thêm)"; review retest-vg5-g6 G43)
+session_max_turns_vn = 11                 # VN adds the xưng hô turn, as map_max_turns_vn does; since v13.17 the VN block reads like
+                                          #   EN: "coach nhắn ≤10 lượt (trừ xưng hô, hỏi thêm)" = 10 + the xưng hô turn (G43)
 detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
 save_gates = 0                            # saving never gates anything: the card never blocks (v13.5: the card and the Week-1 table come
                                           #   together on the 'next' after FILM TODAY; Week 1's pieces follow, one per 'next')
@@ -153,7 +153,8 @@ lean_max_minutes = 60
 talk_max_minutes = 15
 on_map_min = 0.90                         # over 4 simulated weeks
 why_available_rate = 1.0                  # a WHY is stored for every piece and printed on "why?" (none under a Ready piece)
-keyword_exactly_once_rate = 1.0           # the CTA keyword once in every body, plus the ask (plan.kit-week 4; v13.10 counts the CTA
+keyword_exactly_once_rate = 1.0           # v13.17: the Season keyword once in the body OR caption (never both), plus the ask, on CONVERT and gift
+                                          #   pieces only; ATTRACT/TRUST carry their own comment word {WORD} once, in the ask (§CM-CTA-BANK 2; v13.10 counts the CTA
                                           #   form only, a topic mention is free)
 own_words_min = 0.70                      # re-say shorts vs the coach's Talk transcript
 hook_stem_window = 10                     # no repeated stem in 10 consecutive pieces
@@ -321,9 +322,10 @@ needs_words_max = 20                      # fail: a "Needs you" / "Cần" line o
 [week1]                                   # check week1_plan (graders.py; v13.9 / v13.10, audit a3 M3; v13.12 a post a day)
 week_posts = 7                            # v13.12 (founder 11 Oct): the Week-1 table holds 7 rows, one a day (day 1 = Day 0's
                                           #   piece), whatever the hours; the DM replies, "ask 3" and the gift are not counted
-filmed_by_hours = [[0, 2, 2], [2, 3.25, 3], [3.25, 4.5, 4], [4.5, 99, 5]]   # [from h, to h, filmed at most] (§CM-WEEK 2,
-                                          #   §CM-CALENDAR 2: under 2 h or no hours Light 2 filmed + 5 written ≈1¾ h · ≈2½ h
-                                          #   Lean 3 · ≈3½ h Standard 4 · ≈5 h 5; 8 h+ a long video + its cuts); fewer is fine
+filmed_by_hours = [[0, 2, 2], [2, 3.01, 3], [3.01, 4.5, 4], [4.5, 99, 5]]   # [from h, to h, filmed at most] (§CM-WEEK 2,
+                                          #   §CM-CALENDAR 2, v13.17 bands: under 2 h or no hours Light 2 filmed + 5 written · 2–3 h
+                                          #   Lean 3 · over 3 h Standard 4 · 5 h+ 5; 8 h+ a long video + its cuts; 3 h is Lean, so
+                                          #   the Lean band ends at 3.01); fewer is fine
 tier_filmed = { light = 2, lean = 3, standard = 4 }  # with no hours on the card or the strategy: the card's tier=
 idea_overlap = 0.6                        # two "Idea, hook" cells (or FILM TODAY's first line and a Week-1 idea) sharing this share of
 idea_min_shared = 2                       #   the shorter one's content words, and at least 2 of them, are one idea twice

@@ -88,8 +88,8 @@
 #   cta.default "Comment {WORD} là mình gửi {payoff}." in the coach's audience address,
 #   with "(ngại xin comment thì gõ 'nhẹ')"; the quà itself (one inbox message long, written in full) in
 #   its own copy box under the caption; then film.now_or_text "Quay luôn bây giờ, hoặc đăng phần chữ làm
-#   bài viết." The keyword sits once in the words, plus the ask (§CM-WEEK 4 "Từ khoá 1 lần trong bài + lời
-#   mời"). Nothing under it: no dòng kiểm, tick or VÌ SAO (fmt-short.kit-video-short 7), no "đọc to câu
+#   bài viết." v13.17: the comment word {WORD} sits once, in the ask; the Season keyword is for CONVERT and gift pieces
+#   (once in the body or the caption, plus the ask; BANKS §CM-CTA-BANK 2, topic mentions don't count). Nothing under it: no dòng kiểm, tick or VÌ SAO (fmt-short.kit-video-short 7), no "đọc to câu
 #   đầu", "từ khoá đã có", "không có câu hứa rủi ro" or "ai comment cũng nhận quà" line (R9), no old
 #   fallback wording ("đăng caption dạng chữ"). The quiet ask and film.now_or_text are statements: cases
 #   forbid a "?" in their sentence (I5: map.ok is the reply's one question). QUAY HÔM NAY cases assert the

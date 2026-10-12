@@ -197,11 +197,12 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "On Friday 'next' asks for the week's numbers before anything else"
-context = "Week 1, Friday 16 Oct 2026, 7:05 am, Claude Free. Brand Card v1 present (persona default: keyword RECORD YEAR; email-first). All Week-1 pieces are posted; no numbers given yet this week."
+context = "Week 1, Friday 16 Oct 2026, 7:05 am, Claude Free. Brand Card v1 present (persona default: keyword RECORD YEAR; email-first). Monday to Thursday are posted; Friday's piece (N5, the email) was printed on Day 0 and waits; no numbers given yet this week."
 input = '''next'''
 contains = []
 not_contains = []
 regex = [
+  '''(?im)^\W*Today\b[^\n]*\bN\d+\b|^[ \t]*(?:```|~~~)''',
   '''(?i)\bkeyword comments?\b|\brecord year\b''',
   '''(?i)\bcalls?\b''',
   '''(?i)\bsales?\b''',
@@ -217,7 +218,7 @@ invariants = ["I1", "I2", "I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """route: review (route set). UX §3.1 Friday: 'my numbers', spoken: keyword comments · DMs/adds · calls · sales + best post; screenshots and views optional. QA §4 weekly-review ticks replace the stats prompt. On Friday 'next' asks for these first. Persona quits on a request for LinkedIn analytics screenshots."""
+notes = """v13.17 (Friday has a post, §CM-TODAY 3): Friday 'next' first gives today's piece (already printed on Day 0 or after the Talk: ONE 'Today: N5 · Fri …' line, never the script again), then, with no numbers yet, the numbers ask as the one ask. route: review (route set). UX §3.1 Friday: 'my numbers', spoken: keyword comments · DMs/adds · calls · sales + best post; screenshots and views optional. QA §4 weekly-review ticks replace the stats prompt. On Friday 'next' asks for these first. Persona quits on a request for LinkedIn analytics screenshots."""
 
 [[case]]
 id = "router.en.005"
@@ -1556,11 +1557,12 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "'nxt' (typo) on Friday fires the same row as 'next': the numbers prompt"
-context = "Week 1, Friday 16 Oct 2026, 2:40 pm in her car between site visits, iPhone. Brand Card v1 present (persona default: keyword NOTHING ROOM). The Week-1 pieces went out Monday to Thursday (Bree scheduled them)."
+context = "Week 1, Friday 16 Oct 2026, 2:40 pm in her car between site visits, iPhone. Brand Card v1 present (persona default: keyword NOTHING ROOM). The Week-1 pieces went out Monday to Thursday (Bree scheduled them); Friday's piece (N5) was printed on Day 0 and waits."
 input = '''nxt'''
 contains = []
 not_contains = []
 regex = [
+  '''(?im)^\W*Today\b[^\n]*\bN\d+\b|^[ \t]*(?:```|~~~)''',
   '''(?i)\b(nothing room|keyword|comments?)\b''',
   '''(?i)\b(calls?|sales?|DMs?|replies)\b''',
   '''NEXT →[^\n]*\s*\Z''',
@@ -1571,10 +1573,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I2", "I5"]
-max_words = 90
+max_words = 110
 max_chars = 0
 max_questions = 1
-notes = """route: review (trigger set). A typo of 'next' must fire the same router row (UX §5.12 synonyms); on Friday it asks for the numbers by voice or typing (UX §3.1: keyword comments · DMs · calls · sales + best post; screenshots optional). Short: she is in her car."""
+notes = """v13.17 (Friday has a post, §CM-TODAY 3): Friday 'next' first gives today's piece (already printed on Day 0 or after the Talk: ONE 'Today: N5 · Fri …' line, never the script again), then, with no numbers yet, the numbers ask as the one ask. route: review (trigger set). A typo of 'next' must fire the same router row (UX §5.12 synonyms); on Friday it asks for the numbers by voice or typing (UX §3.1: keyword comments · DMs · calls · sales + best post; screenshots optional). Short: she is in her car."""
 
 [[case]]
 id = "router.en.054"

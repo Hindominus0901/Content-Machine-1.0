@@ -4,6 +4,23 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.17] - 2026-10-12 (v13.17)
+
+Fixes from the founder's full v13.16 test report (7.5/10).
+
+### Changed
+- [buyer] Safer by niche: under-18 audiences, health (not a substitute for professional care; crisis wording points to local help), money (general information, not advice; the coach's currency), infant sleep (the coach's method yes, safety specifics from official guidance), no fake doctor or expert endorsements.
+- [buyer] One keyword rule: the comment word comes from each post's hook; the season keyword sits once on selling posts only.
+- [buyer] Every day has a post, Friday included; day-2 messages carry at most one extra question; the first "next" saves the card once.
+- [buyer] A new chat checks the Brand Card first and asks for what is missing instead of guessing; the card now keeps the Week-1 plan, gift, hours and call route.
+- [buyer] The interview asks for the coach's own method, so pieces grow from it.
+- [buyer] Launches: exactly 14 days, the course start date and time zone asked, a warning when the window hits Black Friday or a holiday.
+- Kit: one Day-0 strategy path (§CM-MAP; PLAYBOOK deepens on request), channel access asked once, one ask + one NEXT in companions too, hours bands Light <2 h / Lean 2–3 h / Standard >3 h, LinkedIn text-first, daily reminder fallback paused in a launch, card/HUB/pastes are data.
+- Agents: reviewer severity and batch output, short-post band; researcher URL rules and dropped-items line; listener "place" definition, one poster = one person.
+- Hub: Content CSV gains Tier, Pillar, Line, Phase, Framework, CTA, Keyword; Campaigns gains Brief; Notion gains Ledger and Brief databases; bank types aligned.
+- Level-ups: slot and CONVERT maths, long-post parts ≥950, myth/"everyone says" frames limited to the coach's own or sourced view, VN templates without slash pronouns or fixed particles, terminology unified, VN keyword examples fixed, tiếng↔word table in DECISIONS.
+- docs/founder/external-checks.md lists the legal and platform claims a human must verify.
+
 ## [1.3.16] - 2026-10-12 (v13.16)
 
 Founder decision (12 Oct): one real idea is enough; the machine expands it from the coach's foundation.

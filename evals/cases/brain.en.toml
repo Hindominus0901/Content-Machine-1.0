@@ -99,7 +99,10 @@ regex = [
   '''(?m)^\s*date:\s*20\d\d-\d\d-\d\d\b''',
   '''(?m)^\s*edition:\s*en\b''',
   '''(?m)^\s*pack_version:\s*\S''',
-  '''(?m)^\s*progress:\s*\S''',
+  '''(?m)^\s*progress:\s*(day0|w\d+d\d)\b''',
+  '''(?m)^\s*gift:\s*\S''',
+  '''(?m)^\s*hours:\s*\S''',
+  '''(?m)^\s*week1:\s*\S''',
   '''(?m)^\s*who:\s*\S''',
   '''(?m)^\s*their_words:\s*\S''',
   '''(?m)^\s*promise:\s*\S''',
@@ -289,15 +292,15 @@ id = "brain.en.007"
 kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0"]
-title = "Dates are worked out, not guessed: plan_start is the day after Day 0 (a Monday here); the 4-week try ends in week 4; the week line matches the talk day"
-context = "Day 0 is Sunday 2026-10-11, 8:45 pm Eastern (persona.toml day0), iPhone, ChatGPT Plus, persona default (the Map on screen with FILM TODAY under it: dads with a desk job; keyword KEEP UP; founding small group at his own '$249?' guess). Talk day was never asked (a guess, named once above Week 1). Week 1 runs Mon 2026-10-12 to Sun 2026-10-18. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
+title = "Dates are worked out, not guessed: plan_start is Day 0 itself (a Sunday here); the 4-week try ends in week 4; the week line matches the talk day"
+context = "Day 0 is Sunday 2026-10-11, 8:45 pm Eastern (persona.toml day0), iPhone, ChatGPT Plus, persona default (the Map on screen with FILM TODAY under it: dads with a desk job; keyword KEEP UP; founding small group at his own '$249?' guess). Talk day was never asked (a guess, named once above Week 1). Week 1 runs Sun 2026-10-11 (FILM TODAY, day 1) to Sat 2026-10-17. Turn 1 answers it and gets Week 1, unasked; turn 2 answers the next reply; Day 0's last reply prints the card."
 input = '''[turn 1] yep. filming it in the garage tomorrow before work
 [turn 2] ok'''
 contains = []
 not_contains = []
 regex = [
   '''(?m)^\s*date:\s*2026-10-11\b''',
-  '''(?m)^\s*plan_start:\s*2026-10-12\b''',
+  '''(?m)^\s*plan_start:\s*2026-10-11\b''',
   '''(?ms)^\s*talk_day:\s*(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b.*?^\s*week:[^\n]*\b\1''',
 ]
 not_regex = [
@@ -309,7 +312,7 @@ invariants = ["I5"]
 max_words = 0
 max_chars = 0
 max_questions = 1
-notes = """scope: transcript. brand-card.toml: plan_start = 'the day after Day 0; week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1' (brain.kit-print 3, G1 K4); Day 0 is a Sunday, so plan_start is Monday 2026-10-12; (trial_ends was dropped from the card in v13.11). A 90-day date here would be the old lock leaking into the card. wf15 S3: the week line (talk day · film day · numbers Fri) left the visible top for the machine block; it names the same day as talk_day (talk_day comes before week in the block's order)."""
+notes = """scope: transcript. v13.17 (founder test C2): plan_start = Day 0's date, Week 1 counted from today (brain.kit-print 3, §CM-MEMORY 7; it was 'the day after Day 0', which made week 2 skip a day); week n = 7-day blocks from it, ((weeks since plan_start) mod 4) + 1; Day 0 is Sunday 2026-10-11, so plan_start is 2026-10-11; (trial_ends was dropped from the card in v13.11). A 90-day date here would be the old lock leaking into the card. wf15 S3: the week line (talk day · film day · numbers Fri) left the visible top for the machine block; it names the same day as talk_day (talk_day comes before week in the block's order)."""
 
 [[case]]
 id = "brain.en.008"

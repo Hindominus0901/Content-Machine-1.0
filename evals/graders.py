@@ -349,6 +349,7 @@ MAP_STEP_RE = re.compile(r"\bmap\b|bản đồ|thông điệp", re.I)
 STRATEGY_PART_STEP_RE = re.compile(r"(?<!\w)(?:bước|step)\s+\d+\s*(?:/|of|trên)\s*\d+(?!\w)", re.I)
 STRATEGY_STEP_RE = re.compile(r"\bstrateg(?:y|ies)\b|chiến lược", re.I)
 STEP_COUNTER_RE = re.compile(r"(?<!\w)\d+\s*(?:/|of|trên)\s*\d+(?!\w)", re.I)      # "2/3"
+CONVERT_TITLE_RE = re.compile(r"(?<!\w)(?:convert|chuyen doi)(?!\w)")        # a CONVERT piece's title tag (folded text)
 FILM_STEP_RE = re.compile(r"\bfilm\b|(?<!\w)quay(?!\w)|\bpost today\b|(?<!\w)đăng hôm nay(?!\w)", re.I)  # v13.11: text-first coaches get POST TODAY / ĐĂNG HÔM NAY
 CARD_STEP_RE = re.compile(r"\bbrand card\b|\bcard\b|(?<!\w)thẻ(?!\w)", re.I)
 OVERLAP_N = 8
@@ -1809,7 +1810,8 @@ def reply_decisions(r: Reply, matcher: Matcher, topics=()) -> dict[str, str]:
     return out
 
 
-# An A/B/C choice (v13.1: "Channels I read for you: A) {theirs} B) {found} C) type others", one marked "(recommended)"): a run
+# An A/B/C choice (v13.1: "Hours a week: A) … B) … C) …", one marked "(recommended)"; since v13.17 the channels are no A/B/C, their
+# access is asked once in the interview, §CM-DIG): a run
 # of "A)" "B)" ["C)"] markers, on one line or on the lines under each other. "(A)", "(a)" and "A," are no markers.
 ABC_MARK_RE = re.compile(r"(?<![\w/(])([A-C])\)")
 
@@ -4770,7 +4772,7 @@ DIG_REPLY_MAX_WORDS = 60         # a dig reply is a tag, a question and a NEXT l
 
 def dig_questions(run: Run, before: int) -> list[Reply]:
     """The machine replies before transcript index `before` that ask one of §CM-DIG's story-first questions (strings
-    dig.story, dig.words, dig.offer, dig.proof, dig.stance, dig.buyer, dig.find, dig.channels, dig.goal; since 7 Oct night the
+    dig.story, dig.words, dig.offer, dig.method, dig.proof, dig.stance, dig.buyer, dig.find, dig.channels, dig.goal; since 7 Oct night the
     interview about the coach's side). The machine adapts the line to the client in hand ("Lúc mới tìm tới bạn, chị coach đó nói gì?" for "Lần đầu nhắn cho bạn, họ nói gì?"), so a reply counts when
     it asks something and holds at least DIG_MATCH_MIN of a dig string's words, in a reply of at most
     DIG_REPLY_MAX_WORDS words of talk. Each is one coach turn the dig added before the Map (review retest-ft1 fix 10)."""
@@ -4975,10 +4977,10 @@ def check_day0(run: Run) -> dict:
 # The interview's questions (strings dig.*) and the slots each one fills. A question that holds DIG_MATCH_MIN of a dig
 # string's words is that question: the machine adapts the line to the client in hand.
 # v13.1 (9 Oct 2026, one ask per question): dig.find asks how clients find them (and where they post), dig.channels is its
-# own question (the 2-3 channels in their field), dig.goal asks the goal only; the hours a week are no interview question
+# own question (the 2-3 channels in their field), dig.method (v13.17) asks their steps, dig.goal asks the goal only; the hours a week are no interview question
 # any more, they come as the strategy's A/B/C (§CM-MAP 4).
 DIG_SLOTS = {"dig.buyer": ("who",), "dig.offer": ("offer",), "dig.proof": ("result",), "dig.find": ("find", "platforms"),
-             "dig.channels": ("channels",), "dig.goal": ("goal",), "dig.stance": ("stance",), "dig.story": ("story",),
+             "dig.channels": ("channels",), "dig.method": ("method",), "dig.goal": ("goal",), "dig.stance": ("stance",), "dig.story": ("story",),
              "dig.words": ("words",)}
 # The coach stops the interview ("enough", "đủ rồi", "just make it"): the rest is guessed, never a client's words or result.
 ENOUGH_RE = re.compile(r"\benough\b|\bjust make it\b|\btoo many questions\b|\bstop asking\b|\bno more questions\b"
@@ -6375,10 +6377,9 @@ def check_day0_shape(run: Run) -> dict:
     - Week 1 carries an email (an email or newsletter piece, or a subject line) when the coach named a list (VN also
       by its size, "email thì có 250 người", or the card's "list_size: email 250 · …"; G38); in VN, a list_size that
       counts Zalo contacts is a Zalo list, and a Zalo message (or an email) is its piece;
-    - each public Week-1 piece carries YOUR WORD outside its ask sentence (§CM-WEEK 4 "keyword once in the body, plus
-      the ask"; EN and VN), and so does FILM TODAY's script and caption (film_today_piece; review retest-vg3-g4 G30),
-      and, on its own, FILM TODAY's text version, first line + caption (film_text_version; review retest-vg4-g5 G36;
-      a caption box with no label is the first box after the script's last line, retest-vg5-g6 G41);
+    - each public Week-1 CONVERT piece (title tag CONVERT / CHUYỂN ĐỔI) carries YOUR WORD, the Season keyword, outside
+      its ask sentence (v13.17 keyword table, §CM-CTA-BANK 2: once in the body or the caption, plus the ask; EN and VN);
+      ATTRACT, TRUST and FILM TODAY are not required to carry it (their ask is the piece's own comment word);
     - the card top (every line from card.title or card.visible.what to card.machine.heading; without the heading,
       the title and .what / .how lines) ≤ [day0] brand_card_visible_max_chars, and outside the copy box;
     - the whole card (the top, then the machine block) ≤ platform/targets.toml [budgets.brand_card];
@@ -6511,8 +6512,10 @@ def check_day0_shape(run: Run) -> dict:
             ev.append(f"{_turn(week[0])}: the coach has a Zalo list, and Week 1 has no Zalo message or email")
     item("Week 1 has an email when the coach named a list", ev, ran=(named or zalo_list) and bool(week))
 
-    # each public Week-1 piece carries YOUR WORD outside its ask (acceptance [week] keyword_exactly_once_rate; EN and
-    # VN since review VG2 G26)
+    # v13.17 (§CM-CTA-BANK 2 keyword table): the Season keyword (YOUR WORD) is for CONVERT and gift pieces only, once in the
+    # body OR the caption plus the ask, and is never required on ATTRACT or TRUST (their ask is the piece's own comment
+    # word {WORD}); so FILM TODAY (a TRUST piece) and the other tiers are not read here, and a topic mention of the
+    # keyword's words does not count (keyword_outside_ask counts the capitalised or quoted ask form only in VN).
     ev, checked = [], 0
     own_ask = [ck.plain_line(run.strings.get(k, "")).casefold() for k in ("message.label.side_door",
                                                                            "message.label.off_map")]
@@ -6520,31 +6523,15 @@ def check_day0_shape(run: Run) -> dict:
         c0, c1 = card_span(run, r)
         for p in r.pieces:
             if not _public_piece(p) or c0 <= p.start < c1 or any(x and x in p.title.casefold() for x in own_ask) \
-                    or FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title)):
-                continue                         # a side-door or off-map piece asks for its own thing; FILM TODAY has its own item
+                    or FILM_STEP_RE.match(re.sub(r"^[\W\d_]+", "", p.title)) \
+                    or not CONVERT_TITLE_RE.search(ck.fold(p.title)):
+                continue                         # a side-door or off-map piece asks for its own thing; only CONVERT carries the season keyword
             checked += 1
             if not _keyword_outside_ask(p, word, run.lang):
                 where = "only in the ask" if ck.keyword_count(p.body, word) else "nowhere"
                 ev.append(f'{_turn(r)}: {_piece_name(p) or "a piece"} carries YOUR WORD "{word}" {where} '
-                          "(keyword once in the body, plus the ask)")
-    item("each Week-1 piece carries YOUR WORD outside its ask", ev, ran=bool(checked))
-
-    # FILM TODAY's script and caption carry YOUR WORD outside the ask too (review retest-vg3-g4 G30)
-    ev, piece = [], film_today_piece(run, film) if film and word else None
-    if piece is not None and not _keyword_outside_ask(piece, word, run.lang):
-        where = "only in the ask" if ck.keyword_count(piece.body, word) else "nowhere"
-        ev.append(f'{_turn(film)}: {_piece_name(piece) or "FILM TODAY"} carries YOUR WORD "{word}" {where} '
-                  "(keyword once in the script or caption, plus the ask)")
-    item("FILM TODAY carries YOUR WORD outside its ask", ev, ran=piece is not None)
-
-    # FILM TODAY's text version (first line + caption) carries it on its own: the coach posts it without the script
-    # (§CM-FORMATS 7, K40 / VK-34; review retest-vg4-g5 G36)
-    ev, text = [], film_text_version(run, film) if film and word else None
-    if text is not None and not _keyword_outside_ask(Piece(film.turn, 0, 0, "", "", text), word, run.lang):
-        where = "only in the ask" if ck.keyword_count(text, word) else "nowhere"
-        ev.append(f'{_turn(film)}: FILM TODAY\'s text version carries YOUR WORD "{word}" {where} (first line + '
-                  "caption, posted without the script: keyword once outside the ask)")
-    item("FILM TODAY's text version carries YOUR WORD outside its ask", ev, ran=text is not None)
+                          "(a CONVERT piece: the Season keyword once in the body or caption, plus the ask)")
+    item("each Week-1 CONVERT piece carries YOUR WORD outside its ask", ev, ran=bool(checked))
 
     # the card: its top ≤ 500 characters and outside the copy box; the whole card ≤ its budget; the save line
     limit = int(day0.get("brand_card_visible_max_chars", CARD_VISIBLE_MAX_CHARS))
@@ -8859,11 +8846,11 @@ def check_style(run: Run) -> dict:
 
 # ---------------------------------------------------------------- week1_plan (v13.9 / v13.10; audit a3 M3)
 # v13.12 (founder 11 Oct): Week 1 posts every day, 7 rows one a day (day 1 = Day 0's piece), whatever the hours; the
-# hours set how many are filmed (§CM-WEEK 2, §CM-CALENDAR 2: under 2 h or no hours given Light 2 filmed ≈1¾ h, ≈2½ h
-# Lean 3, ≈3½ h Standard 4, ≈5 h+ 5); the chat table carries "Idea, hook" and no idea twice (the idea ledger,
+# hours set how many are filmed (§CM-WEEK 2, §CM-CALENDAR 2, v13.17 bands: under 2 h or no hours given Light 2 filmed,
+# 2–3 h Lean 3, over 3 h Standard 4, 5 h+ 5); the chat table carries "Idea, hook" and no idea twice (the idea ledger,
 # §CM-HUMANIZE); FILM TODAY's one idea is not a later Week-1 piece's; Week 1's CONVERT asks for replies, never a price,
 # a call or an offer (no offer before week 2 outside a launch, v13.9). Thresholds in acceptance.toml [week1].
-WEEK1_DEFAULTS = {"week_posts": 7, "filmed_by_hours": [[0, 2, 2], [2, 3.25, 3], [3.25, 4.5, 4], [4.5, 99, 5]],
+WEEK1_DEFAULTS = {"week_posts": 7, "filmed_by_hours": [[0, 2, 2], [2, 3.01, 3], [3.01, 4.5, 4], [4.5, 99, 5]],
                   "tier_filmed": {"light": 2, "lean": 3, "standard": 4}, "idea_overlap": 0.6, "idea_min_shared": 2,
                   "idea_max_posts": 3}
 _HOURS_NUM = r"(\d{1,2}(?:[.,]\d)?\s*½?|½)"
@@ -8892,6 +8879,22 @@ def _hours(text: str) -> float | None:
     return v if 0 < v <= 40 else None
 
 
+OVER_HOURS_RE = re.compile(r"(?:\bover|\bmore than|\babove|\btrên|\bhơn|>)\s*$", re.I)
+
+
+UNDER_HOURS_RE = re.compile(r"(?:\bunder|\bless than|\bbelow|\bdưới|\bít hơn|<)\s*$", re.I)
+
+
+def _hours_in(text: str, m: re.Match) -> float | None:
+    """The hours a HOURS_TEXT_RE match names; "over 3 hours" / "trên 3 giờ" (the Standard band, v13.17) is just above 3, "under 2 hours" just below 2."""
+    v = _hours(m.group(1))
+    if v is not None and OVER_HOURS_RE.search(text[:m.start()]):
+        v += 0.02
+    elif v is not None and UNDER_HOURS_RE.search(text[:m.start()]):
+        v -= 0.02
+    return v
+
+
 _NUM_WORDS = {"một": 1, "hai": 2, "ba": 3, "bốn": 4, "năm": 5, "sáu": 6, "bảy": 7, "tám": 8,
               "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6}
 # Hours as a coach says them: "3 tiếng rưỡi", "ba tiếng rưỡi", "2,5 tiếng", "3 hours", "three and a half hours".
@@ -8915,7 +8918,7 @@ def _said_hours(text: str) -> float | None:
 
 def chosen_hours(run: Run) -> tuple[float, str] | None:
     """(hours, where) the coach picked from the strategy's hours options (v13.13: "SỐ GIỜ MỖI TUẦN: A) dưới 2 tiếng …
-    B) 2,5 tiếng … (máy khuyên) C) 3,5 tiếng …"): the coach's next turn names the hours ("3 tiếng rưỡi nha") or a letter
+    B) 2–3 giờ … (máy khuyên) C) trên 3 giờ …"): the coach's next turn names the hours ("3 tiếng rưỡi nha") or a letter
     ("C"); "OK" or silence takes the marked option. None without an options line with hours."""
     rec = ck.plain_line(str(run.strings.get("options.recommended", "(recommended)"))).casefold()
     for r in strategy_steps(run):
@@ -8923,7 +8926,7 @@ def chosen_hours(run: Run) -> tuple[float, str] | None:
             if ln.block or not ln.plain or not WEEK_WORD_RE.search(ln.plain):
                 continue
             opts = {m.group(1): m.group(2) for m in HOURS_OPTION_RE.finditer(ln.plain)}
-            vals = {k: _hours(m.group(1)) for k, v in opts.items() for m in [HOURS_TEXT_RE.search(v)] if m}
+            vals = {k: _hours_in(v, m) for k, v in opts.items() for m in [HOURS_TEXT_RE.search(v)] if m}
             vals = {k: v for k, v in vals.items() if v is not None}
             if len(vals) < 2:
                 continue
@@ -8970,7 +8973,7 @@ def week1_hours(run: Run) -> tuple[float | None, str, str]:
             if ln.block or not ln.plain or not WEEK_WORD_RE.search(ln.plain):
                 continue
             for m in HOURS_TEXT_RE.finditer(ln.plain):
-                v = _hours(m.group(1))
+                v = _hours_in(ln.plain, m)
                 if v is None:
                     continue
                 values.append(v)

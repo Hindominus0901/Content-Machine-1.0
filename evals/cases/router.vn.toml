@@ -257,11 +257,12 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "On Friday 'tiếp' asks for the week's spoken numbers before anything else"
-context = "Week 1, Friday 16 Oct 2026, 11:50 am on a site in Thanh Khê, old Samsung, ChatGPT Free. Brand Card v1 present (persona default: keyword PHÁT SINH, quà danh sách 7 chỗ hay phát sinh; pair anh–em). Thảo posted the Week-1 pieces Monday to Thursday; no numbers given yet this week."
+context = "Week 1, Friday 16 Oct 2026, 11:50 am on a site in Thanh Khê, old Samsung, ChatGPT Free. Brand Card v1 present (persona default: keyword PHÁT SINH, quà danh sách 7 chỗ hay phát sinh; pair anh–em). Thảo posted the Week-1 pieces Monday to Thursday; bài thứ Sáu (N5) đã in từ Ngày 0, chưa đăng; no numbers given yet this week."
 input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b|^[ \t]*(?:```|~~~)''',
   '''(?i)Số liệu thứ Sáu, 3 phút''',
   '''(?i)phát sinh|từ kh(?:óa|oá)|bình luận|comment''',
   '''(?i)khảo sát|(?<!\w)hẹn(?!\w)|(?<!\w)gọi(?!\w)''',
@@ -275,10 +276,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I2", "I5", "I15"]
-max_words = 130
+max_words = 150
 max_chars = 0
 max_questions = 1
-notes = """route: review (route set). §CM-TODAY 3 ('Thứ Sáu chưa có số: số liệu'); §CM-NUMBERS 1: review.ask ('Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · khách biết bạn từ đâu · bài tốt nhất, vì sao. Có thì thêm: lượt xem hoặc ảnh chụp (bài đủ 2 ngày) · …') with the TIẾP clause review.ask_next ('Có gì nói nấy, gõ cũng được, thiếu thì để trống.'); his trade may word 'cuộc gọi', 'đơn' as hẹn khảo sát, hợp đồng ký, so the regexes take either. Screenshots and views are optional, never asked for. Persona: reads numbers from Thảo's book, never sends screenshots, does not know Facebook saves; short because he is on site."""
+notes = """v13.17 (thứ Sáu có bài, §CM-TODAY 3): 'tiếp' thứ Sáu trước hết đưa bài hôm nay (đã in từ Ngày 0 hoặc sau buổi nói chuyện: MỘT dòng 'Hôm nay: N5 · thứ Sáu …', không in lại script), rồi, chưa có số, lời xin số liệu là lời mời duy nhất. route: review (route set). §CM-TODAY 3 ('Thứ Sáu chưa có số: số liệu'); §CM-NUMBERS 1: review.ask ('Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · khách biết bạn từ đâu · bài tốt nhất, vì sao. Có thì thêm: lượt xem hoặc ảnh chụp (bài đủ 2 ngày) · …') with the TIẾP clause review.ask_next ('Có gì nói nấy, gõ cũng được, thiếu thì để trống.'); his trade may word 'cuộc gọi', 'đơn' as hẹn khảo sát, hợp đồng ký, so the regexes take either. Screenshots and views are optional, never asked for. Persona: reads numbers from Thảo's book, never sends screenshots, does not know Facebook saves; short because he is on site."""
 
 [[case]]
 id = "router.vn.006"
@@ -1470,7 +1471,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
 title = "'Nhắc mình Chủ nhật với thứ Sáu' gives the calendar reminders (L0.5), nothing heavier"
-context = "Week 1, Wednesday 14 Oct 2026, iPhone, ChatGPT Free. Brand Card v1 present (persona default; pair bạn–mình; talk day Chủ nhật). Day 1's reply carried the reminder offer (levelup.offer_reminders: 'Tiếp theo: 2 lời nhắc trên lịch, Chủ nhật và thứ Sáu. A) cài luôn … B) để sau.'); she did not answer it then (Day 0's last reply offered the hub)."
+context = "Week 1, Wednesday 14 Oct 2026, iPhone, ChatGPT Free. Brand Card v1 present (persona default; pair bạn–mình; talk day Chủ nhật). Day 1's reply carried the reminder offer (levelup.offer_reminders: 'Tiếp theo: nhắc trên lịch, mỗi ngày nhắn tiếp, thêm Chủ nhật và thứ Sáu. A) cài luôn … B) để sau.'); she did not answer it then (Day 0's last reply offered the hub)."
 input = '''nhắc mình Chủ nhật với thứ Sáu được hông, mình hay quên lắm'''
 contains = []
 not_contains = []
@@ -2061,11 +2062,12 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "floor"]
 title = "'tíep' (typo) on Friday fires the same row as 'tiếp': the numbers prompt"
-context = "Week 1, Friday 16 Oct 2026, 6:10 pm, iPhone, right after showing a flat in Dĩ An. Brand Card v1 present (persona default: keyword GỒNG LÃI; pair anh–em, Nam). The Week-1 pieces went out Monday to Thursday; no numbers given yet."
+context = "Week 1, Friday 16 Oct 2026, 6:10 pm, iPhone, right after showing a flat in Dĩ An. Brand Card v1 present (persona default: keyword GỒNG LÃI; pair anh–em, Nam). The Week-1 pieces went out Monday to Thursday; bài thứ Sáu (N5) đã in từ Ngày 0, chưa đăng; no numbers given yet."
 input = '''tíep'''
 contains = []
 not_contains = []
 regex = [
+  '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b|^[ \t]*(?:```|~~~)''',
   '''(?i)Số liệu thứ Sáu, 3 phút''',
   '''(?i)gồng lãi|từ kh(?:óa|oá)|comment|bình luận''',
   '''(?i)(?<!\w)hẹn(?!\w)|(?<!\w)gặp(?!\w)|buổi tính|cuộc gọi''',
@@ -2078,10 +2080,10 @@ not_regex = [
 ]
 verdict = ""
 invariants = ["I1", "I2", "I5", "I15"]
-max_words = 130
+max_words = 150
 max_chars = 0
 max_questions = 1
-notes = """route: review (trigger set). A typo of 'tiếp' must fire the same row (UX §5.12); on Friday with no numbers it is §CM-NUMBERS 1: review.ask ('Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · …') + review.ask_next; his trade may word the steps as cuộc hẹn, hợp đồng, so the regexes take either; screenshots optional, never asked for. Persona: impatient, no Facebook view counts (personal profile)."""
+notes = """v13.17 (thứ Sáu có bài, §CM-TODAY 3): 'tiếp' thứ Sáu trước hết đưa bài hôm nay (đã in từ Ngày 0 hoặc sau buổi nói chuyện: MỘT dòng 'Hôm nay: N5 · thứ Sáu …', không in lại script), rồi, chưa có số, lời xin số liệu là lời mời duy nhất. route: review (trigger set). A typo of 'tiếp' must fire the same row (UX §5.12); on Friday with no numbers it is §CM-NUMBERS 1: review.ask ('Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · …') + review.ask_next; his trade may word the steps as cuộc hẹn, hợp đồng, so the regexes take either; screenshots optional, never asked for. Persona: impatient, no Facebook view counts (personal profile)."""
 
 [[case]]
 id = "router.vn.060"
