@@ -7455,10 +7455,12 @@ class V1313RealLinesTests(TempRepo):
     def test_each_spoken_piece_against_the_card_share(self):
         run = self.load(("coach", "tiếp"), ("machine", SALES_M16), ("coach", "tiếp"), ("machine", SALES_M17))
         report = graders.check_vn_natural(run)
-        spoken = [e for e in report["evidence"] if "the spoken script ends" in e]
-        self.assertEqual(len(spoken), 1, report["evidence"])
+        # v14.4: the script alone (Câu đầu … Lời mời): the caption, the gift page and the lines after them are no spoken line,
+        # so 37 sentences at 22% (18 points off: a warning), not 52 sentences with the gift's flat list mixed in
+        spoken = [e for e in report.get("warnings", []) if "the spoken script ends" in e]
+        self.assertEqual(len(spoken), 1, report)
         self.assertIn("the Brand Card says 40%", spoken[0])
-        self.assertEqual(report["details"]["spoken_pieces"][0]["sentences"], 52)
+        self.assertEqual(report["details"]["spoken_pieces"][0]["sentences"], 37)
 
     def test_spoken_particle_bands(self):
         def sentences(k: int, n: int = 20) -> str:
@@ -8384,6 +8386,9 @@ class V14ReplyProtocolTests(TempRepo):
 class V14FastDay0Tests(StrategyFirstBase):
     def setUp(self):
         super().setUp()
+        self.write_v14_acceptance()
+
+    def write_v14_acceptance(self):
         self.write("evals/acceptance.toml", """
             [day0]
             map_max_turns_en = 6
@@ -8540,6 +8545,192 @@ class V141LengthTests(StrategyFirstBase):
         self.assertFalse(self.length(report, "a short video's script")["pass"])
         honest = self.grade(self.reply(self.short(520, title="FILM TODAY · TRUST · short video · 520 words")))
         self.assertIs(self.length(honest, "a title's word count")["pass"], True)
+
+
+class V144RealLinesTests(StrategyFirstBase):
+    """v14.4 (qa/runs/v143/MEASURE-vn-day0-4.md "misread or outdated grader checks"): every case below is a line of the v143 sales-coach
+    run (evals/runs/v143-vn-day23), plus the kit decisions made on 12 Oct (one ask a reply, the week status after the card, no empty
+    "Máy tự thêm", no stretch words)."""
+
+    PAIR = 'xung_ho = "chị–em"\nallowed_numbers = ["14", "33"]\nseeded_names = []\n'
+
+    def setUp(self):
+        StrategyFirstBase.setUp(self)
+        V14FastDay0Tests.write_v14_acceptance(self)
+        self.write("evals/personas/vn/thu/persona.toml", self.PAIR)
+        self.write("evals/personas/vn/thu/expected.toml", '[traps]\ncompliance = []\n')
+
+    def vgrade(self, *replies, protocol="v14", coach=("tiếp",)):
+        turns = []
+        for n, reply in enumerate(replies):
+            turns += [("coach", coach[min(n, len(coach) - 1)]), ("machine", reply)]
+        return self.grade(turns, persona="vn/thu", edition="vn", protocol=protocol)
+
+    STATUS = "◆ Bước {n}/10 · Cài Google Sheet · vì sao: chị mở Sheet mỗi ngày, bài nằm sẵn trong đó\nĐã có: chọn B · Còn thiếu: nhắc việc (mai, khi chị nhắn 'tiếp')\n"
+
+    # -- I6: setup instructions are not decisions
+    def test_i6_setup_instructions_are_not_choices(self):
+        for line in ('b File (Tệp) → Import (Nhập) → Upload (Tải lên) → chọn Chien-dich.csv → "Insert new sheet(s)" (Chèn (các) trang tính mới) → Import data (Nhập dữ liệu).',
+                     "Dán lỗi, chữ dồn hết vào một ô: chọn cột A → Data (Dữ liệu) → Split text to columns (Tách văn bản thành các cột).",
+                     "Dán vào tab Chien-dich · bấm ô cột A ở dòng trống đầu tiên rồi dán, chọn file Noi-dung.csv."):
+            with self.subTest(line=line):
+                self.assertEqual(graders._decision_hits(line), [], line)
+        for ask in ("Chị chọn A hay B?", "Chị chọn cột nào?", "Chị chọn giúp em một cách.", "Chị chọn cột A hoặc cột B."):
+            with self.subTest(ask=ask):
+                self.assertTrue(graders._decision_hits(ask), ask)
+        reply = (self.STATUS.format(n=7) + "\nDạ, em làm Sheet. 3 bước, chừng 5 phút:\na Đăng nhập Google, mở sheets.new, đặt tên \"Content Machine\".\n"
+                 "b File (Tệp) → Import (Nhập) → Upload (Tải lên) → chọn Chien-dich.csv → Import data (Nhập dữ liệu). Noi-dung, Kho làm y vậy.\n"
+                 "Dán lỗi, chữ dồn hết vào một ô: chọn cột A → Data (Dữ liệu) → Split text to columns.\n\nTIẾP → Mai nhắn 'tiếp' là có bài thứ Tư.")
+        self.assertPasses(self.vgrade(reply), "I6")
+
+    # -- I12: the bank line's tag is not a word of the hook
+    def test_i12_the_hub_bank_line_is_a_17_word_hook(self):
+        hook = "Khách nói để chị suy nghĩ, đâu phải khách chê, là mình chưa hỏi khách câu nào."
+        bank = f'"{hook}" (Nghe thật)'
+        self.assertEqual(graders.ck.count_words(graders._hook_spoken(bank), "vn"), 17)
+        self.assertEqual(graders._hook_spoken(hook), hook)
+        long_hook = hook + " Hỏi lại đúng một câu thôi nha."
+        self.assertGreater(graders.ck.count_words(graders._hook_spoken(f'"{long_hook}" (Nghe thật)'), "vn"), 18)
+        piece = lambda h: (self.STATUS.format(n=4) + f"\nN1 · thứ Hai · video ngắn · NIỀM TIN · 285 chữ\n```\nHook: {h}\nCâu cuối: Hỏi lại một câu là đủ á.\n```\n\nTIẾP → Quay xong nhắn 'tiếp'.")
+        self.assertPasses(self.vgrade(piece(bank)), "I12")
+        self.assertFails(self.vgrade(piece(long_hook + " Ba tháng đầu mình không ký được hợp đồng nào hết.")), "I12", "words (max 18)")
+
+    # -- I15: "bạn" the staff, and the kit's own table header
+    def test_i15_ban_as_a_noun_or_in_the_kit_table_header(self):
+        card = (self.STATUS.format(n=6) + "\nA) Chủ cơ sở tự trực inbox hoặc có 2–3 bạn trực page · người trả tiền (máy khuyên)\n"
+                "Tuần 1 · khách thấy chị là người hỏi trước rồi mới nói · niềm tin: bạn nghĩ khách hỏi giá xong seen là chê → thật ra mình chưa hỏi khách câu nào\n"
+                "| Ngày | Dạng | Ý, hook | Lời mời |\n|---|---|---|---|\n| T3 13/10 | video | Tin đầu tiên: đừng gửi bảng giá | lưu, gửi bạn trực inbox |\n"
+                "| T4 14/10 | bài dài | Chị Trâm: 14 lên 33 lịch hẹn | comment chữ trong hook |\n\nTIẾP → Mai nhắn 'tiếp'.")
+        self.assertPasses(self.vgrade("◆ Bước 1/10 · Bắt đầu · vì sao: x\nĐã có: a · Còn thiếu: b\nDạ.\nTIẾP → Gửi em.", card), "I15")
+        slip = card.replace("Dạ.", "Dạ.") + "\nBạn nghĩ sao về bài này?"
+        self.assertFails(self.vgrade("◆ Bước 1/10 · Bắt đầu · vì sao: x\nĐã có: a · Còn thiếu: b\nDạ.\nTIẾP → Gửi em.", slip.replace("TIẾP → Mai nhắn 'tiếp'.\n", "") + "\nTIẾP → Mai nhắn 'tiếp'."), "I15", 'pronoun "Bạn"')
+
+    # -- day0_strategy: the week table's type, v14's no-interview and its picks
+    CARD_PLAN = ("Tuần 1 · khách thấy chị là người hỏi trước rồi mới nói\n"
+                 "| Ngày | Dạng | Ý, hook | Lời mời |\n|---|---|---|---|\n| T2 12/10 ✓ | video | Để chị suy nghĩ | comment SUY NGHĨ |\n"
+                 "| CN 18/10 | tin Zalo | Hỏi người quen là chủ cơ sở | xin trả lời, chưa chào bán |\n"
+                 "THU HÚT 3 · NIỀM TIN 3 · CHUYỂN ĐỔI 1 · 4 video quay, khoảng 2 giờ 45 một tuần ✓\n\n"
+                 "HUB.md:\n```\n# HUB · Quyên · cập nhật 12/10/2026\n## Lịch tuần này\n| Thứ | Bài | Ý | Tuyến | Loại | Trạng thái |\n|---|---|---|---|---|---|\n"
+                 "| T2 12/10 | video | để chị suy nghĩ | Câu hỏi lại | NIỀM TIN | Đã quay |\n| T3 13/10 | video | tin đầu tiên | Đừng gửi bảng giá vội | THU HÚT | Ý tưởng |\n"
+                 "| CN 18/10 | tin Zalo | hỏi người quen là chủ cơ sở | Một câu hỏi về chính khách | CHUYỂN ĐỔI | Ý tưởng |\n```\n")
+
+    def plan_run(self, card_body):
+        card = "◆ Bước 6/10 · Brand Card + Tuần 1 · vì sao: lưu lại\nĐã có: a · Còn thiếu: b\n\nBrand Card v1 · 12/10/2026\n" + card_body + "\nTIẾP → Mai nhắn 'tiếp'."
+        return self.load_vn_chain(card)
+
+    def load_vn_chain(self, card):
+        turns = [("coach", "Start"), ("machine", V14S_M25), ("coach", "ok"), ("machine", V14S_M27), ("coach", "ok"), ("machine", V14S_M29),
+                 ("coach", "ok"), ("machine", V14S_M31), ("coach", "ok"), ("machine", V14S_M33), ("coach", "tiếp"), ("machine", card)]
+        return graders.load_run(self.run_dir(turns, persona="vn/thu", edition="vn", protocol="v14"), self.root)
+
+    def test_the_week_plan_reads_the_type_column_and_the_count_line(self):
+        run = self.plan_run(self.CARD_PLAN)
+        self.assertEqual(graders.week_plan_types(run), {"attract": 1, "trust": 1, "convert": 1})     # the HUB.md box's Loại column
+        counts_only = self.CARD_PLAN.split("HUB.md:")[0]
+        self.assertEqual(graders.week_plan_types(self.plan_run(counts_only)), {"attract": 3, "trust": 3, "convert": 1})
+        none = counts_only.replace("CHUYỂN ĐỔI 1", "CHUYỂN ĐỔI 0")
+        self.assertEqual(graders.week_plan_types(self.plan_run(none))["convert"], 0)
+        self.assertEqual(graders.week_plan_types(self.plan_run("Tuần 1\n| Ngày | Dạng |\n|---|---|\n| T2 | video |\n| T3 | video |\n")),
+                         {"attract": 0, "trust": 0, "convert": 0})
+
+    PICKS2 = ("\nWho do you write for: A) owners who answer their own inbox (recommended) B) owners with staff C) both"
+              "\nHours a week: A) 2 hours B) 3 hours (recommended) C) 5 hours")
+
+    def v14_strategy(self, n_picks=2):
+        picks = "".join(f"\nPick {k}: A) one B) two (recommended) C) three" for k in range(n_picks))
+        return MAP_REPLY.replace("We'll run this", picks.lstrip("\n") + "\nWe'll run this")
+
+    def test_v14_allows_three_picks_and_no_interview_in_the_one_strategy_reply(self):
+        self.write_expected('\n[interview]\ndump_gives = ["stance"]\ndump_gaps = ["offer", "find"]\n')
+        turns = self.day0(interview=(), answers=(), strategy=self.v14_strategy(2))
+        report = self.report(turns, protocol="v14")
+        self.assertIs(self.strat(report, "each strategy reply asks one OK")["pass"], True)
+        self.assertIsNot(self.strat(report, "the interview asks when the dump left gaps")["pass"], False)      # not run: v14 has no interview
+        self.assertFalse(self.inv(report, "day0_strategy")["evidence"] and "open choices" in " ".join(self.inv(report, "day0_strategy")["evidence"]))
+        # the same run before v14 keeps both rules
+        old = self.report(turns)
+        self.assertFails(old, "day0_strategy", "2 open choices in one strategy reply (max 1 A/B/C line)")
+        self.assertFails(old, "day0_strategy", "the strategy came straight after the dump with no question")
+        # four picks are over the v14 cap
+        self.assertFails(self.report(self.day0(interview=(), answers=(), strategy=self.v14_strategy(4)), protocol="v14"),
+                         "day0_strategy", "4 open choices in one strategy reply (max 3 A/B/C lines)")
+
+    # -- vn_natural: the voice (spoken lines, a post's body), never the caption, the gift page or the HUB.md box
+    def test_vn_natural_counts_the_spoken_script_and_not_the_caption_or_the_gift_page(self):
+        self.assertEqual(graders.voice_body("Chữ trên màn hình: 0 hợp đồng\nMình bắt đầu nè.\nCâu đầu: Khách nói thật nha.\nÝ 1: Mình hỏi trước nè.\nMáy tự thêm: ý 1\n\nCaption:\n```\nKhách nói để chị suy nghĩ.\n```\nQuà (em viết sẵn):\n```\n1. Hỏi lại.\n```").strip(),
+                         "Mình bắt đầu nè.\nCâu đầu: Khách nói thật nha.\nÝ 1: Mình hỏi trước nè.")
+        hub = ('HUB.md:\n```\n# HUB · Quyên\n## Ngân hàng, mục nổi bật\nHook: "Khách nói để chị suy nghĩ, đâu phải khách chê." (Nghe thật)\n```\n'
+               'Lưu: thêm khung này vào file của project.')
+        flat = "Khách nói thật. Mình hỏi trước. Rồi mới báo giá. Hỏi xong thì im. Khách kể hết. Mình trả lời đúng chỗ. Không đọc lại bảng giá. Xong."
+        card = ("Brand Card v1 · 12/10/2026\nNÓI GÌ: x\nNÓI THẾ NÀO: y\n\nPhần còn lại là cho máy, không cần đọc:\n```\nversion date=2026-10-12 edition=vn\n"
+                "dialect=nam·tiểu từ ~35%·nha, hen, nè\n```\n")
+        gift = "Quà của bài này (em viết sẵn):\n```\n" + flat + "\n" + flat + "\n```\n"
+        script = "N2 · thứ Ba · video ngắn · THU HÚT · 286 chữ\n```\nCâu đầu: Khách nhắn hỏi giá rồi im luôn nha.\nÝ 1: Coi lại tin đầu tiên nè.\nÝ 2: Hỏi trước báo giá sau nha.\nÝ 3: Một câu thôi nè.\nÝ 4: Khách kể rồi mới nói giá nha.\nCâu cuối: Nên hỏi lại một câu đã nha.\n```\nCaption:\n```\n" + flat + "\n```\n"
+        report = self.vgrade("◆ Bước 6/10 · Card · vì sao: x\nĐã có: a · Còn thiếu: b\n" + card + hub + "\nTIẾP → Mai nhắn 'tiếp'.",
+                             "◆ Bước 7/10 · Bài · vì sao: x\nĐã có: a · Còn thiếu: b\n" + script + gift + "\nTIẾP → Mai nhắn 'tiếp'.")
+        natural = self.inv(report, "vn_natural")
+        self.assertIs(natural["pass"], True, natural)       # 2 flat copies of the gift and the caption are 16 sentences with no particle: v143 read them as the script (3%)
+        self.assertEqual(natural["details"].get("voice_sentences", 0), 0)
+
+    # -- v14.4 kit decisions
+    TURN8 = ("◆ Bước 8/10 · Nhắc việc · vì sao: có nhắc thì mỗi ngày khỏi phải tự nhớ\nĐã có: Sheet, bài thứ Hai, thứ Ba đã quay · Còn thiếu: nhắc việc (hôm nay), offer (cần trước tuần 2)\n\n"
+             "Tiếp theo: nhắc trên lịch, mỗi ngày nhắn 'tiếp', thêm Chủ nhật và thứ Sáu. A) cài luôn (máy khuyên): chị nói có tuần bốn bài rồi ba tuần im, có nhắc thì đều hơn. B) để sau.\n"
+             "Cần chị · dán nội dung file quà vào đây một lần, em gắn vào bài cần quà và tin trả lời inbox.\n"
+             "TIẾP → Gõ A hay B, hoặc 'OK' để lấy A.")
+    TURN4 = ("◆ Bước 4/10 · Bài hôm nay · vì sao: chiến lược OK rồi, quay luôn lúc còn hứng\nĐã có: chiến lược OK · Còn thiếu: bài quay hôm nay\n\n"
+             "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.\n\n"
+             "Cần chị · Chị Trâm có cho kể tên, chuyện và câu chị ấy nói trong bài không? (em không đoán bừa; gõ \"bỏ qua\" cũng được)\nTIẾP → Quay xong nhắn 'tiếp'.")
+    TURN6 = ("◆ Bước 7/10 · Chỗ gom mọi thứ · vì sao: bài cả tuần nằm một chỗ cho chị dễ coi\nĐã có: card v1 · Còn thiếu: chỗ gom (hôm nay)\n\n"
+             "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, dựng sẵn cho chị B) Google Sheet, nếu ngày nào cũng mở Sheet C) để sau, chỉ HUB.md. Máy khuyên B: Notion chưa kết nối ở đây, Sheet thì khỏi cần tài khoản mới. Gõ A, B hay C.\n"
+             "TIẾP → Gõ A, B hay C, hoặc 'OK' để lấy B; quay bài thứ Ba xong thì mai nhắn 'tiếp'.")
+
+    def test_a_reply_carries_at_most_one_ask(self):
+        two = self.inv(self.vgrade(self.TURN8), "reply_protocol")
+        self.assertTrue(any("2 asks in one reply" in e for e in two["evidence"]), two)
+        for one in (self.TURN4, self.TURN6):
+            self.assertFalse(any("asks in one reply" in e for e in self.inv(self.vgrade(one), "reply_protocol")["evidence"]), one)
+        # the same request put off to later is a deferred ask, fine
+        later = self.TURN8.replace("Cần chị · dán nội dung file quà vào đây một lần", "Cần chị · tối nay chị dán nội dung file quà vào đây một lần")
+        self.assertFalse(any("asks in one reply" in e for e in self.inv(self.vgrade(later), "reply_protocol")["evidence"]))
+
+    def test_after_the_card_the_status_line_shows_the_week_and_the_day(self):
+        card = ("◆ Bước 6/10 · Brand Card + Tuần 1 · vì sao: lưu lại\nĐã có: a · Còn thiếu: b\n\nBrand Card v1 · 12/10/2026\n"
+                "NÓI GÌ: x\nNÓI THẾ NÀO: y\n\nPhần còn lại là cho máy, không cần đọc:\n```\nversion date=2026-10-12 edition=vn\ndialect=nam·tiểu từ ~35%·nha, hen, nè\n```\n"
+                "Lưu lại.\nTIẾP → Mai nhắn 'tiếp'.")
+        old = self.TURN6
+        wk = old.replace("◆ Bước 7/10 · Chỗ gom mọi thứ", "◆ Tuần 1 · Ngày 2 · Chỗ gom mọi thứ")
+        both = old.replace("◆ Bước 7/10 · Chỗ gom mọi thứ", "◆ Tuần 1 · Ngày 2 · Bước 7/10 · Chỗ gom mọi thứ")
+        bad = self.inv(self.vgrade(card, old), "reply_protocol")
+        self.assertTrue(any("status line after the Brand Card" in e for e in bad["evidence"]), bad)
+        for ok in (wk, both):
+            report = self.inv(self.vgrade(card, ok), "reply_protocol")
+            self.assertFalse(any("status line after the Brand Card" in e for e in report["evidence"]), report)
+        # before the card the setup counter stays as it was
+        self.assertFalse(any("status line after the Brand Card" in e for e in self.inv(self.vgrade(old), "reply_protocol")["evidence"]))
+
+    def test_an_empty_may_tu_them_line_fails(self):
+        piece = lambda added: ("◆ Tuần 1 · Ngày 2 · Bài · vì sao: x\nĐã có: a · Còn thiếu: b\n\nN2 · thứ Ba · video ngắn · THU HÚT · 100 chữ\n```\n"
+                               "Câu đầu: Khách hỏi giá rồi im luôn.\nCâu cuối: Hỏi lại một câu.\n```\n" + added + "\nTIẾP → Quay xong nhắn 'tiếp'.")
+        for empty in ("Máy tự thêm: không", "Máy tự thêm: không.", "Máy tự thêm: không có"):
+            with self.subTest(empty=empty):
+                report = self.inv(self.vgrade(piece(empty)), "reply_protocol")
+                self.assertTrue(any('empty "Máy tự thêm"' in e for e in report["evidence"]), report)
+        for fine in ("Máy tự thêm: ý 2", "Máy tự thêm: đoạn 5, 6, 7", ""):
+            with self.subTest(fine=fine):
+                report = self.inv(self.vgrade(piece(fine)), "reply_protocol")
+                self.assertFalse(any('empty "Máy tự thêm"' in e for e in report["evidence"]), report)
+
+    def test_writer_stretch_words_warn_unless_the_coach_said_them(self):
+        piece = lambda body: ("◆ Tuần 1 · Ngày 2 · Bài · vì sao: x\nĐã có: a · Còn thiếu: b\n\nN2 · thứ Ba · video ngắn · THU HÚT · 100 chữ\n```\n"
+                              f"Câu đầu: {body}\nCâu cuối: Hỏi lại một câu.\n```\n\nTIẾP → Quay xong nhắn 'tiếp'.")
+        for word in ("ngày nào cũng", "bất cứ", "lần nào cũng"):
+            with self.subTest(word=word):
+                report = self.inv(self.vgrade(piece(f"Mình nhắn {word} luôn."), coach=("ok",)), "reply_protocol")
+                self.assertTrue(any("stretch words" in w and word in w for w in report.get("warnings", [])), report)
+                self.assertIsNot(report["pass"], False, report)
+                said = self.inv(self.vgrade(piece(f"Mình nhắn {word} luôn."), coach=(f"em ơi chị nhắn {word} đó",)), "reply_protocol")
+                self.assertFalse(any("stretch words" in w for w in said.get("warnings", [])), said)
+        self.assertEqual([w for _, w in graders.stretch_hits(graders.load_run(self.run_dir([("coach", "x"), ("machine", "Hi")], persona="vn/thu", edition="vn", protocol="v14"), self.root))], [])
 
 
 if __name__ == "__main__":

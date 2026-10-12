@@ -1758,12 +1758,28 @@ CHON_LATER_STEP_BEFORE_RE = re.compile(r"(?<!\w)(?:bước|tin|lượt|phần)\s
                                        r"\s*[,:;]?\s+(?:(?:mình|bạn|anh|chị|em)\s+)?$", re.I)
 
 
+# v14.4 (MEASURE v143, I6): "chọn" in a setup instruction is a click, not a choice for the coach. Two shapes: the object is a file,
+# column, cell or tab ("chọn Chien-dich.csv", "chọn cột A"), or the verb sits in a menu path ("… → Upload → chọn X → Import").
+CHON_OBJECT_AFTER_RE = re.compile(r"^\s*(?:cột|ô|dòng|hàng|tab|thẻ|trang tính|sheet|file|tệp|thư mục|toàn bộ|tất cả|[\w.-]+\.(?:csv|tsv|xlsx?|md|txt|pdf|docx?|zip|json))(?!\w)", re.I)
+
+
+def _setup_instruction_chon(text: str, m: re.Match) -> bool:
+    after = text[m.end():]
+    if re.search(r"(?<!\w)(?:hay|hoặc|or)(?!\w)", after):
+        return False                                       # "chọn cột A hoặc B": a real choice
+    if CHON_OBJECT_AFTER_RE.match(after):
+        return True
+    return "→" in text and bool(re.search(r"→\s*$", text[:m.start()]) or re.match(r"[^→]{0,40}→", after))
+
+
 def _statement_chon(text: str, m: re.Match, question: bool) -> bool:
     """The "chọn" is a noun ("lựa chọn của mình"), the verb of a relative clause in a statement ("chỗ bạn chọn là …") or
     the next step's decision named in passing ("bước 3 chọn giờ")."""
     if not re.fullmatch(r"chọn", m.group(0), re.I):
         return False
     before, after = text[:m.start()], text[m.end():]
+    if not question and _setup_instruction_chon(text, m):
+        return True
     if not question and CHON_LATER_STEP_BEFORE_RE.search(before):
         return True
     if CHON_NOUN_BEFORE_RE.search(before) and CHON_NOUN_AFTER_RE.match(after):
@@ -2521,6 +2537,16 @@ def i11_injection(run: Run) -> dict:
     return result("I11", title, ev, proxy=True)
 
 
+HOOK_QUOTED_RE = re.compile(r"^\s*[\"“”«]\s*(.+?)\s*[\"“”»]\s*(?:\([^)]{1,40}\)\s*)?$")
+
+
+def _hook_spoken(value: str) -> str:
+    """The hook's own words. The HUB.md bank line is `Hook: "…" (Nghe thật)`: the quote is the hook, the tag after it is
+    the bank's source label, not a word of it (v14.4, MEASURE v143 I12)."""
+    m = HOOK_QUOTED_RE.match(value)
+    return m.group(1) if m else value
+
+
 def i12_formats(run: Run) -> dict:
     hook_max = int(run.params.get("hook_max", ck.HOOK_MAX[run.lang]))
     ev, seen = [], 0
@@ -2544,7 +2570,7 @@ def i12_formats(run: Run) -> dict:
                 if not m:
                     continue
                 seen += 1
-                words = ck.count_words(m.group(2), run.lang)
+                words = ck.count_words(_hook_spoken(m.group(2)), run.lang)
                 limit = ck.ON_SCREEN_MAX_WORDS if re.match(r"on|chữ", m.group(1), re.I) else hook_max
                 if words > limit:
                     ev.append(f"{_turn(r)}: {m.group(1)} has {words} words (max {limit})")
@@ -2607,7 +2633,7 @@ KIN_COMPOUNDS = {
     "anh": {"hùng", "trai", "rể", "ruột", "cả", "em", "chị", "tài", "minh", "dũng"},
     "chị": {"gái", "dâu", "ruột", "cả", "em"},
     "em": {"bé", "gái", "trai", "út", "ruột", "dâu", "rể"},
-    "bạn": {"bè", "đời", "trai", "gái", "thân", "đồng", "cùng", "hàng"},
+    "bạn": {"bè", "đời", "trai", "gái", "thân", "đồng", "cùng", "hàng", "trực", "phụ"},   # "gửi bạn trực inbox": a staff member
     "tôi": {"luyện"},
 }
 # Kin words a reply also uses with a name ("cô Hoa") refer to that person when they stand alone later in it.
@@ -2625,6 +2651,12 @@ THIRD_PERSON_AFTER = {
 }
 # A count or a "some" before a kin word names a person too: "một chị coach", "hai anh thợ", "vài chị".
 THIRD_PERSON_BEFORE = re.compile(r"(?:một|hai|ba|vài|mọi|nhiều)\s+$", re.I)
+
+
+# v14.4 (MEASURE v143, I15): "bạn" after a count is a noun, the staff: "tự trực inbox hoặc có 2–3 bạn trực page". And the kit's own
+# week-table header ("niềm tin: bạn nghĩ X → thật ra Y") is a template line the kit owns, not the machine speaking to the coach.
+COUNT_BEFORE_BAN_RE = re.compile(r"(?:\d|một|hai|ba|bốn|vài|mấy|nhiều)\s+$", re.I)
+KIT_TABLE_TEMPLATE_RE = re.compile(r"(?<=niềm tin:\s)bạn nghĩ(?=[^→\n]{0,160}→\s*thật ra)", re.I)
 
 
 def third_person_kin(line: str) -> set[str]:
@@ -2839,6 +2871,7 @@ def i15_vn_language(run: Run) -> dict:
                     continue
                 ok_line = _map_ok_line(run, matcher, r.lines[i].plain)
                 line = EXAMPLE_BRACKET_RE.sub(" ", _unquoted(without_address_ask(r.lines[i].text)))
+                line = KIT_TABLE_TEMPLATE_RE.sub(" ", line)
                 third_kin_line = third_person_kin(line)
                 for m in pron.finditer(line):
                     word = m.group(1).casefold()
@@ -2851,6 +2884,7 @@ def i15_vn_language(run: Run) -> dict:
                     # third person ("như nhà chị dạy mầm non với nhà anh khách gãy chân"; review retest-vg5-g6 G40);
                     # after "chuyện" it is the client's story ("Kể tiếp chuyện chị trong toilet nhà mẫu"; retest-vg6-g7 G44)
                     if word in pair or re.match(r"\s+(?:[" + ck.UPPER + r"]|ấy|ta\b|họ)", after) \
+                            or (word == "bạn" and COUNT_BEFORE_BAN_RE.search(before)) \
                             or re.search(r"(?:các|những|mấy|của|tự|kết|tiếng|nước|nhà|chuyện)\s+$", before) \
                             or word in third \
                             or (word in THIRD_PERSON_KIN_WORDS
@@ -3774,14 +3808,15 @@ def _card_lines(run: Run, card: Reply) -> set[int]:
     return out
 
 
-def _vn_pieces(run: Run) -> list[tuple[Reply, str]]:
+def _vn_pieces(run: Run, titled_only: bool = False) -> list[tuple[Reply, str]]:
     """(reply, text) of each VN piece the machine wrote: piece bodies and copy boxes outside pieces
     (_post_chunk_lines), minus "why?" replies and pieces the coach asked to copy verbatim. A post the coach asked to
     translate stays: it is translated for meaning, in their voice (guide §1 item 2). Left out (review retest-vg4-g5
     G37): a piece's title and any other title or bare label line outside a box ("Tin trả lời inbox 1"), dated notes
     ("Lưu ý (06/10/2026): …"), and the Brand Card's top; a box printed again (the gift, then inbox reply 1 holding the
     same steps; the caption, then its text version) counts once: a chunk with more than half its tokens in
-    POST_RUN-token runs of an earlier chunk is a reprint."""
+    POST_RUN-token runs of an earlier chunk is a reprint. `titled_only` (v14.4) keeps only the chunks of a titled piece: a
+    copy box outside one (the card's, the HUB.md box, an inbox reply, a TSV to paste) is nobody's script."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
     out, seen = [], set()
     for r in run.replies:
@@ -3793,6 +3828,8 @@ def _vn_pieces(run: Run) -> list[tuple[Reply, str]]:
             continue
         top = _card_lines(run, r) if _is_card_reply(run, r) else set()
         for p, idx in _post_chunk_lines(r, paste_steps_marks(run.strings)):
+            if titled_only and (p is None or not p.title):
+                continue
             keep = []
             for i in idx:
                 ln = r.lines[i]
@@ -3838,6 +3875,27 @@ def card_particle_share(run: Run) -> float | None:
             if n <= 100:
                 found = n / 100
     return found
+
+
+# v14.4 (MEASURE v143, vn_natural): the particle share is read off what the coach SAYS or POSTS as the piece itself: a video's
+# spoken lines ("Câu đầu", "Ý n", "Câu cuối", "Lời mời") or a post's body. The caption, the gift page, the inbox reply and the
+# lines for the machine or the sheet that follow the piece are not (13% overall, "script 3%" came from them and the HUB.md bank).
+AFTER_PIECE_LABEL_RE = re.compile(r"^[\s>*_-]*(?:\*\*|__)?(?:(?:caption|chú thích|quà|gift|tin trả lời)\b[^\n]*:\s*(?:\*\*|__)?\s*$|"
+                                  r"dán vào\b|lưu\s*:|[\w.-]+\.(?:md|csv|tsv)\b)", re.I)
+NOT_SAID_LINE_RE = re.compile(r"^[\s>*_-]*(?:\*\*|__)?(?:máy tự thêm\s*:|đăng\s*:|cần chị\b|tiếp\s*→|ngại xin\b)", re.I)
+
+
+def voice_body(text: str) -> str:
+    """The piece's own words: the text up to the first caption / gift / reply / file label, minus direction lines, the
+    posting-date line and the machine's notes."""
+    out = []
+    for line in ck.nfc(text).splitlines():
+        if AFTER_PIECE_LABEL_RE.match(line):
+            break
+        if DIRECTION_LINE_RE.match(line) or NOT_SAID_LINE_RE.match(line):
+            continue
+        out.append(line)
+    return "\n".join(out)
 
 
 def check_vn_natural(run: Run) -> dict:
@@ -3924,6 +3982,13 @@ def check_vn_natural(run: Run) -> dict:
     target = card_particle_share(run)
     if target is not None:
         details["card_particle_share"] = target
+    if target is not None:      # v14.4: against the card, the bodies of the posts only; a video is read by its own spoken lines
+        v_ends, v_sents = particle_share([voice_body(t) for _, t in _vn_pieces(run, titled_only=True)
+                                          if not any(SPOKEN_LINE_RE.match(ln) for ln in t.splitlines())])
+        details["voice_sentences"] = v_sents
+        if v_sents:
+            details["voice_particle_share"] = round(v_ends / v_sents, 2)
+        ends, sents = v_ends, v_sents
     if sents >= int(cfg["particle_min_sentences"]):
         share = ends / sents
         tol = float(cfg["particle_card_tolerance"])
@@ -3945,10 +4010,10 @@ def check_vn_natural(run: Run) -> dict:
     # fail beyond ±spoken_particle_fail (20); a script of fewer than spoken_particle_min_sentences sentences is not read.
     warns, spoken = [], []
     if target is not None:
-        for r, text in _vn_pieces(run):
+        for r, text in _vn_pieces(run, titled_only=True):
             if not any(SPOKEN_LINE_RE.match(ln) for ln in text.splitlines()):
                 continue
-            kept = [ln for ln in _voice_scrub(text, "vn").splitlines() if not DIRECTION_LINE_RE.match(ln)]
+            kept = [ln for ln in _voice_scrub(voice_body(text), "vn").splitlines() if not DIRECTION_LINE_RE.match(ln)]
             sp_e, sp_n = particle_share(["\n".join(_piece_lines("\n".join(kept)))])
             if sp_n < int(cfg["spoken_particle_min_sentences"]):
                 continue
@@ -5301,6 +5366,39 @@ TITLE_WORDS_RE = re.compile(r"(?<!\w)\d[\d.,]*\s*(?:words?|chữ|tiếng)(?!\w)"
 OK_WORD_RE = re.compile(r"(?<!\w)ok(?!\w)", re.I)
 
 
+PLAN_TYPE_HEAD_RE = re.compile(r"^(?:loai|type|tier|bac|phan loai|muc)$")
+
+
+def week_plan_types(run: Run) -> dict[str, int]:
+    """The content types Week 1's plan assigns, read off the week table ("Loại" / "Type" / "Tier" column, in the HUB.md box too:
+    the 4-column chat table has no type column by rule) and, failing that, off the card's count line ("THU HÚT 3 · NIỀM TIN 3 ·
+    CHUYỂN ĐỔI 1"). Pieces come one per 'next', so a piece-only count misses a type whose piece is not printed yet (v14.4,
+    MEASURE v143: the Zalo message on Sunday is CHUYỂN ĐỔI in HUB.md's table and in the count line)."""
+    names = _mix_names(run.lang)
+    plan = {k: 0 for k in names}
+    for rr in week1_replies(run):
+        for _start, _key, rows in reply_tables(rr):
+            head = [c.strip() for c in rows[0].strip("| ").split("|")]
+            col = next((i for i, c in enumerate(head) if PLAN_TYPE_HEAD_RE.match(c)), None)
+            if col is None:
+                continue
+            for row in rows[1:]:
+                cells = [c.strip() for c in row.strip("| ").split("|")]
+                if col < len(cells):
+                    for k, pat in names.items():
+                        if pat.search(cells[col]):
+                            plan[k] += 1
+        if any(plan.values()):
+            return plan
+    for rr in week1_replies(run):
+        text = ck.fold(" ".join(rr.lines[i].plain for i in sorted(set(rr.prose) | set(rr.nexts))))
+        found = {k: int(m.group(1)) for k, pat in names.items()
+                 if (m := re.search(pat.pattern + r"\s+(\d+)(?!\d)", text))}
+        if len(found) == len(names) and sum(found.values()) <= 10:        # counts of pieces, not the mix's 40 / 40 / 20
+            return {**plan, **found}
+    return plan
+
+
 def _calendar_row(run: Run, r: Reply, p: Piece) -> list[str]:
     """The cells (folded rows) of the Week-1 calendar table row for a piece: the table in the piece's reply or the next
     reply, the row whose first cell is the piece's day (title "N1 · Thu · …") or that names its label ("N1")."""
@@ -5496,8 +5594,10 @@ def check_day0_strategy(run: Run) -> dict:
         if not OK_WORD_RE.search(talk):
             ev.append(f"{_turn(st)}: the strategy reply does not ask for the coach's OK")
         open_choices = reply_choices(st, matcher, map_topics(run, st.index))
-        if len(open_choices) > 1:
-            ev.append(f"{_turn(st)}: {len(open_choices)} open choices in one strategy reply (max 1 A/B/C line): "
+        picks_max = max(1, int(day0.get("strategy_picks_max", 3))) if run.v14 else 1      # v14: who, offer, hours in the one reply
+        if len(open_choices) > picks_max:
+            ev.append(f"{_turn(st)}: {len(open_choices)} open choices in one strategy reply (max {picks_max} A/B/C line"
+                      f"{'s' if picks_max > 1 else ''}): "
                       + " | ".join(open_choices))
         for g in abc_choices(st):
             n = sum(ck.fold(g.text).count(rec) for rec in recs)
@@ -5612,11 +5712,11 @@ def check_day0_strategy(run: Run) -> dict:
     # a short turn, not the dump ("I don't have enough leads" is a client's complaint, not a stop)
     stopped = any(t.role == "coach" and len(t.text.split()) <= ENOUGH_MAX_WORDS and ENOUGH_RE.search(t.text)
                   for t in run.turns[:S.index]) if S is not None else False
-    if S is not None and prompt is not None and isinstance(gaps, list) and gaps and not asked and not stopped:
+    if S is not None and prompt is not None and isinstance(gaps, list) and gaps and not asked and not stopped and not run.v14:
         ev.append(f"{_turn(S)}: the strategy came straight after the dump with no question, but the dump left gaps "
                   f"({', '.join(str(g) for g in gaps)}): ask about the coach's side first")
     item("the interview asks when the dump left gaps (unless the coach said enough)", ev,
-         ran=S is not None and prompt is not None and isinstance(gaps, list) and bool(gaps))
+         ran=S is not None and prompt is not None and isinstance(gaps, list) and bool(gaps) and not run.v14)   # v14: no interview
 
     # -- the strategy
     pillars = parse_pillars(blocks.get("map.topics", []))
@@ -5739,6 +5839,10 @@ def check_day0_strategy(run: Run) -> dict:
                 no_type.append(_short(p.title, 30))
             if pillar_res and not any(pat.search(folded) or pat.search(folded_row) for _, pat in pillar_res):
                 no_pillar.append(_short(p.title, 30))
+        plan_types = week_plan_types(run)
+        details["week_plan_types"] = plan_types
+        if len(wk) < sum(plan_types.values()):      # pieces come one per 'next': a type whose piece is not out yet is read off the plan
+            counts = {k: max(v, plan_types.get(k, 0)) for k, v in counts.items()}
         details["week_types"] = counts
         missing = [k.upper() for k, v in counts.items() if v == 0]
         if missing:
@@ -6055,13 +6159,91 @@ def block_problem(run: Run, r: Reply) -> str:
     return ""
 
 
+# ---- v14.4 kit decisions (founder, 12 Oct): one ask a reply, the week status after the card, no empty "Máy tự thêm", no stretch words
+# A request to the coach in the machine's talk ("dán nội dung file quà vào đây", "gửi em link", "paste it here", "send me …"); a question
+# or a choice is read by its own rule. A sentence that puts the ask off ("tối nay", "mai", "tuần 2", "later") is a deferred ask: fine.
+REQUEST_RES = {
+    "vn": re.compile(r"(?<!\w)(?:dán|gửi|chụp|điền|kể|trả lời|cho (?:em|mình|tôi) (?:biết|xem|coi))(?!\w)[^.?!;]{0,60}?"
+                     r"(?<!\w)(?:vào đây|cho (?:em|mình|tôi)|giúp (?:em|mình|tôi)|(?:em|mình|tôi) (?:với|nhé|nha|nghe))(?!\w)", re.I),
+    "en": re.compile(r"(?<!\w)(?:paste|send|share|tell|forward|upload|drop)\s+(?:it |that |me |them |us )?(?:here|to me|me\b)|"
+                     r"(?<!\w)(?:please\s+)?(?:paste|send me|tell me|give me)\b", re.I),
+}
+DEFERRED_RES = {
+    "vn": re.compile(r"(?<!\w)(?:mai|ngày mai|tối nay|tối về|hôm sau|tuần sau|tuần 2|tuần hai|sau này|để sau|lần sau|khi nào|lúc nào|"
+                     r"khi chị có|khi có|khi nào có|sau khi|chưa cần|không gấp|trước tuần)(?!\w)", re.I),
+    "en": re.compile(r"\b(?:later|tomorrow|tonight|next week|week 2|after you|when you have|once you|no rush|not yet|before week)\b", re.I),
+}
+
+
+def reply_asks(run: Run, r: Reply) -> list[str]:
+    """The asks a reply makes of the coach (v14.4: at most one; the kit's EVERY REPLY): the "Needs you / Cần chị" line, the reply's
+    choice (A/B/C or a decision sentence), a question and a request ("dán … vào đây"), each once; an ask that names a later time is
+    deferred and is not counted. A question or request on a line that belongs to the choice or the Needs line is that ask."""
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    idx = sorted(set(r.prose) | set(r.nexts))
+    asks: list[str] = []
+    taken: set[int] = set()
+    deferred = DEFERRED_RES[run.lang]
+    for i in idx:
+        needs = NEEDS_LINE_RE.match(r.lines[i].plain)
+        if needs:
+            taken.add(i)
+            if not deferred.search(NEEDS_TAIL_RE.sub("", needs.group(1))):
+                asks.append("needs: " + _short(needs.group(1), 50))
+    choices = reply_choices(r, matcher, map_topics(run, r.index))
+    if choices:
+        groups = abc_choices(r)
+        for g in groups:
+            taken |= set(range(g.first - 2, g.last + 1))
+        taken |= set(r.nexts)
+        for key in reply_decisions(r, matcher, map_topics(run, r.index)):
+            parts = key.split(".")
+            if len(parts) == 3 and parts[1].isdigit():
+                taken.add(int(parts[1]))
+        asks.append("choice: " + _short(choices[0], 50))
+    for i in idx:
+        if i in taken or r.lines[i].text.lstrip().startswith("|") or _map_label_line(matcher, r.lines[i].plain):
+            continue
+        for sent in re.split(r"(?<=[.?!…])\s+", _unquoted(r.lines[i].plain)):
+            if not sent.strip() or deferred.search(sent):
+                continue
+            if sent.rstrip(" \"'”’)*_").endswith("?"):
+                asks.append("question: " + _short(sent, 50))
+            elif i not in r.nexts and REQUEST_RES[run.lang].search(sent):      # the NEXT line names the one action: it repeats the ask
+                asks.append("request: " + _short(sent, 50))
+    return asks
+
+
+EMPTY_ADDED_RE = re.compile(r"^(?:không(?: có)?|none|nothing|no|n/?a|—|–|-|không gì)\s*\.?$", re.I)
+STRETCH_WORDS = {"vn": ("ngày nào cũng", "bất cứ", "lần nào cũng"), "en": ("always", "every time")}
+
+
+def stretch_hits(run: Run) -> list[tuple[str, str]]:
+    """(turn label, word) of each writer stretch word in a piece that no coach turn says ("ngày nào cũng", "bất cứ", "lần nào cũng";
+    "always", "every time"): a claim the coach never made. A warning."""
+    said = ck.fold(" ".join(t.text for t in run.coach_turns))
+    out = []
+    for r in run.replies:
+        for p in r.pieces:
+            body = ck.fold(p.body)
+            for w in STRETCH_WORDS.get(run.lang, ()):
+                f = ck.fold(w)
+                if re.search(r"(?<!\w)" + re.escape(f) + r"(?!\w)", body) and not re.search(r"(?<!\w)" + re.escape(f) + r"(?!\w)", said):
+                    out.append((_turn(r), w))
+    return list(dict.fromkeys(out))
+
+
 def check_reply_protocol(run: Run) -> dict:
     """v14 reply protocol (kit EVERY REPLY, K-notes): every machine reply opens with the 2 status lines (line 1
     "◆ Step n/10 · … · why: …" or "◆ Week n · Day d · …", line 2 "Have: … · Missing: …"), step numbers never go
     backwards, no banned ending in the last 2 talk lines (a warning elsewhere in the talk), a last NEXT line that names an
     action and does not ask permission, Situation / Problem / Fix when a reply reports a block, the strategy in one reply
     with at most [day0] strategy_picks_max A/B/C picks, no interview question (dig.*) on Day 0 (setup steps 1-7, Week 1
-    Day 1) and, from then on, at most one in a reply and none beside another ask. n/a for a run without meta protocol v14."""
+    Day 1) and, from then on, at most one in a reply and none beside another ask. v14.4 (12 Oct decisions): a reply carries at most
+    one ask (a coach-directed question or request, or the choice; a deferred ask is fine; the strategy reply holds its picks and the
+    OK), after the Brand Card the status line shows "Tuần n · Ngày d" (the combined "◆ Tuần 1 · Ngày d · Bước n/10" too), a
+    "Máy tự thêm: không" line fails (the line is left out when empty) and a writer stretch word in a piece ("ngày nào cũng", "bất cứ",
+    "lần nào cũng"; "always", "every time") that no coach turn says is a warning. n/a for a run without meta protocol v14."""
     if not run.v14:
         return {"id": "reply_protocol", "pass": None, "status": "n/a", "evidence": ["not a v14 run (meta.json protocol)"]}
     day0 = run.acceptance.get("day0", {})
@@ -6091,6 +6273,23 @@ def check_reply_protocol(run: Run) -> dict:
         block = block_problem(run, r)
         if block:
             ev.append(f"{t}: {block}")
+        asks = reply_asks(run, r) if not _is_map_reply(run, r) else []    # v14.4: one ask a reply (the strategy reply holds its picks and the OK)
+        if len(asks) > 1:
+            ev.append(f"{t}: {len(asks)} asks in one reply (max 1, a deferred ask is fine): " + " | ".join(asks))
+        for lst in _added_items(r)[0].values():                   # v14.4: an empty "Máy tự thêm" line is left out, not "không"
+            if not lst or all(EMPTY_ADDED_RE.match(x.strip(" .")) for x in lst):
+                ev.append(f'{t}: an empty "Máy tự thêm" line ("{_short(" ".join(lst) or "empty", 30)}"): leave the line out when the machine added nothing')
+    # v14.4: after the Brand Card the status line carries the week and the day
+    card_r = next((r for r in run.replies if _is_card_reply(run, r)), None)
+    if card_r is not None:
+        for r in run.replies:
+            if r.index > card_r.index and r.status_kind and r.status_kind != "week":
+                ev.append(f"{_turn(r)}: status line after the Brand Card is \"{_short(r.lines[r.tag_at].plain, 40)}\" "
+                          "(want ◆ Tuần n · Ngày d, or ◆ Tuần n · Ngày d · Bước n/10)")
+    hits = stretch_hits(run)
+    if hits:
+        warnings.append("writer stretch words in pieces, not in the coach's turns: "
+                        + ", ".join(f'{t} "{w}"' for t, w in hits[:6]))
     # the strategy: one reply, at most strategy_picks_max A/B/C picks
     steps = strategy_steps(run)
     if len(steps) > int(day0.get("strategy_max_steps", 1)):
