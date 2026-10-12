@@ -289,9 +289,9 @@ items = [
 generalization_check = 1                  # a claim about the coach's clients or market ("nhiều cơ sở … nhất", "ai cũng…", "most of my clients…") must trace to the sources (1 = on)
 # The "Máy tự thêm: đoạn 3, 5" / "Added by me: ¶3, ¶5" line names paragraphs only, no cap (founder 11 Oct): every paragraph
 # holding illustrative content is on it, every number on it is a paragraph of the piece.
-teaching_share_max = 0.30                 # v13.13: warn when a video's "Máy tự thêm" paragraphs are more than this share of its script
-                                          #   paragraphs (up to the Câu cuối): a script mostly the machine's teaching is not the coach's.
-                                          #   The list is read under the label count and under the counts from the top (with and without
+anchor_check = 1                          # v13.16 (founder 12 Oct, one idea is enough): each video and long post shares at least anchor_min_shared content words with one
+anchor_min_shared = 2                     #   card item, strategy line or coach-turn sentence (the paragraphs off the "Máy tự thêm" line count), else fail. Replaces the v13.13 teaching-share warning.
+                                          #   The "Máy tự thêm" list is read under the label count and under the counts from the top (with and without
                                           #   the direction blocks, line by line): the reading with the fewest defects is the one reported
 
 [week_dedupe]                             # check week_dedupe (graders.py; v13.9 fixK9, WEEK CROSS-READ)

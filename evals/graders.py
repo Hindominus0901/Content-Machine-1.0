@@ -310,7 +310,7 @@ DECISION_RE = [re.compile(p, re.I) for p in (
 )]
 COLD_RESULT_RE = [re.compile(p, re.I) for p in (
     r"\b(?:helped|trained|coached|served|worked with)\s+(?:over\s+|more than\s+|like\s+|about\s+)?\d",
-    r"\d[\d.,]*\+?\s+(?:\w+\s+)?(?:clients?|students?|customers?|học viên|khách hàng)(?!\w)",
+    r"\d(?:[\d.,]*\d)?\+?\s+(?:\w+\s+)?(?:clients?|students?|customers?|học viên|khách hàng)(?!\w)",   # v13.16: not across a full stop ("2017. 5am clients")
     r"\b(?:lost|gained|dropped|lose|gain)\s+\d", r"\d[\d.,]*\s*(?:lbs?|pounds?|kg|ký|cân)(?!\w)",
     r"\b(?:earned|revenue|income|salary)\b[^.\n]{0,30}\d", r"(?:doanh thu|thu nhập|lãi|kiếm được)[^.\n]{0,30}\d",
 )]
@@ -2011,9 +2011,13 @@ POSITION_LIST_RE = re.compile(r"(?<!\w)(?:đoạn|trang|page|slide|paragraphs?)\
 ZERO_FOUND_RE = re.compile(r"(?<![\w.,])0\s+(?:người(?:\s+nói)?|people|voices|speakers)\b[^\n]{0,20}?(?<![\w.,])0\s+(?:nơi|places?|sites?|pages?|trang)\b", re.I)
 
 
+# "coach 1-1", "1:1", "1-on-1", "1 on 1": one to one, a way of working, never a count or a result (v13.16)
+ONE_TO_ONE_RE = re.compile(r"(?<![\w.,])1\s*(?:[-–:/]|\s+on\s+|-on-)\s*1(?![\w.,])", re.I)
+
+
 def _blank_version(line: str) -> str:
     blank = lambda m: " " * len(m.group(0))      # noqa: E731
-    return ZERO_FOUND_RE.sub(blank, POSITION_LIST_RE.sub(blank, VERSION_RE.sub(blank, line)))
+    return ONE_TO_ONE_RE.sub(blank, ZERO_FOUND_RE.sub(blank, POSITION_LIST_RE.sub(blank, VERSION_RE.sub(blank, line))))
 
 
 def non_claim_number(line: str, n) -> bool:
@@ -2728,6 +2732,21 @@ FILE_NAME_RE = re.compile(r"(?<![\w-])[\w-]+(?:\.[\w-]+)*\.(?:csv|tsv|md|txt|xls
                           re.I)
 
 
+# v13.16 (v13.15 spot sim misread): the address question and its one re-ask name the options they offer ("Muốn mình gọi anh hay
+# chị thì gõ một chữ là đổi.", "Mình nên gọi là anh, chị hay bạn?"): the pronouns in that line are the question, not a pair slip
+ADDRESS_ASK_RE = re.compile(r"(?<!\w)(?:anh|chị|em|bạn|cô|chú)\s*(?:,|/|hay)\s*(?:anh|chị|em|bạn|cô|chú)(?!\w)", re.I)
+ADDRESS_VERB_RE = re.compile(r"(?<!\w)(?:gọi|xưng|đổi|cách gọi|xưng hô|chọn)(?!\w)", re.I)
+
+
+def address_ask_line(line: str) -> bool:
+    return bool(ADDRESS_ASK_RE.search(line) and ADDRESS_VERB_RE.search(line))
+
+
+def without_address_ask(line: str) -> str:
+    """The line without its address-question sentences (a pronoun slip beside them still counts)."""
+    return " ".join(x for x in re.split(r"(?<=[.!?])\s+", line) if not address_ask_line(x))
+
+
 def i15_vn_language(run: Run) -> dict:
     """VN: one pronoun pair with the coach; one audience address in pieces; no English outside the allowlist.
     The pronoun scan reads the machine's talk minus quotes and brackets ("(vd chị trưởng phòng …)"), the coach's own
@@ -2757,7 +2776,7 @@ def i15_vn_language(run: Run) -> dict:
                 if _coach_self_line(run, matcher, r.lines[i].plain):
                     continue
                 ok_line = _map_ok_line(run, matcher, r.lines[i].plain)
-                line = EXAMPLE_BRACKET_RE.sub(" ", _unquoted(r.lines[i].text))
+                line = EXAMPLE_BRACKET_RE.sub(" ", _unquoted(without_address_ask(r.lines[i].text)))
                 third_kin_line = third_person_kin(line)
                 for m in pron.finditer(line):
                     word = m.group(1).casefold()
@@ -5079,6 +5098,22 @@ def interview_replies(run: Run, before: int) -> list[Reply]:
     return [r for r in run.replies if prompt.index < r.index < before and reply_questions(r)]
 
 
+ECHO_ITEM_RE = re.compile(r"^[\s>*_]*\d{1,2}[.)]\s+\S")
+
+
+def _interview_lines(r: Reply, talk: bool = False) -> list[str]:
+    """A reply's lines the interview count reads (v13.16, v13.15 spot-sim misread): the opener's echo of the coach's own
+    lines ("3 câu đáng tiền bạn vừa nói: 1. … tại sao?") and the address question / its one re-ask are not interview
+    questions, and are not a dig question asked again."""
+    idx = sorted(set(r.prose) | set(r.verdicts) | set(r.nexts))
+    return [without_address_ask(r.lines[i].plain if talk else r.lines[i].text) for i in idx
+            if not ECHO_ITEM_RE.match(r.lines[i].text) and not (not talk and TABLE_ROW_RE.match(r.lines[i].text))]
+
+
+def interview_questions(r: Reply) -> list[str]:
+    return _questions("\n".join(_interview_lines(r)))
+
+
 def _reply_talk(r: Reply) -> str:
     """The machine's talk in a reply: prose, status lines and the NEXT line (copy boxes and the tag left out)."""
     return " ".join(r.lines[i].plain for i in sorted(set(r.prose) | set(r.verdicts) | set(r.nexts)))
@@ -5461,9 +5496,9 @@ def check_day0_strategy(run: Run) -> dict:
     item(f"WHAT I FOUND has {lo}-{hi} lines, each with its source or labelled a guess", ev, ran="map.found" in blocks)
 
     # -- the interview
-    asked = [r for r in before if reply_questions(r)]
-    ev = [f"{_turn(r)}: {len(reply_questions(r))} questions in one reply: " + " | ".join(_short(q, 40) for q in reply_questions(r))
-          for r in asked if len(reply_questions(r)) > 1]
+    asked = [r for r in before if interview_questions(r)]
+    ev = [f"{_turn(r)}: {len(interview_questions(r))} questions in one reply: " + " | ".join(_short(q, 40) for q in interview_questions(r))
+          for r in asked if len(interview_questions(r)) > 1]
     item("the interview asks one question a reply", ev, ran=S is not None and prompt is not None and bool(asked))
     details["interview_questions"] = len(asked)
     max_q = int(day0.get("interview_max_questions", 6))
@@ -5477,7 +5512,7 @@ def check_day0_strategy(run: Run) -> dict:
     slots_given = {str(x) for x in expected.get("dump_gives", [])} if isinstance(expected.get("dump_gives"), list) else set()
     seen: dict[str, Reply] = {}
     for r in asked:
-        key, share = dig_match(run.strings, _reply_talk(r), run.lang)
+        key, share = dig_match(run.strings, " ".join(_interview_lines(r, True)), run.lang)
         if share < DIG_MATCH_MIN:
             continue
         slots = DIG_SLOTS[key]
@@ -5517,7 +5552,7 @@ def check_day0_strategy(run: Run) -> dict:
             unit = "tiếng" if run.lang == "vn" else "words"
             if n > wmax:
                 ev.append(f'{t_topics}: pillar "{_short(name, 40)}" is {n} {unit} (broad topic clusters run 1-{wmax}): too specific')
-            elif re.search(r"\d", name):
+            elif re.search(r"\d", ONE_TO_ONE_RE.sub(" ", name)):
                 ev.append(f'{t_topics}: pillar "{_short(name, 40)}" holds a number: a pillar is a broad topic, not a result or a tip')
             elif any(x and (x in ck.fold(name) or ck.fold(name) in x) for x in narrow):
                 ev.append(f'{t_topics}: pillar "{_short(name, 40)}" is a narrow topic, not a broad cluster')
@@ -6319,6 +6354,9 @@ def week_message_formats(run: Run, week: list[Reply]) -> tuple[bool, bool]:
             cell = row[fmt] if fmt < len(row) else ""
             has_zalo = has_zalo or bool(re.search(r"(?<!\w)zalo(?!\w)", cell, re.I)
                                         and not REPLY_LABEL_RE.search(" ".join(row[:fmt + 1])))
+            # v13.16: the table's email row counts too, in whichever turn the table comes ("T6 16/10 | Email 320 người | …")
+            has_email = has_email or bool(re.search(r"e-?mail|newsletter|(?<!\w)thư(?!\w)", cell, re.I)
+                                          and not REPLY_LABEL_RE.search(" ".join(row[:fmt + 1])))
     return has_email, has_zalo
 
 
@@ -7116,6 +7154,11 @@ HOOK_FRAMES = {
            ("tới mức", re.compile(r"(?<!\w)(?:tới|đến) mức(?!\w)", re.I)),
            ("đang mất", re.compile(r"(?<!\w)đang (?:lãng phí|mất|bỏ lỡ|đánh rơi|đốt|phí)(?!\w)", re.I)),
            ("hỏi mình cách", re.compile(r"(?<!\w)hỏi (?:mình|tôi|em) (?:cách|làm sao|làm thế nào)(?!\w)", re.I)),
+           # v13.16: the kit's lầm tưởng / sự thật and lật niềm tin shapes (hook-library "Thêm hai khung")
+           ("lầm tưởng / sự thật", re.compile(r"^(?:lầm tưởng|hiểu lầm|quan niệm sai)\s*[:\-]\s*[^\n]{3,}?[.!?]?\s*(?:sự thật|thực ra|thật ra)\s*[:\-]", re.I)),
+           ("lật niềm tin", re.compile(r"^(?:bạn|anh|chị|em|mình|khách)? ?(?:không|chẳng) cần\b[^.?!]{2,}[.:;]\s*(?:bạn|anh|chị|em|mình|khách)? ?cần\b"
+                                       r"|^(?:ai cũng|mọi người|người ta) (?:bảo|nói|khuyên)\b[^.?!]*,\s*(?:mà|nhưng)\b",
+                                       re.I)),
            ("gọi đúng người (câu hỏi)", re.compile(r"^[^.?!]{8,}\?\s+\S")),
            # the kit's own email-subject frame (hook-library 3, SOÁT KHUNG): "nếu học trò hay bỏ giữa chừng, đọc thư này" (v13.14)
            ("nếu …, đọc thư này", re.compile(r"(?<!\w)nếu(?!\w)[^.?!]*?,\s*(?:đọc|xem|mở)\s+(?:thư|email|mail)\s+(?:này|nè)(?!\w)",
@@ -7134,6 +7177,13 @@ HOOK_FRAMES = {
            ("if …, read this", re.compile(r"\bif\b[^.?!]*?,\s*(?:read|open|watch)\s+this(?:\s+(?:email|note|one))?\b", re.I)),
            ("you're losing", re.compile(r"\byou(?:'re| are) (?:wasting|losing|leaving|missing|burning)\b", re.I)),
            ("asked me how", re.compile(r"\basked me (?:how|what|why)\b", re.I)),
+           # v13.16 (v13.15 spot sim misread): the kit's belief-flip and myth/truth shapes (hook-library "Hooks 1", "Two more frames")
+           ("belief flip", re.compile(r"^you (?:don't|do not|dont) need\b[^.?!]{2,}[.:;]\s*you need\b"
+                                      r"|^\w+(?:\s+\w+){0,3} (?:don't|do not|doesn't) have an? [^.?!]{2,40}? problem[.,]?\s*they have an? "
+                                      r"|^(?:most )?\w+(?:\s+\w+){0,3} think [^.?!]{2,}[.:;]\s*(?:it's|it is|it isn't)\b"
+                                      r"|^stop [^.?!]{3,}[.:;]\s*\S[^.?!]*\binstead\b|^not [^.?!]{2,}\.\s*not [^.?!]{2,}\.\s*it was\b"
+                                      r"|^(?:everyone|everybody) says\b[^.?!]*[.:;]?[\"']?\s*(?:here's|but)\b", re.I)),
+           ("myth / truth", re.compile(r"^myth\s*[:\-]\s*[^\n]{3,}?[.!?]?\s*truth\s*[:\-]", re.I)),
            ("call-out question", re.compile(r"^[^.?!]{8,}\?\s+\S"))],
 }
 # A slide 1 or a subject line that is one whole question calls the reader out on its own (the call-out frame without the
@@ -8034,7 +8084,7 @@ def check_strategy_doc(run: Run) -> dict:
 # What the machine prints as a piece must trace to the coach, the Brand Card or the research log; a week's pieces must not
 # repeat each other; the VN house style (no em dash, one pet phrase, one ask, one question in "Cần …"). Thresholds in
 # acceptance.toml [source_check], [week_dedupe], [style]; the defaults below apply without them.
-SOURCE_DEFAULTS = {"generalization_check": 1, "teaching_share_max": 0.30}
+SOURCE_DEFAULTS = {"generalization_check": 1, "anchor_check": 1, "anchor_min_shared": 2}
 DEDUPE_DEFAULTS = {"sentence_min_words": 8, "opener_words": 5, "belief_max_pieces": 2,
                    "paraphrase_overlap": 0.6, "paraphrase_min_words": 5, "verbatim_overlap": 0.8,
                    "idea_overlap": 0.75, "idea_min_shared": 3, "idea_max_posts": 3, "idea_cell_min_shared": 2}
@@ -8325,13 +8375,30 @@ def paragraph_reading(text: str, listed: set[int], has_list: bool, label: str = 
     return best or [], paras
 
 
-def teaching_share(paras: list[tuple[int, str]], listed: set[int]) -> tuple[float, int, int]:
-    """(share, listed, total) of a video's script paragraphs on the "Máy tự thêm" line. The script ends at its "Câu cuối"
-    (the caption after it is no script paragraph)."""
-    end = max((n for n, ptext in paras if any(SPOKEN_LINE_RE.match(x) for x in ptext.splitlines())), default=paras[-1][0])
-    script = {n for n, _ in paras if n <= end}
-    hit = len(script & listed)
-    return hit / len(script), hit, len(script)
+ANCHOR_FORMATS = ("short", "long video", "long post")
+
+
+def anchor_items(run: Run, upto: int) -> list[set[str]]:
+    """The foundation a long piece is written from (v13.16, founder 12 Oct: one real idea is enough, the machine expands
+    it): the content words of each sentence or line of the coach's turns, the printed Brand Card and the strategy
+    replies before reply index `upto`."""
+    texts = [source_text(run, upto)] + [r.text for r in strategy_steps(run) if r.index < upto]
+    out: list[set[str]] = []
+    for text in texts:
+        for ln in text.splitlines():
+            for sent in ck.sentences(ln) or [ln]:
+                words = _idea_words(sent)
+                if words:
+                    out.append(words)
+    return out
+
+
+def anchor_gap(text: str, paras: list[tuple[int, str]], listed: set[int], items: list[set[str]], min_shared: int) -> bool:
+    """True when no foundation item shares `min_shared` content words with the piece's own paragraphs (the ones off the
+    "Máy tự thêm" line; the machine's additions cannot anchor the piece)."""
+    own = " ".join(ptext for n, ptext in paras if n not in listed) if paras else text
+    words = {w for w in _idea_words(own) if not w.isdigit()}
+    return not any(len(words & item) >= min_shared for item in items)
 
 
 def check_source_check(run: Run) -> dict:
@@ -8344,7 +8411,7 @@ def check_source_check(run: Run) -> dict:
     piece_paragraphs. v13.13: the list is read under the label count and under the counts from the top, with and without
     the direction blocks and line by line (paragraph_reading; the machine counted both ways in v1312), a closing note
     without a figure ("(đếm từ trên)") is left out of it, and a list printed under the gift page belongs to the post
-    above it. Warn when a video's listed paragraphs are over teaching_share_max (30%) of its script. Heuristic: it reads figures, quote marks, names after a kinship word / "client named" / "Mr", the
+    above it. v13.16: a video or long post (anchor_check) must share at least anchor_min_shared (2) content words with one item of the foundation (anchor_items: a card item, a strategy line, a coach-turn sentence), else fail; the length floors stay in `lengths`. Heuristic: it reads figures, quote marks, names after a kinship word / "client named" / "Mr", the
     illustrative openers and the generalization shapes; a fact told in plain words is the reviewer's to find. n/a
     without a piece."""
     cfg = dict(SOURCE_DEFAULTS, **run.acceptance.get("source_check", {}))
@@ -8356,6 +8423,7 @@ def check_source_check(run: Run) -> dict:
     ev: list[str] = []
     warns: list[str] = []
     n_lists = 0
+    anchor_cache: dict[int, list[set[str]]] = {}
     for u in units:
         src = source_text(run, u.reply.index)
         src_tokens = " " + " ".join(ck.copy_tokens(src)) + " "
@@ -8400,13 +8468,13 @@ def check_source_check(run: Run) -> dict:
                       f'"{_short(item, 50)}"')
         got, paras = paragraph_reading(u.text, listed, bool(u.carried), label)
         ev += got
-        # v13.13 (founder 11 Oct, a post a day): a video whose script is mostly machine teaching reads like the machine's,
-        # not the coach's; warn above teaching_share_max of its paragraphs on the "Máy tự thêm" line
-        if piece_format(u.title) in ("short", "long video") and paras and listed:
-            share, n, total = teaching_share(paras, listed)
-            if share > float(cfg["teaching_share_max"]) + 1e-9:
-                warns.append(f'{label}: {share:.0%} of the video\'s paragraphs are listed as the machine\'s teaching '
-                             f'(max {float(cfg["teaching_share_max"]):.0%}): {n} of {total}')
+        # v13.16 (founder 12 Oct): the v13.13 teaching-share warning is gone; a video or long post needs one real anchor
+        if int(cfg.get("anchor_check", 1)) and piece_format(u.title) in ANCHOR_FORMATS:
+            items = anchor_cache.setdefault(u.reply.index, anchor_items(run, u.reply.index))
+            if anchor_gap(u.text, paras, listed, items, int(cfg.get("anchor_min_shared", 2))):
+                ev.append(f'{label}: no anchor: the piece shares fewer than {int(cfg.get("anchor_min_shared", 2))} content '
+                          "words with any card item, strategy line or coach-turn sentence (ask one story question, "
+                          "or pick another idea)")
     ev, warns = list(dict.fromkeys(ev)), list(dict.fromkeys(warns))
     out = {"id": "source_check", "pass": not ev, "status": "fail" if ev else ("warn" if warns else "pass"),
            "evidence": ev, "details": {"pieces": len(units), "added_lists": n_lists}}

@@ -5,6 +5,7 @@ import contextlib
 import importlib.util
 import io
 import json
+import re
 import sys
 import tempfile
 import textwrap
@@ -6566,7 +6567,7 @@ class V139SourceDedupeStyleTests(TempRepo):
     CARD = 'machine\nkey_belief: coffee comes before the resume\nphrases: "coffee before resume" | "walk in first"\n'
 
     def reply(self, *pieces, extra="", coach=None):
-        body = "\n\n".join(f"N{k} · Reel · TRUST · 60 words\n{text}" for k, text in enumerate(pieces, 1))
+        body = "\n\n".join(f"N{k} · Text post · TRUST · 60 words\n{text}" for k, text in enumerate(pieces, 1))
         return self.grade([("coach", coach or self.COACH),
                            ("machine", f"{TAG}Week 1\n{body}\n{extra}\nNEXT → Say \"next\".")])
 
@@ -7547,25 +7548,33 @@ class V1313RealLinesTests(TempRepo):
         self.assertFalse(fail["pass"], fail)
         self.assertIn("the spoken script ends", " ".join(fail["evidence"]))
 
-    # ---- the teaching share of a video
-    def test_listed_teaching_share_of_a_video(self):
-        script = self.box(COPY_M18)
-        share, hit, total = graders.teaching_share(graders.paragraph_reading(script, {2, 3, 4, 5, 6, 7}, True)[1],
-                                                   {2, 3, 4, 5, 6, 7})
-        self.assertEqual((hit, total), (6, 7))
-        self.assertGreater(share, 0.3)
+    # ---- v13.16: no teaching-share warning; a video or long post needs an anchor in the foundation
+    def test_a_video_mostly_listed_as_the_machines_teaching_no_longer_warns(self):
+        self.assertFalse(hasattr(graders, "teaching_share"))
+        piece = ("N1 · thứ Hai · video ngắn · NIỀM TIN · 90 chữ\n```\nCâu đầu: Khách hỏi giá rồi im thì làm gì.\n\n"
+                 "Ý 1: Mình hỏi trước rồi mới báo giá.\n\nÝ 2: Hỏi xong thì im và nghe khách nói.\n\n"
+                 "Ý 3: Nhắn lại thì mang theo một thứ cho khách.\n\nCâu cuối: Mình hỏi thêm một câu thôi.\n```\n"
+                 "Máy tự thêm: đoạn 2, 3, 4")
+        report = graders.check_source_check(self.load(("coach", "Khách hỏi giá rồi im, em hỏi trước rồi mới báo giá."),
+                                                      ("machine", f"{TAG}Tuần 1\n\n{piece}\n\nTIẾP → Nhắn 'tiếp'.")))
+        self.assertEqual(report["status"], "pass", report)
+        self.assertNotIn("warnings", report)
 
-        def run(listed: str) -> dict:
-            piece = ("N1 · thứ Hai · video ngắn · NIỀM TIN · 90 chữ\n```\nCâu đầu: Khách hỏi giá rồi im thì làm gì.\n\n"
-                     "Ý 1: Mình hỏi trước rồi mới báo giá.\n\nÝ 2: Hỏi xong thì im và nghe khách nói.\n\n"
-                     "Ý 3: Nhắn lại thì mang theo một thứ cho khách.\n\nCâu cuối: Mình hỏi thêm một câu thôi.\n```\n"
-                     f"Máy tự thêm: {listed}")
-            return graders.check_source_check(self.load(("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{piece}\n\nTIẾP → Nhắn 'tiếp'.")))
-        self.assertEqual(run("đoạn 2")["status"], "pass")
-        warned = run("đoạn 2, 3, 4")
-        self.assertEqual(warned["status"], "warn")
-        self.assertTrue(warned["pass"])
-        self.assertIn("listed as the machine's teaching", warned["warnings"][0])
+    def test_a_video_or_long_post_with_no_anchor_in_the_foundation_fails(self):
+        piece = ("N1 · thứ Hai · video ngắn · NIỀM TIN · 90 chữ\n```\nCâu đầu: Khách hỏi giá rồi im thì làm gì.\n\n"
+                 "Ý 1: Mình hỏi trước rồi mới báo giá.\n\nCâu cuối: Mình hỏi thêm một câu thôi.\n```")
+        wk = lambda coach: graders.check_source_check(self.load(("coach", coach), ("machine", f"{TAG}Tuần 1\n\n{piece}\n\nTIẾP → Nhắn 'tiếp'.")))
+        self.assertEqual(wk("Khách hỏi giá rồi im, em hỏi trước rồi mới báo giá.")["status"], "pass")
+        bad = wk("Em dạy yoga cho người lớn tuổi ở Đà Nẵng.")
+        self.assertFalse(bad["pass"], bad)
+        self.assertIn("no anchor", " ".join(bad["evidence"]))
+        # one shared word is not an anchor; a short post is not held to it
+        one = wk("Em dạy yoga, khách đông lắm.")
+        self.assertFalse(one["pass"], one)
+        short = piece.replace("video ngắn", "bài ngắn")
+        ok = graders.check_source_check(self.load(("coach", "Em dạy yoga cho người lớn tuổi ở Đà Nẵng."),
+                                                  ("machine", f"{TAG}Tuần 1\n\n{short}\n\nTIẾP → Nhắn 'tiếp'.")))
+        self.assertTrue(ok["pass"], ok)
 
     # ---- one idea in more than 3 posts
     def test_an_idea_in_more_than_three_posts_fails(self):
@@ -7686,7 +7695,7 @@ class V1313RegradeTests(unittest.TestCase):
         self.assertTrue(any("the spoken script ends" in e for e in got["vn_natural"]["evidence"]))
         self.assertTrue(any("names a client" in e for e in got["hook_lab"]["evidence"]))
         self.assertFalse(got["week_dedupe"]["pass"])
-        self.assertTrue(got["source_check"].get("warnings"))              # N1, N4, N6: mostly teaching
+        self.assertFalse(got["source_check"].get("warnings"))             # v13.16: the teaching-share warning is gone
 
     def test_copywriter_run(self):
         got = self.regrade("v1312-copywriter")
@@ -8229,6 +8238,89 @@ class V1314RegradeTests(unittest.TestCase):
         self.assertFalse(got["deny_list"]["pass"])
         self.assertFalse(got["research_log"]["pass"])
         self.assertTrue(any("Kết quả của một coach" in e for e in got["week_dedupe"]["evidence"]))
+
+
+class V1316RealLinesTests(TempRepo):
+    """Each v13.15 spot-sim misread (qa/runs/v1315/MEASURE-*.md) on the real lines, and the real defect it hid still failing."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", (REPO / "strings" / "vn.toml").read_text(encoding="utf-8"))
+        self.write("editions/vn.toml", (REPO / "editions" / "vn.toml").read_text(encoding="utf-8"))
+        self.write("evals/acceptance.toml", (REPO / "evals" / "acceptance.toml").read_text(encoding="utf-8"))
+        self.write("evals/personas/vn/nat/persona.toml", 'xung_ho = "mình–bạn"\ndisplay_name = "Nhi"\n')
+        self.write("evals/personas/vn/nat/expected.toml", "[traps]\n")
+
+    def test_belief_flip_and_myth_truth_hooks_fill_a_frame(self):
+        for text in ("You don't need an hour. You need 30 minutes, 3 times.",
+                     "Dads don't have a willpower problem. They have a calendar problem.",
+                     "Myth: good speakers don't prepare. Truth: they rehearse the first ten seconds.",
+                     "You don't need more followers. You need these ten people.",
+                     "Everyone says 'just niche down.' Here's the step it skips."):
+            with self.subTest(text=text):
+                self.assertTrue(graders.hook_frame(text, "en"), text)
+                self.assertEqual(graders.hook_length_issue(text, "en"), "")
+        for text in ("Lầm tưởng: đọc vài bài là nghiên cứu xong. Sự thật: phải nghe người thật nói.",
+                     "Ai cũng bảo tuần vắng thì giảm giá, mà tháng đông khách nhất của mình lại không giảm đồng nào"):
+            with self.subTest(text=text):
+                self.assertTrue(graders.hook_frame(text, "vn"), text)
+        self.assertEqual(graders.hook_length_issue("Lầm tưởng: đọc vài bài là nghiên cứu xong. Sự thật: phải nghe người thật nói.", "vn"), "")
+        # a scene or a lesson still fills none
+        for text, lang in (("Pricing is about value.", "en"), ("You don't need to be rude.", "en"),
+                           ("Hôm qua mình gặp một chị bán mỹ phẩm ở chợ.", "vn")):
+            self.assertEqual(graders.hook_frame(text, lang), "", text)
+
+    def test_the_address_question_and_its_re_ask_are_no_pronoun_slip(self):
+        for line in ("Muốn mình gọi anh hay chị thì gõ một chữ là đổi.", "Mình nên gọi là anh, chị hay bạn cho tiện?"):
+            self.assertTrue(graders.address_ask_line(line), line)
+        for line in ("Chị coach đó nói gì với bạn?", "Em gửi chị hay anh bản nháp nhé."):
+            self.assertFalse(graders.address_ask_line(line), line)
+        reply = (f"{TAG}Ngày 0 · Kể chuyện nghề\n\nNhận rồi. Mình tạm gọi là bạn, xưng mình. "
+                 "Muốn mình gọi anh hay chị thì gõ một chữ là đổi.\n\nTIẾP → Kể tiếp, hết thì gõ 'xong'.")
+        run = self.load_vn(("coach", "Okay so the first thing"), ("machine", reply.replace("Ngày 0", "Hỏi thêm")),
+                           ("coach", "Okay next"), ("machine", reply))
+        self.assertTrue(graders.i15_vn_language(run)["pass"], graders.i15_vn_language(run))
+        slip = reply.replace("Nhận rồi.", "Nhận rồi. Chị kể hay lắm.")
+        run = self.load_vn(("coach", "Okay so the first thing"), ("machine", reply), ("coach", "Okay next"), ("machine", slip))
+        self.assertFalse(graders.i15_vn_language(run)["pass"])
+
+    def load_vn(self, *turns):
+        return graders.load_run(self.run_dir(list(turns), persona="vn/nat", edition="vn"), self.root)
+
+    def test_the_openers_echo_is_no_interview_question_and_no_repeat(self):
+        run = self.load_vn(("coach", "x"), ("machine", f"{TAG}Ngày 0 · Kể chuyện nghề\n\nNhận rồi.\n\n3 câu đáng tiền bạn vừa nói:\n"
+                                                      "1. Muốn ai thành khách thì người ta phải tin bạn.\n"
+                                                      "2. Khách hỏi gì thì câu mình hỏi lại vẫn là: tại sao?\n\nTIẾP → Kể tiếp."))
+        self.assertEqual(graders.interview_questions(run.replies[0]), [])
+        real = self.load_vn(("coach", "x"), ("machine", f"{TAG}Hỏi thêm 1/6\n\nBạn đang giúp ai, và ai thì bạn không nhận?\n\nTIẾP → Trả lời."))
+        self.assertEqual(len(graders.interview_questions(real.replies[0])), 1)
+
+    def test_one_to_one_is_not_a_number(self):
+        for name in ("Chuyện nghề với coach 1-1", "Coaching 1:1", "Kèm 1 - 1", "1-on-1 sessions"):
+            self.assertFalse(re.search(r"\d", graders.ONE_TO_ONE_RE.sub(" ", name)), name)
+        for name in ("3 cách báo giá", "Chuyện nghề 10-12", "11:1"):
+            self.assertTrue(re.search(r"\d", graders.ONE_TO_ONE_RE.sub(" ", name)), name)
+        self.assertEqual(graders._blank_version("coach 1-1 cho 20 khách").strip().split(), ["coach", "cho", "20", "khách"])
+
+    def test_a_year_span_then_clients_is_no_client_count_but_a_count_still_is(self):
+        line = "I was a personal trainer, full time, 2011 to 2017. 5am clients, 8pm clients, the whole thing."
+        self.assertFalse([m for p in graders.COLD_RESULT_RE for m in p.finditer(line)])
+        for real in ("I coached 40 clients last year.", "She had 12 students in March."):
+            self.assertTrue([m for p in graders.COLD_RESULT_RE for m in p.finditer(real)], real)
+
+    def test_the_week_table_email_row_counts_in_a_later_turn(self):
+        row = '| T7 17/10 | Video · THU HÚT | "Đắt quá" là câu hỏi · còn thiếu một chuyện thật, em hỏi chị trước khi viết | lưu, gửi |'
+        self.assertIn(row, V14S_CARD)
+        email = '| T7 17/10 | Email 320 người | Không ai hỏi giá: bạn kẹt chỗ nào | Xin trả lời, chưa bán |'
+
+        def formats(card: str):
+            run = self.load_vn(("coach", "Start"), ("machine", V14S_M25), ("coach", "ok"), ("machine", V14S_M27),
+                               ("coach", "ok"), ("machine", V14S_M29), ("coach", "ok"), ("machine", V14S_M31),
+                               ("coach", "ok"), ("machine", V14S_M33), ("coach", "tiếp"), ("machine", card))
+            return graders.week_message_formats(run, graders.week1_replies(run))
+        plain = V14S_CARD.replace("tin Zalo", "bài ngắn")
+        self.assertFalse(formats(plain)[0])
+        self.assertTrue(formats(plain.replace(row, email))[0])
 
 
 if __name__ == "__main__":
