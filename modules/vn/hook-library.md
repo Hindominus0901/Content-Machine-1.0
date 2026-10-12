@@ -13,7 +13,7 @@ v13.7 (10/10/2026, founder xem bản v13.6: "hook cần phải như các cái t 
 4 Đổi dáng: không dùng một dáng hai bài liền; câu mở không trùng recent_hooks (§CM-HUMANIZE); các bài THU HÚT trong tuần dùng ≥3 dáng.
 5 Điểm dừng cứng ở mọi dáng: không bịa kết quả, con số, lời khách, sự khan hiếm; không hạn chót, giới hạn suất giả (§CM-GUARDRAILS); không hứa thu nhập, cân nặng, sức khoẻ; không công kích người hay nhóm người nào (nhắm vào thói quen, lời khuyên); không câu mồi ("bạn sẽ không tin đâu", "X chết rồi", "sự thật người ta giấu", lấy quà miễn phí hay khoe tiền làm cả cái hook).
 
-<!-- @section hook-library.grow-pick src=59bfd0037e -->
+<!-- @section hook-library.grow-pick src=3cd7d62ddb -->
 ### Chọn dáng theo việc của bài và chỗ đặt
 1 Chỗ đặt: ngắn = câu nói đầu video ngắn · màn hình = chữ trên màn hình · tiêu đề = tiêu đề video dài + chữ ảnh bìa · slide 1 = bìa carousel · bài = dòng 1 bài dài · email = tiêu đề email · Zalo = dòng đầu tin Zalo · quảng cáo = câu đầu quảng cáo · live = tên buổi live, webinar. Một ý viết lại cho từng chỗ, không dán y nguyên. Ví dụ của mỗi mục viết cho chỗ đặt đứng đầu; sang chỗ khác thì cắt cho vừa: màn hình ≤6 tiếng (video chữ kiểu POV, "người ta bảo / thực tế": một dòng ≤20 tiếng), tiêu đề và slide 1 ≤70 ký tự, câu đầu video ngắn hay dòng 1 bài ≤{{hook_max}} {{hook_unit}}.
 2 THU HÚT: rộng, người ta chuyển cho người quen mà khách vẫn thấy nói đúng mình. Bắt đầu từ: lật niềm tin, gỡ lời khuyên quen, khoảnh khắc trong ngày của khách, gọi đúng người, mở bằng cảnh, câu nghe được, thử thách, làm lại từ đầu.
@@ -231,6 +231,12 @@ Cảnh của khách (học thử xong không quay lại) vào từ câu 3, khôn
 7 Đổi tiêu đề một lần, theo §CM-PACKAGING 5: tiêu đề mới HOẶC chữ ảnh bìa mới, không đổi cả hai.
 TRƠN → HAY: "Chia sẻ về chuyện định giá" → "3 cách tăng giá mà không mất khách quen" · "Buổi hỏi đáp" → "Mang bài đăng không ai đặt vào đây: sửa trực tiếp 45 phút".
 
+<!-- @section hook-library.grow-titles-belief src=64297e96df -->
+### Thêm hai khung: lật niềm tin, lầm tưởng / sự thật (mục 2 ở trên; v13.15)
+Cả hai là khung bắt buộc như mười khung trên (§CM-FORMATS 1). Niềm tin phải là điều người mua đang tin thật (lời họ, dòng GIỮ); sự thật là của coach, bài chứng minh được; không "X đã chết", "sự thật họ giấu bạn" (§CM-HOOK-FLIP).
+- lật niềm tin: "Ai cũng bảo tuần vắng thì giảm giá, mà tháng đông khách nhất của mình lại không giảm đồng nào" + "giữ giá."
+- lầm tưởng / sự thật: "Lầm tưởng: dạy kèm phải chạy quảng cáo. Sự thật: 4/5 học trò mới của mình tới từ một nhóm phụ huynh." + "1 nhóm → 4 học trò"
+
 <!-- @section hook-library.grow-slides src=9badbd8b05 -->
 ### Slide 1 của carousel, dòng 1 bài dài
 CAROUSEL (§CM-TEXT-FORMATS 1; Facebook, TikTok dạng ảnh)
@@ -246,7 +252,7 @@ BÀI DÀI FACEBOOK (§CM-POSTS 1)
 8 LinkedIn (coach B2B): dòng 1 có thể kết bằng ":" cho bài liệt kê ("7 dấu hiệu nho nhỏ cho thấy khách sẽ mua thật:"); đoạn và hashtag theo §CM-POSTS 3-4, ≤1 emoji.
 9 Dòng 1 theo khung, không bao giờ là cảnh hay lời chào; dòng 2 là bằng chứng hay cú ngoặt, nên chỗ "Xem thêm" cắt ngang đúng lúc người đọc muốn biết tiếp.
 
-<!-- @section hook-library.grow-subject src=f75f72f054 -->
+<!-- @section hook-library.grow-subject src=2a27e1922f -->
 ### Tiêu đề email, dòng đầu tin Zalo
 EMAIL (§CM-TEXT-FORMATS 2)
 1 Tiêu đề bằng chữ khách, một ý, khoảng 6-12 tiếng, viết thường được. Dòng xem trước nói thêm (như chữ ảnh bìa), không lặp. Câu đầu email bắt đầu trả lời tiêu đề.
@@ -272,7 +278,7 @@ ZALO (tin riêng, tin nhóm, tin OA)
 7 TRƠN → HAY: "Khoá coaching tốt nhất cho freelancer!" → "Lịch học thử kín mà chẳng ai đăng ký học tiếp." · "Giảm cân cấp tốc!" → không bao giờ; thay bằng "Tan làm mệt quá, không đi tập nổi? Lịch tập gói gọn trong 20 phút bạn còn rảnh." (cách làm, không kết quả) · "Ưu đãi có hạn!" → hạn thật: "Đóng đăng ký 8 giờ tối thứ Sáu; lớp sau phải qua Tết mới mở."
 8 Sản phẩm về tiền, sức khoẻ, cơ thể: hook nói cách làm; dưới quảng cáo MỘT dòng lưu ý nền tảng như §CM-ADS 7.
 
-<!-- @section hook-library.grow-cta src=21ed4f8b0f -->
+<!-- @section hook-library.grow-cta src=49d2154250 -->
 ### Lời mời theo loại bài (lời mời khép lại điều hook đã hé)
 1 Theo loại bài, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi cho bạn · NIỀM TIN → comment lấy đúng món bài này hứa · CHUYỂN ĐỔI → nhắn riêng, sản phẩm thật, hạn thật (ngoài đợt mở bán thì từ tuần 2; bài CHUYỂN ĐỔI của Tuần 1 chỉ xin một câu trả lời, chưa mời mua). Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Món hứa phải có sẵn trước khi đăng (§CM-CTA-KIT 2).
 2 THU HÚT: "Lưu lại, lần tới cô dâu xin gói rẻ hơn thì mở ra đọc câu thứ hai." · "Gửi cái này cho đứa bạn đang {hoàn cảnh}." · "Mai lên phần 2: {điều còn bỏ ngỏ}." · Cho chọn: "Bạn gom hoá đơn từng tháng hay dồn tới tháng Chạp? Ghi A hay B thôi." Không "bạn nghĩ sao?".

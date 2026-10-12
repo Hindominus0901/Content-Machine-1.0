@@ -45,7 +45,7 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. Lỡ một tuần: vẫn 3, không dồn 6.
 4 HẰNG THÁNG: cho nghỉ mục cũ; bằng chứng sắp tới hạn kiểm lại → hỏi coach.
 
-<!-- @section content-banks.grow-cta src=957ecae1a2 -->
+<!-- @section content-banks.grow-cta src=a5cd0fd84d -->
 ### Ngân hàng lời mời: một lời mời cuối bài ("CTA", "lời kêu gọi", "cuối bài nói gì")
 1 THEO LOẠI BÀI, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi người quen, phần 2 hay câu hỏi cho chọn · NIỀM TIN → từ khoá lấy đúng món bài này hứa, nhắn riêng hay link · CHUYỂN ĐỔI → nhắn riêng, gọi hay đăng ký, mời mua có hạn thật. Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Chưa mở bán thì không mời mua; ngoài đợt mở bán thì trước tuần 2 cũng vậy: bài CHUYỂN ĐỔI Tuần 1 chỉ xin trả lời.
 2 LUẬT (mọi câu bên dưới):
@@ -60,7 +60,7 @@ Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. L�
 4 DANH SÁCH LỜI MỜI: câu coach đã duyệt hay từng kéo được người hỏi: `lời mời · {bậc} · {nền tảng} · "{câu}" · {quà hay gói} · {tầng}`; dùng lại câu tốt nhất mỗi nền tảng trước khi viết mới.
 Nhãn bên dưới: bậc · tầng (TH THU HÚT, NT NIỀM TIN, CĐ CHUYỂN ĐỔI).
 
-<!-- @section content-banks.grow-cta-video src=54dbff265d -->
+<!-- @section content-banks.grow-cta-video src=13304afc67 -->
 ### Câu mời: TikTok, Reels, YouTube
 Nói ở câu cuối; caption nhắc lại một lần. Bài NIỀM TIN xin comment: "{{t:cta.default}}"
 TIKTOK
@@ -88,7 +88,7 @@ SHORTS
 19 nhẹ·TH "Bản đầy đủ ở kênh mình: {tiêu đề}."
 20 link·NT "{Món hứa} của video này có link ở phần giới thiệu kênh."
 
-<!-- @section content-banks.grow-cta-text src=294c4bfa4f -->
+<!-- @section content-banks.grow-cta-text src=9630da8ca1 -->
 ### Câu mời: Facebook, LinkedIn, email, Zalo
 BÀI FACEBOOK (trang cá nhân hay Trang)
 21 từ khoá·NT "Comment SOÁT GIÁ, mình gửi bảng soát giá một trang."
@@ -117,7 +117,7 @@ ZALO (người đã đồng ý nhận tin: nhóm, OA, danh bạ Zalo; không nh�
 40 gọi·CĐ "Tuần này mình mở {N} cuộc gọi ngắn cho bạn nào đã làm xong {quà}. Nhắn ĐẶT LỊCH, mình gửi giờ trống."
 41 mua·CĐ "{Gói} mở cho nhóm mình trước, ngày {ngày}: {gồm gì}, {giá}. Nhắn {KEYWORD} để nhận chi tiết." (chỉ khi đúng là mở trước)
 
-<!-- @section content-banks.grow-magnet src=220f0301b2 -->
+<!-- @section content-banks.grow-magnet src=ae0e0fb366 -->
 ### Ngân hàng quà: món miễn phí một bài trao đi ("lead magnet", "quà", "quà tặng", "nên tặng gì")
 1 QUÀ TỐT là bước nhỏ kế tiếp của chính bài đã mời: cụ thể, xong trong một lần ngồi, tự dùng được không cần coach, không bao giờ là cả khoá. Công cụ một trang, bài tự kiểm hơn hẳn ebook dài. Tên quà nói thẳng nó làm gì.
 2 MỖI TUYẾN NỘI DUNG MỘT QUÀ (chưa có tuyến thì mỗi trụ cột nội dung một quà, §CM-CONTENT-LINES): từ giai đoạn của khách và lời hứa của tuyến, đưa A/B/C (§CM-OPTIONS): ba loại bên dưới hợp giai đoạn, mỗi loại kèm câu hứa và thời gian làm; MỘT cái nên chọn: cái làm nhanh nhất mà khép được vòng của tuyến. Chọn xong → viết trọn trong ngày (§CM-CTA-KIT 2) → lưu thành `quà · {tên} · "{câu hứa}" · {KEYWORD} · trao {cái gì} · qua {inbox | Zalo | email} · bước sau {bước tiếp} · làm ngày {ngày}`, kèm tin trả lời 1 và 2. ≤3 quà chạy cùng lúc; quà của mùa đi trước.
@@ -131,7 +131,7 @@ ZALO (người đã đồng ý nhận tin: nhóm, OA, danh bạ Zalo; không nh�
 7 Không: quà chưa viết, "trị giá {giá}" tự bịa, xin số điện thoại chỉ để gọi chào hàng.
 Mỗi loại bên dưới: là gì · "câu hứa" · hook · từ khoá · gửi qua (inbox nếu không ghi) · bước sau · thời gian làm.
 
-<!-- @section content-banks.grow-magnet-early src=0f58ed44a9 -->
+<!-- @section content-banks.grow-magnet-early src=58f7a4cdf3 -->
 ### Các loại quà: chưa nhận ra và biết vấn đề
 CHƯA NHẬN RA
 1 Bài tự kiểm (5 câu, ra 3 mức) · "2 phút xem {vấn đề} có đang làm bạn mất {cái giá} không" · "{N} dấu hiệu bạn đã thành {kiểu người họ sợ}" · TỰ KIỂM · "Bạn rơi vào mức nào?" → bài của mức đó · 1 tiếng
@@ -147,7 +147,7 @@ BIẾT VẤN ĐỀ
 10 Tờ kế hoạch (một trang, 30 phút) · "Lên kế hoạch {tuần, đợt mở bán, tháng đầu} trong 30 phút" · "Mình lên kế hoạch {việc} trong 30 phút thế này" · LÊN LỊCH · "Gửi mình bản của bạn, mình đánh dấu một chỗ cần đổi." · 1 tiếng
 11 Bảng theo dõi (7 hay 30 ngày, mỗi ngày một dấu) · "{thói quen} trong {N} ngày, mỗi ngày một dấu" · "Mình theo dõi {việc} {N} ngày. Đây là thứ đã đổi." · ĐÁNH DẤU · Zalo · hỏi thăm ngày 7 · 30 phút
 
-<!-- @section content-banks.grow-magnet-mid src=42b9fcb39d -->
+<!-- @section content-banks.grow-magnet-mid src=cba2a10e33 -->
 ### Các loại quà: biết vấn đề và biết giải pháp
 BIẾT VẤN ĐỀ
 12 Khoá mini 5 ngày (mỗi ngày một tin ngắn) · "{kết quả} qua 5 bài ngắn" · "Bài ngày 1 là bài ai cũng bỏ qua" · NĂM NGÀY · Zalo hay email · ngày 5 kết bằng bước đầu của gói · 1 ngày
@@ -162,7 +162,7 @@ BIẾT GIẢI PHÁP
 20 Đồ nghề (thứ coach dùng thật, vì sao, bỏ được gì) · "{N} thứ mình dùng cho {việc}, và 3 thứ mình thôi trả tiền" · danh sách bỏ trước · ĐỒ NGHỀ · bài kể cách làm · 30 phút
 21 Lỗi của chính mình · "{N} điều mình làm sai với {những khách, dự án} đầu tiên" · một lời thú nhận · BÀI HỌC · "Bạn sắp mắc cái nào?" · 45 phút
 
-<!-- @section content-banks.grow-magnet-late src=b4a4d7478c -->
+<!-- @section content-banks.grow-magnet-late src=1a209e309d -->
 ### Các loại quà: biết giải pháp và sẵn sàng
 BIẾT GIẢI PHÁP
 22 Workshop trực tiếp (45-60 phút, ngày thật, cùng gỡ một chỗ) · "Mình làm {cái của bạn} cùng bạn, trực tiếp ngày {ngày}" · "Mang {cái của bạn} tới, mình sửa cùng" · GIỮ CHỖ · link hay Zalo · bản xem lại 48 tiếng + lời mời vào gói · 1 ngày

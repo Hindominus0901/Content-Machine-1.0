@@ -53,7 +53,7 @@ Then the hooks that worked (§CM-BANKS 6) and one line: the bank that runs low n
 - Close the loop the hook opened: the payoff is named after THIS piece's result ("the 3 lines that kill a price page" → "the price-page check").
 - Comment word: the viewer's own words from the hook, ≥2 words, in capitals (PRICE CHECK, THINK ABOUT IT); never GUIDE, FREE, INFO or a word an ordinary comment contains; the same spelling on screen, caption and auto-reply. The Season's word and gift are the CONVERT default (§CM-CTA-KIT 1); a TRUST piece's word comes from its own hook and runs with that piece.
 - The gift exists before the post goes out (§CM-CTA-KIT 2); an offer line carries the real price, date and cap (§CM-CTA-KIT 9).
-- The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened or blocked; under it ONE line, today's date in it: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
+- The coach's own choice ("." (a dot), "comment if…", "when this hits 100 comments", an emoji): word for word, never softened or blocked; under it ONE line, today's date in it: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 - Replies: automatic only on Facebook Pages and Instagram professional accounts; elsewhere by hand, so a comment word runs only where the coach can answer within a day (§CM-CTA-KIT 7). YouTube has no messages: no comment word; the gift goes in the description and pinned comment.
 - A question for comments is a choice ("first or second?", "A or B?"), never "thoughts?".
 - Never: "follow for more", "link in bio" without saying what is there, "DM for price" on a fixed price, fake urgency, two asks, one generic comment ask on every piece.
@@ -84,13 +84,13 @@ YOUTUBE, LONG VIDEOS
 15 link·T pinned comment: "{payoff}: {link}. Start with page {n}; it takes {time}."
 16 call·C "If you're {qualifier} and want help doing this, the application is second in the description: 3 questions, I read each one."
 17 offer·C "{offer}: {what}, {price}, next group {date}. Details second in the description."
-18 Description order: this video's gift → work with me → the email or Zalo list → what the video covers.
+18 Description order: this video's gift → work with me → the email or WhatsApp list → what the video covers.
 SHORTS
 19 quiet·A "The full breakdown is on my channel: {title}."
 20 link·T "The {payoff} from this Short is linked in my channel description."
 
 <!-- @section content-banks.grow-cta-text -->
-### Ask lines: Facebook, LinkedIn, email, Zalo
+### Ask lines: Facebook, LinkedIn, email, WhatsApp
 FACEBOOK POST (profile or Page)
 21 word·T "Comment PRICE CHECK and I'll send you the one-page price check from this post."
 22 quiet·A "Which one are you, the first or the second? Just type 1 or 2."
@@ -112,7 +112,7 @@ EMAIL (a never-mailed or 6-month-silent list: the first email is the permission 
 35 call·C "P.S. If {situation} is still costing you {cost in their words}, reply BOOK CALL and I'll send two times for a 20-minute call."
 36 offer·C "Doors close {date} at {time}. The page: {link}."
 37 apply·C "Applications for {offer} are open until {date}: 3 questions, {time} to answer: {link}."
-ZALO OR WHATSAPP (people who opted in; never cold)
+WHATSAPP OR DM (people who opted in; never cold)
 38 word·T "Reply {KEYWORD} and I'll send day 1 of {gift} here."
 39 DM·T "Quick one: which part of {gift} did you try? Just reply with the number."
 40 call·C "I've opened {N} short calls this week for people who finished {gift}. Reply BOOK CALL and I'll send times."
@@ -121,9 +121,9 @@ ZALO OR WHATSAPP (people who opted in; never cold)
 <!-- @section content-banks.grow-magnet -->
 ### Gift bank: the free thing a piece hands out ("lead magnet", "gift", "freebie", "what should I give away")
 1 A GOOD GIFT is the next small step of the piece that offered it: specific, done in one sitting, useful without the coach, never the whole program. One-page tools and self-checks beat ebooks. Its name says what it does.
-2 ONE GIFT PER CONTENT LINE (per content pillar until lines exist, §CM-CONTENT-LINES): from the line's buyer stage and promise, A/B/C (§CM-OPTIONS): three types below that fit the stage, each with promise line and time to make; ONE recommended: the quickest that closes the line's loop. Picked → written in full that day (§CM-CTA-KIT 2) → kept as `gift · {name} · "{promise}" · {KEYWORD} · delivers {what} · via {DM | Zalo | email} · next {follow-up} · made {date}`, with DM reply 1 and 2. ≤3 gifts live; the Season's gift first.
+2 ONE GIFT PER CONTENT LINE (per content pillar until lines exist, §CM-CONTENT-LINES): from the line's buyer stage and promise, A/B/C (§CM-OPTIONS): three types below that fit the stage, each with promise line and time to make; ONE recommended: the quickest that closes the line's loop. Picked → written in full that day (§CM-CTA-KIT 2) → kept as `gift · {name} · "{promise}" · {KEYWORD} · delivers {what} · via {DM | WhatsApp | email} · next {follow-up} · made {date}`, with DM reply 1 and 2. ≤3 gifts live; the Season's gift first.
 3 STAGES: unaware (the problem has no name for them yet) → problem-aware (they feel it, try fixes) → solution-aware (comparing ways) → ready (deciding about the coach). ATTRACT reaches the first two, TRUST the middle, CONVERT the last.
-4 DELIVERY: DM (auto or by hand, §CM-CTA-BANK 2) · Zalo (the file + one question back; a group for challenges and mini-courses) · email (when there is a list; the gift is the first email, except to a never-mailed or 6-month-silent list: the re-ask first, the gift its reason, §CM-MESSAGES 3). Ask for an email or phone only when something will be sent there.
+4 DELIVERY: DM (auto or by hand, §CM-CTA-BANK 2) · WhatsApp (the file + one question back; a group for challenges and mini-courses) · email (when there is a list; the gift is the first email, except to a never-mailed or 6-month-silent list: the re-ask first, the gift its reason, §CM-MESSAGES 3). Ask for an email or phone only when something will be sent there.
 5 INTO THE OFFER: DM reply 2 asks one question about their result ("Which check did you miss?"); the answer → the matching piece, a call invite, or the offer if they ask. Two follow-ups at most. A gift with no next step is a dead end: fix it before posting.
 6 NICHE FAMILIES:
 - coaching, consulting: self-checks, scripts, case breakdowns, a call that solves one thing · services: price sheets, before-you-book checks, audits, work samples · B2B: calculators, teardowns, process maps, example packs.
@@ -146,13 +146,13 @@ PROBLEM-AWARE
 8 Example pack (10 worked examples, made-up ones labelled, real ones with an OK) · "10 {posts, emails, offers} to model tonight" · a breakdown of one of them · SHOW EXAMPLES · "Which fits you? Send me your draft." · 2 h
 9 Calculator (a sheet run on their own numbers) · "See what {problem} costs you a month" · "I ran the numbers on {situation}" (the coach's real numbers only) · COST SHEET · DM or email · "What did yours come to?" → a call if it's big · 2 h
 10 Planner (one page, 30 minutes) · "Plan your {week, launch, first month} in 30 minutes" · "This is how I plan {x} in 30 minutes" · PLAN SHEET · "Send me yours; I'll mark one change." · 1 h
-11 Tracker (7 or 30 days, one tick a day) · "{habit} for {N} days, one tick a day" · "I tracked {x} for {N} days. Here's what changed." · TRACK IT · Zalo · a day-7 check-in · 30 min
+11 Tracker (7 or 30 days, one tick a day) · "{habit} for {N} days, one tick a day" · "I tracked {x} for {N} days. Here's what changed." · TRACK IT · WhatsApp · a day-7 check-in · 30 min
 
 <!-- @section content-banks.grow-magnet-mid -->
 ### Gift types: problem-aware and solution-aware
 PROBLEM-AWARE
-12 5-day mini-course (one short message a day) · "{result} in 5 short lessons" · "Day 1 is the one most people skip" · FIVE DAYS · Zalo or email · day 5 ends on the offer's first step · 1 day
-13 7-day challenge (a group, one task a day, a real start date) · "{small result} in 7 days, together" · "Starting {date}: one task a day" · JOIN CHALLENGE · Zalo group · day-7 recap → the offer invite · 1 day + 15 min a day
+12 5-day mini-course (one short message a day) · "{result} in 5 short lessons" · "Day 1 is the one most people skip" · FIVE DAYS · WhatsApp or email · day 5 ends on the offer's first step · 1 day
+13 7-day challenge (a group, one task a day, a real start date) · "{small result} in 7 days, together" · "Starting {date}: one task a day" · JOIN CHALLENGE · WhatsApp group · day-7 recap → the offer invite · 1 day + 15 min a day
 14 Question pack (the {N} questions buyers ask before {decision}) · "Every question about {topic}, answered straight" · a question from the bank, word for word · MY ANSWERS · "Which one didn't I answer?" · 1 h
 15 Recorded lesson (15-30 min, screen or talking) · "How I {do x}, start to finish" · "I recorded the whole thing" · FULL LESSON · email or link · ends on a call or offer invite · half a day
 SOLUTION-AWARE
@@ -166,7 +166,7 @@ SOLUTION-AWARE
 <!-- @section content-banks.grow-magnet-late -->
 ### Gift types: solution-aware and ready
 SOLUTION-AWARE
-22 Live workshop (45-60 min, a real date, one problem solved together) · "We build your {thing} live on {date}" · "Bring your {thing}; we fix it together" · SAVE SEAT · link or Zalo · a 48-hour replay + the offer · 1 day
+22 Live workshop (45-60 min, a real date, one problem solved together) · "We build your {thing} live on {date}" · "Bring your {thing}; we fix it together" · SAVE SEAT · link or WhatsApp · a 48-hour replay + the offer · 1 day
 23 Sample session (recorded with the client's OK, or a role-play said to be one) · "Watch a real {session}, unedited" · a moment from it · WATCH SESSION · link · "Want one like it?" → a call · 2 h
 READY
 24 "Is it for me?" sheet (what's inside, price, who for, who not, how it runs) · "Everything about {offer} on one page, price included" · an objection said out loud · OFFER DETAILS · "Any question this didn't answer?" · 45 min

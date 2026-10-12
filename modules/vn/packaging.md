@@ -8,10 +8,10 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 v13.7 (10/10/2026, founder xem bản v13.6: "hook cần phải như các cái t gửi m, các cái ảnh"; bản đó lấy cảnh làm hook, nói ra bài học trên màn hình): các dáng trong ảnh chụp founder gửi thành KHUNG BẮT BUỘC. Kit §CM-FORMATS 1 giữ danh sách khung + một dòng soát; §CM-PACKAGING 2 danh sách đủ; §CM-HOOK-TITLES ví dụ từng khung. Câu đầu = tiêu đề nói ra; câu 2 = bằng chứng; cảnh từ câu 3. Chữ màn hình/ảnh bìa: số lớn thật, kết quả, hay câu phán/lời thách không lộ cách làm. Trả byte: FORMATS bỏ ví dụ HAY (đã ở HOOKS), "hook, chuyện, ý, mời" ở mục 3; PACKAGING bỏ ví dụ từng dáng (chuyển sang §CM-HOOK-TITLES) và câu "điều người xem muốn… không phải thành tích coach" (SOÁT giữ).
 v13.8 (10/10/2026, COMPARE v13.7 lỗi mới 1 và 3): mọi ví dụ lấy từ hồ sơ sales-coach ("không phải tại giá.", "bỏ kịch bản đi.", "112 tin, 14 lịch, chị Trâm", cảnh bảng giá, lễ tân) đổi sang ngách khác (chạy bộ đau gối, tiệm nail, khai thuế, piano), ghi "chỉ để thấy kiểu"; lint E148 + evals/personas/leak-terms.toml chặn dữ kiện hồ sơ thử. HOOKS 4: chữ màn hình, ảnh bìa thêm điều câu đầu chưa nói, không lặp, không nói cách làm, 3 cặp TRƯỢT → QUA; PACKAGING 4 trỏ về đó. Trả byte (STRATEGY-VN): PACKAGING 2 trỏ về 10 khung ở §CM-FORMATS 1 thay vì chép lại cả danh sách; câu "lọt lưới" ngắn lại; QUA ở HOOKS 3 trỏ về mục 4.
 
-<!-- @section packaging.grow-titles src=650faf8c02 -->
+<!-- @section packaging.grow-titles src=8a44efd901 -->
 ### "đặt tiêu đề", "ảnh bìa", "thumbnail": mọi video dài, carousel, trước khi viết
 1 Đóng gói trước: có tiêu đề rồi mới viết, bài giữ đúng lời hứa. Nháp ~20 câu, soát như §CM-HOOKS 2; câu tốt nhất đặt luôn lên bài, 2 câu nữa khi họ hỏi (§CM-LONG 2).
-2 KHUNG BẮT BUỘC cho mọi tiêu đề, câu đầu, slide 1, quảng cáo, tiêu đề email: 10 khung ở §CM-FORMATS 1 (ví dụ từng khung: §CM-HOOK-TITLES); "Nếu bạn {đang khổ vì…}" có thể hỏi thẳng cái khổ; "Bạn đang mất" cũng là "đang lãng phí {N%, giờ}".
+2 KHUNG BẮT BUỘC cho mọi tiêu đề, câu đầu, slide 1, quảng cáo, tiêu đề email: 12 khung ở §CM-FORMATS 1 (ví dụ từng khung: §CM-HOOK-TITLES); "Nếu bạn {đang khổ vì…}" có thể hỏi thẳng cái khổ; "Bạn đang mất" cũng là "đang lãng phí {N%, giờ}".
 3 Câu đầu video = tiêu đề nói ra; câu 2 = bằng chứng thật; cảnh từ câu 3, không làm hook. Số lớn, nhìn là hiểu, không lấy thu nhập làm hook; ≤70 ký tự.
 4 Chữ ảnh bìa 2–4 chữ: số lớn thật, kết quả, hay câu phán, lời thách; thêm điều tiêu đề, câu đầu chưa nói, không lặp, không nói cách làm (cặp mẫu: §CM-HOOKS 4), chỉ chữ. Không lọt lưới YouTube kinh doanh top → viết lại.
 5 Có 6+ video dài: video nào sau 7 ngày lượt xem thấp hơn mọi khi thì đổi tiêu đề HOẶC chữ ảnh bìa, không cả hai.
@@ -35,7 +35,7 @@ v13.8 (10/10/2026, COMPARE v13.7 lỗi mới 1 và 3): mọi ví dụ lấy từ
 3 Một câu "chưa có … vẫn làm được" gỡ nỗi lo (danh sách khách, tiền quảng cáo, thời gian). Một câu nói video cho ai theo chặng ("nếu bạn đã {chặng}…") để người chưa hợp rời sớm; không chê ai. Không bán gì thì được nói ("Video này không bán gì đâu."), chỉ khi đúng. Rồi "Vào việc luôn."
 4 Giữa các phần, một câu nối gợi tò mò cho phần sau: "Giờ bạn biết đăng gì rồi. Bước 3 mới quyết định có ai thấy không." Chưa có bằng chứng: lời hứa, lộ trình gánh; bằng chứng thành [CẦN {XƯNG HÔ}: …].
 
-<!-- @section packaging.grow-text src=6d222d8b7f -->
+<!-- @section packaging.grow-text src=97aa8b80b0 -->
 ### Đào sâu §CM-POSTS
 1 CAROUSEL (Facebook, TikTok dạng ảnh): chữ trước, không ghi chú thiết kế. Slide 1 là hook chữ to, ≤70 ký tự, nói luôn xem hết bộ được gì, không phải nhãn ("Bắt đầu từ đây"); mỗi slide một ý (tiêu đề ngắn, ý chính, ≤3 gạch đầu dòng, câu chốt), chụp riêng vẫn hiểu; slide cuối tặng một món đặt tên theo kết quả của CHÍNH carousel đó + từ khoá 2+ tiếng từ hook: "Comment TĂNG GIÁ, mình gửi file tính giá mình đang dùng." Chưa có món đó: [CẦN {XƯNG HÔ}: món quà].
 2 TIN ZALO hoặc EMAIL: dòng đầu (tiêu đề email) bằng chữ khách: cách mình {kết quả} (dù {giới hạn}) · mình bỏ qua {X} suốt {N} năm (và trả giá đắt) · {N} dấu hiệu bạn đang {vấn đề} · một câu lật ("Không phải bạn thiếu kỷ luật, là kế hoạch may cho người khác."). Thân: một cảnh 60-100 tiếng → bài học một câu → cách của họ 3-5 phần ngắn → một tài liệu → "Trả lời tin này, kể mình nghe…". Zalo ngắn hơn. Quảng bá tối đa một đoạn; sản phẩm chỉ ở tái bút, khi có.

@@ -16,7 +16,7 @@ v13.7 (10 Oct 2026, founder on the v13.6 run: "hook cần phải như các cái 
 
 <!-- @section hook-library.grow-pick -->
 ### Picking mechanisms by purpose and surface
-1 Where: short = a short's first spoken line · screen = on-screen words · title = long-video title + thumbnail words · slide 1 = a carousel cover · post = line 1 of a long post · subject = email subject · chat = first line of a Zalo or WhatsApp message · ad = an ad's first line · live = a live or webinar title. One idea is rewritten for each surface, never pasted. An entry's example is written for its first surface; elsewhere it is cut to fit: screen ≤6 words (a text-led POV or "everyone says / reality" video: one line ≤15), title and slide 1 ≤60 characters, line 1 of a short or a post ≤{{hook_max}} {{hook_unit}}.
+1 Where: short = a short's first spoken line · screen = on-screen words · title = long-video title + thumbnail words · slide 1 = a carousel cover · post = line 1 of a long post · subject = email subject · chat = first line of a WhatsApp message or DM · ad = an ad's first line · live = a live or webinar title. One idea is rewritten for each surface, never pasted. An entry's example is written for its first surface; elsewhere it is cut to fit: screen ≤6 words (a text-led POV or "everyone says / reality" video: one line ≤15), title and slide 1 ≤60 characters, line 1 of a short or a post ≤{{hook_max}} {{hook_unit}}.
 2 ATTRACT hooks are wide: a friend passes it on and the buyer feels named. Start from: belief flip, myth-bust, a moment from the buyer's day, call-out, cold open, overheard line, dare, starting over.
 3 TRUST hooks show how the coach thinks. Start from: their number, costly mistake, confession, steps, behind the scenes, old vs new, how to X without Y.
 4 CONVERT hooks speak to the decision the buyer is weighing. Start from: the objection said out loud, the question buyers ask, the after-state, a result taken apart, before → after, a challenge to join, "not for… / for…".
@@ -229,6 +229,12 @@ The buyer's moment (a trial student who never comes back) comes at line 3, never
 6 Re-title once, by the rule in §CM-PACKAGING 5: a new title OR new thumbnail words, never both.
 Flat → strong: "My thoughts on pricing" → "3 ways to raise your prices (without losing regulars)" · "Q&A session" → "bring the post that got no bookings: live fixes, 45 minutes".
 
+<!-- @section hook-library.grow-titles-belief -->
+### Two more frames: belief flip, myth / truth (item 2 above; v13.15)
+Both are mandatory frames like the ten above (§CM-FORMATS 1). The belief is one the buyer really holds (their words, a KEEP line), the truth is the coach's own and the piece proves it; never "X is dead" or "the truth they hide" (§CM-HOOK-FLIP).
+- belief flip: "Everyone says discount to fill a slow week. My fullest month had no discount." + "keep the price."
+- myth / truth: "Myth: tutors need ads. Truth: 4 of my 5 new students came from one parents' group." + "1 group → 4 students"
+
 <!-- @section hook-library.grow-slides -->
 ### Carousel slide 1, line 1 of a long post
 CAROUSEL (§CM-TEXT-FORMATS 1)
@@ -245,7 +251,7 @@ LINE 1 OF A LONG POST (§CM-POSTS 1)
 9 Facebook long post: line 1 fills a frame, never a scene or a greeting; line 2 is the proof or the turn ("Not because of the price."), so the cut-off reads like a cliffhanger.
 
 <!-- @section hook-library.grow-subject -->
-### Email subjects, chat openers (Zalo, WhatsApp)
+### Email subjects, chat openers (WhatsApp, DM)
 EMAIL (§CM-TEXT-FORMATS 2)
 1 The subject is in buyer words, one idea, about 4-9 words, lowercase fine. The preview line adds (like thumbnail words), never repeats. The email's first line starts paying off the subject.
 2 Shapes: how I {result} (with {limit}) · I ignored {X} (it cost me {Y}) · {N} signs you've {problem} · a reframe ("you're not lazy. you're unclear.") · the question they asked ("do I need a website first?") · a scene ("the email I almost didn't send") · a confession ("I undercharged for {time}").
@@ -253,7 +259,7 @@ EMAIL (§CM-TEXT-FORMATS 2)
 3b Flat → strong: "Newsletter #12" → "the client who cancelled (good thing)" · "Pricing tips" → "I charged too little for {time} (here's the math)" · "Exciting news!" → "doors open Monday: {N} seats, here's why {N}" (only with a real cap and its reason).
 4 Never: a fake "Re:" or "Fwd:", "last chance" or "closing tonight" unless it's true (§CM-GUARDRAILS), all caps, a subject the email doesn't pay off, a gift the email doesn't hold.
 5 Launch emails say what happens and when, plainly; real dates and seats only (§CM-LAUNCH-DAYS).
-CHAT OPENER (Zalo, WhatsApp, a DM)
+CHAT OPENER (WhatsApp, a DM)
 6 First line = who you are + why you're writing (never their name, §CM-MESSAGES 6), the way one person texts another; the chat list shows only the start, so the reason goes there. "Hi, it's {your name} from Tuesday's workshop: the checklist you asked for is below."
 7 Broadcast to a list or group: line 1 is a scene or their question, never "Dear valued customer" or "Hello everyone, I hope you're well".
 8 One message, one job; the offer only when they asked or opted in; a follow-up gives an easy exit ("if now's not the time, ignore this one").
@@ -277,7 +283,7 @@ CHAT OPENER (Zalo, WhatsApp, a DM)
 3 TRUST: "{{t:cta.default}}", {payoff} = what this piece promised: "Comment TUESDAY BAKE and I'll send you the 3 posting times from this video." The keyword is the viewer's own words from the hook, 2+ words, never a machine-picked GUIDE or FREE. Quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
 4 CONVERT (week 2+, with proof): what they get, the exact price, who it's for, the real deadline or cap with its reason, one action: "{N} seats, because I review every page myself; sign-ups close Friday. Message me SAVE MY SEAT." · "If this is you, message me STILL STUCK and say where you are; I'll reply myself." The Season keyword and gift live here by default. Only real numbers.
 5 Link: in a comment, the bio or the description, never in a text post's body: "The checklist is in the first comment."
-6 The coach's own choice ("chấm", "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
+6 The coach's own choice ("." (a dot), "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 7 Each mechanism's natural payoff: their number → the sheet behind it · mistake → the checklist · objection → a message to talk it through · question → the full answer · challenge → join (real start) · after-state, result taken apart → the offer.
 8 Never: fake urgency ("only 3 left" when it isn't), "Don't miss out", "DM for price" on a fixed-price offer, a payoff not yet written, two asks in one piece, one generic "comment X" on every piece.
 Flat → strong: "Follow for more tips!" → "Part 2 tomorrow: the one line I'd add to your price page." · "Comment GUIDE for my free guide" → "Comment PRICE CHECK and I'll send the price sheet from this video." · "Thoughts?" → "What hour do you post your bakes? Just type the hour."

@@ -1283,6 +1283,8 @@ class LevelUpTests(TempRepo):
         for name in ("cm-listener", "cm-writer", "cm-reviewer"):     # these never touch the web or write files
             text = (REPO / "plugin" / "agents" / f"{name}.md").read_text(encoding="utf-8")
             self.assertIn("\ntools: Read, Grep, Glob\n", text, name)
+        text = (REPO / "plugin" / "agents" / "cm-researcher.md").read_text(encoding="utf-8")
+        self.assertIn("\ntools: WebSearch, WebFetch, Read, Grep, Glob\n", text)  # read-only web + files (v13.15)
 
     def test_a_missing_level_up_file_skips_the_plugin_not_the_edition(self):
         make_levelup_repo(self.root)

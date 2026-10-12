@@ -1010,7 +1010,7 @@ input = '''WHOLE RUN: [turn 1] Bắt đầu · [turn 2] anh · [turn 3] dump chu
 contains = []
 not_contains = []
 regex = [
-  '''Cho mình hỏi trước: gọi bạn là anh, chị hay bạn\? \(gõ 1 chữ là được\)''',
+  '''Mình nên gọi là anh, chị hay bạn cho tiện\?''',
   '''Có bài, tin nhắn anh từng viết thì dán 2[–-]3 cái, hoặc gửi link trang của anh\.''',
   '''3 câu đáng tiền anh vừa nói''',
   '''Câu này hôm nay đăng luôn cũng được\.''',

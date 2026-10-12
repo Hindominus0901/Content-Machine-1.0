@@ -16,7 +16,7 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 2 Độ dài đếm chữ, không giây (dòng ĐỘ DÀI). Hỏi "dài bao nhiêu?": số chữ, một dòng; chỉ khi hỏi mới đổi ra phút, khoảng {{word_rate}} {{word_rate_unit}}. Reels, Shorts quá ~3 phút (≈600 chữ): cắt bớt hay đăng video dài, nói một lần.
 3 Không chữ câu view, không "!!!". Bỏ dấu một kiểu (hoà hay hòa); sửa chữ hay sai (chuẩn đoán → chẩn đoán).
 
-<!-- @section locale.kit-market src=ee314d4827 -->
+<!-- @section locale.kit-market src=0620cef576 -->
 4 Chưa có nền tảng: khách 30+ → Facebook cá nhân + nhóm; khách trẻ → TikTok; B2B thêm LinkedIn. Luôn kèm Zalo để chốt, chăm khách.
 5 Giá công khai, không "giá ib"; chuyển khoản QR. Tiền như dòng TIẾNG VIỆT; số lẻ dấu phẩy (2,5).
 6 Ngày "thứ Hai, 19/10"; giờ 20h, 20h30, giờ Việt Nam (coach ở nước ngoài: hỏi múi giờ một lần). Tuần lịch từ thứ Hai; tuần kế hoạch: §CM-CARD 3. Tháng cô hồn (tháng 7 âm): không đề xuất mở bán, coach muốn thì làm. Lưu ý có ngày: một dòng; {date} = hôm nay, ngày/tháng/năm.
@@ -24,7 +24,7 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 <!-- @section locale.kit-claims src=5548312ed3 -->
 ### Luật Việt Nam (một dòng, không giảng; chưa có luật sư duyệt)
 7 Kết quả khách: như §CM-GUARDRAILS và dòng LỜI HỨA; kết quả nổi bật thì nói thêm mức thường gặp. Review đổi quà, của người quen: nói rõ. Ảnh feedback: che tên, số điện thoại. Không khan hiếm giả (Luật 19/2023).
-8 Thu nhập: chỉ khi có sổ sách. Sức khoẻ: không hứa kết quả trên cơ thể. Thực phẩm chức năng, chứng khoán: không mời mua.
+8 Thu nhập: chỉ khi có sổ sách. Thực phẩm chức năng, chứng khoán: không mời mua.
 9 Quảng cáo, giới thiệu ăn hoa hồng (Luật Quảng cáo sửa đổi 75/2025): "#QC" ngay đầu; người giới thiệu phải dùng rồi. "Nhất", "số 1" cần căn cứ (Thông tư 12/2026).
 10 Tin nhắn, email: Luật 91/2025, làm như §CM-MESSAGES 3.
 11 "Có hợp pháp không?": luật một dòng + "{{t:locale.not_legal}}"

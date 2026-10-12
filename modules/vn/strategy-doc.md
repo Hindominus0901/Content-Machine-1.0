@@ -25,7 +25,7 @@ BƯỚC 3 TUYẾN NỘI DUNG. Mỗi trụ cột nội dung 2–3 loạt bài có
 BƯỚC 4 TỶ LỆ NỘI DUNG, THU HÚT/NIỀM TIN/CHUYỂN ĐỔI (§CM-TIERS): A) 40/40/20, mặc định: vừa lớn kênh vừa bán đều · B) ưu tiên lớn kênh 50/35/15: ít người theo dõi, chưa có danh sách · C) tháng ra mắt 30/40/30: trong 6 tuần tới mở bán (§CM-CAMPAIGNS). Chọn theo mục tiêu, danh sách lớn cỡ nào, sản phẩm đã sẵn chưa; một lý do.
 Trụ cột nội dung và tuyến nào cũng phải qua trước khi đưa ra: khách sẵn lòng theo cả năm · coach có chuyện để kể · không nằm trong ĐỂ SAU (§CM-DRIFT).
 
-<!-- @section strategy-doc.grow-engine-last src=d72b096934 -->
+<!-- @section strategy-doc.grow-engine-last src=e02ba6e65a -->
 ### Bước 5–8: mỗi thẻ đưa ra gì
 BƯỚC 5 KÊNH VÀ NHỊP ĐĂNG. Tính từ số giờ mỗi tuần họ thật sự có (hỏi lúc phỏng vấn hay ở tin 2 ngày 0; không bao giờ làm tròn lên). Mỗi phương án: một kênh chính (nơi khách ở và họ đang đăng) · nơi đăng lại từng bài · mỗi ngày 1 bài, số bài quay theo số giờ (§CM-CALENDAR 2) · 3 ngày của họ: lên kế hoạch, quay, xem số. Các phương án khác nhau ở kênh hoặc ở khối lượng: A) kênh họ đang dùng, đúng số giờ · B) kênh mà nghiên cứu thấy khách bàn nhiều nhất · C) như A, nhẹ hơn một nấc trong tháng đầu. Tin Zalo hay Zalo OA tính là email (§CM-LOCALE).
 BƯỚC 6 LỊCH 4 TUẦN, dựng theo §CM-CALENDAR, in từng tuần. Ngày 0: ở đây chỉ một dòng lựa chọn, chưa in bảng; sau OK chỉ in bảng tuần 1, cùng Tuần 1 (§CM-CALENDAR 4). Phương án: A) đúng như bản in · B) khởi động nhẹ: tuần 1–2 xuống một nấc · C) xoay quanh một mốc (ra mắt, một dịp trong năm của khách), các tuần quanh mốc đảo tỷ lệ như §CM-CALENDAR 8.
@@ -49,7 +49,7 @@ NIỀM TIN
 - Bài tốt: lúc một khách bế tắc → quyết định họ đưa ra → kết quả, kèm bối cảnh. Bài dở: "Mình có 10 năm kinh nghiệm" (tự nhận, không cho thấy gì), bài dạy xong không có bước tiếp.
 - Hiệu quả khi: lượt lưu, lượt trả lời, comment đặt câu hỏi, comment từ khoá, tin nhắn nhắc lại ý trong bài, người xem hết, đọc hết.
 
-<!-- @section strategy-doc.grow-tiers-convert src=89403d142e -->
+<!-- @section strategy-doc.grow-tiers-convert src=4b339c5f8a -->
 ### CHUYỂN ĐỔI, đi sâu, và những lỗi làm hỏng tỷ lệ
 CHUYỂN ĐỔI
 - Việc của nó: giúp người đã theo dõi, đã tin, mua cho dễ, cho yên tâm: sản phẩm với giá cụ thể, nói thẳng · gỡ băn khoăn bằng đúng chữ khách · quyết định mua của một khách, và điều suýt làm họ dừng · ai hợp, ai nên đợi · gật đầu rồi thì mọi việc ra sao. Một băn khoăn khách nêu trong cuộc gọi là một bài chưa được làm.
@@ -67,7 +67,7 @@ LỖI HAY GẶP, nhận ra ở buổi xem số thứ Sáu (§CM-NUMBERS), mỗi 
 - Một loại ba lần liền trên một kênh → theo luật của lịch (§CM-CALENDAR 7).
 Bài nào cũng lưu kèm loại của nó; buổi xem số thứ Sáu và buổi soát cuối tháng đọc kết quả theo loại (§CM-STRATEGY-REVIEW 1).
 
-<!-- @section strategy-doc.grow-lines src=c8ede6e0e6 -->
+<!-- @section strategy-doc.grow-lines src=c10772d375 -->
 ### Tuyến nội dung: những loạt bài có tên, quay lại đều ("tuyến nội dung", "content lines", "ý tưởng series", "loạt bài")
 Một tuyến nội dung là loạt bài khách quen chờ: cùng tên, cùng lời hứa, cùng cách làm, mỗi lần một chủ đề mới. Tuyến biến 3–5 trụ cột nội dung rộng thành một tuần 7 bài gần như tự viết; cái tên quay lại đều tạo thói quen xem. Giữ ít khuôn, chỉ thay thứ bỏ vào khuôn.
 1 MỖI CỤM 2–3 TUYẾN, số giờ nào cũng vậy: mỗi ngày 1 bài là 28 chỗ một tháng, tuyến nào cũng có ≥2 lần (hằng tuần, 2 tuần một lần hay hằng tháng), ra ở dạng nào cũng được, quay hay viết (§CM-REPURPOSE); số giờ chỉ đổi số bài phải quay. Tuyến THU HÚT, NIỀM TIN theo tỷ lệ; cụm có 2 tuyến thì mỗi loại một, trừ cụm giữ tuyến CHUYỂN ĐỔI: NIỀM TIN + CHUYỂN ĐỔI, không cần THU HÚT. Cả bộ có 1–2 tuyến CHUYỂN ĐỔI, tuyến nào cũng gắn với sản phẩm (băn khoăn về nó, quyết định mua của một khách, giá của nó), cộng lại ra mỗi tuần (§CM-CALENDAR 3): một tuyến hằng tuần, hay hai tuyến xen nhau. Các tuyến khác không phải tuần nào cũng đủ mặt.
@@ -96,7 +96,7 @@ NÓI CHUYỆN TIỀN VỚI NHAU
 Soát: cụm nào cũng có tuyến THU HÚT và tuyến NIỀM TIN ✓ · một tuyến CHUYỂN ĐỔI, gắn với sản phẩm, ra mỗi tuần ✓ · 7 tuyến, 19/28 chỗ một tháng, còn lại cắt từ chất liệu tuần ✓ · tên nào họ cũng nói tự nhiên được trước máy quay ✓.
 Trong kế hoạch thật, tuyến nào cũng là của coach: chữ của họ, chuyện của họ, khách của họ (đã đồng ý); kết quả của khách mà họ chưa đưa thì để [CẦN {XƯNG HÔ}: …].
 
-<!-- @section strategy-doc.grow-calendar src=70dbcd189b -->
+<!-- @section strategy-doc.grow-calendar src=3b26c26fff -->
 ### Lịch 4 tuần: đầu vào và cách chia chỗ ("lịch content", "lịch đăng bài", "kế hoạch tháng")
 1 ĐẦU VÀO, lấy hết từ chiến lược và Card (thiếu thứ nào thì quay về bước đặt ra thứ đó, §CM-STRATEGY-ENGINE): số giờ mỗi tuần họ thật sự có · kênh chính và nơi đăng lại · tỷ lệ (bước 4) · trụ cột nội dung và tuyến (bước 3) · các mốc: ra mắt, mở bán, một dịp trong năm của khách (§CM-MOMENTS: Tết, 8/3, 20/10, 20/11…), tuần nghỉ · sản phẩm và giá · quà và từ khoá · danh sách Zalo hay email, bao nhiêu người · chất liệu tuần (§CM-REPURPOSE 1).
 2 CHIA CHỖ THEO GIỜ. Mỗi ngày 1 bài, 7 bài một tuần, cả Tuần 1 (bài ngày 0 là ngày 1), cắt từ chất liệu trong tuần (§CM-REPURPOSE). Số giờ quyết định mấy bài phải quay, còn lại là bài viết, không quay. Viết thì mình lo hết; phút của họ: video ngắn ≈20 (quay ≈10, đọc, đăng), có dựng ≈30 · bài dài ≈10 · carousel ≈15, ảnh trích câu ≈10 · bài ngắn, story hay bình chọn, tin Zalo hay email ≈5 · video dài ≈3 tiếng. Cố định: nói chuyện hằng tuần 15 phút (§CM-TALK), thứ Sáu 15.
@@ -155,7 +155,7 @@ Lời nhắc, nếu đã cài (§CM-NUDGES): thứ Hai "{{t:task.week.name}}", t
 <!-- @section strategy-doc.grow-doc-mix src=fe339b95ee -->
 - "4. Tỷ lệ nội dung: thu hút, niềm tin, chuyển đổi": tỷ lệ họ đã OK (mặc định 40/40/20) và vì sao hợp mục tiêu · THU HÚT: để được tìm thấy và chia sẻ: chủ đề rộng, đời sống khách, một quan điểm, khoảnh khắc khách muốn gửi bạn bè mà người lạ thì lướt qua; bậc "đáng nghe, dễ mến" · NIỀM TIN: cho thấy họ nghĩ gì và đã làm được gì: dạy, quy trình, chuyện khách (đã đồng ý); bậc "đáng tin" · CHUYỂN ĐỔI: để mua dễ: sản phẩm, gỡ băn khoăn, quyết định của một khách, lời mời; bậc "yên tâm mua" · mỗi loại: dạng bài, lời mời, và con số cho biết nó hiệu quả (§CM-TIERS) · khách qua từng chặng: 4–5 chặng từ "chưa thấy mình có vấn đề" tới "sẵn sàng mua", mỗi chặng khách hay nói gì (nguyên văn), cần nghe gì, loại bài nào nói điều đó · chữ của khách: 5–10 câu đã GIỮ (2+ người, 2+ nơi), câu nào cũng tự nói ra điều đó, chép y như trên trang (lỗi gõ giữ nguyên, kèm "(sic)"; cắt bớt thì "…"), ghi ở đâu, lúc nào, theo vai, không ghi tên.
 
-<!-- @section strategy-doc.grow-doc-system src=0d547e5a9c -->
+<!-- @section strategy-doc.grow-doc-system src=0dab66ba14 -->
 - "5. Hệ thống nội dung của {xưng hô}": kênh chính và nơi đăng lại từng bài (video ngắn → Reels, TikTok, Shorts; bài dài → LinkedIn, tin Zalo hay email) · mỗi ngày 1 bài, số giờ mỗi tuần của họ quay được mấy bài (§CM-CALENDAR 2) · ngày lên kế hoạch, ngày quay, ngày xem số · độ dài đếm chữ, không tính giây: video ngắn 500–800 trên mọi nền tảng (Reels, Shorts quá giới hạn thì cắt ở đó) · bài dài ≈1.000 (câu mở, câu chuyện, 3 bài học, lời mời) · video dài 1.000–1.500 (mở bằng lời hứa và câu treo ≈120, chuyện ≈200, 3–4 phần ≈225 mỗi phần, cuối phần móc sang phần sau, trả lời câu treo ≈100, lời mời ≈80) · tin Zalo ≤150 tiếng, email ≤375 · mùa 4 tuần, mỗi tuần một bậc niềm tin (§CM-SEASON) · hub: Notion hay HUB.md (§CM-HUB-NOTION, §CM-HUB-MD), bảng nếu họ dùng (§CM-BOARD), và 4 tác vụ hẹn giờ (§CM-HUB-TASKS): thứ Hai "{{t:task.week.name}}", thứ Sáu "{{t:task.numbers.name}}", các ngày khác "{{t:task.today.name}}", làm mới hằng tháng (Claude: TIẾP "làm mới tháng" của thứ Sáu cuối tháng; ChatGPT: tác vụ riêng, thứ Tư đầu tháng); ghi rõ cái nào đã cài, cái nào chưa · tổng kết thứ Sáu, mỗi con số dẫn tới một quyết định: khách hỏi (comment từ khoá, tin nhắn, cuộc gọi, đơn) → làm thêm thứ đã kéo khách tới · câu khách lặp lại 3+ lần → mài câu đó · đăng được mấy bài so với dự định → tuần sau nhiều hay ít bài · bài tốt nhất → tháng sau làm lại ở dạng khác.
 - "6. 30 ngày đầu": lịch 4 tuần (§CM-CALENDAR 4), đủ cả 4 bảng ngay trong file, không ghi "xem trong chat", mỗi tuần một bảng dưới dòng "Tuần {n} · {tuần này khách thấy {xưng hô} thế nào} · niềm tin", rồi tổng theo loại và số giờ. Video hôm nay và Tuần 1 đã viết xong thì đánh ✓. Chưa có bằng chứng: tuần 3 kể quy trình và bước "hỏi 3 khách cũ", không đưa kết quả.
 - "7. Quà tặng và lời mời của {xưng hô}": món quà họ đã OK (tên, dạng, tuyến nào dẫn tới, nó lọc ra ai) và 2 món còn lại để dành (§CM-MAGNET-BANK) · các nấc lời mời: comment {TỪ KHOÁ} → inbox → nhận {quà} → nhắn Zalo hay gọi → sản phẩm, giá nói thẳng (§CM-CTA-BANK) · lời mời theo loại bài: THU HÚT lưu hay gửi, NIỀM TIN comment lấy đúng món bài đó hứa, CHUYỂN ĐỔI nhắn riêng với sản phẩm và hạn thật (quà ở trên là mặc định của CHUYỂN ĐỔI); ít nhất 1/4 bài chỉ xin lưu, gửi · comment từ khoá hay cách nhẹ hơn, đúng như họ đã chọn.

@@ -25,7 +25,7 @@ Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed >
 
 <!-- @section launch-plan.grow-brief -->
 ### Launch Brief and the real limits
-1 BRIEF, from what is known, kept with the Card (a Series row, `hub:Kind` Launch): offer (name · promise + its condition, e.g. "if you give it 1 hour a day" · 3 steps · what they get · start) · for (3) · not for (2) · price, payment plan, real next price and date · seats + real reason · hard close (day, time, zone, what turns off) · bonuses (what · real cost · cap or deadline) · process guarantee, never outcome · type, length, day 1, lives · goal · platforms + follow-up route (email or Zalo) · auto-replies y/n · proof, OK per use (posts, ads, case series) · the Map's 3 old beliefs (the method won't work · I can't · no time or money).
+1 BRIEF, from what is known, kept with the Card (a Series row, `hub:Kind` Launch): offer (name · promise + its condition, e.g. "if you give it 1 hour a day" · 3 steps · what they get · start) · for (3) · not for (2) · price, payment plan, real next price and date · seats + real reason · hard close (day, time, zone, what turns off) · bonuses (what · real cost · cap or deadline) · process guarantee, never outcome · type, length, day 1, lives · goal · platforms + follow-up route (email or WhatsApp) · auto-replies y/n · proof, OK per use (posts, ads, case series) · the Map's 3 old beliefs (the method won't work · I can't · no time or money).
 2 Missing: one question per reply, the fact blocking the next piece first; the rest ride as [NEEDS: …] in the pieces.
 3 REAL LIMITS, before any urgency line. One row per limit: what (seats · bonus · close · price step) · real reason · number · public update times · what happens after. Shown as "Your real limits", 3–4 lines, OK'd once.
 4 Each line states four facts, never asked as four questions: the cap is enforced; the deadline turns the link off or the price up; no reopening; counts are updated truthfully. One they correct to "no" drops that limit from the copy; urgency comes from what is left (a real close date is enough).
@@ -35,14 +35,14 @@ Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed >
 
 <!-- @section launch-plan.grow-steps -->
 ### The ten steps (P labels are for you; to the coach say the plain name)
-Follow-up (stories, replies, email or Zalo, ads optional) runs from P1 to P7 as a layer, not a day.
-P0 Listen: where are they stuck? Top 5 objections logged in their words (groups, comments: read-only, §CM-RESEARCH) · question post, story poll, same question by email or Zalo · ask: a real question.
+Follow-up (stories, replies, email or WhatsApp, ads optional) runs from P1 to P7 as a layer, not a day.
+P0 Listen: where are they stuck? Top 5 objections logged in their words (groups, comments: read-only, §CM-RESEARCH) · question post, story poll, same question by email or WhatsApp · ask: a real question.
 P1 Gift: solves one narrow step and shows the next problem the offer solves · demo video, short text post · ask: the keyword (§CM-CTA-KIT); reply 1 = gift + one A/B question + consent line (§CM-LAUNCH-MESSAGES 2).
 P2 Belief shift: the 3 old beliefs in order (the method · I can't · no time or money) · story post, myths carousel · ask: reply with your story.
 P3 Value: one step taught in full, a quick win · ask: try it, tell me.
 P4 Cases and invite: a dated case series, "a week inside"; every number with its context (§CM-LAUNCH-POSTS 5) · invite to the live, class or waitlist.
-P5 Open cart: one complete offer · pinned offer post, FAQ, not-for · link by DM, email or Zalo.
-P6 Follow-up: warm people who haven't acted: stories, 1:1 answers to open questions, email or Zalo, ads (§CM-ADS); never buyers.
+P5 Open cart: one complete offer · pinned offer post, FAQ, not-for · link by DM, email or WhatsApp.
+P6 Follow-up: warm people who haven't acted: stories, 1:1 answers to open questions, email or WhatsApp, ads (§CM-ADS); never buyers.
 P7 Urgency, only from the real limits: seat updates at the listed times, the bonus deadline, the close.
 P8 Close on time: link off, thank-you post, waitlist.
 P9 After: §CM-LAUNCH-DEBRIEF.
@@ -57,6 +57,14 @@ RUNWAY: 4 weeks out: Brief, math, ask 3–5 past clients for an OK · 3: normal 
 Each day prints: date · plain step name · pieces in copy boxes · ask · coach minutes; open and close days (60–120 min) flagged. An urgency piece with no matching real limit becomes a value or FAQ piece.
 DATE CHECK, silent, before printing: each day on the real calendar, against the coach's dates (start, busy days, events) and §CM-LAUNCH-TIMING's holidays; a clash moves the piece, never a real deadline, said in one line. Close ≥3 days before the cohort start, a weekday evening (§CM-LAUNCH-TIMING 2); the coach's own close nearer: keep it, flagged once. No move or STOP (§CM-CAMPAIGNS 4) lands on or past the start. Every timed send keeps quiet hours (§CM-LAUNCH-TIMING 6).
 
+<!-- @section launch-plan.grow-days-short -->
+### Start in under 6 weeks (a cohort that begins soon)
+SHORT PATH, when the start date is under 6 weeks away (RUNWAY + PREP + the calendar don't fit): the same steps, the same checkpoints, a shorter warm-up. Said once, plainly: "Your group starts {date}, so we run the short path: {n} days, closing {close date}."
+1 COUNT BACK from the start: close ≥3 days before it, a weekday evening (§CM-LAUNCH-TIMING 2). Days left before that close = the calendar: 24+ → 14 DAYS (B) · 12–23 → 7 DAYS (A, or D for past buyers) · under 12 → 7 DAYS for the waitlist, past clients and warm DMs only, with no cold ads.
+2 RUNWAY SQUEEZED into the first days: day 1 the Brief, the math, 3–5 past clients asked for an OK · day 2 the gift written and the sign-up form, real limits OK'd · days 1–3 of the calendar written in full before day 1 posts (PREP). Normal weeks in between keep posting, tilted to the launch's big idea.
+3 CHECKPOINTS keep their rule (below the plan to date → ADJUST; under half of it before the open → STOP, §CM-CAMPAIGNS 4), on the shorter calendar's days. A STOP never pushes the close past start −3: founding seats or the next round instead.
+4 Never invent urgency for the short path: the only deadline is the real start date and the real close.
+
 <!-- @section launch-plan.grow-desk -->
 ### Launch mode and the daily Launch Desk
 1 MODES: normal → runway (4 weeks, no selling) → prep (the week before) → launch (the calendar) → cooldown (2 weeks: debrief, testimonials, objections → next month's belief posts) → normal. Launch pieces carry `hub:Phase` Launch.
@@ -67,7 +75,7 @@ DATE CHECK, silent, before printing: each day on the real calendar, against the 
 - up to 3 new questions or objections pasted (no names) → tomorrow's post or FAQ answers them;
 - seat updates at the listed times: the coach gives the number; the machine never changes one itself;
 - one-line flags: a promise due (gift, series part, the coach's threshold), a deadline tonight, a reply window closing.
-4 Messages: auto-replies as §CM-CTA-KIT 7; offers by DM only within 24 hours of their last message, hence the "reply EARLY" step; cart news by email or Zalo to people who said yes (an old list: permission first, §CM-MESSAGES 3).
+4 Messages: auto-replies as §CM-CTA-KIT 7; offers by DM only within 24 hours of their last message, hence the "reply EARLY" step; cart news by email or WhatsApp to people who said yes (an old list: permission first, §CM-MESSAGES 3).
 5 Never ask for phone numbers in public; hide comments that post one; every capture message carries one purpose and consent line (§CM-MESSAGES 3).
 6 A day over 2 hours with no VA: say so once; offer stories only on the light days.
 

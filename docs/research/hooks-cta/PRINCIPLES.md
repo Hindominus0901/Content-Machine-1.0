@@ -44,6 +44,7 @@ The hook raises both; the piece answers them. A hook that answers them itself ("
 - Give me X minutes: "Cho mình 12 phút, mình sửa lý do … không ra tiền" / "10 năm … trong 40 phút"
 - Receipt: "Mình đã …, giờ …(số)"
 - So X that Y: "… nhẹ tới mức khách tự hỏi lịch trống"
+- v13.15 (founder zip test, 11 Oct 2026): two more mandatory frames, belief flip ("Everyone says X, but Y" / "Ai cũng bảo X, thật ra Y") and myth / truth ("Myth: X. Truth: Y." / "Lầm tưởng: X. Sự thật: Y."), so the hook skill's own shapes count as frames. Kit list: §CM-FORMATS 1; examples: HOOKS §CM-HOOK-TITLES 2. The self-check below still applies (a belief the buyer really holds, no bait).
 
 ## Self-check (silent, before printing any hook)
 1. Desire or pain? (not my story)

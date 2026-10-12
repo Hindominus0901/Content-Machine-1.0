@@ -13,7 +13,7 @@ v13.13 (12 Oct, qa/runs/v1312): 1 SOURCE names generalizations and speeds ("most
 
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
-0 FOCUS: one pillar, one type · one idea ≤15 words · one belief ("X → actually Y") · not NOT NOW · the CTA keyword once in the body (topic free) + one ask
+0 FOCUS: one pillar, one type · one idea ≤15 words · one belief (X → actually Y) · not NOT NOW · keyword: one ask + once in the body (topic uses don't count)
 1 SOURCE: each scene, number, name, quote, result, client act, thought, cause → effect, their past, claim on clients, market ("most…", "10 min, done"): from their words, card, a kept research line; quotes exact, same speaker, no padding; else cut. Teaching, examples: yours, listed
 2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}a §CM-FORMATS 1 frame (subject, slide 1), no client name; on-screen: <2 title words{{/if}}
 3 VOICE + BUYER: tone, rhythm, phrases (≥ half; pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once

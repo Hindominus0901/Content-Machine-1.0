@@ -135,7 +135,7 @@ contains = ["Hôm nay mình làm 3 việc", "đúng một điều để khách n
 regex = [
   '''(?i)khoảng (?:25|30) phút''',
   '''(?i)kể chuyện nghề 5[–-]10 phút''',
-  '''Cho mình hỏi trước: gọi bạn là anh, chị hay bạn\? \(gõ 1 chữ là được\)''',
+  '''Mình nên gọi là anh, chị hay bạn cho tiện\?''',
 ]
 not_regex = [
   '(?<!\w)([Cc]hị|[Aa]nh)\s+(bấm|nói|kể|cứ|gõ|xả)(?!\w)',

@@ -15,11 +15,11 @@ Added details: launch pieces carry the line under the piece too (§CM-EDGE): "Ad
 7 CLOSE DAY: 3 posts (morning "last day", noon FAQ, evening "2 hours left") + stories: countdown · seat update · OK'd proof · not-for · question box · last hour · closed + waitlist. Offer post: §CM-LAUNCH-LIVE 3. The coach's own bait lines: §CM-LAUNCH-BRIEF 7.
 
 <!-- @section launch-scripts.grow-messages kind=script -->
-### Launch messages: email, Zalo, DMs
+### Launch messages: email, WhatsApp, DMs
 Opted-in people only; a list never emailed or silent 6+ months gets the permission re-ask + stop line first, never a sale (§CM-MESSAGES 3, §CM-LAUNCH-SEQUENCES); one ask, no guilt; follow-ups carry an exit line; facts from the Brief or [NEEDS: …]; copy boxes, under each only what §CM-EDGE prints, e.g. "{{t:verdict.needs}}"; each message gets the voice pass before print (§CM-HUMANIZE 2). Reply words: one job each for the whole launch, ≤3 besides STOP: the gift keyword · EARLY for the early link · YES only for the permission re-ask; a word the coach already gave another job (an event's reply word) is never reused.
 1 PUBLIC REPLIES under a keyword post: ≥5 short, rotating ("Sent! Check your message requests."), some by hand.
 2 DM REPLY 1, the one automatic reply: the gift + one A/B question that sorts where they are + "I'll only use this to send the material and launch reminders. Reply STOP anytime."
-3 DM REPLY 2, after they answer (the window is open): a 2-minute tip for their answer + the event + "Want a reminder? Leave your email (or Zalo)", with its purpose.
+3 DM REPLY 2, after they answer (the window is open): a 2-minute tip for their answer + the event + "Want a reminder? Leave your email (or WhatsApp)", with its purpose.
 4 EARLY LINK, the day before the cart: "Doors open tomorrow after {event}. Want the link an hour early? Reply EARLY." To each EARLY within 24 hours: the link, what's on the page, the real bonus, "Any question before you decide?"
 5 HUMAN FOLLOW-UP, only to people with an open question: their question, a short answer, the close, "If it's not the right time, no worries."
 6 AFTER THE GIFT, 5 messages in 5 days: gift + who I am + a one-word question · backstory and the wall · the moment it changed · what else it changes + event invite · waitlist + early link. Email: 3 subject lines each.

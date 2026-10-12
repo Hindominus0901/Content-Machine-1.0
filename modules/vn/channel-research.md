@@ -11,7 +11,7 @@ CÁCH ĐỌC theo R0 (§CM-RESEARCH, hỏi một lần, thật sớm): trợ lý
 AI ĐỌC: có trợ lý con → mỗi kênh một cm-researcher (việc TEARDOWN, rồi COMMENTS cũng kênh đó), 3-5 lượt chạy ngầm cùng lúc; cm-listener đếm chủ đề; một trợ lý soát riêng (cm-reviewer hay trợ lý mới) mở lại từng tiêu đề, câu trích; soát số đếm, chỉ ghi vai, phép đếm GIỮ, rồi mới in. Không có trợ lý: mỗi tin một kênh, 3-4 trang, rải suốt buổi hỏi, không bắt coach chờ.
 DÁN, khi không mở được kênh: chiến lược trước, rồi cùng Tuần 1 khung dán một phút ở R0 3 cho video top của kênh; muốn đọc cả kênh, một khung chép: "Mỗi kênh 10 phút: 1 Mở {kênh} trên {nền tảng}. 2 {YouTube: Video → Phổ biến | TikTok: Phổ biến nếu có, không thì lướt ngược 3 tháng | Facebook: Thước phim | Instagram: Reels}. 3 Chụp 10 bài nhiều view nhất 3 tháng qua: tiêu đề hay dòng đầu, số view, ngày. 4 Mở 3 bài đầu, xem comment nổi bật, chép mỗi bài 20 cái, tên đổi thành chữ cái. 5 Dán vào đây, ghi đầu [{kênh} · tháng {tháng}]."
 
-<!-- @section channel-research.grow-teardown src=ddb1ec1082 -->
+<!-- @section channel-research.grow-teardown src=19d9d487f7 -->
 ### C2 Mổ xẻ từng kênh (mỗi lượt một kênh, chỉ đọc, trang công khai)
 1 90 NGÀY GẦN NHẤT, số đếm đúng như trang hiện, không đoán; trang không hiện view → lượt thả cảm xúc + comment, ghi rõ. MỨC THƯỜNG = số ở giữa của ~20 bài gần nhất; BÀI NỔI = từ 3× mức thường trở lên (nói với coach: "{{t:liked.grid_ratio}}", §CM-LIKED). Đọc rõ chưa tới 6 số: không xếp hạng, và nói thẳng như vậy.
 2 TOP 10 theo view, đánh dấu bài nổi. Mỗi bài: tiêu đề hay dòng đầu, nguyên văn (≤{{quote_cap}} {{quote_unit}}, giữ không dấu, teencode) · hook: dáng gần nhất trong §CM-HOOK-LIBRARY (lật niềm tin, đập lầm tưởng, cảnh đời thường, gọi tên, con số, sai lầm, các bước, câu hỏi, lăn tăn, trước → sau, kể chuyện) · định dạng (video ngắn, video dài, carousel, bài chữ, live) · độ dài tính bằng chữ (đếm từ phụ đề hay caption; không có thì ≈210 tiếng mỗi phút video, ghi ≈) · mục đích: THU HÚT, NIỀM TIN hay CHUYỂN ĐỔI (§CM-TIERS) · lời mời (comment từ khoá, link, inbox, "chấm", nhóm Zalo, không có) · view · comment · ngày · link.
@@ -66,7 +66,7 @@ CẦN CÓ, mỗi mục một khối ngắn:
 8 CÂU CÒN BỎ NGỎ và ai trả lời được (coach, một cuộc gọi với khách, một bản dán).
 Không bao giờ viết phần này chỉ từ trí nhớ: chỗ nào chưa đọc ghi "(mình đoán)" kèm cần đọc gì để chắc.
 
-<!-- @section channel-research.grow-niche-file src=b64e1c7dee -->
+<!-- @section channel-research.grow-niche-file src=bb2728cbca -->
 ### C6 NICHE.md: lưu lại, đọc mỗi lần mở chat, làm mới hằng tháng
 KHUÔN, một file, ≤6.000 ký tự, tiêu đề mục ngắn:
 "# NICHE · {ngách} · v{n} · tháng {tháng}

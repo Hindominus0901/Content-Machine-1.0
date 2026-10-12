@@ -116,7 +116,7 @@
 "anchor.launch-days"    = { text = "Lịch 7, 14, 21 ngày", src = "2e2d1c1cff" }
 "anchor.launch-desk"    = { text = "Chế độ mở bán và Bàn mở bán", src = "ef93046f0b" }
 "anchor.launch-posts"   = { text = "Bài và video mở bán", src = "fdb7313b50" }
-"anchor.launch-messages" = { text = "Tin Zalo, inbox, email", src = "989e8a1ff1" }
+"anchor.launch-messages" = { text = "Tin Zalo, inbox, email", src = "4f26ea2099" }
 "anchor.launch-live"    = { text = "Buổi live, lớp Zalo và bài mời", src = "9ddaa6edfe" }
 "anchor.launch-debrief" = { text = "Sau khi đóng đăng ký", src = "49616f6992" }
 "anchor.ads"            = { text = "Quảng cáo từ bài đã chạy tốt", src = "12fa347f37" }
@@ -174,7 +174,7 @@
 "anchor.objections" = { text = "Kho lăn tăn", src = "9f691ce7fb" }
 "anchor.launch-faq" = { text = "Soạn hỏi đáp", src = "1990950929" }
 "anchor.sales-page" = { text = "Sườn trang bán", src = "3a9e99f954" }
-"anchor.launch-sequences" = { text = "Tin Zalo, email và inbox trong đợt", src = "afd5b999f2" }
+"anchor.launch-sequences" = { text = "Tin Zalo, email và inbox trong đợt", src = "bcd4cdd60a" }
 "anchor.run-of-show" = { text = "Buổi live từng phút", src = "281a76ef85" }
 "anchor.live-selling" = { text = "Live chốt lớp, nhóm Zalo, chấm", src = "8269fd221c" }
 "anchor.launch-timing" = { text = "Giờ, ngày, mùa trong năm", src = "63a9a6b932" }

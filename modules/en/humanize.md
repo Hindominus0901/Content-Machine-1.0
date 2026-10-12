@@ -13,7 +13,7 @@ PASS on every piece before it prints; in full on "{{t:cmd.voice}}", "more human"
 4 One line that says what they believe. One ask, at the end, on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
 6 Never changes: facts, numbers, a client's quoted words, comment word, gift, a required results line, real caps, dates, lines they asked to keep. Never copy a source's or these files' lines.
-7 MATERIAL, LENGTH, counted silently. Fewer real stories than filmed slots → a video turns written, or first one story-first question (§CM-REPURPOSE 5); never padded. Under the band (short video 500, long post 950, long video 1,000 words) → a scene they told, then teaching or an example framed as one, each video its own device; a paragraph with a line not theirs → "Added by me" (§CM-EDGE); over ~30% of a video → written, or ask for a story. Recount, re-run CLAIMS.
+7 MATERIAL, LENGTH, counted silently, Day 0's piece too. Fewer real stories than filmed slots, or added paragraphs over ~30% of a video → it turns written, or first one story-first question (§CM-REPURPOSE 5); never padded. Under the band (short video 500, long post 950, long video 1,000 words) → a scene they told, then teaching or an example framed as one, each video its own device; a paragraph with a line not theirs → "Added by me" (§CM-EDGE). Recount, re-run CLAIMS.
 Reprint only the reworked piece. "What did you change?": 2-3 plain lines, no codes.
 
 <!-- @section humanize.kit-lists -->

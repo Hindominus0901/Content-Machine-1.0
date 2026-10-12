@@ -180,7 +180,7 @@ sections = ["launch-plan.grow-steps"]
 
 [[levelup.launch.anchor]]
 id = "LAUNCH-DAYS"
-sections = ["launch-plan.grow-days"]
+sections = ["launch-plan.grow-days", "launch-plan.grow-days-short"]
 
 [[levelup.launch.anchor]]
 id = "LAUNCH-DESK"
@@ -406,7 +406,7 @@ sections = ["hook-library.grow-short"]
 
 [[levelup.hooks.anchor]]
 id = "HOOK-TITLES"
-sections = ["hook-library.grow-titles"]
+sections = ["hook-library.grow-titles", "hook-library.grow-titles-belief"]
 
 [[levelup.hooks.anchor]]
 id = "HOOK-TEXT"

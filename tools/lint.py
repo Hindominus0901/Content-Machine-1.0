@@ -685,7 +685,8 @@ class Linter:
                 if not isinstance(spec, dict) or "default" not in spec:
                     self.add("E161", path, f"[pending] {key} needs {{ default = ..., reason = \"...\" }}")
             self.check_skill_name(cfg["skill_name"], path, "skill_name")
-            params = data.get("params") if isinstance(data.get("params"), dict) else {}
+            params = cmlib.build_params(data.get("params") if isinstance(data.get("params"), dict) else {},
+                                        self.root)
             pending = data.get("pending") if isinstance(data.get("pending"), dict) else {}
             self.editions[ed_id] = cmlib.Edition(id=ed_id, lang=cfg["lang"], cfg=cfg, params=params,
                                                  pending=pending, strings={}, string_src={})

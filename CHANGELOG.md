@@ -4,6 +4,23 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.15] - 2026-10-12 (v13.15)
+
+Fixes from the founder's zip test (EN sleep coach, VN finance coach).
+
+### Changed
+- [buyer] The Brand Card shows the pack's real version (it said 1.3.10 since v13.10).
+- [buyer] A thin first conversation no longer gets a padded video: with no full story for a 500-word script, Day 0's piece is a written post (POST TODAY) or one question asking for a story first.
+- [buyer] Health, sleep, nutrition, fitness, mental-health and money results carry "individual result, not a promise"; no cure or diagnosis claims; baby and child sleep or safety tips come only from your own pediatric source or a doctor.
+- [buyer] New hook shapes count as frames: "Everyone says X, but Y" and "Myth: X. Truth: Y."
+- [buyer] A launch whose start is under 6 weeks away gets a short path: fewer warm-up days, the same checkpoints, no invented urgency.
+- [buyer] English edition: WhatsApp or DM follow-ups next to email; no Vietnam-only defaults.
+- [buyer] Vietnamese edition: a natural pronoun question in reply 1, a voice tip, and a sensible default when the question is skipped.
+- Kit: `{{pack_version}}` build param from VERSION (`tools/cmlib.py` build_params; `tools/tests/test_pack_version.py` bans literals); thin rule covers FILM TODAY (§CM-TODAY 1, §CM-HUMANIZE 7, block step 5/6); §CM-GUARDRAILS health line; keyword wording "once as the ask, once in the body, topic mentions don't count" (Ship Check 0, §CM-WEEK 4); §CM-FORMATS 1 / §CM-PACKAGING 2 frames; VN particle example moved to COPY §CM-COPY-VOICE 2 (VN method budget).
+- Level-ups: HOOKS section hook-library.grow-titles-belief (§CM-HOOK-TITLES); LAUNCH section launch-plan.grow-days-short (§CM-LAUNCH-DAYS), CAMPAIGNS pointer; EN Zalo → WhatsApp/DM.
+- Plugin: cm-researcher `tools: WebSearch, WebFetch, Read, Grep, Glob`; cm-reviewer SEVERITY (hard stop vs fix) and ONE ROUND; cm-writer thin check before drafting, health rules, no second round; agents print no first line or NEXT; companions share one first-line format and the Day-0 no-card rule.
+- Evals: guardrails.en.069, guardrails.vn.069 (health guard); VN reply-1 question regex updated. DECISIONS: v13.15 entry, the tiếng-vs-words cap reason.
+
 ## [1.3.14] - 2026-10-11 (v13.14)
 
 Fixes from the v13.13 simulated runs (qa/runs/v1313).

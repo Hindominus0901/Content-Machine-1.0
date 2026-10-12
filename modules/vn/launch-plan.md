@@ -23,7 +23,7 @@ số người cần = số suất ÷ tỉ lệ chốt; tệp ấm = chỉ nhữn
 Chưa có số → [CẦN {XƯNG HÔ}: …], một câu; không mượn tỉ lệ "trong ngành". Cần nhiều hơn cả tệp ấm → nói một dòng, coach chọn: A ít suất hơn, hay hâm tệp 4 tuần trước.
 5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS), và thẻ từng ngày của chiến dịch nếu đã có phần CAMPAIGNS (file, hay skill cm-campaigns khi dùng plugin; §CM-CAMPAIGNS). Không hứa bán hết suất.
 
-<!-- @section launch-plan.grow-brief src=55c20c4ad2 -->
+<!-- @section launch-plan.grow-brief src=eda59b4a76 -->
 ### Hồ sơ mở bán và giới hạn thật
 1 HỒ SƠ, từ điều đã biết, lưu kèm Card (dòng Series, `hub:Kind` Launch): sản phẩm (tên · lời hứa + điều kiện · 3 bước · nhận gì · ngày bắt đầu) · dành cho (3), không dành cho (2) · giá công khai, trả góp, giá đợt sau thật, từ ngày nào · suất + lý do thật · giờ đóng (ngày, giờ, cái gì tắt) · quà (là gì · chi phí thật · giới hạn hay hạn; ≤50% giá khoá) · cam kết cách làm, không cam kết kết quả · kiểu, số ngày, ngày 1, buổi live · mục tiêu · kênh, đường chăm (Zalo, email) · trả lời tự động · bằng chứng, được dùng ở đâu (bài, quảng cáo, series) · 3 niềm tin cũ trên Bản đồ.
 2 Thiếu: mỗi tin một câu, hỏi điều đang chặn bài kế trước; còn lại để [CẦN {XƯNG HÔ}: …] trong bài.
@@ -33,7 +33,7 @@ Chưa có số → [CẦN {XƯNG HÔ}: …], một câu; không mượn tỉ l�
 6 Thiếu thì lùi một bước: chưa có bằng chứng khách → kiểu A, không series; suất không lý do → không nêu suất; không giờ đóng → không đếm ngược, "đợt sau khai giảng {ngày}"; số thiếu bối cảnh → kể quy trình; khách chưa cho dùng ở chỗ đó → bỏ; chưa có danh sách → tin inbox 1 xin Zalo + bài "nhắn mình để nhận link"; quảng cáo từ trang cá nhân → §CM-ADS 4.
 7 Câu mồi coach tự chọn giữ nguyên văn, một dòng lưu ý (§CM-CTA-KIT 6): "50 slot trải nghiệm ai muốn?", "Chấm q.t mình hướng dẫn 👇", "Đủ 100 comment UP …". Số slot là giới hạn thật, qua mục 4 (đủ người → bài sau báo đủ; không giữ đúng số → mục 5); ngưỡng comment là lời hứa Bàn mở bán theo dõi, không bịa số. "Hữu duyên" chỉ là giọng, một lần.
 
-<!-- @section launch-plan.grow-steps src=2354ffd6f8 -->
+<!-- @section launch-plan.grow-steps src=9313bfdbd3 -->
 ### Mười chặng (nhãn P để máy dùng; với coach gọi tên thường)
 Chăm lại (story, trả lời, Zalo, email, quảng cáo) chạy suốt P1–P7, không phải một ngày.
 P0 Dò sóng: khách kẹt ở đâu? Ghi 5 lăn tăn hay gặp, đúng chữ khách (nhóm, comment: chỉ đọc, §CM-RESEARCH) · bài hỏi, story bình chọn, hỏi y vậy qua Zalo · mời: một câu hỏi thật.
@@ -57,7 +57,15 @@ HÂM TỆP: còn 4 tuần: hồ sơ, tính số, xin 3–5 khách cũ cho kể �
 Mỗi ngày in: thứ, ngày · tên chặng lời thường · bài trong khung chép · lời mời · phút của coach; ngày mở, ngày đóng (60–120 phút) báo trước. Bài hối thúc không khớp giới hạn thật → thành bài giá trị, hỏi đáp.
 SOÁT NGÀY, làm thầm trước khi in: đặt từng ngày trong mẫu lên lịch thật, so với ngày của chính coach (ngày khai giảng, ngày bận, ngày họ đã kể) và ngày lễ ở §CM-LAUNCH-TIMING (20/10, 20/11, Tết); trùng thì dời bài, không dời hạn thật, báo một dòng. Ngày đóng cách ngày khai giảng ≥3 ngày, vào tối ngày thường (§CM-LAUNCH-TIMING); hạn coach tự chốt cách khai giảng <3 ngày: giữ hạn, báo một dòng, một lần. Phương án dời hay DỪNG (§CM-CAMPAIGNS 4) không bao giờ rơi vào hay qua ngày khai giảng. Mọi tin hẹn giờ giữ giờ yên (§CM-LAUNCH-TIMING 5).
 
-<!-- @section launch-plan.grow-desk src=ae578025ec -->
+<!-- @section launch-plan.grow-days-short src=fa0e0e6303 -->
+### Còn dưới 6 tuần là khai giảng
+ĐƯỜNG NGẮN, khi từ nay tới ngày khai giảng dưới 6 tuần (HÂM TỆP + CHUẨN BỊ + lịch không vừa): đủ các chặng, đủ các mốc soát, chỉ rút ngắn phần hâm tệp. Nói một lần, lời thường: "Lớp của {xưng hô} khai giảng {ngày}, nên {tự xưng} chạy đường ngắn: {n} ngày, đóng {ngày đóng}."
+1 ĐẾM NGƯỢC từ ngày khai giảng: đóng trước đó ≥3 ngày, một tối trong tuần (§CM-LAUNCH-TIMING 2). Số ngày còn tới hôm đóng quyết lịch: từ 24 → 14 NGÀY (B) · 12–23 → 7 NGÀY (A, hay D cho khách cũ) · dưới 12 → 7 NGÀY chỉ cho danh sách chờ, khách cũ, người đã nhắn, không chạy quảng cáo lạnh.
+2 HÂM TỆP dồn vào mấy ngày đầu: ngày 1 hồ sơ, tính số, xin 3–5 khách cũ cho kể · ngày 2 xong quà, form đăng ký, chốt giới hạn thật · ngày 1–3 của lịch viết đủ chữ trước khi đăng bài ngày 1 (CHUẨN BỊ). Những ngày thường xen giữa vẫn đăng, lái dần về ý lớn của đợt.
+3 MỐC SOÁT giữ nguyên luật (dưới kế hoạch tới hôm đó → CHỈNH; chưa mở mà dưới một nửa → DỪNG, §CM-CAMPAIGNS 4), đặt theo ngày của lịch ngắn. DỪNG không bao giờ đẩy ngày đóng quá khai giảng −3: chuyển sang suất nhóm đầu hay đợt sau.
+4 Không bịa gấp gáp cho đường ngắn: hạn duy nhất là ngày khai giảng thật và giờ đóng thật.
+
+<!-- @section launch-plan.grow-desk src=5da5e88d08 -->
 ### Chế độ mở bán và Bàn mở bán mỗi ngày
 1 CHẾ ĐỘ: bình thường → hâm tệp (4 tuần, chưa bán) → chuẩn bị (tuần trước) → mở bán (theo lịch) → hạ nhiệt (2 tuần: nhìn lại, xin cảm nhận, lăn tăn thành bài tháng sau) → bình thường. Bài trong đợt mang `hub:Phase` Launch.
 2 Tác vụ hẹn giờ trong đợt: các lời nhắc hằng tuần tạm dừng, chỉ còn tác vụ "Ngày mở bán" chạy Bàn này mỗi ngày (§CM-NUDGE-RULES 6); bài viết xoay quanh lăn tăn mới nhất (chủ đề khác tạm nghỉ, giữ 1 bài đồng cảm/tuần); soát số thứ Sáu thành bảng điểm (từng chặng, kế hoạch so với thực tế). Hạ nhiệt thì trả lại như cũ.

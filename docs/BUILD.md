@@ -133,6 +133,7 @@ Prose and templates use one small, deterministic syntax. No Jinja.
 | Syntax | Meaning |
 |---|---|
 | `{{param}}` | Edition param from `[params]`, or `[edition]` fields (`{{name}}`, `{{skill_name}}`) |
+| `{{pack_version}}` | The pack's VERSION, filled by the build (`cmlib.build_params`); used in the Brand Card's machine block. Never write a version literal in prose (`tools/tests/test_pack_version.py`) |
 | `{{t:key}}` | The edition's string for `key` (EN text, or VN `text`) |
 | `{{#if flag}}…{{else}}…{{/if}}` | Keep a branch by flag. Flags are the edition id (`en`, `vn`), the target (`kit`, `phone`, `method`, `grow`, `skill`, `task`, `help`, `site`) and the extra build flags (`connected`, `standalone`). `{{#if a,b}}` means a OR b. Blocks may nest |
 | `{{#unless flag}}…{{/unless}}` | The inverse |

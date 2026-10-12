@@ -16,7 +16,7 @@ Máy tự thêm: bài mở bán cũng có dòng dưới bài (§CM-EDGE): "Máy 
 6 CAROUSEL NGỘ NHẬN (P2), 6 trang: mỗi niềm tin cũ một trang: lầm tưởng · sự thật · làm ngay hôm nay · cái thật sự làm đa số kẹt lại · lưu lại + lời mời.
 7 NGÀY ĐÓNG: 3 bài (sáng "ngày cuối", trưa hỏi đáp, tối "còn 2 tiếng") + story: đếm ngược · suất · bằng chứng được phép · không hợp với ai · hộp câu hỏi · giờ cuối · đã đóng + danh sách chờ. Bài mời: §CM-LAUNCH-LIVE 3. Câu mồi coach tự chọn: §CM-LAUNCH-BRIEF 7.
 
-<!-- @section launch-scripts.grow-messages kind=script src=21937424fd -->
+<!-- @section launch-scripts.grow-messages kind=script src=731dc2b1c6 -->
 ### Tin mở bán: Zalo, inbox, email
 Chỉ gửi người đã đồng ý; danh sách chưa từng nhận email hay im 6 tháng: email đầu là thư xin phép lại kèm dòng dừng, không bán (§CM-MESSAGES 3, §CM-LAUNCH-SEQUENCES); mỗi tin một lời mời, không làm khách áy náy; tin nhắc có lối ra (như mục 5); số liệu từ hồ sơ hay [CẦN {XƯNG HÔ}: …]; tin 1:1 xưng số ít theo Card; tin nào cũng qua lượt giọng trước khi in (§CM-HUMANIZE 2: tiểu từ, chữ hay nói như Card); khung chép; dưới khung chỉ những gì §CM-EDGE in, vd "{{t:verdict.needs}}". Chữ trả lời: mỗi chữ một việc suốt đợt, tối đa 3 chữ ngoài DỪNG: từ khoá quà · SỚM cho link sớm · CÓ chỉ cho thư xin phép lại; chữ coach đã giao việc khác (chữ trả lời của buổi live) thì không dùng lại.
 1 TRẢ LỜI DƯỚI BÀI có từ khoá: ≥5 câu ngắn xoay vòng, xưng theo người comment, vài câu gõ tay.

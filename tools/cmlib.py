@@ -167,6 +167,17 @@ def load_strings(edition_id: str, root: Path | None = None) -> tuple[dict[str, s
     return texts, srcs
 
 
+def build_params(params: dict, root: Path | None = None) -> dict:
+    """An edition's [params] plus the build-filled ones: {{pack_version}} (Brand Card machine block) is the
+    pack's VERSION file, never a literal in prose (v13.15; tools/tests/test_pack_version.py)."""
+    root = root or ROOT
+    out = dict(params)
+    version_file = root / "VERSION"
+    if "pack_version" not in out and version_file.exists():
+        out["pack_version"] = version_file.read_text(encoding="utf-8").strip()
+    return out
+
+
 def load_edition(edition_id: str, root: Path | None = None) -> Edition:
     root = root or ROOT
     data = load_toml(root / "editions" / f"{edition_id}.toml")
@@ -175,11 +186,12 @@ def load_edition(edition_id: str, root: Path | None = None) -> Edition:
         if key not in cfg:
             raise CMError("E161", f"[edition] missing key '{key}'", f"editions/{edition_id}.toml")
     texts, srcs = load_strings(edition_id, root)
+    params = build_params(data.get("params", {}), root)
     return Edition(
         id=cfg["id"],
         lang=cfg["lang"],
         cfg=cfg,
-        params=data.get("params", {}),
+        params=params,
         pending=data.get("pending", {}),
         strings=texts,
         string_src=srcs,

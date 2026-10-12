@@ -38,7 +38,7 @@ DANH SÁCH VÀ TIN NHẮN (§CM-COPY-LISTS): DANH SÁCH CÓ SỢI CHỈ "N ý, m
 3 Ví dụ trong các phần này là dựng ra để thấy dáng, mỗi nhịp một dòng; không đăng, không lấy làm dữ kiện. Trong bài thật, chỗ nào cũng là của coach: cảnh trong lời xả, con số của họ, kết quả khách đã đồng ý cho kể.
 4 Kiểm thầm sau khi viết: mỗi nhịp gọi tên được bằng một chữ không? Nhịp nào cũng cần nhịp trước nó không? Chỉ một niềm tin? Câu khẳng định nào cũng có bằng chứng hay chuyện thật của chính coach? THU HÚT: người xem có chuyển cho nhau không? NIỀM TIN: khách có thấy coach nghĩ thế nào không? CHUYỂN ĐỔI: khách có biết bước tiếp theo không?
 
-<!-- @section copywriting.grow-stories src=a411a06963 -->
+<!-- @section copywriting.grow-stories src=e7f3e7c5d2 -->
 ### Khung chuyện: chuyện năm dòng, chuyện một bài học, câu kéo câu (hợp lúc nào · nhịp và số chữ · ví dụ dựng ra · hỏng khi)
 CHUYỆN NĂM DÒNG · THU HÚT, NIỀM TIN · video ngắn, bài ngắn, caption, story; khung chuyện mặc định của Tuần 1.
 Nhịp (video ngắn ≈600): khoảnh khắc trong đời khách, để khách thấy mình trong đó ≈100 · chỗ vướng: đã thử gì, vì sao không ăn thua, kèm một chi tiết ≈120 · mình thấy ra: bước ngoặt, bằng một việc làm hay một đồ vật ≈120 · cái đổi: cách mới và một dữ kiện ≈150 · "tới lượt bạn": một bước nhỏ, rồi lời mời khép câu bỏ ngỏ ≈60. Bài ngắn: năm đoạn, mỗi đoạn ≈50 tiếng.
@@ -83,7 +83,7 @@ Nhịp (quảng cáo ≈150 tiếng, email ≈300): dừng: gọi đúng ngườ
 VD: Anh chị kế toán còn đi đòi chứng từ từng khách qua Zalo: · hoá đơn thiếu đa phần không mất, chỉ là không ai xin đúng lúc. · Một tin hẹn sẵn ngày 25, cuối tháng chứng từ về đủ. · Nhắn ĐÒI CHỨNG TỪ, mình gửi mẫu tin.
 Hỏng khi: "Nhanh tay lên!" mà không lý do; "muốn" dựng bằng tính từ; thiếu nhịp tò mò (câu nào cũng hét).
 
-<!-- @section copywriting.grow-proof src=0711fe907b -->
+<!-- @section copywriting.grow-proof src=edf0664e69 -->
 ### Khung bằng chứng: mổ xẻ quyết định, gỡ băn khoăn, bài mời mua
 MỔ XẺ QUYẾT ĐỊNH · CHUYỂN ĐỔI (khung chốt mạnh nhất), NIỀM TIN · video ngắn, bài dài, một phần video dài, carousel. Chỉ khách thật đã đồng ý bằng chữ (§CM-PROOF-BANK); không gộp nhiều khách thành một người.
 Nhịp (video ngắn ≈700; bài dài ≈1.000 thì mỗi nhịp nhân ≈1,4): lúc khách kẹt, lời họ nói ≈100 · họ bắt đầu từ đâu ≈100 · họ từng tin gì ≈80 · quyết định làm đổi mọi thứ ≈150 · các bước ≈150 · kết quả kèm hoàn cảnh và "{{t:claims.individual}}" ≈60 · hợp ai, không hợp ai ≈40 · lời mời ≈20.
@@ -110,7 +110,7 @@ Nhịp: mở ≈120: bằng chứng (một dữ kiện của họ), lời hứa 
 VD: "Nếu phải lấp kín lịch từ con số 0": bằng chứng (số năm, số khách của họ) · các phần: nói với ai, nói gì, nói ở đâu, mời thế nào · câu bỏ ngỏ: "câu hỏi cho biết khách này có mua hay không".
 Hỏng khi: câu móc chỉ là "nhớ xem hết video"; các phần không theo thứ tự nào (không có sợi chỉ); độn chữ cho đủ 1.000.
 
-<!-- @section copywriting.grow-lists src=24f5079f4c -->
+<!-- @section copywriting.grow-lists src=c4dd63eaf6 -->
 ### Danh sách có sợi chỉ, tin ngắn
 DANH SÁCH CÓ SỢI CHỈ · THU HÚT, NIỀM TIN · carousel, bài ngắn, video ngắn, bài dạng danh sách trên LinkedIn. Sợi chỉ: một niềm tin mà ý nào cũng phục vụ, nói ra một lần gần cuối; xếp tăng dần, ý hay nhất để cuối.
 Nhịp (video ngắn ≈550, carousel 10–12 trang): câu mở có đúng số ý và kết quả, ≤18 tiếng · vì sao có danh sách này, một dữ kiện của coach ≈30 · từng ý: đầu ý 2–5 chữ + một dữ kiện của coach + vì sao, mỗi ý ≈60–90, ý nào cũng đứng riêng được · ý trả lời câu mở, để cuối · sợi chỉ một câu ≈20 · lời mời ≈30.
@@ -121,7 +121,7 @@ Nhịp (email ≈300 tiếng): tiêu đề bằng chữ khách, giải đáp tro
 VD: Email tiêu đề "cái báo giá mình không gửi" · 11 giờ đêm thứ Sáu, bản báo giá để giá thấp · báo giá gửi lúc mệt là báo giá gửi lúc sợ · nhắn lại mình hôm nào gửi. Zalo: "Thấy chị đang làm thực đơn đặt tiệc. Khách bên chị hay đặt theo suất hay theo mâm ạ?"
 Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy bạn xem tin rồi"; làm người ta áy náy.
 
-<!-- @section copywriting.grow-cuts src=7122fa7675 -->
+<!-- @section copywriting.grow-cuts src=84a7386740 -->
 ### Chất liệu một tuần, bảy bài ("mỗi ngày 1 bài", "cắt ra nhiều dạng", "từ một chuyện ra nhiều bài", "đăng đều mỗi ngày")
 1 CHẤT LIỆU, lấy từ mọi nguồn: đoạn xả và câu trả lời buổi nói chuyện (§CM-TALK) · tài liệu coach đưa (file, bài cũ, bản ghi lời, ghi chú, slide, lời khen khách họ gửi) · chuyện, bằng chứng trong kho (§CM-STORY-BANK, §CM-PROOF-BANK) · nghiên cứu của máy, chỉ dòng đã GIỮ: chữ khách, chủ đề bình luận, mổ kênh, ghi chú về ngách (§CM-RESEARCH-BANK, §CM-CHANNELS, §CM-NICHE) · kênh, bài coach thích hay theo dõi: chỉ mượn dáng, không chép (§CM-LIKED). Dữ kiện (số, kết quả, lời khách, sự việc) chỉ lấy từ coach, card hay tài liệu của họ; dòng nghiên cứu là tiếng nói khách theo vai, không phải bằng chứng; chuyện của người làm nội dung khác không bao giờ thành chuyện của coach. Mỗi ngày 1 bài, 7 bài một tuần, cắt từ đó ra nhiều kiểu bài; số giờ quyết định mấy bài phải quay (§CM-CALENDAR 2), còn lại không cần quay.
 2 CÁC KIỂU BÀI, độ dài · phút của coach (máy viết hết): video ngắn 500–800 chữ · ≈20 (quay ≈10, đọc, đăng) · bài dài ≈1.000 chữ · ≈10 · carousel 10–12 trang · ≈15 · bài ngắn 250–450 tiếng · ≈5 · ảnh trích câu, một câu của coach ≤30 tiếng · ≈10 · story hay bình chọn 3–5 khung, mỗi khung ≤35 tiếng · ≈5 · tin Zalo ≤150 tiếng hay email ≤375 · ≈5 · video dài 1.000–1.500 chữ · ≈3 tiếng.
@@ -198,7 +198,7 @@ Hai chất liệu, 7 bài, 6 dạng; ý bỏ tập gam ra 4 bài, mỗi bài m�
 <!-- @section copywriting.grow-voice src=c56e58a023 -->
 ### Thuyết phục mà vẫn nói như người Việt
 1 Xưng hô: một cặp từ dòng đầu tới dòng cuối, theo Card, coach xưng mình hay tôi ("mình – bạn", "mình – các mẹ", "tôi – anh chị"); không trôi mình → tôi → chúng tôi; tin riêng gọi một người ("chị", "anh"), không "các bạn". Lời khách trích nguyên văn giữ cách xưng của họ.
-2 Tiểu từ: đúng chữ và tỉ lệ trên Card, lấy từ chính bài của coach (giọng Nam: nha, nghen, hen, không nhé, nhỉ, đấy), đặt ở câu mời, câu dặn cho mềm; "dạ", "ạ" khi nhắn khách lớn tuổi; không ba câu liền một tiểu từ. Câu nêu bằng chứng thì nói thẳng, khỏi tiểu từ.
+2 Tiểu từ: đúng chữ và tỉ lệ trên Card, lấy từ chính bài của coach (giọng Nam: nha, nghen, hen, không nhé, nhỉ, đấy), đặt ở câu mời, câu dặn cho mềm; "dạ", "ạ" khi nhắn khách lớn tuổi; không ba câu liền một tiểu từ. Câu nêu bằng chứng thì nói thẳng, khỏi tiểu từ. Card Nam 40%: TRƯỢT (0/4) "Tập xong uống nước. Đừng ăn liền. Bụng còn mỏi. Nghỉ chút." → ĐẠT (2/4) "Tập xong uống nước nha. Đừng ăn liền. Bụng còn mỏi á. Nghỉ chút."
 3 Nhịp nói: chủ đề trước rồi "thì / là / mà" ("Báo giá thì đừng gửi lúc 11 giờ đêm."); bỏ chủ ngữ đã rõ; câu ngắn, một hơi; nối bằng rồi, xong, mà, nên, thế là, hoá ra, có điều. Kịch bản không "Tuy nhiên", "Do đó", "Bên cạnh đó".
 4 Bỏ chữ quảng cáo dịch: "Hãy cùng khám phá", "bí mật", "bí quyết thành công", "Bạn đã bao giờ…", "Hãy tưởng tượng…", "Bạn có biết rằng…", "giải pháp tối ưu", "thay đổi cuộc đời", "bùng nổ doanh số", "đột phá", "cơ hội có một không hai", "đừng bỏ lỡ", "số lượng có hạn" (có hạn thật thì nói số và lý do), "ib để biết giá", chữ thổi phồng (đỉnh cao, siêu, cực kỳ, vô cùng).
 5 Lời mời kiểu Việt: một việc, nói như rủ ("Ai cần thì comment BẢNG TÍNH" + tiểu từ theo Card), luôn có đường cho người ngại ("ngại thì nhắn riêng mình"), bài bán thì ghi giá.
