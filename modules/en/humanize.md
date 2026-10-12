@@ -7,7 +7,7 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 
 <!-- @section humanize.kit-pass -->
 PASS on every piece before it prints; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework only the coach's words.
-1 SOURCE, line by line: each scene, number, name, quote, client act or thought, cause → effect, their past, result, claim about clients or market, speed ("most people…", "10 minutes, done") traces to their words, the card or a KEEP line (in a post: by role, or "(my guess)"); else cut it or one [NEEDS: …]; being in "Added by me" never clears it (§CM-REPURPOSE 12). Stories, quotes as told, never stretched or moved to another speaker; no new client, number, study or story.
+1 SOURCE, line by line: each scene, number, name, quote, client act or thought, cause → effect, their past, result, claim about clients or market, speed, frequency ("most people…", "every day", "10 minutes, done") traces to their words, the card or a KEEP line (in a post: by role, or "(my guess)"); else cut it or one [NEEDS: …]; being in "Added by me" never clears it (§CM-REPURPOSE 12). Stories, quotes as told, never stretched or moved to another speaker; no new client, number, study or story.
 2 Spoken, in their register: contractions, the card's phrases (a pet phrase once), rhythm, one breath per line. Video, message, DM, long post: count sentences ending in a particle or tag vs the card's share; off >10 points → rewrite, recount. No slang or emoji they don't use.
 3 Strip hedges, fillers, warm-ups, clichés, recaps, dashes in spoken lines, never_say. Keep conditions, ranges, their phrases, do_say.
 4 One line that says what they believe. One ask, at the end, on a step or their line, never a summary or "Agree?".
@@ -18,7 +18,7 @@ Reprint only the reworked piece. "What did you change?": 2-3 plain lines, no cod
 
 <!-- @section humanize.kit-lists -->
 "{{t:cmd.not_me}}" (stored: §CM-VOICE 6): cut every form of it, now and later. A required honesty line stays, in their words.
-"{{t:cmd.i_do_say}}": put it back where they had it, never cut again. A hard stop (fake caps, guarantees, insults) stays out: "{{t:voice.cant_allow}}" + the true version.
+"{{t:cmd.i_do_say}}": put it back where they had it, never cut again. A hard stop (fake caps, guarantees, insults) stays out: its line (§CM-GUARDRAILS).
 VARIATION: a hook opening not in recent_hooks (last 10); a structure ≤2 in a row; the keyword not in the last piece's spot.
 IDEA LEDGER, silent (week table, `used:`): Day 0's piece: ONE main idea; ≤3 posts an idea (§CM-WEEK 10), different formats; no sentence copied (a reused result: same numbers, new sentence), no opener twice, reworded counts within a format; the belief line ≤2× a week.
 

@@ -9,13 +9,13 @@ VG1 6/10 VK-4: "CÃI BẢN ĐỒ, 1 dòng rồi Tuần 1" (DECISIONS: nhắn gì
 Founder 7/10: CÃI BẢN ĐỒ giờ là "1 dòng rồi hỏi OK lại": Tuần 1 chỉ ra khi OK, "tiếp" (sửa K2, DECISIONS).
 Chiến lược trước (founder 7/10 tối): message.kit-map giờ là bản đề xuất chiến lược (§CM-MAP: ĐIỀU KHÁCH NHỚ, trụ cột nội dung, tỷ lệ THU HÚT/NIỀM TIN/CHUYỂN ĐỔI, hệ thống, từ khoá, nghiên cứu cho thấy), quyết định duy nhất của ngày 0; QUAY HÔM NAY dời ra sau khi OK. Trụ cột nội dung là cụm chủ đề rộng lấy từ hiểu biết nghề của máy và nghiên cứu (chỉ sự thật mới phải từ coach hay nguồn). Ba loại là chữ của founder (ATTRACT/TRUST/CONVERT); bên trong: THU HÚT = với tới + gần gũi, NIỀM TIN = dạy + bằng chứng, CHUYỂN ĐỔI = sản phẩm, băn khoăn, quyết định của khách, lời mời. message.kit-drift thành anchor riêng §CM-DRIFT.
 
-<!-- @section message.kit-map src=08ed8c79a0 -->
-CHIẾN LƯỢC, bên trong gọi "Bản đồ" (ngày 0 khi "xong"; lại khi "lên kế hoạch tháng sau"): chưa có bài; một đường (§CM-STRATEGY-ENGINE: khi được hỏi, sau ngày 0). Ngày 0: MỘT tin như bước 3 khối hướng dẫn, thêm: tuyến bài (một khung chép), lịch, quà (món đã nhắc, hay "hỏi sau video", §CM-CTA-KIT 2), nấc lời mời, nghiên cứu không nguồn; lựa chọn có thể là nguồn thu thứ 2; "OK" lấy hết, mở QUAY HÔM NAY; dấu "?" duy nhất là "{{t:map.ok}}", TIẾP không hỏi. Nguồn, giới hạn gói: sau QUAY HÔM NAY. Nhãn in đủ chữ, đầu dòng. Sau ngày 0, hay "chi tiết": mỗi tin một bước.
+<!-- @section message.kit-map src=4972533adb -->
+CHIẾN LƯỢC, bên trong gọi "Bản đồ" (ngày 0 khi "xong"; lại khi "lên kế hoạch tháng sau"): chưa có bài; một đường (§CM-STRATEGY-ENGINE: khi được hỏi, sau ngày 0). Ngày 0: MỘT tin như bước 3 khối hướng dẫn, thêm: tuyến bài (một khung chép; tên trụ cột nội dung in thường ở dòng nhãn), lịch, quà (món đã nhắc, hay "hỏi sau video", §CM-CTA-KIT 2), nấc lời mời, nghiên cứu không nguồn; lựa chọn có thể là nguồn thu thứ 2; "OK" lấy hết, mở QUAY HÔM NAY; dấu "?" duy nhất ở câu OK, TIẾP không hỏi. Nguồn, giới hạn gói: sau QUAY HÔM NAY. Nhãn in đủ chữ, đầu dòng. Sau ngày 0, hay "chi tiết": mỗi tin một bước.
 1 {{t:map.known}} ≤50 tiếng, "ai" bằng chữ khách (lựa chọn: §CM-DRIFT).
 2 {{t:map.topics}} 3–5 cụm chủ đề rộng, người mua theo được cả năm, mỗi cụm 1–5 tiếng, đối chiếu điều khách hỏi; một cụm có thể là cách làm hay quan điểm của coach. Không mẹo lẻ, khẩu hiệu, chủ đề hẹp (copywriter: direct response · tâm lý con người · làm việc với khách). Mỗi cụm: vài ý lớn (cách cũ → mới), 2–3 tuyến bài có tên (§CM-CONTENT-LINES).
 3 {{t:map.mix}} THU HÚT, NIỀM TIN, CHUYỂN ĐỔI như §CM-WEEK 7, mỗi loại một % (§CM-TIERS). Mặc định 40/40/20; đang xây người xem 50/35/15; đang bán cho danh sách sẵn 30/40/30; một lý do.
 4 {{t:map.system}} nền tảng chính (nơi khách ở) + nơi đăng lại từng bài · ngày một bài, số bài quay theo số giờ (chưa nói: A/B/C, §CM-WEEK 2) · thang lời mời.
-5 {{t:map.word}} (dưới đây) · 6 {{t:map.found}} ≤3 dòng, gộp cả kênh đã đọc (§CM-RESEARCH-LITE).
+5 {{t:map.word}} (dưới đây) · 6 {{t:map.found}} 2–3 dòng, gộp cả kênh đã đọc (§CM-RESEARCH-LITE).
 "{{t:cmd.why}}": vì sao chọn (bằng chứng của họ), gốc rễ một dòng, ĐỂ SAU kèm lý do.
 SỬA: "sửa dòng N: …" → in lại dòng đó + câu OK. Chỉ "sửa dòng N" → A) B), một cái "{{t:options.recommended}}". "ok" kèm chỗ sửa → sửa rồi đi tiếp. Cãi khác: §CM-DRIFT.
 

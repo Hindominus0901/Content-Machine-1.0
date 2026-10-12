@@ -55,7 +55,7 @@ Then the hooks that worked (§CM-BANKS 6) and one line: the bank that runs low n
 
 | | {WORD}, the piece's comment word | {KEYWORD}, the Season keyword |
 |---|---|---|
-| On | pieces asking for a comment (TRUST, the Day-0 video) | CONVERT and gift pieces |
+| On | TRUST comment asks, no gift | CONVERT and Season-gift pieces (Day-0 video too) |
 | From | the viewer's words in THIS hook | the strategy (§CM-MAP), one a season |
 | Size | ≥2 words; one only if the card lists it as their buyers' term | the same |
 | Once | in the ask | in the body or the caption, never both, plus the ask; never required on ATTRACT or TRUST |

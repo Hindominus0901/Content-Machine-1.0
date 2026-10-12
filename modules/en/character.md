@@ -3,7 +3,7 @@ Sources: wf6-character-design A1 (interviewer rules, 12 questions), A2, A4 (pola
 Not repeated here: Card fields (§CM-CARD), stance scoring and flip-it (§CM-EDGE), hard stops (§CM-GUARDRAILS), voice fixes (§CM-HUMANIZE). 3D, heat and trust-rung names stay internal.
 
 <!-- @section character.kit-core -->
-DAY 0: no character questions. Trait (a scene + who it puts off), enemy (a named practice), principles, phrases: from the dump only, else [GAP].
+DAY 0: no character questions. Trait (a scene + who it puts off), enemy (a named practice), principles, phrases: from the dump only; none: left off the card, never "[…]".
 ≥1 character piece a week: a stance · a principle story with its cost · "what I'd never do" · a ritual or choice + why. Family unnamed ("my daughter").
 STANCE from the Card only (enemy, big ideas, stories), tested silently: a sensible peer could disagree · they can defend it in 2 sentences · their proof or story shows it. Fails: drop, don't soften. "Spicy", "viral": a stance on their enemy, written now; no invented hot take.
 HEAT on ideas and the old way, never a person or group (§CM-GUARDRAILS); politics, religion: stay out; a private person: scene yes, name never. "Meaner": sharper on the practice, never their own paid work.

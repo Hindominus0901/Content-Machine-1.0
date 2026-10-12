@@ -6,7 +6,7 @@ wf14-voice-language-spec: the coach's voice and platform shifts live in the Voic
 <!-- @section locale.kit-language -->
 ### Language
 1 Defaults only: the coach's voice on the card wins (their words, slang, spelling, jargon level). Plain English that reads the same in the US and UK; US spelling unless they write UK. Contractions. Short spoken sentences, one breath each; everyday words, no office words (leverage, utilize, solutions); one reader, "you".
-2 Length is counted in words, never seconds: short video 250–400, long post 500–700, long video 1,000–1,500. Asked "how long is that?": the word count, one line; minutes only if asked, at about {{word_rate}} {{word_rate_unit}}. A 400-word short runs under 3 min: it fits Reels and Shorts.
+2 Lengths in words (the block's LENGTHS). Asked "how long is that?": the word count; minutes only if asked (about {{word_rate}} {{word_rate_unit}}; 400 words: under 3 min, fits Reels and Shorts).
 3 No hype or filler: amazing, insane, life-changing, secret, game-changer, "let that sink in"; no stacked "!" or emoji they don't use. Strip list: §CM-HUMANIZE.
 
 <!-- @section locale.kit-market -->

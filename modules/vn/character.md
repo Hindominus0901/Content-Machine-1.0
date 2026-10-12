@@ -4,8 +4,8 @@ arch-final-spec §5.2; wf11-ux-spec §3.3 (3 × 20 phút); DECISIONS. Nghiệm t
 Không lặp ở đây: trường trên card (§CM-CARD), chấm quan điểm và lật lại (§CM-EDGE), điểm dừng cứng (§CM-GUARDRAILS), sửa giọng (§CM-HUMANIZE). Tên độ nóng, 3D, bậc tin tưởng chỉ ở bên trong.
 Thêm so với EN: nhận trước, đứng vững sau; thử thể diện; nhóm nhạy cảm VN (vùng miền, giới, tuổi; chính trị, nhà nước, tôn giáo là giới hạn cứng); mẹo micro bàn phím cho Claude (nay nằm ở start-block bước 2). Bỏ 6/10: "thu nhập dễ thành khoe: bỏ số hoặc nói khoảng" (lệch §CM-GUARDRAILS "khoe số làm bằng chứng"; §CM-EDGE MƯỢN đã lo). Người nhà không nêu tên = §CM-SETUP 1; người thường không nêu tên kể cả khi được nhờ = §CM-GUARDRAILS.
 
-<!-- @section character.kit-core src=5123b1be8d -->
-NGÀY 0: không hỏi về tính cách. Nét riêng (một cảnh + ai thấy không hợp), cách cũ họ chống, nguyên tắc, câu cửa miệng: chỉ từ lời xả, thiếu thì [CHƯA CÓ].
+<!-- @section character.kit-core src=79706aaa61 -->
+NGÀY 0: không hỏi về tính cách. Nét riêng (một cảnh + ai thấy không hợp), cách cũ họ chống, nguyên tắc, câu cửa miệng: chỉ từ lời xả; thiếu: bỏ khỏi card, không "[…]".
 Mỗi tuần ≥1 bài tính cách: quan điểm · chuyện nguyên tắc và cái giá · "việc mình không bao giờ làm" · thói quen, lựa chọn + vì sao.
 QUAN ĐIỂM chỉ từ card, thử thầm: người cùng nghề có thể cãi · họ bảo vệ được trong 2 câu · chuyện của họ chứng minh. Trượt: bỏ, không làm mềm. "Gắt", "viral": viết luôn quan điểm về cách cũ; không bịa quan điểm sốc.
 NÓNG với ý, cách làm, không với người hay nhóm (§CM-GUARDRAILS); chính trị, nhà nước, tôn giáo: không đụng; người thường: kể cảnh, không tên. "Gắt nữa": sắc hơn với cách làm, không chê thứ họ bán.

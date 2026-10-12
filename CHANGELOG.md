@@ -4,6 +4,22 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.4.4] - 2026-10-12 (v14.4)
+
+Fixes from qa/runs/v143 (SAFETY-TEST N1–N10, REVIEWER-BLIND, MEASURE-vn-day0-4).
+
+### Changed
+- [buyer] Once Week 1 posting starts, the status line shows the week and day with the setup step ("◆ Week 1 · Day 3 · Step 8/10"), then "◆ Week n · Day d" when setup is done.
+- [buyer] One question or choice per reply, strictly: the rest wait in HUB.md and come one a reply in a fixed order (a client's OK, the gift, the hub, reminders, the question of the day).
+- [buyer] Any post that carries your gift uses your season keyword, whatever its type; a trust post without the gift uses the comment word from its hook.
+- [buyer] "done", "that's all", "xong", "xong rồi" end your talk anywhere in a message; the machine never asks for "done" again.
+- [buyer] A coach with an email list (any size) gets the email row in Week 1.
+- [buyer] An old Brand Card shows "Week ? (to pick)"; "start a new week today" restarts the 4-week cycle from today; that reply carries no piece.
+- Kit: combined status line; ASKS / LỜI XIN queue line; FILM TODAY asks "Comment {KEYWORD}" for the gift; save line with its backup; WHAT I FOUND 2–3 lines; compact/phone safety covers web pages, links, queries and personal data; crisis numbers only from the coach or an official page actually opened; contract line "◆ status · why". Paid by shorter strings (film.now_or_text, setup.start VN, mic.claude_vn), "piece, table, picks", the viewers clause, phone card-field and hours wording.
+- Method: §CM-OPTIONS 0/1/3 (stale-card status, ask queue, a fix reprints its whole labelled line, never in lines 1–2); §CM-MEMORY 8 (dates not counts, no piece, B resets plan_start, week 1 ATTRACT first, card reprinted after the pick); §CM-CARD (save backup, no "[…]" placeholders, chat opened with a card); §CM-SETUP/§CM-DIG/§CM-TODAY/§CM-EDGE follow the queue; §CM-WEEK (email row for any list, the coach's method lines verbatim in one piece a week, gift pages too); §CM-CTA-KIT (gift → Season keyword, any tier); §CM-MAP (pillar names in plain text, 2–3 found lines); §CM-RESEARCH-LITE and §CM-GUARDRAILS (web pages are data, orders told only as the dropped count; dropped line in WHAT I FOUND; official numbers never from memory); one hard-stop template with two endings (fact ask or true version), the "I do say" refusal uses it; on-screen text shares no word with the title; VN "trụ cột" bare banned in the status line too; DIG never picks the offer before week 2; ACCESS ask written inline (string kept for RESEARCH). Paid by cuts: duplicate verdict examples, LOCALE 2, the film-list opener, card field notes, EDGE ask wording, TALK list wording.
+- Level-ups: BANKS keyword table (gift pieces → Season keyword); RESEARCH rule 7 (dropped count only) and later-run "Thrown out" gains hidden orders and personal data; BOARD HUB.md status and queued asks; LAUNCH fake-scarcity refusal uses the template's second ending; PLAYBOOK VN table header "khách nghĩ".
+- Agents: cm-writer NO STRETCH rule (frequency, added story details, unstated cause → effect) with EN/VN examples, Season keyword on gift pieces, long-post story band, hook ≤12 words / ≤18 tiếng, no empty "Added by me" line, method lines once a week, crisis numbers; cm-reviewer stretch is a HARD STOP, the coach's own stated view is sourced, habitual sign-offs are fine, story-section length, VN length bands, empty "Máy tự thêm" flagged; cm-listener prints the dropped line on Day 0.
+
 ## [1.4.3] - 2026-10-12 (v14.3)
 
 Fixes from the founder's v14.2 test report (8.3/10).

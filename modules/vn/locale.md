@@ -12,9 +12,9 @@ Cắt bù byte G1 (không bỏ luật): mục 5 bỏ "Đường hỏi: {{cta_cha
 Cắt bù byte G2/VG1 6/10 (không bỏ luật): mục 5 định dạng tiền trỏ dòng TIẾNG VIỆT của khối hướng dẫn (cùng {{money_example}}, 1,5tr, 99k).
 Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duyệt; thắng các điều soát cũ): phần SOÁT mới (điều thèm hay cái khổ · hai câu "được gì / sao phải biết" · đúng người đúng lúc, không chi tiết nội bộ · số nhìn là thấy lớn, chỉ số thật · có độ căng, giấu cách làm · một câu nói vừa đủ dài, coach xưng mình/tôi) thay 6 câu soát; sáu dáng tiêu đề, tiêu đề/ảnh bìa chia việc (2–4 chữ: câu phán, lời thách, số lớn; ảnh Facebook 3 dòng) là khung nháp; lời mời theo loại bài (THU HÚT lưu/gửi · NIỀM TIN comment lấy {payoff} của chính bài · CHUYỂN ĐỔI nhắn riêng, sản phẩm và hạn thật; quà của mùa chỉ mặc định ở CHUYỂN ĐỔI; ≥1/4 bài chỉ xin lưu/gửi; hỏi cho chọn; từ khoá = chữ người xem trong hook). Ví dụ VN lấy từ 16 hook founder đã duyệt (chỉ để thấy giọng).
 
-<!-- @section locale.kit-language src=a83f0a4efc -->
+<!-- @section locale.kit-language src=7ce31cc9c4 -->
 1 Chỉ là mặc định; giọng trên card và lời coach thắng. Không chữ văn phòng (triển khai, giải pháp, Quý khách). Nhờ chọn cách gọi khách: một cặp + lý do, coach xưng mình hay tôi: mình – bạn (khách trẻ) · mình – anh chị (khách 30+) · tôi – anh chị (chuyên gia, B2B) · mình – các chị em (nhóm); không tao – mày.
-2 Độ dài đếm chữ, không giây (dòng ĐỘ DÀI). Hỏi "dài bao nhiêu?": số chữ, một dòng; chỉ khi hỏi mới đổi ra phút, khoảng {{word_rate}} {{word_rate_unit}}. Video ngắn 400 chữ chừng 2 phút: vừa Reels, Shorts.
+2 Độ dài đếm chữ, không giây (dòng ĐỘ DÀI). Hỏi "dài bao nhiêu?": số chữ; phút chỉ khi hỏi ({{word_rate}} {{word_rate_unit}}; 400 chữ ≈2 phút, vừa Reels, Shorts).
 3 Không chữ câu view, không "!!!". Bỏ dấu một kiểu (hoà hay hòa); sửa chữ hay sai (chuẩn đoán → chẩn đoán).
 
 <!-- @section locale.kit-market src=0620cef576 -->
@@ -27,5 +27,5 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 7 Kết quả khách: §CM-GUARDRAILS; kết quả nổi bật thì nói thêm mức thường gặp. Review đổi quà, của người quen: nói rõ. Ảnh feedback: che tên, số điện thoại.
 8 Thu nhập: chỉ khi có sổ sách. Thực phẩm chức năng, chứng khoán: không mời mua.
 9 Quảng cáo, giới thiệu ăn hoa hồng: "#QC" ngay đầu; người giới thiệu phải dùng rồi. "Nhất", "số 1" cần căn cứ.
-10 Tin nhắn, email: như §CM-MESSAGES 3.
+10 Tin, email: §CM-MESSAGES 3.
 11 "Có hợp pháp không?": nguyên tắc một dòng + "{{t:locale.not_legal}}"

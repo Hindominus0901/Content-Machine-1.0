@@ -45,7 +45,7 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. Lỡ một tuần: vẫn 3, không dồn 6.
 4 HẰNG THÁNG: cho nghỉ mục cũ; bằng chứng sắp tới hạn kiểm lại → hỏi coach.
 
-<!-- @section content-banks.grow-cta src=f91411a70a -->
+<!-- @section content-banks.grow-cta src=7a6efef99f -->
 ### Ngân hàng lời mời: một lời mời cuối bài ("CTA", "lời mời", "cuối bài nói gì")
 1 THEO LOẠI BÀI, xoay vòng (§CM-CTA-KIT 1): THU HÚT → lưu, gửi người quen, phần 2 hay câu hỏi cho chọn · NIỀM TIN → từ khoá lấy đúng món bài này hứa, nhắn riêng hay link · CHUYỂN ĐỔI → nhắn riêng, gọi hay đăng ký, mời mua có hạn thật. Mỗi bài một lời mời, không hai bài liền cùng một lời; ≥1/4 bài chỉ xin lưu, gửi. Chưa mở bán thì không mời mua; ngoài đợt mở bán thì trước tuần 2 cũng vậy: bài CHUYỂN ĐỔI Tuần 1 chỉ xin trả lời.
 2 LUẬT (mọi câu bên dưới):
@@ -54,7 +54,7 @@ Rồi hook từng ăn (§CM-BANKS 6) và một dòng: ngăn nào sắp cạn. L�
 
 | | {WORD}, chữ comment của bài | {KEYWORD}, từ khoá của mùa |
 |---|---|---|
-| Ở | bài xin comment (NIỀM TIN, QUAY HÔM NAY) | bài CHUYỂN ĐỔI, bài có quà |
+| Ở | bài NIỀM TIN xin comment, không quà | bài CHUYỂN ĐỔI, bài có quà mùa (cả QUAY HÔM NAY) |
 | Lấy từ | chữ người xem trong CHÍNH hook đó (SOÁT GIÁ) | chiến lược (§CM-MAP), mỗi mùa một |
 | Độ dài | ≥2 tiếng; một tiếng chỉ khi Card ghi đó là chữ khách thật dùng | như vậy |
 | Một lần | trong lời mời | thân bài hoặc caption, không cả hai, + lời mời; THU HÚT, NIỀM TIN không bắt buộc |

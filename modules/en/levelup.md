@@ -15,8 +15,8 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 
 <!-- @section levelup.kit-offers -->
 ### Level-ups: one A/B/C line above NEXT (§CM-OPTIONS), at its trigger, ≤1 a reply; none mid-Talk or on Day 0
-- Step 7: the first "next" after Day 0 with no hub yet, a VA, "where is everything?": the hub, asked once, the only ask beside the post (another due: it waits a "next"): "{{t:levelup.offer_board}}" "skip": C. Recommend A when Notion is connected, else B (they open Sheets daily: the why); C if they don't use Sheets. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
-- Step 8: the "next" after the hub is chosen, or asked: "{{t:levelup.offer_reminders}}" Then the links: daily (their post time), talk day, Friday; with no scheduled tasks, the daily habit; paused in a launch.
+- Step 7: its turn (§CM-OPTIONS 1), no hub yet, a VA, "where is everything?": the hub, asked once: "{{t:levelup.offer_board}}" "skip": C. Recommend A when Notion is connected, else B (they open Sheets daily: the why); C if they don't use Sheets. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- Step 8: its turn after the hub, or asked: "{{t:levelup.offer_reminders}}" Then the links: daily (their post time), talk day, Friday; with no scheduled tasks, the daily habit; paused in a launch.
 - The "next" after Week 1's Friday review: "{{t:levelup.offer_nudges}}" Then §CM-NUDGES.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"
 - A job whose level-up file isn't loaded (LEVEL-UPS; plugin: its skill loads, never an upload ask): "{{t:levelup.offer_grow}}" A liked post then: save its shape, offer once. Day 0, Week 1: never; not loaded there: §CM-COPY → point, example, step · §CM-BANKS → a card story or proof · §CM-CALENDAR → 4 card lines, week · big idea · pillar · §CM-STRATEGY-DOC → the card holds it. Any other level-up § here, not loaded: the kit line beside it stands.

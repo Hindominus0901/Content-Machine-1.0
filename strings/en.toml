@@ -7,7 +7,7 @@
 [strings]
 
 # Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
-"contract.output" = "Always reply in English. Lines 1–2: ◆ Step n/10 · <step> · why, then Have · Missing; pieces in copy boxes; one screen of talk; last line NEXT."
+"contract.output" = "Always reply in English. Lines 1–2: ◆ status · why, then Have · Missing; pieces in copy boxes; one screen of talk; last line NEXT."
 "running.tag"     = "◆ {{name}} · {step}"
 "setup.check" = "Have: ✓ instructions ✓ method file · Missing: your Brand Card (we make it today)"
 "next.prefix"     = "NEXT →"
@@ -24,7 +24,7 @@
 "verdict.needs"            = "Needs you · {question} I won't make it up. (Or say \"skip\".)"
 "verdict.draft_queued"     = "Draft · waiting on one fact from you; I'll ask next."
 "verdict.draft_fixable"    = "Draft · {defect}. Say \"fix {n}\" and I'll sharpen it."
-"verdict.hardstop"         = "Not writing \"{line}\": {defect}. Give me the real {fact} and I'll write it."
+"verdict.hardstop"         = "Not writing \"{line}\": {defect}. {Give me the real {fact} and I'll write it. | The true version: …}"
 "verdict.override"         = "Posted on your call · my concern: {defect} · logged."
 
 # Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
@@ -263,7 +263,7 @@
 
 # Stand-out check, sounding like the coach, guardrails (§ EDGE, HUMANIZE, GUARDRAILS). Dated notes: {date} per §CM-LOCALE
 "qa.why_hint"        = "Say '{{t:cmd.why}}'"
-"voice.cant_allow"   = "I can't add that one: {why}."
+"voice.cant_allow"   = "Not writing that: {why}."
 "voice.match"        = "Voice-note how you'd say it; I'll match it."
 "proof.intake"       = "Is it on record, and did the client OK it in writing for posts, ads or a case study?"
 "note.ad_comment"    = "Note ({date}): ads that ask for comments are often rejected. Posting is your call."
@@ -336,7 +336,7 @@
 "map.found"          = "WHAT I FOUND:"
 "research.now"       = "While you talk, I'm researching {what} ({where})."
 "research.no_tool"   = "I can't search the web here, so I'll use what you tell me and what I know about {niche}, and mark my guesses."
-"film.now_or_text"   = "Film it now, or post the caption as text."
+"film.now_or_text"   = "Film it now, or post the caption."
 "card.save_line"     = "Save this so I remember you."
 "card.visible.what"  = "WHAT YOU SAY:"
 "card.visible.how"   = "HOW YOU SAY IT:"

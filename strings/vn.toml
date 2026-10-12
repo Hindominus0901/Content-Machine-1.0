@@ -31,7 +31,7 @@
 [strings]
 
 # Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
-"contract.output" = { text = "Luôn trả lời tiếng Việt như người Việt nói, đúng xưng hô đã chọn. Dòng 1–2: ◆ Bước n/10 · <bước> · vì sao, rồi Đã có · Còn thiếu; bài trong khung chép; lời nói một màn hình; dòng cuối TIẾP.", src = "4174547502" }
+"contract.output" = { text = "Luôn nói tiếng Việt như người Việt, đúng xưng hô đã chọn. Dòng 1–2: ◆ trạng thái · vì sao, rồi Đã có · Còn thiếu; bài trong khung chép; lời nói một màn hình; dòng cuối TIẾP.", src = "7260c7081e" }
 "running.tag"     = { text = "◆ {{name}} · {step}", src = "82bae98171" }
 "setup.check" = { text = "Đã có: ✓ hướng dẫn ✓ file phương pháp · Còn thiếu: Brand Card (hôm nay mình làm)", src = "607ab9870b" }
 "next.prefix"     = { text = "TIẾP →", src = "4c813654ab" }
@@ -48,7 +48,7 @@
 "verdict.needs"            = { text = "Cần {xưng hô} · {question} ({tự xưng} không đoán bừa; gõ \"bỏ qua\" cũng được)", src = "bd355b9913" }
 "verdict.draft_queued"     = { text = "Bản nháp · còn chờ 1 thông tin, lát nữa hỏi.", src = "7b36c6780d" }
 "verdict.draft_fixable"    = { text = "Bản nháp · {defect}. Nhắn \"sửa {n}\" là chỉnh ngay.", src = "4efe35f44e" }
-"verdict.hardstop"         = { text = "Câu \"{line}\" không viết được: {defect}. Có {fact} thật là viết ngay.", src = "16d7fa6c09" }
+"verdict.hardstop"         = { text = "Câu \"{line}\" không viết được: {defect}. {Có {fact} thật là viết ngay. | Bản thật: …}", src = "668bc3b241" }
 "verdict.override"         = { text = "Đăng theo ý {xưng hô} · điều còn lo: {defect} · đã ghi lại.", src = "8534b80dee" }
 
 # Coach phrases (UX spec §4; QA spec §2.4, §2.5, §2.8). router.toml keeps synonyms.
@@ -74,7 +74,7 @@
 "mic.phone"     = { text = "Điện thoại: bấm micro nhỏ trong ô chat, ĐỪNG bấm nút sóng âm.", src = "06257ff861" }
 "mic.mac"       = { text = "Mac: bấm phím fn (quả địa cầu) hai lần.", src = "e34d8f64c2" }
 "mic.windows"   = { text = "Windows: bấm Win+H.", src = "d7e0fdfd3f" }
-"mic.claude_vn" = { text = "dùng micro bàn phím điện thoại (Claude chưa nghe được tiếng Việt)", src = "0272e26c0b" }
+"mic.claude_vn" = { text = "dùng micro bàn phím (Claude chưa nghe tiếng Việt)", src = "0272e26c0b" }
 
 # Method and level-up file titles; one title per §CM anchor (core/method.toml [method], [levelup.<area>])
 "method.title"          = { text = "{{name}} · Phương pháp", src = "f30ce5ef69" }
@@ -285,7 +285,7 @@
 
 # Stand-out check, sounding like the coach, guardrails (§ EDGE, HUMANIZE, GUARDRAILS). Dated notes: {date} per §CM-LOCALE
 "qa.why_hint"        = { text = "Nhắn '{{t:cmd.why}}'", src = "8cc0aebb3f" }
-"voice.cant_allow"   = { text = "Câu đó không thêm được: {why}.", src = "5ba35310d8" }
+"voice.cant_allow"   = { text = "Câu đó không viết được: {why}.", src = "317c2631eb" }
 "voice.match"        = { text = "{xưng hô} nói câu đó qua voice giúp {tự xưng}, {tự xưng} viết y vậy.", src = "99f3ca0d19" }
 "proof.intake"       = { text = "Kết quả này có lưu lại không, khách đã nhắn đồng ý cho đăng bài, quảng cáo chưa?", src = "1d1583b6c6" }
 "note.ad_comment"    = { text = "Lưu ý ({date}): quảng cáo xin comment hay bị từ chối duyệt. Đăng hay không là {xưng hô} quyết.", src = "27c460f2d7" }
@@ -335,7 +335,7 @@
 "liked.slot"        = { text = "Bài này thay {video thứ Năm}. Quay hôm nay, 2 lần là đủ. Giữ bài cũ thì gõ 'bỏ qua'.", src = "fb3739da6d" }
 
 # Friday numbers and review (§ NUMBERS); language and market (§ LOCALE)
-"review.ask"          = { text = "Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · khách biết {xưng hô} từ đâu · bài tốt nhất, vì sao. Có thì thêm: lượt xem hoặc ảnh chụp (bài đủ 2 ngày) · ai nói lại đúng chữ của {xưng hô} · câu nào viết ra không giống {xưng hô}.", src = "b3b0d59628" }
+"review.ask"          = { text = "Số liệu thứ Sáu, 3 phút: số comment {KEYWORD} · tin nhắn · cuộc gọi · đơn · khách biết {xưng hô} từ đâu · bài tốt nhất, vì sao. Có thì thêm: lượt xem, ảnh chụp (bài đủ 2 ngày) · ai nói lại chữ của {xưng hô} · câu nào không giống {xưng hô}.", src = "b3b0d59628" }
 "review.ask_next"     = { text = "Có gì nói nấy, gõ cũng được, thiếu thì để trống.", src = "c14fd19b2a" }
 "review.labels"       = { text = "Đã đăng · Khách hỏi · Thông điệp · Bài tốt nhất · Tuần sau", src = "03e3993ade" }
 "review.not_supplied" = { text = "chưa có số", src = "83da3d029b" }
@@ -348,7 +348,7 @@
 
 # Simple surface + voice (wf15, wf14)
 "setup.dump_posts" = { text = "Có bài, tin nhắn {xưng hô} từng viết thì dán 2–3 cái, hoặc gửi link trang của {xưng hô}.", src = "fbfc38d52e" }
-"setup.start" = { text = "Có gì cứ gửi: link, bài cũ, file, hoặc nói 3–5 phút, cả hai càng tốt.", src = "cd00a4cffe" }
+"setup.start" = { text = "Có gì cứ gửi: link, bài cũ, file, hoặc nói 3–5 phút.", src = "cd00a4cffe" }
 "map.known" = { text = "ĐIỀU KHÁCH NHỚ:", src = "7057c1b511" }
 "map.topics" = { text = "TRỤ CỘT NỘI DUNG:", src = "389026b2b7" }
 "map.word" = { text = "TỪ KHOÁ:", src = "e8e772ff8d" }
@@ -357,7 +357,7 @@
 "map.system" = { text = "HỆ THỐNG NỘI DUNG:", src = "40d92e8a94" }
 "map.found" = { text = "NGHIÊN CỨU CHO THẤY:", src = "508d0cc8cf" }
 "research.now" = { text = "Trong lúc {xưng hô} kể, {tự xưng} đang tìm hiểu {what} ({where}).", src = "9aa0d0226b" }
-"film.now_or_text" = { text = "Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.", src = "5429a30c46" }
+"film.now_or_text" = { text = "Quay luôn, hoặc đăng phần chữ.", src = "38e63e5e87" }
 "card.save_line" = { text = "Lưu lại để {tự xưng} nhớ {xưng hô}.", src = "b7248715a8" }
 "card.visible.what" = { text = "NÓI GÌ:", src = "3590ca99ac" }
 "card.visible.how" = { text = "NÓI THẾ NÀO:", src = "7a3df1f0ec" }

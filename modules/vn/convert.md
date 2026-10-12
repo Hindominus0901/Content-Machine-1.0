@@ -11,8 +11,8 @@ Cắt bù byte G1 (không bỏ luật): mục 1 cta.default → "lời mời ở
 VG1/G2 6/10: mục 5 VK-2 coach chê xin comment bằng lời (cả lúc xả) → quiet ngay, không cãi, bài chưa đăng in lại lời mời; "Nghe như spam?" chỉ khi là câu hỏi (cta.not_pushy, VK-1). Mục 2, 4 VK-19: quà đến cùng caption đầu hứa nó, chưa viết thì không hứa; ngày 0 trỏ start-block bước 6–7 thay vì kể lại (byte).
 Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duyệt; thắng các điều soát cũ): phần SOÁT mới (điều thèm hay cái khổ · hai câu "được gì / sao phải biết" · đúng người đúng lúc, không chi tiết nội bộ · số nhìn là thấy lớn, chỉ số thật · có độ căng, giấu cách làm · một câu nói vừa đủ dài, coach xưng mình/tôi) thay 6 câu soát; sáu dáng tiêu đề, tiêu đề/ảnh bìa chia việc (2–4 chữ: câu phán, lời thách, số lớn; ảnh Facebook 3 dòng) là khung nháp; lời mời theo loại bài (THU HÚT lưu/gửi · NIỀM TIN comment lấy {payoff} của chính bài · CHUYỂN ĐỔI nhắn riêng, sản phẩm và hạn thật; quà của mùa chỉ mặc định ở CHUYỂN ĐỔI; ≥1/4 bài chỉ xin lưu/gửi; hỏi cho chọn; từ khoá = chữ người xem trong hook). Ví dụ VN lấy từ 16 hook founder đã duyệt (chỉ để thấy giọng).
 
-<!-- @section convert.kit-keyword src=7d9a6d2fa6 -->
-1 Lời mời khép điều hook hé, gọi đúng món bài này hứa, có chữ của hook: "{{t:cta.default}}" ({payoff}: món của bài, một trang). Theo loại bài: THU HÚT → lưu, gửi bạn, lý do từ hook · NIỀM TIN, QUAY HÔM NAY → chữ comment · CHUYỂN ĐỔI → từ khoá mùa + quà của mùa; từ tuần 2: nhắn riêng, sản phẩm thật, hạn thật. ≥1/4 bài chỉ xin lưu, gửi. Hỏi comment thì cho chọn ("A hay B?"), không "bạn nghĩ sao?". Mẫu: §CM-COPY-CTA. Từ khoá: xem dưới.
+<!-- @section convert.kit-keyword src=9d53bb3bc4 -->
+1 Lời mời khép điều hook hé, gọi đúng món bài này hứa, có chữ của hook: "{{t:cta.default}}" ({payoff}: món của bài, một trang). Theo loại bài: THU HÚT → lưu, gửi bạn, lý do từ hook · NIỀM TIN → chữ comment · bài có quà mùa (cả QUAY HÔM NAY) → từ khoá mùa · CHUYỂN ĐỔI → từ khoá mùa + quà của mùa; từ tuần 2: nhắn riêng, sản phẩm thật, hạn thật. ≥1/4 bài chỉ xin lưu, gửi. Hỏi comment thì cho chọn ("A hay B?"), không "bạn nghĩ sao?". Mẫu: §CM-COPY-CTA. Từ khoá: xem dưới.
 2 Quà của mùa: hỏi một lần (ngày 0: dòng Cần dưới QUAY HÔM NAY, sau lời xin phép kể chuyện khách): "{xưng hô} có sẵn quà, file tặng chưa?" Có: dán một lần, dùng đúng nó. Chưa: giữ quà dưới QUAY HÔM NAY; chê thì A/B/C, viết từ cách làm 3 bước của họ: 1 trang vừa một tin inbox, tên gọi thẳng, viết xong, trong khung chép. Hạn: cùng caption đầu hứa nó, hoặc khi hỏi "gửi gì?"; đã hứa mà chưa có: viết ngay.
 3 Trả lời dưới bài: ≥5 câu ngắn xoay vòng, xưng theo người comment, đều chỉ vào inbox.
 4 Bài xin comment: quà và tin trả lời inbox 1 xong trước khi đăng (ngày 0: tự gửi khung quà tới khi tin inbox 1 đi cùng card); không tick dưới bài.
@@ -23,11 +23,11 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 7 Trả lời inbox tự động chỉ có ở Trang Facebook, Instagram chuyên nghiệp; trang cá nhân, LinkedIn: "{{t:cta.by_hand}}", gộp vào dòng có ngày. Instagram: mỗi comment một tin riêng trong 7 ngày, nên tin inbox 1 kết bằng câu hỏi. Không bắt lập Trang, cài công cụ; họ hỏi mới nêu tên.
 8 Comment từ khoá tính là một lần cho.
 
-<!-- @section convert.kit-sell kind=script src=08efc749cf -->
+<!-- @section convert.kit-sell src=7e8f5a0df5 kind=script -->
 9 Bài mời mua: nhận gì (hình thức, bao lâu, ngày bắt đầu) · giá công khai, trả mấy lần · dành cho ai · "Không hợp với ai đang…" · cam kết cách làm, có điều kiện, chưa có thì "{{t:verdict.needs}}" · suất, hạn chỉ khi thật, nói thẳng (§CM-GUARDRAILS) · một việc. Chưa có bằng chứng: mời suất nhóm đầu, hạ bậc (§CM-EDGE).
 
 ### Từ khoá (bảng đủ: §CM-CTA-BANK)
-{WORD}, chữ comment: ≥2 tiếng người xem trong hook này, (một tiếng: chỉ khi card có), viết HOA, 1 lần, trong lời mời. {KEYWORD}, từ khoá mùa (§CM-MAP): chỉ bài CHUYỂN ĐỔI, bài có quà; 1 lần, thân bài hoặc caption, + lời mời. Nhắc chủ đề không tính.
+{WORD}, chữ comment: ≥2 tiếng người xem trong hook này, (một tiếng: chỉ khi card có), viết HOA, 1 lần, trong lời mời. {KEYWORD}, từ khoá mùa (§CM-MAP): chỉ bài CHUYỂN ĐỔI, bài có quà mùa (loại nào cũng vậy); 1 lần, thân bài hoặc caption, + lời mời. Nhắc chủ đề không tính.
 
 <!-- @section convert.grow-ads src=8d69006845 -->
 ### Quảng cáo từ bài đã chạy tốt ("chạy quảng cáo", "boost bài này")

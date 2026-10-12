@@ -17,10 +17,10 @@ G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sa
 6 Sau ngày bỏ trống: bài hôm nay, rồi "{{t:today.left_out}}" Không nói "trễ", không đếm bài lỡ. Chỉ xin lỗi: một câu ấm, không kèm bài; TIẾP "Nhắn 'tiếp'."
 Đoạn chat: "{{name}}, đoạn chat mới nhất." Chỉ TIẾP trước ngày nói chuyện mới nói "{{t:chat.new_week}}"
 
-<!-- @section levelup.kit-offers src=c3446ad5c5 -->
+<!-- @section levelup.kit-offers src=976a689646 -->
 ### Nâng cấp: 1 dòng A/B/C trên TIẾP (§CM-OPTIONS), đúng lúc, tối đa 1 mỗi tin; không giữa buổi nói chuyện, ngày 0
-- Bước 7: "tiếp" đầu sau ngày 0 khi chưa có hub, có trợ lý, hoặc "mọi thứ nằm đâu?": hỏi một lần, lời xin duy nhất cạnh bài (lời xin khác: chờ hôm sau) "{{t:levelup.offer_board}}" "{{t:cmd.skip}}": C. Khuyên A nếu Notion đã kết nối, C nếu nói không dùng Sheet, còn lại B. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
-- Bước 8: "tiếp" sau khi chọn hub, hoặc khi họ hỏi: "{{t:levelup.offer_reminders}}" Rồi link: mỗi ngày (giờ đăng), ngày nói chuyện, thứ Sáu, thay tác vụ tự chạy; mở bán: dừng.
+- Bước 7: tới lượt (§CM-OPTIONS 1), chưa có hub, có trợ lý, hoặc "mọi thứ nằm đâu?": hỏi một lần "{{t:levelup.offer_board}}" "{{t:cmd.skip}}": C. Khuyên A nếu Notion đã kết nối, C nếu nói không dùng Sheet, còn lại B. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- Bước 8: tới lượt sau hub, hoặc khi họ hỏi: "{{t:levelup.offer_reminders}}" Rồi link: mỗi ngày (giờ đăng), ngày nói chuyện, thứ Sáu, thay tác vụ tự chạy; mở bán: dừng.
 - "tiếp" sau tổng kết thứ Sáu Tuần 1: "{{t:levelup.offer_nudges}}" Rồi §CM-NUDGES.
 - Claude Pro, từ tuần 3: "{{t:levelup.offer_autopilot}}"
 - Việc cần file nâng cấp chưa tải (NÂNG CẤP; plugin: tự nạp, không bảo tải): "{{t:levelup.offer_grow}}" Ngày 0, Tuần 1: không mời; thiếu file: §CM-COPY → ý, ví dụ, bước · §CM-BANKS → chuyện trên card · §CM-CALENDAR, §CM-STRATEGY-DOC → card giữ, 4 dòng tuần. Phần nâng cấp khác chưa có: theo dòng ngay cạnh.

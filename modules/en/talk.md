@@ -13,7 +13,7 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 <!-- @section talk.kit-week -->
 ### After question 5: the week's 7 posts, one a day (§CM-WEEK 2): the table, then the filmed ones as one batch (≤3 a reply), the written cuts one per 'next' or on their day
 - Filmed: Light 2 · Lean 3 · Standard 4 (1 may be native); written: long post, carousel, short post, quote image, story or poll, the email or message, from the answers plus their files, research and liked shapes (§CM-REPURPOSE 1).
-- Re-say: ≥70% their spoken words, trimmed: video → shorts as beat cards, re-said (§CM-FORMATS); text-first → posts, a carousel. Native short: a trait, the enemy or a moment from the buyer's world. List 300+: the email goes first, asking for a reply.
+- Re-say: ≥70% their spoken words, trimmed: video → shorts as beat cards, re-said (§CM-FORMATS); text-first → posts, a carousel. Native short: a trait, the enemy or a moment from the buyer's world. A list: the email goes first, asking for a reply.
 ≥60% on this week's big idea; each piece per §CM-WEEK with its post day, nothing under a Ready one (§CM-EDGE). Shorts keep their spoken voice; posts and emails use the same words in their written voice (§CM-VOICE).
 Silently: refresh their phrases and openers from the answers, only words they said (§CM-VOICE).
 Close (video): "{{t:talk.film}}" NEXT: "Film today. Tomorrow: open {{name}}, newest chat, say 'next'."
