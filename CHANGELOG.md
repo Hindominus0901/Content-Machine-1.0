@@ -4,6 +4,20 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-10-12 (v14.1)
+
+Founder + real users (12 Oct): voice and writing are good; hooks and CTAs are not good enough, voice goes flat on thin input, weaker models write short pieces (qa/runs/v140 MEASURE-*).
+
+### Changed
+- [buyer] Hooks: every hook now comes from your buyer's want or daily pain, is tried in 3 different proven shapes, checked on the 6 founder questions, and only the best one is printed. "Everyone says X, but…" hooks always say what you actually think. The on-screen words add something the first line doesn't say.
+- [buyer] Asks under a post close what the hook opened and name the thing it promised: save or send with a reason from the hook, comment for this post's own payoff, a real offer from week 2. Comment questions give an A/B choice.
+- [buyer] Before printing, the machine counts: a short video is at least 500 words (it expands your idea when short), and in Vietnamese the sentence-ending particles match your own share (e.g. 45%: 11–17 of 30 sentences end in nha, nè, á).
+- Kit: §CM-FORMATS 1 is a 4-step hook procedure (pick the pain from the card → 3 different frames → a point a yes on the 6 checks → print the winner; belief flip with the coach's real Y; on-screen adds); Ship Check 2 "best of 3 frames scored", new step 4 COUNT / ĐẾM (word floor; VN particle target written out, card without a share → count the coach's pasted posts/talk); FILM TODAY "≥500 words (count)"; §CM-CTA-KIT 1 the ask in a hook word, ATTRACT's save/send reason from the hook, pointer to §CM-COPY-CTA. Bare "trụ cột" out of kit, method and STRATEGY (cụm chủ đề; §CM-NATURAL 7 also when the coach says it).
+- Kit budgets paid by cuts: the bottom banned-endings line now points to the top list; phone "one phone screen of talk" (the contract line says it), phone VN particle/length lines (step 4 holds them), shorter Ship Check wording, "First piece in ~12 min" (step 1 says it). Kit EN 6,498 / VN 7,500, phone EN 7,485 / VN 7,468, method EN 57,323 / VN 66,545.
+- Level-ups: HOOKS §CM-HOOK-ENGINE (the 4 steps in full, scoring, ties, a worked example); §CM-HOOK-LIBRARY 1 and STRATEGY §CM-HOOKS 1 point to it (the ≥12-draft rule is gone); COPY §CM-COPY-CTA (close the loop, the echo check, tiers, 6 fail → pass pairs per edition in other niches). Companion jobs name both.
+- Agents: cm-writer runs the hook engine (3 frames, scored, winner), states Y in belief flips, runs the CTA echo check, never returns a short piece; cm-reviewer flags a belief flip with no Y, an ask with no echo or a save/send with no reason, a title count the script doesn't reach.
+- Graders: hook_lab adds "a belief flip states its Y" (belief_flip_y) and "the ask echoes the hook" (cta_echo, acceptance cta_echo_check); the VN belief-flip frame accepts "thật ra"/"tưởng" and the EN one a second sentence; lengths adds "a title's word count is the piece's own" (title_count_slack) and a short_floor_tolerance knob. Tests: V141HookCtaTests, V141LengthTests.
+
 ## [1.4.0] - 2026-10-12 (v14.0)
 
 Founder (12 Oct): a mission-control assistant that runs the protocol until everything is set up; coaches talk less before the first piece.

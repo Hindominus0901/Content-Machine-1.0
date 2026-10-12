@@ -405,6 +405,10 @@ id = "HOOK-SHORT"
 sections = ["hook-library.grow-short"]
 
 [[levelup.hooks.anchor]]
+id = "HOOK-ENGINE"               # v14.1: the 4 hook steps (pick, fill 3 frames, score, print the winner)
+sections = ["hook-library.grow-engine"]
+
+[[levelup.hooks.anchor]]
 id = "HOOK-TITLES"
 sections = ["hook-library.grow-titles", "hook-library.grow-titles-belief"]
 
@@ -576,6 +580,10 @@ sections = ["copywriting.grow-story", "copywriting.grow-story-craft"]
 [[levelup.copy.anchor]]
 id = "PERSUASION"
 sections = ["copywriting.grow-persuade", "copywriting.grow-ethics"]
+
+[[levelup.copy.anchor]]
+id = "COPY-CTA"                  # v14.1: the ask closes the hook's loop; 6 fail → pass pairs
+sections = ["copywriting.grow-cta"]
 
 [[levelup.copy.anchor]]
 id = "COPY-VOICE"

@@ -1011,14 +1011,14 @@ LEVELUP_AREAS = {   # area -> (file, [anchor ids]) as core/method.toml [levelup.
                               "LONG", "LONG-INTRO", "LONG-CUTS"]),
     "playbook": ("PLAYBOOK", ["STRATEGY-ENGINE", "TIERS", "CONTENT-LINES", "CALENDAR", "STRATEGY-DOC"]),
     "hooks": ("HOOKS", ["HOOK-LIBRARY", "HOOK-FLIP", "HOOK-PROOF", "HOOK-SCENE", "HOOK-CALLOUT", "HOOK-MISTAKE",
-                        "HOOK-SHORT", "HOOK-TITLES", "HOOK-TEXT", "HOOK-ADS", "HOOK-CTA"]),
+                        "HOOK-SHORT", "HOOK-ENGINE", "HOOK-TITLES", "HOOK-TEXT", "HOOK-ADS", "HOOK-CTA"]),
     "campaigns": ("CAMPAIGNS", ["CAMPAIGNS", "CAMPAIGN-FOUNDING", "CAMPAIGN-GIFT", "CAMPAIGN-CLASS", "CAMPAIGN-EVENT",
                                 "CAMPAIGN-APPLY", "CAMPAIGN-RELAUNCH", "LAUNCH-PREP", "OBJECTIONS", "LAUNCH-FAQ",
                                 "SALES-PAGE", "LAUNCH-SEQUENCES", "RUN-OF-SHOW", "LIVE-SELLING", "LAUNCH-TIMING",
                                 "LAUNCH-AFTER"]),
     "banks": ("BANKS", ["BANKS", "CTA-BANK", "MAGNET-BANK", "RESEARCH-BANK", "STORY-BANK", "PROOF-BANK"]),
     "copy": ("COPY", ["COPY", "COPY-FRAMEWORKS", "COPY-STORIES", "COPY-BELIEFS", "COPY-PROBLEM", "COPY-PROOF",
-                      "COPY-LONG", "COPY-LISTS", "REPURPOSE", "STORYTELLING", "PERSUASION", "COPY-VOICE"]),
+                      "COPY-LONG", "COPY-LISTS", "REPURPOSE", "STORYTELLING", "PERSUASION", "COPY-CTA", "COPY-VOICE"]),
 }
 LEVELUP_BUDGETS = {   # bytes (en, vn) where an area is not the 30,720 B default
     "strategy": (36864, 36864),      # +MONTH, LIKED (7 Oct)

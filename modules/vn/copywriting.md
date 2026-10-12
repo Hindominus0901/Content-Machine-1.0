@@ -195,6 +195,17 @@ Hai chất liệu, ba ý, 7 bài, 6 dạng, một bài dài; ý bỏ tập gam r
 5 LẰN RANH CỨNG (§CM-GUARDRAILS): không bịa kết quả, con số, lời khách, ảnh chụp màn hình, "từng lên báo"; không khan hiếm, hạn chót giả; không hứa thu nhập, cân nặng, sức khoẻ, không con số lời lãi ("học xong tự hoàn vốn", "x10 doanh thu"); không doạ bằng sức khoẻ, nợ nần, gia đình; không ép trong tin nhắn riêng (gây áy náy, "cơ hội cuối" không có thật); chỉ đối đầu với ý tưởng, thói quen, lời khuyên, không bao giờ với con người hay bất kỳ nhóm người nào; nêu tên đối thủ chỉ khi coach yêu cầu, kèm dòng lưu ý có ngày (§CM-GUARDRAILS).
 6 Coach muốn bước qua lằn ranh: viết bản thật làm được cùng việc đó (giới hạn thật, kết quả thật kèm hoàn cảnh, cái giá của việc chờ nói thật) kèm "{{t:voice.cant_allow}}", một dòng, không giảng.
 
+<!-- @section copywriting.grow-cta src=1278e24a47 -->
+### Lời mời khép điều hook hé ("lời mời", "CTA"; chi tiết của §CM-CTA-KIT 1)
+1 KHÉP VÒNG: câu cuối trả lời hook; lời mời gọi đúng món bài hứa, có chữ của hook (§CM-CTA-BANK 2); hai bài liền không cùng kiểu mời. Trước khi in: lời mời chung chữ, điều hứa với câu đầu chưa? Chưa → viết lại.
+2 TRƯỢT → ĐẠT (chỉ lấy dáng, ngành khác; dữ kiện, số là của coach):
+- THU HÚT · "Khai thuế khó, cho tới khi bạn biết đúng một mốc này." · "Theo dõi để xem thêm nha!" → "Lưu lại, tuần trước mốc đó mở ra coi nha."
+- THU HÚT · "Học viên yoga cứ nghỉ sau tuần 2? Xem cái này." · "Bạn nghĩ sao?" → "Học viên bạn hay nghỉ tuần 2 hay tuần 4? Gõ 2 hoặc 4."
+- THU HÚT · "Hình nail đẹp mà ngày thường ghế trống? Không phải tại hình." · "Thấy hay thì share!" → "Gửi cho chủ tiệm nào đang cố đăng thêm hình."
+- NIỀM TIN · "Bánh hết sạch thứ Bảy, thứ Ba ế? 7 năm làm bánh, mình sửa đúng một chỗ." · "Comment BÁNH nhận tài liệu" → "Comment BÁNH THỨ BA, mình gửi đúng chỗ đã sửa, gọn một trang."
+- NIỀM TIN · "Trả lời "cho xem thêm hình nha?" sao cho cô dâu chốt lịch ngay." · "Inbox để tư vấn" → "Comment XEM THÊM HÌNH, mình gửi nguyên văn câu trả lời."
+- CHUYỂN ĐỔI, từ tuần 2 · "Từ 9 lên 26 học viên piano trong một năm." · "Sắp hết chỗ, inbox lẹ!" (khan hiếm giả) → "Từ 3/6 mình nhận thêm 4 bạn, vì mình tự dạy từng bạn. Nhắn BUỔI ĐẦU."
+
 <!-- @section copywriting.grow-voice src=c56e58a023 -->
 ### Thuyết phục mà vẫn nói như người Việt
 1 Xưng hô: một cặp từ dòng đầu tới dòng cuối, theo Card, coach xưng mình hay tôi ("mình – bạn", "mình – các mẹ", "tôi – anh chị"); không trôi mình → tôi → chúng tôi; tin riêng gọi một người ("chị", "anh"), không "các bạn". Lời khách trích nguyên văn giữ cách xưng của họ.

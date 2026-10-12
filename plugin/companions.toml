@@ -121,6 +121,7 @@ description = "Content Machine hook library: hooks, titles, slide 1, subject lin
 part = "hook library"
 jobs = """\
 - "hook library", "more hooks", "hook ideas", or any hook, title, slide 1, subject or opener: §CM-HOOK-LIBRARY, then the mechanisms it picks (§CM-HOOK-FLIP, §CM-HOOK-PROOF, §CM-HOOK-SCENE, §CM-HOOK-CALLOUT, §CM-HOOK-MISTAKE)
+- before any hook prints: §CM-HOOK-ENGINE (pick the pain, fill 3 frames, score, print the winner)
 - a short's three hooks: §CM-HOOK-SHORT
 - titles, thumbnail words, live titles: §CM-HOOK-TITLES
 - slide 1, line 1 of a long post, email subjects, chat openers: §CM-HOOK-TEXT
@@ -163,7 +164,8 @@ jobs = """\
 - the frameworks by group: §CM-COPY-FRAMEWORKS · stories §CM-COPY-STORIES · beliefs §CM-COPY-BELIEFS · problem, before and after §CM-COPY-PROBLEM · client decision, objection, offer §CM-COPY-PROOF · long post, long video §CM-COPY-LONG · lists, email, Zalo §CM-COPY-LISTS
 - "a post a day", "repurpose", one week's material into 7 posts of many formats: §CM-REPURPOSE
 - "storytelling", "tell a story", finding the story in the dump: §CM-STORYTELLING
-- "persuade", "convince", urgency, guarantees, proof: §CM-PERSUASION · sounding natural, not like an ad: §CM-COPY-VOICE"""
+- "persuade", "convince", urgency, guarantees, proof: §CM-PERSUASION · sounding natural, not like an ad: §CM-COPY-VOICE
+- the ask at the end, "CTA", one that closes the hook's loop: §CM-COPY-CTA"""
 extra = """\
 The hook comes from the hook lab (§CM-FORMATS 1 in the method, §CM-HOOKS in cm-strategy) after the framework is picked; the format rules stay in the method (§CM-FORMATS, §CM-POSTS, §CM-MESSAGES). Framework names never reach the coach: on "why?" only the plain label.
 """
@@ -275,6 +277,7 @@ description = "Content Machine thư viện hook: hook, tiêu đề, slide 1, ti�
 part = "thư viện hook"
 jobs = """\
 - "thư viện hook", "thêm hook", "gợi ý hook", hay mọi hook, tiêu đề, slide 1, tiêu đề email, câu mở: §CM-HOOK-LIBRARY, rồi các dáng nó chọn (§CM-HOOK-FLIP, §CM-HOOK-PROOF, §CM-HOOK-SCENE, §CM-HOOK-CALLOUT, §CM-HOOK-MISTAKE)
+- trước khi in hook nào: §CM-HOOK-ENGINE (chọn cái khổ, đổ 3 khung, chấm, in câu thắng)
 - ba hook của video ngắn: §CM-HOOK-SHORT
 - tiêu đề, chữ ảnh bìa, tên buổi live: §CM-HOOK-TITLES
 - slide 1, dòng 1 bài dài, tiêu đề email, tin Zalo: §CM-HOOK-TEXT
@@ -317,7 +320,8 @@ jobs = """\
 - các khung theo nhóm: §CM-COPY-FRAMEWORKS · chuyện §CM-COPY-STORIES · niềm tin §CM-COPY-BELIEFS · vấn đề, trước và sau §CM-COPY-PROBLEM · quyết định của khách, băn khoăn, bài mời mua §CM-COPY-PROOF · bài dài, video dài §CM-COPY-LONG · danh sách, email, Zalo §CM-COPY-LISTS
 - "mỗi ngày 1 bài", "cắt ra nhiều dạng", chất liệu một tuần thành 7 bài nhiều kiểu: §CM-REPURPOSE
 - "kể chuyện", "storytelling", tìm chuyện trong lời xả: §CM-STORYTELLING
-- "thuyết phục", hối thúc, cam kết, bằng chứng: §CM-PERSUASION · cho tự nhiên, không giọng quảng cáo: §CM-COPY-VOICE"""
+- "thuyết phục", hối thúc, cam kết, bằng chứng: §CM-PERSUASION · cho tự nhiên, không giọng quảng cáo: §CM-COPY-VOICE
+- lời mời cuối bài, "CTA", khép đúng điều hook hé: §CM-COPY-CTA"""
 extra = """\
 Hook lấy từ lab hook (§CM-FORMATS 1 trong phần phương pháp, §CM-HOOKS ở skill cm-strategy) sau khi đã chọn khung; luật từng dạng bài vẫn ở phần phương pháp (§CM-FORMATS, §CM-POSTS, §CM-MESSAGES). Tên khung không bao giờ tới tai coach: gõ "tại sao?" chỉ thấy nhãn thường.
 """

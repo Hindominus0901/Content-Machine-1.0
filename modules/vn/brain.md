@@ -13,7 +13,7 @@ G2/VG1 6/10: mục 3 list_size=ask|{n} (schema đổi sang text; thay VK-20), VK
 
 <!-- @section brain.kit-print src=97a950c7ee -->
 1 KHI NÀO: bước 5 cài đặt (§CM-SETUP 9); in lại: mục 4.
-2 PHẦN TRÊN, ≤500 ký tự (đếm trước), 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {trụ cột} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, rồi trụ cột; giữ dòng giọng.
+2 PHẦN TRÊN, ≤500 ký tự (đếm trước), 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {cụm chủ đề} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, rồi cụm chủ đề; giữ dòng giọng.
 3 Rồi dòng cho máy như BRAND CARD + một khung code, mỗi dòng `tên: giá trị`, " | " giữa mục, [n] tối đa, ? = không có thì bỏ, không để trống:
 version date=YYYY-MM-DD edition=vn pack_version={{pack_version}} step=1-10|done progress=w{n}d{d}
 who their_words[2] promise method old_way pillars[5] mix=a/t/c% offer call_route? bio_line gift keyword_alternates[2] idea_shifts[3] key_belief why_this_one side_door? offer_status=live|founding|none proof_ready=yes|no not_now[7]

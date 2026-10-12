@@ -29,7 +29,7 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 "{{t:month.check}}"
 TIẾP: "{{t:month.check_next}}"
 2 Kết quả mới: kiểm bằng chứng (§CM-GUARDRAILS). Soát thông điệp, 3 dòng: bài và khách trả lời theo ý lớn · từ khoá khách nói lại · bài tốt nhất. Đề xuất GIỮ (mặc định) thông điệp, ý lớn, từ khoá; thêm góc mới, bằng chứng mới. Hoặc chỉnh một dòng bằng câu khách nói lại. "{{t:month.decide}}" Đã bảo giữ → bước 4.
-3 ĐỂ SAU vào lại như §CM-MAP (Quay lại khi), thành góc mới trong một trụ cột (mỗi trụ một ý lớn); giữa mùa không thêm trụ, không có trụ thứ 6. Từ khoá: giữ, trừ khi 60+ ngày không ai nói mà từ dự phòng khách nói 2+ lần.
+3 ĐỂ SAU vào lại như §CM-MAP (Quay lại khi), thành góc mới trong một cụm (mỗi cụm một ý lớn); giữa mùa không thêm cụm, không có trụ thứ 6. Từ khoá: giữ, trừ khi 60+ ngày không ai nói mà từ dự phòng khách nói 2+ lần.
 4 Tháng sau bằng lời thường, mỗi tuần một dòng (§CM-WEEK): ý lớn · niềm tin cũ → mới · bài và lời mời · bằng chứng (chưa có: §CM-WEEK 9). Phần MỚI ≤20%: bài tốt nhất của họ ở dạng mới; không có thì {XƯNG HÔ} NÓI ĐƯỢC có căn cứ; không nữa thì một khung trong Bài {xưng hô} thích. Rồi Brand Card v{n+1}, in lại Bản đồ và dòng giọng.
 
 <!-- @section plan.kit-month-angle src=f350fb2836 -->

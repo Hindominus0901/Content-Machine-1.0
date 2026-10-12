@@ -3658,7 +3658,9 @@ class FT1RoundGraderTests(TempRepo):
     def test_the_threshold_is_acceptance_hook_lab(self):
         week = f"{TAG}Tuần 1\n\n{NHI_N4}\n\nTIẾP → Nhắn 'tiếp'."
         self.assertFails(self.vn(("coach", "tiếp"), ("machine", week)), "hook_lab")
-        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nonscreen_repeat_share = 1.1\nonscreen_new_words_min = 0\n")
+        # NHI_N4's ask ("Comment KHÔNG AI NHẮN") closes another piece's loop, not this email hook's: the v14.1 echo check
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\nonscreen_repeat_share = 1.1\nonscreen_new_words_min = 0\n"
+                   "cta_echo_check = false\n")
         self.assertPasses(self.vn(("coach", "tiếp"), ("machine", week)), "hook_lab")
 
     def test_no_short_no_check(self):
@@ -4139,7 +4141,7 @@ class FT2RoundGraderTests(TempRepo):
         self.assertEqual({k: check["details"][k] for k in ("text_posts", "slides", "subjects")},
                          {"text_posts": 1, "slides": 1, "subjects": 3})
         names = [i["item"] for i in check["items"]]
-        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False, False, True, True, False, True, True], names)
+        self.assertEqual([i["pass"] for i in check["items"]], [True, True, False, False, False, False, True, True, False, True, True, True, True], names)
         self.assertTrue(any('text post line 1 fills none of the hook frames' in e for e in ev), ev)   # a flat claim is no frame
         self.assertTrue(any('text post line 1 is 3 words, not one spoken sentence' in e for e in ev), ev)   # a riddle, too short
         self.assertIn("headline_max_chars", check["details"])
@@ -5240,7 +5242,7 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
 
     def test_a_short_video_is_500_to_800_words_with_a_little_slack(self):
         """The defaults match acceptance [lengths] (founder 7 Oct night, kept 11 Oct; audit a3 L2: they were 120-200)."""
-        for n, ok in ((650, True), (500, True), (800, True), (460, True), (870, True), (150, False), (900, False)):
+        for n, ok in ((650, True), (500, True), (800, True), (460, True), (440, False), (870, True), (150, False), (900, False)):
             with self.subTest(words=n):
                 report = self.grade(self.reply(self.short(n)))
                 item = self.length(report, "a short video's script")
@@ -8432,6 +8434,99 @@ class V14FastDay0Tests(StrategyFirstBase):
         self.assertNotIn("map_dig_answers", v["details"])          # dig_answers_max = 0
         old = self.inv(self.grade(self.numbered(self.day0()), suite="day0"), "day0_timing")
         self.assertEqual(old["details"]["map_dig_answers"], 2)     # the older order: the interview's answers come on top
+
+
+class V141HookCtaTests(TempRepo):
+    """v14.1 (qa/runs/v140 MEASURE-*: a loose "Ai cũng tưởng X, thật ra không phải" hook, an on-screen text that says the
+    hook again, asks that close no loop, a 239-word FILM TODAY): hook_lab reads a belief flip's Y and the ask's echo of the
+    hook; lengths reads a title's own count against the script."""
+
+    def setUp(self):
+        super().setUp()
+        self.write("strings/vn.toml", toml_table("strings", FT1_STRINGS))
+        self.write("evals/acceptance.toml", FT1_ACCEPT)
+        self.write("evals/personas/vn/quyen/persona.toml", 'xung_ho = "chị–em"\ndialect = "Nam"\n'
+                   'allowed_numbers = ["10", "12", "26", "3"]\n')
+        self.write("evals/personas/vn/quyen/answers.md", "## Dump chunk 1\nChị làm sale 10 năm.\n")
+
+    vn = HookPrinciplesGraderTests.vn
+
+    @staticmethod
+    def short(first, on="không phải tại giá.", ask="Lưu lại nha."):
+        return (f"N2 · thứ Ba 13/10 · THU HÚT · 510 chữ\n```\nChữ trên màn hình: {on}\n"
+                "Khung hình đầu: điện thoại mở khung chat\n"
+                f"Câu đầu: \"{first}\"\n"
+                "Câu cuối: \"Hỏi khách một câu trước khi báo giá, rồi mới gửi số.\"\nCaption:\n"
+                f"Một câu hỏi trước khi gửi bảng giá.\n{ask}\n```")
+
+    def items(self, report):
+        return {i["item"]: i for i in self.inv(report, "hook_lab")["items"]}
+
+    def test_belief_flip_y(self):
+        y = graders.belief_flip_y
+        self.assertIn("only negates", y("Ai cũng tưởng khách nói để chị suy nghĩ là từ chối, thật ra không phải.", "vn"))
+        self.assertIn("no Y", y("Ai cũng bảo phải giảm giá.", "vn"))
+        self.assertEqual(y("Ai cũng bảo muốn đông học viên thì chạy quảng cáo, thật ra 26 bạn của mình đến từ một buổi học đầu.",
+                           "vn"), "")
+        self.assertEqual(y("Lầm tưởng: gia sư cần quảng cáo. Sự thật: 4 trong 5 học viên mới của mình đến từ một nhóm phụ huynh.",
+                           "vn"), "")
+        self.assertIn("only negates", y("Everyone says post daily. Not really.", "en"))
+        self.assertEqual(y("Everyone says discount to fill a slow week. My fullest month had no discount.", "en"), "")
+        self.assertEqual(y("Everyone says more ads fill a studio, but my 26 came from one first lesson.", "en"), "")
+        self.assertEqual(y("Khách hỏi giá rồi seen? 10 năm làm sale, mình chỉ sửa đúng một chỗ.", "vn"), "")   # no flip
+
+    def test_the_kits_belief_flip_frames_are_frames(self):
+        for text in ("Ai cũng bảo muốn đông học viên thì chạy quảng cáo, thật ra 26 bạn của mình đến từ một buổi học đầu.",
+                     "Ai cũng tưởng khách im là chê giá, nhưng mình thấy khách im vì chưa hỏi được câu của họ."):
+            self.assertTrue(graders.hook_frame(text, "vn"), text)
+        self.assertTrue(graders.hook_frame("Everyone says discount to fill a slow week. My fullest month had no discount.", "en"))
+
+    def test_a_belief_flip_with_no_y_fails_hook_lab(self):
+        bad = self.short("Ai cũng tưởng khách nói để chị suy nghĩ là từ chối, thật ra không phải.")
+        report = self.vn(bad)
+        self.assertFails(report, "hook_lab", "belief flip with Y only negates X")
+        good = self.short("Ai cũng tưởng khách nói để chị suy nghĩ là từ chối, thật ra khách đang chờ mình hỏi một câu.",
+                          ask="Lưu lại, lần sau khách nói suy nghĩ thì mở ra nha.")
+        self.assertTrue(self.items(self.vn(good))["a belief flip states its Y, the coach's own view (never only \"not really\")"]["pass"])
+
+    def test_the_ask_echoes_the_hook(self):
+        hook = "Khách hỏi giá rồi seen? 10 năm làm sale, mình chỉ sửa đúng một chỗ."
+        name = "the ask echoes a word or the promise of the hook (it closes the hook's loop)"
+        generic = self.vn(self.short(hook, ask="Comment BÍ KÍP để nhận tài liệu miễn phí nha."))
+        self.assertFalse(self.items(generic)[name]["pass"])
+        self.assertFails(generic, "hook_lab", "the ask shares no word or promise with the hook")
+        echo = self.vn(self.short(hook, ask="Comment HỎI GIÁ, mình gửi 3 câu hỏi trước khi báo giá."))
+        self.assertTrue(self.items(echo)[name]["pass"])
+        self.assertEqual(self.inv(echo, "hook_lab")["details"]["asks"], 1)
+        self.write("evals/acceptance.toml", FT1_ACCEPT + "\n[hook_lab]\ncta_echo_check = false\n")
+        self.assertTrue(self.items(self.vn(self.short(hook, ask="Comment BÍ KÍP để nhận tài liệu miễn phí nha.")))[name]["pass"])
+        self.assertEqual(graders.cta_echo("Comment GUIDE for my free guide", "Sold out Saturday, dead by Tuesday?", "en"), [])
+        self.assertTrue(graders.cta_echo("Comment TUESDAY BAKE and I'll send you the one change",
+                                         "Sold out Saturday, dead by Tuesday?", "en"))
+
+    def test_the_weak_runs_onscreen_repeat_still_fails(self):
+        # qa/runs/v140 MEASURE-vn-sales-weak: "Hỏi giá rồi seen" under "Khách hỏi giá xong là seen, …" says the hook again
+        report = self.vn(self.short("Khách hỏi giá xong là seen, mình hay sợ nhắn thêm.", on="Hỏi giá rồi seen",
+                                    ask="Comment HỎI GIÁ, mình gửi 3 câu hỏi trước khi báo giá."))
+        self.assertFalse(self.items(report)["on-screen text adds to the first spoken line (never repeats it)"]["pass"])
+
+
+class V141LengthTests(StrategyFirstBase):
+    """v14.1: a title's own count ("· 520 words") must be met by the piece ([lengths] title_count_slack)."""
+
+    words = staticmethod(StrategyFirstLengthsTests.words)
+    short = StrategyFirstLengthsTests.short
+    reply = StrategyFirstLengthsTests.reply
+    length = StrategyFirstLengthsTests.length
+
+    def test_a_title_count_the_script_does_not_reach_fails(self):
+        report = self.grade(self.reply(self.short(240, title="FILM TODAY · TRUST · short video · 520 words")))
+        item = self.length(report, "a title's word count")
+        self.assertIs(item["pass"], False, item)
+        self.assertTrue(any("the title says 520 words, the piece counts" in e for e in item["evidence"]), item)
+        self.assertFalse(self.length(report, "a short video's script")["pass"])
+        honest = self.grade(self.reply(self.short(520, title="FILM TODAY · TRUST · short video · 520 words")))
+        self.assertIs(self.length(honest, "a title's word count")["pass"], True)
 
 
 if __name__ == "__main__":

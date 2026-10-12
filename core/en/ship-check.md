@@ -13,13 +13,15 @@ v13.13 (12 Oct, qa/runs/v1312): 1 SOURCE names generalizations and speeds ("most
 
 v13.16 (12 Oct, founder "one idea is enough"): 1 drops "no padding" (it read as a length cap) and lists only "teaching from none of these"; PRINT (phone) lists paragraphs with a line from none of their sources. ship.kit 900 → 890.
 
+v14.1 (12 Oct, qa/runs/v140): 2 "best of 3 frames scored" (kit; phone "best of 3 drafts", everyone-says names their Y), on-screen "adds"; new 4 COUNT before PRINT (word floor; VN ĐẾM adds the particle target, e.g. 45%, 30 sentences → 11–17, and the coach's own messages when the card has no share; the VN 3 particle clause moved there). Paid by a shorter 1 SOURCE, PRINT without "(§CM-EDGE)", phone PRINT shorter. ship.kit EN 890 → 900 (budget 900), VN → 1,000.
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
 0 FOCUS: one pillar, one type · one idea ≤15 words · one belief (X → actually Y) · not NOT NOW · {{#if phone}}comment word once, in the ask; Season keyword (CONVERT) once, body or caption{{else}}keywords: §CM-CTA-KIT 1{{/if}}
-1 SOURCE: each scene, number, name, quote, result, client act or thought, cause → effect, their past, claim on clients or market ("most…"): from their words, card, a kept research line; quotes exact, same speaker; else cut. Teaching from none: listed
-2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}a §CM-FORMATS 1 frame (subject, slide 1), no client name; on-screen: <2 title words{{/if}}
-3 VOICE + BUYER: tone, rhythm, phrases (in ≥half the pieces; each ≤1×), address, no never-words; a buyer stops at line 1, believes it. Fix once
-PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: each paragraph (beat, slide) with a line from none of their sources; none: no line{{else}} (§CM-EDGE){{/if}}. Missing fact, hard stop → "Needs you · <one question>"
+1 SOURCE: each scene, number, name, quote, result, client act, thought, cause → effect, their past, a "most…" claim: from their words, card, kept research; quotes exact, same speaker; else cut. Teaching from none: listed
+2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}best of 3 drafts; "everyone says X" names their real Y; no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}best of 3 frames scored (§CM-FORMATS 1; subject, slide 1), no client name; on-screen adds, <2 title words{{/if}}
+3 VOICE + BUYER: tone, rhythm, phrases (≥half the pieces, ≤1× each), address, no never-words; a buyer stops at line 1, believes it. Fix once
+4 COUNT, then PRINT: words ≥ floor (video 500, long post 950), else grow the anchor
+PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: paragraphs with a line from none of their sources{{/if}}. Missing fact, hard stop → "Needs you · <one question>"
 
 <!-- @section ship.card -->
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise

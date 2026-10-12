@@ -5797,7 +5797,12 @@ def check_day0_strategy(run: Run) -> dict:
 # (short 500-800: founder 7 Oct night, kept 11 Oct; the defaults match acceptance.toml [lengths], audit a3 L2)
 LENGTH_DEFAULTS = {"tolerance": 0.10, "short_words_min": 500, "short_words_max": 800, "long_post_words": 1000,
                    "long_post_tolerance": 0.15, "long_video_words_min": 1000, "long_video_words_max": 1500,
-                   "long_video_parts_min": 3, "seconds_budget_fails": True}
+                   "long_video_parts_min": 3, "seconds_budget_fails": True,
+                   # v14.1 (qa/runs/v140: a weak model's 239-word FILM TODAY): the floor's own slack (short_floor_tolerance; the
+                   # grader counts spoken lines only, a human count runs ~5-8% higher: v140 N2 461 vs 501), and a title that
+                   # states a count the piece does not reach fails (title_count_slack)
+                   "short_floor_tolerance": 0.10, "title_count_slack": 0.15}
+TITLE_COUNT_RE = re.compile(r"(?<![\w.,])(\d{2,4})\s*(?:words|từ|chữ|tiếng)\b", re.I)
 LONG_VIDEO_TITLE_RE = re.compile(r"\blong(?:[- ]form)?\s+(?:video|film)\b|(?<!\w)video\s+dài(?!\w)|\byoutube\b|\bpodcast\b",
                                  re.I)
 SHORT_TITLE_RE = re.compile(r"\bshort\s+video\b|\breels?\b|\bvideo\b|\bclip\b|\bfilm today\b|\bshorts?\b(?!\s+post)"
@@ -5892,7 +5897,8 @@ def check_lengths(run: Run) -> dict:
     tol = float(cfg["tolerance"])
     items = []
     seen = {"short": 0, "long_post": 0, "long_video": 0, "titles": 0}
-    ev_short, ev_post, ev_video, ev_sec = [], [], [], []
+    ev_short, ev_post, ev_video, ev_sec, ev_claim = [], [], [], [], []
+    floor_tol = float(cfg.get("short_floor_tolerance", tol))
     measured: list[dict] = []                    # what the grader counted, piece by piece (v13.14: it used to measure nothing)
     unit = "tiếng" if run.lang == "vn" else "words"
     pieces = [(r, p) for r in run.replies for p in r.pieces if p.title and not r.after_why]
@@ -5911,14 +5917,14 @@ def check_lengths(run: Run) -> dict:
         kind = piece_kind(p)
         if kind == "short":
             n = spoken_words(run, r, p)
-            measured.append({"turn": r.turn, "piece": _short(head, 30), "kind": kind, "words": n})
+            measured.append({"turn": r.turn, "piece": _short(head, 30), "kind": kind, "words": n, "title": head})
             seen["short"] += 1
             lo, hi = int(cfg["short_words_min"]), int(cfg["short_words_max"])
-            if n and not (lo * (1 - tol) <= n <= hi * (1 + tol)):
+            if n and not (lo * (1 - floor_tol) <= n <= hi * (1 + tol)):
                 ev_short.append(f'{_turn(r)}: {_short(head, 30)} says {n} {unit} (a short video runs {lo}-{hi})')
         elif kind == "long_post":
             n = piece_words(run, p)
-            measured.append({"turn": r.turn, "piece": _short(head, 30), "kind": kind, "words": n})
+            measured.append({"turn": r.turn, "piece": _short(head, 30), "kind": kind, "words": n, "title": head})
             seen["long_post"] += 1
             target, lt = int(cfg["long_post_words"]), float(cfg["long_post_tolerance"])
             if not target * (1 - lt) <= n <= target * (1 + lt):
@@ -5926,7 +5932,7 @@ def check_lengths(run: Run) -> dict:
                                f'{round(target * (1 - lt))}-{round(target * (1 + lt))})')
         elif kind == "long_video":
             n = piece_words(run, p)
-            measured.append({"turn": r.turn, "piece": _short(head, 30), "kind": kind, "words": n})
+            measured.append({"turn": r.turn, "piece": _short(head, 30), "kind": kind, "words": n, "title": head})
             seen["long_video"] += 1
             lo, hi = int(cfg["long_video_words_min"]), int(cfg["long_video_words_max"])
             if not lo <= n <= hi:
@@ -5937,7 +5943,14 @@ def check_lengths(run: Run) -> dict:
                 ev_video.append(f'{_turn(r)}: {_short(head, 30)} shows {len(nums)} numbered parts (want {need}-4, each "Part n")')
             elif not HOOK_PART_RE.search(p.body) or not ASK_PART_RE.search(p.body):
                 ev_video.append(f'{_turn(r)}: {_short(head, 30)} has its parts but no labelled hook or ask around them')
+    slack = float(cfg.get("title_count_slack", 0.15))
+    for m_ in measured:                  # a title's own count ("· 520 chữ") the piece does not reach: printed unchecked
+        claim = TITLE_COUNT_RE.search(m_.get("title", ""))
+        if claim and m_["words"] and m_["words"] < int(claim.group(1)) * (1 - slack):
+            ev_claim.append(f'turn {m_["turn"]}: the title says {claim.group(1)} {unit}, the piece counts {m_["words"]}: '
+                            f'count before printing, and grow the anchor under the floor')
     for name, ev, ran, n in (
+            ("a title's word count is the piece's own (counted before printing)", ev_claim, bool(measured), len(measured)),
             (f"a short video's script is {cfg['short_words_min']}-{cfg['short_words_max']} {unit}", ev_short,
              seen["short"] > 0, seen["short"]),
             (f"a long post is about {cfg['long_post_words']} {unit} (±{round(float(cfg['long_post_tolerance']) * 100)}%)",
@@ -6957,12 +6970,90 @@ def hook_shorts(run: Run) -> list[dict]:
                     cur["caption"] = rest
                     cur["end"] = i
         for n, s in enumerate(found):
+            bound = found[n + 1]["at"] if n + 1 < len(found) else len(r.lines)
             if not s["caption"]:
-                bound = found[n + 1]["at"] if n + 1 < len(found) else len(r.lines)
                 s["caption"] = _caption_box(r, boxes, s, bound)
                 s["caption_box"] = bool(s["caption"])
+            s["ask"] = _short_ask(r, s, bound)
         out += found
     return out
+
+
+# v14.1 (qa/runs/v140 MEASURE-vn-sales-strong: "Comment X" asks that close nothing; PRINCIPLES CTA 1): the ask under a short
+# is the line, within the short, that asks for a comment, a save, a send or a message (CTA_ASK_RE); the echo check reads it
+# against the hook (first line + on-screen text): it must share a content word other than the ask's own words (CTA_GENERIC).
+CTA_ASK_RE = re.compile(r"(?<!\w)(?:comment|cmt|bình luận|lưu lại|lưu video|lưu bài|gửi (?:video|bài|clip) này|gửi cho (?:bạn|người|chủ|ai)"
+                        r"|nhắn (?:mình|tôi|em|riêng|chữ)|inbox (?:mình|tôi|em)|save this|save it|send this|send it|share this|dm me"
+                        r"|message me|just type|gõ (?:a|b|\d|một chữ))(?!\w)", re.I)
+CTA_GENERIC = {"comment", "cmt", "bình", "luận", "lưu", "gửi", "nhắn", "inbox", "video", "clip", "bài", "link", "file", "quà",
+               "chữ", "từ", "khoá", "khóa", "dưới", "ngay", "thôi", "gõ", "save", "send", "share", "dm", "message", "reply", "post",
+               "free", "guide", "below", "type", "letter", "i'll", "ill", "tip", "more", "follow", "theo", "dõi", "xem", "thêm",
+               "nhận", "trang", "page", "tài", "liệu", "về", "đây"}
+
+
+def _short_ask(r: Reply, s: dict, bound: int) -> str:
+    """The ask of a short (hook_shorts dict): the first line after its first spoken line, before the next short and within
+    HOOK_WINDOW + 10 lines, that asks for a comment, save, send or message (CTA_ASK_RE). '' when none."""
+    stop = min(bound, s["at"] + HOOK_WINDOW + 10, len(r.lines))
+    for i in range(s["at"] + 1, stop):
+        ln = r.lines[i]
+        if ln.fence or not ln.plain or ON_SCREEN_RE.match(ln.plain) or FIRST_LINE_RE.match(ln.plain):
+            continue
+        if CTA_ASK_RE.search(ln.plain):
+            return ln.plain
+    return ""
+
+
+def cta_echo(ask: str, hook: str, lang: str) -> list[str]:
+    """The content words an ask shares with its hook (the first line and the on-screen text), the ask's own words
+    (CTA_GENERIC) left out: [] when it echoes nothing (a generic "Comment GUIDE for more tips")."""
+    mine = {w for w in _hook_content(ask, lang) if w.lower() not in CTA_GENERIC and not w.isdigit()}
+    theirs = set(_hook_content(hook, lang))
+    shared = mine & theirs
+    # the comment word in capitals ("Comment KHÔNG AI NHẮN") taken from the hook's own words is the echo itself
+    word = " ".join(m.group(0) for m in re.finditer(r"[^\W\d_]{2,}", ck.nfc(ask)) if m.group(0).isupper())
+    if word:
+        low, hook_all = word.lower(), " ".join(_hook_all(hook, lang)).lower()
+        stop = HOOK_STOP_VN_RAW if lang == "vn" else HOOK_STOP_EN
+        if f" {low} " in f" {hook_all} " or any(w in hook_all.split() and w not in stop for w in low.split()):
+            shared |= {low}
+    return sorted(shared)
+
+
+# v14.1 (qa/runs/v140 MEASURE-vn-sales-strong N2: "Ai cũng tưởng … là từ chối, thật ra không phải"): a belief flip
+# ("Everyone says X, but Y", "Ai cũng bảo X, thật ra Y", "Myth: X. Truth: Y.") must state Y, the coach's own view or
+# result. A Y that only negates X ("not really", "thật ra không phải") or no Y at all fails (belief_flip_y).
+BELIEF_X_RE = {"vn": re.compile(r"^\W*(?:ai cũng|ai ai cũng|mọi người|người ta|nhiều người)\s+(?:đều\s+)?(?:bảo|nói|tưởng|nghĩ|khuyên|tin)(?!\w)"
+                                r"|^\W*(?:lầm tưởng|hiểu lầm|quan niệm sai)\s*:", re.I),
+               "en": re.compile(r"^\W*(?:everyone|everybody|most people|people)\s+(?:says?|thinks?|tells? you|believes?|will tell you)\b"
+                                r"|^\W*myth\s*:", re.I)}
+BELIEF_TURN_RE = {"vn": re.compile(r"(?:,|\.|:|;)\s*(?:thật ra|thực ra|sự thật\s*:|nhưng|mà|hoá ra|hóa ra)(?!\w)", re.I),
+                  "en": re.compile(r"(?:,|\.|:|;|—|-)\s*(?:but|truth\s*:|actually|in fact|here's the truth|the truth is)\b", re.I)}
+BELIEF_EMPTY = {"vn": {"không", "phải", "đâu", "vậy", "thế", "sai", "đúng", "hẳn", "lắm", "chưa", "chắc", "nha", "nhé", "đó", "nè",
+                       "như", "hoàn", "toàn", "hề", "rồi", "là"},
+                "en": {"not", "really", "true", "wrong", "isn't", "isnt", "so", "quite", "case", "it", "that", "nope", "no", "the",
+                       "always", "exactly", "necessarily", "is", "be"}}
+
+
+def belief_flip_y(text: str, lang: str) -> str:
+    """'' when a hook is no belief flip, or states its Y; else why not ("no Y", "Y only negates X: ..."). Y is what
+    follows the turn ("thật ra", "but", "Truth:") or, with no turn word, the next sentence."""
+    body = ck.straight_quotes(ck.nfc(text or "")).strip().strip('"').strip()
+    if not BELIEF_X_RE[lang].search(body):
+        return ""
+    m = BELIEF_TURN_RE[lang].search(body)
+    if m:
+        y = body[m.end():]
+    else:
+        parts = re.split(r"(?<=[.!?])\s+", body, maxsplit=1)
+        y = parts[1] if len(parts) > 1 else ""
+    if not y.strip():
+        return "no Y after the belief"
+    words = [w for w in _hook_all(y, lang) if w.lower() not in BELIEF_EMPTY[lang]]
+    words = [w for w in words if w not in (HOOK_STOP_VN_RAW if lang == "vn" else HOOK_STOP_EN) or w.isdigit()]
+    if len(words) < 2:
+        return f'Y only negates X ("{_short(y.strip(), 30)}")'
+    return ""
 
 
 HOOK_NEGATIONS = {True: {"không", "chưa", "chẳng", "đâu", "đừng", "chớ"},          # VN: "đâu có" says no
@@ -7348,7 +7439,7 @@ HOOK_FRAMES = {
            # v13.16: the kit's lầm tưởng / sự thật and lật niềm tin shapes (hook-library "Thêm hai khung")
            ("lầm tưởng / sự thật", re.compile(r"^(?:lầm tưởng|hiểu lầm|quan niệm sai)\s*[:\-]\s*[^\n]{3,}?[.!?]?\s*(?:sự thật|thực ra|thật ra)\s*[:\-]", re.I)),
            ("lật niềm tin", re.compile(r"^(?:bạn|anh|chị|em|mình|khách)? ?(?:không|chẳng) cần\b[^.?!]{2,}[.:;]\s*(?:bạn|anh|chị|em|mình|khách)? ?cần\b"
-                                       r"|^(?:ai cũng|mọi người|người ta) (?:bảo|nói|khuyên)\b[^.?!]*,\s*(?:mà|nhưng)\b",
+                                       r"|^(?:ai cũng|mọi người|người ta) (?:bảo|nói|khuyên|tưởng|nghĩ|tin)\b[^.?!]*,\s*(?:mà|nhưng|thật ra|thực ra)(?!\w)",
                                        re.I)),
            ("gọi đúng người (câu hỏi)", re.compile(r"^[^.?!]{8,}\?\s+\S")),
            # the kit's own email-subject frame (hook-library 3, SOÁT KHUNG): "nếu học trò hay bỏ giữa chừng, đọc thư này" (v13.14)
@@ -7373,7 +7464,8 @@ HOOK_FRAMES = {
                                       r"|^\w+(?:\s+\w+){0,3} (?:don't|do not|doesn't) have an? [^.?!]{2,40}? problem[.,]?\s*they have an? "
                                       r"|^(?:most )?\w+(?:\s+\w+){0,3} think [^.?!]{2,}[.:;]\s*(?:it's|it is|it isn't)\b"
                                       r"|^stop [^.?!]{3,}[.:;]\s*\S[^.?!]*\binstead\b|^not [^.?!]{2,}\.\s*not [^.?!]{2,}\.\s*it was\b"
-                                      r"|^(?:everyone|everybody) says\b[^.?!]*[.:;]?[\"']?\s*(?:here's|but)\b", re.I)),
+                                      r"|^(?:everyone|everybody) says\b[^.?!]*[.:;]?[\"']?\s*(?:here's|but)\b"
+                                      r"|^(?:everyone|everybody|most people) (?:says?|thinks?)\b[^.?!]{3,}[.:;][\"']?\s+\S", re.I)),
            ("myth / truth", re.compile(r"^myth\s*[:\-]\s*[^\n]{3,}?[.!?]?\s*truth\s*[:\-]", re.I)),
            ("call-out question", re.compile(r"^[^.?!]{8,}\?\s+\S"))],
 }
@@ -7621,7 +7713,9 @@ def check_hook_lab(run: Run) -> dict:
     min_words = int(acc.get(f"first_line_min_words_{lang}", FIRST_MIN_WORDS[lang]))
     self_words = coach_self_words(run)
     shape, voice, opinion, frame, method = [], [], [], [], []
+    flip_y, echo = [], []
     frames_on = bool(acc.get("frame_check", True))
+    echo_on = bool(acc.get("cta_echo_check", True))
     for s in shorts:
         where = f"turn {s['turn']}: " if s.get("turn") is not None else ""
         if frames_on and s.get("first") and not hook_frame(s["first"], lang):
@@ -7642,6 +7736,14 @@ def check_hook_lab(run: Run) -> dict:
             m = OPINION_ASK[lang].search(s.get(key, "") or "")
             if m and m.group(0).strip():
                 opinion.append(f'{where}the ask is an opinion question ("{m.group(0).strip()}"); give a choice ("A hay B?")')
+        why_y = belief_flip_y(s.get("first", ""), lang) if frames_on else ""
+        if why_y:
+            flip_y.append(f'{where}belief flip with {why_y}: Y must be the coach\'s own view or result, said in full: '
+                          f'"{_short(s["first"], 70)}"')
+        if echo_on and s.get("ask") and (s.get("first") or s.get("on")) \
+                and not cta_echo(s["ask"], f'{s.get("first", "")} {s.get("on", "")}', lang):
+            echo.append(f'{where}the ask shares no word or promise with the hook (it closes no loop): "{_short(s["ask"], 60)}" '
+                        f'under "{_short(s.get("first") or s.get("on"), 50)}"')
     for t in thumbs:
         got_repeat, got_method = thumb_findings(t, cfg, lang, frames_on)
         repeat += got_repeat
@@ -7661,6 +7763,9 @@ def check_hook_lab(run: Run) -> dict:
                 and not hook_frame(h["text"], lang) \
                 and not (h["kind"] != "post" and HEADLINE_QUESTION_RE.match(h["text"].strip())):
             frame.append(f'{where}{what} fills none of the hook frames (§CM-FORMATS 1, §CM-POSTS 1): "{_short(h["text"], 70)}"')
+        why_y = belief_flip_y(h["text"], lang) if frames_on and h["kind"] in ("post", "slide") else ""
+        if why_y:
+            flip_y.append(f'{where}{what}: belief flip with {why_y}: "{_short(h["text"], 70)}"')
         if h["kind"] == "post":
             why = hook_length_issue(h["text"], lang, max_sent, min_words)
             if why:
@@ -7705,6 +7810,10 @@ def check_hook_lab(run: Run) -> dict:
          "evidence": list(dict.fromkeys(method))},
         {"item": "no hook names a client the coach gave (a name or a role)", "pass": not named,
          "evidence": list(dict.fromkeys(named))},
+        {"item": "a belief flip states its Y, the coach's own view (never only \"not really\")", "pass": not flip_y,
+         "evidence": list(dict.fromkeys(flip_y))},
+        {"item": "the ask echoes a word or the promise of the hook (it closes the hook's loop)", "pass": not echo,
+         "evidence": list(dict.fromkeys(echo))},
     ]
     passed = all(i["pass"] for i in items)
     out = {"id": "hook_lab", "pass": passed, "status": "pass" if passed else "fail", "items": items,
@@ -7715,7 +7824,7 @@ def check_hook_lab(run: Run) -> dict:
                        "text_posts": sum(1 for h in heads if h["kind"] == "post"),
                        "slides": sum(1 for h in heads if h["kind"] == "slide"),
                        "subjects": sum(1 for h in heads if h["kind"] == "subject"),
-                       "thumbnails": len(thumbs),
+                       "thumbnails": len(thumbs), "asks": sum(1 for s in shorts if s.get("ask")),
                        "onscreen_repeat_share": cfg["share"], "headline_max_chars": cfg["max_chars"]}}
     if warn:
         out["warnings"] = list(dict.fromkeys(warn))

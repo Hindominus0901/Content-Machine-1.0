@@ -159,6 +159,7 @@
 "anchor.hook-callout" = { text = "Gọi đúng người, câu khách hỏi, băn khoăn, thử thách", src = "7f9ae3efde" }
 "anchor.hook-mistake" = { text = "Lỗi đắt giá, thú nhận, làm lại từ đầu, các bước", src = "3a12a420eb" }
 "anchor.hook-short" = { text = "Ba hook của video ngắn", src = "7d69817fa1" }
+"anchor.hook-engine" = { text = "Máy làm hook: 4 bước trước khi in", src = "59ee34e1a0" }
 "anchor.hook-titles" = { text = "Tiêu đề, chữ ảnh bìa, tên buổi live", src = "3e9e9aee38" }
 "anchor.hook-text" = { text = "Slide 1, dòng 1, tiêu đề email, tin Zalo", src = "a69bbb5ace" }
 "anchor.hook-ads" = { text = "Hook quảng cáo", src = "af03232633" }
@@ -400,6 +401,7 @@
 "anchor.storytelling" = { text = "Kể chuyện", src = "5d4710cc7b" }
 "anchor.persuasion" = { text = "Thuyết phục và những lằn ranh", src = "0a7adca681" }
 "anchor.copy-voice" = { text = "Thuyết phục mà vẫn nói như người Việt", src = "502f9902e9" }
+"anchor.copy-cta" = { text = "Lời mời khép điều hook hé, trượt → đạt", src = "22380b9bbf" }
 "voice.not_me_ok"              = { text = "Rồi, từ giờ không dùng \"{line}\" nữa.", src = "7e5f0bc551" }
 "voice.do_say_ok"              = { text = "Rồi, \"{word}\" giữ lại.", src = "581bb8047e" }
 "card.label.voice_line"        = { text = "Giọng", src = "dc50b5a834" }

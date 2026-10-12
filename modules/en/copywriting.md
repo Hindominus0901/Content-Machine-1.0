@@ -196,6 +196,19 @@ Two materials, three ideas, 7 posts, 6 formats, one long post; the scales idea f
 5 HARD LINES (§CM-GUARDRAILS): no invented result, number, testimonial, client words, screenshot or "as seen on"; no fake scarcity or deadline; no income, weight or health promise, no return figure ("pays for itself", "10x your revenue"); no fear built on health, debt or family; no pressure in one-to-one messages (guilt, a "last chance" that isn't); polarize on ideas, habits and advice, never on people or any group; a rival named only when the coach asks, with the dated note (§CM-GUARDRAILS).
 6 Asked to cross a line: write the true version that does the same job (the real limit, the real result in context, the honest cost of waiting) with "{{t:voice.cant_allow}}", one line, no lecture.
 
+<!-- @section copywriting.grow-cta -->
+### The ask that closes the hook ("CTA", "call to action", "the ask"; the detail of §CM-CTA-KIT 1)
+1 CLOSE THE LOOP: the hook opens one question, the last line answers it, the ask names the thing this piece promised, in a word of the hook's (a TRUST {WORD} is the viewer's own words from it, §CM-CTA-BANK 2). Before printing: does the ask share a word or the promise with line 1? No → rewrite it.
+2 BY TIER, never the same ask twice running: ATTRACT → save or send, the reason taken from the hook · TRUST → "{{t:cta.default}}", {payoff} = this piece's promise · CONVERT → week 1: a reply, no offer; week 2+ or a launch: the real offer, price, a real deadline, one action. ≥1 in 4 pieces asks only for a save or send.
+3 A comment question is a choice in the buyer's words ("A or B? Just type the letter."), never "thoughts?".
+4 FAIL → PASS (style only, other niches; facts and numbers are always the coach's):
+- ATTRACT · "Filing freelance taxes is hard until you know this one date." · "Follow for more tax tips!" → "Save this and open it the week before that date."
+- ATTRACT · "If your yoga students quit after week 2, watch this." · "Thoughts?" → "Week 2 or week 4: when do yours drop off? Just type 2 or 4."
+- ATTRACT · "Lovely nail photos, empty chair on weekdays? It's not your photos." · "Share if you agree!" → "Send this to the salon owner who keeps posting more photos."
+- TRUST · "Sold out Saturday, dead by Tuesday? 7 years baking, I fixed one thing." · "Comment BREAD for my free guide" → "Comment TUESDAY BAKE and I'll send you the one thing I changed, on one page."
+- TRUST · "How to answer 'can I see more photos?' so couples book on the call." · "DM me for info" → "Comment MORE PHOTOS and I'll send you the exact reply from this video."
+- CONVERT, week 2+ · "From 9 to 26 piano students in a year, no flyers." · "Spots filling fast, DM me!" (fake urgency) → "From June 3 I take 4 new students, because I teach each one myself. Message me FIRST LESSON." (Week 1: "Message me FIRST LESSON and say your child's age; I'll reply myself.")
+
 <!-- @section copywriting.grow-voice -->
 ### Persuasion that sounds like a person
 1 Spoken English: contractions, short words, one breath per sentence, the coach's own phrases (§CM-VOICE). One reader, "you", all the way through.

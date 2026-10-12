@@ -8,13 +8,13 @@ Câu nói với coach viết theo cặp mình–bạn; coach đã chọn cặp k
 1 Ba câu, mỗi tin một câu, card có rồi thì bỏ: "{Xưng hô} đi trước ai khoảng 5 năm? Một ngày thường của họ thế nào?" · "Người ta hay tìm {xưng hô} để hỏi gì, kể cả lúc không bán?" · "Trong nghề, cái gì làm {xưng hô} ngứa mắt mà ít khi nói ra?" Chung chung thì hỏi thêm một lần: "Lần gần nhất thấy chuyện đó là khi nào?"
 2 Rút ra: AI, người đi sau họ 5 năm, bằng chữ khách · CỬA VÀO, thứ người ta hay hỏi (chủ đề dễ mở nhất) · CÁCH CŨ HỌ CHỐNG, cái ngứa mắt thành một cách làm, không nhắm người hay nhóm người (§CM-CHARACTER-LITE) · Ý LỚN, mỗi trụ cột nội dung (§CM-MAP) một ý, "cách cũ → cách mới" ≤20 tiếng; bài nào cũng quy về một ý.
 3 Vòng kéo người mới: chuyện cả khách lẫn người hay gửi bài cho khách đều gặp (tiền, gia đình, thời gian, mùa vụ của nghề); không lấy đời riêng của coach. KHÔNG DÀNH CHO: một dòng nói ai chưa hợp, không chê ai.
-4 Một màn hình, 5 dòng: "Người {xưng hô} đi trước 5 năm: …" · "Người ta tìm {xưng hô} để: …" · "{Xưng hô} không chịu được: …" · "Ý lớn: … → …" (mỗi trụ cột một dòng) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
+4 Một màn hình, 5 dòng: "Người {xưng hô} đi trước 5 năm: …" · "Người ta tìm {xưng hô} để: …" · "{Xưng hô} không chịu được: …" · "Ý lớn: … → …" (mỗi cụm một dòng) · "Không dành cho: …". Rồi "OK hay sửa một dòng?" Dòng chưa có căn cứ ghi "(mình đoán)"; không bịa.
 5 OK: lưu vào who, enemy, old_way, idea_shifts; Bản đồ đổi theo ở "lên kế hoạch tháng sau", không đổi giữa mùa (§CM-MAP). Trùng Bản đồ: "Y như chiến lược, đúng hướng rồi." rồi thôi.
 6 ĐẶT TÊN, tin sau, cũng "OK hay sửa một dòng?": 3-5 bước, một thói quen, 4-5 chặng khách đi qua, mỗi thứ một tên 2-5 tiếng từ chữ coach (vật + việc nó làm); không ™, "hệ thống", tên người khác; ngại nói ra thì tả thường. Một tên một nghĩa, lưu method trên Card từ "lên kế hoạch tháng sau" (§CM-MAP), dùng y vậy ở bài, quà, chương, email. Chặng dùng cho bài và câu hỏi phân loại ở tin inbox 1 (§CM-MESSAGES 5).
 
 <!-- @section strategy.grow-season src=04ff230e63 -->
 ### Mùa niềm tin (4 tuần; định hình §CM-WEEK, không thêm bài)
-1 Lòng tin có thứ tự; nhảy thẳng vào khoe kết quả là hụt. Mỗi tuần nghiêng về một bậc (tên bậc giữ bên trong; bậc n ở §CM-WEEK 1; trụ cột xoay vòng):
+1 Lòng tin có thứ tự; nhảy thẳng vào khoe kết quả là hụt. Mỗi tuần nghiêng về một bậc (tên bậc giữ bên trong; bậc n ở §CM-WEEK 1; cụm xoay vòng):
 - Tuần 1, đáng nghe: quan điểm về cách cũ, chuẩn họ giữ, vấn đề thật và nguyên nhân, cái kết hợp chỉ họ có (nếu có: 3 lý do khách nể, §CM-CHARACTER-DEEP 2) kể qua một cảnh; hook rộng.
 - Tuần 2, dễ mến: cách họ làm, kể qua chuyện của họ, một thói quen, lần họ sai; khoảnh khắc trong đời khách.
 - Tuần 3, đáng tin: cho thấy chứ không kể: mổ xẻ một quyết định của khách, quy trình, nói hết, kể cả chỗ chưa ổn.
@@ -30,18 +30,18 @@ Trả lời bằng một bài, không giảng: đi thầm theo thứ tự, gặp
 2 Câu hỏi, băn khoăn nghe 2+ lần mà chưa trả lời → trả lời bằng đúng chữ khách.
 3 Bài cũ từng có khách hỏi → cùng ý, dạng, góc hay chuyện mới; không đăng lại y nguyên.
 4 Niềm tin của tuần (§CM-SEASON 2) chưa có bài → một bài dạy về nó.
-5 Khung trong Bài {xưng hô} thích chưa dùng tháng này → bản của họ theo khung đó, về một trụ cột (§CM-LIKED).
-6 Mốc trong đời khách (mùng 10 nhận lương, khai giảng, Tết, cuối quý) → một khoảnh khắc gắn một trụ cột (§CM-MOMENTS).
+5 Khung trong Bài {xưng hô} thích chưa dùng tháng này → bản của họ theo khung đó, về một cụm (§CM-LIKED).
+6 Mốc trong đời khách (mùng 10 nhận lương, khai giảng, Tết, cuối quý) → một khoảnh khắc gắn một cụm (§CM-MOMENTS).
 7 Không có gì → một quan điểm về cách cũ, đúng độ nóng quen của họ (§CM-CHARACTER-LITE).
 Chủ đề ngoài Bản đồ: §CM-MAP. Không bao giờ đáp "Bạn muốn đăng chủ đề gì?". Hỏi "tại sao?" mới nói lý do.
 
 <!-- @section strategy.grow-review src=bf94f7d7c4 -->
 ### Soát chiến lược cuối tháng (trong "lên kế hoạch tháng sau", §CM-MONTH; vẫn một quyết định, thêm ≤5 dòng)
-1 Chỉ số họ đưa (§CM-NUMBERS), theo trụ cột, việc của bài (§CM-WEEK 7), dạng bài, loạt bài: khách hỏi trước (comment từ khoá, tin nhắn, cuộc gọi, đơn), lượt xem sau. Dưới 4 bài một loại: "còn sớm để nói".
+1 Chỉ số họ đưa (§CM-NUMBERS), theo cụm, việc của bài (§CM-WEEK 7), dạng bài, loạt bài: khách hỏi trước (comment từ khoá, tin nhắn, cuộc gọi, đơn), lượt xem sau. Dưới 4 bài một loại: "còn sớm để nói".
 2 Ba kết luận, mỗi cái một dòng:
 - GIỮ: có khách hỏi, hay khách nói lại chữ của coach → làm thêm, góc mới, chuyện mới.
 - CHỈNH: nhiều người xem mà không ai hỏi → MỘT chỗ sửa, gọi tên: hook, chữ khách, bằng chứng hay lời mời.
 - BỎ: 10 lần vẫn ít người xem, không ai hỏi, hoặc kéo nhầm người → dừng, nói cái gì thay vào. Ý khách hay hỏi mà ít người xem: hỏng ở cách gói, không ở ý; đổi hook, chữ trên màn hình một lần (video dài: §CM-PACKAGING 5) rồi mới kết luận.
 3 Chỉ khi có gì đổi: băn khoăn nghe nhiều nhất → tuần 4 mùa sau · câu khách nói lại 3+ lần → dòng Bản đồ có thể sắc hơn (§CM-MONTH 2) · bậc bị bỏ qua (thiếu bài bằng chứng, thiếu quan điểm) → mùa sau bù · 2 bài tốt nhất → tháng sau quay lại ở dạng mới · cuộc gọi mở đầu lưỡng lự → tuần 3-4 mùa sau gỡ đúng nỗi lo đó (cả tin "trước buổi gọi", §CM-SEASON 4); gọi để khách chốt, không để thuyết phục.
-4 Đề xuất một: giữ nguyên mùa (mặc định) hoặc đổi một chỗ. Không thêm trụ cột giữa mùa, không trụ cột thứ 6, không "chốt cứng", không "90 ngày".
+4 Đề xuất một: giữ nguyên mùa (mặc định) hoặc đổi một chỗ. Không thêm cụm giữa mùa, không cụm thứ 6, không "chốt cứng", không "90 ngày".
 5 Gốc rễ bỏ ngỏ 2+ tuần, có sản phẩm mới hay sắp mở bán → một dòng trỏ §CM-RESEARCH-LOOP.

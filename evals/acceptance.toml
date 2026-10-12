@@ -120,8 +120,13 @@ long_video_words_min = 1000               # long video: 1,000-1,500 words, in pa
 long_video_words_max = 1500
 long_video_parts_min = 3                  #   at least this many numbered parts (the kit: 3-4), with a hook and an ask around them
 seconds_budget_fails = true               # a length in seconds on a title or in talk ("FILM TODAY (under 30 s)", "30 giây") fails
+short_floor_tolerance = 0.10              # v14.1: a short's floor (500) is read with this slack (450): the grader counts spoken lines
+                                          #   only and runs ~5-8% under a human count (v140 N2: 461 vs 501); a 240-word FILM TODAY fails
+title_count_slack = 0.15                  # v14.1: a title's own count ("· 520 chữ") more than this share over the piece's counted words fails
 
 [hook_lab]                                # check hook_lab (graders.py; qa/standards/hook-lab.md HL7, HL8; review retest-ft1 fix 2)
+cta_echo_check = true                     # v14.1: a short's ask shares a content word or the promise with its hook (first line, on-screen);
+                                          #   "Comment GUIDE for my free guide" under any hook closes no loop (PRINCIPLES CTA 1)
 onscreen_repeat_share = 0.6               # (v13.8, §CM-HOOKS 4: was 0.75; a thumbnail's text against its title too) a short's on-screen text fails when this share (or more) of its content words comes
                                           #   back in the first spoken line: the same claim twice. The founder's test and its
                                           #   retest sat at 100% (4 of 6 VN Week-1 shorts, e.g. "Một email, 180 người" over

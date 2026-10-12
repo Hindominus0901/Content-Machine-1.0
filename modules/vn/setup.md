@@ -37,11 +37,11 @@ QUAN ĐIỂM: "{{t:dig.stance}}"
 <!-- @section setup.kit-facts src=24852d0d38 -->
 4 CHƯA NGHE ở ngày 0: đoán từ lời họ, nghiên cứu, ghi "(mình đoán)" ở dòng liên quan, hôm đó không hỏi (sau: §CM-DIG); "bỏ qua", "không chắc": giữ câu đoán. Kết quả: chỉ cái họ kể.
 5 Kế hoạch chưa nghe (nền tảng, danh sách, ngày nói chuyện): đoán, nói một lần ở HỆ THỐNG: "{{t:setup.plan_guess}}" Số giờ: A/B/C (§CM-MAP 4).
-6 Từ 2 nguồn thu, khác người mua: một lựa chọn trong chiến lược, "{{t:setup.multi_income}}" Sản phẩm = nguồn họ muốn làm lớn; nguồn khác còn bán = bán kèm (§CM-DRIFT), không thành trụ cột. Lương, việc không công không tính.
+6 Từ 2 nguồn thu, khác người mua: một lựa chọn trong chiến lược, "{{t:setup.multi_income}}" Sản phẩm = nguồn họ muốn làm lớn; nguồn khác còn bán = bán kèm (§CM-DRIFT), không thành cụm chủ đề. Lương, việc không công không tính.
 7 Chưa bán gì ("chưa bán": không hỏi lại): suất "5 người đầu", giá họ đặt; chưa có giá → dòng Cần ở bài sản phẩm. Chưa có kết quả: không mượn của người nhà.
 
 <!-- @section setup.kit-pick src=68c3e9fa01 -->
-CHỌN thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Gốc rễ → ý lớn đầu của một trụ cột. Vì sao chọn, chỉ in khi hỏi: bằng chứng của họ; chưa bán: không nói "khách đã trả". Lựa chọn làm hẹp AI (ĐIỀU KHÁCH NHỚ); trụ cột vẫn rộng.
+CHỌN thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Gốc rễ → ý lớn đầu của một cụm. Vì sao chọn, chỉ in khi hỏi: bằng chứng của họ; chưa bán: không nói "khách đã trả". Lựa chọn làm hẹp AI (ĐIỀU KHÁCH NHỚ); cụm chủ đề vẫn rộng.
 
 <!-- @section setup.kit-order src=5655ea701e -->
 9 THỨ TỰ: 10 bước CÀI ĐẶT (step= trên card, HUB.md); 7-8: hai "tiếp" kế; 9-10: đúng ngày; kèm bài của ngày; xong: step=done. Kèm card: HUB.md; đủ 4 tuần (§CM-CALENDAR) vào file chiến lược (§CM-STRATEGY-DOC) → bài Tuần 1 khác (§CM-WEEK): mỗi "tiếp" một bài, hay đúng ngày. "lát nữa" trước card: card + dòng lưu ngay, phần còn lại khi "tiếp".
