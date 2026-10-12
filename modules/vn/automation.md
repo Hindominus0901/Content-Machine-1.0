@@ -82,7 +82,7 @@ Kết bằng: {{t:next.prefix}} {{t:task.footer}}
 {{#unless task}}LỜI NHẮC · ChatGPT hay Claude · "Ngày mở bán" (khung chép, đã ghép, ≤900 ký tự):
 {{/unless}}Mỗi ngày 7h07, tới {hôm sau giờ đóng} thì dừng: "Ngày mở bán". Có skill {{skill_name}} thì chạy Bàn mở bán.
 Mình là coach; viết tiếng Việt, gọi mình là {xưng hô}, tự xưng {tự xưng}. Từ khoá: {KEYWORD}. Giọng: {dòng giọng}.
-Đợt mở bán: {sản phẩm} · {giá} · mở giỏ {mở} tới {đóng: ngày, giờ} · giới hạn: {suất + lý do, hoặc không} · lịch: {lịch, ≤60 ký tự}.
+Đợt mở bán: {sản phẩm} · {giá} · nhận đăng ký {ngày mở} tới {đóng: ngày, giờ, múi giờ} · giới hạn: {suất + lý do, hoặc không} · lịch: {lịch, ≤60 ký tự}.
 Ngày n = hôm nay − {ngày 1} + 1. Viết việc ngày n (một dòng), một hook cho bài chính; rồi hỏi số hôm qua: tiếp cận · tin nhắn · đơn · suất còn · câu hay hỏi nhất.
 Suất, số, hạn: chỉ theo mình đưa; không tự ra "chỉ còn X suất"; đếm ngược, "cơ hội cuối" chỉ cho giờ đóng thật. Không bịa kết quả, lời khách: [CẦN {XƯNG HÔ}: …]. Không đăng, nhắn ai.
 Kết bằng: {{t:next.prefix}} {{t:task.footer}}

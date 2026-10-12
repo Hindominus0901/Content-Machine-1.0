@@ -34,20 +34,20 @@ START UNDER 6 WEEKS AWAY: the short path (§CM-LAUNCH-DAYS), same campaigns and 
 
 <!-- @section launch-campaigns.grow-founding -->
 ### 1 Founding seats (type A: a first round, no client result yet)
-FITS: a new offer, or one never sold this way · no client result they may show · any warm audience, even a small one · a founding price below the real next price, with the date it ends · seats = what they can deliver well while building it.
-MATH (§CM-LAUNCH 4): seats = the lower of (goal ÷ founding price) and capacity · waitlist needed = seats ÷ their close rate · warm pool now. Needed > pool: fewer seats, or a longer runway of TRUST pieces.
+FITS: a new offer, or one never sold this way · no client result they may show · a founding price below the real next price, with the date it ends · seats = what they can deliver well while building it.
+MATH (§CM-LAUNCH 4): seats = the lower of (goal ÷ founding price) and capacity · waitlist needed = seats ÷ their close rate · warm pool now. Needed > pool: fewer seats, or a longer TRUST runway.
 RUNWAY: normal weeks lean to the offer's big idea · gift and DM reply 1 written · one waitlist keyword · founding terms OK'd: price, what founders help shape, the feedback asked, when the price ends.
-TIME: prep ≈2.5 h; launch week ≈4 h of coach time; D5 and D7 60–90 min each.
+TIME, coach hours: prep ≈2.5 · launch week ≈4, D5 and D7 60–90 min of it: ≈6.5 in all.
 DAYS (7, §CM-LAUNCH-DAYS):
 D1 long post · ATTRACT · call-out · why now, who it's for, "help me shape it", the terms · ask: waitlist keyword · then: DM reply 1 (details + one A/B question), ≥5 public replies.
 D2 short video · ATTRACT · before → after, on their own work · GIFT DEMO · keyword · then: DM reply 2 to each answer; email or WhatsApp opt-in with its purpose.
-D3 long post · TRUST · belief flip · STORY (belief 1) · "I'm live on {day}; want a reminder?" · then: a reminder list of everyone who says yes.
+D3 long post · TRUST · belief flip · STORY (belief 1) · "I'm live on {day}; want a reminder?" · then: a reminder list.
 D4 short video · TRUST · their number (their own hours, tests, attempts) · TEACH on their own demo · "reply EARLY for the early link" · then: each EARLY within 24 hours.
 D5 live, 45 min (§CM-RUN-OF-SHOW, founding version), after reminders at 24 h, 1 h and start · CONVERT · then the pinned offer post: OFFER with the founding terms · then: the link to the EARLY list; open message by email or WhatsApp.
 D6 text post + carousel · CONVERT · objection said out loud · ANSWER ×3, not-for, "founding price ends tomorrow {time}" · then: 1:1 answers to open questions.
 D7 close day · CONVERT · NEWS · CLOSE (morning, noon FAQ, "2 hours left") · link off on time · then: 3 messages to opt-ins who haven't bought.
-D8 post · TRUST · "doors closed, welcome founders", kickoff date, waitlist for round 2 · then: welcome + first step.
-CHECKPOINTS: D2 night, waitlist vs needed (under half → STOP: no public cart: a personal invite to the warmest people who engaged, by a route they opted into, same terms, one message each) · D5 after the live, EARLY replies + questions vs seats (fewer → ADJUST: D6 answers the top question first) · D6 noon, seats taken vs plan (under → ADJUST: a 1:1 answer to each open question) · D8, each founder's feedback call booked.
+AFTER, next morning: post · TRUST · "doors closed, welcome founders", kickoff date, waitlist for round 2 · then: welcome + first step; each founder's feedback call booked.
+CHECKPOINTS: D2 night, waitlist vs needed (≥ half → GO · fewer → ADJUST: D3 adds keyword story frames) · D4 night, still under half → STOP: no public cart: a personal invite to the warmest people who engaged, by a route they opted into, same terms, one message each · D5 after the live, EARLY replies + questions vs seats (fewer → ADJUST: D6 answers the top question first) · D6 noon, seats taken vs plan (under → ADJUST: a 1:1 answer to each open question). None after the close.
 NEVER: "clients got", CASE beats or testimonials. Proof = their process, their demo, their own result with its context.
 
 <!-- @section launch-campaigns.grow-gift -->
@@ -55,11 +55,11 @@ NEVER: "clients got", CASE beats or testimonials. Proof = their process, their d
 FITS: ≥1 client result they may show · a price people pay after a post and a few messages, no call · warm pool ≥ leads needed · no live (one live → §CM-CAMPAIGN-EVENT).
 MATH (§CM-LAUNCH 4) + gift requests needed = leads needed (each request is a lead) · EARLY replies needed ≥ seats.
 GIFT: solves one narrow step and shows the next problem the offer solves (§CM-LAUNCH-STEPS P1), named after its result; one keyword for the whole campaign; DM reply 1 and the 5 welcome messages (§CM-LAUNCH-MESSAGES 2, 6) ready before D2; the recorded walkthrough (≈1,500 words) video planned for D9.
-TIME: prep ≈4 h; week 1 ≈2 h, week 2 ≈5 h of coach time, ≈9 h with no helper (then D10–D11 are stories only); D9 and D14 60–120 min.
+TIME, coach hours: prep ≈4 · D1–D7 ≈2 · D8–D14 ≈5, D9 and D14 60–120 min each of it: ≈11 in all. No helper and short of time: D10–D11 become stories only (≈1 h less).
 DAYS 1–8, warm-up:
 D1 text-background post or story poll · ATTRACT · the question buyers ask · QUESTION · "A or B?" · then: the same question by email or WhatsApp; answers logged as objections.
 D2 short video · ATTRACT · before → after · GIFT DEMO · keyword → DM reply 1 · then: ≥5 public replies; DM reply 2 to each answer; welcome 1.
-D3 text-background post · ATTRACT · their number or costly mistake · result · time · "free, not for sale" · a cap only from the real limits · keyword · then: DM flow; welcome 2. The coach's own bait line ("50 seats, who wants one?", the dot comment) stays word-for-word with one note (§CM-CTA-KIT 6).
+D3 text-background post · ATTRACT · their number or costly mistake · result · time · "free, not for sale" · a cap on the gift only if the gift is really limited, with its own reason (the program's seats are a separate limit) · keyword · then: DM flow; welcome 2. The coach's own bait line ("50 seats, who wants one?", the dot comment) stays word-for-word with one note (§CM-CTA-KIT 6).
 D4 long post · TRUST · confession · STORY (belief 1: the method won't work) · "save it; reply with yours" · then: welcome 3.
 D5 carousel, 6 slides · TRUST · myth-bust · myths (belief 2: I can't), §CM-LAUNCH-POSTS 6 · keyword · then: welcome 4 + "the walkthrough comes out {day}".
 D6 short video or long post · TRUST · overheard line · TEACH + case 1 (OK'd, in context) · "try it, tell me" · then: welcome 5 (waitlist + early link).
@@ -67,14 +67,14 @@ D7 short video · TRUST · the after-state (OK'd) · STORY (belief 3: no time or
 D8 carousel or short video · TRUST · behind the scenes · INSIDE + "doors open tomorrow" · "reply EARLY for the early link" · then: each EARLY within 24 hours; a "tomorrow" note by email or WhatsApp.
 
 <!-- @section launch-campaigns.grow-gift-cart -->
-### 2 Free-gift launch: the cart, D9–D15, and checkpoints
+### 2 Free-gift launch: the cart, D9–D14, and checkpoints
 D9 OPEN · walkthrough video, ≈1,500 words, recorded (long-video parts, §CM-LONG) · CONVERT · NEWS · then the pinned offer post: OFFER · link by DM to the EARLY list within 24 hours; open message by email or WhatsApp; a second message: "what's on the page" + the top question answered.
 D10 long post or short video · TRUST · a result taken apart · CASE (OK'd) + "the walkthrough stays up until {real time}" · reply · then: case message; a DM to each person who asked something.
 D11 text post + carousel · CONVERT · objection said out loud · ANSWER ×3 (top logged objections) + not-for · then: FAQ message; 1:1 answers.
 D12 text-background post + stories · CONVERT · NEWS · bonus ends tonight (real) + seat updates at the listed times · then: bonus-deadline message.
 D13 long post · TRUST + CONVERT · call-out · "closes tomorrow" + the cost of waiting in their buyer's words (never fear, never "you'll regret it") · then: closes-tomorrow message; human follow-up only to people with an open question (§CM-LAUNCH-MESSAGES 5).
 D14 CLOSE · CONVERT · NEWS · CLOSE: 3 posts + stories · then: 3–4 messages (morning, afternoon, evening, last hour) · link off on time.
-D15 post · TRUST · doors closed, thank you, waitlist · then: buyers' welcome; non-buyers hear nothing until day 7 (§CM-LAUNCH-AFTER).
+AFTER, next morning: post · TRUST · doors closed, thank you, waitlist · then: buyers' welcome; non-buyers hear nothing until day 7 (§CM-LAUNCH-AFTER).
 CHECKPOINTS (plan to date from the math):
 D3 night: gift requests ≥ half of leads needed → GO · fewer → ADJUST: D4 adds a keyword text post and keyword story frames, at their best hour.
 D5 night: requests under half of leads needed → STOP: the open date moves a week (start date safe, §CM-CAMPAIGNS 4) and the warm-up runs on, or switch to founding seats.
@@ -88,7 +88,7 @@ Close: sales vs seats → §CM-LAUNCH-AFTER. Never extended (payment failure asi
 FITS: ≥1 client result they may show · a price where people want to try the method first · 3 recorded nights in a group + 1 live, or 5 lives (challenge) · they want the list to grow · 21 days free.
 MATH (§CM-LAUNCH 4) + sign-ups needed = leads needed; first class: show-up and exercises are logged as the baseline. A group's member cap (§CM-LIVE-SELLING 2) is a real limit with its reason.
 SET UP: the group (rules pinned, join by approval, only hosts post during class), 3 videos of ≤1,000 words, 3 exercises, the morning recaps, reminders.
-TIME: prep ≈5 h; ≈2 h in week 1, ≈5 h in weeks 2 and 3 of coach time; a helper strongly advised.
+TIME, coach hours: prep ≈5 · week 1 ≈2 · weeks 2 and 3 ≈5 each: ≈17 in all; a helper strongly advised.
 DAYS 1–10, warm-up and sign-ups:
 D1 text-background post or poll · ATTRACT · the question buyers ask · QUESTION · then: the same question by email or WhatsApp.
 D2 short video · ATTRACT · before → after · GIFT DEMO · keyword → DM reply 1 · then: public replies, DM reply 2.

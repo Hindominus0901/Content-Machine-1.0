@@ -34,7 +34,7 @@ BELIEF FLIP: the viewer believed A; the hook says B; the piece proves B.
 5 "{A strength they're proud of} is the problem." · TRUST · post, subject · "Answering clients at 11 pm and they still don't respect your hours? It's the thing you're proud of."
 6 "Most {buyers} think {A} sells. It's {B}." · ATTRACT, CONVERT · post, title, live · "Most tutors think the trial lesson sells the course. Parents decide somewhere else."
 7 "Not {usual fix}. Not {usual fix}. It was {their answer}." · TRUST · short, post, slide 1 · "Not the logo. Not more posts. It was one line on my price page." · Only fixes they saw tried; habits, never a rival's method.
-MYTH-BUST: the advice they keep hearing, then what the coach sees.
+MYTH-BUST: the advice they keep hearing, then what the coach sees: only the coach's own or a sourced view; health or money: "a belief I often hear", never a statistic.
 8 "Everyone says '{advice}'. Here's what it skips." · ATTRACT · short, slide 1 · "Everyone says 'just niche down.' Here's the step it skips."
 9 "'{Advice}' works, if you {condition nobody mentions}." · TRUST · post, title · "'Post every day' works if you know what your buyer's scared of."
 10 "Myth: {belief}. Truth: {their answer}." · TRUST · screen, slide 1 · "Myth: good speakers don't prepare. Truth: they rehearse the first ten seconds." · Trap: "X is dead", "the truth they hide" (bait).
@@ -231,7 +231,7 @@ Flat → strong: "My thoughts on pricing" → "3 ways to raise your prices (with
 
 <!-- @section hook-library.grow-titles-belief -->
 ### Two more frames: belief flip, myth / truth (item 2 above; v13.15)
-Both are mandatory frames like the ten above (§CM-FORMATS 1). The belief is one the buyer really holds (their words, a KEEP line), the truth is the coach's own and the piece proves it; never "X is dead" or "the truth they hide" (§CM-HOOK-FLIP).
+Both are mandatory frames like the ten above (§CM-FORMATS 1). The belief is one the buyer really holds (their words, a KEEP line), the truth is the coach's own (or sourced) and the piece proves it; health or money: "a belief I often hear", never a statistic; never "X is dead" or "the truth they hide" (§CM-HOOK-FLIP).
 - belief flip: "Everyone says discount to fill a slow week. My fullest month had no discount." + "keep the price."
 - myth / truth: "Myth: tutors need ads. Truth: 4 of my 5 new students came from one parents' group." + "1 group → 4 students"
 
@@ -280,8 +280,8 @@ CHAT OPENER (WhatsApp, a DM)
 ### CTA lines by tier (the ask closes the loop the hook opened)
 1 Tiers, rotated (§CM-CTA-KIT 1): ATTRACT → save or send · TRUST → comment for THIS piece's payoff · CONVERT → DM with the real offer and a real deadline (outside a launch, from week 2; Week 1's CONVERT piece asks for a reply, no offer). One ask per piece, never the same ask twice running; ≥1 in 4 pieces asks only for a save or send. The payoff exists before the post goes out (§CM-CTA-KIT 2).
 2 ATTRACT: "Save this for the next time a couple asks for a cheaper package." · "Send this to the friend who {situation}." · "Part 2 tomorrow: {the open question}." · a choice: "Do you file receipts monthly or all in December? Just type A or B." Never "thoughts?".
-3 TRUST: "{{t:cta.default}}", {payoff} = what this piece promised: "Comment TUESDAY BAKE and I'll send you the 3 posting times from this video." The keyword is the viewer's own words from the hook, 2+ words, never a machine-picked GUIDE or FREE. Quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
-4 CONVERT (week 2+, with proof): what they get, the exact price, who it's for, the real deadline or cap with its reason, one action: "{N} seats, because I review every page myself; sign-ups close Friday. Message me SAVE MY SEAT." · "If this is you, message me STILL STUCK and say where you are; I'll reply myself." The Season keyword and gift live here by default. Only real numbers.
+3 TRUST: "{{t:cta.default}}", {payoff} = what this piece promised: "Comment TUESDAY BAKE and I'll send you the 3 posting times from this video." {WORD}: the viewer's own words from the hook, by the keyword table (§CM-CTA-BANK 2), never a machine-picked GUIDE or FREE. Quiet style (§CM-CTA-KIT 5): "{{t:cta.quiet}}"
+4 CONVERT (week 2+, with proof): what they get, the exact price, who it's for, the real deadline or cap with its reason, one action: "{N} seats, because I review every page myself; sign-ups close Friday. Message me SAVE MY SEAT." · "If this is you, message me STILL STUCK and say where you are; I'll reply myself." The Season {KEYWORD} and gift live here by default (once, body or caption). Only real numbers.
 5 Link: in a comment, the bio or the description, never in a text post's body: "The checklist is in the first comment."
 6 The coach's own choice ("." (a dot), "comment if…", "when this hits 100 comments", an emoji): word for word, never softened; under it ONE line: "{{t:cta.platform_note}}" (§CM-CTA-KIT 6).
 7 Each mechanism's natural payoff: their number → the sheet behind it · mistake → the checklist · objection → a message to talk it through · question → the full answer · challenge → join (real start) · after-state, result taken apart → the offer.

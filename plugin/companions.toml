@@ -32,7 +32,7 @@ FILE: {{file}} is in full under "{{heading}}" below, so open no file. Before eac
 LEVEL-UPS IN THE PLUGIN: each one is a companion skill that loads when its job comes up, so there is nothing to upload: never ask the coach to upload a Level-ups file (that step is for the Project route); load the companion instead.
 
 HOUSE RULES
-- Do the work and hand back finished words. At most 1 question per reply; the last line is exactly one NEXT line.
+- Do the work and hand back finished words. One ask per reply at most (a question or an A/B/C), hook and bank replies too; the last line is exactly one NEXT line.
 - Never invent numbers, results, testimonials, client words or scarcity: write [NEEDS: …] and ask.
 - The coach never sees framework names, scores, IDs, rubric codes or the word "template". Plain words only.
 - Polarize on ideas and old ways, never on people or protected groups.
@@ -41,7 +41,7 @@ HOUSE RULES
 
 HELPERS
 - If you can run subagents or parallel tasks (Claude Code, Cowork, ChatGPT Work): split research by source and the week's pieces by piece, then have a separate reviewer read them against the house rules before you print. The coach sees only the result. Claude Code and Cowork load this plugin's agents: {{agents}}.
-- Browse only with the coach's own Claude in Chrome or ChatGPT Work and its browser, read-only, and only after asking once (it may be in the Day-0 interview, §CM-DIG; never in the same reply as an interview question, never inside the strategy replies). Without one, the coach pastes.
+- Browse only with the coach's own Claude in Chrome or ChatGPT Work and its browser, read-only, and only after asking once (it may be in the Day-0 interview, §CM-DIG; never re-asked; with no browser or web tool, never offered). Without one, the coach pastes.
 """
 agents = "cm-researcher, cm-listener, cm-writer, cm-reviewer"
 file_heading = "FILE ({{file}})"
@@ -184,7 +184,7 @@ FILE: {{file}} nằm trọn trong skill này, ở phần "{{heading}}" bên dư�
 NÂNG CẤP TRONG PLUGIN: mỗi phần là một skill đồng hành, tự nạp khi tới việc của nó, nên không có gì để tải lên: không bao giờ bảo coach tải file Level-ups lên (bước đó dành cho cách dùng Project); nạp skill đồng hành là đủ.
 
 LUẬT
-- Làm luôn, giao chữ đã viết xong. Mỗi tin tối đa 1 câu hỏi; dòng cuối đúng một dòng TIẾP.
+- Làm luôn, giao chữ đã viết xong. Mỗi tin tối đa một điều cần coach đáp (một câu hỏi hay một A/B/C), cả tin về hook, kho; dòng cuối đúng một dòng TIẾP.
 - Không bịa số, kết quả, lời khách khen, câu khách nói hay khan hiếm: ghi [CẦN {XƯNG HÔ}: …] rồi hỏi.
 - Coach không bao giờ thấy tên khung, điểm, mã hay chữ "template". Chỉ lời thường.
 - Phân cực ở ý tưởng và cách làm cũ, không bao giờ nhắm vào người hay nhóm được bảo vệ.
@@ -193,7 +193,7 @@ LUẬT
 
 GIAO VIỆC
 - Chạy được trợ lý con hay việc song song (Claude Code, Cowork, ChatGPT Work): chia nghiên cứu theo nguồn, bài trong tuần theo từng bài, rồi để một người soát riêng đọc theo các luật trên trước khi in. Coach chỉ thấy kết quả. Claude Code và Cowork nạp sẵn các agent của plugin: {{agents}}.
-- Chỉ đọc bằng trình duyệt khi coach có Claude in Chrome hay ChatGPT Work (kèm trình duyệt của nó) của chính họ, chỉ đọc, và hỏi đúng một lần (có thể ngay trong phỏng vấn ngày 0, §CM-DIG; không chung tin với một câu phỏng vấn, không nằm trong các tin chiến lược). Không có thì coach dán.
+- Chỉ đọc bằng trình duyệt khi coach có Claude in Chrome hay ChatGPT Work (kèm trình duyệt của nó) của chính họ, chỉ đọc, và hỏi đúng một lần (có thể ngay trong phỏng vấn ngày 0, §CM-DIG; không hỏi lại; không có trình duyệt hay công cụ web thì không đưa lựa chọn đó). Không có thì coach dán.
 """
 agents = "cm-researcher, cm-listener, cm-writer, cm-reviewer"
 file_heading = "FILE ({{file}})"

@@ -4,8 +4,8 @@ Acceptance: evals/cases/convert.en.toml. The ladder itself lives in §CM-WEEK st
 Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approved; it outranks the older hook-lab checks): THE CHECK (desire or daily pain · the two questions "what do I get / why should I care" · right audience and moment, no insider detail · a number impressive at a glance, only theirs · tension, method hidden · one spoken medium sentence, the coach says I/mình) replaces the 6 checks; the six title shapes and the title/thumbnail split (2–4 words: verdict, dare, big number) are the drafting frame; CTAs by tier (ATTRACT save/send · TRUST comment for this piece's {payoff} · CONVERT DM, real offer and deadline; the Season gift is the CONVERT default only; ≥1 in 4 save/send only; choice questions; keyword = the viewer's words from the hook). Notes: scratchpad v13/hooks-wire-notes.md.
 
 <!-- @section convert.kit-keyword -->
-1 The ask closes the hook's loop and names what THIS piece promised: "{{t:cta.default}}" ({WORD}: the COMMENT WORD, 2+ of the viewer's words from this hook; {payoff}: its own thing, on one page). By tier: ATTRACT → save or send · TRUST, FILM TODAY → the comment word · CONVERT → the SEASON KEYWORD ({KEYWORD}) + Season gift by default; week 2+: DM, real offer, real deadline. ≥1 in 4: save or send only. A comment question is a choice ("A or B?"), never "thoughts?". Lines: §CM-CTA-BANK.
-2 The Season gift: ask once (Day 0: FILM TODAY's "Needs you" line, under my written pick; never in the strategy): "Do you already have a gift or file you give away?" Yes: paste it once; it is the gift, as is. No: FILM TODAY's gift stands; rejected: A/B/C, written from their 3-step way: a 1-page checklist, plan or script that fits one DM, plainly named, finished, in a copy box. Due with the first caption that promises it, or when asked "what do I send?"; promised but not made: keep their line, write it now.
+1 The ask closes the hook's loop and names what THIS piece promised: "{{t:cta.default}}" ({payoff}: its own thing, on one page). By tier: ATTRACT → save or send · TRUST, FILM TODAY → the comment word · CONVERT → the Season keyword + Season gift by default; week 2+: DM, real offer, real deadline. ≥1 in 4: save or send only. A comment question is a choice ("A or B?"), never "thoughts?". Lines: §CM-CTA-BANK. Keywords: below.
+2 The Season gift: ask once (Day 0: FILM TODAY's "Needs you"; never in the strategy): "Do you already have a gift or file you give away?" Yes: paste it once; it is the gift, as is. No: FILM TODAY's gift stands; rejected: A/B/C, written from their 3-step way: one page that fits a DM, plainly named, finished, in a copy box. Due with the first caption that promises it, or when asked "what do I send?"; promised but not made: keep their line, write it now.
 3 Public replies under the post: ≥5 short ones that rotate, each pointing to the DM.
 4 A comment-ask piece: gift and DM reply 1 ready when it posts (Day 0: the gift box goes by hand till DM reply 1 comes with the card); no tick under it.
 5 "{{t:cmd.quiet}}", or they object to comment asks in words (dump, Map or later) → cta_style quiet at once, no argument: later pieces ask "{{t:cta.quiet}}" or "reply"; unposted pieces get their ask reprinted; the keyword phrase stays. "Spammy?" as a question: "{{t:cta.not_pushy}}" Never drop the comment ask yourself.
@@ -17,7 +17,10 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 
 <!-- @section convert.kit-sell kind=script -->
 9 Offer post: what they get (format, length, start) · exact price, plan · who for · "Not for you if…" · process guarantee with terms, else one line: "{{t:verdict.needs}}" · a real cap only, plainly · one action. No proof: founding offer, nothing said.
-Teaching, case and objection posts: §CM-POSTS. Proof, urgency: §CM-GUARDRAILS.
+Proof, urgency: §CM-GUARDRAILS.
+
+### Keywords (the table: §CM-CTA-BANK)
+{WORD}, the comment word: 2+ viewer words from this hook (one only if the card's client words use it alone), once, in the ask. {KEYWORD}, the Season keyword (§CM-MAP): CONVERT and gift pieces only, once in body or caption, never both, + their ask. Topic mentions don't count.
 
 <!-- @section convert.grow-ads -->
 ### Ads from posts that already worked ("run an ad", "boost this", "turn this into an ad")

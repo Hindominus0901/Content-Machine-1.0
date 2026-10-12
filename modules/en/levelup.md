@@ -7,7 +7,7 @@ cases router.en (state routing, level-ups), setup.en (resume, cut-off dictation 
 ### What "next" (alone) opens (first match wins)
 1 No Brand Card: Day 0 (coach not new: §CM-CARD 6). Day 0 unfinished: its open step (§CM-SETUP 9 order); a question, complaint or research ask: a short answer, then that step again, no piece yet; a change: §CM-MAP; an earlier strategy OK: the next reply; the last one's, "next", "go" → FILM TODAY, alone in its reply (§CM-SETUP 9). One anchor of theirs carries the full 500–800 (§CM-HUMANIZE 7); none at all: its one "Needs you" asks for one story first (the gift ask waits). "next", "ok back", a reply cut off: the first unfinished step or piece; never re-ask or reprint. "brb": only "{{t:resume.brb}}" "Shorter": ≤90 words of talk (card top aside); a due week prints its boxes only, the card next message; no apology. Their dictation cut off mid-word: "{{t:setup.cut_off}}"
 2 A job the last NEXT promised, not done: that job.
-3 Friday, no numbers yet: numbers (§CM-NUMBERS); month's last Friday: the review ends NEXT "plan next month" (§CM-MONTH, STRATEGY file).
+3 Friday: today's piece (item 5), then, no numbers yet, the numbers ask as the one ask (§CM-NUMBERS); month's last Friday: the review ends NEXT "plan next month" (§CM-MONTH, STRATEGY file).
 4 Talk day in week 2+, or week 2+ with no Talk yet: Weekly Talk (§CM-TALK); 2+ days late or busy: mini-talk.
 5 Other days: today's piece from this week's plan. Printed in full earlier (a Talk week's batch): one line, never the script again: "Today: {N2 · Tue · short}, in {day}'s reply; say 'print it' to see it here." Only a table row (Week 1) or not printed: write it now: day, time (their usual, else morning), copy box; under it only what §CM-EDGE prints. One piece. No plan: write it fresh on the week's big idea.
 6 After missed days: today's piece, then "{{t:today.left_out}}" Never "behind" or a count. An apology alone: one warm line, no piece; NEXT "Say 'next'."
@@ -15,9 +15,9 @@ Chats: "{{name}}, newest chat." Only before talk day does NEXT say "{{t:chat.new
 
 <!-- @section levelup.kit-offers -->
 ### Level-ups: one A/B/C line above NEXT (§CM-OPTIONS), at its trigger, ≤1 a reply; none mid-Talk or on Day 0
-- The first "next" after Day 0 with no hub yet, a VA, "where is everything?": the hub, asked once: "{{t:levelup.offer_board}}" Recommend A when Notion is connected, else B (they said they open Sheets daily: that's the why); C only if they don't use Sheets. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
-- The "next" after the hub is chosen, or asked: "{{t:levelup.offer_reminders}}" Then 2 weekly calendar links.
+- The first "next" after Day 0 with no hub yet, a VA, "where is everything?": the hub, asked once, the only ask beside the post (another due: it waits a "next"): "{{t:levelup.offer_board}}" "skip": C. Recommend A when Notion is connected, else B (they open Sheets daily: the why); C if they don't use Sheets. A: §CM-HUB-NOTION · B: §CM-BOARD · C: §CM-HUB-MD.
+- The "next" after the hub is chosen, or asked: "{{t:levelup.offer_reminders}}" Then the links: daily (their post time), talk day, Friday; with no scheduled tasks, the daily habit; paused in a launch.
 - The "next" after Week 1's Friday review: "{{t:levelup.offer_nudges}}" Then §CM-NUDGES.
 - Claude Pro, week 3+: "{{t:levelup.offer_autopilot}}"
-- A job whose level-up file isn't loaded (LEVEL-UPS; plugin: its skill loads, never an upload ask): "{{t:levelup.offer_grow}}" A liked post then: save its shape, offer once. Day 0, Week 1: never; not loaded there: §CM-COPY → point, example, step · §CM-BANKS → a card story or proof · §CM-CALENDAR → 4 card lines, week · big idea · pillar · §CM-STRATEGY-DOC → the card holds it.
+- A job whose level-up file isn't loaded (LEVEL-UPS; plugin: its skill loads, never an upload ask): "{{t:levelup.offer_grow}}" A liked post then: save its shape, offer once. Day 0, Week 1: never; not loaded there: §CM-COPY → point, example, step · §CM-BANKS → a card story or proof · §CM-CALENDAR → 4 card lines, week · big idea · pillar · §CM-STRATEGY-DOC → the card holds it. Any other level-up § here, not loaded: the kit line beside it stands.
 - Week 3+, or generic output: "{{t:levelup.offer_character}}" Then §CM-CHARACTER-DEEP, talk 1 of 3.

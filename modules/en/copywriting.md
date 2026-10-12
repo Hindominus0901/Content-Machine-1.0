@@ -21,9 +21,9 @@ House rules in every example: made up to show the shape and labelled so; no inve
 1 Counted in words, never seconds or minutes (§CM-LOCALE 2). Home lengths: short video 500–800 on every platform (Reels or Shorts over their length cap: trim there) · short post 150–300 · carousel 10–12 slides, ≤30 words each · long post ≈1,000 (hook, story, 3 lessons, invitation) · long video 1,000–1,500 in parts · email ≤250 · chat message ≤60 · story frames 3–5, ≤25 each.
 2 Each framework's beats are given at its home length. In another format each beat keeps its share; the hook stays ≤{{hook_max}} {{hook_unit}} and the ask 20–80 words at any length.
 3 Short video, 500–800: hook and re-hook ≈40 · scene or setup ≈100–150 · 3–5 beats ≈80–120 each, joined by "but" or "so", never "and then" · last line ≈20, the answer itself · ask ≈30. Five beats (belief shift, five-line story): ≈100 each. Three beats (problem → cost → way out): the way out takes half.
-4 Long post ≈1,000: hook ≤12 + re-hook ≈30 · story ≈300 · 3 lessons ≈150–200 each (point → why → example) · invitation ≈80. Story frames live in the ≈300; teaching frames in the lessons.
+4 Long post ≈1,000: hook ≤12 + re-hook ≈30 · story ≈300 · 3 lessons ≈180–220 each (point → why → example) · invitation ≈80; the parts sum ≥950. Story frames live in the ≈300; teaching frames in the lessons.
 5 Long video 1,000–1,500 in parts: opening ≈120 (proof, promise, plan, one loop: §CM-LONG-INTRO) · context ≈200 · 3–4 parts ≈200–250, each ending on a re-hook · the loop paid ≈100 · ask ≈80. A part may run its own framework (a belief shift, a case).
-6 Substance, never padding. Under the floor → a second example, a scene, the buyer's own words from research; nothing there → shorter, with [NEEDS: one more example] in the outline, never fog. Over the ceiling → cut the weakest beat whole, not every beat a little.
+6 Substance, never padding. Under the floor → grow the anchor (§CM-REPURPOSE 5): a second example, a scene, the buyer's own words from research; no anchor → one story question first (§CM-REPURPOSE 6), never fog; the bands hold. Over the ceiling → cut the weakest beat whole, not every beat a little.
 7 The count prints only where the format's header already shows it (§CM-FORMATS 5).
 
 <!-- @section copywriting.grow-frames -->
@@ -81,8 +81,8 @@ EX: Before: Sunday night, a tutor rewriting the week's lessons from scratch. · 
 Fails when: an after nobody reached; an income or body after; the bridge skipped (the gap is the content).
 AIDA · CONVERT · ad, offer lead-in, email to a warm list, the first screen of a sales page; also the check that a selling piece has all four.
 Beats (ad ≈120, email ≈220): stop: the call-out or a pain in buyer words ≈15 · interest: a cause or fact they didn't know ≈60 · want: the after as a scene and one OK'd proof line ≈80 · act: one action and a reason now, only from the real limits ≈30.
-EX: Bookkeepers who still chase receipts on WhatsApp: · most missing receipts aren't lost, they're never asked for at the right moment. · One message on the 25th, and the month closes with the receipts in. · Reply CHASE RECEIPTS for the wording.
-Fails when: "act now!" with no reason; want built from adjectives; no interest beat (every line shouts).
+EX: Bookkeepers who still chase receipts on WhatsApp: · in the books I close, a missing receipt was rarely lost; nobody asked for it at the right moment. · One message on the 25th, and the month closes with the receipts in. · Reply CHASE RECEIPTS for the wording.
+Fails when: "act now!" with no reason; want built from adjectives; no interest beat (every line shouts); a "most {buyers}…" with no source (the coach's count or a KEEP line, §CM-REPURPOSE 9).
 
 <!-- @section copywriting.grow-proof -->
 ### Proof frames: case breakdown, objection answer, offer post
@@ -150,12 +150,12 @@ PASS: "Next time you follow up, try bringing one thing: the photo from last time
 13 A WEEK, the shape only (made up): a piano teacher for adult beginners; a Talk answer about a student who dropped scales and learned one whole song a week, plus one held buyer line. Light, 2 filmed:
 - Mon · short · ATTRACT · the student who dropped scales · save it
 - Tue · carousel · TRUST · 5 steps to learn one song in a week · comment the hook's word
-- Wed · short post · ATTRACT · the mistake: scales before songs · send it to a friend
+- Wed · long post · TRUST · the scales mistake: the student's story, 3 lessons · comment the hook's word
 - Thu · quote image · ATTRACT · their line "Play the song first." · save it
-- Fri · short · TRUST · another student, 3 lessons · comment the hook's word
-- Sat · story poll · TRUST · "Played a whole song this month? yes / not yet" · vote
+- Fri · short · TRUST · the held buyer line "too old to read music", answered · send it to a friend
+- Sat · story poll · ATTRACT · "Played a whole song this month? yes / not yet" · vote
 - Sun · email · CONVERT · which song are you stuck on · reply (week 1: no offer)
-Two materials, 7 posts, 6 formats; the scales idea feeds 4 posts, each its own angle, no sentence twice.
+Two materials, three ideas, 7 posts, 6 formats, one long post; the scales idea feeds 3 posts (the most allowed, item 8), each its own angle, no sentence twice.
 
 <!-- @section copywriting.grow-story -->
 ### Storytelling: the shape every story frame uses ("storytelling", "tell a story")
@@ -193,7 +193,7 @@ Two materials, 7 posts, 6 formats; the scales idea feeds 4 posts, each its own a
 2 Risk reversal only if real: a refund policy, a trial, a free first session the coach really offers, quoted as written. None → describe what lowers the risk (what happens in week 1, how to stop).
 3 Urgency only from the real limits on record (§CM-LAUNCH-BRIEF 3): a seat count, a close date, a price step, each with its reason, said plainly. None on record → no urgency line; "why now" is the honest cost of waiting.
 4 The whole truth: what the method doesn't fix, who it isn't for, where the coach got it wrong. One honest limit per CONVERT piece makes the rest believable.
-5 HARD LINES (§CM-GUARDRAILS): no invented result, number, testimonial, client words, screenshot or "as seen on"; no fake scarcity or deadline; no income, weight or health promise, no return figure ("pays for itself", "10x your revenue"); no fear built on health, debt or family; no pressure in one-to-one messages (guilt, a "last chance" that isn't); polarize on ideas, habits and advice, never on people, a named rival or any group.
+5 HARD LINES (§CM-GUARDRAILS): no invented result, number, testimonial, client words, screenshot or "as seen on"; no fake scarcity or deadline; no income, weight or health promise, no return figure ("pays for itself", "10x your revenue"); no fear built on health, debt or family; no pressure in one-to-one messages (guilt, a "last chance" that isn't); polarize on ideas, habits and advice, never on people or any group; a rival named only when the coach asks, with the dated note (§CM-GUARDRAILS).
 6 Asked to cross a line: write the true version that does the same job (the real limit, the real result in context, the honest cost of waiting) with "{{t:voice.cant_allow}}", one line, no lecture.
 
 <!-- @section copywriting.grow-voice -->

@@ -171,7 +171,7 @@
 "anchor.campaign-apply" = { text = "Chiến dịch 5: ứng tuyển", src = "458388c254" }
 "anchor.campaign-relaunch" = { text = "Chiến dịch 6: chạy lại, mở quanh năm", src = "61fd616eb0" }
 "anchor.launch-prep" = { text = "Việc cần xong trước khi mở bán", src = "c5931aa241" }
-"anchor.objections" = { text = "Kho lăn tăn", src = "9f691ce7fb" }
+"anchor.objections" = { text = "Kho băn khoăn", src = "9f691ce7fb" }
 "anchor.launch-faq" = { text = "Soạn hỏi đáp", src = "1990950929" }
 "anchor.sales-page" = { text = "Sườn trang bán", src = "3a9e99f954" }
 "anchor.launch-sequences" = { text = "Tin Zalo, email và inbox trong đợt", src = "bcd4cdd60a" }
@@ -203,6 +203,7 @@
 "anchor.liked" = { text = "Bài coach thích", src = "00e43012d8" }
 "setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
 "setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
+"setup.check_gaps" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v}, còn thiếu: {fields}", src = "6ca75b3eda" }
 "phone.opening" = { text = "Chỉ cần bấm Gửi. Phần dưới là cho máy, khỏi cần đọc.", src = "b6a97fd51f" }
 "phone.save" = { text = "Lưu: nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", chép khung MY CONTENT MACHINE gửi Zalo \"Cloud của tôi\". Chat dài quá: in khung mới, dán vào chat mới.", src = "f6e358cc8f" }
 
@@ -231,7 +232,7 @@
 "task.today.name"         = { text = "Một việc hôm nay", src = "f5d7626aca" }
 "task.numbers.name"       = { text = "Số liệu thứ Sáu", src = "8e23e8665b" }
 "task.footer"             = { text = "Mở {{name}}, vào đoạn chat mới nhất, nhắn 'tiếp'.", src = "d070fed980" }
-"levelup.offer_reminders" = { text = "Tiếp theo: 2 lời nhắc trên lịch, {day} và thứ Sáu. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "8d1cb38751" }
+"levelup.offer_reminders" = { text = "Tiếp theo: nhắc trên lịch, mỗi ngày nhắn 'tiếp', thêm {day} và thứ Sáu. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "912a3995b3" }
 "levelup.offer_nudges"    = { text = "Theo đủ một tuần rồi. Tiếp theo: lời nhắc thứ Hai, mỗi sáng, thứ Sáu. A) cài luôn (máy khuyên): {why}. B) chỉ thứ Sáu C) để sau.", src = "821f4d0b5f" }
 "levelup.offer_board"     = { text = "Gom mọi thứ về một chỗ cho dễ xem: A) Notion, dựng sẵn cho {xưng hô} B) Google Sheet, nếu ngày nào cũng mở Sheet C) để sau, chỉ HUB.md. Máy khuyên {letter}: {why}. Gõ A, B hay C.", src = "52fd5b044b" }
 "levelup.offer_autopilot" = { text = "Tiếp theo: tuần nào bài cũng tự vào Notion. A) cài luôn (máy khuyên): {why}. B) để sau.", src = "8688cc1974" }
@@ -366,6 +367,7 @@
 "dig.story"                    = { text = "Nhớ lại người khách {xưng hô} giúp được nhiều nhất. Hồi mới tìm tới, họ đang kẹt chuyện gì?", src = "0b9ee7312d" }
 "dig.words"                    = { text = "Lần đầu nhắn tới, họ nói gì? Nhớ được nguyên văn thì càng hay.", src = "ec4e67239a" }
 "dig.offer"                    = { text = "Khách làm cùng thì nhận được gì, làm theo cách nào, trả bao nhiêu?", src = "a45563b39d" }
+"dig.method"                   = { text = "Từ lúc khách mới tới đến khi có kết quả, {xưng hô} dẫn họ đi qua những bước nào?", src = "a6d20a8928" }
 "dig.proof"                    = { text = "Có kết quả thật nào của khách mà {xưng hô} sẵn lòng kể ra không?", src = "60c5654c2a" }
 "dig.stance"                   = { text = "Người trong nghề hay khuyên khách điều gì mà {xưng hô} thấy sai?", src = "4d6081d2f9" }
 "dig.buyer"                    = { text = "Được nhân bản một khách thì chọn ai, còn kiểu khách nào không muốn nhận?", src = "890b2a58bb" }

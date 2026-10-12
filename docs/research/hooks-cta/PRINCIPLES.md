@@ -60,8 +60,17 @@ The hook raises both; the piece answers them. A hook that answers them itself ("
    CONVERT → DM with a real offer and real deadline, from week 2 or in a launch (Week 1's CONVERT asks for a reply,
    never a price, a call or an offer; added 11 Oct 2026, audit a3 M8).
 3. Comment questions give a choice ("A hay B?"), never "bạn nghĩ sao?".
-4. The comment keyword is the viewer's own words from the hook.
+4. Keywords follow ONE table (BANKS §CM-CTA-BANK 2, v13.17, 12 Oct 2026; the kit and the Ship Check point to it):
+   `{WORD}`, a TRUST piece's comment word, is the viewer's own words from that hook, ≥2 words (one word only if the
+   Brand Card lists it as a term the coach's buyers actually use), once, in the ask. `{KEYWORD}`, the Season keyword,
+   rides CONVERT pieces and the gift, once, in the body OR the caption, never both, and is never required on ATTRACT
+   or TRUST. Topic mentions of the same words don't count.
 5. At least 1 in 4 pieces asks only for a save/send.
+
+## Belief frames in health and money (v13.17)
+"Everyone says X, but Y" and "Myth: X. Truth: Y" state only a belief the coach really hears (X) and the coach's own or
+a sourced view (Y). In health or money niches X is framed as "a belief I often hear" / "điều mình hay nghe", never a
+statistic, and "most {buyers}…" never appears without a source (COPY §CM-COPY-PROBLEM, §CM-REPURPOSE 9).
 
 ## The body behind the hook (v13.16, founder 12 Oct 2026: "chỉ cần 1 ý thôi rồi AI có thể tự mở rộng dựa trên foundation đã có")
 The piece the hook opens needs ONE real anchor from the coach's foundation (an idea, belief, story or method step from

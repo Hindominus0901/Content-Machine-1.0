@@ -5,7 +5,7 @@ cases router.en (talk day, 'later' mid-Talk, missed talk day), fmt-short.en (re-
 
 <!-- @section talk.kit-talk -->
 ### Weekly Talk (talk day · about 15 min · voice only)
-1 First reply: one line, then question 1 only: "{{t:talk.open}}" Never ask them to film the Talk or use a second device.
+1 First reply: one line, then question 1 only: "{{t:talk.open}}"
 2 5 questions, one per message, in belief order for this week's big idea, each a real scene: "{{t:talk.question}}" 1 someone was sure {old belief} · 2 that belief cost them · 3 you saw it differently · 4 someone did {a step of their way} instead · 5 it worked, and what they said (week 4: what made someone say yes).
 3 After each answer only "{{t:talk.ack}}" + the next question; NEXT: "{{t:talk.next}}" No summary, praise or advice. Thin answer → once: "{{t:talk.probe}}"
 4 "skip" → next question. "later" → keep the place: "{{t:talk.paused}}" Under 3 answers, nothing is written. Side topics → park quietly. Never write their story for them.

@@ -179,6 +179,7 @@
 # Setup-check variants and the Phone Starter (UX spec §1.2, §1.4)
 "setup.check_compact" = "◆ {{name}} · Setup check: ✓ instructions ✗ method file (compact mode) · Brand Card: we make it today"
 "setup.check_found"   = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card v{v} ✓"
+"setup.check_gaps"    = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card v{v}, missing: {fields}"
 "phone.opening"       = "You only need to press Send. The rest is for the machine."
 "phone.save"          = "Save: at the end, long-press this chat → Rename → \"{{name}}\". Then copy the MY CONTENT MACHINE box and send it to yourself (Notes or email). When this chat gets long, I print a fresh box: paste it into a new chat named {{name}}."
 
@@ -209,7 +210,7 @@
 "task.today.name"         = "Today's one thing"
 "task.numbers.name"       = "Numbers day"
 "task.footer"             = "Open {{name}}, newest chat, say 'next'."
-"levelup.offer_reminders" = "Next: 2 calendar reminders, {day} and Friday. A) set them (recommended): {why}. B) not now."
+"levelup.offer_reminders" = "Next: calendar reminders, a daily 'next' plus {day} and Friday. A) set them (recommended): {why}. B) not now."
 "levelup.offer_nudges"    = "You did a full week. Next: my messages on Monday, each morning and Friday. A) set them (recommended): {why}. B) Friday only C) not now."
 "levelup.offer_board"     = "One place to see everything: A) Notion, built for you B) a Google Sheet, if you open Sheets every day C) later, HUB.md only. I'd pick {letter}: {why}. Type A, B or C."
 "levelup.offer_autopilot" = "Next: each week written into Notion by itself. A) set it up (recommended): {why}. B) not now."
@@ -345,6 +346,7 @@
 "dig.story"                    = "Think of one client you really helped. What was going on for them the week they first got in touch?"
 "dig.words"                    = "What did they say or write to you that first time, word for word if you can?"
 "dig.offer"                    = "When someone says yes to you, what exactly do they get, how is it delivered, and what do they pay?"
+"dig.method"                   = "How do you take a client from where they start to the result, step by step?"
 "dig.proof"                    = "What's one real result a client got with you that you'd be happy to share?"
 "dig.stance"                   = "What does everyone in your field tell people that you think is wrong?"
 "dig.buyer"                    = "If you could clone one client, who would it be, and who would you rather not take on?"

@@ -184,7 +184,7 @@ max_chars = { en = 160, vn = 160 }
 source = "machine"
 required = true
 label_key = "card.label.progress"
-note = "steps done and the current level, e.g. day0 ✓ · week1 ✓ · talks 3 · level 1"
+note = "v13.17 (founder test C1): day0 until the card exists, then w{n}d{d} = week n, the last day posted (w1d1 after FILM TODAY); it decides what 'next' opens (§CM-MEMORY 7)"
 
 # ---------------------------------------------------------------- the message (Map fields)
 [[machine.field]]
@@ -248,6 +248,26 @@ source = "map"
 required = true
 label_key = "card.label.offer"
 note = "name · price · how to buy; or the founding offer; or what to sell first (visible until wf15)"
+
+[[machine.field]]
+name = "call_route"
+group = "map"
+type = "text"
+max_chars = { en = 80, vn = 90 }
+source = "coach"
+required = false
+label_key = "card.label.call_route"
+note = "v13.17 (founder test C3): how a buyer books a call (a link, 'DM me', Zalo), as the coach said it"
+
+[[machine.field]]
+name = "gift"
+group = "map"
+type = "text"
+max_chars = { en = 120, vn = 130 }
+source = "map"
+required = true
+label_key = "card.label.gift"
+note = "v13.17: the Season gift: its name + where its text is (\"coach's own, pasted\" or \"written Day 0\"), §CM-CTA-KIT 2"
 
 [[machine.field]]
 name = "bio_line"
@@ -574,7 +594,7 @@ type = "date"
 source = "machine"
 required = true
 label_key = "card.label.plan_start"
-note = "the day after Day 0; week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1"
+note = "v13.17 (founder test C2): Day 0's date (Week 1 day 1 = FILM TODAY's piece); week n = 7-day blocks from it; tasks work out the week as ((weeks since plan_start) mod 4) + 1; a card whose plan_start is another date is recounted from Day 0 (§CM-MEMORY 7)"
 
 [[machine.field]]
 name = "season"
@@ -611,6 +631,7 @@ options = ["light", "lean", "standard", "va"]
 source = "check"
 required = true
 label_key = "card.label.tier"
+note = "from hours: light under 2 h (or unheard), lean 2-3 h, standard over 3 h (v13.17: no gap at exactly 2 h)"
 
 [[machine.field]]
 name = "platform"
@@ -673,12 +694,14 @@ label_key = "card.label.timezone"
 note = "the coach's zone, or \"ask\" until they name one (never asked on Day 0, never blank)"
 
 [[machine.field]]
-name = "hours_week"
+name = "hours"
 group = "plan"
-type = "int"
-source = "check"
-required = false
-label_key = "card.label.hours_week"
+type = "text"
+max_chars = { en = 12, vn = 12 }
+source = "map"
+required = true
+label_key = "card.label.hours"
+note = "v13.17 (founder test C3): hours a week, their number (\"2\", \"2.5\"); sets tier: light under 2 h, lean 2-3 h, standard over 3 h; unheard: light"
 
 [[machine.field]]
 name = "mode"
@@ -749,6 +772,18 @@ source = "machine"
 required = false
 label_key = "card.label.recent_hooks"
 note = "opening words of the latest hooks, so new ones don't repeat (no board on ChatGPT)"
+
+[[machine.field]]
+name = "week1"
+group = "recent"
+type = "list"
+max_items = 7
+max_chars = { en = 70, vn = 80 }
+source = "machine"
+required = true
+label_key = "card.label.week1"
+item = "d{n} · format · tier · idea (✓ once posted)"
+note = "v13.17 (founder test C1): the compact Week-1 table, so a new chat reuses it instead of rebuilding it (§CM-MEMORY 7)"
 
 # ---------------------------------------------------------------- posts the coach likes
 # The coach's "Posts you like" / "Bài bạn thích" at L0-L1 (wf13-inspiration-spec §4); from L2

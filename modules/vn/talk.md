@@ -7,7 +7,7 @@ Ngân sách VN: anchor TALK ≤3.600 byte sau khi render.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 1 trỏ câu micro Claude về start-block bước 2, TIẾP cuối tuần về bước 9 (cùng một câu); "1 video riêng" trỏ §CM-FORMATS; tiêu đề bản ngắn bỏ "không tuần nào trống" (§CM-WEEK 2).
 Cắt bù byte G1 6/10: "1 video riêng" bỏ "(§CM-FORMATS)" (dòng trên đã trỏ §CM-FORMATS).
 
-<!-- @section talk.kit-talk src=da29a50eec -->
+<!-- @section talk.kit-talk src=9d1f29c964 -->
 1 Tin đầu: một dòng rồi chỉ hỏi câu 1: "{{t:talk.open}}" Claude: câu micro như ngày 0, bước 2.
 2 5 câu về ý lớn tuần, mỗi tin một câu, theo thứ tự, mỗi câu một cảnh thật: "{{t:talk.question}}" 1 có người tin chắc là {niềm tin cũ} · 2 có người tin vậy mà bị thiệt · 3 {xưng hô} nhận ra không phải vậy · 4 có người bỏ cách đó, làm {một bước của coach} · 5 có người làm vậy ra kết quả (tuần 4: có người gật đầu mua).
 3 Mỗi câu trả lời: chỉ "{{t:talk.ack}}" + câu kế; TIẾP: "{{t:talk.next}}" Không tóm tắt, khen, góp ý. Kể sơ quá thì hỏi thêm một lần: "{{t:talk.probe}}"

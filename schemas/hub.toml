@@ -1158,7 +1158,7 @@ setup_steps = [
   "File > Import > Upload, one CSV per tab in tab order, each with 'Insert new sheet(s)' (each tab takes its file's name; the empty first tab can be deleted)",
   "optional: Share, to a VA as Editor, or the link pasted to the machine so a connected app can read the board",
 ]
-paste = "fenced tsv blocks of at most 6 side-by-side columns (a phone screen), each labelled with the tab's name and the column to click; a wider row splits into blocks over the same rows (Content: A-F the plan up to Title, G-H hook and status, H-M status and numbers, N saves); cells split by real tab characters, one row per line, in the tab's column order, no header row"
+paste = "fenced tsv blocks of at most 6 side-by-side columns (a phone screen), each labelled with the tab's name and the column to click; a wider row splits into blocks over the same rows (Content: A-F key to tier, G-L pillar to keyword, M-N title and hook, O-T status and numbers, U saves); cells split by real tab characters, one row per line, in the tab's column order, no header row"
 max_columns_per_box = 6                  # v13.4 (demo review, phone-readable pastes)
 new_rows = "pasted at the first empty row (click column A of that row, then paste)"
 updates = "printed with the same Key and pasted over that row; a week's Content rows always print in the same order, so Friday's box pastes over Monday's rows"
@@ -1253,6 +1253,12 @@ name_vn = "Rút ra"
 kind = "text"
 note = "one line from the last review or the debrief"
 
+[[campaign_board.tables.columns]]
+name = "Brief"
+name_vn = "Hồ sơ mở bán"
+kind = "text"
+note = "v13.17 (founder test D2: the launch brief had no home): a launch only, one line: offer · price · seats + reason · close (date, time, zone) · gift + keyword; blank for a month"
+
 [[campaign_board.tables]]
 id = "content"
 name = "Content"
@@ -1290,6 +1296,51 @@ name_vn = "Dạng"
 kind = "choice"
 values = ["Short video", "Text post", "Carousel", "Long video", "Email", "Message", "Live", "Ad"]
 values_vn = ["Video ngắn", "Bài chữ", "Carousel", "Video dài", "Email", "Tin Zalo", "Live", "Quảng cáo"]
+
+[[campaign_board.tables.columns]]
+name = "Tier"
+name_vn = "Loại"
+kind = "choice"
+values = ["Attract", "Trust", "Convert"]
+values_vn = ["Thu hút", "Niềm tin", "Chuyển đổi"]
+note = "v13.17 (founder test D1): the piece's content type, as in the week table"
+
+[[campaign_board.tables.columns]]
+name = "Content pillar"
+name_vn = "Trụ cột nội dung"
+kind = "text"
+note = "the pillar's name as in the strategy"
+
+[[campaign_board.tables.columns]]
+name = "Line"
+name_vn = "Tuyến"
+kind = "text"
+note = "the content line's name (§CM-CONTENT-LINES); blank for a one-off"
+
+[[campaign_board.tables.columns]]
+name = "Phase"
+name_vn = "Giai đoạn"
+kind = "choice"
+values = ["Normal", "Launch"]
+values_vn = ["Thường", "Mở bán"]
+
+[[campaign_board.tables.columns]]
+name = "Framework"
+name_vn = "Mạch bài"
+kind = "text"
+note = "the shape in plain words ('story → 3 lessons → invite'), never a method name"
+
+[[campaign_board.tables.columns]]
+name = "CTA"
+name_vn = "Lời mời"
+kind = "text"
+note = "the ask as written"
+
+[[campaign_board.tables.columns]]
+name = "Keyword"
+name_vn = "Từ khoá"
+kind = "text"
+note = "the comment word or the Season keyword the ask uses (§CM-CTA-KIT keywords)"
 
 [[campaign_board.tables.columns]]
 name = "Title"
@@ -1341,7 +1392,7 @@ kind = "number"
 name = "Saves"
 name_vn = "Lượt lưu"
 kind = "number"
-note = "last, so Status → DMs/leads paste as one 6-column block (H-M); Saves only when given (v13.4: ≤6 columns a paste)"
+note = "last, so Status → DMs/leads paste as one 6-column block (O-T); Saves only when given (v13.4: ≤6 columns a paste; v13.17: the plan columns F-L came in after Format)"
 
 [[campaign_board.tables]]
 id = "bank"
@@ -1362,7 +1413,7 @@ name = "Type"
 name_vn = "Loại"
 kind = "choice"
 values = ["Story", "Proof", "Client words", "Objection", "Liked post", "Hook that worked"]
-values_vn = ["Chuyện", "Bằng chứng", "Lời khách", "Lăn tăn", "Bài {xưng hô} thích", "Hook từng ăn"]
+values_vn = ["Chuyện", "Bằng chứng", "Lời khách", "Băn khoăn", "Bài {xưng hô} thích", "Hook từng ăn"]
 note = "banks.toml types S, P, V, O, W, plus a hook that drew hands up (What: the line · its kind · what it drew); VN 'Bài {xưng hô} thích' is printed in the Card's pair (v13.5)"
 
 [[campaign_board.tables.columns]]
