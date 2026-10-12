@@ -269,7 +269,7 @@ input = '''tiếp'''
 contains = []
 not_contains = ["anh, chị hay bạn"]
 regex = [
-  '''\A[^\w\n]*◆ Content Machine · ''',
+  '''\A[^\w\n]*◆ (?:Bước \d+/10|Tuần \d+ · Ngày \d+) · ''',
   '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
   '''(?i)Buổi nói chuyện tuần''',
 ]
@@ -432,7 +432,7 @@ input = '''Bắt đầu
 contains = ["Lưu vào dự án", "chị"]
 not_contains = ["anh, chị hay bạn"]
 regex = [
-  '''\A[^\w\n]*◆ Content Machine · Kiểm tra cài đặt''',
+  '''\A[^\w\n]*◆ (?:Bước \d+/10|Tuần \d+ · Ngày \d+) · ''',
   '''(?i)tiếp''',
 ]
 not_regex = [

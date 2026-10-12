@@ -184,7 +184,17 @@ max_chars = { en = 160, vn = 160 }
 source = "machine"
 required = true
 label_key = "card.label.progress"
-note = "v13.17 (founder test C1): day0 until the card exists, then w{n}d{d} = week n, the last day posted (w1d1 after FILM TODAY); it decides what 'next' opens (§CM-MEMORY 7)"
+note = "v13.17 (founder test C1): w{n}d{d} = week n, the last day posted (w1d1 after FILM TODAY); it decides what 'next' opens (§CM-MEMORY 7)"
+
+[[machine.field]]
+name = "step"
+group = "card"
+type = "text"
+max_chars = { en = 8, vn = 8 }
+source = "machine"
+required = true
+label_key = "card.label.step"
+note = "v14.0 (founder 12 Oct, mission control): the setup step, 1-10 (start, listen + research, strategy, today's piece, Brand Card, Week 1, hub, reminders, first Weekly Talk, first Friday review), then done; the status line shows it (§CM-OPTIONS 0, §CM-SETUP 9). progress keeps the week and day"
 
 # ---------------------------------------------------------------- the message (Map fields)
 [[machine.field]]

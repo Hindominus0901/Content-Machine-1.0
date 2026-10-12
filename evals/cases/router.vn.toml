@@ -137,7 +137,7 @@ input = '''tiếp'''
 contains = []
 not_contains = []
 regex = [
-  '''\A\s*◆ Content Machine · Kiểm tra cài đặt: ✓ hướng dẫn''',
+  '''\A\s*◆ Bước 1/10 · [^\n]*\n\s*Đã có: ✓ hướng dẫn''',
   '''Hôm nay mình làm 3 việc''',
   '''(?i)anh, chị hay bạn''',
   '''TIẾP →[^\n]*\s*\Z''',
@@ -172,7 +172,7 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''Kiểm tra cài đặt''',
+  '''✓ hướng dẫn''',
   '''(?i)xả hết''',
   '''(?i)anh, chị hay bạn''',
   '''(?i)(làm lại|bắt đầu lại|kể lại) từ đầu''',
@@ -207,7 +207,7 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''Kiểm tra cài đặt''',
+  '''✓ hướng dẫn''',
   '''(?i)anh, chị hay bạn''',
   '''(?i)(kể|nói) lại (từ đầu|hết)''',
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
@@ -503,7 +503,7 @@ not_regex = [
   '''(?i)(lưu|save)[^\n]{0,40}(trước đã|trước rồi|rồi mới|mới (làm|viết) tiếp)''',
   '''(?i)đã lưu (?:Brand Card )?chưa''',
   '''(?i)Chưa thấy Brand Card ở đây''',
-  '''Kiểm tra cài đặt''',
+  '''✓ hướng dẫn''',
   '''(?i)xả hết|Hôm nay mình làm 3 việc''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',
@@ -1853,7 +1853,7 @@ regex = [
 ]
 not_regex = [
   '''(?m)^\W*QUAY HÔM NAY\b''',
-  '''(?i)Hôm nay mình làm 3 việc|gọi bạn là anh, chị hay bạn|Kiểm tra cài đặt''',
+  '''(?i)Hôm nay mình làm 3 việc|gọi bạn là anh, chị hay bạn|✓ hướng dẫn''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
   '''(?i)buổi nói chuyện tuần''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
@@ -2011,7 +2011,7 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''Kiểm tra cài đặt''',
+  '''✓ hướng dẫn''',
   '''(?i)buổi nói chuyện tuần''',
   '''(?i)câu (hỏi )?(1|một) (trên|trong) (5|năm)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
@@ -2042,7 +2042,7 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''Kiểm tra cài đặt''',
+  '''✓ hướng dẫn''',
   '''(?i)(?<!\w)(?<!kết )bạn(?!\w)(?!\s+bè)''',
   '''(?i)(?<!\w)(hom nay|bai dang|chi oi|em gui|tiep theo)(?!\w)''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
@@ -2800,7 +2800,7 @@ regex = [
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''Kiểm tra cài đặt''',
+  '''✓ hướng dẫn''',
   '''(?i)buổi nói chuyện tuần''',
   '''(?im)^\W*(?:Sẵn sàng (?:quay|đăng|gửi)\b|Bản nháp ·|✓ Đã kiểm:)''',
   '''VÌ SAO RA KHÁCH''',

@@ -7,9 +7,9 @@
 [strings]
 
 # Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
-"contract.output" = "Always reply in English. First line ◆ {{name}} · <step>; pieces in copy boxes; one screen of talk; end with one NEXT line."
+"contract.output" = "Always reply in English. Lines 1–2: ◆ Step n/10 · <step> · why, then Have · Missing; pieces in copy boxes; one screen of talk; last line NEXT."
 "running.tag"     = "◆ {{name}} · {step}"
-"setup.check"     = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card: we make it today"
+"setup.check" = "Have: ✓ instructions ✓ method file · Missing: your Brand Card (we make it today)"
 "next.prefix"     = "NEXT →"
 "why.prefix"      = "WHY THIS GETS CLIENTS"
 "checked.prefix"  = "✓ Checked:"
@@ -177,9 +177,9 @@
 "ics.friday.description" = "Open {{name}}, newest chat, and say \"my numbers\". 3 minutes."
 
 # Setup-check variants and the Phone Starter (UX spec §1.2, §1.4)
-"setup.check_compact" = "◆ {{name}} · Setup check: ✓ instructions ✗ method file (compact mode) · Brand Card: we make it today"
-"setup.check_found"   = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card v{v} ✓"
-"setup.check_gaps"    = "◆ {{name}} · Setup check: ✓ instructions ✓ method file · Brand Card v{v}, missing: {fields}"
+"setup.check_compact" = "Have: ✓ instructions ✗ method file (compact mode) · Missing: your Brand Card (we make it today)"
+"setup.check_found" = "Have: ✓ instructions ✓ method file ✓ Brand Card v{v} · Missing: {step}"
+"setup.check_gaps" = "Have: ✓ instructions ✓ method file · Brand Card v{v} · Missing: {fields}"
 "phone.opening"       = "You only need to press Send. The rest is for the machine."
 "phone.save"          = "Save: at the end, long-press this chat → Rename → \"{{name}}\". Then copy the MY CONTENT MACHINE box and send it to yourself (Notes or email). When this chat gets long, I print a fresh box: paste it into a new chat named {{name}}."
 
@@ -190,7 +190,7 @@
 # G2 (DECISIONS 6 Oct, long dumps): dump.enough is the soft cut and carries the first missing-fact guess in the same
 # message (one question mark in all; since 7 Oct the first dig question, §CM-DIG); dump.post_it follows the early win's best line in its copy box.
 "dump.keep_going"        = "Keep going, or say 'done'."
-"dump.enough"            = "That's plenty for today. If you have one more story, tell it now. If not: {your first question | say 'done'.}"
+"dump.enough" = "That's plenty for today. One more story? Tell it now; else say 'done' and I draft your strategy."
 "check.pick"             = "My pick: {option}, because {reason}."
 "save.limit_claude_free" = "Hit the limit? Come back when it resets, same chat, say 'next'."
 "resume.brb"             = "No rush. Say 'ok back' when you're back."
@@ -323,7 +323,8 @@
 "locale.not_legal"    = "Not legal advice; for your case, ask a lawyer."
 
 # Simple surface + voice (docs/research/wf15-simple-surface-spec.md, wf14-voice-language-spec.md)
-"setup.dump_posts"   = "Got posts or messages you've written? Paste 2–3 too, or send a link to your page."
+"setup.dump_posts" = "Got posts or messages you've written? Paste 2–3 too, or send a link to your page."
+"setup.start" = "Send what you have: links, old posts, files, and/or talk for 3–5 min."
 "map.known"          = "KNOWN FOR:"
 "map.topics"         = "CONTENT PILLARS:"
 "map.word"           = "YOUR WORD:"
@@ -403,6 +404,11 @@
 "options.reply"       = "Type A, B or C, change one, or 'OK' for {letter}."
 "options.decided"     = "I'm going with {option}: {reason}. Type {other} to switch."
 "options.disagree"    = "I'd push back here: {evidence}."
-"options.step"        = "Step {n} of {total} · {step}"
-"memory.restore"      = "I remember: {state} · open step: {step}."
+"status.step" = "◆ Step {n}/10 · {step} · why: {why}"
+"status.week" = "◆ Week {n} · Day {d} · {step} · why: {why}"
+"status.have" = "Have: {have} · Missing: {missing}"
+"status.situation" = "Situation:"
+"status.problem" = "Problem:"
+"status.fix" = "Fix:"
+"memory.restore" = "Have: {state} (from last time) · Missing: {step}"
 "memory.paste_hub"    = "I can't see our past work from here. Paste HUB.md or your Brand Card and I'll pick up where we stopped."

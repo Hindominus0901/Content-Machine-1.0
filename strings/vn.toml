@@ -31,9 +31,9 @@
 [strings]
 
 # Output contract, running tag and per-piece labels (UX spec §1.2, §2, §4; PLAN reconciliation 2)
-"contract.output" = { text = "Luôn trả lời tiếng Việt như người Việt nói, đúng xưng hô đã chọn. Dòng đầu ◆ {{name}} · <bước>; bài trong khung chép; lời nói một màn hình; cuối một dòng TIẾP.", src = "bec614b979" }
+"contract.output" = { text = "Luôn trả lời tiếng Việt như người Việt nói, đúng xưng hô đã chọn. Dòng 1–2: ◆ Bước n/10 · <bước> · vì sao, rồi Đã có · Còn thiếu; bài trong khung chép; lời nói một màn hình; dòng cuối TIẾP.", src = "4174547502" }
 "running.tag"     = { text = "◆ {{name}} · {step}", src = "82bae98171" }
-"setup.check"     = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card: hôm nay mình làm", src = "a5b0d1d40d" }
+"setup.check" = { text = "Đã có: ✓ hướng dẫn ✓ file phương pháp · Còn thiếu: Brand Card (hôm nay mình làm)", src = "607ab9870b" }
 "next.prefix"     = { text = "TIẾP →", src = "4c813654ab" }
 "why.prefix"      = { text = "VÌ SAO RA KHÁCH", src = "f91b568b43" }
 "checked.prefix"  = { text = "✓ Đã kiểm:", src = "781a6a9609" }
@@ -201,9 +201,9 @@
 "anchor.map" = { text = "Ngày 0: chiến lược, từng bước", src = "0841ac89fc" }
 "anchor.drift" = { text = "Chọn trọng tâm và giữ đúng hướng", src = "a9b71576ca" }
 "anchor.liked" = { text = "Bài coach thích", src = "00e43012d8" }
-"setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
-"setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
-"setup.check_gaps" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v}, còn thiếu: {fields}", src = "6ca75b3eda" }
+"setup.check_compact" = { text = "Đã có: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Còn thiếu: Brand Card (hôm nay mình làm)", src = "f74df54656" }
+"setup.check_found" = { text = "Đã có: ✓ hướng dẫn ✓ file phương pháp ✓ Brand Card v{v} · Còn thiếu: {step}", src = "66c4497394" }
+"setup.check_gaps" = { text = "Đã có: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} · Còn thiếu: {fields}", src = "6fa4324a6e" }
 "phone.opening" = { text = "Chỉ cần bấm Gửi. Phần dưới là cho máy.", src = "b6a97fd51f" }
 "phone.save" = { text = "Lưu: nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", chép khung MY CONTENT MACHINE gửi Zalo \"Cloud của tôi\". Chat dài quá: in khung mới, dán vào chat mới.", src = "f6e358cc8f" }
 
@@ -212,7 +212,7 @@
 # Day 0 details and the Brand Card (§ SETUP, CARD; P2 method anchors)
 "setup.no_setup"         = { text = "Không, hôm nay chưa cần gì cả.", src = "3e6ebde339" }
 "dump.keep_going"        = { text = "Cứ kể tiếp, hết thì gõ 'xong'.", src = "ce841a838d" }
-"dump.enough"            = { text = "Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì {câu hỏi đầu | gõ 'xong'.}", src = "dee4d28a32" }
+"dump.enough" = { text = "Hôm nay vậy là đủ rồi. Còn chuyện nào thì kể luôn, không thì gõ 'xong' để {tự xưng} lên chiến lược.", src = "521fc599db" }
 "check.pick"             = { text = "{tự xưng} chọn {option}, vì {reason}.", src = "d1e588aea6" }
 "save.limit_claude_free" = { text = "Hết lượt thì đợi có lượt lại, quay về đoạn chat này, nhắn 'tiếp'.", src = "e2843e8de7" }
 "resume.brb"             = { text = "Không vội đâu. Quay lại thì nhắn 'ok rồi'.", src = "6cf6995cec" }
@@ -347,6 +347,7 @@
 
 # Simple surface + voice (wf15, wf14)
 "setup.dump_posts" = { text = "Có bài, tin nhắn {xưng hô} từng viết thì dán 2–3 cái, hoặc gửi link trang của {xưng hô}.", src = "fbfc38d52e" }
+"setup.start" = { text = "Có gì cứ gửi: link, bài cũ, file, hoặc nói 3–5 phút, cả hai càng tốt.", src = "cd00a4cffe" }
 "map.known" = { text = "ĐIỀU KHÁCH NHỚ:", src = "7057c1b511" }
 "map.topics" = { text = "TRỤ CỘT NỘI DUNG:", src = "389026b2b7" }
 "map.word" = { text = "TỪ KHOÁ:", src = "e8e772ff8d" }
@@ -421,6 +422,11 @@
 "options.reply"       = { text = "Gõ A, B hay C, sửa một ý, hoặc 'OK' để lấy {letter}.", src = "258c45b33f" }
 "options.decided"     = { text = "{tự xưng} chọn {option} vì {reason}; muốn khác thì gõ {other}.", src = "7f9f477824" }
 "options.disagree"    = { text = "Chỗ này xin nói thẳng: {evidence}.", src = "a3197ff73a" }
-"options.step"        = { text = "Bước {n}/{total} · {step}", src = "f549115143" }
-"memory.restore"      = { text = "Lần trước: {state} · đang dở bước {step}.", src = "a184bc5170" }
+"status.step" = { text = "◆ Bước {n}/10 · {step} · vì sao: {why}", src = "123387bdb2" }
+"status.week" = { text = "◆ Tuần {n} · Ngày {d} · {step} · vì sao: {why}", src = "c54a9edca2" }
+"status.have" = { text = "Đã có: {have} · Còn thiếu: {missing}", src = "b97d933504" }
+"status.situation" = { text = "Tình hình:", src = "821e08df75" }
+"status.problem" = { text = "Vấn đề:", src = "4204e14466" }
+"status.fix" = { text = "Cách xử lý:", src = "943df968a5" }
+"memory.restore" = { text = "Đã có: {state} (từ lần trước) · Còn thiếu: {step}", src = "6e6e7b2137" }
 "memory.paste_hub"    = { text = "Ở đây chưa xem được lần trước làm tới đâu. Dán HUB.md hoặc Brand Card vào là làm tiếp đúng chỗ.", src = "f45dae847f" }

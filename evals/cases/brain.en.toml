@@ -472,7 +472,7 @@ input = '''next'''
 contains = []
 not_contains = ["we make it today"]
 regex = [
-  '''\A\s*◆ Content Machine · ''',
+  '''\A\s*◆ (?:Step \d+/10|Week \d+ · Day \d+) · ''',
   '''(?m)^\s*(?:```|~~~)|^\W*N\d+\s*·''',
   '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
@@ -584,7 +584,7 @@ input = '''Start'''
 contains = []
 not_contains = ["we make it today"]
 regex = [
-  '''\A\s*◆ Content Machine · ''',
+  '''\A\s*◆ (?:Step \d+/10|Week \d+ · Day \d+) · ''',
   '''(?i)Brand Card v1\W{0,3}[✓✔]|[✓✔]\W{0,3}Brand Card v1\b''',
 ]
 not_regex = [
@@ -732,7 +732,7 @@ not_contains = []
 regex = [
   '''(?i)\bBrand Card\b''',
   '''for the machine, no need to read''',
-  '''\A\s*◆ Content Machine · ''',
+  '''\A\s*◆ (?:Step \d+/10|Week \d+ · Day \d+) · ''',
 ]
 not_regex = [
   '''(?i)empty your head''',

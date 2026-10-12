@@ -90,10 +90,10 @@ lanes = ["S1", "floor"]
 title = "Pass test: reply 1 opens with the exact VN setup-check line and ends with one TIẾP line"
 context = "Door A done on chatgpt.com (Windows, Chrome): project 'Content Machine', VN instruction block saved in Instructions, CONTENT-MACHINE-VN.md added as a project file. New chat inside the project. No Brand Card in sources. Nothing said yet."
 input = """Bắt đầu"""
-contains = ["◆ Content Machine · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card: hôm nay mình làm"]
+contains = ["Đã có: ✓ hướng dẫn ✓ file phương pháp · Còn thiếu: Brand Card (hôm nay mình làm)"]
 not_contains = ["Setup check", "method file", "we make it today", "làm ngay hôm nay"]
 regex = [
-  '''\A\s*◆ Content Machine · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card: hôm nay mình làm''',
+  '''\A\s*◆ Bước 1/10 · [^\n]*\n\s*Đã có: ✓ hướng dẫn ✓ file phương pháp · Còn thiếu: Brand Card \(hôm nay mình làm\)''',
   '''TIẾP →[^\n]*\s*\Z''',
 ]
 not_regex = ['''TIẾP →[\s\S]*TIẾP →''']
@@ -111,7 +111,7 @@ context = "Door A steps 1, 2 and 4 done on a Windows laptop; step 3 failed (the 
 input = """Bắt đầu"""
 not_contains = ["✓ file phương pháp"]
 regex = [
-  '\A◆ Content Machine · Kiểm tra cài đặt: ✓ hướng dẫn',
+  '\A◆ Bước 1/10 · [^\n]*\n\s*Đã có: ✓ hướng dẫn',
   '(?i)anh, chị hay bạn',
   '''(?i)khoảng (?:25|30) phút''',
 ]
@@ -158,7 +158,7 @@ context = "Door B: ChatGPT Free app on Android, no project, no files, no helper 
 input = """<<paste: the rendered VN PHONE-STARTER.txt, whole>>"""
 contains = ["micro nhỏ trong ô chat", "sóng âm", "anh, chị hay bạn"]
 not_contains = ["dự án", "project", "§", "✓ file phương pháp", "Notion"]
-regex = ['\A◆ Content Machine']
+regex = ['\A◆ (?:Bước \d+/10|Tuần \d+ · Ngày \d+) · ']
 invariants = ["I1", "I4", "I5", "I15"]
 max_questions = 1
 notes = "UX §1.4 Door B 'never mentions a project'; strings mic.phone ('Điện thoại: bấm micro nhỏ trong ô chat, ĐỪNG bấm nút sóng âm.'); Hạnh's voice-mode habit (persona behaviour) makes the sound-wave warning mandatory in reply 1."
@@ -936,7 +936,7 @@ input = """tiep em oi"""
 regex = [
   '''(?im)^\W*Hôm nay\b[^\n]*\bN\d+\b''',
   '''(?i)in lại''',
-  '''\A◆ Content Machine''',
+  '''\A◆ (?:Bước \d+/10|Tuần \d+ · Ngày \d+) · ''',
 ]
 not_contains = ["dự án", "anh, chị hay bạn", "VÌ SAO RA KHÁCH"]
 not_regex = [

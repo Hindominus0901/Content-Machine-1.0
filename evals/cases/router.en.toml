@@ -109,7 +109,7 @@ input = '''next'''
 contains = []
 not_contains = []
 regex = [
-  '''\A\s*◆ Content Machine · Setup check: ✓ instructions''',
+  '''\A\s*◆ Step 1/10 · [^\n]*\n\s*Have: ✓ instructions''',
   '''(?i)about 25 min''',
   '''(?i)the ONE thing you(?:'|’)ll be known for''',
   '''NEXT →[^\n]*\s*\Z''',
@@ -145,7 +145,7 @@ regex = [
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''Setup check:''',
+  '''Have: ✓ instructions''',
   '''(?i)empty your head''',
   '''(?i)\bwhy this one\b''',
   '''(?im)^\W*(?:Ready to (?:film|post|send)\b|Draft ·|✓ Checked:)''',
@@ -1539,7 +1539,7 @@ regex = [
 not_regex = [
   '''(?m)^\W*(Ready to (film|post|send)\b|Draft ·|✓ Checked:)''',
   '''WHY THIS GETS CLIENTS''',
-  '''Setup check:''',
+  '''Have: ✓ instructions''',
   '''(?i)weekly talk''',
   '''(?i)\byour numbers\b''',
   '''(?m)^[ \t]*(?:```|~~~)''',

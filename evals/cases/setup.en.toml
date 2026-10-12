@@ -68,10 +68,10 @@ lanes = ["S1", "floor"]
 title = "Start reply opens with the exact setup-check line and ends with one NEXT line"
 context = "Door A complete: instruction block saved in the project, CONTENT-MACHINE-EN.md added as a project file, new chat inside the project. No Brand Card exists yet. Day 0, minute 0. ChatGPT Free, Windows laptop."
 input = '''Start'''
-contains = ["◆ Content Machine · Setup check: ✓ instructions ✓ method file · Brand Card: we make it today"]
+contains = ["Have: ✓ instructions ✓ method file · Missing: your Brand Card (we make it today)"]
 not_contains = []
 regex = [
-  '''\A\s*◆ Content Machine · Setup check: ✓ instructions ✓ method file · Brand Card: we make it today''',
+  '''\A\s*◆ Step 1/10 · [^\n]*\n\s*Have: ✓ instructions ✓ method file · Missing: your Brand Card \(we make it today\)''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -135,7 +135,7 @@ input = '''Start'''
 contains = ["small mic"]
 not_contains = ["✓ method file"]
 regex = [
-  '''\A\s*◆ Content Machine · Setup check: ✓ instructions''',
+  '''\A\s*◆ Step 1/10 · [^\n]*\n\s*Have: ✓ instructions''',
   '''(?i)about 25 min''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
@@ -1375,7 +1375,7 @@ input = '''You only need to press Send. The rest is for the machine. [Phone Star
 contains = ["small mic"]
 not_contains = ["✓ method file"]
 regex = [
-  '''\A\s*◆ Content Machine''',
+  '''\A\s*◆ (?:Step \d+/10|Week \d+ · Day \d+) · ''',
   '''(?i)about 25 min''',
 ]
 not_regex = [
@@ -1786,8 +1786,8 @@ input = '''<<paste: evals/personas/en/proof-coach/answers.md, the "## Dump chunk
 contains = []
 not_contains = []
 regex = [
-  '''That(?:'|’)s plenty for today\. If you have one more story, tell it now\. If not:''',
-  '''(?s)If not:(?:.{0,240}?\bRight\?|\s*say ['‘’"“]?done)''',
+  '''That(?:'|’)s plenty for today\. One more story\? Tell it now''',
+  '''(?s)else say ['‘’"“]?done['‘’"“]? and I draft your strategy''',
 ]
 not_regex = [
   '''(?i)one more minute''',
