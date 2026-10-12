@@ -75,7 +75,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "S0", "floor"]
 title = "FILM TODAY alone after the strategy's OK has every part: on-screen ≤6, first line, 3-5 beats (a full 500–800-word script, retest v13), last line, caption box, CTA + quiet, then 'Film it now…'; nothing under it"
-context = "Day 0, about minute 22, ChatGPT Plus on the iPhone, Corinne in her car between site visits. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: KNOWN FOR built on 'the nothing room' and taping a room out before buying; YOUR WORD: nothing room; free gift = the Tape-Out Guide and offer the Room Reset ($3,500), both from her dump. She OKs it in this turn, so this reply is FILM TODAY alone. Delivery: beat cards (the default), not a script."
+context = "Day 0, about minute 22, ChatGPT Plus on the iPhone, Corinne in her car between site visits. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok'); the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: KNOWN FOR built on 'the nothing room' and taping a room out before buying; YOUR WORD: nothing room; free gift = the Tape-Out Guide and offer the Room Reset ($3,500), both from her dump. She OKs it in this turn, so this reply is FILM TODAY alone. Delivery: beat cards (the default), not a script."
 input = '''ok. I've got like 20 minutes before pickup, give me the video'''
 regex = [
   '''FILM TODAY''',
@@ -119,7 +119,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
 title = "Compact mode: FILM TODAY alone after the strategy's OK is complete with no method file, prints nothing under it, and never asks for the file"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 22, iPhone. The interview is done (his best result: none yet, so his own story) and the strategy came in its pre-filled steps (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; founding small group, no price set), each OK'd; the last ended 'We'll run this for 4 weeks. OK, or change a line.' His 'yep' OKs it, so this reply is FILM TODAY alone. His dump said reading a script makes him sound like a 'hostage video', so beat cards (the default)."
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 22, iPhone. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (his best result: none yet, so his own story) (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; founding small group, no price set); the last ended 'We'll run this for 4 weeks. OK, or change a line.' His 'yep' OKs it, so this reply is FILM TODAY alone. His dump said reading a script makes him sound like a 'hostage video', so beat cards (the default)."
 input = '''yep'''
 regex = [
   '''FILM TODAY''',
@@ -160,7 +160,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Word-for-word coach at a desk webcam: full sentences, same budgets, her own story, no teleprompter, nothing under it"
-context = "Day 0, about minute 22, Claude Free on the Windows laptop. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: agency owners after a record year with no cash; YOUR WORD: record year; Margin Sprint $7,500, from her dump. She OKs it in this turn and asks for word-for-word, so this reply is FILM TODAY alone, word for word. Delivery is never asked on Day 0 (beat cards by default); her own ask switches it. Her dump says she films at her desk on the laptop webcam, 1-2 takes."
+context = "Day 0, about minute 22, Claude Free on the Windows laptop. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok'); the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: agency owners after a record year with no cash; YOUR WORD: record year; Margin Sprint $7,500, from her dump. She OKs it in this turn and asks for word-for-word, so this reply is FILM TODAY alone, word for word. Delivery is never asked on Day 0 (beat cards by default); her own ask switches it. Her dump says she films at her desk on the laptop webcam, 1-2 takes."
 input = '''ok. Word for word please. I'll read it once at my desk and post it on LinkedIn.'''
 regex = [
   '''FILM TODAY''',
@@ -288,9 +288,10 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Whole run: FILM TODAY comes whole and alone after the strategy's OK, within the film-ready budget"
-context = "Whole run: Day 0 on S0 compact mode (no method file), iPhone, Sunday night. Coach turns are replayed from answers.md (dump chunks 1-3, including the sound-wave slip in turn 1, then short answers to the interview's questions from ## Answer bank per ## Behaviour, then 'ok' to each strategy step) up to and including his 'yep' to the strategy's last step, which brings FILM TODAY alone. Regexes below run on that last reply; graders.py day0_timing runs on the whole transcript."
-input = '''<<coach turns: answers.md "## Dump chunk 1..3" in order, then short answers to the interview's questions from "## Answer bank" in the persona's style, then "ok" to each strategy step, ending with "yep" to the last one, which brings FILM TODAY alone>>'''
+context = "Whole run: Day 0 on S0 compact mode (no method file), iPhone, Sunday night. Coach turns are replayed from answers.md (dump chunks 1-3, including the sound-wave slip in turn 1, then one short answer to the strategy's A/B/C picks from ## Answer bank per ## Behaviour, then 'ok' to the strategy, one reply) up to and including his 'yep' to the strategy, which brings FILM TODAY alone. Regexes below run on that last reply; graders.py day0_timing runs on the whole transcript."
+input = '''<<coach turns: answers.md "## Dump chunk 1..3" in order, then one short answer to the strategy's A/B/C picks from "## Answer bank" in the persona's style, ending with "yep", which brings FILM TODAY alone>>'''
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''FILM TODAY''',
   '''(?i)first line''',
   '''(?i)last line''',
@@ -301,6 +302,7 @@ regex = [
   '''(?i)NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\bwant (the|a|me to write the) caption\b''',
   '''(?i)\b(shall|should) I (write|add) the (caption|last line)\b''',
   '''WHY THIS GETS CLIENTS''',
@@ -1197,11 +1199,13 @@ context = "Day 0, about minute 17, ChatGPT Plus on the iPhone. Same state as fmt
 input = '''[turn 1] Reset is the one I want to grow. full projects pay the 5 salaries but those come from referrals. I've got like 20 minutes before pickup, give me the video
 [turn 2] why?'''
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
   '''(?i)(?:sectional|stairs?|landing|measure the door|Whitfields?|Megan|front room|piano|swatch|Priya|bonus room|storage unit|nothing room)''',
   '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\bHollis\b''',
   '''(?i)\b(400|30\s*(%|percent))''',
   '''(?i)\b(elevated?|curated|timeless|forever home|dream home)\b''',

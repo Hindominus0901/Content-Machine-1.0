@@ -30,7 +30,7 @@ strategy_max_minutes = 25                 # the strategy proposal, in active min
                                           #   interview (it replaces map_max_minutes = 20, which no check read)
 map_max_turns_en = 6                      # coach turns before the strategy: Start, the dump's sends, "done". The interview's
 map_max_turns_vn = 7                      #   answers come on top (dig_answers_max); VN adds the xưng hô turn
-dig_answers_max = 6                       # §CM-DIG (7 Oct night): at most 6 questions, one a reply, and each answer is a coach
+dig_answers_max = 0                       # v14: no interview on Day 0 (day0_legacy keeps 6 for older runs). §CM-DIG (7 Oct night): at most 6 questions, one a reply, and each answer is a coach
                                           #   turn: day0_timing adds the interview questions the run really asked (a reply that
                                           #   asks one of the dig.* strings, adapted to the client in hand), up to this many, to
                                           #   map_max_turns_* and session_max_turns_*. A rich dump asks none.
@@ -39,12 +39,12 @@ interview_max_questions = 6               # day0_strategy: more questions than t
 map_lines = 6                             # the strategy's labelled lines: KNOWN FOR · CONTENT PILLARS · CONTENT MIX · YOUR SYSTEM
                                           #   · YOUR WORD · WHAT I FOUND (map.known, map.topics, map.mix, map.system, map.word,
                                           #   map.found), then "OK, or change a line". YOUR VOICE left the proposal (it is in the card)
-strategy_max_steps = 3                    # v13 (founder, 9 Oct: choices one step at a time): the strategy may come in up to 3 pre-filled
+strategy_max_steps = 1                    # v14: the strategy is ONE reply with at most strategy_picks_max A/B/C picks (day0_legacy keeps 3). v13 (founder, 9 Oct: choices one step at a time): the strategy may come in up to 3 pre-filled
                                           #   steps (§CM-MAP; with PLAYBOOK loaded §CM-STRATEGY-ENGINE), one a reply, the coach's OK after
                                           #   each; the LAST one ends on map.ok ("the one decision"). day0_timing adds one coach turn per
                                           #   step but the last to the session's turns. 1 = the old one-reply strategy.
-strategy_max_words_en = 160               # each strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): the
-strategy_max_words_vn = 200               #   kit's caps (start-block step 4 "≤160 words (reply 2 ≤100)"; VN step 5 "≤200 tiếng (tin 2
+strategy_max_words_en = 200               # each strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): the
+strategy_max_words_vn = 250               #   kit's caps (start-block step 4 "≤160 words (reply 2 ≤100)"; VN step 5 "≤200 tiếng (tin 2
 strategy_step2_max_words_en = 100         #   ≤120)"). Were 400/450 (audit a3 M4)
 strategy_step2_max_words_vn = 120
 strategy_words_tolerance = 0.10           # read with this much slack (the grader counts the tag and NEXT lines)
@@ -59,7 +59,7 @@ system_min_words_en = 12                  # YOUR SYSTEM: a platform, pieces a we
 system_min_words_vn = 14
 found_min_lines = 2                       # WHAT I FOUND: 2-3 lines (the kit: "≤3 lines", retest v13, 9 Oct; was 4, audit a3 M5), each
 found_max_lines = 3                       #   with its source (a place, a month) or labelled a guess
-film_ready_max_minutes = 35               # FILM TODAY (after the OK), in active minutes. It was 20 with the Map and FILM TODAY in
+film_ready_max_minutes = 18               # v14: FAIL above 18 active minutes (day0_legacy keeps 35). FILM TODAY (after the OK), in active minutes. It was 20 with the Map and FILM TODAY in
                                           #   one reply; the interview and the research now come first
 film_ready_max_minutes_from_email = 45    # with the install, from the setup email
 # The soft dump cut (DECISIONS "Long dumps…", "One more story stays open", "Long dictation and the Map reply"): past
@@ -86,6 +86,27 @@ running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <n
 shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes and the card top
                                           #   not counted (§CM-TODAY 1); EN, and any edition without its own key
 shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.md §CM-TODAY 1 "lời nói <=120 tiếng")
+
+# v14 (fast Day 0, 10-step setup, reply protocol; read for a run whose meta.json has "protocol": "v14", evals/run.py writes it):
+film_ready_warn_minutes = 12              # the first piece's TARGET in active minutes: above it a warning, above film_ready_max_minutes
+                                          #   (18) a failure; day0_timing also reports the minutes and the coach's words before it
+first_piece_max_coach_turns_en = 4        # coach turns to the first piece: a warning above (0 = off)
+first_piece_max_coach_turns_vn = 5        #   VN adds the address answer
+strategy_picks_max = 3                    # the strategy reply (setup step 3): at most 3 A/B/C picks (who, offer, hours), then the one OK
+question_of_day_from_day = 2              # reply_protocol: a dig.* question (the question of the day) only from day 2, one a reply, never
+                                          #   beside another ask; on Day 0 (setup steps 1-7, Week 1 Day 1) it fails
+
+# Runs before v14 (no "protocol": "v14" in meta.json) are graded with these over [day0]: the interview before the strategy, the
+# strategy in up to 3 steps, film-ready within 35 minutes, no first-piece warning.
+[day0_legacy]
+dig_answers_max = 6
+strategy_max_steps = 3
+strategy_max_words_en = 160
+strategy_max_words_vn = 200
+film_ready_max_minutes = 35
+film_ready_warn_minutes = 0
+first_piece_max_coach_turns_en = 0
+first_piece_max_coach_turns_vn = 0
 
 [lengths]                                 # check lengths (graders.py; founder, 7 Oct night: "the length has to be measured by words,
                                           #   not seconds, because people speak at different speeds"). VN counts tiếng (whitespace

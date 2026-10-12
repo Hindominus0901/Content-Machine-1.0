@@ -5460,8 +5460,12 @@ class StrategyFirstRealKitTests(unittest.TestCase):
 
     def test_the_acceptance_file_carries_the_new_budgets(self):
         day0 = graders._toml(REPO / "evals" / "acceptance.toml")["day0"]
-        self.assertEqual((day0["map_lines"], day0["dig_answers_max"], day0["interview_max_questions"]), (6, 6, 6))
-        self.assertEqual((day0["strategy_max_minutes"], day0["film_ready_max_minutes"], day0["session_max_minutes"]), (25, 35, 45))
+        self.assertEqual((day0["map_lines"], day0["interview_max_questions"]), (6, 6))
+        self.assertEqual((day0["dig_answers_max"], day0["strategy_max_steps"]), (0, 1))           # v14: no interview, one strategy reply
+        legacy = graders._toml(REPO / "evals" / "acceptance.toml")["day0_legacy"]
+        self.assertEqual((legacy["dig_answers_max"], legacy["strategy_max_steps"], legacy["film_ready_max_minutes"]), (6, 3, 35))
+        self.assertEqual((day0["strategy_max_minutes"], day0["film_ready_max_minutes"], day0["session_max_minutes"]), (25, 18, 45))
+        self.assertEqual((day0["film_ready_warn_minutes"], day0["strategy_picks_max"]), (12, 3))
         lengths = graders._toml(REPO / "evals" / "acceptance.toml")["lengths"]
         self.assertEqual((lengths["short_words_min"], lengths["short_words_max"], lengths["long_post_words"],
                           lengths["long_video_words_min"], lengths["long_video_words_max"]), (500, 800, 1000, 1000, 1500))
@@ -8233,6 +8237,201 @@ class V1316RealLinesTests(TempRepo):
         plain = V14S_CARD.replace("tin Zalo", "bài ngắn")
         self.assertFalse(formats(plain)[0])
         self.assertTrue(formats(plain.replace(row, email))[0])
+
+
+# ---------------------------------------------------------------- v14: the reply protocol, the fast Day 0
+
+def v14(step: int, body: str, why: str = "so you get your first piece fast", have: str = "your links · Missing: the offer",
+        nxt: str = "NEXT → Send what you have: links, old posts or a 3-minute talk.") -> str:
+    """A v14 reply: the two status lines, the work, the NEXT line."""
+    return f"◆ Step {step}/10 · Start · why: {why}\nHave: {have}\n{body}\n{nxt}"
+
+
+V14_WEEK = ("◆ Week 1 · Day 3 · Hub · why: your posts live in one place\nHave: the card · Missing: reminders\n"
+            "Hub is set up.\nNEXT → Say next and I set the reminders.")
+
+
+class V14ReplyProtocolTests(TempRepo):
+    def setUp(self):
+        super().setUp()
+        self.write("strings/en.toml", toml_table("strings", {**EN_STRINGS, "setup.start":
+                   "Send what you have: links, old posts, files, and/or talk for 3–5 min."}))
+
+    def g(self, replies, **meta):
+        turns = []
+        for r in replies:
+            turns += [("coach", "ok"), ("machine", r)]
+        return self.grade(turns, protocol="v14", **meta)
+
+    def item(self, report):
+        return self.inv(report, "reply_protocol")
+
+    def test_a_good_reply_passes_and_an_older_run_is_not_read(self):
+        report = self.g([v14(1, "Hi."), v14(2, "Got it."), v14(3, "Here is the plan."), V14_WEEK])
+        self.assertIs(self.item(report)["pass"], True, self.item(report))
+        old = self.grade([("coach", "ok"), ("machine", "plain reply\nNEXT → go")])
+        self.assertEqual(self.item(old)["status"], "n/a")
+        self.assertIsNot(self.item(old)["pass"], False)
+
+    def test_line_1_and_line_2_are_required(self):
+        self.assertFails(self.g([f"{TAG}Start\nHave: a · Missing: b\nHi.\nNEXT → Send it."]), "reply_protocol", "line 1 is not the status line")
+        self.assertFails(self.g([v14(1, "Hi.").replace("Have: your links · Missing: the offer", "Hi there.")]), "reply_protocol", "line 2 is not Have")
+        self.assertFails(self.g([v14(1, "Hi.").replace("so you get", "")]) if False else
+                         self.g(["◆ Step 1/10 · Start\nHave: a · Missing: b\nHi.\nNEXT → Send it."]), "reply_protocol", "line 1")
+        self.assertFails(self.g([v14(11, "Hi.")]), "reply_protocol", "outside 1-10")
+
+    def test_step_numbers_never_go_backwards(self):
+        self.assertFails(self.g([v14(4, "a"), v14(3, "b")]), "reply_protocol", "goes backwards")
+        self.assertPasses(self.g([v14(4, "a"), v14(4, "b"), v14(5, "c")]), "reply_protocol")
+        self.assertFails(self.g([V14_WEEK, v14(9, "late")]), "reply_protocol", "goes backwards")
+
+    def test_banned_endings_in_the_last_two_lines_fail(self):
+        for end in ("Let me know if you want a different one.", "Do you want me to write the next one?",
+                    "Would you like the caption too?", "If you need more, just ask.", "Shall I continue?", "Anything else?"):
+            report = self.g([v14(2, f"Here it is.\n{end}")])
+            self.assertFails(report, "reply_protocol", "banned ending")
+
+    def test_a_banned_phrase_higher_up_or_in_a_copy_box_is_not_a_failure(self):
+        report = self.g([v14(2, "Would you like a faster way? No: here is the plan.\nOne.\nTwo.\nThree.")])
+        item = self.item(report)
+        self.assertIsNot(item["pass"], False, item)
+        self.assertTrue(any("banned phrase" in w for w in item["warnings"]), item)
+        boxed = self.g([v14(2, "Your post:\n```\nLet me know if you want the checklist.\n```")])
+        self.assertPasses(boxed, "reply_protocol")
+
+    def test_vn_banned_endings(self):
+        vn = ("◆ Bước 2/10 · Lắng nghe · vì sao: để có bài đầu nhanh\nĐã có: link · Còn thiếu: giá\n"
+              "Mình đã đọc xong.\n{end}\nTIẾP → Gửi thêm.")
+        for end in ("Bạn có muốn mình viết luôn không?", "Nếu cần gì cứ nói nhé.", "Cần mình viết thêm không?"):
+            tail = vn.replace("{end}\nTIẾP → Gửi thêm.", f"TIẾP → Gửi thêm.\n{end}")
+            report = self.grade([("coach", "ok"), ("machine", tail)], protocol="v14", edition="vn", persona="en/test-coach")
+            self.assertFails(report, "reply_protocol", "banned ending")
+        ok = self.grade([("coach", "ok"), ("machine", vn.replace("{end}\n", ""))], protocol="v14", edition="vn", persona="en/test-coach")
+        self.assertPasses(ok, "reply_protocol")
+
+    def test_the_next_line_is_present_last_and_an_action(self):
+        self.assertFails(self.g([v14(2, "Done.", nxt="Send more.")]), "reply_protocol", "no NEXT line")
+        self.assertFails(self.g([v14(2, "Done.") + "\nOne more thing."]), "reply_protocol", "NEXT is not the last line")
+        self.assertFails(self.g([v14(2, "Done.", nxt="NEXT → Want me to write the post?")]), "reply_protocol", "NEXT asks permission")
+        self.assertPasses(self.g([v14(2, "Done.", nxt="NEXT → Which hours: A) 2 B) 4 (recommended)?")]), "reply_protocol")
+
+    def test_a_reply_that_reports_a_block_carries_situation_problem_fix(self):
+        stuck = "I couldn't open your page."
+        self.assertFails(self.g([v14(2, stuck)]), "reply_protocol", "without Situation:, Problem:, Fix:")
+        good = f"{stuck}\nSituation: your link is behind a login.\nProblem: I can't read it.\nFix: paste the text here."
+        self.assertPasses(self.g([v14(2, good)]), "reply_protocol")
+        wrong = "Fix: paste the text here.\nProblem: I can't read it.\nSituation: the link needs a login."
+        self.assertFails(self.g([v14(2, wrong)]), "reply_protocol", "not in order")
+        self.assertPasses(self.g([v14(2, "Here is your page, read in full.")]), "reply_protocol")
+
+    @staticmethod
+    def strategy(picks: int) -> str:
+        lines = [f"Pick {n}: A) one B) two C) three (recommended)" for n in range(picks)]
+        return v14(3, MAP_REPLY.split("\n", 1)[1].replace("    ", "").replace("NEXT → Say \"ok\" and I'll write today's video.", "")
+                   + "\n" + "\n".join(lines))
+
+    def test_the_strategy_has_at_most_three_picks_in_one_reply(self):
+        three = self.g([self.strategy(3)])
+        self.assertPasses(three, "reply_protocol")
+        self.assertPasses(three, "I6")
+        self.assertPasses(three, "I5")
+        self.assertFails(self.g([self.strategy(4)]), "reply_protocol", "4 A/B/C picks")
+        self.assertFails(self.grade([("coach", "ok"), ("machine", self.strategy(3))]), "I6")      # before v14: one decision a reply
+
+    def test_two_strategy_replies_fail(self):
+        self.assertFails(self.g([self.strategy(1), self.strategy(1)]), "reply_protocol", "strategy came in 2 replies")
+
+    def test_no_interview_question_on_day_0_and_one_a_reply_after(self):
+        q = "Where do new clients find you today?"
+        self.assertFails(self.g([v14(2, q, nxt="NEXT → Tell me.")]), "reply_protocol", "interview question on Day 0")
+        week = V14_WEEK.replace("Hub is set up.", q).replace("NEXT → Say next and I set the reminders.", "NEXT → Tell me.")
+        self.assertPasses(self.g([v14(9, "x"), week.replace("Day 3", "Day 2")]), "reply_protocol")
+        two = week.replace(q, q + " And what did they say first? Which channels do you like?")
+        self.assertFails(self.g([two]), "reply_protocol", "comes with another ask")
+        day1 = week.replace("Day 3", "Day 1")
+        self.assertFails(self.g([day1]), "reply_protocol", "interview question on Day 0")
+
+    def test_the_status_step_is_the_setup_step_not_a_strategy_substep(self):
+        run = graders.load_run(self.run_dir([("coach", "x"), ("machine", v14(5, "Plan.", why="so you can film today"))], protocol="v14"), self.root)
+        r = run.replies[0]
+        self.assertEqual((r.status_kind, r.status_n, r.step), ("step", 5, "Start"))
+        self.assertIsNone(graders._step_counter(r))
+        self.assertFalse(graders._is_film_reply(run, r))          # "film" in the why is no step name
+        week = graders.load_run(self.run_dir([("coach", "x"), ("machine", V14_WEEK)], protocol="v14"), self.root).replies[0]
+        self.assertEqual((week.status_kind, week.status_n, week.status_day, week.step), ("week", 1, 3, "Hub"))
+
+    def test_setup_start_is_a_dump_prompt(self):
+        start = "Send what you have: links, old posts, files, and/or talk for 3–5 min."
+        run = graders.load_run(self.run_dir([("coach", "Start"), ("machine", v14(1, start))], protocol="v14"), self.root)
+        self.assertIs(graders.dump_prompt(run), run.replies[0])
+
+
+class V14FastDay0Tests(StrategyFirstBase):
+    def setUp(self):
+        super().setUp()
+        self.write("evals/acceptance.toml", """
+            [day0]
+            map_max_turns_en = 6
+            dig_answers_max = 0
+            strategy_max_minutes = 25
+            film_ready_max_minutes = 18
+            film_ready_warn_minutes = 12
+            first_piece_max_coach_turns_en = 4
+            session_max_turns = 10
+            session_max_minutes = 45
+            map_lines = 6
+            strategy_max_steps = 1
+            found_min_lines = 2
+            found_max_lines = 3
+            [day0_legacy]
+            dig_answers_max = 6
+            strategy_max_steps = 3
+            film_ready_max_minutes = 35
+            film_ready_warn_minutes = 0
+            first_piece_max_coach_turns_en = 0
+            [lengths]
+            [voice]
+            i23_phrase_share_min = 0.5
+            never_words = 0
+            """)
+
+    def timed(self, film_min, **meta):
+        rows = [(role, text) for role, text in self.day0(interview=(), answers=())]
+        d = self.run_dir(rows, suite="day0", **meta)
+        lines = [json.loads(l) for l in (d / "transcript.jsonl").read_text(encoding="utf-8").splitlines()]
+        for row in lines:
+            if row["role"] == "machine" and row["text"].lstrip().startswith(f"{TAG}FILM TODAY"):
+                row["t_min"] = film_min
+            elif row["role"] == "coach" and row["text"] == S_OK:
+                row["t_min"] = film_min - 0.5
+        (d / "transcript.jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in lines) + "\n", encoding="utf-8")
+        return graders.grade(d, self.root)
+
+    def test_the_first_piece_warns_above_12_minutes_and_fails_above_18(self):
+        fast = self.inv(self.timed(11.0, protocol="v14"), "day0_timing")
+        self.assertIs(fast["pass"], True, fast)
+        self.assertFalse(fast.get("warnings"))
+        self.assertEqual(fast["details"]["film_ready_active_minutes"], 11.0)
+        self.assertGreater(fast["details"]["first_piece_coach_words"], 0)
+        slow = self.inv(self.timed(15.0, protocol="v14"), "day0_timing")
+        self.assertIs(slow["pass"], True, slow)
+        self.assertTrue(any("target 12" in w for w in slow["warnings"]), slow)
+        self.assertFails(self.timed(19.0, protocol="v14"), "day0_timing", "film-ready at active minute 19 (max 18)")
+
+    def test_a_run_before_v14_keeps_the_old_budgets(self):
+        old = self.timed(30.0)
+        item = self.inv(old, "day0_timing")
+        self.assertFalse([e for e in item["evidence"] if "film-ready" in e], item)
+        self.assertFalse(item.get("warnings"))
+        self.assertEqual(graders.load_run(self.run_dir(self.day0(), suite="day0"), self.root).acceptance["day0"]["strategy_max_steps"], 3)
+        self.assertEqual(graders.load_run(self.run_dir(self.day0(), suite="day0", protocol="v14"), self.root)
+                         .acceptance["day0"]["strategy_max_steps"], 1)
+
+    def test_v14_adds_no_interview_answers_to_the_turn_budget(self):
+        v = self.inv(self.grade(self.numbered(self.day0()), suite="day0", protocol="v14"), "day0_timing")
+        self.assertNotIn("map_dig_answers", v["details"])          # dig_answers_max = 0
+        old = self.inv(self.grade(self.numbered(self.day0()), suite="day0"), "day0_timing")
+        self.assertEqual(old["details"]["map_dig_answers"], 2)     # the older order: the interview's answers come on top
 
 
 if __name__ == "__main__":

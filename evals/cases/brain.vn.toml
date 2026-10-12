@@ -76,16 +76,18 @@ input = '''[turn 1] ok em, tối chị quay
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''Brand Card v1\W{0,4}·[^\n]*\n\s*[^\w\n]*NÓI GÌ:[^\n]+\n\s*[^\w\n]*NÓI THẾ NÀO:[^\n]+\n(?:[^\n]*(?:với khách|không bao giờ):[^\n]*\n)?\s*[^\w\n]*(?:Phần còn lại là )?cho máy, không cần đọc''',
   '''Brand Card v1\W{0,4}·(?:(?!cho máy)[\s\S]){1,520}cho máy, không cần đọc''',
   '''cho máy, không cần đọc[^\n]*\n\s*```[^\n]*\n(?:(?!```)[\s\S]){1,6100}```''',
   '''(?im)^[^\w\n]*NÓI GÌ:[^\n]*lãi ảo''',
   '''(?m)^\s*version:\s*v?1\s*$''',
-  '''Lưu lại để (?:em|mình) nhớ (?:chị|bạn)[^\n]{0,12}\(30 giây\)''',
+  '''Lưu lại để (?:em|mình) nhớ (?:chị|bạn)''',
   '''(?i)Lưu vào dự án''',
   '''TIẾP →[^\n]*(?i:quay video hôm nay)[^\n]*(?i:mai (?:(?:chị|anh|bạn|em) )?mở)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)MY-BRAND-BRAIN|Brand Brain''',
   '''(?i)(có tấm card này|nghỉ ở đây|kịch bản vẫn đợi|kịch bản Tuần 1 \(8 phút\))''',
   '''(?s)Brand Card v1\W{0,4}·.*Brand Card v1\W{0,4}·''',
@@ -114,6 +116,7 @@ input = '''[turn 1] ok em, tối chị quay
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?m)^\s*version:\s*v?1\s*$''',
   '''(?m)^\s*date:\s*20\d\d-\d\d-\d\d\b''',
   '''(?m)^\s*edition:\s*vn\b''',
@@ -154,6 +157,7 @@ regex = [
   '''(?im)^\s*dialect:\s*(north|bắc|miền bắc)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*(big_domino|pillars?|b_ids|b[1-7]|focus_scores?|locks?|edge|rungs?)\s*:''',
   '''(?i)big[ _]?domino''',
   '''\bB[1-7]\b''',
@@ -181,11 +185,13 @@ input = '''[turn 1] ok
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''Brand Card v1\W{0,4}·[^\n]*\n\s*[^\w\n]*NÓI GÌ:[^\n]+\n\s*[^\w\n]*NÓI THẾ NÀO:[^\n]+\n(?:[^\n]*(?:với khách|không bao giờ):[^\n]*\n)?\s*[^\w\n]*(?:Phần còn lại là )?cho máy, không cần đọc''',
   '''Brand Card v1\W{0,4}·(?:(?!cho máy)[\s\S]){1,520}cho máy, không cần đọc''',
   '''(?im)^[^\w\n]*NÓI GÌ:[^\n]*(?i:g[ồo]ng l[ãa]i)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''Brand Card v1\W{0,4}·(?:(?!cho máy)[\s\S])*?\b[VSPXKIBOR]-\d+\b''',
   '''Brand Card v1\W{0,4}·(?:(?!cho máy)[\s\S])*?(?i:(?<!\w)trụ\s*[1-9])''',
   '''Brand Card v1\W{0,4}·(?:(?!cho máy)[\s\S])*?(?i:pillar|domino|\bB[1-7]\b|focus score|edge score|chấm điểm|(?<!\w)điểm\s*\d)''',
@@ -213,6 +219,7 @@ input = '''[turn 1] ok
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?m)^\s*who:\s*\S''',
   '''(?m)^\s*promise:\s*\S''',
   '''(?m)^\s*method:\s*\S''',
@@ -222,6 +229,7 @@ regex = [
   '''cho máy, không cần đọc[^\n]*\n\s*```[^\n]*\n(?:(?!```)[\s\S]){1,6100}```''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^\s*passages:(?:[^\n|]*\|){5}''',
   '''(?m)^\s*client_words:(?:[^\n|]*\|){8}''',
   '''(?m)^\s*stories:(?:[^\n|]*\|){5}''',
@@ -345,12 +353,14 @@ input = '''[turn 1] ok em, tối anh quay ở công trình
 contains = ["Cloud của tôi"]
 not_contains = ["dự án", "Lưu vào dự án"]
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){3}(?:(?!```)[\s\S])*?Brand Card v1\W{0,4}·''',
   '''(?i)cho máy, không cần đọc''',
   '''(?m)^\s*pronouns:\s*(anh\s*[–-]\s*em|em\s*[–-]\s*anh)''',
-  '''Lưu lại để (?:em|mình) nhớ (?:anh|bạn)[^\n]{0,12}\(30 giây\)''',
+  '''Lưu lại để (?:em|mình) nhớ (?:anh|bạn)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\A(?:(?!```)[\s\S])*?Brand Card v1\W{0,4}·''',
   '''(?s)Brand Card v1\W{0,4}·.*Brand Card v1\W{0,4}·''',
   '''(?i)(muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
@@ -381,7 +391,7 @@ regex = [
   '''(?m)^\s*pronouns:\s*(chị\s*[–-]\s*em|em\s*[–-]\s*chị)''',
   '''(?m)^\s*version:\s*v?\d''',
   '''(?i)(nhấn giữ|đổi tên)''',
-  '''Lưu lại để (?:em|mình) nhớ (?:chị|bạn)[^\n]{0,12}\(30 giây\)''',
+  '''Lưu lại để (?:em|mình) nhớ (?:chị|bạn)''',
 ]
 not_regex = [
   '''(?i)(máy tính|tải (file|về)|đính kèm)''',
@@ -679,12 +689,14 @@ input = '''[turn 1] ok, tối mình quay
 contains = ["(chưa nghe thì mình đoán, gõ một chữ là đổi)"]
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?m)^\s*offer_status:\s*(founding|none)\s*$''',
   '''(?m)^\s*proof_ready:\s*no\s*$''',
   '''(?m)^\s*pronouns:\s*(mình\s*[–-]\s*bạn|bạn\s*[–-]\s*mình)''',
   '''(?m)^\s*list_size:\s*(?:ask|0)\b''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\d[\d.,]*\s*(đ|k|nghìn|ngàn|tr|triệu)(?!\w)''',
   '''(?m)^\s*proof:\s*\S*P-\d''',
   '''(?im)^(?!.*(không|chưa|hông)).*(nhỏ bạn|con bạn)[^\n]{0,60}(hết đau|3 tuần|4 viên)''',
@@ -709,6 +721,7 @@ input = '''[turn 1] ok
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^\s*side_door:[^\n]*(dạy sale|đội sale|lớp sale)''',
   '''(?m)^\s*pronouns:\s*(anh\s*[–-]\s*em|em\s*[–-]\s*anh)''',
   '''(?im)^\s*dialect:\s*(south|nam|miền nam)''',
@@ -717,6 +730,7 @@ regex = [
   '''(?im)^\s*address_1to1:[^\n]*(Dạ|em\s*[–-]\s*anh chị|em\s*[–-]\s*anh)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*not_now:(?:[^|\n]*\|){7}''',
   '''(?im)^\s*keyword_alternates:[^\n]*(bảo hiểm|căn hộ|đầu tư)''',
   '''(?im)^[^\w\n]*NÓI GÌ:[^\n]*(view sông|lời gấp đôi|sinh lời)''',
@@ -843,7 +857,7 @@ contains = ["Cloud của tôi"]
 not_contains = ["dự án"]
 regex = [
   '''Brand Card v1\W{0,4}·[^\n]*\n\s*[^\w\n]*NÓI GÌ:[^\n]+\n\s*[^\w\n]*NÓI THẾ NÀO:[^\n]+\n(?:[^\n]*(?:với khách|không bao giờ):[^\n]*\n)?\s*[^\w\n]*(?:Phần còn lại là )?cho máy, không cần đọc''',
-  '''Lưu lại để (?:em|mình) nhớ (?:anh|bạn)[^\n]{0,12}\(30 giây\)''',
+  '''Lưu lại để (?:em|mình) nhớ (?:anh|bạn)''',
   '''TIẾP →[^\n]*(?i:tiếp)''',
 ]
 not_regex = [
@@ -901,11 +915,13 @@ input = '''[turn 1] ok em, tối chị quay
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)từ giờ (em|mình) không dùng ["“]bỉm sữa["”] nữa''',
   '''(?im)^\s*never_say:[^\n]*bỉm sữa''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:\n[^\n]*)?không bao giờ:\s*["“]?bỉm sữa''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?is)không dùng ["“]bỉm sữa["”] nữa\.(?:(?!không bao giờ:|cho máy)[\s\S])*?bỉm sữa''',
   '''(?i)(chị (có )?chắc|tại sao không)[^\n]*\?''',
 ]
@@ -929,12 +945,14 @@ input = '''[turn 1] sửa dòng 4: thẳng thôi em, đừng ghi ấm áp gì c�
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^\s*tone:[^\n]*thẳng''',
   '''(?im)^\s*phrases:[^\n]*lãi mới là để tiêu''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*thẳng''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:\n[^\n]*)?lãi mới là để tiêu''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*tone:[^\n]*ấm áp''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*ấm áp''',
   '''(?s)(?:OK hay sửa một dòng\?[\s\S]*?){2}''',
@@ -958,6 +976,7 @@ input = '''[turn 1] ok em, tối chị quay
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^\s*tone:[^\n]*(thẳng|gần gũi|khiêm tốn|mộc|thật)''',
   '''(?im)^\s*rhythm:[^\n]*(ngắn|cảnh|số|dòng|kể)''',
   '''(?im)^\s*phrases:(?:[^\n|]*\|){2}''',
@@ -973,6 +992,7 @@ regex = [
   '''(?im)^\s*written_vs_spoken:\s*\S''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*audience_address:[^\n]*em\s*[–-]\s*chị''',
   '''(?im)^\s*(tone|rhythm):[^\n]*(truyền cảm hứng|cuốn hút|chuyên nghiệp|tuyệt vời|lôi cuốn)''',
   '''(?im)^\s*(phrases|openers_closers):[^\n]*(nâng tầm|bứt phá|hành trình|ra đơn ầm ầm|tự do tài chính)''',
@@ -999,15 +1019,17 @@ input = '''[turn 1] Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày th
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?s)ĐIỀU KHÁCH NHỚ:(?:(?!TIẾP →).)*QUAY HÔM NAY''',
   '''QUAY HÔM NAY(?:[\s\S]*?```[\s\S]*?```){4}[\s\S]*?Brand Card v1\W{0,4}·''',
-  '''Lưu lại để (?:em|mình) nhớ (?:anh|bạn)[^\n]{0,12}\(30 giây\)''',
+  '''Lưu lại để (?:em|mình) nhớ (?:anh|bạn)''',
   '''(?i)Add text content''',
   '''(?m)^\s*owned_channel:\s*(both|email|zalo)\b''',
   '''(?m)^\s*list_size:\s*\d''',
   '''(?im)^\s*audience_address:[^\n]*tôi\s*[–-]\s*anh chị''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)Brand Card v1\W{0,4}·[\s\S]*^[^\w\n]*QUAY HÔM NAY\b''',
   '''(?s)Brand Card v1\W{0,4}·.*Brand Card v1\W{0,4}·''',
   '''(?i)(muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',

@@ -127,7 +127,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "QUAY HÔM NAY alone after the strategy's OK has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3–5 ý (kịch bản đủ câu 500–800 chữ, retest v13), câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
-context = "Day 0, about minute 18, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: past ~1.200 tiếng the soft cut came after chunk 2 and, with nothing missing (her buyers' words 'bán thì đắt mà cuối tháng không thấy tiền đâu', Ngân's consented result, the offer), ended '… Còn chuyện nào thì kể luôn, không thì gõ 'xong'.'; she told one more story (chunk 3) and typed 'xong'. The interview is done and the strategy came in its pre-filled steps (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang; offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ), each OK'd; the last one ended '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: gạch đầu dòng (chunk 3: 'em cho chị mấy gạch đầu dòng')."
+context = "Day 0, about minute 18, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: past ~1.200 tiếng the soft cut came after chunk 2 and, with nothing missing (her buyers' words 'bán thì đắt mà cuối tháng không thấy tiền đâu', Ngân's consented result, the offer), ended '… Còn chuyện nào thì kể luôn, không thì gõ 'xong'.'; she told one more story (chunk 3) and typed 'xong'. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang; offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ); the last one ended '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: gạch đầu dòng (chunk 3: 'em cho chị mấy gạch đầu dòng')."
 input = '''ok em. Tối nay chị quay luôn, em đưa chị cái video đi'''
 regex = [
   '''QUAY HÔM NAY''',
@@ -173,7 +173,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "floor"]
 title = "Compact mode: QUAY HÔM NAY alone after the strategy's OK is complete with no method file, prints nothing under it, never asks for the file, carries no client result"
-context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 18, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the best-result guess ('… không thì mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the interview's last question was what she sells (nothing yet). The interview is done and the strategy came in its pre-filled steps (dân văn phòng 25–35 ngồi máy tính cả ngày; TỪ KHOÁ: CỨNG ĐƠ; quà = 3 động tác 5 phút tại bàn; no offer yet: cold start, 0 online clients), each OK'd; the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: thẻ ý (the default)."
+context = "S0 compact mode: the instruction block only, no method file in the project. Day 0, about minute 18, ChatGPT Free on her iPhone, at the studio after the 7pm class. Pair bạn–mình (she refused 'chị'); her audience voice mình – mấy bạn; Southern. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the best-result guess ('… không thì mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), which she confirmed; the interview's last question was what she sells (nothing yet). The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (dân văn phòng 25–35 ngồi máy tính cả ngày; TỪ KHOÁ: CỨNG ĐƠ; quà = 3 động tác 5 phút tại bàn; no offer yet: cold start, 0 online clients); the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: thẻ ý (the default)."
 input = '''ok luôn. tối nay mình quay'''
 regex = [
   '''QUAY HÔM NAY''',
@@ -218,7 +218,7 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "Undecided audience pair: QUAY HÔM NAY alone uses one picked pair, never asks; the quiet ask and 'Quay luôn bây giờ…' are statements"
-context = "Day 0, about minute 18, ChatGPT Plus; he dumped from the iPhone app and reads on the laptop. Pair anh–em; Southern. His audience pair is undecided (persona: 'mình – bạn' hay 'anh – em'; he picks at random if the machine proposes nothing). Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bảo hiểm, môi giới căn hộ, dạy sale); he answered it in the interview. The interview is done and the strategy came in its pre-filled steps (bridge buyer = vợ chồng trẻ mua căn hộ đầu tiên; TỪ KHOÁ: GỒNG LÃI; quà = bảng tính ngược 1 trang; offer = buổi tính trước khi cọc: 0đ, he lives on commission and says so), each OK'd; the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. His OK in this turn brings ONE reply: QUAY HÔM NAY alone. The audience pair is picked, never asked; it shows on the card's NÓI THẾ NÀO line ('với khách: …') after this, and in the script itself. Delivery: thẻ ý."
+context = "Day 0, about minute 18, ChatGPT Plus; he dumped from the iPhone app and reads on the laptop. Pair anh–em; Southern. His audience pair is undecided (persona: 'mình – bạn' hay 'anh – em'; he picks at random if the machine proposes nothing). Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bảo hiểm, môi giới căn hộ, dạy sale); he answered it in the interview. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (bridge buyer = vợ chồng trẻ mua căn hộ đầu tiên; TỪ KHOÁ: GỒNG LÃI; quà = bảng tính ngược 1 trang; offer = buổi tính trước khi cọc: 0đ, he lives on commission and says so); the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. His OK in this turn brings ONE reply: QUAY HÔM NAY alone. The audience pair is picked, never asked; it shows on the card's NÓI THẾ NÀO line ('với khách: …') after this, and in the script itself. Delivery: thẻ ý."
 input = '''ok em. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11. Lẹ đi em'''
 regex = [
   '''QUAY HÔM NAY''',
@@ -256,7 +256,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
 title = "On site: QUAY HÔM NAY alone after the strategy's OK is a walk-around beat card on his 2019 story, never 'sit and talk to the camera', no 'không phát sinh', nothing under it"
-context = "Day 0, about minute 19, ChatGPT Free on his old Samsung, standing in a client's kitchen in Thanh Khê at lunch. Pair anh–em; Central (Quảng) voice; public posts xưng Đức / tụi em, gọi anh chị. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bếp trọn gói, nội thất homestay, đóng tủ cho công ty thiết kế); he answered it in the interview. The interview is done and the strategy came in its pre-filled steps (chủ nhà phố và căn hộ ở Đà Nẵng sợ phát sinh khi sửa bếp; TỪ KHOÁ: PHÁT SINH; quà = danh sách 7 chỗ hay phát sinh khi sửa bếp), each OK'd; the last one ended '… chạy thử 4 tuần nghe. OK hay sửa một dòng?'. His OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: thẻ ý (persona behaviour: 'Đừng bắt anh ngồi nói trước camera')."
+context = "Day 0, about minute 19, ChatGPT Free on his old Samsung, standing in a client's kitchen in Thanh Khê at lunch. Pair anh–em; Central (Quảng) voice; public posts xưng Đức / tụi em, gọi anh chị. Past ~1.200 tiếng the soft cut came after dump chunk 2 with the multi-income guess (setup.multi_income: bếp trọn gói, nội thất homestay, đóng tủ cho công ty thiết kế); he answered it in the interview. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (chủ nhà phố và căn hộ ở Đà Nẵng sợ phát sinh khi sửa bếp; TỪ KHOÁ: PHÁT SINH; quà = danh sách 7 chỗ hay phát sinh khi sửa bếp); the last one ended '… chạy thử 4 tuần nghe. OK hay sửa một dòng?'. His OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: thẻ ý (persona behaviour: 'Đừng bắt anh ngồi nói trước camera')."
 input = '''ok em. nói ngắn thôi em, anh đang ở công trình'''
 regex = [
   '''QUAY HÔM NAY''',
@@ -1386,11 +1386,13 @@ context = "Day 0, about minute 18, Door A on ChatGPT Plus. Pair chị–em; publ
 input = """[turn 1] xong rồi em. Tối nay chị quay luôn, em đưa chị cái video đi
 [turn 2] tại sao?"""
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)[^\n]*dẫn tới''',
   '''(?i)(?:28 Tết|2019|(?<!\w)kho(?!\w)|cộng sổ|(?<!\w)vở(?!\w)|lãi ảo|Ngân)''',
   '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?<!\w)(?:bạn|em) Trang(?!\w)|(?<!\w)anh Khải(?!\w)|50 triệu|gấp 3|(?<![\d,.])1 tỷ''',
   '''(?i)(?<!\w)(?:nha|nè|hông|tui)(?!\w)''',
   '''(?m)^\W*✓ Đã kiểm:''',

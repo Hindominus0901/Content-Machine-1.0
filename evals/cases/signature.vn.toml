@@ -388,7 +388,7 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S0", "S1", "floor"]
 title = "Belief chain stays hidden: 'TRỤ CỘT NỘI DUNG:' in plain words, no Big Domino, no B1-B7, no bare 'trụ'"
-context = "Day 0, Door A (ChatGPT Plus), pair anh–em. The interview's last question was the multi-income line; this is his answer, so the strategy follows in its pre-filled steps; the input OKs each."
+context = "Day 0, Door A (ChatGPT Plus), pair anh–em. The interview's last question was the multi-income line; this is his answer, so the strategy follows in ONE pre-filled reply; the input OKs it."
 input = '''ừ đúng rồi em, vợ chồng trẻ. Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11.
 [turn 2] ok
 [turn 3] ok'''
@@ -481,7 +481,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "QUAY HÔM NAY alone after the strategy's OK carries the keyword in its words and the comment ask with the 'nhẹ' option; no ✓ Đã kiểm line under it"
-context = "Day 0, pair bạn–mình, audience mình – mấy bạn. The interview's last question was what she sells (nothing yet). The interview is done and the strategy came in its pre-filled steps (TỪ KHOÁ: CỨNG ĐƠ), each OK'd; the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone."
+context = "Day 0, pair bạn–mình, audience mình – mấy bạn. The interview's last question was what she sells (nothing yet). The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (TỪ KHOÁ: CỨNG ĐƠ); the last one ended '… chạy thử 4 tuần nha. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone."
 input = '''ok luôn'''
 regex = [
   '''(?m)QUAY HÔM NAY[\s\S]*^(?![^\n]*(?i:comment|nhắn riêng))[^\n]*(?i:c(?:ứ|u)ng đ(?:ơ|o))''',
@@ -558,10 +558,12 @@ context = "Day 0, pair bạn–mình, audience mình – mấy bạn. Her last m
 input = """[turn 1] chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi
 [turn 2] tại sao vậy?"""
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
   '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\b(?:registry|echo|K-\d+)\b''',
   '''(?i)chữa cháy[^\n]{0,20}(?:là )?từ kh(?:oá|óa)''',
   '''(?m)^\W*✓ Đã kiểm:''',

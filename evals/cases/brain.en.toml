@@ -60,14 +60,16 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''Brand Card v1\W{0,4}·[^\n]*\n\s*\W*WHAT YOU SAY:[^\n]+\n\s*\W*HOW YOU SAY IT:[^\n]+\n(?:[^\n]*\b(?:to them|never):[^\n]*\n)?\s*\W*(?:The rest is )?for the machine, no need to read''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S]){1,520}for the machine, no need to read''',
   '''for the machine, no need to read[^\n]*\n\s*```[^\n]*\n(?:(?!```)[\s\S]){1,5300}```''',
   '''(?m)^\s*version:\s*1\b''',
-  '''Save this so I remember you \(30 s\)\.''',
+  '''Save this so I remember you\.''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)MY-BRAND-BRAIN''',
   '''(?i)\bBrand Brain\b''',
   '''(?i)that(?:'|’)s today done''',
@@ -96,6 +98,7 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?m)^\s*date:\s*20\d\d-\d\d-\d\d\b''',
   '''(?m)^\s*edition:\s*en\b''',
   '''(?m)^\s*pack_version:\s*\S''',
@@ -145,6 +148,7 @@ regex = [
   '''(?m)^\s*not_now:\s*\S''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^\s*(pronouns|dialect):\s*\S''',
   '''(?im)^\s*(big_domino|pillars?|b_ids|b[1-7]|focus_scores?|locks?|edge|rungs?|paid|narrow|energy)\s*:''',
 ]
@@ -167,6 +171,7 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\W*WHAT YOU SAY:[^\n]*·[^\n]*·[^\n]*\bchapter\b''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*·''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*(?:\n[^\n]*)?\bto them:\s*["“]?you\b''',
@@ -175,6 +180,7 @@ regex = [
   '''(?m)^\s*not_now:\s*\S''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?\$\d''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?(?i:\bnumbers fri|\btalk (mon|tue|wed|thu|fri|sat|sun)\w*\s*·)''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?(?i:\bnot now\b|\bparked\b|\bside door\b)''',
@@ -263,6 +269,7 @@ input = '''[turn 1] yep. filming it in the garage tomorrow before work
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?m)^\s*offer_status:\s*(none|founding)\b''',
   '''(?m)^\s*proof_ready:\s*no\b''',
   '''(?m)^\s*list_size:\s*(?:0|ask)\b''',
@@ -272,6 +279,7 @@ regex = [
   '''(?m)^\s*talk_day:\s*(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\b(Owen|Lily|Jess|Tommy)\b''',
   '''Brand Card v1\W{0,4}·[\s\S]*?\b(22|200)\b''',
   '''Brand Card v1\W{0,4}·[\s\S]*?(?i:couple hundred)''',
@@ -299,11 +307,13 @@ input = '''[turn 1] yep. filming it in the garage tomorrow before work
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?m)^\s*date:\s*2026-10-11\b''',
   '''(?m)^\s*plan_start:\s*2026-10-11\b''',
   '''(?ms)^\s*talk_day:\s*(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b.*?^\s*week:[^\n]*\b\1''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^\s*trial_ends:''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?(?i:\bnumbers fri)''',
 ]
@@ -326,6 +336,7 @@ input = '''[turn 1] ok. I'll film at my desk tomorrow at 7.
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?m)^\s*platform:\s*linkedin\b''',
   '''(?m)^\s*owned_channel:\s*email\b''',
   '''(?m)^\s*list_size:\s*380\b''',
@@ -337,6 +348,7 @@ regex = [
   '''(?im)^\W*WHAT YOU SAY:[^\n]*record year''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''Brand Card v1\W{0,4}·[\s\S]*?(?i:\bformer CFO\b|\bBig 4\b|\bMBA\b)''',
   '''\bRaj\b''',
   '''(?i)85,000''',
@@ -362,6 +374,7 @@ input = '''[turn 1] I'm not filming today. I'll post the words on LinkedIn tonig
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?m)^\s*cta_style:\s*quiet\b''',
   '''(?m)^\s*list_size:\s*900\b''',
   '''(?m)^\s*owned_channel:\s*email\b''',
@@ -369,6 +382,7 @@ regex = [
   '''(?m)^\s*talk_day:\s*(Mon|Tue|Wed|Sat|Sun)\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^\s*side_door:\s*[^\s\[]''',
   '''(?m)^\s*(pronouns|dialect):\s*\S''',
   '''\bMargaret\b''',
@@ -396,10 +410,12 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\s*side_door:[^\n]*\bresume''',
   '''(?im)^\s*not_now:[^\n]*\b(life coach|divorce|empty nest|menopause|401|pension)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*who:[^\n]*\b(20s|twenty|young|UX)\b''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?(?i:\bresume reviews?\b)''',
 ]
@@ -422,10 +438,12 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\s*phrases:[^\n]*(carrot cake|coffee before resume|too old|too vague|anything with a pulse|feeding the portal|nobody tells you)''',
   '''(?im)^\s*passages:[^\n]*(carrot cake|4B|63 applications|different logo|one more chapter|keepers list)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*(phrases|passages|openers_closers):[^\n]*\b(reinvent|pivot|second act|dream job|journey|empower|transform|unlock)''',
   '''(?im)^\s*(phrases|passages):[^\n]*\bdesign er\b''',
 ]
@@ -884,6 +902,7 @@ input = '''[turn 1] I'm not filming today. I'll post the words on LinkedIn tonig
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''Brand Card v1\W{0,4}·[^\n]*\n\s*\W*WHAT YOU SAY:[^\n]+\n\s*\W*HOW YOU SAY IT:[^\n]+\n(?:[^\n]*\b(?:to them|never):[^\n]*\n)?\s*\W*(?:The rest is )?for the machine, no need to read''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S]){1,520}for the machine, no need to read''',
   '''(?im)^\W*WHAT YOU SAY:[^\n]*\bbadge\b''',
@@ -893,6 +912,7 @@ regex = [
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*(?:\n[^\n]*)?\bto them:\s*["“]?you\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\W*HOW YOU SAY IT:(?:(?!\bnever\b)[^\n])*\b(ladies|girls|y(?:'|’)all|guys)\b''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*\b(authentic|inspiring|empowering|powerful|amazing|engaging|eloquent)\b''',
   '''Brand Card v1\W{0,4}·(?:(?!for the machine)[\s\S])*?(?i:\$\d|\bnumbers fri|\bnot now\b)''',
@@ -917,6 +937,7 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\s*tone:[^\n]*\b(plain|dry|warm|direct|blunt|practical)\b''',
   '''(?im)^\s*rhythm:[^\n]*\b(short|story|fragments?|lines?|step)\b''',
   '''(?im)^\s*phrases:(?:[^\n|]*\|){2}''',
@@ -928,6 +949,7 @@ regex = [
   '''(?im)^\s*written_vs_spoken:\s*\S''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*audience_address:(?:(?!\bnever\b)[^\n])*\b(ladies|girls|gals|y(?:'|’)all|guys|Dana)\b''',
   '''(?im)^\s*(tone|rhythm):[^\n]*\b(authentic|inspiring|empowering|powerful|amazing|engaging|charismatic)\b''',
   '''(?im)^\s*(phrases|openers_closers):[^\n]*\b(unlock your potential|reinvent\w*|pivot|journey|hustle|level up|second act)''',
@@ -953,11 +975,13 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)Got it: ["“]game-changer["”] is out of your voice from now on\.''',
   '''(?im)^\s*never_say:[^\n]*game-changer''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*(?:\n[^\n]*)?\bnever:\s*["“]?game-changer''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?is)out of your voice from now on\.(?:(?!\bnever:|for the machine)[\s\S])*?\bgame[- ]changer''',
   '''(?i)\b(are you sure|why not)\b[^\n]*\?''',
 ]
@@ -982,12 +1006,14 @@ input = '''[turn 1] change 4: blunt, not warm and fuzzy. and use "I'm not going 
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\s*tone:[^\n]*\bblunt\b''',
   '''(?im)^\s*phrases:[^\n]*blow smoke''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bblunt\b''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*(?:\n[^\n]*)?blow smoke''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*tone:[^\n]*\bfuzzy\b''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bfuzzy\b''',
   '''(?i)We(?:'|’)ll run this for 4 weeks[\s\S]*We(?:'|’)ll run this for 4 weeks[\s\S]*We(?:'|’)ll run this for 4 weeks''',
@@ -1011,7 +1037,7 @@ contains = []
 not_contains = []
 regex = [
   '''Brand Card v1\W{0,4}·[^\n]*\n\s*\W*WHAT YOU SAY:[^\n]+\n\s*\W*HOW YOU SAY IT:[^\n]+\n(?:[^\n]*\b(?:to them|never):[^\n]*\n)?\s*\W*(?:The rest is )?for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)\.''',
+  '''Save this so I remember you\.''',
   '''NEXT →[^\n]*(?i:\bnext\b)''',
 ]
 not_regex = [
@@ -1041,11 +1067,13 @@ input = '''[turn 1] Reset is the one I want to grow. full projects pay the 5 sal
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i:film today)(?:[\s\S]*?```[\s\S]*?```){4}[\s\S]*?Brand Card v1\W{0,4}·''',
-  '''Save this so I remember you \(30 s\)\.''',
+  '''Save this so I remember you\.''',
   '''(?s)KNOWN FOR:(?:(?!NEXT →).)*FILM TODAY''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)Brand Card v1\W{0,4}·[\s\S]*^\W*FILM TODAY\b''',
   '''(?s)Brand Card v1\W{0,4}·.*Brand Card v1\W{0,4}·''',
   '''(?i)\b(want|ready for|shall I (do|write)) (your |the )?week 1\b[^\n]*\?''',

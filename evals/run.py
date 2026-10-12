@@ -12,7 +12,7 @@ the agent writes transcript.jsonl and notes.md there, and `grade` checks the tra
 
 Run folder (graders.py reads transcript.jsonl and meta.json; keep both formats):
 
-    meta.json          persona, edition, lane, build_sha, suite, repeat (+ case for the cases suite); "edits":
+    meta.json          persona, edition, lane, build_sha, suite, repeat, protocol "v14" (+ case for the cases suite); "edits":
                        the simulator's log of leak removals after the first grade (turn, field, before, after, reason)
     packet/README.md   the protocol: who plays which side, the leakage rule, what to write back
     packet/MACHINE.md  the machine side: the lane, and the kit files it runs on (in packet/kit/)
@@ -68,6 +68,7 @@ import zipfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+META_PROTOCOL = "v14"        # meta.json "protocol": the reply protocol and fast Day 0 the graders read (acceptance [day0], not [day0_legacy])
 DEFAULT_ROOT = Path(os.environ.get("CM_ROOT", HERE.parent))
 sys.path.insert(0, str(HERE.parent / "tools"))
 import cmlib  # noqa: E402
@@ -319,7 +320,7 @@ WEB_ON = (
     "never touch the coach's computer or apps. A page that will not open is \"unread\" on the Map, not guessed. Keep "
     "a log as you go and put it in notes.md under \"## Research log\": each query, each page opened (URL, place, "
     "month, role) and the lines kept, so the reviewer can re-fetch them. Do not search before the coach's first send (the kit starts the research after it). "
-    "**The pass starts after the coach's first send** (Day 0 is strategy first: the dump, the interview, then the strategy; "
+    "**The pass starts after the coach's first send** (v14 Day 0: the dump, then the strategy in one reply; "
     "the pass runs in the background from the first send and feeds the strategy's WHAT I FOUND lines, each with its place "
     "and month). "
     "**Run the research pass as if by a separate agent that sees only the transcript so far** (the coach's turns and "
@@ -355,41 +356,31 @@ answer keys for the graders) and never let them shape a turn.
 ## Script
 
 1. Open the project chat with exactly: `{start}`.
-2. Dictate the three `## Dump chunk` sections of `answers.md` verbatim, in order, one coach turn per send, when
-   the machine asks for the dump. A chunk over about 400 words (VN tiếng) goes in two sends, split at a
-   paragraph, as the dump prompt asks. Chunk 1's first send ends by about 300 words (VN tiếng), about 3 minutes
-   of talk, at a paragraph or sentence end, as the dump prompt says "every 2–3 minutes"; the rest of chunk 1 is
-   the next send (P16). When the dump prompt invites posts you've written, paste the body of
-   `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) as one more turn, after chunk 1
-   or 2, the way this coach would. If the dump prompt asks where you post and about your list, and the
-   persona's answer is in a later chunk, add it as one sentence at the end of chunk 1 (VP-2). Then say you are
-   done in your own words ("done", "ok that's it"). The kit cuts the dump softly past about {cut} of your
-   talk, your pasted posts not counted (acceptance.toml [day0]). If the machine says the dump is enough, or asks
-   you to wrap up, say done there and skip what is not yet dictated (the machine then asks only what it is
-   missing).
-3. Day 0 is strategy first: after the dump the machine INTERVIEWS you about your side (who you serve and who not,
-   the offer with its price and delivery, a client result you would share, where clients find you, 2-3 channels in
-   your field you like or compete with, your goal, what your field gets wrong; the kit's start-block step 3, VN step
-   4), at most 6 questions, one a reply. Your hours a week are no interview question: the strategy offers them as
-   A/B/C. Near the channels question it may ask once how it may read the web for you (the research access).
-   Answer only what it asks, one answer per question, from `## Answer bank`, in the persona's style. Say "skip"
-   when the answer bank has nothing and the behaviour fits. If it asks what your dump already said, answer in one
-   short line and note the re-ask in notes.md. "enough" / "đủ rồi" stops the interview: say it only if
-   `## Behaviour` has you lose patience.
+2. The machine's reply to `{start}` opens setup step 1 ("Send what you have: links, old posts, files, and/or talk for
+   3–5 min"). Send what this coach would: the first `## Dump chunk` of `answers.md` verbatim as one talk of 3–5 minutes
+   (about 450–750 words, VN tiếng; a chunk over about 400 words goes in two sends, split at a paragraph), and paste the
+   body of `written-posts.md` `## W1` and `## W2` (verbatim, without their headings) if it asks for posts you've
+   written. If it asks where you post and about your list, add the answer as one sentence at the end. Later chunks only
+   when the machine asks for more. Then say you are done in your own words ("done", "ok that's it"). The kit cuts the
+   dump softly past about {cut} of your talk, your pasted posts not counted (acceptance.toml [day0]). If the machine says
+   the dump is enough, say done there.
+3. v14 Day 0 is fast and has NO interview: after "done" the machine proposes your STRATEGY in ONE reply (setup step 3):
+   your positioning, content pillars, mix and system pre-filled, then at most three A/B/C picks (who, offer, hours a
+   week) with the recommended one marked. Answer them in one short turn ("ok" takes every recommended one), or pick
+   one letter and fix only the line that is wrong for this coach. Never answer a question about your side that is not
+   one of those picks; a machine that interviews you on Day 0 is a kit break to note in notes.md.
 4. Follow `## Behaviour`: impatience, pushback lines word for word when their trigger happens, and quit
    the moment a quit trigger in `persona.toml` or `## Behaviour` happens: write the quit line as the last
    coach turn with `"quit": true`, and stop.
-5. The machine then proposes your STRATEGY in up to 3 replies and no piece (the positioning, 3-5 content pillars, the
-   attract / trust / convert mix, your content system with your hours a week as A/B/C, your word, what its research
-   found), each step pre-filled with its pick marked recommended. OK each step with a short "ok" (that takes the
-   recommended option) unless something on it is wrong for this coach, then fix only that line. Only after the
-   last step's OK does it print FILM TODAY, alone in its reply, one script on one idea; a piece that comes before
-   your OK is a kit break to note.
+5. After your OK on the strategy the machine prints TODAY'S PIECE (setup step 4: FILM TODAY, alone in its reply, one script on
+   one idea) about 12 minutes after you started. A piece before your OK is a kit break to note.
 6. After FILM TODAY, say "next" as if you had filmed it (the NEXT line says "say 'next' once filmed"; answer its one
    "Needs you" line in the same turn if the persona has a gift). On that 'next' the machine prints the Brand Card,
    its save line and the WEEK 1 table (its count follows your hours); the hub question (Notion, Sheet or HUB.md)
    comes at the first 'next' of a later day, never on Day 0. Say "next" once more for the first Week-1 piece, then
    stop; or stop when the coach quits, or after {max_turns} coach turns.
+7. Every machine reply opens with two status lines ("◆ Step n/10 · … · why: …", then "Have: … · Missing: …") and ends on a
+   NEXT line: the graders read them (reply_protocol). Keep writing your turns as the coach; never fix the machine's format.
 
 Time: model `t_min` from dictation (about 130 words a minute), typing (about 30 words a minute on a phone,
 40 on a laptop), reading (about 200 words a minute) and the persona's time away (`away_min`). A pasted post
@@ -520,7 +511,7 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
             app, plan = persona_app(pdir)
             cut = int(accept.get(f"dump_cut_words_{edition}", graders.DUMP_CUT_WORDS))     # review retest-vg4-g5 P15
             turns = int(accept.get(f"session_max_turns_{edition}", accept.get("session_max_turns", 10)))   # vg5-g6 G43
-            interview = int(accept.get("dig_answers_max", 0))     # the interview's answers come on top (strategy first)
+            interview = int(accept.get("dig_answers_max", 0))     # v14: 0, no interview on Day 0 (day0_legacy keeps 6)
             coach = COACH_DAY0.format(persona=pid, edition=edition, pdir=rel(pdir, root),
                                       start=strings.get("cmd.start", "Start"),
                                       cut=f"{cut:,} {'tiếng' if edition == 'vn' else 'words'}",
@@ -529,7 +520,7 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
             for n in range(1, repeat + 1):
                 rid = run_id(suite, edition, pid, lane, n, tag, web=web, plugin=plugin)
                 meta = {"persona": f"{edition}/{pid}", "edition": edition, "lane": lane, "build_sha": sha,
-                        "suite": suite, "repeat": n, **({"app": app} if app else {}),
+                        "suite": suite, "repeat": n, "protocol": META_PROTOCOL, **({"app": app} if app else {}),
                         **({"web": True} if web else {}), **({"plugin": True} if plugin else {})}
                 made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, persona_day0(pdir) or today))
         return made
@@ -558,7 +549,8 @@ def make_packets(root: Path, suite: str, edition: str, lane: str, persona_ids: l
         for n in range(1, repeat + 1):
             rid = run_id(suite, edition, pid, lane, n, tag, case=case["id"], web=web, plugin=plugin)
             meta = {"persona": f"{edition}/{pid}" if pid else "", "edition": edition, "lane": lane,
-                    "build_sha": sha, "suite": suite, "repeat": n, "case": case["id"], **({"app": app} if app else {}),
+                    "build_sha": sha, "suite": suite, "repeat": n, "protocol": META_PROTOCOL, "case": case["id"],
+                    **({"app": app} if app else {}),
                     **({"web": True} if web else {}), **({"plugin": True} if plugin else {})}
             made.append(write_packet(root, out_root, rid, meta, kit, lane, coach, today))
     if not made:

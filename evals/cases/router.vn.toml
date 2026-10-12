@@ -1813,7 +1813,7 @@ regex = [
   '''(?m)^\W*NÓI GÌ:''',
   '''(?m)^\W*NÓI THẾ NÀO:''',
   '''Phần còn lại là cho máy, không cần đọc''',
-  '''(?i)lưu lại để (?:em|mình) nhớ (?:anh|bạn) \(30 giây\)''',
+  '''(?i)lưu lại để (?:em|mình) nhớ (?:anh|bạn)''',
   '''(?i)Add text content''',
   '''TIẾP →[^\n]*tiếp[^\n]*\s*\Z''',
 ]

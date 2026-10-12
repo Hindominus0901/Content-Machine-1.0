@@ -85,10 +85,12 @@ context = "Day 0 continued, persona default (ChatGPT Free). FILM TODAY was deliv
 input = """[turn 1] ok I'll film it tomorrow morning
 [turn 2] next. the message to my past clients first please"""
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '(?i)\b(3|three)\b[^\n]{0,30}\bpast clients?\b',
   '(?i)\b(quote|use|share)\b[^.\n]{0,40}\b(name|ok|okay|permission)\b|\b(name|ok|okay|permission)\b[^.\n]{0,40}\b(quote|use|share)\b',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '(?i)\b(fill (it )?(in|out)|survey|google form|questionnaire)\b',
   '(?i)\bBuyer Mirror\b',
   '(?i)\bPam\b',

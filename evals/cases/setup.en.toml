@@ -89,32 +89,27 @@ id = "setup.en.002"
 kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1", "S0", "floor"]
-title = "Reply 1 gives the new 3-line promise, all three device mic tips and the pasted-posts invite"
+title = "Reply 1 (setup step 1) promises the first piece in about 12 minutes and asks for what they have: links, posts, files and/or a 3–5 minute talk"
 context = "Door A complete on Claude Pro (Mac desktop app). New chat in the project. Day 0, minute 0. Linda types slowly and has never used dictation on her Mac."
 input = '''Start'''
 contains = [
   "small mic",
   "sound-wave button",
-  "fn (globe) twice",
-  "Win+H",
 ]
 not_contains = []
 regex = [
-  '''(?i)about 25 min''',
-  '''(?i)talk 5[–-]10 min(?:utes)? about your work''',
-  '''(?i)\bONE thing\b''',
-  '''(?i)film (it )?today''',
-  '''(?i)your first week''',
-  '''(?i)paste 2[–-]3''',
-  '''(?i)link to your page''',
-  '''(?i)where you post''',
-  '''(?i)your email list \(or none\)''',
+  '''\A\s*◆ Step 1/10 · [^\n]*\n\s*Have: ✓ instructions''',
+  '''(?i)about 12 min''',
+  '''(?i)Send what you have: links, old posts, files, and/or talk for 3[–-]5 min''',
+  '''(?i)what you sell \(price\)''',
 ]
 not_regex = [
   '''(?i)\b(upload|download)\b''',
   '''(?i)setup page''',
-  '''(?i)about 30 min''',
+  '''(?i)about (?:25|30) min''',
   '''(?i)empty your head''',
+  '''(?i)talk 5[–-]10 min''',
+  '''(?i)paste 2[–-]3|link to your page''',
   '''(?im)^[^\n]*email list[^\n]*\?''',
 ]
 verdict = ""
@@ -122,7 +117,7 @@ invariants = ["I1", "I2", "I5"]
 max_words = 260
 max_chars = 0
 max_questions = 1
-notes = """wf15 §1.1 and start-block DAY 0 step 1: 'Today, about 25 min: 1) Talk 5–10 min about your work. 2) I find the ONE thing you'll be known for. 3) You get a video to film today and your first week.' + mic tip by device + the dump prompt with setup.dump_posts ('Got posts or messages you've written? Paste 2–3 too, or send a link to your page.', wf14 V3: optional, never a gate). G2 K24 / DECISIONS 6 Oct: the topic list ends '· where you post, and your email list (or none)', a hint with no question mark, so a soft cut cannot lose those facts. The old promise ('about 30 min', 'Empty your head') is gone (R14). Quit point 9 'Mac mic not found' (Linda): the Mac tip (strings mic.mac) must be in reply 1; without it she types 4 chunks over 20 min and the early-win timing fails. Graded with graders.py checks deny_list as well as the invariants listed."""
+notes = """v14 (12 Oct 2026): reply 1 is setup step 1, line 1 "◆ Step 1/10 · … · why: …", line 2 the setup check, then "About 12 min to today's first piece. Send what you have: links, old posts, files, and/or talk for 3–5 min. Who you help, what you sell (price), a client before → after, what your field gets wrong." + the phone mic line (mic.phone; the Mac and Windows tips are no longer printed, a kit gap noted in qa/v14 G-notes). No interview, no email-list or platform question: they come from the material and the question of the day. Older text, kept for history: wf15 §1.1 and start-block DAY 0 step 1: 'Today, about 25 min: 1) Talk 5–10 min about your work. 2) I find the ONE thing you'll be known for. 3) You get a video to film today and your first week.' + mic tip by device + the dump prompt with setup.dump_posts ('Got posts or messages you've written? Paste 2–3 too, or send a link to your page.', wf14 V3: optional, never a gate). G2 K24 / DECISIONS 6 Oct: the topic list ends '· where you post, and your email list (or none)', a hint with no question mark, so a soft cut cannot lose those facts. The old promise ('about 30 min', 'Empty your head') is gone (R14). Quit point 9 'Mac mic not found' (Linda): the Mac tip (strings mic.mac) must be in reply 1; without it she types 4 chunks over 20 min and the early-win timing fails. Graded with graders.py checks deny_list as well as the invariants listed."""
 
 [[case]]
 id = "setup.en.003"
@@ -136,7 +131,7 @@ contains = ["small mic"]
 not_contains = ["✓ method file"]
 regex = [
   '''\A\s*◆ Step 1/10 · [^\n]*\n\s*Have: ✓ instructions''',
-  '''(?i)about 25 min''',
+  '''(?i)about 12 min''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
@@ -152,7 +147,7 @@ invariants = ["I1", "I5"]
 max_words = 260
 max_chars = 0
 max_questions = 1
-notes = """UX §1.2: if step 3 fails, compact mode runs all of Day 0 from the instruction block (start-block: 'carry on; Day 0 never asks for a download'); Day 0 never sends the coach back to the setup page and nothing can block it. QA principle 4: never claim a check that didn't run, so the line must not tick the method file. acceptance.toml detours_between_start_and_day0_end = 0: any 'add the file' nudge waits until after Day 0's last reply (there is no stop point any more, wf15 §1). The promise is the new one ('about 25 min', R14). Dan quits on Day-0 setup homework."""
+notes = """v14: the promise is "About 12 min to today's first piece" (setup step 1). UX §1.2: if step 3 fails, compact mode runs all of Day 0 from the instruction block (start-block: 'carry on; Day 0 never asks for a download'); Day 0 never sends the coach back to the setup page and nothing can block it. QA principle 4: never claim a check that didn't run, so the line must not tick the method file. acceptance.toml detours_between_start_and_day0_end = 0: any 'add the file' nudge waits until after Day 0's last reply (there is no stop point any more, wf15 §1). The promise is the new one ('about 25 min', R14). Dan quits on Day-0 setup homework."""
 
 [[case]]
 id = "setup.en.004"
@@ -164,7 +159,7 @@ context = "Door A complete on Claude Free (Windows). Day 0, minute 0. EN registe
 input = '''Start'''
 contains = []
 not_contains = []
-regex = ['''(?i)about 25 min''']
+regex = ['''(?i)about 12 min''']
 not_regex = [
   '''(?i)what should I call you''',
   '''(?i)how (should|do you want me to) (I )?address you''',
@@ -593,12 +588,13 @@ id = "setup.en.017"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "floor"]
-title = "Whole run: strategy after the interview, FILM TODAY alone after the OK, then the card + Week-1 table on 'next', within the turn budget"
+title = "Whole run: strategy in one reply (no interview), FILM TODAY alone after the OK, then the card + Week-1 table on 'next', within the turn budget"
 context = "Whole run, Day 0, ChatGPT Free, persona default (answers.md order, Behaviour section; t_min recorded on every turn). Graded on every machine reply."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2-3] dump chunks 1-2; past ~1,200 words the soft cut follows chunk 2 · [turn 4] chunk 3 as her one more story, ending 'done' · then one answer per interview question from the answer bank (the 12 weeks is what she wants to grow, resume reviews pay the electric bill) · then 'ok' to each strategy step (up to 3) · then, after FILM TODAY, 'filmed it, next' · Stop after Day 0's last reply (Brand Card + save line + the Week-1 table + NEXT).'''
+input = '''WHOLE RUN: [turn 1] Start · [turn 2-3] dump chunks 1-2; past ~1,200 words the soft cut follows chunk 2 · [turn 4] chunk 3 as her one more story, ending 'done' · then one short answer to the strategy's A/B/C picks from the answer bank (v14: no interview) (the 12 weeks is what she wants to grow, resume reviews pay the electric bill) · then 'ok' to the strategy (one reply) · then, after FILM TODAY, 'filmed it, next' · Stop after Day 0's last reply (Brand Card + save line + the Week-1 table + NEXT).'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)3 lines you just said''',
   '''(?m)^\W*KNOWN FOR:''',
   '''(?m)^\W*YOUR WORD:''',
@@ -609,7 +605,7 @@ regex = [
   '''WHAT YOU SAY:''',
   '''HOW YOU SAY IT:''',
   '''for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)''',
+  '''Save this so I remember you''',
   '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
   '''(?m)^\W*CONTENT PILLARS:''',
@@ -620,6 +616,7 @@ regex = [
   '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)why this one''',
@@ -652,10 +649,11 @@ persona = "coldstart-coach"
 lanes = ["S0"]
 title = "Whole run on compact mode: every Day-0 milestone holds with no method file, a 'brb' included"
 context = "Whole run, Day 0, lane S0 (instruction block only, no method file), iPhone, ChatGPT Plus, persona default including 'brb kid's up' right after FILM TODAY and 'ok back' 6 minutes later. Graded on every machine reply."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2-3] dump chunks 1-2; past ~1,200 words the soft cut follows chunk 2 · then one answer per interview question from the answer bank (his best result: 'yep' to the guess that there is none yet, his own pull-up story) · then 'ok' to each strategy step (up to 3); FILM TODAY alone follows · then 'brb kid's up' · then 'ok back' (the card + the Week-1 table come: the step after FILM TODAY) · Stop after Day 0's last reply (Brand Card + save line + the Week-1 table + NEXT).'''
+input = '''WHOLE RUN: [turn 1] Start · [turn 2-3] dump chunks 1-2; past ~1,200 words the soft cut follows chunk 2 · then one short answer to the strategy's A/B/C picks from the answer bank (v14: no interview) (his best result: 'yep' to the guess that there is none yet, his own pull-up story) · then 'ok' to the strategy (one reply); FILM TODAY alone follows · then 'brb kid's up' · then 'ok back' (the card + the Week-1 table come: the step after FILM TODAY) · Stop after Day 0's last reply (Brand Card + save line + the Week-1 table + NEXT).'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)3 lines you just said''',
   '''My guess: no client result yet''',
   '''(?m)^\W*KNOWN FOR:''',
@@ -665,11 +663,12 @@ regex = [
   '''Film it now, or post the caption as text\.''',
   '''No rush\. Say ["“'‘]?ok back["”'’]? when you(?:'|’)re back\.''',
   '''for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)''',
+  '''Save this so I remember you''',
   '''(?m)^\W*CONTENT PILLARS:''',
   '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)why this one''',
@@ -703,15 +702,17 @@ input = '''WHOLE RUN: Start · dictated chunks (fn twice) until the soft cut aft
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''Film it now, or post the caption as text\.''',
   '''(?i)talk day \w+(?: · email list: [^\n()]{1,24})? \(my guess(?:, where unheard)?(?:; one word changes it)?\)''',
   '''(?i)\b(hit reply|reply to me|just reply|reply and tell me)\b''',
   '''(?i)\blist_size\b\W{0,3}(?:about\s*|~)?900\b''',
   '''for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)''',
+  '''Save this so I remember you''',
   '''(?i)email (it|this|the card|a copy) to yourself''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\b(upload|download)\b''',
   '''(?i)setup page''',
   '''(?i)outside (the|this) project''',
@@ -744,7 +745,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "FILM TODAY alone after the strategy's OK: memorisable shape, her own story, quiet option, nothing printed under the piece"
-context = "Day 0, about minute 22. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: KNOWN FOR built on 'one more chapter' and coffee before resume; YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word; offer 12 weeks 1:1 at $2,400 from her dump. She OKs it in this turn, so this reply is FILM TODAY alone. Dana asked for bullets, not word-for-word. ChatGPT Free."
+context = "Day 0, about minute 22. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok'); the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: KNOWN FOR built on 'one more chapter' and coffee before resume; YOUR WORD: CHAPTER, from her clients' 'one more chapter', also the comment word; offer 12 weeks 1:1 at $2,400 from her dump. She OKs it in this turn, so this reply is FILM TODAY alone. Dana asked for bullets, not word-for-word. ChatGPT Free."
 input = '''yep, ok. bullets please, not word for word'''
 contains = []
 not_contains = []
@@ -834,7 +835,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1", "floor"]
 title = "Cold-start FILM TODAY uses his own story, makes no result claim and prints nothing under the piece"
-context = "Day 0, about minute 22, iPhone. The interview is done (his best result: none yet, so his own story) and the strategy came in its pre-filled steps (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; offer = founding small group, no price set), each OK'd; the last ended 'We'll run this for 4 weeks. OK, or change a line.' His 'yep' OKs it, so this reply is FILM TODAY alone. Dan wants beat cards, not word-for-word ('hostage video')."
+context = "Day 0, about minute 22, iPhone. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (his best result: none yet, so his own story) (dads 35-45 with a desk job and kids under 10; YOUR WORD: keep up; offer = founding small group, no price set); the last ended 'We'll run this for 4 weeks. OK, or change a line.' His 'yep' OKs it, so this reply is FILM TODAY alone. Dan wants beat cards, not word-for-word ('hostage video')."
 input = '''yep'''
 contains = []
 not_contains = []
@@ -910,6 +911,7 @@ input = '''[turn 1] no gift yet. I'll film it tomorrow morning when my hair look
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''WHAT YOU SAY:''',
   '''HOW YOU SAY IT:''',
   '''Brand Card v1\b[\s\S]{0,800}?for the machine, no need to read''',
@@ -918,6 +920,7 @@ regex = [
   '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)that(?:'|’)s today done''',
   '''(?i)this card is how I remember you''',
   '''(?i)\bstop here\b''',
@@ -1073,12 +1076,14 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\bDM repl(y|ies)\b''',
   '''(?i)ask (your )?(3|three) past clients''',
   '''(?i)\be-?mail\b''',
   '''(?i)\breply\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\bPam\b''',
   '''(?i)lead magnet|keyword asset|\bCTA\b|\bfunnel\b''',
   '''(?i)\b90\s*(%|percent)''',
@@ -1204,7 +1209,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1"]
 title = "Talk day guessed from the dump and named once in YOUR SYSTEM; Day 0's last reply is the card + the Week-1 table, no hub offer (it comes at Day 1's first 'next'), and says where to come back"
-context = "Whole run from the interview's last answer to Day 0's last reply, ChatGPT Free. Dana's dump never named a talk day; it said Mondays she is at her mom's. The strategy comes in its pre-filled steps (she OKs each), FILM TODAY alone after the last OK, then on 'next' (once filmed) the Brand Card + the save line + the Week-1 table. There is no 3-line wrap-up any more."
+context = "Whole run from the interview's last answer to Day 0's last reply, ChatGPT Free. Dana's dump never named a talk day; it said Mondays she is at her mom's. The strategy comes in ONE pre-filled reply (she OKs it), FILM TODAY alone after the last OK, then on 'next' (once filmed) the Brand Card + the save line + the Week-1 table. There is no 3-line wrap-up any more."
 input = '''[turn 1] Mostly referrals, and Facebook.
 [turn 2] ok
 [turn 3] ok
@@ -1213,6 +1218,7 @@ input = '''[turn 1] Mostly referrals, and Facebook.
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\bFor [^\n]{2,60}· talk day (?!mon)\w+ · email list: [^\n()]{1,24} \(my guess, where unheard; one word changes it\)\.''',
   '''(?i)\bfri(day)?\b''',
   '''(?m)^\W*WHAT YOU SAY:''',
@@ -1220,6 +1226,7 @@ regex = [
   '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\b(?:which|what) (?:day|talk day)\b[^\n?]{0,30}\byou\b[^\n]*\?''',
   '''(?i)\bwhen (?:do|can|will|should) you (?:talk|record)\b[^\n]*\?''',
   '''(?s)\(my guess, where unheard; one word changes it\).*\(my guess, where unheard; one word changes it\)''',
@@ -1376,7 +1383,7 @@ contains = ["small mic"]
 not_contains = ["✓ method file"]
 regex = [
   '''\A\s*◆ (?:Step \d+/10|Week \d+ · Day \d+) · ''',
-  '''(?i)about 25 min''',
+  '''(?i)about 12 min''',
 ]
 not_regex = [
   '''(?i)\bprojects?\b''',
@@ -1426,7 +1433,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "S0"]
 title = "A résumé as the whole hook is flipped: credentials become proof, the opener is the buyer's problem"
-context = "Day 0, about minute 22, Claude Free. The interview is done and the strategy came in its pre-filled steps, each OK'd; the last one ended 'We'll run this for 4 weeks. OK, or change a line.' (YOUR WORD record year; Margin Before More). Erin OKs it in this turn and asks for a credentials opener before any video exists, so this reply is FILM TODAY alone."
+context = "Day 0, about minute 22, Claude Free. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok'); the last one ended 'We'll run this for 4 weeks. OK, or change a line.' (YOUR WORD record year; Margin Before More). Erin OKs it in this turn and asks for a credentials opener before any video exists, so this reply is FILM TODAY alone."
 input = '''ok. and open the video with my background. CPA, 9 years at the agency, VP of Finance, 14 sprints. people need to know I'm legit'''
 contains = []
 not_contains = []
@@ -1600,6 +1607,7 @@ input = '''WHOLE RUN: [turn 1] Start · [turn 2-3] dump chunks 1-2 (chunk 1 ends
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)3 lines you just said''',
   '''(?i)you earn from (?:3|4|5|three|four|five) things''',
   '''(?m)^\W*KNOWN FOR:''',
@@ -1618,6 +1626,7 @@ regex = [
   '''NEXT →[^\n]*(?i:back in this chat, say ['"“‘]next)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''WHY THIS GETS CLIENTS''',
   '''(?m)^\W*(?:✓ Checked:|Ready to (?:film|post|send) ·|Draft ·)''',
   '''(?i)why this one''',
@@ -1693,11 +1702,13 @@ input = '''[turn 1] yep. the 12 weeks is the one I want to grow. resume reviews 
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
   '''(?i)(?:carrot|cake|4B|63|applications|Teresa|coffee|24 years|Lorraine)''',
   '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\b90\s*(%|percent)''',
   '''\bPam\b''',
   '''(?i)\bcertified\b''',
@@ -1722,11 +1733,13 @@ input = '''[turn 1] next
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
   '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''(?i)\b(?:record year|Marcus|stairwell|bank app|heart monitor|13-week|client by client|margin before more|underwater)\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\bRaj\b''',
   '''(?i)85,000''',
   '''(?i)\b70\s*(%|percent)''',
@@ -1754,7 +1767,7 @@ regex = [
   '''WHAT YOU SAY:''',
   '''HOW YOU SAY IT:''',
   '''for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)''',
+  '''Save this so I remember you''',
   '''NEXT →[^\n]*\bnext\b''',
 ]
 not_regex = [
@@ -1819,11 +1832,13 @@ input = '''[turn 1] ok I'll film it tomorrow morning
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\bFor [^\n]{2,60}· talk day \w+ · email list: [^\n()]{1,24} \(my guess, where unheard; one word changes it\)\.''',
   '''(?im)^\s*list_size:\s*ask\b''',
-  '''Save this so I remember you \(30 s\)''',
+  '''Save this so I remember you''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\s*list_size:\s*0\b''',
   '''(?i)\b(?:how (?:big|many)|do you have|is there)\b[^\n?]{0,40}\b(?:list|subscribers?|emails?)\b[^\n]*\?''',
   '''(?s)\(my guess, where unheard; one word changes it\).*\(my guess, where unheard; one word changes it\)''',

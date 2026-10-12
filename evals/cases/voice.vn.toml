@@ -111,7 +111,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "floor"]
 title = "NÓI THẾ NÀO (the card's voice line) for a cold-start yoga teacher on her phone: her own tone words, a short rhythm, one line of hers verbatim, 'với khách: mình – mấy bạn'; Southern OK line"
-context = "Day 0, ChatGPT Free on her iPhone, mình–bạn (reply 1 got 'Bạn đi, gọi chị nghe già.'). Dump chunks 1-2 told; when the dump prompt invited them she pasted her posts W1-W2 below chunk 1. The soft cut after chunk 2 carried the result guess (setup.guess_no_result) and she typed 'ừa'; the last câu đoán was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answered it (TỪ KHOÁ: CỨNG ĐƠ). The interview and the strategy are done and OK'd, QUAY HÔM NAY printed alone and she filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1. Her talk is the spoken voice (ờ, á, nè, hông, thiệt, run-ons); W1-W2 the written one (lowercase line starts, 'dc', ':))')."
+context = "Day 0, ChatGPT Free on her iPhone, mình–bạn (reply 1 got 'Bạn đi, gọi chị nghe già.'). Dump chunks 1-2 told; when the dump prompt invited them she pasted her posts W1-W2 below chunk 1. The soft cut after chunk 2 carried the result guess (setup.guess_no_result) and she typed 'ừa'; the last câu đoán was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answered it (TỪ KHOÁ: CỨNG ĐƠ). The strategy (one reply) is done and OK'd, QUAY HÔM NAY printed alone and she filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1. Her talk is the spoken voice (ờ, á, nè, hông, thiệt, run-ons); W1-W2 the written one (lowercase line starts, 'dc', ':))')."
 input = '''quay xong rồi, tiếp nha'''
 contains = []
 not_contains = []
@@ -147,7 +147,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "NÓI THẾ NÀO (the card's voice line) for chị Hạnh: 'với khách: chị – các em', kept apart from the em–chị the machine uses with her; her tone words and one line of hers; Bắc only"
-context = "Day 0, Door B: chị Hạnh pasted the Phone Starter into a normal ChatGPT Free chat on Android; em–chị from reply 2 ('Gọi chị là chị thôi em, chị bốn lăm tuổi rồi.'). She pasted her posts W1-W3 below dump chunk 1 (W1 opens 'Các em ạ, chị nói thật nhé'). The soft cut came after chunk 2 (which ends with her going out to a client) and carried the multi-income câu đoán (setup.multi_income: spa, lớp kèm, mỹ phẩm). She came back and answered it by telling chunk 3 (TỪ KHOÁ: NGẠI CHÀO). The interview and the strategy are done and OK'd, QUAY HÔM NAY printed alone and she filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1."
+context = "Day 0, Door B: chị Hạnh pasted the Phone Starter into a normal ChatGPT Free chat on Android; em–chị from reply 2 ('Gọi chị là chị thôi em, chị bốn lăm tuổi rồi.'). She pasted her posts W1-W3 below dump chunk 1 (W1 opens 'Các em ạ, chị nói thật nhé'). The soft cut came after chunk 2 (which ends with her going out to a client) and carried the multi-income câu đoán (setup.multi_income: spa, lớp kèm, mỹ phẩm). She came back and answered it by telling chunk 3 (TỪ KHOÁ: NGẠI CHÀO). The strategy (one reply) is done and OK'd, QUAY HÔM NAY printed alone and she filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1."
 input = '''quay xong rồi, tiếp em'''
 contains = []
 not_contains = []
@@ -184,7 +184,7 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "floor"]
 title = "'sửa dòng giọng' alone on the card: A) and B) built from his own lines, each with an audience pair he has filmed with, one (máy khuyên); no card or strategy reprint, no voice quiz"
-context = "Day 0, Door A, ChatGPT Plus (iPhone app), anh–em, Southern. Chunks 1-3 told (his posts W1-W3 below chunk 1); the interview and the strategy (TỪ KHOÁ: GỒNG LÃI) are done and OK'd, QUAY HÔM NAY printed alone, and his 'tiếp' brought the Brand Card + dòng lưu + bảng Tuần 1. Its NÓI THẾ NÀO line reads 'NÓI THẾ NÀO: nhanh · thẳng · vui · câu ngắn, kể cảnh · \"Tính trước rồi hẵng cọc nha.\" · với khách: \"mình – bạn\"' (his audience pair was undecided, so the machine picked one). He wants the voice line different and does not say how."
+context = "Day 0, Door A, ChatGPT Plus (iPhone app), anh–em, Southern. Chunks 1-3 told (his posts W1-W3 below chunk 1); The strategy (one reply) (TỪ KHOÁ: GỒNG LÃI) is done and OK'd, QUAY HÔM NAY printed alone, and his 'tiếp' brought the Brand Card + dòng lưu + bảng Tuần 1. Its NÓI THẾ NÀO line reads 'NÓI THẾ NÀO: nhanh · thẳng · vui · câu ngắn, kể cảnh · \"Tính trước rồi hẵng cọc nha.\" · với khách: \"mình – bạn\"' (his audience pair was undecided, so the machine picked one). He wants the voice line different and does not say how."
 input = '''sửa dòng giọng'''
 contains = []
 not_contains = []
@@ -219,18 +219,20 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'sửa dòng giọng: …' in her words on the card: NÓI THẾ NÀO reprinted with her line and 'mấy bạn', then 'tiếp' brings the first Tuần 1 piece"
-context = "Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told (W1-W2 pasted below chunk 1); the interview and the strategy (TỪ KHOÁ: CỨNG ĐƠ) are done and OK'd, QUAY HÔM NAY printed alone, and her 'tiếp' brought the Brand Card + dòng lưu + bảng Tuần 1. Its NÓI THẾ NÀO line quotes 'Nói thiệt nha, cái lưng nó hông có lỗi gì hết á.' and ends 'với khách: \"mình – bạn\"'. Turn 1 changes the voice line in her own words; turn 2 says 'tiếp' and gets the first Tuần 1 piece."
+context = "Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told (W1-W2 pasted below chunk 1); The strategy (one reply) (TỪ KHOÁ: CỨNG ĐƠ) is done and OK'd, QUAY HÔM NAY printed alone, and her 'tiếp' brought the Brand Card + dòng lưu + bảng Tuần 1. Its NÓI THẾ NÀO line quotes 'Nói thiệt nha, cái lưng nó hông có lỗi gì hết á.' and ends 'với khách: \"mình – bạn\"'. Turn 1 changes the voice line in her own words; turn 2 says 'tiếp' and gets the first Tuần 1 piece."
 input = '''[turn 1] sửa dòng giọng: ghi câu "Đứng dậy cái đã, rồi mình nói tiếp" đi, câu đó mình nói hoài á. với khách thì mình kêu mấy bạn văn phòng
 [turn 2] tiếp'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*Đứng dậy cái đã''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*với khách:[^\n]*mấy bạn''',
   '''(?ms)(?:^[ \t]*(?:```|~~~).*?){6}''',
   '''(?m)^\W*N1\b[^\n]*·''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^[^\w\n]*[AB]\)\s''',
   '''(?i)(?:giọng (?:của )?bạn (?:thế nào|ra sao)|tả giọng|bạn (?:muốn|thích) giọng|bạn chắc (?:chưa|không))''',
   '''(?i)(?:muốn|làm|viết)[^\n?]{0,25}tuần 1[^\n]*\?''',
@@ -262,12 +264,14 @@ input = '''[turn 1] ok em, tối nay chị quay luôn
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)(?:^|\|)\s*written_vs_spoken\s*:[^\n|]*(?:dòng|emoji|(?<!\w)ko(?!\w)|gọn|ngắn|viết tắt)''',
   '''(?im)(?:^|\|)\s*rhythm\s*:[^\n|]*(?:ngắn|cảnh|dòng|một việc|số thật|chốt)''',
   '''(?im)(?:^|\|)\s*openers_closers\s*:[^\n]*(?:Các chị em ơi|chưa cần làm gì to tát|nói chuyện bằng con số|lãi mới là để tiêu|chưa chắc đã có tiền)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:các chị em|chị em mình)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:(?<!\w)(?:ờ|alo|ừm)(?!\w)|(?<!\w)z(?!\w)|thôi chị gửi đoạn này|kiểu thợ may)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:sổ ba cộc|tinh lai|(?<!\w)lải(?!\w)|giành thời gian|sốp pi|lai stream)''',
   '''(?s)```[^\n]*\n(?:(?!```).)*?(?:[\U0001F300-\U0001FAFF❤✨](?:(?!```).)*?){3}```''',
@@ -296,12 +300,14 @@ input = '''[turn 1] ok chiều mình quay, giờ đang ở studio
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:nói thiệt|đứng dậy|hông cần thảm|đâu lại vô đó|tư thế kế tiếp|chữa cháy|ghế xịn|cần mỗi ngày|ngồi yên)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)(?:nha|nè|á|hông)(?!\w)''',
   '''(?:Phần còn lại là )?cho máy, không cần đọc''',
-  '''Lưu lại để mình nhớ bạn \(30 giây\)\.''',
+  '''Lưu lại để mình nhớ bạn\.''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:(?<!\w)(?:ờ|alo|ừm|ừa)(?!\w)|(?<!\w)z(?!\w)|được chưa ta)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:[\U0001F300-\U0001FAFF☀-⛿❤✨]|:\)\))''',
   '''(?im)(?:^|\|)\s*written_vs_spoken\s*:[^\S\n]*(?!(?:none|n/?a|-|—|\?|không có|chưa có|chưa)[^\S\n]*(?:\||$))[^\s|]''',
@@ -333,10 +339,12 @@ input = '''[turn 1] chị quay rồi em, kê điện thoại lên kệ ở quầ
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?:(?!```).)*?```(?:(?!```).)*?(?<!\w)em(?!\w)(?:(?!```).)*?```(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?){3}''',
   '''(?is)inbox[^`\n]{0,60}\n(?:[^\n`]*\n){0,2}?[ \t]*```[^\n]*\n(?:(?!```).)*?(?<!\w)em(?!\w)(?:(?!```).)*?```''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?<!\w)(?:các chị|chị em|các bạn|mấy bạn|cả nhà|mọi người|các nàng|nàng|các mom)\s*,?\s*(?:ơi|nào)(?!\w)''',
   '''(?is)\A(?:(?:(?!```).)*?```(?:(?!```).)*?```)*?(?:(?!```).)*?```[^\n]*\n(?!\s*(?:version|date|edition)\b)(?:(?!```).)*?(?:cả nhà iu|nàng ơi|các mom|quý khách|(?<!\w)các bạn(?!\w))''',
   '''(?is)inbox[^`\n]{0,60}\n(?:[^\n`]*\n){0,2}?[ \t]*```[^\n]*\n(?:(?!```).)*?(?<!\w)(?:các em|mấy em|các chị|chị em)(?!\w)(?:(?!```).)*?```''',
@@ -738,17 +746,19 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Tuần 1 cut from his dump: no banned tell even where he said one ('bứt phá', 'nâng tầm'), his lines used where they fit but never stamped on every piece"
-context = "Day 0, Door A, Claude Pro on the laptop, em–anh. Khoa told chunks 1-3 from his phone's keyboard mic (chunk 3 holds 'tôi ghét mấy bài kiểu bứt phá doanh thu, nâng tầm doanh nghiệp') and pasted W1-W3 below chunk 1; the interview and the strategy (TỪ KHOÁ: TUYỂN HOÀI; LinkedIn + Facebook; email 250) are done and OK'd, and QUAY HÔM NAY is on screen. Turn 1 says he won't film (text-first: the long post); turn 2 says 'tiếp' and gets the card + bảng Tuần 1; turn 3 says 'tiếp' for the first Tuần 1 piece."
+context = "Day 0, Door A, Claude Pro on the laptop, em–anh. Khoa told chunks 1-3 from his phone's keyboard mic (chunk 3 holds 'tôi ghét mấy bài kiểu bứt phá doanh thu, nâng tầm doanh nghiệp') and pasted W1-W3 below chunk 1; The strategy (one reply) (TỪ KHOÁ: TUYỂN HOÀI; LinkedIn + Facebook; email 250) is done and OK'd, and QUAY HÔM NAY is on screen. Turn 1 says he won't film (text-first: the long post); turn 2 says 'tiếp' and gets the card + bảng Tuần 1; turn 3 says 'tiếp' for the first Tuần 1 piece."
 input = '''[turn 1] tôi không quay video đâu, tôi viết thôi. đăng phần chữ
 [turn 2] tiếp
 [turn 3] tiếp'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){2}''',
   '''(?im)^(?!\W*(?:phrases|openers_closers|passages|client_words|stories|NÓI THẾ NÀO|NÓI GÌ|tone|rhythm|who|their_words|promise|method|old_way|key_belief|idea_shifts|principles|enemy|trait|connectors)\b)[^\n]*(?:ở 15 ngày|làm thử 2 tiếng|viết thử một trang|không có lỗi gì hết|không nằm ở chỗ đăng|người kèm|chỗ khác trả hơn|nghỉ từ tuần đầu)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^(?![^\n]*(?:passages|client_words|stories|never_say)\s*:)[^\n]*(?:bứt phá|nâng tầm)''',
   '''(?i)(?:hãy cùng khám phá|đây là lý do tại sao|bạn có biết rằng|trong thế giới hiện đại|hy vọng bài viết hữu ích|thay đổi cuộc chơi|lan tỏa giá trị|mang lại giá trị|góp phần)''',
   '''(?i)không chỉ[^.\n]{1,80}mà còn''',
@@ -845,14 +855,16 @@ input = '''[turn 1] ok em, tối nay anh quay
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?m)^[^\w\n]*NÓI THẾ NÀO:[^\n]*["“][^"”\n]{6,}["”][^\n]*["“][^"”\n]{6,}["”]''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*["“][^"”\n]*(?:tính trước rồi hẵng cọc|an toàn cho ngân hàng|cầm theo tờ giấy|lãi của năm đầu|mua cái để che|tui nói thẳng|cái rèm nhà mẫu|nói thiệt nè|tui gồng rồi)''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:nhanh|thẳng|vui|gọn|thật|lẹ)''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:\n[^\n]*)?với khách:\s*["“]?(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em)''',
   '''Brand Card v1\W{0,4}·[^\n]*\n[\s\S]{0,500}?(?:Phần còn lại là )?cho máy, không cần đọc''',
-  '''Lưu lại để em nhớ anh \(30 giây\)\.''',
+  '''Lưu lại để em nhớ anh\.''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:tone|rhythm|phrases|audience_address|code_mix|written_vs_spoken|connectors|dialect)\s*[:=]''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:truyền cảm hứng|cuốn hút|chuyên nghiệp|tuyệt vời|lôi cuốn|ấn tượng|đầy năng lượng|thu hút)''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*(?:cơ hội vàng|siêu phẩm|đẳng cấp|an cư lạc nghiệp|tổ ấm mơ ước|sinh lời|đầu tư an toàn)''',
@@ -913,11 +925,13 @@ input = '''[turn 1] <<paste: tuan-multihat-plus/pillar-transcript.md, Tuấn's a
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)(?:ngân hàng tính cho ngân hàng|tiền mua giấc ngủ|rồi gồng mười chín năm|coi chi cho thương rồi khổ|cả nhà nằm theo|che có lỗ|thì ai góp|để em về tính)''',
   '''(?s)(?:```(?:(?!```).)*```(?:(?!```).)*?){3}''',
   '''(?i)GỒNG LÃI''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?:™|®)''',
   '''(?i)(?:phương pháp|công thức|hệ thống|bí quyết)\s+(?:tính ngược|3 bước|ba bước|quỹ 6 tháng|che vay)''',
   '''(?i)(?:tính ngược|quỹ 6 tháng|ba bước|3 bước)\s+(?:method|formula|system|framework)''',
@@ -978,12 +992,14 @@ input = '''[turn 1] tiếp
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^\W*VÌ SAO RA KHÁCH\W[^\n]*(?:→|->)''',
   '''(?i)(?:quán hải sản|10 giờ đêm|ghế nhựa|15 phút|phiếu việc|làm thử|(?<!\w)kèm(?!\w)|mùng 8|cổng xưởng|tuyển hoài|chấm công)''',
   '''(?i)(?:giọng (?:của )?anh|câu (?:của )?anh|chữ của anh|tôi\s*[–-]\s*anh chị|xưng tôi|ký (?:tên )?Khoa|đúng giọng)''',
   '''(?i)(?:dựng (?:theo|từ|như|bằng|thành)|viết (?:theo|dưới dạng|như|thành|từ)|mở (?:đầu )?(?:bằng|với|là)|bắt đầu (?:bằng|từ|với)|kết (?:bằng|với|lại)|(?<!\w)rồi (?:đến|là|chốt|mời|rút|kết|để|nhắn|bảo|bài|câu|lời|chuyển|dẫn|cho|nói|mới)|(?<!\w)kể (?:một |1 |lại )?(?:chuyện|cảnh|câu|khách|lần))''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^\s*(?:```|~~~)''',
   '''(?i)(?:audience_address|code_mix|written_vs_spoken|openers_closers|never_say|do_say|connectors)''',
   '''(?i)70\s*%|80\s*%|6 tháng lương|200 triệu''',
@@ -1005,11 +1021,12 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "Whole run to the strategy: the dump prompt invites his posts once, never a gate; no voice question; Southern from the early win on"
-context = "Whole run, Day 0, Door A, ChatGPT Plus (set up on the laptop, dumping from the iPhone app), from 'Bắt đầu' to the strategy's last step, persona default (answers.md order). Reply 1 asks the xưng hô; he types 'anh'. When the dump prompt invites them, he pastes W1-W3 below chunk 1. Chunk 2 passes about 1,200 tiếng, so its reply is the soft cut with the multi-income câu đoán; chunk 3 answers it ('Thôi, xong.'), the interview asks what is still open, and the strategy follows; he OKs each step. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."
-input = '''WHOLE RUN: [turn 1] Bắt đầu · [turn 2] anh · [turn 3] dump chunk 1, then written-posts.md W1-W3 bodies pasted below it (no headings) · [turn 4] dump chunk 2 · [turn 5] dump chunk 3, ending 'Thôi, xong.' · then one answer per interview question, if any · then 'ok' to each strategy step but the last. Stop after the reply that ends on '… OK hay sửa một dòng?'.'''
+context = "Whole run, Day 0, Door A, ChatGPT Plus (set up on the laptop, dumping from the iPhone app), from 'Bắt đầu' to the strategy's last step, persona default (answers.md order). Reply 1 asks the xưng hô; he types 'anh'. When the dump prompt invites them, he pastes W1-W3 below chunk 1. Chunk 2 passes about 1,200 tiếng, so its reply is the soft cut with the multi-income câu đoán; chunk 3 answers it ('Thôi, xong.'), the interview asks what is still open, and the strategy follows in one reply; he OKs it. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."
+input = '''WHOLE RUN: [turn 1] Bắt đầu · [turn 2] anh · [turn 3] dump chunk 1, then written-posts.md W1-W3 bodies pasted below it (no headings) · [turn 4] dump chunk 2 · [turn 5] dump chunk 3, ending 'Thôi, xong.' · then one short answer to the strategy's A/B/C picks · then 'ok' to the strategy (one reply). Stop after the reply that ends on '… OK hay sửa một dòng?'.'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''Mình nên gọi là anh, chị hay bạn cho tiện\?''',
   '''Có bài, tin nhắn anh từng viết thì dán 2[–-]3 cái, hoặc gửi link trang của anh\.''',
   '''3 câu đáng tiền anh vừa nói''',
@@ -1019,6 +1036,7 @@ regex = [
   '''(?m)^\W*TRỤ CỘT NỘI DUNG:''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)(?:giọng (?:của )?anh (?:thế nào|ra sao)|anh (?:muốn|thích) giọng|tả giọng|chọn giọng|giọng nào|văn phong (?:của )?anh)[^\n]*\?''',
   '''(?i)(?:trang trọng hay (?:thân mật|gần gũi)|nghiêm túc hay vui|câu ngắn hay (?:câu )?dài)''',
   '''(?im)^(?![^\n]*(?:GIỌNG|NÓI THẾ NÀO):)[^\n]*(?:mình\s*[–-]\s*bạn|anh\s*[–-]\s*em)[^\n]*\?''',

@@ -370,8 +370,9 @@ persona = "coldstart-coach"
 lanes = ["S1", "S0"]
 title = "Day-0 whole run with two forwarded posts: each gets the keep clause, the strategy still lands on KEEP UP, GUIDE never becomes his word"
 context = "Whole run: Day 0 (persona.toml day0), iPhone, ChatGPT Plus, no Brand Card yet. The persona player follows answers.md and Behaviour; the two forwards are the only additions."
-input = '''WHOLE RUN: [turn 1] Start · [turn 2] dump chunk 1 · [turn 3] <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L2" block: everything below its HTML comment, verbatim>> · [turn 4-5] dump chunks 2-3, chunk 3 ends 'done' · [turn 6] his answer to the first interview question, from the answer bank · [turn 7] at the next question, instead of answering: <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L8" block: everything below its HTML comment, verbatim>> · [turn 8] his answer to that question, from the answer bank; further questions get one answer each · then 'ok' to each strategy step (up to 3); FILM TODAY alone follows. Stop after that reply.'''
+input = '''WHOLE RUN: [turn 1] Start · [turn 2] dump chunk 1 · [turn 3] <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L2" block: everything below its HTML comment, verbatim>> · [turn 4-5] dump chunks 2-3, chunk 3 ends 'done' · [turn 6] his short answer to the strategy's A/B/C picks, from the answer bank (v14: no interview) · [turn 7] instead of 'ok' (the strategy is on screen), as more material: <<paste: evals/personas/en/coldstart-coach/liked-paste.md, the "## L8" block: everything below its HTML comment, verbatim>> · [turn 8] his answer to the strategy's pick that is still open, from the answer bank · then 'ok' to the strategy (one reply); FILM TODAY alone follows. Stop after that reply.'''
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\(kept that post for [^)\n]+; first, today(?:'|’)s (?:video|piece)\.?\)''',
   '''(?im)^\W*YOUR WORD:[^\n]*\bkeep up\b''',
   '''FILM TODAY''',
@@ -380,6 +381,7 @@ regex = [
   '''We(?:'|’)ll run this for 4 weeks\. OK, or change a line\.''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\bGUIDE\b''',
   '''(?i)kindergarten|weight vest|bear crawl|cushion fort|no-equipment dad plan|backyard\.barbell|petrakis''',
   '''(?i)saved to posts you like|make my version''',

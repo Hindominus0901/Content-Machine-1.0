@@ -54,7 +54,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "The strategy: KNOWN FOR, CONTENT PILLARS, CONTENT MIX, YOUR SYSTEM, YOUR WORD, WHAT I FOUND over ≤3 steps and one decision; nothing else on it"
-context = "Day 0, about minute 12, ChatGPT Free. Dana sent dump chunks 1-3 (her written posts pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the last interview question was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, about minute 12, ChatGPT Free. Dana sent dump chunks 1-3 (her written posts pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the last interview question was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). She answers it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
 [turn 2] ok
 [turn 3] ok'''
@@ -239,7 +239,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S0", "S1"]
 title = "Cold-start strategy for desk-job dads, KEEP UP as his word, no body outcome, nothing parked shown"
-context = "Day 0, iPhone, ChatGPT Plus. After 'done' the interview asked Dan's open facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, iPhone, ChatGPT Plus. After 'done' the interview asked Dan's open facts one per message: the best result ('My guess: no client result yet, so I'll use your own story. Right?') and, last, what he sells ('My guess: nothing to sell yet. Right?'). He answers the offer guess with the 8-week small-group idea. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''I've thought about like 8 weeks, a small group, maybe 5 guys, and I check in with each one for 15 minutes on a video call once a week. I was thinking $249? I honestly don't know what to charge.
 [turn 2] ok
 [turn 3] ok'''
@@ -283,6 +283,7 @@ input = '''[turn 1] The 12-week program is what I want to grow. Resume reviews p
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\b(11|eleven)\b[^\n]{0,40}\bclients?\b|\b(Lorraine|Bev|Gail)\b''',
   '''(?i)\b(coffee|portal|keepers list)\b''',
   '''(?i)\bresume''',
@@ -294,6 +295,7 @@ regex = [
   '''(?i)\b(comes? back|back (when|at|if|in)|stays parked)\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
   '''\b(PAID|WORDS|PROOF|EDGE|NARROW|ENERGY)\b''',
   '''(?i)\bscores?\b|\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
@@ -317,7 +319,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "Erin's strategy, RECORD YEAR as her word, her method or old way in the one breath, nothing parked shown"
-context = "Day 0, Claude Free. Erin sent 3 dump chunks and 'done'; her dump holds her clients' words, Marcus's result and the Margin Sprint, so the last interview question was the multi-income line (retainers, sprints, deal prep, the class). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, Claude Free. Erin sent 3 dump chunks and 'done'; her dump holds her clients' words, Marcus's result and the Margin Sprint, so the last interview question was the multi-income line (retainers, sprints, deal prep, the class). She answers it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''The retainers pay the bills. The sprint is how people get to the retainer, and that's what I want to sell more of. Deal prep is my best hourly rate, but it's lumpy and it's a different person. The class is a hobby.
 [turn 2] ok
 [turn 3] ok'''
@@ -355,7 +357,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "Corinne's strategy for the Room Reset homeowner, NOTHING ROOM as her word, full projects off the strategy"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the last interview question was the multi-income line (full projects, Resets, color consults, staging). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset, so the last interview question was the multi-income line (full projects, Resets, color consults, staging). She answers it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''Full projects, about 70 percent. They pay 5 salaries. The Reset is what I want to grow, because it's the one we can actually sell from content. Color consults are $250 for 90 minutes and I'd stop tomorrow. Staging is a favor for 2 realtor friends.
 [turn 2] ok
 [turn 3] ok'''
@@ -458,7 +460,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "Multi-income answer steers the pick: the strategy is built for the 12-week program's buyer; resume reviews and life coaching stay off it"
-context = "Day 0, after 'done'. The one missing fact was the multi-income line (setup.multi_income: 'You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Dana answers it; nothing else is missing. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, after 'done'. The one missing fact was the multi-income line (setup.multi_income: 'You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). Dana answers it; nothing else is missing. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''The 12-week program is what I want to grow. Resume reviews pay the electric bill, half my income some months. The life coaching is two ladies once a month, I'm not taking more.
 [turn 2] ok
 [turn 3] ok'''
@@ -1312,11 +1314,13 @@ input = '''[turn 1] I've thought about like 8 weeks, a small group, maybe 5 guys
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\b(keep up|don(?:'|’)t have an hour|start every monday|garage|pull-?ups?|sets of 8)\b''',
   '''(?i)\bmoms?\b[^\n]*\b(different buyer|later|parked|comes? back|back (when|if|at))''',
   '''(?i)\b(TRT|testosterone)\b[^\n]*\b(risky|stays parked|never|doctor|medical|parked)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\b(people|clients?|dads|guys) (have )?paid you\b''',
   '''(?i)\bpaying clients\b''',
   '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
@@ -1346,12 +1350,14 @@ input = '''[turn 1] The retainers pay the bills. The sprint is how people get to
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\b14\b[^\n]*\bsprints?\b|\bsprints?\b[^\n]*\b14\b''',
   '''(?i)\btax\b[^\n]*\b(risky|stays parked|never|tax (person|pro|preparer)|parked|outside)''',
   '''(?i)\bdeal prep\b[^\n]*\b(side door|referrals?|DMs?|word of mouth|keep|still)''',
   '''(?i)\b(different (buyer|problem)|risky|a tool|anyone could say|later stage|nothing to sell)\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
   '''\b(PAID|WORDS|PROOF|EDGE|NARROW|ENERGY)\b''',
   '''(?i)\bscores?\b|\b[0-2]\s*/\s*2\b''',
@@ -1380,11 +1386,13 @@ input = '''[turn 1] Full projects, about 70 percent. They pay 5 salaries. The Re
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\b64\b''',
   '''(?i)\b(whole[- ]house|full[- ]service|full projects?)\b[^\n]*\b(side door|referrals?|builders?|DMs?|keep|still)\b''',
   '''(?i)\b(staging|realtors?)\b[^\n]*\b(different buyer|parked|later|comes? back|favou?r)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
   '''\b(PAID|WORDS|PROOF|EDGE|NARROW|ENERGY)\b''',
   '''(?i)\bscores?\b|\b[0-2]\s*/\s*2\b''',
@@ -1413,11 +1421,13 @@ input = '''[turn 1] <<paste: linda-claude-pro-mac-newsletter/answers.md, the '##
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)\b(3|three)\b[^\n]{0,40}\b(clients?|women)\b|\b(Ren[ée]e|Joan|Carol)\b''',
   '''(?i)\b(empty nest|marriage|friendships?|life[- ]coaching|life topics)\b[^\n]*\bafter (corporate|the badge)\b''',
   '''(?i)\bmenopause\b[^\n]*\b(risky|stays parked|never|doctor|health)''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''\b(DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|TOOL|GENERIC|RISKY)\b''',
   '''\b(PAID|WORDS|PROOF|EDGE|NARROW|ENERGY)\b''',
   '''(?i)\bscores?\b|\b[0-2]\s*/\s*2\b''',
@@ -1444,7 +1454,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "HOW YOU SAY IT (the card's voice line) in plain words: her tone, her rhythm, one phrase of hers verbatim, and how she talks to buyers ('you')"
-context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the last interview question was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). The interview and the strategy are done and OK'd, and FILM TODAY printed alone; she filmed it and now says 'next', so this reply is the Brand Card (its HOW YOU SAY IT line is the voice line) + the save line + the Week-1 table. Her dump is the spoken voice; her pasted posts are the written voice."
+context = "Day 0, ChatGPT Free, about minute 12. Dana sent dump chunks 1-3 (her written posts W1-W2 pasted with chunk 1) and 'done'. Her dump already holds her clients' words, Lorraine's result and her offer, so the last interview question was the multi-income line ('You earn from 3 things. My guess: write for …, the one buyer who could buy more than one. Right?'). The strategy (one reply) is done and OK'd, and FILM TODAY printed alone; she filmed it and now says 'next', so this reply is the Brand Card (its HOW YOU SAY IT line is the voice line) + the save line + the Week-1 table. Her dump is the spoken voice; her pasted posts are the written voice."
 input = '''filmed it. next'''
 contains = []
 not_contains = []
@@ -1475,7 +1485,7 @@ kind = "D"
 persona = "linda-claude-pro-mac-newsletter"
 lanes = ["S1"]
 title = "HOW YOU SAY IT (the card's voice line) for a writerly coach: warm, a long scene then a short line, one phrase of hers verbatim, 'you' to one reader"
-context = "Day 0, Claude Pro (Mac). Linda dictated chunks 1-2 (her written posts pasted with chunk 1). Her dump holds her clients' words, Renée's result and her one offer, The interview and the strategy are done and OK'd, and FILM TODAY printed alone; she filmed it and now says 'next', so this reply is the Brand Card (its HOW YOU SAY IT line is the voice line) + the save line + the Week-1 table. Her dump is the spoken voice; her pasted posts are the written voice."
+context = "Day 0, Claude Pro (Mac). Linda dictated chunks 1-2 (her written posts pasted with chunk 1). Her dump holds her clients' words, Renée's result and her one offer, The strategy (one reply) is done and OK'd, and FILM TODAY printed alone; she filmed it and now says 'next', so this reply is the Brand Card (its HOW YOU SAY IT line is the voice line) + the save line + the Week-1 table. Her dump is the spoken voice; her pasted posts are the written voice."
 input = '''filmed it. next'''
 contains = []
 not_contains = []
@@ -1506,16 +1516,18 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'change the voice line' on the card edits HOW YOU SAY IT in her words: the line reprinted, no voice quiz"
-context = "Day 0, ChatGPT Free. Dana's dump (chunks 1-3, her written posts W1-W2 with chunk 1), the interview and the strategy are done and OK'd, and FILM TODAY printed alone. Turn 1 says 'next' once filmed and gets the Brand Card + save line + the Week-1 table; its HOW YOU SAY IT line is the voice line. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
+context = "Day 0, ChatGPT Free. Dana's dump (chunks 1-3, her written posts W1-W2 with chunk 1), The strategy (one reply) is done and OK'd, and FILM TODAY printed alone. Turn 1 says 'next' once filmed and gets the Brand Card + save line + the Week-1 table; its HOW YOU SAY IT line is the voice line. In turn 2 Dana changes the voice line in her own words. Assertions run on the reply to turn 2."
 input = '''[turn 1] filmed it. next
 [turn 2] change the voice line: blunt, not warm and fuzzy. and use "I'm not going to blow smoke at you", that one's mine.'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bblunt\b''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*blow smoke''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\W*HOW YOU SAY IT:[^\n]*\bfuzzy\b''',
   '''(?i)\bFILM TODAY\b''',
   '''(?i)\b(how would you describe|what words would you use|which (tone|words|phrase)|describe your (voice|tone))\b''',
@@ -1536,7 +1548,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S1", "floor"]
 title = "'ok' with a voice change on the strategy's last step: the change is stored and the day goes on to FILM TODAY, no second OK"
-context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset. The interview is done and the strategy's last step is on screen, ending 'We'll run this for 4 weeks. OK, or change a line.' She says OK and adds how she addresses newsletter readers (the voice line is the card's, which comes after FILM TODAY)."
+context = "Day 0, ChatGPT Plus. Corinne sent 3 dump chunks and 'done'; her dump holds Megan's and Priya's words, the bonus-room result and the Room Reset. The interview is done and the strategy (one reply) is on screen, ending 'We'll run this for 4 weeks. OK, or change a line.' She says OK and adds how she addresses newsletter readers (the voice line is the card's, which comes after FILM TODAY)."
 input = '''ok. but in the newsletter I call them neighbors'''
 contains = []
 not_contains = []
@@ -1563,7 +1575,7 @@ id = "message.en.054"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "Whole run to the strategy: early win, the interview, the strategy in its steps; no check screen"
+title = "Whole run to the strategy: early win, the strategy in one reply with its A/B/C picks; no check screen"
 context = "Whole run, Day 0, ChatGPT Free, from Start to the strategy's last step, persona default (answers.md order; t_min on every turn). The coach turns are scripted below; the machine replies come from the kit. Regexes must match at least one machine reply; not_regex and max_* hold on every machine reply."
 input = '''[turn 1] Start
 [turn 2] <<paste: proof-coach/answers.md, the '## Dump chunk 1' section verbatim>>
@@ -1576,6 +1588,7 @@ input = '''[turn 1] Start
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)3 lines you just said that are worth money''',
   '''(?i)\(recommended\)''',
   '''(?i)you earn from (3|three) things''',
@@ -1587,6 +1600,7 @@ regex = [
   '''(?m)^\W*YOUR SYSTEM:''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^\W*[1-7][.):]?\s+(?:who|their words|old way|best result|your way|how you(?:'|’)ll work)\b''',
   '''(?i)you know a lot|months of content|nothing (gets |is |will be )?thrown away''',
   '''(?i)\bfix (any line|[1-7])\b''',

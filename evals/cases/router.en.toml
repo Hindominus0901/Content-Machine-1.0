@@ -110,12 +110,12 @@ contains = []
 not_contains = []
 regex = [
   '''\A\s*◆ Step 1/10 · [^\n]*\n\s*Have: ✓ instructions''',
-  '''(?i)about 25 min''',
-  '''(?i)the ONE thing you(?:'|’)ll be known for''',
+  '''(?i)about 12 min''',
+  '''(?i)Send what you have''',
   '''NEXT →[^\n]*\s*\Z''',
 ]
 not_regex = [
-  '''(?i)about 30 min|empty your head''',
+  '''(?i)about (?:25|30) min|empty your head''',
   '''(?i)weekly talk''',
   '''(?i)\b(today(?:'|’)s piece|my numbers|plan next month)\b''',
   '''WHY THIS GETS CLIENTS''',
@@ -2680,7 +2680,7 @@ regex = [
   '''(?m)^\W*WHAT YOU SAY:''',
   '''(?m)^\W*HOW YOU SAY IT:''',
   '''for the machine, no need to read''',
-  '''Save this so I remember you \(30 s\)\.''',
+  '''Save this so I remember you\.''',
   '''NEXT →[^\n]*['‘’"“]?next\b[^\n]*\s*\Z''',
 ]
 not_regex = [

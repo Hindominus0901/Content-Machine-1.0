@@ -119,7 +119,7 @@ class RunPackets(TempRepo):
         self.assertEqual([d.name for d in made], ["p2-day0-en-test-coach-S1-r1", "p2-day0-en-test-coach-S1-r2"])
         meta = json.loads((made[0] / "meta.json").read_text(encoding="utf-8"))
         self.assertEqual(meta, {"persona": "en/test-coach", "edition": "en", "lane": "S1", "build_sha": "abc123",
-                                "suite": "day0", "repeat": 1})
+                                "suite": "day0", "repeat": 1, "protocol": "v14"})
         kit = sorted(p.name for p in (made[0] / "packet" / "kit").iterdir())
         self.assertEqual(kit, ["1-INSTRUCTIONS.txt", "CONTENT-MACHINE-EN.md"])
         coach = (made[0] / "packet" / "COACH.md").read_text(encoding="utf-8")
@@ -170,27 +170,22 @@ class RunPackets(TempRepo):
             self.assertIn("reading time goes on their next turn", text)
         self.assertIn("Write each machine turn once; never run `grade` or a leak scan on a draft.", readme)   # P13
         self.assertIn("A draft that used a persona fact\n  stays as written and fails the run", readme)
-        self.assertIn("If the dump prompt asks where you post and about your list", coach)       # VP-2
-        self.assertIn("add it as one sentence at the end of chunk 1", coach)
+        self.assertIn("If it asks where you post and about your list", " ".join(coach.split()))       # VP-2
+        self.assertIn("add the answer as one sentence at the end", " ".join(coach.split()))
 
     def test_protocol_long_chunks_go_in_two_sends(self):
         """Retest VG3/G4 §8 P10: a dump chunk over about 400 words is two sends, split at a paragraph, as the dump
         prompt asks (first sends of 595-871 words made the early win late and the consultant's film-ready 20.3)."""
         made = self.packets()
         step2 = " ".join((made[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
-        self.assertIn("A chunk over about 400 words (VN tiếng) goes in two sends, split at a paragraph, as the dump "
-                      "prompt asks.", step2)
-        self.assertIn("one coach turn per send", step2)
+        self.assertIn("a chunk over about 400 words goes in two sends, split at a paragraph", step2)
         self.assertNotIn("one coach turn each", step2)
 
-    def test_protocol_first_send_ends_by_300_words(self):
-        """Retest VG5/G6 §8 P16: chunk 1's first send ends by about 300 words (VN tiếng), about 3 minutes, as the dump
-        prompt says "every 2–3 minutes" (Erin's 425-word first send took 4.3 min and made the early win a warning)."""
+    def test_protocol_first_send_is_one_talk(self):
+        """v14 (was VG5/G6 §8 P16): the first send is one talk of 3–5 minutes (setup.start), about 450–750 words (Erin's 425-word first send took 4.3 min and made the early win a warning)."""
         step2 = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
-        self.assertIn("Chunk 1's first send ends by about 300 words (VN tiếng), about 3 minutes of talk, at a paragraph "
-                      "or sentence end, as the dump prompt says \"every 2–3 minutes\"; the rest of chunk 1 is the next "
-                      "send (P16).", step2)
-        self.assertIn("A chunk over about 400 words (VN tiếng) goes in two sends", step2)       # P10 still holds
+        self.assertIn("the first `## Dump chunk` of `answers.md` verbatim as one talk of 3–5 minutes (about 450–750 words", step2)
+        self.assertIn("a chunk over about 400 words goes in two sends", step2)       # P10 still holds
 
     def test_session_turn_cap_per_edition(self):
         """Retest VG5/G6 §8 G43: the coach side stops after the session budget + 4 turns, VN from session_max_turns_vn
@@ -210,20 +205,20 @@ class RunPackets(TempRepo):
         en = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
         self.assertIn("or after 20 coach turns.", en)
 
-    def test_coach_script_follows_the_strategy_first_order(self):
-        """The coach side is told what the machine now does (v13.5 order; audit a3 H4): it interviews (<= 6 questions,
-        one a reply, no 90-day goal, no hours question), proposes the strategy in up to 3 replies with no piece, each
-        OK'd, prints FILM TODAY alone after the last OK; the coach says 'next' as if filmed for the card + Week-1 table,
-        and once more for the first Week-1 piece; the hub question never comes on Day 0."""
+    def test_coach_script_follows_the_v14_order(self):
+        """The coach side is told what the v14 machine does (reply protocol, fast Day 0): setup step 1 asks for what they
+        have, no interview, the strategy in ONE reply with at most three A/B/C picks ("ok" takes the recommended ones), FILM
+        TODAY alone after the OK about 12 minutes in, 'next' for the card + Week-1 table, then one Week-1 piece; every machine
+        reply opens with the two status lines and ends on NEXT; the hub question never comes on Day 0."""
         coach = " ".join((self.packets()[0] / "packet" / "COACH.md").read_text(encoding="utf-8").split())
-        for fragment in ("Day 0 is strategy first", "INTERVIEWS you about your side", "at most 6 questions, one a reply",
-                         "Your hours a week are no interview question", "proposes your STRATEGY in up to 3 replies and no piece",
-                         "OK each step", "does it print FILM TODAY, alone in its reply",
-                         "say \"next\" as if you had filmed it", "prints the Brand Card, its save line and the WEEK 1 table",
-                         "never on Day 0", "a piece that comes before your OK is a kit break to note",
-                         "note the re-ask in notes.md"):
+        for fragment in ("opens setup step 1", "3–5 min", "has NO interview", "in ONE reply (setup step 3)",
+                         "at most three A/B/C picks", "\"ok\" takes every recommended one",
+                         "prints TODAY'S PIECE", "about 12 minutes", "say \"next\" as if you had filmed it",
+                         "prints the Brand Card, its save line and the WEEK 1 table", "never on Day 0",
+                         "A piece before your OK is a kit break to note", "two status lines", "NEXT line"):
             self.assertIn(fragment, coach)
-        for stale in ("Accept the Map", "90-day goal", "in one reply and no piece", "FILM TODAY and Week 1"):
+        for stale in ("Accept the Map", "90-day goal", "INTERVIEWS you about your side", "up to 3 replies and no piece",
+                      "at most 6 questions", "note the re-ask in notes.md", "FILM TODAY and Week 1"):
             self.assertNotIn(stale, coach)
         machine = (self.packets(web=True, tag="w")[0] / "packet" / "MACHINE.md").read_text(encoding="utf-8")
         self.assertIn("The pass starts after the coach's first send", machine)
@@ -274,6 +269,7 @@ class RunPackets(TempRepo):
         self.assertNotIn("FILM TODAY", coach)                  # assertions never reach the simulator
         meta = json.loads((made[0] / "meta.json").read_text(encoding="utf-8"))
         self.assertEqual(meta["case"], "message.en.001")
+        self.assertEqual(meta["protocol"], "v14")
         with self.assertRaisesRegex(run.RunError, "not found"):
             self.packets(suite="cases", module="message", case_ids=["message.en.999"])
 

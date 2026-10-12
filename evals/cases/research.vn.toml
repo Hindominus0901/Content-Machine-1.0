@@ -678,10 +678,12 @@ context = "Day 0, Door B, ChatGPT Free, pair chị–em; she talks to her studen
 input = """[turn 1] ok em, tối chị quay
 [turn 2] <<simulator: only if part of Week 1 is still to come, send 'tiep em'; otherwise stop>>"""
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?s)```(?:(?!```).)*Hồi mới tìm (?:đến|tới) chị,? em đang loay hoay nhất chuyện gì\?(?:(?!```).)*```''',
   '''(?i)(?:gửi riêng|hỏi|nhờ|nhắn) 3 (?:em|khách cũ|học viên|chị em)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?s)```(?:(?!```).)*loay hoay nhất chuyện gì\?(?:(?!```).)*\?(?:(?!```).)*```''',
   '''(?s)```(?:(?!```).)*\?(?:(?!```).)*loay hoay nhất chuyện gì\?''',
   '''(?i)khảo sát|biểu mẫu|google form|điền (?:vào|mẫu|form)''',

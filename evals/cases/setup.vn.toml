@@ -113,7 +113,7 @@ not_contains = ["✓ file phương pháp"]
 regex = [
   '\A◆ Bước 1/10 · [^\n]*\n\s*Đã có: ✓ hướng dẫn',
   '(?i)anh, chị hay bạn',
-  '''(?i)khoảng (?:25|30) phút''',
+  '''(?i)khoảng 12 phút''',
 ]
 not_regex = [
   '(?i)(tải|đính kèm|upload|thêm|gắn)\s+(lại\s+)?(file|tệp)[^.\n]{0,40}(ngay|bây giờ|trước khi|rồi mới)',
@@ -128,25 +128,25 @@ id = "setup.vn.003"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S0", "S1", "floor"]
-title = "Reply 1: the 3-line promise and the xưng hô question in a neutral pronoun; the dump prompt waits for reply 2"
+title = "Reply 1 (bước 1/10): the 12-minute promise, setup.start and the xưng hô question in a neutral pronoun"
 context = "Door A (S1) or block only (S0), ChatGPT Plus on a Windows laptop. New chat. Nothing said yet."
 input = """Bắt đầu"""
-contains = ["Hôm nay mình làm 3 việc", "đúng một điều để khách nhớ bạn", "video quay được hôm nay", "kèm bài cả tuần đầu", "anh, chị hay bạn", "gõ 1 chữ"]
+contains = ["Khoảng 12 phút", "Có gì cứ gửi: link, bài cũ, file, hoặc nói 3–5 phút", "anh, chị hay bạn"]
 regex = [
-  '''(?i)khoảng (?:25|30) phút''',
-  '''(?i)kể chuyện nghề 5[–-]10 phút''',
+  '''\A\s*◆ Bước 1/10 · [^\n]*\n\s*Đã có: ✓ hướng dẫn''',
+  '''(?i)khoảng 12 phút''',
   '''Mình nên gọi là anh, chị hay bạn cho tiện\?''',
 ]
 not_regex = [
   '(?<!\w)([Cc]hị|[Aa]nh)\s+(bấm|nói|kể|cứ|gõ|xả)(?!\w)',
   '(?<!\w)[Ee]m\s+(sẽ|tìm|lo)(?!\w)',
-  '''MỘT điều''',
+  '''(?i)khoảng (?:25|30) phút|kể chuyện nghề 5[–-]10 phút''',
   '''(?i)xả hết ra''',
 ]
 invariants = ["I1", "I4", "I5", "I15", "I17"]
 max_words = 170
 max_questions = 1
-notes = "start-block NGÀY 0 step 1: 'Hôm nay mình làm 3 việc, khoảng 30 phút: 1) Bạn kể chuyện nghề 5–10 phút. 2) Mình tìm ra đúng một điều để khách nhớ bạn. 3) Bạn có ngay một video quay được hôm nay, kèm bài cả tuần đầu.' + mic tip, then the xưng hô question (XƯNG HÔ). The naturalness pass replaced 'MỘT điều' with 'đúng một điều' (B3). The VN block still says 'khoảng 30 phút' where R14 / EN say 25 min, so the regex takes either (flagged to the kit owner). The dump prompt is reply 2 in VN (step 2), so 'xả hết ra' here is out of order. Quit point 15 'xưng hô asked late'. Until the coach answers, the machine speaks mình–bạn; addressing her as chị or speaking as em before she chose is a slip."
+notes = "v14 (12 Oct 2026): reply 1 is bước 1/10: 'Khoảng 12 phút nữa là có bài đầu tiên. Có gì cứ gửi: link, bài cũ, file, hoặc nói 3–5 phút…' + the xưng hô question; no interview. Older text, kept for history: start-block NGÀY 0 step 1: 'Hôm nay mình làm 3 việc, khoảng 30 phút: 1) Bạn kể chuyện nghề 5–10 phút. 2) Mình tìm ra đúng một điều để khách nhớ bạn. 3) Bạn có ngay một video quay được hôm nay, kèm bài cả tuần đầu.' + mic tip, then the xưng hô question (XƯNG HÔ). The naturalness pass replaced 'MỘT điều' with 'đúng một điều' (B3). The VN block still says 'khoảng 30 phút' where R14 / EN say 25 min, so the regex takes either (flagged to the kit owner). The dump prompt is reply 2 in VN (step 2), so 'xả hết ra' here is out of order. Quit point 15 'xưng hô asked late'. Until the coach answers, the machine speaks mình–bạn; addressing her as chị or speaking as em before she chose is a slip."
 
 [[case]]
 id = "setup.vn.004"
@@ -315,7 +315,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "QUAY HÔM NAY alone after the strategy's OK: beat card from her own story, caption and gift boxes, quiet option, nothing printed under the piece"
-context = "Helper-installed Door A (Linh set it up on the shop computer; Hạnh uses the ChatGPT phone app). Pair chị–em; her audience address is chị – các em. Dump chunks 1-2 sent (past ~1,200 tiếng, so the soft cut followed chunk 2); the multi-income question was answered in the interview (the spa feeds the family; content is for the lớp kèm). The interview is done and the strategy came in its pre-filled steps (TỪ KHOÁ: NGẠI CHÀO), each OK'd; the last one ended '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. She cannot read word for word ('chị nói theo ý chị')."
+context = "Helper-installed Door A (Linh set it up on the shop computer; Hạnh uses the ChatGPT phone app). Pair chị–em; her audience address is chị – các em. Dump chunks 1-2 sent (past ~1,200 tiếng, so the soft cut followed chunk 2); the multi-income question was answered in the interview (the spa feeds the family; content is for the lớp kèm). The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (TỪ KHOÁ: NGẠI CHÀO); the last one ended '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. She cannot read word for word ('chị nói theo ý chị')."
 input = '''Đúng rồi em, ok. Chị nói theo ý chị thôi nhé.'''
 regex = [
   '''QUAY HÔM NAY''',
@@ -569,6 +569,7 @@ title = "No stop point (v13.5): QUAY HÔM NAY stands alone; 'tiếp' brings the 
 context = "Door A, ChatGPT Plus on the laptop, pair chị–em. Day 0, about minute 21: the strategy was OK'd and the last reply was QUAY HÔM NAY alone (script box, caption box, the machine's gift box, 'Quay luôn bây giờ, hoặc đăng phần chữ làm bài viết.', one line 'Cần chị · chị có sẵn quà chưa? …', TIẾP 'quay xong nhắn tiếp'). She answers without pasting a gift (setup.kit-order 9, start-block steps 6-8)."
 input = """[turn 1] chưa có quà em ơi, tiếp"""
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
   '''Brand Card v1\b[\s\S]{0,900}?Phần còn lại là cho máy, không cần đọc:''',
@@ -578,6 +579,7 @@ regex = [
   '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?quay lại đoạn chat này, nhắn ['"“‘]tiếp['"”’]''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)Hôm nay xong rồi''',
   '''(?i)nhớ được bạn|đợi bạn|Cần bạn ·''',
   '''\[CẦN BẠN|\[anh/chị\]''',
@@ -819,7 +821,7 @@ input = '''quay xong rồi, tiếp em'''
 contains = [
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
-  '''Lưu lại để em nhớ chị (30 giây)''',
+  '''Lưu lại để em nhớ chị''',
   '''quay lại đoạn chat này''',
 ]
 regex = [
@@ -981,15 +983,16 @@ id = "setup.vn.044"
 kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S0", "S1", "floor"]
-title = "Whole run, impatient multi-income coach: strategy after the interview, QUAY HÔM NAY alone after the OK, the card + Tuần 1 table on 'tiếp', within the turn budget"
+title = "Whole run, impatient multi-income coach: strategy in one reply (no interview), QUAY HÔM NAY alone after the OK, the card + Tuần 1 table on 'tiếp', within the turn budget"
 context = "Whole run, Day 0, persona default: Door A on the laptop, dumps from the iPhone app, ChatGPT Plus (t_min and away_min on every turn). Graded on every machine reply."
 input = '''[turn 1] Bắt đầu
 [turn 2] anh
 [turn 3] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 1' section verbatim>>
 [turn 4] <<paste: tuan-multihat-plus/written-posts.md, the '## W1' and '## W2' section bodies verbatim, without their headings>>
 [turn 5] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 2' section verbatim>>
-[turn 6] <<simulator: past ~1,200 tiếng the soft cut follows chunk 2; then the interview, one answer per question from the answer bank (the multi-income line, now A/B: he picks bảo hiểm, 'Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11.'); then 'ok' to each strategy step; after QUAY HÔM NAY, 'quay xong, tiếp'. Stop after Day 0's last reply (Brand Card + save line + the Tuần 1 table + TIẾP).>>'''
+[turn 6] <<simulator: past ~1,200 tiếng the soft cut follows chunk 2; then (v14: no interview) one short answer to the strategy's A/B/C picks from the answer bank (the multi-income pick: he picks bảo hiểm, 'Đều đều thì bảo hiểm. Mà tháng này anh cần chốt căn 2 tỷ 68, hợp đồng môi giới tới 30/11.'); then 'ok' to the strategy (one reply); after QUAY HÔM NAY, 'quay xong, tiếp'. Stop after Day 0's last reply (Brand Card + save line + the Tuần 1 table + TIẾP).>>'''
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)3 câu đáng tiền anh vừa nói:''',
   '''(?s)```[^`]{6,}?```\W*Câu này hôm nay (?:(?:chị|anh|bạn) )?đăng luôn cũng được(?:[^\S\n]+\w+){0,2}[.!]''',
   '''(?s)Hôm nay vậy là đủ rồi[^.\n]{0,12}\..{0,200}?Còn chuyện nào thì[^\n]{0,8}kể luôn, không thì''',
@@ -999,13 +1002,14 @@ regex = [
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
   '''Phần còn lại là cho máy, không cần đọc:''',
-  '''Lưu lại để em nhớ anh \(30 giây\)''',
+  '''Lưu lại để em nhớ anh''',
   '''TIẾP →[^\n]*Mai (?:(?:chị|anh|bạn|em) )?quay lại đoạn chat này, nhắn ['"“‘]tiếp['"”’]''',
   '''[Cc]hạy thử 4 tuần[^\n]{0,24}OK hay sửa một dòng\?''',
   '''(?m)^\W*TRỤ CỘT NỘI DUNG:''',
   '''(?m)^\s*\|[^\n]*\|[^\n]*\n\s*\|[\s:|-]+\|''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?m)^\W*(?:VÌ SAO RA KHÁCH|✓ Đã kiểm:|Sẵn sàng (?:quay|đăng|gửi) ·|Bản nháp ·)''',
   '''(?i)biết nhiều thật|6 tháng content|không bỏ (?:gì|phí)''',
   '''(?m)^\W*(?:[1-7]\W{1,3})?(?:Lời của họ|Cách cũ|Kết quả tốt nhất|Cách của anh)\s*:''',
@@ -1175,7 +1179,7 @@ input = """[turn 1] ok. Tôi không quay video đâu, tôi viết thôi.
 regex = [
   '''Viết cho [^\n]{2,80}hằng tuần kể 15 phút cho tuần sau · danh sách Zalo[^\n()]{1,50}\(chưa nghe thì em đoán, [^\n)]{0,12}gõ một chữ là đổi\)''',
   '''(?i)list_size\s*[=:]\s*ask\b''',
-  '''Lưu lại để em nhớ anh \(30 giây\)''',
+  '''Lưu lại để em nhớ anh''',
 ]
 not_regex = [
   '''(?i)list_size\s*[=:]\s*0\b''',
@@ -1253,7 +1257,7 @@ regex = [
   '''NÓI GÌ:''',
   '''NÓI THẾ NÀO:''',
   '''Phần còn lại là cho máy, không cần đọc:''',
-  '''Lưu lại để em nhớ anh \(30 giây\)''',
+  '''Lưu lại để em nhớ anh''',
   '''(?i)Add text content''',
   '''TIẾP →[^\n]*['"“‘]tiếp['"”’]''',
 ]

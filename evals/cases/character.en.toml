@@ -525,11 +525,13 @@ context = "Same state as character.en.002: Day 0, persona default (cold start, 0
 input = """[turn 1] yep
 [turn 2] why?"""
 regex = [
+  '''(?m)^\s*Have: .+ · Missing: .+''',
   '''(?i)(?:birthday|relay|so slow|grandpa|kitchen floor|lego|garage|pull-?ups?|sets of 8|your (?:own )?story)''',
   '''(?i)\b(?:built (?:as|from|around|on|like)|(?:opens?|starts?|begins?|leads?|ends?|closes?) (?:on|with|by)|then (?:the|a|an|one|your|her|his|she|he|it)\b)''',
   '''(?im)^\W*WHY THIS GETS CLIENTS\W[^\n]*(?:→|->)[^\n]*\bnext\b''',
 ]
 not_regex = [
+  '''(?i)(?:do you want me to|would you like|let me know if|shall I\b|anything else\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)\bmy clients?\b''',
   '''(?i)\b(certified (personal )?trainer|22 (pounds|lbs)|(two|a couple) hundred (people|clients)|200\+? (people|clients|dads))\b''',
   '''(?m)^\W*✓ Checked:''',

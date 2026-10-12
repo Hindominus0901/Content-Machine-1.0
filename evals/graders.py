@@ -135,6 +135,13 @@ the coach's hours, the "Idea, hook" column and no idea twice, FILM TODAY's one i
 week 2). Week 1 is every piece after the strategy up to week 2 (week1_replies): in the v13.5 order the pieces come one per
 'next' after the Brand Card + Week-1 table, and the Week-1 items read them there. deny_list adds Matt Gray's framework names
 (MATT_GRAY_NAMES, as tools/lint.py E142) to the locale's list.
+v14 (reply protocol, 10-step setup, fast Day 0; meta.json "protocol": "v14", written by evals/run.py): reply_protocol reads the
+two status lines of every reply ("◆ Step n/10 · … · why: …" or "◆ Week n · Day d · …", then "Have: … · Missing: …"; Reply.status_kind /
+status_n / status_day; Reply.step is the step name alone), step numbers never going back, the banned endings in the last 2 talk lines,
+the last NEXT line as an action, Situation / Problem / Fix on a reported block, the strategy in one reply with at most
+strategy_picks_max A/B/C picks and no interview question on Day 0. day0_timing reports the minutes, coach words and coach turns to
+the first piece (warn above film_ready_warn_minutes 12, fail above film_ready_max_minutes 18). Runs without the protocol key are read
+with acceptance [day0_legacy] over [day0] (the older budgets).
 Status is pass | fail | warn | n/a | not_run; "pass" is null when the check did not run; "warn" passes with
 "warnings" or "confusions" to read.
 """
@@ -169,6 +176,32 @@ POST_PASTE_LABEL_RE = re.compile(r"\bready to paste\b|\b(?:post|caption|reply|in
                                  r"|(?<!\w)(?:bài viết|đăng|tin trả lời|quà|cmt)(?!\w)", re.I)
 TAG_RE = re.compile(r"^◆\s*(.+?)\s*·\s*(.+?)\s*$")
 LABEL_RE = re.compile(r"^N\d+\b")
+# v14 reply protocol (strings status.step, status.week, status.have, status.situation / problem / fix; kit K-notes):
+# line 1 "◆ Step n/10 · <step> · why: <why>" (VN "◆ Bước n/10 · … · vì sao: …") during setup, "◆ Week n · Day d · <step> · why: <why>"
+# (VN "◆ Tuần n · Ngày d · …") after step 10; line 2 "Have: … · Missing: …" (VN "Đã có: … · Còn thiếu: …").
+_WHY = r"(?:why|vì sao)\s*:\s*(?P<why>\S.*)"
+STATUS_STEP_RE = re.compile(r"^◆\s*(?:Step|Bước)\s+(?P<n>\d{1,2})\s*/\s*10\s*·\s*(?P<step>.+?)\s*·\s*" + _WHY + "$", re.I)
+STATUS_WEEK_RE = re.compile(r"^◆\s*(?:Week|Tuần)\s+(?P<n>\d+)\s*·\s*(?:Day|Ngày)\s+(?P<d>\d+)\s*(?:·\s*(?P<step>.+?)\s*)?·\s*"
+                            + _WHY + "$", re.I)
+HAVE_RE = re.compile(r"^(?:Have|Đã có)\s*:\s*\S.*·\s*(?:Missing|Còn thiếu)\s*:\s*\S", re.I)
+# Banned endings (kit BANNED ENDINGS): an offer or a permission question where the next action should be.
+BANNED_END_RES = {
+    "en": re.compile(r"\b(?:do you want me to|would you like|let me know if|if you need\b.*\bjust\b|shall i\b|anything else\?)", re.I),
+    "vn": re.compile(r"(?<!\w)(?:(?:bạn|anh|chị|em)\s+có muốn|nếu cần.*cứ nói|cần (?:mình|em)\b.*không\?)", re.I),
+}
+# A NEXT line that asks permission instead of naming the action ("Want me to draft it?", "Bạn có muốn mình viết không?").
+PERMISSION_START_RES = {
+    "en": re.compile(r"^\W*(?:want me to|do you want|would you like|shall i|should i|can i|may i|is it ok|ok if|want to|ready to|are you ready)\b", re.I),
+    "vn": re.compile(r"(?<!\w)(?:có muốn|muốn mình|cần mình|được không|có cần mình|để mình[^?]*không)(?!\w)", re.I),
+}
+# A reply that reports a block (a page it could not open, a hard stop) carries Situation / Problem / Fix, a line each, in order.
+BLOCK_RES = {
+    "en": re.compile(r"\b(?:I|we)\s+(?:can'?t|cannot|couldn'?t|could not|was(?:n'?t| not) able to|am(?:n'?t| not) able to)\s+(?:open|read|reach|load|access|see|fetch)\b"
+                     r"|\b(?:page|link|site|file)\s+(?:is |was )?(?:blocked|private|behind a login|unreadable)\b|\bhard stop\b", re.I),
+    "vn": re.compile(r"(?<!\w)(?:mình|em|tôi|tui|máy)\s+(?:chưa |không |khó )?(?:mở|đọc|vào|truy cập|xem|tải) được(?!\w)"
+                     r"|(?<!\w)(?:trang|link|liên kết|file|tệp)\s+(?:này |đó )?bị chặn(?!\w)|(?<!\w)dừng cứng(?!\w)", re.I),
+}
+SITUATION_KEYS = {"en": ("Situation", "Problem", "Fix"), "vn": ("Tình hình", "Vấn đề", "Cách xử lý")}
 # The coach's "why?" (cmd.why) and its close variants about the last piece: "why this one?", "why N2?", "why that
 # hook?", "tại sao?", "vì sao chọn bài này?". A why-question about anything else ("why do people even watch reels?",
 # "Why can't I talk about TRT?", "tại sao dạo này ai cũng quay video dọc?") is a question, not the command.
@@ -701,6 +734,9 @@ class Reply:
     kinds: dict[int, str] = field(default_factory=dict)    # status line index -> verdict kind
     machine_at: list[int] = field(default_factory=list)    # where each machine block sat (a line index)
     strategy_at: int = -1          # the first labelled line of a strategy proposal (3+ of its labels), else -1
+    status_kind: str = ""          # v14: "step" (◆ Step n/10 · …) or "week" (◆ Week n · Day d · …) when line 1 is the status line
+    status_n: int = 0              # v14: the setup step n (kind "step") or the week n (kind "week")
+    status_day: int = 0            # v14: the day d of a week status line
 
     def visible(self, blocks=("", "copy", "paste")) -> str:
         return "\n".join(ln.text for ln in self.lines if ln.block in blocks and not ln.fence)
@@ -907,6 +943,13 @@ def analyse_reply(turn: Turn, index: int, matcher: Matcher) -> Reply:
         m = TAG_RE.match(lines[first].plain)
         if m:
             r.step, r.tag_at = m.group(2), first
+            sm = STATUS_STEP_RE.match(lines[first].plain)
+            wm = None if sm else STATUS_WEEK_RE.match(lines[first].plain)
+            if sm:      # v14: "Step 3/10" is the setup counter, not a strategy sub-step; the "why" never names the step
+                r.status_kind, r.status_n, r.step = "step", int(sm.group("n")), sm.group("step")
+            elif wm:
+                r.status_kind, r.status_n, r.status_day = "week", int(wm.group("n")), int(wm.group("d"))
+                r.step = wm.group("step") or ""
     for i, ln in enumerate(lines):
         if ln.block or ln.fence or not ln.plain:
             continue
@@ -981,6 +1024,12 @@ class Run:
     kit: str = ""          # kit wording as " token token … ": rendered strings + the packet's instruction block
 
     @property
+    def v14(self) -> bool:
+        """A v14 run (meta.json "protocol": "v14", written by evals/run.py): the reply protocol, the 10-step setup and the
+        fast Day 0. Without it a run is graded as before v14 (acceptance [day0_legacy] over [day0])."""
+        return str(self.meta.get("protocol", "")).lower() == "v14"
+
+    @property
     def is_day0(self) -> bool:
         return self.meta.get("suite") == "day0" or any(day0_step(self, r) == "map" for r in self.replies)
 
@@ -1023,8 +1072,11 @@ def load_run(run_dir: Path, root: Path) -> Run:
         r.after_why = is_why_ask(last_coach, strings)
         r.after_check = bool(CHECK_ASK_RE.search(last_coach))
         replies.append(r)
+    acceptance = _toml(root / "evals" / "acceptance.toml")
+    if str(meta.get("protocol", "")).lower() != "v14" and isinstance(acceptance.get("day0_legacy"), dict):
+        acceptance["day0"] = {**acceptance.get("day0", {}), **acceptance["day0_legacy"]}      # runs before v14 keep their budgets
     return Run(root, run_dir, meta, turns, replies, persona, expected, texts, strings, params,
-               _toml(root / "evals" / "acceptance.toml"), lang, matcher, kit_tokens(run_dir, strings))
+               acceptance, lang, matcher, kit_tokens(run_dir, strings))
 
 
 def kit_tokens(run_dir: Path, strings: dict) -> str:
@@ -1639,6 +1691,14 @@ def private_asks_in_public(run: Run, r: Reply) -> list[str]:
     return out
 
 
+def _picks_allowed(run: Run, r: Reply) -> int:
+    """Questions / decisions one reply may ask: 1, but v14's strategy reply (setup step 3, one reply) holds up to
+    [day0] strategy_picks_max A/B/C picks (who, offer, hours), then the one map.ok."""
+    if run.v14 and _is_map_reply(run, r):
+        return max(1, int(run.acceptance.get("day0", {}).get("strategy_picks_max", 3)))
+    return 1
+
+
 def i5_questions(run: Run) -> dict:
     """At most 1 question per reply to the coach: questions in the machine's talk (prose and the NEXT line); a
     piece's own questions are its audience's, except a private ask printed inside a public piece
@@ -1646,7 +1706,7 @@ def i5_questions(run: Run) -> dict:
     ev = []
     for r in run.replies:
         qs = reply_questions(r) + private_asks_in_public(run, r)
-        if len(qs) > 1:
+        if len(qs) > _picks_allowed(run, r):
             ev.append(f"{_turn(r)}: {len(qs)} questions: " + " | ".join(_short(q, 50) for q in qs))
     return result("I5", "At most 1 question per reply", ev)
 
@@ -1881,7 +1941,7 @@ def i6_decisions(run: Run) -> dict:
     ev = []
     for r in run.replies:
         asks = reply_choices(r, matcher, map_topics(run, r.index))
-        if len(asks) > 1:
+        if len(asks) > _picks_allowed(run, r):
             ev.append(f"{_turn(r)}: {len(asks)} decision prompts in one reply: " + "; ".join(asks))
     return result("I6", "At most 1 real decision per reply", ev, proxy=True)
 
@@ -4495,6 +4555,8 @@ def _is_map_reply(run: Run, r: Reply) -> bool:
     if r.step and MAP_STEP_RE.search(r.step):
         return True
     n = len(map_lines(run, r))
+    if r.status_kind == "step" and r.status_n == 3 and n >= 1:
+        return True                      # v14: setup step 3 is the strategy, in one reply (the counter is no sub-step)
     if r.step and STRATEGY_PART_STEP_RE.search(r.step) and n >= 1:
         return True                      # "Bước 2/3 · Tuyến bài, tỷ lệ, hệ thống" with its labels: one of the 3 pre-filled steps
     if r.step and STRATEGY_STEP_RE.search(r.step) and n >= 2:
@@ -4821,6 +4883,13 @@ def _over_budget(run: Run, reply: Reply, active: float, limit: float, what: str)
     return [note], []
 
 
+def coach_words_before(run: Run, index: int) -> int:
+    """The coach's own words in the turns before transcript position `index` (pasted posts left out): the talk a
+    Day-0 coach spends before the first piece (v14 target: one 3-5 minute talk, about 450-750 words)."""
+    return sum(ck.count_words(coach_words(run, t.text), run.lang) for t in run.turns[:index]
+               if t.role == "coach" and not t.third_party)
+
+
 def check_day0(run: Run) -> dict:
     """wf15 §3 budgets, for the strategy-first order (founder, 7 Oct night; v13.5, 10 Oct: xưng hô, dump, interview, the
     strategy in up to 3 replies, FILM TODAY alone only after its OK, then the Brand Card + Week-1 table): the strategy within map_max_turns coach turns
@@ -4912,10 +4981,19 @@ def check_day0(run: Run) -> dict:
         cut = dump_cut(run, film_reply)
         if cut:
             details["dump_cut"] = cut
+        # v14 (fast Day 0): the first piece's minutes and the coach's own words and turns before it are measured and reported;
+        # film_ready_warn_minutes (12: the target) warns, film_ready_max_minutes (18) fails; 0 / no key = no warning
+        details["first_piece_coach_words"] = coach_words_before(run, film_reply.index)
+        warn_at = float(day0.get("film_ready_warn_minutes", 0) or 0)
         if active is not None and active > limit:
             fail, warn = _over_budget(run, film_reply, active, limit, "film-ready")
             ev += fail
             warnings += warn
+        elif active is not None and warn_at and active > warn_at:
+            warnings.append(f"first piece at active minute {active:g} (target {warn_at:g}, fail above {limit:g})")
+        turns_max = int(day0.get(f"first_piece_max_coach_turns_{run.meta['edition']}", day0.get("first_piece_max_coach_turns", 0)) or 0)
+        if turns_max and details["film_ready_coach_turns"] > turns_max:
+            warnings.append(f"{details['film_ready_coach_turns']} coach turns to the first piece (target {turns_max})")
     else:
         ev.append("no film-ready step reached")
     # the session's coach turns: a turn of only their own pasted posts is not counted here either (G31, wf14 V3).
@@ -5084,9 +5162,11 @@ def dig_like(strings: dict, text: str, share: float | None = None, lang: str = "
 
 
 def dump_prompt(run: Run) -> Reply | None:
-    """The reply that invites the dump (setup.dump_posts), else the setup check's (setup.check, setup.check_compact)."""
+    """The reply that invites the dump (setup.dump_posts, or since v14 setup.start), else the setup check's (setup.check,
+    setup.check_compact)."""
     matcher = run.matcher or Matcher(run.strings, run.lang)
-    return next((r for r in run.replies if matcher.says("setup.dump_posts", r.text)), None) or \
+    return next((r for r in run.replies if any(matcher.says(k, r.text) for k in ("setup.dump_posts", "setup.start")
+                                               if k in run.strings)), None) or \
         next((r for r in run.replies if any(matcher.says(k, r.text) for k in ("setup.check", "setup.check_compact"))),
              None)
 
@@ -5890,6 +5970,130 @@ def check_running_tag(run: Run) -> dict:
                         + ", ".join(f"turn {t}" for t in missing)]
     return {"id": "running_tag", "pass": ok, "status": "pass" if ok else "fail", "evidence": ev,
             "details": {"tagged": n - len(missing), "replies": n}}
+
+
+# ---------------------------------------------------------------- v14: the reply protocol
+
+BANNED_TAIL_LINES = 2           # a banned ending counts in the last 2 lines of a reply (the machine's talk)
+
+
+def _talk_lines(r: Reply) -> list[int]:
+    """Indexes of a reply's non-empty lines outside copy / paste / machine blocks and fences: what the machine says."""
+    return [i for i, ln in enumerate(r.lines) if ln.plain and not ln.block and not ln.fence]
+
+
+def rank_of(r: Reply) -> int:
+    """Where a reply's status line sits in the order: the setup step n (1-10), a week status 11, none 0."""
+    return r.status_n if r.status_kind == "step" else (11 if r.status_kind == "week" else 0)
+
+
+def banned_endings(run: Run, r: Reply) -> tuple[list[str], list[str]]:
+    """(in the last 2 talk lines, elsewhere in the talk): the banned-ending phrases a reply holds."""
+    pat = BANNED_END_RES[run.lang]
+    idx = _talk_lines(r)
+    tail = set(idx[-BANNED_TAIL_LINES:])
+    hit_tail = [r.lines[i].plain for i in idx if i in tail and pat.search(r.lines[i].plain)]
+    hit_else = [r.lines[i].plain for i in idx if i not in tail and pat.search(r.lines[i].plain)]
+    return hit_tail, hit_else
+
+
+def next_line_problem(run: Run, r: Reply) -> str:
+    """"" when the reply's last talk line is a NEXT line that names an action; else what is wrong."""
+    idx = _talk_lines(r)
+    if not r.nexts:
+        return "no NEXT line"
+    if not idx or idx[-1] not in r.nexts:
+        return "NEXT is not the last line"
+    text = r.lines[idx[-1]].plain
+    body = re.sub(r"^\W*[^\W\d_]+\W*", "", text, count=1)              # without the "NEXT →" / "TIẾP →" prefix
+    if PERMISSION_START_RES[run.lang].search(body) and ("?" in text or text.rstrip(" .!").casefold().endswith("không")):
+        return "NEXT asks permission (" + _short(text, 50) + ")"
+    return ""
+
+
+def block_problem(run: Run, r: Reply) -> str:
+    """"" or what is missing when a reply reports a block (BLOCK_RES in its talk) or opens Situation / Problem / Fix: the
+    three lines, in order, one line each."""
+    keys = SITUATION_KEYS[run.lang]
+    idx = _talk_lines(r)
+    talk = [r.lines[i].plain for i in idx]
+    at = {k: [n for n, t in enumerate(talk) if re.match(rf"^\W*{re.escape(k)}\s*:", t, re.I)] for k in keys}
+    reports = any(BLOCK_RES[run.lang].search(t) for t in talk)
+    if not reports and not any(at.values()):
+        return ""
+    missing = [k for k in keys if not at[k]]
+    if missing:
+        return "reports a block without " + ", ".join(k + ":" for k in missing)
+    pos = [at[k][0] for k in keys]
+    if pos != sorted(pos) or any(len(at[k]) > 1 for k in keys):
+        return f"{' / '.join(keys)} not in order, one line each"
+    return ""
+
+
+def check_reply_protocol(run: Run) -> dict:
+    """v14 reply protocol (kit EVERY REPLY, K-notes): every machine reply opens with the 2 status lines (line 1
+    "◆ Step n/10 · … · why: …" or "◆ Week n · Day d · …", line 2 "Have: … · Missing: …"), step numbers never go
+    backwards, no banned ending in the last 2 talk lines (a warning elsewhere in the talk), a last NEXT line that names an
+    action and does not ask permission, Situation / Problem / Fix when a reply reports a block, the strategy in one reply
+    with at most [day0] strategy_picks_max A/B/C picks, no interview question (dig.*) on Day 0 (setup steps 1-7, Week 1
+    Day 1) and, from then on, at most one in a reply and none beside another ask. n/a for a run without meta protocol v14."""
+    if not run.v14:
+        return {"id": "reply_protocol", "pass": None, "status": "n/a", "evidence": ["not a v14 run (meta.json protocol)"]}
+    day0 = run.acceptance.get("day0", {})
+    ev, warnings, details = [], [], {}
+    last_rank, last_turn = 0, 0
+    for r in run.replies:
+        t = _turn(r)
+        if not r.status_kind:
+            ev.append(f"{t}: line 1 is not the status line (◆ Step n/10 · … · why: … or ◆ Week n · Day d · …)")
+        else:
+            if r.status_kind == "step" and not 1 <= r.status_n <= 10:
+                ev.append(f"{t}: step {r.status_n} is outside 1-10")
+            if rank_of(r) < last_rank:
+                ev.append(f"{t}: step goes backwards ({r.status_kind} {r.status_n} after turn {last_turn}'s rank {last_rank})")
+            last_rank, last_turn = max(last_rank, rank_of(r)), r.turn
+        nxt = next((i for i, ln in enumerate(r.lines) if ln.plain and i > max(r.tag_at, -1)), None)
+        if r.tag_at >= 0 and (nxt is None or not HAVE_RE.match(r.lines[nxt].plain)):
+            ev.append(f"{t}: line 2 is not Have: … · Missing: …")
+        tail, elsewhere = banned_endings(run, r)
+        if tail:
+            ev.append(f"{t}: banned ending: \"{_short(tail[-1], 60)}\"")
+        if elsewhere:
+            warnings.append(f"{t}: banned phrase in the talk: \"{_short(elsewhere[0], 60)}\"")
+        problem = next_line_problem(run, r)
+        if problem:
+            ev.append(f"{t}: {problem}")
+        block = block_problem(run, r)
+        if block:
+            ev.append(f"{t}: {block}")
+    # the strategy: one reply, at most strategy_picks_max A/B/C picks
+    steps = strategy_steps(run)
+    if len(steps) > int(day0.get("strategy_max_steps", 1)):
+        ev.append(f"the strategy came in {len(steps)} replies (max {day0.get('strategy_max_steps', 1)}: one reply)")
+    matcher = run.matcher or Matcher(run.strings, run.lang)
+    for r in steps:
+        picks = len(abc_choices(r))
+        details["strategy_picks"] = picks
+        if picks > int(day0.get("strategy_picks_max", 3)):
+            ev.append(f"{_turn(r)}: {picks} A/B/C picks in the strategy reply (max {day0.get('strategy_picks_max', 3)})")
+    # the question of the day: not on Day 0, one a reply, none beside another ask
+    asked = {r.index: r for r in dig_questions(run, len(run.turns))}
+    for r in asked.values():
+        day0_reply = (r.status_kind == "step" and r.status_n <= 7) or (r.status_kind == "week" and r.status_n == 1
+                                                       and r.status_day < int(day0.get("question_of_day_from_day", 2)))
+        if day0_reply:
+            ev.append(f"{_turn(r)}: interview question on Day 0 (the question of the day starts on day 2)")
+        elif len(reply_questions(r)) > 1:
+            ev.append(f"{_turn(r)}: the question of the day comes with another ask ({len(reply_questions(r))} questions)")
+    if run.replies:
+        details["status_lines"] = sum(1 for r in run.replies if r.status_kind)
+        details["replies"] = len(run.replies)
+    out = {"id": "reply_protocol", "pass": not ev, "status": "fail" if ev else "pass", "evidence": ev, "details": details}
+    if warnings:
+        out["warnings"] = warnings
+        if not ev:
+            out["status"] = "warn"
+    return out
 
 
 # How a VN coach refers to themself in a CTA or a message ("mình gửi", "tôi gửi", "tụi em gửi", "Đức gửi"; review VG-4):
@@ -9158,7 +9362,7 @@ def grade(run_dir: Path, root: Path | None = None) -> dict:
     run = load_run(run_dir, root)
     invariants = [fn(run) for fn in INVARIANTS]
     by_id = {i["id"]: i for i in invariants}
-    checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_day0(run),
+    checks = [check_deny_list(run), check_quit_triggers(run, by_id), check_running_tag(run), check_reply_protocol(run), check_day0(run),
               check_day0_strategy(run), check_day0_shape(run), check_lengths(run), check_vn_natural(run),
               check_vn_messages(run), check_hook_lab(run), check_strategy_doc(run), check_research_log(run),
               check_source_check(run), check_week_dedupe(run), check_style(run), check_week1_plan(run)]

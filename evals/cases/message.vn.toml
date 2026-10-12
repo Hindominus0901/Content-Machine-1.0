@@ -260,7 +260,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "A story instead of 'đúng' or 'sửa': taken as the answer to the câu đoán; the strategy follows with her correction in ĐIỀU KHÁCH NHỚ"
-context = "Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'). The interview's last question was the multi-income line with the buyer guessed a little off: 'Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa mới mở, vì lớp kèm là cái chị muốn làm lớn. Đúng không?'. As her Behaviour says, she does not type 'đúng' or 'sửa'; she tells a story with the correction in it. Nothing else is missing. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (the soft cut after chunk 2; chunk 3 ended 'xong rồi đấy em'). The interview's last question was the multi-income line with the buyer guessed a little off: 'Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa mới mở, vì lớp kèm là cái chị muốn làm lớn. Đúng không?'. As her Behaviour says, she does not type 'đúng' or 'sửa'; she tells a story with the correction in it. Nothing else is missing. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''Ơ không phải các em mới mở đâu em. Có em mở ba bốn năm rồi vẫn ngại chào đấy. Như em Loan ở Hưng Yên ấy, mở spa lâu rồi, đi học chốt sale về dạy nhân viên nói theo, xong nhân viên nói câu nào khách cũng sợ, thế là Loan lại phải tự đứng quầy. Các em ấy là thợ lên làm chủ, tay nghề tốt, chỉ có mỗi cái là ngại chào thôi.
 [turn 2] ok
 [turn 3] ok'''
@@ -412,7 +412,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "'bỏ qua' on the last câu đoán: the guess stands, marked '(mình đoán)', and the strategy follows with nothing parked shown"
-context = "Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?') and she typed 'ừa'. The interview's last question was what she sells: 'Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'. She skips it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?') and she typed 'ừa'. The interview's last question was what she sells: 'Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'. She skips it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''bỏ qua
 [turn 2] ok
 [turn 3] ok'''
@@ -477,7 +477,7 @@ kind = "D"
 persona = "hanh-android-free-nocomputer"
 lanes = ["S0", "S1", "floor"]
 title = "The strategy: ĐIỀU KHÁCH NHỚ, TRỤ CỘT NỘI DUNG, TỶ LỆ NỘI DUNG, HỆ THỐNG NỘI DUNG, TỪ KHOÁ, NGHIÊN CỨU CHO THẤY over ≤3 steps, map.ok last; nothing else on it"
-context = "Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (chunk 2 passed ~1,200 tiếng and she left for a client; the soft cut ended 'không thì gõ xong'; she came back with 'tiep em oi' and chunk 3 ended 'xong rồi đấy em'). The interview's last question was the multi-income line ('Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa, vì … Đúng không?'). She answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, Door B (Phone Starter), ChatGPT Free on Android, em–chị. Chunks 1-3 told (chunk 2 passed ~1,200 tiếng and she left for a client; the soft cut ended 'không thì gõ xong'; she came back with 'tiep em oi' and chunk 3 ended 'xong rồi đấy em'). The interview's last question was the multi-income line ('Chị đang có 3 nguồn thu. Em đoán nên viết cho các em chủ spa, vì … Đúng không?'). She answers it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng khách spa thì khách quen giới thiệu nhau là đủ rồi. Chị làm content là để kéo các em chủ spa vào lớp kèm thôi.
 [turn 2] ok
 [turn 3] ok'''
@@ -550,7 +550,7 @@ kind = "D"
 persona = "tuan-multihat-plus"
 lanes = ["S1", "S0", "floor"]
 title = "Bridge-buyer strategy: young couples buying a first apartment, GỒNG LÃI, no listing hype, sales training off the strategy"
-context = "Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunk 1 got the early win; chunk 2 passed ~1,200 tiếng, so its reply was the soft cut carrying the multi-income câu đoán ('Anh đang có 3 nguồn thu. Em đoán nên viết cho vợ chồng trẻ mua căn đầu tiên, vì nhà mua căn đầu cũng cần bảo hiểm che người đứng tên vay. Đúng không?'). He tells chunk 3 as his one more story: the 22 sales recruits, the 2 tỷ 68 apartment he must close by 30/11 ('em đừng có bỏ bất động sản ra nha'), the 'view sông' idea, his cousin's 'lời gấp đôi', his channels, 6 of his 9 apartment buyers also insured with him; it ends 'Thôi, xong.'. That story answers the guess and nothing else is missing. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, Door A, ChatGPT Plus (iPhone app), anh–em. Chunk 1 got the early win; chunk 2 passed ~1,200 tiếng, so its reply was the soft cut carrying the multi-income câu đoán ('Anh đang có 3 nguồn thu. Em đoán nên viết cho vợ chồng trẻ mua căn đầu tiên, vì nhà mua căn đầu cũng cần bảo hiểm che người đứng tên vay. Đúng không?'). He tells chunk 3 as his one more story: the 22 sales recruits, the 2 tỷ 68 apartment he must close by 30/11 ('em đừng có bỏ bất động sản ra nha'), the 'view sông' idea, his cousin's 'lời gấp đôi', his channels, 6 of his 9 apartment buyers also insured with him; it ends 'Thôi, xong.'. That story answers the guess and nothing else is missing. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''<<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3' section verbatim>>
 [turn 2] ok
 [turn 3] ok'''
@@ -613,7 +613,7 @@ kind = "D"
 persona = "coldstart-coach"
 lanes = ["S1", "S0", "floor"]
 title = "Cold-start strategy: CỨNG ĐƠ, no price, no paid-client claims, no health promise"
-context = "Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), she typed 'ừa'; the interview's last question was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answers it. Her dump also named her friend's '3 tuần hết đau' (not a client, not measured, no consent). The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, ChatGPT Free on her iPhone, mình–bạn. Chunks 1-2 told; the soft cut after chunk 2 carried the result guess (setup.guess_no_result: 'Mình đoán chưa có kết quả của khách, nên mình kể chuyện chính bạn trải qua. Đúng không?'), she typed 'ừa'; the interview's last question was what she sells ('Mình đoán: bạn chưa bán gì, mới tính một lớp nhỏ. Đúng không?'). She answers it. Her dump also named her friend's '3 tuần hết đau' (not a client, not measured, no consent). The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''chưa có gì hết á, mình chưa bán gì. Lớp online thì mới nghĩ trong đầu thôi
 [turn 2] ok
 [turn 3] ok'''
@@ -651,7 +651,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
 title = "Claims-safe strategy for a kitchen renovation shop: 'phát sinh' in his buyers' words, never 'không phát sinh' without its condition"
-context = "Day 0, Door B (Phone Starter), ChatGPT Free on his Android phone, anh–em. Chunks 1-2 told (results with consent: chị Loan, anh Hưng chị Yến; the soft cut after chunk 2 ended 'không thì gõ xong'); chunk 3, his one more story, named kitchens about 70%, homestay interiors about 20%, subcontract cabinets about 10%, the phong thủy questions he won't answer, and ended 'xong rồi đó em' plus his typed corrections. The interview's last question was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ nhà phố, căn hộ muốn sửa bếp, vì … Đúng không?'). He answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, Door B (Phone Starter), ChatGPT Free on his Android phone, anh–em. Chunks 1-2 told (results with consent: chị Loan, anh Hưng chị Yến; the soft cut after chunk 2 ended 'không thì gõ xong'); chunk 3, his one more story, named kitchens about 70%, homestay interiors about 20%, subcontract cabinets about 10%, the phong thủy questions he won't answer, and ended 'xong rồi đó em' plus his typed corrections. The interview's last question was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ nhà phố, căn hộ muốn sửa bếp, vì … Đúng không?'). He answers it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''uh đúng rồi em, bếp là chính nghe. Homestay với thầu phụ thì khách tự tìm tới.
 [turn 2] ok
 [turn 3] ok'''
@@ -689,7 +689,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "B2B strategy: ĐIỀU KHÁCH NHỚ speaks tôi–anh chị, the machine speaks em–anh; no rounded rate, no marketing jargon"
-context = "Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the first câu đoán (what he sells); chunk 3, his one more story, answered it (the 45.000.000đ 3-month package, the half-day training, headhunting he does not like, LinkedIn 2,400, Zalo about 380, email 250) and ended 'xong'. The interview's last question was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ doanh nghiệp 20–100 người tự tuyển, vì gói tư vấn 3 tháng là cái anh bán chính. Đúng không?'). He answers it. The strategy follows in its pre-filled steps (up to 3 replies); the input OKs each with 'ok'."
+context = "Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-2 told; the soft cut after chunk 2 carried the first câu đoán (what he sells); chunk 3, his one more story, answered it (the 45.000.000đ 3-month package, the half-day training, headhunting he does not like, LinkedIn 2,400, Zalo about 380, email 250) and ended 'xong'. The interview's last question was the multi-income line ('Anh đang có 3 nguồn thu. Em đoán nên viết cho chủ doanh nghiệp 20–100 người tự tuyển, vì gói tư vấn 3 tháng là cái anh bán chính. Đúng không?'). He answers it. The strategy follows in ONE pre-filled reply (≤3 A/B/C picks); the input OKs it with 'ok'."
 input = '''Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày thì khách quen hỏi mới làm, còn tìm người hộ thì đừng quảng bá, tôi làm vì nể thôi.
 [turn 2] ok
 [turn 3] ok'''
@@ -760,6 +760,7 @@ input = '''[turn 1] <<paste: proof-coach/answers.md, the '## Dump chunk 3' secti
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)(60 học viên|Ngân|lãi ảo)''',
   '''(?i)quảng cáo''',
   '''(?i)(live|livestream)''',
@@ -769,6 +770,7 @@ regex = [
   '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
   '''\b[VSPXK]-\d+\b''',
   '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
@@ -1212,6 +1214,7 @@ input = '''[turn 1] <<paste: the rendered VN PHONE-STARTER.txt, whole>>
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)3 câu đáng tiền chị vừa nói''',
   '''Câu này hôm nay (?:(?:chị|anh|bạn) )?đăng luôn cũng được(?:[^\S\n]+\w+){0,2}[.!]''',
   '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?ĐIỀU KHÁCH NHỚ:''',
@@ -1222,6 +1225,7 @@ regex = [
   '''(?m)^[^\w\n]*(?:[1-4][.)]?[ \t]+)?HỆ THỐNG NỘI DUNG:''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^[^\w\n]*[1-7][.)]?\s+(?:Ai|Lời của họ|Cách cũ|Kết quả tốt nhất|Cách của (?:chị|bạn|mình))\s*:''',
   '''(?i)(Chị biết nhiều thật|6 tháng content|không bỏ gì)''',
   '''(?i)\bsửa\s+[1-7]\b''',
@@ -1283,6 +1287,7 @@ input = '''[turn 1] Đúng rồi em. Spa nuôi cả nhà chị đấy, nhưng kh
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)(9 (chủ spa|em|học viên)|Thảo|Loan|2018|dọa da)''',
   '''(?i)(máy móc|mỹ phẩm)''',
   '''(?i)(khác tệp khách|chỉ là công cụ|dễ thành hứa quá lời|kỹ thuật viên|luật quảng cáo)''',
@@ -1290,6 +1295,7 @@ regex = [
   '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
   '''\b[VSPXK]-\d+\b''',
   '''\b[0-2]\s*/\s*2\b|\b\d{1,2}\s*/\s*12\b''',
@@ -1318,6 +1324,7 @@ input = '''[turn 1] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)6\s*(trên|/|trong)\s*9|6 nhà''',
   '''(?i)(căn hộ|môi giới|mua căn)''',
   '''(?i)bảo hiểm''',
@@ -1326,6 +1333,7 @@ regex = [
   '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?i)(2 tỷ 68|2,68 tỷ)[^\n]{0,60}(để sau|để dành|khác tệp)''',
   '''(?i)(để sau|để dành)\W{0,3}(bất động sản|BĐS|môi giới)''',
   '''(?im)^(?!.*(không|chưa|đừng|hổng)).*(lời gấp đôi|view sông|lãi suất đảm bảo|sinh lời chắc)''',
@@ -1354,6 +1362,7 @@ input = '''[turn 1] uh đúng rồi em, bếp là chính nghe. Homestay với th
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?i)(Loan|Hưng|Yến|96 triệu|112|116,5|40 công trình|báo giá chốt|70\s?%)''',
   '''(?i)(phong th(ủ|u)y|xem ngày|hướng bếp)''',
   '''(?i)(dễ thành hứa quá lời|không bao giờ|ngoài chuyên môn|nói bậy)''',
@@ -1361,6 +1370,7 @@ regex = [
   '''(?i)(khác tệp khách|bán kèm|cửa riêng|cửa phụ|khách tự tìm)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^(?!.*(không|chưa)).*(anh Quân|dì Năm)''',
   '''(?im)^(?!.*(không|chưa)).*gần như không (có cái nào )?phát sinh''',
   '''DIFF-BUYER|DIFF-PROBLEM|NO-OFFER|TOO-EARLY|\bGENERIC\b|\bRISKY\b|\bTOOL\b''',
@@ -1389,6 +1399,7 @@ input = '''[turn 1] Đúng. Gói 3 tháng là chính. Đào tạo nửa ngày th
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''19\s*(trên|/)\s*31''',
   '''4\s*(trên|/)\s*17''',
   '''(?i)(14 doanh nghiệp|tuyển hoài|quán hải sản|phòng khám|cổng xưởng)''',
@@ -1398,6 +1409,7 @@ regex = [
   '''(?i)(quay lại khi|khi nào|khi (khách|có|mở|đổi)|mùa sau|3\+? lần|mở bán|không bao giờ)''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^(?!.*(không|thay vì|chưa)).*(70|80)\s?%''',
   '''(?im)^(?!.*(không|chưa)).*200 triệu''',
   '''(?im)^(?!.*(không|chưa)).*(chị bên du lịch|đi nghỉ phép mà không ai gọi)''',
@@ -1454,7 +1466,7 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
 title = "NÓI THẾ NÀO (the card's voice line) in plain words: her tone, her rhythm, one phrase of hers verbatim, and how she talks to buyers ('mình – các chị em'), never the machine's em–chị"
-context = "Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-2 (her posts W1-W3 pasted after chunk 1: public posts 'mình – các chị em', the Zalo message 'chị – em'; the soft cut after chunk 2 ended 'không thì gõ xong'). Chunk 3 ended 'xong rồi đấy em'. The interview and the strategy are done and OK'd, QUAY HÔM NAY printed alone and she filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1. Her dump is the spoken voice; her pasted posts are the written voice."
+context = "Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu sent dump chunks 1-2 (her posts W1-W3 pasted after chunk 1: public posts 'mình – các chị em', the Zalo message 'chị – em'; the soft cut after chunk 2 ended 'không thì gõ xong'). Chunk 3 ended 'xong rồi đấy em'. The strategy (one reply) is done and OK'd, QUAY HÔM NAY printed alone and she filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1. Her dump is the spoken voice; her pasted posts are the written voice."
 input = '''quay xong rồi, tiếp em'''
 contains = []
 not_contains = []
@@ -1485,7 +1497,7 @@ kind = "D"
 persona = "consultant"
 lanes = ["S1", "floor"]
 title = "NÓI THẾ NÀO (the card's voice line) for a B2B coach: steady and plain, a phrase of his verbatim, 'tôi – anh chị' with buyers while the machine stays em–anh"
-context = "Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-3 told (his posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 carried the offer guess; chunk 3 answered it and ended 'xong'); the last câu đoán was the multi-income line. He answered it. The interview and the strategy are done and OK'd, QUAY HÔM NAY printed alone and he filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1. (Text-first: he posted the long post instead of filming.)"
+context = "Day 0, Door A, Claude Pro on the laptop, anh–em. Chunks 1-3 told (his posts W1-W3 pasted after chunk 1; the soft cut after chunk 2 carried the offer guess; chunk 3 answered it and ended 'xong'); the last câu đoán was the multi-income line. He answered it. The strategy (one reply) is done and OK'd, QUAY HÔM NAY printed alone and he filmed it; this turn says 'tiếp', so this reply is the Brand Card (its NÓI THẾ NÀO line is the voice line) + dòng lưu + bảng Tuần 1. (Text-first: he posted the long post instead of filming.)"
 input = '''đăng rồi, tiếp em'''
 contains = []
 not_contains = []
@@ -1516,16 +1528,18 @@ kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0"]
 title = "'sửa dòng giọng: …' on the card edits NÓI THẾ NÀO in her words: the line reprinted, no voice quiz, QUAY HÔM NAY not reprinted"
-context = "Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu's dump (chunks 1-3, her posts W1-W3 after chunk 1), the interview and the strategy are done and OK'd; QUAY HÔM NAY printed alone. Turn 1 says 'tiếp' once filmed and gets the Brand Card + dòng lưu + bảng Tuần 1; its NÓI THẾ NÀO line is the voice line. In turn 2 she changes the voice line in her own words. Assertions run on the reply to turn 2."
+context = "Day 0, Door A, ChatGPT Plus on the laptop, em–chị. Thu's dump (chunks 1-3, her posts W1-W3 after chunk 1), The strategy (one reply) is done and OK'd; QUAY HÔM NAY printed alone. Turn 1 says 'tiếp' once filmed and gets the Brand Card + dòng lưu + bảng Tuần 1; its NÓI THẾ NÀO line is the voice line. In turn 2 she changes the voice line in her own words. Assertions run on the reply to turn 2."
 input = '''[turn 1] quay xong rồi, tiếp em
 [turn 2] sửa dòng giọng: thẳng thôi em, đừng ghi ấm áp gì cả. thêm câu "Doanh thu là để khoe, lãi mới là để tiêu" vào, câu đấy của chị'''
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*thẳng''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*lãi mới là để tiêu''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^[^\w\n]*NÓI THẾ NÀO:[^\n]*ấm áp''',
   '''(?m)^[^\w\n]*QUAY HÔM NAY\b''',
   '''(?i)(chị (muốn|thích) (giọng|tả)|tả giọng|chọn giọng|giọng nào)[^\n]*\?''',
@@ -1548,7 +1562,7 @@ kind = "D"
 persona = "service-biz"
 lanes = ["S0", "S1", "floor"]
 title = "'ok' with a voice change on the strategy's last step: the change is stored and the day goes on to QUAY HÔM NAY, no reprint, no second OK"
-context = "Day 0, Door B (Phone Starter), ChatGPT Free on Android, anh–em. Chunks 1-3 told; the interview is done and the strategy's last step is on screen, ending 'Chạy thử 4 tuần nghe. OK hay sửa một dòng?'. He says OK and adds how he speaks on the workshop page (the voice line is the card's, which comes after QUAY HÔM NAY)."
+context = "Day 0, Door B (Phone Starter), ChatGPT Free on Android, anh–em. Chunks 1-3 told; the interview is done and the strategy (one reply) is on screen, ending 'Chạy thử 4 tuần nghe. OK hay sửa một dòng?'. He says OK and adds how he speaks on the workshop page (the voice line is the card's, which comes after QUAY HÔM NAY)."
 input = '''ok em. mà trên trang của xưởng thì anh xưng tụi em với khách nghe'''
 contains = []
 not_contains = []
@@ -1583,10 +1597,12 @@ input = '''[turn 1] <<paste: tuan-multihat-plus/answers.md, the '## Dump chunk 3
 contains = []
 not_contains = []
 regex = [
+  '''(?m)^\s*Đã có: .+ · Còn thiếu: .+''',
   '''(?s)\A(?:(?!```).){0,700}?(?i:căn|bất động sản|BĐS|môi giới)''',
   '''(?i)OK hay sửa một dòng''',
 ]
 not_regex = [
+  '''(?i)(?:(?:bạn|anh|chị|em) có muốn|nếu cần[^\n]{0,40}cứ nói|cần (?:mình|em)\b[^\n]{0,40}không\?)[^\n]*(?:\n[^\n]*)?\s*\Z''',
   '''(?im)^(?!.*(không|chưa|đừng|hổng)).*view sông''',
   '''(?i)(giá tốt|bán gấp|căn cuối|cơ hội vàng|siêu phẩm)''',
   '''(?im)^(?!.*(không|chưa|đừng|hổng)).*(lời gấp đôi|sinh lời)''',
