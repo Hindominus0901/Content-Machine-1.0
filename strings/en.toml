@@ -247,6 +247,8 @@
 "tick.client_ok"        = "It's true, and {client} said yes to being shown this way."
 "tick.cap"              = "The cap or deadline is real, and you'll keep it."
 "claims.individual"     = "individual result, not a promise"
+"claims.care"           = "not a substitute for professional care"
+"claims.money"          = "general information, not advice"
 "film.not_filming"      = "Not filming today: post the caption as text."
 "film.list_open"        = "Say each first and last line out loud; a line you wouldn't say to a client, I'll cut."
 "film.onscreen_reason"  = "It has to read in a second."

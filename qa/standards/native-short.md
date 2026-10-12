@@ -7,7 +7,7 @@ Sources, in order: DECISIONS (lengths in words, never seconds, 7 Oct; short vide
 
 A short video script of 500–800 spoken words (founder, 7 Oct; kept 11 Oct; lengths are in words, never seconds, because people speak at different speeds): a POV, relatable, "I made it", stance or story piece on ONE idea, in 3–5 beats filmed one a take, ready to film today on a phone.
 
-What good means: three aligned hooks; a lock-in, then beats joined by "but" or "therefore"; a final line, written first, that pays off the hook; one idea and one belief; a caption that carries the piece forward; filmable in one place, and it sounds like the coach when read aloud.
+What good means: three aligned hooks; a lock-in, then beats joined by "but" or "so"; a final line, written first, that pays off the hook; one idea and one belief; a caption that carries the piece forward; filmable in one place, and it sounds like the coach when read aloud.
 
 ## Scope
 
@@ -21,7 +21,7 @@ What good means: three aligned hooks; a lock-in, then beats joined by "but" or "
 | ID | Item | 0 | 1 | 2 | Critical |
 |---|---|---|---|---|---|
 | NS1 | Hooks aligned [D lengths] | A hook missing, or the hooks point at different ideas | Aligned, but the verbal hook only names the topic (no loop) | The title hook (on-screen, ≤6 words), the visual hook (one filmable first frame) and the verbal hook (verbatim first line) point at one idea; the verbal hook opens a loop beyond the topic | yes |
-| NS2 | Beats | No lock-in; or beats joined by "and then"; or fewer than 3 or more than 5 beats | A lock-in, but beats loosely joined, or the final line not verbatim or not paying off the hook | A verbatim lock-in of one or two spoken sentences; 3–5 beats, one per take, joined by "but" or "therefore"; a verbatim final line, written first, that pays off the hook | no |
+| NS2 | Beats | No lock-in; or beats joined by "and then"; or fewer than 3 or more than 5 beats | A lock-in, but beats loosely joined, or the final line not verbatim or not paying off the hook | A verbatim lock-in of one or two spoken sentences; 3–5 beats, one per take, joined by "but" or "so"; a verbatim final line, written first, that pays off the hook | no |
 | NS3 | Length [D] | The spoken script (first line, beats, last line; not the on-screen text, the first frame, the caption or the ask) is outside 500–800 words ±10% (VN: tiếng); or the piece states a length in seconds | — | 500–800 spoken words, within ±10% (acceptance [lengths] short_words_min / _max, tolerance); no length in seconds anywhere | no |
 | NS4 | Buyer Filter (ATTRACT pieces and character or entertainment pieces only; otherwise N/A) | Generic humour, or a moment anyone has lived | A moment from the buyer's world that meets 1 of the 3 tests | A moment from the buyer's world (an R-ID) that meets ≥2 of 3: the ideal client would send it to a peer; you need the problem to get the joke; it names the next domino | yes, where it applies |
 | NS5 | Delivery mode | No delivery mode, or one that overrides the mode the coach chose | A mode set but incomplete (e.g. beat cards without the verbatim hook and final line) | Mode B by default: beat cards with a verbatim hook and final line. Mode A: 4–6 off-camera questions, each with what the answer should hit. Mode C: word for word with pause marks, the default for compliance-sensitive pieces | no |
@@ -49,7 +49,7 @@ What good means: three aligned hooks; a lock-in, then beats joined by "but" or "
 checks = [
   "Do all 3 hooks (on-screen, first frame, first line) point at one idea?",
   "Does the final line pay off the hook?",
-  "Is it one beat per take, joined by \"but\" or \"therefore\", never \"and then\"?",
+  "Is it one beat per take, joined by \"but\" or \"so\", never \"and then\"?",
   "Can it be filmed in one place on a phone, with no props or edits?",
 ]
 checks_vn = [
@@ -70,7 +70,7 @@ checks_vn = [
 
 ## Calibration (fictional coaches)
 
-**PASS.** EN, a bookkeeping coach for solo plumbers. TRUST, 620 spoken words in 4 beats. On-screen: "Receipts aren't April's job." First frame: a shoebox on a van seat. First line: "I watched a plumber lose a weekend to a shoebox of receipts." (a receipt frame, one spoken sentence). Beats: the April dump, *but* 15 minutes on Friday, *therefore* a boring April, *but* the one receipt that still goes missing. Final line: "Fifteen minutes on Friday. April gets boring." Caption line 1 continues the hook. NS4 N/A (TRUST). NS1 2 · NS2 2 · NS3 2 · NS5 2 · NS6 1 (line 3 missing) · NS7 2 = 11/12, with `shared.md` passed. **Result: PASS.**
+**PASS.** EN, a bookkeeping coach for solo plumbers. TRUST, 620 spoken words in 4 beats. On-screen: "Receipts aren't April's job." First frame: a shoebox on a van seat. First line: "I watched a plumber lose a weekend to a shoebox of receipts." (a receipt frame, one spoken sentence). Beats: the April dump, *but* 15 minutes on Friday, *so* a boring April, *but* the one receipt that still goes missing. Final line: "Fifteen minutes on Friday. April gets boring." Caption line 1 continues the hook. NS4 N/A (TRUST). NS1 2 · NS2 2 · NS3 2 · NS5 2 · NS6 1 (line 3 missing) · NS7 2 = 11/12, with `shared.md` passed. **Result: PASS.**
 
 **FAIL (length).** The same script cut to "35 seconds" (about 90 words, 2 beats). NS3 = 0 (outside 500–800 words, and a length in seconds), NS2 = 0 (2 beats). **Result: FAIL** (NS3: "35 seconds").
 

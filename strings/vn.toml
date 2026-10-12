@@ -204,7 +204,7 @@
 "setup.check_compact" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✗ file phương pháp (chế độ gọn) · Brand Card: hôm nay mình làm", src = "97b05e920a" }
 "setup.check_found" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v} ✓", src = "900775798e" }
 "setup.check_gaps" = { text = "◆ {{name}} · Kiểm tra cài đặt: ✓ hướng dẫn ✓ file phương pháp · Brand Card v{v}, còn thiếu: {fields}", src = "6ca75b3eda" }
-"phone.opening" = { text = "Chỉ cần bấm Gửi. Phần dưới là cho máy, khỏi cần đọc.", src = "b6a97fd51f" }
+"phone.opening" = { text = "Chỉ cần bấm Gửi. Phần dưới là cho máy.", src = "b6a97fd51f" }
 "phone.save" = { text = "Lưu: nhấn giữ đoạn chat → Đổi tên → \"{{name}}\", chép khung MY CONTENT MACHINE gửi Zalo \"Cloud của tôi\". Chat dài quá: in khung mới, dán vào chat mới.", src = "f6e358cc8f" }
 
 # ---- Method anchors (P2 kit sections); same keys as strings/en.toml
@@ -269,6 +269,8 @@
 "tick.client_ok"        = { text = "Chuyện có thật, {client} đồng ý cho kể như vậy.", src = "2dcea9c668" }
 "tick.cap"              = { text = "Số suất hay hạn chót là thật, giữ đúng lời.", src = "163c41a399" }
 "claims.individual"     = { text = "kết quả tuỳ người, không phải cam kết", src = "f5d5ca08a4" }
+"claims.care"           = { text = "không thay cho bác sĩ, chuyên gia", src = "4c67eb67ea" }
+"claims.money"          = { text = "thông tin chung, không phải tư vấn", src = "a3f6f8b035" }
 "film.not_filming"      = { text = "Hôm nay không quay thì đăng caption thành bài chữ.", src = "4ef2cdccd3" }
 "film.list_open"        = { text = "Đọc to câu đầu với câu cuối mỗi video. Câu nào không nói với khách được thì cắt.", src = "b8cbd7e9be" }
 "film.onscreen_reason"  = { text = "Chữ trên màn hình phải đọc được trong 1 giây.", src = "d6669d87aa" }

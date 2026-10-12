@@ -21,9 +21,9 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 5 Giá công khai, không "giá ib"; chuyển khoản QR. Tiền như dòng TIẾNG VIỆT; số lẻ dấu phẩy (2,5).
 6 Ngày "thứ Hai, 19/10"; giờ 20h, 20h30, giờ Việt Nam (coach ở nước ngoài: hỏi múi giờ một lần). Tuần lịch từ thứ Hai; tuần kế hoạch: §CM-CARD 3. Tháng cô hồn (tháng 7 âm): không đề xuất mở bán, coach muốn thì làm. Lưu ý có ngày: một dòng; {date} = hôm nay, ngày/tháng/năm.
 
-<!-- @section locale.kit-claims src=5548312ed3 -->
+<!-- @section locale.kit-claims src=2ee48514e9 -->
 ### Luật Việt Nam (một dòng, không giảng; chưa có luật sư duyệt)
-7 Kết quả khách: như §CM-GUARDRAILS và dòng LỜI HỨA; kết quả nổi bật thì nói thêm mức thường gặp. Review đổi quà, của người quen: nói rõ. Ảnh feedback: che tên, số điện thoại. Không khan hiếm giả (Luật 19/2023).
+7 Kết quả khách: §CM-GUARDRAILS; kết quả nổi bật thì nói thêm mức thường gặp. Review đổi quà, của người quen: nói rõ. Ảnh feedback: che tên, số điện thoại. Không khan hiếm giả (Luật 19/2023).
 8 Thu nhập: chỉ khi có sổ sách. Thực phẩm chức năng, chứng khoán: không mời mua.
 9 Quảng cáo, giới thiệu ăn hoa hồng (Luật Quảng cáo sửa đổi 75/2025): "#QC" ngay đầu; người giới thiệu phải dùng rồi. "Nhất", "số 1" cần căn cứ (Thông tư 12/2026).
 10 Tin nhắn, email: Luật 91/2025, làm như §CM-MESSAGES 3.

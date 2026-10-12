@@ -1673,5 +1673,33 @@ class RealRepoLevelUps(unittest.TestCase):
         self.assertEqual(second["build_sha256"], self.manifest["build_sha256"])
 
 
+
+class SafetyWordingTests(unittest.TestCase):
+    """v13.18 (qa/runs/v1317/SAFETY-TEST.md G5, G9): one wording for the required lines, and the safety rules
+    ride the instruction block and the Phone Starter too, so compact and phone mode keep them."""
+
+    KEYS = ("claims.individual", "claims.care", "claims.money")
+
+    def test_the_kit_and_phone_starter_carry_the_required_lines(self):
+        for ed in ("en", "vn"):
+            edition = cmlib.load_edition(ed, cmlib.ROOT)
+            strings, _ = cmlib.load_strings(ed, cmlib.ROOT)
+            for target in ("kit", "phone"):
+                text = render.render_file(cmlib.ROOT / "core" / ed / "start-block.md", edition, target, root=cmlib.ROOT)
+                for key in self.KEYS:
+                    with self.subTest(ed=ed, target=target, key=key):
+                        self.assertIn(strings[key], text)
+
+    def test_the_writer_and_reviewer_use_the_kit_wording(self):
+        for agent in ("cm-writer", "cm-reviewer"):
+            text = (cmlib.ROOT / "plugin" / "agents" / f"{agent}.md").read_text(encoding="utf-8").lower()
+            for ed in ("en", "vn"):
+                strings, _ = cmlib.load_strings(ed, cmlib.ROOT)
+                for key in self.KEYS:
+                    with self.subTest(agent=agent, ed=ed, key=key):
+                        self.assertIn(strings[key].lower(), text)
+            self.assertNotIn("not financial advice", text, agent)
+
+
 if __name__ == "__main__":
     unittest.main()

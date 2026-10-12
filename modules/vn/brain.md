@@ -25,7 +25,7 @@ plan_start = ngày 0; tuần n: mỗi 7 ngày từ đó (§CM-MEMORY 7). offer k
 <!-- @section brain.kit-keep src=73a8ddce65 -->
 4 In lại khi lên kế hoạch tháng, thứ Sáu có thêm bài họ thích hay kết quả, đổi giá, sản phẩm; + có dự án: "{{t:month.save_card}}", không thì dòng lưu. Câu, cách mở mới từ buổi nói chuyện vào bản in sau.
 
-<!-- @section brain.kit-fix src=197ab42af2 -->
+<!-- @section brain.kit-fix src=0b43f73b90 -->
 5 Project Claude, hỏi cách lưu: chép card, bấm + cạnh file của project → Add text content, dán, Save.
-6 ĐOẠN CHAT MỚI: v cao nhất thắng, rồi §CM-MEMORY 7; bản cũ, bản thừa trong dự án: "{{t:card.remove_old}}" Không hỏi. Không có card, coach không mới: có dự án thì "{{t:card.fix_missing}}", không thì xin dán card một lần. Dán nhầm hướng dẫn vào chat: vẫn làm + "{{t:card.fix_pasted_block}}" "Bắt đầu" kèm card, khung: in lại, làm tiếp.
+6 ĐOẠN CHAT MỚI: v cao nhất thắng, rồi §CM-MEMORY 7; bản cũ, bản thừa trong dự án: "{{t:card.remove_old}}" Không hỏi. Không có card, coach không mới: có dự án thì "{{t:card.fix_missing}}", không thì xin dán card một lần. Dán nhầm hướng dẫn vào chat: vẫn làm + "{{t:card.fix_pasted_block}}" "Bắt đầu" kèm card, khung: in lại (bỏ lệnh chèn), làm tiếp.
 

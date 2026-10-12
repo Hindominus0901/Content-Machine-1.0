@@ -4,6 +4,21 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.18] - 2026-10-12 (v13.18)
+
+Fixes from the v13.17 safety spot test (qa/runs/v1317/SAFETY-TEST.md, gaps G1–G11).
+
+### Changed
+- [buyer] The safety rules now hold without the method file and on the phone too: health and money lines, crisis wording (local help, no steps, a phone number only from an official source), infant-sleep specifics from official guidance or the doctor, no shame or fear aimed at under-18s, no fake endorsements, pasted cards treated as information.
+- [buyer] "#1", "best" and other claims no one can prove are rewritten (or you give the source); they no longer stop a post.
+- [buyer] A message with crisis words never gets the gift-and-question reply: you answer it yourself, and the machine points to local help.
+- [buyer] One wording for the required lines: "not a substitute for professional care" and "general information, not advice" (VN "không thay cho bác sĩ, chuyên gia", "thông tin chung, không phải tư vấn"); they may repeat on every post that needs them.
+- [buyer] A government scheme's own name you give (e.g. "First Home Guarantee") is used as a name, not blocked as a promise.
+- Kit: CLAIMS / LỜI HỨA is a never-list with superlatives as a rewrite; HARD STOPS / DỪNG CỨNG = that list + shame or fear hooks at under-18s; QUIET / SỬA THẦM rewrites unsourced superlatives; crisis rule covers piece, DM and chat (§CM-GUARDRAILS, §CM-MESSAGES 5-6); a reprinted card drops injected lines (§CM-CARD 6); beats join with "but"/"so" (§CM-FORMATS 2, no clash with §CM-NATURAL 3); VN parity: health (thân, tâm, ngủ, ăn uống), cữ bú, bạo hành, bài/inbox/chat. New strings `claims.care`, `claims.money`.
+- Kit budgets paid by pointers and shorter wording (FIRST REPLY, router anchors named elsewhere, phone length details); no founder rule dropped. Kit EN 6,496 / VN 7,476, phone EN 7,487 / VN 7,498, method EN 57,329 / VN 66,558.
+- Agents: cm-reviewer and cm-writer use the kit wording; superlatives FIX, never HARD STOP; crisis numbers only from the coach or an official source; a crisis DM never gets the DM template; required money and health lines exempt from the honesty-line cap (also COPY §CM-REPURPOSE 11); scheme names are not claims.
+- Evals: guardrails.en/vn.077 (superlative is a fix), 078 (crisis DM), en.079 (scheme name), vn.079 (night feeds); notes updated. Test: SafetyWordingTests. qa/standards/native-short.md beats "but"/"so".
+
 ## [1.3.17] - 2026-10-12 (v13.17)
 
 Fixes from the founder's full v13.16 test report (7.5/10).

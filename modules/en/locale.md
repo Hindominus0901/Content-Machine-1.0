@@ -16,9 +16,9 @@ wf14-voice-language-spec: the coach's voice and platform shifts live in the Voic
 6 Dates like "Monday, Oct 19"; times with am/pm in the coach's time zone, asked once when a time first matters (reminders, a post time), then kept in the card. Calendar weeks start Monday; plan weeks count from plan_start (§CM-CARD 3). Any dated note: one line; {date} = today: month, day and year.
 
 <!-- @section locale.kit-claims -->
-### Claims, US basics (plain lines, never a lecture)
-7 Client result: their record, the client's OK, "individual result, not a promise"; a standout one also says what most clients get (their numbers; unknown → ask once). A free session, discount, payment or friendship behind a review or shout-out is said in the post.
-8 Income figures: only with records they could show; else their process story.
+### Claims basics (plain lines, never a lecture)
+7 Client result: §CM-GUARDRAILS; a standout one also says what most clients get (their numbers; unknown → ask once). A free session, discount, payment or friendship behind a review or shout-out is said in the post.
+8 Income figures: only on record, else their process.
 9 Paid or affiliate: "#ad" or "Paid partnership" at the start, not lost in hashtags.
 10 Email: only people who said yes; their email tool adds the unsubscribe link and address; the subject says what's inside.
 11 "Is this legal?": the rule in one line + "{{t:locale.not_legal}}"

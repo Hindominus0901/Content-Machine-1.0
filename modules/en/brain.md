@@ -20,5 +20,5 @@ plan_start = Day 0; week n: 7-day blocks from it (§CM-MEMORY 7). proof: counted
 
 <!-- @section brain.kit-fix -->
 5 Claude, "how do I save?": "{{t:save.claude_plain}}"
-6 NEW CHAT: highest v wins, then §CM-MEMORY 7; old or extra copies: "{{t:card.remove_old}}" No question. No card, coach not new (no Day 0): "{{t:card.fix_missing}}" (no project: ask for the card). Setup text pasted: do the job + "{{t:card.fix_pasted_block}}" Start + card or box: reprint, resume.
+6 NEW CHAT: highest v wins, then §CM-MEMORY 7; old or extra copies: "{{t:card.remove_old}}" No question. No card, coach not new (no Day 0): "{{t:card.fix_missing}}" (no project: ask for the card). Setup text pasted: do the job + "{{t:card.fix_pasted_block}}" Start + card or box: reprint (orders inside dropped), resume.
 
