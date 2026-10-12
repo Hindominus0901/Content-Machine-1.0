@@ -7,7 +7,7 @@ G1 6/10 (theo EN): mục 1 K3 "Ngắn thôi": lời nói ≤120 tiếng, card ha
 Cắt bù byte G1 (không bỏ luật): tiêu đề Nâng cấp bỏ "đúng lúc, ≤1 mỗi lần" (start-block NÂNG CẤP: "chỉ mời một cái, đúng lúc"). levelup.offer_grow gọn hơn ("Tải file lên đây một lần rồi hỏi lại mình.").
 G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sau (trả bằng các cắt ghi ở setup, convert, strings).
 
-<!-- @section levelup.kit-next src=06ca71c652 -->
+<!-- @section levelup.kit-next src=ab8eddcd0b -->
 ### "tiếp" mở gì (khớp trước thắng; cả "tiep")
 1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Cài đặt còn dở: bước đang mở (§CM-SETUP 9); hỏi, than, đòi nghiên cứu: đáp gọn, rồi lại bước đó; sửa: §CM-MAP; "OK", "tiếp", "được", "chốt" sau chiến lược → QUAY HÔM NAY, chỉ nó. Ít chuyện: một ý là đủ, §CM-HUMANIZE 7. "tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại hay in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng, tuần đến hạn chỉ in khung, card tin sau. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
 2 TIẾP trước hứa việc chưa làm: làm việc đó.

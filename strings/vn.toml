@@ -247,7 +247,7 @@
 "talk.next"      = { text = "Cứ nói, xong thì bấm gửi.", src = "cf3ce1d335" }
 "talk.probe"     = { text = "Lúc đó đang ở đâu, người ta nói gì?", src = "07f70a531b" }
 "talk.paused"    = { text = "Dừng ở câu {n}. Nhắn 'tiếp' là hỏi tiếp.", src = "d63a2644af" }
-"talk.film"      = { text = "Quay liền các video ngắn, mỗi video 1–2 lần, khoảng 10 phút một video. Vấp thì nói lại, khỏi dựng.", src = "24365a7389" }
+"talk.film"      = { text = "Quay liền các video ngắn, mỗi video 1–2 lần, khoảng 7 phút một video. Vấp thì nói lại, khỏi dựng.", src = "bfa0d0b0de" }
 "talk.mini_open" = { text = "Tuần bận thì 3 câu hỏi nhanh thôi, 5 phút, cứ nói là được.", src = "b7a36f9fc4" }
 
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)

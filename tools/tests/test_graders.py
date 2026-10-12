@@ -4421,7 +4421,7 @@ THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%
 
 ## 5. Hệ thống nội dung của bạn
 
-Video ngắn 500–800 chữ · bài dài ≈1.000 chữ · video dài 1.000–1.500 chữ.
+Video ngắn 250–400 chữ · bài dài 500–700 chữ · video dài 1.000–1.500 chữ.
 
 ## 6. 30 ngày đầu
 
@@ -5223,7 +5223,8 @@ class StrategyFirstTimingTests(StrategyFirstBase):
 
 class StrategyFirstLengthsTests(StrategyFirstBase):
     """The founder, 7 Oct night: "the length has to be measured by words, not seconds, because people speak at different
-    speeds": a short video 500-800 words, a long post about 1,000, a long video 1,000-1,500 in parts."""
+    speeds": a short video 250-400 words, a long post 500-700 (v14.2; under the floor fails, over the ceiling warns), a long
+    video 1,000-1,500 in parts."""
 
     @staticmethod
     def words(n: int, seed: str = "word") -> str:
@@ -5240,15 +5241,21 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
     def length(self, report: dict, name: str) -> dict:
         return next(i for i in self.inv(report, "lengths")["items"] if i["item"].startswith(name))
 
-    def test_a_short_video_is_500_to_800_words_with_a_little_slack(self):
-        """The defaults match acceptance [lengths] (founder 7 Oct night, kept 11 Oct; audit a3 L2: they were 120-200)."""
-        for n, ok in ((650, True), (500, True), (800, True), (460, True), (440, False), (870, True), (150, False), (900, False)):
+    def test_a_short_video_is_250_to_400_words_with_a_little_slack(self):
+        """The defaults match acceptance [lengths] (founder 12 Oct, v14.2: 250-400, was 500-800; audit a3 L2). Under the
+        floor (with its slack) fails; over the ceiling only warns."""
+        for n, ok in ((320, True), (250, True), (400, True), (230, True), (210, False), (150, False), (650, True), (900, True)):
             with self.subTest(words=n):
                 report = self.grade(self.reply(self.short(n)))
                 item = self.length(report, "a short video's script")
                 self.assertIs(item["pass"], ok, item)
         report = self.grade(self.reply(self.short(150)))
-        self.assertFails(report, "lengths", "says 150 words (a short video runs 500-800)")
+        self.assertFails(report, "lengths", "says 150 words (a short video runs 250-400)")
+        for n, warned in ((420, False), (650, True)):
+            with self.subTest(over=n):
+                inv = self.inv(self.grade(self.reply(self.short(n))), "lengths")
+                self.assertEqual(inv["status"], "warn" if warned else "pass", inv)
+                self.assertEqual(any("over 400" in w for w in inv.get("warnings", [])), warned, inv)
 
     def test_only_the_spoken_script_is_counted(self):
         piece = self.short(650) + "\n\nExtra caption words here " + self.words(300, "x")
@@ -5264,23 +5271,27 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
         self.write("strings/vn.toml", toml_table("strings", VN_STRINGS))
         self.write("evals/personas/vn/thu/persona.toml", 'xung_ho = "chị–em"\nallowed_numbers = ["3"]\nseeded_names = []\n')
         piece = ("N1 · thứ Năm · Video ngắn · 150 chữ\n```\nChữ trên màn hình: Nghe khách trước\nCâu đầu: " + self.words(10, "mot")
-                 + "\nÝ 1: " + self.words(550, "hai") + "\nCâu cuối: " + self.words(40, "ba") + "\nCaption:\nMột dòng.\n```")
+                 + "\nÝ 1: " + self.words(300, "hai") + "\nCâu cuối: " + self.words(40, "ba") + "\nCaption:\nMột dòng.\n```")
         report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{piece}\n\nTIẾP → Nhắn 'tiếp'.")],
                             persona="vn/thu", edition="vn")
         self.assertIs(self.length(report, "a short video's script")["pass"], True, self.length(report, "a short video's script"))
-        short = piece.replace(self.words(550, "hai"), self.words(20, "hai"))
+        short = piece.replace(self.words(300, "hai"), self.words(20, "hai"))
         report = self.grade([("coach", "tiếp"), ("machine", f"{TAG}Tuần 1\n\n{short}\n\nTIẾP → Nhắn 'tiếp'.")],
                             persona="vn/thu", edition="vn")
-        self.assertFails(report, "lengths", "says 70 tiếng (a short video runs 500-800)")
+        self.assertFails(report, "lengths", "says 70 tiếng (a short video runs 250-400)")
 
-    def test_a_long_post_is_about_1000_words(self):
-        for n, ok in ((1000, True), (850, True), (1150, True), (800, False), (1300, False)):
+    def test_a_long_post_is_500_to_700_words(self):
+        """v14.2 (founder 12 Oct): 500-700, was about 1,000; under 475 fails, over 735 only warns."""
+        for n, ok in ((600, True), (500, True), (700, True), (480, True), (450, False), (1000, True)):
             with self.subTest(words=n):
                 post = f"Long post · Sun · Facebook\n```\n{self.words(n)}\n```"
                 self.assertIs(self.length(self.grade(self.reply(post)), "a long post")["pass"], ok)
-        post = f"Long post · Sun · Facebook\n```\n{self.words(800)}\n```"
-        self.assertFails(self.grade(self.reply(post)), "lengths", "is 800 words (a long post is about 1000, 850-1150)")
-        vn = f"Bài dài · Chủ nhật · Facebook\n```\n{self.words(1000)}\n```"
+        post = f"Long post · Sun · Facebook\n```\n{self.words(400)}\n```"
+        self.assertFails(self.grade(self.reply(post)), "lengths", "is 400 words (a long post runs 500-700)")
+        over = self.inv(self.grade(self.reply(f"Long post · Sun · Facebook\n```\n{self.words(1000)}\n```")), "lengths")
+        self.assertEqual(over["status"], "warn", over)
+        self.assertTrue(any("over 700" in w for w in over["warnings"]), over)
+        vn = f"Bài dài · Chủ nhật · Facebook\n```\n{self.words(600)}\n```"
         self.assertIs(self.length(self.grade(self.reply(vn)), "a long post")["pass"], True)
 
     def test_a_long_video_is_1000_to_1500_words_in_parts(self):
@@ -5318,7 +5329,8 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
     def test_the_lengths_read_acceptance(self):
         self.write("evals/acceptance.toml", "[day0]\nsession_max_turns = 10\n[lengths]\nshort_words_min = 50\nshort_words_max = 80\ntolerance = 0\n")
         self.assertIs(self.length(self.grade(self.reply(self.short(60))), "a short video's script")["pass"], True)
-        self.assertIs(self.length(self.grade(self.reply(self.short(150))), "a short video's script")["pass"], False)
+        self.assertIs(self.length(self.grade(self.reply(self.short(40))), "a short video's script")["pass"], False)
+        self.assertIs(self.length(self.grade(self.reply(self.short(150))), "a short video's script")["pass"], True)   # over: a warning
         self.assertIn("a short video's script is 50-80 words", self.length(self.grade(self.reply(self.short(60))), "a short")["item"])
 
 
@@ -5387,7 +5399,7 @@ Women walked out with a box.
 ## 4. Your content mix: attract, trust, convert
 ATTRACT 40% · TRUST 40% · CONVERT 20%
 ## 5. Your content system
-Short video 500-800 words · long post about 1,000 words · long video 1,000-1,500 words.
+Short video 250-400 words · long post 500-700 words · long video 1,000-1,500 words.
 ## 6. Your first 30 days
 ## 7. Your gift and your asks
 ## 8. What this is built on
@@ -5423,9 +5435,9 @@ Short video 500-800 words · long post about 1,000 words · long video 1,000-1,5
                       self.check(self.doc(self.DOC.replace("ATTRACT 40% · TRUST 40% · CONVERT 20%", "ATTRACT, TRUST, CONVERT")), "part 4")["evidence"][0])
 
     def test_part_5_gives_lengths_in_words_never_seconds(self):
-        none = self.DOC.replace("Short video 500-800 words · long post about 1,000 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
+        none = self.DOC.replace("Short video 250-400 words · long post 500-700 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
         self.assertEqual(len(self.check(self.doc(none), "part 5")["evidence"]), 3)
-        secs = self.DOC.replace("Short video 500-800 words", "Short video 500-800 words (30 seconds)")
+        secs = self.DOC.replace("Short video 250-400 words", "Short video 250-400 words (30 seconds)")
         self.assertIn("measures a length in seconds", self.check(self.doc(secs), "part 5")["evidence"][0])
 
 
@@ -5469,8 +5481,9 @@ class StrategyFirstRealKitTests(unittest.TestCase):
         self.assertEqual((day0["strategy_max_minutes"], day0["film_ready_max_minutes"], day0["session_max_minutes"]), (25, 18, 45))
         self.assertEqual((day0["film_ready_warn_minutes"], day0["strategy_picks_max"]), (12, 3))
         lengths = graders._toml(REPO / "evals" / "acceptance.toml")["lengths"]
-        self.assertEqual((lengths["short_words_min"], lengths["short_words_max"], lengths["long_post_words"],
-                          lengths["long_video_words_min"], lengths["long_video_words_max"]), (500, 800, 1000, 1000, 1500))
+        self.assertEqual((lengths["short_words_min"], lengths["short_words_max"], lengths["long_post_words_min"],
+                          lengths["long_post_words_max"], lengths["long_video_words_min"], lengths["long_video_words_max"]),
+                         (250, 400, 500, 700, 1000, 1500))                     # v14.2 (founder 12 Oct): shorter pieces
 
 
 class StrategyFirstPersonaTests(unittest.TestCase):
@@ -8069,16 +8082,16 @@ class V1314RealLinesTests(TempRepo):
         check = graders.check_lengths(run)
         measured = check["details"]["measured"]
         self.assertEqual([m["kind"] for m in measured], ["short"], check)
-        self.assertTrue(500 <= measured[0]["words"] <= 530, measured)         # the title says 517 chữ
+        self.assertTrue(500 <= measured[0]["words"] <= 530, measured)         # the title says 517 chữ (v13.x run: over 400 now warns)
         self.assertTrue(self.item(check, "a short video")["pass"], check)
-        # cut the script to a third: now it is short of 500
+        # cut the script to a quarter: now it is short of 250
         lines = V14S_M33.split("\n")
-        cut = "\n".join(lines[:8] + lines[22:])
+        cut = "\n".join(lines[:8] + lines[30:])
         turns = self.sales_day0()
         turns[9] = ("machine", cut)
         check = graders.check_lengths(self.load(*turns))
         self.assertFalse(self.item(check, "a short video")["pass"], check)
-        self.assertTrue(any("a short video runs 500-800" in e for e in check["evidence"]), check["evidence"])
+        self.assertTrue(any("a short video runs 250-400" in e for e in check["evidence"]), check["evidence"])
 
     def test_lengths_reads_a_long_post_in_a_box(self):
         body = "\n\n".join("Anh Tài làm trung tâm tiếng Anh ở Biên Hòa, tự đứng lớp luôn, hỏi bé thích gì trước rồi mới nói học phí nha." for _ in range(40))
@@ -8520,7 +8533,7 @@ class V141LengthTests(StrategyFirstBase):
     length = StrategyFirstLengthsTests.length
 
     def test_a_title_count_the_script_does_not_reach_fails(self):
-        report = self.grade(self.reply(self.short(240, title="FILM TODAY · TRUST · short video · 520 words")))
+        report = self.grade(self.reply(self.short(200, title="FILM TODAY · TRUST · short video · 520 words")))
         item = self.length(report, "a title's word count")
         self.assertIs(item["pass"], False, item)
         self.assertTrue(any("the title says 520 words, the piece counts" in e for e in item["evidence"]), item)

@@ -15,12 +15,12 @@ Tên gọi bên trong (không cho coach thấy): KHUNG = framework; THU HÚT / N
 6 "Kể thành chuyện đi", "làm dạng danh sách": khung gần nhất, ghi lại, không bình luận. "Bạn dùng framework gì?": 2-3 nhãn thường, mỗi cái hợp lúc nào.
 7 Một niềm tin, một khung. Niềm tin thứ hai → bài thứ hai, đưa vào kế hoạch. Khung lồng nhau chỉ khi khung đó cho phép (bài dài bỏ ngỏ chứa một chuyện; một phần của video dài có thể là một lần lật niềm tin).
 
-<!-- @section copywriting.grow-length src=e6016ef732 -->
+<!-- @section copywriting.grow-length src=998e3bf851 -->
 ### Độ dài tính bằng chữ, và khung chia chữ ra sao
-1 Đếm chữ (tin nhắn, bài ngắn đếm tiếng), không tính giây, phút (§CM-LOCALE 2). Độ dài gốc: video ngắn 500–800 chữ trên mọi nền tảng (Reels, Shorts quá giới hạn độ dài thì cắt bớt ở đó) · bài ngắn 250–450 tiếng · carousel 10–12 trang, mỗi trang ≤40 tiếng · bài dài ≈1.000 chữ (hook, chuyện, 3 bài học, lời mời) · video dài 1.000–1.500 chữ, chia phần · email ≤375 tiếng · Zalo ≤150 tiếng, tin riêng ≤90 · story 3–5 khung, mỗi khung ≤35 tiếng.
+1 Đếm chữ (tin nhắn, bài ngắn đếm tiếng), không tính giây, phút (§CM-LOCALE 2). Độ dài gốc: video ngắn 250–400 chữ trên mọi nền tảng (dưới 3 phút: vừa Reels, Shorts) · bài ngắn 250–450 tiếng · carousel 10–12 trang, mỗi trang ≤40 tiếng · bài dài 500–700 chữ (hook, chuyện, 2–3 bài học, lời mời) · video dài 1.000–1.500 chữ, chia phần · email ≤375 tiếng · Zalo ≤150 tiếng, tin riêng ≤90 · story 3–5 khung, mỗi khung ≤35 tiếng.
 2 Nhịp của mỗi khung ghi theo độ dài gốc của nó. Sang dạng khác, mỗi nhịp giữ đúng phần của mình; hook vẫn ≤{{hook_max}} {{hook_unit}}, lời mời 20–80 chữ ở mọi độ dài.
-3 Video ngắn 500–800: hook và câu móc ≈40 · cảnh hay bối cảnh ≈100–150 · 3–5 ý, mỗi ý ≈80–120, nối bằng "mà", "nên", "thế là", không "rồi sau đó… rồi sau đó" · câu cuối ≈20, nói luôn câu trả lời · lời mời ≈30. Khung năm nhịp (lật niềm tin, chuyện năm dòng): mỗi nhịp ≈100. Khung ba nhịp (vấn đề → hệ quả → lối ra): lối ra chiếm nửa bài.
-4 Bài dài ≈1.000: hook ≤18 tiếng + câu móc ≈30 · chuyện ≈300 · 3 bài học, mỗi bài ≈180–220 (ý → vì sao → ví dụ) · lời mời ≈80; cộng lại ≥950. Khung chuyện nằm trong ≈300 chữ chuyện; khung dạy nằm trong các bài học.
+3 Video ngắn 250–400: hook và câu móc ≈30 · cảnh hay bối cảnh ≈50–80 · 3–5 ý, mỗi ý ≈40–70, nối bằng "mà", "nên", "thế là", không "rồi sau đó… rồi sau đó" · câu cuối ≈20, nói luôn câu trả lời · lời mời ≈20. Khung năm nhịp (lật niềm tin, chuyện năm dòng): mỗi nhịp ≈50. Khung ba nhịp (vấn đề → hệ quả → lối ra): lối ra chiếm nửa bài.
+4 Bài dài 500–700: hook ≤18 tiếng + câu móc ≈20–30 · chuyện ≈150–200 · 2–3 bài học, mỗi bài ≈100–130 (ý → vì sao → ví dụ) · lời mời ≈50; cộng lại 500–700. Khung chuyện nằm trong phần chuyện; khung dạy nằm trong các bài học.
 5 Video dài 1.000–1.500, chia phần: mở ≈120 (bằng chứng, lời hứa, lộ trình, một câu bỏ ngỏ: §CM-LONG-INTRO) · bối cảnh ≈200 · 3–4 phần ≈200–250, cuối mỗi phần một câu móc · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80. Một phần có thể chạy khung riêng (lật niềm tin, mổ xẻ quyết định).
 6 Đủ chữ bằng ruột, không bằng độn. Dưới mức sàn → mở rộng điểm tựa (§CM-REPURPOSE 5): thêm một ví dụ, một cảnh, chính câu khách nói tìm được khi nghiên cứu; chưa có điểm tựa → hỏi một chuyện trước (§CM-REPURPOSE 6), không viết chữ rỗng; độ dài giữ nguyên. Quá mức trần → bỏ trọn nhịp yếu nhất, không gọt mỗi nhịp một ít.
 7 Số chữ chỉ in ở chỗ dòng đầu của dạng bài vốn đã in (§CM-FORMATS 5).
@@ -38,10 +38,10 @@ DANH SÁCH VÀ TIN NHẮN (§CM-COPY-LISTS): DANH SÁCH CÓ SỢI CHỈ "N ý, m
 3 Ví dụ trong các phần này là dựng ra để thấy dáng, mỗi nhịp một dòng; không đăng, không lấy làm dữ kiện. Trong bài thật, chỗ nào cũng là của coach: cảnh trong lời xả, con số của họ, kết quả khách đã đồng ý cho kể.
 4 Kiểm thầm sau khi viết: mỗi nhịp gọi tên được bằng một chữ không? Nhịp nào cũng cần nhịp trước nó không? Chỉ một niềm tin? Câu khẳng định nào cũng có bằng chứng hay chuyện thật của chính coach? THU HÚT: người xem có chuyển cho nhau không? NIỀM TIN: khách có thấy coach nghĩ thế nào không? CHUYỂN ĐỔI: khách có biết bước tiếp theo không?
 
-<!-- @section copywriting.grow-stories src=e7f3e7c5d2 -->
+<!-- @section copywriting.grow-stories src=fc903bdd74 -->
 ### Khung chuyện: chuyện năm dòng, chuyện một bài học, câu kéo câu (hợp lúc nào · nhịp và số chữ · ví dụ dựng ra · hỏng khi)
 CHUYỆN NĂM DÒNG · THU HÚT, NIỀM TIN · video ngắn, bài ngắn, caption, story; khung chuyện mặc định của Tuần 1.
-Nhịp (video ngắn ≈600): khoảnh khắc trong đời khách, để khách thấy mình trong đó ≈100 · chỗ vướng: đã thử gì, vì sao không ăn thua, kèm một chi tiết ≈120 · mình thấy ra: bước ngoặt, bằng một việc làm hay một đồ vật ≈120 · cái đổi: cách mới và một dữ kiện ≈150 · "tới lượt bạn": một bước nhỏ, rồi lời mời khép câu bỏ ngỏ ≈60. Bài ngắn: năm đoạn, mỗi đoạn ≈50 tiếng.
+Nhịp (video ngắn ≈300): khoảnh khắc trong đời khách, để khách thấy mình trong đó ≈50 · chỗ vướng: đã thử gì, vì sao không ăn thua, kèm một chi tiết ≈60 · mình thấy ra: bước ngoặt, bằng một việc làm hay một đồ vật ≈60 · cái đổi: cách mới và một dữ kiện ≈80 · "tới lượt bạn": một bước nhỏ, rồi lời mời khép câu bỏ ngỏ ≈30. Bài ngắn: năm đoạn, mỗi đoạn ≈50 tiếng.
 VD: Chị chủ tiệm hoa cưới ngồi báo giá từng đám tới 12 giờ đêm. · Làm bảng giá rồi mà cô dâu vẫn hỏi "có gói nào rẻ hơn không chị". · Tới hôm có cặp hỏi riêng giá hoa ở bảng chào khách. · Giờ chị báo ba gói, bảng chào khách tính riêng. · Tuần này thử tách riêng một món; ai cần mẫu báo giá ba dòng thì comment BA DÒNG.
 Hỏng khi: chỗ vướng chung chung ("khó lắm"); bước ngoặt là "mình chợt nhận ra" mà không có việc gì, vật gì; cuối bài giảng đạo thay vì đưa một bước.
 CHUYỆN MỘT BÀI HỌC · NIỀM TIN, THU HÚT · email, Zalo, bài ngắn, một phần của bài dài; khi lời xả có một cảnh sắc và một ý.
@@ -49,18 +49,18 @@ Nhịp (email ≈300 tiếng): cảnh: giờ, chỗ, một đồ vật ≈100 ·
 VD: 7 giờ sáng thứ Ba, file Excel của khách có 40 sheet. · Chị ấy bảo: "Em không biết phải nhìn số nào." · Một tuần chỉ cần một con số. · Theo dõi hết là chẳng theo dõi gì. · Nhắn lại mình con số chị sẽ giữ.
 Hỏng khi: hai bài học; cảnh chỉ là câu tóm ("dạo gần đây mình làm với một khách"); bài học nói lại ba lần.
 CÂU KÉO CÂU · THU HÚT · video ngắn, bài chữ, mấy dòng đầu quảng cáo; cũng là nhịp bên trong mọi khung khác.
-Nhịp (video ngắn ≈550): hook ≤18 tiếng gợi một câu hỏi · mỗi câu sau trả lời một phần và mở một câu hỏi nhỏ hơn ("mà", "nên", "tức là") · một câu móc khoảng giữa bài · câu cuối khép câu hỏi đầu tiên · lời mời ≈30.
+Nhịp (video ngắn ≈300): hook ≤18 tiếng gợi một câu hỏi · mỗi câu sau trả lời một phần và mở một câu hỏi nhỏ hơn ("mà", "nên", "tức là") · một câu móc khoảng giữa bài · câu cuối khép câu hỏi đầu tiên · lời mời ≈20.
 VD: "Khách tốt nhất học xong, cảm ơn, rồi không quay lại? Không phải tại bài dạy đâu." · Chỉ là chẳng ai hỏi họ muốn gì tiếp. · Thế là họ im. · Tức là lời mời kế tiếp họ nghe sẽ là của người khác. · Buổi cuối hỏi một câu: "Giờ chị muốn gỡ chuyện gì tiếp?"
 Hỏng khi: có câu bỏ đi mà chẳng ai thấy thiếu; câu móc hứa nhiều hơn bài trả; nhử mà không bao giờ trả.
 
-<!-- @section copywriting.grow-beliefs src=28e99bbf88 -->
+<!-- @section copywriting.grow-beliefs src=f6596c59e5 -->
 ### Khung niềm tin: lật niềm tin, gỡ lời khuyên quen, cách cũ – cách mới
 LẬT NIỀM TIN · NIỀM TIN (khung lõi), CHUYỂN ĐỔI khi một niềm tin chặn việc mua · video ngắn, carousel, bài học trong bài dài, một phần video dài. Niềm tin lấy từ kế hoạch (§CM-TIERS) hay băn khoăn coach nghe được.
-Nhịp (video ngắn ≈650): niềm tin cũ bằng chữ khách, nói cho công bằng: vì sao nó nghe hợp lý ≈100 · chỗ nứt: một cảnh, một dữ kiện cho thấy nó sai ≈150 · niềm tin mới một câu ≈30 · bằng chứng: việc coach đã làm, kết quả đã xin phép, lý do ai cũng kiểm được ≈200 · nghĩa là gì, một bước, lời mời ≈120. Hẹp dần: hook rộng → một câu vì sao nên nghe → chữ khách để người không hợp tự đi → lật → một lời mời (§CM-HOOKS 5).
+Nhịp (video ngắn ≈350): niềm tin cũ bằng chữ khách, nói cho công bằng: vì sao nó nghe hợp lý ≈50 · chỗ nứt: một cảnh, một dữ kiện cho thấy nó sai ≈80 · niềm tin mới một câu ≈20 · bằng chứng: việc coach đã làm, kết quả đã xin phép, lý do ai cũng kiểm được ≈110 · nghĩa là gì, một bước, lời mời ≈70. Hẹp dần: hook rộng → một câu vì sao nên nghe → chữ khách để người không hợp tự đi → lật → một lời mời (§CM-HOOKS 5).
 VD: "Đăng nhiều thì nhiều khách", nghe hợp lý: mua nhiều vé thì dễ trúng. · Rồi đăng mỗi ngày cả tháng, không ai nhắn. · Khách tới từ cái bài gọi đúng tên vấn đề của họ. · {N} người đặt lịch gần nhất của coach đều nhắc tới một bài. · Tuần này viết một bài bằng đúng chữ khách hay nói.
 Hỏng khi: vẽ niềm tin cũ cho ngớ ngẩn (khách từng tin nó); hai niềm tin; "bằng chứng" chỉ là thêm một câu khẳng định.
 GỠ LỜI KHUYÊN QUEN · THU HÚT · video ngắn, carousel, bài ngắn; lời khuyên khách nghe khắp nơi.
-Nhịp (video ngắn ≈550): lời khuyên y như người ta hay nói ≈60 · vì sao nghe có vẻ đúng ≈80 · nó bỏ sót gì, kèm một ví dụ ≈200 · nên làm gì ≈150 · lúc nào lời khuyên cũ vẫn đúng ≈40 · lời mời. Carousel: trang 1 dáng kết quả, "vì sao" và "điều đúng" mỗi thứ một trang, chỗ bỏ sót 2–3 trang, 3 bước, trang tóm, quà.
+Nhịp (video ngắn ≈300): lời khuyên y như người ta hay nói ≈30 · vì sao nghe có vẻ đúng ≈40 · nó bỏ sót gì, kèm một ví dụ ≈110 · nên làm gì ≈80 · lúc nào lời khuyên cũ vẫn đúng ≈20 · lời mời. Carousel: trang 1 dáng kết quả, "vì sao" và "điều đúng" mỗi thứ một trang, chỗ bỏ sót 2–3 trang, 3 bước, trang tóm, quà.
 VD: "Cứ chọn ngách hẹp vào." · Nghe đúng: hẹp thì dễ nhớ. · Mà nó bỏ qua một bước: vấn đề nào người ta sẵn sàng bỏ tiền ra gỡ. · Cô giáo yoga chọn "yoga cho dân chạy bộ"; dân chạy chịu chi cho cái đầu gối đau, không phải cho yoga. · Chọn vấn đề trước, ngách tự ra. · Biết vấn đề rồi thì cứ hẹp thoải mái.
 Hỏng khi: "X chết rồi", "sự thật người ta giấu"; gỡ một điều chẳng ai tin; nhắm vào người khuyên thay vì lời khuyên.
 CÁCH CŨ – CÁCH MỚI · NIỀM TIN, CHUYỂN ĐỔI · video ngắn, carousel, bài ngắn, quảng cáo. Cách cũ là thói quen hay lời khuyên, không phải một người hay một nhóm người.
@@ -68,14 +68,14 @@ Nhịp (bài ngắn ≈350 tiếng): cách cũ y như khách đang làm, nói c�
 VD: Cách cũ: gọi tư vấn 40 phút, mình giải thích hết. · Mình nói nửa buổi, khách gật gù rồi hẹn "để lần sau". · Cách mới: gửi trước ba câu hỏi. · Khách trả lời bằng chữ, cuộc gọi vào thẳng vấn đề của họ. · Đổi lại mỗi khách tốn thêm mười phút. · Ai cần ba câu đó thì comment BA CÂU HỎI.
 Hỏng khi: cách cũ bị biếm hoạ; không có cái giá (đọc như quảng cáo); "cách nào cũng được" mà không có lập trường.
 
-<!-- @section copywriting.grow-problem src=d2e38e596c -->
+<!-- @section copywriting.grow-problem src=721994054e -->
 ### Khung vấn đề: vấn đề → hệ quả → lối ra, trước → sau → cây cầu, dừng → muốn → làm
 PAS · NIỀM TIN, CHUYỂN ĐỔI · bài ngắn, email, video ngắn, quảng cáo; khách biết vấn đề mà xem nhẹ nó.
 Nhịp (bài ngắn ≈350 tiếng): vấn đề bằng chữ khách, một cảnh ≈80 · để yên thì tốn gì: giờ, tiền, cái lúc thấy nhói, lấy từ câu khách than khi nghiên cứu ≈110 · lối ra: cách của coach, 2–3 bước ≈110 · một bước, lời mời ≈40.
 VD: Gửi báo giá xong, cả tuần không ai trả lời. · Mỗi ngày im lặng mình lại tự hạ giá trong đầu, tới lúc gọi thì giảm trước cả khi khách mở lời. · Gửi giá kèm một câu hỏi: "Anh chị tiện bắt đầu ngày nào trong hai ngày này?" · Thử ngay với báo giá tới.
 Hỏng khi: hệ quả bịa ra hay thổi lên ("mất trắng"); doạ chuyện sức khoẻ, nợ nần, gia đình; lối ra chỉ là "học với mình".
 BAB · CHUYỂN ĐỔI, NIỀM TIN · video ngắn, carousel, quảng cáo, đoạn dẫn vào bài mời mua. Cần "sau" có thật: của chính coach hay của khách đã xin phép, kèm hoàn cảnh.
-Nhịp (video ngắn ≈600): trước: một ngày của khách, cụ thể ≈150 · sau: cũng ngày đó khi đã gỡ xong, kể thành cảnh, không thành lời hứa ≈150 · cây cầu: cái gì đổi, các bước ≈200 · hợp với ai, không hợp ai ≈50 · lời mời ≈50.
+Nhịp (video ngắn ≈300): trước: một ngày của khách, cụ thể ≈80 · sau: cũng ngày đó khi đã gỡ xong, kể thành cảnh, không thành lời hứa ≈80 · cây cầu: cái gì đổi, các bước ≈100 · hợp với ai, không hợp ai ≈20 · lời mời ≈20.
 VD: Trước: tối Chủ nhật, cô giáo dạy kèm soạn lại giáo án cả tuần từ đầu. · Sau: tối Chủ nhật, cô mở một thư mục toàn giáo án đã dạy ổn. · Cây cầu: mỗi trình độ một giáo án dùng lại; đổi câu chuyện, giữ khung bài. · Hợp với cô có học sinh đều, không hợp luyện thi cấp tốc.
 Hỏng khi: "sau" chưa ai đạt; "sau" là thu nhập hay vóc dáng; bỏ qua cây cầu (khoảng giữa mới là nội dung).
 AIDA · CHUYỂN ĐỔI · quảng cáo, đoạn dẫn vào bài mời mua, email gửi danh sách đã quen, màn đầu trang bán hàng; còn dùng để kiểm bài bán có đủ bốn phần không.
@@ -83,14 +83,14 @@ Nhịp (quảng cáo ≈150 tiếng, email ≈300): dừng: gọi đúng ngườ
 VD: Anh chị kế toán còn đi đòi chứng từ từng khách qua Zalo: · sổ mình làm, hoá đơn thiếu hiếm khi mất, chỉ là không ai xin đúng lúc. · Một tin hẹn sẵn ngày 25, cuối tháng chứng từ về đủ. · Nhắn ĐÒI CHỨNG TỪ, mình gửi mẫu tin.
 Hỏng khi: "Nhanh tay lên!" mà không lý do; "muốn" dựng bằng tính từ; thiếu nhịp tò mò (câu nào cũng hét); "đa số {khách}…" mà không nguồn (số của coach hay dòng GIỮ, §CM-REPURPOSE 9).
 
-<!-- @section copywriting.grow-proof src=edf0664e69 -->
+<!-- @section copywriting.grow-proof src=2ad1b5ff1b -->
 ### Khung bằng chứng: mổ xẻ quyết định, gỡ băn khoăn, bài mời mua
 MỔ XẺ QUYẾT ĐỊNH · CHUYỂN ĐỔI (khung chốt mạnh nhất), NIỀM TIN · video ngắn, bài dài, một phần video dài, carousel. Chỉ khách thật đã đồng ý bằng chữ (§CM-PROOF-BANK); không gộp nhiều khách thành một người.
-Nhịp (video ngắn ≈700; bài dài ≈1.000 thì mỗi nhịp nhân ≈1,4): lúc khách kẹt, lời họ nói ≈100 · họ bắt đầu từ đâu ≈100 · họ từng tin gì ≈80 · quyết định làm đổi mọi thứ ≈150 · các bước ≈150 · kết quả kèm hoàn cảnh và "{{t:claims.individual}}" ≈60 · hợp ai, không hợp ai ≈40 · lời mời ≈20.
+Nhịp (video ngắn ≈350; bài dài ≈600 thì mỗi nhịp nhân ≈1,7): lúc khách kẹt, lời họ nói ≈50 · họ bắt đầu từ đâu ≈50 · họ từng tin gì ≈40 · quyết định làm đổi mọi thứ ≈75 · các bước ≈75 · kết quả kèm hoàn cảnh và "{{t:claims.individual}}" ≈30 · hợp ai, không hợp ai ≈20 · lời mời ≈10.
 VD: Lễ tân phòng khám nha: "Lịch kín mà khách bùng hoài chị ơi." · Đã nhắn nhắc lịch rồi. · Cả phòng khám tin là khách quên. · Quyết định: hỏi lý do ngay lúc đặt lịch. · Một câu hỏi, đặt cọc cho ca dài, gọi lại hôm trước. · Kết quả: [số thật của coach, khách đã đồng ý]. · Phòng khám khách phải chờ mới có lịch thì không cần cách này.
 Hỏng khi: khoe kết quả trước mà không có quyết định; "kết quả tuỳ người" thay cho hoàn cảnh; câu của khách mà coach chưa từng kể.
 GỠ BĂN KHOĂN · CHUYỂN ĐỔI · video ngắn, bài ngắn, email, Zalo, hỏi đáp. Lấy từ băn khoăn coach nghe được khi gọi, khi nhắn, dưới comment (§CM-OBJECTIONS).
-Nhịp (video ngắn ≈550): băn khoăn nguyên văn, nói lại cho tử tế ≈60 · vì sao lo vậy là phải ≈80 · sự thật, nhìn lại ≈150 · bằng chứng: việc đã làm, kết quả đã xin phép ≈120 · lỡ không hợp thì sao, chỉ khi có thật (học thử, chính sách hoàn tiền đang áp dụng) ≈60 · một lời mời ≈40.
+Nhịp (video ngắn ≈300): băn khoăn nguyên văn, nói lại cho tử tế ≈30 · vì sao lo vậy là phải ≈40 · sự thật, nhìn lại ≈90 · bằng chứng: việc đã làm, kết quả đã xin phép ≈70 · lỡ không hợp thì sao, chỉ khi có thật (học thử, chính sách hoàn tiền đang áp dụng) ≈30 · một lời mời ≈20.
 VD: "Giờ chị chưa có tiền học đâu em." · Phải rồi: khoản đó chi ra là thấy liền. · Khoản không thấy: thêm sáu tháng tự mò. · Tháng đầu làm gì, từng bước. · Điều khoản hoàn tiền đúng như đang ghi, nếu có.
 Hỏng khi: cãi tay đôi với khách; "học xong tự hoàn vốn" hay bất kỳ con số lời lãi nào; cam kết không có thật.
 BÀI MỜI MUA · CHUYỂN ĐỔI · bài đăng, email, Zalo, cuối video dài; chỉ sản phẩm đang bán, giá thật, giới hạn thật (§CM-LAUNCH-BRIEF).
@@ -98,22 +98,22 @@ Nhịp (≈450 tiếng): kết quả nó nhắm tới, một câu ≈30 · hợp
 VD: Nhóm 4 tuần để chốt mức giá trọn gói đầu tiên. · Cho designer đang tính tiền theo giờ, không dành cho agency. · Mỗi tuần một buổi gọi, một bảng tính giá, báo giá của từng người được sửa ngay trong buổi. · {giá}. · {N} suất, vì báo giá của từng người được sửa trực tiếp. · Comment GIÁ TRỌN GÓI.
 Hỏng khi: giấu giá ("ib báo giá"); giới hạn suất, hạn chót giả; cộng "giá trị" ra một con số thổi phồng.
 
-<!-- @section copywriting.grow-long src=bbf4f2c9cc -->
+<!-- @section copywriting.grow-long src=946b422666 -->
 ### Khung dài: bài dài bỏ ngỏ, video dài theo phần
-BÀI DÀI BỎ NGỎ, ≈1.000 chữ · chủ yếu NIỀM TIN, THU HÚT trên Facebook, LinkedIn; mỗi tuần nhiều nhất một bài, là bài chữ chính của tuần.
-Nhịp: hook ≤18 tiếng, ý chính nằm trước "Xem thêm" · câu móc ≈30: cái được mất hay câu hỏi, mở câu bỏ ngỏ ("cuối bài là câu mình giờ đưa vào mọi báo giá") · chuyện ≈300 (chuyện năm dòng hay chuyện một bài học) · bài học 1 ≈170: ý → vì sao → ví dụ · bài học 2 ≈170 · bài học 3 ≈170, mạnh nhất, trả lời câu bỏ ngỏ · lời mời ≈80, một việc. Mỗi bài học mở bằng một câu đứng riêng được, để người lướt vẫn nắm được bài. Quá giới hạn nền tảng: hook, chuyện, một bài học, lời mời (§CM-POSTS 4).
+BÀI DÀI BỎ NGỎ, 500–700 chữ · chủ yếu NIỀM TIN, THU HÚT trên Facebook, LinkedIn; mỗi tuần nhiều nhất một bài, là bài chữ chính của tuần.
+Nhịp: hook ≤18 tiếng, ý chính nằm trước "Xem thêm" · câu móc ≈30: cái được mất hay câu hỏi, mở câu bỏ ngỏ ("cuối bài là câu mình giờ đưa vào mọi báo giá") · chuyện ≈150–200 (chuyện năm dòng hay chuyện một bài học) · bài học 1 ≈110: ý → vì sao → ví dụ · bài học 2 ≈110 · bài học 3 ≈110, mạnh nhất, trả lời câu bỏ ngỏ · lời mời ≈50, một việc. Mỗi bài học mở bằng một câu đứng riêng được, để người lướt vẫn nắm được bài. Quá giới hạn nền tảng: hook, chuyện, một bài học, lời mời (§CM-POSTS 4).
 VD: Hook "Khách nào cũng mặc cả từng báo giá? Đọc cái này trước khi giảm." · Chuyện: hai khách cùng tháng, một người mặc cả từng đồng, một người chuyển đủ ngay hôm đầu. · Bài học: giá lọc ra người nghiêm túc · tuần đầu định nhịp cho cả khoá · câu mình giờ đưa vào mọi báo giá. · Mời: comment CÂU BÁO GIÁ để lấy câu đó.
 Hỏng khi: bài học chẳng dính gì tới chuyện; thêm bài học thứ tư; nối kiểu văn viết (Bên cạnh đó, Hơn nữa); câu bỏ ngỏ không bao giờ được trả.
-HOOK, soát khung (§CM-FORMATS 1, §CM-HOOK-TEXT): là một khung, không mở bằng cảnh khách hay tên khách. TRƯỢT: "Tối đó cô học trò ôm cuốn nhạc tới lớp, mắt đỏ hoe." → ĐẠT: "Tập đàn mấy tháng mà chưa đàn trọn một bài? Không phải tại ngón tay đâu." Dưới 950 chữ: thêm một ví dụ trong bài học, không độn.
+HOOK, soát khung (§CM-FORMATS 1, §CM-HOOK-TEXT): là một khung, không mở bằng cảnh khách hay tên khách. TRƯỢT: "Tối đó cô học trò ôm cuốn nhạc tới lớp, mắt đỏ hoe." → ĐẠT: "Tập đàn mấy tháng mà chưa đàn trọn một bài? Không phải tại ngón tay đâu." Dưới 500 chữ: thêm một ví dụ trong bài học, không độn.
 VIDEO DÀI THEO PHẦN, 1.000–1.500 chữ · NIỀM TIN, CHUYỂN ĐỔI · YouTube, video Facebook, podcast (§CM-LONG). Lời nói; mỗi phần là gạch đầu dòng; chỉ đoạn mở và câu cuối viết nguyên văn.
 Nhịp: mở ≈120: bằng chứng (một dữ kiện của họ), lời hứa (xem xong làm được gì), lộ trình (3–4 phần, gọi tên thường), một câu bỏ ngỏ trả lời gần cuối, một câu "kể cả khi bạn…" (§CM-LONG-INTRO) · bối cảnh hay chuyện ≈200 · 3–4 phần, mỗi phần ≈200–250: ý → vì sao → ví dụ → làm gì → câu móc gợi phần sau hay mở lại câu bỏ ngỏ ("Phần 3 là chỗ phần lớn mọi người bỏ cuộc.") · giữa video, một lần, câu tự kiểm dạng khẳng định · trả lời câu bỏ ngỏ ≈100 · lời mời ≈80: quà, sản phẩm chỉ khi có, video nên xem tiếp. Một phần có thể chạy khung riêng (lật niềm tin, mổ xẻ quyết định).
 VD: "Nếu phải lấp kín lịch từ con số 0": bằng chứng (số năm, số khách của họ) · các phần: nói với ai, nói gì, nói ở đâu, mời thế nào · câu bỏ ngỏ: "câu hỏi cho biết khách này có mua hay không".
 Hỏng khi: câu móc chỉ là "nhớ xem hết video"; các phần không theo thứ tự nào (không có sợi chỉ); độn chữ cho đủ 1.000.
 
-<!-- @section copywriting.grow-lists src=c4dd63eaf6 -->
+<!-- @section copywriting.grow-lists src=bf981dc684 -->
 ### Danh sách có sợi chỉ, tin ngắn
 DANH SÁCH CÓ SỢI CHỈ · THU HÚT, NIỀM TIN · carousel, bài ngắn, video ngắn, bài dạng danh sách trên LinkedIn. Sợi chỉ: một niềm tin mà ý nào cũng phục vụ, nói ra một lần gần cuối; xếp tăng dần, ý hay nhất để cuối.
-Nhịp (video ngắn ≈550, carousel 10–12 trang): hook có đúng số ý và kết quả, ≤18 tiếng · vì sao có danh sách này, một dữ kiện của coach ≈30 · từng ý: đầu ý 2–5 chữ + một dữ kiện của coach + vì sao, mỗi ý ≈60–90, ý nào cũng đứng riêng được · ý trả lời hook, để cuối · sợi chỉ một câu ≈20 · lời mời ≈30.
+Nhịp (video ngắn ≈300, carousel 10–12 trang): hook có đúng số ý và kết quả, ≤18 tiếng · vì sao có danh sách này, một dữ kiện của coach ≈20 · từng ý: đầu ý 2–5 chữ + một dữ kiện của coach + vì sao, mỗi ý ≈30–50, ý nào cũng đứng riêng được · ý trả lời hook, để cuối · sợi chỉ một câu ≈20 · lời mời ≈20.
 VD: "5 tin mình không bao giờ gửi khách mới (và gửi gì thay)". Mỗi ý: tin đó, vì sao phản tác dụng, câu thay. Sợi chỉ: tin nào cũng phải làm bước tiếp theo của khách dễ hơn.
 Hỏng khi: một mớ mẹo không có sợi chỉ; độn cho đủ số; các ý phải đọc cùng nhau mới hiểu.
 TIN NGẮN · mọi tầng · email ≤375 tiếng; Zalo ≤150, tin riêng ≤90, gửi một người, tin đầu không link, không chào bán (§CM-MESSAGES).
@@ -121,16 +121,16 @@ Nhịp (email ≈300 tiếng): tiêu đề bằng chữ khách, giải đáp tro
 VD: Email tiêu đề "cái báo giá mình không gửi" · 11 giờ đêm thứ Sáu, bản báo giá để giá thấp · báo giá gửi lúc mệt là báo giá gửi lúc sợ · nhắn lại mình hôm nào gửi. Zalo: "Thấy chị đang làm thực đơn đặt tiệc. Khách bên chị hay đặt theo suất hay theo mâm ạ?"
 Hỏng khi: hai lời mời; giọng bản tin trong tin nhắn riêng; "thấy bạn xem tin rồi"; làm người ta áy náy.
 
-<!-- @section copywriting.grow-cuts src=84a7386740 -->
+<!-- @section copywriting.grow-cuts src=71db02b40b -->
 ### Chất liệu một tuần, bảy bài ("mỗi ngày 1 bài", "cắt ra nhiều dạng", "từ một chuyện ra nhiều bài", "đăng đều mỗi ngày")
 1 CHẤT LIỆU, lấy từ mọi nguồn: đoạn xả và câu trả lời buổi nói chuyện (§CM-TALK) · tài liệu coach đưa (file, bài cũ, bản ghi lời, ghi chú, slide, lời khen khách họ gửi) · chuyện, bằng chứng trong kho (§CM-STORY-BANK, §CM-PROOF-BANK) · nghiên cứu của máy, chỉ dòng đã GIỮ: chữ khách, chủ đề bình luận, mổ kênh, ghi chú về ngách (§CM-RESEARCH-BANK, §CM-CHANNELS, §CM-NICHE) · kênh, bài coach thích hay theo dõi: chỉ mượn dáng, không chép (§CM-LIKED). Dữ kiện (số, kết quả, lời khách, sự việc) chỉ lấy từ coach, card hay tài liệu của họ; dòng nghiên cứu là tiếng nói khách theo vai, không phải bằng chứng; chuyện của người làm nội dung khác không bao giờ thành chuyện của coach. Mỗi ngày 1 bài, 7 bài một tuần, cắt từ đó ra nhiều kiểu bài; số giờ quyết định mấy bài phải quay (§CM-CALENDAR 2), còn lại không cần quay.
-2 CÁC KIỂU BÀI, độ dài · phút của coach (máy viết hết): video ngắn 500–800 chữ · ≈20 (quay ≈10, đọc, đăng) · bài dài ≈1.000 chữ · ≈10 · carousel 10–12 trang · ≈15 · bài ngắn 250–450 tiếng · ≈5 · ảnh trích câu, một câu của coach ≤30 tiếng · ≈10 · story hay bình chọn 3–5 khung, mỗi khung ≤35 tiếng · ≈5 · tin Zalo ≤150 tiếng hay email ≤375 · ≈5 · video dài 1.000–1.500 chữ · ≈3 tiếng.
+2 CÁC KIỂU BÀI, độ dài · phút của coach (máy viết hết): video ngắn 250–400 chữ · ≈15 (quay 6–8, đọc, đăng) · bài dài 500–700 chữ · ≈8 · carousel 10–12 trang · ≈15 · bài ngắn 250–450 tiếng · ≈5 · ảnh trích câu, một câu của coach ≤30 tiếng · ≈10 · story hay bình chọn 3–5 khung, mỗi khung ≤35 tiếng · ≈5 · tin Zalo ≤150 tiếng hay email ≤375 · ≈5 · video dài 1.000–1.500 chữ · ≈3 tiếng.
 3 MỘT CHẤT LIỆU, NHIỀU BÀI, khi mỗi bài một dạng khác, một góc riêng (cảnh lúc đó · bài học · cái sai · các bước · câu hỏi nó gợi ra · phía khách), khung hook riêng (§CM-FORMATS 1), lời mời riêng theo loại bài (§CM-CTA-KIT 1). Một ý, một chuyện ra 2–3 bài một tuần là bình thường. Không chép một câu từ bài này sang bài kia: ảnh trích câu được lấy một câu, bài gốc chỉ nói câu đó một lần. Hai bài cùng dạng trên một chất liệu: bỏ một.
 4 SỔ Ý (§CM-HUMANIZE): mỗi chất liệu → các bài của nó ("câu trả lời 3 → video thứ Hai, ảnh trích thứ Năm, bình chọn thứ Bảy"), ghi vào kế hoạch tuần và `used:` trên card; tuần sau lấy chất liệu mới trước; chuyện đã dùng chỉ quay lại ở tháng sau, dạng khác.
-<!-- @section copywriting.grow-cuts-thin src=67a96b144d -->
+<!-- @section copywriting.grow-cuts-thin src=01f72a7e02 -->
 ### Ít chất liệu: một ý là đủ, không viết suông ("không có chuyện gì để kể", "hết ý")
-5 ĐIỂM TỰA TRƯỚC, trước khi viết tuần: điểm tựa là một ý, niềm tin, chuyện hay bước làm của chính coach: lời xả, buổi nói chuyện, card, chiến lược đã OK, tài liệu, bài cũ họ đưa, dòng kho bằng chứng, câu nghiên cứu đã GIỮ; một khoảnh khắc tính một lần. Mỗi bài một điểm tựa là đủ: bài vẫn viết đủ độ dài (video ngắn 500–800, bài dài ≈1.000) bằng cách mở rộng điểm tựa đó với cách làm, niềm tin của coach, phần dạy, các bước làm, ví dụ nói rõ là ví dụ, chữ khách trong câu đã GIỮ (§CM-HUMANIZE 7). Mở rộng như vậy là dạy có gốc, không phải độn.
-6 Ô KHÔNG CÓ ĐIỂM TỰA (điểm tựa nào cũng đã đủ 3 bài, mục 10): (a) trước khi viết, hỏi một câu xin chuyện ("Lần gần nhất khách … thì chuyện gì xảy ra?"), là dòng Cần duy nhất của tin; họ kể xong mới viết. Hoặc (b) ô đó lấy một ý khác trong sổ ý, bài quay có thể đổi thành bài viết trên ý đó (bài dài ≈1.000, carousel hay ảnh trích câu); tuần vẫn đủ 7 bài. Bớt video thì tin tuần nói đúng một dòng, gộp vào dòng Cần hay TIẾP, không hỏi thêm: "Tuần này 3 video thay vì 4: chưa đủ chất liệu cho video thứ 4; {xưng hô} kể thêm một chuyện là mình đổi lại."
+5 ĐIỂM TỰA TRƯỚC, trước khi viết tuần: điểm tựa là một ý, niềm tin, chuyện hay bước làm của chính coach: lời xả, buổi nói chuyện, card, chiến lược đã OK, tài liệu, bài cũ họ đưa, dòng kho bằng chứng, câu nghiên cứu đã GIỮ; một khoảnh khắc tính một lần. Mỗi bài một điểm tựa là đủ: bài vẫn viết đủ độ dài (video ngắn 250–400, bài dài 500–700) bằng cách mở rộng điểm tựa đó với cách làm, niềm tin của coach, phần dạy, các bước làm, ví dụ nói rõ là ví dụ, chữ khách trong câu đã GIỮ (§CM-HUMANIZE 7). Mở rộng như vậy là dạy có gốc, không phải độn.
+6 Ô KHÔNG CÓ ĐIỂM TỰA (điểm tựa nào cũng đã đủ 3 bài, mục 10): (a) trước khi viết, hỏi một câu xin chuyện ("Lần gần nhất khách … thì chuyện gì xảy ra?"), là dòng Cần duy nhất của tin; họ kể xong mới viết. Hoặc (b) ô đó lấy một ý khác trong sổ ý, bài quay có thể đổi thành bài viết trên ý đó (bài dài 500–700, carousel hay ảnh trích câu); tuần vẫn đủ 7 bài. Bớt video thì tin tuần nói đúng một dòng, gộp vào dòng Cần hay TIẾP, không hỏi thêm: "Tuần này 3 video thay vì 4: chưa đủ chất liệu cho video thứ 4; {xưng hô} kể thêm một chuyện là mình đổi lại."
 7 KHÔNG VIẾT SUÔNG: chưa có điểm tựa thì không viết cho đủ chữ; có rồi, viết đủ độ dài không phải độn. "Máy tự thêm" chỉ ghi đoạn có câu không bám vào nguồn nào của coach (dạy chung chung, ví dụ không từ gì của họ), không giới hạn số đoạn; đoạn mở rộng từ card, cách làm, niềm tin, tài liệu của coach thì không ghi. Dữ kiện vẫn phải có nguồn (mục 9).
 8 MỘT Ý ≤3 BÀI MỘT TUẦN, sổ ý đếm từng bài (mục 10). Các video cùng dạng mỗi bài một kiểu ví dụ: một bài "giả sử…", một bài cảnh của chính coach, một bài câu nghiên cứu; một tuần không lặp kiểu.
 9 DỮ KIỆN TRÁ HÌNH: câu nói chung hay tốc độ ("bước này nhiều người bỏ qua nhất", "mười phút là xong", "khách lúc nào cũng…") là dữ kiện: có nguồn (coach nói; dòng GIỮ kèm số thật: "hai người ở hai nhóm kể…") hoặc cắt. Câu nghiên cứu vào bài ghi nguồn theo vai và nơi, hay "(mình đoán)".
@@ -165,14 +165,14 @@ Hai chất liệu, ba ý, 7 bài, 6 dạng, một bài dài; ý bỏ tập gam r
 5 Không bao giờ: khách làm, nói, nghĩ điều coach chưa kể; gộp nhiều khách thành một; cảnh dựng ra mà kể như thật (cảnh dựng thì nói rõ là dựng: "Thử hình dung…").
 6 Một cảnh, nhiều bài: cùng một khoảnh khắc làm được video ngắn (chuyện năm dòng), email (một bài học) và phần chuyện của bài dài; mỗi bài đổi một niềm tin khác nên cái kết và lời mời khác, dữ kiện thì giữ nguyên.
 
-<!-- @section copywriting.grow-story-craft src=11770cb6f8 -->
+<!-- @section copywriting.grow-story-craft src=1f365ab2fe -->
 ### Độ căng, nhịp kể, độ cụ thể, cái kết
 1 Độ căng: mở bằng câu hỏi mà chuyện sẽ trả lời; giấu câu trả lời thêm một nhịp, quá chỗ mình thấy vừa; đẩy cái giá lên một lần trước bước ngoặt ("rồi chị ấy đòi hoàn tiền"). Mỗi chuyện một vấn đề.
 2 Kể trong video: câu ngắn ở cảnh và bước ngoặt, câu dài hơn ở chỗ giải thích; mỗi lần quay một nhịp; "mà", "nên", "thế là" giữa các nhịp; một câu dọn đường trước bước ngoặt ("Rồi chị nói đúng một câu."); một câu móc quanh giữa bài. Lời nói không dùng gạch ngang. Đọc to lên.
 3 Thang cụ thể: leo tới khi người lạ hình dung được. "Khách gặp khó" → "một khách gặp khó chuyện giá" → "một thợ chụp ảnh cưới cứ báo giá theo giờ" → "báo 8 tiếng, làm 14 tiếng, quên tính tiền cuốn album". Dừng ở bậc mà dữ kiện của coach với tới; không leo bằng chi tiết bịa.
 4 Nỗi khổ và mong muốn: viết "trước" bằng thứ khách thấy, nghe, cảm (thùng hoá đơn chưa mở, cái nặng lòng tối Chủ nhật) và "sau" cũng vậy (hộp tin sáng thứ Hai nhẹ tênh), lấy từ nghiên cứu và lời xả, không từ tính từ.
 5 Cái kết trao sang lời mời: câu cuối trả lời hook; lời mời đi tiếp từ kết quả của chuyện ("Ai muốn ba câu chị ấy giờ hay hỏi thì comment BA CÂU HỎI."), không lạc sang chuyện khác. Quà đặt tên theo kết quả của chính chuyện này (§CM-HOOK-CTA). Không tóm lại bài học, không "Bạn thấy sao?".
-6 Bao nhiêu chữ cho chuyện: video ngắn ≈150–250 trong 500–800 · bài dài ≈300 · video dài ≈200, thêm một chuyện trong một phần · email ≈100–150 tiếng · story: một cảnh, một ý, một lời mời.
+6 Bao nhiêu chữ cho chuyện: video ngắn ≈80–120 trong 250–400 · bài dài ≈150–200 · video dài ≈200, thêm một chuyện trong một phần · email ≈100–150 tiếng · story: một cảnh, một ý, một lời mời.
 
 <!-- @section copywriting.grow-persuade src=06a38f0f21 -->
 ### Thuyết phục: các đòn bẩy ("thuyết phục", "làm sao cho khách tin")

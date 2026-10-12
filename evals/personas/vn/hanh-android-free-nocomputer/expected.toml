@@ -98,7 +98,7 @@ mix = "THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, cộng 100; mặc định 40/40/
 system = "nền tảng chính Facebook cá nhân (Messenger → Zalo), nơi đăng lại TikTok và Zalo; 2 tiếng rưỡi mỗi tuần: 3 video ngắn thẻ ý, 1 bài dài, 1 tin Zalo; thang lời mời comment/nhắn NGẠI CHÀO → 5 câu nói thật → Zalo → chuyển khoản."
 found = "2–4 dòng có nguồn (nhóm Facebook chủ spa, bình luận TikTok; tháng/năm) hoặc ghi '(mình đoán)'; chị dùng điện thoại Android, không máy tính: không có công cụ thì nói một lần và mọi dòng là '(mình đoán)'."
 week1_after_ok = "Chỉ sau khi chị OK: QUAY HÔM NAY + Tuần 1 một tin, rồi Brand Card; file CHIEN-LUOC-NOI-DUNG.md chỉ khi app tạo được file (ChatGPT miễn phí trên điện thoại: hỏi 'chiến lược' để nhận bản in một khung)."
-lengths = "video ngắn 120–200 chữ; bài dài ≈1.000 chữ; không tính giây."
+lengths = "video ngắn 250–400 chữ; bài dài 500–700 chữ; không tính giây."
 
 [keyword]
 # day0_heard: the Day-0 dump (chunks 1-2) quotes the buyer phrase AND the coach says many clients use it, or quotes it from 3+ NAMED clients (true: the Map prints it with no guess tag;
@@ -367,7 +367,7 @@ must = [
   "khi chị quay lại sau khi bị gọi đi ('tiếp em ơi', 'chi quay lai roi'), máy tiếp đúng chỗ, không hỏi lại câu đã trả lời",
   "sau 'xong' (hay câu cắt) máy hỏi về phía chị, mỗi tin MỘT câu, bỏ điều chị đã kể (khách, gói và giá, kết quả, điều cả nghề làm sai chị kể rồi): chỉ còn 'khách mới tìm tới thế nào, chị đăng ở đâu' và '90 ngày tới content làm gì cho chị, mấy tiếng mỗi tuần'; chị trả lời bằng chuyện thì máy nhận chuyện đó, không đòi chị gõ 'sửa dòng 3'; máy không hỏi lại điều chị đã nói, không hỏi quá 6 câu",
   "chiến lược một tin, chưa có bài: ĐIỀU KHÁCH NHỚ, TRỤ CỘT NỘI DUNG (3–5, rộng), TỶ LỆ NỘI DUNG (THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, cộng 100), HỆ THỐNG NỘI DUNG, TỪ KHOÁ, NGHIÊN CỨU CHO THẤY (2–4 dòng có nguồn hay 'mình đoán'), rồi 'OK hay sửa một dòng?'; trong ≤7 lượt của chị cộng các câu hỏi thêm; không có bảng kiểm 7 dòng, câu kiểm kê hay bản bỏ túi",
-  "chỉ sau khi chị OK: QUAY HÔM NAY dạng thẻ ý để thuộc (độ dài đếm chữ, 120–200 chữ, không đếm giây), dưới bài không in dòng nào, cuối là 'Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.'",
+  "chỉ sau khi chị OK: QUAY HÔM NAY dạng thẻ ý để thuộc (độ dài đếm chữ, 250–400 chữ, không đếm giây), dưới bài không in dòng nào, cuối là 'Quay luôn bây giờ, hoặc đăng caption dạng bài chữ cũng được.'",
   "gợi ý giữ Brand Card bằng cách gửi vào Zalo 'Cloud của tôi' hoặc nhờ Linh, con gái lưu; không bao giờ chặn bước tiếp",
   "tuần 1 tới cùng tin với QUAY HÔM NAY (2 THU HÚT, 2 NIỀM TIN, 1 CHUYỂN ĐỔI, mỗi bài ghi trụ cột và loại), không chờ hỏi, trước Brand Card; chưa lưu vẫn làm tiếp",
   "câu TIẾP cuối buổi không nhắc dự án nếu chị không có dự án; nói rõ hôm sau mở đâu và dán gì (tối đa 1 lần dán)",

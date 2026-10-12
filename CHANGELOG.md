@@ -4,6 +4,17 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-10-12 (v14.2)
+
+Founder (12 Oct, after reading qa/runs/v141/EXAMPLES.md): "các bài hơi bị dài quá, còn lại oke rồi". Only the lengths change; hooks, asks, voice and structure stay as approved.
+
+### Changed
+- [buyer] Shorter pieces: a short video is now 250–400 words (about 6–8 minutes to film, under 3 minutes on screen, so it fits Reels and Shorts) and a long post 500–700 words (a story and 2–3 lessons). Long videos stay 1,000–1,500 words. Your week takes less time: about 1½ hours (Light), 1¾ hours (Lean), 2¾ hours (Standard).
+- Kit: FILM TODAY "≥250 words (count)"; LENGTHS short video 250–400, long post 500–700 ("hook line, story, lessons, invitation"); Ship Check 4 floors video 250, long post 500 (VN the same in tiếng). Kit EN 6,497, VN 7,499; phone EN 7,484, VN 7,467; method EN 57,288, VN 66,511.
+- Method and level-ups: §CM-FORMATS 3, §CM-POSTS (long post 500–700, 2–3 lessons ≈100–130), §CM-HUMANIZE 7 band, §CM-LOCALE 2 (a 400-word short runs under 3 min; the trim caveat is gone), §CM-WEEK 2, §CM-TODAY 1. COPY: home lengths, short-video and long-post part budgets re-balanced (hook + re-hook, story ≈150–200, 2–3 lessons ≈100–130, invitation ≈50), every short-video frame's beats about halved, the open-loop long post (3 × ≈110), story share, minutes per piece. PLAYBOOK: slot-math minutes (short ≈15, film 6–8; long post ≈8; Light ≈1½ h, Lean ≈1¾ h, Standard ≈2¾ h), the lines' lengths, part 5's lengths. LAUNCH: the short video 250–400 (before ≈80, the method ≈150). String `talk.film` "about 7 min a short". VN src hashes refreshed.
+- Agents: cm-writer and cm-reviewer use 250–400 and 500–700 (writer cuts back to the band when over).
+- Graders: `lengths` fails a short under 250 (−10%) and a long post under 500 (−5%); over 400 / 700 is a warning (acceptance `[lengths]` long_post_words_min / _max replace long_post_words); strategy_doc part 5 looks for 250-400 and 500-700. qa/standards native-short NS3, copy-frameworks CF4, calendar CL5/CL6; persona expectations and fmt-short case titles. DECISIONS "v14.2: shorter pieces" (old bands marked superseded).
+
 ## [1.4.1] - 2026-10-12 (v14.1)
 
 Founder + real users (12 Oct): voice and writing are good; hooks and CTAs are not good enough, voice goes flat on thin input, weaker models write short pieces (qa/runs/v140 MEASURE-*).

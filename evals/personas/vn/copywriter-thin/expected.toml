@@ -102,8 +102,8 @@ mix = "THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, mỗi loại một tỷ lệ, c�
 system = "nền tảng chính = Facebook cá nhân (nơi chị đăng, tối Chủ nhật); nơi đăng lại (Zalo, email 320 người); mỗi tuần mấy bài mỗi loại vừa 3 tiếng (lean: 3 video ngắn, 1 bài dài, 1 email hay tin Zalo); độ dài đếm chữ; thang lời mời comment từ khoá → inbox → quà → gọi → gói; bảng và 3 lời nhắc."
 found = "2–4 dòng, mỗi dòng có nguồn (nhóm Facebook coach, bình luận TikTok; tháng/năm) hoặc ghi '(mình đoán)'; không có công cụ thì nói một lần ('Ở đây mình không tra mạng được…') và mọi dòng là '(mình đoán)'."
 no_not_now = "Không in ĐỂ SAU, 'vì sao chọn cái này', điểm số, tên khung trên chiến lược; những thứ đó chỉ in khi Nhi hỏi 'tại sao?'."
-week1_after_ok = "Chỉ sau khi Nhi OK: QUAY HÔM NAY + Tuần 1 một tin (2 THU HÚT, 2 NIỀM TIN, 1 CHUYỂN ĐỔI; mỗi bài ghi trụ cột và loại; video ngắn 120–200 chữ, bài dài ≈1.000 chữ), file CHIEN-LUOC-NOI-DUNG.md nếu app tạo được file, rồi Brand Card."
-lengths = "video ngắn 120–200 chữ; bài dài ≈1.000 chữ (±15%); video dài 1.000–1.500 chữ chia phần; không bao giờ tính giây."
+week1_after_ok = "Chỉ sau khi Nhi OK: QUAY HÔM NAY + Tuần 1 một tin (2 THU HÚT, 2 NIỀM TIN, 1 CHUYỂN ĐỔI; mỗi bài ghi trụ cột và loại; video ngắn 250–400 chữ, bài dài 500–700 chữ), file CHIEN-LUOC-NOI-DUNG.md nếu app tạo được file, rồi Brand Card."
+lengths = "video ngắn 250–400 chữ; bài dài 500–700 chữ; video dài 1.000–1.500 chữ chia phần; không bao giờ tính giây."
 
 [keyword]
 # day0_heard: the Day-0 dump (chunks 1-4) gives NO buyer phrase at all, so the Map prints the word with "(mình đoán" until

@@ -111,17 +111,19 @@ first_piece_max_coach_turns_vn = 0
 [lengths]                                 # check lengths (graders.py; founder, 7 Oct night: "the length has to be measured by words,
                                           #   not seconds, because people speak at different speeds"). VN counts tiếng (whitespace
                                           #   tokens: what a word counter shows, the founder's "chữ").
-tolerance = 0.10                          # a short video's bounds are read with this much slack (counting differs by a few words)
-short_words_min = 500                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
-short_words_max = 800                     #   first frame, the caption or the ask), 500-800 words (founder, 7 Oct night)
-long_post_words = 1000                    # long post: about 1,000 words ...
-long_post_tolerance = 0.15                #   +-15%
+tolerance = 0.10                          # a short video's ceiling is read with this much slack (counting differs by a few words)
+short_words_min = 250                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
+short_words_max = 400                     #   first frame, the caption or the ask), 250-400 words (founder 12 Oct, v14.2; was 500-800):
+                                          #   under the floor fails, over the ceiling (440) is a warning
+long_post_words_min = 500                 # long post: 500-700 words (founder 12 Oct, v14.2; was about 1,000, +-15%): under the floor
+long_post_words_max = 700                 #   (read with long_post_tolerance) fails, over the ceiling is a warning
+long_post_tolerance = 0.05                #   the long post's slack both ways (475 fails below, 735 warns above)
 long_video_words_min = 1000               # long video: 1,000-1,500 words, in parts ...
 long_video_words_max = 1500
 long_video_parts_min = 3                  #   at least this many numbered parts (the kit: 3-4), with a hook and an ask around them
 seconds_budget_fails = true               # a length in seconds on a title or in talk ("FILM TODAY (under 30 s)", "30 giây") fails
-short_floor_tolerance = 0.10              # v14.1: a short's floor (500) is read with this slack (450): the grader counts spoken lines
-                                          #   only and runs ~5-8% under a human count (v140 N2: 461 vs 501); a 240-word FILM TODAY fails
+short_floor_tolerance = 0.10              # v14.1: a short's floor (250) is read with this slack (225): the grader counts spoken lines
+                                          #   only and runs ~5-8% under a human count (v140 N2: 461 vs 501); a 200-word FILM TODAY fails
 title_count_slack = 0.15                  # v14.1: a title's own count ("· 520 chữ") more than this share over the piece's counted words fails
 
 [hook_lab]                                # check hook_lab (graders.py; qa/standards/hook-lab.md HL7, HL8; review retest-ft1 fix 2)

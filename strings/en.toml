@@ -225,7 +225,7 @@
 "talk.next"      = "Answer out loud, then send."
 "talk.probe"     = "Where were you, and what did they say?"
 "talk.paused"    = "We stopped at question {n}. Say 'next' and we carry on."
-"talk.film"      = "Film the shorts back to back, 1–2 takes each, about 10 min a short. Just say it again; no editing."
+"talk.film"      = "Film the shorts back to back, 1–2 takes each, about 7 min a short. Just say it again; no editing."
 "talk.mini_open" = "Short week: 3 quick questions, 5 minutes, voice is fine."
 
 # Plan next month and Your angle (§ MONTH; angle.labels is read by evals/graders.py)

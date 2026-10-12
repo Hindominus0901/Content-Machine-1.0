@@ -74,7 +74,7 @@ id = "fmt-short.en.001"
 kind = "D"
 persona = "service-biz"
 lanes = ["S1", "S0", "floor"]
-title = "FILM TODAY alone after the strategy's OK has every part: on-screen ≤6, first line, 3-5 beats (a full 500–800-word script, retest v13), last line, caption box, CTA + quiet, then 'Film it now…'; nothing under it"
+title = "FILM TODAY alone after the strategy's OK has every part: on-screen ≤6, first line, 3-5 beats (a full 250–400-word script, v14.2), last line, caption box, CTA + quiet, then 'Film it now…'; nothing under it"
 context = "Day 0, about minute 22, ChatGPT Plus on the iPhone, Corinne in her car between site visits. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok'); the last one ended 'We'll run this for 4 weeks. OK, or change a line.' Its lines: KNOWN FOR built on 'the nothing room' and taping a room out before buying; YOUR WORD: nothing room; free gift = the Tape-Out Guide and offer the Room Reset ($3,500), both from her dump. She OKs it in this turn, so this reply is FILM TODAY alone. Delivery: beat cards (the default), not a script."
 input = '''ok. I've got like 20 minutes before pickup, give me the video'''
 regex = [

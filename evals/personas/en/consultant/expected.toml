@@ -12,7 +12,7 @@ must_include = [
   "the interview about her side, one question a reply, at most 6, nothing her dump already gave (who, the offer and price, the Marcus result, LinkedIn and the 380 list, her 2 hours, what her field gets wrong): only how clients find her and the 90-day goal, plus the income-streams guess ('You earn from 4 things. My guess: …'; the retainers pay the bills, the sprint is what she wants to grow)",
   "the strategy in ONE reply and no piece: KNOWN FOR, CONTENT PILLARS (3-5 broad), CONTENT MIX (ATTRACT / TRUST / CONVERT, shares adding to 100), YOUR SYSTEM, YOUR WORD, WHAT I FOUND (2-4 lines with sources or labelled guesses), then 'OK, or change a line.'",
   "Claude Free line once under the strategy ('Hit the limit? Come back when it resets, same chat, say 'next'.')",
-  "only after her OK, in one reply: FILM TODAY for a desk webcam, word-for-word (her delivery mode), a short-video script of 120-200 words, first and last line verbatim, built from her own story (the stairwell or Marcus's call), nothing printed under it; then Week 1 (2 ATTRACT, 2 TRUST, 1 CONVERT, each naming its content pillar and type; a long post of about 1,000 words) unasked, before the Brand Card; saving never gates it",
+  "only after her OK, in one reply: FILM TODAY for a desk webcam, word-for-word (her delivery mode), a short-video script of 250-400 words, first and last line verbatim, built from her own story (the stairwell or Marcus's call), nothing printed under it; then Week 1 (2 ATTRACT, 2 TRUST, 1 CONVERT, each naming its content pillar and type; a long post of about 1,000 words) unasked, before the Brand Card; saving never gates it",
   "quiet CTA option offered with the keyword, explained in one plain line ('keyword' is not SEO)",
   "CONTENT-STRATEGY.md where the app can make files (Claude Free in a browser can't: 'Say 'strategy'' offered instead)",
 ]
@@ -21,7 +21,7 @@ must_not = [
   "FILM TODAY, Week 1, a copy box or 'post it' before her OK (the founder's v10 run: 'it already says let's post it')",
   "a question about platform, list size, talk day, delivery or hours (guessed from the dump; platform and talk day named once in YOUR SYSTEM) or about what the dump gave (who, the offer, the Marcus result, her hours)",
   "'why this one' or NOT NOW on the strategy (they print on 'why?')",
-  "a length in seconds ('under 30 s'): short video 120-200 words, long post about 1,000, long video 1,000-1,500 in parts",
+  "a length in seconds ('under 30 s'): short video 250-400 words, long post 500-700, long video 1,000-1,500 in parts",
 ]
 max_coach_turns_to_map = 6                # coach turns before the strategy (the Map's old key), plus the interview's answers (dig_answers_max)
 max_coach_turns_session = 10              # plus the interview's answers
@@ -65,7 +65,7 @@ pillars_too_narrow = [
 mix = "ATTRACT / TRUST / CONVERT with shares adding to 100; default 40/40/20 (she has a 380-person list and referral clients, building an audience on LinkedIn: 40/40/20 or 50/35/15 with a reason)."
 system = "core platform LinkedIn (word-for-word desk-webcam shorts, text posts, a PDF post), re-cut into the Monday email to the 380; Lean at 2 hours a week: 3 short videos, 1 long post, 1 email; ask ladder comment RECORD YEAR -> DM -> the client margin sheet -> a 30-minute fit call -> the sprint; the board and 3 reminders."
 found = "2-4 lines with a place and a month each, or labelled '(my guess)'; a Claude Free browser chat has no search tool: say so once and label every line a guess."
-lengths = "short video 120-200 words; long post about 1,000 words; long video 1,000-1,500 words in parts; never seconds."
+lengths = "short video 250-400 words; long post 500-700 words; long video 1,000-1,500 words in parts; never seconds."
 
 [map]
 buyer = "Founders and owners of independent marketing agencies (about $1M-$5M revenue, 8-35 people, 4+ years in) who are not the numbers person and have a bookkeeper and a tax CPA but nobody looking forward; they find Erin right after a record year with no cash (payroll on a personal card, drawing on the line of credit, unsure they can afford a hire)."
@@ -142,7 +142,7 @@ must_not_pick = [
 [week1]
 platform_mix = "email-first"          # LinkedIn + newsletter, email_list 380 >= 300, so the lead piece is the email
 lead_piece = "Email to the 380 on the Monday Number with a 'reply to me' line, on big idea 1, built from Marcus's 'Record year. Empty account.' or her stairwell story, ending on one question (e.g. 'Which client would you fire first?'); keyword RECORD YEAR once, quiet option offered."
-film_today = "LinkedIn native video at her desk webcam, a script of 120-200 words, word-for-word, first and last line verbatim, from the stairwell story or Marcus's 6 a.m. call; nothing printed under it; printed only after her OK of the strategy, in the same reply as Week 1."
+film_today = "LinkedIn native video at her desk webcam, a script of 250-400 words, word-for-word, first and last line verbatim, from the stairwell story or Marcus's 6 a.m. call; nothing printed under it; printed only after her OK of the strategy, in the same reply as Week 1."
 must_include = [
   "the email to the 380 is the lead piece and asks for replies",
   "2 LinkedIn text posts",

@@ -126,7 +126,7 @@ id = "fmt-short.vn.001"
 kind = "D"
 persona = "proof-coach"
 lanes = ["S1", "S0", "floor"]
-title = "QUAY HÔM NAY alone after the strategy's OK has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3–5 ý (kịch bản đủ câu 500–800 chữ, retest v13), câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
+title = "QUAY HÔM NAY alone after the strategy's OK has every part (chữ trên màn hình ≤6, câu đầu ≤18, 3–5 ý (kịch bản đủ câu 250–400 chữ, v14.2), câu cuối, caption box, LÃI ẢO ask + 'nhẹ', the quà box, 'Quay luôn bây giờ…'), her storeroom story in it, nothing under it"
 context = "Day 0, about minute 18, Door A on ChatGPT Plus (laptop; she films on her Android phone). Pair chị–em; public posts mình – các chị em; Northern. Dump chunks 1-3 are in: past ~1.200 tiếng the soft cut came after chunk 2 and, with nothing missing (her buyers' words 'bán thì đắt mà cuối tháng không thấy tiền đâu', Ngân's consented result, the offer), ended '… Còn chuyện nào thì kể luôn, không thì gõ 'xong'.'; she told one more story (chunk 3) and typed 'xong'. The strategy came in ONE reply (setup step 3, pre-filled, its A/B/C picks taken with 'ok') (TỪ KHOÁ: LÃI ẢO; quà = Sổ 3 Cột bản 1 trang; offer Khóa Shop Nhỏ Lãi Thật 4.990.000đ); the last one ended '… chạy thử 4 tuần nhé. OK hay sửa một dòng?'. Her OK in this turn brings ONE reply: QUAY HÔM NAY alone. Delivery: gạch đầu dòng (chunk 3: 'em cho chị mấy gạch đầu dòng')."
 input = '''ok em. Tối nay chị quay luôn, em đưa chị cái video đi'''
 regex = [
