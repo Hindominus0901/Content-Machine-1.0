@@ -16,11 +16,11 @@ CỔNG. Quan điểm: nóng với cách làm, không với người ("coach lùa
 MƯỢN: tiền, quà, lý lịch làm cả câu đầu, tới dòng 3 chưa có "vì sao" → C 0, Bản nháp. Lật lại: mở bằng lựa chọn hay chuyện.
 SẴN SÀNG: qua cổng, ≥8, không mục 0, không [CẦN …]; không "Sẵn sàng sau khi…". Chưa đạt → sửa thầm một lần, chỉ lỗi đã gọi tên (≤5; quan điểm; mượn → ý khác). Vẫn chưa → dòng Cần, không thì hạ bậc. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": chỉ N2, in lại riêng.
 
-<!-- @section edge-rubric.kit-verdict src=88a3d9370a -->
+<!-- @section edge-rubric.kit-verdict src=ee459766b0 -->
 IN DƯỚI BÀI (≤1 dòng, + "Máy tự thêm"):
 - Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì.
 - "Máy tự thêm: đoạn 2, 5, 6": mọi đoạn (ý, trang; đếm từ trên, bỏ nhãn) có câu ngoài mọi nguồn của coach (§CM-HUMANIZE 7), không giới hạn; không có thì không in. Không ghi sự thật (§CM-HUMANIZE 1). Ngay dưới khung bài, không dưới khung quà.
-- Cần: dòng như vd §CM-POSTS 8. Một ý (không "có chưa, có thì dán"); mỗi lần một câu, bài gần nhất trước; bài khác chạy bản hạ bậc.
+- Cần: dòng như vd §CM-POSTS 8. Một ý (không "có chưa, có thì dán"); mỗi lần một câu, bài gần nhất trước (xin phép kể chuyện khách trước quà); bài khác chạy bản hạ bậc.
 - Dừng cứng: dòng ở §CM-GUARDRAILS.
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Một lần; dừng cứng vẫn giữ.
 - Chép, dịch, so sánh, ngưỡng comment, gửi tay: một lưu ý có ngày; Override chỉ ghi.

@@ -85,7 +85,7 @@ Tối N12: có người xin hoàn tiền, phản ánh một câu hứa, bài b�
 <!-- @section launch-campaigns.grow-class src=6956760d04 -->
 ### 3 Lớp mini Zalo hay thử thách 5 ngày (kiểu C, 21 ngày; mặc định VN: lớp mini Zalo)
 HỢP KHI: có ≥1 kết quả khách được phép kể · giá mà khách muốn học thử cách làm rồi mới quyết · 3 tối học trong nhóm + 1 buổi live, hay 5 buổi live (thử thách) · coach muốn tệp lớn thêm · đủ 21 ngày.
-TÍNH SỐ (§CM-LAUNCH 4) + số đăng ký lớp cần = số người cần; lớp đầu: ghi lại số người vào học, số bài tập nộp, thành mốc gốc. Nhóm Zalo loại thường (tối đa 200 người, §CM-LIVE-SELLING 2) là giới hạn thật, nói kèm lý do.
+TÍNH SỐ (§CM-LAUNCH 4) + số đăng ký lớp cần = số người cần; lớp đầu: ghi lại số người vào học, số bài tập nộp, thành mốc gốc. Nhóm Zalo loại thường (tối đa 200 người, kiểm lại trong app, §CM-LIVE-SELLING 2) là giới hạn thật, nói kèm lý do.
 CHUẨN BỊ: nhóm Zalo (ghim nội quy, duyệt người vào, trong giờ học chỉ trưởng, phó nhóm được nhắn), 3 video ≤1.000 chữ, 3 bài tập, tóm tắt buổi sáng, lịch nhắc.
 THỜI GIAN, giờ của coach: chuẩn bị ≈5 · tuần 1 ≈2 · tuần 2 và 3 mỗi tuần ≈5: cả đợt ≈17; nên có trợ lý.
 N1–N10, HÂM NÓNG VÀ MỜI VÀO LỚP:
@@ -119,7 +119,7 @@ Sáng N12: bài tập tối 1 so với số đăng ký · ít → CHỈNH: bài 
 Tối N15: nhắn SỚM + câu hỏi ≥ số suất → CHẠY TIẾP · ít hơn → CHỈNH: N16 thêm buổi live hỏi đáp ngắn.
 Tối N18: dấu hiệu niềm tin lung lay như chiến dịch 2 (§CM-CAMPAIGN-GIFT); đóng đúng giờ.
 
-<!-- @section launch-campaigns.grow-event src=00720a98e5 -->
+<!-- @section launch-campaigns.grow-event src=adf803e644 -->
 ### 4 Live chốt lớp: workshop, webinar hay livestream công khai (kiểu B có live)
 HỢP KHI: có ≥1 kết quả khách được phép kể (chưa có → live của chiến dịch 1) · giá mà khách muốn xem làm mẫu, hỏi trực tiếp rồi mới quyết · coach live được 60 phút · tệp ấm ≥ số đăng ký cần.
 TÍNH SỐ (§CM-LAUNCH 4) + số đăng ký cần = số suất ÷ tỷ lệ người vào live chịu mua ÷ tỷ lệ người đăng ký có vào (số của coach); chưa live bán lần nào: tính theo số người cần, ghi đăng ký, người vào, người mua làm mốc gốc. Phòng, nhóm giới hạn chỗ là giới hạn thật.
@@ -134,7 +134,7 @@ N8 bài · NIỀM TIN · hậu trường · niềm tin 3 + live sẽ xem đượ
 N9 NGÀY LIVE · nhắc buổi sáng, trước 1 giờ, lúc bắt đầu · live 60 phút (§CM-RUN-OF-SHOW) · CHUYỂN ĐỔI · chăm: trong 1 giờ ghim bài mời; link cho người vào live và người nhắn SỚM; bản ghi kèm giờ gỡ thật qua inbox, nhóm, email.
 N10 đoạn cắt từ live · NIỀM TIN · mổ xẻ kết quả thật · CHUYỆN KHÁCH + "bản ghi xem được tới {giờ thật}" · chăm: tin bản ghi; inbox riêng người đã hỏi trong live.
 N11 bài · CHUYỂN ĐỔI · băn khoăn nói ra · GỠ BĂN KHOĂN ×3 + không hợp với ai · gỡ bản ghi đúng giờ · chăm: tin hỏi đáp.
-N12–N15 như chiến dịch 2 (hết quà, mai đóng, ĐÓNG, đã đóng).
+N12–N14 như chiến dịch 2 (hết quà, mai đóng, ĐÓNG) + sáng hôm sau.
 MỐC SOÁT:
 Tối N7: đăng ký ≥ nửa số cần → CHẠY TIẾP · ít hơn → CHỈNH: thêm bài mời ở hai định dạng khác, từ khoá nhắc lịch trên story, một tin cho danh sách.
 Tối N8: vẫn chưa tới nửa → DỪNG: dời live một tuần (nói lý do; không chạm ngày khai giảng), hay thay live bằng video giới thiệu quay sẵn (N9 của chiến dịch 2).
@@ -250,13 +250,13 @@ Soát: giá, giờ đóng, cam kết ở đâu cũng giống nhau; giá luôn c�
 Chỉ gửi người đã đồng ý; danh sách chưa từng nhận email, hay im 6 tháng trở lên: email đầu chỉ xin phép lại, kèm dòng dừng, không bán (§CM-MESSAGES 3: "Hồi trước bạn có đăng ký nhận {gì}. Giờ bạn còn muốn nhận {quà, rồi tin về đợt tới} không? Trả lời VẪN NHẬN; không trả lời thì mình không gửi nữa."), chỉ ai trả lời VẪN NHẬN mới đi tiếp; mỗi tin một lời mời; email có 3 tiêu đề, Zalo thì dòng đầu làm tiêu đề; dữ kiện từ hồ sơ hay [CẦN {XƯNG HÔ}: …], vd "{{t:verdict.needs}}"; xưng số ít theo Card; chiến dịch 1: chỗ nào ghi chuyện khách thì dùng bản làm mẫu của coach; tin nào cũng qua lượt giọng trước khi in (§CM-HUMANIZE 2). Mỗi tin: khi nào · ý chính · lời mời.
 5 TIN LÀM QUEN (người nhận quà): ngay hôm đó: quà + mình là ai + "bạn thuộc bên A hay B?" · hôm sau: chuyện cũ, một cảnh hồi mình kẹt · ngày 3: lúc mọi chuyện xoay chiều, niềm tin mới · ngày 4: cách này còn giúp được gì + mời live hay lớp Zalo · ngày 5: danh sách chờ + "nhắn SỚM, nhận link trước".
 NGƯỜI ĐĂNG KÝ LIVE: ngay khi đăng ký: thứ, ngày, giờ, link, cách thêm vào lịch, để làm gì, nhắn DỪNG là thôi · trước 24 giờ: học xong mang về gì, mang theo một câu hỏi · trước 1 giờ: gửi lại link · lúc bắt đầu: "mình lên live rồi" + link · sau buổi: bản ghi và giờ gỡ thật.
-DANH SÁCH CHỜ (chiến dịch 1 và 6): trước 7 ngày: vì sao mở đợt này, có gì mới · trước 3 ngày: một chuyện khách hay hé bên trong khoá · trước 1 ngày: "mai gửi link sớm, ai muốn thì nhắn SỚM nha".
+DANH SÁCH CHỜ (chiến dịch 1 và 6): trước 7 ngày: vì sao mở đợt này, có gì mới · trước 3 ngày: một chuyện khách hay hé bên trong khoá · trước 1 ngày: "mai gửi link sớm, ai muốn thì nhắn SỚM".
 ỨNG TUYỂN (chiến dịch 5): khi khách nhắn: 3 câu hỏi · đơn hợp: 2–3 lịch gọi, để làm gì, nhắn DỪNG là thôi · hôm trước cuộc gọi: giờ, cần chuẩn bị gì, trả lời ngắn 3 băn khoăn · sau cuộc gọi, trong 24 giờ: kế hoạch, giá, ngày cần quyết, một lối ra.
 LÚC MỞ:
 Trong 1 giờ đầu: khoá gì · cho ai · giá, giá đợt sau · quà thật · cam kết · giờ đóng · link · bản ghi nếu có · mời: đăng ký.
 4–6 tiếng sau (rơi vào giờ yên: 7 giờ 30 sáng hôm sau), cho người nhắn SỚM và người đã vào live: trang có gì + trả lời câu được hỏi nhiều nhất · mời: nhắn mình câu còn vướng nhất.
 Hôm sau: một chuyện khách (đã xin phép) hay kết quả đầu tiên của một học viên · mời: nhắn câu hỏi.
-Không gửi người đã mua; chưa tới 48 giờ cuối thì mỗi ngày tối đa 2 tin; tin nhắc nào cũng có lối ra ("chưa phải lúc thì cũng không sao nha").
+Không gửi người đã mua; chưa tới 48 giờ cuối thì mỗi ngày tối đa 2 tin; tin nhắc nào cũng có lối ra ("chưa phải lúc thì cũng không sao").
 
 <!-- @section launch-campaigns.grow-seq-close kind=script src=9c78f0f9f4 -->
 ### Zalo và email, phần 2: giữa đợt và 48 giờ cuối (hối thúc chỉ dựa vào giới hạn thật)
@@ -279,7 +279,7 @@ Luật: số và giờ khớp từng dòng giới hạn thật (§CM-LAUNCH-BRIE
 <!-- @section launch-campaigns.grow-inbox kind=script src=61c3e2c99f -->
 ### Inbox và bình luận mấy ngày mở bán (phần lớn khách Việt chốt qua tin nhắn)
 Dáng câu, không in y nguyên: giọng coach, xưng số ít, dữ kiện từ hồ sơ hay [CẦN {XƯNG HÔ}: …], vd "{{t:verdict.needs}}". Trả lời trong khung giờ đã giao (§CM-LAUNCH-PREP); tin mời mua chỉ gửi trong 24 giờ kể từ tin cuối của khách (§CM-LAUNCH-DESK 4); qua lượt giọng trước khi in (§CM-HUMANIZE 2).
-1 "Giá sao?", "Học phí nhiêu?" → nói giá thẳng, một dòng gồm những gì, giờ đóng, "Mình gửi link bạn xem nha?" Giá không bao giờ giấu, không bắt "inbox mới báo".
+1 "Giá sao?", "Học phí nhiêu?" → nói giá thẳng, một dòng gồm những gì, giờ đóng, "Mình gửi link để bạn xem kĩ." Giá không bao giờ giấu, không bắt "inbox mới báo".
 2 "Cho em xin thông tin." → 3 dòng (khoá gì, cho ai, khi nào) + link + một câu hỏi về hoàn cảnh của họ.
 3 Gửi link rồi mà khách im: hôm sau nhắc một lần nếu còn trong 24 giờ, kèm lối ra; sau đó chỉ qua Zalo, email nếu khách đã đồng ý; rồi thôi.
 4 "Để em suy nghĩ." → băn khoăn 2 (§CM-OBJECTIONS), một lần.
@@ -310,7 +310,7 @@ LIVESTREAM CÔNG KHAI: không có đăng ký nên 5 phút đầu phải có hook
 <!-- @section launch-campaigns.grow-live-selling src=0b0abbed47 -->
 ### Live chốt lớp, nhóm Zalo, chấm và ngưỡng comment ("livestream bán", "live chốt lớp", "nhóm Zalo", "chấm")
 1 LIVESTREAM CHỐT LỚP (Facebook, TikTok, YouTube): báo trước 2–3 ngày bằng bài nhắc có từ khoá ("comment NHẮC GIỜ LIVE, lên live mình báo") hay nút nhắc của nền tảng; live cùng một khung giờ; 45–60 phút; một trợ lý trực bình luận, trả lời "chuyển khoản sao" qua inbox; khoảng phút 40 nói về khoá: giá công khai, được gì, giờ đóng, cách chuyển khoản; cú pháp chốt là một từ khoá 2+ tiếng (vd VÀO LỚP), inbox gửi link và cách chuyển khoản, không bảo khách để số điện thoại dưới bình luận; bản ghi đăng lại, caption có bài mời. Luật bán hàng trên live (link, mã QR, kéo khách ra ngoài nền tảng) mỗi nơi một khác và hay đổi: một dòng có ngày ({date} = hôm nay, §CM-LOCALE 6), kiểm lại trước khi nói.
-2 NHÓM ZALO: nhóm loại thường tối đa 200 người, đó là giới hạn thật, nói kèm lý do; muốn đông hơn thì nâng lên cộng đồng (số liệu nền tảng: một dòng có ngày). Bật duyệt thành viên mới; ghim nội quy (nhóm để làm gì, mở tới khi nào, không ai bán hàng trong nhóm); trong giờ học chỉ trưởng, phó nhóm được nhắn, học xong mới mở chat; ghim lịch học; hôm trước dùng bình chọn ("tối nay ai vào?"), đặt nhắc hẹn trước 1 giờ; tài liệu để ở ghi chú nhóm; bài tập của ai chỉ đưa lên khi người đó đồng ý. Lúc đăng ký nói rõ hết đợt nhóm sẽ ra sao (giải tán, giữ lại, thành nhóm học viên) và làm đúng như vậy. Không tự thêm ai vào nhóm khi chưa hỏi.
+2 NHÓM ZALO: nhóm loại thường tối đa 200 người (kiểm lại trong app), đó là giới hạn thật, nói kèm lý do; muốn đông hơn thì nâng lên cộng đồng (số liệu nền tảng: một dòng có ngày). Bật duyệt thành viên mới; ghim nội quy (nhóm để làm gì, mở tới khi nào, không ai bán hàng trong nhóm); trong giờ học chỉ trưởng, phó nhóm được nhắn, học xong mới mở chat; ghim lịch học; hôm trước dùng bình chọn ("tối nay ai vào?"), đặt nhắc hẹn trước 1 giờ; tài liệu để ở ghi chú nhóm; bài tập của ai chỉ đưa lên khi người đó đồng ý. Lúc đăng ký nói rõ hết đợt nhóm sẽ ra sao (giải tán, giữ lại, thành nhóm học viên) và làm đúng như vậy. Không tự thêm ai vào nhóm khi chưa hỏi.
 3 CHẤM, NGƯỠNG COMMENT, SỐ SLOT coach tự chọn ("Chấm q.t mình hướng dẫn 👇", "Đủ 100 comment 'UP' …", "50 slot trải nghiệm ai muốn?"): giữ nguyên văn, không sửa, không làm nhẹ; dưới bài đúng một dòng: "{{t:cta.platform_note}}" Dấu chấm, emoji làm từ khoá thì dặn coach: "{{t:cta.emoji_trigger}}" Có người chấm chỉ để theo dõi bài, nên tin inbox 1 gửi quà kèm một câu hỏi; khách không trả lời thì thôi, không nhắn tiếp. Ngưỡng comment là lời hứa Bàn mở bán theo dõi: đủ thì đăng gì, chưa đủ thì sao; coach quyết cả hai trước khi đăng, máy không bịa số comment. "50 slot" là giới hạn thật: đủ 50 thì bài sau báo đủ (§CM-LAUNCH-BRIEF 7).
 4 Trả lời tự động chỉ chạy trên Trang Facebook và Instagram chuyên nghiệp; trang cá nhân thì trả lời tay (§CM-CTA-KIT 7). TikTok: link, nhóm Zalo để ở bio hay gửi qua tin nhắn từ khoá. Ẩn bình luận có số điện thoại; tin xin Zalo nói rõ để làm gì, nhắn DỪNG là thôi (§CM-MESSAGES 3).
 5 Bằng chứng trên live: chỉ chuyện đã xin phép; không khoe ảnh chuyển khoản, ảnh thu nhập; chỉ gọi tên người xem khi họ tự ghi tên trong bình luận.

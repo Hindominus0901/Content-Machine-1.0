@@ -240,8 +240,8 @@ Chỉ lấy dáng (ngành khác), cái khổ "học viên nghỉ sau buổi th�
 7 Đổi tiêu đề một lần, theo §CM-PACKAGING 5: tiêu đề mới HOẶC chữ ảnh bìa mới, không đổi cả hai.
 TRƠN → HAY: "Chia sẻ về chuyện định giá" → "3 cách tăng giá mà không mất khách quen" · "Buổi hỏi đáp" → "Mang bài đăng không ai đặt vào đây: sửa trực tiếp 45 phút".
 
-<!-- @section hook-library.grow-titles-belief src=d3b38ec3b8 -->
-### Thêm hai khung: lật niềm tin, lầm tưởng / sự thật (mục 2 ở trên; v13.15)
+<!-- @section hook-library.grow-titles-belief src=4c376d717f -->
+### Thêm hai khung: lật niềm tin, lầm tưởng / sự thật (mục 2 ở trên)
 Cả hai là khung bắt buộc như mười khung trên (§CM-FORMATS 1). Niềm tin phải là điều người mua đang tin thật (lời họ, dòng GIỮ); sự thật là của coach (hay có nguồn), bài chứng minh được; sức khoẻ, tiền bạc: "điều mình hay nghe", không thành con số; không "X đã chết", "sự thật họ giấu bạn" (§CM-HOOK-FLIP).
 - lật niềm tin: "Ai cũng bảo tuần vắng thì giảm giá, mà tháng đông khách nhất của mình lại không giảm đồng nào" + "giữ giá."
 - lầm tưởng / sự thật: "Lầm tưởng: dạy kèm phải chạy quảng cáo. Sự thật: 4/5 học trò mới của mình tới từ một nhóm phụ huynh." + "1 nhóm → 4 học trò"

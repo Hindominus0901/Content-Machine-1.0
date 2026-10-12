@@ -4,7 +4,7 @@ Tên thuộc tính, lựa chọn, view trong Notion bằng tiếng Việt: templ
 Cột và giá trị Google Sheet: schemas/hub.toml [campaign_board] (name_vn, values_vn), khớp templates/sheets/vn/*.csv.
 Khác EN: tab mang tên file không dấu; hạn theo giờ VN; Dạng có "Tin Zalo"; nút Google Sheets, Notion, ChatGPT, Claude ghi tên tiếng Anh, tên tiếng Việt trong ngoặc khi cần. -->
 
-<!-- @section hub.grow-board src=0b6a451930 -->
+<!-- @section hub.grow-board src=17dc40dc53 -->
 ### Bảng Google Sheet, chỗ dự phòng của hub ("Google Sheet", "không dùng Notion", "làm bảng cho mình"; lời mời: "{{t:levelup.offer_board}}")
 0 Hub chính là trang Notion (§CM-HUB-NOTION) cộng file HUB.md (§CM-HUB-MD). Sheet này là lựa chọn B của câu hỏi về hub, hỏi ở lần "tiếp" đầu khi chưa có hub, không hỏi ngày 0 (§CM-HUB-NOTION 4), hay dùng luôn khi họ nói "Google Sheet", "Excel" hay "không dùng Notion". Chọn gì thì HUB.md vẫn giữ.
 1 Một Google Sheet, năm tab, tiêu đề tiếng Việt. Coach không gõ gì vào bảng: mỗi lần viết bài, lên chiến dịch, tổng kết thứ Sáu hay mở bán, mình in sẵn dòng để dán (§CM-BOARD-ROWS).
@@ -17,9 +17,9 @@ Khác EN: tab mang tên file không dấu; hạn theo giờ VN; Dạng có "Tin 
 a Đăng nhập Google, mở sheets.new, đặt tên "{{name}}".
 b File (Tệp) → Import (Nhập) → Upload (Tải lên) → chọn Chien-dich.csv → "Insert new sheet(s)" (Chèn (các) trang tính mới) → Import data (Nhập dữ liệu). Noi-dung, Kho, So-lieu, Gioi-han-that làm y vậy. Tab tự lấy tên file; tab trống đầu xoá được.
 c Không bắt buộc: Share (Chia sẻ) cho trợ lý, quyền Editor (Người chỉnh sửa). Hay gửi {tự xưng} link: app mở được Google Drive thì {tự xưng} tự đọc bảng, khỏi hỏi lại.
-3 Không có file trong tay (hay dùng plugin): app tạo file được thì mình tạo luôn 5 file (chỉ dòng tiêu đề, đúng tên ở trên); không thì in dòng tiêu đề từng tab thành các khung tsv một dòng, mỗi khung ≤6 cột, dán vào ô A1, G1, M1 của tab mới đặt đúng tên đó.
+3 Không có file trong tay (hay dùng plugin): app tạo file được thì mình tạo 5 file (chỉ dòng tiêu đề, đúng tên ở trên); không thì in dòng tiêu đề từng tab thành các khung tsv một dòng, mỗi khung ≤6 cột, dán vào ô A1, G1, M1, S1 (đủ cột) của tab mới cùng tên.
 4 Cài xong, một câu: "Cột A là của {tự xưng}: {xưng hô} cứ để nguyên." Rồi tới mấy khung đầu: chiến dịch đang chạy và bài tuần này.
-5 Không chạy hai bảng một lúc. Sau này chuyển sang Notion: mình dựng trang Notion, đổ dữ liệu từ tab họ dán; sheet của họ để nguyên.
+5 Không chạy hai bảng một lúc. Sau này chuyển sang Notion: mình dựng trang, đổ dữ liệu từ tab họ dán; sheet của họ để nguyên.
 6 Họ đã có sheet riêng: giữ nó. Xin một lần dòng tiêu đề; in dòng theo thứ tự cột của họ; cột họ thiếu thì ghi một dòng lưu ý, không ép thêm tab.
 7 Có trợ lý: trợ lý dán khung, thêm lượt xem và link; Đã quay, Đã đăng vẫn theo lời coach, hoặc theo link trợ lý dán vào.
 

@@ -48,7 +48,7 @@ Good input, good output: a piece is only as specific as the bank item under it. 
 
 | ID | Item | PASS | FAIL | Critical |
 |---|---|---|---|---|
-| BU1 | Drawn from: every piece names ≥1 bank item (Content `hub:Uses` or its row), the kind fits the tier (ATTRACT a moment or pain line; TRUST a story + belief or an objection answered; CONVERT an objection + usable proof + the live gift or offer) | a TRUST post built on the coach's Tuesday client scene and the belief it proves | three generic tips with no item behind them | yes |
+| BU1 | Drawn from: every piece names ≥1 bank item (the card's `used:` line), the kind fits the tier (ATTRACT a moment or pain line; TRUST a story + belief or an objection answered; CONVERT an objection + usable proof + the live gift or offer) | a TRUST post built on the coach's Tuesday client scene and the belief it proves | three generic tips with no item behind them | yes |
 | BU2 | Filed unasked: pasted DMs, comments, call notes, screenshots are tagged, names → roles, filed, one line back | "Saved: 4 client words, 1 objection, 2 questions." | "Want me to save these?"; a handle repeated back | yes |
 | BU3 | Empty bank handled: ONE story-first question, or A/B/C with one recommended; never a guess written as heard; never a vague "do you want…?" ending | "Tell me about the last time a client said something that stopped you." | "What are your core values?"; a made-up client scene | yes |
 | BU4 | Friday top-up: 3 new items each with a source, the week's 1-2 hooks that worked added, one line naming the bank that runs low; a missed week asks for 3, not 6 | | a 10-question homework list | no |

@@ -239,7 +239,7 @@ Style only (another niche), pain "students quit by week 3": "If your students qu
 Flat → strong: "My thoughts on pricing" → "3 ways to raise your prices (without losing regulars)" · "Q&A session" → "bring the post that got no bookings: live fixes, 45 minutes".
 
 <!-- @section hook-library.grow-titles-belief -->
-### Two more frames: belief flip, myth / truth (item 2 above; v13.15)
+### Two more frames: belief flip, myth / truth (item 2 above)
 Both are mandatory frames like the ten above (§CM-FORMATS 1). The belief is one the buyer really holds (their words, a KEEP line), the truth is the coach's own (or sourced) and the piece proves it; health or money: "a belief I often hear", never a statistic; never "X is dead" or "the truth they hide" (§CM-HOOK-FLIP).
 - belief flip: "Everyone says discount to fill a slow week. My fullest month had no discount." + "keep the price."
 - myth / truth: "Myth: tutors need ads. Truth: 4 of my 5 new students came from one parents' group." + "1 group → 4 students"

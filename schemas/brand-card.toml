@@ -121,6 +121,7 @@ max_chars = { en = 30, vn = 30 }
 source = "map"
 required = true
 label_key = "card.label.keyword"
+note = "v14.3 (founder test item 2): the main Season keyword (2-4 buyer words). It prints on the visible top AND as the machine block's `keyword:` line (next to keyword_alternates), the field CARD CHECK reads (§CM-MEMORY 7); one field, two places, so the name is not repeated as a [[machine.field]]."
 
 [[visible.field]]
 name = "voice_line"
@@ -257,7 +258,7 @@ max_chars = { en = 120, vn = 130 }
 source = "map"
 required = true
 label_key = "card.label.offer"
-note = "name · price · how to buy; or the founding offer; or what to sell first (visible until wf15)"
+note = "name · price · how to buy; or the founding offer; or what to sell first (visible until wf15). v14.3: needed from week 2 or when a CONVERT slot is due; before that `offer: not yet` and CARD CHECK shows \"Missing: offer (needed before week 2)\" / \"Còn thiếu: offer (cần trước tuần 2)\" without an ask (§CM-MEMORY 7)."
 
 [[machine.field]]
 name = "call_route"

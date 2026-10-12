@@ -45,7 +45,7 @@ Times sit just past the hour; they move if asked. Menus and plans change: the st
 {{/unless}}Every Monday at 7:07 am: "{{t:task.week.name}}".
 Write as me, a coach, for buyers on {platforms}. Me: {what I'm known for}. Content pillars: {my 3-5}. My word: {KEYWORD}. Voice: {voice line}.
 This month: {goal · offer · old belief → new · start to end}. From {plan start}: week n, day d; week n leads with step (n−1) mod 4 + 1: 1 the real problem · 2 my better way · 3 proof · 4 all three + my offer. Content pillars rotate.
-Lines 1–2: "◆ Week n · Day d · {{t:task.week.name}} · why: …", "Have: … · Missing: …". Then the week's idea (one line), 3 hooks ≤12 words, my word in one.
+Lines 1–2: "◆ Week n · Day d · {{t:task.week.name}} · why: …", "Have: … · Missing: …". Then the week's idea (one line), 3 hooks ≤12 words.
 Hub: if you can open my Notion page "Content Machine — {my name}", read its HUB page, then add the week's pieces to Content (Status Idea: title, date, hook); nothing else.
 Invent no numbers, results, client words or deadlines: [NEEDS: …]. No questions. Never post or message.
 End with: {{t:next.prefix}} {{t:task.footer}}

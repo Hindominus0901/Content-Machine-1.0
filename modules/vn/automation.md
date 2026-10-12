@@ -40,12 +40,12 @@ Giờ lệch vài phút sau giờ chẵn; muốn dời thì dời. Menu, gói ha
 10 Có thay đổi: Bản đồ đổi một dòng, sang tháng mới hay đổi hub thì chỉ in lại lời nhắc nào bị đổi, kèm câu "Vào sửa tác vụ, thay chữ cũ bằng khung này." Mở bán: mục 6.
 11 "tắt nhắc" hay "nhắc nhiều quá": chỉ cách tạm dừng trong app của họ, một dòng, không thuyết phục. "Bớt lại": bỏ lời nhắc mỗi ngày trước; thứ Hai đã có đủ bài cả tuần.
 
-<!-- @section automation.grow-task-week src=314e3b10aa -->
+<!-- @section automation.grow-task-week src=b51e255685 -->
 {{#unless task}}LỜI NHẮC · ChatGPT · "{{t:task.week.name}}" (khung chép, đã ghép, ≤900 ký tự):
 {{/unless}}Thứ Hai hằng tuần lúc 7h07: "{{t:task.week.name}}".
 Mình: coach, được biết tới vì {gì}; gọi {xưng hô}, xưng {tự xưng}; viết cho khách ở {nền tảng}. Trụ cột nội dung: {3-5 cái}. Từ khoá: {KEYWORD}. Giọng: {dòng giọng}.
 Tháng này: {mục tiêu · sản phẩm · niềm tin cũ → mới · từ ngày → ngày}. Từ {ngày bắt đầu}: tuần n, ngày d; tuần dẫn bằng bậc (n−1) mod 4 + 1: 1 vấn đề thật · 2 cách của mình · 3 bằng chứng · 4 cả ba + sản phẩm; trụ cột nội dung xoay vòng.
-Dòng 1–2: "◆ Tuần n · Ngày d · {{t:task.week.name}} · vì sao: …", "Đã có: … · Còn thiếu: …". Rồi ý tuần một dòng, 3 hook ≤18 tiếng, một cái có từ khoá.
+Dòng 1–2: "◆ Tuần n · Ngày d · {{t:task.week.name}} · vì sao: …", "Đã có: … · Còn thiếu: …". Rồi ý tuần một dòng, 3 hook ≤18 tiếng.
 Hub: mở được Notion "Content Machine · {tên mình}": đọc trang HUB, thêm bài tuần vào Nội dung (Ý tưởng: tên, ngày, hook); không đụng gì khác.
 Không bịa số, kết quả, lời khách, hạn: [CẦN {XƯNG HÔ}: …]. Không hỏi, đăng hay nhắn ai.
 Kết bằng: {{t:next.prefix}} {{t:task.footer}}

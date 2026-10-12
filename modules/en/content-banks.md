@@ -6,7 +6,7 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 
 <!-- @section content-banks.grow-banks -->
 ### Banks: what every piece is made from ("bank", "banks", "what's in my bank", "save this")
-1 Every piece pulls ≥1 bank item (client words, a story, proof, an objection, a moment), named in its Content row (`hub:Uses`). Nothing fits → ONE question that fills one (story first, §CM-STORY-BANK); never a guess dressed up as heard.
+1 Every piece pulls ≥1 bank item (client words, a story, proof, an objection, a moment), named on the card's `used:` line. Nothing fits → ONE question that fills one (story first, §CM-STORY-BANK); never a guess dressed up as heard.
 2 THE BANKS (names the coach sees; never refs or types):
 - Buyer (§CM-RESEARCH-BANK): client words (verbatim: pain, dream, fear, failed fix, identity, trigger) · objections · moments (scenes only the buyer lives) · insights (a pattern in 2+ places, with its root).
 - Coach: stories (§CM-STORY-BANK) · proof (§CM-PROOF-BANK) · beliefs ("{Buyers} often think __; I think __ because {story or proof}") · daily captures.
@@ -37,7 +37,7 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 2 DRAWN FROM: the week writer (§CM-WEEK) and the hook lab read the banks first; each piece names its items.
 - ATTRACT: a moment, a daily story or a pain line. TRUST: a story + the belief it proves, or an objection answered. CONVERT: an objection + proof the coach may use + the live gift or offer (§CM-TIERS).
 - A content line (§CM-CONTENT-LINES) draws from its own bank first (an objection line: the next unused objection).
-- Rotation: least used in 30 days first (`hub:Uses`); one story ≤ once in 14 days per platform; a client line ≤ once a week as a quote, its pattern may return (§CM-HUMANIZE).
+- Rotation: least used in 30 days first (`used:`); one story ≤ once in 14 days per platform; a client line ≤ once a week as a quote, its pattern may return (§CM-HUMANIZE).
 - Empty: ONE question, or A/B/C with one recommended (§CM-OPTIONS): a research moment · a story from this week · a process piece that needs no proof.
 3 FRIDAY TOP-UP (after the numbers, §CM-NUMBERS): 3 new items, each with its source:
 - 1 from this week's comments or DMs (the coach pastes 10, names swapped for letters);

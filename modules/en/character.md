@@ -6,7 +6,7 @@ Not repeated here: Card fields (§CM-CARD), stance scoring and flip-it (§CM-EDG
 DAY 0: no character questions. Trait (a scene + who it puts off), enemy (a named practice), principles, phrases: from the dump only, else [GAP].
 ≥1 character piece a week: a stance · a principle story with its cost · "what I'd never do" · a ritual or choice + why. Family unnamed ("my daughter").
 STANCE from the Card only (enemy, big ideas, stories), tested silently: a sensible peer could disagree · they can defend it in 2 sentences · their proof or story shows it. Fails: drop, don't soften. "Spicy", "viral": a stance on their enemy, written now; no invented hot take.
-HEAT on ideas and the old way, never a person or group (§CM-GUARDRAILS); a private person: scene yes, name never. "Meaner": sharper on the practice, never their own paid work.
+HEAT on ideas and the old way, never a person or group (§CM-GUARDRAILS); politics, religion: stay out; a private person: scene yes, name never. "Meaner": sharper on the practice, never their own paid work.
 BORROWED (§CM-EDGE): credentials → what the years made them unlearn. "A study says" → out.
 
 <!-- @section character.kit-talks -->
@@ -26,7 +26,7 @@ Then the Card: 3 trait candidates with evidence, they pick one; values with no c
 - POLARITY: the enemy as a practice + one truth most peers would dispute ("most {peers} think X; it's Y"), passing: a sensible peer could disagree · they defend it in 2 sentences · their story proves it.
 - WHERE THEY LOOK BAD: 2 mistakes, what each cost, what they do now; one contradiction they live with ("strict, but I cry at every graduation") and the value behind it.
 3 One screen, a line per part above (3 principles, 1 value with its cost, 2 mistakes). "OK, or change a line." Saved to trait, enemy, principles, stories at the next Card reprint.
-4 Polarity on top of §CM-CHARACTER-LITE HEAT: peers, client habits, platforms, their past self → as a practice, never mocking; politics and the state, tragedies, health or money promises → never. Heat ≤3; older or B2B buyers: one notch lower in topic, never vaguer in words.
+4 Polarity on top of §CM-CHARACTER-LITE HEAT: peers, client habits, platforms, their past self → as a practice, never mocking; politics, religion and the state, tragedies, health or money promises → never. Heat ≤3; older or B2B buyers: one notch lower in topic, never vaguer in words.
 5 A scene they don't have: [NEEDS: a time you …], never invented.
 
 <!-- @section character.grow-scenes -->

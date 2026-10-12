@@ -4,6 +4,7 @@ wf12-qa-spec §3.2 (hộp luật VN), §4; arch-final-spec §5.10, §8.4, §9.1;
 Không ghi ngày ở đây (lint E145): ngày của một lưu ý là ngày viết nó. Giọng riêng của coach và cách đổi theo nền tảng: §CM-VOICE; phần này là mặc định của bản VN.
 PENDING: tốc độ nói (word_rate), thứ tự nền tảng, đường comment → Messenger → Zalo, bộ luật VN (chờ luật sư: luật chặt chung, câu kết quả nào cũng cần hồ sơ). Lịch lễ Tết chưa có; chỉ giữ tháng cô hồn.
 Thêm so với EN: bảng xưng hô với khách, chính tả và dấu, Zalo thay email, giá công khai, tháng cô hồn, luật VN (19/2023, Luật Quảng cáo sửa đổi, Thông tư 12/2026, quà ≤50%, dữ liệu cá nhân 91/2025).
+v14.3 (founder test mục 7): bỏ số luật cứng (19/2023, 75/2025, 91/2025, Thông tư 12/2026) khỏi phần ship; luật đổi nhanh và chưa có luật sư duyệt, nên mục 7-11 chỉ còn nguyên tắc + "kiểm với quy định hiện hành". Người bảo trì kiểm luật hiện hành ở docs/founder/external-checks.md.
 Văn nói, tiểu từ ba miền: §CM-NATURAL 4 (mục 1 chỉ trỏ về đó). Quà ≤50%: dòng luật nằm ở §CM-GUARDRAILS (QUYỀN CỦA COACH) và §CM-CTA-KIT 9, không lặp ở mục 9. Mục 7 trỏ về §CM-GUARDRAILS cho hồ sơ và sự đồng ý.
 Tích hợp 6/10 (ngân sách file phương pháp ≤56.320 byte): mục 5 bỏ "email chỉ khi có danh sách" (start-block bước 7, §CM-MESSAGES 1); mục 7 trỏ dòng LỜI HỨA cho claims.individual; mục 10 trỏ §CM-MESSAGES 3; tiêu đề Luật VN bỏ "nên kết quả nào cũng cần hồ sơ" (§CM-GUARDRAILS LẶNG LẼ, KẾT QUẢ MỚI).
 G1 6/10 (theo EN, K4): mục 6 "Tuần lịch từ thứ Hai; tuần kế hoạch: §CM-CARD 3" (tuần kế hoạch đếm từ plan_start). locale.not_legal gọn hơn ("việc của bạn").
@@ -22,9 +23,9 @@ Hook + CTA (10/10/2026, docs/research/hooks-cta/PRINCIPLES.md, founder đã duy�
 6 Ngày "thứ Hai, 19/10"; giờ 20h, 20h30, giờ Việt Nam (coach ở nước ngoài: hỏi múi giờ một lần). Tuần lịch từ thứ Hai; tuần kế hoạch: §CM-CARD 3. Tháng cô hồn (tháng 7 âm): không đề xuất mở bán, coach muốn thì làm. Lưu ý có ngày: một dòng; {date} = hôm nay, ngày/tháng/năm.
 
 <!-- @section locale.kit-claims src=2ee48514e9 -->
-### Luật Việt Nam (một dòng, không giảng; chưa có luật sư duyệt)
-7 Kết quả khách: §CM-GUARDRAILS; kết quả nổi bật thì nói thêm mức thường gặp. Review đổi quà, của người quen: nói rõ. Ảnh feedback: che tên, số điện thoại. Không khan hiếm giả (Luật 19/2023).
+### Luật Việt Nam (một dòng, không giảng; kiểm với quy định hiện hành)
+7 Kết quả khách: §CM-GUARDRAILS; kết quả nổi bật thì nói thêm mức thường gặp. Review đổi quà, của người quen: nói rõ. Ảnh feedback: che tên, số điện thoại.
 8 Thu nhập: chỉ khi có sổ sách. Thực phẩm chức năng, chứng khoán: không mời mua.
-9 Quảng cáo, giới thiệu ăn hoa hồng (Luật Quảng cáo sửa đổi 75/2025): "#QC" ngay đầu; người giới thiệu phải dùng rồi. "Nhất", "số 1" cần căn cứ (Thông tư 12/2026).
-10 Tin nhắn, email: Luật 91/2025, làm như §CM-MESSAGES 3.
-11 "Có hợp pháp không?": luật một dòng + "{{t:locale.not_legal}}"
+9 Quảng cáo, giới thiệu ăn hoa hồng: "#QC" ngay đầu; người giới thiệu phải dùng rồi. "Nhất", "số 1" cần căn cứ.
+10 Tin nhắn, email: như §CM-MESSAGES 3.
+11 "Có hợp pháp không?": nguyên tắc một dòng + "{{t:locale.not_legal}}"

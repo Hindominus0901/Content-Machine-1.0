@@ -25,7 +25,7 @@ Unknown → [NEEDS: …], one question; never a borrowed industry rate. Needed >
 
 <!-- @section launch-plan.grow-brief -->
 ### Launch Brief and the real limits
-1 BRIEF, from what is known, kept with the Card (a Series row, `hub:Kind` Launch): offer (name · promise + its condition, e.g. "if you give it 1 hour a day" · 3 steps · what they get · start) · for (3) · not for (2) · price, payment plan, real next price and date · the program's seats + real reason (a free gift or class has its own cap, if any, never the program's) · hard close (date, time, time zone, what turns off) · bonuses (what · real cost · cap or deadline) · process guarantee, never outcome · type, length, day 1, lives · goal · platforms + follow-up route (email or WhatsApp) · auto-replies y/n · proof, OK per use (posts, ads, case series) · the Map's 3 old beliefs (the method won't work · I can't · no time or money).
+1 BRIEF, from what is known, kept with the Card (its Campaigns row, the Brief cell): offer (name · promise + its condition, e.g. "if you give it 1 hour a day" · 3 steps · what they get · start) · for (3) · not for (2) · price, payment plan, real next price and date · the program's seats + real reason (a free gift or class has its own cap, if any, never the program's) · hard close (date, time, time zone, what turns off) · bonuses (what · real cost · cap or deadline) · process guarantee, never outcome · type, length, day 1, lives · goal · platforms + follow-up route (email or WhatsApp) · auto-replies y/n · proof, OK per use (posts, ads, case series) · the Map's 3 old beliefs (the method won't work · I can't · no time or money).
 2 Missing: one question per reply, the fact blocking the next piece first: before any calendar, the program's start date, then the coach's time zone (a country with several, e.g. Australia: which one; buyers in another: theirs too). The rest ride as [NEEDS: …] in the pieces.
 3 REAL LIMITS, before any urgency line. One row per limit: what (seats · bonus · close · price step) · real reason · number · public update times · what happens after. Shown as "Your real limits", 3–4 lines, OK'd once.
 4 Each line states four facts, never asked as four questions: the cap is enforced; the deadline turns the link off or the price up; no reopening; counts are updated truthfully. One they correct to "no" drops that limit from the copy; urgency comes from what is left (a real close date is enough).
@@ -68,7 +68,7 @@ Silent, before printing: each day on the real calendar, against the coach's date
 
 <!-- @section launch-plan.grow-desk -->
 ### Launch mode and the daily Launch Desk
-1 MODES: normal → runway (4 weeks, no selling) → prep (the week before) → launch (the calendar) → cooldown (2 weeks: debrief, testimonials, objections → next month's belief posts) → normal. Launch pieces carry `hub:Phase` Launch.
+1 MODES: normal → runway (4 weeks, no selling) → prep (the week before) → launch (the calendar) → cooldown (2 weeks: debrief, testimonials, objections → next month's belief posts) → normal. Launch pieces: Phase Launch.
 2 Scheduled tasks in launch mode: the weekly ones pause and the one "Launch day" task runs this Desk daily (§CM-NUDGE-RULES 6); pieces are written around the latest objections (other topics paused but 1 relate piece a week); the Friday review becomes the scoreboard (plan vs actual per step). Cooldown switches them back.
 3 LAUNCH DESK, daily, ≤20 coach minutes on an ordinary launch day; open, live and close days 60–120, flagged (a VA can do the rest):
 - today's pieces in copy boxes, in posting order with times;

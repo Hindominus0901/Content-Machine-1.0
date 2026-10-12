@@ -398,7 +398,7 @@
 # Portable kits (docs/BUILD.md §6): the save line the Claude plugin, the ChatGPT plugin and the one-file kit
 # carry in place of the kit's own, since those chats are not projects. Its presence turns the three outputs
 # on; tools/build.py holds the kit line it replaces and stops the build if the kit stops printing it.
-"portable.save" = "Save: copy the card and email it to yourself. Tomorrow: say \"{{t:cmd.next}}\" in this same chat; in a new chat, paste the card first."
+"portable.save" = "Save: copy the card and email it to yourself. In a new chat, paste the card first."
 
 # v13 kit (founder 9 Oct: "it just goes along, or asks 'do you want X?'"): the choice pattern (§CM-OPTIONS) and the
 # chat-start memory line (§CM-MEMORY). Coach-facing lines only; the rules live in modules/en/options.md.

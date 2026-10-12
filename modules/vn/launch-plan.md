@@ -23,9 +23,9 @@ số người cần = số suất ÷ tỷ lệ chốt; tệp ấm = chỉ nhữn
 Chưa có số → [CẦN {XƯNG HÔ}: …], một câu; không mượn tỷ lệ "trong ngành". Cần nhiều hơn cả tệp ấm → nói một dòng, coach chọn: A ít suất hơn, hay hâm tệp 4 tuần trước.
 5 In 3 dòng (số suất · số người cần · tệp ấm bây giờ), kiểu và bước đầu; rồi hồ sơ (§CM-LAUNCH-BRIEF), lịch (§CM-LAUNCH-DAYS), và thẻ từng ngày của chiến dịch nếu đã có phần CAMPAIGNS (file, hay skill cm-campaigns khi dùng plugin; §CM-CAMPAIGNS). Không hứa bán hết suất.
 
-<!-- @section launch-plan.grow-brief src=47443f8ca4 -->
+<!-- @section launch-plan.grow-brief src=301590b209 -->
 ### Hồ sơ mở bán và giới hạn thật
-1 HỒ SƠ, từ điều đã biết, lưu kèm Card (dòng Series, `hub:Kind` Launch): sản phẩm (tên · lời hứa + điều kiện · 3 bước · nhận gì · ngày bắt đầu) · dành cho (3), không dành cho (2) · giá công khai, trả góp, giá đợt sau thật, từ ngày nào · số suất của khoá + lý do thật (quà có giới hạn riêng, nếu có) · giờ đóng (ngày, giờ, múi giờ, cái gì tắt) · quà (là gì · chi phí thật · giới hạn hay hạn; ≤50% giá khoá theo luật khuyến mại, kiểm lại) · cam kết cách làm, không cam kết kết quả · kiểu, số ngày, ngày 1, buổi live · mục tiêu · kênh, đường chăm (Zalo, email) · trả lời tự động · bằng chứng, được dùng ở đâu (bài, quảng cáo, series) · 3 niềm tin cũ trên Bản đồ.
+1 HỒ SƠ, từ điều đã biết, lưu kèm Card (dòng Chiến dịch, ô Hồ sơ mở bán): sản phẩm (tên · lời hứa + điều kiện · 3 bước · nhận gì · ngày bắt đầu) · dành cho (3), không dành cho (2) · giá công khai, trả góp, giá đợt sau thật, từ ngày nào · số suất của khoá + lý do thật (quà có giới hạn riêng, nếu có) · giờ đóng (ngày, giờ, múi giờ, cái gì tắt) · quà (là gì · chi phí thật · giới hạn hay hạn; ≤50% giá khoá theo luật khuyến mại, kiểm lại) · cam kết cách làm, không cam kết kết quả · kiểu, số ngày, ngày 1, buổi live · mục tiêu · kênh, đường chăm (Zalo, email) · trả lời tự động · bằng chứng, được dùng ở đâu (bài, quảng cáo, series) · 3 niềm tin cũ trên Bản đồ.
 2 Thiếu: mỗi tin một câu, hỏi điều đang chặn bài kế trước: trước khi lên lịch, ngày khai giảng, rồi múi giờ (khách ở nước khác: giờ của họ nữa). Còn lại để [CẦN {XƯNG HÔ}: …] trong bài.
 3 GIỚI HẠN THẬT, có trước mọi câu hối thúc. Mỗi giới hạn một dòng: loại (suất · quà · giờ đóng · mốc tăng giá) · lý do thật · con số · giờ cập nhật công khai · hết hạn thì sao. Coach thấy "Giới hạn thật", 3–4 dòng, OK một lần.
 4 Mỗi dòng ghi sẵn bốn điều, không hỏi thành bốn câu: đủ suất là ngừng nhận; tới hạn là tắt link hay lên giá thật; không mở lại; số cập nhật đúng thật. Coach sửa điều nào thành "không" → bỏ giới hạn đó; hối thúc chỉ dựa vào phần còn lại (giờ đóng thật là đủ).
@@ -66,9 +66,9 @@ Mỗi ngày in: thứ, ngày · tên chặng lời thường · bài trong khung
 ### Soát ngày, lịch nào cũng vậy
 Làm thầm trước khi in: đặt từng ngày trong mẫu lên lịch thật, so với ngày của chính coach (ngày khai giảng, ngày bận, ngày họ đã kể) và ngày lễ ở §CM-LAUNCH-TIMING (20/10, 20/11, Tết); trùng thì dời bài, không dời hạn thật, báo một dòng. Đợt chạm tuần Black Friday, ngày đôi, Tết hay một kỳ nghỉ dài (§CM-LAUNCH-TIMING 3): một dòng cảnh báo trước lịch, kèm phương án sớm hơn hay muộn hơn. Ngày đóng cách ngày khai giảng ≥3 ngày, vào tối ngày thường (§CM-LAUNCH-TIMING); hạn coach tự chốt cách khai giảng <3 ngày: giữ hạn, báo một dòng, một lần. Phương án dời hay DỪNG (§CM-CAMPAIGNS 4) không bao giờ rơi vào hay qua ngày khai giảng. Mọi tin hẹn giờ giữ giờ yên (§CM-LAUNCH-TIMING 6).
 
-<!-- @section launch-plan.grow-desk src=e88041691b -->
+<!-- @section launch-plan.grow-desk src=405188048b -->
 ### Chế độ mở bán và Bàn mở bán mỗi ngày
-1 CHẾ ĐỘ: bình thường → hâm tệp (4 tuần, chưa bán) → chuẩn bị (tuần trước) → mở bán (theo lịch) → hạ nhiệt (2 tuần: nhìn lại, xin cảm nhận, băn khoăn thành bài tháng sau) → bình thường. Bài trong đợt mang `hub:Phase` Launch.
+1 CHẾ ĐỘ: bình thường → hâm tệp (4 tuần, chưa bán) → chuẩn bị (tuần trước) → mở bán (theo lịch) → hạ nhiệt (2 tuần: nhìn lại, xin cảm nhận, băn khoăn thành bài tháng sau) → bình thường. Bài trong đợt: Giai đoạn Mở bán.
 2 Tác vụ hẹn giờ trong đợt: các lời nhắc hằng tuần tạm dừng, chỉ còn tác vụ "Ngày mở bán" chạy Bàn này mỗi ngày (§CM-NUDGE-RULES 6); bài viết xoay quanh băn khoăn mới nhất (chủ đề khác tạm nghỉ, giữ 1 bài đồng cảm/tuần); soát số thứ Sáu thành bảng điểm (từng chặng, kế hoạch so với thực tế). Hạ nhiệt thì trả lại như cũ.
 3 BÀN MỞ BÁN, mỗi ngày, coach ≤20 phút ngày thường; ngày mở, live, đóng 60–120 phút, báo trước (trợ lý làm phần còn lại):
 - bài hôm nay trong khung chép, theo thứ tự đăng, kèm giờ;

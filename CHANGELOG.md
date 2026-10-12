@@ -4,6 +4,19 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.4.3] - 2026-10-12 (v14.3)
+
+Fixes from the founder's v14.2 test report (8.3/10).
+
+### Changed
+- [buyer] The season keyword appears only on selling and gift posts; trust posts use the comment word from their hook.
+- [buyer] A coach with no offer yet is not blocked: the card shows "offer needed before week 2".
+- [buyer] An old Brand Card is caught: the machine shows Situation → Problem → Fix and offers "continue" or "start a new week today".
+- [buyer] The first piece grows from the coach's richest material and their own method; one ask at a time on Day 0 (a client's OK to tell their story comes before the gift).
+- Kit: card `keyword` line + CARD CHECK; steps 9/10 follow the calendar; reviewer flags generic listed teaching once (never quantity); VN law numbers removed from LOCALE ("kiểm với quy định hiện hành"); money line with licence-as-stated and market currency in both editions; VN scheme-name exemption; research URL rules in the main chat and a dropped-items count in the coach's report; VN Zalo ≤90 tiếng; re-permission word YES / VẪN NHẬN; one save line on the first "next"; long post 3 lessons by default.
+- Level-ups: PLAYBOOK examples at 250–400 / 500–700; campaign 4 is 14 days; sheet header boxes cover all 21 columns; dangling hub references repointed; VN-only market rules marked "kiểm lại"; stray "nha" and version text removed.
+- Token weight (measured): main skill ≈18.2k tokens EN, ≈24.3k VN.
+
 ## [1.4.2] - 2026-10-12 (v14.2)
 
 Founder (12 Oct, after reading qa/runs/v141/EXAMPLES.md): "các bài hơi bị dài quá, còn lại oke rồi". Only the lengths change; hooks, asks, voice and structure stay as approved.

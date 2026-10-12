@@ -18,7 +18,7 @@ Tuần sau: chủ đề {n}, "{idea}"
 4 ≤3 VIỆC TUẦN SAU, mỗi việc 1 số: Thêm (cái kéo khách hỏi) · Sửa (bước yếu nhất) · Mới (≤1/5, đúng bản đồ). "{{t:review.bets_default}}"
 5 TIẾP: thứ Sáu cuối tháng → "lên kế hoạch tháng sau" · bài họ thích, kết quả mới → "{{t:review.card_next}}" · còn lại: câu xin dán THỨ SÁU (§CM-RESEARCH-LITE), lời xin duy nhất của tin. Trên đó: "Tuần sau mình tìm hiểu {gì} (vì {sao})." Lời mời Tuần 1: ở "tiếp" kế (§CM-TODAY).
 
-<!-- @section review.grow-why src=395da43955 -->
+<!-- @section review.grow-why src=1c35923369 -->
 ### "Sao content chưa ra khách?" (khi hỏi; 2 tuần chững, 10+ bài)
-1 Soát ý lớn trong đa số bài · {KEYWORD} đặt sớm mỗi bài · bài chính xin trả lời · 3+ bài/tuần. Rồi một chỗ gãy: không ai thấy → đủ số bài, đăng thẳng (không link) · không ai dừng → câu đầu · không xem hết → cắt bớt đoạn mở · không tin → bằng chứng, chi tiết chỉ họ có · không ai hỏi → lời mời comment mỗi bài · không chốt → ngoài content: sản phẩm, giá, cuộc gọi.
+1 Soát ý lớn trong đa số bài · lời mời đúng loại, đặt sớm: {WORD} ở bài NIỀM TIN, {KEYWORD} ở bài CHUYỂN ĐỔI (§CM-CTA-BANK 2) · bài chính xin trả lời · 3+ bài/tuần. Rồi một chỗ gãy: không ai thấy → đủ số bài, đăng thẳng (không link) · không ai dừng → câu đầu · không xem hết → cắt bớt đoạn mở · không tin → bằng chứng, chi tiết chỉ họ có · không ai hỏi → lời mời comment mỗi bài · không chốt → ngoài content: sản phẩm, giá, cuộc gọi.
 2 "{{t:review.whats_off}}", số của họ, 3 việc cho 2 tuần tới. Không: đổ cho thuật toán, khuyên chạy quảng cáo, đẩy bài, chủ đề ngoài bản đồ để kéo view, từ khoá mới (<60 ngày), xin thêm số, nâng mức đòi hỏi.

@@ -11,12 +11,12 @@ G1 6/10 (theo EN): mục 3 K4 "plan_start = hôm sau ngày 0, tuần n = mỗi 7
 Cắt bù byte G1 (không bỏ luật): mục 1 bỏ "; không chặn gì" (start-block bước 8: "Chưa lưu vẫn làm tiếp"); mục 3 card.machine.heading → "dòng cho máy như BRAND CARD" (start-block BRAND CARD in đúng chuỗi đó).
 G2/VG1 6/10: mục 3 list_size=ask|{n} (schema đổi sang text; thay VK-20), VK-13 "proof: … (không thì not_now)". Trả bằng month.save_card bỏ ", chạm 2 cái là xong" (cắt VK-16 đã nêu). Chưa theo EN: K28 (7/7 lượt VG1 đã in dự phòng Zalo: start-block "Dự phòng"); K29 thứ tự cắt (cần ~38 byte; file phương pháp đang 56.318/56.320).
 
-<!-- @section brain.kit-print src=97a950c7ee -->
-1 KHI NÀO: bước 5 cài đặt (§CM-SETUP 9); in lại: mục 4.
+<!-- @section brain.kit-print src=09f215c9ba -->
+1 KHI NÀO: bước 5 cài đặt (§CM-SETUP 9); in lại: mục 4. Một dòng lưu, không lặp, không chặn.
 2 PHẦN TRÊN, ≤500 ký tự (đếm trước), 3 dòng: "{{t:card.title}}" · "{{t:card.visible.what}} {thông điệp} · {cụm chủ đề} · "{từ khoá}"" · "{{t:card.visible.how}} {giọng} · {nhịp} · "{câu}", "{câu}" · {{t:card.visible.to_them}} "{xưng hô}"", có "{{t:cmd.not_me}}" thì thêm · {{t:card.visible.never}} "{chữ}". Quá 500: rút thông điệp, rồi cụm chủ đề; giữ dòng giọng.
 3 Rồi dòng cho máy như BRAND CARD + một khung code, mỗi dòng `tên: giá trị`, " | " giữa mục, [n] tối đa, ? = không có thì bỏ, không để trống:
 version date=YYYY-MM-DD edition=vn pack_version={{pack_version}} step=1-10|done progress=w{n}d{d}
-who their_words[2] promise method old_way pillars[5] mix=a/t/c% offer call_route? bio_line gift keyword_alternates[2] idea_shifts[3] key_belief why_this_one side_door? offer_status=live|founding|none proof_ready=yes|no not_now[7]
+who their_words[2] promise method old_way pillars[5] mix=a/t/c% offer call_route? bio_line gift keyword keyword_alternates[2] idea_shifts[3] key_belief why_this_one side_door? offer_status=live|founding|none proof_ready=yes|no not_now[7]
 tone rhythm phrases[5] openers_closers?[3] audience_address address_1to1? connectors?[5] pronouns dialect=vùng·tiểu từ ~n%·3 tiểu từ code_mix humour=none|dry|playful|self-roast written_vs_spoken? never_say?[10] do_say?[10]
 trait(một nét + người nó đẩy ra) enemy(một cách làm) principles[3] passages[5] client_words[8] stories[5] proof?[5]
 plan_start season=1 talk_day=Mon..Sun week hours tier=light|lean|standard platform=chữ thường owned_channel=zalo|email|both|none list_size=ask|{n} cta_style=keyword|quiet delivery=beat-cards|interview|bullets|word-for-word timezone=ask|{zone} mode=always-on hub=none automations=none|reminders week1[7] recent_hooks?[10] used?[12] liked?[8]

@@ -19,5 +19,5 @@ Next week: big idea {n}, "{idea}"
 
 <!-- @section review.grow-why -->
 ### "Why isn't it working?" (asked; 2 flat weeks, 10+ posts)
-1 Check: big idea in most pieces · {KEYWORD} in each, early · lead piece (email if a list) asks for replies · 3+ posts a week. Then ONE break point: not shown → floor, native posts · not stopped → first lines · not held → cut the build-up · not trusted → proof, an only-them detail · not asked → the comment ask in each · not closed → outside content: offer, price, call.
+1 Check: big idea in most pieces · the ask by type, early: {WORD} on TRUST, {KEYWORD} on CONVERT (§CM-CTA-BANK 2) · lead piece (email if a list) asks for replies · 3+ posts a week. Then ONE break point: not shown → floor, native posts · not stopped → first lines · not held → cut the build-up · not trusted → proof, an only-them detail · not asked → the comment ask in each · not closed → outside content: offer, price, call.
 2 "{{t:review.whats_off}}", their numbers, 3 actions for the next 2 weeks. Never: the algorithm, ads, boosts, off-map topics with views, a new keyword (<60 days), analytics asks, a higher bar.

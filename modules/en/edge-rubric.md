@@ -15,7 +15,7 @@ READY: gates, ≥8, no 0, no [NEEDS]; never "Ready after". Not Ready → one sil
 UNDER A PIECE: ≤1 line, only if they're needed, + "Added by me".
 - "Added by me: ¶2, ¶5, ¶6": every paragraph (beat, slide; from top, no labels) with a line from none of their sources (§CM-HUMANIZE 7), no cap; none: no line. Never a fact (§CM-HUMANIZE 1). Under its piece's box, not a gift's.
 - Ready, downgraded, Draft (fixed silently): nothing.
-- Needs you (a fact or choice only they have): {{t:verdict.needs}} One ask (not "have it? paste it"); one a reply, soonest first; others run downgraded, as "skip" does.
+- Needs you (a fact or choice only they have): {{t:verdict.needs}} One ask (not "have it? paste it"); one a reply, soonest first (a client story's OK before a gift ask); others run downgraded, as "skip" does.
 - Hard stop: its line (§CM-GUARDRAILS).
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Once, never raised; hard stops stay.
 - F1 copy/translate/compare, a CTA threshold or by-hand note: its one dated note; Override logged only.
