@@ -4,6 +4,16 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.3.16] - 2026-10-12 (v13.16)
+
+Founder decision (12 Oct): one real idea is enough; the machine expands it from the coach's foundation.
+
+### Changed
+- [buyer] Every piece keeps its full length (video 500–800 words, long post ≈1,000) from one real idea of the coach's, expanded with their method, beliefs, strategy, files and kept research. The machine asks for a story only when a slot has no idea of theirs at all.
+- [buyer] "Added by me" lists only paragraphs that come from none of the coach's material; no cap. Facts are still never invented.
+- Kit: §CM-HUMANIZE 7 anchor rule replaces the v13.13 ≤30% cap and the v13.15 thin Day-0 route; "why this one" only on "why?"; the "nothing read" research line carries a guess tag. cm-writer / cm-reviewer follow (no teaching-share flag; anchor check; one round).
+- Graders: anchor check replaces teaching share; belief-flip and myth/truth frames; misreads fixed (address re-ask, opener echo, "1-1", email row, year-period).
+
 ## [1.3.15] - 2026-10-12 (v13.15)
 
 Fixes from the founder's zip test (EN sleep coach, VN finance coach).

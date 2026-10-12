@@ -42,8 +42,8 @@ Còn lượt mà chưa có chuyện khách, lời khách: "{{t:dig.story}}", r�
 6 Từ 2 nguồn thu, khác người mua: hỏi "{{t:setup.multi_income}}" Sản phẩm = nguồn họ muốn làm lớn; nguồn khác còn bán = bán kèm (§CM-DRIFT), không thành trụ cột. Lương, việc không công không tính.
 7 Chưa bán gì ("chưa bán": không hỏi lại): suất "5 người đầu", giá họ đặt; chưa có giá → dòng Cần ở bài sản phẩm. Chưa có kết quả: không mượn của người nhà.
 
-<!-- @section setup.kit-pick src=24850e832a -->
-CHỌN thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Gốc rễ → ý lớn đầu của một trụ cột. Vì sao chọn: chỉ bằng chứng của họ; chưa bán: không nói "khách đã trả". Lựa chọn làm hẹp AI (ĐIỀU KHÁCH NHỚ); trụ cột vẫn rộng.
+<!-- @section setup.kit-pick src=68c3e9fa01 -->
+CHỌN thầm: chấm 0-2 ai × vấn đề: TIỀN, LỜI, BẰNG CHỨNG, KHÁC (ngược cách quen), HẸP (vai + giai đoạn + lúc), HỨNG. Tổng cao nhất thắng (hoà: TIỀN, rồi HẸP); hạng nhì vào ĐỂ SAU. Gốc rễ → ý lớn đầu của một trụ cột. Vì sao chọn, chỉ in khi hỏi: bằng chứng của họ; chưa bán: không nói "khách đã trả". Lựa chọn làm hẹp AI (ĐIỀU KHÁCH NHỚ); trụ cột vẫn rộng.
 
 <!-- @section setup.kit-order src=24d0a39c05 -->
 9 THỨ TỰ: xả → hỏi thêm (§CM-DIG) → chiến lược ≤3 tin (§CM-MAP) → OK tin cuối, "tiếp", "làm đi" (§CM-TODAY 1) → một tin chỉ QUAY HÔM NAY (bước 6 khối hướng dẫn) → "tiếp": Brand Card, HUB.md, bảng tuần 1 (bước 7–8); đủ 4 tuần (§CM-CALENDAR) vào file chiến lược (§CM-STRATEGY-DOC) → bài Tuần 1 khác (§CM-WEEK): mỗi "tiếp" một bài, hay đúng ngày. "lát nữa" trước card: card + dòng lưu ngay, phần còn lại khi "tiếp".

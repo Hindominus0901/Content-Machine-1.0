@@ -83,9 +83,9 @@ Ships as the Ship Check card (`core/{en,vn}/ship-check.md`, spec §2.3; ≤900 c
 | 3 | Does it push on an idea or practice, never on a person or group? | Chỉ phản bác ý tưởng, cách làm; không nhắm vào người hay nhóm người? |
 | 4 | Edge ≥8, none at 0: keyword + specific, one idea, proof shown, only-you detail, a stance? | Edge ≥8, không trụ nào 0: từ khoá + cụ thể, một ý, có bằng chứng, chi tiết chỉ bạn có, một quan điểm? |
 | 5 | Keyword once in the words (plus the ask), new hook stem, no hedge in the hook, 0 open brackets? | Từ khoá 1 lần trong bài (cộng lời mời), hook mới, không rào đón trong hook, không còn ngoặc [CẦN {XƯNG HÔ}]? (v13.5: [CẦN BẠN] became [CẦN {XƯNG HÔ}]) |
-| 6 | Every paragraph with a line not from the coach on "Added by me: ¶n"? One "Needs you" ask, ≤20 words? | Mọi đoạn có câu không phải của coach nằm trên dòng "Máy tự thêm: đoạn N"? Một dòng "Cần", một điều, ≤20 chữ? |
+| 6 | Each piece grows from ≥1 real anchor of the coach's (idea, belief, story, method step)? Every paragraph with a line tracing to no foundation item on "Added by me: ¶n" (grounded teaching is not listed, no share cap)? One "Needs you" ask, ≤20 words? | Mỗi bài có ≥1 điểm tựa thật của coach (ý, niềm tin, chuyện, bước làm)? Mọi đoạn có câu không bám vào nguồn nào của coach nằm trên dòng "Máy tự thêm: đoạn N" (phần dạy có gốc không ghi, không giới hạn tỉ lệ)? Một dòng "Cần", một điều, ≤20 chữ? |
 
-Rows 1-5 mirror the card; row 6 is the judge's added read (11 Oct 2026, audit a3 L4): `graders.py source_check` finds illustrative paragraphs only by marker words ("say a…", "imagine", "ví dụ"), so a teaching paragraph without one is caught here.
+Rows 1-5 mirror the card; row 6 is the judge's added read (11 Oct 2026, audit a3 L4): `graders.py source_check` finds illustrative paragraphs only by marker words ("say a…", "imagine", "ví dụ"), so a teaching paragraph without one is caught here. v13.16 (12 Oct 2026, founder "chỉ cần 1 ý thôi"): the list holds only paragraphs that trace to no foundation item (card, method, beliefs, OK'd strategy, the coach's words and files, KEEP lines); one anchor expanded to full length is grounded, and the old ≤30% share is gone.
 
 ## VN note
 

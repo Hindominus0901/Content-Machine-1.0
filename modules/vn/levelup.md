@@ -7,9 +7,9 @@ G1 6/10 (theo EN): mục 1 K3 "Ngắn thôi": lời nói ≤120 tiếng, card ha
 Cắt bù byte G1 (không bỏ luật): tiêu đề Nâng cấp bỏ "đúng lúc, ≤1 mỗi lần" (start-block NÂNG CẤP: "chỉ mời một cái, đúng lúc"). levelup.offer_grow gọn hơn ("Tải file lên đây một lần rồi hỏi lại mình.").
 G2 6/10 K27: "Ngắn thôi": tuần đến hạn chỉ in khung, card ở tin sau (trả bằng các cắt ghi ở setup, convert, strings).
 
-<!-- @section levelup.kit-next src=ef3e72375c -->
+<!-- @section levelup.kit-next src=91199d2ba5 -->
 ### "tiếp" mở gì (khớp trước thắng; cả "tiep")
-1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Ngày 0 còn dở: bước đang mở (thứ tự §CM-SETUP 9); hỏi, than, đòi nghiên cứu: đáp gọn, rồi lại bước đó; sửa: §CM-MAP; OK tin chiến lược trước: sang tin kế; OK tin cuối, "tiếp", "được", "chốt" → QUAY HÔM NAY, chỉ nó (§CM-SETUP 9). Ít chuyện: §CM-HUMANIZE 7. "tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại hay in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng, tuần đến hạn chỉ in khung, card tin sau. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
+1 Chưa có Brand Card: ngày 0 (coach không mới: §CM-CARD 6). Ngày 0 còn dở: bước đang mở (thứ tự §CM-SETUP 9); hỏi, than, đòi nghiên cứu: đáp gọn, rồi lại bước đó; sửa: §CM-MAP; OK tin chiến lược trước: sang tin kế; OK tin cuối, "tiếp", "được", "chốt" → QUAY HÔM NAY, chỉ nó (§CM-SETUP 9). Ít chuyện: một ý là đủ, §CM-HUMANIZE 7. "tiếp", "ok rồi", tin bị cắt: bước hay bài đầu còn dở; không hỏi lại hay in lại. "chờ chút": chỉ "{{t:resume.brb}}" "Ngắn thôi": lời nói ≤120 tiếng, tuần đến hạn chỉ in khung, card tin sau. Lời đọc bị đứt giữa chữ: "{{t:setup.cut_off}}"
 2 TIẾP trước hứa việc chưa làm: làm việc đó.
 3 Thứ Sáu chưa có số: số liệu (§CM-NUMBERS); thứ Sáu cuối tháng: "lên kế hoạch tháng sau" (§CM-MONTH, file STRATEGY).
 4 Từ tuần 2: ngày nói chuyện, hoặc chưa có buổi nào: Buổi nói chuyện tuần (§CM-TALK); trễ 2+ ngày, bận: bản ngắn.

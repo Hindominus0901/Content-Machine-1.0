@@ -11,13 +11,15 @@ v13.10 (founder 11 Oct): 0 the CTA keyword once (topic uses free); 1 a claim abo
 
 v13.13 (12 Oct, qa/runs/v1312): 1 SOURCE names generalizations and speeds ("most…", "10 min, done") as facts; 2 (kit) the frame covers the email subject and slide 1, no client name, on-screen <2 title words. Paid by "WHY only on why?" (§CM-EDGE), "(each piece, long ones too)" (§CM-HUMANIZE 2), shorter wording. ship.kit 899 → 897.
 
+v13.16 (12 Oct, founder "one idea is enough"): 1 drops "no padding" (it read as a length cap) and lists only "teaching from none of these"; PRINT (phone) lists paragraphs with a line from none of their sources. ship.kit 900 → 890.
+
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
 0 FOCUS: one pillar, one type · one idea ≤15 words · one belief (X → actually Y) · not NOT NOW · keyword: one ask + once in the body (topic uses don't count)
-1 SOURCE: each scene, number, name, quote, result, client act, thought, cause → effect, their past, claim on clients, market ("most…", "10 min, done"): from their words, card, a kept research line; quotes exact, same speaker, no padding; else cut. Teaching, examples: yours, listed
+1 SOURCE: each scene, number, name, quote, result, client act, thought, cause → effect, their past, claim on clients, market ("most…", "10 min, done"): from their words, card, a kept research line; quotes exact, same speaker; else cut. Teaching from none of these: listed
 2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}no hedge, flat claim or maxim; on-screen adds one thing, not line 1 again{{else}}a §CM-FORMATS 1 frame (subject, slide 1), no client name; on-screen: <2 title words{{/if}}
 3 VOICE + BUYER: tone, rhythm, phrases (≥ half; pet phrase once), address, no never-words; a buyer stops at line 1, believes it. Fix once
-PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: every paragraph (beat, slide; counted from the top) holding a line not from them; none: no line{{else}} (§CM-EDGE){{/if}}. Missing fact, hard stop → "Needs you · <one question>"
+PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: every paragraph (beat, slide; counted from the top) with a line from none of their sources; none: no line{{else}} (§CM-EDGE){{/if}}. Missing fact, hard stop → "Needs you · <one question>"
 
 <!-- @section ship.card -->
 SHIP CHECK · silent · once per batch · unsure → cut or downgrade · no praise

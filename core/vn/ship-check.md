@@ -19,13 +19,15 @@ v13.10 (founder 11/10): 0 từ khoá một lần (nhắc chủ đề không tín
 
 v13.13 (12/10, qa/runs/v1312): 1 NGUỒN thêm câu chung, tốc độ ("nhiều người…", "10 phút là xong") là dữ kiện, "không độn"; 2 (kit) khung cả tiêu đề email, trang 1, không tên khách, chữ màn hình trùng tiêu đề <2 chữ; 3 "tiểu từ đếm như card ±10". Trả bằng "Lý do: chỉ khi hỏi" (§CM-EDGE), "từng bài, cả bài dài" (§CM-HUMANIZE 2), chữ gọn hơn. ship.kit 997 → 997.
 
-<!-- @section ship.kit src=70fd45448b -->
+v13.16 (12/10, founder "chỉ cần 1 ý thôi"): 1 bỏ "không độn" (đọc như giới hạn độ dài), "Dạy, ví dụ ngoài các nguồn đó: ghi ra"; IN (điện thoại) chỉ ghi đoạn có câu ngoài mọi nguồn của coach. ship.kit 998 → 990.
+
+<!-- @section ship.kit src=83e229b808 -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · mọi bài · không chắc → cắt hoặc hạ bậc
 0 TRỌNG TÂM: một trụ cột, một loại · ý chính ≤20 tiếng · một niềm tin ("X → hoá ra Y") · không ý để dành · từ khoá: một lời mời + một lần trong thân bài (nhắc chủ đề không tính)
-1 NGUỒN: cảnh, số, tên, câu trích, kết quả, việc khách làm, nghĩ, vì A nên B, chuyện cũ coach, câu chung về khách, thị trường ("nhiều người…", "10 phút là xong"): từ lời coach, card, nghiên cứu đã giữ; trích y nguyên, đúng người, không độn; không có → cắt. Dạy, ví dụ: hiểu biết nghề, ghi ra
+1 NGUỒN: cảnh, số, tên, câu trích, kết quả, việc khách làm, nghĩ, vì A nên B, chuyện cũ coach, câu chung về khách, thị trường ("nhiều người…", "10 phút là xong"): từ lời coach, card, nghiên cứu đã giữ; trích y nguyên, đúng người; không có → cắt. Dạy, ví dụ ngoài các nguồn đó: ghi ra
 2 KHÁC BIỆT{{#if phone}}: cụ thể, một ý, có bằng chứng, chỉ coach có, có người cãi{{else}} ≥8, không ô 0 (§CM-EDGE){{/if}}. Hook, dòng 1 caption: {{#if phone}}không rào, phán suông, châm ngôn; chữ màn hình thêm một điều, không lặp ý câu đầu{{else}}một khung §CM-FORMATS 1 (cả tiêu đề, trang 1), không tên khách; chữ màn hình trùng tiêu đề <2 chữ{{/if}}
 3 GIỌNG + NGƯỜI MUA: nhịp, câu hay nói (≥ nửa; câu cửa miệng 1 lần), xưng hô; tiểu từ đếm như card ±10, không chồng; không chữ cấm, tiếng Anh, "—"; người mua dừng ở câu đầu, tin. Sửa một lần
-IN: bài; dưới bài "Máy tự thêm: đoạn 2, 5"{{#if phone}}: đoạn (ý, trang) có câu không của coach; không có: bỏ dòng{{else}} (§CM-EDGE){{/if}}. Thiếu, điều cấm → "Cần {xưng hô} · <một câu hỏi>"
+IN: bài; dưới bài "Máy tự thêm: đoạn 2, 5"{{#if phone}}: đoạn (ý, trang) có câu ngoài mọi nguồn của coach; không có: bỏ dòng{{else}} (§CM-EDGE){{/if}}. Thiếu, điều cấm → "Cần {xưng hô} · <một câu hỏi>"
 
 <!-- @section ship.card src=9ab2ae814b -->
 KIỂM TRA TRƯỚC KHI GIAO · âm thầm · một lần mỗi đợt · không chắc → cắt hoặc hạ bậc · không khen

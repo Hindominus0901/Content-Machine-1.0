@@ -11,12 +11,12 @@ BORROWED: money, freebie or résumé as the whole hook, no why by line 3 → C 0
 READY: gates, ≥8, no 0, no [NEEDS]; never "Ready after". Not Ready → one silent fix of the named defects only (≤5; polarity; borrowed → next idea). Still not → Needs you (the fact or choice that fixes it), else downgrade. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": only N2, reprinted alone.
 
 <!-- @section edge-rubric.kit-verdict -->
-WHAT PRINTS under a piece: ≤1 line, only if the coach is needed, + "Added by me".
-- "Added by me: ¶2, ¶5, ¶6": every paragraph (beat, slide; from top, no label lines) with a line not theirs, no cap, to OK or cut; none: no line. Never a fact (§CM-HUMANIZE 1). Right under its piece's box, not a gift box.
+UNDER A PIECE: ≤1 line, only if they're needed, + "Added by me".
+- "Added by me: ¶2, ¶5, ¶6": every paragraph (beat, slide; from top, no labels) with a line from none of their sources (§CM-HUMANIZE 7), no cap, to OK or cut; none: no line. Never a fact (§CM-HUMANIZE 1). Under its piece's box, not a gift's.
 - Ready, downgraded, Draft (fixed silently): nothing.
 - Needs you (a fact or choice only they have): {{t:verdict.needs}} One ask (not "have it? paste it"); one a reply, soonest first; others run downgraded, as "skip" does.
 - Hard stop: {{t:verdict.hardstop}}
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Once, never raised; hard stops stay.
 - F1 copy/translate/compare, a CTA threshold or by-hand note: its one dated note; Override logged only.
-"{{t:cmd.why}}" → for the last piece, one sentence: its WHY line ({{t:why.prefix}}: old belief → new, their evidence) + how it's built in plain words, never a framework name. Never scores, letters, gates or ticks. Evidence: their phrase, scene or client; no adjectives.
+"{{t:cmd.why}}" → for the last piece, one sentence: its WHY line ({{t:why.prefix}}: old belief → new, their evidence) + how it's built in plain words, never a framework name. Never scores, letters, gates, ticks. Evidence: their phrase, scene or client; no adjectives.
 THEIR OWN DRAFT checked ("ok to post?"): one line, the Ready line or "{{t:verdict.draft_fixable}}". Asked for a score or "edge check": the plain state + "{{t:qa.why_hint}}", never a number.

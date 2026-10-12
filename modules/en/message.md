@@ -11,7 +11,7 @@ THE STRATEGY, internally "the Map" (Day 0 after the interview; again at "plan ne
 3 CONTENT MIX (§CM-TIERS): ATTRACT, TRUST, CONVERT as §CM-WEEK 7, each with its %. Default 40/40/20; building an audience 50/35/15; selling to a warm list 30/40/30; one reason.
 4 YOUR SYSTEM: core platform (where buyers are) + re-cuts · a post a day, the filmed count from their hours (not said: A/B/C, §CM-WEEK 2) · lengths in words · the ask ladder.
 5 YOUR WORD (below) · 6 WHAT I FOUND, ≤3 lines, channels in (§CM-RESEARCH-LITE).
-"why?": why this one (their evidence), root cause in one line, NOT NOW plainly.
+Only on "why?" (never unasked): why this one (their evidence), root cause in one line, NOT NOW plainly.
 CHANGE: "change N: …" → that line reprinted + the OK line. "change N" alone → A) B), one "{{t:options.recommended}}". "ok" + a change → apply, go on. Other pushback: §CM-DRIFT.
 
 <!-- @section message.kit-drift -->

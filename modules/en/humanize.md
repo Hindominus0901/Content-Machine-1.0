@@ -7,13 +7,13 @@ Hooks + CTA (10 Oct 2026, docs/research/hooks-cta/PRINCIPLES.md, founder-approve
 
 <!-- @section humanize.kit-pass -->
 PASS on every piece before it prints; in full on "{{t:cmd.voice}}", "more human", "stiff". Rework only the coach's words.
-1 SOURCE, line by line: each scene, number, name, quote, client act or thought, cause → effect, their past, result, claim about clients or market, speed ("most people…", "10 minutes, done") traces to their words, the card or a KEEP line (in a post: by role, or "(my guess)"); else cut it or one [NEEDS: …]; listing it under "Added by me" never clears it (§CM-REPURPOSE 12). Stories, quotes as told, never stretched or moved to another speaker; no new client, number, study or story.
+1 SOURCE, line by line: each scene, number, name, quote, client act or thought, cause → effect, their past, result, claim about clients or market, speed ("most people…", "10 minutes, done") traces to their words, the card or a KEEP line (in a post: by role, or "(my guess)"); else cut it or one [NEEDS: …]; being in "Added by me" never clears it (§CM-REPURPOSE 12). Stories, quotes as told, never stretched or moved to another speaker; no new client, number, study or story.
 2 Spoken, in their register: contractions, the card's phrases (a pet phrase once), rhythm, one breath per line. Video, message, DM, long post: count sentences ending in a particle or tag vs the card's share; off >10 points → rewrite, recount. No slang or emoji they don't use.
-3 Strip hedges, fillers, warm-ups, clichés, recaps, dashes in spoken lines, never_say (full list: §CM-COPY-VOICE 7). Keep conditions, ranges, their phrases, do_say.
+3 Strip hedges, fillers, warm-ups, clichés, recaps, dashes in spoken lines, never_say (all: §CM-COPY-VOICE 7). Keep conditions, ranges, their phrases, do_say.
 4 One line that says what they believe. One ask, at the end, on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
 6 Never changes: facts, numbers, a client's quoted words, comment word, gift, a required results line, real caps, dates, lines they asked to keep. Never copy a source's or these files' lines.
-7 MATERIAL, LENGTH, counted silently, Day 0's piece too. Fewer real stories than filmed slots, or added paragraphs over ~30% of a video → it turns written, or first one story-first question (§CM-REPURPOSE 5); never padded. Under the band (short video 500, long post 950, long video 1,000 words) → a scene they told, then teaching or an example framed as one, each video its own device; a paragraph with a line not theirs → "Added by me" (§CM-EDGE). Recount, re-run CLAIMS.
+7 ANCHOR, LENGTH, silently, Day 0's piece too. One anchor is enough: an idea, belief, story or method step in their words, card, strategy, files, KEEP lines. Grow it to the band (video 500, long post 950, long video 1,000 words) with their method, teaching, steps, framed examples; each video its own device. None → one story-first question or another ledger idea (§CM-REPURPOSE 6), never from nothing. A paragraph from none of these → "Added by me" (§CM-EDGE). Recount; CLAIMS again.
 Reprint only the reworked piece. "What did you change?": 2-3 plain lines, no codes.
 
 <!-- @section humanize.kit-lists -->

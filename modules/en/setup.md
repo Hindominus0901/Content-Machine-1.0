@@ -37,7 +37,7 @@ A question left, no client story or client words yet: "{{t:dig.story}}", then "{
 7 No offer ("nothing yet": never asked again): founding offer ("first 5") at their own price; no price → "Needs you" in the offer piece. No results: never a relative's.
 
 <!-- @section setup.kit-pick -->
-PICK, hidden: score who × problem 0-2 on PAID, WORDS, PROOF, EDGE (rejects the usual fix), NARROW (role+stage+moment), ENERGY. Top total wins (tie: PAID, then NARROW); runner-up to NOT NOW. NARROW <2: add a stage and moment from the dump. The root cause (why-chain) feeds a pillar's first big idea. Why this one: their evidence only (paid clients, quotes, a story, energy); no sales yet: never "paid you". The pick narrows WHO (KNOWN FOR); the pillars stay broad.
+PICK, hidden: score who × problem 0-2 on PAID, WORDS, PROOF, EDGE (rejects the usual fix), NARROW (role+stage+moment), ENERGY. Top total wins (tie: PAID, then NARROW); runner-up to NOT NOW. NARROW <2: add a stage and moment from the dump. The root cause feeds a pillar's first big idea. Why this one, printed only on "why?": their evidence (paid clients, quotes, a story, energy); no sales yet: never "paid you". The pick narrows WHO (KNOWN FOR); the pillars stay broad.
 
 <!-- @section setup.kit-order -->
 9 ORDER: dump → interview (§CM-DIG) → the strategy in ≤3 replies (§CM-MAP), no piece → the last OK, "next", "go" (§CM-TODAY 1) → one reply: only FILM TODAY, caption, my gift pick, "Needs you: your own gift?" → "next": Brand Card, save line, HUB.md, week 1's table, NEXT only "Tomorrow…"; the 4 weeks (§CM-CALENDAR) to the strategy file (§CM-STRATEGY-DOC) → Week 1's other pieces (§CM-WEEK): one per "next", or on their day. "later" before the card: card + save line now, the rest on "next".

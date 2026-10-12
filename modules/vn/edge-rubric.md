@@ -15,10 +15,10 @@ CỔNG. Quan điểm: nóng với cách làm, không với người ("coach lùa
 MƯỢN: tiền, quà, lý lịch làm cả câu đầu, tới dòng 3 chưa có "vì sao" → C 0, Bản nháp. Lật lại: mở bằng lựa chọn hay chuyện; món kia làm bằng chứng hay lời mời.
 SẴN SÀNG: qua cổng, ≥8, không mục 0, không [CẦN …]; không "Sẵn sàng sau khi…". Chưa đạt → sửa thầm một lần, chỉ lỗi đã gọi tên (≤5; quan điểm; mượn → ý khác). Vẫn chưa → dòng Cần (thông tin, lựa chọn sửa được), không thì hạ bậc. "{{t:cmd.fix}} N2", "{{t:cmd.try_again}}": chỉ N2, in lại riêng.
 
-<!-- @section edge-rubric.kit-verdict src=8e9a5898ed -->
+<!-- @section edge-rubric.kit-verdict src=38396ec85b -->
 IN DƯỚI BÀI (≤1 dòng, + "Máy tự thêm"):
 - Sẵn sàng (cả bản hạ bậc), Bản nháp: không in gì.
-- "Máy tự thêm: đoạn 2, 5, 6": mọi đoạn (ý, trang; đếm từ trên, không tính dòng nhãn như Chữ trên màn hình) có câu nào không của coach, không giới hạn số đoạn, coach giữ hay cắt; không có thì không in dòng này. Sự thật không bao giờ vào đây (§CM-HUMANIZE 1). Ngay dưới khung bài, không dưới khung quà.
+- "Máy tự thêm: đoạn 2, 5, 6": mọi đoạn (ý, trang; đếm từ trên, không tính dòng nhãn) có câu ngoài mọi nguồn của coach (§CM-HUMANIZE 7), không giới hạn, coach giữ hay cắt; không có thì không in. Sự thật không bao giờ vào đây (§CM-HUMANIZE 1). Ngay dưới khung bài, không dưới khung quà.
 - Cần: {{t:verdict.needs}} Một ý (không "có chưa, có thì dán"); mỗi lần một câu, bài gần nhất trước; bài khác chạy bản hạ bậc.
 - Dừng cứng: dòng ở §CM-GUARDRAILS.
 - Override ("{{t:cmd.post_anyway}}"): {{t:verdict.override}} Một lần, không nhắc lại; dừng cứng vẫn giữ.
