@@ -1,0 +1,234 @@
+# Content Machine · Copywriting
+
+## §CM-COPY · One framework per piece, lengths in words
+
+### One framework per piece: how the machine picks ("write a post", "copywriting", "framework"; runs inside §CM-FORMATS, §CM-POSTS, §CM-MESSAGES, §CM-LONG)
+1 Order for every piece: the ONE belief it changes (old → new, one line, from the week's plan: §CM-WEEK, §CM-TIERS) → the framework → the hook lab (§CM-FORMATS 1, §CM-HOOK-LIBRARY), whose loop the framework's last beat pays → the beats in words (next part) → the humanize pass (§CM-HUMANIZE) → the check (§CM-EDGE).
+2 Pick by tier and format; the first fit wins, the second is the fallback:
+- ATTRACT (the right strangers stop and share) · short video: five-line story, slippery slope · post or carousel: myth-bust, list with a spine · long post: open loop, story-led · long video: in parts ("if I started over", "the N mistakes") · message: one-lesson story.
+- TRUST (they see how the coach thinks) · short video: belief shift, old vs new · post or carousel: list with a spine, problem → cost → way out · long post: open loop, lesson-led · long video: in parts, the full method · message: one-lesson story.
+- CONVERT (the buyer decides) · short video: objection answer, case breakdown · post or carousel: case breakdown, offer post · long post: case breakdown, before → after → bridge · long video: in parts, a client decision · message: short message, offer post, stop → want → act. Outside a launch, no offer before week 2: Week 1's CONVERT piece is an objection answer or a case ending on a reply ask.
+3 The goal breaks a tie: to be passed on → a story or a myth-bust; to show thinking → belief shift, list, old vs new; to decide → proof, objection, offer. Material decides last: a story frame needs a real scene (the dump, §CM-STORY-BANK); a proof frame an OK'd result (§CM-PROOF-BANK); an offer post a live offer. Missing → the next fit, never an invented scene or result; every fit needs it → one [NEEDS: …].
+4 Variety: never the same framework two pieces running; a week uses ≥3 (with §CM-HUMANIZE VARIATION). A remix of a liked post (§CM-LIKED) borrows its framework, never its words.
+5 Silent: Week-1 writing and the hook lab store the pick with the piece record as a plain label ("built as: problem → what it costs → the way out") and the belief. The coach sees both only on "why?"; never the internal name, the beats or this table.
+6 "Make it a story", "do a list": the nearest framework, recorded, no comment. "What frameworks do you use?": 2-3 plain labels and when each fits.
+7 One belief, one framework. A second belief → a second piece, added to the plan. Frameworks nest only where one says so (an open-loop long post holds a story; a long video's part can be a belief shift).
+
+### Lengths in words, and how a framework uses them
+1 Counted in words, never seconds or minutes (§CM-LOCALE 2). Home lengths: short video 250–400 on every platform (under 3 min: fits Reels, Shorts) · short post 150–300 · carousel 10–12 slides, ≤30 words each · long post 400–500 (hook, story, 3 lessons, invitation; 4) · long video 1,000–1,500 in parts · email ≤250 · chat message ≤60 · story frames 3–5, ≤25 each.
+2 Each framework's beats are given at its home length. In another format each beat keeps its share; the hook stays ≤12 words and the ask 20–80 words at any length.
+3 Short video, 250–400: hook and re-hook ≈30 · scene or setup ≈50–80 · 3–5 beats ≈40–70 each, joined by "but" or "so", never "and then" · last line ≈20, the answer itself · ask ≈20. Five beats (belief shift, five-line story): ≈50 each. Three beats (problem → cost → way out): the way out takes half.
+4 Long post 400–500: hook ≤12 + re-hook ≈20 · story ≈100–130 · 3 lessons ≈80–90 each (point → why → example) · invitation ≈40: sum ≈410–470. 2 lessons (≈90–110) only with a longer story, ≈150–180: sum ≈400–470. Story frames live in the story; teaching frames in the lessons.
+5 Long video 1,000–1,500 in parts: opening ≈120 (proof, promise, plan, one loop: §CM-LONG-INTRO) · context ≈200 · 3–4 parts ≈200–250, each ending on a re-hook · the loop paid ≈100 · ask ≈80. A part may run its own framework (a belief shift, a case).
+6 Substance, never padding. Under the floor → grow the anchor (§CM-REPURPOSE 5): a second example, a scene, the buyer's own words from research; no anchor → one story question first (§CM-REPURPOSE 6), never fog; the bands hold. Over the ceiling → cut the weakest beat whole, not every beat a little.
+7 The count prints only where the format's header already shows it (§CM-FORMATS 5).
+
+## §CM-COPY-FRAMEWORKS · The writing frameworks
+
+### The frameworks (internal names; the coach may hear only the plain label)
+1 Sixteen frameworks in six groups:
+STORIES (§CM-COPY-STORIES): FIVE-LINE STORY "you → the snag → what I saw → what changed → your turn" · ONE-LESSON STORY "one moment, one lesson" · SLIPPERY SLOPE "each line earns the next".
+BELIEFS (§CM-COPY-BELIEFS): BELIEF SHIFT "what you believed → the crack → what's true → proof → your turn" · MYTH-BUST "what everyone says → what it skips → what to do" · OLD VS NEW "the old way → the new way → the honest trade".
+PROBLEM (§CM-COPY-PROBLEM): PAS "problem → what it costs → the way out" · BAB "before → after → the bridge" · AIDA "stop → interest → want → act".
+PROOF (§CM-COPY-PROOF): CASE BREAKDOWN "a client's decision, step by step" · OBJECTION ANSWER "the worry said out loud → what's true → the step" · OFFER POST "what it is → who for → what's inside → the price → how to join".
+LONG (§CM-COPY-LONG): OPEN-LOOP LONG POST "hook → story → 3 lessons → invitation" · LONG VIDEO IN PARTS "proof → promise → plan → parts → payoff".
+LISTS AND MESSAGES (§CM-COPY-LISTS): LIST WITH A SPINE "N points, one thread" · SHORT MESSAGE "one scene, one point, one ask".
+2 Rules for all: one belief per piece; each beat is a sentence a person would say, never a label in the output ("The problem:", "Lesson 1:"); beats joined by "but" or "so"; the last beat pays the hook's loop with the answer itself; the ask continues the piece's result (a gift or step named after it, §CM-HOOK-CTA, §CM-CTA-KIT).
+3 Examples in these parts are made up to show the shape, one line per beat; never posted, never a source of facts. In a piece every slot is the coach's own: a scene from the dump, their number, an OK'd result.
+4 Silent check after drafting: can each beat be named in one word? Does each beat need the one before it? One belief only? Every claim backed by proof or the coach's own experience? ATTRACT: would a friend pass it on? TRUST: does the buyer see how the coach thinks? CONVERT: does the buyer know the next step?
+
+## §CM-COPY-STORIES · Story frames: five lines, one lesson, each line earns the next
+
+### Story frames: five-line story, one-lesson story, slippery slope (when · beats in words · example, made up · fails when)
+FIVE-LINE STORY · ATTRACT, TRUST · short video, short post, caption, story frames; Week 1's default story.
+Beats (short video ≈300): their moment, in the buyer's world, so the buyer sees themselves ≈50 · the snag: what was tried and why it didn't work, with one detail ≈60 · what was seen: the turn, shown by an action or object ≈60 · what changed: the new way and one fact ≈80 · your turn: one small step, then the ask that closes the loop ≈30. Short post: five lines of ≈40.
+EX: A florist re-quotes every wedding by hand at midnight. · She tried a price sheet; couples still asked for "something cheaper". · One couple asked what the welcome-sign flowers cost on their own. · Now she quotes three packages and the sign as an add-on. · Price one thing separately this week; comment THREE PACKAGES for the three-line quote.
+Fails when: the snag is generic ("it was hard"); the turn is "I realised" with nothing done or seen; the end preaches instead of giving a step.
+ONE-LESSON STORY · TRUST, ATTRACT · email, WhatsApp, short post, one part of a long piece; when the dump has one sharp scene and one point.
+Beats (email ≈220): scene: time, place, one object ≈80 · what happened, someone's exact words ≈60 · the lesson in one line ≈20 · what it means for the reader ≈40 · one step or ask ≈20.
+EX: Tuesday, 7 a.m., a client's spreadsheet with 40 tabs. · "I don't know which number to look at," she said. · One number runs the week. · Track everything and you steer by nothing. · Reply with the one number you'd keep.
+Fails when: two lessons; the scene is a summary ("I was working with a client recently"); the lesson said three times.
+SLIPPERY SLOPE · ATTRACT · short video, text-led post, an ad's first lines; also the rhythm inside any frame.
+Beats (short ≈300): hook ≤12 that opens a question · each sentence answers part of it and opens a smaller one ("but", "so", "which means") · a re-hook near halfway · the last line closes the first question · ask ≈20.
+EX: "Best clients finish, say thanks, and never book again? It isn't the work." · Nobody asks what's next. · So they go quiet. · Which means the next offer they hear is someone else's. · Ask in the last session: "What do you want to fix next?"
+Fails when: a line could go without anyone noticing; a re-hook promises more than the piece pays; a tease never delivered.
+
+## §CM-COPY-BELIEFS · Belief frames: the shift, the myth, old vs new
+
+### Belief frames: belief shift, myth-bust, old vs new
+BELIEF SHIFT · TRUST (the core frame), CONVERT when a belief blocks buying · short video, carousel, a long post's lessons, a long video's part. The belief comes from the plan (§CM-TIERS) or an objection the coach heard.
+Beats (short ≈350): the old belief said fairly, in buyer words, and why it made sense ≈50 · the crack: a scene or fact where it fails ≈80 · the new belief in one line ≈20 · proof: their experience, an OK'd result, a reason anyone can check ≈110 · what it means, one step, the ask ≈70. Narrow as it goes: wide hook → one line why listen → buyer words so the wrong crowd drops off → the shift → one ask (§CM-HOOKS 5).
+EX: "More posts, more clients" makes sense: more tickets, more draws. · Then a month of daily posts brings no messages. · Clients come from the post that names their exact problem. · {N} of the coach's last bookings mentioned one post. · Write one post this week in your buyer's words.
+Fails when: the old belief made to look stupid (the buyer held it); two beliefs; "proof" that is only another claim.
+MYTH-BUST · ATTRACT · short video, carousel, short post; advice the buyer hears everywhere.
+Beats (short ≈300): the advice as people say it ≈30 · why it sounds right ≈40 · what it skips, with one example ≈110 · what to do instead ≈80 · when the old advice IS right ≈20 · ask. Carousel: slide 1 the result, 1 slide each for why and what's true, 2–3 for what it skips, 3 steps, a summary, the gift.
+EX: "Just niche down." · It sounds right: narrow is memorable. · It skips a step: which problem people already pay to fix. · A yoga teacher niched into "yoga for runners"; runners paid for knee pain. · Pick the problem; the niche follows. · Once you know the problem, niche away.
+Fails when: "X is dead", "the truth they hide"; a myth nobody believes; the people who give the advice attacked, not the advice.
+OLD VS NEW · TRUST, CONVERT · short video, carousel, short post, ad. The old way is a habit or advice, never a person or group.
+Beats (short post ≈250): the old way as the buyer does it, fairly ≈60 · what it costs (time, money, the feeling) ≈50 · the new way in one line ≈20 · how it works, 2–3 steps ≈80 · the honest trade (what the new way asks) ≈20 · ask ≈20.
+EX: Old way: a 40-minute call where you explain everything. · You talk half of it; they leave to "think about it". · New way: three questions sent before the call. · They answer in writing; the call starts at their problem. · It costs ten minutes a lead. · Comment THREE QUESTIONS for them.
+Fails when: the old way caricatured; no trade (it reads like an ad); "both work" with no stance.
+
+## §CM-COPY-PROBLEM · Problem frames: the cost, before and after, stop to act
+
+### Problem frames: problem → cost → way out, before → after → bridge, stop → want → act
+PAS · TRUST, CONVERT · short post, email, short video, ad; the buyer knows the problem but underrates it.
+Beats (short post ≈250): the problem in buyer words, one scene ≈60 · what it costs if it stays: time, money, the moment it stings, from research pain lines ≈80 · the way out: the coach's approach in 2–3 steps ≈80 · one step, the ask ≈30.
+EX: You send the proposal and hear nothing for a week. · Each silent day you cut the price in your head; on the call you discount before they ask. · Send the price with one question: "Which of these two start dates suits you?" · Try it on the next proposal.
+Fails when: the cost is invented or blown up ("you'll lose everything"); fear about health, debt or family; the way out is "work with me".
+BAB · CONVERT, TRUST · short video, carousel, ad, the lead-in to an offer. Needs a real after: the coach's own or an OK'd client's, with context.
+Beats (short ≈300): before: one day in the buyer's life, specific ≈80 · after: the same day once fixed, as a scene, never a promise ≈80 · the bridge: what changed, the steps ≈100 · who it's for, who not ≈20 · ask ≈20.
+EX: Before: Sunday night, a tutor rewriting the week's lessons from scratch. · After: Sunday night, she opens one folder of plans that already worked. · Bridge: one plan per level, reused; the stories change, the structure stays. · For tutors with regular students, not one-off exam prep.
+Fails when: an after nobody reached; an income or body after; the bridge skipped (the gap is the content).
+AIDA · CONVERT · ad, offer lead-in, email to a warm list, the first screen of a sales page; also the check that a selling piece has all four.
+Beats (ad ≈120, email ≈220): stop: the call-out or a pain in buyer words ≈15 · interest: a cause or fact they didn't know ≈60 · want: the after as a scene and one OK'd proof line ≈80 · act: one action and a reason now, only from the real limits ≈30.
+EX: Bookkeepers who still chase receipts on WhatsApp: · in the books I close, a missing receipt was rarely lost; nobody asked for it at the right moment. · One message on the 25th, and the month closes with the receipts in. · Reply CHASE RECEIPTS for the wording.
+Fails when: "act now!" with no reason; want built from adjectives; no interest beat (every line shouts); a "most {buyers}…" with no source (the coach's count or a KEEP line, §CM-REPURPOSE 9).
+
+## §CM-COPY-PROOF · Proof frames: a client's decision, an objection, the offer
+
+### Proof frames: case breakdown, objection answer, offer post
+CASE BREAKDOWN · CONVERT (the strongest converter), TRUST · short video, long post, a long video's part, carousel. Only a real client with a written OK (§CM-PROOF-BANK); never several clients told as one.
+Beats (short ≈350; in a long post ≈450, each beat ×1.3): their stuck moment, their words ≈50 · where they started ≈50 · the belief they held ≈40 · the decision that changed it ≈75 · the steps ≈75 · the result with its context and "individual result, not a promise" ≈30 · who it's for, who not ≈20 · ask ≈10.
+EX: A dentist's front desk: "We're booked, but the no-shows kill us." · Reminder texts already went out. · They believed people forget. · The decision: ask the reason when booking. · One question, a deposit for long slots, one call the day before. · Result: [the coach's real figure, OK'd]. · Not for clinics with a waiting list.
+Fails when: the result first with no decision (a brag); "results may vary" instead of context; a client line the coach never reported.
+OBJECTION ANSWER · CONVERT · short video, short post, email or WhatsApp, an FAQ. From an objection the coach heard on calls, in messages or comments (§CM-OBJECTIONS).
+Beats (short ≈300): the objection word for word, with respect ≈30 · why it's reasonable ≈40 · what's true, the reframe ≈90 · proof: experience or an OK'd result ≈70 · how risk is handled, only if real (a trial, a refund policy that exists) ≈30 · one ask ≈20.
+EX: "I can't afford coaching right now." · Fair: that money leaves where you can see it. · The cost you can't see: another six months guessing alone. · What the first month covers, step by step. · The refund terms as written, if they exist.
+Fails when: arguing with the buyer; "it pays for itself" or any return figure; a guarantee that doesn't exist.
+OFFER POST · CONVERT · post, email, WhatsApp, a long video's end; only a live offer with its real price and real limits (§CM-LAUNCH-BRIEF).
+Beats (≈300): the result it's for, one line ≈20 · who it's for, who not ≈50 · what's inside: format, length, what they do ≈100 · one OK'd proof line ≈30 · the price, shown ≈20 · why now, only a real limit and its reason ≈30 · how to join, one action ≈30.
+EX: A 4-week group to set your first retainer price. · For designers billing by the hour, not agencies. · A weekly call, a pricing sheet, your proposal reviewed live. · {price}. · {N} seats, because each proposal is reviewed live. · Comment FIRST RETAINER.
+Fails when: the price hidden ("DM for price"); a fake cap or deadline; a "value" stack adding up to an inflated sum.
+
+## §CM-COPY-LONG · The long post and the long video
+
+### Long frames: the open-loop long post, the long video in parts
+OPEN-LOOP LONG POST, 400–500 words · TRUST mostly, ATTRACT on Facebook and LinkedIn; at most one a week, the week's lead text piece.
+Beats: hook ≤12, the claim before "See more" · re-hook ≈20: the stake or the question, opening the loop ("by the end, the one line I now put in every proposal") · story ≈100–130 (five-line or one-lesson story) · lesson 1 ≈80: point → why → example · lesson 2 ≈80 · lesson 3 ≈80, the strongest, which pays the loop · invitation ≈40, one action. Each lesson opens on a line that stands alone, so a skimmer still gets the post. Over a platform's limit: hook, story, one lesson, invitation (§CM-POSTS 4).
+EX: Hook "Clients haggle over every proposal? Read this before you discount." · Story: two clients, same month, one haggled, one paid in full the first day. · Lessons: price filters for commitment · the first week sets the tone · the line in every proposal now. · Invitation: comment PROPOSAL LINE for that line.
+Fails when: the lessons have nothing to do with the story; a fourth lesson; essay links (Moreover); the loop never paid.
+OPENING LINE, frame check (§CM-FORMATS 1, §CM-HOOK-TEXT): a frame, never a client scene or a client's name. Fail: "That evening my student walked in with red eyes and her music book." → Pass: "Practising for months and still can't finish one song? It isn't your fingers." Under 400 words: another example inside a lesson, never filler.
+LONG VIDEO IN PARTS, 1,000–1,500 words · TRUST, CONVERT · YouTube, Facebook video, podcast (§CM-LONG). Spoken; bullets per part; word for word only the opening and the last line.
+Beats: opening ≈120: proof (one fact of theirs), promise (what the viewer can do by the end), plan (3–4 parts by plain name), one loop paid near the end, one "even if you…" (§CM-LONG-INTRO) · context or story ≈200 · 3–4 parts ≈200–250 each: point → why → example → what to do → a re-hook that sells the next part or re-opens the loop ("Part 3 is where most people stop.") · once, mid-video, a self-test as a statement · the loop paid ≈100 · ask ≈80: the gift, the offer only if one exists, the next video. A part may run its own frame (a belief shift, a case).
+EX: "If I had to fill my calendar from zero": proof (their years, clients) · parts: who to talk to, what to say, where, how to ask · loop: "the one question that tells you a lead will buy".
+Fails when: re-hooks that only say "stay to the end"; parts in no order (no spine); padding to reach 1,000.
+
+## §CM-COPY-LISTS · Lists and short messages
+
+### List with a spine, short message
+LIST WITH A SPINE · ATTRACT, TRUST · carousel, short post, short video, LinkedIn list. The spine: one belief every item serves, said once near the end; order rising, the best last.
+Beats (short ≈300, carousel 10–12 slides): hook with the real count and the result ≈12 · why this list, one fact of theirs ≈20 · items: a head of 2–5 words + one fact of theirs + why, ≈30–50 each, each standing alone · the item that pays the hook, last · the spine in one line ≈20 · ask ≈20.
+EX: "5 messages I never send a new client (and what I send instead)". Each item: the message, why it backfires, the swap. Spine: every message should make their next step easier.
+Fails when: tips with no thread; a padded count; items that only make sense together.
+SHORT MESSAGE · any tier · email ≤250 words; WhatsApp or chat ≤60, to one person, no link or pitch in a first message (§CM-MESSAGES).
+Beats (email ≈220): subject in buyer words, paid off in the first two sentences · a scene ≈80 · the point in one line ≈20 · what it means for them ≈60 · one ask (reply, one question) ≈20 · a P.S. for the offer only if one exists. Chat ≈50: the real reason for writing · one question.
+EX: Email subject "the proposal I didn't send" · Friday, 11 p.m., a draft priced low · a proposal sent tired is priced scared · reply with the day you send yours. Chat: "Saw you're starting a catering menu. Do people order per person or per tray with you?"
+Fails when: two asks; newsletter tone in a one-to-one chat; "I saw you opened my email"; guilt.
+
+## §CM-REPURPOSE · A post a day from one week's material
+
+### One week's material, seven posts ("a post a day", "repurpose", "turn this into posts", "more formats")
+1 THE MATERIAL, from every source: the dump and the Weekly Talk answers (§CM-TALK) · what the coach hands over (docs, old posts, transcripts, notes, slides, the testimonials they give) · stories and proof in the banks (§CM-STORY-BANK, §CM-PROOF-BANK) · my research, KEEP lines only: buyer words, comment themes, the channel teardown, the niche notes (§CM-RESEARCH-BANK, §CM-CHANNELS, §CM-NICHE) · references they like or follow: their shape only, never copied (§CM-LIKED). Facts (numbers, results, client words, events) only from the coach, the card or their own materials; a research line is buyer voice by role, never proof; a reference creator's facts never become the coach's. 7 posts a week, one a day, are cut from it into many kinds of post; their hours set how many are filmed (§CM-CALENDAR 2), the rest need no filming.
+2 THE CUTS, words · their minutes (I write all): short video 250–400 · ≈15 (film 6–8, read, post) · long post 400–500 · ≈7 · carousel 10–12 slides · ≈15 · short post 150–300 · ≈5 · quote or image post, one line of theirs, ≤25 words · ≈10 · story frames or a poll, 3–5 frames ≤25 each · ≈5 · email ≤250 or WhatsApp note · ≈5 · long video 1,000–1,500 · ≈3 h.
+3 ONE MATERIAL, SEVERAL POSTS, when each is a different format with its own angle (the scene · the lesson · the mistake · the steps · the question it raises · the client's side), its own hook frame (§CM-FORMATS 1) and its own ask by type (§CM-CTA-KIT 1). One idea or story feeding 2–3 posts a week is normal. Never one sentence copied from post to post: a quote post may lift one line, the post it came from says it once. Two posts of one format on one material: one goes.
+4 THE LEDGER (§CM-HUMANIZE): each material → its posts ("Talk answer 3 → Mon short, Thu quote, Sat poll"), on the week plan and the card's `used:`; next week draws new material first; a used story comes back only in a new month, in a new format.
+
+### Thin material: one anchor is enough, never written from nothing ("not enough stories", "nothing to say")
+5 ANCHORS FIRST, before the week is written: an anchor is one idea, belief, story or method step of the coach's: the dump and the Talk, the card, the OK'd strategy, files and old posts they hand over, proof-bank rows, KEEP research lines; one moment counts once. One a piece is enough: the piece is written to its full length (short video 250–400, long post 400–500) by growing that anchor with the coach's method and beliefs, plain teaching and how-to steps, examples framed as examples, buyer words from KEEP lines (§CM-HUMANIZE 7). That is grounded teaching, not padding.
+6 A SLOT WITH NO ANCHOR (every anchor already in 3 posts, item 10): (a) before writing, one story-first question ("What happened the last time a client …?"), that reply's one Needs you; the piece is written once they answer. Or (b) the slot takes another ledger idea, and a filmed slot may turn written on it (a long post 400–500, a carousel or a quote image); the week still has 7 posts. When a video turns written, the week reply says so in one plain line, folded into the Needs you or NEXT, no extra ask: "This week 3 videos instead of 4: not enough of your material for the fourth yet; tell me one more story and I'll switch it back."
+7 NEVER FROM NOTHING: no piece is written to length without an anchor; with one, a piece grown to its length is not padded. "Added by me" lists only paragraphs whose lines trace to no foundation item (generic teaching, an illustration from nothing of theirs), no cap; paragraphs grown from their card, method, beliefs or materials are not listed. Facts need a source either way (item 9).
+8 ONE IDEA ≤3 POSTS A WEEK, the ledger counting each (item 10). Videos of one format each use their own example device: one "say a client…", one the coach's own scene, one a research line; never one device twice in a week.
+9 FACTS IN DISGUISE: a generalization or a speed ("most people skip this step", "ten minutes and it's done", "clients always…") is a fact: source it (the coach said it; a KEEP line with its true count: "two people in two groups said…") or cut it. A research line in a post carries its source by role and place, or "(my guess)".
+EX: Thin dump, Lean (3 filmed): one story, two beliefs, a 3-step method. Mon video (the story) · Wed video (belief 1, grown with their 3 steps; one "say a client…" paragraph, listed) · Fri video (belief 2, grown with step 2 and a KEEP buyer line, nothing listed). Next week, with all three in 3 posts, the reply's Needs you asks "What happened the last time a new client went quiet after the first call?"
+
+### Counting ideas, retelling results ("same idea again", "repeating myself", "used that number already")
+10 THE LEDGER AT PLANNING TIME, before any piece is written: each row of the week table names one idea (the Idea column), then each idea's posts are counted; an idea ≤3 posts, a one-line aside counts too ("drop the memorized script" slipped into 6 posts is 6). The Season keyword rides only in CONVERT and gift posts (§CM-CTA-BANK 2), each time with a new idea. The card's client profile (who they are, where they're stuck) is the audience, never an idea: it doesn't count and never fills a body; every post speaks to them, each with its own idea. An idea about to hit a 4th post → another idea from the same content pillar, or cut the aside.
+11 RETOLD, NEVER COPIED: a result reused in another post is told in new words. Numbers stay exact; the sentence around them changes: the first post tells it in order; a later one opens on the last number, or on what the client did; an email or message just points back ("the August story, 7 replies"). The honesty line may repeat word for word at most once a week; other times, same meaning, new sentence. Exempt: the required money and health lines (§CM-GUARDRAILS), word for word wherever needed.
+12 TEACHING NEVER SPEAKS FOR EVERYONE: listing a paragraph under "Added by me" never makes a generalization OK; listed, it still needs a source (item 9). Teaching paragraphs speak as "you can…", "try…", never "most people…", "everyone…", "clients always…" unless the coach said it.
+FAIL: "A follow-up with nothing in hand just reads as 'so, are you buying?'" (speaks for every client; no one said it)
+PASS: "Next time you follow up, try bringing one thing: the photo from last time, or the answer they're still waiting on." (a suggestion, speaks for no one)
+
+### Seven posts from one week, an example
+13 A WEEK, the shape only (made up): a piano teacher for adult beginners; a Talk answer about a student who dropped scales and learned one whole song a week, plus one held buyer line. Light, 2 filmed:
+- Mon · short · ATTRACT · the student who dropped scales · save it
+- Tue · carousel · TRUST · 5 steps to learn one song in a week · comment the hook's word
+- Wed · long post · TRUST · the scales mistake: the student's story, 3 lessons · comment the hook's word
+- Thu · quote image · ATTRACT · their line "Play the song first." · save it
+- Fri · short · TRUST · the held buyer line "too old to read music", answered · send it to a friend
+- Sat · story poll · ATTRACT · "Played a whole song this month? yes / not yet" · vote
+- Sun · email · CONVERT · which song are you stuck on · reply (week 1: no offer)
+Two materials, three ideas, 7 posts, 6 formats, one long post; the scales idea feeds 3 posts (the most allowed, item 8), each its own angle, no sentence twice.
+
+## §CM-STORYTELLING · Storytelling
+
+### Storytelling: the shape every story frame uses ("storytelling", "tell a story")
+1 Scene first: a time, a place, one sense detail or object ("Tuesday, 10 p.m., the laptop on the ironing board"), never "Recently I was working with a client…". Then the conflict: what someone wanted and what stood in the way, in their exact words. Then the turn, shown by something done or seen, never "I realised". Then the lesson, one short line, or in someone else's mouth. Then the step.
+2 Roles: the buyer (or a client like them) is the hero; the coach is the guide who has been there, hands over the plan and steps back. The coach is the hero only in an origin or failure story, and then their old self mirrors the buyer.
+3 Story types by job: origin, why they do this work (TRUST, at most monthly) · client, a decision (CONVERT, written OK) · failure, their own mistake and its cost, the whole truth, looking bad included (TRUST) · overheard, a line from a buyer, a shop, research, said as "a line I keep hearing" (ATTRACT) · daily moment, something from this week (ATTRACT) · contrast, two people and two choices, said as "picture two…", never as true (ATTRACT, TRUST).
+4 Finding the story in the dump: a time word ("last week", "when I started"), a quote ("she said"), a number of theirs, a feeling word (embarrassed, furious), a "but" or "turns out". Each hit is a candidate scene; keep the one with the clearest turn. None → one question: "When did a client last say something that surprised you? Their words, if you remember them." Kept in the story bank (§CM-STORY-BANK) and reused across formats.
+5 Never: a client who does, says or thinks what the coach didn't report; several clients told as one; a made-up scene told as true (a made-up one is said as made up: "Picture…").
+6 One scene, many pieces: the same moment can carry a short (five-line story), an email (one lesson) and a long post's story; each piece changes a different belief, so the ending and the ask change, the facts never do.
+
+### Tension, pacing, specifics, endings
+1 Tension: open on the question the story answers; hold the answer one beat longer than feels comfortable; raise the cost once before the turn ("then she asked for a refund"). One problem per story.
+2 Spoken video: short sentences at the scene and the turn, longer at the explaining; one beat per take; "but" or "so" between beats; one set-up line before the turn ("Then she said one thing."); a re-hook near the halfway word. No dashes in spoken lines. Read it aloud.
+3 Specificity ladder: climb until a stranger can picture it. "Clients struggle" → "a client struggled with pricing" → "a wedding photographer kept quoting by the hour" → "she quoted 8 hours, worked 14, and never billed the album". Stop at the rung the coach's facts reach; never climb with invented detail.
+4 Pain and dream: write the before as the buyer sees, hears and feels it (the unread proposal, the Sunday dread) and the after the same way (a quiet Monday inbox), from research and the dump, never from adjectives.
+5 Endings hand over to the ask: the last line answers the hook; the ask carries on from the story's result ("Want the three questions she asks now? Comment THREE QUESTIONS."), never a new topic. The gift is named after this story's result (§CM-HOOK-CTA). No moral recap, no "Agree?".
+6 How much story: short video ≈80–120 of its 250–400 · long post ≈100–130 · long video ≈200, plus one inside a part · email ≈80–120 · story frames: one scene, one point, one ask.
+
+## §CM-PERSUASION · Persuasion and the lines never crossed
+
+### Persuasion: the levers ("persuade", "convince")
+1 One belief per piece; over a month, a chain: the problem is real and costs something → it's not their fault, the cause is X → the usual fix fails because Y → a better way exists → this coach can guide it (proof) → they can do it even though… (the objection) → now is a good time (only a real reason). Each piece moves one link; the plan orders them (§CM-TIERS, §CM-CALENDAR).
+2 Name the objection first: in a CONVERT piece say the biggest worry before the buyer does ("If you're thinking 'I don't have time for this'…") and answer it with a fact, never a promise.
+3 Proof stack, shown, never said: the coach's number → a thing they made (the sheet, the before and after document) → an OK'd client line → an outside signal (where they've taught, a known client they may name). Never "proven", "with proof", "guaranteed results".
+4 Specificity: exact beats round (their real {N}, never rounded up); a named object beats an adjective; only from the coach's facts.
+5 Give first: one complete, usable thing per piece (the step, the script, the checklist), nothing held back for the ask; the gift adds to it, never finishes a piece cut short on purpose.
+6 Social proof only when real: OK'd client words, counts the coach keeps. None → their experience or the reason, never "hundreds of people".
+7 Contrast: set the option next to its alternative (the old way, doing it alone, doing nothing) with an honest trade; never an inflated value sum.
+8 Small yes first: a comment word, a reply, a self-test ("If writing a post takes you more than an hour, the idea isn't clear yet."). One ask per piece.
+9 Aim at the situation, never the person: "a proposal unanswered for a week", not "Are you bad with money?". One buyer at one stage; numbers in the piece sit just above where they are, never past the coach's proof.
+
+### Authority, risk, urgency, and the lines never crossed
+1 Authority without bragging: one line why listen, a fact (years, people helped, where they've taught), after the hook, said once, plainly; the expertise shows in how specific the advice is. Never a money flex or a résumé as the hook.
+2 Risk reversal only if real: a refund policy, a trial, a free first session the coach really offers, quoted as written. None → describe what lowers the risk (what happens in week 1, how to stop).
+3 Urgency only from the real limits on record (§CM-LAUNCH-BRIEF 3): a seat count, a close date, a price step, each with its reason, said plainly. None on record → no urgency line; "why now" is the honest cost of waiting.
+4 The whole truth: what the method doesn't fix, who it isn't for, where the coach got it wrong. One honest limit per CONVERT piece makes the rest believable.
+5 HARD LINES (§CM-GUARDRAILS): no invented result, number, testimonial, client words, screenshot or "as seen on"; no fake scarcity or deadline; no income, weight or health promise, no return figure ("pays for itself", "10x your revenue"); no fear built on health, debt or family; no pressure in one-to-one messages (guilt, a "last chance" that isn't); polarize on ideas, habits and advice, never on people or any group; a rival named only when the coach asks, with the dated note (§CM-GUARDRAILS).
+6 Asked to cross a line: write the true version that does the same job (the real limit, the real result in context, the honest cost of waiting) with "Not writing that: {why}.", one line, no lecture.
+
+## §CM-COPY-CTA · CTAs that close the hook's loop, fail → pass
+
+### The ask that closes the hook ("CTA", "call to action", "the ask"; the detail of §CM-CTA-KIT 1)
+1 CLOSE THE LOOP: the hook opens one question, the last line answers it, the ask names the thing this piece promised, in a word of the hook's (a TRUST {WORD} is the viewer's own words from it, §CM-CTA-BANK 2). Before printing: does the ask share a word or the promise with line 1? No → rewrite it.
+2 BY TIER, never the same ask twice running: ATTRACT → save or send, the reason taken from the hook · TRUST → "Comment {WORD} and I'll send you {payoff}.", {payoff} = this piece's promise · CONVERT → week 1: a reply, no offer; week 2+ or a launch: the real offer, price, a real deadline, one action. ≥1 in 4 pieces asks only for a save or send.
+3 A comment question is a choice in the buyer's words ("A or B? Just type the letter."), never "thoughts?".
+4 FAIL → PASS (style only, other niches; facts and numbers are always the coach's):
+- ATTRACT · "Filing freelance taxes is hard until you know this one date." · "Follow for more tax tips!" → "Save this and open it the week before that date."
+- ATTRACT · "If your yoga students quit after week 2, watch this." · "Thoughts?" → "Week 2 or week 4: when do yours drop off? Just type 2 or 4."
+- ATTRACT · "Lovely nail photos, empty chair on weekdays? It's not your photos." · "Share if you agree!" → "Send this to the salon owner who keeps posting more photos."
+- TRUST · "Sold out Saturday, dead by Tuesday? 7 years baking, I fixed one thing." · "Comment BREAD for my free guide" → "Comment TUESDAY BAKE and I'll send you the one thing I changed, on one page."
+- TRUST · "How to answer 'can I see more photos?' so couples book on the call." · "DM me for info" → "Comment MORE PHOTOS and I'll send you the exact reply from this video."
+- CONVERT, week 2+ · "From 9 to 26 piano students in a year, no flyers." · "Spots filling fast, DM me!" (fake urgency) → "From June 3 I take 4 new students, because I teach each one myself. Message me FIRST LESSON." (Week 1: "Message me FIRST LESSON and say your child's age; I'll reply myself.")
+
+## §CM-COPY-VOICE · Persuasion that sounds like a person
+
+### Persuasion that sounds like a person
+1 Spoken English: contractions, short words, one breath per sentence, the coach's own phrases (§CM-VOICE). One reader, "you", all the way through.
+2 Drop the ad words: secret, unlock, game-changer, transform your life, skyrocket, proven system, limited time only, act now, don't miss out, revolutionary, insane results, "I'm so excited to announce".
+3 Rhythm: long and short mixed; a fragment after a long sentence lands the point. A question only when the piece answers it. One exclamation mark at most.
+4 The ask in plain words: what to do, what they get, the quiet route ("or just message me").
+5 Flat → natural:
+- "Unlock the secret to more clients" → "The one question I ask before every sales call"
+- "Are you tired of struggling with pricing?" → "Quote sent Monday, still no answer Thursday? It isn't your price."
+- "Our proven system will transform your business" → "The three checks I run with every new client, in order"
+- "Don't miss out on this amazing opportunity!" → "Doors close Friday, because the group starts Monday." (a real date)
+- "Imagine waking up to a full inbox" → a scene of theirs that happened, or nothing
+- "Comment below if you agree!" → "Comment PRICE SHEET and I'll send it."
+- "I'm passionate about helping coaches grow" → "I've read {N} coaches' sales pages. The same line is missing from most."
+6 Read it aloud: would they say it to one client across a table? If not, rewrite the line.
+
+### What the voice pass strips
+7 The voice pass (§CM-HUMANIZE 3) strips: hedges (might, maybe, kind of, I think) · intensifiers (really, literally) · warm-ups (hey guys, so today) · undercutting (hopefully this helps) · tags (right?, you know?) · recaps (in conclusion) · fog (journey, unlock, elevate, crucial role, Moreover, dive in) · clichés (crush it, thrilled to announce) · a 2nd "not just" · lists of three · dashes in spoken lines.
