@@ -1,0 +1,7 @@
+# build outputs
+dist/
+# raw simulated-run transcripts (verdicts and summaries live in qa/)
+evals/runs/
+__pycache__/
+*.pyc
+.DS_Store

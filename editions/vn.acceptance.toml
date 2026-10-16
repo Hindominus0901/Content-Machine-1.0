@@ -1,0 +1,13 @@
+# Founder sign-off for every PENDING_VN key in editions/vn.toml [pending]
+# (docs/BUILD.md §2, arch-final-spec §9.1 release rule).
+#
+# `python3 tools/lint.py --release` fails (E120) while any pending key has no
+# signed row here. To accept a key, copy its safe default from vn.toml, then sign
+# and date it yourself:
+#
+#   [accepted.platform_priority]
+#   default = "Facebook (profile and Page) + Zalo core, TikTok for top of funnel, YouTube long-form"
+#   signed_by = "founder"
+#   date = "YYYY-MM-DD"
+#
+# Only the founder adds rows. No key has been accepted yet.

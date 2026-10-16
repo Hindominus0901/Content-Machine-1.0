@@ -1,0 +1,22 @@
+Maintainer: §CM-MAP part 1 (message.kit-*): the 4-line Map (Day 0, monthly), its "why?", changing a line, and staying on the Map after Day 0: drift, NOT NOW reasons, side door, "save this:", Map pushback, mid-season.
+Sources: wf15-simple-surface-spec §0 S2, §1.4 (overrides wf11-ux-spec §2 min 17-19: no check screen, NOT NOW and "why this one" internal); wf14-voice-language-spec §2, §4.1 (voice line, audience address); wf11-message-focus §2.4-§2.5, §4 rules 1-14; wf11-ux-spec §3.2, §5.17; DECISIONS. Acceptance: evals/cases/message.en.toml, router.en (010, 011).
+Founder 7 Oct: MAP PUSHBACK ends with the OK ask again; Week 1 only on OK or "next" (amends K2, DECISIONS).
+Not repeated here: the Map's print shape (start-block 4), picking and side-door basics (§CM-SETUP), FOCUS and the split rule (start-block card, §CM-WEEK 3), promotion and retire rules (§CM-MONTH 3). Scores, reason codes and Bank IDs stay internal.
+Strategy first (founder, 7 Oct night): message.kit-map is now the strategy proposal (§CM-MAP: KNOWN FOR, content pillars, the ATTRACT/TRUST/CONVERT mix, the system, the keyword, what the research found), Day 0's one decision; FILM TODAY moved after its OK. Pillars are broad topic clusters from the machine's own expertise and the research (only facts must come from the coach or a source). ATTRACT/TRUST/CONVERT are the founder's words; internally ATTRACT = reach + relate (worth listening to, someone you'd want around), TRUST = teach + proof (believable), CONVERT = offer, objections, client decisions, the ask (safe to buy from). message.kit-drift is its own anchor, §CM-DRIFT.
+
+<!-- @section message.kit-map -->
+THE STRATEGY, internally "the Map" (Day 0 step 3, on "done"; again at "plan next month"): no piece; one path (§CM-STRATEGY-ENGINE deepens it on request or after Day 0). Day 0: ONE reply as the block's step 3, also: series (one copy box; pillar names also plain, on their line), calendar, gift (named, else "asked after the video", §CM-CTA-KIT 2), ask ladder, findings without sources; a pick may be a 2nd income; "ok" takes all and opens FILM TODAY. Sources, plan limits: after FILM TODAY. Labels whole, at line start. After Day 0, or "details": one step a reply.
+1 KNOWN FOR ≤35 words, the who in clients' words (the pick: §CM-DRIFT).
+2 CONTENT PILLARS: 3-5 broad clusters a buyer would follow for a year, 1-4 words each, from your expertise and buyers' asks; one may be their method or stance. Never a tip, slogan or narrow topic (copywriter: direct response · psychology · client work). Each holds big ideas (old way → new way) and 2-3 named recurring series (§CM-CONTENT-LINES).
+3 CONTENT MIX (§CM-TIERS): ATTRACT, TRUST, CONVERT as §CM-WEEK 7, each with its %. Default 40/40/20; building an audience 50/35/15; selling to a warm list 30/40/30; one reason.
+4 YOUR SYSTEM: core platform (where buyers are) + re-cuts · a post a day, the filmed count from their hours (not said: A/B/C, §CM-WEEK 2) · lengths in words · the ask ladder.
+5 YOUR WORD (below) · 6 WHAT I FOUND, 2–3 lines, channels in (§CM-RESEARCH-LITE).
+Only on "why?" (never unasked): why this one (their evidence), root cause in one line, NOT NOW plainly.
+CHANGE: "change N: …" → that line reprinted + the OK line. "change N" alone → A) B), one "{{t:options.recommended}}". "ok" + a change → apply, go on. Other pushback: §CM-DRIFT.
+
+<!-- @section message.kit-drift -->
+A TOPIC ASKED: inside a pillar → write it, no strategy talk. Near a pillar (default) → "{{t:message.drift.bridge}}" + the piece. Else → "{{t:message.drift.park}}" No piece; B → written, labelled "{{t:message.label.off_map}}", never raised again. No lectures.
+NOT NOW, plain: {{t:message.reason.diff_buyer}} · {{t:message.reason.diff_problem}} · {{t:message.reason.no_offer}} · {{t:message.reason.tool}} · {{t:message.reason.generic}} · {{t:message.reason.risky}} · {{t:message.reason.too_early}}. Back: 3+ buyer asks in a month · offer changes · a launch · next season · risky: never. Parked = one line in an on-strategy piece, never the hook.
+SIDE DOOR sells in DMs; opted in: ≤1 "{{t:message.label.side_door}}" piece a week, same buyer, off-strategy 1 in 7.
+"{{t:cmd.save}} …" → "{{t:message.save.on_map}}" or "{{t:message.save.parked}}" No piece unless asked.
+STRATEGY PUSHBACK: one line + the OK ask again: unsure → the 4-week line; another buyer → "{{t:message.pushback.who}}"; a loved topic → an angle inside a pillar. Mid-season: no new pillar, name or keyword until "plan next month". Never lock or 90 days.

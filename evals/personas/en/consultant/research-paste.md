@@ -1,0 +1,38 @@
+# Erin Castellano · research paste (fictional persona, EN, consultant)
+
+What Erin pastes when the machine offers research: lines she copied from an agency owners forum, LinkedIn groups and comments, a Facebook group for agency founders, and course, book, podcast and service reviews, about agency owners who grow revenue and still run out of cash. No usernames; each line carries its source note. Contents are fictional. Traps inside: 2 sellers' promos, 3 duplicates (cross-posted lines), and 1 line that is Erin's own sentence reposted in a group (it must not count as an audience voice).
+
+---
+
+1. (forum thread) Best revenue year we've ever had and I've dipped into the line of credit for payroll three times since September. How? [agency owners forum, 2026-09]
+2. (group post) I don't actually know which of our clients are profitable. I know which ones are loud. [LinkedIn group, 2026-08]
+3. (comment) Our bookkeeper sends the P&L around the 20th of the following month. By then it's history. [LinkedIn comment, 2026-09]
+4. (forum thread) Everyone says "raise your prices." Raise them on who? [agency owners forum, 2026-07]
+5. (review) The agency finance course was all exit multiples and EBITDA. I just want to make payroll without sweating. [course review, 2026-06]
+6. (group post) Record year. Lowest cash balance we've had in four years. Explain that to me like I'm a creative director. [FB group, 2026-09]
+7. (forum thread) I check our bank balance every morning before I check email. Is that normal? [agency owners forum, 2026-08]
+8. (group post) Close your books in 24 hours with our AI bookkeeping platform! Agencies save 20+ hours a month. Book a free demo, link in comments [FB group, 2026-09]
+9. (comment) Build a 7-figure agency in 12 months or less. My Scale System has helped 300+ agency owners. Comment SCALE and I'll DM you [LinkedIn comment, 2026-09]
+10. (group post) I don't actually know which of our clients are profitable. I know which ones are loud. [LinkedIn group, cross-posted, 2026-08]
+11. (forum thread) Our biggest client is almost half our revenue. The whole team works weekends for them. I'm afraid to look at the numbers. [agency owners forum, 2026-09]
+12. (podcast review) Good episode, but "know your numbers" isn't advice. Which numbers? [podcast review, 2026-07]
+13. (group post) Hired six people this year because we were growing. Now I can't sleep. [FB group, 2026-08]
+14. (group post) Your biggest client is not your best client until you've done the math. [LinkedIn group, 2026-09]
+15. (forum thread) How do people figure out margin by client when nobody fills in their timesheets? [agency owners forum, 2026-09]
+16. (group post) We grew and somehow I pay myself less than my account directors. [FB group, 2026-09]
+17. (group post) Record year. Lowest cash balance we've had in four years. Explain that to me like I'm a creative director. [FB group, cross-posted, 2026-09]
+18. (review) Our last outsourced CFO sent beautiful dashboards every month. I never understood them and we never changed anything. [service review, 2026-05]
+19. (forum thread) Can we afford to hire a second strategist, or am I just panicking because Q4 is slow? [agency owners forum, 2026-10]
+20. (comment) S-corp election saved us a fortune, every agency should do it [LinkedIn comment, 2026-08]
+21. (group post) Scope creep isn't a client problem, it's an us problem. We never say no to the big ones. [FB group, 2026-09]
+22. (forum thread) Record year and I put payroll on my personal card twice. Not proud of it. [agency owners forum, 2026-09]
+23. (comment) I don't need a CFO, I need someone to tell me which client is eating us alive. [LinkedIn comment, 2026-09]
+24. (group post) We won three awards this year and lost money on two of the three projects. [FB group, 2026-08]
+25. (forum thread) I check our bank balance every morning before I check email. Is that normal? [agency owners forum, cross-posted, 2026-08]
+26. (forum thread) What's a "good" margin for an agency our size? Every source says something different. [agency owners forum, 2026-07]
+27. (review) Great on mindset, useless on what to actually do on Monday morning. [book review, 2026-06]
+28. (group post) Our anchor client refers us half our new business. I can't touch their pricing. Can I? [FB group, 2026-09]
+29. (forum thread) Thinking about selling in a couple of years. What multiple should I expect? [agency owners forum, 2026-09]
+30. (comment) busy and broke. that's the agency business model apparently [LinkedIn comment, 2026-09]
+31. (group post) My partner and I fight about money every week and it isn't even our money, it's the agency's. [FB group, 2026-08]
+32. (forum thread) Revenue up, profit down, team exhausted. We got all three. [agency owners forum, 2026-09]

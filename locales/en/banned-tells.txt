@@ -1,0 +1,69 @@
+# AI tells and fog phrases (lint E141) for English coach text.
+# Sources: docs/research/wf6-definitive-concise.md §2a (H "AI fog", D throat-clearing,
+# E self-undercutting), §1 I11 (Wikipedia AI Cleanup tells; Kobak et al. style words).
+# Scanned over strings/en.toml values, guides/* and locales/en/examples.md.
+# Hedges and fillers (2a A-C, I) are writing targets for the runtime check, not lint.
+#
+# One entry per line; lines starting with "#" are comments.
+# A plain entry matches as a whole word or phrase, any letter case.
+# "re:" starts a Python regular expression; it is case-sensitive unless it
+# begins with (?i).
+
+# Style words
+delve
+re:(?i)\bdelv(es|ed|ing)\b
+tapestry
+testament to
+realm
+re:(?i)\bembark(s|ed|ing)?\s+on\b
+elevate
+re:(?i)\belevat(es|ed|ing)\b
+unleash
+re:(?i)\bunleash(es|ed|ing)\b
+supercharge
+revolutionize
+game-changer
+game changer
+cutting-edge
+seamless
+re:(?i)\bharness(es|ing)?\s+the\s+power\b
+
+# Fog openers and closers
+in today's fast-paced world
+re:(?i)\bin\s+today['’]?s\s+(fast-paced|digital|ever-changing|modern|busy)\s+(world|age|landscape|market)\b
+in a world where
+re:(?i)\b(digital|business|content|competitive|ever-changing|ever-evolving|marketing)\s+landscape\b
+navigate the complexities
+re:(?i)\bnavigat(e|es|ing)\s+the\s+(complex|ever|landscape|world)
+let's dive in
+re:(?i)\blet['’]?s\s+dive\s+(in|into|deep)\b
+deep dive
+dive deep
+buckle up
+look no further
+re:(?i)\btake\s+(it|your\s+\w+)\s+to\s+the\s+next\s+level\b
+in conclusion
+re:(^|[.!?]\s+)(Moreover|Furthermore|Additionally),
+at the end of the day
+it goes without saying
+
+# Inflated significance and vague attribution
+it's important to note
+it's worth noting
+re:(?i)\bplays?\s+an?\s+(crucial|pivotal|vital|key|critical)\s+role\b
+serves as a
+re:(?i)\bunlock(s|ed|ing)?\s+(your|the|their)\s+(full\s+)?(potential|power|secrets?|growth)\b
+unlock your potential
+studies show
+some argue
+
+# "Journey" as a metaphor
+re:(?i)\b(your|my|our|their|his|her)\s+(\w+\s+)?journey\b
+everyone's journey is unique
+
+# Self-undercutting and throat-clearing
+hopefully this helps
+I hope this helps
+if that makes sense
+I just wanted to share
+so today I want to talk about

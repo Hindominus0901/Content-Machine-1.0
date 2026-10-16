@@ -1,0 +1,38 @@
+# Corinne Abernathy · research paste (fictional persona, EN, service-biz)
+
+What Corinne pastes when the machine offers research: lines Bree copied from Facebook groups (home and neighborhood groups), a home-improvement forum, Instagram comments and service or store reviews, about homeowners who can't get one room to work. No usernames; each line carries its source note. Contents are fictional. Traps inside: 2 sellers' promos, 3 duplicates (cross-posted lines), and 1 line that is Corinne's own sentence reposted in a group (it must not count as an audience voice).
+
+---
+
+1. (group post) We've lived in this house four years and the front room is still empty except for a piano nobody plays. What do people even DO with a formal living room? [FB group, 2026-09]
+2. (forum thread) I'm so afraid of buying the wrong couch that we've been sitting on camp chairs for 5 months. [home forum, 2026-08]
+3. (review) The e-design service sent me 3 mood boards and a shopping list with no measurements. The sofa they picked didn't fit through my door. [service review, 2026-07]
+4. (comment) every house in our subdivision has the same empty "formal living room" [IG comment, 2026-09]
+5. (group post) Bought a huge sectional the week we moved in. Now the whole room is arranged around it and it blocks the door to the deck. [FB group, 2026-08]
+6. (group post) Designer-look rooms for $99! Get 3 concepts in 48 hours, unlimited revisions. Comment DESIGN for 50% off this week only [FB group, 2026-09]
+7. (forum thread) We call it the nothing room. Kids walk through it to get to the stairs and that's it. [home forum, 2026-09]
+8. (comment) I have 9 paint swatches taped to my wall and I've hated all of them for a year [IG comment, 2026-09]
+9. (group post) SOFA BLOWOUT! Up to 70% off floor models this weekend only, no returns, sizes as marked [FB marketplace group, 2026-10]
+10. (forum thread) I'm so afraid of buying the wrong couch that we've been sitting on camp chairs for 5 months. [home forum, cross-posted, 2026-08]
+11. (review) The designer was lovely but we never got a price until the third meeting. I felt stupid for asking. [service review, 2026-06]
+12. (group post) I don't know what my style is. I like everything on Pinterest and nothing in my house. [FB group, 2026-09]
+13. (forum thread) Is it normal to spend a fortune on throw pillows and still hate the room? Asking for me. [home forum, 2026-08]
+14. (group post) You can't shop your way out of a room that doesn't have a job. [FB group, 2026-09]
+15. (comment) we've lived here 3 years and it still doesn't feel like ours [IG comment, 2026-08]
+16. (group post) Can I take out the half wall between my kitchen and living room myself? YouTube says it's easy [FB group, 2026-09]
+17. (forum thread) We call it the nothing room. Kids walk through it to get to the stairs and that's it. [home forum, cross-posted, 2026-09]
+18. (review) Paid for a color consult, got a lovely paint color, room still felt empty and weird. Paint wasn't the problem. [service review, 2026-07]
+19. (group post) Every time I buy something for the dining room it looks wrong next to the other stuff I bought. [FB group, 2026-08]
+20. (comment) I want a room that works on a school night, not a room for photos [IG comment, 2026-09]
+21. (group post) My husband says we need a designer, I say designers are for rich people. Who's right? [FB group, 2026-09]
+22. (forum thread) Bought an 8x10 rug and everything looks like it's floating. Return it or buy a second one? [home forum, 2026-08]
+23. (group post) What's the color of the year for 2027? I want to repaint everything [FB group, 2026-10]
+24. (review) Great sofa, but the delivery guys couldn't get it up our stairs and the restocking fee was brutal [store review, 2026-07]
+25. (group post) Bought a huge sectional the week we moved in. Now the whole room is arranged around it and it blocks the door to the deck. [FB group, cross-posted, 2026-08]
+26. (comment) the scariest part is spending real money and being wrong [IG comment, 2026-09]
+27. (forum thread) We have a bonus room over the garage that's basically a storage unit with carpet. [home forum, 2026-09]
+28. (group post) Realtor wants us to stage before listing. Do we rent furniture or use ours? [FB group, 2026-09]
+29. (review) The design firm had a five-figure minimum. We just needed one room done. [service review, 2026-06]
+30. (comment) we bought everything in the wrong order and now nothing goes together [IG comment, 2026-08]
+31. (group post) Hosting Thanksgiving for the first time in the new house and the dining room is a table and a box of cords. Panic. [FB group, 2026-10]
+32. (forum thread) Anyone else have a room they literally just walk past every day? [home forum, 2026-09]

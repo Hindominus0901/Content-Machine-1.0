@@ -1,0 +1,279 @@
+# Slot Key and Run Key grammar (arch-final-spec §5.5, §5.9, §7; docs/BUILD.md §6).
+#
+# A Slot Key names one piece of content: it is the upsert key of the Content
+# database (hub `Slot Key`), so every write finds-or-creates by it and nothing is
+# ever made twice. A Run Key names one job run: it is the title of a Runs row
+# (hub `Run Key`) and guards the job, so "Run now" followed by the scheduled run
+# does the work once.
+#
+# Keys are internal. The coach never sees them (wf11-ux-spec §4).
+#
+# Each grammar has a Python regex (named groups), examples that must match and
+# near-misses that must not. `invalid` entries match the regex but name a day or
+# week that does not exist; tools/cmschema.py parse_key() rejects them.
+# Weeks are ISO 8601: YYYY is the ISO week-numbering year (it can differ from the
+# calendar year in the first and last days of December/January), ww is 01-53,
+# and week 53 exists only in long years (2026 has one; 2027 does not).
+# Dates are YYYY-MM-DD in the coach's own time zone: the run date.
+
+schema_version = 1
+
+[conventions]
+alphabet = "upper-case letters, digits and hyphens; nothing else"
+week = "ISO 8601 week-numbering year and week, YYYY-Www"
+date = "YYYY-MM-DD in the coach's time zone"
+coach_visible = false
+
+# ================================================================ Slot Keys
+
+[slot]
+property = "Slot Key"                    # hub.toml, Content database
+unique_in = "Content"
+rule = "every write is an upsert by Slot Key; a slot key is never reused for a different piece"
+
+# ---------------------------------------------------------------- weekly slots
+[slot.weekly]
+pattern = '^(?P<year>\d{4})-W(?P<week>0[1-9]|[1-4][0-9]|5[0-3])-(?P<slot>P|N1|N2|C[1-5]|K|T|E|D|A1)$'
+form = "YYYY-Www-<slot>"
+examples = ["2026-W41-P", "2026-W41-N1", "2026-W41-N2", "2026-W41-C1", "2026-W41-C5", "2026-W41-K",
+            "2026-W41-T", "2026-W41-E", "2026-W41-D", "2026-W41-A1", "2026-W53-P", "2027-W01-N1"]
+near_misses = ["2026-W41-C6", "2026-W41-C0", "2026-W41-N3", "2026-W41-A2", "2026-W54-P", "2026-W00-N1",
+               "2026-W4-P", "2026-41-P", "26-W41-P", "2026-w41-P", "2026-W41-p", "2026-W41-", "2026-W41",
+               "2026-W41-PP", " 2026-W41-P", "2026-W41-P "]
+invalid = ["2027-W53-P"]
+
+# One row per slot code. `format` is the default Content `Format` option.
+[[slot.weekly.suffix]]
+code = "P"
+format = "Talk"
+meaning = "the week's big idea: the Weekly Talk (Lean default) or the opt-in filmed long video"
+
+[[slot.weekly.suffix]]
+code = "N1"
+format = "Native short"
+meaning = "native short 1; at least one character piece a week sits in N1 or N2"
+
+[[slot.weekly.suffix]]
+code = "N2"
+format = "Native short"
+meaning = "native short 2 (Standard tier and up)"
+
+[[slot.weekly.suffix]]
+code = "C1"
+format = "Clip"
+meaning = "re-say short or clip cut from P, most belief shift"
+
+[[slot.weekly.suffix]]
+code = "C2"
+format = "Clip"
+meaning = "re-say short or clip cut from P, the keyword or method reveal"
+
+[[slot.weekly.suffix]]
+code = "C3"
+format = "Clip"
+meaning = "re-say short or clip cut from P, proof or a client decision (from week 2)"
+
+[[slot.weekly.suffix]]
+code = "C4"
+format = "Clip"
+meaning = "re-say short or clip cut from P, a stance or relatable moment (VA tier)"
+
+[[slot.weekly.suffix]]
+code = "C5"
+format = "Clip"
+meaning = "re-say short or clip cut from P, a stance or relatable moment (VA tier)"
+
+[[slot.weekly.suffix]]
+code = "K"
+format = "Carousel"
+meaning = "carousel: the method steps, one rule per slide"
+
+[[slot.weekly.suffix]]
+code = "T"
+format = "Text post"
+meaning = "text post or long post: a 5-line story or a stance"
+
+[[slot.weekly.suffix]]
+code = "E"
+format = "Email"
+meaning = "email or Zalo message: story, one lesson, link, P.S. call to action"
+
+[[slot.weekly.suffix]]
+code = "D"
+format = "Cut-down"
+meaning = "5-10 minute cut-down of the filmed long video (only when one exists)"
+
+[[slot.weekly.suffix]]
+code = "A1"
+format = "Ad"
+meaning = "ad, week 4 of a Season only, and only once consented client proof exists"
+
+# ---------------------------------------------------------------- launch slots
+[slot.launch]
+pattern = '^LCH-(?P<launch>[A-Z0-9]{2,10})-D(?P<day>0[1-9]|[12][0-9]|30)-(?P<fmt>BG|LONG|REEL|CAR|STORY|LIVE|DM|EMAIL|ZALO|AD)(?P<n>[2-9])?$'
+form = "LCH-<launch id>-D<nn>-<FMT>[2-9]"
+launch_id = "2-10 upper-case letters or digits, chosen when the launch is planned; the same id names its LAUNCH-<id> run"
+day = "calendar day 01-30 of the 7, 14 or 21-day launch calendar"
+repeat = "a second piece of the same format on the same day adds a digit 2-9 (LCH-NOV26-D01-BG2)"
+examples = ["LCH-NOV26-D03-REEL", "LCH-FOUND1-D07-LIVE", "LCH-NOV26-D01-BG", "LCH-NOV26-D01-BG2",
+            "LCH-2611-D14-EMAIL", "LCH-MOI1-D21-ZALO", "LCH-NOV26-D30-DM"]
+near_misses = ["LCH-NOV26-D3-REEL", "LCH-NOV26-D00-REEL", "LCH-NOV26-D31-REEL", "LCH-nov26-D03-REEL",
+               "LCH-NOV26-D03-TWEET", "LCH-N-D03-REEL", "LCH-NOV26-D03-REEL1", "LAUNCH-NOV26-D03-REEL",
+               "LCH-NOVEMBER2026-D03-REEL", "LCH-NOV26-03-REEL", "LCH-NOV-26-D03-REEL"]
+invalid = []
+
+# Launch format codes and the Content `Format` option each one writes.
+[[slot.launch.fmt]]
+code = "BG"
+format = "BG post"
+meaning = "background-text post, 130 characters or fewer"
+
+[[slot.launch.fmt]]
+code = "LONG"
+format = "Long post"
+meaning = "long Facebook post (story, case part with its context, open cart)"
+
+[[slot.launch.fmt]]
+code = "REEL"
+format = "Native short"
+meaning = "reel or short video"
+
+[[slot.launch.fmt]]
+code = "CAR"
+format = "Carousel"
+meaning = "carousel"
+
+[[slot.launch.fmt]]
+code = "STORY"
+format = "Story"
+meaning = "story frames"
+
+[[slot.launch.fmt]]
+code = "LIVE"
+format = "Live"
+meaning = "live or workshop outline"
+
+[[slot.launch.fmt]]
+code = "DM"
+format = "DM flow"
+meaning = "DM reply flow"
+
+[[slot.launch.fmt]]
+code = "EMAIL"
+format = "Email"
+meaning = "email"
+
+[[slot.launch.fmt]]
+code = "ZALO"
+format = "Zalo message"
+meaning = "Zalo message"
+
+[[slot.launch.fmt]]
+code = "AD"
+format = "Ad"
+meaning = "retargeting or launch ad"
+
+# ---------------------------------------------------------------- daily drop
+[slot.drop]
+pattern = '^DROP-(?P<year>\d{4})-(?P<month>0[1-9]|1[0-2])-(?P<day>0[1-9]|[12][0-9]|3[01])$'
+form = "DROP-YYYY-MM-DD"
+meaning = "the weekday drop: one Idea row (1 idea + 3 hooks + 1 capture question)"
+format = "Native short"
+examples = ["DROP-2026-10-07", "DROP-2026-12-31", "DROP-2027-01-01", "DROP-2028-02-29"]
+near_misses = ["DROP-2026-13-01", "DROP-2026-00-07", "DROP-2026-10-32", "DROP-2026-10-00", "DROP-2026-1-07",
+               "DROP-26-10-07", "drop-2026-10-07", "DROP-2026-10-7", "DROP-20261007", "DROP 2026-10-07"]
+invalid = ["DROP-2026-02-30", "DROP-2027-02-29", "DROP-2026-04-31"]
+
+# ================================================================ Run Keys
+
+[run]
+property = "Run Key"                     # hub.toml, Runs database (its title)
+unique_in = "Runs"
+guard = "before working, read the Runs row for this key: OK means reply 'Already done' with the link and stop; Partial or a stale Running row means do only what is missing"
+first_write = "the Runs row, as Running, before any other write"
+last_write = "the same row, as OK, Partial or Failed"
+stale_running_hours = 2                  # a Running row older than this counts as Partial
+finish = "a Partial run is completed by the next run with the same key ('finish batch'), which writes only the missing Slot Keys"
+once = "Run now followed by the scheduled run creates nothing twice"
+
+[[run.key]]
+type = "SETUP"
+pattern = '^SETUP-(?P<year>\d{4})-(?P<month>0[1-9]|1[0-2])-(?P<day>0[1-9]|[12][0-9]|3[01])$'
+form = "SETUP-YYYY-MM-DD"
+meaning = "the day the board was set up; its Steps track resumable setup steps"
+examples = ["SETUP-2026-10-05"]
+near_misses = ["SETUP", "SETUP-2026-10", "SETUP-2026-10-5", "setup-2026-10-05", "SETUP-2026-W41"]
+invalid = ["SETUP-2026-02-30"]
+
+[[run.key]]
+type = "BATCH"
+pattern = '^BATCH-(?P<year>\d{4})-W(?P<week>0[1-9]|[1-4][0-9]|5[0-3])$'
+form = "BATCH-YYYY-Www"
+meaning = "Monday batch for one ISO week"
+examples = ["BATCH-2026-W41", "BATCH-2026-W01", "BATCH-2026-W53"]
+near_misses = ["BATCH-2026-W54", "BATCH-2026-W00", "BATCH-2026-W4", "BATCH-2026-41", "BATCH-2026-10-05",
+               "batch-2026-W41", "BATCH-2026-W41-P"]
+invalid = ["BATCH-2027-W53"]
+
+[[run.key]]
+type = "DROP"
+pattern = '^DROP-(?P<year>\d{4})-(?P<month>0[1-9]|1[0-2])-(?P<day>0[1-9]|[12][0-9]|3[01])$'
+form = "DROP-YYYY-MM-DD"
+meaning = "one weekday drop; the same string is the drop's Slot Key in Content"
+examples = ["DROP-2026-10-07"]
+near_misses = ["DROP-2026-10-7", "DROP-2026-W41", "DROP-2026-10-32", "Drop-2026-10-07"]
+invalid = ["DROP-2026-02-30"]
+
+[[run.key]]
+type = "REVIEW"
+pattern = '^REVIEW-(?P<year>\d{4})-W(?P<week>0[1-9]|[1-4][0-9]|5[0-3])$'
+form = "REVIEW-YYYY-Www"
+meaning = "Friday review for one ISO week"
+examples = ["REVIEW-2026-W41", "REVIEW-2026-W53"]
+near_misses = ["REVIEW-2026-W54", "REVIEW-2026-10-09", "REVIEW-W41", "review-2026-W41", "REVIEW-2026-W41-P"]
+invalid = ["REVIEW-2027-W53"]
+
+[[run.key]]
+type = "CUT"
+pattern = '^CUT-(?P<year>\d{4})-W(?P<week>0[1-9]|[1-4][0-9]|5[0-3])-P$'
+form = "CUT-YYYY-Www-P"
+meaning = "cutting one week's filmed long video (Slot Key YYYY-Www-P) into its clip slots"
+examples = ["CUT-2026-W41-P"]
+near_misses = ["CUT-2026-W41", "CUT-2026-W41-N1", "CUT-2026-W54-P", "cut-2026-W41-P"]
+invalid = ["CUT-2027-W53-P"]
+
+[[run.key]]
+type = "PLAN"
+pattern = '^PLAN-(?P<year>\d{4})-(?P<month>0[1-9]|1[0-2])$'
+form = "PLAN-YYYY-MM"
+meaning = "the monthly plan for the month it starts"
+examples = ["PLAN-2026-11", "PLAN-2027-01"]
+near_misses = ["PLAN-2026-13", "PLAN-2026-00", "PLAN-2026-1", "PLAN-2026-W45", "plan-2026-11"]
+invalid = []
+
+[[run.key]]
+type = "LAUNCH"
+pattern = '^LAUNCH-(?P<launch>[A-Z0-9]{2,10})$'
+form = "LAUNCH-<launch id>"
+meaning = "one launch; its Steps track the resumable launch-pack build"
+examples = ["LAUNCH-NOV26", "LAUNCH-FOUND1", "LAUNCH-2611"]
+near_misses = ["LAUNCH-N", "LAUNCH-nov26", "LAUNCH-NOV-26", "LAUNCH-NOVEMBER2026", "LCH-NOV26", "LAUNCH-"]
+invalid = []
+
+# ---------------------------------------------------------------- run states
+# Values of the Runs `Run State` property (hub.toml), in lifecycle order.
+[[run.state]]
+name = "Running"
+meaning = "written first, before any other write; older than stale_running_hours counts as Partial"
+
+[[run.state]]
+name = "OK"
+meaning = "everything the job owed is written; a later run with this key stops at once"
+
+[[run.state]]
+name = "Partial"
+meaning = "some Slot Keys are still missing (listed in Missing); the next run with this key writes only those"
+
+[[run.state]]
+name = "Failed"
+meaning = "nothing useful was written (for example the hub was unreachable); the output went to chat as a paste block"

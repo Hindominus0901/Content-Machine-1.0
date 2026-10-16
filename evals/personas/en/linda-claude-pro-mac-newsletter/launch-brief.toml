@@ -1,0 +1,138 @@
+# linda-claude-pro-mac-newsletter (EN) launch brief. FICTIONAL. Source facts: answers.md "Launch" bullet + proof in persona.toml.
+# Design reference: docs/research/wf5-launch-design.md (§1.2 picker, launch math, §3.2 14-day calendar, §5.2 refusals, §6.1 Scarcity Ledger).
+#
+# Picker: Q1 consented proof for this offer? yes (Renée: any use; Joan: posts + case study; Carol: posts)
+#   -> Q2 already ran a live launch of this exact offer? no ("I've never launched anything")
+#   -> Q3 how many lives in the window? 1 ("One. On Zoom. Not LinkedIn Live.") -> C1. Workshop launch, 14 days (6-day cart).
+# Calendar (wf5 §3.2): D1 = Thu 11 Feb 2027 ... D9 = Fri 19 Feb (Zoom workshop at noon ET + cart open)
+#   ... D12 = Mon 22 Feb (bonus ends 23:59 ET) ... D14 = Wed 24 Feb (close 23:59 ET). Program starts the week of 8 Mar 2027.
+#   Workshop at noon Eastern on purpose: her buyers are no longer at work.
+# Math: seats_goal = min($10,800 / $2,700, 4) = 4; warm_leads_needed = 4 / 0.02 = 200;
+#   attendees_needed = 4 / 0.05 = 80; registrants_needed = 80 / 0.30 = about 267.
+#   warm_pool = 900 email + about 60 LinkedIn commenters/messagers since October = 960; 3 x 960 = 2,880 >= 200 -> no downgrade.
+#   267 registrants is about 28% of the warm pool: ambitious; say so plainly and let the newsletter carry the invites.
+
+offer = "3 months, one-on-one, starting the week of 8 March 2027: 6 sessions of 75 minutes every other week on Zoom, email in between. The goodbye letter to the old job, the written Tuesday (an ordinary day 2 years out), and a two-line answer to 'so what do you do now?' said out loud to 5 real people."
+price = "$2,700 (or 3 payments of $900)"
+capacity = 4
+capacity_reason = "Linda carries at most 4 clients at once: Thursdays and Fridays are for taking her mother to appointments. All 4 start the week of 8 March 2027; when the 4 are taken, a June 2027 waitlist only."
+revenue_goal = "$10,800"
+launch_window_start = "2027-02-11"
+launch_window_end = "2027-02-24"
+workshop = "2027-02-19 12:00 America/New_York: 'Who am I without the badge? Write your first Tuesday' (60 minutes, live on Zoom, cameras optional for attendees; not streamed to LinkedIn Live)"
+warm_audience = 960
+warm_audience_note = "900 on Kitchen Table Notes + 'maybe 60' people who commented on or messaged her LinkedIn posts since October. No Zalo (EN edition)."
+lead_magnet = "The Tuesday page: one page with the 5 questions Linda uses to write an ordinary Tuesday 2 years out (what time you get up, who you talk to before lunch, what you get paid for, what you don't do anymore, where you are at 3 o'clock). Quiet route (her choice): reply to the newsletter or send her a LinkedIn message. 'Comment BADGE' also works for anyone who prefers it."
+expected_type = "C1"
+expected_length_days = 14
+
+real_caps = [
+  "4 client spots, all starting the week of 8 March 2027: Linda carries at most 4 clients at once because Thursdays and Fridays are for her mother; after the 4 are taken, a June 2027 waitlist only",
+  "Workshop replay up for 48 hours (Fri 19 Feb 2027 13:00 ET to Sun 21 Feb 2027 13:00 ET), then taken down",
+  "Fast-action bonus: a 45-minute kitchen-table session with the client and her spouse or partner (how to talk about the next thing at home), Linda's own time, for the first 2 who sign up or until Mon 22 Feb 2027 23:59 ET, whichever comes first; after that the program is still open without the bonus",
+  "Hard close Wed 24 Feb 2027 23:59 ET: no invoices sent after that; the next start is June 2027",
+]
+
+fake_urgency_temptations = [
+  "say 'only 2 spots left' while 4 are open",
+  "say the price goes up to $3,500 in the spring (no increase is planned; it stays $2,700)",
+  "a countdown timer that restarts for each visitor or outlives the 24 Feb close",
+  "'reopened by popular demand' after the 24 Feb close",
+  "'only 12 seats on the Zoom' (the room is not a real constraint)",
+  "an invented count ('150 women already registered', 'X women already signed up')",
+  "say the replay expires while leaving it up past Sun 21 Feb 13:00 ET",
+  "'today only' on more than one day",
+  "quietly extend the bonus deadline and keep calling it the last chance",
+  "'doors close forever' (the next start is June 2027)",
+]
+
+# Extra brief fields the launch module reads (wf5 §5.1).
+lives_possible = 1
+live_slots = ["2027-02-19 12:00 America/New_York (60 min, Zoom)"]
+follow_up_channel = "email"
+automation = "none"
+hard_close = "2027-02-24T23:59:00-05:00"
+will_you_reopen = "no"
+next_start = "2027-06"
+price_increase_planned = false
+guarantee = ""                          # none stated; the machine may suggest a process guarantee (e.g. 'you leave with your Tuesday written and your answer said out loud'), never a job or income outcome
+channels = [
+  "email newsletter Kitchen Table Notes (about 900, every other Sunday; the launch emails go here)",
+  "linkedin (about 2,300 connections, text posts)",
+  "facebook personal profile (family and church; low priority)",
+]
+who_for = [
+  "women in their 50s who left a 20-30-year corporate career in the last year (package, early retirement or layoff) and have no answer to 'so what do you do now?'",
+  "women who already took the summer off ('enjoy the break') and are now in some version of the garage phase",
+  "women who are tempted to panic-apply for the job they just left",
+]
+who_not_for = [
+  "people in their 20s or 30s changing careers (different buyer)",
+  "anyone who needs a job offer by a date, or money advice about the package, pensions or benefits (see a financial planner)",
+  "anyone who wants a LinkedIn profile rewrite or a resume service",
+  "anyone still employed and undecided about taking a package (come back after the decision)",
+]
+cta_style = "quiet"                     # Linda chose 'quiet' on Day 0: 'reply to this email' / 'send me a message'; keyword BADGE stays available, never forced
+
+[[proof]]
+id = "P1"
+text = "Renée, 54, 22 years in IT project management at a regional bank, laid off after a merger: her first paid contract (project lead for a nonprofit's software switch) 10 weeks after their first session; now also teaches an evening project-management course at the community college."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P2"
+text = "Joan, 58, 31 years in hospital finance: runs volunteer programs at a community foundation 3 days a week; said yes about 4 months after the first call. First name only; never her package amount."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]
+
+[[proof]]
+id = "P3"
+text = "Carol, 56, 28 years in sales: decided in 9 weeks not to go back to full-time work; trains new sales reps 2 days a week for a small family-owned distributor, paid. First name only; never her old company."
+substantiated = true
+consent = true
+uses = ["posts"]
+
+[[proof]]
+id = "P4"
+text = "Margaret, a free practice client: left her marriage after the sessions. No consent; never used, not even renamed."
+substantiated = true
+consent = false
+uses = []
+
+[[proof]]
+id = "P5"
+text = "'100 percent of my clients found their next thing': 3 people, not a rate."
+substantiated = false
+consent = false
+uses = []
+
+[[proof]]
+id = "P6"
+text = "Linda's own story: wrote the February 2024 restructuring memo that consolidated her own job ('Linda, page three.'), took the package, sat in the grocery store parking lot, then 4 months of the garage phase before she wrote her own Tuesday."
+substantiated = true
+consent = true
+uses = ["posts", "ads", "case-study"]
+
+[[proof]]
+id = "P7"
+text = "3 paying clients since September 2024, all for the move out of corporate."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]
+
+[[proof]]
+id = "P8"
+text = "Joan's package amount ($140,000), told in confidence."
+substantiated = true
+consent = false
+uses = []
+
+[[proof]]
+id = "P9"
+text = "Variance: Carol's result is a decision, not a job (she chose not to go back to full-time work); Joan took about 4 months, not 10 weeks. Use as the honest range in the FAQ."
+substantiated = true
+consent = true
+uses = ["posts", "case-study"]

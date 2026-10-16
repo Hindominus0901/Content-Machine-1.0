@@ -1,0 +1,38 @@
+# Dan Whitlock: research paste (coldstart-coach, EN, fictional)
+
+Pasted by Dan in Week 2 with: "found a bunch of stuff dads are saying online, copied it into my notes, here". Lines are as he copied them: no usernames, a type tag in front, a source note at the end. All text is fictional. The trap key (sellers, duplicates, the coach's own line) is in `expected.toml` under `[research]`, not here.
+
+---
+
+1. (group post) Anyone else just not able to keep up with their kids anymore? My son ran me into the ground at the trampoline park and I had to go sit in the car for a minute. [FB dads group, 2026-08]
+2. (forum thread) I used to be the athletic one. Now I get winded carrying the laundry upstairs. [Reddit fatherhood forum, 2026-07]
+3. (comment) Who has an hour to work out with two toddlers? Genuinely asking. [IG comments under a fitness reel, 2026-09]
+4. (group post) I start every Monday and by Thursday it's over. Every single week since my daughter was born. [FB dads group, 2026-09]
+5. (review) Bought a 12-week program in January. Made it to week 3. Kid got hand foot and mouth and that was the end of that. 2 stars, not really the program's fault I guess. [app store review, fitness app, 2026-02]
+6. (post) 🔥 DAD BOD DESTROYER: 12 weeks to shredded. 60% off this weekend only. Join 10,000+ dads who already changed their lives. Link in bio. [IG sponsored post, 2026-09]
+7. (forum thread) My wife works nights, I've got the kids 3 evenings a week. The gym is basically a fantasy at this point. [Reddit fatherhood forum, 2026-08]
+8. (comment) I don't want abs. I want to play tag for more than 2 minutes without dying. [TikTok comments, 2026-09]
+9. (group post) Anyone else feel like every fitness program is made for 23 year olds with no responsibilities? [FB dads group, 2026-07]
+10. (comment) I used to be the athletic one. Now I get winded carrying the laundry upstairs. [TikTok comments, 2026-08]
+11. (review) This testosterone support stack changed my life, energy through the roof!! Use code DADPOWER for 20% off. 5 stars [supplement store review, 2026-07]
+12. (forum thread) Sitting 9 hours a day and then trying to do yard work on Saturday is how I threw my back out twice this year. [Reddit fatherhood forum, 2026-06]
+13. (group post) I keep waiting for a "good week" to start. There are no good weeks with a 2 year old. [FB dads group, 2026-08]
+14. (comment) What do you even eat when your dinner is the leftover mac and cheese off two plates [IG comments, 2026-09]
+15. (forum thread) Doc said my blood pressure is creeping up. 41, two kids, desk job. Where do I even start without a gym? [Reddit fatherhood forum, 2026-09]
+16. (comment) 30 minutes you actually do beats an hour you never do. [IG comments, 2026-10]
+17. (group post) My kid asked why I'm always tired. That one stuck with me. [FB dads group, 2026-09]
+18. (comment) Who has an hour to work out with two toddlers? Genuinely asking. [FB reel comments, 2026-09]
+19. (review) The workouts are great if you have 60 minutes and a full gym. I have neither. [fitness app review, 2026-05]
+20. (forum thread) Half my office is on TRT now. Is that just what happens at 40? [Reddit men's health forum, 2026-08]
+21. (group post) I just want to be able to keep up with my kids at the park without needing a nap after. [FB dads group, 2026-09]
+22. (comment) Every January I buy a program. Every February I feel like a failure. [TikTok comments, 2026-01]
+23. (forum thread) Stopped going to the gym when my second was born, and every time I try to go back I feel like I'm starting from zero. [Reddit fatherhood forum, 2026-07]
+24. (group post) I start every Monday and by Thursday it's over. Every single week since my daughter was born. [FB dads group, 2026-09]
+25. (comment) My 5 year old wanted a piggyback ride for the whole zoo and I made it to the penguins. [IG comments, 2026-08]
+26. (review) Meal plan was 5 meals a day of chicken and rice. Lasted 4 days. My kids eat nuggets, so I eat nuggets. [nutrition app review, 2026-03]
+27. (group post) Does anyone else work out in the garage at like 5am because it's the only time nobody needs you? [FB dads group, 2026-08]
+28. (comment) Not trying to be a fitness model, just trying not to be the dad sitting on the bench. [TikTok comments, 2026-09]
+29. (forum thread) Played college baseball. Can't touch my toes now. It's humbling. [Reddit fatherhood forum, 2026-06]
+30. (group post) Wife says I'm grumpy when I don't move. She's right. I just don't know when. [FB dads group, 2026-09]
+31. (comment) I just can't keep up with it. Work, kids, the gym, something always gives and it's always the gym. [IG comments, 2026-09]
+32. (review) Coach was 24 and kept telling me to "prioritize sleep." Bro I have a newborn. [coaching app review, 2026-04]

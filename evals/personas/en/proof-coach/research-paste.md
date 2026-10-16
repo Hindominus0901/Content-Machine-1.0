@@ -1,0 +1,38 @@
+# Dana Lindqvist · research paste (fictional persona, EN, proof-coach)
+
+What Dana pastes when the machine offers research: lines she copied from Facebook groups, a career forum, Instagram comments and book or service reviews about women 45+ trying to leave corporate jobs. No usernames; each line carries its source note. Contents are fictional. Traps inside: 2 sellers' promos, 3 duplicates (cross-posted lines), and 1 line that is Dana's own words reposted in a group (it must not count as an audience voice).
+
+---
+
+1. (group post) I'm 53 and I've been at the same utility company since I was 27. Every posting wants a "digital native." Is it too late for me? [FB group, 2026-09]
+2. (forum thread) I've applied to 80+ jobs since my position was eliminated. Two callbacks. Both for the exact job I just lost. [career forum, 2026-08]
+3. (review) Three chapters on finding your passion. I'm 49 with a mortgage. My passion is my health insurance. [book review, 2026-07]
+4. (comment) golden handcuffs are real. I'm counting the days until the pension vests [IG comment, 2026-09]
+5. (group post) Took the personality test the outplacement firm gave us. It said I should be a forest ranger. I'm 56 and allergic to pine. [FB group, 2026-08]
+6. (forum thread) Nobody tells you how to look for a job when you haven't looked since the nineties. [career forum, 2026-09]
+7. (group post) I want one more chapter that's mine. Not retirement, not this. Something. [FB group, 2026-09]
+8. (group post) Tired of the 9-to-5 grind? My 6-week Reinvention Blueprint has helped 500+ women over 40 land their dream careers! Comment BLUEPRINT for the link [FB group, 2026-09]
+9. (comment) ATS-optimized resumes, 48-hour turnaround, DM for 20% off this week only [LinkedIn comment, 2026-08]
+10. (forum thread) I've applied to 80+ jobs since my position was eliminated. Two callbacks. Both for the exact job I just lost. [career forum, cross-posted, 2026-08]
+11. (review) The outplacement service was a portal and a webinar. I wanted a human. [service review, 2026-06]
+12. (forum thread) My new manager is 29. He's nice. I just can't do another reorg. [career forum, 2026-09]
+13. (group post) I'm not burned out. I'm bored. There's a difference and nobody gets it. [FB group, 2026-08]
+14. (comment) how do you even ask someone for an informational interview without it being weird [IG comment, 2026-09]
+15. (group post) You're not too old, you're too vague. You're applying for anything with a pulse. [FB group, 2026-08]
+16. (forum thread) Everyone says network. Network how? I haven't been to a happy hour in ten years. [career forum, 2026-07]
+17. (group post) I want one more chapter that's mine. Not retirement, not this. Something. [FB group, cross-posted, 2026-09]
+18. (group post) Severance runs out in March. I keep refreshing the job boards like it's going to change. [FB group, 2026-09]
+19. (review) Career coach rewrote my resume and told me to apply more. Hundreds of dollars later, same result. [service review, 2026-05]
+20. (comment) my kids are gone, my job is the same, and I'm the one who changed [IG comment, 2026-08]
+21. (forum thread) Is a pay cut at 50 crazy? I'd take less to like Mondays again. [career forum, 2026-09]
+22. (group post) Hot flashes in a board meeting is a special kind of hell. [FB group, 2026-08]
+23. (forum thread) Can I sue for age discrimination if they keep saying "culture fit"? [career forum, 2026-09]
+24. (group post) What do you even put on a resume after 26 years at one place? One job title for half the page? [FB group, 2026-09]
+25. (group post) I'm not burned out. I'm bored. There's a difference and nobody gets it. [FB group, cross-posted, 2026-08]
+26. (comment) I'd love to try something before I jump. I can't afford to jump and be wrong. [IG comment, 2026-09]
+27. (group post) Has anyone actually changed careers after 50 and not regretted it? Real stories please, not ads. [FB group, 2026-09]
+28. (forum thread) Outplacement told me to "leverage my network." My network got laid off with me. [career forum, 2026-08]
+29. (review) Good course, but it was all thirty-somethings talking about side hustles. [course review, 2026-06]
+30. (group post) I know my KPIs. I don't know my strengths. [FB group, 2026-09]
+31. (comment) everyone keeps saying "it's never too late" and honestly it makes me feel worse [IG comment, 2026-09]
+32. (group post) Got walked out on a Tuesday with a box and a cake. 22 years. I'm still angry about the cake. [FB group, 2026-08]

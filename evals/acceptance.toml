@@ -1,0 +1,361 @@
+# Release thresholds read by evals/graders.py and tools/preflight.py.
+# Sources: docs/research/wf11-ux-spec.md §6 (persona acceptance) and wf12-qa-spec.md §0, §5 (gates);
+# [copy] and [cases] liked_min from wf13-inspiration-spec.md §6; [day0] turn and minute budgets, map_lines and
+# [week] why_available_rate from wf15-simple-surface-spec.md §3 (founder, 6 Oct 2026); [voice] from
+# wf14-voice-language-spec.md §5; [vn_natural] from docs/research/vn-language-guide.md §9.3. wf14/wf15 win
+# over wf11/wf12 where they differ. Where they differ, the reconciliations in docs/PLAN.md apply (Ready = Edge >= 8;
+# release floor 7). Strategy first (founder, 7 Oct 2026 night, after his v10 run): [day0] and [lengths] below are for the order
+# xưng hô, dump, interview, the strategy (up to 3 replies since 9 Oct), FILM TODAY alone after the OK, then on 'next' the Brand
+# Card + the Week-1 table, then a Week-1 piece per 'next' (v13.5, 10 Oct); lengths are in words.
+
+[install]
+door_a_max_actions = 4
+door_a_median_minutes = 3
+door_a_max_minutes = 5
+pass_test_tag_rate = 1.0
+door_b_max_actions = 2
+door_b_first_reply_seconds = 60
+helper_path_max_minutes = 10
+
+[day0]
+# Strategy first (founder, 7 Oct 2026 night, after his v10 run; DECISIONS "Strategy first on Day 0"): xưng hô (VN) -> the
+# dump -> the interview about the coach's side (§CM-DIG, at most 6 questions, one a reply) -> the strategy in up to 3 replies,
+# no piece (§CM-MAP; each step one OK, the last the one decision) -> only after the OK: FILM TODAY alone, one idea -> on 'next'
+# (once filmed): the Brand Card + the save line + the Week-1 table -> one Week-1 piece per 'next' (v13.5, 10 Oct; audit a3 L1).
+# It replaces K2 (the Map and FILM TODAY in one reply) and the 7 Oct order (FILM TODAY and Week 1 in one reply). The budgets below are for that longer order: the founder accepts a
+# longer Day 0 (the kit says "about 35 min"). Read by graders.py (day0_timing, day0_shape, day0_strategy) and run.py.
+early_win_max_minutes_after_dump_start = 4   # the early win only QUOTES 3 lines now (no copy box, no "post it")
+strategy_max_minutes = 25                 # the strategy proposal, in active minutes (t_min minus away_min). The interview's
+                                          #   answers are coach turns that take minutes, so this is the real guard of the
+                                          #   interview (it replaces map_max_minutes = 20, which no check read)
+map_max_turns_en = 6                      # coach turns before the strategy: Start, the dump's sends, "done". The interview's
+map_max_turns_vn = 7                      #   answers come on top (dig_answers_max); VN adds the xưng hô turn
+dig_answers_max = 0                       # v14: no interview on Day 0 (day0_legacy keeps 6 for older runs). §CM-DIG (7 Oct night): at most 6 questions, one a reply, and each answer is a coach
+                                          #   turn: day0_timing adds the interview questions the run really asked (a reply that
+                                          #   asks one of the dig.* strings, adapted to the client in hand), up to this many, to
+                                          #   map_max_turns_* and session_max_turns_*. A rich dump asks none.
+interview_max_questions = 6               # day0_strategy: more questions than this before the strategy fails (a vague answer's
+                                          #   one follow-up counts in the 6)
+map_lines = 6                             # the strategy's labelled lines: KNOWN FOR · CONTENT PILLARS · CONTENT MIX · YOUR SYSTEM
+                                          #   · YOUR WORD · WHAT I FOUND (map.known, map.topics, map.mix, map.system, map.word,
+                                          #   map.found), then "OK, or change a line". YOUR VOICE left the proposal (it is in the card)
+strategy_max_steps = 1                    # v14: the strategy is ONE reply with at most strategy_picks_max A/B/C picks (day0_legacy keeps 3). v13 (founder, 9 Oct: choices one step at a time): the strategy may come in up to 3 pre-filled
+                                          #   steps (§CM-MAP; with PLAYBOOK loaded §CM-STRATEGY-ENGINE), one a reply, the coach's OK after
+                                          #   each; the LAST one ends on map.ok ("the one decision"). day0_timing adds one coach turn per
+                                          #   step but the last to the session's turns. 1 = the old one-reply strategy.
+strategy_max_words_en = 200               # each strategy reply's talk (copy boxes aside; the tag, the OK line and NEXT count): the
+strategy_max_words_vn = 250               #   kit's caps (start-block step 4 "≤160 words (reply 2 ≤100)"; VN step 5 "≤200 tiếng (tin 2
+strategy_step2_max_words_en = 100         #   ≤120)"). Were 400/450 (audit a3 M4)
+strategy_step2_max_words_vn = 120
+strategy_words_tolerance = 0.10           # read with this much slack (the grader counts the tag and NEXT lines)
+pillars_min = 3                           # CONTENT PILLARS: 3-5 broad topic clusters (message.kit-map 2) ...
+pillars_max = 5
+pillar_max_words_en = 4                   # ... 1-4 words each ("direct response", "human psychology", "working with clients")
+pillar_max_words_vn = 6                   #   (VN in tiếng: "làm việc với khách" is 5)
+mix_min_share = 10                        # CONTENT MIX: ATTRACT / TRUST / CONVERT (VN THU HÚT / NIỀM TIN / CHUYỂN ĐỔI), each with a
+mix_max_share = 60                        #   share; the three add up to 100; default 40/40/20 (50/35/15 building an audience,
+                                          #   30/40/30 selling to a warm list); no type under 10 or over 60
+system_min_words_en = 12                  # YOUR SYSTEM: a platform, pieces a week, the ask path: at least this many words
+system_min_words_vn = 14
+found_min_lines = 2                       # WHAT I FOUND: 2-3 lines (the kit: "≤3 lines", retest v13, 9 Oct; was 4, audit a3 M5), each
+found_max_lines = 3                       #   with its source (a place, a month) or labelled a guess
+film_ready_max_minutes = 18               # v14: FAIL above 18 active minutes (day0_legacy keeps 35). FILM TODAY (after the OK), in active minutes. It was 20 with the Map and FILM TODAY in
+                                          #   one reply; the interview and the research now come first
+film_ready_max_minutes_from_email = 45    # with the install, from the setup email
+# The soft dump cut (DECISIONS "Long dumps…", "One more story stays open", "Long dictation and the Map reply"): past
+# this much dump talk (EN words, VN tiếng; pasted posts left out) the machine prints dump.enough. A budget (the
+# strategy's or film-ready) over its limit is a warning when the machine cut on time and the coach's own talk accounts
+# for the overrun: they chose to keep talking after the cut, or the send the cut answered ran long past this threshold.
+# With no cut, a late one, or minutes left over that the coach's talk does not cover (the machine's own turns), it
+# stays a failure.
+dump_cut_words_en = 1200                  # ~1,200 words of talk; evals/run.py's COACH.md quotes both (P15)
+dump_cut_words_vn = 1200                  # ~1,200 tiếng, pasted posts left out (lowered from 1,500 after VG2)
+# No stop point (wf15 §1, R13): Day 0 ends with the Brand Card + save line + NEXT, bounded by the two session_ keys.
+session_max_minutes = 45                  # the whole Day 0 (was 40, with the strategy inside the first 20 minutes)
+session_max_turns = 10                    # the kit: "<= 10 coach turns + the interview"; the interview's answers are added (above)
+session_max_turns_vn = 11                 # VN adds the xưng hô turn, as map_max_turns_vn does; since v13.17 the VN block reads like
+                                          #   EN: "coach nhắn ≤10 lượt (trừ xưng hô, hỏi thêm)" = 10 + the xưng hô turn (G43)
+detours_between_start_and_day0_end = 0    # downloads, uploads, setup-page visits, app switches, Start to Day 0's last reply
+save_gates = 0                            # saving never gates anything: the card never blocks (v13.5: the card and the Week-1 table come
+                                          #   together on the 'next' after FILM TODAY; Week 1's pieces follow, one per 'next')
+brand_card_visible_max_chars = 500        # wf15 S3: the 3-4 line top; schemas/brand-card.toml, targets [budgets.brand_card_visible]
+                                          # (the whole card's budget is platform/targets.toml [budgets.brand_card])
+known_for_max_en = 35                     # the strategy's KNOWN FOR, "one breath" (modules/en/message.md §CM-MAP)
+known_for_max_vn = 50                     # ĐIỀU KHÁCH NHỚ in tiếng (modules/vn/message.md §CM-MAP)
+running_tag_min = 1.0                     # every Day-0 reply opens with "◆ <name> · <step>" (graders running_tag)
+shorter_max_words = 90                    # after "Shorter": the next reply's talk, copy boxes and the card top
+                                          #   not counted (§CM-TODAY 1); EN, and any edition without its own key
+shorter_max_words_vn = 120                # VN, in tiếng (modules/vn/levelup.md §CM-TODAY 1 "lời nói <=120 tiếng")
+
+# v14 (fast Day 0, 10-step setup, reply protocol; read for a run whose meta.json has "protocol": "v14", evals/run.py writes it):
+film_ready_warn_minutes = 12              # the first piece's TARGET in active minutes: above it a warning, above film_ready_max_minutes
+                                          #   (18) a failure; day0_timing also reports the minutes and the coach's words before it
+first_piece_max_coach_turns_en = 4        # coach turns to the first piece: a warning above (0 = off)
+first_piece_max_coach_turns_vn = 5        #   VN adds the address answer
+strategy_picks_max = 3                    # the strategy reply (setup step 3): at most 3 A/B/C picks (who, offer, hours), then the one OK
+question_of_day_from_day = 2              # reply_protocol: a dig.* question (the question of the day) only from day 2, one a reply, never
+                                          #   beside another ask; on Day 0 (setup steps 1-7, Week 1 Day 1) it fails
+
+# Runs before v14 (no "protocol": "v14" in meta.json) are graded with these over [day0]: the interview before the strategy, the
+# strategy in up to 3 steps, film-ready within 35 minutes, no first-piece warning.
+[day0_legacy]
+dig_answers_max = 6
+strategy_max_steps = 3
+strategy_max_words_en = 160
+strategy_max_words_vn = 200
+film_ready_max_minutes = 35
+film_ready_warn_minutes = 0
+first_piece_max_coach_turns_en = 0
+first_piece_max_coach_turns_vn = 0
+
+[lengths]                                 # check lengths (graders.py; founder, 7 Oct night: "the length has to be measured by words,
+                                          #   not seconds, because people speak at different speeds"). VN counts tiếng (whitespace
+                                          #   tokens: what a word counter shows, the founder's "chữ").
+tolerance = 0.10                          # a short video's ceiling is read with this much slack (counting differs by a few words)
+short_words_min = 250                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
+short_words_max = 400                     #   first frame, the caption or the ask), 250-400 words (founder 12 Oct, v14.2; was 500-800):
+                                          #   under the floor fails, over the ceiling (440) is a warning
+long_post_words_min = 400                 # long post: 400-500 words (founder 16 Oct, v14.5; was 500-700, before that about 1,000): under
+long_post_words_max = 500                 #   the floor (read with long_post_tolerance) fails, over the ceiling is a warning
+long_post_tolerance = 0.05                #   the long post's slack both ways (380 fails below, 525 warns above)
+long_video_words_min = 1000               # long video: 1,000-1,500 words, in parts ...
+long_video_words_max = 1500
+long_video_parts_min = 3                  #   at least this many numbered parts (the kit: 3-4), with a hook and an ask around them
+seconds_budget_fails = true               # a length in seconds on a title or in talk ("FILM TODAY (under 30 s)", "30 giây") fails
+short_floor_tolerance = 0.10              # v14.1: a short's floor (250) is read with this slack (225): the grader counts spoken lines
+                                          #   only and runs ~5-8% under a human count (v140 N2: 461 vs 501); a 200-word FILM TODAY fails
+title_count_slack = 0.15                  # v14.1: a title's own count ("· 520 chữ") more than this share over the piece's counted words fails
+
+[hook_lab]                                # check hook_lab (graders.py; qa/standards/hook-lab.md HL7, HL8; review retest-ft1 fix 2)
+cta_echo_check = true                     # v14.1: a short's ask shares a content word or the promise with its hook (first line, on-screen);
+                                          #   "Comment GUIDE for my free guide" under any hook closes no loop (PRINCIPLES CTA 1)
+onscreen_repeat_share = 0.6               # (v13.8, §CM-HOOKS 4: was 0.75; a thumbnail's text against its title too) a short's on-screen text fails when this share (or more) of its content words comes
+                                          #   back in the first spoken line: the same claim twice. The founder's test and its
+                                          #   retest sat at 100% (4 of 6 VN Week-1 shorts, e.g. "Một email, 180 người" over
+                                          #   "Một email gửi 180 người: 7 người trả lời, 1 người mua": 3 of 3); a hook that
+                                          #   brings a word or number of its own ("Record year. Still no cash." over "Best
+                                          #   year ever. I'm in a stairwell, asking the bank for payroll.": 1 of 3) stays under
+onscreen_min_words = 2                    # content words needed in the on-screen text to judge the repeat
+onscreen_new_words_min = 1                # the on-screen text must also hold this many content words that are in neither the first
+                                          #   line nor the first frame; 0 = every word may come from them. Retest-ft2: "Tim nhiều, hộp
+                                          #   tin nhắn trống" over a frame "một bài nhiều tim, lướt sang hộp tin nhắn trống" and a line
+                                          #   "…thả tim, mà không ai nhắn hỏi giá hết" says one fact three times (33% passed the share).
+headline_max_chars_en = 60                # slide 1 and the first email subject line, in characters (qa/standards/hook-lab.md HL9;
+headline_max_chars_vn = 70                #   packaging.md "≤60 characters"; VN "≤70"). Retest-ft2: "Your biggest client might be underwater.
+                                          #   Here's how to check." is 61. A subject line's 2nd and 3rd drafts are held to hedges only.
+first_line_max_sentences = 2              # the founder-approved check (docs/research/hooks-cta/PRINCIPLES.md, 10 Oct 2026, item 6: "one
+                                          #   spoken sentence, two short ones at most"; founder v1 "too many sentences"): a short's first line
+                                          #   or a text post's line 1 with more sentences is a paragraph
+first_line_min_words_en = 4               # ... and with fewer words a riddle ("Why?", "That's not research."; "not a three-word riddle";
+                                          #   "63 applications. 2 interviews." is 4 and passes)
+first_line_min_words_vn = 5               #   VN in tiếng ("Vì sao?", "Đắt quá hả?" fail)
+onscreen_title_shared_fail = 2            # v13.13 (founder 11 Oct, v1312 "Khách đang nói thật" over "…khách nói…"): a short's on-screen text
+                                          #   or a long video's thumbnail text that shares this many content words with the first spoken
+                                          #   line / the title fails, even under onscreen_repeat_share; 0 = off (it follows the repeat
+                                          #   share: a share above 1 switches it off too)
+frame_check = true                        # v13.7 (founder on v13.6: "hook cần phải như các cái t gửi m, các cái ảnh"): a short's first
+                                          #   line, a text post's line 1 and (v13.10, every Week-1 piece; audit a3 M2) slide 1 and the
+                                          #   first subject line (a whole question counts there) fill one of the hook frames (graders.HOOK_FRAMES: give me N
+                                          #   minutes · watch this · hard until · start over · N ways · receipt · so X that Y · you're
+                                          #   losing · asked me how · a call-out question); the on-screen text never states the method
+                                          #   ("tin đầu: đừng gửi giá."). false = both items off.
+
+[research_log]                            # check research_log (graders.py; the web lane's Research log in notes.md; review retest-ft2 fix 8)
+keep_min_pages = 2                        # a KEEP is backed by lines from this many distinct pages ...
+keep_min_hosts = 2                        #   on this many distinct hosts (reviews under one product page are one place; "{n} nơi" counts
+                                          #   sites, threads shown apart). Retest-ft2: EN's KEEP stood on 3 Capterra reviews of one product
+                                          #   page, Nhi's on 3 people in 2 threads of one forum.
+
+[memory]
+brand_card_saved_by_end_of_day1 = "5/6"
+recoverable_copy = "6/6"
+
+[language]
+deny_list_hits = 0
+vn_naturalness_min = 4.0                  # native reviewer, 1–5
+vn_pronoun_slips = 0
+vn_en_leakage_outside_allowlist = 0
+
+[week]
+lean_max_minutes = 60
+talk_max_minutes = 15
+on_map_min = 0.90                         # over 4 simulated weeks
+why_available_rate = 1.0                  # a WHY is stored for every piece and printed on "why?" (none under a Ready piece)
+keyword_exactly_once_rate = 1.0           # v13.17: the Season keyword once in the body OR caption (never both), plus the ask, on CONVERT and gift
+                                          #   pieces only; ATTRACT/TRUST carry their own comment word {WORD} once, in the ask (§CM-CTA-BANK 2; v13.10 counts the CTA
+                                          #   form only, a topic mention is free)
+own_words_min = 0.70                      # re-say shorts vs the coach's Talk transcript
+hook_stem_window = 10                     # no repeated stem in 10 consecutive pieces
+same_structure_max_in_a_row = 2
+running_tag_min = 0.98                    # over 30+ turns on ChatGPT Free / Claude Free
+
+[voice]                                   # I23 (wf14 §5)
+i23_phrase_share_min = 0.5                # in a week of >= 4 pieces of >= 60 words, this share uses one of their phrases
+never_words = 0                           # hits of the persona's never-words (and never-particles) in pieces
+
+[vn_natural]                              # check vn_natural, VN runs only (docs/research/vn-language-guide.md §9.3,
+                                          #   §10.2 items 4-5). The guide's numbers are directional ("ngưỡng là phán
+                                          #   đoán"); these start more lenient and get tightened after 30-50 real runs.
+min_tieng = 15                            # density and particles read pieces of >= 15 tiếng (vn-naturalness.md scope)
+patterns_per_100_max = 2.0                # flag-level translationese (graders.VN_TELLS: việc/sự + V, một cách + adj,
+patterns_min_hits = 2                     #   được… bởi, điều này, Tuy nhiên / Bên cạnh đó / Do đó, Hãy, chúng ta…) over
+                                          #   this many per 100 tiếng AND at least this many hits, in a piece or the run.
+                                          #   Guide §9.3: việc/sự from 2 a piece, Hãy over 1, essay connectors from 1 in
+                                          #   scripts and messages. Measured: 0 in the guide's "after" lines (2,835
+                                          #   tiếng) and the VN personas' own words (15,800 tiếng); 3.5 in its "before" lines
+bold_max = 0                              # **…** in a piece (guide §9.3: a fail on Facebook, Zalo, TikTok)
+emoji_line_max = 2                        # lines opening with an emoji in a piece (guide §9.3: flag from 3)
+ai_emoji = ["🚀", "💡", "✨", "🎯", "🌟"]   # in a piece only if the coach's own written-posts.md uses it (guide §9.3, §4.9)
+em_dash_max = 0                           # "—" in a piece, unless their own posts use it (guide §2.5 P4, §10.2 item 5)
+particle_share_ratio_min = 0.5            # sentences ending in a particle, run vs their written-posts.md (guide §9.3:
+                                          #   below half of theirs; §4.6: their posts 36%, range 6-64% across the six
+                                          #   personas, AI without the pack 11%)
+particle_share_floor = 0.1                # no written-posts.md: below this share (guide: 1/3 for captions and messages;
+                                          #   pieces mix scripts and LinkedIn, and the guide's own "after" lines run 19%)
+particle_min_sentences = 10               # fewer sentences in the run's pieces: not compared
+particle_card_tolerance = 0.10            # the run's written pieces against the Brand Card's "tiểu từ ~N%": beyond ±10 points fails
+spoken_particle_warn = 0.10               # v13.13: each spoken piece (a video script: it has a Câu đầu / Câu cuối line, directions
+spoken_particle_fail = 0.20               #   left out, the Ý n beats read as spoken) against the Brand Card's share, one by one:
+spoken_particle_min_sentences = 8         #   beyond ±10 points a warning, beyond ±20 a failure; a script of fewer sentences is not read
+
+[quality]
+ready_edge_min = 8                        # runtime "Ready": gates pass, Edge >= 8, no pillar at 0
+release_edge_avg_min = 8                  # judge, median of 3 runs, per persona and edition
+release_piece_floor = 7
+pillar_zero_allowed = false
+stance_formats_character_score = 2
+red_claims = 0
+id_resolution = 1.0
+pack_beats_no_pack_by = 2                 # Edge points, with 0 fabrications
+canary_planted_defects = 0.10
+canary_founder_approved = 0.10
+
+[calibration]                             # gate G3b
+runtime_ready_judge_fail_max = 0.10
+self_minus_judge_edge_max = 1.0
+manual_lint_miss_rate_max = 0.20
+draft_rate_report_above = 0.25
+
+[judge]
+labelled_pieces_per_edition_min = 40
+labelled_dont_post_min = 20
+post_agreement_min = 0.85
+dont_post_caught_min = 0.90
+second_read_drop_revise = 2               # a drop of >= 2 twice means revise the judge prompt
+
+[router]
+route_accuracy_min = 0.95
+trigger_rate_min = 0.90
+false_trigger_max = 0.10
+routes_per_edition = 40
+trigger_phrases = 20
+non_trigger_phrases = 10
+
+[copy]                                    # I19: copy runs against someone else's post (wf13-inspiration-spec §4, §6)
+en_words = 6                              # a shared run of 6 EN words is a copy run (locales/en/stock-phrases.txt exempt)
+vn_tieng = 8                              # 8 VN tiếng (locales/vn/stock-phrases.txt exempt); both calibrated in Phase-0 D6
+false_hit_max = 0.01                      # share of independent pieces (the D6 baseline) the check calls copies
+same_post_yes_max = 0.05                  # founder-labelled "same post?" pairs (20, default path) answered yes
+
+[cases]
+per_module_min = 20
+guardrails_min = 40
+liked_min = 22                            # wf13-inspiration-spec §6: liked.<ed>.toml >= 22 cases per edition
+guardrails_false_blocks = 0
+fmt_short_min = 30
+convert_min = 25
+launch_scripts_min = 25
+router_min = 40
+automation_min = 30
+runtime_selfcheck_j_set = 30
+regression_noise_edge = 0.5
+regression_noise_pass_rate = 0.05
+
+[testers]                                 # gate G8 (humans)
+install_unaided = "3/3"
+median_minutes_to_film_ready_incl_install = 45   # strategy first (7 Oct night): the interview and the proposal come before today's video
+recall_next_day_min = "2/3"
+return_day3 = "6/6"
+score_install_min = 8
+score_first_session_min = 8
+score_know_what_to_say_min = 8
+score_weekly_min = 7
+score_trust_min = 7
+score_any_dimension_floor = 6
+
+[quit_points]                             # UX §6: each must be absent or handled (graders + G6)
+items = [
+  "method file requested mid-session",
+  "Door B refers to a project that does not exist",
+  "save-for-reward gate",
+  "nothing back during minutes 8-10 of the dump",
+  "brand wall with framework codes",
+  "paid income stream parked with no bridge or side door",
+  "'locked 90 days' wording",
+  "'new chat outside the project'",
+  "Mac mic not found",
+  "Claude save without a picture route or backup",
+  "keyword CTA with no quiet option",
+  "email list ignored",
+  "two-device Weekly Talk or clip trimming",
+  "FB insights screenshots required",
+  "xưng hô asked late",
+  "reading the script while filming on the same phone",
+  "Notion-hosted setup page",
+]
+
+[quit_triggers]                           # QA §5.1 G6: the persona player quits when any happens
+items = [
+  "asked to fill a template",
+  "more than 2 unexplained terms in one step",
+  "more than 1 question in a reply",
+  "more than 300 words before anything usable",
+  "options with no default",
+  "a score, 'Edge' or rubric code in chat",
+]
+
+[source_check]                            # check source_check (graders.py; v13.9 fixK9, SOURCE before print; v13.10 by paragraph)
+generalization_check = 1                  # a claim about the coach's clients or market ("nhiều cơ sở … nhất", "ai cũng…", "most of my clients…") must trace to the sources (1 = on)
+# The "Máy tự thêm: đoạn 3, 5" / "Added by me: ¶3, ¶5" line names paragraphs only, no cap (founder 11 Oct): every paragraph
+# holding illustrative content is on it, every number on it is a paragraph of the piece.
+anchor_check = 1                          # v13.16 (founder 12 Oct, one idea is enough): each video and long post shares at least anchor_min_shared content words with one
+anchor_min_shared = 2                     #   card item, strategy line or coach-turn sentence (the paragraphs off the "Máy tự thêm" line count), else fail. Replaces the v13.13 teaching-share warning.
+                                          #   The "Máy tự thêm" list is read under the label count and under the counts from the top (with and without
+                                          #   the direction blocks, line by line): the reading with the fewest defects is the one reported
+
+[week_dedupe]                             # check week_dedupe (graders.py; v13.9 fixK9, WEEK CROSS-READ)
+sentence_min_words = 8                    # the same sentence (normalised) of at least this many words in 2 pieces of a batch fails
+opener_words = 5                          # the same first 5 words in 2 pieces of a batch fails
+belief_max_pieces = 2                     # the card's key_belief line in more than 2 pieces of a batch fails
+paraphrase_overlap = 0.6                  # v13.10: two sentences in different pieces of the run (Day 0 + Week 1, across replies) sharing
+                                          # this share of content words (of the longer one) repeat each other in meaning: fail
+paraphrase_min_words = 5                  # ... counted only when both sentences hold at least this many content words
+idea_overlap = 0.75                       # v13.13 (founder 11 Oct: one idea feeds 2-3 posts a week): an idea of the ledger (the Week-1 table's
+idea_min_shared = 3                       #   Idea cells, the card's method, principles and idea_shifts) is said in a post when one of its
+idea_max_posts = 3                        #   sentences holds this share of the idea's words (at least idea_min_shared); in more than
+                                          #   idea_max_posts posts of the run it fails, whatever the formats
+idea_cell_min_shared = 2                  # v13.14: a Week-1 table idea cell is also said in a post when one sentence shares this many of its
+                                          #   content words (wording free: "hỏi trước … báo giá"); the season keyword and the card's audience
+                                          #   profile (who) are no idea words; more than idea_max_posts such posts fails
+verbatim_overlap = 0.8                    # v13.12 (founder 11 Oct, a post a day cut into many formats): between posts of
+                                          #   different formats only a near-verbatim sentence (this share) fails; the 0.6
+                                          #   paraphrase counts within one format (unknown format: counted as the same)
+
+[style]                                   # check style (graders.py; v13.9 fixK9)
+pet_phrase_max = 1                        # warn: a card phrase more than once in a piece (VN em dash "—" in a piece fails)
+asks_max = 1                              # warn: more than one ask line in a piece
+needs_questions_max = 1                   # fail: a "Needs you" / "Cần" line ("·" or ":") asking more than one thing
+needs_words_max = 20                      # fail: a "Needs you" / "Cần" line over this many words (VN tiếng): "one ask, ≤20 words" (v13.10)
+
+[week1]                                   # check week1_plan (graders.py; v13.9 / v13.10, audit a3 M3; v13.12 a post a day)
+week_posts = 7                            # v13.12 (founder 11 Oct): the Week-1 table holds 7 rows, one a day (day 1 = Day 0's
+                                          #   piece), whatever the hours; the DM replies, "ask 3" and the gift are not counted
+filmed_by_hours = [[0, 2, 2], [2, 3.01, 3], [3.01, 4.5, 4], [4.5, 99, 5]]   # [from h, to h, filmed at most] (§CM-WEEK 2,
+                                          #   §CM-CALENDAR 2, v13.17 bands: under 2 h or no hours Light 2 filmed + 5 written · 2–3 h
+                                          #   Lean 3 · over 3 h Standard 4 · 5 h+ 5; 8 h+ a long video + its cuts; 3 h is Lean, so
+                                          #   the Lean band ends at 3.01); fewer is fine
+tier_filmed = { light = 2, lean = 3, standard = 4 }  # with no hours on the card or the strategy: the card's tier=
+idea_overlap = 0.6                        # two "Idea, hook" cells (or FILM TODAY's first line and a Week-1 idea) sharing this share of
+idea_min_shared = 2                       #   the shorter one's content words, and at least 2 of them, are one idea twice
+idea_max_posts = 3                        # v13.12 (founder 11 Oct): one idea may feed 2-3 posts a week in different formats; two
+                                          #   rows of one format on one idea, or one idea in more rows than this, fail

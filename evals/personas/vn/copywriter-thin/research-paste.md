@@ -1,0 +1,25 @@
+# research-paste.md · copywriter-thin (VN) · Nhi
+
+> Nhánh không có trình duyệt: Nhi lướt vài nhóm Facebook của coach và chuyên gia 1-1, bình luận TikTok dưới video về coaching và một diễn đàn nghề nghiệp, rồi dán vào chat theo từng bước máy chỉ, không ghi tên người viết. Mỗi dòng: (nơi đăng) lời nguyên văn [nguồn, tháng]. Có 2 dòng quảng cáo của người bán, 2 dòng bị dán trùng, 3 dòng là của người MUA dịch vụ coaching chứ không phải coach (hữu ích để hiểu, nhưng không phải người mua của Nhi), và 1 dòng thật ra là câu của chính Nhi (chị từng comment trong nhóm), không được tính là tiếng nói người mua.
+
+- (nhóm FB) em đăng bài mỗi ngày được 3 tháng rồi mà inbox vẫn im ru, không biết mình sai ở đâu [nhóm FB cộng đồng coach Việt Nam, 2026-09]
+- (nhóm FB) thả tim thì nhiều mà hỏi giá thì không có ai, các chị có bị vậy không [nhóm FB coach và chuyên gia 1-1, 2026-09]
+- (TikTok) làm video 40 ngày liên tục, view cao mà không ai nhắn hỏi gói, chắc em làm sai gì đó [bình luận TikTok, 2026-09]
+- (nhóm FB) bán được cho người quen rồi, giờ muốn bán cho người lạ mà không biết mở lời sao [nhóm FB coach và chuyên gia 1-1, 2026-08]
+- (nhóm FB) có người nhắn hỏi giá xong là im luôn, không biết do giá hay do mình nói chưa rõ [nhóm FB cộng đồng coach Việt Nam, 2026-09]
+- (diễn đàn) thuê người viết bài thì bài hay mà đọc không giống mình, đăng lên cũng không ai chốt [diễn đàn nghề nghiệp, 2026-07]
+- (nhóm FB) em mới học xong khóa coach, giờ làm podcast hay làm Facebook trước vậy mọi người [nhóm FB cộng đồng coach Việt Nam, 2026-08]
+- (nhóm FB) thả tim thì nhiều mà hỏi giá thì không có ai, các chị có bị vậy không [nhóm FB coach và chuyên gia 1-1, 2026-09]
+- (TikTok) cứ bảo đăng đều đi, đăng đều đi, mà đăng cái gì thì không ai chỉ [bình luận TikTok, 2026-09]
+- (nhóm FB) KHÓA XÂY KÊNH 1 TRIỆU FOLLOWER CHỈ 1.990K, cam kết 100 inbox mỗi ngày, ib ngay kẻo lỡ [nhóm FB làm giàu cùng coach, 2026-09]
+- (nhóm FB) mình có 4.000 người theo dõi mà tháng rồi chỉ có 1 người hỏi, mà người đó là bạn mình [nhóm FB coach và chuyên gia 1-1, 2026-08]
+- (nhóm FB) đăng bài mỗi ngày được 3 tháng rồi mà inbox vẫn im ru, không biết mình sai ở đâu [nhóm FB coach và chuyên gia 1-1, 2026-09]
+- (diễn đàn) hỏi khách cũ sao chọn mình thì ngại, sợ họ nghĩ mình xin lời khen [diễn đàn nghề nghiệp, 2026-07]
+- (TikTok) coach nào cũng nói giống nhau, em coi xong không biết ai khác ai [bình luận TikTok, 2026-08]
+- (nhóm FB) viết bài thì viết được, mà tới đoạn kêu gọi nhắn tin là em xóa đi viết lại cả buổi [nhóm FB cộng đồng coach Việt Nam, 2026-09]
+- (nhóm FB) nhận chạy quảng cáo, giá chỉ 50 triệu cả gói, đảm bảo khách về, inbox em báo giá [nhóm FB làm giàu cùng coach, 2026-09]
+- (nhóm FB) hỏi làm thế nào thì ai cũng hỏi được, hỏi để làm gì mới khó [nhóm FB coach và chuyên gia 1-1, 2026-09]
+- (review) mua khóa của chị đó xong thấy hay mà không biết áp dụng vào việc của mình sao, hơi tiếc tiền [review khóa học trên mạng, 2026-08]
+- (nhóm FB) em có danh sách email 300 người mà gửi hoài không ai trả lời, giờ ngại gửi nữa [nhóm FB cộng đồng coach Việt Nam, 2026-08]
+- (TikTok) mua gói tư vấn xong mới biết người ta nói chung chung, đâu có ai hỏi mình đang gặp chuyện gì [bình luận TikTok, 2026-09]
+- (nhóm FB) em sợ nhắn tin mời khách cũ quay lại thì thấy mình đang bán hàng, mà không nhắn thì đâu có ai biết em còn nhận khách [nhóm FB coach và chuyên gia 1-1, 2026-09]

@@ -1,0 +1,280 @@
+[
+ {
+  "scores": [
+   {
+    "proposal": "coach-ux",
+    "coach_simplicity": 9,
+    "founder_fidelity": 6,
+    "outcome_power": 7,
+    "platform_robustness": 7,
+    "buildability": 8,
+    "bilingual": 7,
+    "total": 44,
+    "fatal_flaws": [
+     "The Claude path drops the Project, so the three commands only work if the skill triggers on its own. 'Set me up' and 'What's next?' (VN: 'Thi\u1ebft l\u1eadp cho t\u00f4i', 'Ti\u1ebfp theo l\u00e0 g\u00ec?') are generic phrases that the \u2264190-char description does not contain. In a fresh Claude chat the skill may not load, and the first session never starts. That breaks the 'install and get value without help' promise.",
+     "It cuts 'keyword-DM automation flows' as ops and has no Launch module. This contradicts two founder decisions: comment-keyword CTAs ON by default, each with its matching auto-reply/DM script; and planned 7/14/21-day launch campaigns with a 'launch mode' for the weekly automation.",
+     "It has no Character Core in onboarding and no 5th Edge pillar (Character & Polarity: definitive, no hedging, takes a stance, flags flex-only or freebie-only pieces). Both are in the founder plan.",
+     "The ChatGPT automation puts BATCH, REVIEW, DROP, the Brief, the Season and the Ship Check into one task prompt of \u22648,000 chars. ChatGPT's task-prompt limit is undocumented, and weekday recurrence on Free is unverified. The 3-task split is offered only 'on request', yet it is the safer default.",
+     "VN Notion and Sheet property names are localised through a label map. The research recommends English property names in both editions, so one set of prompts works for both. Localised names add a way for connector writes to fail silently in the VN edition only.",
+     "The Gemini path never says where the Brand Brain lives between chats (no Project, no hub writes). A Gemini coach loses all context in the second session unless told to attach MY-BRAND-BRAIN.md every time."
+    ]
+   },
+   {
+    "proposal": "outcomes",
+    "coach_simplicity": 5,
+    "founder_fidelity": 7,
+    "outcome_power": 9,
+    "platform_robustness": 6,
+    "buildability": 6,
+    "bilingual": 8,
+    "total": 41,
+    "fatal_flaws": [
+     "The ChatGPT install relies on founder-maintained task share links. These carry the founder's time zone, so the coach must fix it. The coach also pastes the Brief into the <<BRIEF>> slot of 3 tasks, re-pastes it monthly, and does a Notion 'Merge with CSV'. A non-technical coach will get at least one of these wrong, which leaves the Brief out of date in the tasks or runs them at the wrong hour.",
+     "There are about 35 coach-visible items per edition, 15 commands, and a 6-step Claude install (Notion + connector + Skill + Project + tasks). The weekly load is about 9 assets plus 8 stats per post entered at day 7. That assumes a VA, so a solo coach with 1-2 h/week is overloaded.",
+     "It has no Launch module (only a 'launch' phase mix) and no Character Core or Character & Polarity Edge pillar. Both are founder additions.",
+     "Path B states that 'connectors and Skills work on Free' as fact, but the vendor docs conflict on this, and there is no fallback if Skills are missing. Gemini gets no automation path at all.",
+     "'Keyword in 100% of pieces' conflicts with the proposal's own variation guard. It also risks forced, repetitive phrasing, the 'mass-produced' pattern that platforms demote."
+    ]
+   },
+   {
+    "proposal": "robustness",
+    "coach_simplicity": 5,
+    "founder_fidelity": 8,
+    "outcome_power": 7,
+    "platform_robustness": 9,
+    "buildability": 5,
+    "bilingual": 9,
+    "total": 43,
+    "fatal_flaws": [
+     "Path A asks the coach to choose between uploading a plugin or a skill. Installing both duplicates the skill and causes trigger conflicts. Path A also has 6 steps, and the coach creates 3 scheduled tasks by hand. The pack is about 60 files across 5 install paths plus automation, hub, examples and WHATS-NEW folders, so the coach makes several decisions before getting any value.",
+     "The v1 build scope is very large: a custom renderer, translation memory with paragraph hashes, schema migrations, an 'update check' command, a plugin, an all-in-one Lite file, and eval adapters for 3 vendors with calibrated LLM judges. A greenfield v1 risks never shipping.",
+     "Fast mode (one voice note) is the default only on free tiers. Paid coaches get one question at a time with probes, and the Film Today script arrives at about minute 26\u201336, after the 30-day calendar is built. That delays the first win compared with the other proposals.",
+     "It has no Character Core or Character & Polarity Edge pillar.",
+     "ChatGPT users may also upload an optional skill zip on top of the project files. That gives two method sources that can drift apart or contradict each other in the same account."
+    ]
+   }
+  ],
+  "winner": "coach-ux",
+  "best_ideas_to_graft": [
+   "From robustness: a Launch module. It plans and scripts 7/14/21-day launches (bait/lead magnet, belief shift, value, case-study series, open cart, retargeting, real urgency) and flips the weekday automation into 'launch mode' with dates. Scarcity must come from real cap or deadline fields. VN defaults to a 21-day launch.",
+   "From robustness: comment-keyword CTAs are ON by default. Every keyword must name the real asset it delivers and ships with its first auto-DM reply script. Localised idioms (ch\u1ea5m / ib / h\u1eefu duy\u00ean) live in the VN library. Meta engagement-bait rules stay a dated note in platform-notes, never a blocker.",
+   "From robustness: task prompts are generated in-session by a command, so there are no founder share links and no founder time zone in buyers' tasks. Each Brief carries a version stamp, and the Friday review checks for Brief drift and tells ChatGPT users when to replace the task text.",
+   "From robustness: a transcript watcher on Claude Pro. Ticking 'Transcript ready' on the pillar row means the next morning's run cuts the transcript automatically. On other platforms the coach still pastes it.",
+   "From robustness: platform/targets.toml with a verified_on date per limit. Lint fails the build when a date is more than 90 days old, a budget is breached, or a placeholder is unresolved. The build also applies NFC normalisation for VN character counts, ASCII-only zip and file names, dotfile/__MACOSX stripping, and deterministic zips.",
+   "From robustness: an all-in-one Lite file plus a starter prompt as a last-resort fallback for any AI, kept in a Troubleshooting folder rather than shown as a 5th install path.",
+   "From robustness: Notion property names and option values stay in English in both editions; only view names and descriptions are localised. Add schema_version and hub_schema stamps, plus an add-only 'repair hub / update check' for quarterly updates.",
+   "From robustness: release evals that include adversarial cases (fake testimonial, income guarantee, invented $ result, prompt injection in pasted comments), an empty-bank cold-start coach, idempotency (run T1 twice on a sandbox Notion), and router and skill-trigger accuracy gates. Shipped examples are the frozen golden outputs.",
+   "From robustness: a monthly Authenticity Pack (Matt Gray): a voice memo answering 15 questions, transcribed into the banks. Also the Signal-framework questions (who you're 5 years ahead of, what people already ask you for, what you're quietly intolerant of).",
+   "From robustness: method prose stays in English, wrapped in a VN output contract with VN examples, behind a method_prose switch the founder decides. Batch size is set per plan tier.",
+   "From outcomes: a swap test inside the Authenticity dimension. If a competitor could post the piece unchanged, it scores 0.",
+   "From outcomes: a CTA kit delivered in the first session: comment keyword, a first DM line that asks a qualifying question, and the booking-form attribution question ('Where did you first hear about me, and what did you watch before reaching out?'). Reviews track keyword echo (how often the audience says it back) and 'named before booking'.",
+   "From outcomes: at least 70% of clip words must be the coach's own transcript words, and every pillar segment must work alone as a clip and carry a verbatim CLIP LINE.",
+   "From outcomes: a no-pillar fallback ('record a 10-minute mini-pillar: answer these 3 questions into your phone'), so a missed recording never means a zero week. Reviews say results are judged on a 90-day trend.",
+   "From outcomes: the W4 pillar is a client decision breakdown or live consult and becomes the Start Here anchor (pinned-post script + pre-call email script). Self-deprecating formats stay blocked until proof pieces exist (competence first).",
+   "From outcomes: deterministic date-arithmetic rotation (themes, recognition moments, hook stems) for stateless ChatGPT and Gemini tasks. Also a one-line 'Create with Claude' sentence that sets up the schedule.",
+   "From outcomes: CARD + DEEP sections in each reference file. Batch runs read only the CARDs, and DEEP sections load only when a flag fires (e.g. an AMBER claim)."
+  ],
+  "must_fix": [
+   "Make the commands trigger reliably on every platform without a Project. Commands must contain the product name ('Set up my Content Machine', 'Content Machine: what's next?', and the VN equivalents with 'Content Machine' kept in), or the Claude install must include a 1-line Project instruction 'Always use the content-machine skill'. Add a skill-trigger-rate gate (\u226590% per edition) to the release evals.",
+   "Add the founder's Character thesis without making Day 0 longer. Fold the Character Core prompts (one extreme trait, enemy/old way, a principle you'd never break, vision) into the existing \u226410 voice questions and the Edge card, and output a short Character Card. Add Edge pillar 5, Character & Polarity: definitive, no hedging, takes a stance, expresses a trait/principle/value. Flag flex-only and freebie-only pieces. Re-base the ship threshold on 5 pillars.",
+   "Add the Launch module and launch mode to the weekday automation. Also add comment-keyword CTAs ON by default, each with its delivered asset and DM reply script. Remove 'keyword-DM flows' from the cut list (the DM message is a script and therefore in scope; the automation tooling stays out).",
+   "Ship both ChatGPT automation variants pre-generated: one combined weekday task and the 3-task split (fits the Free cap exactly). Measure the real task-prompt length limit and Free weekday/time-window behaviour at launch, then make the safer one the default. The Friday task asks for a fixed stats or screenshot reply in the same chat.",
+   "Generate every task prompt in-session with the Brief embedded and version-stamped. No founder share links. The Friday review detects Brief drift and gives the ChatGPT coach one paste to replace it.",
+   "Keep hub property names and option values in English in both editions; localise only view names, descriptions and coach-facing labels. One schema.yaml renders the Notion template, the Sheet tabs and every property name used in prompts.",
+   "Make the hub default and the VN platform, CTA channel (e.g. Zalo/Messenger), compliance pack, launch length and transcript tools parametric in vn.yaml. Mark them PENDING, and block a VN release until they are filled or explicitly accepted. Until then the strict universal RED/AMBER claims rules apply.",
+   "State the Gemini memory path explicitly: attach or paste MY-BRAND-BRAIN.md at the start of each chat, and label it 'manual, best effort'. Same for the Claude Free/no-Skills fallback via Project files.",
+   "Protect the first win. A film-ready native short must arrive by about minute 25, before any planning, on every platform and plan. Fast lane (all questions in one voice note) is the default for everyone. The session can be resumed if the coach stops after the first script, and 'What's next?' picks it up.",
+   "Cap coach effort at 1-2 h/week with no VA assumed. Volume is set by the time answer, stats are 3-4 numbers per post or screenshots, and the weekly report fits on one screen with exactly one NEXT line.",
+   "Clip and cut-down outputs must read as scripts (the coach's verbatim words, hook, on-screen text, caption, CTA), not editing instructions. No shot lists, B-roll or timecode briefs.",
+   "Keep the coach-visible zip tiny: START-HERE plus one folder per app (one Claude skill zip; no plugin in v1). Examples, .ics files and the all-in-one Lite file go in a Help/Troubleshooting folder.",
+   "Make install self-tests mandatory: a Notion write test plus 'Run now' with an approval-mode check on Claude Pro, and a Reports/Runs row as the visible heartbeat. 'What's next?' catch-up is the universal manual path for Free and Gemini.",
+   "Keep dated platform facts in one file with verified_on dates, enforced by lint. Budgets keep a margin: skill description \u2264190 chars after NFC, ChatGPT instructions \u22646,000 EN / \u22647,000 VN, \u22643 uploads on day 1 for ChatGPT Free, at most 5 project files.",
+   "Keep the proof gate and claims linter. Direct-response offers and ads are blocked until a P item has consent or the offer is labelled a founding pilot. 'AI-powered' never appears in offer copy. No invented specifics: every specific maps to a Bank ID or gets a [NEEDS] tag.",
+   "Release gate: 3 golden personas \u00d7 2 editions (including one cold-start), run Setup \u2192 Batch \u2192 Cut \u2192 Review on Claude Pro/Free, ChatGPT Free/Plus and Gemini, plus the adversarial and idempotency cases. VN needs native-reviewer sign-off before launch."
+  ]
+ },
+ {
+  "scores": [
+   {
+    "proposal": "coach-ux",
+    "coach_simplicity": 9,
+    "founder_fidelity": 5,
+    "outcome_power": 7,
+    "platform_robustness": 7,
+    "buildability": 8,
+    "bilingual": 7,
+    "total": 43,
+    "fatal_flaws": [
+     "No Launch module. The founder's addition says converting content 'c\u1ea7n 1 c\u00e1i g\u1ecdi l\u00e0 launching': a planned 7/14/21-day campaign (bait/lead magnet \u2192 belief shift \u2192 value \u2192 case-study series unlocked by comments \u2192 open cart \u2192 retargeting \u2192 real urgency \u2192 close). The strongest selling mechanism the founder named is missing.",
+     "It contradicts the founder decision 'COMMENT-KEYWORD CTAs are IN, by default'. Comment-keyword CTAs only appear as a break-point fix, and the matching auto-reply/DM message script is cut along with 'keyword-DM automation flows'. That message script is a script, so it is in scope.",
+     "The Edge Check has 4 dimensions and no Character & Polarity pillar. Nothing flags flex-only or freebie-only pieces, and there is no Character Core or Character Card in onboarding. The founder calls this 'the deepest layer of the machine'.",
+     "The founder's 3 scheduled automations are collapsed into one 'Daily Machine'. The behaviours survive, but on ChatGPT one undocumented-length task prompt (\u22648,000 chars) has to carry the brief (cut to \u2264400 words), the Season, all three procedures and a Ship Check squeezed to about 700 chars. So the quality gate and the raw material are both thinnest on the platform with no memory.",
+     "Hard CTAs are allowed only in Week 4, and only if the proof gate is open. Prospects who arrive in Weeks 1\u20133 see almost no direct ask. This goes against Nik Setting's funnel-balance rule (missing BOFU leads to 'I don't know if this works') and against the brief's finding that converting content must exist before the prospect reaches out.",
+     "Gemini users have no defined place for the Brand Brain to persist (no project, no attach-each-chat rule). Matt Gray's packaging and hook library is absent."
+    ]
+   },
+   {
+    "proposal": "outcomes",
+    "coach_simplicity": 6,
+    "founder_fidelity": 7,
+    "outcome_power": 9,
+    "platform_robustness": 6,
+    "buildability": 7,
+    "bilingual": 8,
+    "total": 43,
+    "fatal_flaws": [
+     "No Launch module. It has only a 'launch' phase mix (20/30/50) and a 'Launch arc' series kind. There is no 7/14/21-day phased campaign, no launch-mode switch for the weekly automation, and no VN launch idioms.",
+     "No Character & Polarity Edge pillar, no flex-only or freebie-only flag, and no Character Card. Character survives only as the Admire Triad, one extreme trait and the enemy.",
+     "The ChatGPT path depends on founder share links. These carry the creator's time zone, so every buyer has to fix it. The Brief also has to be pasted by hand into 3 tasks and replaced monthly, plus a CSV merge and re-upload. That means high friction and certain Brief drift for non-technical coaches.",
+     "The default 1-week pillar lag means Week 1 has no clips cut from a pillar, and the coach's 'record \u2192 paste \u2192 cut' loop shows results a week late. That weakens the speed-to-outcome effect the founder wants.",
+     "The load is too heavy for a 1\u20132 h/week coach without a VA: 8 stats per piece plus attribution answers, about 35 coach-visible items, 15 commands, and a 25-minute monthly session with 8 sub-tasks.",
+     "Requiring the keyword in 100% of pieces risks keyword stuffing and templated sameness, which is exactly what YouTube's 'inauthentic content' policy and the variation guard target."
+    ]
+   },
+   {
+    "proposal": "robustness",
+    "coach_simplicity": 5,
+    "founder_fidelity": 8,
+    "outcome_power": 8,
+    "platform_robustness": 9,
+    "buildability": 6,
+    "bilingual": 9,
+    "total": 45,
+    "fatal_flaws": [
+     "It breaks the 'no-brainer simple' requirement as written: 5 install paths, a Plugin-vs-Skill choice in Claude setup step 2, about 60 files per edition, 16 commands, a monthly 30\u201345 min Authenticity Pack, and a quarterly 'update check'. The coach is handed a toolkit to learn.",
+     "No Character & Polarity Edge pillar (it has only an 'only-you POV line / one opinion' inside Value), no flex-only or freebie-only flag, and no Character Core interview or Character Card.",
+     "The first film-ready piece comes only after a one-question-at-a-time interview, keyword selection and the 30-day plan (around minutes 26\u201336). Week 1 is written fresh rather than cut from the coach's own spoken answers. That gives a slower first win and less authentic raw material on day 1.",
+     "The v1 build scope is heavy: a custom renderer, translation memory, lint, model adapters for 3 vendors, migrations, snapshots and an all-in-one Lite file. Together these put the release date at risk without making the scripts better.",
+     "Its DR measurement is weaker than 'outcomes': no keyword-echo count, no named-before-booking, no swap test and no competence-first gate. Trustable weekly cadence is not guaranteed outside the phase mix."
+    ]
+   }
+  ],
+  "winner": "robustness",
+  "best_ideas_to_graft": [
+   "From coach-ux: the 'What's next?' state table plus exactly one NEXT line (action, minutes, when) at the end of every reply. Teach only 'Set me up', 'What's next?' and 'Here's my recording'. Surface every other command in context.",
+   "From coach-ux: a film-ready native short at around minute 25, BEFORE any planning, with exactly one real decision in the session (pick the signature keyword from 3 candidates mined from the coach's and clients' own words).",
+   "From coach-ux: Week 1 is cut from the coach's own spoken onboarding answers (the interview treated as pillar #0). This makes the 'pillar \u2192 cut-downs' model concrete on day one, and most words on screen are the coach's.",
+   "From coach-ux: a fast-start paste (bio, sales page, captions) that pre-fills fields and crosses off questions, with all \u226410 questions answerable in one voice message and at most 3 probes. The volume tier comes from the time-budget answer, not from an extra decision.",
+   "From coach-ux: catch-up logic so the next run completes any missed job, and 'What's next?' as the universal manual path for Claude Free and Gemini (one .ics, not three).",
+   "From coach-ux: one optional \u226410-minute homework item per week, each stating what it unlocks: Buyer Mirror message in W1, objection mining in W2, offer, proof, consent and CTA link before the first hard sell.",
+   "From coach-ux: clip scripts written as verbatim PASSAGE ranges ('from \"\u2026\" to \"\u2026\"'), which stay words rather than editor briefs. Status changes are attested by the coach in chat ('posted N1').",
+   "From outcomes: the Domino Week. The week sweeps all 4 rungs because new people arrive weekly, while the month advances the belief chain. At least 1 Trustable piece every week from W2, so BOFU is never empty.",
+   "From outcomes: a buyer-signal scoreboard (keyword comments/DMs, calls booked, named-before-booking, keyword ECHO count when the audience says it back, trust-hours counter, 90-day framing). The break-point diagnosis runs only after 2 flat weeks and \u226510 posted pieces.",
+   "From outcomes: the swap test as the Authenticity floor (if a competitor could post it unchanged, it scores 0), plus the competence-first gate (self-deprecating formats stay blocked until proof is pinned) and Soo Wei's MOFU 3-question check as hard gates.",
+   "From outcomes: a CTA ladder per rung and a CTA kit (comment keyword, a first DM line that asks a qualifying question, and a booking-form attribution question), with give:ask \u22483.5:1. Ads are written only from winners with consented proof.",
+   "From outcomes: SPCL mapped to rungs (Status\u2192Admirable, Likeness\u2192Likable, Power\u2192Credible, Credibility\u2192Trustable). \u226570% of clip words must come from the coach's own transcript.",
+   "From outcomes: the film-today 'Belief Bomb' (contrarian belief from Q7 + story from Q6), Layer-1 questions each tagged with the field they feed, a no-pillar mini-pillar fallback, and a monthly Start Here path (pinned-post script + pre-call email).",
+   "From outcomes: R/T/S outcome-lever tags as the design discipline. Any feature that cannot name a lever is cut (Hormozi's 'delete before automate').",
+   "From outcomes: an EN-leakage scan of VN coach-facing files and VN golden runs graded by a native reviewer (naturalness \u22654/5) as a release gate.",
+   "Keep from robustness (the winner): the Launch module with launch mode, comment-keyword CTAs ON by default with a real asset and an auto-DM script, Meta engagement-bait kept as a dated note and never a blocker, VN idioms (ch\u1ea5m/ib/h\u1eefu duy\u00ean), a 21-day VN launch default, runtime-generated task prompts (no share links), date-arithmetic rotation for stateless tasks, Brief version stamps with a drift check, the transcript watcher, targets.toml with verified_on dates, PENDING_VN release blockers, and translation-memory staleness lint."
+  ],
+  "must_fix": [
+   "Add Character & Polarity as the 5th Edge pillar. It checks that a piece is definitive (no hedging), concise, takes a stance some people will reject, and expresses a trait, principle, value or vision. Also add a flex-only / freebie-only flag that asks for the character angle, and the hard limit: no attacks on protected groups or private individuals. Use one consistent scale, e.g. 0\u20132 \u00d7 5 = 10, ship at \u22657 with no zero; Convert needs Authority = 2 with a consented proof ID or founding-pilot framing.",
+   "Replace the brand form with a Character Core conversational excavation (stories, anger, what you'd never do, the one extreme trait, principles, values, vision, enemy/old way, quirks, how you talk) that produces a short living Character Card. Reserve recurring character content slots inside Admirable/Likable.",
+   "Ship the Launch module to founder spec: a 7/14/21-day calendar running bait/lead magnet \u2192 belief shift \u2192 value \u2192 educate (case-study series unlocked by comments) \u2192 open cart \u2192 retargeting scripts \u2192 real urgency/scarcity \u2192 close + post-launch proof/waitlist. It switches the weekly batch into launch mode and accepts only real caps or deadlines from the Offer fields.",
+   "Make comment-keyword CTAs the default on bait posts, carousels, reels and case-study series. Each keyword must name the real asset it delivers and come with the matching auto-reply/DM script. Keep Meta's engagement-bait rules as a dated platform note, never a blocker.",
+   "Add the Matt Gray packaging and hook library: title formulas with a parenthetical payoff; 2\u20134-word thumbnail text that adds to the title; a long-form hook (contrarian \u2192 named structure \u2192 mirror pain \u2192 proof \u2192 promise with an open loop paid off at the end \u2192 objection removal); the 5-line story (Mirror \u2192 Friction \u2192 Realization \u2192 Shift \u2192 Invitation); a contextual-lead-magnet CTA mix of about 60/20/20; and carousel rules.",
+   "Collapse the coach-facing surface: one install path per AI app, with no Plugin-vs-Skill choice exposed (make the plugin optional or drop it for v1). START-HERE fits one page. Three taught commands plus 'What's next?' and a NEXT line on every reply. A film-ready short arrives by about minute 25, before planning.",
+   "Keep the founder's 3 automations as 3 named tasks: weekly batch on Mon, daily idea + hook drop on weekdays, weekly review on Fri. That fits ChatGPT Free's 3-task cap. Each task gets run keys, slot keys, a catch-up guard and an embedded QC card. ChatGPT task messages are generated in-session with the Brief and time zone pre-filled; never use founder share links.",
+   "Guarantee funnel balance every week: at least 1 Trustable/converting piece weekly from W2, a CTA matched to the rung on every piece, and hard sells gated on \u22651 consented proof item or a real founding-pilot cap. Signature beliefs get \u22653 spaced exposures per 30 days in varied formats. The keyword appears in the hook, on-screen text or caption line 1, but the variation guard prevents stuffing.",
+   "Respect the 1\u20132 h/week budget: at most 4 required stats per post (Views, Saves+Sends, Comments+DMs, Leads), a monthly re-plan of \u226430 min, at most one \u226410-min optional homework item per week, and a volume tier set by the time-budget answer.",
+   "Make every VN market fact parametric with a PENDING_VN release block: platform priority, CTA channel (e.g. Zalo/Messenger/inbox norms), a compliance pack that falls back to strict universal RED/AMBER rules, hub default (Notion vs Sheets), launch length default, seasonal overlay (T\u1ebft) and reference creators. Native-written VN hooks, banned AI tells, examples and x\u01b0ng h\u00f4 guidance live in the Voice Card. A native reviewer signs off before the VN launch.",
+   "Before launch, self-test and verify every unverified platform behaviour: ChatGPT task prompt length and Free weekday scheduling, the Claude approval mode on unattended Notion writes, Claude Free Skills availability, Gemini zip-vs-folder upload and how the Brand Brain persists in Gemini, and ChatGPT Plus Notion writes. Ship honest tier labels ('Claude Pro + Notion = runs itself; ChatGPT = drafts arrive, you or your VA paste').",
+   "Trim the v1 build scope to what protects output quality: build/render, a limits lint, an i18n staleness check, and golden runs for 3 personas \u00d7 2 editions, including a cold-start persona and adversarial claims and prompt-injection cases. Defer multi-vendor eval adapters, snapshot infrastructure and the all-in-one Lite path unless they are cheap."
+  ]
+ },
+ {
+  "scores": [
+   {
+    "proposal": "coach-ux",
+    "coach_simplicity": 9,
+    "founder_fidelity": 6,
+    "outcome_power": 7,
+    "platform_robustness": 6,
+    "buildability": 8,
+    "bilingual": 7,
+    "total": 43,
+    "fatal_flaws": [
+     "Founder decisions missing. There is no Launch module: the plan requires planned 7/14/21-day launches (bait \u2192 belief shift \u2192 value \u2192 educate \u2192 open cart \u2192 retarget \u2192 urgency/close) and a 'launch mode' for the weekly automation. The proposal also explicitly CUTS 'keyword-DM automation flows'. The founder made comment-keyword CTAs ON by default, each shipped with its matching auto-reply/DM script and a real deliverable.",
+     "The Edge Check scores only 4 pillars (K/V/A/Au). The founder added a 5th pillar, Character & Polarity: definitive, concise, takes a stance, expresses a trait/principle/value/vision. The founder also wants a Character Core onboarding that outputs a Character Card, plus flags for 'flex-only' and 'freebie-only' pieces. None of this is present.",
+     "Skill triggering is unreliable on Claude. The Claude Project is cut, and the three taught commands ('Set me up', 'What's next?', 'Here's my recording') are generic phrases. None of them appears in the 185-char skill description. A fresh chat can answer 'What's next?' without loading the skill or reading Notion, which breaks the core UX promise.",
+     "The 'What's next?' state table (rows 3-8) and the catch-up logic need to read hub state: Reports keys, Filmed/Posted rows, stats. On ChatGPT and Gemini the hub is a Google Sheet the model cannot read and there is no Reports log. So the 'universal manual path' and catch-up only work on Claude+Notion, yet they are claimed for every platform.",
+     "The single ChatGPT 'Daily Machine' task packs the batch, drop and review procedures, the Brief, the Season block, the avoid-list and the Ship Check into one prompt of up to 8,000 chars. The task-prompt limit is undocumented. It is also a correlated single point of failure: ChatGPT auto-pauses a task when it is ignored or its chat is deleted, so ignoring a few daily drops silently stops the Monday batch and the Friday review too.",
+     "The Gemini path never says where the Brand Brain lives. There is no Notion, the Sheet is not readable, and no 'attach MY-BRAND-BRAIN.md' step is given, so Gemini sessions are effectively stateless.",
+     "Translation staleness is tracked by a file-level source-sha. Any EN typo fix invalidates the whole VN file, and the full method is hand-translated (about 16 files), so maintenance cost doubles. VN Notion property names are localized through a label map, which adds a second schema surface to keep in sync."
+    ]
+   },
+   {
+    "proposal": "outcomes",
+    "coach_simplicity": 6,
+    "founder_fidelity": 7,
+    "outcome_power": 9,
+    "platform_robustness": 6,
+    "buildability": 6,
+    "bilingual": 8,
+    "total": 42,
+    "fatal_flaws": [
+     "ChatGPT automation depends on founder-maintained task share links. These links carry the founder's timezone, must be re-published for every release and edition, and still need a manual <<BRIEF>> paste. Monthly upkeep is about 4 manual operations: replace the brief in 3 tasks, merge the CSV, re-upload MY-BRAND-BRAIN. That contradicts 'no-brainer simple' and the research warning about timezone leakage.",
+     "The context budget rests on 'batch runs read CARD sections only; DEEP loads when a flag fires'. Nothing can enforce partial loading. Claude reads a reference file whole, and ChatGPT retrieves chunks by relevance. So the 12-15k-token Monday budget is fictional with 18 references. The overlapping playbooks (attract/educate/convert vs short/posts/longform) also make routing misses more likely.",
+     "The Monday T1 run does the cut kit of last week's pillar plus pillar prep, N1, N2 and the email, gated, up to 10 scripts in one unattended run. That is a high risk of hitting Pro usage limits and getting partial runs. On ChatGPT, T1 cannot cut at all.",
+     "There is no Launch module, only a 'launch' phase mix and a 'Launch arc' series kind with no launch calendar or launch-mode switch. There is also no Character & Polarity pillar or Character Core.",
+     "'The keyword appears in 100% of pieces' conflicts with the humanize pass and the variation guard. Keyword stuffing produces exactly the generic, repetitive feel the Edge thesis is meant to prevent.",
+     "Coach load is high: 5 install paths, a Claude path needing Skill + Project + connector + 3 tasks, about 35 coach-visible items per edition, and 15 commands plus a menu card."
+    ]
+   },
+   {
+    "proposal": "robustness",
+    "coach_simplicity": 6,
+    "founder_fidelity": 8,
+    "outcome_power": 7,
+    "platform_robustness": 9,
+    "buildability": 7,
+    "bilingual": 9,
+    "total": 46,
+    "fatal_flaws": [
+     "Tooling is over-scoped for v1. A custom renderer, paragraph-level translation memory, schema migrations, committed snapshots, 3-vendor eval adapters with a calibrated LLM judge, and outputs for plugin + skill + Gemini root zip + all-in-one Lite would delay the first shippable edition unless the work is phased.",
+     "There is too much coach-facing choice. Path A offers 'plugin OR skill', which is a needless decision, and installing both risks duplicate triggers. There are 5 install paths, about 60 dist files per edition and 16 commands. A monthly 30-45 min Authenticity Pack (15-question voice memo) is stacked on top of the 1-2 h/week budget.",
+     "The Edge Check still has 4 pillars. There is no Character & Polarity pillar, no Character Core or Character Card, and no flex-only or freebie-only flag.",
+     "On ChatGPT Free/Go, the design relies on weekly Monday (T1) and Friday (T2) recurrences, but choosing a weekday on Free is unverified. No in-design fallback exists beyond generic .ics reminders.",
+     "A PENDING_VN marker hard-blocks the VN release, yet no safe interim defaults are defined, so the VN launch is blocked on pending research. Method prose defaults to English for VN, which risks English leaking into VN output. The switch to VN prose exists but the decision is deferred.",
+     "Minor incoherence: the connected (Claude) T2 runs a 'Brief drift \u2192 replace your ChatGPT task blocks' step, but connected users have no ChatGPT tasks."
+    ]
+   }
+  ],
+  "winner": "robustness",
+  "best_ideas_to_graft": [
+   "From coach-ux, the 'What's next?' state table. Every reply ends with exactly one NEXT line (action, minutes, when). The catch-up logic is shared by the scheduled run and the manual command, so Claude Free users get the same behaviour by typing it.",
+   "From coach-ux, the first-session sequence. A film-ready native short arrives around minute 25, before any planning. The keyword is the only real decision. An optional fast-start paste of bio, sales page and captions lets the machine skip questions it can already answer.",
+   "From coach-ux, Week 1 is cut from the coach's own spoken onboarding answers, treating the interview as pillar #0. The coach learns the pillar \u2192 cut-downs model by doing it on day one.",
+   "From coach-ux, a single weekday 'Daily Machine' router task (Mon batch / Fri review / other days drop, catch-up, weekend capture branch). Use it as the ChatGPT Free/Go fallback when weekday-specific recurrence or the 3-slot cap is a problem, not as the default.",
+   "From coach-ux, choose the default hub from the AI app (Claude \u2192 Notion; ChatGPT/Gemini \u2192 Sheets Lite, overridable in edition config). This removes one install decision.",
+   "From coach-ux, let the coach attest a status in chat ('posted N1', 'filmed the pillar') during interactive sessions only. Scheduled runs still never set Filmed or Posted.",
+   "From coach-ux, ChatGPT monthly upkeep stays at 2 or fewer paste actions. One command regenerates a personalised task message with the Brief, plan and timezone already filled in, so no founder share links are needed.",
+   "From coach-ux, safe defaults while VN research is TBD: make no platform recommendation (ask 'where do your buyers already see you?'), treat every result claim as AMBER under strict compliance, budget VN instructions 15-25% longer, count characters after NFC normalisation, and add a x\u01b0ng h\u00f4 pronoun pair field to the VN Voice Card.",
+   "From coach-ux, set the volume tier from the time-budget answer (\u22641 h, 1-2 h, or VA) instead of asking an extra question. Use honest tier labels: 'runs itself' / 'drafts arrive, you paste' / 'one message each morning'.",
+   "From outcomes, a buyer-signal scoreboard: keyword DMs, calls booked, named-before-booking, a booking-form attribution question, a keyword 'echo' count, a trust-hours counter, and 90-day trend framing.",
+   "From outcomes, a weekly rung sweep: every week covers all 4 rungs while the month advances the belief chain. From week 2 there is at least one Trustable piece every week.",
+   "From outcomes, a 'never a zero week' design: a 1-week lag pipeline, plus a no-pillar fallback (record a 10-minute mini-pillar answering 3 questions), plus Mode A guided interview so a VA or friend can run the pillar.",
+   "From outcomes, a stronger quality gate: a swap test in the Authenticity score (could a competitor post this unchanged?), a Buyer Filter with competence-first gating, an idea kill rule (evidence = 1 and proof-ability = 1), and at least 70% of clip words taken from the coach's transcript.",
+   "From outcomes, a CTA kit: comment keyword, a first DM line that asks a qualifying question, and an attribution question. This lines up with the founder's comment-keyword default.",
+   "From outcomes, the VN release gate: an EN-leakage scan of VN coach-facing files with a loanword allowlist, a native naturalness score of at least 4/5 in golden runs, and PENDING flags that must be 'cleared or explicitly accepted' rather than hard-blocking."
+  ],
+  "must_fix": [
+   "Add the founder's Character thesis. Put a Character Core excavation at the start of onboarding: stories, anger, what you'd never do, the ONE extreme trait, principles, values, vision, the enemy/old way, quirks, how you talk. It outputs a living Character Card. Add Edge Check pillar 5, Character & Polarity: definitive, concise, takes a stance, expresses a trait/principle/value/vision. Add flex-only and freebie-only flags. Polarity has hard limits: no attacks on protected groups or private individuals. Re-scale the footer and ship threshold (e.g., 5\u00d70-2, ship \u22657 with no 0), and update the QC card, rubric files and evals to match.",
+   "Keep and complete the Launch module: a 7/14/21-day calendar (VN default 21), phases, and a launch-mode switch for the weekly automation. Comment-keyword CTAs are ON by default, and each keyword names the real asset it delivers and ships with its auto-reply/DM script. Scarcity must come from the Offer's real cap or deadline fields. Meta's engagement-bait rules stay a dated note in platform-notes and never block anything.",
+   "Make skill triggering reliable. On Claude, keep a short Project instruction that forces the skill and links the hub (or use /content-machine as the documented fallback). Every taught command carries the product name ('Content Machine: what's next?', 'Set up my Content Machine'). Gate the release on router accuracy \u226595% and description-trigger rate \u226590% in both languages.",
+   "Claude install ships ONE artifact, the skill zip. The plugin and marketplace sync are maintainer-optional and never a coach choice. START-HERE sends each coach to exactly one folder, and coach-visible files per path stay at 5 or fewer.",
+   "ChatGPT automation: generate task prompts at runtime from the current Brief, with no founder share links. Hold each self-contained task to a conservative budget (e.g., \u22645,000 chars including a Brief of \u2264600 words / \u22644,000 chars) until the real limit is measured on launch day. Default to 3 separate tasks so one auto-pause doesn't kill everything. Fall back to the single weekday-router task when Free can't pick weekdays. Put a verification matrix for these unverified behaviours in platform/targets.toml.",
+   "Define stateless behaviour for 'What's next?' and catch-up on ChatGPT and Gemini, where the hub is unreadable. Derive the due job from date arithmetic against the plan start date in the Brand Brain, ask at most one status question, and never claim the hub-state parity that only Claude+Notion has.",
+   "Context budget: do not rely on partial-file loading. Keep each reference at 150 lines or fewer, load at most 4 references per job named by the router, keep the about-900-char QC card always loaded, and open the full rubric only on a fail. Concatenated ChatGPT files use unique \u00a7 anchors with sections of 2 KB or less.",
+   "Cap scheduled runs at 4-5 scripts and at most 3 web searches. Run the transcript cut kit on the paste/command event (or the Claude 'Transcript Ready' watcher), never inside the Monday batch. Write the Runs Log row first as Running, then OK or Partial, and have 'finish batch' resume only the missing Slot Keys.",
+   "State rules must match everywhere (QC card, task prompts, eval assertions): AI sets only Idea, Scripted or Reviewed; coach-attested Filmed/Posted only in interactive chat; never delete; never overwrite a non-empty Scripted body; upsert by Slot Key; Runs Log keys per job and period.",
+   "Gemini path: specify where the Brand Brain lives (attach MY-BRAND-BRAIN.md in each chat), confirm at release which upload form works (unzipped folder or root zip), and state that scheduling is out of scope for v1.",
+   "VN edition: replace the hard PENDING_VN block with safe defaults plus founder-signed acceptance. Decide method_prose (EN with a VN output contract, or VN) from golden-run evidence before launch. Keep schema property names and option values in English, with VN view names and labels. Use ASCII file names, and apply NFC normalisation before every character-budget check.",
+   "Phase the build. v1.0 = std-lib build + lint (budgets, anchors, placeholders, paragraph-hash staleness, verified_on age) + skill zip + ChatGPT bundle + Gemini folder + task templates + Notion/Sheets schema + golden personas (including cold-start) with deterministic graders. Add the plugin, the all-in-one Lite file, migrations machinery and multi-vendor automated LLM-judge adapters in 1.1, but put schema_version fields in the Brand Brain and hub now.",
+   "Cut monthly coach load to fit 1-2 h/week. 'Plan next month' takes 25 minutes or less. The Authenticity Pack becomes an optional 10-minute voice memo spread across weekly capture questions. ChatGPT monthly upkeep is at most 2 paste actions.",
+   "Repetition rule: each chosen signature keyword and each signature belief gets at least 3 exposures per 30 days, across varied formats and placements. Do not require the keyword in 100% of pieces. The variation guard must stop identical keyword placement or hook stems from repeating.",
+   "Release gate: golden personas \u00d7 2 editions \u00d7 (Claude Pro, Claude Free, ChatGPT Free/Plus, Gemini) must show 0 RED claims, 100% of cited bank IDs resolving, no duplicates when a connected batch is re-run on a sandbox Notion, Edge rubric thresholds met, and VN naturalness \u22654/5 from a native reviewer. The shipped examples are the frozen outputs of these runs."
+  ]
+ }
+]

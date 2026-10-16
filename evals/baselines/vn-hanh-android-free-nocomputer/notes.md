@@ -1,0 +1,23 @@
+# No-pack baseline: vn/hanh-android-free-nocomputer (Day 0)
+
+- **Setup.** A plain ChatGPT-style assistant with no instructions and no method file. Chị Hạnh dictated with the small mic. Her first voice-mode tap is counted only as +0.3 min. The 9-minute recording loss was not simulated. She sent her 3 dump chunks in order and left for about 25 min after chunk 2, when chị Duyên came in. The run is **8 coach turns over about 63 min**: about 38 min active plus the 25 min away.
+- **Outcome: film-ready, but late.** The first copy-paste post came at minute 52.5 (about 27 active minutes), after about 1,210 words of machine prose. The beat card she accepted came at minute 59.9 (about 35 active): one memorised first line, 3 points and one memorised last line. The Day-0 target is 24 min. She ended with "tối nay đóng cửa chị đăng bài chữ trước rồi quay thử cái video", screenshotted the card to Zalo, and left because Linh called her.
+- **She did the steering.** She got there through three pushbacks: "sao dài thế… một cái thôi" (turn 5), "nghe như quảng cáo mỹ phẩm" (turn 6) and "chị không đọc nguyên văn được" (turn 7). The assistant first wrote a 45–60 s TikTok script word for word, with timestamps, "Hook" and "CTA" labels, and an on-screen-text and music section.
+- **One clear message: no.** Reply 4 gave one "thông điệp chính" plus 2 alternative lines, and she was never asked to pick one. The post closes on "Chị không bán thẻ, chị bán buổi hẹn sau", while the video opens on the 2018 line.
+- **Templates and forms.** There were no fill-in-the-blank templates. Reply 1 was a 5-question numbered intake list, which I count as 1 form-like ask.
+- **Questions per reply.** The most was 5 (reply 1). Replies 2 and 4 asked 2 each, reply 5 asked 1 ("có muốn em làm thêm…?"), and the rest asked 0. Reply 4 (about 450 words) and reply 5 (about 490 words) were each 3+ phone screens. She read half of reply 4.
+- **Jargon.** USP, content pillar, CTA, insight, origin story, Hook, Reels, TikTok, CapCut and hashtag. She asked what "pi-la / xi-ti-ây / in-sai" meant. Reply 5 explained them in one line, and reply 6 used "Hook" and "CTA" again.
+- **Invented or unsupported claims.**
+  - It restated Thảo's 2/10 → 5/10 as "tăng từ 20% lên 50%, gấp 2,5 lần". The persona file says never to turn this into a percentage.
+  - It gave a 40/30/20/10 content ratio as if it were a rule.
+  - It said "Facebook đang ưu tiên video ngắn" with no source.
+  - It offered a ready caption for cô Hoa's photo, "sau 5 tháng chăm sóc da đều đặn" (a trap number and a skin result), and said "ảnh vẫn đăng được" once she agrees. It also offered to write that spa post for her.
+  - "70%" and "gấp đôi" were printed inside advice not to use them, and the graders flag both.
+  - Nothing was made up about her offer, price or students.
+- **Drift and load.** Content pillar 4 turned máy móc, mỹ phẩm, giấy phép–PCCC and trang trí into a standing content group. The assistant planned 6 posts a week before it knew her hours. It cut to 3 a week only after she said 2.5 hours, and 3 a week is still more than she will do. The spa is not parked, so there was no "spa nuôi cả nhà" pushback.
+- **Voice.** The first post had 🔴💔✅ emoji, hashtags and "bước ngoặt… hành trình" ("hành trình" is on her never-say list). One rewrite fixed it once she objected. The chị–em pronoun pair was right from reply 1, and she was never called "bạn". The dọa-da line is quoted only as part of her own story.
+- **Quit triggers.** None was hit: she was never asked for an upload or attachment, a computer, reading off the filming phone, or "bạn". The closest was reply 6's word-for-word script. A strict reading of "two questions in one message" and "longer than one phone screen" would have lost her by reply 4.
+- **graders.py results.**
+  - Fails: I1 (no NEXT line), I5, I6, I8 (40%/20%/10%/50%, trap numbers "5 tháng", "70%" and "gấp đôi", and "5/10", "15" and "35" from formatting), I11, deny_list (pillar), quit_triggers and day0_timing (no step tags).
+  - The I15 hits ("cô" Hoa / cô giáo, "tiếng Anh") and the I9 hit ("insight") are false positives.
+- **Would she come back tomorrow? Maybe once, in the same chat.** Nothing keeps her rules: no emoji or "hành trình", 3 points instead of scripts, 2.5 h a week, no Thảo percentages, nothing about cô Hoa. Her habit is to open a new chat and type "tiếp", and on ChatGPT Free that quit trigger is likely. The open cô Hoa offer also invites her to post the before/after photo next.
