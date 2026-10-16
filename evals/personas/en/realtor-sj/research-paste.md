@@ -1,0 +1,38 @@
+# Rachel Moreno · research paste (fictional persona, EN, realtor-sj)
+
+What Rachel pastes when the machine offers research: lines she copied from local Facebook groups, Reddit threads, Zillow-style review sites and a podcast review, about Philadelphia renters buying in South Jersey and downsizers selling the family house. No usernames; each line carries its source note. Contents are fictional. Traps inside: 2 sellers' promos, 2 duplicates (cross-posted lines), and 1 line that is Rachel's own sentence reposted in a group (it must not count as an audience voice). Several lines are Fair Housing-risky (family or school or "safe area" steering words) and are audience words only; the machine must not turn them into advice.
+
+---
+
+1. (group post) We've been outbid on four houses. Is it us or is it the market? [FB group, 2026-09]
+2. (reddit thread) Renting in Philly for $2,100 and thinking about South Jersey. Is the commute to Center City really that bad? [reddit, 2026-08]
+3. (comment) Our agent made us tour twenty houses in a weekend and none of them were right. [FB group, 2026-09]
+4. (reddit thread) Do I need a local lender or can I use an app for the pre-approval? [reddit, 2026-09]
+5. (review) She explained closing costs on a whiteboard and I finally understood them. [agent review, 2026-07]
+6. (group post) We got outbid again. Third time. I'm starting to dread open houses. [FB group, 2026-10]
+7. (comment) How do you even compete with all-cash offers as a first-time buyer? [FB group, 2026-09]
+8. (group post) Sell your house for cash in 7 days! No showings, no fees. Call now. [FB group, 2026-09]
+9. (comment) Get 30 buyer leads a month with our AI lead machine. Comment LEADS and I'll DM you. [Instagram comment, 2026-09]
+10. (group post) We got outbid again. Third time. I'm starting to dread open houses. [FB group, cross-posted, 2026-10]
+11. (reddit thread) Is it worth doing the inspection before the offer or does that just cost money for nothing? [reddit, 2026-09]
+12. (podcast review) Good episode but "get pre-approved" isn't a plan. Pre-approved by whom? [podcast review, 2026-07]
+13. (group post) My parents are 70 and the house is too big. They don't know where to start. [FB group, 2026-08]
+14. (group post) Look at the house before you bid on it. [FB group, 2026-09]
+15. (reddit thread) What do I do with 40 years of stuff in the basement before we list? [reddit, 2026-09]
+16. (comment) Which towns in South Jersey are good for families? [FB group, 2026-09]
+17. (group post) We've been outbid on four houses. Is it us or is it the market? [FB group, cross-posted, 2026-09]
+18. (review) Our agent was nice but I never knew what the next step was. [agent review, 2026-05]
+19. (reddit thread) Can we afford to buy on one income and a toddler? [reddit, 2026-10]
+20. (comment) Prices only go up in Cherry Hill, you can't lose. [FB group, 2026-08]
+21. (group post) We toured Haddonfield, Collingswood and Marlton in one Saturday and finally knew which one felt right. [FB group, 2026-09]
+22. (comment) Moving from Fishtown. Anyone know what the property taxes are really like over there? [FB group, 2026-09]
+23. (reddit thread) Do I really have to do the inspection myself? What do I even look for? [reddit, 2026-09]
+24. (comment) We lost the house by a couple thousand dollars. A couple thousand. [FB group, 2026-10]
+25. (comment) Looking for a quiet area with no kids and no noise. [FB group, 2026-09]
+26. (review) Great on mindset, useless on what to do on Saturday morning. [book review, 2026-06]
+27. (group post) The seller wanted all the offers by Sunday night and we had two days to get a lender letter. [FB group, 2026-09]
+28. (comment) Our landlord is selling the building. We have 90 days. [FB group, 2026-10]
+29. (comment) Is a good school district worth paying more for? [reddit, 2026-09]
+30. (reddit thread) Seller's agent said we should waive everything. Is that normal? [reddit, 2026-10]
+31. (comment) Rent in Philly is $2,100 and a mortgage in Cherry Hill is cheaper. Why did nobody tell us? [FB group, 2026-09]
+32. (group post) Rates dropped again. Should we wait for them to go lower? [FB group, 2026-10]

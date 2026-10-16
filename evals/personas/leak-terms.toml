@@ -73,6 +73,10 @@ terms = ["Dan Whitlock", "you're booked", "NEVER ZERO"]
 fixture = "evals/personas/en/consultant"
 terms = ["Erin Castellano", "Margin Sprint", "busy and broke", "margin before more", "top-line theater"]
 
+[realtor-sj-en]
+fixture = "evals/personas/en/realtor-sj"
+terms = ["Rachel Moreno", "Pine Barrens Realty Group", "bridge buyer plan", "open-house scramble"]
+
 [linda-claude-pro-mac-newsletter]
 fixture = "evals/personas/en/linda-claude-pro-mac-newsletter"
 terms = ["Linda Garvey", "without the badge", "write the Tuesday", "the garage phase"]
