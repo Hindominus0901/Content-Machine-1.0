@@ -151,16 +151,16 @@ Founder: "mỗi ngày 1 bài nhưng mà từ những chất liệu thì ra đư�
 |---|---|---|---|
 | Light (mặc định, khi chưa nghe số giờ) | dưới 2 giờ | 2 video ngắn + 5 bài viết | khoảng 1 giờ 30 |
 | Lean | 2–3 giờ | 3 video quay một lèo + 4 bài viết (có carousel) | khoảng 1 giờ 45 |
-| Standard | trên 3 giờ | 4 video có dựng + 3 bài viết | khoảng 2 giờ 45 |
+| Standard | trên 3 giờ | 4 video có dựng + 3 bài viết | khoảng 2 giờ 40 |
 | | từ 5 giờ | 5 video có dựng + carousel + bài dài | |
 | | từ 8 giờ | 1 video dài cắt ra 4 video ngắn, 1 bài dài, 1 tin Zalo hay email | |
 
-Phút của coach cho từng dạng: video ngắn khoảng 15 (quay 6–8, đọc, đăng), có dựng khoảng 25 · bài dài khoảng 8 · carousel khoảng 15 · ảnh trích câu khoảng 10 · bài ngắn, story hay bình chọn, tin Zalo hay email khoảng 5 · cố định mỗi tuần: buổi nói chuyện 15 phút và buổi xem số thứ Sáu 15 phút. Dư giờ thì trả lời comment, tin nhắn.
+Phút của coach cho từng dạng: video ngắn khoảng 15 (quay 6–8, đọc, đăng), có dựng khoảng 25 · bài dài khoảng 7 · carousel khoảng 15 · ảnh trích câu khoảng 10 · bài ngắn, story hay bình chọn, tin Zalo hay email khoảng 5 · cố định mỗi tuần: buổi nói chuyện 15 phút và buổi xem số thứ Sáu 15 phút. Dư giờ thì trả lời comment, tin nhắn.
 
 Thêm vài luật:
 
 - Kênh chữ (cả LinkedIn): bài quay đổi thành bài viết, chừa lại một video.
-- Gói nào có từ 4 bài viết trở lên: có một bài dài 500–700 chữ.
+- Gói nào có từ 4 bài viết trở lên: có một bài dài 400–500 chữ.
 - Có danh sách email (bao nhiêu người cũng vậy): có một dòng email xin trả lời. Không có: một tin riêng.
 - Coach xin ít bài hơn: được, đó là quyền của họ; không bao giờ một tuần trống.
 - Tuần 1, bài CHUYỂN ĐỔI là tin Zalo hay email **xin trả lời**: chưa giá, chưa mời gọi, chưa chào bán.
@@ -356,7 +356,7 @@ Từ khoá comment là chữ khách nói, từ 2 tiếng trở lên, viết có 
 | Dạng | Độ dài | Cấu trúc |
 |---|---|---|
 | **Video ngắn** | **250–400 chữ**, mọi nền tảng | hook và câu móc khoảng 30 · cảnh hay bối cảnh khoảng 50–80 · 3–5 ý, mỗi ý khoảng 40–70, nối bằng "mà", "nên", "thế là" · câu cuối khoảng 20, nói luôn câu trả lời · lời mời khoảng 20. Khung năm nhịp: mỗi nhịp khoảng 50. Khung ba nhịp: lối ra chiếm nửa bài. |
-| **Bài dài** | **500–700 chữ** | hook ≤18 tiếng, ý chính nằm trước "Xem thêm" · câu móc khoảng 20–30 · chuyện khoảng 150–200 · 3 bài học, mỗi bài khoảng 100–120 (ý → vì sao → ví dụ), bài học thứ 3 mạnh nhất và trả lời câu bỏ ngỏ · lời mời khoảng 50. Chỉ 2 bài học (khoảng 110–130 mỗi bài) khi chuyện dài hơn, khoảng 250–300. |
+| **Bài dài** | **400–500 chữ** | hook ≤18 tiếng, ý chính nằm trước "Xem thêm" · câu móc khoảng 20 · chuyện khoảng 100–130 · 3 bài học, mỗi bài khoảng 80–90 (ý → vì sao → ví dụ), bài học thứ 3 mạnh nhất và trả lời câu bỏ ngỏ · lời mời khoảng 40. Chỉ 2 bài học (khoảng 90–110 mỗi bài) khi chuyện dài hơn, khoảng 150–180. |
 | Video dài | 1.000–1.500 chữ | mở khoảng 120 (bằng chứng, lời hứa, lộ trình, một câu bỏ ngỏ, một câu "kể cả khi bạn…") · bối cảnh hay chuyện khoảng 200 · 3–4 phần, mỗi phần khoảng 200–250 (ý → vì sao → ví dụ → làm gì → câu móc sang phần sau) · trả lời câu bỏ ngỏ khoảng 100 · lời mời khoảng 80 |
 | Bài ngắn | 250–450 tiếng | |
 | Carousel | 10–12 trang, mỗi trang ≤40 tiếng | trang 1 là hook chữ to, mỗi trang một ý, trang cuối là quà và một chữ comment |
@@ -401,7 +401,7 @@ Một video 400 chữ chạy dưới 3 phút (khoảng 2 phút ở tốc độ n
 | Nói trong cuộc họp | "Họp 5 phút" | sửa một thói quen nói trong họp | video ngắn 300 chữ | hằng tuần | THU HÚT | lưu, gửi đồng nghiệp |
 | | "Sửa một câu báo cáo" | một câu báo cáo thật (đã giấu tên), trước và sau | carousel 10 trang | 2 tuần một lần | NIỀM TIN | comment chữ trong hook |
 | Giải thích kỹ thuật | "Câu kỹ thuật, nói lại" | một câu đầy chữ chuyên môn, nói lại cho sếp hiểu | bài ngắn 300 tiếng | 2 tuần một lần | THU HÚT | gửi người hay phải trình bày |
-| | "Nói cho sếp không code nghe" | trọn một lần trình bày, từng bước | bài dài 600 chữ | hằng tháng | NIỀM TIN | comment chữ trong hook |
+| | "Nói cho sếp không code nghe" | trọn một lần trình bày, từng bước | bài dài 450 chữ | hằng tháng | NIỀM TIN | comment chữ trong hook |
 | Run và giọng | "Trước giờ demo" | khoảnh khắc 5 phút trước khi trình bày | video ngắn 350 chữ | 2 tuần một lần | THU HÚT | lưu |
 | | "Một buổi kèm, kể lại" | quyết định của một học viên (đã đồng ý) | video ngắn 400 chữ | 2 tuần một lần | NIỀM TIN | comment chữ trong hook |
 | Một câu, ba ý | "Một câu, ba ý, từng bước" | trọn cách làm trên một ví dụ | carousel 12 trang | hằng tháng | NIỀM TIN | comment chữ trong hook |
@@ -431,7 +431,7 @@ Soát: mỗi trụ cột có THU HÚT + NIỀM TIN, trụ cột giữ CHUYỂN �
 | 3 | carousel | Ba bước Một câu, ba ý cho báo cáo tuần · "Báo cáo tuần trong 3 câu, sếp khỏi hỏi lại." | comment BÁO CÁO TUẦN |
 | 4 | video ngắn (quay) | Lầm tưởng slide nhiều là chắc · "Lầm tưởng: slide càng nhiều càng chắc. Sự thật: sếp chỉ nhớ một câu." | comment MỘT CÂU |
 | 5 | ảnh trích câu | Câu của Vy: "Câu kết nói trước, giải thích nói sau." | lưu |
-| 6 | bài dài 600 | Chuyện tuần đầu Vy lên trưởng nhóm, 3 bài học · "Tuần đầu lên trưởng nhóm, mình bị sếp cắt lời giữa buổi demo. Từ đó mình đổi đúng một thứ." | comment chữ trong hook |
+| 6 | bài dài 450 | Chuyện tuần đầu Vy lên trưởng nhóm, 3 bài học · "Tuần đầu lên trưởng nhóm, mình bị sếp cắt lời giữa buổi demo. Từ đó mình đổi đúng một thứ." | comment chữ trong hook |
 | 7 | tin Zalo | Hỏi cuộc họp làm họ ngại nhất | nhắn lại (chưa chào bán) |
 
 Sổ ý: "nói câu kết trước" có ở ngày 1, 3, 5 (3 bài, đủ mức) · 7 bài, 5 dạng, có một bài dài · 3 THU HÚT, 3 NIỀM TIN, 1 CHUYỂN ĐỔI ✓ · 2 video quay, đúng gói Light ✓. Bài ngày 6 dựa vào chuyện chính Vy kể; nếu Vy chưa kể thì dòng "Cần" của tin hỏi đúng một câu: "Tuần đầu lên trưởng nhóm, lần đầu bạn thấy mình nói lạc là trong cuộc họp nào?"
@@ -660,6 +660,6 @@ Dùng cho mọi bài tiếng Việt trước khi đăng. Mỗi dòng "có" là �
 | 11 | Toàn tiếng Việt | Tìm câu tiếng Anh | Không câu tiếng Anh; chữ tiếng Anh chỉ khi coach thật sự chêm |
 | 12 | Kể theo lối Việt | Xem chuyện | Có cảnh, có lời nguyên văn, bước ngoặt bằng việc làm hay đồ vật, kết bằng một việc nhỏ |
 | 13 | Một niềm tin, một lời mời | Đọc câu đầu và câu cuối | Câu cuối trả lời hook; một lời mời, có chữ của hook, có đường cho người ngại |
-| 14 | Đúng độ dài | Đếm chữ | Video ngắn 250–400, bài dài 500–700, bài ngắn 250–450 tiếng, Zalo ≤90 tiếng |
+| 14 | Đúng độ dài | Đếm chữ | Video ngắn 250–400, bài dài 400–500, bài ngắn 250–450 tiếng, Zalo ≤90 tiếng |
 | 15 | Đọc to | Đọc thành tiếng như coach nói với một khách | Không câu nào vấp, không câu nào người Việt không nói |
 | 16 | Dịch ngược | Dịch từng chữ ba câu ra tiếng Anh | Cả ba câu đều vấp |

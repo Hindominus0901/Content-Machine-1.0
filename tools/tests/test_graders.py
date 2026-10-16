@@ -4421,7 +4421,7 @@ THU HÚT 40% · NIỀM TIN 40% · CHUYỂN ĐỔI 20%
 
 ## 5. Hệ thống nội dung của bạn
 
-Video ngắn 250–400 chữ · bài dài 500–700 chữ · video dài 1.000–1.500 chữ.
+Video ngắn 250–400 chữ · bài dài 400–500 chữ · video dài 1.000–1.500 chữ.
 
 ## 6. 30 ngày đầu
 
@@ -5223,7 +5223,7 @@ class StrategyFirstTimingTests(StrategyFirstBase):
 
 class StrategyFirstLengthsTests(StrategyFirstBase):
     """The founder, 7 Oct night: "the length has to be measured by words, not seconds, because people speak at different
-    speeds": a short video 250-400 words, a long post 500-700 (v14.2; under the floor fails, over the ceiling warns), a long
+    speeds": a short video 250-400 words, a long post 400-500 (v14.5; under the floor fails, over the ceiling warns), a long
     video 1,000-1,500 in parts."""
 
     @staticmethod
@@ -5280,18 +5280,18 @@ class StrategyFirstLengthsTests(StrategyFirstBase):
                             persona="vn/thu", edition="vn")
         self.assertFails(report, "lengths", "says 70 tiếng (a short video runs 250-400)")
 
-    def test_a_long_post_is_500_to_700_words(self):
-        """v14.2 (founder 12 Oct): 500-700, was about 1,000; under 475 fails, over 735 only warns."""
-        for n, ok in ((600, True), (500, True), (700, True), (480, True), (450, False), (1000, True)):
+    def test_a_long_post_is_400_to_500_words(self):
+        """v14.5 (founder 16 Oct): 400-500, was 500-700 (v14.2) and about 1,000; under 380 fails, over 525 only warns."""
+        for n, ok in ((450, True), (400, True), (500, True), (385, True), (370, False), (1000, True)):
             with self.subTest(words=n):
                 post = f"Long post · Sun · Facebook\n```\n{self.words(n)}\n```"
                 self.assertIs(self.length(self.grade(self.reply(post)), "a long post")["pass"], ok)
-        post = f"Long post · Sun · Facebook\n```\n{self.words(400)}\n```"
-        self.assertFails(self.grade(self.reply(post)), "lengths", "is 400 words (a long post runs 500-700)")
+        post = f"Long post · Sun · Facebook\n```\n{self.words(300)}\n```"
+        self.assertFails(self.grade(self.reply(post)), "lengths", "is 300 words (a long post runs 400-500)")
         over = self.inv(self.grade(self.reply(f"Long post · Sun · Facebook\n```\n{self.words(1000)}\n```")), "lengths")
         self.assertEqual(over["status"], "warn", over)
-        self.assertTrue(any("over 700" in w for w in over["warnings"]), over)
-        vn = f"Bài dài · Chủ nhật · Facebook\n```\n{self.words(600)}\n```"
+        self.assertTrue(any("over 500" in w for w in over["warnings"]), over)
+        vn = f"Bài dài · Chủ nhật · Facebook\n```\n{self.words(450)}\n```"
         self.assertIs(self.length(self.grade(self.reply(vn)), "a long post")["pass"], True)
 
     def test_a_long_video_is_1000_to_1500_words_in_parts(self):
@@ -5399,7 +5399,7 @@ Women walked out with a box.
 ## 4. Your content mix: attract, trust, convert
 ATTRACT 40% · TRUST 40% · CONVERT 20%
 ## 5. Your content system
-Short video 250-400 words · long post 500-700 words · long video 1,000-1,500 words.
+Short video 250-400 words · long post 400-500 words · long video 1,000-1,500 words.
 ## 6. Your first 30 days
 ## 7. Your gift and your asks
 ## 8. What this is built on
@@ -5435,7 +5435,7 @@ Short video 250-400 words · long post 500-700 words · long video 1,000-1,500 w
                       self.check(self.doc(self.DOC.replace("ATTRACT 40% · TRUST 40% · CONVERT 20%", "ATTRACT, TRUST, CONVERT")), "part 4")["evidence"][0])
 
     def test_part_5_gives_lengths_in_words_never_seconds(self):
-        none = self.DOC.replace("Short video 250-400 words · long post 500-700 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
+        none = self.DOC.replace("Short video 250-400 words · long post 400-500 words · long video 1,000-1,500 words.", "Posts, videos, emails.")
         self.assertEqual(len(self.check(self.doc(none), "part 5")["evidence"]), 3)
         secs = self.DOC.replace("Short video 250-400 words", "Short video 250-400 words (30 seconds)")
         self.assertIn("measures a length in seconds", self.check(self.doc(secs), "part 5")["evidence"][0])
@@ -5483,7 +5483,7 @@ class StrategyFirstRealKitTests(unittest.TestCase):
         lengths = graders._toml(REPO / "evals" / "acceptance.toml")["lengths"]
         self.assertEqual((lengths["short_words_min"], lengths["short_words_max"], lengths["long_post_words_min"],
                           lengths["long_post_words_max"], lengths["long_video_words_min"], lengths["long_video_words_max"]),
-                         (250, 400, 500, 700, 1000, 1500))                     # v14.2 (founder 12 Oct): shorter pieces
+                         (250, 400, 400, 500, 1000, 1500))                     # v14.2 / v14.5 (founder 12, 16 Oct): shorter pieces
 
 
 class StrategyFirstPersonaTests(unittest.TestCase):
@@ -8101,7 +8101,7 @@ class V1314RealLinesTests(TempRepo):
         check = graders.check_lengths(self.load(("coach", "tiếp"), ("machine", post)))
         self.assertEqual(check["details"]["long_post"], 1)
         self.assertTrue(self.item(check, "a long post")["pass"], check)
-        short = post.replace(body, "\n\n".join(body.split("\n\n")[:16]))
+        short = post.replace(body, "\n\n".join(body.split("\n\n")[:12]))
         self.assertFalse(self.item(graders.check_lengths(self.load(("coach", "tiếp"), ("machine", short))), "a long post")["pass"])
 
     # ---- week_dedupe: the idea cells of the Week-1 table

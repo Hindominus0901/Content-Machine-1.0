@@ -20,7 +20,7 @@ must_not = [
   "FILM TODAY, Week 1, a copy box or 'post it' before her OK",
   "a question about platform, list size, talk day, delivery or hours (guessed from the dump) or about what the dump gave (who, the offer, the method, Priya and Sam)",
   "'why this one' or NOT NOW on the strategy (they print on 'why?')",
-  "a length in seconds: short video 250-400 words, long post 500-700, long video 1,000-1,500 in parts",
+  "a length in seconds: short video 250-400 words, long post 400-500, long video 1,000-1,500 in parts",
   "'great neighborhood for young families', 'safe area', 'the schools are excellent', 'prices only go up' or any of the other [compliance_risk] phrases in a piece or as the machine's own wording",
 ]
 max_coach_turns_to_map = 6
@@ -64,7 +64,7 @@ pillars_too_narrow = [
 mix = "ATTRACT / TRUST / CONVERT with shares adding to 100; default 40/40/20 (she has a 140-person text list and referral clients, building a local audience on Facebook groups and Reels: 40/40/20 or 50/35/15 with a reason)."
 system = "core platform Facebook local groups (answer-first posts and group comments), Instagram Reels re-cut from the same handheld clip, one YouTube neighbourhood tour a month, a text to the 140; Standard at 2-3 hours a week: 2 short videos, 1 long post, 2 group posts, 1 text; ask ladder comment OUTBID -> DM -> the checklist -> a 45-minute buyer consultation; the board and 3 reminders."
 found = "2-4 lines with a place and a month each, or labelled '(my guess)'; no search tool in a plain Claude chat: say so once and label every line a guess."
-lengths = "short video 250-400 words; long post 500-700 words; long video 1,000-1,500 words in parts; never seconds."
+lengths = "short video 250-400 words; long post 400-500 words; long video 1,000-1,500 words in parts; never seconds."
 
 [map]
 buyer = "First-time buyers who rent in Philadelphia and want to cross the bridge to South Jersey (Cherry Hill, Haddonfield, Voorhees, Marlton), often couples on one or two incomes who have been outbid more than once; second, empty-nest owners downsizing from the family house. Described by situation (renting, outbid, too much house), never by family status, age, neighbourhood 'type' or any protected class."

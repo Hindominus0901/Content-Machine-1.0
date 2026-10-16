@@ -30,13 +30,13 @@ v13.7 (10/10/2026, founder xem bản v13.6: "hook cần phải như các cái t 
 - Sửa thì nói lại, không cắt từ bản ghi.
 - Một chỗ, một điện thoại, quay 1–2 lần; không app, dựng, đạo cụ, nhạc trend nếu không xin. Xin shot list: "{{t:film.words_only}}"
 
-<!-- @section fmt-short.kit-post src=f52ce47023 kind=script -->
+<!-- @section fmt-short.kit-post src=9d28d0be1a kind=script -->
 ### Bài "chia sẻ thật" (Facebook, LinkedIn, caption dài)
 1 Dòng 1 ≤18 tiếng, theo khung §CM-FORMATS 1, đứng riêng; ý chính nằm trước "Xem thêm". Dòng 2 móc tiếp: cái giá, con số, hay câu hỏi bài sẽ trả lời.
 2 Rồi bằng chứng → 3 ý ngắn, hoặc kể: cảnh của họ → cái giá, lỗi của chính họ → họ thấy ra gì → cái gì đổi → lời mời. Một câu chốt rõ; một việc để làm.
 3 Đoạn theo bài coach, thường 2–4 câu, sau hook ≤40% đoạn một câu, không nhãn kiểu "Bài học:", nói với một người. Chỗ cái giá: cảnh, ngày, con số thật của họ.
 4 Không link trong bài (gửi inbox, để comment), một hashtag chiến dịch không dấu. Bài ngắn 250–450 tiếng.
-BÀI DÀI 500–700 chữ: câu mở (≤18 tiếng) + câu móc · câu chuyện ≈150–200 · 3 bài học, mỗi bài ≈100–130 (§CM-COPY 4; 2 bài khi chuyện ≈250–300) · lời mời ≈50, một việc. Quá giới hạn nền tảng (LinkedIn): câu mở, chuyện, 1 bài học, lời mời.
+BÀI DÀI 400–500 chữ: câu mở (≤18 tiếng) + câu móc · câu chuyện ≈100–130 · 3 bài học, mỗi bài ≈80–90 (§CM-COPY 4; 2 bài khi chuyện ≈150–180) · lời mời ≈40, một việc. Quá giới hạn nền tảng (LinkedIn): câu mở, chuyện, 1 bài học, lời mời.
 VIDEO DÀI 1.000–1.500 chữ: chia phần theo §CM-COPY 5, §CM-LONG.
 5 CAROUSEL (LinkedIn: file PDF): 10–12 dòng "Trang n: …". Trang 1 ≤15 tiếng, dáng kết quả (kết quả, con số hoặc ai), không phải nhãn ("Bắt đầu từ đây"); trang 2 giữ lời trang 1; rồi mỗi trang một quy tắc ≤40 tiếng (quy tắc · vì sao · ví dụ), không comment vẫn đáng lưu. Một trang tóm ý đáng gửi. Trang cuối: quà + từ khoá. Caption không thêm lời hứa.
 6 BÀI CHỮ TRÊN NỀN MÀU (Facebook): ≤{{bg_post_max_chars}} ký tự, chỉ chữ. "Câu 2 đăng luôn được không?" lúc đang xả: câu 2 thành bài ngắn, không từ khoá, không in gì dưới, rồi "{{t:dump.keep_going}}" NHẬT KÝ ZALO: ≤90 tiếng, một chuyện thật trong tuần + một việc nhẹ, không từ khoá.

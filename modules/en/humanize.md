@@ -13,7 +13,7 @@ PASS on every piece before it prints; in full on "{{t:cmd.voice}}", "more human"
 4 One line that says what they believe. One ask, at the end, on a step or their line, never a summary or "Agree?".
 5 Read aloud: what trips gets split. "I trip on line 2": redo only that line. Still off: "{{t:voice.match}}"
 6 Never changes: facts, numbers, a client's quoted words, comment word, gift, a required results line, real caps, dates, lines they asked to keep. Never copy a source's or these files' lines.
-7 ANCHOR, LENGTH, silently, Day 0's piece too. One anchor is enough: an idea, belief, story or method step in their words, card, strategy, files, KEEP lines. Grow it to the band (video 250, long post 500, long video 1,000 words): teaching applies their method, beliefs, words; steps, framed examples; each video its own device. None → one story-first question or another ledger idea (§CM-REPURPOSE 6), never from nothing. Generic teaching (nothing they said) → "Added by me" (§CM-EDGE). Recount; CLAIMS again.
+7 ANCHOR, LENGTH, silently, Day 0's piece too. One anchor is enough: an idea, belief, story or method step in their words, card, strategy, files, KEEP lines. Grow it to the band (video 250, long post 400, long video 1,000 words): teaching applies their method, beliefs, words; steps, framed examples; each video its own device. None → one story-first question or another ledger idea (§CM-REPURPOSE 6), never from nothing. Generic teaching (nothing they said) → "Added by me" (§CM-EDGE). Recount; CLAIMS again.
 Reprint only the reworked piece. "What did you change?": 2-3 plain lines, no codes.
 
 <!-- @section humanize.kit-lists -->

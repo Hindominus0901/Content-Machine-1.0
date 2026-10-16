@@ -98,7 +98,7 @@ mix = "THU HÚT / NIỀM TIN / CHUYỂN ĐỔI, cộng 100; mặc định 40/40/
 system = "nền tảng chính Facebook cá nhân (Messenger → Zalo), nơi đăng lại TikTok và Zalo; 2 tiếng rưỡi mỗi tuần: 3 video ngắn thẻ ý, 1 bài dài, 1 tin Zalo; thang lời mời comment/nhắn NGẠI CHÀO → 5 câu nói thật → Zalo → chuyển khoản."
 found = "2–4 dòng có nguồn (nhóm Facebook chủ spa, bình luận TikTok; tháng/năm) hoặc ghi '(mình đoán)'; chị dùng điện thoại Android, không máy tính: không có công cụ thì nói một lần và mọi dòng là '(mình đoán)'."
 week1_after_ok = "Chỉ sau khi chị OK: QUAY HÔM NAY + Tuần 1 một tin, rồi Brand Card; file CHIEN-LUOC-NOI-DUNG.md chỉ khi app tạo được file (ChatGPT miễn phí trên điện thoại: hỏi 'chiến lược' để nhận bản in một khung)."
-lengths = "video ngắn 250–400 chữ; bài dài 500–700 chữ; không tính giây."
+lengths = "video ngắn 250–400 chữ; bài dài 400–500 chữ; không tính giây."
 
 [keyword]
 # day0_heard: the Day-0 dump (chunks 1-2) quotes the buyer phrase AND the coach says many clients use it, or quotes it from 3+ NAMED clients (true: the Map prints it with no guess tag;

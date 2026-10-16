@@ -75,7 +75,7 @@ statistic, and "most {buyers}…" never appears without a source (COPY §CM-COPY
 ## The body behind the hook (v13.16, founder 12 Oct 2026: "chỉ cần 1 ý thôi rồi AI có thể tự mở rộng dựa trên foundation đã có")
 The piece the hook opens needs ONE real anchor from the coach's foundation (an idea, belief, story or method step from
 their words, Brand Card, OK'd strategy, files or KEEP research), then runs to its full length (short video 250–400 words,
-long post 500–700) on the coach's method, beliefs and plain teaching. Only paragraphs that trace to nothing of theirs go
+long post 400–500) on the coach's method, beliefs and plain teaching. Only paragraphs that trace to nothing of theirs go
 on "Added by me" / "Máy tự thêm"; numbers, client words, results and claims about clients or the market still need a
 source (DECISIONS "12 Oct 2026: one idea is enough"; kit §CM-HUMANIZE 7, COPY §CM-REPURPOSE 5–7).
 

@@ -21,7 +21,7 @@ must_not = [
   "FILM TODAY, Week 1, a copy box or 'post it' before her OK (the founder's v10 run: 'it already says let's post it')",
   "a question about platform, list size, talk day, delivery or hours (guessed from the dump; platform and talk day named once in YOUR SYSTEM) or about what the dump gave (who, the offer, the Marcus result, her hours)",
   "'why this one' or NOT NOW on the strategy (they print on 'why?')",
-  "a length in seconds ('under 30 s'): short video 250-400 words, long post 500-700, long video 1,000-1,500 in parts",
+  "a length in seconds ('under 30 s'): short video 250-400 words, long post 400-500, long video 1,000-1,500 in parts",
 ]
 max_coach_turns_to_map = 6                # coach turns before the strategy (the Map's old key), plus the interview's answers (dig_answers_max)
 max_coach_turns_session = 10              # plus the interview's answers
@@ -65,7 +65,7 @@ pillars_too_narrow = [
 mix = "ATTRACT / TRUST / CONVERT with shares adding to 100; default 40/40/20 (she has a 380-person list and referral clients, building an audience on LinkedIn: 40/40/20 or 50/35/15 with a reason)."
 system = "core platform LinkedIn (word-for-word desk-webcam shorts, text posts, a PDF post), re-cut into the Monday email to the 380; Lean at 2 hours a week: 3 short videos, 1 long post, 1 email; ask ladder comment RECORD YEAR -> DM -> the client margin sheet -> a 30-minute fit call -> the sprint; the board and 3 reminders."
 found = "2-4 lines with a place and a month each, or labelled '(my guess)'; a Claude Free browser chat has no search tool: say so once and label every line a guess."
-lengths = "short video 250-400 words; long post 500-700 words; long video 1,000-1,500 words in parts; never seconds."
+lengths = "short video 250-400 words; long post 400-500 words; long video 1,000-1,500 words in parts; never seconds."
 
 [map]
 buyer = "Founders and owners of independent marketing agencies (about $1M-$5M revenue, 8-35 people, 4+ years in) who are not the numbers person and have a bookkeeper and a tax CPA but nobody looking forward; they find Erin right after a record year with no cash (payroll on a personal card, drawing on the line of credit, unsure they can afford a hire)."

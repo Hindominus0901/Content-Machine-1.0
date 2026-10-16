@@ -4,6 +4,18 @@ Lines tagged `[buyer]` become the localised "What's new" page shipped to buyers.
 
 ## [Unreleased]
 
+## [1.4.5] - 2026-10-16 (v14.5)
+
+Founder decision, 16 Oct: shorter long posts ("bài nên ngắn bớt đi tầm 400 500 thôi").
+
+### Changed
+- [buyer] Long posts are shorter: 400–500 words (was 500–700): a hook line, a story of about 100–130 words, 2–3 short lessons and an invitation. Short videos stay 250–400 words.
+- Kit: LENGTHS long post 400–500; Ship Check 4 long-post floor 400 (was 500). Byte-neutral, VN in tiếng.
+- Method: §CM-POSTS long post 400–500 (story ≈100–130, 3 lessons ≈80–90, 2 only with a story ≈150–180, invitation ≈40); §CM-HUMANIZE 7 grows a long post to 400; §CM-WEEK 2 "one long post 400–500".
+- Level-ups: COPY 1 home lengths, 4 long-post parts (re-hook ≈20, story ≈100–130, lessons ≈80–90 / ≈90–110 with 2, invitation ≈40; sums ≈410–470 / ≈400–470), case breakdown in a long post ≈450 (×1.3), open-loop long post 400–500 (lessons ≈80, "Under 400 words"), cuts table long post ≈7 min, story share ≈100–130; PLAYBOOK examples 450 words, part 5 system 400-500, slot math long post ≈7 (Light 30 + 32 + 30, Lean 45 + 32 + 30, Standard 100 + 27 + 30 ≈2½ h, VN 2 giờ 40).
+- Agents: cm-writer and cm-reviewer long post 400–500, story ≈100–130 (≈150–180 with 2 lessons), parts sum 400+.
+- Evals: acceptance `[lengths]` long_post_words_min 400 / max 500 (fails under 380, warns over 525); graders defaults and strategy_doc part 5 "400-500"; qa/standards CF4, CL5, CL6; persona expected lengths; tests. DECISIONS "16 Oct 2026 (v14.5)"; founder docs GIONG-VA-CHIEN-LUOC updated.
+
 ## [1.4.4] - 2026-10-12 (v14.4)
 
 Fixes from qa/runs/v143 (SAFETY-TEST N1–N10, REVIEWER-BLIND, MEASURE-vn-day0-4).

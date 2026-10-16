@@ -89,7 +89,7 @@ found = "2–4 dòng có nơi và tháng (nhóm Facebook chủ spa, chủ trung 
 hours_pick = "3 tiếng rưỡi; không làm tròn lên 4 hay 5"
 coach_edit = "Tin 1: thêm trụ cột 'dạy nhân viên' (hoặc đổi tên cụm sẵn có thành 'dạy nhân viên')"
 coach_pushback = "Tin 3: 'Sao bỏ TikTok của chị?' (nếu bỏ) hoặc 'Quà chị có rồi mà, cái file để chị suy nghĩ đó' (nếu bày quà mới); máy đáp ≤2 câu, có căn cứ"
-lengths = "video ngắn 250–400 chữ; bài dài 500–700 chữ; tin Zalo ≤250 chữ; không bao giờ tính giây"
+lengths = "video ngắn 250–400 chữ; bài dài 400–500 chữ; tin Zalo ≤250 chữ; không bao giờ tính giây"
 
 [keyword]
 # day0_heard: chunk 1 quotes the buyer phrase AND says "gần như chủ cơ sở nào nhắn chị lần đầu cũng nói y chang"

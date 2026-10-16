@@ -89,7 +89,7 @@ replies and no piece, FILM TODAY alone only after the coach's OK, then on 'next'
 piece per 'next' (v13.5); the early win only quotes 3 lines; the research
 said once; WHAT I FOUND with its sources; at most 6 interview questions, none for what the dump gave; 3-5 broad CONTENT
 PILLARS; the ATTRACT / TRUST / CONVERT mix adding to 100; YOUR SYSTEM; Week 1 on all three types and a pillar per piece),
-lengths (in WORDS, never seconds: a short video 250-400, a long post 500-700, a long video 1,000-1,500 in parts),
+lengths (in WORDS, never seconds: a short video 250-400, a long post 400-500, a long video 1,000-1,500 in parts),
 day0_shape (the Day-0 deliverables: FILM TODAY's caption box and quiet
 option, YOUR WORD = the CTA keyword, KNOWN FOR in one breath, an email in Week 1 when the coach named a list (VN: a
 Zalo message for a Zalo list), the keyword once in the body of FILM TODAY, of its text version and of each Week-1
@@ -5898,10 +5898,10 @@ def check_day0_strategy(run: Run) -> dict:
 
 # ---------------------------------------------------------------- lengths in words (founder, 7 Oct night)
 
-# (short 250-400, long post 500-700: founder 12 Oct, v14.2 "các bài hơi bị dài quá"; was 500-800 and about 1,000; the defaults
+# (short 250-400: founder 12 Oct, v14.2 "các bài hơi bị dài quá", was 500-800; long post 400-500: founder 16 Oct, v14.5, was 500-700; the defaults
 # match acceptance.toml [lengths], audit a3 L2; under a floor fails, over a ceiling is a warning)
-LENGTH_DEFAULTS = {"tolerance": 0.10, "short_words_min": 250, "short_words_max": 400, "long_post_words_min": 500,
-                   "long_post_words_max": 700, "long_post_tolerance": 0.05, "long_video_words_min": 1000,
+LENGTH_DEFAULTS = {"tolerance": 0.10, "short_words_min": 250, "short_words_max": 400, "long_post_words_min": 400,
+                   "long_post_words_max": 500, "long_post_tolerance": 0.05, "long_video_words_min": 1000,
                    "long_video_words_max": 1500,
                    "long_video_parts_min": 3, "seconds_budget_fails": True,
                    # v14.1 (qa/runs/v140: a weak model's 239-word FILM TODAY): the floor's own slack (short_floor_tolerance; the
@@ -5990,7 +5990,7 @@ def piece_words(run: Run, p: Piece) -> int:
 
 def check_lengths(run: Run) -> dict:
     """Lengths are in words, never seconds (founder, 7 Oct 2026 night: "the length has to be measured by words, not
-    seconds, because people speak at different speeds"): a short video's spoken script 250-400 words and a long post 500-700
+    seconds, because people speak at different speeds"): a short video's spoken script 250-400 words and a long post 400-500
     (founder, 12 Oct, v14.2; under the floor fails, over the ceiling is a warning, both read with their slack), a long video
     1,000-1,500 words in parts
     (a numbered part, 3 or more, with a hook and an ask), and no length in seconds on a piece's title ("FILM TODAY (under
@@ -6005,7 +6005,7 @@ def check_lengths(run: Run) -> dict:
     items = []
     seen = {"short": 0, "long_post": 0, "long_video": 0, "titles": 0}
     ev_short, ev_post, ev_video, ev_sec, ev_claim = [], [], [], [], []
-    warnings: list[str] = []                     # v14.2: over a ceiling (short 400, long post 700) warns, never fails
+    warnings: list[str] = []                     # v14.2: over a ceiling (short 400, long post 500) warns, never fails
     floor_tol = float(cfg.get("short_floor_tolerance", tol))
     measured: list[dict] = []                    # what the grader counted, piece by piece (v13.14: it used to measure nothing)
     unit = "tiếng" if run.lang == "vn" else "words"
@@ -8463,7 +8463,7 @@ def check_strategy_doc(run: Run) -> dict:
       one the machine uses with this coach (persona xung_ho: "chị" for Hạnh, "bạn" for Nhi), never the other;
     - part 2 has 3-5 content pillars (its "###" sections) that are the ones of the strategy the coach OK'd, part 4's mix
       adds up to 100 (ATTRACT, TRUST, CONVERT with a share each), part 5 gives lengths in words (short video 250-400,
-      long post 500-700, long video 1,000-1,500) and none in seconds;
+      long post 400-500, long video 1,000-1,500) and none in seconds;
     - the hooks of its content pillars' big ideas are no flat claim, label or maxim, repeat no line, hold no hedge
       (short_findings, the hook_lab's own tests; an on-screen text that is just a pillar's name is a label here too);
     - every line it quotes as heard online (a quote with a place and a month) is verbatim among the kept lines of the
@@ -8529,7 +8529,7 @@ def check_strategy_doc(run: Run) -> dict:
             ev_mix.append(f"part 4's mix adds up to {sum(shares.values())}%, not 100")
     if 5 in part_text:
         body5 = part_text[5]
-        for label, pat in (("short video 250-400", r"250\s*(?:-|–|đến|to)\s*400"), ("long post 500-700", r"500\s*(?:-|–|đến|to)\s*700"),
+        for label, pat in (("short video 250-400", r"250\s*(?:-|–|đến|to)\s*400"), ("long post 400-500", r"400\s*(?:-|–|đến|to)\s*500"),
                            ("long video 1,000-1,500", r"1[.,]?000\s*(?:-|–|đến|to)\s*1[.,]?500")):
             if not re.search(pat, body5):
                 ev_len.append(f"part 5 gives no length for the {label} words")

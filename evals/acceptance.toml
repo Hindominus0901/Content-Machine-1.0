@@ -115,9 +115,9 @@ tolerance = 0.10                          # a short video's ceiling is read with
 short_words_min = 250                     # short video: its spoken script (first line, beats, last line; not the on-screen text, the
 short_words_max = 400                     #   first frame, the caption or the ask), 250-400 words (founder 12 Oct, v14.2; was 500-800):
                                           #   under the floor fails, over the ceiling (440) is a warning
-long_post_words_min = 500                 # long post: 500-700 words (founder 12 Oct, v14.2; was about 1,000, +-15%): under the floor
-long_post_words_max = 700                 #   (read with long_post_tolerance) fails, over the ceiling is a warning
-long_post_tolerance = 0.05                #   the long post's slack both ways (475 fails below, 735 warns above)
+long_post_words_min = 400                 # long post: 400-500 words (founder 16 Oct, v14.5; was 500-700, before that about 1,000): under
+long_post_words_max = 500                 #   the floor (read with long_post_tolerance) fails, over the ceiling is a warning
+long_post_tolerance = 0.05                #   the long post's slack both ways (380 fails below, 525 warns above)
 long_video_words_min = 1000               # long video: 1,000-1,500 words, in parts ...
 long_video_words_max = 1500
 long_video_parts_min = 3                  #   at least this many numbered parts (the kit: 3-4), with a hook and an ask around them

@@ -15,13 +15,14 @@ v13.16 (12 Oct, founder "one idea is enough"): 1 drops "no padding" (it read as 
 
 v14.1 (12 Oct, qa/runs/v140): 2 "best of 3 frames scored" (kit; phone "best of 3 drafts", everyone-says names their Y), on-screen "adds"; new 4 COUNT before PRINT (word floor; VN ĐẾM adds the particle target, e.g. 45%, 30 sentences → 11–17, and the coach's own messages when the card has no share; the VN 3 particle clause moved there). Paid by a shorter 1 SOURCE, PRINT without "(§CM-EDGE)", phone PRINT shorter. ship.kit EN 890 → 900 (budget 900), VN → 1,000.
 v14.2 (12 Oct, founder: shorter pieces): 4 COUNT floors video 250, long post 500 (were 500, 950); VN the same in tiếng. Byte-neutral.
+v14.5 (16 Oct, founder: "bài nên ngắn bớt đi tầm 400 500 thôi"): 4 COUNT long-post floor 400 (was 500); VN the same. Byte-neutral.
 <!-- @section ship.kit -->
 SHIP CHECK · silent · every piece · unsure → cut or downgrade
 0 FOCUS: one pillar, one type · one idea ≤15 words · one belief (X → Y) · not NOT NOW · {{#if phone}}comment word once, in the ask; Season keyword (CONVERT, gift) once, body or caption{{else}}keywords: §CM-CTA-KIT 1{{/if}}
 1 SOURCE: each scene, number, name, quote, result, client act, thought, cause → effect, their past, a "most/always…" claim: from their words, card, kept research; quotes exact, same speaker; else cut. Teaching from none: listed
 2 STAND-OUT ≥8, no 0{{#if phone}}: a specific · one idea, one belief · proof shown · an only-them detail · a disputable stance{{else}} (§CM-EDGE){{/if}}. Every hook, caption line 1: {{#if phone}}best of 3 drafts; "everyone says X" names their real Y; no hedge, flat claim or maxim; on-screen adds one thing, no line-1 word{{else}}best of 3 frames scored (§CM-FORMATS 1; subject, slide 1), no client name; on-screen adds, no title word{{/if}}
 3 VOICE + BUYER: tone, rhythm, phrases (≥half the pieces, ≤1× each), address, no never-words; a buyer stops at line 1, believes it. Fix once
-4 COUNT, then PRINT: words ≥ floor (video 250, long post 500), else grow the anchor
+4 COUNT, then PRINT: words ≥ floor (video 250, long post 400), else grow the anchor
 PRINT: the piece; under it "Added by me: ¶2, ¶5"{{#if phone}}: paragraphs with a line from none of their sources{{/if}}. Missing fact, hard stop → "Needs you · <one question>"
 
 <!-- @section ship.card -->
